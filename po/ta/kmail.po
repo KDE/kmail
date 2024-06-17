@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-19 17:18+0530\n"
+"PO-Revision-Date: 2024-06-16 18:07+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6990,15 +6990,7 @@ msgstr "எத்தனை நாட்களென்பதை இங்கு 
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:169
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If A Certificate In The Chain Expires</h1>\n"
-#| "Select the minimum number of days all certificates in the chain should be "
-#| "valid without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If A Certificate In The Chain Expires</h1>\n"
@@ -7017,15 +7009,7 @@ msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:205
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Encryption Certificate Expires</h1>\n"
-#| "Select the minimum number of days the encryption certificate should be "
-#| "valid without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If Encryption Certificate Expires</h1>\n"
@@ -7084,15 +7068,7 @@ msgstr "&மூல (root) சான்றிதழ்களுக்கு:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:307
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If Root Certificate Expires</h1>\n"
@@ -7107,7 +7083,7 @@ msgstr ""
 "எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
 "SPHINX அமைப்பாக 14 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
-"</qt>"
+"</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
 #: ui/securitypageencryptiontab.ui:323

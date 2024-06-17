@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-05-26 12:10+0200\n"
+"PO-Revision-Date: 2024-06-16 10:13+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -22,6 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -531,7 +532,7 @@ msgstr ""
 #: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Templates"
-msgstr "Szablony"
+msgstr "Wzorce"
 
 #: collectionpage/collectionviewpage.cpp:36
 #, kde-format
@@ -1061,12 +1062,12 @@ msgstr "Ogólne"
 #: configuredialog/configurecomposerpage.cpp:72
 #, kde-format
 msgid "Standard Templates"
-msgstr "Standardowe szablony"
+msgstr "Standardowe wzorce"
 
 #: configuredialog/configurecomposerpage.cpp:78
 #, kde-format
 msgid "Custom Templates"
-msgstr "Własne szablony"
+msgstr "Własne wzorce"
 
 #: configuredialog/configurecomposerpage.cpp:84
 #, kde-format
@@ -1888,12 +1889,12 @@ msgstr "Zapisz wiadomość w katalogu roboczych"
 #: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save as &Template"
-msgstr "Zapisz jako sza&blon"
+msgstr "Zapisz jako &wzorzec"
 
 #: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgid "Save email in Template folder"
-msgstr "Zapisz wiadomość w katalogu szablonów"
+msgstr "Zapisz wiadomość w katalogu wzorców"
 
 #: editor/kmcomposerwin.cpp:1303
 #, kde-format
@@ -2151,7 +2152,7 @@ msgstr "Sprawdźanie pisowni: wyłączone"
 #: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Re&save as Template"
-msgstr "Zapi&sz ponownie jako szablon"
+msgstr "Zapi&sz ponownie jako wzorzec"
 
 #: editor/kmcomposerwin.cpp:2066
 #, kde-format
@@ -2164,7 +2165,7 @@ msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr ""
-"Zapisz tę wiadomość w katalogu Szablony. Można ją będzie później zmienić."
+"Zapisz tę wiadomość w katalogu Wzorce. Można ją będzie później zmienić."
 
 #: editor/kmcomposerwin.cpp:2069
 #, kde-format
@@ -3294,12 +3295,12 @@ msgstr "Katalog &roboczych:"
 #: identity/identitydialog.cpp:599
 #, kde-format
 msgid "Select Templates Folder"
-msgstr "Wybierz katalog szablonów"
+msgstr "Wybierz katalog wzorców"
 
 #: identity/identitydialog.cpp:601
 #, kde-format
 msgid "&Templates folder:"
-msgstr "Ka&talog szablonów:"
+msgstr "Ka&talog wzorców:"
 
 #: identity/identitydialog.cpp:606
 #, kde-format
@@ -3343,12 +3344,12 @@ msgstr ""
 #: identity/identitydialog.cpp:656
 #, kde-format
 msgid "&Use custom message templates for this identity"
-msgstr "&Użyj własnych szablonów dla tej tożsamości"
+msgstr "&Użyj własnych wzorców dla tej tożsamości"
 
 #: identity/identitydialog.cpp:670
 #, kde-format
 msgid "&Copy Global Templates"
-msgstr "S&kopiuj szablony globalne"
+msgstr "S&kopiuj wzorce globalne"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -4353,7 +4354,7 @@ msgstr "Brak tematu"
 #: kmmainwidget.cpp:1396
 #, kde-format
 msgid "(no templates)"
-msgstr "(brak szablonu użytkownika)"
+msgstr "(brak wzorca użytkownika)"
 
 #: kmmainwidget.cpp:1448
 #, kde-format
@@ -4835,7 +4836,7 @@ msgstr "Nowa"
 #: kmmainwidget.cpp:3179
 #, kde-format
 msgid "Message From &Template"
-msgstr "Wiadomość z sza&blonu"
+msgstr "Wiadomość ze &wzorca"
 
 #: kmmainwidget.cpp:3185
 #, kde-format
@@ -5900,7 +5901,7 @@ msgstr "W&yślij ponownie..."
 #: messageactions.cpp:83
 #, kde-format
 msgid "New Message From &Template"
-msgstr "Nowa wiadomość z sza&blonu"
+msgstr "Nowa wiadomość ze &wzorca"
 
 #: messageactions.cpp:85
 #, kde-format
@@ -6547,25 +6548,25 @@ msgstr "Krótki spis katalogów"
 #: settings/kmail.kcfg.in:374
 #, kde-format
 msgid "Message template for new message"
-msgstr "Szablon dla nowej wiadomości"
+msgstr "Wzorzec dla nowej wiadomości"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:379
 #, kde-format
 msgid "Message template for reply"
-msgstr "Szablon dla odpowiedzi"
+msgstr "Wzorzec dla odpowiedzi"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:384
 #, kde-format
 msgid "Message template for reply to all"
-msgstr "Szablon dla odpowiedzi do wszystkich"
+msgstr "Wzorzec dla odpowiedzi do wszystkich"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:389
 #, kde-format
 msgid "Message template for forward"
-msgstr "Szablon dla przesyłania dalej"
+msgstr "Wzorzec dla przesyłania dalej"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:394
