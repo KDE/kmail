@@ -68,8 +68,7 @@ void ColorListBox::newColor(const QModelIndex &index)
     }
 
     if (index.isValid()) {
-        QColor c = color(index.row());
-        c = QColorDialog::getColor(c, this);
+        const QColor c = QColorDialog::getColor(color(index.row()), this);
         if (c.isValid()) {
             setColor(index.row(), c);
         }
