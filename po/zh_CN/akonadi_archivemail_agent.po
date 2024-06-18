@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -138,15 +138,15 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "kde-china@kde.org"
 
-#. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:109
 #, kde-format
-msgid "Add..."
-msgstr "添加..."
+msgid "Add…"
+msgstr ""
 
 #: archivemailwidget.cpp:115
-#, kde-format
-msgid "Open Containing Folder..."
+#, fuzzy, kde-format
+#| msgid "Open Containing Folder..."
+msgid "Open Containing Folder…"
 msgstr "打开所在文件夹..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -197,6 +197,12 @@ msgstr "目录不存在。请检验设置。归档已推迟。"
 #, kde-format
 msgid "Start to archive %1"
 msgstr "开始归档到 %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "添加..."
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38

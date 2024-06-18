@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-05-26 21:08+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -63,58 +63,59 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "tomst.trasuns@posteo.net"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "To"
 msgstr "Kam"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "Subject"
 msgstr "Temats"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "Send around"
 msgstr "Nosūtīt ap"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "Recurrent"
 msgstr "Atkārtota sūtīšana"
 
-#: sendlaterconfigurewidget.cpp:59
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Message Id"
 msgstr "Vēstules ID"
 
-#: sendlaterconfigurewidget.cpp:70
-#, kde-format
-msgid "No messages waiting..."
+#: sendlaterconfigurewidget.cpp:69
+#, fuzzy, kde-format
+#| msgid "No messages waiting..."
+msgid "No messages waiting…"
 msgstr "Rindā nav vēstuļu..."
 
-#: sendlaterconfigurewidget.cpp:95
+#: sendlaterconfigurewidget.cpp:94
 #, kde-format
 msgid "Send now"
 msgstr "Nosūtīt tagad"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:98 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Dzēst"
 
-#: sendlaterconfigurewidget.cpp:159
+#: sendlaterconfigurewidget.cpp:158
 #, kde-format
 msgid "Yes"
 msgstr "Jā"
 
-#: sendlaterconfigurewidget.cpp:159
+#: sendlaterconfigurewidget.cpp:158
 #, kde-format
 msgid "No"
 msgstr "Nē"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:208
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -122,13 +123,13 @@ msgstr[0] "Vai vēlaties dzēst šo vienumu?"
 msgstr[1] "Vai vēlaties dzēst šos vienumus?"
 msgstr[2] "Vai vēlaties dzēst šos vienumus?"
 
-#: sendlaterconfigurewidget.cpp:210
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Dzēst vienumus"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:217
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -136,13 +137,13 @@ msgstr[0] "Vai vēlaties dzēst arī šo vēstuli?"
 msgstr[1] "Vai vēlaties dzēst arī šīs vēstules?"
 msgstr[2] "Vai vēlaties dzēst arī šīs vēstules?"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Dzēst vēstules"
 
-#: sendlaterconfigurewidget.cpp:221
+#: sendlaterconfigurewidget.cpp:220
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
@@ -206,6 +207,7 @@ msgstr "Sūtīt no jauna"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Rediģēt..."

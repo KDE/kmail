@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: okular\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2013-11-09 20:08+0000\n"
 "Last-Translator: Nermina Agović <nagovic1@etf.unsa.ba>\n"
 "Language-Team: Bosanski <lokal@lugbih.org>\n"
@@ -66,58 +66,59 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Samir.ribic@etf.unsa.ba,lbajgoric1@etf.unsa.ba,nagovic1@etf.unsa.ba"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "To"
 msgstr "Prima"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "Subject"
 msgstr "Naslov"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "Send around"
 msgstr "Poslano oko"
 
-#: sendlaterconfigurewidget.cpp:57
+#: sendlaterconfigurewidget.cpp:56
 #, kde-format
 msgid "Recurrent"
 msgstr "Ponavljajući"
 
-#: sendlaterconfigurewidget.cpp:59
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Message Id"
 msgstr "ID poruke"
 
-#: sendlaterconfigurewidget.cpp:70
-#, kde-format
-msgid "No messages waiting..."
+#: sendlaterconfigurewidget.cpp:69
+#, fuzzy, kde-format
+#| msgid "No messages waiting..."
+msgid "No messages waiting…"
 msgstr "Nema poruka na čekanju..."
 
-#: sendlaterconfigurewidget.cpp:95
+#: sendlaterconfigurewidget.cpp:94
 #, kde-format
 msgid "Send now"
 msgstr "Šalji sada"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:98 ui/sendlaterconfigurewidget.ui:38
+#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
 #, kde-format
 msgid "Delete"
 msgstr "Obriši"
 
-#: sendlaterconfigurewidget.cpp:159
+#: sendlaterconfigurewidget.cpp:158
 #, kde-format
 msgid "Yes"
 msgstr "Da"
 
-#: sendlaterconfigurewidget.cpp:159
+#: sendlaterconfigurewidget.cpp:158
 #, kde-format
 msgid "No"
 msgstr "Ne"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:208
 #, fuzzy, kde-format
 #| msgid "Do you want to delete selected items? Do you want to continue?"
 msgid "Do you want to delete the selected item?"
@@ -126,14 +127,14 @@ msgstr[0] "Želite li obrisati odabrane objekte? Želite li nastaviti?"
 msgstr[1] "Želite li obrisati odabrane objekte? Želite li nastaviti?"
 msgstr[2] "Želite li obrisati odabrane objekte? Želite li nastaviti?"
 
-#: sendlaterconfigurewidget.cpp:210
+#: sendlaterconfigurewidget.cpp:209
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Obriši"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:217
 #, fuzzy, kde-format
 #| msgid "Do you want to remove messages as well?"
 msgid "Do you want to delete the message as well?"
@@ -142,14 +143,14 @@ msgstr[0] "Da li želiš ukloniti i ovu poruku?"
 msgstr[1] "Da li želiš ukloniti i ovu poruku?"
 msgstr[2] "Da li želiš ukloniti i ovu poruku?"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:218
 #, fuzzy, kde-format
 #| msgid "Remove messages"
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Ukloni poruke"
 
-#: sendlaterconfigurewidget.cpp:221
+#: sendlaterconfigurewidget.cpp:220
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action:button"
@@ -214,8 +215,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Izmijeni..."
 
 #~ msgid "Remove items"

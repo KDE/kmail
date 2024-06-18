@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2023-09-25 19:00+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
-#, kde-format
+#: settingsdialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action:button"
 msgid "Add"
 msgstr "Aggiungi"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
-#, kde-format
+#: settingsdialog.cpp:68
+#, fuzzy, kde-format
+#| msgid "Modify"
+msgctxt "@action:button"
 msgid "Modify"
 msgstr "Modifica"
 
@@ -42,6 +46,16 @@ msgstr "Vuoi veramente eliminare la casella di posta unificata <b>%1</b>?"
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Rimuovere davvero?"
+
+#: settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Aggiungi"
+
+#: settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Modifica"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
@@ -64,12 +78,14 @@ msgstr "Configura la casella di posta unificata"
 msgid "Name:"
 msgstr "Nome:"
 
-#: unifiedmailboxeditor.cpp:102
-#, kde-format
+#: unifiedmailboxeditor.cpp:103
+#, fuzzy, kde-format
+#| msgid "Pick icon..."
+msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "Scegli icona..."
 
-#: unifiedmailboxeditor.cpp:103
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
 msgstr "Icona:"

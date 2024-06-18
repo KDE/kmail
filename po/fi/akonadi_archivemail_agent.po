@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-02-19 12:11+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -148,15 +148,15 @@ msgid "Your emails"
 msgstr ""
 "jiri.gronroos+kde@iki.fi,lasse.liehu@gmail.com,translator@legisign.org,"
 
-#. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:109
 #, kde-format
-msgid "Add..."
-msgstr "Lisää…"
+msgid "Add…"
+msgstr ""
 
 #: archivemailwidget.cpp:115
-#, kde-format
-msgid "Open Containing Folder..."
+#, fuzzy, kde-format
+#| msgid "Open Containing Folder..."
+msgid "Open Containing Folder…"
 msgstr "Avaa kansio, jossa tämä sijaitsee…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -212,6 +212,12 @@ msgstr "Kansiota ei ole olemassa. Tarkista asetukset. Arkistointia lykättiin."
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Käynnistä arkistointi: %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Lisää…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38

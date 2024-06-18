@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2023-09-26 13:22+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
-#, kde-format
+#: settingsdialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action:button"
 msgid "Add"
 msgstr "Lisää"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
-#, kde-format
+#: settingsdialog.cpp:68
+#, fuzzy, kde-format
+#| msgid "Modify"
+msgctxt "@action:button"
 msgid "Modify"
 msgstr "Muokkaa"
 
@@ -42,6 +46,16 @@ msgstr "Haluatko varmasti poistaa yhdistetyn postilaatikon <b>%1</b>?"
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Poistetaanko varmasti?"
+
+#: settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Lisää"
+
+#: settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Muokkaa"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
@@ -64,12 +78,14 @@ msgstr "Yhdistetyn postilaatikon asetukset"
 msgid "Name:"
 msgstr "Nimi:"
 
-#: unifiedmailboxeditor.cpp:102
-#, kde-format
+#: unifiedmailboxeditor.cpp:103
+#, fuzzy, kde-format
+#| msgid "Pick icon..."
+msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "Valitse kuvake…"
 
-#: unifiedmailboxeditor.cpp:103
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
 msgstr "Kuvake:"

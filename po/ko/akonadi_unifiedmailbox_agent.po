@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2023-10-08 23:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 22.12.3\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
-#, kde-format
+#: settingsdialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action:button"
 msgid "Add"
 msgstr "추가"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
-#, kde-format
+#: settingsdialog.cpp:68
+#, fuzzy, kde-format
+#| msgid "Modify"
+msgctxt "@action:button"
 msgid "Modify"
 msgstr "수정"
 
@@ -44,6 +48,16 @@ msgstr ""
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "정말 삭제하시겠습니까?"
+
+#: settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "추가"
+
+#: settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "수정"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
@@ -66,12 +80,14 @@ msgstr "통합 편지함 설정"
 msgid "Name:"
 msgstr "이름:"
 
-#: unifiedmailboxeditor.cpp:102
-#, kde-format
+#: unifiedmailboxeditor.cpp:103
+#, fuzzy, kde-format
+#| msgid "Pick icon..."
+msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "아이콘 선택..."
 
-#: unifiedmailboxeditor.cpp:103
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
 msgstr "아이콘:"

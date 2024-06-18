@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2023-12-30 17:54+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -17,13 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 23.08.4\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
-#, kde-format
+#: settingsdialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action:button"
 msgid "Add"
 msgstr "新增"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
-#, kde-format
+#: settingsdialog.cpp:68
+#, fuzzy, kde-format
+#| msgid "Modify"
+msgctxt "@action:button"
 msgid "Modify"
 msgstr "修改"
 
@@ -42,6 +46,16 @@ msgstr "您確定要移除整合信箱 <b>%1</b> 嗎？"
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "確定移除？"
+
+#: settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "新增"
+
+#: settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "修改"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
@@ -64,12 +78,14 @@ msgstr "設定整合信箱"
 msgid "Name:"
 msgstr "名稱："
 
-#: unifiedmailboxeditor.cpp:102
-#, kde-format
+#: unifiedmailboxeditor.cpp:103
+#, fuzzy, kde-format
+#| msgid "Pick icon..."
+msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "選取圖示..."
 
-#: unifiedmailboxeditor.cpp:103
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
 msgstr "圖示："

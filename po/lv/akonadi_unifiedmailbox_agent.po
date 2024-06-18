@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-02-01 10:33+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -18,13 +18,17 @@ msgstr ""
 "2);\n"
 "X-Generator: Lokalize 23.08.4\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
-#, kde-format
+#: settingsdialog.cpp:53
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action:button"
 msgid "Add"
 msgstr "Pievienot"
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
-#, kde-format
+#: settingsdialog.cpp:68
+#, fuzzy, kde-format
+#| msgid "Modify"
+msgctxt "@action:button"
 msgid "Modify"
 msgstr "Rediģēt"
 
@@ -43,6 +47,16 @@ msgstr "Vai tiešām vēlaties noņemt apvienoto e-pasta kastīti <b>%1</b>?"
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Tiešām noņemt?"
+
+#: settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr "Pievienot"
+
+#: settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
+msgstr "Rediģēt"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
@@ -65,12 +79,14 @@ msgstr "Konfigurēt apvienoto kastīti"
 msgid "Name:"
 msgstr "Nosaukums:"
 
-#: unifiedmailboxeditor.cpp:102
-#, kde-format
+#: unifiedmailboxeditor.cpp:103
+#, fuzzy, kde-format
+#| msgid "Pick icon..."
+msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "Izvēlieties ikonu..."
 
-#: unifiedmailboxeditor.cpp:103
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
 msgstr "Ikona:"

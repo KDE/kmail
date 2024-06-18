@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -29,8 +29,8 @@ msgstr "kde-china@kde.org"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
-msgstr "保存..."
+msgid "Save…"
+msgstr ""
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -82,9 +82,11 @@ msgid "View"
 msgstr "查看"
 
 #: ktnefmain.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "View With..."
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr "查看方式..."
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -94,15 +96,19 @@ msgid "Extract"
 msgstr "解压"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract To..."
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr "解压到..."
 
 #: ktnefmain.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract All To..."
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr "全部解压到..."
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -124,15 +130,19 @@ msgid "Show Message Text"
 msgstr "显示消息属性"
 
 #: ktnefmain.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Save Message Text As..."
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr "保存消息文本为..."
 
 #: ktnefmain.cpp:160
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Default Folder..."
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr "默认文件夹..."
 
 #: ktnefmain.cpp:172
@@ -202,16 +212,20 @@ msgid "&Open With"
 msgstr "打开方式(&O)"
 
 #: ktnefmain.cpp:570
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Open With"
+#| msgid "&Other..."
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr "其他(&O)..."
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:menu"
+#| msgid "&Open With"
 msgctxt "@title:menu"
-msgid "&Open With..."
-msgstr "打开方式(&O)..."
+msgid "&Open With…"
+msgstr "打开方式(&O)"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -348,3 +362,10 @@ msgstr "文件大小："
 #, kde-format
 msgid "MIME type:"
 msgstr "MIME 类型："
+
+#~ msgid "Save..."
+#~ msgstr "保存..."
+
+#~ msgctxt "@title:menu"
+#~ msgid "&Open With..."
+#~ msgstr "打开方式(&O)..."

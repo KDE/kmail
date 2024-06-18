@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-17 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -422,7 +422,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: editor/kmcomposerwin.cpp:2414 kmreaderwin.cpp:306 kmsystemtray.cpp:48
+#: editor/kmcomposerwin.cpp:2413 kmreaderwin.cpp:306 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -451,7 +451,9 @@ msgid "Folder holds a mailing list"
 msgstr "Ο φάκελος περιέχει μια λίστα ταχυδρομείου"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Detect Automatically"
+msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Αυτόματη ανίχνευση"
 
@@ -471,7 +473,9 @@ msgid "Preferred handler:"
 msgstr "Προτιμώμενος διαχειριστής:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Invoke Handler"
+msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Κλήση χειριστή"
 
@@ -1448,6 +1452,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:456
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
+msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Διαμόρφωση της σειράς συμπλήρωσης..."
 
@@ -1502,7 +1507,6 @@ msgid "A&dd…"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:833
 #: configuredialog/configurecomposerpage.cpp:1054
 #, kde-format
 msgid "Re&move"
@@ -1510,9 +1514,10 @@ msgstr "&Αφαίρεση"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:1054
-#, kde-format
-msgid "Mod&ify..."
-msgstr "&Επεξεργασία..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Mod&ify…"
+msgstr "Τροποποίηση..."
 
 #: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
@@ -1547,9 +1552,10 @@ msgstr "&Αφαίρεση"
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:729
-#, kde-format
-msgid "Modify..."
+#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Τροποποίηση..."
 
 #: configuredialog/configurecomposerpage.cpp:729
@@ -1605,6 +1611,13 @@ msgstr "Τιμή"
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Νέο"
+
+#: configuredialog/configurecomposerpage.cpp:833
+#, fuzzy, kde-format
+#| msgid "Re&move"
+msgctxt "@action:button"
+msgid "Re&move"
+msgstr "&Αφαίρεση"
 
 #: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
@@ -1996,21 +2009,21 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Εμφάνιση λίστας συνημμένων"
 
-#: editor/kmcomposerwin.cpp:334 kmail_part.cpp:40 kmmainwin.cpp:97
-#: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
+#: editor/kmcomposerwin.cpp:333 kmail_part.cpp:40 kmmainwin.cpp:97
+#: kmreadermainwin.cpp:475 kontactplugin/kmail/kmail_plugin.cpp:41
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:364
+#: editor/kmcomposerwin.cpp:363
 #, fuzzy, kde-format
 #| msgid "Select the dictionary to use when spell-checking this message"
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Επιλογή λεξικού προς χρήση ορθογραφικού ελέγχου για αυτό το μήνυμα"
 
-#: editor/kmcomposerwin.cpp:371
+#: editor/kmcomposerwin.cpp:370
 #, fuzzy, kde-format
 #| msgid ""
 #| "Select the sent-mail folder where a copy of this message will be saved"
@@ -2020,7 +2033,7 @@ msgstr ""
 "Επιλογή του φακέλου απεσταλμένων όπου θα σωθεί ένα αντίγραφο αυτού του "
 "μηνύματος"
 
-#: editor/kmcomposerwin.cpp:379
+#: editor/kmcomposerwin.cpp:378
 #, fuzzy, kde-format
 #| msgid "Select the outgoing account to use for sending this message"
 msgctxt "@info:tooltip"
@@ -2029,7 +2042,7 @@ msgstr ""
 "Επιλογή του λογαριασμού εξερχομένων που θα χρησιμοποιηθεί για την αποστολή "
 "αυτού του μηνύματος"
 
-#: editor/kmcomposerwin.cpp:387
+#: editor/kmcomposerwin.cpp:386
 #, fuzzy, kde-format
 #| msgid "Set the \"From:\" email address for this message"
 msgctxt "@info:tooltip"
@@ -2038,148 +2051,148 @@ msgstr ""
 "Καθορίστε την διεύθυνση ηλ. αλληλογραφίας για το πεδίο «Από:» για αυτό το "
 "μήνυμα"
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:414
 #, fuzzy, kde-format
 #| msgid "&Identity:"
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Ταυτότητα:"
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:415
 #, fuzzy, kde-format
 #| msgid "&Dictionary:"
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Λεξικό:"
 
-#: editor/kmcomposerwin.cpp:417
+#: editor/kmcomposerwin.cpp:416
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail folder:"
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Φάκελος απεστα&λμένων:"
 
-#: editor/kmcomposerwin.cpp:418
+#: editor/kmcomposerwin.cpp:417
 #, fuzzy, kde-format
 #| msgid "&Mail transport:"
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Μεταφορέας &αλληλογραφίας:"
 
-#: editor/kmcomposerwin.cpp:419
+#: editor/kmcomposerwin.cpp:418
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&Από:"
 
-#: editor/kmcomposerwin.cpp:420
+#: editor/kmcomposerwin.cpp:419
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Θέμα:"
 
-#: editor/kmcomposerwin.cpp:494
+#: editor/kmcomposerwin.cpp:493
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Σύνταξη μηνύματος"
 
-#: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1281
+#: editor/kmcomposerwin.cpp:1246 editor/kmcomposerwin.cpp:1280
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Αποστολή αλληλογραφίας"
 
-#: editor/kmcomposerwin.cpp:1254 editor/kmcomposerwin.cpp:1287
+#: editor/kmcomposerwin.cpp:1253 editor/kmcomposerwin.cpp:1286
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "Α&ποστολή αλληλογραφίας μέσω"
 
-#: editor/kmcomposerwin.cpp:1256
+#: editor/kmcomposerwin.cpp:1255
 #, kde-format
 msgid "Send"
 msgstr "Αποστολή"
 
-#: editor/kmcomposerwin.cpp:1259 editor/kmcomposerwin.cpp:1271
+#: editor/kmcomposerwin.cpp:1258 editor/kmcomposerwin.cpp:1270
 #, kde-format
 msgid "Send &Later"
 msgstr "Αποστολή αρ&γότερα"
 
-#: editor/kmcomposerwin.cpp:1265 editor/kmcomposerwin.cpp:1278
+#: editor/kmcomposerwin.cpp:1264 editor/kmcomposerwin.cpp:1277
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Αποστολή αργό&τερα μέσω"
 
-#: editor/kmcomposerwin.cpp:1267
+#: editor/kmcomposerwin.cpp:1266
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "Σε αναμονή"
 
-#: editor/kmcomposerwin.cpp:1296
+#: editor/kmcomposerwin.cpp:1295
 #, kde-format
 msgid "Save as &Draft"
 msgstr "Αποθήκευση ως &προσχέδιο"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1297
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "Αποθήκευση μηνύματος στο φάκελο με τα προσχέδια"
 
-#: editor/kmcomposerwin.cpp:1302
+#: editor/kmcomposerwin.cpp:1301
 #, kde-format
 msgid "Save as &Template"
 msgstr "Αποθήκευση ως πρό&τυπο"
 
-#: editor/kmcomposerwin.cpp:1303
+#: editor/kmcomposerwin.cpp:1302
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "Αποθήκευση μηνύματος στο φάκελο προτύπων"
 
-#: editor/kmcomposerwin.cpp:1307
+#: editor/kmcomposerwin.cpp:1306
 #, kde-format
 msgid "Save as &File"
 msgstr "Αποθήκευση ως α&ρχείο"
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1307
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "Αποθήκευση μηνύματος ως κείμενο ή html αρχείο"
 
-#: editor/kmcomposerwin.cpp:1312
+#: editor/kmcomposerwin.cpp:1311
 #, fuzzy, kde-format
 #| msgid "&Insert Text File..."
 msgid "&Insert Text File…"
 msgstr "&Εισαγωγή αρχείου κειμένου..."
 
-#: editor/kmcomposerwin.cpp:1316
+#: editor/kmcomposerwin.cpp:1315
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "Ε&ισαγωγή πρόσφατου αρχείου κειμένου"
 
-#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:2961
+#: editor/kmcomposerwin.cpp:1325 kmmainwidget.cpp:2961
 #, kde-format
 msgid "&Address Book"
 msgstr "&Βιβλίο διευθύνσεων"
 
-#: editor/kmcomposerwin.cpp:1327
+#: editor/kmcomposerwin.cpp:1326
 #, kde-format
 msgid "Open Address Book"
 msgstr "Άνοιγμα βιβλίου διευθύνσεων"
 
-#: editor/kmcomposerwin.cpp:1334
+#: editor/kmcomposerwin.cpp:1333
 #, kde-format
 msgid "&New Composer"
 msgstr "&Νέο παράθυρο σύνταξης"
 
-#: editor/kmcomposerwin.cpp:1340
+#: editor/kmcomposerwin.cpp:1339
 #, fuzzy, kde-format
 #| msgid "Select Recipient"
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Επιλογή παραλήπτη"
 
-#: editor/kmcomposerwin.cpp:1343
+#: editor/kmcomposerwin.cpp:1342
 #, fuzzy, kde-format
 #| msgctxt "@title:window"
 #| msgid "Save Distribution List"
@@ -2187,68 +2200,68 @@ msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Αποθήκευση λίστας διανομής"
 
-#: editor/kmcomposerwin.cpp:1364
+#: editor/kmcomposerwin.cpp:1363
 #, fuzzy, kde-format
 #| msgid "Paste as Attac&hment"
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Επικόλληση ως &συνημμένο"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1367
 #, fuzzy, kde-format
 #| msgid "Cl&ean Spaces"
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "&Καθαρισμός κενών"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1371
 #, kde-format
 msgid "Use Fi&xed Font"
 msgstr "Χρήση γραμματοσειράς &σταθερού πλάτους"
 
-#: editor/kmcomposerwin.cpp:1378
+#: editor/kmcomposerwin.cpp:1377
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Επείγον"
 
-#: editor/kmcomposerwin.cpp:1380
+#: editor/kmcomposerwin.cpp:1379
 #, kde-format
 msgid "&Request Disposition Notification"
 msgstr "&Αίτηση ειδοποίησης παράδοσης"
 
-#: editor/kmcomposerwin.cpp:1384
+#: editor/kmcomposerwin.cpp:1383
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgid "&Request Delivery Confirmation"
 msgstr "&Αίτηση ειδοποίησης παράδοσης"
 
-#: editor/kmcomposerwin.cpp:1389
+#: editor/kmcomposerwin.cpp:1388
 #, kde-format
 msgid "&Wordwrap"
 msgstr "Ανα&δίπλωση λέξεων"
 
-#: editor/kmcomposerwin.cpp:1394
+#: editor/kmcomposerwin.cpp:1393
 #, kde-format
 msgid "&Snippets"
 msgstr "&Δείγματα"
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1398
 #, kde-format
 msgid "&Automatic Spellchecking"
 msgstr "&Αυτόματος ορθογραφικός έλεγχος"
 
-#: editor/kmcomposerwin.cpp:1415
+#: editor/kmcomposerwin.cpp:1414
 #, kde-format
 msgid "Rich Text Editing"
 msgstr "Επεξεργασία εμπλουτισμένου κείμενου"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1416
 #, kde-format
 msgid "Rich Text"
 msgstr "Εμπλουτισμένο κείμενο"
 
-#: editor/kmcomposerwin.cpp:1418
+#: editor/kmcomposerwin.cpp:1417
 #, fuzzy, kde-format
 #| msgid "Toggle rich text editing mode"
 msgctxt "@info:tooltip"
@@ -2256,119 +2269,119 @@ msgid "Toggle rich text editing mode"
 msgstr ""
 "Εναλλαγή ενεργοποίησης λειτουργίας επεξεργασίας εμπλουτισμένου κειμένου"
 
-#: editor/kmcomposerwin.cpp:1422
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "&All Fields"
 msgstr "Ό&λα τα πεδία"
 
-#: editor/kmcomposerwin.cpp:1425
+#: editor/kmcomposerwin.cpp:1424
 #, kde-format
 msgid "&Identity"
 msgstr "Ταυτότ&ητα"
 
-#: editor/kmcomposerwin.cpp:1428
+#: editor/kmcomposerwin.cpp:1427
 #, kde-format
 msgid "&Dictionary"
 msgstr "&Λεξικό"
 
-#: editor/kmcomposerwin.cpp:1431
+#: editor/kmcomposerwin.cpp:1430
 #, kde-format
 msgid "&Sent-Mail Folder"
 msgstr "Φάκελ&ος απεσταλμένων"
 
-#: editor/kmcomposerwin.cpp:1434
+#: editor/kmcomposerwin.cpp:1433
 #, kde-format
 msgid "&Mail Transport"
 msgstr "Μεταφορέας &αλληλογραφίας"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1436
 #, kde-format
 msgid "&From"
 msgstr "&Από"
 
-#: editor/kmcomposerwin.cpp:1440
+#: editor/kmcomposerwin.cpp:1439
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Θέμα"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1444
 #, fuzzy, kde-format
 #| msgid "Append S&ignature"
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Υπογραφή στο &τέλος"
 
-#: editor/kmcomposerwin.cpp:1449
+#: editor/kmcomposerwin.cpp:1448
 #, fuzzy, kde-format
 #| msgid "Pr&epend Signature"
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Υπογραφή στην &αρχή"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1452
 #, fuzzy, kde-format
 #| msgid "Insert Signature At C&ursor Position"
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Εισαγωγή υπογραφής στη θέση &δρομέα"
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1467
 #, fuzzy, kde-format
 #| msgid "Spellchecker"
 msgid "&Spellchecker…"
 msgstr "Ελεγκτής ορθογραφίας"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1468
 #, kde-format
 msgid "Spellchecker"
 msgstr "Ελεγκτής ορθογραφίας"
 
-#: editor/kmcomposerwin.cpp:1473
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "Κρυ&πτογράφηση μηνύματος"
 
-#: editor/kmcomposerwin.cpp:1474
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Encrypt"
 msgstr "Κρυπτογράφηση"
 
-#: editor/kmcomposerwin.cpp:1476
+#: editor/kmcomposerwin.cpp:1475
 #, kde-format
 msgid "&Sign Message"
 msgstr "&Υπογραφή μηνύματος"
 
-#: editor/kmcomposerwin.cpp:1477
+#: editor/kmcomposerwin.cpp:1476
 #, kde-format
 msgid "Sign"
 msgstr "Υπογραφή"
 
-#: editor/kmcomposerwin.cpp:1504
+#: editor/kmcomposerwin.cpp:1503
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "Μορφή &κρυπτογράφησης μηνύματος"
 
-#: editor/kmcomposerwin.cpp:1507
+#: editor/kmcomposerwin.cpp:1506
 #, fuzzy, kde-format
 #| msgid "Select a cryptographic format for this message"
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Επιλέξτε μια μορφή κρυπτογράφησης για αυτό το μήνυμα"
 
-#: editor/kmcomposerwin.cpp:1512
+#: editor/kmcomposerwin.cpp:1511
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Create Follow Up Reminder…"
 msgstr "Αναζήτηση μ&ηνυμάτων..."
 
-#: editor/kmcomposerwin.cpp:1546
+#: editor/kmcomposerwin.cpp:1545
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure KMail…"
 msgstr "Διαμόρφωση του KMail..."
 
-#: editor/kmcomposerwin.cpp:1577 kmmainwin.cpp:222 kmreadermainwin.cpp:538
+#: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:222 kmreadermainwin.cpp:534
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2377,57 +2390,57 @@ msgstr ""
 "<qt>Αυτό θα κρύψει εντελώς τη γραμμή μενού. Μπορείτε να την αποκαλύψετε πάλι "
 "πληκτρολογώντας %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1580 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:225
 #, fuzzy, kde-format
 #| msgid "Hide menu bar"
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Απόκρυψη της γραμμή μενού"
 
-#: editor/kmcomposerwin.cpp:1678 editor/kmcomposerwin.cpp:3992
+#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3991
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Γραμμή: %1 "
 
-#: editor/kmcomposerwin.cpp:1681
+#: editor/kmcomposerwin.cpp:1680
 #, fuzzy, kde-format
 #| msgid " Column: %1 "
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Στήλη: %1 "
 
-#: editor/kmcomposerwin.cpp:1686
+#: editor/kmcomposerwin.cpp:1685
 #, kde-format
 msgid "OVR"
 msgstr "ΕΠΚ"
 
-#: editor/kmcomposerwin.cpp:1686
+#: editor/kmcomposerwin.cpp:1685
 #, kde-format
 msgid "INS"
 msgstr "ΕΙΣ"
 
-#: editor/kmcomposerwin.cpp:1694
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Έλεγχος ορθογραφίας: ενεργός"
 
-#: editor/kmcomposerwin.cpp:1694
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Έλεγχος ορθογραφίας: ανενεργός"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2069
 #, kde-format
 msgid "Re&save as Template"
 msgstr "Νέα απο&θήκευση ως πρότυπο"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2069
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Αποθήκευ&ση ως προσχέδιο"
 
-#: editor/kmcomposerwin.cpp:2071
+#: editor/kmcomposerwin.cpp:2070
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2436,7 +2449,7 @@ msgstr ""
 "Νέα αποθήκευση αυτού του μηνύματος στο φάκελο προτύπων. Έτσι μπορείτε να το "
 "χρησιμοποιήσετε στο μέλλον."
 
-#: editor/kmcomposerwin.cpp:2073
+#: editor/kmcomposerwin.cpp:2072
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2445,92 +2458,92 @@ msgstr ""
 "Αποθήκευση αυτού του μηνύματος στο φάκελο προσχεδίων. Μπορείτε να το "
 "επεξεργαστείτε και να το αποστείλετε αργότερα."
 
-#: editor/kmcomposerwin.cpp:2077
+#: editor/kmcomposerwin.cpp:2076
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr ""
 "Επιθυμείτε την απόρριψη του μηνύματος, ή την αποθήκευσή του για αργότερα;"
 
-#: editor/kmcomposerwin.cpp:2078
+#: editor/kmcomposerwin.cpp:2077
 #, fuzzy, kde-format
 #| msgid "Close Composer"
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Κλείσιμο παραθύρου σύνταξης"
 
-#: editor/kmcomposerwin.cpp:2146
+#: editor/kmcomposerwin.cpp:2145
 #, fuzzy, kde-format
 #| msgid "Autosave Message Failed"
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Η αυτόματη αποθήκευση μηνύματος απέτυχε"
 
-#: editor/kmcomposerwin.cpp:2147
+#: editor/kmcomposerwin.cpp:2146
 #, fuzzy, kde-format
 #| msgid "Sending Message Failed"
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Η αποστολή του μηνύματος απέτυχε"
 
-#: editor/kmcomposerwin.cpp:2333
+#: editor/kmcomposerwin.cpp:2332
 #, fuzzy, kde-format
 #| msgid "Insert File Content"
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Εισαγωγή περιεχομένων αρχείου"
 
-#: editor/kmcomposerwin.cpp:2398
+#: editor/kmcomposerwin.cpp:2397
 #, kde-format
 msgid "Add as &Inline Image"
 msgstr "Προσθήκη ως &εμβόλιμη εικόνα"
 
-#: editor/kmcomposerwin.cpp:2399
+#: editor/kmcomposerwin.cpp:2398
 #, kde-format
 msgid "Add as &Attachment"
 msgstr "Προσθήκη ως &συνημμένο"
 
-#: editor/kmcomposerwin.cpp:2414 editor/kmcomposerwin.cpp:2518
+#: editor/kmcomposerwin.cpp:2413 editor/kmcomposerwin.cpp:2517
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Όνομα του συνημμένου:"
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2419
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2419
 #, fuzzy, kde-format
 #| msgid "Invalid date"
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Μη έγκυρη ημερομηνία"
 
-#: editor/kmcomposerwin.cpp:2471
+#: editor/kmcomposerwin.cpp:2470
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Προσθήκη του URL στο μήνυμα"
 msgstr[1] "Προσθήκη των URL στο μήνυμα"
 
-#: editor/kmcomposerwin.cpp:2472
+#: editor/kmcomposerwin.cpp:2471
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Προσθήκη αρχείου ως συνημμένου"
 msgstr[1] "Προσθήκη σαν συνημμένο"
 
-#: editor/kmcomposerwin.cpp:2518
+#: editor/kmcomposerwin.cpp:2517
 #, kde-format
 msgid "Insert clipboard text as attachment"
 msgstr "Εισαγωγή κειμένου του προχείρου ως συνημμένο"
 
-#: editor/kmcomposerwin.cpp:2610
+#: editor/kmcomposerwin.cpp:2609
 #, kde-format
 msgid "unnamed"
 msgstr "ανώνυμο"
 
-#: editor/kmcomposerwin.cpp:2636
+#: editor/kmcomposerwin.cpp:2635
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2542,14 +2555,14 @@ msgstr ""
 "p><p>Παρακαλώ επιλέξτε το κλειδί για χρήση στη διαμόρφωση της ταυτότητας.</"
 "p></qt>"
 
-#: editor/kmcomposerwin.cpp:2643
+#: editor/kmcomposerwin.cpp:2642
 #, fuzzy, kde-format
 #| msgid "Undefined Signing Key"
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Μη ορισμένο κλειδί υπογραφής"
 
-#: editor/kmcomposerwin.cpp:2802
+#: editor/kmcomposerwin.cpp:2801
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2560,7 +2573,7 @@ msgstr ""
 "θα πρέπει να ορίσετε τη διεύθυνσή για όλες τις ταυτότητες, ώστε να μη "
 "χρειάζεται να την εισάγετε σε κάθε μήνυμα."
 
-#: editor/kmcomposerwin.cpp:2811
+#: editor/kmcomposerwin.cpp:2810
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2569,52 +2582,52 @@ msgstr ""
 "Πρέπει να ορίσετε τουλάχιστον έναν παραλήπτη, είτε στο πεδίο 'Προς:' ή σαν "
 "κοινοποίηση ή σαν κρυφή κοινοποίηση."
 
-#: editor/kmcomposerwin.cpp:2817
+#: editor/kmcomposerwin.cpp:2816
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Δεν καθορίσατε το πεδίο Προς:. Να σταλεί το μήνυμα έτσι κι αλλιώς;"
 
-#: editor/kmcomposerwin.cpp:2819
+#: editor/kmcomposerwin.cpp:2818
 #, fuzzy, kde-format
 #| msgid "No To: specified"
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Δεν έχει καθορισθεί το πεδίο Προς:"
 
-#: editor/kmcomposerwin.cpp:2820 editor/kmcomposerwin.cpp:2834
+#: editor/kmcomposerwin.cpp:2819 editor/kmcomposerwin.cpp:2833
 #, fuzzy, kde-format
 #| msgid "S&end as Is"
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Αποστολή ό&πως είναι"
 
-#: editor/kmcomposerwin.cpp:2821
+#: editor/kmcomposerwin.cpp:2820
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Καθορισμός του θέματος"
 
-#: editor/kmcomposerwin.cpp:2831
+#: editor/kmcomposerwin.cpp:2830
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Δεν καθορίσατε κάποιο θέμα. Να σταλεί το μήνυμα έτσι κι αλλιώς;"
 
-#: editor/kmcomposerwin.cpp:2833
+#: editor/kmcomposerwin.cpp:2832
 #, fuzzy, kde-format
 #| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Δεν έχει καθορισθεί θέμα"
 
-#: editor/kmcomposerwin.cpp:2835
+#: editor/kmcomposerwin.cpp:2834
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Καθορισμός του θέματος"
 
-#: editor/kmcomposerwin.cpp:2880
+#: editor/kmcomposerwin.cpp:2879
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2623,34 +2636,34 @@ msgstr ""
 "Πρέπει να ορίσετε τουλάχιστον έναν παραλήπτη για να μπορέσετε να "
 "κρυπτογραφήσετε ένα προσχέδιο."
 
-#: editor/kmcomposerwin.cpp:3066
+#: editor/kmcomposerwin.cpp:3065
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "About to send email…"
 msgstr "Έτοιμο για αποστολή αλληλογραφίας..."
 
-#: editor/kmcomposerwin.cpp:3067
+#: editor/kmcomposerwin.cpp:3066
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Αποστολή επιβεβαίωσης"
 
-#: editor/kmcomposerwin.cpp:3068
+#: editor/kmcomposerwin.cpp:3067
 #, fuzzy, kde-format
 #| msgid "&Send Now"
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Απο&στολή τώρα"
 
-#: editor/kmcomposerwin.cpp:3069
+#: editor/kmcomposerwin.cpp:3068
 #, fuzzy, kde-format
 #| msgid "Send &Later"
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Αποστολή αρ&γότερα"
 
-#: editor/kmcomposerwin.cpp:3144
+#: editor/kmcomposerwin.cpp:3143
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2659,26 +2672,26 @@ msgstr ""
 "Προσπαθείτε να στείλετε το μήνυμα σε περισσότερους από %1 παραλήπτες. "
 "Αποστολή του μηνύματος;"
 
-#: editor/kmcomposerwin.cpp:3145
+#: editor/kmcomposerwin.cpp:3144
 #, kde-format
 msgid "Too many recipients"
 msgstr "Πάρα πολλοί παραλήπτες"
 
-#: editor/kmcomposerwin.cpp:3146
+#: editor/kmcomposerwin.cpp:3145
 #, fuzzy, kde-format
 #| msgid "&Send as Is"
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Αποστολή όπως είναι"
 
-#: editor/kmcomposerwin.cpp:3147
+#: editor/kmcomposerwin.cpp:3146
 #, fuzzy, kde-format
 #| msgid "&Edit Recipients"
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Επεξεργασία παραληπτών"
 
-#: editor/kmcomposerwin.cpp:3184
+#: editor/kmcomposerwin.cpp:3183
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2687,26 +2700,26 @@ msgstr ""
 "Η απενεργοποίηση της λειτουργίας HTML θα προκαλέσει την απώλεια της "
 "μορφοποίησης του κειμένου. Είστε σίγουρος/η;"
 
-#: editor/kmcomposerwin.cpp:3186
+#: editor/kmcomposerwin.cpp:3185
 #, kde-format
 msgid "Lose the formatting?"
 msgstr "Απώλεια της μορφοποίησης;"
 
-#: editor/kmcomposerwin.cpp:3187
+#: editor/kmcomposerwin.cpp:3186
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Απώλεια μορφοποίησης"
 
-#: editor/kmcomposerwin.cpp:3188
+#: editor/kmcomposerwin.cpp:3187
 #, fuzzy, kde-format
 #| msgid "Add Markup Plain Text"
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Προσθήκη σήμανσης ως απλό κείμενο"
 
-#: editor/kmcomposerwin.cpp:3400
+#: editor/kmcomposerwin.cpp:3399
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2714,7 +2727,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3413
+#: editor/kmcomposerwin.cpp:3412
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2722,7 +2735,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3429
+#: editor/kmcomposerwin.cpp:3428
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2730,7 +2743,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3442
+#: editor/kmcomposerwin.cpp:3441
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2738,27 +2751,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3615
+#: editor/kmcomposerwin.cpp:3614
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Κρυπτογράφηση"
 
-#: editor/kmcomposerwin.cpp:3617
+#: editor/kmcomposerwin.cpp:3616
 #, fuzzy, kde-format
 #| msgid "Do &Not Encrypt"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "&Να μην κρυπτογραφηθεί"
 
-#: editor/kmcomposerwin.cpp:3757
+#: editor/kmcomposerwin.cpp:3756
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3779
+#: editor/kmcomposerwin.cpp:3778
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2766,7 +2779,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3783
+#: editor/kmcomposerwin.cpp:3782
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2774,7 +2787,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3787
+#: editor/kmcomposerwin.cpp:3786
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2782,7 +2795,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3814
+#: editor/kmcomposerwin.cpp:3813
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2791,7 +2804,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3822
+#: editor/kmcomposerwin.cpp:3821
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2801,7 +2814,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3830
+#: editor/kmcomposerwin.cpp:3829
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2809,7 +2822,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3836
+#: editor/kmcomposerwin.cpp:3835
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2817,7 +2830,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3842
+#: editor/kmcomposerwin.cpp:3841
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2825,7 +2838,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3849
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2835,7 +2848,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3857
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2843,7 +2856,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3863
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2853,7 +2866,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3871
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2861,7 +2874,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3877
+#: editor/kmcomposerwin.cpp:3876
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2869,12 +2882,12 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3994
+#: editor/kmcomposerwin.cpp:3993
 #, kde-format
 msgid " Column: %1 "
 msgstr " Στήλη: %1 "
 
-#: editor/kmcomposerwin.cpp:4209
+#: editor/kmcomposerwin.cpp:4208
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "if in your language something like 'key(s)' is not possible please use "
@@ -2899,12 +2912,12 @@ msgstr ""
 "παραλήπτη. Αν δεν υπάρχει κατάλληλο κλειδί στη λίστα, μπορείτε επίσης να "
 "αναζητήσετε <a href=\"%2\">εξωτερικά κλειδιά</a>.</qt>"
 
-#: editor/kmcomposerwin.cpp:4221
+#: editor/kmcomposerwin.cpp:4220
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Επιλογή κλειδιού κρυπτογράφησης"
 
-#: editor/kmcomposerwin.cpp:4306
+#: editor/kmcomposerwin.cpp:4305
 #, fuzzy, kde-format
 #| msgid "Login Information"
 msgid "Plugin Editor Information"
@@ -3686,9 +3699,10 @@ msgstr "Λογαριασμός εξερχομένων:"
 msgid "Attach my vCard to message"
 msgstr "Επισύναψη της κάρτας μου vCard στο μήνυμα"
 
-#: identity/identitydialog.cpp:614 identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:614
 #, fuzzy, kde-format
 #| msgid "Create..."
+msgctxt "@action:button"
 msgid "Create…"
 msgstr "Δημιουργία..."
 
@@ -3728,7 +3742,9 @@ msgid "&Use custom message templates for this identity"
 msgstr "&Χρήση προσαρμοσμένων προτύπων μηνύματος για αυτήν την ταυτότητα"
 
 #: identity/identitydialog.cpp:670
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Copy Global Templates"
+msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Αντιγρα&φή καθολικών προτύπων"
 
@@ -3850,6 +3866,12 @@ msgstr ""
 "Ο προσαρμοσμένος φάκελος προσχεδίων για την ταυτότητα \"%1\" δεν υπάρχει "
 "(πια), και γι' αυτό θα χρησιμοποιηθεί ο προκαθορισμένος φάκελος προσχεδίων."
 
+#: identity/identitydialog.cpp:1163
+#, fuzzy, kde-format
+#| msgid "Create..."
+msgid "Create…"
+msgstr "Δημιουργία..."
+
 #: identity/identitydialog.cpp:1165
 #, fuzzy, kde-format
 #| msgid "Edit"
@@ -3964,12 +3986,6 @@ msgstr[1] "Αφαίρεση ταυτότητας"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Α&φαίρεση"
-
-#: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify..."
-msgid "Modify…"
-msgstr "Τροποποίηση..."
 
 #: identity/identitypage.cpp:275
 #, kde-format
@@ -4712,8 +4728,9 @@ msgid "Sending messages"
 msgstr "Αποστολή μηνυμάτων"
 
 #: kmkernel.cpp:1457
-#, kde-format
-msgid "Initiating sending process..."
+#, fuzzy, kde-format
+#| msgid "Initiating sending process..."
+msgid "Initiating sending process…"
 msgstr "Αρχικοποίηση διαδικασίας αποστολής..."
 
 #: kmkernel.cpp:1536
@@ -5510,7 +5527,7 @@ msgstr "&Παρακολούθηση νήματος"
 msgid "&Ignore Thread"
 msgstr "Παρά&βλεψη νήματος"
 
-#: kmmainwidget.cpp:3272 kmreadermainwin.cpp:490
+#: kmmainwidget.cpp:3272 kmreadermainwin.cpp:486
 #, fuzzy, kde-format
 #| msgid "Save Attachment"
 msgid "Save A&ttachments…"
@@ -6079,28 +6096,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Έναρξη..."
 
-#: kmreadermainwin.cpp:493 util.cpp:149
+#: kmreadermainwin.cpp:489 util.cpp:149
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Μετακίνηση στα απορρίμματα"
 
-#: kmreadermainwin.cpp:494
+#: kmreadermainwin.cpp:490
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Απορρίμματα"
 
-#: kmreadermainwin.cpp:495
+#: kmreadermainwin.cpp:491
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Μετακίνηση μηνύματος στα απορρίμματα"
 
-#: kmreadermainwin.cpp:541
+#: kmreadermainwin.cpp:537
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Απόκρυψη της γραμμή μενού"
 
-#: kmreadermainwin.cpp:624
+#: kmreadermainwin.cpp:620
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Αδυναμία αντιγραφής του αντικειμένου. %1"
@@ -8905,6 +8922,12 @@ msgstr[1] "Απάντηση εκτός γραφείου ενεργή στους 
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Εστίαση"
+
+#~ msgid "Mod&ify..."
+#~ msgstr "&Επεξεργασία..."
+
+#~ msgid "Modify..."
+#~ msgstr "Τροποποίηση..."
 
 #~ msgid "A&dd..."
 #~ msgstr "Προσ&θήκη..."

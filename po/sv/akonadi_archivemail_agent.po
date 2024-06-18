@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2023-08-10 07:30+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -144,15 +144,15 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "stefan.asserhall@gmail.com"
 
-#. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:109
 #, kde-format
-msgid "Add..."
-msgstr "Lägg till..."
+msgid "Add…"
+msgstr ""
 
 #: archivemailwidget.cpp:115
-#, kde-format
-msgid "Open Containing Folder..."
+#, fuzzy, kde-format
+#| msgid "Open Containing Folder..."
+msgid "Open Containing Folder…"
 msgstr "Öppna omgivande korg..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -206,6 +206,12 @@ msgstr ""
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Börja arkivera %1"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Lägg till..."
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38

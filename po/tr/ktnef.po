@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-05-17 01:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -30,8 +30,8 @@ msgstr "necdetyucel@gmail.com"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
-msgstr "Kaydet…"
+msgid "Save…"
+msgstr ""
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -85,9 +85,11 @@ msgid "View"
 msgstr "Görünüm"
 
 #: ktnefmain.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "View With..."
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr "Birlikte Görüntüle…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -97,15 +99,19 @@ msgid "Extract"
 msgstr "Çıkar"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract To..."
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr "Şuraya Çıkar…"
 
 #: ktnefmain.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract All To..."
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr "Tümünü Şuraya Çıkar…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -127,15 +133,19 @@ msgid "Show Message Text"
 msgstr "İleti Metnini Göster"
 
 #: ktnefmain.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Save Message Text As..."
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr "İleti Metnini Farklı Kaydet…"
 
 #: ktnefmain.cpp:160
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Default Folder..."
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr "Öntanımlı Klasör…"
 
 #: ktnefmain.cpp:172
@@ -206,16 +216,20 @@ msgid "&Open With"
 msgstr "&Birlikte Aç"
 
 #: ktnefmain.cpp:570
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Open With"
+#| msgid "&Other..."
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr "Diğ&er…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:menu"
+#| msgid "&Open With"
 msgctxt "@title:menu"
-msgid "&Open With..."
-msgstr "&Birlikte Aç…"
+msgid "&Open With…"
+msgstr "&Birlikte Aç"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -352,3 +366,10 @@ msgstr "Dosya boyutu:"
 #, kde-format
 msgid "MIME type:"
 msgstr "MIME türü:"
+
+#~ msgid "Save..."
+#~ msgstr "Kaydet…"
+
+#~ msgctxt "@title:menu"
+#~ msgid "&Open With..."
+#~ msgstr "&Birlikte Aç…"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2013-09-10 03:52+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -147,15 +147,15 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "sairan@computer.org"
 
-#. i18n: ectx: property (text), widget (QPushButton, addItem)
-#: archivemailwidget.cpp:109 ui/archivemailwidget.ui:31
+#: archivemailwidget.cpp:109
 #, kde-format
-msgid "Add..."
-msgstr "Қосу..."
+msgid "Add…"
+msgstr ""
 
 #: archivemailwidget.cpp:115
-#, kde-format
-msgid "Open Containing Folder..."
+#, fuzzy, kde-format
+#| msgid "Open Containing Folder..."
+msgid "Open Containing Folder…"
 msgstr "Орналасқан қапшығын ашу..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -208,6 +208,12 @@ msgstr ""
 #, kde-format
 msgid "Start to archive %1"
 msgstr "%1 архивтеуі басталды"
+
+#. i18n: ectx: property (text), widget (QPushButton, addItem)
+#: ui/archivemailwidget.ui:31
+#, kde-format
+msgid "Add..."
+msgstr "Қосу..."
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-04-04 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2018-11-09 04:02+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -18,13 +18,15 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 
-#: settingsdialog.cpp:53 settingsdialog.cpp:128
+#: settingsdialog.cpp:53
 #, kde-format
+msgctxt "@action:button"
 msgid "Add"
 msgstr ""
 
-#: settingsdialog.cpp:68 settingsdialog.cpp:132
+#: settingsdialog.cpp:68
 #, kde-format
+msgctxt "@action:button"
 msgid "Modify"
 msgstr ""
 
@@ -42,6 +44,16 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
+msgstr ""
+
+#: settingsdialog.cpp:128
+#, kde-format
+msgid "Add"
+msgstr ""
+
+#: settingsdialog.cpp:132
+#, kde-format
+msgid "Modify"
 msgstr ""
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
@@ -65,12 +77,13 @@ msgstr ""
 msgid "Name:"
 msgstr ""
 
-#: unifiedmailboxeditor.cpp:102
+#: unifiedmailboxeditor.cpp:103
 #, kde-format
+msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr ""
 
-#: unifiedmailboxeditor.cpp:103
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
 msgstr ""

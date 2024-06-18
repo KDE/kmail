@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2024-05-28 06:01+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -71,7 +71,9 @@ msgid "Finish"
 msgstr "დასრულება"
 
 #: refreshsettingscleanuppage.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clean"
+msgctxt "@action:button"
 msgid "Clean"
 msgstr "გასუფთავება"
 

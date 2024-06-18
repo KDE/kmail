@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2013-09-30 02:24+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -29,8 +29,8 @@ msgstr "sairan@computer.org"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
-msgstr "Сақтау"
+msgid "Save…"
+msgstr ""
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -84,9 +84,11 @@ msgid "View"
 msgstr "Көру"
 
 #: ktnefmain.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "View With..."
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr "Мынамен көру..."
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -96,15 +98,19 @@ msgid "Extract"
 msgstr "Тарқату"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract To..."
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr "Қайда тарқату..."
 
 #: ktnefmain.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract All To..."
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr "Мынаған бүкілін тарқату..."
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -126,15 +132,19 @@ msgid "Show Message Text"
 msgstr "Хабарлама мәтінін көрсету"
 
 #: ktnefmain.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Save Message Text As..."
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr "Хабарлама мәтінін былай сақтау..."
 
 #: ktnefmain.cpp:160
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Default Folder..."
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr "Әдетті қапшық..."
 
 #: ktnefmain.cpp:172
@@ -206,7 +216,7 @@ msgstr ""
 #: ktnefmain.cpp:570
 #, kde-format
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr ""
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
@@ -214,7 +224,7 @@ msgstr ""
 #| msgctxt "@action:inmenu"
 #| msgid "View With..."
 msgctxt "@title:menu"
-msgid "&Open With..."
+msgid "&Open With…"
 msgstr "Мынамен көру..."
 
 #. i18n: ectx: Menu (file)
@@ -357,6 +367,9 @@ msgstr "Файл өлшемі:"
 #| msgid "Mime type:"
 msgid "MIME type:"
 msgstr "MIME түрі:"
+
+#~ msgid "Save..."
+#~ msgstr "Сақтау"
 
 #~ msgctxt "@info:status"
 #~ msgid "100 attachments found"

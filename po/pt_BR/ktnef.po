@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2021-05-15 14:05-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -32,8 +32,8 @@ msgstr "marcus.gama@gmail.com, alvarenga@kde.org"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
-msgstr "Salvar..."
+msgid "Save…"
+msgstr ""
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -89,9 +89,11 @@ msgid "View"
 msgstr "Exibir"
 
 #: ktnefmain.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "View With..."
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr "Exibir com..."
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -101,15 +103,19 @@ msgid "Extract"
 msgstr "Extrair"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract To..."
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr "Extrair para..."
 
 #: ktnefmain.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract All To..."
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr "Extrair tudo para..."
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -131,15 +137,19 @@ msgid "Show Message Text"
 msgstr "Mostrar o texto da mensagem"
 
 #: ktnefmain.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Save Message Text As..."
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr "Salvar o texto da mensagem como..."
 
 #: ktnefmain.cpp:160
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Default Folder..."
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr "Pasta padrão..."
 
 #: ktnefmain.cpp:172
@@ -214,16 +224,20 @@ msgid "&Open With"
 msgstr "&Abrir com"
 
 #: ktnefmain.cpp:570
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Open With"
+#| msgid "&Other..."
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr "&Outro..."
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:menu"
+#| msgid "&Open With"
 msgctxt "@title:menu"
-msgid "&Open With..."
-msgstr "&Abrir com..."
+msgid "&Open With…"
+msgstr "&Abrir com"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -362,3 +376,10 @@ msgstr "Tamanho do arquivo:"
 #, kde-format
 msgid "MIME type:"
 msgstr "Tipo MIME:"
+
+#~ msgid "Save..."
+#~ msgstr "Salvar..."
+
+#~ msgctxt "@title:menu"
+#~ msgid "&Open With..."
+#~ msgstr "&Abrir com..."

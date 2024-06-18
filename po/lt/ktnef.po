@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2012-04-13 04:27+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -30,7 +30,7 @@ msgstr ""
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
+msgid "Save…"
 msgstr ""
 
 #: attachpropertydialog.cpp:94
@@ -85,7 +85,7 @@ msgstr ""
 #: ktnefmain.cpp:115
 #, kde-format
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr ""
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -97,13 +97,13 @@ msgstr ""
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
 #, kde-format
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr ""
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr ""
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -127,13 +127,13 @@ msgstr ""
 #: ktnefmain.cpp:147
 #, kde-format
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr ""
 
 #: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr ""
 
 #: ktnefmain.cpp:172
@@ -207,13 +207,13 @@ msgstr ""
 #: ktnefmain.cpp:570
 #, kde-format
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr ""
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format
 msgctxt "@title:menu"
-msgid "&Open With..."
+msgid "&Open With…"
 msgstr ""
 
 #. i18n: ectx: Menu (file)

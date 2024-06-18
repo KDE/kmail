@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2021-07-20 17:52+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -28,8 +28,8 @@ msgstr "wizzardsk@gmail.com"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
-msgstr "Uložiť..."
+msgid "Save…"
+msgstr ""
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -81,9 +81,11 @@ msgid "View"
 msgstr "Zobraziť"
 
 #: ktnefmain.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "View With..."
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr "Zobraziť pomocou..."
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -93,15 +95,19 @@ msgid "Extract"
 msgstr "Rozbaliť"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract To..."
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr "Rozbaliť do..."
 
 #: ktnefmain.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract All To..."
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr "Extrahovať všetko do..."
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -123,15 +129,19 @@ msgid "Show Message Text"
 msgstr "Zobraziť text správy"
 
 #: ktnefmain.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Save Message Text As..."
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr "Uložiť text správy ako..."
 
 #: ktnefmain.cpp:160
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Default Folder..."
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr "Predvolený priečinok..."
 
 #: ktnefmain.cpp:172
@@ -203,16 +213,20 @@ msgid "&Open With"
 msgstr "&Otvoriť pomocou"
 
 #: ktnefmain.cpp:570
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Open With"
+#| msgid "&Other..."
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr "&Iné..."
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:menu"
+#| msgid "&Open With"
 msgctxt "@title:menu"
-msgid "&Open With..."
-msgstr "&Otvoriť pomocou..."
+msgid "&Open With…"
+msgstr "&Otvoriť pomocou"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -351,6 +365,13 @@ msgstr "Veľkosť súboru:"
 #, kde-format
 msgid "MIME type:"
 msgstr "Typ MIME:"
+
+#~ msgid "Save..."
+#~ msgstr "Uložiť..."
+
+#~ msgctxt "@title:menu"
+#~ msgid "&Open With..."
+#~ msgstr "&Otvoriť pomocou..."
 
 #~ msgctxt "@info:status"
 #~ msgid "100 attachments found"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2022-10-23 06:49+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -72,7 +72,9 @@ msgid "Finish"
 msgstr "Selesai"
 
 #: refreshsettingscleanuppage.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clean"
+msgctxt "@action:button"
 msgid "Clean"
 msgstr "Bersihkan"
 

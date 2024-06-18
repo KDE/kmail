@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2024-06-18 00:40+0000\n"
 "PO-Revision-Date: 2021-05-16 22:24+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -29,8 +29,8 @@ msgstr "kde@peremen.name"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
-msgid "Save..."
-msgstr "저장..."
+msgid "Save…"
+msgstr ""
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -82,9 +82,11 @@ msgid "View"
 msgstr "보기"
 
 #: ktnefmain.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "View With..."
 msgctxt "@action:inmenu"
-msgid "View With..."
+msgid "View With…"
 msgstr "다음으로 보기..."
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
@@ -94,15 +96,19 @@ msgid "Extract"
 msgstr "압축 풀기"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract To..."
 msgctxt "@action:inmenu"
-msgid "Extract To..."
+msgid "Extract To…"
 msgstr "다음에 압축 풀기..."
 
 #: ktnefmain.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Extract All To..."
 msgctxt "@action:inmenu"
-msgid "Extract All To..."
+msgid "Extract All To…"
 msgstr "다음에 모두 압축 풀기..."
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
@@ -124,15 +130,19 @@ msgid "Show Message Text"
 msgstr "메시지 텍스트 표시"
 
 #: ktnefmain.cpp:147
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Save Message Text As..."
 msgctxt "@action:inmenu"
-msgid "Save Message Text As..."
+msgid "Save Message Text As…"
 msgstr "메시지 텍스트 저장..."
 
 #: ktnefmain.cpp:160
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu"
+#| msgid "Default Folder..."
 msgctxt "@action:inmenu"
-msgid "Default Folder..."
+msgid "Default Folder…"
 msgstr "기본 폴더..."
 
 #: ktnefmain.cpp:172
@@ -202,16 +212,20 @@ msgid "&Open With"
 msgstr "다음으로 열기(&O)"
 
 #: ktnefmain.cpp:570
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:inmenu Open With"
+#| msgid "&Other..."
 msgctxt "@action:inmenu Open With"
-msgid "&Other..."
+msgid "&Other…"
 msgstr "기타(&O)..."
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:menu"
+#| msgid "&Open With"
 msgctxt "@title:menu"
-msgid "&Open With..."
-msgstr "다음으로 열기(&O)..."
+msgid "&Open With…"
+msgstr "다음으로 열기(&O)"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -350,6 +364,13 @@ msgstr "파일 크기:"
 #, kde-format
 msgid "MIME type:"
 msgstr "MIME 형식:"
+
+#~ msgid "Save..."
+#~ msgstr "저장..."
+
+#~ msgctxt "@title:menu"
+#~ msgid "&Open With..."
+#~ msgstr "다음으로 열기(&O)..."
 
 #~ msgctxt "@info:status"
 #~ msgid "100 attachments found"
