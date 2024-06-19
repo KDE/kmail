@@ -393,8 +393,7 @@ msgid "Folder holds a mailing list"
 msgstr "文件夹用于存放邮件列表"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "自动检测"
@@ -415,8 +414,7 @@ msgid "Preferred handler:"
 msgstr "首选的处理器："
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "调用处理器"
@@ -1272,11 +1270,10 @@ msgid ""
 msgstr "自动补全记忆邮箱地址数量的上限"
 
 #: configuredialog/configurecomposerpage.cpp:456
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr "配置补全"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:465
 #, kde-format
@@ -1331,10 +1328,9 @@ msgstr "删除(&M)"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:1054
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "修改…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
@@ -1423,8 +1419,7 @@ msgid "Ne&w"
 msgstr "新建(&W)"
 
 #: configuredialog/configurecomposerpage.cpp:833
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "删除(&M)"
@@ -3290,11 +3285,10 @@ msgid "Attach my vCard to message"
 msgstr "将我的 vCard 附加到消息"
 
 #: identity/identitydialog.cpp:614
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
-msgstr "创建…"
+msgstr ""
 
 #: identity/identitydialog.cpp:618
 #, kde-format
@@ -3327,8 +3321,7 @@ msgid "&Use custom message templates for this identity"
 msgstr "为此身份使用自定义消息模板(&U)"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "复制全局模板(&C)"
@@ -4199,10 +4192,9 @@ msgid "Sending messages"
 msgstr "发送消息中"
 
 #: kmkernel.cpp:1457
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
-msgstr "正在初始化发送进程..."
+msgstr ""
 
 #: kmkernel.cpp:1536
 #, kde-format
@@ -7904,9 +7896,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Mod&ify..."
-#~ msgstr "修改(&I)..."
-
-#~ msgid "Modify..."
-#~ msgstr "修改..."

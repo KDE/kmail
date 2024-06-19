@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-28 06:00+0200\n"
+"PO-Revision-Date: 2024-06-18 05:58+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -142,13 +142,12 @@ msgstr "Temuri.doghonadze@gmail.com"
 #: archivemailwidget.cpp:109
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "დამატება..."
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder..."
+#, kde-format
 msgid "Open Containing Folder…"
-msgstr "შემცველი საქაღალდის გახსნა..."
+msgstr "შემცველი საქაღალდის გახსნა…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45

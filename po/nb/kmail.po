@@ -8238,9 +8238,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Mod&ify..."
-#~ msgstr "En&dre …"
-
-#~ msgid "Modify..."
-#~ msgstr "Endre …"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-16 12:23+0200\n"
+"PO-Revision-Date: 2024-06-18 23:01+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #: sendlaterconfiguredialog.cpp:33
 #, kde-format
@@ -88,10 +88,9 @@ msgid "Message Id"
 msgstr "Id. de mensaje"
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
-msgstr "No hay mensajes esperando..."
+msgstr "No hay mensajes en espera..."
 
 #: sendlaterconfigurewidget.cpp:94
 #, kde-format
@@ -204,8 +203,7 @@ msgstr "Volver a enviar"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
 msgstr "Modificar..."
 

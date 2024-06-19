@@ -87,10 +87,9 @@ msgid "Message Id"
 msgstr "消息编号"
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
-msgstr "没有等待发送的消息..."
+msgstr ""
 
 #: sendlaterconfigurewidget.cpp:94
 #, kde-format
@@ -201,7 +200,6 @@ msgstr "重新发送"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "修改..."
+msgstr ""

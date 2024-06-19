@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-17 01:26+0300\n"
+"PO-Revision-Date: 2024-06-18 12:56+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -21,17 +21,17 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Necdet Yücel"
+msgstr "Necdet Yücel, Emir SARI"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "necdetyucel@gmail.com"
+msgstr "necdetyucel@gmail.com, emir_sari@icloud.com"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr ""
+msgstr "Kaydet…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -85,9 +85,7 @@ msgid "View"
 msgstr "Görünüm"
 
 #: ktnefmain.cpp:115
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "View With..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Birlikte Görüntüle…"
@@ -99,17 +97,13 @@ msgid "Extract"
 msgstr "Çıkar"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
 msgstr "Şuraya Çıkar…"
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract All To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Tümünü Şuraya Çıkar…"
@@ -133,17 +127,13 @@ msgid "Show Message Text"
 msgstr "İleti Metnini Göster"
 
 #: ktnefmain.cpp:147
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Save Message Text As..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
 msgstr "İleti Metnini Farklı Kaydet…"
 
 #: ktnefmain.cpp:160
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Default Folder..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
 msgstr "Öntanımlı Klasör…"
@@ -216,20 +206,16 @@ msgid "&Open With"
 msgstr "&Birlikte Aç"
 
 #: ktnefmain.cpp:570
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
+#, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "Diğ&er…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "&Birlikte Aç"
+msgstr "&Birlikte Aç…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6

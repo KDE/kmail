@@ -24,11 +24,10 @@ msgid "Filter Log Viewer"
 msgstr "过滤器日志查看器"
 
 #: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr "分享..."
+msgstr ""
 
 #: filterlogdialog.cpp:85
 #, kde-format

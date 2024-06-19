@@ -7941,9 +7941,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Mod&ify..."
-#~ msgstr "&Rievdat …"
-
-#~ msgid "Modify..."
-#~ msgstr "Rievdat …"

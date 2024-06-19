@@ -357,10 +357,3 @@ msgstr "Filstorleik:"
 #, kde-format
 msgid "MIME type:"
 msgstr "MIME-type:"
-
-#~ msgid "Save..."
-#~ msgstr "Lagra …"
-
-#~ msgctxt "@title:menu"
-#~ msgid "&Open With..."
-#~ msgstr "O&pna med …"

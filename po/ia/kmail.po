@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2020, 2021, 2022, 2023 g.sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2020, 2021, 2022, 2023, 2024 g.sora <g.sora@tiscali.it>
 # giovanni <g.sora@tiscali.it>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-06-07 09:53+0200\n"
+"PO-Revision-Date: 2024-06-18 14:58+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -395,8 +395,7 @@ msgid "Folder holds a mailing list"
 msgstr "Dossier contine un lista de e-posta"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Releva automaticamente"
@@ -417,8 +416,7 @@ msgid "Preferred handler:"
 msgstr "Gerente preferite:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Invoca gerente"
@@ -1306,8 +1304,7 @@ msgstr ""
 "completion"
 
 #: configuredialog/configurecomposerpage.cpp:456
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Configura completamento..."
@@ -1366,10 +1363,9 @@ msgstr "Re&move"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:1054
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "Modifica…"
+msgstr "Mod&ifica..."
 
 #: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
@@ -1458,8 +1454,7 @@ msgid "Ne&w"
 msgstr "No&ve"
 
 #: configuredialog/configurecomposerpage.cpp:833
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Re&move"
@@ -3445,8 +3440,7 @@ msgid "Attach my vCard to message"
 msgstr "Attacha mi vCard a message"
 
 #: identity/identitydialog.cpp:614
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Crea…"
@@ -3484,8 +3478,7 @@ msgid "&Use custom message templates for this identity"
 msgstr "&Usa patronos de message personalisate pro iste identitate"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Copia patronos global"
@@ -4388,10 +4381,9 @@ msgid "Sending messages"
 msgstr "Inviante messages"
 
 #: kmkernel.cpp:1457
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
-msgstr "Il es initiante a inviar processo..."
+msgstr "Il es initiante processo de inviar..."
 
 #: kmkernel.cpp:1536
 #, kde-format

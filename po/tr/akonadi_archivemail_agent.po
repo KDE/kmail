@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-29 12:57+0300\n"
+"PO-Revision-Date: 2024-06-18 12:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -141,13 +141,12 @@ msgstr "emir_sari@icloud.com"
 #: archivemailwidget.cpp:109
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "Ekle…"
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder..."
+#, kde-format
 msgid "Open Containing Folder…"
-msgstr "İçeren Klasörü Aç..."
+msgstr "İçeren Klasörü Aç…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45

@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-06-08 13:01+0300\n"
+"PO-Revision-Date: 2024-06-18 12:56+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -410,8 +410,7 @@ msgid "Folder holds a mailing list"
 msgstr "Bu klasör bir e-posta listesi tutuyor"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Kendiliğinden Algıla"
@@ -432,8 +431,7 @@ msgid "Preferred handler:"
 msgstr "Tercih edilen işleyici:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "İşleyiciyi Çağır"
@@ -1304,8 +1302,7 @@ msgstr ""
 "sayısı"
 
 #: configuredialog/configurecomposerpage.cpp:456
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Tamamlamayı Yapılandır…"
@@ -1364,10 +1361,9 @@ msgstr "&Kaldır"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:1054
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "Değiştir…"
+msgstr "Değ&iştir…"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
@@ -1456,8 +1452,7 @@ msgid "Ne&w"
 msgstr "Ye&ni"
 
 #: configuredialog/configurecomposerpage.cpp:833
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Kaldır"
@@ -3419,8 +3414,7 @@ msgid "Attach my vCard to message"
 msgstr "İletiye vCard’ımı iliştir"
 
 #: identity/identitydialog.cpp:614
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Oluştur…"
@@ -3458,11 +3452,10 @@ msgid "&Use custom message templates for this identity"
 msgstr "Bu kimlik için ö&zel ileti şablonları kullan"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
-msgstr "Genel Şablonları Ko&pyala"
+msgstr "Global Şablonları Ko&pyala"
 
 #: identity/identitydialog.cpp:677
 #, kde-format
@@ -4364,8 +4357,7 @@ msgid "Sending messages"
 msgstr "İletiler gönderiliyor"
 
 #: kmkernel.cpp:1457
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
 msgstr "Gönderme işlemi başlatılıyor…"
 
