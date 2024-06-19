@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-06-07 20:03+0200\n"
+"PO-Revision-Date: 2024-06-18 03:56+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -421,7 +421,7 @@ msgstr "Manipulador preferido:"
 #: collectionpage/collectionmailinglistpage.cpp:94
 #, kde-format
 msgid "Invoke Handler"
-msgstr "Invocar el manipulador"
+msgstr "Invocar el manejador"
 
 #: collectionpage/collectionmailinglistpage.cpp:101
 #, kde-format
