@@ -3,46 +3,9 @@
   <id>org.kde.kmail2.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
-  <developer_name>The KDE Community</developer_name>
-  <developer_name xml:lang="ar">مجتمع كِيدِي</developer_name>
-  <developer_name xml:lang="ast">La comunidá KDE</developer_name>
-  <developer_name xml:lang="az">KDE Cəmiyyəti</developer_name>
-  <developer_name xml:lang="bg">KDE Общност</developer_name>
-  <developer_name xml:lang="ca">La comunitat KDE</developer_name>
-  <developer_name xml:lang="ca-valencia">La comunitat KDE</developer_name>
-  <developer_name xml:lang="cs">Komunita KDE</developer_name>
-  <developer_name xml:lang="da">KDE-fællesskabet</developer_name>
-  <developer_name xml:lang="de">Die KDE-Gemeinschaft</developer_name>
-  <developer_name xml:lang="el">Η Κοινότητα του KDE</developer_name>
-  <developer_name xml:lang="en-GB">The KDE Community</developer_name>
-  <developer_name xml:lang="eo">La KDE-Komunumo</developer_name>
-  <developer_name xml:lang="es">La comunidad KDE</developer_name>
-  <developer_name xml:lang="et">KDE kogukond</developer_name>
-  <developer_name xml:lang="eu">KDE komunitatea</developer_name>
-  <developer_name xml:lang="fi">KDE-yhteisö</developer_name>
-  <developer_name xml:lang="fr">La communauté KDE</developer_name>
-  <developer_name xml:lang="gl">A comunidade de KDE</developer_name>
-  <developer_name xml:lang="he">קהילת KDE</developer_name>
-  <developer_name xml:lang="hu">A KDE Közösség</developer_name>
-  <developer_name xml:lang="ia">Le communitate de KDE</developer_name>
-  <developer_name xml:lang="id">Komunitas KDE</developer_name>
-  <developer_name xml:lang="it">La comunità KDE</developer_name>
-  <developer_name xml:lang="ka">KDE-ის საზოგადოება</developer_name>
-  <developer_name xml:lang="ko">KDE 커뮤니티</developer_name>
-  <developer_name xml:lang="lv">KDE kopiena</developer_name>
-  <developer_name xml:lang="nl">De KDE gemeenschap</developer_name>
-  <developer_name xml:lang="pl">Społeczność KDE</developer_name>
-  <developer_name xml:lang="pt">A Comunidade do KDE</developer_name>
-  <developer_name xml:lang="pt-BR">A comunidade KDE</developer_name>
-  <developer_name xml:lang="ru">Сообщество KDE</developer_name>
-  <developer_name xml:lang="sk">KDE Komunita</developer_name>
-  <developer_name xml:lang="sl">Skupnost KDE</developer_name>
-  <developer_name xml:lang="sv">KDE-gemenskapen</developer_name>
-  <developer_name xml:lang="tr">KDE Topluluğu</developer_name>
-  <developer_name xml:lang="uk">Спільнота KDE</developer_name>
-  <developer_name xml:lang="x-test">xxThe KDE Communityxx</developer_name>
-  <developer_name xml:lang="zh-CN">KDE 社区</developer_name>
-  <developer_name xml:lang="zh-TW">KDE 社群</developer_name>
+  <developer id="org.kde">
+    <name translate="no">KDE</name>
+  </developer>
   <name>KMail</name>
   <name xml:lang="ar">بريدك</name>
   <name xml:lang="ast">KMail</name>
