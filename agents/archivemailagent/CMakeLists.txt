@@ -15,11 +15,11 @@ target_sources(archivemailagent PRIVATE
     archivemailinfo.h
     job/archivejob.h
     archivemailagentutil.h
-    )
+)
 
 kconfig_add_kcfg_files(archivemailagent
     settings/archivemailagentsettings.kcfgc
-    )
+)
 
 
 qt_add_dbus_adaptor(libarchivemailagent_SRCS org.freedesktop.Akonadi.ArchiveMailAgent.xml archivemailagent.h ArchiveMailAgent)
@@ -29,13 +29,13 @@ ecm_qt_declare_logging_category(archivemailagent HEADER archivemailagent_debug.h
         DESCRIPTION "kmail (archivemailagent)"
         OLD_CATEGORY_NAMES log_archivemailagent
         EXPORT KMAIL
-    )
+)
 
 
-ki18n_wrap_ui(archivemailagent ui/archivemailwidget.ui )
+ki18n_wrap_ui(archivemailagent ui/archivemailwidget.ui)
 
 pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
-#if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+#if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(archivemailagent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(archivemailagent
@@ -62,21 +62,21 @@ target_link_libraries(akonadi_archivemail_agent
     KF6::Notifications
     KPim6::MailCommon
     KF6::I18n
-    )
+)
 
-if( APPLE )
+if(APPLE)
     set_target_properties(akonadi_archivemail_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
     set_target_properties(akonadi_archivemail_agent PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.archivemail")
     set_target_properties(akonadi_archivemail_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Email Archiver")
-endif ()
+endif()
 
-install(TARGETS akonadi_archivemail_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS akonadi_archivemail_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES archivemailagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
-install(FILES akonadi_archivemail_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
+install(FILES akonadi_archivemail_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 
-if (BUILD_TESTING)
+if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 
@@ -114,7 +114,7 @@ target_link_libraries(archivemailagentconfig
     KF6::XmlGui
     KF6::I18n
 )
-#if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+#if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(archivemailagentconfig PROPERTIES UNITY_BUILD ON)
 #endif()
 

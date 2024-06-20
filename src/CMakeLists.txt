@@ -11,7 +11,7 @@ add_custom_target(kmail_xml ALL
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
-if (TARGET KF6::UserFeedbackWidgets)
+if(TARGET KF6::UserFeedbackWidgets)
     add_definitions(-DWITH_KUSERFEEDBACK)
 endif()
 
@@ -44,7 +44,7 @@ ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_activities
 
 
 add_library(kmailprivate)
-if (TARGET KF6::UserFeedbackWidgets)
+if(TARGET KF6::UserFeedbackWidgets)
     target_sources(kmailprivate PRIVATE
         userfeedback/accountinfosource.cpp
         userfeedback/accountinfosource.h
@@ -52,7 +52,7 @@ if (TARGET KF6::UserFeedbackWidgets)
         userfeedback/plugininfosource.h
         userfeedback/kmailuserfeedbackprovider.cpp
         userfeedback/kmailuserfeedbackprovider.h
-    )
+)
 endif()
 
 target_sources(kmailprivate PRIVATE
@@ -337,7 +337,7 @@ target_sources(kmailprivate PRIVATE
     historyclosedreader/historyclosedreadermenu.cpp
 )
 
-if (TARGET Plasma::Activities)
+if(TARGET Plasma::Activities)
     target_sources(kmailprivate PRIVATE
         activities/activitiesmanager.h
         activities/activitiesmanager.cpp
@@ -353,8 +353,8 @@ if (TARGET Plasma::Activities)
 
 	activities/accountactivities.h
 	activities/accountactivities.cpp
-    )
-    if (BUILD_TESTING)
+)
+    if(BUILD_TESTING)
        add_subdirectory(activities/autotests)
     endif()
 endif()
@@ -430,7 +430,7 @@ kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
 )
 
 set(kmail_userfeedback_LIB)
-if (TARGET KF6::UserFeedbackWidgets)
+if(TARGET KF6::UserFeedbackWidgets)
     set(kmail_userfeedback_LIB KF6::UserFeedbackWidgets)
 endif()
 
@@ -438,7 +438,7 @@ target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})
 
 
 pim_target_precompile_headers(kmailprivate PUBLIC ../kmail_pch.h)
-if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
 endif()
 
@@ -489,12 +489,12 @@ target_link_libraries(kmailprivate
     KF6::StatusNotifierItem
     ${kmail_userfeedback_LIB}
 )
-if (TARGET KF6::TextEditTextToSpeech)
+if(TARGET KF6::TextEditTextToSpeech)
     target_link_libraries(kmailprivate
         PRIVATE KF6::TextEditTextToSpeech)
 endif()
 
-if (TARGET Plasma::Activities)
+if(TARGET Plasma::Activities)
     target_link_libraries(kmailprivate PRIVATE Plasma::Activities)
 endif()
 
@@ -602,7 +602,7 @@ install(FILES
 )
 install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
-install( FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
+install(FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 install(TARGETS
     kmailpart
     DESTINATION ${KDE_INSTALL_PLUGINDIR}

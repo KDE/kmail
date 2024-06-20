@@ -19,12 +19,12 @@ target_sources(ktnef PRIVATE
     messagepropertydialog.h
     qwmf.h
     ktnef.qrc
-    )
+)
 
 ecm_qt_declare_logging_category(ktnef HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_LOG CATEGORY_NAME org.kde.pim.ktnefapps
 	DESCRIPTION "kmail (ktnef apps)"
         EXPORT KMAIL
-    )
+)
 
 
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/hicolor/*-apps-ktnef.png")
@@ -32,7 +32,7 @@ ecm_add_app_icon(ktnef ICONS ${ICONS_SRCS})
 
 ki18n_wrap_ui(ktnef ui/attachpropertywidgetbase.ui)
 
-if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(ktnef PROPERTIES UNITY_BUILD ON)
 endif()
 

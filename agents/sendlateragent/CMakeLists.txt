@@ -12,7 +12,7 @@ ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debu
         DESCRIPTION "kmail (sendlateragent)"
         OLD_CATEGORY_NAMES log_sendlateragent
         EXPORT KMAIL
-    )
+)
 
 
 set(libsendlateragent_SRCS
@@ -29,12 +29,12 @@ set(libsendlateragent_SRCS
     sendlaterremovemessagejob.h
     sendlaterutil.h
     ${sendlater_common_SRCS}
-    )
+)
 
 set(sendlateragent_SRCS
     sendlateragent.cpp
     sendlateragent.h
-    )
+)
 
 qt_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
 
@@ -45,7 +45,7 @@ add_library(sendlateragent STATIC ${libsendlateragent_SRCS})
 set_property(TARGET sendlateragent PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 pim_target_precompile_headers(sendlateragent PUBLIC ../../kmail_pch.h)
-#if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+#if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
 #endif()
 
@@ -62,24 +62,24 @@ target_link_libraries(sendlateragent
     KF6::XmlGui
     KF6::Notifications
     KF6::I18n
-    )
+)
 
 
 add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
 target_link_libraries(akonadi_sendlater_agent
     sendlateragent
     KPim6::AkonadiAgentBase
-    )
+)
 
-if( APPLE )
+if(APPLE)
     set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
     set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Send Later")
-endif ()
+endif()
 
-install(TARGETS akonadi_sendlater_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS akonadi_sendlater_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES sendlateragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
-install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
+install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 #kcoreaddons_add_plugin(sendlateragentconfig
 #    SOURCES ${sendlateragentconfig_SRCS}

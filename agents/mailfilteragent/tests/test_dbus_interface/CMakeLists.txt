@@ -16,7 +16,7 @@ target_link_libraries(serverdbus_gui
     Qt::Gui
     Qt::Widgets
     Qt::DBus
-    )
+)
 
 
 #client
@@ -33,4 +33,4 @@ target_link_libraries(clientdbus_gui
     Qt::Gui
     Qt::Widgets
     Qt::DBus
-    )
+)

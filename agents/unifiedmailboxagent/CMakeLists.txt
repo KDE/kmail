@@ -11,7 +11,7 @@ add_executable(akonadi_unifiedmailbox_agent)
 ecm_qt_declare_logging_category(akonadi_unifiedmailbox_agent HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent
         DESCRIPTION "kmail (unifiedmailboxagent)"
         EXPORT KMAIL
-    )
+)
 
 kconfig_add_kcfg_files(akonadi_unifiedmailbox_agent
     settings.kcfgc
@@ -34,7 +34,7 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
     ${unifiedmailbox_agent_SRCS}
 )
 
-#if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+#if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
@@ -52,13 +52,13 @@ target_link_libraries(akonadi_unifiedmailbox_agent
     KF6::DBusAddons
 )
 
-if( APPLE )
+if(APPLE)
     set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
     set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.KF6::UnifiedMailbox")
     set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE PIM Unified Mailbox")
-endif ()
+endif()
 
-install(TARGETS akonadi_unifiedmailbox_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS} )
+install(TARGETS akonadi_unifiedmailbox_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(FILES unifiedmailboxagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 

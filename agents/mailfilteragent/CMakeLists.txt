@@ -15,7 +15,7 @@ target_sources(mailfilteragentprivate PRIVATE
     mailfilteragent_private_export.h
 )
 
-if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(mailfilteragentprivate PROPERTIES UNITY_BUILD ON)
 endif()
 
@@ -47,7 +47,7 @@ target_sources(akonadi_mailfilter_agent PRIVATE
     filtermanager.h
     mailfilteragent.h
     ${akonadi_mailfilter_agent_SRCS}
-    )
+)
 
 
 
@@ -55,18 +55,18 @@ ecm_qt_declare_logging_category(akonadi_mailfilter_agent HEADER mailfilteragent_
         DESCRIPTION "kmail (mailfilter agent)"
         OLD_CATEGORY_NAMES log_mailfilteragent
         EXPORT KMAIL
-    )
+)
 
 
-if (COMPILE_WITH_UNITY_CMAKE_SUPPORT)
+if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(akonadi_mailfilter_agent PROPERTIES UNITY_BUILD ON)
 endif()
 
-if( APPLE )
+if(APPLE)
     set_target_properties(akonadi_mailfilter_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
     set_target_properties(akonadi_mailfilter_agent PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.mailfilter")
     set_target_properties(akonadi_mailfilter_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Email Filter")
-endif ()
+endif()
 
 
 target_link_libraries(akonadi_mailfilter_agent
@@ -83,10 +83,10 @@ target_link_libraries(akonadi_mailfilter_agent
     KF6::WindowSystem
     KF6::I18n
     mailfilteragentprivate
-    )
+)
 
 install(TARGETS akonadi_mailfilter_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES mailfilteragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
-install(FILES akonadi_mailfilter_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR} )
+install(FILES akonadi_mailfilter_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 add_subdirectory(tests)

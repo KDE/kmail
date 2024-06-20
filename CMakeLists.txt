@@ -146,7 +146,7 @@ set_package_properties(KF6TextEditTextToSpeech PROPERTIES DESCRIPTION
     "Add support for text to speech"
     TYPE OPTIONAL
 )
-if (TARGET KF6::TextEditTextToSpeech)
+if(TARGET KF6::TextEditTextToSpeech)
     add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
 endif()
 find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
@@ -158,7 +158,7 @@ set_package_properties(Qt6Keychain PROPERTIES
     URL "https://github.com/frankosterfeld/qtkeychain"
     TYPE REQUIRED)
 
-configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h )
+configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h)
 
 include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
 configure_file(kmail-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
@@ -175,7 +175,7 @@ set_package_properties(KF6UserFeedback PROPERTIES DESCRIPTION "User Feedback lib
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
 
 set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
-if (USE_UNITY_CMAKE_SUPPORT)
+if(USE_UNITY_CMAKE_SUPPORT)
     set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
 
@@ -183,33 +183,33 @@ endif()
 option(USE_PRECOMPILED_HEADERS "Use precompiled headers" OFF) # Set to OFF when using clazy and such
 set(COMPILE_WITH_CMAKE_PCH_SUPPORT OFF)
 macro(pim_target_precompile_headers)
-    if (USE_PRECOMPILED_HEADERS)
+    if(USE_PRECOMPILED_HEADERS)
         set(COMPILE_WITH_CMAKE_PCH_SUPPORT ON)
-        if (COMPILE_WITH_CMAKE_PCH_SUPPORT)
+        if(COMPILE_WITH_CMAKE_PCH_SUPPORT)
             target_precompile_headers(${ARGV})
         endif()
     endif()
 endmacro()
 
 option(OPTION_USE_PLASMA_ACTIVITIES "Activate plasma activities (experimental)" OFF)
-if (OPTION_USE_PLASMA_ACTIVITIES)
-    if (NOT WIN32 AND NOT APPLE)
+if(OPTION_USE_PLASMA_ACTIVITIES)
+    if(NOT WIN32 AND NOT APPLE)
        set(OPTION_USE_PLASMA_ACTIVITIES true)
     else()
        set(OPTION_USE_PLASMA_ACTIVITIES false)
     endif()
 endif()
-if (OPTION_USE_PLASMA_ACTIVITIES)
-    if (NOT WIN32 AND NOT APPLE)
+if(OPTION_USE_PLASMA_ACTIVITIES)
+    if(NOT WIN32 AND NOT APPLE)
        find_package(PlasmaActivities "6.1.0")
     endif()
 endif()
 
-if (TARGET Plasma::Activities)
+if(TARGET Plasma::Activities)
     set(HAVE_ACTIVITY_SUPPORT TRUE)
 endif()
 
-configure_file(config-kmail.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h )
+configure_file(config-kmail.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 
 add_subdirectory(src)
 add_subdirectory(agents)

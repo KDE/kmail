@@ -8,7 +8,7 @@ ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEAD
         DESCRIPTION "kmail (kmail kontact plugins)"
         OLD_CATEGORY_NAMES log_kmail_plugin
         EXPORT KMAIL
-    )
+)
 
 
 set(kontact_kmail_plugins_interface_SRCS)

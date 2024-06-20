@@ -16,4 +16,4 @@ add_executable(mailagentdbus_gui mailagentdbus_gui.cpp
 target_link_libraries(mailagentdbus_gui
     mailfilteragentprivate
     KPim6::MailCommon
-    )
+)
