@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Stefan Asserhäll <stefan.asserhall@gmail.com>, 2012, 2013, 2014, 2018, 2019.
+# SPDX-FileCopyrightText: 2012, 2013, 2014, 2018, 2019, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2019-12-17 18:35+0100\n"
+"PO-Revision-Date: 2024-06-19 18:46+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
@@ -24,11 +24,10 @@ msgid "Filter Log Viewer"
 msgstr "Visning av filterlogg"
 
 #: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr "Dela..."
+msgstr "Dela…"
 
 #: filterlogdialog.cpp:85
 #, kde-format
@@ -84,8 +83,7 @@ msgid "Log filter actions"
 msgstr "Logga filteråtgärder"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Storleksbegränsning för logg:"
@@ -123,8 +121,7 @@ msgstr ""
 "Den detaljerade felbeskrivningen är \"%2\"."
 
 #: filterlogdialog.cpp:330
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Kmail-fel"

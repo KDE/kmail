@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-06-07 10:46+0200\n"
+"PO-Revision-Date: 2024-06-18 17:18+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -407,8 +407,7 @@ msgid "Folder holds a mailing list"
 msgstr "La carpeta manté una llista de correu"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Detecta automàticament"
@@ -429,8 +428,7 @@ msgid "Preferred handler:"
 msgstr "Gestor preferit:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Invoca el gestor"
@@ -1320,8 +1318,7 @@ msgstr ""
 "compleció"
 
 #: configuredialog/configurecomposerpage.cpp:456
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Configura la compleció…"
@@ -1380,10 +1377,9 @@ msgstr "&Elimina"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #: configuredialog/configurecomposerpage.cpp:1054
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "Modifica…"
+msgstr "Mod&ifica…"
 
 #: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
@@ -1472,11 +1468,10 @@ msgid "Ne&w"
 msgstr "No&u"
 
 #: configuredialog/configurecomposerpage.cpp:833
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
-msgstr "&Elimina"
+msgstr "Eli&mina"
 
 #: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
@@ -3455,8 +3450,7 @@ msgid "Attach my vCard to message"
 msgstr "Adjunta la meua vCard al missatge"
 
 #: identity/identitydialog.cpp:614
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Crea…"
@@ -3494,8 +3488,7 @@ msgid "&Use custom message templates for this identity"
 msgstr "Utilit&za plantilles de missatge personalitzades per a esta identitat"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Copia les plantilles globals"
@@ -4406,8 +4399,7 @@ msgid "Sending messages"
 msgstr "S'estan enviant els missatges"
 
 #: kmkernel.cpp:1457
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
 msgstr "S'està iniciant el procés d'enviament…"
 
@@ -8275,9 +8267,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid "Mod&ify..."
-#~ msgstr "&Modifica…"
-
-#~ msgid "Modify..."
-#~ msgstr "Modifica…"
