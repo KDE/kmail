@@ -84,13 +84,6 @@ However, there may be local rules that require you to turn this option on. When 
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="kcfg_ShowCryptoOwnertrust">
-        <property name="text">
-         <string>Show encryption key ownertrust level</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
