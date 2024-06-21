@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# Kishore G <kishore96@gmail.com>, 2021.
+# SPDX-FileCopyrightText: 2021, 2024 Kishore G <kishore96@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-04 00:39+0000\n"
-"PO-Revision-Date: 2021-11-11 20:19+0530\n"
+"PO-Revision-Date: 2024-06-20 21:58+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.08.3\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #: settingsdialog.cpp:53 settingsdialog.cpp:128
 #, kde-format
@@ -38,8 +38,7 @@ msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "<b>%1</b> என்ற ஒருங்கிணைந்த அஞ்சல்பெட்டியை உறுதியாக நீக்க வேண்டுமா?"
 
 #: settingsdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Really Remove?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "உறுதியாக நீக்கலாமா?"
