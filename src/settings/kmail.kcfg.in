@@ -105,7 +105,6 @@
         <default>false</default>
       </entry>
       <entry name="CustomMessageHeadersCount" type="Int" key="mime-header-count">
-        <label>Specifies the number of custom MIME header fields to be inserted in messages (for internal use only)</label>
       </entry>
       <entry name="CloseToQuotaThreshold" type="Int">
         <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
@@ -131,11 +130,9 @@
         <default>true</default>
       </entry>
       <entry name="AutoExpiring" type="Bool" key="auto-expiring">
-        <label>Specifies whether the folders will expire in the background (for internal use only)</label>
         <default>true</default>
       </entry>
       <entry name="FirstStart" type="Bool" key="first-start">
-        <label>Specifies whether this is the very first time that the application is run (for internal use only)</label>
         <default>true</default>
       </entry>
       <entry key="ShowMenuBar" type="Bool">
@@ -298,23 +295,18 @@
         <default>QSize(800,600)</default>
       </entry>
       <entry name="IdentityDialogSize" type="Size" key="Identity Dialog size">
-        <label>The size of the identity dialog (for internal use only)</label>
         <default>QSize()</default>
       </entry>
       <entry name="SearchWidgetWidth" type="Int">
-        <label>The width of the search window (for internal use only)</label>
         <default>0</default>
       </entry>
       <entry name="SearchWidgetHeight" type="Int">
-        <label>The height of the search window (for internal use only)</label>
         <default>0</default>
       </entry>
       <entry name="ConfigureDialogWidth" type="Int">
-        <label>The width of the Configure KMail dialog (for internal use only)</label>
         <default>800</default>
       </entry>
       <entry name="ConfigureDialogHeight" type="Int">
-        <label>The height of the Configure KMail dialog (for internal use only)</label>
         <default>600</default>
       </entry>
       <entry name="FolderViewWidth" type="Int">
@@ -414,27 +406,21 @@
  <!-- Search Dialog settings -->
  <group name="SearchDialog">
    <entry name="CollectionWidth" type="Int">
-     <label>Specifies the width of the collection field in the Search Window dialog (for internal use only)</label>
      <default>150</default>
    </entry>
    <entry name="SubjectWidth" type="Int">
-     <label>Specifies the width of the subject field in the Search Window dialog (for internal use only)</label>
      <default>150</default>
    </entry>
    <entry name="SenderWidth" type="Int">
-     <label>Specifies the width of the sender field in the Search Window dialog (for internal use only)</label>
      <default>120</default>
    </entry>
    <entry name="ReceiverWidth" type="Int">
-     <label>Specifies the width of the receiver field in the Search Window dialog (for internal use only)</label>
      <default>120</default>
    </entry>
    <entry name="DateWidth" type="Int">
-     <label>Specifies the width of the date field in the Search Window dialog (for internal use only)</label>
      <default>120</default>
    </entry>
    <entry name="FolderWidth" type="Int">
-     <label>Specifies the width of the folder field in the Search Window dialog (for internal use only)</label>
      <default>100</default>
    </entry>
  </group>
