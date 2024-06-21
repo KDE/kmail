@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-06-21 00:39+0000\n"
 "PO-Revision-Date: 2024-02-24 22:07+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -437,7 +437,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "메일링 리스트에 글을 쓰는 URL:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
 #, kde-format
 msgid "Subscribe to List"
 msgstr "메일링 리스트에 가입"
@@ -1244,31 +1244,21 @@ msgctxt "@title:group"
 msgid "Recipients"
 msgstr "받는 사람"
 
-#: configuredialog/configurecomposerpage.cpp:331
-#, kde-format
-msgid ""
-"By default, request an MDN when starting to compose a message. You can "
-"select this on a per-message basis using \"Options - Request Disposition "
-"Notification\""
-msgstr ""
-"기본적으로 메시지를 작성할 때 읽음 확인을 요청합니다. 메시지별 설정을 \"옵션 "
-"- 읽음 확인 요청\"에서 변경할 수 있습니다"
-
-#: configuredialog/configurecomposerpage.cpp:364
+#: configuredialog/configurecomposerpage.cpp:357
 #, fuzzy, kde-format
 #| msgid "Warn if too many recipients are specified"
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "받는 사람이 너무 많을 때 알림"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:366
 #, fuzzy, kde-format
 #| msgid "Set the maximum number of recipients for the warning"
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "받는 사람이 다음보다 많을 때 알림"
 
-#: configuredialog/configurecomposerpage.cpp:399
+#: configuredialog/configurecomposerpage.cpp:390
 #, fuzzy, kde-format
 #| msgid ""
 #| "Only allow this many recipients to be specified for the message. This "
@@ -1288,69 +1278,69 @@ msgstr ""
 "에게 메시지를 보내는 것을 방지합니다. 분배 목록이나 메일링 리스트는 여기에서 "
 "제외됩니다."
 
-#: configuredialog/configurecomposerpage.cpp:420
+#: configuredialog/configurecomposerpage.cpp:411
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr "최근에 입력한 주소를 기억하고 수신자 자동 완성에 사용함"
 
-#: configuredialog/configurecomposerpage.cpp:436
+#: configuredialog/configurecomposerpage.cpp:427
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "저장하지 않음"
 
-#: configuredialog/configurecomposerpage.cpp:439
+#: configuredialog/configurecomposerpage.cpp:430
 #, fuzzy, kde-format
 #| msgid "Maximum recent addresses retained:"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "최대 최근 주소:"
 
-#: configuredialog/configurecomposerpage.cpp:443
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr "자동 완성에 사용하도록 기억할 최근 입력한 주소의 최대 개수입니다"
 
-#: configuredialog/configurecomposerpage.cpp:456
+#: configuredialog/configurecomposerpage.cpp:447
 #, fuzzy, kde-format
 #| msgid "Configure Completion..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "완성 설정..."
 
-#: configuredialog/configurecomposerpage.cpp:465
+#: configuredialog/configurecomposerpage.cpp:456
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "자동 저장"
 
-#: configuredialog/configurecomposerpage.cpp:475
+#: configuredialog/configurecomposerpage.cpp:466
 #, kde-format
 msgid "No autosave"
 msgstr "자동으로 저장하지 않음"
 
-#: configuredialog/configurecomposerpage.cpp:476
+#: configuredialog/configurecomposerpage.cpp:467
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "분"
 
-#: configuredialog/configurecomposerpage.cpp:478
+#: configuredialog/configurecomposerpage.cpp:469
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "지정한 시간마다 자동으로 메시지 저장"
 
-#: configuredialog/configurecomposerpage.cpp:688
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "답장 제목 접두사(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:693
-#: configuredialog/configurecomposerpage.cpp:723
+#: configuredialog/configurecomposerpage.cpp:682
+#: configuredialog/configurecomposerpage.cpp:712
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes (entries are case-"
@@ -1362,152 +1352,152 @@ msgid ""
 msgstr ""
 "다음 제목 접두사를 찾습니다 (대소문자 구분 없는 정규 표현식으로 처리합니다):"
 
-#: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "Re&move"
 msgstr "삭제(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:1043
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "수정..."
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:690
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "새 답장 접두사 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:702
+#: configuredialog/configurecomposerpage.cpp:691
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "답장 접두사를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:704
+#: configuredialog/configurecomposerpage.cpp:693
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "답장 제목 접두사:"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:708
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "전달 제목 접두사(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:718 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "삭제(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:718 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:718 identity/identitypage.cpp:274
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "수정..."
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:718
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "새 전달 접두사 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "전달 접두사를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:720
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "전달 제목 접두사:"
 
-#: configuredialog/configurecomposerpage.cpp:784
+#: configuredialog/configurecomposerpage.cpp:773
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "사용자 정의 message-id 접미사 사용(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:800
+#: configuredialog/configurecomposerpage.cpp:789
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "사용자 정의 message-id 접미사(&I):"
 
-#: configuredialog/configurecomposerpage.cpp:812
+#: configuredialog/configurecomposerpage.cpp:801
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "사용자 정의 MIME 헤더 필드:"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:809
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "이름"
 
-#: configuredialog/configurecomposerpage.cpp:821
+#: configuredialog/configurecomposerpage.cpp:810
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "값"
 
-#: configuredialog/configurecomposerpage.cpp:829
+#: configuredialog/configurecomposerpage.cpp:818
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "추가(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:822
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "삭제(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:842
+#: configuredialog/configurecomposerpage.cpp:831
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "이름(&N):"
 
-#: configuredialog/configurecomposerpage.cpp:852
+#: configuredialog/configurecomposerpage.cpp:841
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "값(&V):"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:980
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "'Content-Type'은 허용된 문자열이 아닙니다. 이 헤더는 저장되지 않습니다."
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:980
 #, kde-format
 msgid "Invalid header"
 msgstr "잘못된 헤더"
 
-#: configuredialog/configurecomposerpage.cpp:1032
+#: configuredialog/configurecomposerpage.cpp:1021
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "빠진 첨부 감지 사용(&N)"
 
-#: configuredialog/configurecomposerpage.cpp:1043
+#: configuredialog/configurecomposerpage.cpp:1032
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1515,35 +1505,35 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "다음 단어가 들어 있으면 파일을 첨부하는 것으로 간주:"
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "Enter new key word:"
 msgstr "새 단어 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:1055
+#: configuredialog/configurecomposerpage.cpp:1045
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "선택한 첨부 파일 단어를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:1056
+#: configuredialog/configurecomposerpage.cpp:1046
 #, kde-format
 msgid "Attachment Word:"
 msgstr "첨부 파일 단어:"
 
-#: configuredialog/configurecomposerpage.cpp:1064
+#: configuredialog/configurecomposerpage.cpp:1054
 #, fuzzy, kde-format
 #| msgid "Maximum Attachment Size:"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "최대 첨부 크기:"
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1061
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1073
+#: configuredialog/configurecomposerpage.cpp:1063
 #, kde-format
 msgid "No limit"
 msgstr "무제한"
@@ -1674,22 +1664,22 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "전역 HTML 설정을 수정하면 폴더별 설정을 덮어씁니다."
 
-#: configuredialog/configuresecuritypage.cpp:313
-#: configuredialog/configuresecuritypage.cpp:315
-#: configuredialog/configuresecuritypage.cpp:317
-#: configuredialog/configuresecuritypage.cpp:319
+#: configuredialog/configuresecuritypage.cpp:303
+#: configuredialog/configuresecuritypage.cpp:305
+#: configuredialog/configuresecuritypage.cpp:307
+#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] "일"
 
-#: configuredialog/configuresecuritypage.cpp:355
+#: configuredialog/configuresecuritypage.cpp:340
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 설정"
 
-#: configuredialog/configuresecuritypage.cpp:362
+#: configuredialog/configuresecuritypage.cpp:347
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1702,23 +1692,23 @@ msgstr ""
 "모듈이 없습니다. 설치 상태를 확인하십시오. 이 모듈은 Kleopatra에서 제공합니"
 "다."
 
-#: configuredialog/configuresecuritypage.cpp:367
+#: configuredialog/configuresecuritypage.cpp:352
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 설정 모듈 오류"
 
-#: configuredialog/configuresecuritypage.cpp:434
+#: configuredialog/configuresecuritypage.cpp:419
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "이 옵션을 사용하려면 dirmngr 0.9.0 이상이 필요합니다"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:573 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "프록시 없음"
 
-#: configuredialog/configuresecuritypage.cpp:575
+#: configuredialog/configuresecuritypage.cpp:560
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(현재 시스템 설정: %1)"
@@ -4206,7 +4196,7 @@ msgid "&Help"
 msgstr "도움말(&H)"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:345 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:343 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "주 도구 모음"
@@ -6178,45 +6168,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "%1 폴더 속성"
 
-#: messageactions.cpp:63
+#: messageactions.cpp:61
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "답장(&R)"
 
-#: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "답장(&R)"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
 #, fuzzy, kde-format
 #| msgid "Reply to &All..."
 msgid "Reply to &All…"
 msgstr "전체 답장 쓰기(&A)..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:64
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "작성자에게 답장 쓰기(&U)..."
 
-#: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "메일링 리스트에 답장 쓰기(&L)..."
 
-#: messageactions.cpp:68
+#: messageactions.cpp:66
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "인용하지 않고 답장 쓰기(&Q)..."
 
-#: messageactions.cpp:69
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox Inline mail forwarding"
 #| msgid "Inline"
@@ -6224,14 +6214,14 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "인라인"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:68
 #, fuzzy, kde-format
 #| msgid "As Attachment"
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "첨부 파일로"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6239,149 +6229,137 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "다음으로 전달(&R)..."
 
-#: messageactions.cpp:72
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgid "New Message to Recipients..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "수신자에게 새 메시지 보내기..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:71
 #, kde-format
 msgid "Mar&k Message"
 msgstr "메시지 표시(&K)"
 
-#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "전달(&F)"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "메일링 리스트(&L)"
 
-#: messageactions.cpp:76 messageactions.cpp:371
-#, fuzzy, kde-format
-#| msgid "Add Note..."
-msgid "Add Note…"
-msgstr "메모 추가..."
-
-#: messageactions.cpp:77
+#: messageactions.cpp:74
 #, kde-format
 msgid "&Edit As New"
 msgstr "새 메시지로 편집(&E)"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:75
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "메일링 리스트에 필터 적용(&L)..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:76
 #, fuzzy, kde-format
 #| msgid "Add Followup Reminder..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "후속 작업 알림 추가..."
 
-#: messageactions.cpp:81
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "다시 보내기(&G)..."
 
-#: messageactions.cpp:82
+#: messageactions.cpp:79
 #, kde-format
 msgid "New Message From &Template"
 msgstr "템플릿에서 새 메시지 만들기(&T)"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Export to PDF"
 msgid "Export to PDF…"
 msgstr "PDF로 내보내기"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:82
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "메시지 파일로 압축"
 
-#: messageactions.cpp:373
-#, fuzzy, kde-format
-#| msgid "Edit Note..."
-msgid "Edit Note…"
-msgstr "메모 편집..."
-
-#: messageactions.cpp:418
+#: messageactions.cpp:398
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "메일링 리스트에 필터 적용..."
 
-#: messageactions.cpp:454
+#: messageactions.cpp:434
 #, kde-format
 msgid "<unknown>"
 msgstr "<알 수 없음>"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:434
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "메일링 리스트 이름: %1"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:437
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "리스트 보관함에서 메시지 열기"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:440
 #, kde-format
 msgid "Post New Message"
 msgstr "새 메시지 쓰기"
 
-#: messageactions.cpp:463
+#: messageactions.cpp:443
 #, kde-format
 msgid "Go to Archive"
 msgstr "보관함으로 이동"
 
-#: messageactions.cpp:466
+#: messageactions.cpp:446
 #, kde-format
 msgid "Request Help"
 msgstr "도움 요청"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:449
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "소유자에게 연락"
 
-#: messageactions.cpp:475
+#: messageactions.cpp:455
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "메일링 리스트에서 탈퇴"
 
-#: messageactions.cpp:484
+#: messageactions.cpp:464
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "%1 메일링 리스트에 필터 적용..."
 
-#: messageactions.cpp:661
+#: messageactions.cpp:641
 #, kde-format
 msgid "email"
 msgstr "이메일"
 
-#: messageactions.cpp:664
+#: messageactions.cpp:644
 #, kde-format
 msgid "web"
 msgstr "웹"
 
-#: messageactions.cpp:669
+#: messageactions.cpp:649
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6389,12 +6367,12 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1(%2)"
 
-#: messageactions.cpp:778
+#: messageactions.cpp:747
 #, kde-format
 msgid "Export to PDF"
 msgstr "PDF로 내보내기"
 
-#: messageactions.cpp:778
+#: messageactions.cpp:747
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF 문서 (*.pdf)"
@@ -7430,19 +7408,19 @@ msgstr "메시지 열기(&M)"
 msgid "Security defaults"
 msgstr "보안 기본값"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AlwaysEncryptDrafts)
 #: ui/securitypageencryptiontab.ui:23
 #, kde-format
 msgid "Encrypt draft messages"
 msgstr "임시 보관함 메시지 암호화"
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
 #, kde-format
 msgid "Check to store messages encrypted "
 msgstr "메시지를 암호화해서 저장하려면 선택"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
 #, kde-format
 msgid ""
@@ -7466,7 +7444,7 @@ msgstr ""
 "에는 메일 시스템 관리자에게 문의하십시오.\n"
 "</p></qt>"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
 #, kde-format
 msgid "Encry&pt sent messages"
@@ -7490,13 +7468,13 @@ msgstr "가능하다면 모든 메시지 암호화"
 msgid "Encryption indicators"
 msgstr "암호화 표시기"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoLabelIndicator)
 #: ui/securitypageencryptiontab.ui:80
 #, kde-format
 msgid "Show sign/encrypt indicator"
 msgstr "서명/암호화 표시기 표시"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
@@ -8337,6 +8315,24 @@ msgstr[0] "서버에서 부재 중 답장 사용 중"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "크기 조정: %1%"
+
+#~ msgid ""
+#~ "By default, request an MDN when starting to compose a message. You can "
+#~ "select this on a per-message basis using \"Options - Request Disposition "
+#~ "Notification\""
+#~ msgstr ""
+#~ "기본적으로 메시지를 작성할 때 읽음 확인을 요청합니다. 메시지별 설정을 \"옵"
+#~ "션 - 읽음 확인 요청\"에서 변경할 수 있습니다"
+
+#, fuzzy
+#~| msgid "Add Note..."
+#~ msgid "Add Note…"
+#~ msgstr "메모 추가..."
+
+#, fuzzy
+#~| msgid "Edit Note..."
+#~ msgid "Edit Note…"
+#~ msgstr "메모 편집..."
 
 #~ msgid "Mod&ify..."
 #~ msgstr "수정(&I)..."

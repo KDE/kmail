@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-06-21 00:39+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -492,7 +492,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "<b>Тасвиркунандаи рӯйхати фиристониш: </b>"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:472
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Имзоиш"
@@ -1359,27 +1359,19 @@ msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Қабулкунандаҳои иловагӣ"
 
-#: configuredialog/configurecomposerpage.cpp:331
-#, kde-format
-msgid ""
-"By default, request an MDN when starting to compose a message. You can "
-"select this on a per-message basis using \"Options - Request Disposition "
-"Notification\""
-msgstr ""
-
-#: configuredialog/configurecomposerpage.cpp:364
+#: configuredialog/configurecomposerpage.cpp:357
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "<recipients>"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:366
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Воҳиди зиёди пайвасткунӣ бо як сервер"
 
-#: configuredialog/configurecomposerpage.cpp:399
+#: configuredialog/configurecomposerpage.cpp:390
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1389,51 +1381,51 @@ msgid ""
 "account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:420
+#: configuredialog/configurecomposerpage.cpp:411
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:436
+#: configuredialog/configurecomposerpage.cpp:427
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Ғайри худнигоҳдорӣ"
 
-#: configuredialog/configurecomposerpage.cpp:439
+#: configuredialog/configurecomposerpage.cpp:430
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Тағйири адресҳои охирин..."
 
-#: configuredialog/configurecomposerpage.cpp:443
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:456
+#: configuredialog/configurecomposerpage.cpp:447
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Танзимоти қуттии хатнависӣ"
 
-#: configuredialog/configurecomposerpage.cpp:465
+#: configuredialog/configurecomposerpage.cpp:456
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Ғайри худнигоҳдорӣ"
 
-#: configuredialog/configurecomposerpage.cpp:475
+#: configuredialog/configurecomposerpage.cpp:466
 #, kde-format
 msgid "No autosave"
 msgstr "Ғайри худнигоҳдорӣ"
 
-#: configuredialog/configurecomposerpage.cpp:476
+#: configuredialog/configurecomposerpage.cpp:467
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1442,19 +1434,19 @@ msgid_plural " minutes"
 msgstr[0] " дақиқа"
 msgstr[1] " дақиқа"
 
-#: configuredialog/configurecomposerpage.cpp:478
+#: configuredialog/configurecomposerpage.cpp:469
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "Пурсиши ахборот оиди &коркарди иттилоот"
 
-#: configuredialog/configurecomposerpage.cpp:688
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Префиксҳои &унвоноти ҷавоб"
 
-#: configuredialog/configurecomposerpage.cpp:693
-#: configuredialog/configurecomposerpage.cpp:723
+#: configuredialog/configurecomposerpage.cpp:682
+#: configuredialog/configurecomposerpage.cpp:712
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1467,160 +1459,160 @@ msgstr ""
 "Шиносоии мувофиқати префиксҳои зерин\n"
 "(ифодаҳои мунтазам ғайри бақайдгирии феҳрист):"
 
-#: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "Re&move"
 msgstr "&Ҳузф кардан"
 
-#: configuredialog/configurecomposerpage.cpp:701
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:1043
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Таъғир додан..."
 
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:690
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Префикси нави ҷавобро ворид кунед:"
 
-#: configuredialog/configurecomposerpage.cpp:702
+#: configuredialog/configurecomposerpage.cpp:691
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:704
+#: configuredialog/configurecomposerpage.cpp:693
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Префиксҳои &унвоноти ҷавоб"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:708
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Префиксҳои унвони &фиристониш"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:729 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:718 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Ҳу&зф кардан"
 
-#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:718 identity/identitypage.cpp:272
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:729 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:718 identity/identitypage.cpp:274
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Таъғир додан..."
 
-#: configuredialog/configurecomposerpage.cpp:729
+#: configuredialog/configurecomposerpage.cpp:718
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Префикси нави фиристонишро ворид кунед:"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:719
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:720
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Префиксҳои унвони &фиристониш"
 
-#: configuredialog/configurecomposerpage.cpp:784
+#: configuredialog/configurecomposerpage.cpp:773
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "Ишора намудани &суффикси худ дар Message-Id"
 
-#: configuredialog/configurecomposerpage.cpp:800
+#: configuredialog/configurecomposerpage.cpp:789
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "С&уффикс дар Message-Id:"
 
-#: configuredialog/configurecomposerpage.cpp:812
+#: configuredialog/configurecomposerpage.cpp:801
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Тегҳои истифодашавандаи унвоноти MIME:"
 
-#: configuredialog/configurecomposerpage.cpp:820
+#: configuredialog/configurecomposerpage.cpp:809
 #, fuzzy, kde-format
 #| msgid "Name"
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Ном"
 
-#: configuredialog/configurecomposerpage.cpp:821
+#: configuredialog/configurecomposerpage.cpp:810
 #, fuzzy, kde-format
 #| msgid "Value"
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Аҳамият"
 
-#: configuredialog/configurecomposerpage.cpp:829
+#: configuredialog/configurecomposerpage.cpp:818
 #, fuzzy, kde-format
 #| msgid "Ne&w"
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Э&ҷод кардан"
 
-#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:822
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Ҳузф кардан"
 
-#: configuredialog/configurecomposerpage.cpp:842
+#: configuredialog/configurecomposerpage.cpp:831
 #, fuzzy, kde-format
 #| msgid "&Name:"
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Ном:"
 
-#: configuredialog/configurecomposerpage.cpp:852
+#: configuredialog/configurecomposerpage.cpp:841
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Аҳамият:"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:980
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid header"
 msgstr "&Афзудани имзо"
 
-#: configuredialog/configurecomposerpage.cpp:1032
+#: configuredialog/configurecomposerpage.cpp:1021
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "&Фаъол сохтани муайянкунандаи замимотҳои фаромӯшшуда"
 
-#: configuredialog/configurecomposerpage.cpp:1043
+#: configuredialog/configurecomposerpage.cpp:1032
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1629,37 +1621,37 @@ msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Ягон яки аз калимаҳои навбатӣ оиди мавҷуд будани замимот низ шаҳодат медиҳад:"
 
-#: configuredialog/configurecomposerpage.cpp:1054
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Калимаи муҳими навро ворид кунед:"
 
-#: configuredialog/configurecomposerpage.cpp:1055
+#: configuredialog/configurecomposerpage.cpp:1045
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1056
+#: configuredialog/configurecomposerpage.cpp:1046
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "&Замимот"
 
-#: configuredialog/configurecomposerpage.cpp:1064
+#: configuredialog/configurecomposerpage.cpp:1054
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "бо замимот"
 
-#: configuredialog/configurecomposerpage.cpp:1071
+#: configuredialog/configurecomposerpage.cpp:1061
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1073
+#: configuredialog/configurecomposerpage.cpp:1063
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
@@ -1813,23 +1805,23 @@ msgstr ""
 "Таъғироти танзимоти глобалии мунозирот ба параметрҳои тамоми папкаҳо амал "
 "мекунад."
 
-#: configuredialog/configuresecuritypage.cpp:313
-#: configuredialog/configuresecuritypage.cpp:315
-#: configuredialog/configuresecuritypage.cpp:317
-#: configuredialog/configuresecuritypage.cpp:319
+#: configuredialog/configuresecuritypage.cpp:303
+#: configuredialog/configuresecuritypage.cpp:305
+#: configuredialog/configuresecuritypage.cpp:307
+#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: configuredialog/configuresecuritypage.cpp:355
+#: configuredialog/configuresecuritypage.cpp:340
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Ф&иристодан"
 
-#: configuredialog/configuresecuritypage.cpp:362
+#: configuredialog/configuresecuritypage.cpp:347
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1837,23 +1829,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:367
+#: configuredialog/configuresecuritypage.cpp:352
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:434
+#: configuredialog/configuresecuritypage.cpp:419
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:573 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:575
+#: configuredialog/configuresecuritypage.cpp:560
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
@@ -4413,7 +4405,7 @@ msgid "&Help"
 msgstr "&Садо"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:345 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:343 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, fuzzy, kde-format
 msgid "Main Toolbar"
 msgstr "Лавҳаи HTML"
@@ -6416,44 +6408,44 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Хусусиятҳои папкаи %1"
 
-#: messageactions.cpp:63
+#: messageactions.cpp:61
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Ҷавоб додан"
 
-#: messageactions.cpp:64 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "&Ҷавоб додан"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
 #, fuzzy, kde-format
 msgid "Reply to &All…"
 msgstr "Ба ҳама &ҷавоб додан..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:64
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "Шах&сан ҷавоб додан..."
 
-#: messageactions.cpp:67 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "Ба рӯйхати фиристониш &ҷавоб додан..."
 
-#: messageactions.cpp:68
+#: messageactions.cpp:66
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Ҷавоб додан &ғайри иқтибосӣ..."
 
-#: messageactions.cpp:69
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6461,13 +6453,13 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Дар матн"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:68
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "бо замимот"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6475,157 +6467,146 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&Фиристониш..."
 
-#: messageactions.cpp:72
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Фиристодан &ба рӯйхати фиристониш..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:71
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&Ишора кардан"
 
-#: messageactions.cpp:74 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Фиристониш"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Ба рӯйхати фиристониш &ҷавоб додан..."
 
-#: messageactions.cpp:76 messageactions.cpp:371
-#, fuzzy, kde-format
-#| msgid "Add..."
-msgid "Add Note…"
-msgstr "Афзудан..."
-
-#: messageactions.cpp:77
+#: messageactions.cpp:74
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&Тағйири иттилоот"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:75
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Филтронӣ аз рӯи &рӯйхати фиристониш..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:76
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "&Ҷустуҷӯи иттилоот..."
 
-#: messageactions.cpp:81
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Такроран &фиристодан..."
 
-#: messageactions.cpp:82
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 msgid "New Message From &Template"
 msgstr "Иттилооти нав аз сервер нест"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF…"
 msgstr "Озод кардан аз кӯҳнашуда"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:82
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Иттилооти нав ба..."
 
-#: messageactions.cpp:373
-#, fuzzy, kde-format
-msgid "Edit Note…"
-msgstr "Тағйир кардан..."
-
-#: messageactions.cpp:418
+#: messageactions.cpp:398
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "Филтронидан аз рӯи рӯйхати фиристониш..."
 
-#: messageactions.cpp:454
+#: messageactions.cpp:434
 #, kde-format
 msgid "<unknown>"
 msgstr "<unknown>"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:434
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "Ба рӯйхати фиристониш &ҷавоб додан..."
 
-#: messageactions.cpp:457
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "Иттилооти OpenPGP - имзои нодуруст"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:440
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "Иттилооти нав"
 
-#: messageactions.cpp:463
+#: messageactions.cpp:443
 #, fuzzy, kde-format
 msgid "Go to Archive"
 msgstr "Фиристониш"
 
-#: messageactions.cpp:466
+#: messageactions.cpp:446
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "Маълумот"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:449
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Алоқотҳо"
 
-#: messageactions.cpp:475
+#: messageactions.cpp:455
 #, fuzzy, kde-format
 #| msgid "Unsubscribe from List"
 msgid "Unsubscribe from List"
 msgstr "Ҷавоби хаттӣ"
 
-#: messageactions.cpp:484
+#: messageactions.cpp:464
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "Филтри аз рӯи рӯйхати фиристониши %1..."
 
-#: messageactions.cpp:661
+#: messageactions.cpp:641
 #, fuzzy, kde-format
 msgid "email"
 msgstr "Почта"
 
-#: messageactions.cpp:664
+#: messageactions.cpp:644
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:669
+#: messageactions.cpp:649
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6634,13 +6615,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "Почта"
 
-#: messageactions.cpp:778
+#: messageactions.cpp:747
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF"
 msgstr "Озод кардан аз кӯҳнашуда"
 
-#: messageactions.cpp:778
+#: messageactions.cpp:747
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -7680,20 +7661,20 @@ msgstr "Боз кардани иттилоот"
 msgid "Security defaults"
 msgstr "Ҳамчун асосӣ кардан"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mAlwaysEncryptWhenSavingInDrafts)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_AlwaysEncryptDrafts)
 #: ui/securitypageencryptiontab.ui:23
 #, fuzzy, kde-format
 #| msgid "Encrypted message"
 msgid "Encrypt draft messages"
 msgstr "Иттилооти рамзгузошташуда"
 
-#. i18n: ectx: property (toolTip), widget (QCheckBox, mStoreEncrypted)
+#. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
 #, kde-format
 msgid "Check to store messages encrypted "
 msgstr "Иттилоотро ба намуди рамзгузошташуда барои захира кардан ишора кунед"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mStoreEncrypted)
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
 #, fuzzy, kde-format
 #| msgid ""
@@ -7728,7 +7709,7 @@ msgstr ""
 "параметр танзим шуда бошад. Аз мудири низоми худ маслиҳат бипурсед.\n"
 "</qt>"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mStoreEncrypted)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
 #, fuzzy, kde-format
 #| msgid "Encrypted message"
@@ -7757,14 +7738,14 @@ msgstr ""
 msgid "Encryption indicators"
 msgstr "Параметрҳои рамзгузорӣ"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowEncSignIndicator)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoLabelIndicator)
 #: ui/securitypageencryptiontab.ui:80
 #, fuzzy, kde-format
 #| msgid "Show s&igned/encrypted text after composing"
 msgid "Show sign/encrypt indicator"
 msgstr "Намоиши матни рамзгузошташуда/им&зошуда"
 
-#. i18n: ectx: property (text), widget (QCheckBox, mShowCryptoOwnertrust)
+#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
 #: ui/securitypageencryptiontab.ui:90
 #, kde-format
 msgid "Show encryption key ownertrust level"
@@ -8676,6 +8657,15 @@ msgstr[1] "Тағйири ҷавобҳо \"берун аз офис\"..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Add..."
+#~ msgid "Add Note…"
+#~ msgstr "Афзудан..."
+
+#, fuzzy
+#~ msgid "Edit Note…"
+#~ msgstr "Тағйир кардан..."
 
 #~ msgid "Mod&ify..."
 #~ msgstr "Тағ&йирот..."

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-06-16 18:08+0530\n"
+"PO-Revision-Date: 2024-06-20 22:00+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -70,8 +70,7 @@ msgid "Finish"
 msgstr "முடி"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "சுத்தம் செய்"

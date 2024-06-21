@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-19 17:53+0530\n"
+"PO-Revision-Date: 2024-06-20 22:01+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #: sendlaterconfiguredialog.cpp:33
 #, kde-format
@@ -87,10 +87,9 @@ msgid "Message Id"
 msgstr ""
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
-msgstr "அனுப்புவதற்கு எந்த அஞ்சலும் இல்லை..."
+msgstr "அனுப்புவதற்கு எந்த அஞ்சலும் இல்லை…"
 
 #: sendlaterconfigurewidget.cpp:94
 #, kde-format
@@ -203,7 +202,6 @@ msgstr "மீண்டும் அனுப்பு"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
 msgstr "திருத்து…"
