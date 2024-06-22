@@ -1,6 +1,6 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2019, 2021, 2023.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2019, 2021, 2023, 2024.
 #
 msgid ""
 msgstr ""

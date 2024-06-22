@@ -7591,7 +7591,7 @@ msgstr "账户信息"
 #: userfeedback/accountinfosource.cpp:29
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
-msgstr "KMail 中已配置的账户数量及类型 (接收账号和发送账号)。"
+msgstr "KMail 中已配置的账户数量及类型 (接收账户和发送账户)。"
 
 #: userfeedback/plugininfosource.cpp:19
 #, kde-format
