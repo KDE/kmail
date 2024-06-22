@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:39+0000\n"
+"POT-Creation-Date: 2024-06-22 00:39+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -1730,24 +1730,24 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "वैस्विक थ्रेडिंग सेटिंग ल बदले से ए सब्बो विसिस्ट फोल्डर के मूल्य मन ल बदल देही."
 
+#: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
 #: configuredialog/configuresecuritypage.cpp:305
 #: configuredialog/configuresecuritypage.cpp:307
-#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " दिन"
 msgstr[1] " दिनों"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:338
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "सेटिंग (&S)"
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1755,23 +1755,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ये विकल्प ल जरूरी हे dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "प्राक्सी नइ"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(अभी हाल के तंत्र सेटिंग: %1)"
@@ -3366,14 +3366,14 @@ msgid "Encrypt messages when possible"
 msgstr "जहाँ संभव हो अपने अपन संदेस एनक्रिप्ट करव (&m)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "जब बिन दसखत संदेस भेजे जाय के कोसिस होही तहां चेतावनी देव (&u)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
@@ -6760,16 +6760,8 @@ msgstr "संपादक निरधारित करव: (&d)"
 msgid "Use e&xternal editor instead of composer"
 msgstr "कम्पोजर के बदले बाहिरी सम्पादक उपयोग करव (&x)"
 
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.in:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:111
+#: settings/kmail.kcfg.in:110
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6777,50 +6769,34 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:115
+#: settings/kmail.kcfg.in:114
 #, fuzzy, kde-format
 #| msgid "Empty local &trash folder on program exit"
 msgid "Empty the local trash folder on program exit"
 msgstr "प्रोग्राम से बाहिर होए मं लोकल घुरुवा फोल्डर खाली करव (&t)"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:119
+#: settings/kmail.kcfg.in:118
 #, fuzzy, kde-format
 #| msgid "Delete Sieve Script Confirmation"
 msgid "Delete messages without confirmation"
 msgstr "सीव स्क्रिप्ट पुस्टिकरन मेटाव"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:123
+#: settings/kmail.kcfg.in:122
 #, fuzzy, kde-format
 #| msgid "Select Folder"
 msgid "Allow to start specific folder"
 msgstr "फोल्डर चुनव"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:127
+#: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr ""
 
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.in:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.in:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg.in:160
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6828,7 +6804,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg.in:168
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6836,26 +6812,26 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg.in:175
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "तेजी से खोजव लकीर संपादन देखाव"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:183
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr ""
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg.in:186
 #, fuzzy, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "पावइया संपादक के पंक्तियों के सबसे अधिक संख्या."
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6864,26 +6840,26 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg.in:209
 #, kde-format
 msgid "Confirm &before send"
 msgstr "भेजने से पहिली पुस्टि करव (&b)"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg.in:216
 #, fuzzy, kde-format
 #| msgid "Confirm &before send"
 msgid "Check spelling before send"
 msgstr "भेजने से पहिली पुस्टि करव (&b)"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg.in:220
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "संदेस डिस्पाजिसन सूचना अपने अपन निवेदित करव (&m)"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg.in:221
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6894,13 +6870,13 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg.in:243
 #, kde-format
 msgid "Autosave interval:"
 msgstr "अपने अपन सहेजे के अंतराल:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg.in:244
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6909,210 +6885,125 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr ""
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr ""
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg.in:273
 #, fuzzy, kde-format
 #| msgid "Show crypto &icons"
 msgid "Show crypto label indicator"
 msgstr "क्रिप्टो चिनहा देखाव (&i)"
 
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto &icons"
-msgid "Show crypto ownertrust icons"
-msgstr "क्रिप्टो चिनहा देखाव (&i)"
-
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:284
+#: settings/kmail.kcfg.in:277
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.in:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.in:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.in:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.in:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.in:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
-
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg.in:331
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "संदेस प्रिव्यू फलक"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:346
+#: settings/kmail.kcfg.in:334
 #, fuzzy, kde-format
 #| msgid "&Do not show a message preview pane"
 msgid "Do not show a message preview pane"
 msgstr "संदेस प्रिव्यू पेनल नइ देखाव (&D)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:349
+#: settings/kmail.kcfg.in:337
 #, fuzzy, kde-format
 #| msgid "Show the message preview pane belo&w the message list"
 msgid "Show the message preview pane below the message list"
 msgstr "संदेस सूची के नीचे संदेस प्रिव्यू पॅन देखाव (&w)"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:352
+#: settings/kmail.kcfg.in:340
 #, fuzzy, kde-format
 #| msgid "Show the message preview pane ne&xt to the message list"
 msgid "Show the message preview pane next to the message list"
 msgstr "संदेस प्रिव्यू पेनल संदेस के बाजू मं देखाव (&x)"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:359
+#: settings/kmail.kcfg.in:347
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "फोल्डर सूची"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:350
 #, fuzzy, kde-format
 #| msgid "Lon&g folder list"
 msgid "Long folder list"
 msgstr "फोल्डर लंबी सूची (&g)"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg.in:353
 #, fuzzy, kde-format
 #| msgid "Shor&t folder list"
 msgid "Short folder list"
 msgstr "फोल्डर छोटी सूची (&t)"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:374
+#: settings/kmail.kcfg.in:362
 #, kde-format
 msgid "Message template for new message"
 msgstr "नवा संदेस बर संदेस टैम्प्लेट"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:379
+#: settings/kmail.kcfg.in:367
 #, kde-format
 msgid "Message template for reply"
 msgstr "जवाब बर संदेस टैम्प्लेट"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:384
+#: settings/kmail.kcfg.in:372
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "सब्बो ल जवाब भेजे बर संदेस टैम्प्लेट"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:389
+#: settings/kmail.kcfg.in:377
 #, kde-format
 msgid "Message template for forward"
 msgstr "आगू भेजे बर संदेस टैम्पलेट"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:394
+#: settings/kmail.kcfg.in:382
 #, kde-format
 msgid "Quote characters"
 msgstr "उदाहरन अक्छर"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:409
+#: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
-msgstr ""
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
 msgstr ""
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
@@ -7572,27 +7463,21 @@ msgstr "क्रिप्टो चिनहा देखाव (&i)"
 msgid "Show sign/encrypt indicator"
 msgstr "कम्पोजिंग के बाद् दसखत/एनक्रिप्टेड पाठ देखाव (&i)"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
-#: ui/securitypageencryptiontab.ui:90
-#, kde-format
-msgid "Show encryption key ownertrust level"
-msgstr ""
-
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
-#: ui/securitypageencryptiontab.ui:100
+#: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/securitypageencryptiontab.ui:106
+#: ui/securitypageencryptiontab.ui:99
 #, fuzzy, kde-format
 #| msgid "Always show the encryption keys &for approval"
 msgid "Always approve encryption keys before send"
 msgstr "अनुमोदन बर हमेसा एनक्रिप्सन कुंजी देखाव (&f)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/securitypageencryptiontab.ui:127
+#: ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
@@ -7601,7 +7486,7 @@ msgstr ""
 "कान्फिगर करव)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/securitypageencryptiontab.ui:139
+#: ui/securitypageencryptiontab.ui:132
 #, fuzzy, kde-format
 #| msgid "For end-user certificates/keys:"
 msgid "For end-user certificates/&keys:"
@@ -7611,14 +7496,14 @@ msgstr "एन्ड यूजर प्रमानपत्र/कुंजी
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
-#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
+#: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "दिनों के संख्या इहां चुनव"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:169
+#: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7631,7 +7516,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:205
+#: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7644,14 +7529,14 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
-#: ui/securitypageencryptiontab.ui:221
+#: ui/securitypageencryptiontab.ui:214
 #, fuzzy, kde-format
 #| msgid "For root certificates:"
 msgid "For own certificates:"
 msgstr "रूट प्रमानपत्र बर:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:245
+#: ui/securitypageencryptiontab.ui:238
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7664,14 +7549,14 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/securitypageencryptiontab.ui:261
+#: ui/securitypageencryptiontab.ui:254
 #, fuzzy, kde-format
 #| msgid "For root certificates:"
 msgid "For &root certificates:"
 msgstr "रूट प्रमानपत्र बर:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:307
+#: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7684,20 +7569,20 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/securitypageencryptiontab.ui:323
+#: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
 msgstr "माध्यमिक सीए प्रमानपत्र बर:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/securitypageencryptiontab.ui:354
+#: ui/securitypageencryptiontab.ui:347
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "GnuPG Settings…"
 msgstr "सेटिंग (&S)"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/securitypageencryptiontab.ui:393
+#: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
 msgstr "सब्बो \"फिर से नइ पूछव\" चेतावनियों ल फिर से सक्छम करव"
@@ -8338,6 +8223,11 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Show crypto &icons"
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "क्रिप्टो चिनहा देखाव (&i)"
 
 #, fuzzy
 #~| msgid "Add..."

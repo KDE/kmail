@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:39+0000\n"
+"POT-Creation-Date: 2024-06-22 00:39+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -1775,24 +1775,24 @@ msgstr ""
 "Ændring af den globale HTML-indstilling tilsidesætter alle mappespecifikke "
 "værdier."
 
+#: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
 #: configuredialog/configuresecuritypage.cpp:305
 #: configuredialog/configuresecuritypage.cpp:307
-#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " dag"
 msgstr[1] " dage"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:338
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG-indstillinger..."
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:345
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1804,23 +1804,23 @@ msgid ""
 msgstr ""
 "Modulet mangler. Tjek din installation. Dette modul leveres af Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG konfigurationsmodul-fejl"
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Dette tilvalg kræver dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ingen proxy"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Nuværende systemindstilling: %1)"
@@ -3473,14 +3473,14 @@ msgid "Encrypt messages when possible"
 msgstr "Kryptér breve automatisk når det er muligt"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Advar ved forsøg på at sende &usignerede breve"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
@@ -6863,18 +6863,8 @@ msgstr "Angiv &editor:"
 msgid "Use e&xternal editor instead of composer"
 msgstr "&Brug ekstern editor i stedet for brevskriveren"
 
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.in:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Angiver antallet af brugerdefinerede MIME-header-felter der skal indsættes i "
-"breve (kun til intern brug)"
-
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:111
+#: settings/kmail.kcfg.in:110
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6884,47 +6874,31 @@ msgstr ""
 "kvotegrænse."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:115
+#: settings/kmail.kcfg.in:114
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Tøm lokal papirkurvsmappe ved afslutning af programmet"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:119
+#: settings/kmail.kcfg.in:118
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Slet breve uden bekræftelse"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:123
+#: settings/kmail.kcfg.in:122
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Tillad at starte specifik mappe"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:127
+#: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Angiv den mappe der skal åbnes når programmet startes"
 
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.in:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr "Angiver om mapperne vil udløbe i baggrunden (kun til intern brug)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.in:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr "Angiver om det er første gang programmet kører (kun til intern brug)"
-
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg.in:160
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6934,7 +6908,7 @@ msgstr ""
 "detekteres mere end én e-mailkonto. Vi spørger altid kun én gang."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg.in:168
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6943,26 +6917,26 @@ msgstr ""
 "Denne værdi bruges til at afgøre om introduktionen til KMail skal vises."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg.in:175
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Vis linjeredigering for hurtigsøgning i mappe"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:183
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Videresend indlejret som standard."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Advar hvis modtagerantallet er flere end:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6973,25 +6947,25 @@ msgstr ""
 "bede om bekræftelse før afsendelse af e-mailen. Advarslen kan slås fra."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg.in:209
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Bekræft &før afsendelse"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg.in:216
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Udfør stavekontrol før afsendelse"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg.in:220
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Bed automatisk om &brevdispositionspåmindelser"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg.in:221
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -7008,13 +6982,13 @@ msgstr ""
 "p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg.in:243
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Auto-gem interval:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg.in:244
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -7026,212 +7000,121 @@ msgstr ""
 "deaktivere autogemning ved at sætte det til værdien 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
 "Vis panel til håndtering og indsættelse af tekststumper i brevskriveren."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "Når markeret, vil sendte breve blive gemt i krypteret form"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "En liste over alle nyligt anvendte URL'er"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "En liste over alle nyligt anvendte tegnsæt"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg.in:273
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Vis kryptoetiket-indikator"
 
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
-msgid "Show crypto ownertrust icons"
-msgstr "Vis kryptoetiket-indikator"
-
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:284
+#: settings/kmail.kcfg.in:277
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Validér standard genvej til afsendelse"
 
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.in:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Størrelsen på identitetsdialogen (kun til intern brug)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.in:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Bredden på søgevinduet (kun til intern brug)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.in:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Højden på søgevinduet (kun til intern brug)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.in:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "Bredden på dialogen Indstil KMail (kun til intern brug)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.in:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "Højden på dialogen Indstil KMail (kun til intern brug)"
-
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg.in:331
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "Brevforhåndsvisningsrude"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:346
+#: settings/kmail.kcfg.in:334
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Vis ikke en rude med forhåndsvisning af breve"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:349
+#: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Vis rude med forhåndsvisning af breve under brevlisten"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:352
+#: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Vis en rude med forhåndsvisning af breve ved siden af brevlisten"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:359
+#: settings/kmail.kcfg.in:347
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "Mappeliste"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:350
 #, kde-format
 msgid "Long folder list"
 msgstr "Lang mappeliste"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg.in:353
 #, kde-format
 msgid "Short folder list"
 msgstr "Kort mappeliste"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:374
+#: settings/kmail.kcfg.in:362
 #, kde-format
 msgid "Message template for new message"
 msgstr "Brevskabelon for nyt brev"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:379
+#: settings/kmail.kcfg.in:367
 #, kde-format
 msgid "Message template for reply"
 msgstr "Brevskabelon for svar"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:384
+#: settings/kmail.kcfg.in:372
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Brevskabelon for svar til alle"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:389
+#: settings/kmail.kcfg.in:377
 #, kde-format
 msgid "Message template for forward"
 msgstr "Brevskabelon for videresend"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:394
+#: settings/kmail.kcfg.in:382
 #, kde-format
 msgid "Quote characters"
 msgstr "Tilføj tegn"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:409
+#: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Angiver den politik der bruges ved visning af politik"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Angiver bredden af samlingsfeltet i søgevindue-dialogen (kun til intern brug)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Angiver bredden af emnefeltet i søgevindue-dialogen (kun til intern brug)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Angiver bredden af afsenderfeltet i søgevindue-dialogen (kun til intern brug)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Angiver bredden af modtagerfeltet i søgevindue-dialogen (kun til intern brug)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Angiver bredden af datofeltet i søgevindue-dialogen (kun til intern brug)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Angiver bredden af mappefeltet i søgevindue-dialogen (kun til intern brug)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -7725,33 +7608,27 @@ msgstr "Vis kryptoetiket-indikator"
 msgid "Show sign/encrypt indicator"
 msgstr "Vis signeret/krypteret-indikator i editor"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
-#: ui/securitypageencryptiontab.ui:90
-#, kde-format
-msgid "Show encryption key ownertrust level"
-msgstr ""
-
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
-#: ui/securitypageencryptiontab.ui:100
+#: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/securitypageencryptiontab.ui:106
+#: ui/securitypageencryptiontab.ui:99
 #, fuzzy, kde-format
 #| msgid "Always show the encryption keys &for approval"
 msgid "Always approve encryption keys before send"
 msgstr "Vis altid indkodningsnøgler til &godkendelse"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/securitypageencryptiontab.ui:127
+#: ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
 msgstr "Advar hvis certifikat/nø&gler udløber snart (indstil grænse nedenfor)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/securitypageencryptiontab.ui:139
+#: ui/securitypageencryptiontab.ui:132
 #, kde-format
 msgid "For end-user certificates/&keys:"
 msgstr "Til slutbruger-certifikater/-&nøgler:"
@@ -7760,14 +7637,14 @@ msgstr "Til slutbruger-certifikater/-&nøgler:"
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
-#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
+#: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "Vælg antal dage her"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:169
+#: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7787,7 +7664,7 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:205
+#: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7807,14 +7684,14 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
-#: ui/securitypageencryptiontab.ui:221
+#: ui/securitypageencryptiontab.ui:214
 #, fuzzy, kde-format
 #| msgid "For &root certificates:"
 msgid "For own certificates:"
 msgstr "Til rod-certifikater:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:245
+#: ui/securitypageencryptiontab.ui:238
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>\n"
@@ -7842,13 +7719,13 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/securitypageencryptiontab.ui:261
+#: ui/securitypageencryptiontab.ui:254
 #, kde-format
 msgid "For &root certificates:"
 msgstr "Til rod-certifikater:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:307
+#: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7868,20 +7745,20 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/securitypageencryptiontab.ui:323
+#: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
 msgstr "Til mellemliggende CA-certifikater:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/securitypageencryptiontab.ui:354
+#: ui/securitypageencryptiontab.ui:347
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgid "GnuPG Settings…"
 msgstr "GnuPG-indstillinger..."
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/securitypageencryptiontab.ui:393
+#: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
 msgstr "Genaktivér alle \"Spørg ikke igen\"-advarsler"
@@ -8637,6 +8514,83 @@ msgstr[1] "\"Ikke på kontoret\"-svar aktiveret på serverne"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Angiver antallet af brugerdefinerede MIME-header-felter der skal "
+#~ "indsættes i breve (kun til intern brug)"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr "Angiver om mapperne vil udløbe i baggrunden (kun til intern brug)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Angiver om det er første gang programmet kører (kun til intern brug)"
+
+#, fuzzy
+#~| msgid "Show crypto label indicator"
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Vis kryptoetiket-indikator"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "Størrelsen på identitetsdialogen (kun til intern brug)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Bredden på søgevinduet (kun til intern brug)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Højden på søgevinduet (kun til intern brug)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr "Bredden på dialogen Indstil KMail (kun til intern brug)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr "Højden på dialogen Indstil KMail (kun til intern brug)"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Angiver bredden af samlingsfeltet i søgevindue-dialogen (kun til intern "
+#~ "brug)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Angiver bredden af emnefeltet i søgevindue-dialogen (kun til intern brug)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Angiver bredden af afsenderfeltet i søgevindue-dialogen (kun til intern "
+#~ "brug)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Angiver bredden af modtagerfeltet i søgevindue-dialogen (kun til intern "
+#~ "brug)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Angiver bredden af datofeltet i søgevindue-dialogen (kun til intern brug)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Angiver bredden af mappefeltet i søgevindue-dialogen (kun til intern brug)"
 
 #, fuzzy
 #~| msgid ""

@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2019, 2021, 2023.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2018, 2019, 2021, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2023-09-25 19:00+0200\n"
+"PO-Revision-Date: 2024-06-18 17:43+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -18,15 +18,13 @@ msgstr ""
 "X-Generator: Lokalize 22.12.3\n"
 
 #: settingsdialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Aggiungi"
 
 #: settingsdialog.cpp:68
-#, fuzzy, kde-format
-#| msgid "Modify"
+#, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Modifica"
@@ -79,8 +77,7 @@ msgid "Name:"
 msgstr "Nome:"
 
 #: unifiedmailboxeditor.cpp:103
-#, fuzzy, kde-format
-#| msgid "Pick icon..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "Scegli icona..."

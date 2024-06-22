@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:39+0000\n"
+"POT-Creation-Date: 2024-06-22 00:39+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1744,23 +1744,23 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "ការ​ផ្លាស់ប្ដូរ​​ការកំណត់​ HTML សកល នឹង​បដិសេធ​រាល់​តម្លៃ​ជាក់លាក់​របស់​ថត​ទាំងអស់ ។"
 
+#: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
 #: configuredialog/configuresecuritypage.cpp:305
 #: configuredialog/configuresecuritypage.cpp:307
-#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " ថ្ងៃ"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:338
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "ការ​កំណត់ GnuPG​..."
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1768,23 +1768,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ជម្រើស​នេះ​ទាមទារ dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "គ្មាន​ប្រូកស៊ី"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(ការ​កំណត់​ប្រព័ន្ធ​បច្ចុប្បន្ន ៖ %1)"
@@ -3401,14 +3401,14 @@ msgid "Encrypt messages when possible"
 msgstr "អ៊ិនគ្រីប​សារ​ដោយស្វ័យប្រវត្តិ​នៅពេល​ណា​ក៏ដោយ​ឲ្យ​តែ​អាច​ធ្វើ​ទៅ​បាន"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
@@ -6807,17 +6807,8 @@ msgstr "បញ្ជាក់​កម្មវិធី​កែសម្រួ
 msgid "Use e&xternal editor instead of composer"
 msgstr "ប្រើ​កម្មវិធី​កែសម្រួល​ខាងក្នុង ជំនួស​ឲ្យ​កម្មវិធី​តែង"
 
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.in:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"បញ្ជាក់​ចំនួន​វាល​បឋមកថា MIME ផ្ទាល់ខ្លួន ដើម្បី​​ឲ្យ​បញ្ចូល​ក្នុង​សារ (សម្រាប់​ការ​ប្រើប្រាស់​ខា​ងក្នុង​ប៉ុណ្ណោះ)"
-
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:111
+#: settings/kmail.kcfg.in:110
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6825,50 +6816,33 @@ msgid ""
 msgstr "កម្រិត​ពន្លឺ​សម្រាប់​នៅ​ពេល​ព្រមាន​អ្នក​ប្រើ​ ដែល​ថត​មួយ​នៅ​ជិត​ដែន​កំណត់​កូតា​របស់​វា ។"
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:115
+#: settings/kmail.kcfg.in:114
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "សម្អាត​ថត​ធុងសំរាម ពេល​ចេញ​ពី​កម្មវិធី"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:119
+#: settings/kmail.kcfg.in:118
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Delete messages without confirmation"
 msgstr "​ផ្ញើ​ការ​អះអាង"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:123
+#: settings/kmail.kcfg.in:122
 #, fuzzy, kde-format
 #| msgid "Select Shortcut for Folder"
 msgid "Allow to start specific folder"
 msgstr "ជ្រើស​ផ្លូវកាត់​សម្រាប់​ថត"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:127
+#: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "បញ្ជាក់​ចំនួន​ថត​ត្រូវ​បើក នៅពេល​កម្មវិធី​ចាប់ផ្ដើម"
 
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.in:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr "បញ្ជាក់​ថាតើថត​នឹង​ផុត​កំណត់​ក្នុង​ផ្ទៃ​ខាង​ក្រោយ​ដែរឬទេ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុងប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.in:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"បញ្ជាក់​ថាតើ​​ នេះ​ជា​ពេល​ដំបូង​បង្អស់​ដែល​កម្មវិធី​ដំណើការ​មែនឬ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg.in:160
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6876,7 +6850,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg.in:168
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6884,19 +6858,19 @@ msgid ""
 msgstr "តម្លៃ​នេះ​គឺត្រូវបាន​ប្រើ​ដើម្បី​សម្រេច​ថាតើ​ ការណែនាំ​អំពី KMail គួរតែត្រូវបាន​បង្ហាញ​ឬអត់ ។"
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg.in:175
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "បង្ហាញ​ការ​កែសម្រួល​ស្វែង​រក​​ថត​រហ័ស"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:183
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "បញ្ជូន​បន្ត​ក្នុងតួ​ជា​លំនាំដើម ។"
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg.in:186
 #, fuzzy, kde-format
 #| msgid "Warn if the number of recipients is larger than"
 msgid "Warn if the number of recipients is more than:"
@@ -6904,7 +6878,7 @@ msgstr "ព្រមាន នៅពេលដែល​ចំនួន​អ្�
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6915,25 +6889,25 @@ msgstr ""
 "អាច​ត្រូវ​បាន​បិទ ។"
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg.in:209
 #, kde-format
 msgid "Confirm &before send"
 msgstr "អះអាងមុនផ្ញើ"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg.in:216
 #, kde-format
 msgid "Check spelling before send"
 msgstr "ពិនិត្យមើល​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg.in:220
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "ស្នើ​ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​ដោយស្វ័យប្រវត្តិ"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg.in:221
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6948,13 +6922,13 @@ msgstr ""
 "><em>ការជូនដំណឹង​អំពី​ការរៀបចំ​សំណើរ</em> ។</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg.in:243
 #, kde-format
 msgid "Autosave interval:"
 msgstr "រក្សាទុក​ចន្លោះពេល​ដោយស្វ័យប្រវត្តិ ៖"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg.in:244
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6966,207 +6940,121 @@ msgstr ""
 "ដោយ​កំណត់​វា​ទៅ​តម្លៃ 0 ។"
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "បង្ហាញ​កា​រគ្រប់គ្រង​អត្ថបទ​ដែល​បាន​ច្រឹប និង​បញ្ចូល​បន្ទះ​នៅ​ក្នុង​កម្មវិធី​តែង ។"
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "នៅ​ពេល​ពិនិត្យ​មើល សារ​ដែលបានផ្ញើ​នឹង​ត្រូវ​បាន​ទុក​នៅ​ក្នុង​ទម្រង់​ដែល​បានអ៊ីនគ្រិប"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "បញ្ជី​របស់​ URLs ដែលបាន​ប្រើប្រាស់​ថ្មី​ទាំងអស់"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "បញ្ជី​របស់​ការ​អ៊ីនកូ​ដដែល​បាន​ប្រើ​ថ្មី​ទាំងអស់"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg.in:273
 #, fuzzy, kde-format
 #| msgid "Show signed/encrypted text after composing"
 msgid "Show crypto label indicator"
 msgstr "បង្ហាញ​អត្ថបទ​ដែលបាន​​ចុះហត្ថលេខា/បាន​អ៊ិនគ្រីប​បន្ទាប់ពីការតែង"
 
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.in:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr ""
-
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:284
+#: settings/kmail.kcfg.in:277
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.in:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "ទំហំ​ប្រអប់​អត្តសញ្ញាណ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.in:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "ទំហំ​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.in:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "កម្ពស់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.in:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "ទទឹង​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.in:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg.in:331
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "ស្លាបព្រិល​ទិដ្ឋភាព​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:346
+#: settings/kmail.kcfg.in:334
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "កុំ​បង្ហាញ​ស្លាបព្រិល​សារ​មើលជា​មុន"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:349
+#: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "បង្ហាញ​ស្លាបព្រិល​​មើល​សារ​ជា​មុន​ខាង​ក្រោម​បញ្ជី​សារ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:352
+#: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "បង្ហាញ​ស្លាបព្រិល​មើលសារ​ជាមុន​នៅ​ជាប់នឹង​បញ្ជីសារ"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:359
+#: settings/kmail.kcfg.in:347
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "បញ្ជី​ថត"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:350
 #, kde-format
 msgid "Long folder list"
 msgstr "បញ្ជី​ថត​សារ​វែង"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg.in:353
 #, kde-format
 msgid "Short folder list"
 msgstr "បញ្ជី​ថត​ខ្លី"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:374
+#: settings/kmail.kcfg.in:362
 #, kde-format
 msgid "Message template for new message"
 msgstr "ពុម្ពសារ​​សម្រាប់​សារ​ថ្មី"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:379
+#: settings/kmail.kcfg.in:367
 #, kde-format
 msgid "Message template for reply"
 msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:384
+#: settings/kmail.kcfg.in:372
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "ពុម្ព​សារ​សម្រាប់​ឆ្លើយតប​ទៅ​អ្នក​ទាំងអស់"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:389
+#: settings/kmail.kcfg.in:377
 #, kde-format
 msgid "Message template for forward"
 msgstr "ពុម្ព​សារ​សម្រាប់​បញ្ជូន​បន្ត"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:394
+#: settings/kmail.kcfg.in:382
 #, kde-format
 msgid "Quote characters"
 msgstr "តួអក្សរ​សម្រង់"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:409
+#: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "បញ្ជាក់​ថាតើ​ គោលនយោបាយ​ត្រូវ​បាន​ប្រើ​នៅពេល​បង្ហាញ​គោលនយោបាយ​ដែរឬទេ"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​សម្រាំង​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"បញ្ជាក់​ទទឹង​របស់​វាល​ប្រធាន​បទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr "បញ្ជាក់​ទទឹង​របស់​វាល​​អ្នក​ផ្ញើ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr "បញ្ជាក់​ទទឹង​នៃ​វាល​អ្នកទទួល​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាងក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"បញ្ជាក់​ទទឹង​របស់​វាល​កាលបរិច្ឆេទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr "បញ្ជាក់​​ទទឹង​របស់​វាល​ថត​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, fuzzy, kde-format
@@ -7700,34 +7588,28 @@ msgstr "វិញ្ញាបនបត្រ​ការអ៊ិនគ្រី
 msgid "Show sign/encrypt indicator"
 msgstr "បង្ហាញ​អត្ថបទ​ដែលបាន​​ចុះហត្ថលេខា/បាន​អ៊ិនគ្រីប​បន្ទាប់ពីការតែង"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
-#: ui/securitypageencryptiontab.ui:90
-#, kde-format
-msgid "Show encryption key ownertrust level"
-msgstr ""
-
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
-#: ui/securitypageencryptiontab.ui:100
+#: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/securitypageencryptiontab.ui:106
+#: ui/securitypageencryptiontab.ui:99
 #, fuzzy, kde-format
 #| msgid "Always show the encryption keys &for approval"
 msgid "Always approve encryption keys before send"
 msgstr "បង្ហាញ​សោ​អ៊ិនគ្រីប​ដើម្បី​អនុម័ត​ជានិច្ច"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/securitypageencryptiontab.ui:127
+#: ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
 msgstr "ព្រមាន ប្រសិនបើ​វញ្ញាបនបត្រ/សោ ជិតផុតកំណត់ (កំណត់​រចនាសម្ព័ន្ធ​កម្រិតពន្លឺ​ខាងក្រោម)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/securitypageencryptiontab.ui:139
+#: ui/securitypageencryptiontab.ui:132
 #, fuzzy, kde-format
 #| msgid "For end-user certificates/keys:"
 msgid "For end-user certificates/&keys:"
@@ -7737,14 +7619,14 @@ msgstr "សម្រាប់​សោ/​វិញ្ញាបនបត្រ�
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
-#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
+#: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "ជ្រើស​ចំនួន​ថ្ងៃ​នៅទីនេះ"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:169
+#: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7763,7 +7645,7 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:205
+#: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7782,14 +7664,14 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
-#: ui/securitypageencryptiontab.ui:221
+#: ui/securitypageencryptiontab.ui:214
 #, fuzzy, kde-format
 #| msgid "For root certificates:"
 msgid "For own certificates:"
 msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:245
+#: ui/securitypageencryptiontab.ui:238
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>\n"
@@ -7816,14 +7698,14 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/securitypageencryptiontab.ui:261
+#: ui/securitypageencryptiontab.ui:254
 #, fuzzy, kde-format
 #| msgid "For root certificates:"
 msgid "For &root certificates:"
 msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:307
+#: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7842,20 +7724,20 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/securitypageencryptiontab.ui:323
+#: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
 msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ CA មធ្យម ៖"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/securitypageencryptiontab.ui:354
+#: ui/securitypageencryptiontab.ui:347
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgid "GnuPG Settings…"
 msgstr "ការ​កំណត់ GnuPG​..."
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/securitypageencryptiontab.ui:393
+#: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
 msgstr "បើកការ​ព្រមាន \"កុំសួរម្ដងទៀត\" ឡើងវិញ"
@@ -8606,6 +8488,75 @@ msgstr[0] "កា​រឆ្លើយតប​នៅ​ក្រៅ​ការ
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "ពង្រីក"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ចំនួន​វាល​បឋមកថា MIME ផ្ទាល់ខ្លួន ដើម្បី​​ឲ្យ​បញ្ចូល​ក្នុង​សារ (សម្រាប់​ការ​ប្រើប្រាស់​ខា​ងក្នុង​"
+#~ "ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ថាតើថត​នឹង​ផុត​កំណត់​ក្នុង​ផ្ទៃ​ខាង​ក្រោយ​ដែរឬទេ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុងប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ថាតើ​​ នេះ​ជា​ពេល​ដំបូង​បង្អស់​ដែល​កម្មវិធី​ដំណើការ​មែនឬ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "ទំហំ​ប្រអប់​អត្តសញ្ញាណ (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "ទំហំ​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "កម្ពស់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr "ទទឹង​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr "កម្ពស់​របស់​ប្រអប់​កំណត់​រចនាសម្ព័ន្ធ KMail (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ទទឹង​នៃ​វាល​សម្រាំង​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ទទឹង​របស់​វាល​ប្រធាន​បទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ទទឹង​របស់​វាល​​អ្នក​ផ្ញើ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ទទឹង​នៃ​វាល​អ្នកទទួល​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាងក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "បញ្ជាក់​ទទឹង​របស់​វាល​កាលបរិច្ឆេទ​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr "បញ្ជាក់​​ទទឹង​របស់​វាល​ថត​នៅ​ក្នុង​ប្រអប់​បង្អួច​ស្វែងរក (សម្រាប់​តែ​ការ​ប្រើប្រាស់​ខាង​ក្នុង​ប៉ុណ្ណោះ)"
 
 #, fuzzy
 #~| msgid "Add Note..."

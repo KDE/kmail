@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:39+0000\n"
+"POT-Creation-Date: 2024-06-22 00:39+0000\n"
 "PO-Revision-Date: 2023-12-12 19:31+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -1753,10 +1753,10 @@ msgid ""
 msgstr ""
 "Globálna zmena nastavenia HTML prepíše hodnoty v jednotlivých priečinkoch."
 
+#: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
 #: configuredialog/configuresecuritypage.cpp:305
 #: configuredialog/configuresecuritypage.cpp:307
-#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
@@ -1764,13 +1764,13 @@ msgstr[0] " deň"
 msgstr[1] " dni"
 msgstr[2] " dní"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:338
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Nastavenie GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:345
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1783,23 +1783,23 @@ msgstr ""
 "Modul chýba. Prosím, skontrolujte vašu inštaláciu. Tento modul poskytuje "
 "Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Chyba modulu nastavenia GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Táto možnosť si vyžaduje dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "žiadne proxy"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Aktuálne systémové nastavenie: %1)"
@@ -3429,14 +3429,14 @@ msgid "Encrypt messages when possible"
 msgstr "Automaticky šifrovať správy, ak je to možné"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Varovať pri pok&use o zaslanie nepodpísaných správ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
@@ -6810,18 +6810,8 @@ msgstr "&Zadajte editor:"
 msgid "Use e&xternal editor instead of composer"
 msgstr "Použiť externý editor namiesto composera"
 
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.in:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Určuje počet vlastných polí MIME hlavičiek na vloženie do správ (len pre "
-"vnútorné použitie)"
-
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:111
+#: settings/kmail.kcfg.in:110
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6829,47 +6819,31 @@ msgid ""
 msgstr "Prah, kedy varovať používateľa, že priečinok sa blíži ku kvóte."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:115
+#: settings/kmail.kcfg.in:114
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "&Vyprázdniť kôš pri ukončení programu"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:119
+#: settings/kmail.kcfg.in:118
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Vymazať správy bez potvrdenia"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:123
+#: settings/kmail.kcfg.in:122
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Povoliť spustenie určeného priečinka"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:127
+#: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Nastaviť priečinok na otvorenie pri spustení programu"
 
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.in:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr "Určuje, či priečinky expirujú na pozadí (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.in:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr "Určuje, či je aplikácia spustená prvý krát (len pre vnútorné použitie)"
-
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg.in:160
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6879,7 +6853,7 @@ msgstr ""
 "pokiaľ je zistených viac poštových účtov. Budeme sa pýtať iba raz."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg.in:168
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6887,26 +6861,26 @@ msgid ""
 msgstr "Táto hodnota je použitá na rozhodnutie, či sa má zobraziť Úvod KMail."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg.in:175
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Zobraziť pole rýchleho hľadania priečinka"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:183
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Preposlať v riadku ako predvolené."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Varovať ak počet prijímateľov je väčší ako:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6917,25 +6891,25 @@ msgstr ""
 "potvrdenie pred poslaním mailu. Upozornenie sa dá vypnúť."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg.in:209
 #, kde-format
 msgid "Confirm &before send"
 msgstr "&Potvrdiť pred poslaním"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg.in:216
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Skontroluje pravopis pred odoslaním"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg.in:220
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Automaticky poslať požiadavku potvrdenia o doručení"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg.in:221
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6951,13 +6925,13 @@ msgstr ""
 "p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg.in:243
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Interval pre automatické ukladanie:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg.in:244
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6969,215 +6943,120 @@ msgstr ""
 "nastavením hodnoty na 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "Zobraziť panely textových úryvkov a vkladania v composeri."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "Pri kontrole, poslané správy budú uložené v šifrovanej forme"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Zoznam všetkých nedávno použitých URL"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Zoznam všetkých nedávno použitých kódovaní"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg.in:273
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Zobraziť indikátor šifrovaného popisu"
 
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
-msgid "Show crypto ownertrust icons"
-msgstr "Zobraziť indikátor šifrovaného popisu"
-
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:284
+#: settings/kmail.kcfg.in:277
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Skontrolovať poslať predvolenú skratku"
 
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.in:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Veľkosť dialógu identity (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.in:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Šírka okna hľadania (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.in:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Výška okna hľadanie (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.in:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr "Šírka konfiguračného dialógu KMail (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.in:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "Výška konfiguračného dialógu KMail (len pre vnútorné použitie)"
-
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg.in:331
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "Náhľad správy"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:346
+#: settings/kmail.kcfg.in:334
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Nezobraziť panel náhľadu správy"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:349
+#: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Zobraziť náhľad správy po&d zoznamom správ"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:352
+#: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Zobraziť náhľad správy &vedľa zoznamu správ"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:359
+#: settings/kmail.kcfg.in:347
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "Zoznam priečinkov"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:350
 #, kde-format
 msgid "Long folder list"
 msgstr "Dlhý zoznam priečinkov"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg.in:353
 #, kde-format
 msgid "Short folder list"
 msgstr "Krátky zoznam priečinkov"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:374
+#: settings/kmail.kcfg.in:362
 #, kde-format
 msgid "Message template for new message"
 msgstr "Šablóna pre novú správu"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:379
+#: settings/kmail.kcfg.in:367
 #, kde-format
 msgid "Message template for reply"
 msgstr "Šablóna pre odpoveď"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:384
+#: settings/kmail.kcfg.in:372
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Šablóna správy pre odpovedať všetkým"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:389
+#: settings/kmail.kcfg.in:377
 #, kde-format
 msgid "Message template for forward"
 msgstr "Šablóna pre poslať ďalej"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:394
+#: settings/kmail.kcfg.in:382
 #, kde-format
 msgid "Quote characters"
 msgstr "Znaky citácie"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:409
+#: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Určuje politiku použitú pri zobrazovaní politiky"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Určuje šírku poľa kolekcia v dialógu okna hľadania (len pre vnútorné "
-"použitie)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Určuje šírku poľa predmet v dialógu okna hľadania (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Určuje šírku poľa odosielateľ v dialógu okna hľadania (len pre vnútorné "
-"použitie)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Určuje šírku poľa prijímateľ v dialógu okna hľadania (len pre vnútorné "
-"použitie)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Určuje šírku poľa dátum v dialógu okna hľadania (len pre vnútorné použitie)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Určuje šírku poľa priečinka v dialógu okna hľadania (len pre vnútorné "
-"použitie)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -7671,27 +7550,21 @@ msgstr "Zobraziť indikátor šifrovaného popisu"
 msgid "Show sign/encrypt indicator"
 msgstr "Zobraziť podpísaný/zašifrovaný indikátor v editore"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
-#: ui/securitypageencryptiontab.ui:90
-#, kde-format
-msgid "Show encryption key ownertrust level"
-msgstr ""
-
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
-#: ui/securitypageencryptiontab.ui:100
+#: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
 msgstr "Výstrahy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/securitypageencryptiontab.ui:106
+#: ui/securitypageencryptiontab.ui:99
 #, fuzzy, kde-format
 #| msgid "Always show the encryption keys &for approval"
 msgid "Always approve encryption keys before send"
 msgstr "Vždy požadovať &potvrdenie pre šifrovacie kľúče"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/securitypageencryptiontab.ui:127
+#: ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
 msgstr ""
@@ -7699,7 +7572,7 @@ msgstr ""
 "nastavte hranice pre varovania)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/securitypageencryptiontab.ui:139
+#: ui/securitypageencryptiontab.ui:132
 #, kde-format
 msgid "For end-user certificates/&keys:"
 msgstr "Pre koncové certifikáty/kľúče:"
@@ -7708,14 +7581,14 @@ msgstr "Pre koncové certifikáty/kľúče:"
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
-#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
+#: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "Tu si vyberte počet dní"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:169
+#: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7735,7 +7608,7 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:205
+#: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7755,14 +7628,14 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
-#: ui/securitypageencryptiontab.ui:221
+#: ui/securitypageencryptiontab.ui:214
 #, fuzzy, kde-format
 #| msgid "For &root certificates:"
 msgid "For own certificates:"
 msgstr "Pre koreňové certifikáty:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:245
+#: ui/securitypageencryptiontab.ui:238
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>\n"
@@ -7790,13 +7663,13 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/securitypageencryptiontab.ui:261
+#: ui/securitypageencryptiontab.ui:254
 #, kde-format
 msgid "For &root certificates:"
 msgstr "Pre koreňové certifikáty:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:307
+#: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7816,13 +7689,13 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/securitypageencryptiontab.ui:323
+#: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
 msgstr "Pre CA certifikáty medzičlánkov:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/securitypageencryptiontab.ui:354
+#: ui/securitypageencryptiontab.ui:347
 #, fuzzy, kde-format
 #| msgctxt "@title:window"
 #| msgid "GnuPG Settings"
@@ -7830,7 +7703,7 @@ msgid "GnuPG Settings…"
 msgstr "Nastavenie GnuPG"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/securitypageencryptiontab.ui:393
+#: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
 msgstr "Znovu zapnúť varovania \"Už sa nepýtať\""
@@ -8574,6 +8447,86 @@ msgstr[2] "Odpoveď mimo kancelárie aktívna na serveroch"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Priblíženie: %1%"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Určuje počet vlastných polí MIME hlavičiek na vloženie do správ (len pre "
+#~ "vnútorné použitie)"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr "Určuje, či priečinky expirujú na pozadí (len pre vnútorné použitie)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Určuje, či je aplikácia spustená prvý krát (len pre vnútorné použitie)"
+
+#, fuzzy
+#~| msgid "Show crypto label indicator"
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Zobraziť indikátor šifrovaného popisu"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "Veľkosť dialógu identity (len pre vnútorné použitie)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Šírka okna hľadania (len pre vnútorné použitie)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Výška okna hľadanie (len pre vnútorné použitie)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr "Šírka konfiguračného dialógu KMail (len pre vnútorné použitie)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr "Výška konfiguračného dialógu KMail (len pre vnútorné použitie)"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Určuje šírku poľa kolekcia v dialógu okna hľadania (len pre vnútorné "
+#~ "použitie)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Určuje šírku poľa predmet v dialógu okna hľadania (len pre vnútorné "
+#~ "použitie)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Určuje šírku poľa odosielateľ v dialógu okna hľadania (len pre vnútorné "
+#~ "použitie)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Určuje šírku poľa prijímateľ v dialógu okna hľadania (len pre vnútorné "
+#~ "použitie)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Určuje šírku poľa dátum v dialógu okna hľadania (len pre vnútorné "
+#~ "použitie)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Určuje šírku poľa priečinka v dialógu okna hľadania (len pre vnútorné "
+#~ "použitie)"
 
 #, fuzzy
 #~| msgid ""

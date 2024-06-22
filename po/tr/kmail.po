@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:39+0000\n"
+"POT-Creation-Date: 2024-06-22 00:39+0000\n"
 "PO-Revision-Date: 2024-06-18 12:56+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1643,23 +1643,23 @@ msgid ""
 msgstr ""
 "Genel HTML ayarlarını değiştirmek tüm klasöre özel değerleri değiştirecektir."
 
+#: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
 #: configuredialog/configuresecuritypage.cpp:305
 #: configuredialog/configuresecuritypage.cpp:307
-#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " gün"
 msgstr[1] " gün"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:338
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG Ayarları"
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1669,23 +1669,23 @@ msgstr ""
 "Bu modül eksik. Lütfen kurulumu doğrulayın. Bu modül Kleopatra tarafından "
 "sağlanmaktadır."
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG Yapılandırma Modülü Hatası"
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Bu seçenek dirmngr >= 0.9.0 gerektirir"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "vekil sunucu yok"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Şu anki sistem ayarları: %1)"
@@ -3267,13 +3267,13 @@ msgid "Encrypt messages when possible"
 msgstr "Olabildiğince iletileri şifrele"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "İmzasız ileti gönderilmeye çalışıldığında uyar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Şifrelenmemiş ileti gönderilmeye çalışıldığında uyar"
@@ -6460,18 +6460,8 @@ msgstr "Bir düzenleyici &belirtin:"
 msgid "Use e&xternal editor instead of composer"
 msgstr "&Harici düzenleyici kullan"
 
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.in:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"İletilere eklenilecek özel MIME üstbilgi alanlarının numarasını belirler "
-"(yalnızca dahili kullanım için)"
-
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:111
+#: settings/kmail.kcfg.in:110
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6480,51 +6470,31 @@ msgstr ""
 "Bir klasörün kota sınırına yaklaştığını kullanıcıya bildirme eşik değeri."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:115
+#: settings/kmail.kcfg.in:114
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Uygulamadan çıkarken yerel çöp klasörünü boşalt"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:119
+#: settings/kmail.kcfg.in:118
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "İletileri onay olmadan sil"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:123
+#: settings/kmail.kcfg.in:122
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Özel klasörü başlatmaya izin ver"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:127
+#: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Uygulama başlatıldığında açılacak klasörü belirtin"
 
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.in:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-"Klasörlerin süresinin arka planda dolacağını belirtir (yalnızca dahili "
-"kullanımda)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.in:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Bu çalışmanın, uygulamanın ilk başlatılması olup olmadığını belirler "
-"(yalnızca dahili kullanım için)"
-
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg.in:160
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6535,7 +6505,7 @@ msgstr ""
 "kez sorulur."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg.in:168
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6545,26 +6515,26 @@ msgstr ""
 "için kullanılır."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg.in:175
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Hızlı klasör arama satırını göster"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:183
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "İleti içi metni Öntanımlı Olarak Yönlendir."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Alıcı sayısı bunu aşarsa uyar:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6575,25 +6545,25 @@ msgstr ""
 "uyarı verecek ve bir onay isteyecektir. Uyarı iletisi kapatılabilir."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg.in:209
 #, kde-format
 msgid "Confirm &before send"
 msgstr "&Göndermeden önce onayla"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg.in:216
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Göndermeden önce yazım denetimi yap"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg.in:220
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "İleti okundu uyarılarını oto&matik gönder"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg.in:221
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6610,13 +6580,13 @@ msgstr ""
 "qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg.in:243
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Otomatik kaydetme aralığı:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg.in:244
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6628,218 +6598,119 @@ msgstr ""
 "0 yaparak otomatik kaydetmeyi devre dışı bırakabilirsiniz."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "Oluşturucuda Metin Parçası Yönetimi ve Ekleme Panelini göster."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
 "İşaretlendiğinde, gönderilen iletiler şifrelenmiş biçimde kaydedilecektir"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "En son kullanılan URL'lerin listesi"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "En son kullanılan kodlamaların listesi"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg.in:273
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Şifreleme etiketi göstergesini göster"
 
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.in:280
-#, kde-format
-msgid "Show crypto ownertrust icons"
-msgstr "Şifreleme sahip güveni simgelerini göster"
-
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:284
+#: settings/kmail.kcfg.in:277
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Gönderilen Öntanımlı Kısayolun Geçerliliğini Denetle"
 
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.in:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Hesap penceresinin boyutu (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.in:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Arama penceresinin genişliği (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.in:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Arama penceresinin yüksekliği (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.in:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"K Posta Uygulamasını Yapılandır penceresinin genişliği (dahili kullanım için)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.in:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"K Posta Uygulamasını Yapılandır penceresinin yüksekliği (dahili kullanım "
-"için)"
-
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg.in:331
 #, kde-format
 msgid "Message preview pane:"
 msgstr "İleti önizleme paneli:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:346
+#: settings/kmail.kcfg.in:334
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "İleti önizleme bölümünü gösterme"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:349
+#: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "İleti listesinin altında ileti önizleme bölümünü göster"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:352
+#: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "İleti listesinin yanında ileti önizleme bölümünü göster"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:359
+#: settings/kmail.kcfg.in:347
 #, kde-format
 msgid "Folder list:"
 msgstr "Klasör listesi:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:350
 #, kde-format
 msgid "Long folder list"
 msgstr "Uzun klasör listesi"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg.in:353
 #, kde-format
 msgid "Short folder list"
 msgstr "Kısa klasör listesi"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:374
+#: settings/kmail.kcfg.in:362
 #, kde-format
 msgid "Message template for new message"
 msgstr "Yeni iletiler için şablonlar"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:379
+#: settings/kmail.kcfg.in:367
 #, kde-format
 msgid "Message template for reply"
 msgstr "Yanıtlamak için ileti şablonu"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:384
+#: settings/kmail.kcfg.in:372
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Tümünü yanıtlamak için ileti şablonu"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:389
+#: settings/kmail.kcfg.in:377
 #, kde-format
 msgid "Message template for forward"
 msgstr "Yönlendirmek için ileti şablonu"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:394
+#: settings/kmail.kcfg.in:382
 #, kde-format
 msgid "Quote characters"
 msgstr "Alıntı karakterleri"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:409
+#: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "İlke görüntülenirken kullanılan kullanılan ilkeyi belirler"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki koleksiyon alanının genişliğini "
-"belirtir (yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki konu alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki gönderici alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki alıcı alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki tarih alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Arama Penceresi iletişim kutusundaki klasör alanının genişliğini belirtir "
-"(yalnızca dahili kullanım için)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -7315,33 +7186,27 @@ msgstr "Şifreleme göstergeleri"
 msgid "Show sign/encrypt indicator"
 msgstr "İmza/Şifreleme göstergelerini göster"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
-#: ui/securitypageencryptiontab.ui:90
-#, kde-format
-msgid "Show encryption key ownertrust level"
-msgstr "Sahip güven düzeyi şifreleme anahtarını göster"
-
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
-#: ui/securitypageencryptiontab.ui:100
+#: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
 msgstr "Alarmlar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/securitypageencryptiontab.ui:106
+#: ui/securitypageencryptiontab.ui:99
 #, kde-format
 msgid "Always approve encryption keys before send"
 msgstr "Gönderme öncesi şifreleme anahtarlarını her zaman onayla"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/securitypageencryptiontab.ui:127
+#: ui/securitypageencryptiontab.ui:120
 #, kde-format
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
 msgstr ""
 "Sertifika yakın tarihte sona e&riyorsa uyar (aşağıdan tarihleri ayarlayın)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/securitypageencryptiontab.ui:139
+#: ui/securitypageencryptiontab.ui:132
 #, kde-format
 msgid "For end-user certificates/&keys:"
 msgstr "Son kullanıcı sertifikaları/anahtarları i&çin:"
@@ -7350,14 +7215,14 @@ msgstr "Son kullanıcı sertifikaları/anahtarları i&çin:"
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
-#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
+#: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "Burada kaç gün olduğunu seç"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:169
+#: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7377,7 +7242,7 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:205
+#: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7397,13 +7262,13 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
-#: ui/securitypageencryptiontab.ui:221
+#: ui/securitypageencryptiontab.ui:214
 #, kde-format
 msgid "For own certificates:"
 msgstr "Kendi sertifikaları için:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:245
+#: ui/securitypageencryptiontab.ui:238
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7423,13 +7288,13 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/securitypageencryptiontab.ui:261
+#: ui/securitypageencryptiontab.ui:254
 #, kde-format
 msgid "For &root certificates:"
 msgstr "K&ök sertifikalar için:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:307
+#: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -7449,19 +7314,19 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/securitypageencryptiontab.ui:323
+#: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
 msgstr "Orta düzey CA sertifikaları için:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/securitypageencryptiontab.ui:354
+#: ui/securitypageencryptiontab.ui:347
 #, kde-format
 msgid "GnuPG Settings…"
 msgstr "GnuPG Ayarları…"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/securitypageencryptiontab.ui:393
+#: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
 msgstr "Tüm “Bir Daha Sorma” Uyarılarını Yeniden Etkinleştir"
@@ -8173,6 +8038,94 @@ msgstr[1] "Ofis dışında yanıtlaması sunucularda etkin"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Yakınlaştır: %​%1"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "İletilere eklenilecek özel MIME üstbilgi alanlarının numarasını belirler "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "Klasörlerin süresinin arka planda dolacağını belirtir (yalnızca dahili "
+#~ "kullanımda)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Bu çalışmanın, uygulamanın ilk başlatılması olup olmadığını belirler "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Şifreleme sahip güveni simgelerini göster"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "Hesap penceresinin boyutu (dahili kullanım için)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Arama penceresinin genişliği (dahili kullanım için)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Arama penceresinin yüksekliği (dahili kullanım için)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "K Posta Uygulamasını Yapılandır penceresinin genişliği (dahili kullanım "
+#~ "için)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "K Posta Uygulamasını Yapılandır penceresinin yüksekliği (dahili kullanım "
+#~ "için)"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki koleksiyon alanının genişliğini "
+#~ "belirtir (yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki konu alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki gönderici alanının genişliğini "
+#~ "belirtir (yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki alıcı alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki tarih alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Arama Penceresi iletişim kutusundaki klasör alanının genişliğini belirtir "
+#~ "(yalnızca dahili kullanım için)"
+
+#~ msgid "Show encryption key ownertrust level"
+#~ msgstr "Sahip güven düzeyi şifreleme anahtarını göster"
 
 #~ msgid ""
 #~ "By default, request an MDN when starting to compose a message. You can "

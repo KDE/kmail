@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-21 00:39+0000\n"
+"POT-Creation-Date: 2024-06-22 00:39+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1821,24 +1821,24 @@ msgstr ""
 "Η αλλαγή της καθολικής ρύθμισης για τα νήματα θα υπερισχύσει όλων των τιμών "
 "που πιθανώς έχουν οριστεί για επιμέρους φακέλους."
 
+#: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
 #: configuredialog/configuresecuritypage.cpp:305
 #: configuredialog/configuresecuritypage.cpp:307
-#: configuredialog/configuresecuritypage.cpp:309
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " ημέρα"
 msgstr[1] " ημέρες"
 
-#: configuredialog/configuresecuritypage.cpp:340
+#: configuredialog/configuresecuritypage.cpp:338
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Ρυθμίσεις GnuPG..."
 
-#: configuredialog/configuresecuritypage.cpp:347
+#: configuredialog/configuresecuritypage.cpp:345
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1846,23 +1846,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:352
+#: configuredialog/configuresecuritypage.cpp:350
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:419
+#: configuredialog/configuresecuritypage.cpp:417
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Αυτή η επιλογή απαιτεί το dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:558 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "χωρίς διαμεσολαβητή"
 
-#: configuredialog/configuresecuritypage.cpp:560
+#: configuredialog/configuresecuritypage.cpp:558
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Τρέχουσα ρύθμιση συστήματος: %1)"
@@ -3534,14 +3534,14 @@ msgid "Encrypt messages when possible"
 msgstr "Αυτόματη κρυπτογράφηση μηνυμάτων &αν γίνεται"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Προειδοποίηση κατά την προσπάθεια αποστολής αν&υπόγραφων μηνυμάτων"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:120
+#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
@@ -7031,18 +7031,8 @@ msgstr "&Ορισμός επεξεργαστή:"
 msgid "Use e&xternal editor instead of composer"
 msgstr "&Χρήση εξωτερικού επεξεργαστή για τη σύνταξη μηνυμάτων"
 
-#. i18n: ectx: label, entry (CustomMessageHeadersCount), group (General)
-#: settings/kmail.kcfg.in:108
-#, kde-format
-msgid ""
-"Specifies the number of custom MIME header fields to be inserted in messages "
-"(for internal use only)"
-msgstr ""
-"Καθορίζει τον αριθμό των προσαρμοσμένων πεδίων επικεφαλίδων MIME που θα "
-"εισάγονται στα μηνύματα (μόνο για εσωτερική χρήση)"
-
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:111
+#: settings/kmail.kcfg.in:110
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -7052,53 +7042,33 @@ msgstr ""
 "μεγέθους του."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:115
+#: settings/kmail.kcfg.in:114
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr ""
 "Άδειασμα του τοπικού φακέλου απορριμμά&των κατά την έξοδο από το πρόγραμμα"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:119
+#: settings/kmail.kcfg.in:118
 #, fuzzy, kde-format
 #| msgid "Delete Sieve Script Confirmation"
 msgid "Delete messages without confirmation"
 msgstr "Επιβεβαίωση διαγραφής σεναρίου Sieve"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:123
+#: settings/kmail.kcfg.in:122
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Επιτρέπει την εκκίνηση συγκεκριμένου φακέλου"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:127
+#: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Καθορίζει το φάκελο που θα ανοίγει κατά την εκκίνηση του προγράμματος"
 
-#. i18n: ectx: label, entry (AutoExpiring), group (General)
-#: settings/kmail.kcfg.in:134
-#, kde-format
-msgid ""
-"Specifies whether the folders will expire in the background (for internal "
-"use only)"
-msgstr ""
-"Καθορίζει αν θα γίνεται λήξη των φακέλων στο παρασκήνιο (για εσωτερική χρήση "
-"μόνο)"
-
-#. i18n: ectx: label, entry (FirstStart), group (General)
-#: settings/kmail.kcfg.in:138
-#, kde-format
-msgid ""
-"Specifies whether this is the very first time that the application is run "
-"(for internal use only)"
-msgstr ""
-"Καθορίζει αν είναι η πρώτη φορά που εκτελείται η εφαρμογή (για εσωτερική "
-"χρήση μόνο)"
-
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg.in:160
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -7106,7 +7076,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg.in:168
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -7116,26 +7086,26 @@ msgstr ""
 "εισαγωγής στο KMail."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg.in:175
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Εμφάνιση γραμμής γρήγορης αναζήτησης"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:183
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Προκαθορισμένα προώθηση εμβόλιμα."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Προειδοποίηση αν ο αριθμός παραληπτών είναι περισσότερος από:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -7147,25 +7117,25 @@ msgstr ""
 "αποστολή του μηνύματος. Η προειδοποίηση μπορεί να απενεργοποιηθεί."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg.in:209
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Επι&βεβαίωση πριν την αποστολή"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg.in:216
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Έλεγχος ορθογραφίας πριν την αποστολή"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg.in:220
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Αυτόματη αίτηση ειδοποιήσεων παράδοσης &μηνύματος"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg.in:221
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -7182,13 +7152,13 @@ msgstr ""
 "παράδοσης</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg.in:243
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Χρονικό διάστημα αυτόματης αποθήκευσης:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg.in:244
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -7201,7 +7171,7 @@ msgstr ""
 "απενεργοποιήσετε τη δημιουργία του θέτοντας εδώ την τιμή  0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
@@ -7209,7 +7179,7 @@ msgstr ""
 "συντάκτη."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
@@ -7217,210 +7187,112 @@ msgstr ""
 "κρυπτογραφημένη μορφή"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Μια λίστα με όλα τα πρόσφατα χρησιμοποιημένα URL"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Μια λίστα με όλες τις πρόσφατα χρησιμοποιημένες κωδικοποιήσεις"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg.in:273
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
 
-#. i18n: ectx: label, entry (ShowCryptoOwnertrust), group (Composer)
-#: settings/kmail.kcfg.in:280
-#, fuzzy, kde-format
-#| msgid "Show crypto label indicator"
-msgid "Show crypto ownertrust icons"
-msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
-
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:284
+#: settings/kmail.kcfg.in:277
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Επαλήθευση προκαθορισμένης συντόμευσης αποστολής"
 
-#. i18n: ectx: label, entry (IdentityDialogSize), group (Geometry)
-#: settings/kmail.kcfg.in:301
-#, kde-format
-msgid "The size of the identity dialog (for internal use only)"
-msgstr "Το μέγεθος του διαλόγου ταυτότητας (για εσωτερική χρήση μόνο)"
-
-#. i18n: ectx: label, entry (SearchWidgetWidth), group (Geometry)
-#: settings/kmail.kcfg.in:305
-#, kde-format
-msgid "The width of the search window (for internal use only)"
-msgstr "Το πλάτος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
-
-#. i18n: ectx: label, entry (SearchWidgetHeight), group (Geometry)
-#: settings/kmail.kcfg.in:309
-#, kde-format
-msgid "The height of the search window (for internal use only)"
-msgstr "Το ύψος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
-
-#. i18n: ectx: label, entry (ConfigureDialogWidth), group (Geometry)
-#: settings/kmail.kcfg.in:313
-#, kde-format
-msgid "The width of the Configure KMail dialog (for internal use only)"
-msgstr ""
-"Το πλάτος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
-
-#. i18n: ectx: label, entry (ConfigureDialogHeight), group (Geometry)
-#: settings/kmail.kcfg.in:317
-#, kde-format
-msgid "The height of the Configure KMail dialog (for internal use only)"
-msgstr "Το ύψος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
-
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg.in:331
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "Πλαίσιο προεπισκόπησης μηνυμάτων"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:346
+#: settings/kmail.kcfg.in:334
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Να μην εμφανίζεται το πλαίσιο προεπισκόπησης μηνυμάτων"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:349
+#: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr ""
 "Εμφάνιση του πλαισίου προεπισκόπησης μηνυμάτων κάτω από τη λίστα μηνυμάτων"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:352
+#: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr ""
 "Εμφάνιση του πλαισίου προεπισκόπησης μηνυμάτων δίπλα από τη λίστα μηνυμάτων"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:359
+#: settings/kmail.kcfg.in:347
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "Λίστα φακέλων"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:350
 #, kde-format
 msgid "Long folder list"
 msgstr "Εκτενής λίστα φακέλων"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg.in:353
 #, kde-format
 msgid "Short folder list"
 msgstr "Σύντομη λίστα φακέλων"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:374
+#: settings/kmail.kcfg.in:362
 #, kde-format
 msgid "Message template for new message"
 msgstr "Πρότυπο μηνύματος για νέο μήνυμα"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:379
+#: settings/kmail.kcfg.in:367
 #, kde-format
 msgid "Message template for reply"
 msgstr "Πρότυπο μηνύματος για απάντηση"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:384
+#: settings/kmail.kcfg.in:372
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Πρότυπο μηνύματος για απάντηση σε όλους"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:389
+#: settings/kmail.kcfg.in:377
 #, kde-format
 msgid "Message template for forward"
 msgstr "Πρότυπο μηνύματος για προώθηση"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:394
+#: settings/kmail.kcfg.in:382
 #, kde-format
 msgid "Quote characters"
 msgstr "Χαρακτήρες παράθεσης"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:409
+#: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 "Καθορίζει την πολιτική που θα χρησιμοποιείται όταν θα γίνεται εμφάνιση της "
 "πολιτικής"
-
-#. i18n: ectx: label, entry (CollectionWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:417
-#, kde-format
-msgid ""
-"Specifies the width of the collection field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Καθορίζει το πλάτος του πεδίου συλλογής στο διάλογο του παραθύρου αναζήτησης "
-"(μόνο για εσωτερική χρήση)"
-
-#. i18n: ectx: label, entry (SubjectWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:421
-#, kde-format
-msgid ""
-"Specifies the width of the subject field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Καθορίζει το πλάτος του πεδίου θέματος στο διάλογο του παραθύρου αναζήτησης "
-"(μόνο για εσωτερική χρήση)"
-
-#. i18n: ectx: label, entry (SenderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:425
-#, kde-format
-msgid ""
-"Specifies the width of the sender field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Καθορίζει το πλάτος του πεδίου του αποστολέα στο διάλογο του παραθύρου "
-"αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#. i18n: ectx: label, entry (ReceiverWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:429
-#, kde-format
-msgid ""
-"Specifies the width of the receiver field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Καθορίζει το πλάτος του πεδίου του παραλήπτη στο διάλογο του παραθύρου "
-"αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#. i18n: ectx: label, entry (DateWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:433
-#, kde-format
-msgid ""
-"Specifies the width of the date field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Καθορίζει το πλάτος του πεδίου της ημερομηνίας στο διάλογο του παραθύρου "
-"αναζήτησης (μόνο για εσωτερική χρήση)"
-
-#. i18n: ectx: label, entry (FolderWidth), group (SearchDialog)
-#: settings/kmail.kcfg.in:437
-#, kde-format
-msgid ""
-"Specifies the width of the folder field in the Search Window dialog (for "
-"internal use only)"
-msgstr ""
-"Καθορίζει το πλάτος του πεδίου φακέλου στο διάλογο του παραθύρου αναζήτησης "
-"(μόνο για εσωτερική χρήση)"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -7960,27 +7832,21 @@ msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφ�
 msgid "Show sign/encrypt indicator"
 msgstr "Εμφάνιση ένδειξης υπογραφής/κρυπτογράφησης στον επεξεργαστή"
 
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoOwnertrust)
-#: ui/securitypageencryptiontab.ui:90
-#, kde-format
-msgid "Show encryption key ownertrust level"
-msgstr ""
-
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup3)
-#: ui/securitypageencryptiontab.ui:100
+#: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
-#: ui/securitypageencryptiontab.ui:106
+#: ui/securitypageencryptiontab.ui:99
 #, fuzzy, kde-format
 #| msgid "Always show the encryption keys &for approval"
 msgid "Always approve encryption keys before send"
 msgstr "Εμφάνιση των κλειδιών κρυπτογράφησης &για έγκριση"
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
-#: ui/securitypageencryptiontab.ui:127
+#: ui/securitypageencryptiontab.ui:120
 #, fuzzy, kde-format
 #| msgid "Warn if certificates/keys expire soon (configure thresholds below)"
 msgid "Warn if certificates/ke&ys expire soon (configure thresholds below)"
@@ -7989,7 +7855,7 @@ msgstr ""
 "χρονικών ορίων παρακάτω)"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
-#: ui/securitypageencryptiontab.ui:139
+#: ui/securitypageencryptiontab.ui:132
 #, fuzzy, kde-format
 #| msgid "For end-user certificates/keys:"
 msgid "For end-user certificates/&keys:"
@@ -7999,14 +7865,14 @@ msgstr "Για πιστοποιητικά/κλειδιά χρήστη:"
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
 #. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:161 ui/securitypageencryptiontab.ui:197
-#: ui/securitypageencryptiontab.ui:237 ui/securitypageencryptiontab.ui:299
+#: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
+#: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "Επιλέξτε εδώ τον αριθμό ημερών"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:169
+#: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -8026,7 +7892,7 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:205
+#: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -8046,14 +7912,14 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
-#: ui/securitypageencryptiontab.ui:221
+#: ui/securitypageencryptiontab.ui:214
 #, fuzzy, kde-format
 #| msgid "For root certificates:"
 msgid "For own certificates:"
 msgstr "Για πιστοποιητικά ρίζας:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#: ui/securitypageencryptiontab.ui:245
+#: ui/securitypageencryptiontab.ui:238
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>\n"
@@ -8081,14 +7947,14 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
-#: ui/securitypageencryptiontab.ui:261
+#: ui/securitypageencryptiontab.ui:254
 #, fuzzy, kde-format
 #| msgid "For root certificates:"
 msgid "For &root certificates:"
 msgstr "Για πιστοποιητικά ρίζας:"
 
 #. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
-#: ui/securitypageencryptiontab.ui:307
+#: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""
 "<qt>\n"
@@ -8108,20 +7974,20 @@ msgstr ""
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2)
-#: ui/securitypageencryptiontab.ui:323
+#: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
 msgstr "Για ενδιάμεσα πιστοποιητικά CA:"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
-#: ui/securitypageencryptiontab.ui:354
+#: ui/securitypageencryptiontab.ui:347
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgid "GnuPG Settings…"
 msgstr "Ρυθμίσεις GnuPG..."
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
-#: ui/securitypageencryptiontab.ui:393
+#: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
 msgstr ""
@@ -8894,6 +8760,91 @@ msgstr[1] "Απάντηση εκτός γραφείου ενεργή στους 
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Εστίαση"
+
+#~ msgid ""
+#~ "Specifies the number of custom MIME header fields to be inserted in "
+#~ "messages (for internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει τον αριθμό των προσαρμοσμένων πεδίων επικεφαλίδων MIME που θα "
+#~ "εισάγονται στα μηνύματα (μόνο για εσωτερική χρήση)"
+
+#~ msgid ""
+#~ "Specifies whether the folders will expire in the background (for internal "
+#~ "use only)"
+#~ msgstr ""
+#~ "Καθορίζει αν θα γίνεται λήξη των φακέλων στο παρασκήνιο (για εσωτερική "
+#~ "χρήση μόνο)"
+
+#~ msgid ""
+#~ "Specifies whether this is the very first time that the application is run "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει αν είναι η πρώτη φορά που εκτελείται η εφαρμογή (για εσωτερική "
+#~ "χρήση μόνο)"
+
+#, fuzzy
+#~| msgid "Show crypto label indicator"
+#~ msgid "Show crypto ownertrust icons"
+#~ msgstr "Εμφάνιση ετικέτας ένδειξης κρυπτογράφησης"
+
+#~ msgid "The size of the identity dialog (for internal use only)"
+#~ msgstr "Το μέγεθος του διαλόγου ταυτότητας (για εσωτερική χρήση μόνο)"
+
+#~ msgid "The width of the search window (for internal use only)"
+#~ msgstr "Το πλάτος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
+
+#~ msgid "The height of the search window (for internal use only)"
+#~ msgstr "Το ύψος του παραθύρου αναζήτησης (για εσωτερική χρήση μόνο)"
+
+#~ msgid "The width of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "Το πλάτος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
+
+#~ msgid "The height of the Configure KMail dialog (for internal use only)"
+#~ msgstr ""
+#~ "Το ύψος του διαλόγου διαμόρφωσης του KMail (για εσωτερική χρήση μόνο)"
+
+#~ msgid ""
+#~ "Specifies the width of the collection field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει το πλάτος του πεδίου συλλογής στο διάλογο του παραθύρου "
+#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#~ msgid ""
+#~ "Specifies the width of the subject field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει το πλάτος του πεδίου θέματος στο διάλογο του παραθύρου "
+#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#~ msgid ""
+#~ "Specifies the width of the sender field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει το πλάτος του πεδίου του αποστολέα στο διάλογο του παραθύρου "
+#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#~ msgid ""
+#~ "Specifies the width of the receiver field in the Search Window dialog "
+#~ "(for internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει το πλάτος του πεδίου του παραλήπτη στο διάλογο του παραθύρου "
+#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#~ msgid ""
+#~ "Specifies the width of the date field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει το πλάτος του πεδίου της ημερομηνίας στο διάλογο του παραθύρου "
+#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
+
+#~ msgid ""
+#~ "Specifies the width of the folder field in the Search Window dialog (for "
+#~ "internal use only)"
+#~ msgstr ""
+#~ "Καθορίζει το πλάτος του πεδίου φακέλου στο διάλογο του παραθύρου "
+#~ "αναζήτησης (μόνο για εσωτερική χρήση)"
 
 #, fuzzy
 #~| msgid ""
