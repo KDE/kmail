@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-06-16 10:13+0200\n"
+"PO-Revision-Date: 2024-06-22 08:11+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -4744,7 +4744,7 @@ msgstr "Opóźnione wiadomości..."
 #: kmmainwidget.cpp:3029
 #, kde-format
 msgid "Followup Reminder Messages..."
-msgstr "Wiadomości przypomnienia..."
+msgstr "Wiadomości przypominająca..."
 
 #: kmmainwidget.cpp:3040 util.cpp:149
 #, kde-format
@@ -5891,7 +5891,7 @@ msgstr "Odfiltruj po &listach dyskusyjnych..."
 #: messageactions.cpp:80
 #, kde-format
 msgid "Add Followup Reminder..."
-msgstr "Usługa przypomnienie..."
+msgstr "Dodaj przypomnienie…"
 
 #: messageactions.cpp:82
 #, kde-format
