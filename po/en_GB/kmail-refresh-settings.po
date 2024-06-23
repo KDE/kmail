@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-30 16:29+0100\n"
+"PO-Revision-Date: 2024-06-22 12:51+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -70,8 +70,7 @@ msgid "Finish"
 msgstr "Finish"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Clean"

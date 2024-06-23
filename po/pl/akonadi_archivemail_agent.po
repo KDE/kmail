@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-26 12:18+0200\n"
+"PO-Revision-Date: 2024-06-22 08:13+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -36,36 +37,31 @@ msgid "Archive all subfolders"
 msgstr "Archiwizuj wszystkie podkatalogi"
 
 #: addarchivemailwidget.cpp:38
-#, fuzzy, kde-format
-#| msgid "Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Katalog:"
 
 #: addarchivemailwidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "Format:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Format:"
 
 #: addarchivemailwidget.cpp:56
-#, fuzzy, kde-format
-#| msgid "Path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Ścieżka:"
 
 #: addarchivemailwidget.cpp:63
-#, fuzzy, kde-format
-#| msgid "Backup each:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Twórz kopię zapasową co:"
 
 #: addarchivemailwidget.cpp:75
-#, fuzzy, kde-format
-#| msgid "Maximum number of archive:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Największa liczba archiwów:"
@@ -147,13 +143,12 @@ msgstr "lukasz.wojnilowicz@gmail.com"
 #: archivemailwidget.cpp:109
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "Dodaj…"
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder..."
+#, kde-format
 msgid "Open Containing Folder…"
-msgstr "Otwórz zawierający katalog..."
+msgstr "Otwórz jego katalog…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45

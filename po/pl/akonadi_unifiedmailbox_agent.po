@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
+# SPDX-FileCopyrightText: 2018, 2021, 2023, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 #
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2018, 2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2023-09-30 10:23+0200\n"
+"PO-Revision-Date: 2024-06-22 08:13+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -16,17 +16,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: settingsdialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Dodaj"
 
 #: settingsdialog.cpp:68
-#, fuzzy, kde-format
-#| msgid "Modify"
+#, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Zmień"
@@ -79,8 +78,7 @@ msgid "Name:"
 msgstr "Nazwa:"
 
 #: unifiedmailboxeditor.cpp:103
-#, fuzzy, kde-format
-#| msgid "Pick icon..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "Wybierz ikonę..."

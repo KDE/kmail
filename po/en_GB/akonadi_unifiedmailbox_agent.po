@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-21 19:29+0100\n"
+"PO-Revision-Date: 2024-06-22 12:49+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -15,18 +15,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 
 #: settingsdialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Add"
 
 #: settingsdialog.cpp:68
-#, fuzzy, kde-format
-#| msgid "Modify"
+#, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Modify"
@@ -79,8 +77,7 @@ msgid "Name:"
 msgstr "Name:"
 
 #: unifiedmailboxeditor.cpp:103
-#, fuzzy, kde-format
-#| msgid "Pick icon..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Pick icon..."
 msgstr "Pick icon..."

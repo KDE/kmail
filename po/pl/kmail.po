@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-22 00:39+0000\n"
-"PO-Revision-Date: 2024-06-16 10:13+0200\n"
+"PO-Revision-Date: 2024-06-22 08:11+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -402,8 +402,7 @@ msgid "Folder holds a mailing list"
 msgstr "Katalog przechowuje listę dyskusyjną"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Wykryj samoczynnie"
@@ -424,8 +423,7 @@ msgid "Preferred handler:"
 msgstr "Pierwszeństwo obsługi:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Wywołaj obsługę"
@@ -1295,8 +1293,7 @@ msgstr ""
 "późniejszego podpowiadania"
 
 #: configuredialog/configurecomposerpage.cpp:447
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Ustawienia podpowiadania…"
@@ -1356,10 +1353,9 @@ msgstr "U&suń"
 
 #: configuredialog/configurecomposerpage.cpp:690
 #: configuredialog/configurecomposerpage.cpp:1043
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "Zmień…"
+msgstr "Zm&ień…"
 
 #: configuredialog/configurecomposerpage.cpp:690
 #, kde-format
@@ -1448,8 +1444,7 @@ msgid "Ne&w"
 msgstr "&Nowy"
 
 #: configuredialog/configurecomposerpage.cpp:822
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "U&suń"
@@ -3422,8 +3417,7 @@ msgid "Attach my vCard to message"
 msgstr "Dołącz moją wizytówkę do wiadomości"
 
 #: identity/identitydialog.cpp:614
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Utwórz…"
@@ -3461,8 +3455,7 @@ msgid "&Use custom message templates for this identity"
 msgstr "&Użyj własnych wzorców dla tej tożsamości"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "S&kopiuj wzorce globalne"
@@ -4369,10 +4362,9 @@ msgid "Sending messages"
 msgstr "Wysyłanie wiadomości"
 
 #: kmkernel.cpp:1457
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
-msgstr "Inicjalizacja procesu wysyłania…"
+msgstr "Rozpoczynanie wysyłania…"
 
 #: kmkernel.cpp:1536
 #, kde-format
@@ -4922,7 +4914,7 @@ msgstr "Opóźnione wiadomości…"
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "Wiadomości przypomnienia…"
+msgstr "Wiadomości przypominająca…"
 
 #: kmmainwidget.cpp:3041 util.cpp:149
 #, kde-format
