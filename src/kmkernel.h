@@ -387,6 +387,7 @@ public:
     void action(bool mailto,
                 bool check,
                 bool startInTray,
+                bool htmlBody,
                 const QString &to,
                 const QString &cc,
                 const QString &bcc,

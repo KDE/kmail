@@ -32,6 +32,7 @@ QDebug operator<<(QDebug d, const CommandLineInfo &t)
     d << "mCheckMail " << t.checkMail();
     d << "mViewOnly " << t.viewOnly();
     d << "mCalledWithSession " << t.calledWithSession();
+    d << "mHtmlBody " << t.htmlBody();
     return d;
 }
 
@@ -110,6 +111,12 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
     if (parser.isSet(QStringLiteral("body"))) {
         mMailto = true;
         mBody = parser.value(QStringLiteral("body"));
+    }
+
+    if (parser.isSet(QStringLiteral("html"))) {
+        mMailto = true;
+        mBody = parser.value(QStringLiteral("html"));
+        mHtmlBody = true;
     }
 
     const QStringList attachList = parser.values(QStringLiteral("attach"));
@@ -300,7 +307,7 @@ bool CommandLineInfo::operator==(const CommandLineInfo &other) const
     return mCustomHeaders == other.mCustomHeaders && mAttachURLs == other.mAttachURLs && mTo == other.mTo && mCc == other.mCc && mBcc == other.mBcc
         && mSubject == other.mSubject && mBody == other.mBody && mInReplyTo == other.mInReplyTo && mReplyTo == other.mReplyTo && mIdentity == other.mIdentity
         && mMessageFile == other.mMessageFile && mStartInTray == other.mStartInTray && mMailto == other.mMailto && mCheckMail == other.mCheckMail
-        && mViewOnly == other.mViewOnly && mCalledWithSession == other.mCalledWithSession;
+        && mViewOnly == other.mViewOnly && mCalledWithSession == other.mCalledWithSession && mHtmlBody == other.mHtmlBody;
 }
 
 void CommandLineInfo::setCustomHeaders(const QStringList &newCustomHeaders)
@@ -381,4 +388,14 @@ void CommandLineInfo::setViewOnly(bool newViewOnly)
 void CommandLineInfo::setCalledWithSession(bool newCalledWithSession)
 {
     mCalledWithSession = newCalledWithSession;
+}
+
+bool CommandLineInfo::htmlBody() const
+{
+    return mHtmlBody;
+}
+
+void CommandLineInfo::setHtmlBody(bool newHtmlBody)
+{
+    mHtmlBody = newHtmlBody;
 }

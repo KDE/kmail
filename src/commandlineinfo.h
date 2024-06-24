@@ -82,6 +82,9 @@ public:
 
     void setCalledWithSession(bool newCalledWithSession);
 
+    [[nodiscard]] bool htmlBody() const;
+    void setHtmlBody(bool newHtmlBody);
+
 private:
     QStringList mCustomHeaders;
     QList<QUrl> mAttachURLs;
@@ -99,6 +102,7 @@ private:
     bool mCheckMail = false;
     bool mViewOnly = false;
     bool mCalledWithSession = false; // for ignoring '-session foo'
+    bool mHtmlBody = false;
 };
 
 Q_DECLARE_TYPEINFO(CommandLineInfo, Q_MOVABLE_TYPE);
