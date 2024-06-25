@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-22 00:39+0000\n"
+"POT-Creation-Date: 2024-06-25 00:39+0000\n"
 "PO-Revision-Date: 2024-06-18 16:09+0200\n"
 "Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3900,13 +3900,21 @@ msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Zobrazit daný soubor se zprávou"
 
-#: kmail_options.h:39
+#: kmail_options.h:38
+#, fuzzy, kde-format
+#| msgctxt "@info:shell"
+#| msgid "Set body of message"
+msgctxt "@info:shell"
+msgid "Set body of message as html"
+msgstr "Nastavit tělo zprávy"
+
+#: kmail_options.h:40
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Seznam dostupných voleb pro uživatelskou zpětnou vazbu"
 
-#: kmail_options.h:44
+#: kmail_options.h:45
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -4129,79 +4137,79 @@ msgstr "Panel nástrojů HTML"
 msgid "Text Direction Toolbar"
 msgstr "Panel nástrojů směru textu"
 
-#: kmkernel.cpp:616
+#: kmkernel.cpp:617
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail je nastaven na odpojen, všechny síťové úlohy jsou odloženy"
 
-#: kmkernel.cpp:636 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr "Odeslat e-mail"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr "E-mail nelze odeslat"
 
-#: kmkernel.cpp:668
+#: kmkernel.cpp:669
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail je nastaven na připojen, všechny síťové úlohy jsou obnoveny"
 
-#: kmkernel.cpp:670
+#: kmkernel.cpp:671
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:743
+#: kmkernel.cpp:744
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail je právě v odpojeném režimu; jak si přejete pokračovat?"
 
-#: kmkernel.cpp:745
+#: kmkernel.cpp:746
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Připojen/Odpojen"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:747
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Pracovat připojen"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:748
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Pracovat odpojen"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:772
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:774
+#: kmkernel.cpp:775
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:869
+#: kmkernel.cpp:870
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:871
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Otevření souboru automatického uložení selhalo"
 
-#: kmkernel.cpp:1417
+#: kmkernel.cpp:1419
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4211,7 +4219,7 @@ msgstr[1] "Tyto %1 identity byly nastaveny pro používání výchozího transpo
 msgstr[2] ""
 "Těchto %1 identit bylo nastaveno pro používání výchozího transportu:"
 
-#: kmkernel.cpp:1441
+#: kmkernel.cpp:1443
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4221,17 +4229,17 @@ msgstr[1] "Tyto %1 identity byly nastaveny pro používání změněného transp
 msgstr[2] ""
 "Těchto %1 identit bylo nastaveno pro používání změněného transportu:"
 
-#: kmkernel.cpp:1456
+#: kmkernel.cpp:1458
 #, kde-format
 msgid "Sending messages"
 msgstr "Odesílám zprávy"
 
-#: kmkernel.cpp:1457
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Je inicializováno odesílání…"
 
-#: kmkernel.cpp:1536
+#: kmkernel.cpp:1538
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4240,7 +4248,7 @@ msgstr ""
 "Zdroj %1 je poškozen.\n"
 "%2"
 
-#: kmkernel.cpp:1712 kmkernel.cpp:1718
+#: kmkernel.cpp:1714 kmkernel.cpp:1720
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7849,11 +7857,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr "Určuje zda složka vyprší na pozadí (pouze pro interní použití)"
-
-#~ msgid "Show encryption key ownertrust level"
-#~ msgstr "Zobrazit úroveň důvěry šifrovacího klíče"

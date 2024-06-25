@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-22 00:39+0000\n"
+"POT-Creation-Date: 2024-06-25 00:39+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -3913,13 +3913,19 @@ msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Boodskap skuif het gevaal."
 
-#: kmail_options.h:39
+#: kmail_options.h:38
+#, fuzzy, kde-format
+msgctxt "@info:shell"
+msgid "Set body of message as html"
+msgstr "Redigeer Boodksap"
+
+#: kmail_options.h:40
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:44
+#: kmail_options.h:45
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -4141,39 +4147,39 @@ msgstr ""
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:616
+#: kmkernel.cpp:617
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:636 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, fuzzy, kde-format
 msgid "Send Email"
 msgstr "Stuur Nou"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
 
-#: kmkernel.cpp:668
+#: kmkernel.cpp:669
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:670
+#: kmkernel.cpp:671
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:743
+#: kmkernel.cpp:744
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:745
+#: kmkernel.cpp:746
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -4181,7 +4187,7 @@ msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Inlyn"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:747
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -4189,7 +4195,7 @@ msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Inlyn"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:748
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -4197,29 +4203,29 @@ msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Inlyn"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:772
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:774
+#: kmkernel.cpp:775
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:869
+#: kmkernel.cpp:870
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:871
 #, fuzzy, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Boodskap skuif het gevaal."
 
-#: kmkernel.cpp:1417
+#: kmkernel.cpp:1419
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4227,7 +4233,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1441
+#: kmkernel.cpp:1443
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4235,25 +4241,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1456
+#: kmkernel.cpp:1458
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
 msgid "Sending messages"
 msgstr "Vee boodskappe uit"
 
-#: kmkernel.cpp:1457
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "Initiating sending process…"
 msgstr ""
 
-#: kmkernel.cpp:1536
+#: kmkernel.cpp:1538
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1712 kmkernel.cpp:1718
+#: kmkernel.cpp:1714 kmkernel.cpp:1720
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
