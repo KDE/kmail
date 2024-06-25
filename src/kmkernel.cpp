@@ -379,9 +379,11 @@ void KMKernel::openComposer(const QString &to,
                             const QStringList &customHeaders,
                             const QString &replyTo,
                             const QString &inReplyTo,
-                            const QString &identity)
+                            const QString &identity,
+                            bool htmlBody)
 {
-    const OpenComposerSettings settings(to, cc, bcc, subject, body, hidden, messageFile, attachmentPaths, customHeaders, replyTo, inReplyTo, identity);
+    const OpenComposerSettings
+        settings(to, cc, bcc, subject, body, hidden, messageFile, attachmentPaths, customHeaders, replyTo, inReplyTo, identity, htmlBody);
     auto job = new OpenComposerJob(this);
     job->setOpenComposerSettings(std::move(settings));
     job->start();
@@ -402,7 +404,8 @@ void KMKernel::openComposer(const QString &to,
                             const QString &attachParamValue,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset,
-                            unsigned int identity)
+                            unsigned int identity,
+                            bool htmlBody)
 {
     fillComposer(hidden,
                  to,
@@ -420,7 +423,8 @@ void KMKernel::openComposer(const QString &to,
                  attachContDisp,
                  attachCharset,
                  identity,
-                 false);
+                 false,
+                 htmlBody);
 }
 
 void KMKernel::openComposer(const QString &to,
@@ -437,7 +441,8 @@ void KMKernel::openComposer(const QString &to,
                             const QString &attachParamValue,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset,
-                            unsigned int identity)
+                            unsigned int identity,
+                            bool htmlBody)
 {
     fillComposer(false,
                  to,
@@ -455,7 +460,8 @@ void KMKernel::openComposer(const QString &to,
                  attachContDisp,
                  attachCharset,
                  identity,
-                 true);
+                 true,
+                 htmlBody);
 }
 
 void KMKernel::fillComposer(bool hidden,
@@ -474,7 +480,8 @@ void KMKernel::fillComposer(bool hidden,
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset,
                             unsigned int identity,
-                            bool forceShowWindow)
+                            bool forceShowWindow,
+                            bool htmlBody)
 {
     const FillComposerJobSettings settings(hidden,
                                            to,
@@ -492,7 +499,8 @@ void KMKernel::fillComposer(bool hidden,
                                            attachContDisp,
                                            attachCharset,
                                            identity,
-                                           forceShowWindow);
+                                           forceShowWindow,
+                                           htmlBody);
     auto job = new FillComposerJob;
     job->setSettings(std::move(settings));
     job->start();
@@ -1068,7 +1076,19 @@ void KMKernel::action(bool mailto,
                       const QString &identity)
 {
     if (mailto) {
-        openComposer(to, cc, bcc, subj, body, false, messageFile.toLocalFile(), QUrl::toStringList(attachURLs), customHeaders, replyTo, inReplyTo, identity);
+        openComposer(to,
+                     cc,
+                     bcc,
+                     subj,
+                     body,
+                     false,
+                     messageFile.toLocalFile(),
+                     QUrl::toStringList(attachURLs),
+                     customHeaders,
+                     replyTo,
+                     inReplyTo,
+                     identity,
+                     htmlBody);
     } else {
         openReader(check, startInTray);
     }

@@ -214,7 +214,8 @@ public Q_SLOTS:
                                    const QStringList &customHeaders,
                                    const QString &replyTo = QString(),
                                    const QString &inReplyTo = QString(),
-                                   const QString &identity = QString());
+                                   const QString &identity = QString(),
+                                   bool htmlBody = false);
 
     /**
      * Opens a composer window and prefills it with different
@@ -252,7 +253,8 @@ public Q_SLOTS:
                                    const QString &attachParamValue,
                                    const QByteArray &attachContDisp,
                                    const QByteArray &attachCharset,
-                                   unsigned int identity);
+                                   unsigned int identity,
+                                   bool htmlBody);
 
     /**
      * Opens a composer window and prefills it with different
@@ -289,7 +291,8 @@ public Q_SLOTS:
                                    const QString &attachParamValue,
                                    const QByteArray &attachContDisp,
                                    const QByteArray &attachCharset,
-                                   unsigned int identity);
+                                   unsigned int identity,
+                                   bool htmlBody);
 
     /**
      * Opens a composer window and prefills it with different
@@ -573,7 +576,8 @@ private:
                                       const QByteArray &attachContDisp,
                                       const QByteArray &attachCharset,
                                       unsigned int identity,
-                                      bool forceShowWindow);
+                                      bool forceShowWindow,
+                                      bool htmlBody);
 
     KMAIL_NO_EXPORT void verifyAccount();
     KMAIL_NO_EXPORT void resourceGoOnLine();

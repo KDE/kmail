@@ -24,7 +24,8 @@ struct KMAILTESTS_TESTS_EXPORT OpenComposerSettings {
                          const QStringList &customHeaders,
                          const QString &replyTo,
                          const QString &inReplyTo,
-                         const QString &identity)
+                         const QString &identity,
+                         bool htmlBody)
         : mAttachmentPaths(attachmentPaths)
         , mCustomHeaders(customHeaders)
         , mTo(to)
@@ -37,6 +38,7 @@ struct KMAILTESTS_TESTS_EXPORT OpenComposerSettings {
         , mInReplyTo(inReplyTo)
         , mIdentity(identity)
         , mHidden(hidden)
+        , mHtmlBody(htmlBody)
     {
     }
 
@@ -52,6 +54,7 @@ struct KMAILTESTS_TESTS_EXPORT OpenComposerSettings {
     QString mInReplyTo;
     QString mIdentity;
     bool mHidden = false;
+    bool mHtmlBody = false;
 };
 
 class KMAILTESTS_TESTS_EXPORT OpenComposerJob : public QObject

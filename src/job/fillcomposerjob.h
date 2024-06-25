@@ -28,7 +28,8 @@ struct FillComposerJobSettings {
                             const QByteArray &attachContDisp,
                             const QByteArray &attachCharset,
                             unsigned int identity,
-                            bool forceShowWindow)
+                            bool forceShowWindow,
+                            bool htmlBody)
         : mTo(to)
         , mCc(cc)
         , mBcc(bcc)
@@ -46,6 +47,7 @@ struct FillComposerJobSettings {
         , mIdentity(identity)
         , mForceShowWindow(forceShowWindow)
         , mHidden(hidden)
+        , mHtmlBody(htmlBody)
     {
     }
 
@@ -66,6 +68,7 @@ struct FillComposerJobSettings {
     unsigned int mIdentity = 0;
     bool mForceShowWindow = false;
     bool mHidden = false;
+    bool mHtmlBody = false;
 };
 
 class FillComposerJob : public QObject
