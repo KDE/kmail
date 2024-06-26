@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-04-20 00:38+0000\n"
-"PO-Revision-Date: 2024-06-18 03:56+0200\n"
+"PO-Revision-Date: 2024-06-25 17:50+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3879,7 +3879,7 @@ msgstr "Leer el cuerpo-del-mensaje desde «archivo»"
 #: kmail_options.h:27
 #, kde-format
 msgid "Set body of message"
-msgstr "Poner cuerpo del mensaje"
+msgstr "Definir el cuerpo del mensaje"
 
 #: kmail_options.h:28
 #, kde-format
