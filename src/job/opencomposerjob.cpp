@@ -105,7 +105,9 @@ void OpenComposerJob::start()
 void OpenComposerJob::slotOpenComposer()
 {
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, mContext, mIdentityId);
-    cWin->forceEnableHtml();
+    if (mOpenComposerSettings.mHtmlBody) {
+        cWin->forceEnableHtml();
+    }
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         cWin->setFocusToSubject();
     }
