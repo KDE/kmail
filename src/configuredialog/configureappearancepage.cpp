@@ -53,7 +53,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QIcon>
 #include <QLineEdit>
 
-#include <KMime/DateFormatter>
+#include <MessageCore/DateFormatter>
 
 #include <KLazyLocalizedString>
 #include <QButtonGroup>
@@ -68,7 +68,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QVBoxLayout>
 #include <QWhatsThis>
 
-using KMime::DateFormatter;
+using MessageCore::DateFormatter;
 using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
@@ -599,10 +599,10 @@ QString AppearancePageHeadersTab::helpAnchor() const
 static const struct {
     const KLazyLocalizedString displayName;
     DateFormatter::FormatType dateDisplay;
-} dateDisplayConfig[] = {{kli18n("Sta&ndard format (%1)"), KMime::DateFormatter::CTime},
-                         {kli18n("Locali&zed format (%1)"), KMime::DateFormatter::Localized},
-                         {kli18n("Smart for&mat (%1)"), KMime::DateFormatter::Fancy},
-                         {kli18n("C&ustom format:"), KMime::DateFormatter::Custom}};
+} dateDisplayConfig[] = {{kli18n("Sta&ndard format (%1)"), MessageCore::DateFormatter::CTime},
+                         {kli18n("Locali&zed format (%1)"), MessageCore::DateFormatter::Localized},
+                         {kli18n("Smart for&mat (%1)"), MessageCore::DateFormatter::Fancy},
+                         {kli18n("C&ustom format:"), MessageCore::DateFormatter::Custom}};
 static const int numDateDisplayConfig = sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
 
 AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
