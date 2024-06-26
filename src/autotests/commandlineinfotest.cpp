@@ -33,6 +33,7 @@ void CommandLineInfoTest::shouldHaveDefaultValues()
     QVERIFY(!w.checkMail());
     QVERIFY(!w.viewOnly());
     QVERIFY(!w.calledWithSession());
+    QVERIFY(!w.htmlBody());
 }
 
 void CommandLineInfoTest::parseCommandLineInfo_data()
