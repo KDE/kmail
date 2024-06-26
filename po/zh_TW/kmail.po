@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:39+0000\n"
 "PO-Revision-Date: 2024-05-30 22:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -4129,67 +4129,67 @@ msgstr "HTML 工具列"
 msgid "Text Direction Toolbar"
 msgstr "文字方向工具列"
 
-#: kmkernel.cpp:617
+#: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail 目前設定為離線工作，所有網路相關的工作都將暫停。"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr "傳送電子郵件"
 
-#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:646 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr "無法傳送郵件"
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail 目前設定為上線中，所有網路相關的工作都將繼續。"
 
-#: kmkernel.cpp:671
+#: kmkernel.cpp:679
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "KMail 目前設定為上線中，所有網路相關的工作都將在偵測到網路連線後繼續"
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:752
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail 目前在離線模式。您要怎麼處理？"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "上線/離線"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:755
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "回到線上"
 
-#: kmkernel.cpp:748
+#: kmkernel.cpp:756
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "離線工作"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:780
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "偵測到網路連線，所有網路工作都將回復"
 
-#: kmkernel.cpp:775
+#: kmkernel.cpp:783
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "沒有偵測到網路連線，所有網路工作都將暫停"
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:878
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4198,37 +4198,37 @@ msgstr ""
 "開啟於 %1 的自動儲存檔失敗。\n"
 "理由：%2"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "開啟自動儲存檔失敗"
 
-#: kmkernel.cpp:1419
+#: kmkernel.cpp:1439
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "以下 %1 個身份已經被設定為使用預設的送信帳號："
 
-#: kmkernel.cpp:1443
+#: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "以下 %1 個身份使用的送信帳號已被變更："
 
-#: kmkernel.cpp:1458
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "Sending messages"
 msgstr "送出信件中"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1479
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "正在起始寄件程序…"
 
-#: kmkernel.cpp:1538
+#: kmkernel.cpp:1558
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4237,7 +4237,7 @@ msgstr ""
 "資源 %1 已損毀。\n"
 "%2"
 
-#: kmkernel.cpp:1714 kmkernel.cpp:1720
+#: kmkernel.cpp:1734 kmkernel.cpp:1740
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

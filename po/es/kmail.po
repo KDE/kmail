@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:39+0000\n"
-"PO-Revision-Date: 2024-06-18 03:56+0200\n"
+"POT-Creation-Date: 2024-06-26 00:39+0000\n"
+"PO-Revision-Date: 2024-06-25 17:50+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4004,7 +4004,7 @@ msgstr "Leer el cuerpo-del-mensaje desde «archivo»"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
-msgstr "Poner cuerpo del mensaje"
+msgstr "Definir el cuerpo del mensaje"
 
 #: kmail_options.h:32
 #, kde-format
@@ -4043,12 +4043,10 @@ msgid "View the given message file"
 msgstr "Ver el archivo de mensaje dado"
 
 #: kmail_options.h:38
-#, fuzzy, kde-format
-#| msgctxt "@info:shell"
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "Poner cuerpo del mensaje"
+msgstr "Definir el cuerpo del mensaje como HTML"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4278,31 +4276,31 @@ msgstr "Barra de herramientas HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra de herramientas de dirección de texto"
 
-#: kmkernel.cpp:617
+#: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail está en modo desconectado. Todas las tareas relacionadas con la red se "
 "han suspendido"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr "Enviar correo"
 
-#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:646 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Imposible enviar correo"
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail está en modo conectado. Todas las tareas relacionadas con la red se "
 "han reanudado"
 
-#: kmkernel.cpp:671
+#: kmkernel.cpp:679
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4311,44 +4309,44 @@ msgstr ""
 "KMail está en modo conectado. Todas las tareas de red se reanudarán cuando "
 "se detecte una conexión de red"
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:752
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail está ahora en modo desconectado. ¿Quiere seguir adelante?"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Conectado/desconectado"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:755
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Trabajar con conexión"
 
-#: kmkernel.cpp:748
+#: kmkernel.cpp:756
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Trabajar sin conexión"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:780
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "Conexión de red detectada, todas las tareas relacionadas con la red se han "
 "reanudado"
 
-#: kmkernel.cpp:775
+#: kmkernel.cpp:783
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "No se ha detectado conexión de red, todas las tareas relacionadas con la red "
 "se han suspendido"
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:878
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4357,12 +4355,12 @@ msgstr ""
 "Ha fallado al abrir el archivo de autoguardado en %1.\n"
 "Motivo: %2"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "La apertura del archivo de autoguardado ha fallado"
 
-#: kmkernel.cpp:1419
+#: kmkernel.cpp:1439
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4372,7 +4370,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Estas %1 identidades se han cambiado para usar el transporte predefinido:"
 
-#: kmkernel.cpp:1443
+#: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4381,17 +4379,17 @@ msgstr[0] "Esta identidad se ha cambiado para usar el transporte modificado:"
 msgstr[1] ""
 "Estas %1 identidades se han cambiado para usar el transporte modificado:"
 
-#: kmkernel.cpp:1458
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "Sending messages"
 msgstr "Enviando mensajes"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1479
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Iniciando el proceso de envío..."
 
-#: kmkernel.cpp:1538
+#: kmkernel.cpp:1558
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4400,7 +4398,7 @@ msgstr ""
 "El recurso %1 está dañado.\n"
 "%2"
 
-#: kmkernel.cpp:1714 kmkernel.cpp:1720
+#: kmkernel.cpp:1734 kmkernel.cpp:1740
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

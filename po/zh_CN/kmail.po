@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -3863,12 +3863,10 @@ msgid "View the given message file"
 msgstr "查看给定的消息文件"
 
 #: kmail_options.h:38
-#, fuzzy, kde-format
-#| msgctxt "@info:shell"
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "设置消息正文"
+msgstr ""
 
 #: kmail_options.h:40
 #, kde-format
@@ -4096,67 +4094,67 @@ msgstr "HTML 工具栏"
 msgid "Text Direction Toolbar"
 msgstr "文本方向工具栏"
 
-#: kmkernel.cpp:617
+#: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail 设置为脱机；所有的网络任务都将被推迟"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr "发送电子邮件"
 
-#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:646 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr "无法发送邮件。"
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail 设置为联机；所有的网络任务都已恢复"
 
-#: kmkernel.cpp:671
+#: kmkernel.cpp:679
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "KMail 已设置为联机；所有的网络任务都将在检测到网络链接时恢复"
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:752
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail 目前处于脱机模式。您打算如何继续？"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "联机/脱机"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:755
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "联机工作"
 
-#: kmkernel.cpp:748
+#: kmkernel.cpp:756
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "脱机工作"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:780
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "检测到网络连接，所有的网络任务都已恢复"
 
-#: kmkernel.cpp:775
+#: kmkernel.cpp:783
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "未检测到网络连接，所有的网络任务都已挂起"
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:878
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4165,36 +4163,36 @@ msgstr ""
 "打开位于 %1 的自动保存文件失败。\n"
 "原因：%2"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "打开自动保存文件失败"
 
-#: kmkernel.cpp:1419
+#: kmkernel.cpp:1439
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "这 %1 个身份已经更改为使用默认传送方式："
 
-#: kmkernel.cpp:1443
+#: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "这 %1 个身份已经更改为使用修改的传送方式："
 
-#: kmkernel.cpp:1458
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "Sending messages"
 msgstr "发送消息中"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1479
 #, kde-format
 msgid "Initiating sending process…"
 msgstr ""
 
-#: kmkernel.cpp:1538
+#: kmkernel.cpp:1558
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4203,7 +4201,7 @@ msgstr ""
 "资源 %1 已损坏。\n"
 "%2"
 
-#: kmkernel.cpp:1714 kmkernel.cpp:1720
+#: kmkernel.cpp:1734 kmkernel.cpp:1740
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7770,63 +7768,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr "指定要插入信息的自定义 MIME 头部字段个数 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr "指定文件夹是否在后台过期 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr "指定此次是否为应用程序首次运行 (仅供内部使用)"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "身份对话框大小 (仅供内部使用)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "搜索窗口宽度 (仅供内部使用)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "搜索窗口高度 (仅供内部使用)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr "KMail 配置对话框宽度 (仅供内部使用)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr "KMail 配置对话框高度 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr "指定搜索窗口对话框中收藏字段的宽度 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "指定搜索窗口对话框中主题字段宽度 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "指定搜索窗口对话框中发件人字段宽度 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr "指定搜索窗口对话框中收件人字段宽度 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "指定搜索窗口对话框中日期字段宽度 (仅供内部使用)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "指定搜索窗口对话框中文件夹字段的宽度 (仅供内部使用)"

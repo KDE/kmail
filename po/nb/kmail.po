@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:39+0000\n"
+"POT-Creation-Date: 2024-06-26 00:39+0000\n"
 "PO-Revision-Date: 2015-02-07 22:15+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -4266,30 +4266,30 @@ msgstr "HTML-verktøylinje"
 msgid "Text Direction Toolbar"
 msgstr "Verktøylinje for tekstretning"
 
-#: kmkernel.cpp:617
+#: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail er satt i frakoblet modus. Alle jobber som krever nettverk er satt på "
 "vent"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr ""
 
-#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:646 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail er koblet til igjen. Alle jobber som krever nettverk er gjenopptatt"
 
-#: kmkernel.cpp:671
+#: kmkernel.cpp:679
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4298,47 +4298,47 @@ msgstr ""
 "KMail er satt til å være koblet til. Alle jobber som krever nettverk blir "
 "gjenopptatt når en nettverksforbindelse oppdages"
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:752
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail er i frakoblet modus. Hvordan vil du fortsette?"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:754
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Tilkoblet/Frakoblet"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:755
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Arbeid tilkoblet"
 
-#: kmkernel.cpp:748
+#: kmkernel.cpp:756
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Arbeid frakoblet"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:780
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "Nettverksforbindelse er oppdaget, alle jobber som krever nettverk er "
 "gjenopptatt"
 
-#: kmkernel.cpp:775
+#: kmkernel.cpp:783
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Ingen nettverksforbindelse funnet, alle jobber som krever nettverk er satt "
 "på vent"
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:878
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4347,12 +4347,12 @@ msgstr ""
 "Klarte ikke åpne autolagret fil ved %1.\n"
 "Årsak: %2"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Klarte ikke åpne autolagret fil"
 
-#: kmkernel.cpp:1419
+#: kmkernel.cpp:1439
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4361,7 +4361,7 @@ msgstr[0] "Denne identiteten er endret til å bruke standard meldingstransport:"
 msgstr[1] ""
 "Disse %1 identitetene er endret til å bruke standard meldingstransport:"
 
-#: kmkernel.cpp:1443
+#: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4371,25 +4371,25 @@ msgstr[0] ""
 msgstr[1] ""
 "Disse %1 identitetene er endret til å bruke den endrede meldingstransporten:"
 
-#: kmkernel.cpp:1458
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "Sending messages"
 msgstr "Sender meldinger"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1479
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Starter sendeprosessen …"
 
-#: kmkernel.cpp:1538
+#: kmkernel.cpp:1558
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1714 kmkernel.cpp:1720
+#: kmkernel.cpp:1734 kmkernel.cpp:1740
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -8106,81 +8106,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr ""
-#~ "Oppgir antall egendefinerte MIME hodefelter som skal settes inn i "
-#~ "meldinger (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr ""
-#~ "Oppgir om mappene skal gå ut på dato i bakgrunnen (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Oppgir om dette er aller første gang programmet kjøres (bare for internt "
-#~ "bruk)"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "Størrelse på identitetsdialogen (bare for internt bruk)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "Bredden på søkevinduet (bare for internt bruk)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "Høyden på søkevinduet (bare for internt bruk)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr "Bredden på KMails oppsettsdialog (bare for internt bruk)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr "Høyden på KMails oppsettsdialog (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Oppgir bredden på samlingsfeltet i søkevinduet (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "Oppgir bredden på emnefeltet i søkevinduet (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Oppgir bredden på avsenderfeltet i søkevinduet (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Oppgir bredden på adressatfeltet i søkevinduet (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "Oppgir bredden på datofeltet i søkevinduet (bare for internt bruk)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr "Oppgir bredden på mappefeltet i søkevinduet (bare for internt bruk)"
-
-#, fuzzy
-#~| msgid "Add Note..."
-#~ msgid "Add Note…"
-#~ msgstr "Legg til merknad …"
-
-#, fuzzy
-#~| msgid "Edit Note..."
-#~ msgid "Edit Note…"
-#~ msgstr "Rediger merknad …"

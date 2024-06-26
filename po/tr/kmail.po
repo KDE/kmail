@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:39+0000\n"
-"PO-Revision-Date: 2024-06-18 12:56+0300\n"
+"POT-Creation-Date: 2024-06-26 00:39+0000\n"
+"PO-Revision-Date: 2024-06-26 01:05+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -4015,12 +4015,10 @@ msgid "View the given message file"
 msgstr "Verilen ileti dosyasını göster"
 
 #: kmail_options.h:38
-#, fuzzy, kde-format
-#| msgctxt "@info:shell"
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "İletinin gövdesini belirle"
+msgstr "İletinin gövdesini HTML olarak ayarla"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4249,27 +4247,27 @@ msgstr "HTML Araç Çubuğu"
 msgid "Text Direction Toolbar"
 msgstr "Metin Yönü Araç Çubuğu"
 
-#: kmkernel.cpp:617
+#: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "K Posta çevrimdışı olarak ayarlanmış; tüm ağ işleri beklemede"
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr "E-posta Gönder"
 
-#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:646 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr "E-posta gönderimi olanaksız"
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "K Posta çevrimiçi olarak ayarlandı; tüm ağ işlemleri sürdürülüyor"
 
-#: kmkernel.cpp:671
+#: kmkernel.cpp:679
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4278,42 +4276,42 @@ msgstr ""
 "K Posta çevrimiçi olarak ayarlandı; ağ bağlantısı tespit edildiğinde tüm ağ "
 "işlemlerini sürdürülecek"
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:752
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 "K Posta şu anda çevrimdışı çalışıyor. İşlemi nasıl gerçekleştirmek "
 "istiyorsunuz?"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Çevrimiçi/Çevrimdışı"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:755
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Çevrimiçi Çalış"
 
-#: kmkernel.cpp:748
+#: kmkernel.cpp:756
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Çevrimdışı Çalış"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:780
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Ağ bağlantısı tespit edildi, tüm ağ görevlerini sürdürülüyor"
 
-#: kmkernel.cpp:775
+#: kmkernel.cpp:783
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Ağ bağlantısı tespit edildi, tüm ağ görevleri durduruldu"
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:878
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4322,12 +4320,12 @@ msgstr ""
 "%1 konumundaki kendiliğinden kaydetme dosyası açılamadı.\n"
 "Sebep: %2"
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "Otokayıt Dosyayı Açma Başarısız"
 
-#: kmkernel.cpp:1419
+#: kmkernel.cpp:1439
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4338,7 +4336,7 @@ msgstr[1] ""
 "Aşağıdaki %1 adet kimlik, öntanımlı taşıyıcıyı kullanacak şekilde "
 "değiştirildi:"
 
-#: kmkernel.cpp:1443
+#: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4349,17 +4347,17 @@ msgstr[1] ""
 "Aşağıdaki %1 adet kimlik, değiştirilmiş taşıyıcıyı kullanacak şekilde "
 "ayarlandı:"
 
-#: kmkernel.cpp:1458
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "Sending messages"
 msgstr "İletiler gönderiliyor"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1479
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Gönderme işlemi başlatılıyor…"
 
-#: kmkernel.cpp:1538
+#: kmkernel.cpp:1558
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4368,7 +4366,7 @@ msgstr ""
 "%1 özkaynağı bozuk.\n"
 "%2"
 
-#: kmkernel.cpp:1714 kmkernel.cpp:1720
+#: kmkernel.cpp:1734 kmkernel.cpp:1740
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

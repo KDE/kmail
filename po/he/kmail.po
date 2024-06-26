@@ -20,15 +20,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-25 00:39+0000\n"
-"PO-Revision-Date: 2024-06-23 08:39+0300\n"
+"POT-Creation-Date: 2024-06-26 00:39+0000\n"
+"PO-Revision-Date: 2024-06-25 15:45+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.0\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -2390,18 +2390,16 @@ msgid "Send Confirmation"
 msgstr "אימות שליחה"
 
 #: editor/kmcomposerwin.cpp:3067
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
-msgstr "שלח &עכשיו"
+msgstr "לשלוח &עכשיו"
 
 #: editor/kmcomposerwin.cpp:3068
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
-msgstr "שלח &אחר-כך"
+msgstr "לשלוח &אחר כך"
 
 #: editor/kmcomposerwin.cpp:3143
 #, kde-format
@@ -2416,15 +2414,13 @@ msgid "Too many recipients"
 msgstr "יותר מדי נמענים"
 
 #: editor/kmcomposerwin.cpp:3145
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
-msgstr "&שלח ללא שינוי"
+msgstr "ל&שלוח ללא שינוי"
 
 #: editor/kmcomposerwin.cpp:3146
-#, fuzzy, kde-format
-#| msgid "&Edit Recipients"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&עריכת נמענים"
@@ -2442,16 +2438,16 @@ msgid "Lose the formatting?"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3186
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
-msgstr "מידע אודות החיבור"
+msgstr "עיצוב דליל"
 
 #: editor/kmcomposerwin.cpp:3187
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
-msgstr "הודעה בתור טקסט רגיל"
+msgstr "הוספת סימון טקסט פשוט"
 
 #: editor/kmcomposerwin.cpp:3399
 #, kde-format
@@ -2662,15 +2658,13 @@ msgid ""
 msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
-#, fuzzy, kde-format
-#| msgid "Send Now"
+#, kde-format
 msgctxt "@action"
 msgid "Send Now"
-msgstr "לשלוח עכשיו"
+msgstr "לשלוח כעת"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "הגדרת נושא להודעה הזאת"
@@ -2730,9 +2724,9 @@ msgid "&Attach file"
 msgstr "&צירוף קובץ"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:30
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Remind me later"
-msgstr "שלח אחר כך"
+msgstr "לה&זכיר לי מאוחר יותר"
 
 #: editor/warningwidgets/externaleditorwarning.cpp:18
 #, kde-format
@@ -2875,11 +2869,10 @@ msgid "Clear History"
 msgstr ""
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Reopen Closed Viewer"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "פתיחת המציג שנסגר מחדש"
+msgstr "פתיחת מציג שנסגר מחדש"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
@@ -2934,8 +2927,7 @@ msgid "&Duplicate existing vCard"
 msgstr "&שכפול כרטיס ביקור קיים"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Existing identities:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "זהויות &קיימות:"
@@ -3359,9 +3351,9 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "כינוי הדוא״ל „%1” שגוי"
 
 #: identity/identitydialog.cpp:751
-#, fuzzy, kde-format
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "השתמש ב&סיומת זיהוי הודעה מותאמת אישית"
+msgstr "חובה לציין דוא״ל לזהות הזאת."
 
 #: identity/identitydialog.cpp:751
 #, kde-format
@@ -3407,11 +3399,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:848
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
-msgstr "כתובת הדוא\"ל של רשות התעודות שמנפיקה תעודות"
+msgstr "כתובת הדוא״ל לא נמצאה במפתח/אישורים"
 
 #: identity/identitydialog.cpp:860
 #, kde-format
@@ -3774,15 +3765,16 @@ msgstr ""
 "qt>"
 
 #: job/removecollectionjob.cpp:92
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the folder <resource>%1</resource> and "
 "all its subfolders, discarding their contents? <p><b>Beware</b> that "
 "discarded messages are not saved into your Trash folder and are permanently "
 "deleted.</p></qt>"
 msgstr ""
-"<qt>האם אתה בטוח שברצונך למחוק את התיקייה <b>%1</b> ואת כל תיקיות המשנה שלה, "
-"תוך אובדן התכולה שלהן? </qt>"
+"<qt>למחוק את התיקייה <resource>%1</resource> על כל תת־התיקיות שלה תוך ויתור "
+"על תוכנן? <p><b>חשוב לשים לב</b> הודעות שוויתרת עליהן לא נשמרות בתיקיית "
+"האשפה שלך אלא נמחקות לצמיתות.</p></qt>"
 
 #: job/removecollectionjob.cpp:99
 #, kde-format
@@ -4125,79 +4117,79 @@ msgstr ""
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:617
+#: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:637 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
+#: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
 msgid "Send Email"
 msgstr "שליחת דוא״ל"
 
-#: kmkernel.cpp:638 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:646 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
 #, kde-format
 msgid "Impossible to send email"
 msgstr "אי אפשר לשלוח דוא״ל"
 
-#: kmkernel.cpp:669
+#: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:671
+#: kmkernel.cpp:679
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:744
+#: kmkernel.cpp:752
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "כרגע, מצב העבודה של KMail הוא לא מקוון. איך להמשיך?"
 
-#: kmkernel.cpp:746
+#: kmkernel.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "מקוון/בלתי מקוון"
 
-#: kmkernel.cpp:747
+#: kmkernel.cpp:755
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "עבודה מקוונת"
 
-#: kmkernel.cpp:748
+#: kmkernel.cpp:756
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "עבודה לא מקוונת"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:780
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:775
+#: kmkernel.cpp:783
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:870
+#: kmkernel.cpp:878
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:871
+#: kmkernel.cpp:879
 #, kde-format
 msgid "Opening Autosave File Failed"
 msgstr "פתיחת קובץ שמירה אוטומטי נכשלה"
 
-#: kmkernel.cpp:1419
+#: kmkernel.cpp:1439
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4207,7 +4199,7 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: kmkernel.cpp:1443
+#: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4217,24 +4209,24 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: kmkernel.cpp:1458
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "Sending messages"
 msgstr "הודעות נשלחות"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1479
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "תהליך השליחה מאותחל…"
 
-#: kmkernel.cpp:1538
+#: kmkernel.cpp:1558
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1714 kmkernel.cpp:1720
+#: kmkernel.cpp:1734 kmkernel.cpp:1740
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
