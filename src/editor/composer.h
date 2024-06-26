@@ -129,6 +129,8 @@ public: // kmkernel
 
     virtual void forceDisableHtml() = 0;
 
+    virtual void forceEnableHtml() = 0;
+
     virtual void disableForgottenAttachmentsCheck() = 0;
 
 public: // kmcommand

@@ -2690,6 +2690,12 @@ void KMComposerWin::forceDisableHtml()
     // FIXME: Remove the toggle toolbar action somehow
 }
 
+void KMComposerWin::forceEnableHtml()
+{
+    enableHtml();
+    // TODO
+}
+
 bool KMComposerWin::isComposing() const
 {
     return mComposerBase && mComposerBase->isComposing();

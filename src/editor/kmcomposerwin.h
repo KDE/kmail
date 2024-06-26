@@ -212,6 +212,8 @@ public: // kmkernel, kmcommands, callback
      */
     void forceDisableHtml() override;
 
+    void forceEnableHtml() override;
+
     /**
      * Returns @c true while the message composing is in progress.
      */
