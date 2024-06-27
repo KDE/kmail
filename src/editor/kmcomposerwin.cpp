@@ -343,9 +343,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     const QList<int> defaultSizes{0};
     mHeadersToEditorSplitter->setSizes(defaultSizes);
 
-    auto v = new QVBoxLayout(mMainWidget);
-    v->setContentsMargins({});
-    v->addWidget(mHeadersToEditorSplitter);
+    auto mainlayoutMainWidget = new QVBoxLayout(mMainWidget);
+    mainlayoutMainWidget->setContentsMargins({});
+    mainlayoutMainWidget->addWidget(mHeadersToEditorSplitter);
     auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
     identity->setObjectName("identitycombo"_L1);
@@ -429,16 +429,16 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     auto editorAndCryptoStateIndicators = new QWidget(mSplitter);
 
-    auto vbox = new QVBoxLayout(editorAndCryptoStateIndicators);
-    vbox->setSpacing(0);
-    vbox->setContentsMargins({});
+    mEditorAndCryptoStateIndicatorsLayout = new QVBoxLayout(editorAndCryptoStateIndicators);
+    mEditorAndCryptoStateIndicatorsLayout->setSpacing(0);
+    mEditorAndCryptoStateIndicatorsLayout->setContentsMargins({});
 
     connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
-    vbox->addWidget(mPotentialPhishingEmailWarning);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mPotentialPhishingEmailWarning);
 
     connect(mAttachmentMissing, &AttachmentMissingWarning::attachMissingFile, this, &KMComposerWin::slotAttachMissingFile);
     connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposerWin::slotExplicitClosedMissingAttachment);
-    vbox->addWidget(mAttachmentMissing);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mAttachmentMissing);
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
     composerEditorNg->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
@@ -452,15 +452,15 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     // connect(editor, &KMComposerEditor::textChanged, this, &KMComposeWin::slotEditorTextChanged);
     mComposerBase->setEditor(composerEditorNg);
 
-    vbox->addWidget(mIncorrectIdentityFolderWarning);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mIncorrectIdentityFolderWarning);
 
-    vbox->addWidget(mPluginEditorMessageWidget);
-    vbox->addWidget(mAttachmentFromExternalMissing);
-    vbox->addWidget(mTooMyRecipientWarning);
-    vbox->addWidget(mNearExpiryWarning);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mPluginEditorMessageWidget);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mAttachmentFromExternalMissing);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mTooMyRecipientWarning);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mNearExpiryWarning);
 
-    vbox->addWidget(mCryptoStateIndicatorWidget);
-    vbox->addWidget(mRichTextEditorWidget);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mCryptoStateIndicatorWidget);
+    mEditorAndCryptoStateIndicatorsLayout->addWidget(mRichTextEditorWidget);
 
     mSnippetSplitter->insertWidget(0, editorAndCryptoStateIndicators);
     mSnippetSplitter->setOpaqueResize(true);
@@ -515,7 +515,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     }
     connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);
 
-    v->addWidget(mExternalEditorWarning);
+    mainlayoutMainWidget->addWidget(mExternalEditorWarning);
 
     mPluginEditorManagerInterface->setParentWidget(this);
     mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorWidget->editor());

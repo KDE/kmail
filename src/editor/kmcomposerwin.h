@@ -63,6 +63,7 @@ class NearExpiryWarning;
 class KHamburgerMenu;
 class TooManyRecipientsWarning;
 class SubjectLineEditWithAutoCorrection;
+class QVBoxLayout;
 namespace MailTransport
 {
 class Transport;
@@ -713,4 +714,5 @@ private:
     std::shared_ptr<Kleo::KeyCache> mKeyCache;
 
     ModeType mModeType = ModeType::ComposerType;
+    QVBoxLayout *mEditorAndCryptoStateIndicatorsLayout = nullptr;
 };
