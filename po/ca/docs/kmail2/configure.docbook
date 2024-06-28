@@ -365,13 +365,13 @@ format="PNG"/></imageobject
 >Adreça de correu electrònic</title>
 <para
 >Si la vostra adreça és <replaceable
->Jordi Usuari &lt;jordi@exemple.cat&gt;</replaceable
+>Jordi Usuari &lt;jordi@example.com&gt;</replaceable
 >, haureu d'introduir <userinput
 >Jordi Usuari</userinput
 > en el camp <guilabel
 >El vostre nom</guilabel
 > i <userinput
->jordi@exemple.cat</userinput
+>jordi@example.com</userinput
 > en el camp <guilabel
 >Adreça de correu</guilabel
 >.</para
@@ -394,9 +394,9 @@ format="PNG"/></imageobject
 <title
 >Àlies de correu electrònic</title>
 <para
->Adreça principal: nom.cognom@exemple.org</para>
+>Adreça principal: nom.cognom@example.org</para>
 <para
->Àlies: nom@exemple.org i cognom@exemple.org</para>
+>Àlies: nom@example.org i cognom@example.org</para>
 </example>
 </listitem>
 </varlistentry>

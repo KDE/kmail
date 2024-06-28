@@ -767,7 +767,7 @@
 
 <para
 >Sempre que vulgueu afegir-hi més d'un destinatari en un dels camps, utilitzeu una coma per a separar una adreça de la següent. Podríeu necessitar especificar adreces completes (&pex;, <userinput
->usuari@exemple.cat</userinput
+>usuari@example.com</userinput
 >) fins i tot per a usuaris locals, depenent de la configuració en el vostre sistema.</para>
 
 <para
@@ -3702,7 +3702,7 @@ after composing</guilabel
 >--gen-key</option
 ></userinput
 >. O podeu demanar-li al &kmail; que creï un parell de claus nou en crear un compte nou de correu electrònic. La identitat (normalment el vostre nom seguit per la vostra adreça de correu electrònic entre abraçadors, com ara <userinput
->Jordi Exemple &lt;jordi@exemple.cat&gt;</userinput
+>Jordi Exemple &lt;jordi@example.com&gt;</userinput
 >) i la vostra frase de pas són importants per a la cooperació entre el &kmail; i <application
 >GnuPG</application
 >.</para>
