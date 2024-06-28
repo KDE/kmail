@@ -248,7 +248,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
     , mNearExpiryWarning(new NearExpiryWarning(this))
     , mCryptoStateIndicatorWidget(new CryptoStateIndicatorWidget(this))
-    , mPotentialPhishingEmailWarning(new PotentialPhishingEmailWarning(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
@@ -431,9 +430,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEditorAndCryptoStateIndicatorsLayout = new QVBoxLayout(editorAndCryptoStateIndicators);
     mEditorAndCryptoStateIndicatorsLayout->setSpacing(0);
     mEditorAndCryptoStateIndicatorsLayout->setContentsMargins({});
-
-    connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
-    mEditorAndCryptoStateIndicatorsLayout->addWidget(mPotentialPhishingEmailWarning);
 
     connect(mAttachmentMissing, &AttachmentMissingWarning::attachMissingFile, this, &KMComposerWin::slotAttachMissingFile);
     connect(mAttachmentMissing, &AttachmentMissingWarning::explicitClosedMissingAttachment, this, &KMComposerWin::slotExplicitClosedMissingAttachment);
@@ -3144,6 +3140,11 @@ void KMComposerWin::slotPotentialPhishingEmailsFound(const QStringList &list)
     if (list.isEmpty()) {
         slotCheckSendNowStep2();
     } else {
+        if (!mPotentialPhishingEmailWarning) {
+            mPotentialPhishingEmailWarning = new PotentialPhishingEmailWarning(this);
+            connect(mPotentialPhishingEmailWarning, &PotentialPhishingEmailWarning::sendNow, this, &KMComposerWin::slotCheckSendNowStep2);
+            mEditorAndCryptoStateIndicatorsLayout->insertWidget(0, mPotentialPhishingEmailWarning);
+        }
         mPotentialPhishingEmailWarning->setPotentialPhisingEmail(list);
     }
 }

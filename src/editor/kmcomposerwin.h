@@ -697,7 +697,7 @@ private:
     KToggleAction *mFollowUpToggleAction = nullptr;
     MessageComposer::StatusBarLabelToggledState *mStatusBarLabelToggledOverrideMode = nullptr;
     MessageComposer::StatusBarLabelToggledState *mStatusBarLabelSpellCheckingChangeMode = nullptr;
-    PotentialPhishingEmailWarning *const mPotentialPhishingEmailWarning;
+    PotentialPhishingEmailWarning *mPotentialPhishingEmailWarning = nullptr;
     IncorrectIdentityFolderWarning *const mIncorrectIdentityFolderWarning;
     KMComposerGlobalAction *mGlobalAction = nullptr;
     TextCustomEditor::RichTextEditorWidget *mRichTextEditorWidget = nullptr;
