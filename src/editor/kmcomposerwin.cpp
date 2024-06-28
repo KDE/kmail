@@ -454,7 +454,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mIncorrectIdentityFolderWarning);
 
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mPluginEditorMessageWidget);
-    mEditorAndCryptoStateIndicatorsLayout->addWidget(mAttachmentFromExternalMissing);
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mTooMyRecipientWarning);
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mNearExpiryWarning);
 
