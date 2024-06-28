@@ -572,11 +572,8 @@ target_link_libraries(kmail
     KPim6::WebEngineViewer
     ${kmail_userfeedback_LIB}
     KF6::WindowSystem
+    KF6::IconThemes
 )
-
-if(TARGET KF6::IconThemes)
-    target_link_libraries(kmail KF6::IconThemes)
-endif()
 
 if(BUILD_TESTING)
     add_subdirectory(autotests)
