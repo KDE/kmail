@@ -252,7 +252,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
     , mPluginEditorManagerInterface(new KMailPluginEditorManagerInterface(this))
     , mPluginEditorGrammarManagerInterface(new KMailPluginGrammarEditorManagerInterface(this))
-    , mAttachmentFromExternalMissing(new AttachmentAddedFromExternalWarning(this))
     , mPluginEditorMessageWidget(new PimCommon::PurposeMenuMessageWidget(this))
     , mKeyCache(Kleo::KeyCache::mutableInstance())
 {
@@ -611,6 +610,14 @@ KMComposerWin::~KMComposerWin()
     delete mComposerBase;
 }
 
+void KMComposerWin::createAttachmentFromExternalMissing()
+{
+    if (!mAttachmentFromExternalMissing) {
+        mAttachmentFromExternalMissing = new AttachmentAddedFromExternalWarning(this);
+        mEditorAndCryptoStateIndicatorsLayout->insertWidget(0, mAttachmentFromExternalMissing);
+    }
+}
+
 void KMComposerWin::slotTooManyRecipients(bool b)
 {
     if (b) {
@@ -791,6 +798,7 @@ void KMComposerWin::addAttachment(const QList<KMail::Composer::AttachmentInfo> &
         mComposerBase->addAttachment(info.url, info.comment, false);
     }
     if (showWarning) {
+        createAttachmentFromExternalMissing();
         mAttachmentFromExternalMissing->setAttachmentNames(lst);
         mAttachmentFromExternalMissing->animatedShow();
     }

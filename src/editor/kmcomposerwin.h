@@ -583,6 +583,7 @@ private:
     void updateHamburgerMenu();
     void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
+    void createAttachmentFromExternalMissing();
 
     [[nodiscard]] bool sign() const;
 
@@ -707,7 +708,7 @@ private:
     KMailPluginEditorConvertTextManagerInterface *mPluginEditorConvertTextManagerInterface = nullptr;
     KMailPluginGrammarEditorManagerInterface *const mPluginEditorGrammarManagerInterface;
 
-    AttachmentAddedFromExternalWarning *const mAttachmentFromExternalMissing;
+    AttachmentAddedFromExternalWarning *mAttachmentFromExternalMissing = nullptr;
     KHamburgerMenu *mHamburgerMenu = nullptr;
     PimCommon::PurposeMenuMessageWidget *const mPluginEditorMessageWidget;
 
