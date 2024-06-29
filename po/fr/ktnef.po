@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-17 09:11+0200\n"
+"PO-Revision-Date: 2024-06-26 20:28+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -19,9 +19,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 23.08.5\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -37,7 +37,7 @@ msgstr "jcorn@free.fr, sdepiets@gmail.com"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr ""
+msgstr "Enregistrer…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -95,9 +95,7 @@ msgid "View"
 msgstr "Affichage"
 
 #: ktnefmain.cpp:115
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "View With..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Afficher avec..."
@@ -109,17 +107,13 @@ msgid "Extract"
 msgstr "Extraire"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
 msgstr "Extraire vers..."
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract All To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Tout extraire vers..."
@@ -143,17 +137,13 @@ msgid "Show Message Text"
 msgstr "Afficher le texte du message"
 
 #: ktnefmain.cpp:147
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Save Message Text As..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
 msgstr "Enregistrer le texte du message sous..."
 
 #: ktnefmain.cpp:160
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Default Folder..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
 msgstr "Dossier par défaut..."
@@ -230,20 +220,16 @@ msgid "&Open With"
 msgstr "&Ouvrir avec"
 
 #: ktnefmain.cpp:570
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
+#, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "&Autres..."
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "&Ouvrir avec"
+msgstr "&Ouvrir avec..."
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
