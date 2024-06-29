@@ -243,12 +243,8 @@ SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
     , mWidget(new Ui::SecurityPageEncryptionTab)
 {
     mWidget->setupUi(this);
-    connect(mWidget->kcfg_AlwaysEncryptDrafts, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
-    connect(mWidget->kcfg_CryptoStoreEncrypted, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mAutoSign, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mAutoEncrypt, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
-
-    connect(mWidget->kcfg_ShowCryptoLabelIndicator, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
 
     connect(mWidget->mShowKeyApprovalDlg, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mWarnUnsigned, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);

@@ -91,20 +91,10 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     mConfirmSendCheck = new QCheckBox(i18n("&Confirm action"), this);
     mConfirmSendCheck->setObjectName(u"kcfg_ConfirmBeforeSend"_s);
     formLayout->addRow(i18n("Before sending:"), mConfirmSendCheck);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mConfirmSendCheck, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
-#else
-    connect(mConfirmSendCheck, &QCheckBox::checkStateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
-#endif
 
     mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling"), this);
     mCheckSpellingBeforeSending->setObjectName(u"kcfg_CheckSpellingBeforeSend"_s);
     formLayout->addRow(QString(), mCheckSpellingBeforeSending);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mCheckSpellingBeforeSending, &QCheckBox::stateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
-#else
-    connect(mCheckSpellingBeforeSending, &QCheckBox::checkStateChanged, this, &AccountsPageSendingTab::slotEmitChanged);
-#endif
 
     // "send on check" combo:
     mSendOnCheckCombo = new QComboBox(this);
@@ -127,7 +117,6 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     hLayout->addWidget(mUndoSend);
     connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {
         mUndoSendComboBox->setEnabled(state);
-        slotEmitChanged();
     });
 
     mUndoSendComboBox = new UndoSendCombobox(this);

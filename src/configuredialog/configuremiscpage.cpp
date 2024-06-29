@@ -60,31 +60,11 @@ MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
     layout->addWidget(mOnStartupOpenFolder);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mMMTab.kcfg_ExcludeImportantFromExpiry, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#else
-    connect(mMMTab.kcfg_ExcludeImportantMailFromExpiry, &QCheckBox::checkStateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#endif
-    connect(mMMTab.kcfg_LoopOnGotoUnread, &QComboBox::activated, this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.kcfg_ActionEnterFolder, &QComboBox::activated, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkTime, &QSpinBox::valueChanged, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
     connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mMMTab.kcfg_ShowPopupAfterDnD, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#else
-    connect(mMMTab.kcfg_ShowPopupAfterDnD, &QCheckBox::checkStateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#endif
     connect(mOnStartupOpenFolder, &MailCommon::FolderRequester::folderChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mMMTab.kcfg_EmptyTrashOnExit, &QCheckBox::stateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#else
-    connect(mMMTab.kcfg_EmptyTrashOnExit, &QCheckBox::checkStateChanged, this, &MiscPageFolderTab::slotEmitChanged);
-#endif
-    connect(mMMTab.kcfg_StartSpecificFolderAtStartup, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
     connect(mMMTab.kcfg_StartSpecificFolderAtStartup, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
-    connect(mMMTab.kcfg_DeleteMessageWithoutConfirmation, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.kcfg_EnableFolderDnD, &QCheckBox::toggled, this, &MiscPageFolderTab::slotEmitChanged);
 }
 
 void MiscPageFolderTab::doLoadFromGlobalSettings()

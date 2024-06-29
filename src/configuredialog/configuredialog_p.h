@@ -81,6 +81,5 @@ protected:
 
 private:
     QTabWidget *const mTabWidget;
-    KConfigDialogManager *m_configDialogManager = nullptr;
     bool mWasInitialized = false;
 };

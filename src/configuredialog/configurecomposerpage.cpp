@@ -328,11 +328,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoRequestMDNCheck = new QCheckBox(KMailSettings::self()->requestMDNItem()->label(), this);
     mAutoRequestMDNCheck->setObjectName(u"kcfg_RequestMDN"_s);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mAutoRequestMDNCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
-    connect(mAutoRequestMDNCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupGridLayout->addWidget(mAutoRequestMDNCheck, row, 0, 1, -1);
     ++row;
 
@@ -365,12 +360,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mRecipientSpin->setEnabled(false);
     mRecipientSpin->setToolTip(i18nc("@info:tooltip", "Set the maximum number of recipients for the warning"));
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mRecipientCheck, &QCheckBox::stateChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
-#else
-    connect(mRecipientCheck, &QCheckBox::checkStateChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
-#endif
-    connect(mRecipientSpin, &QSpinBox::valueChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
     connect(mRecipientCheck, &QCheckBox::toggled, mRecipientSpin, &QSpinBox::setEnabled);
 
@@ -1019,11 +1008,6 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     // "Enable detection of missing attachments" check box
     mMissingAttachmentDetectionCheck = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
     mMissingAttachmentDetectionCheck->setObjectName(u"kcfg_ShowForgottenAttachmentWarning"_s);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mMissingAttachmentDetectionCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
-    connect(mMissingAttachmentDetectionCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 
     // "Attachment key words" label and string list editor
@@ -1043,7 +1027,6 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     mAttachWordsListEditor->setObjectName(u"kcfg_AttachmentKeywords"_s);
     mAttachWordsListEditor->setRemoveDialogLabel(i18n("Do you want to remove this attachment word?"));
     mAttachWordsListEditor->setAddDialogLabel(i18n("Attachment Word:"));
-    connect(mAttachWordsListEditor, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     vlay->addWidget(mAttachWordsListEditor);
 
     connect(mMissingAttachmentDetectionCheck, &QAbstractButton::toggled, label, &QWidget::setEnabled);
