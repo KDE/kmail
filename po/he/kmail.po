@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:39+0000\n"
-"PO-Revision-Date: 2024-06-28 10:08+0300\n"
+"PO-Revision-Date: 2024-06-29 15:48+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3740,14 +3740,15 @@ msgstr ""
 "שלה? ייתכן כי תתי תיקיות אלו לא ריקות, והתוכן שלהן ילך לאיבוד גם כן. </qt>"
 
 #: job/removecollectionjob.cpp:85
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the folder <resource>%1</resource>, "
 "discarding its contents? <p><b>Beware</b> that discarded messages are not "
 "saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
-"<qt>האם אתה בטוח שברצונך למחוק את התיקייה <b>%1</b>  תוך אובדן התכולה שלה? </"
-"qt>"
+"<qt>למחוק את התיקייה <resource>%1</resource>, ולוותר על התכולה שלה? "
+"<p><b>כדאי לשים לב</b> שהודעות שסולקו אינן נשמרות לתיקיית האשפה שלך והן "
+"נמחקות לצמיתות.</p></qt>"
 
 #: job/removecollectionjob.cpp:92
 #, kde-format
@@ -5821,7 +5822,7 @@ msgstr ""
 #, kde-format
 msgctxt "@info:credit"
 msgid "Tobias Koenig"
-msgstr ""
+msgstr "טוביאס קוניג"
 
 #: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:136
 #, kde-format
@@ -5831,7 +5832,7 @@ msgstr "מאפייני התיקייה מתקבלים"
 #: manageshowcollectionproperties.cpp:102
 #, kde-format
 msgid "Network is unconnected. Folder information cannot be updated."
-msgstr ""
+msgstr "הרשת מנותקת. אי אפשר לעדכן את פרטי התיקייה."
 
 #: manageshowcollectionproperties.cpp:183
 #, kde-format
@@ -5943,7 +5944,7 @@ msgstr "הודעה חדשה מ&תבנית"
 #: messageactions.cpp:81
 #, kde-format
 msgid "Export to PDF…"
-msgstr ""
+msgstr "ייצוא ל־PDF…"
 
 #: messageactions.cpp:82
 #, kde-format
@@ -5959,7 +5960,7 @@ msgstr "סינון לפי רשימת דיוור…"
 #: messageactions.cpp:434
 #, kde-format
 msgid "<unknown>"
-msgstr ""
+msgstr "<לא ידוע>"
 
 #: messageactions.cpp:434
 #, kde-format
@@ -5979,12 +5980,12 @@ msgstr "פרסום הודעה חדשה"
 #: messageactions.cpp:443
 #, kde-format
 msgid "Go to Archive"
-msgstr ""
+msgstr "מעבר לארכיון"
 
 #: messageactions.cpp:446
 #, kde-format
 msgid "Request Help"
-msgstr ""
+msgstr "בקשת עזרה"
 
 #: messageactions.cpp:449
 #, kde-format
@@ -6023,12 +6024,12 @@ msgstr "%1 (%2)"
 #: messageactions.cpp:747
 #, kde-format
 msgid "Export to PDF"
-msgstr ""
+msgstr "ייצוא ל־PDF"
 
 #: messageactions.cpp:747
 #, kde-format
 msgid "PDF document (*.pdf)"
-msgstr ""
+msgstr "מסמך PDF‏ (‎*.pdf)"
 
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
@@ -6150,12 +6151,12 @@ msgstr "לא בחרת תיקייה תקפה."
 #: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
-msgstr ""
+msgstr "שכחת לבחור אוספים."
 
 #: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
-msgstr ""
+msgstr "שכחת להגדיר תנאי."
 
 #: searchdialog/searchwindow.cpp:469
 #, kde-format
@@ -6537,12 +6538,12 @@ msgstr "הוספת תגית חדשה…"
 #, kde-format
 msgctxt "@action"
 msgid "More…"
-msgstr ""
+msgstr "עוד…"
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
 msgid "Tag not Found"
-msgstr ""
+msgstr "תגית לא נמצאה"
 
 #: tag/tagactionmanager.cpp:204
 #, kde-format
@@ -6569,7 +6570,7 @@ msgstr "חיפוש תגית…"
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order…"
-msgstr ""
+msgstr "שינוי סדר החשבונות…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -6623,7 +6624,7 @@ msgstr "הו&ספה…"
 #: ui/identitypage.ui:37
 #, kde-format
 msgid "Modify the selected identity"
-msgstr ""
+msgstr "עריכת הזהות הנבחרת"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
@@ -6653,7 +6654,7 @@ msgstr "הסרת הזהות הנבחרת"
 #: ui/identitypage.ui:79
 #, kde-format
 msgid "Use the selected identity by default"
-msgstr ""
+msgstr "להשתמש בזהות הנבחרת כברירת מחדל"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
 #: ui/identitypage.ui:82
@@ -6670,6 +6671,9 @@ msgid ""
 "for priority reindexing. If you uncheck a folder it may still be indexed "
 "later, unless it was manually excluded from indexing."
 msgstr ""
+"חלק מהתיקיות לחיפוש עדיין לא תועדו במפתח או שהוחרגו מהתיעוד במפתח. כל "
+"התיקיות שסומנו להלן תתוזמנה לתיעוד במפתח בעדיפות גבוהה. ביטול סימון של "
+"תיקייה לא מבטיח שלא תתועד במפתח בהמשך, אלא אם כן הוחרגה ידנית מתיעוד במפתח."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
@@ -6962,7 +6966,7 @@ msgstr "הצגת מחוון חתימה/הצפנה"
 #: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
-msgstr ""
+msgstr "התראות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:99
