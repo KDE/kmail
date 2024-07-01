@@ -245,7 +245,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mContext(context)
     , mAttachmentMissing(new AttachmentMissingWarning(this))
     , mExternalEditorWarning(new ExternalEditorWarning(this))
-    , mTooMyRecipientWarning(new TooManyRecipientsWarning(this))
     , mNearExpiryWarning(new NearExpiryWarning(this))
     , mCryptoStateIndicatorWidget(new CryptoStateIndicatorWidget(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
@@ -450,7 +449,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mIncorrectIdentityFolderWarning);
 
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mPluginEditorMessageWidget);
-    mEditorAndCryptoStateIndicatorsLayout->addWidget(mTooMyRecipientWarning);
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mNearExpiryWarning);
 
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mCryptoStateIndicatorWidget);
@@ -613,11 +611,21 @@ void KMComposerWin::createAttachmentFromExternalMissing()
     }
 }
 
+void KMComposerWin::createTooMyRecipientWarning()
+{
+    if (!mTooMyRecipientWarning) {
+        mTooMyRecipientWarning = new TooManyRecipientsWarning(this);
+        mEditorAndCryptoStateIndicatorsLayout->insertWidget(0, mTooMyRecipientWarning);
+    }
+}
+
 void KMComposerWin::slotTooManyRecipients(bool b)
 {
     if (b) {
+        createTooMyRecipientWarning();
         mTooMyRecipientWarning->animatedShow();
     } else {
+        createTooMyRecipientWarning();
         mTooMyRecipientWarning->animatedHide();
     }
 }

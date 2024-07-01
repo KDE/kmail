@@ -584,6 +584,7 @@ private:
     void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg);
     void slotTooManyRecipients(bool b);
     void createAttachmentFromExternalMissing();
+    void createTooMyRecipientWarning();
 
     [[nodiscard]] bool sign() const;
 
@@ -683,7 +684,7 @@ private:
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     AttachmentMissingWarning *const mAttachmentMissing;
     ExternalEditorWarning *const mExternalEditorWarning;
-    TooManyRecipientsWarning *const mTooMyRecipientWarning;
+    TooManyRecipientsWarning *mTooMyRecipientWarning = nullptr;
     NearExpiryWarning *const mNearExpiryWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
     QTimer *mRunKeyResolverTimer = nullptr;
