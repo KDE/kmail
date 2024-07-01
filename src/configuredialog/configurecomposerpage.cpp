@@ -735,6 +735,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
 void ComposerPageSubjectTab::doLoadFromGlobalSettings()
 {
+    qDebug() << " void ComposerPageSubjectTab::doLoadFromGlobalSettings()";
     loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
     loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
     loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
@@ -751,11 +752,9 @@ void ComposerPageSubjectTab::save()
 
 void ComposerPageSubjectTab::doResetToDefaultsOther()
 {
+    qDebug() << " void ComposerPageSubjectTab::doResetToDefaultsOther()";
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
-    loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
-    loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
-    loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
-    loadWidget(mReplaceReplyPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem());
+    doLoadFromGlobalSettings();
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
 }
 

@@ -32,6 +32,7 @@ public:
 private:
     void doLoadFromGlobalSettings() override;
     void doLoadOther() override;
+    void doResetToDefaultsOther() override;
 
 private:
     Ui_MiscMainTab mMMTab;

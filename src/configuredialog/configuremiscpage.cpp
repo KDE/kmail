@@ -96,6 +96,15 @@ void MiscPageFolderTab::doLoadFromGlobalSettings()
     doLoadOther();
 }
 
+void MiscPageFolderTab::doResetToDefaultsOther()
+{
+    const bool bUseDefaultsKMail = KMailSettings::self()->useDefaults(true);
+    const bool bUseDefaults = MessageViewer::MessageViewerSettings::self()->useDefaults(true);
+    doLoadFromGlobalSettings();
+    KMailSettings::self()->useDefaults(bUseDefaultsKMail);
+    MessageViewer::MessageViewerSettings::self()->useDefaults(bUseDefaults);
+}
+
 void MiscPageFolderTab::doLoadOther()
 {
     mOnStartupOpenFolder->setCollection(Akonadi::Collection(KMailSettings::self()->startupFolder()));
