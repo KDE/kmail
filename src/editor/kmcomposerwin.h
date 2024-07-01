@@ -585,6 +585,7 @@ private:
     void slotTooManyRecipients(bool b);
     void createAttachmentFromExternalMissing();
     void createTooMyRecipientWarning();
+    void createExternalEditorWarning();
 
     [[nodiscard]] bool sign() const;
 
@@ -683,7 +684,7 @@ private:
     MailCommon::SnippetTreeView *mSnippetWidget = nullptr;
     PimCommon::CustomToolsWidgetNg *mCustomToolsWidget = nullptr;
     AttachmentMissingWarning *const mAttachmentMissing;
-    ExternalEditorWarning *const mExternalEditorWarning;
+    ExternalEditorWarning *mExternalEditorWarning = nullptr;
     TooManyRecipientsWarning *mTooMyRecipientWarning = nullptr;
     NearExpiryWarning *const mNearExpiryWarning;
     QTimer *mVerifyMissingAttachment = nullptr;
@@ -717,4 +718,5 @@ private:
 
     ModeType mModeType = ModeType::ComposerType;
     QVBoxLayout *mEditorAndCryptoStateIndicatorsLayout = nullptr;
+    QVBoxLayout *mMainlayoutMainWidget = nullptr;
 };

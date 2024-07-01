@@ -244,7 +244,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     , mId(id)
     , mContext(context)
     , mAttachmentMissing(new AttachmentMissingWarning(this))
-    , mExternalEditorWarning(new ExternalEditorWarning(this))
     , mNearExpiryWarning(new NearExpiryWarning(this))
     , mCryptoStateIndicatorWidget(new CryptoStateIndicatorWidget(this))
     , mIncorrectIdentityFolderWarning(new IncorrectIdentityFolderWarning(this))
@@ -340,9 +339,9 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     const QList<int> defaultSizes{0};
     mHeadersToEditorSplitter->setSizes(defaultSizes);
 
-    auto mainlayoutMainWidget = new QVBoxLayout(mMainWidget);
-    mainlayoutMainWidget->setContentsMargins({});
-    mainlayoutMainWidget->addWidget(mHeadersToEditorSplitter);
+    mMainlayoutMainWidget = new QVBoxLayout(mMainWidget);
+    mMainlayoutMainWidget->setContentsMargins({});
+    mMainlayoutMainWidget->addWidget(mHeadersToEditorSplitter);
     auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
     identity->setObjectName("identitycombo"_L1);
@@ -507,8 +506,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     }
     connect(attachmentController, &KMail::AttachmentController::fileAttached, mAttachmentMissing, &AttachmentMissingWarning::slotFileAttached);
 
-    mainlayoutMainWidget->addWidget(mExternalEditorWarning);
-
     mPluginEditorManagerInterface->setParentWidget(this);
     mPluginEditorManagerInterface->setRichTextEditor(mRichTextEditorWidget->editor());
     mPluginEditorManagerInterface->setActionCollection(actionCollection());
@@ -608,6 +605,14 @@ void KMComposerWin::createAttachmentFromExternalMissing()
     if (!mAttachmentFromExternalMissing) {
         mAttachmentFromExternalMissing = new AttachmentAddedFromExternalWarning(this);
         mEditorAndCryptoStateIndicatorsLayout->insertWidget(0, mAttachmentFromExternalMissing);
+    }
+}
+
+void KMComposerWin::createExternalEditorWarning()
+{
+    if (!mExternalEditorWarning) {
+        mExternalEditorWarning = new ExternalEditorWarning(this);
+        mMainlayoutMainWidget->addWidget(mExternalEditorWarning);
     }
 }
 
@@ -4106,12 +4111,14 @@ MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus KMComposerW
 
 void KMComposerWin::slotExternalEditorStarted()
 {
+    createExternalEditorWarning();
     mComposerBase->identityCombo()->setEnabled(false);
     mExternalEditorWarning->show();
 }
 
 void KMComposerWin::slotExternalEditorClosed()
 {
+    createExternalEditorWarning();
     mComposerBase->identityCombo()->setEnabled(true);
     mExternalEditorWarning->hide();
 }
