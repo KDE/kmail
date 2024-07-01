@@ -3521,8 +3521,8 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
         bSMIMESigningKey = false;
     }
 
-    bool bNewIdentityHasSigningKey = bPGPSigningKey || bSMIMESigningKey;
-    bool bNewIdentityHasEncryptionKey = bPGPEncryptionKey || bSMIMEEncryptionKey;
+    const bool bNewIdentityHasSigningKey = bPGPSigningKey || bSMIMESigningKey;
+    const bool bNewIdentityHasEncryptionKey = bPGPEncryptionKey || bSMIMEEncryptionKey;
 
     if (!mKeyCache->initialized()) {
         // We need to start key listing on our own othweise KMail will crash and we want to wait till the cache is populated.
