@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-29 00:39+0000\n"
-"PO-Revision-Date: 2024-06-29 15:48+0300\n"
+"PO-Revision-Date: 2024-06-30 09:11+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1687,7 +1687,7 @@ msgstr "בחירה"
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
-msgstr ""
+msgstr "ארכיון"
 
 #: dialog/archivefolderdialog.cpp:52
 #, kde-format
@@ -1716,17 +1716,17 @@ msgstr "ת&סדיר:"
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
-msgstr ""
+msgstr "ארכיון Zip מכווץ (‎.zip)"
 
 #: dialog/archivefolderdialog.cpp:89
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
-msgstr ""
+msgstr "ארכיון לא מכווץ (‎.tar)"
 
 #: dialog/archivefolderdialog.cpp:90
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
-msgstr ""
+msgstr "ארכיון Tar מכווץ ב־BZ2‏ (‎.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:91
 #, kde-format
@@ -1811,10 +1811,10 @@ msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:376
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr "הסר זהות"
+msgstr "נא לבחור את החשבון היוצא שישמש לשליחת ההודעה הזאת"
 
 #: editor/kmcomposerwin.cpp:384
 #, fuzzy, kde-format
@@ -2021,7 +2021,7 @@ msgstr "עריכת טקסט עשיר"
 #: editor/kmcomposerwin.cpp:1419
 #, kde-format
 msgid "Rich Text"
-msgstr ""
+msgstr "טקסט עשיר"
 
 #: editor/kmcomposerwin.cpp:1420
 #, kde-format
@@ -2145,7 +2145,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
-msgstr ""
+msgstr "הסתרת סרגל תפריטים"
 
 #: editor/kmcomposerwin.cpp:1680 editor/kmcomposerwin.cpp:4005
 #, kde-format
@@ -2162,12 +2162,12 @@ msgstr " עמודה: %1 "
 #: editor/kmcomposerwin.cpp:1688
 #, kde-format
 msgid "OVR"
-msgstr ""
+msgstr "שכתוב"
 
 #: editor/kmcomposerwin.cpp:1688
 #, kde-format
 msgid "INS"
-msgstr ""
+msgstr "הוספה"
 
 #: editor/kmcomposerwin.cpp:1696
 #, kde-format
@@ -2311,16 +2311,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:2819
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
-msgstr "עליך לציין לפחות נמען אחד בשדה, או בשדה \"נמען\" או \"עותק סמוי\"."
+msgstr "יש לציין נמען אחד לפחות, או בשדה אל: או כעותק או כעותק סמוי."
 
 #: editor/kmcomposerwin.cpp:2825
-#, fuzzy, kde-format
+#, kde-format
 msgid "To: field is empty. Send message anyway?"
-msgstr "לא ציינת נושא. האם לשלוח את ההודעה בכל זאת?"
+msgstr "שדה אל: ריק. לשלוח את ההודעה בכל זאת?"
 
 #: editor/kmcomposerwin.cpp:2827
 #, kde-format
@@ -2421,7 +2421,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:3199
 #, kde-format
 msgid "Lose the formatting?"
-msgstr ""
+msgstr "לוותר על העיצוב?"
 
 #: editor/kmcomposerwin.cpp:3200
 #, kde-format
@@ -2800,7 +2800,7 @@ msgstr "לא נבחרו הודעות."
 #: folderarchive/folderarchiveagentjob.cpp:71
 #, kde-format
 msgid "List of collections is empty. %1"
-msgstr ""
+msgstr "רשימת האוספים ריקה. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:90
 #, kde-format
@@ -2852,7 +2852,7 @@ msgstr ""
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "פינוי ההיסטוריה"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
 #, kde-format
@@ -2865,12 +2865,12 @@ msgstr "פתיחת מציג שנסגר מחדש"
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
-msgstr ""
+msgstr "תמונה"
 
 #: identity/encodedimagepicker.cpp:134
 #, kde-format
 msgid "You do not have your own contact defined in the address book."
-msgstr ""
+msgstr "פרטי הקשר העצמיים שלך לא מוגדרים בפנקס הכתובות."
 
 #: identity/encodedimagepicker.cpp:134 identity/encodedimagepicker.cpp:144
 #: identity/encodedimagepicker.cpp:152
@@ -2926,12 +2926,12 @@ msgstr "שגיאה ביצירת צמד מפתחות חדש: %1"
 #: identity/identitydialog.cpp:174
 #, kde-format
 msgid "Key Generation Error"
-msgstr ""
+msgstr "שגיאת יצירת מפתח"
 
 #: identity/identitydialog.cpp:214
 #, kde-format
 msgid "No key"
-msgstr ""
+msgstr "אין מפתח"
 
 #: identity/identitydialog.cpp:216
 #, kde-format
@@ -3282,18 +3282,16 @@ msgid "Autocorrection language:"
 msgstr "שפת התיקון האוטומטי:"
 
 #: identity/identitydialog.cpp:630
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "שחזור שם התחום כברירת המחדל"
 
 #: identity/identitydialog.cpp:633
-#, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "תחום &ברירת מחדל:"
+msgstr "שם תחום כ&ברירת מחדל:"
 
 #: identity/identitydialog.cpp:639
 #, kde-format
@@ -3305,20 +3303,20 @@ msgstr ""
 "p></qt>"
 
 #: identity/identitydialog.cpp:656
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Use custom message templates for this identity"
-msgstr "השתמש ב&סיומת זיהוי הודעה מותאמת אישית"
+msgstr "להשתמש ב&תבניות מותאמות לזהות הזאת"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
-msgstr "הח&לף"
+msgstr "ה&עתקת תבניות כלליות"
 
 #: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Templates"
-msgstr ""
+msgstr "תבניות"
 
 #: identity/identitydialog.cpp:683
 #, kde-format
@@ -3451,7 +3449,7 @@ msgstr "לא הצלחנו למחוק קובץ כרטיס ביקור (vCard)."
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
-msgstr ""
+msgstr "לבטל?"
 
 #: identity/identityeditvcarddialog.cpp:125
 #, kde-format
@@ -3469,7 +3467,7 @@ msgstr "ביטול עריכה"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Cancel"
-msgstr ""
+msgstr "לא לבטל"
 
 #: identity/identitylistview.cpp:76
 #, kde-format
@@ -3495,24 +3493,22 @@ msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>להסיר את הזהות בשם <b>%1</b>?</qt>"
 
 #: identity/identitypage.cpp:217
-#, fuzzy, kde-format
-#| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
+#, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
-msgstr[1] "<qt>האם אתה בטוח שברצונך להסיר את הזהות ששמה <b>%1</b>?</qt>"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "להסיר את הזהות?"
+msgstr[1] "להסיר את שתי הזהויות האלה?"
+msgstr[2] "להסיר את %1 הזהויות האלה?"
+msgstr[3] "להסיר את %1 הזהויות האלה?"
 
 #: identity/identitypage.cpp:220
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
-msgstr[0] "הסר זהות"
-msgstr[1] "הסר זהות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "הסרת זהות"
+msgstr[1] "הסרת זהויות"
+msgstr[2] "הסרת זהויות"
+msgstr[3] "הסרת זהויות"
 
 #: identity/identitypage.cpp:221
 #, kde-format
@@ -7646,12 +7642,15 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
+"KMail יכול לשלוח תמונה באיכות נמוכה (48x48 פיקסלים) עם כל הודעה.למשל, זאת "
+"יכולה להיות תמונה שלך או תו כלשהו. היא תופיע בלקוח הדוא״ל של הנמען (אם הוא "
+"תומך בזה)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:78
 #, kde-format
 msgid "An informative text about the current mode!"
-msgstr ""
+msgstr "טקסט שנועד ליידע אותך על המצב הנוכחי!"
 
 #: undosend/undosendcombobox.cpp:22
 #, kde-format
