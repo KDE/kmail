@@ -942,13 +942,11 @@ QString AppearancePageMessageTagTab::helpAnchor() const
 
 TagListWidgetItem::TagListWidgetItem(QListWidget *parent)
     : QListWidgetItem(parent)
-    , mTag(nullptr)
 {
 }
 
 TagListWidgetItem::TagListWidgetItem(const QIcon &icon, const QString &text, QListWidget *parent)
     : QListWidgetItem(icon, text, parent)
-    , mTag(nullptr)
 {
 }
 

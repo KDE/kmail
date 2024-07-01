@@ -171,10 +171,10 @@ public:
 
     ~TagListWidgetItem() override;
     void setKMailTag(const MailCommon::Tag::Ptr &tag);
-    MailCommon::Tag::Ptr kmailTag() const;
+    [[nodiscard]] MailCommon::Tag::Ptr kmailTag() const;
 
 private:
-    MailCommon::Tag::Ptr mTag;
+    MailCommon::Tag::Ptr mTag = nullptr;
 };
 
 /**Configuration tab in the appearance page for modifying the available set of
