@@ -141,12 +141,14 @@ static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
 AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mCustomFontCheck(new QCheckBox(i18n("&Use custom fonts"), this))
+    , mFontLocationCombo(new QComboBox(this))
+    , mFontChooser(new KFontChooser(KFontChooser::DisplayFrame, this))
 {
     assert(numFontNames == sizeof mFont / sizeof *mFont);
 
     // "Use custom fonts" checkbox, followed by <hr>
     auto vlay = new QVBoxLayout(this);
-    mCustomFontCheck = new QCheckBox(i18n("&Use custom fonts"), this);
     vlay->addWidget(mCustomFontCheck);
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
@@ -158,7 +160,6 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     // "font location" combo box and label:
     auto hlay = new QHBoxLayout(); // inherites spacing
     vlay->addLayout(hlay);
-    mFontLocationCombo = new QComboBox(this);
     mFontLocationCombo->setEnabled(false); // !mCustomFontCheck->isChecked()
 
     QStringList fontDescriptions;
@@ -175,7 +176,6 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
 
     hlay->addWidget(mFontLocationCombo);
     hlay->addStretch(10);
-    mFontChooser = new KFontChooser(KFontChooser::DisplayFrame, this);
     mFontChooser->setMinVisibleItems(4);
     mFontChooser->setEnabled(false); // since !mCustomFontCheck->isChecked()
     vlay->addWidget(mFontChooser);

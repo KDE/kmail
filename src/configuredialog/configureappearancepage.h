@@ -61,9 +61,9 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *mCustomFontCheck = nullptr;
-    QComboBox *mFontLocationCombo = nullptr;
-    KFontChooser *mFontChooser = nullptr;
+    QCheckBox *const mCustomFontCheck;
+    QComboBox *const mFontLocationCombo;
+    KFontChooser *const mFontChooser;
 
     int mActiveFontIndex{-1};
     QFont mFont[8];
