@@ -916,10 +916,6 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     topLayout->addStretch(100); // spacer
 }
 
-void AppearancePageGeneralTab::doResetToDefaultsOther()
-{
-}
-
 void AppearancePageGeneralTab::doLoadOther()
 {
     loadWidget(mSystemTrayCheck, KMailSettings::self()->systemTrayEnabledItem());

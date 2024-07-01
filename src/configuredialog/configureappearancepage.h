@@ -151,7 +151,6 @@ public:
 
 private:
     void doLoadOther() override;
-    void doResetToDefaultsOther() override;
 
 private: // data
     QCheckBox *mCloseAfterReplyOrForwardCheck = nullptr;
