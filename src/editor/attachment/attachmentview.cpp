@@ -115,7 +115,9 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
             toRemove.append(part);
         }
         for (const AttachmentPart::Ptr &part : std::as_const(toRemove)) {
-            mModel->removeAttachment(part);
+            if (!mModel->removeAttachment(part)) {
+                qCWarning(KMAIL_LOG) << "Impossible to remove attachment";
+            }
         }
     } else {
         QTreeView::keyPressEvent(event);
