@@ -2174,7 +2174,7 @@ void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
         info.delay = KMailSettings::self()->undoSendDelay();
         info.to = MessageCore::StringUtil::quoteHtmlChars(mComposerBase->to());
 
-        UndoSendManager::self()->addItem(info);
+        UndoSendManager::self()->addItem(std::move(info));
     }
     setModified(false);
     mComposerBase->cleanupAutoSave();
