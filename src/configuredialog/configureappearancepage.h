@@ -83,11 +83,11 @@ private:
     void loadColor(bool loadFromConfig);
 
 private:
-    QCheckBox *mCustomColorCheck = nullptr;
-    ColorListBox *mColorList = nullptr;
-    QCheckBox *mRecycleColorCheck = nullptr;
-    QSpinBox *mCloseToQuotaThreshold = nullptr;
-    QCheckBox *mUseInlineStyle = nullptr;
+    QCheckBox *const mCustomColorCheck;
+    ColorListBox *const mColorList;
+    QCheckBox *const mRecycleColorCheck;
+    QSpinBox *const mCloseToQuotaThreshold;
+    QCheckBox *const mUseInlineStyle;
 };
 
 class AppearancePageLayoutTab : public ConfigModuleTab

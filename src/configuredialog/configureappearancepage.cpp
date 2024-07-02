@@ -319,10 +319,14 @@ static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
 AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mCustomColorCheck(new QCheckBox(i18n("&Use custom colors"), this))
+    , mColorList(new ColorListBox(this))
+    , mRecycleColorCheck(new QCheckBox(i18n("Recycle colors on deep &quoting"), this))
+    , mCloseToQuotaThreshold(new QSpinBox(this))
+    , mUseInlineStyle(new QCheckBox(i18n("&Do not change color from original HTML mail"), this))
 {
     // "use custom colors" check box
     auto vlay = new QVBoxLayout(this);
-    mCustomColorCheck = new QCheckBox(i18n("&Use custom colors"), this);
     vlay->addWidget(mCustomColorCheck);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCustomColorCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -330,7 +334,6 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     connect(mCustomColorCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
 #endif
 
-    mUseInlineStyle = new QCheckBox(i18n("&Do not change color from original HTML mail"), this);
     vlay->addWidget(mUseInlineStyle);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mUseInlineStyle, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
@@ -339,7 +342,6 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
 #endif
 
     // color list box:
-    mColorList = new ColorListBox(this);
     mColorList->setEnabled(false); // since !mCustomColorCheck->isChecked()
     for (int i = 0; i < numColorNames; ++i) {
         mColorList->addColor(colorNames[i].displayName.toString());
@@ -347,7 +349,6 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     vlay->addWidget(mColorList, 1);
 
     // "recycle colors" check box:
-    mRecycleColorCheck = new QCheckBox(i18n("Recycle colors on deep &quoting"), this);
     mRecycleColorCheck->setEnabled(false);
     vlay->addWidget(mRecycleColorCheck);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
@@ -361,7 +362,6 @@ AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     vlay->addLayout(hbox);
     auto l = new QLabel(i18nc("@label:textbox", "Close to quota threshold:"), this);
     hbox->addWidget(l);
-    mCloseToQuotaThreshold = new QSpinBox(this);
     mCloseToQuotaThreshold->setRange(0, 100);
     mCloseToQuotaThreshold->setSingleStep(1);
     connect(mCloseToQuotaThreshold, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
