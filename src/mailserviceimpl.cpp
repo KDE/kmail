@@ -41,7 +41,8 @@ bool MailServiceImpl::sendMessage(const QString &from,
     KMime::Message::Ptr msg(new KMime::Message);
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
 
-    msg->contentType()->setCharset(QByteArrayLiteral("utf-8"));
+    // Already defined in MessageHelper::initHeader
+    msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
 
     if (!from.isEmpty()) {
         msg->from()->fromUnicodeString(from, QByteArrayLiteral("utf-8"));
@@ -89,8 +90,8 @@ bool MailServiceImpl::sendMessage(const QString &from,
 
     KMime::Message::Ptr msg(new KMime::Message);
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
-
-    msg->contentType()->setCharset(QByteArrayLiteral("utf-8"));
+    // Already defined in MessageHelper::initHeader
+    msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
 
     if (!from.isEmpty()) {
         msg->from()->fromUnicodeString(from, QByteArrayLiteral("utf-8"));

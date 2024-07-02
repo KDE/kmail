@@ -46,7 +46,8 @@ void OpenComposerJob::start()
 
     MessageHelper::initHeader(mMsg, KIdentityManagementCore::IdentityManager::self(), mIdentityId);
 
-    mMsg->contentType()->setCharset(QByteArrayLiteral("utf-8"));
+    // contentType() already create in MessageHelper::initHeader
+    mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
     if (!mOpenComposerSettings.mTo.isEmpty()) {
         mMsg->to()->fromUnicodeString(mOpenComposerSettings.mTo, QByteArrayLiteral("utf-8"));
     }
