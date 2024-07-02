@@ -216,13 +216,13 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested(QPoint pos)
         if ((nbElementSelected == 1)) {
             mailItem = static_cast<FollowUpReminderInfoItem *>(listItems.at(0));
             if (mailItem->data(0, AnswerItemFound).toBool()) {
-                showMessage = menu.addAction(i18n("Show Message"));
+                showMessage = menu.addAction(i18nc("@action", "Show Message"));
                 menu.addSeparator();
             }
-            showOriginalMessage = menu.addAction(QIcon::fromTheme(QStringLiteral("mail-message")), i18n("Show Original Message"));
+            showOriginalMessage = menu.addAction(QIcon::fromTheme(QStringLiteral("mail-message")), i18nc("@action", "Show Original Message"));
             menu.addSeparator();
         }
-        QAction *deleteItem = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"));
+        QAction *deleteItem = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action", "Delete"));
         QAction *result = menu.exec(QCursor::pos());
         if (result) {
             if (result == showMessage) {

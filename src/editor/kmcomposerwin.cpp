@@ -2410,8 +2410,8 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
                 QFileInfo fi(source->text());
 
                 QMenu menu(this);
-                const QAction *addAsInlineImageAction = menu.addAction(i18n("Add as &Inline Image"));
-                menu.addAction(i18n("Add as &Attachment"));
+                const QAction *addAsInlineImageAction = menu.addAction(i18nc("@action", "Add as &Inline Image"));
+                menu.addAction(i18nc("@action", "Add as &Attachment"));
                 const QAction *selectedAction = menu.exec(QCursor::pos());
                 if (selectedAction == addAsInlineImageAction) {
                     // Let the textedit from kdepimlibs handle inline images
