@@ -2428,7 +2428,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
         // Ok, when we reached this point, the user wants to add the image as an attachment.
         // Ask for the filename first.
         bool ok;
-        QString attName = QInputDialog::getText(this, i18n("KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
+        QString attName = QInputDialog::getText(this, i18nc("@title:window", "KMail"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
         if (!ok) {
             return true;
         }
@@ -2531,8 +2531,12 @@ void KMComposerWin::slotPasteAsAttachment()
     }
     if (mimeData->hasText()) {
         bool ok;
-        const QString attName =
-            QInputDialog::getText(this, i18n("Insert clipboard text as attachment"), i18n("Name of the attachment:"), QLineEdit::Normal, QString(), &ok);
+        const QString attName = QInputDialog::getText(this,
+                                                      i18nc("@title:window", "Insert clipboard text as attachment"),
+                                                      i18n("Name of the attachment:"),
+                                                      QLineEdit::Normal,
+                                                      QString(),
+                                                      &ok);
         if (ok) {
             mComposerBase->addAttachment(attName, attName, QStringLiteral("utf-8"), QApplication::clipboard()->text().toUtf8(), "text/plain");
         }
