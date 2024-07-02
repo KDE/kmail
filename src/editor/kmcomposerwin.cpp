@@ -1910,9 +1910,11 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
                                                  /*TODO || KMailSettings::self()->requestMDN()*/);
     }
     // check for presence of a priority header, indicating urgent mail:
-    if (newMsg->headerByType("X-PRIORITY") && newMsg->headerByType("Priority")) {
-        const QString xpriority = newMsg->headerByType("X-PRIORITY")->asUnicodeString();
-        const QString priority = newMsg->headerByType("Priority")->asUnicodeString();
+    auto xPriorityHeader = newMsg->headerByType("X-PRIORITY");
+    auto priorityHeader = newMsg->headerByType("Priority");
+    if (xPriorityHeader && priorityHeader) {
+        const QString xpriority = xPriorityHeader->asUnicodeString();
+        const QString priority = priorityHeader->asUnicodeString();
         if (xpriority == "2 (High)"_L1 && priority == "urgent"_L1) {
             mUrgentAction->setChecked(true);
         }
