@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgctxt "@action:button"
 msgid "Modify"
 msgstr ""
 
-#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#: settingsdialog.cpp:90
 #, kde-format
 msgid "Remove"
 msgstr ""
@@ -47,12 +47,20 @@ msgstr ""
 
 #: settingsdialog.cpp:128
 #, kde-format
+msgctxt "@action"
 msgid "Add"
 msgstr ""
 
 #: settingsdialog.cpp:132
 #, kde-format
+msgctxt "@action"
 msgid "Modify"
+msgstr ""
+
+#: settingsdialog.cpp:134
+#, kde-format
+msgctxt "@action"
+msgid "Remove"
 msgstr ""
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134

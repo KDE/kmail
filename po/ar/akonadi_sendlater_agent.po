@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2024-06-26 18:31+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -94,13 +94,16 @@ msgid "No messages waiting…"
 msgstr "لا رسائل تتنظر…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Send now"
+msgctxt "@action"
 msgid "Send now"
 msgstr "أرسل الآن"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
-#, kde-format
+#: sendlaterconfigurewidget.cpp:97
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "احذف"
 
@@ -215,6 +218,12 @@ msgstr "أعد الإرسال"
 #, kde-format
 msgid "Modify…"
 msgstr "عدّل…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "احذف"
 
 #~ msgid "Remove items"
 #~ msgstr "إزالة العناصر"

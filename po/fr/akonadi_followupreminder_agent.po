@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2024-05-29 13:39+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -93,17 +93,23 @@ msgid "On hold"
 msgstr "En attente"
 
 #: followupreminderinfowidget.cpp:219
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Message"
+msgctxt "@action"
 msgid "Show Message"
 msgstr "Afficher le message "
 
 #: followupreminderinfowidget.cpp:222
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Original Message"
+msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Afficher le message original"
 
 #: followupreminderinfowidget.cpp:225
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Supprimer"
 

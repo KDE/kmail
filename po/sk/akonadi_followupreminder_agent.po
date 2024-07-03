@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -88,18 +88,23 @@ msgid "On hold"
 msgstr "Pozdržané"
 
 #: followupreminderinfowidget.cpp:219
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Message"
+msgctxt "@action"
 msgid "Show Message"
 msgstr "Zobraziť správu"
 
 #: followupreminderinfowidget.cpp:222
 #, fuzzy, kde-format
 #| msgid "Show Message"
+msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Zobraziť správu"
 
 #: followupreminderinfowidget.cpp:225
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Vymazať"
 

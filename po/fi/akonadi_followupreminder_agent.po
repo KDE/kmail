@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2022-02-05 18:30+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -88,17 +88,23 @@ msgid "On hold"
 msgstr "Pidossa"
 
 #: followupreminderinfowidget.cpp:219
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Message"
+msgctxt "@action"
 msgid "Show Message"
 msgstr "Näytä viesti"
 
 #: followupreminderinfowidget.cpp:222
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Original Message"
+msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Näytä alkuperäinen viesti"
 
 #: followupreminderinfowidget.cpp:225
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Poista"
 

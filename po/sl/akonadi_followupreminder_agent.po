@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2024-05-28 07:22+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -89,17 +89,23 @@ msgid "On hold"
 msgstr "Zadržano"
 
 #: followupreminderinfowidget.cpp:219
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Message"
+msgctxt "@action"
 msgid "Show Message"
 msgstr "Pokaži sporočilo"
 
 #: followupreminderinfowidget.cpp:222
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Original Message"
+msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Pokaži izvirno sporočilo"
 
 #: followupreminderinfowidget.cpp:225
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Izbriši"
 

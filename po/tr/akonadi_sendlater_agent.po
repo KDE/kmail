@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2024-06-18 12:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -93,13 +93,16 @@ msgid "No messages waiting…"
 msgstr "Bekleyen ileti yok…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Send now"
+msgctxt "@action"
 msgid "Send now"
 msgstr "Şimdi gönder"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
-#, kde-format
+#: sendlaterconfigurewidget.cpp:97
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Sil"
 
@@ -206,3 +209,9 @@ msgstr "Yeniden Gönder"
 #, kde-format
 msgid "Modify…"
 msgstr "Değiştir…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Sil"

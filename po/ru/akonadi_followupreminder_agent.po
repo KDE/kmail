@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2022-10-01 14:59+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -96,18 +96,24 @@ msgstr "Ожидается"
 
 # BUGME: needs ellipsis at the end (as it opens a new window/dialog)? --aspotashev
 #: followupreminderinfowidget.cpp:219
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Message"
+msgctxt "@action"
 msgid "Show Message"
 msgstr "Показать письмо"
 
 # BUGME: needs ellipsis at the end (as it opens a new window/dialog)? --aspotashev
 #: followupreminderinfowidget.cpp:222
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Original Message"
+msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Показать исходное письмо…"
 
 #: followupreminderinfowidget.cpp:225
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Удалить"
 

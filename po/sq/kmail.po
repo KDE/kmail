@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-02 00:39+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -365,8 +365,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: editor/kmcomposerwin.cpp:2429 kmreaderwin.cpp:306 kmsystemtray.cpp:48
-#: kmsystemtray.cpp:79
+#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -604,64 +603,64 @@ msgstr ""
 msgid "Before sending:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:95
 #, kde-format
 msgid "Check spelling"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Never Automatically"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "On All Mail Checks"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:114
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Send Now"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Send Later"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:121
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:125
+#: configuredialog/configureaccountpage.cpp:115
 #, kde-format
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:201
+#: configuredialog/configureaccountpage.cpp:190
 #, fuzzy, kde-format
 #| msgid "&Add..."
 msgid "Add Mail Account…"
 msgstr "&Shto..."
 
-#: configuredialog/configureaccountpage.cpp:202
+#: configuredialog/configureaccountpage.cpp:191
 #, fuzzy, kde-format
 #| msgid "&Add..."
 msgid "Custom Account…"
 msgstr "&Shto..."
 
-#: configuredialog/configureaccountpage.cpp:222
+#: configuredialog/configureaccountpage.cpp:211
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -669,32 +668,32 @@ msgid ""
 "properly installed."
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:224
+#: configuredialog/configureaccountpage.cpp:213
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:272
+#: configuredialog/configureaccountpage.cpp:261
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:280
+#: configuredialog/configureaccountpage.cpp:269
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:287
+#: configuredialog/configureaccountpage.cpp:276
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:334
+#: configuredialog/configureaccountpage.cpp:323
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -816,22 +815,22 @@ msgstr ""
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:325
+#: configuredialog/configureappearancepage.cpp:322
 #, kde-format
 msgid "&Use custom colors"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:333
-#, kde-format
-msgid "&Do not change color from original HTML mail"
-msgstr ""
-
-#: configuredialog/configureappearancepage.cpp:350
+#: configuredialog/configureappearancepage.cpp:324
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:362
+#: configuredialog/configureappearancepage.cpp:326
+#, kde-format
+msgid "&Do not change color from original HTML mail"
+msgstr ""
+
+#: configuredialog/configureappearancepage.cpp:363
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
@@ -1197,19 +1196,19 @@ msgctxt "@title:group"
 msgid "Recipients"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:357
+#: configuredialog/configurecomposerpage.cpp:352
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:366
+#: configuredialog/configurecomposerpage.cpp:361
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:390
+#: configuredialog/configurecomposerpage.cpp:379
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1219,50 +1218,50 @@ msgid ""
 "account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:400
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:427
+#: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:430
+#: configuredialog/configurecomposerpage.cpp:419
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:434
+#: configuredialog/configurecomposerpage.cpp:423
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:447
+#: configuredialog/configurecomposerpage.cpp:436
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:456
+#: configuredialog/configurecomposerpage.cpp:445
 #, fuzzy, kde-format
 #| msgid "Auto"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Auto"
 
-#: configuredialog/configurecomposerpage.cpp:466
+#: configuredialog/configurecomposerpage.cpp:455
 #, kde-format
 msgid "No autosave"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:467
+#: configuredialog/configurecomposerpage.cpp:456
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
@@ -1270,18 +1269,18 @@ msgid_plural " minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: configuredialog/configurecomposerpage.cpp:469
+#: configuredialog/configurecomposerpage.cpp:458
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:682
-#: configuredialog/configurecomposerpage.cpp:712
+#: configuredialog/configurecomposerpage.cpp:671
+#: configuredialog/configurecomposerpage.cpp:701
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1289,185 +1288,185 @@ msgid ""
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:690
-#: configuredialog/configurecomposerpage.cpp:1042
+#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:1026
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:690
-#: configuredialog/configurecomposerpage.cpp:1042
+#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:1026
 #, kde-format
 msgid "Re&move"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:690
-#: configuredialog/configurecomposerpage.cpp:1042
+#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:1026
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "Mod&ify…"
 msgstr "&Modifiko..."
 
-#: configuredialog/configurecomposerpage.cpp:690
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:691
+#: configuredialog/configurecomposerpage.cpp:680
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgid "Reply Prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:708
+#: configuredialog/configurecomposerpage.cpp:697
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:718 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:707 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:718 identity/identitypage.cpp:272
+#: configuredialog/configurecomposerpage.cpp:707
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:718 identity/identitypage.cpp:274
+#: configuredialog/configurecomposerpage.cpp:707
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "Modify…"
 msgstr "&Modifiko..."
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:707
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:708
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:720
+#: configuredialog/configurecomposerpage.cpp:709
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Forward"
 msgid "Forward Prefix:"
 msgstr "&Përpara"
 
-#: configuredialog/configurecomposerpage.cpp:772
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:788
+#: configuredialog/configurecomposerpage.cpp:777
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:800
+#: configuredialog/configurecomposerpage.cpp:789
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:808
+#: configuredialog/configurecomposerpage.cpp:797
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:809
+#: configuredialog/configurecomposerpage.cpp:798
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:817
+#: configuredialog/configurecomposerpage.cpp:806
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:821
+#: configuredialog/configurecomposerpage.cpp:810
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Hiqe"
 
-#: configuredialog/configurecomposerpage.cpp:830
+#: configuredialog/configurecomposerpage.cpp:819
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:840
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:979
+#: configuredialog/configurecomposerpage.cpp:968
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:979
+#: configuredialog/configurecomposerpage.cpp:968
 #, kde-format
 msgid "Invalid header"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1020
+#: configuredialog/configurecomposerpage.cpp:1009
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1031
+#: configuredialog/configurecomposerpage.cpp:1015
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1042
+#: configuredialog/configurecomposerpage.cpp:1026
 #, kde-format
 msgid "Enter new key word:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1044
+#: configuredialog/configurecomposerpage.cpp:1028
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1045
+#: configuredialog/configurecomposerpage.cpp:1029
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgid "Attachment Word:"
 msgstr "Ruaj të bashkangjiturit ..."
 
-#: configuredialog/configurecomposerpage.cpp:1053
+#: configuredialog/configurecomposerpage.cpp:1036
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Ruaj të bashkangjiturit ..."
 
-#: configuredialog/configurecomposerpage.cpp:1060
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1062
+#: configuredialog/configurecomposerpage.cpp:1045
 #, kde-format
 msgid "No limit"
 msgstr ""
@@ -1478,7 +1477,7 @@ msgstr ""
 msgid "Add"
 msgstr "&Shto..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#: configuredialog/configuredialoglistview.cpp:57
 #, kde-format
 msgid "Remove"
 msgstr ""
@@ -1605,24 +1604,24 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
 
+#: configuredialog/configuresecuritypage.cpp:297
+#: configuredialog/configuresecuritypage.cpp:299
 #: configuredialog/configuresecuritypage.cpp:301
 #: configuredialog/configuresecuritypage.cpp:303
-#: configuredialog/configuresecuritypage.cpp:305
-#: configuredialog/configuresecuritypage.cpp:307
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " ditë"
 msgstr[1] " ditë"
 
-#: configuredialog/configuresecuritypage.cpp:338
+#: configuredialog/configuresecuritypage.cpp:334
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Nisja..."
 
-#: configuredialog/configuresecuritypage.cpp:345
+#: configuredialog/configuresecuritypage.cpp:341
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1630,23 +1629,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:350
+#: configuredialog/configuresecuritypage.cpp:346
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:417
+#: configuredialog/configuresecuritypage.cpp:413
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:556 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:552 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:558
+#: configuredialog/configuresecuritypage.cpp:554
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
@@ -2138,7 +2137,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1693 editor/kmcomposerwin.cpp:4018
+#: editor/kmcomposerwin.cpp:1693 editor/kmcomposerwin.cpp:4024
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2170,114 +2169,125 @@ msgstr ""
 msgid "Spellcheck: off"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2085
+#: editor/kmcomposerwin.cpp:2087
 #, kde-format
 msgid "Re&save as Template"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2085
+#: editor/kmcomposerwin.cpp:2087
 #, kde-format
 msgid "&Save as Draft"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2086
+#: editor/kmcomposerwin.cpp:2088
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2088
+#: editor/kmcomposerwin.cpp:2090
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2092
+#: editor/kmcomposerwin.cpp:2094
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2093
+#: editor/kmcomposerwin.cpp:2095
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Nisja..."
 
-#: editor/kmcomposerwin.cpp:2161
+#: editor/kmcomposerwin.cpp:2163
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Duke lëvizur mesazhet"
 
-#: editor/kmcomposerwin.cpp:2162
+#: editor/kmcomposerwin.cpp:2164
 #, fuzzy, kde-format
 #| msgid "Total Messages"
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Gjithsej Mesazhe"
 
-#: editor/kmcomposerwin.cpp:2348
+#: editor/kmcomposerwin.cpp:2350
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2413
+#: editor/kmcomposerwin.cpp:2415
 #, kde-format
+msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2414
-#, kde-format
+#: editor/kmcomposerwin.cpp:2416
+#, fuzzy, kde-format
+#| msgid "Save Attachments..."
+msgctxt "@action"
 msgid "Add as &Attachment"
-msgstr ""
+msgstr "Ruaj të bashkangjiturit ..."
 
-#: editor/kmcomposerwin.cpp:2429 editor/kmcomposerwin.cpp:2533
+#: editor/kmcomposerwin.cpp:2431
+#, fuzzy, kde-format
+#| msgid "KMail"
+msgctxt "@title:window"
+msgid "KMail"
+msgstr "KMail"
+
+#: editor/kmcomposerwin.cpp:2431 editor/kmcomposerwin.cpp:2536
 #, kde-format
 msgid "Name of the attachment:"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2437
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Ruaj të bashkangjiturit ..."
 
-#: editor/kmcomposerwin.cpp:2486
+#: editor/kmcomposerwin.cpp:2488
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] ""
 msgstr[1] ""
 
-#: editor/kmcomposerwin.cpp:2487
+#: editor/kmcomposerwin.cpp:2489
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] ""
 msgstr[1] ""
 
-#: editor/kmcomposerwin.cpp:2533
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
+msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2625
+#: editor/kmcomposerwin.cpp:2631
 #, kde-format
 msgid "unnamed"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2651
+#: editor/kmcomposerwin.cpp:2657
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2285,13 +2295,13 @@ msgid ""
 "in the identity configuration.</p></qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2658
+#: editor/kmcomposerwin.cpp:2664
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2823
+#: editor/kmcomposerwin.cpp:2829
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2299,135 +2309,135 @@ msgid ""
 "for each message."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2832
+#: editor/kmcomposerwin.cpp:2838
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2838
+#: editor/kmcomposerwin.cpp:2844
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2840
+#: editor/kmcomposerwin.cpp:2846
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2841 editor/kmcomposerwin.cpp:2855
+#: editor/kmcomposerwin.cpp:2847 editor/kmcomposerwin.cpp:2861
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2848
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2852
+#: editor/kmcomposerwin.cpp:2858
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2854
+#: editor/kmcomposerwin.cpp:2860
 #, fuzzy, kde-format
 #| msgid "No Subject"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Asnjë Subjekt"
 
-#: editor/kmcomposerwin.cpp:2856
+#: editor/kmcomposerwin.cpp:2862
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2901
+#: editor/kmcomposerwin.cpp:2907
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3087
+#: editor/kmcomposerwin.cpp:3093
 #, kde-format
 msgid "About to send email…"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3088
+#: editor/kmcomposerwin.cpp:3094
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Nisja..."
 
-#: editor/kmcomposerwin.cpp:3089
+#: editor/kmcomposerwin.cpp:3095
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3090
+#: editor/kmcomposerwin.cpp:3096
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3170
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3171
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgid "Too many recipients"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3172
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3179
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Duke lëvizur mesazhet"
 
-#: editor/kmcomposerwin.cpp:3210
+#: editor/kmcomposerwin.cpp:3216
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3218
 #, kde-format
 msgid "Lose the formatting?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3213
+#: editor/kmcomposerwin.cpp:3219
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3220
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3426
+#: editor/kmcomposerwin.cpp:3432
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2435,7 +2445,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3439
+#: editor/kmcomposerwin.cpp:3445
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2443,7 +2453,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3455
+#: editor/kmcomposerwin.cpp:3461
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2451,7 +2461,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3468
+#: editor/kmcomposerwin.cpp:3474
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2459,27 +2469,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3641
+#: editor/kmcomposerwin.cpp:3647
 #, fuzzy, kde-format
 #| msgid "Description"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Përshkrimi"
 
-#: editor/kmcomposerwin.cpp:3643
+#: editor/kmcomposerwin.cpp:3649
 #, fuzzy, kde-format
 #| msgid "Description"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Përshkrimi"
 
-#: editor/kmcomposerwin.cpp:3783
+#: editor/kmcomposerwin.cpp:3789
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3805
+#: editor/kmcomposerwin.cpp:3811
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2487,7 +2497,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3809
+#: editor/kmcomposerwin.cpp:3815
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2495,7 +2505,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3813
+#: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2503,7 +2513,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3840
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2512,7 +2522,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3848
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2522,7 +2532,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3856
+#: editor/kmcomposerwin.cpp:3862
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2530,7 +2540,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3862
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2538,7 +2548,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3868
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2546,7 +2556,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3876
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2556,7 +2566,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3890
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2564,7 +2574,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3890
+#: editor/kmcomposerwin.cpp:3896
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2574,7 +2584,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3898
+#: editor/kmcomposerwin.cpp:3904
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2582,7 +2592,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3903
+#: editor/kmcomposerwin.cpp:3909
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2590,12 +2600,12 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4020
+#: editor/kmcomposerwin.cpp:4026
 #, kde-format
 msgid " Column: %1 "
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4237
+#: editor/kmcomposerwin.cpp:4243
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2608,12 +2618,12 @@ msgid ""
 "certificates.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4249
+#: editor/kmcomposerwin.cpp:4255
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4334
+#: editor/kmcomposerwin.cpp:4340
 #, kde-format
 msgid "Plugin Editor Information"
 msgstr ""
@@ -2859,7 +2869,7 @@ msgid "Reopen Closed Viewer"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1919
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3516,13 +3526,35 @@ msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Hiqe"
 
+#: identity/identitypage.cpp:272
+#, kde-format
+msgctxt "@action"
+msgid "Add…"
+msgstr ""
+
+#: identity/identitypage.cpp:274
+#, fuzzy, kde-format
+#| msgid "&Modify..."
+msgctxt "@action"
+msgid "Modify…"
+msgstr "&Modifiko..."
+
 #: identity/identitypage.cpp:275
 #, kde-format
+msgctxt "@action"
 msgid "Rename"
 msgstr ""
 
+#: identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "&Remove"
+msgctxt "@action"
+msgid "Remove"
+msgstr "&Hiqe"
+
 #: identity/identitypage.cpp:281
 #, kde-format
+msgctxt "@action"
 msgid "Set as Default"
 msgstr ""
 
@@ -3672,26 +3704,26 @@ msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr ""
 
-#: job/opencomposerjob.cpp:121
+#: job/opencomposerjob.cpp:122
 #, kde-format
 msgid "Do you want to attach this folder \"%1\"?"
 msgstr ""
 
-#: job/opencomposerjob.cpp:122
+#: job/opencomposerjob.cpp:123
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Kartela"
 
-#: job/opencomposerjob.cpp:123
+#: job/opencomposerjob.cpp:124
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgctxt "@action:button"
 msgid "Attach"
 msgstr "Kartela"
 
-#: job/opencomposerjob.cpp:124
+#: job/opencomposerjob.cpp:125
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
@@ -3991,72 +4023,72 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmcommands.cpp:524
+#: kmcommands.cpp:525
 #, kde-format
 msgid "Save To File"
 msgstr ""
 
-#: kmcommands.cpp:709
+#: kmcommands.cpp:710
 #, kde-format
 msgid "Open Message"
 msgstr ""
 
-#: kmcommands.cpp:709
+#: kmcommands.cpp:710
 #, fuzzy, kde-format
 #| msgid "Total Messages"
 msgid "Message"
 msgstr "Gjithsej Mesazhe"
 
-#: kmcommands.cpp:738
+#: kmcommands.cpp:739
 #, kde-format
 msgid "The file does not contain a message."
 msgstr ""
 
-#: kmcommands.cpp:811
+#: kmcommands.cpp:812
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:922
+#: kmcommands.cpp:923
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:926
+#: kmcommands.cpp:927
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr ""
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:928
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1314
+#: kmcommands.cpp:1315
 #, kde-format
 msgid "Filtering messages"
 msgstr ""
 
-#: kmcommands.cpp:1324
+#: kmcommands.cpp:1325
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr ""
 
-#: kmcommands.cpp:1532 kmcommands.cpp:1664
+#: kmcommands.cpp:1533 kmcommands.cpp:1665
 #, kde-format
 msgid "Moving messages"
 msgstr "Duke lëvizur mesazhet"
 
-#: kmcommands.cpp:1532 kmcommands.cpp:1674
+#: kmcommands.cpp:1533 kmcommands.cpp:1675
 #, kde-format
 msgid "Deleting messages"
 msgstr ""
 
-#: kmcommands.cpp:1816
+#: kmcommands.cpp:1817
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgctxt "@info:progress"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-28 00:38+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2014-06-07 02:34-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -84,16 +84,19 @@ msgstr ""
 
 #: followupreminderinfowidget.cpp:219
 #, kde-format
+msgctxt "@action"
 msgid "Show Message"
 msgstr ""
 
 #: followupreminderinfowidget.cpp:222
 #, kde-format
+msgctxt "@action"
 msgid "Show Original Message"
 msgstr ""
 
 #: followupreminderinfowidget.cpp:225
 #, kde-format
+msgctxt "@action"
 msgid "Delete"
 msgstr ""
 

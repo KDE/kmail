@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2023-10-08 23:17+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -31,7 +31,7 @@ msgctxt "@action:button"
 msgid "Modify"
 msgstr "수정"
 
-#: settingsdialog.cpp:90 settingsdialog.cpp:134
+#: settingsdialog.cpp:90
 #, kde-format
 msgid "Remove"
 msgstr "삭제"
@@ -50,14 +50,25 @@ msgid "Really Remove?"
 msgstr "정말 삭제하시겠습니까?"
 
 #: settingsdialog.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "추가"
 
 #: settingsdialog.cpp:132
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Modify"
+msgctxt "@action"
 msgid "Modify"
 msgstr "수정"
+
+#: settingsdialog.cpp:134
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
+msgid "Remove"
+msgstr "삭제"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format

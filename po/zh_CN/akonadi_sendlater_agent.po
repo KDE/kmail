@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -92,13 +92,16 @@ msgid "No messages waiting…"
 msgstr ""
 
 #: sendlaterconfigurewidget.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Send now"
+msgctxt "@action"
 msgid "Send now"
 msgstr "立即发送"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
-#, kde-format
+#: sendlaterconfigurewidget.cpp:97
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "删除"
 
@@ -203,3 +206,9 @@ msgstr "重新发送"
 #, kde-format
 msgid "Modify…"
 msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "删除"

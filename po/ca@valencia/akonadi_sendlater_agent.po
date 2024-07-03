@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-03 00:39+0000\n"
 "PO-Revision-Date: 2024-06-18 17:16+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -96,13 +96,16 @@ msgid "No messages waiting…"
 msgstr "No hi ha missatges en espera…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Send now"
+msgctxt "@action"
 msgid "Send now"
 msgstr "Envia ara"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: sendlaterconfigurewidget.cpp:97 ui/sendlaterconfigurewidget.ui:38
-#, kde-format
+#: sendlaterconfigurewidget.cpp:97
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Suprimix"
 
@@ -209,3 +212,9 @@ msgstr "Torna a enviar"
 #, kde-format
 msgid "Modify…"
 msgstr "Modifica…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Suprimix"
