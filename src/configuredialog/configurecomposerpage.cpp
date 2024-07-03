@@ -462,8 +462,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label = new QLabel(KMailSettings::self()->autosaveIntervalItem()->label(), this);
     label->setBuddy(mAutoSave);
 
-    connect(mAutoSave, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
-
     groupHBoxLayout->addWidget(label);
     groupHBoxLayout->addWidget(mAutoSave);
     groupHBoxLayout->addStretch();
