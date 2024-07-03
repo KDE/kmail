@@ -52,9 +52,9 @@ void ListView::resizeColums()
 void ListView::slotContextMenu(QPoint pos)
 {
     QMenu menu(this);
-    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18n("Add"), this, &ListView::addHeader);
+    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add"), this, &ListView::addHeader);
     if (currentItem()) {
-        menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18n("Remove"), this, &ListView::removeHeader);
+        menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &ListView::removeHeader);
     }
     menu.exec(viewport()->mapToGlobal(pos));
 }
