@@ -116,6 +116,9 @@ QString ComposerPageGeneralTab::helpAnchor() const
 
 ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mAutoAppSignFileCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(), this))
+    , mTopQuoteCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this))
+    , mDashDashCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this))
 {
     // Main layout
     auto mainLayout = new QVBoxLayout(this);
@@ -128,7 +131,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     auto groupVBoxLayout = new QVBoxLayout();
 
     // "Automatically insert signature" checkbox
-    mAutoAppSignFileCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(), this);
 
     QString helpText = i18n("Automatically insert the configured signature when starting to compose a message");
     mAutoAppSignFileCheck->setToolTip(helpText);
@@ -142,7 +144,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addWidget(mAutoAppSignFileCheck);
 
     // "Insert signature above quoted text" checkbox
-    mTopQuoteCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this);
     mTopQuoteCheck->setEnabled(false);
 
     helpText = i18n("Insert the signature above any quoted text");
@@ -158,7 +159,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupVBoxLayout->addWidget(mTopQuoteCheck);
 
     // "Prepend separator to signature" checkbox
-    mDashDashCheck = new QCheckBox(MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this);
     mDashDashCheck->setEnabled(false);
 
     helpText = i18n("Insert the RFC-compliant signature separator (two dashes and a space on a line) before the signature");
@@ -754,11 +754,12 @@ QString ComposerPageHeadersTab::helpAnchor() const
 
 ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mCreateOwnMessageIdCheck(new QCheckBox(i18n("&Use custom message-id suffix"), this))
+    , mMessageIdSuffixEdit(new QLineEdit(this))
 {
     auto vlay = new QVBoxLayout(this);
 
     // "Use custom Message-Id suffix" checkbox:
-    mCreateOwnMessageIdCheck = new QCheckBox(i18n("&Use custom message-id suffix"), this);
 #if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
     connect(mCreateOwnMessageIdCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
 #else
@@ -769,7 +770,6 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     // "Message-Id suffix" line edit and label:
     auto hlay = new QHBoxLayout(); // inherits spacing
     vlay->addLayout(hlay);
-    mMessageIdSuffixEdit = new QLineEdit(this);
     mMessageIdSuffixEdit->setClearButtonEnabled(true);
     // only ASCII letters, digits, plus, minus and dots are allowed
     auto messageIdSuffixValidator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
@@ -1095,13 +1095,13 @@ void ComposerPageAutoCorrectionTab::doResetToDefaultsOther()
 
 ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mAutoResizeWidget(new MessageComposer::ImageScalingWidget(this))
 {
     auto vlay = new QVBoxLayout(this);
     vlay->setSpacing(0);
     vlay->setContentsMargins({});
-    autoResizeWidget = new MessageComposer::ImageScalingWidget(this);
-    vlay->addWidget(autoResizeWidget);
-    connect(autoResizeWidget, &MessageComposer::ImageScalingWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
+    vlay->addWidget(mAutoResizeWidget);
+    connect(mAutoResizeWidget, &MessageComposer::ImageScalingWidget::changed, this, &ConfigModuleTab::slotEmitChanged);
 }
 
 QString ComposerPageAutoImageResizeTab::helpAnchor() const
@@ -1111,17 +1111,17 @@ QString ComposerPageAutoImageResizeTab::helpAnchor() const
 
 void ComposerPageAutoImageResizeTab::save()
 {
-    autoResizeWidget->writeConfig();
+    mAutoResizeWidget->writeConfig();
 }
 
 void ComposerPageAutoImageResizeTab::doLoadFromGlobalSettings()
 {
-    autoResizeWidget->loadConfig();
+    mAutoResizeWidget->loadConfig();
 }
 
 void ComposerPageAutoImageResizeTab::doResetToDefaultsOther()
 {
-    autoResizeWidget->resetToDefault();
+    mAutoResizeWidget->resetToDefault();
 }
 
 #include "moc_configurecomposerpage.cpp"

@@ -52,9 +52,9 @@ private:
 
 private:
     QCheckBox *mShowAkonadiSearchAddressesInComposer = nullptr;
-    QCheckBox *mAutoAppSignFileCheck = nullptr;
-    QCheckBox *mTopQuoteCheck = nullptr;
-    QCheckBox *mDashDashCheck = nullptr;
+    QCheckBox *const mAutoAppSignFileCheck;
+    QCheckBox *const mTopQuoteCheck;
+    QCheckBox *const mDashDashCheck;
     QCheckBox *mReplyUsingVisualFormat = nullptr;
     QCheckBox *mSmartQuoteCheck = nullptr;
     QCheckBox *mStripSignatureCheck = nullptr;
@@ -146,8 +146,8 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *mCreateOwnMessageIdCheck = nullptr;
-    QLineEdit *mMessageIdSuffixEdit = nullptr;
+    QCheckBox *const mCreateOwnMessageIdCheck;
+    QLineEdit *const mMessageIdSuffixEdit;
     ListView *mHeaderList = nullptr;
     QPushButton *mRemoveHeaderButton = nullptr;
     QLineEdit *mTagNameEdit = nullptr;
@@ -205,7 +205,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    MessageComposer::ImageScalingWidget *autoResizeWidget = nullptr;
+    MessageComposer::ImageScalingWidget *const mAutoResizeWidget;
 };
 
 class KMAIL_EXPORT ComposerPage : public ConfigModuleWithTabs
