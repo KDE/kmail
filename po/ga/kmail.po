@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1543,11 +1543,14 @@ msgstr "Gan teorainn"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "&Cuir Leis"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Bain"
 
@@ -3745,13 +3748,6 @@ msgstr "Athraigh..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Athainmnigh"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Bain"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7017,6 +7013,7 @@ msgstr "Cuir clib nua leis"
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Starting..."
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Á Thosú..."
 
@@ -8188,6 +8185,9 @@ msgstr[4] "Freagra \"As Láthair Ón Oifig\" in úsáid"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Súmáil"
+
+#~ msgid "Remove"
+#~ msgstr "Bain"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

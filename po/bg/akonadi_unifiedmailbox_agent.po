@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-06-25 17:52+0200\n"
+"PO-Revision-Date: 2024-07-03 23:06+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -47,22 +47,19 @@ msgid "Really Remove?"
 msgstr "Наистина ли да се премахне?"
 
 #: settingsdialog.cpp:128
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Добавяне"
 
 #: settingsdialog.cpp:132
-#, fuzzy, kde-format
-#| msgid "Modify"
+#, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "Модифициране"
 
 #: settingsdialog.cpp:134
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Премахване"

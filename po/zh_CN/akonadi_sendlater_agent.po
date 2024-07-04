@@ -92,15 +92,13 @@ msgid "No messages waiting…"
 msgstr ""
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "立即发送"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "删除"

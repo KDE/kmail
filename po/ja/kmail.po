@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1614,11 +1614,14 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "追加..."
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "削除"
 
@@ -3884,13 +3887,6 @@ msgstr "編集..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "名前変更(&R)"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "削除"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7213,6 +7209,7 @@ msgstr "新しいタグを追加"
 #, fuzzy, kde-format
 #| msgctxt "@action:button Search for messages"
 #| msgid "&Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "検索(&S)"
 
@@ -8623,6 +8620,9 @@ msgstr[0] "不在返信がアクティブです"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "削除"
 
 #, fuzzy
 #~| msgid "Add Note..."

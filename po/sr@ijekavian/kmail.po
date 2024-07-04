@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1688,12 +1688,16 @@ msgid "No limit"
 msgstr "без ограничења"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Додај"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Уклони"
 
@@ -4013,13 +4017,6 @@ msgstr "Измени..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Преименуј"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Уклони"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7373,6 +7370,7 @@ msgstr "Додај нову ознаку..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Тражи ознаку"
 
@@ -8747,6 +8745,9 @@ msgstr[3] "Одговор ван‑канцеларије је активан н
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Увеличање"
+
+#~ msgid "Remove"
+#~ msgstr "Уклони"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

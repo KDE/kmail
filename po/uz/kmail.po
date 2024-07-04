@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -1564,11 +1564,13 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Qoʻshish..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "&Olib tashlash"
 
@@ -3722,12 +3724,6 @@ msgstr "Oʻzgartirish"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Nomini oʻzgartirish"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "&Olib tashlash"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6945,6 +6941,7 @@ msgstr "Qoʻshish..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Qidirish"
 
@@ -8127,6 +8124,10 @@ msgstr[0] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "&Olib tashlash"
 
 #, fuzzy
 #~| msgid "Add..."

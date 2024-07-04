@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail-1.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2005-01-23 05:51+0100\n"
 "Last-Translator: Jañ-Mai Drapier <jan-mai.drapier@mail.dotcom.fr>\n"
 "Language-Team: Brezhoneg <Suav.Icb@wanadoo.fr>\n"
@@ -1578,11 +1578,14 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Ouzhpennañ ..."
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Lemel"
 
@@ -3746,13 +3749,6 @@ msgstr "Kemmañ ..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Adenvel"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Lemel"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6987,6 +6983,7 @@ msgstr "Ouzhpennañ ur bouetadur ..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Klask"
 
@@ -8153,6 +8150,9 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "Lemel"
 
 #, fuzzy
 #~ msgid "Show crypto ownertrust icons"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -1583,12 +1583,16 @@ msgid "No limit"
 msgstr "Sem limite"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Adicionar"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Remover"
 
@@ -3857,13 +3861,6 @@ msgstr "Modificar..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Mudar o Nome"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Remover"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7155,6 +7152,7 @@ msgstr "Adicionar uma Nova Marca..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag..."
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Procurar pela marca..."
 
@@ -8466,6 +8464,9 @@ msgstr[1] "Resposta 'fora do escritório' activa nos servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliação: %1%"
+
+#~ msgid "Remove"
+#~ msgstr "Remover"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -1640,12 +1640,16 @@ msgid "No limit"
 msgstr "Nole limite"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Radjouter"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Oister"
 
@@ -3848,13 +3852,6 @@ msgstr "Candjî..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Rilomer"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Oister"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7184,6 +7181,7 @@ msgstr "Radjouter novele etikete..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Trover etikete"
 
@@ -8390,6 +8388,9 @@ msgstr[1] "Response foû do buro e-n alaedje"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Zoumer"
+
+#~ msgid "Remove"
+#~ msgstr "Oister"
 
 #, fuzzy
 #~| msgid "Specifies the number of updates to perform (for internal use only)"

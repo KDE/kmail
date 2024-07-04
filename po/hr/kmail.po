@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -1601,11 +1601,13 @@ msgstr "Logiraj granicu veličine:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Dodaj..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "U&Kloni"
 
@@ -3753,12 +3755,6 @@ msgstr "Izmijeni …"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Promijeni ime"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "U&Kloni"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6976,6 +6972,7 @@ msgstr "Dodaj korisnički račun"
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Traži"
 
@@ -8189,6 +8186,10 @@ msgstr[2] "Aktivan je odgovor \"izvan ureda\""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "U&Kloni"
 
 #, fuzzy
 #~ msgid "Show crypto ownertrust icons"

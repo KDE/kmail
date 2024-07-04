@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2013-09-10 03:52+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -149,18 +149,21 @@ msgstr "sairan@computer.org"
 
 #: archivemailwidget.cpp:109
 #, kde-format
+msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Орналасқан қапшығын ашу..."
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Өшіру"
 
@@ -220,6 +223,12 @@ msgstr "Қосу..."
 #, kde-format
 msgid "Modify..."
 msgstr "Өзгерту..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Өшіру"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

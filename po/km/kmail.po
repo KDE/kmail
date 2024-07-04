@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1605,11 +1605,14 @@ msgstr "គ្មាន​ព្រំដែន"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "បន្ថែម..."
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "យកចេញ"
 
@@ -3853,13 +3856,6 @@ msgstr "​កែប្រែ..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "​ប្ដូរ​ឈ្មោះ"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "យកចេញ"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7144,6 +7140,7 @@ msgstr "បន្ថែម​ស្លាក​ថ្មី"
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "ស្លាក​ស្វែង​រក"
 
@@ -8531,6 +8528,9 @@ msgstr[0] "កា​រឆ្លើយតប​នៅ​ក្រៅ​ការ
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "ពង្រីក"
+
+#~ msgid "Remove"
+#~ msgstr "យកចេញ"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

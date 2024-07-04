@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -1648,11 +1648,13 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Ychwanegu..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "Gware&du"
 
@@ -3865,12 +3867,6 @@ msgstr "Addasu..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Ailenwi"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "Gware&du"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7076,6 +7072,7 @@ msgstr "Ychwanegu cofnod ..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Chwilio"
 
@@ -8399,6 +8396,10 @@ msgstr[1] "Golygu Ymatebion \"Allan o'r Swyddfa\"..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "Gware&du"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

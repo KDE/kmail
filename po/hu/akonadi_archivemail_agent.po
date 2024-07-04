@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-01-22 11:33+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -148,18 +148,21 @@ msgstr "ulysses@fsf.hu,urbalazs@fsf.hu"
 
 #: archivemailwidget.cpp:109
 #, kde-format
+msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Tartalmazó mappa megnyitása…"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Törlés"
 
@@ -222,6 +225,12 @@ msgstr "Hozzáadás…"
 #, kde-format
 msgid "Modify..."
 msgstr "Módosítás…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Törlés"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

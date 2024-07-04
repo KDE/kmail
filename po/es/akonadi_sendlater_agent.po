@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-06-18 23:01+0200\n"
+"PO-Revision-Date: 2024-07-03 17:28+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -93,15 +93,13 @@ msgid "No messages waiting…"
 msgstr "No hay mensajes en espera..."
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Enviar ahora"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Borrar"

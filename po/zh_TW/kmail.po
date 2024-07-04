@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-05-30 22:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1498,12 +1498,16 @@ msgid "No limit"
 msgstr "不限制"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "新增"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "移除"
 
@@ -3570,13 +3574,6 @@ msgstr "修改…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "重新命名"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "移除"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6604,7 +6601,9 @@ msgid "Add New Tag…"
 msgstr "新增標籤…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "搜尋標籤…"
 
@@ -7829,6 +7828,9 @@ msgstr[0] "「不在辦公室」的自動回覆已在伺服器上啟動"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "縮放：%1%"
+
+#~ msgid "Remove"
+#~ msgstr "移除"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-02-24 22:07+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1538,12 +1538,16 @@ msgid "No limit"
 msgstr "무제한"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "추가"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "삭제"
 
@@ -3756,13 +3760,6 @@ msgstr "수정..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "이름 바꾸기"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "삭제"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6971,6 +6968,7 @@ msgstr "새 태그 추가..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag..."
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "태그 검색..."
 
@@ -8244,6 +8242,9 @@ msgstr[0] "서버에서 부재 중 답장 사용 중"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "크기 조정: %1%"
+
+#~ msgid "Remove"
+#~ msgstr "삭제"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

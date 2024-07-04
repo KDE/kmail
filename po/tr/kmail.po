@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-06-26 01:05+0300\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"PO-Revision-Date: 2024-07-03 12:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -1516,12 +1516,15 @@ msgid "No limit"
 msgstr "Sınır yok"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Ekle"
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "Kaldır"
 
@@ -2251,22 +2254,19 @@ msgid "Insert File"
 msgstr "Dosya Ekle"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "&İleti İçi Görsel Olarak Ekle"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "&Ek Olarak Ekle"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "K Posta"
@@ -2302,8 +2302,7 @@ msgstr[0] "Dosyayı &Ek Olarak Ekle"
 msgstr[1] "Dosyaları &Ek Olarak Ekle"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Pano Metnini Ek Olarak Ekle"
@@ -3671,39 +3670,28 @@ msgid "&Remove"
 msgstr "Ka&ldır"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Ekle…"
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Değiştir…"
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Kaldır"
-
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
-msgstr "Öntanımlı olarak ayarla"
+msgstr "Öntanımlı Olarak Ayarla"
 
 #: identity/newidentitydialog.cpp:38
 #, kde-format
@@ -6793,7 +6781,9 @@ msgid "Add New Tag…"
 msgstr "Yeni Etiket Ekle…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Etiket ara…"
 
@@ -8081,6 +8071,9 @@ msgstr[1] "Ofis dışında yanıtlaması sunucularda etkin"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Yakınlaştır: %​%1"
+
+#~ msgid "Remove"
+#~ msgstr "Kaldır"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

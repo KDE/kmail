@@ -87,22 +87,19 @@ msgid "On hold"
 msgstr "暂停"
 
 #: followupreminderinfowidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Show Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "显示消息"
 
 #: followupreminderinfowidget.cpp:222
-#, fuzzy, kde-format
-#| msgid "Show Original Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "显示原始邮件"
 
 #: followupreminderinfowidget.cpp:225
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "删除"

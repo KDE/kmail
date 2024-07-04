@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -1636,12 +1636,16 @@ msgid "No limit"
 msgstr "Fără limită"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Adaugă"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Elimină"
 
@@ -3963,13 +3967,6 @@ msgstr "Modificare..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Redenumește"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Elimină"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7345,6 +7342,7 @@ msgstr "Adaugă marcaj nou"
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Caută"
 
@@ -8610,6 +8608,9 @@ msgstr[2] "Răspuns „Ieșit din birou” activ"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Panoramare"
+
+#~ msgid "Remove"
+#~ msgstr "Elimină"
 
 #, fuzzy
 #~| msgid "The width of the search window (for internal use only)"

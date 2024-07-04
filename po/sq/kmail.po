@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -1474,13 +1474,16 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Shto..."
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "&Remove"
+msgctxt "@action"
 msgid "Remove"
-msgstr ""
+msgstr "&Hiqe"
 
 #: configuredialog/configuremiscpage.cpp:34
 #, kde-format
@@ -3544,13 +3547,6 @@ msgstr "&Modifiko..."
 msgctxt "@action"
 msgid "Rename"
 msgstr ""
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "&Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "&Hiqe"
 
 #: identity/identitypage.cpp:281
 #, kde-format
@@ -6670,6 +6666,7 @@ msgstr "&Shto..."
 #, fuzzy, kde-format
 #| msgctxt "@action:button Search for messags"
 #| msgid "&Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Kërko"
 

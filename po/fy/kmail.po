@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -1701,12 +1701,14 @@ msgstr "Maksimale lochgrutte:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Taheakje..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
 #| msgid "Remo&ve"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Fuort&smite"
 
@@ -4051,13 +4053,6 @@ msgstr "Wizigje..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Omnea&me"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remo&ve"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Fuort&smite"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7475,6 +7470,7 @@ msgstr "Yngong taheakje..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Sykje"
 
@@ -8900,6 +8896,11 @@ msgstr[1] "Ofwêzigensantwurden bewurkje..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Remo&ve"
+#~ msgid "Remove"
+#~ msgstr "Fuort&smite"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

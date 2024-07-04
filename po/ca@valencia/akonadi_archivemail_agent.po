@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-06-18 17:16+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -143,18 +143,23 @@ msgid "Your emails"
 msgstr "txemaq@gmail.com,antonibella5@yahoo.com"
 
 #: archivemailwidget.cpp:109
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add…"
+msgctxt "@action"
 msgid "Add…"
 msgstr "Afig…"
 
 #: archivemailwidget.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Containing Folder…"
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Obri la carpeta contenidora…"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Suprimix"
 
@@ -216,6 +221,12 @@ msgstr "Afig…"
 #, kde-format
 msgid "Modify..."
 msgstr "Modifica…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Suprimix"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

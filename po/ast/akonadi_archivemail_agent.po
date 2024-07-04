@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -140,17 +140,19 @@ msgstr "alministradores@softastur.org"
 
 #: archivemailwidget.cpp:109
 #, kde-format
+msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
 #, kde-format
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
+#: archivemailwidget.cpp:118
 #, kde-format
+msgctxt "@action"
 msgid "Delete"
 msgstr ""
 
@@ -208,6 +210,12 @@ msgstr ""
 #: ui/archivemailwidget.ui:38
 #, kde-format
 msgid "Modify..."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
 msgstr ""
 
 #: widgets/formatcombobox.cpp:14

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -1495,12 +1495,16 @@ msgid "No limit"
 msgstr ""
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Lasit"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Váldde eret"
 
@@ -3604,13 +3608,6 @@ msgstr "Rievdat …"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Rievdat nama"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Váldde eret"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6724,9 +6721,11 @@ msgid "Add New Tag…"
 msgstr ""
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Searching..."
+msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr ""
+msgstr "Ohcamin …"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -7851,3 +7850,6 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "Váldde eret"

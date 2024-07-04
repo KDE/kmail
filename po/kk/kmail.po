@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1658,12 +1658,16 @@ msgid "No limit"
 msgstr "Шегі жоқ"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Қосу"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Өшіру"
 
@@ -3944,13 +3948,6 @@ msgstr "Өзгерту..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Атауын өзгерту"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Өшіру"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7242,6 +7239,7 @@ msgstr "Жаңа тэг-белгіні қосу..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Іздейтін тег-белгісі"
 
@@ -8636,6 +8634,9 @@ msgstr[0] "%1 серверде \"Кеңседе жоқ\" жауабы істей
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Масштаб"
+
+#~ msgid "Remove"
+#~ msgstr "Өшіру"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

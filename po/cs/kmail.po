@@ -1,7 +1,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011, 2012.
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023 Vít Pelčák <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024 Vít Pelčák <vit@pelcak.org>
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
 #
@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-06-26 15:11+0200\n"
-"Last-Translator: Vit Pelcak <vpelcak@suse.cz>\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"PO-Revision-Date: 2024-07-03 10:39+0200\n"
+"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -1479,12 +1479,15 @@ msgid "No limit"
 msgstr "Bez limitu"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Přidat"
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "Odstranit"
 
@@ -2213,22 +2216,19 @@ msgid "Insert File"
 msgstr "Vložit soubor"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Př&idat jako vložený obrázek"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Přid&at jako přílohu"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2266,8 +2266,7 @@ msgstr[1] "Přid&at soubory jako přílohu"
 msgstr[2] "Přid&at soubory jako přílohu"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Vložit text ze schránky jako přílohu"
@@ -3564,36 +3563,25 @@ msgid "&Remove"
 msgstr "Odst&ranit"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Přidat…"
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Změnit…"
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Přejmenovat"
 
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Odstranit"
-
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "Nastavit jako výchozí"
@@ -6647,7 +6635,9 @@ msgid "Add New Tag…"
 msgstr "Přidat novou značku…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Hledat značku…"
 
@@ -7892,3 +7882,6 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
+
+#~ msgid "Remove"
+#~ msgstr "Odstranit"

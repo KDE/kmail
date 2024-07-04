@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-03-11 16:38+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -1576,12 +1576,16 @@ msgid "No limit"
 msgstr "Ei rajoitusta"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Lisää"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Poista"
 
@@ -3821,13 +3825,6 @@ msgstr "Muuta…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Muuta nimeä"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Poista"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7073,6 +7070,7 @@ msgstr "Lisää uusi luokitus…"
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag..."
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Etsi luokitusta…"
 
@@ -8373,6 +8371,9 @@ msgstr[1] "Poissaolovastaus on aktiivinen palvelimilla"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Lähennys: %1 %"
+
+#~ msgid "Remove"
+#~ msgstr "Poista"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

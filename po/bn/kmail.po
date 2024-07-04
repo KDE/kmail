@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -1588,11 +1588,13 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "যো&গ করো..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "&সরিয়ে ফেলো"
 
@@ -3777,12 +3779,6 @@ msgstr "বদলাও..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "না&ম পাল্টাও"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "&সরিয়ে ফেলো"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7020,6 +7016,7 @@ msgstr "এন্ট্রি যোগ করো..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&সন্ধান"
 
@@ -8213,6 +8210,10 @@ msgstr[1] "\"অফিসে নেই\" উত্তর কনফিগার �
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "&সরিয়ে ফেলো"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

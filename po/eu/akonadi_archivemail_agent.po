@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-05-19 09:08+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -148,18 +148,21 @@ msgstr "xalba@ni.eus"
 
 #: archivemailwidget.cpp:109
 #, kde-format
+msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Ireki hau barnean duen karpeta..."
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Ezabatu"
 
@@ -222,6 +225,12 @@ msgstr "Gehitu..."
 #, kde-format
 msgid "Modify..."
 msgstr "Aldatu..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Ezabatu"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

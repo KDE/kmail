@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1480,12 +1480,15 @@ msgid "No limit"
 msgstr "无限制"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "添加"
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "删除"
 
@@ -2204,22 +2207,19 @@ msgid "Insert File"
 msgstr "插入文件"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "添加为内嵌图像(&I)"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "添加为附件(&A)"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2253,8 +2253,7 @@ msgid_plural "Add Files as &Attachment"
 msgstr[0] "添加文件为附件(&A)"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "将剪贴板内的文字作为附件插入"
@@ -3528,36 +3527,25 @@ msgid "&Remove"
 msgstr "删除(&R)"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr "添加…"
+msgstr ""
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
-msgstr "修改…"
+msgstr ""
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "重命名"
 
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "删除"
-
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "设置为默认"
@@ -6567,7 +6555,9 @@ msgid "Add New Tag…"
 msgstr "添加新标签"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "搜索标签"
 
@@ -7805,3 +7795,6 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
+
+#~ msgid "Remove"
+#~ msgstr "删除"

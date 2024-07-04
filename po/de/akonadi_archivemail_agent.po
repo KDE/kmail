@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-03-20 21:31+0100\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -145,18 +145,21 @@ msgstr "lueck@hube-lueck.de"
 
 #: archivemailwidget.cpp:109
 #, kde-format
+msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Ordner mit diesem Inhalt öffnen ..."
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Löschen"
 
@@ -219,6 +222,12 @@ msgstr "Hinzufügen ..."
 #, kde-format
 msgid "Modify..."
 msgstr "Ändern ..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Löschen"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

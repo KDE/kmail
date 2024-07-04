@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-06-25 17:50+0200\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"PO-Revision-Date: 2024-07-03 17:29+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -1517,12 +1517,15 @@ msgid "No limit"
 msgstr "Sin límite"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Añadir"
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -2257,22 +2260,19 @@ msgid "Insert File"
 msgstr "Insertar archivo"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Añadir como &imagen intercalada"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Añadir como &adjunto"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2308,8 +2308,7 @@ msgstr[0] "Añadir archivo como &adjunto"
 msgstr[1] "Añadir archivos como &adjuntos"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Insertar el texto del portapapeles como adjunto"
@@ -3697,36 +3696,25 @@ msgid "&Remove"
 msgstr "Elimina&r"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Añadir..."
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Modificar..."
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Cambiar de nombre"
 
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Eliminar"
-
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "Poner como predeterminado"
@@ -6844,7 +6832,9 @@ msgid "Add New Tag…"
 msgstr "Añadir nueva etiqueta..."
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Buscar etiqueta..."
 
@@ -8138,6 +8128,9 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1 %"
+
+#~ msgid "Remove"
+#~ msgstr "Eliminar"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

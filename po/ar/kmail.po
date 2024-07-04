@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-06-26 18:32+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1499,12 +1499,16 @@ msgid "No limit"
 msgstr "لا حدّ"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "أضف"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "أزل"
 
@@ -3659,13 +3663,6 @@ msgstr "عدّل…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "أعد التّسمية"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "أزل"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6786,7 +6783,9 @@ msgid "Add New Tag…"
 msgstr "أضف وسمًا جديدًا…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "ابحث عن وسم…"
 
@@ -8065,6 +8064,9 @@ msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "التكبير: %1٪"
+
+#~ msgid "Remove"
+#~ msgstr "أزل"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

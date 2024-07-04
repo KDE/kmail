@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -1688,11 +1688,13 @@ msgstr "Stærðartakmörk annáls:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "B&æta við..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "E&yða"
 
@@ -4003,12 +4005,6 @@ msgstr "Breyta..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Endur&nefna"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "E&yða"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7357,6 +7353,7 @@ msgstr "Bæta við færslu..."
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Leita"
 
@@ -8751,6 +8748,10 @@ msgstr[1] "Breyta \"Ekki við\" svörum..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "E&yða"
 
 #, fuzzy
 #~| msgid "Add..."

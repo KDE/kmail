@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-06-18 19:53+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -143,18 +143,23 @@ msgstr ""
 "mvillarino@users.sourceforge.net, xosecalvo@gmail.com, adrian@chaves.io"
 
 #: archivemailwidget.cpp:109
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add…"
+msgctxt "@action"
 msgid "Add…"
 msgstr "Engadir…"
 
 #: archivemailwidget.cpp:115
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Open Containing Folder…"
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Abrir o cartafol contedor…"
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -216,6 +221,12 @@ msgstr "Engadir…"
 #, kde-format
 msgid "Modify..."
 msgstr "Modificar…"
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Eliminar"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

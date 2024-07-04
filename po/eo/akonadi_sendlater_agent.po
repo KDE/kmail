@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-06-19 23:49+0200\n"
+"PO-Revision-Date: 2024-07-03 21:54+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -95,15 +95,13 @@ msgid "No messages waiting…"
 msgstr "Neniuj mesaĝoj atendantaj…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Sendi nun"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Forigi"

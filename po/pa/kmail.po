@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -1574,11 +1574,14 @@ msgstr "ਲਾਗ ਸਾਈਜ਼ ਲਿਮਟ:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "ਸ਼ਾਮਲ(&A)"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "ਹਟਾਓ"
 
@@ -3779,13 +3782,6 @@ msgstr "ਸੋਧ..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "ਨਾਂ-ਬਦਲੋ(&R)"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "ਹਟਾਓ"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7090,6 +7086,7 @@ msgstr "ਨਵਾਂ ਟੈਗ ਸ਼ਾਮਲ"
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "ਖੋਜ"
 
@@ -8270,6 +8267,9 @@ msgstr[1] "ਦਫ਼ਤਰੋਂ ਬਾਹਰ ਜਵਾਬ ਚਾਲੂ..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "ਹਟਾਓ"
 
 #, fuzzy
 #~| msgid "The width of the search window (for internal use only)"

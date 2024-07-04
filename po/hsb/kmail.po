@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -1580,12 +1580,16 @@ msgid "No limit"
 msgstr "Žana hranica"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Dodać"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Wotstronić"
 
@@ -3745,13 +3749,6 @@ msgstr "Změnić..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Přemjenować"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Wotstronić"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6984,6 +6981,7 @@ msgstr "Nowy etiket dodać..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Etiket pytać"
 
@@ -8169,6 +8167,9 @@ msgstr[3] "Awtomatiske wotmołwy njepřitomnosće wobdźěłać..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "Wotstronić"
 
 #, fuzzy
 #~| msgid "Add Note..."

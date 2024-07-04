@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1678,12 +1678,16 @@ msgid "No limit"
 msgstr "Χωρίς όριο"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Αφαίρεση"
 
@@ -4002,13 +4006,6 @@ msgstr "Τροποποίηση..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Μετονομασία"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Αφαίρεση"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7380,6 +7377,7 @@ msgstr "Προσθήκη νέας ετικέτας..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Αναζήτηση ετικέτας"
 
@@ -8803,6 +8801,9 @@ msgstr[1] "Απάντηση εκτός γραφείου ενεργή στους 
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Εστίαση"
+
+#~ msgid "Remove"
+#~ msgstr "Αφαίρεση"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

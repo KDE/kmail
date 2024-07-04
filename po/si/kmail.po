@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -1548,11 +1548,14 @@ msgstr ""
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "එක් කරන්න..."
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "ඉවත් කරන්න"
 
@@ -3715,13 +3718,6 @@ msgstr "වෙනස් කරන්න..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "ප්‍රතිනම් (&R)"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "ඉවත් කරන්න"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6960,6 +6956,7 @@ msgstr "නව ටැගයක් එක් කරන්න"
 #, fuzzy, kde-format
 #| msgctxt "@action:button Search for messages"
 #| msgid "&Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "සොයන්න (&S)"
 
@@ -8129,6 +8126,9 @@ msgstr[1] "කාර්‍යාලයෙන් බැහැර පිළිත�
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "විශාලන"
+
+#~ msgid "Remove"
+#~ msgstr "ඉවත් කරන්න"
 
 #, fuzzy
 #~| msgid ""

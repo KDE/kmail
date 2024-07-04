@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-05-30 11:20+0200\n"
+"PO-Revision-Date: 2024-07-03 23:06+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -86,22 +86,19 @@ msgid "On hold"
 msgstr "На изчакване"
 
 #: followupreminderinfowidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Show Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Показване на съобщение"
 
 #: followupreminderinfowidget.cpp:222
-#, fuzzy, kde-format
-#| msgid "Show Original Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Показване на оригинално съобщение"
 
 #: followupreminderinfowidget.cpp:225
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Изтриване"

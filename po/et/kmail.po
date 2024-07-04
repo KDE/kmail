@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1636,12 +1636,16 @@ msgid "No limit"
 msgstr "Piirang puudub"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Lisa"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Eemalda"
 
@@ -3906,13 +3910,6 @@ msgstr "Muuda..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Muuda nime"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Eemalda"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7182,6 +7179,7 @@ msgstr "Lisa uus silt..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Sildi otsimine"
 
@@ -8538,6 +8536,9 @@ msgstr[1] "Puhkuseteade on serverites aktiveeritud"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Suurendus: %1%"
+
+#~ msgid "Remove"
+#~ msgstr "Eemalda"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

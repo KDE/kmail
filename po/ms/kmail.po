@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -1658,11 +1658,13 @@ msgstr "Logkan had saiz:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "T&ambah..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "&Buang"
 
@@ -3961,12 +3963,6 @@ msgstr "Ubahsuai..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Namakan semula"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "&Buang"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7271,6 +7267,7 @@ msgstr "Tambahkan Entri..."
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Cari"
 
@@ -8672,6 +8669,10 @@ msgstr[1] "Edit Jawapan  \"Di Luar Pejabat\" ..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "&Buang"
 
 #, fuzzy
 #~| msgid "Add..."

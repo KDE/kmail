@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-06-25 09:39+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1518,12 +1518,16 @@ msgid "No limit"
 msgstr "Necun limite"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Adde"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Remove"
 
@@ -3715,13 +3719,6 @@ msgstr "Modifica…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Renomina"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Remove"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6836,7 +6833,9 @@ msgid "Add New Tag…"
 msgstr "Adde nove etiquetta…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Cerca etiquetta..."
 
@@ -8132,6 +8131,9 @@ msgstr[1] "Responsa de foras de officio active sur le servitores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1"
+
+#~ msgid "Remove"
+#~ msgstr "Remove"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

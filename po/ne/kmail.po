@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1686,11 +1686,14 @@ msgstr "लग साइज सीमा:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "थप्नुहोस्..."
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "हटाउनुहोस्"
 
@@ -4012,13 +4015,6 @@ msgstr "परिमार्जन गर्नुहोस्..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "पुन: नामकरण गर्नुहोस्"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "हटाउनुहोस्"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7361,6 +7357,7 @@ msgstr "प्रविष्टि थप्नुहोस्..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "खोज्नुहोस्"
 
@@ -8752,6 +8749,9 @@ msgstr[1] "\"अफिस बाहिरको\" जवाफ सम्पा�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "हटाउनुहोस्"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2020-09-20 09:02+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -150,18 +150,21 @@ msgstr "sstavra@gmail.com"
 
 #: archivemailwidget.cpp:109
 #, kde-format
+msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
+msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Άνοιγμα περιέχοντος φακέλου..."
 
-#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
-#: archivemailwidget.cpp:118 ui/archivemailwidget.ui:45
-#, kde-format
+#: archivemailwidget.cpp:118
+#, fuzzy, kde-format
+#| msgid "Delete"
+msgctxt "@action"
 msgid "Delete"
 msgstr "Διαγραφή"
 
@@ -224,6 +227,12 @@ msgstr "Προσθήκη..."
 #, kde-format
 msgid "Modify..."
 msgstr "Τροποποίηση..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/archivemailwidget.ui:45
+#, kde-format
+msgid "Delete"
+msgstr "Διαγραφή"
 
 #: widgets/formatcombobox.cpp:14
 #, kde-format

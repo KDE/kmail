@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1669,11 +1669,14 @@ msgstr "ثبت حد اندازه:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&افزودن...‌"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "حذف"
 
@@ -3998,13 +4001,6 @@ msgstr "تغییر..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "&تغییر نام‌"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "حذف"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7364,6 +7360,7 @@ msgstr "افزودن برچسب جدید..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "جستجو"
 
@@ -8771,6 +8768,9 @@ msgstr[1] ""
 #, fuzzy, kde-format
 msgid "Zoom: %1%"
 msgstr "بزرگ‌نمایی"
+
+#~ msgid "Remove"
+#~ msgstr "حذف"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

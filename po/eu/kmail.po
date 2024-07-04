@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-05-19 12:10+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1558,12 +1558,16 @@ msgid "No limit"
 msgstr "Mugarik ez"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Gehitu"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Kendu"
 
@@ -3785,13 +3789,6 @@ msgstr "Aldatu..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Berrizendatu"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Kendu"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6898,7 +6895,9 @@ msgid "Add New Tag…"
 msgstr "Gehitu etiketa berria..."
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Bilatu etiketa..."
 
@@ -8192,6 +8191,9 @@ msgstr[1] "Bulegotik kanpo erantzuna zerbitzarietan aktibo dago"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %%1"
+
+#~ msgid "Remove"
+#~ msgstr "Kendu"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

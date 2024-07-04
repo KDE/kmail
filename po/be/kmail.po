@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-06-05 07:03\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -1471,12 +1471,16 @@ msgid "No limit"
 msgstr "Без абмежаванняў"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Дадаць"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Выдаліць"
 
@@ -3502,13 +3506,6 @@ msgstr "Змяніць…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Змяніць назву"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Выдаліць"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6518,9 +6515,11 @@ msgid "Add New Tag…"
 msgstr ""
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Searching…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr ""
+msgstr "Пошук…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -7644,6 +7643,9 @@ msgstr[3] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "Выдаліць"
 
 #~ msgid "Modify..."
 #~ msgstr "Змяніць..."

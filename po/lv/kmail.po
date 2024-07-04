@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-05-26 23:25+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -1539,12 +1539,16 @@ msgid "No limit"
 msgstr "Bez ierobežojuma"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Pievienot"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Noņemt"
 
@@ -3749,13 +3753,6 @@ msgstr "Rediģēt…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Pārdēvēt"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Noņemt"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6875,7 +6872,9 @@ msgid "Add New Tag…"
 msgstr "Pievienot jaunu birku…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Meklēt birku…"
 
@@ -8165,6 +8164,9 @@ msgstr[2] "Serveros ir ieslēgta „Neesmu birojā“ atbilde"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Tālummaiņa: %1%"
+
+#~ msgid "Remove"
+#~ msgstr "Noņemt"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "

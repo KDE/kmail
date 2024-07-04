@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1659,11 +1659,13 @@ msgstr "Маҳдудият ба андозаи маҷала:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add..."
+msgctxt "@action"
 msgid "Add"
 msgstr "&Афзудан..."
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr "Ҳу&зф кардан"
 
@@ -3945,12 +3947,6 @@ msgstr "Таъғир додан..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Таъғири ном"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Remove"
-msgstr "Ҳу&зф кардан"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7233,6 +7229,7 @@ msgstr "Афзудани вурудот"
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "&Ҷустуҷӯ"
 
@@ -8580,6 +8577,10 @@ msgstr[1] "Тағйири ҷавобҳо \"берун аз офис\"..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Remove"
+#~ msgstr "Ҳу&зф кардан"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

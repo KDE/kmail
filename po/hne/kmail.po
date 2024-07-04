@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -1586,11 +1586,14 @@ msgstr "लाग आकार सीमा:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "जोड़व...(&A)"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "हटाव"
 
@@ -3787,13 +3790,6 @@ msgstr "सुधारव..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "नाम बदलव (&R)"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "हटाव"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7089,6 +7085,7 @@ msgstr "नवा टैग जोड़व"
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "खोजव"
 
@@ -8262,6 +8259,9 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "हटाव"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2024-05-29 22:04+0200\n"
+"PO-Revision-Date: 2024-07-03 21:54+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -89,22 +89,19 @@ msgid "On hold"
 msgstr "En atendo"
 
 #: followupreminderinfowidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Show Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Montri Mesaĝon"
 
 #: followupreminderinfowidget.cpp:222
-#, fuzzy, kde-format
-#| msgid "Show Original Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Montri Originalan Mesaĝon"
 
 #: followupreminderinfowidget.cpp:225
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Forigi"

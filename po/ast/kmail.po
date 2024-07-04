@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -1445,11 +1445,13 @@ msgstr ""
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, kde-format
+msgctxt "@action"
 msgid "Add"
 msgstr ""
 
-#: configuredialog/configuredialoglistview.cpp:57
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, kde-format
+msgctxt "@action"
 msgid "Remove"
 msgstr ""
 
@@ -3457,12 +3459,6 @@ msgstr ""
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
-msgstr ""
-
-#: identity/identitypage.cpp:277
-#, kde-format
-msgctxt "@action"
-msgid "Remove"
 msgstr ""
 
 #: identity/identitypage.cpp:281
@@ -6442,6 +6438,7 @@ msgstr ""
 
 #: tag/tagselectdialog.cpp:67
 #, kde-format
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr ""
 

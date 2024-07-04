@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -1493,12 +1493,16 @@ msgid "No limit"
 msgstr "چەك يوق"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "قوش"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "چىقىرىۋەت"
 
@@ -3608,13 +3612,6 @@ msgstr "ئۆزگەرت…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "ئات ئۆزگەرت"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "چىقىرىۋەت"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6753,6 +6750,7 @@ msgstr "يېڭى خەتكۈش قوش"
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Searching..."
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "ئىزدەۋاتىدۇ…"
 
@@ -7902,6 +7900,9 @@ msgstr[0] ""
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "كېڭەيت-تارايت"
+
+#~ msgid "Remove"
+#~ msgstr "چىقىرىۋەت"
 
 #~ msgid "Modify..."
 #~ msgstr "ئۆزگەرت…"

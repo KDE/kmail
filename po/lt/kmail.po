@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -1576,12 +1576,16 @@ msgid "No limit"
 msgstr "Neribotas"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Pridėti"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Pašalinti"
 
@@ -3829,13 +3833,6 @@ msgstr "Keisti..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "Pervadinti"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Pašalinti"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7144,6 +7141,7 @@ msgstr "Pridėti naują žymą..."
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Search tag"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Ieškoti žymės"
 
@@ -8465,6 +8463,9 @@ msgstr[3] "Suaktyvinti „Nesu darbo vietoje“ atsakymai serveriuose"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Mastelis"
+
+#~ msgid "Remove"
+#~ msgstr "Pašalinti"
 
 #, fuzzy
 #~| msgid "Specifies the number of updates to perform (for internal use only)"

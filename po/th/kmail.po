@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -1619,11 +1619,14 @@ msgstr "จำกัดขนาดปูมการกรอง:"
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "เ&พิ่ม"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "ลบ"
 
@@ -3829,13 +3832,6 @@ msgstr "แก้ไข..."
 msgctxt "@action"
 msgid "Rename"
 msgstr "เ&ปลี่ยนชื่อ"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "ลบ"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -7130,6 +7126,7 @@ msgstr "เพิ่มป้ายใหม่"
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
 #| msgid "Search"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "ค้นหา"
 
@@ -8361,6 +8358,9 @@ msgstr[0] "ตอบกลับเมื่อไม่อยู่ที่อ
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Remove"
+#~ msgstr "ลบ"
 
 #, fuzzy
 #~| msgid "Show crypto &icons"

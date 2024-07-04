@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-06-28 13:49+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -1561,12 +1561,16 @@ msgid "No limit"
 msgstr "Pas de limite"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add"
+msgctxt "@action"
 msgid "Add"
 msgstr "Ajouter"
 
-#: configuredialog/configuredialoglistview.cpp:57
-#, kde-format
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#, fuzzy, kde-format
+#| msgid "Remove"
+msgctxt "@action"
 msgid "Remove"
 msgstr "Supprimer"
 
@@ -3778,13 +3782,6 @@ msgstr "Modifier…"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Renommer"
-
-#: identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
-msgctxt "@action"
-msgid "Remove"
-msgstr "Supprimer"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
@@ -6931,7 +6928,9 @@ msgid "Add New Tag…"
 msgstr "Ajouter une nouvelle étiquette…"
 
 #: tag/tagselectdialog.cpp:67
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Search tag…"
+msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Rechercher une étiquette..."
 
@@ -8248,6 +8247,9 @@ msgstr[1] "Message d'absence actif sur les serveurs"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom : %1 %"
+
+#~ msgid "Remove"
+#~ msgstr "Supprimer"
 
 #~ msgid ""
 #~ "Specifies the number of custom MIME header fields to be inserted in "
