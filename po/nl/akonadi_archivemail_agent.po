@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-04 00:39+0000\n"
-"PO-Revision-Date: 2024-06-19 11:10+0200\n"
+"PO-Revision-Date: 2024-07-04 17:44+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -139,22 +139,19 @@ msgid "Your emails"
 msgstr "freekdekruijf@kde.nl"
 
 #: archivemailwidget.cpp:109
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Toevoegen…"
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder…"
+#, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Map openen waarin het zich bevindt…"
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Verwijderen"

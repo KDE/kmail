@@ -151,8 +151,7 @@ msgid "Open Containing Folder…"
 msgstr ""
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "删除"

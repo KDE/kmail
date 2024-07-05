@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-04 00:39+0000\n"
-"PO-Revision-Date: 2024-06-18 19:53+0200\n"
+"PO-Revision-Date: 2024-07-04 14:44+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -143,22 +143,19 @@ msgstr ""
 "mvillarino@users.sourceforge.net, xosecalvo@gmail.com, adrian@chaves.io"
 
 #: archivemailwidget.cpp:109
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Engadir…"
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder…"
+#, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Abrir o cartafol contedor…"
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Eliminar"

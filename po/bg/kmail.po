@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-05 00:39+0000\n"
 "PO-Revision-Date: 2024-07-03 23:05+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -1123,13 +1123,13 @@ msgstr "Автоматична корекция"
 msgid "Auto Resize Image"
 msgstr "Автоматично преоразмеряване на изображението"
 
-#: configuredialog/configurecomposerpage.cpp:127
+#: configuredialog/configurecomposerpage.cpp:130
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Подпис"
 
-#: configuredialog/configurecomposerpage.cpp:133
+#: configuredialog/configurecomposerpage.cpp:135
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
@@ -1137,7 +1137,7 @@ msgid ""
 msgstr ""
 "Автоматично вмъкване на конфигурирания подпис при съставяне на съобщение"
 
-#: configuredialog/configurecomposerpage.cpp:148
+#: configuredialog/configurecomposerpage.cpp:149
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Поставете подписа над всеки цитиран текст"
@@ -1326,13 +1326,13 @@ msgstr[1] " минути"
 msgid "Automatically save the message at this specified interval"
 msgstr "Автоматично запазване на съобщението на този определен интервал"
 
-#: configuredialog/configurecomposerpage.cpp:666
+#: configuredialog/configurecomposerpage.cpp:664
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Отговор - пред&ставки на темата"
 
-#: configuredialog/configurecomposerpage.cpp:671
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:669
+#: configuredialog/configurecomposerpage.cpp:699
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1342,129 +1342,129 @@ msgstr ""
 "Разпознаване на последователност от следните представки (въведеното е "
 "регулярен израз, без значение на  големи/малки букви):"
 
-#: configuredialog/configurecomposerpage.cpp:679
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "A&dd…"
 msgstr "&Добавяне…"
 
-#: configuredialog/configurecomposerpage.cpp:679
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "Re&move"
 msgstr "И&зтриване"
 
-#: configuredialog/configurecomposerpage.cpp:679
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "Mod&ify…"
 msgstr "&Промяна…"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Въведете нова представка при отговор:"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Искате ли да премахнете префикса за отговор?"
 
-#: configuredialog/configurecomposerpage.cpp:682
+#: configuredialog/configurecomposerpage.cpp:680
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Префикс за отговор:"
 
-#: configuredialog/configurecomposerpage.cpp:697
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Препра&щане - представки на темата"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:707 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:705 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "И&зтриване"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Add…"
 msgstr "Добавяне…"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Modify…"
 msgstr "Промяна…"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Въведете нова представка при препращане:"
 
-#: configuredialog/configurecomposerpage.cpp:708
+#: configuredialog/configurecomposerpage.cpp:706
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Искате ли да премахнете префикса за препращане?"
 
-#: configuredialog/configurecomposerpage.cpp:709
+#: configuredialog/configurecomposerpage.cpp:707
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Префикса за препращане:"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:755
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&Потребителска наставка за идентификация на съобщение"
 
-#: configuredialog/configurecomposerpage.cpp:777
+#: configuredialog/configurecomposerpage.cpp:775
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Потребителска наставка (message-&id):"
 
-#: configuredialog/configurecomposerpage.cpp:789
+#: configuredialog/configurecomposerpage.cpp:787
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Потребителски заглавни части - mime:"
 
-#: configuredialog/configurecomposerpage.cpp:797
+#: configuredialog/configurecomposerpage.cpp:795
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Име"
 
-#: configuredialog/configurecomposerpage.cpp:798
+#: configuredialog/configurecomposerpage.cpp:796
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Стойност"
 
-#: configuredialog/configurecomposerpage.cpp:806
+#: configuredialog/configurecomposerpage.cpp:804
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Но&в"
 
-#: configuredialog/configurecomposerpage.cpp:810
+#: configuredialog/configurecomposerpage.cpp:808
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "И&зтриване"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:817
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Име:"
 
-#: configuredialog/configurecomposerpage.cpp:829
+#: configuredialog/configurecomposerpage.cpp:827
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "Сто&йност:"
 
-#: configuredialog/configurecomposerpage.cpp:968
+#: configuredialog/configurecomposerpage.cpp:966
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1472,17 +1472,17 @@ msgstr ""
 "'Тип съдържание' не е удостоверен низ. Тази заглавна част няма да бъде "
 "запазена."
 
-#: configuredialog/configurecomposerpage.cpp:968
+#: configuredialog/configurecomposerpage.cpp:966
 #, kde-format
 msgid "Invalid header"
 msgstr "Невалидна заглавна част"
 
-#: configuredialog/configurecomposerpage.cpp:1009
+#: configuredialog/configurecomposerpage.cpp:1007
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "Откр&иване на липсващите прикрепени файлове"
 
-#: configuredialog/configurecomposerpage.cpp:1015
+#: configuredialog/configurecomposerpage.cpp:1013
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1490,34 +1490,34 @@ msgstr ""
 "Разпознаване на поне една от ключовите думи като намерение за прикрепяне на "
 "файл:"
 
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Въведете нова ключова дума:"
 
-#: configuredialog/configurecomposerpage.cpp:1028
+#: configuredialog/configurecomposerpage.cpp:1026
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Искате ли да премахнете тази ключова дума за прикачен файл?"
 
-#: configuredialog/configurecomposerpage.cpp:1029
+#: configuredialog/configurecomposerpage.cpp:1027
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Ключова дума за прикачен файл:"
 
-#: configuredialog/configurecomposerpage.cpp:1036
+#: configuredialog/configurecomposerpage.cpp:1034
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Максимален размер за прикачен файл:"
 
-#: configuredialog/configurecomposerpage.cpp:1043
+#: configuredialog/configurecomposerpage.cpp:1041
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " кБ"
 
-#: configuredialog/configurecomposerpage.cpp:1045
+#: configuredialog/configurecomposerpage.cpp:1043
 #, kde-format
 msgid "No limit"
 msgstr "Без ограничение"

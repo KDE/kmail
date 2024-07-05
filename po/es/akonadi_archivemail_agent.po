@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-04 00:39+0000\n"
-"PO-Revision-Date: 2024-06-18 03:51+0200\n"
+"PO-Revision-Date: 2024-07-05 02:13+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -140,22 +140,19 @@ msgid "Your emails"
 msgstr "ecuadra@eloihr.net,fjvinal@gmail.com"
 
 #: archivemailwidget.cpp:109
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Añadir..."
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder…"
+#, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Abrir la carpeta contenedora..."
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Borrar"

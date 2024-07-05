@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-05 00:39+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1258,21 +1258,21 @@ msgstr ""
 msgid "Auto Resize Image"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:127
+#: configuredialog/configurecomposerpage.cpp:130
 #, fuzzy, kde-format
 #| msgid "Signature"
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "امضا"
 
-#: configuredialog/configurecomposerpage.cpp:133
+#: configuredialog/configurecomposerpage.cpp:135
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:148
+#: configuredialog/configurecomposerpage.cpp:149
 #, fuzzy, kde-format
 #| msgid "Use smaller font for quoted text"
 msgid "Insert the signature above any quoted text"
@@ -1452,13 +1452,13 @@ msgstr[1] ""
 msgid "Automatically save the message at this specified interval"
 msgstr "درخواست خودکار اخطارهای وضع &پیام‌"
 
-#: configuredialog/configurecomposerpage.cpp:666
+#: configuredialog/configurecomposerpage.cpp:664
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "پیشوندهای موضوع‌ &پاسخ‌"
 
-#: configuredialog/configurecomposerpage.cpp:671
-#: configuredialog/configurecomposerpage.cpp:701
+#: configuredialog/configurecomposerpage.cpp:669
+#: configuredialog/configurecomposerpage.cpp:699
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1471,156 +1471,156 @@ msgstr ""
 "شناخت هر دنباله پیشوندهای زیر\n"
 ")مدخلها، عبارتهای منظم حساس به حالت هستند(:"
 
-#: configuredialog/configurecomposerpage.cpp:679
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:679
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "Re&move"
 msgstr "&حذف‌"
 
-#: configuredialog/configurecomposerpage.cpp:679
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:1024
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "تغییر..."
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "وارد کردن پیشوند پاسخ جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:682
+#: configuredialog/configurecomposerpage.cpp:680
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "پیشوندهای موضوع‌ &پاسخ‌"
 
-#: configuredialog/configurecomposerpage.cpp:697
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "پیشوندهای موضوع &پیش‌سو‌"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:707 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:705 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "&حذف‌"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "تغییر..."
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "وارد کردن پیشوند پیش‌سوی جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:708
+#: configuredialog/configurecomposerpage.cpp:706
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:709
+#: configuredialog/configurecomposerpage.cpp:707
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "پیشوندهای موضوع &پیش‌سو‌"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:755
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "&استفاده از پسوند شناسه پیام سفارشی‌"
 
-#: configuredialog/configurecomposerpage.cpp:777
+#: configuredialog/configurecomposerpage.cpp:775
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "پسوند &شناسه پیام سفارشی‌:‌"
 
-#: configuredialog/configurecomposerpage.cpp:789
+#: configuredialog/configurecomposerpage.cpp:787
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "تعریف حوزه‌های سرآیند مایم سفارشی:"
 
-#: configuredialog/configurecomposerpage.cpp:797
+#: configuredialog/configurecomposerpage.cpp:795
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "نام"
 
-#: configuredialog/configurecomposerpage.cpp:798
+#: configuredialog/configurecomposerpage.cpp:796
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "مقدار"
 
-#: configuredialog/configurecomposerpage.cpp:806
+#: configuredialog/configurecomposerpage.cpp:804
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&جدید‌"
 
-#: configuredialog/configurecomposerpage.cpp:810
+#: configuredialog/configurecomposerpage.cpp:808
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&حذف‌"
 
-#: configuredialog/configurecomposerpage.cpp:819
+#: configuredialog/configurecomposerpage.cpp:817
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&نام:‌"
 
-#: configuredialog/configurecomposerpage.cpp:829
+#: configuredialog/configurecomposerpage.cpp:827
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&مقدار:‌"
 
-#: configuredialog/configurecomposerpage.cpp:968
+#: configuredialog/configurecomposerpage.cpp:966
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:968
+#: configuredialog/configurecomposerpage.cpp:966
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgid "Invalid header"
 msgstr "&فعال‌سازی امضا‌"
 
-#: configuredialog/configurecomposerpage.cpp:1009
+#: configuredialog/configurecomposerpage.cpp:1007
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "&فعال‌سازی آشکارسازی پیوستهای از دست‌ رفته‌"
 
-#: configuredialog/configurecomposerpage.cpp:1015
+#: configuredialog/configurecomposerpage.cpp:1013
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1628,39 +1628,39 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "شناخت هر کدام از واژه‌های کلیدی زیر به عنوان هدف برای پیوست پرونده:"
 
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "Enter new key word:"
 msgstr "وارد کردن واژه کلیدی جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:1028
+#: configuredialog/configurecomposerpage.cpp:1026
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1029
+#: configuredialog/configurecomposerpage.cpp:1027
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "&پیوستها‌"
 
-#: configuredialog/configurecomposerpage.cpp:1036
+#: configuredialog/configurecomposerpage.cpp:1034
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr " پیوست دارد"
 
-#: configuredialog/configurecomposerpage.cpp:1043
+#: configuredialog/configurecomposerpage.cpp:1041
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " مگابایت"
 
-#: configuredialog/configurecomposerpage.cpp:1045
+#: configuredialog/configurecomposerpage.cpp:1043
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
