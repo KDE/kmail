@@ -8141,6 +8141,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Remove"
-#~ msgstr "Fjern"

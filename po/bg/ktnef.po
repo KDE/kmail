@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-06-25 17:52+0200\n"
+"PO-Revision-Date: 2024-07-05 15:58+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -87,7 +87,7 @@ msgstr "Преглед"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr "Преглед с..."
+msgstr "Преглед с…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -99,13 +99,13 @@ msgstr "Извличане"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "Извличане в..."
+msgstr "Извличане в…"
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "Извличане на всички файлове в..."
+msgstr "Извличане на всички файлове в…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -129,13 +129,13 @@ msgstr "Показване текста на съобщението"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
-msgstr "Запазване текста на съобщението като..."
+msgstr "Запазване текста на съобщението като…"
 
 #: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
-msgstr "Папка по подразбиране..."
+msgstr "Папка по подразбиране…"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -208,7 +208,7 @@ msgstr "&Отваряне с"
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
-msgstr "&Други..."
+msgstr "&Други…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format

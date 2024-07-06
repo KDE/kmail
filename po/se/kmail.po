@@ -7850,6 +7850,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Remove"
-#~ msgstr "Váldde eret"
