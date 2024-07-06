@@ -4480,19 +4480,19 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     SearchPattern pattern;
     const QString searchString = mMessagePane->currentFilterSearchString();
     if (!searchString.isEmpty()) {
-        MessageList::Core::QuickSearchLine::SearchOptions options = mMessagePane->currentOptions();
+        MessageList::Core::SearchMessageByButtons::SearchOptions options = mMessagePane->currentOptions();
         QByteArray searchStringVal;
-        if (options & MessageList::Core::QuickSearchLine::SearchEveryWhere) {
+        if (options & MessageList::Core::SearchMessageByButtons::SearchEveryWhere) {
             searchStringVal = QByteArrayLiteral("<message>");
-        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstSubject) {
+        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstSubject) {
             searchStringVal = QByteArrayLiteral("subject");
-        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstBody) {
+        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstBody) {
             searchStringVal = QByteArrayLiteral("<body>");
-        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstFrom) {
+        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstFrom) {
             searchStringVal = QByteArrayLiteral("from");
-        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstBcc) {
+        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstBcc) {
             searchStringVal = QByteArrayLiteral("bcc");
-        } else if (options & MessageList::Core::QuickSearchLine::SearchAgainstTo) {
+        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstTo) {
             searchStringVal = QByteArrayLiteral("to");
         } else {
             searchStringVal = QByteArrayLiteral("<message>");
