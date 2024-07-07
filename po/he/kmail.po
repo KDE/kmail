@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:39+0000\n"
-"PO-Revision-Date: 2024-07-02 13:55+0300\n"
+"PO-Revision-Date: 2024-07-06 14:14+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2841,7 +2841,7 @@ msgstr "רשימת האוספים ריקה. %1"
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
-msgstr ""
+msgstr "התיקייה הזאת %1 היא לקריאה בלבד. נא לוודא שהגדרות החשבון %2 נכונות."
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -3664,12 +3664,12 @@ msgstr ""
 #: identity/xfaceconfigurator.cpp:182
 #, kde-format
 msgid "Install pngquant to obtain better image quality."
-msgstr ""
+msgstr "יש להתקין את pngquant כדי לקבל איכות תמונה משופרת"
 
 #: identity/xfaceconfigurator.cpp:269
 #, kde-format
 msgid "pngquant exited with code %1: %2"
-msgstr ""
+msgstr "pngquant נסגר עם קוד השגיאה %1: %2"
 
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
@@ -3718,7 +3718,7 @@ msgstr "איש הקשר נוצר בהצלחה"
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
 #, kde-format
 msgid "Contact cannot be stored: %1"
-msgstr ""
+msgstr "לא ניתן לאחסן את איש הקשר: %1"
 
 #: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
 #, kde-format
@@ -3899,7 +3899,7 @@ msgstr "רק לבדוק אם יש הודעות חדשות"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
-msgstr ""
+msgstr "התחלה במזעור לשורת המשימות"
 
 #: kmail_options.h:35
 #, kde-format
@@ -3929,7 +3929,7 @@ msgstr "הגדרת תוכן ההודעה כ־html"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
-msgstr ""
+msgstr "הצגת אפשרויות זמינות למשוב משתמש"
 
 #: kmail_options.h:45
 #, kde-format
@@ -3998,7 +3998,7 @@ msgstr "הו&דעה"
 #: kmail_part.rc:163 kmmainwin.rc:163 kmreadermainwin.rc:47
 #, kde-format
 msgid "Reply Special"
-msgstr ""
+msgstr "תגובה מיוחדת"
 
 #. i18n: ectx: Menu (menubar_message_forward)
 #: kmail_part.rc:172 kmmainwin.rc:172 kmreadermainwin.rc:56
@@ -7819,9 +7819,6 @@ msgstr[3] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "תקריב: %1%"
-
-#~ msgid "Remove"
-#~ msgstr "הסרה"
 
 #~ msgid "Show crypto ownertrust icons"
 #~ msgstr "הצגת סמלי אמינות בעלים קריפטוגרפית"
