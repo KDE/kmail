@@ -26,16 +26,16 @@ void OpenComposerHiddenJob::start()
     // Already defined in MessageHelper::initHeader
     mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
     if (!mSettings.mCc.isEmpty()) {
-        mMsg->cc()->fromUnicodeString(mSettings.mCc, QByteArrayLiteral("utf-8"));
+        mMsg->cc()->fromUnicodeString(mSettings.mCc);
     }
     if (!mSettings.mBcc.isEmpty()) {
-        mMsg->bcc()->fromUnicodeString(mSettings.mBcc, QByteArrayLiteral("utf-8"));
+        mMsg->bcc()->fromUnicodeString(mSettings.mBcc);
     }
     if (!mSettings.mSubject.isEmpty()) {
-        mMsg->subject()->fromUnicodeString(mSettings.mSubject, QByteArrayLiteral("utf-8"));
+        mMsg->subject()->fromUnicodeString(mSettings.mSubject);
     }
     if (!mSettings.mTo.isEmpty()) {
-        mMsg->to()->fromUnicodeString(mSettings.mTo, QByteArrayLiteral("utf-8"));
+        mMsg->to()->fromUnicodeString(mSettings.mTo);
     }
     if (!mSettings.mBody.isEmpty()) {
         mMsg->setBody(mSettings.mBody.toUtf8());

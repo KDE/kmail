@@ -60,7 +60,7 @@ void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFa
 {
     KMime::Message::Ptr rmsg = reply.msg;
     if (mSettings.url.isValid()) {
-        rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url), QByteArrayLiteral("utf-8"));
+        rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url));
     }
     bool lastEncrypt = false;
     bool lastSign = false;

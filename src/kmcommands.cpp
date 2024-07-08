@@ -411,7 +411,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), id);
     // Already defined in MessageHelper::initHeader
     msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
-    msg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl), QByteArrayLiteral("utf-8"));
+    msg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl));
 
     KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, id);
     win->setFocusToSubject();

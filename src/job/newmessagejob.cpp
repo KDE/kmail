@@ -28,13 +28,13 @@ void NewMessageJob::start()
     mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
     // set basic headers
     if (!mNewMessageJobSettings.mCc.isEmpty()) {
-        mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc, QByteArrayLiteral("utf-8"));
+        mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc);
     }
     if (!mNewMessageJobSettings.mBcc.isEmpty()) {
-        mMsg->bcc()->fromUnicodeString(mNewMessageJobSettings.mBcc, QByteArrayLiteral("utf-8"));
+        mMsg->bcc()->fromUnicodeString(mNewMessageJobSettings.mBcc);
     }
     if (!mNewMessageJobSettings.mTo.isEmpty()) {
-        mMsg->to()->fromUnicodeString(mNewMessageJobSettings.mTo, QByteArrayLiteral("utf-8"));
+        mMsg->to()->fromUnicodeString(mNewMessageJobSettings.mTo);
     }
 
     mMsg->assemble();

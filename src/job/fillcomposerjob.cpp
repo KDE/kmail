@@ -28,16 +28,16 @@ void FillComposerJob::start()
     // Already defined in MessageHelper::initHeader
     mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
     if (!mSettings.mCc.isEmpty()) {
-        mMsg->cc()->fromUnicodeString(mSettings.mCc, QByteArrayLiteral("utf-8"));
+        mMsg->cc()->fromUnicodeString(mSettings.mCc);
     }
     if (!mSettings.mBcc.isEmpty()) {
-        mMsg->bcc()->fromUnicodeString(mSettings.mBcc, QByteArrayLiteral("utf-8"));
+        mMsg->bcc()->fromUnicodeString(mSettings.mBcc);
     }
     if (!mSettings.mSubject.isEmpty()) {
-        mMsg->subject()->fromUnicodeString(mSettings.mSubject, QByteArrayLiteral("utf-8"));
+        mMsg->subject()->fromUnicodeString(mSettings.mSubject);
     }
     if (!mSettings.mTo.isEmpty()) {
-        mMsg->to()->fromUnicodeString(mSettings.mTo, QByteArrayLiteral("utf-8"));
+        mMsg->to()->fromUnicodeString(mSettings.mTo);
     }
     if (mSettings.mIdentity > 0) {
         auto h = new KMime::Headers::Generic("X-KMail-Identity");
@@ -82,21 +82,21 @@ void FillComposerJob::slotOpenComposer()
         } else {
             // Just do what we're told to do
             msgPart = new KMime::Content;
-            msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1StringView(mSettings.mAttachCte), QByteArrayLiteral("utf-8"));
+            msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1StringView(mSettings.mAttachCte));
             msgPart->setBody(mSettings.mAttachData); // TODO: check if was setBodyEncoded
             auto ct = msgPart->contentType(); // Create
             ct->setMimeType(mSettings.mAttachType + '/' + mSettings.mAttachSubType);
             ct->setParameter(QLatin1StringView(mSettings.mAttachParamAttr),
                              mSettings.mAttachParamValue); // TODO: Check if the content disposition parameter needs to be set!
             if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
-                msgPart->contentDisposition()->fromUnicodeString(QLatin1StringView(mSettings.mAttachContDisp), QByteArrayLiteral("utf-8"));
+                msgPart->contentDisposition()->fromUnicodeString(QLatin1StringView(mSettings.mAttachContDisp));
             }
             if (!mSettings.mAttachCharset.isEmpty()) {
                 // qCDebug(KMAIL_LOG) << "Set attachCharset to" << attachCharset;
                 ct->setCharset(mSettings.mAttachCharset);
             }
 
-            ct->setName(mSettings.mAttachName, QByteArrayLiteral("utf-8"));
+            ct->setName(mSettings.mAttachName);
             msgPart->assemble();
             // Don't show the composer window if the automatic sending is checked
             iCalAutoSend = MessageViewer::MessageViewerSettings::self()->automaticSending();
