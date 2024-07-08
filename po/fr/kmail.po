@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:39+0000\n"
-"PO-Revision-Date: 2024-06-28 13:49+0200\n"
+"PO-Revision-Date: 2024-07-05 10:39+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -1561,15 +1561,13 @@ msgid "No limit"
 msgstr "Pas de limite"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Ajouter"
 
 #: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Supprimer"
@@ -2305,22 +2303,19 @@ msgid "Insert File"
 msgstr "Insérer un fichier"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
-msgstr "Ajouter une image &incorporée"
+msgstr "Ajouter comme image &intégrée"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
-msgstr "Ajouter comme &pièce jointe"
+msgstr "&Ajouter comme pièce jointe"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2356,11 +2351,10 @@ msgstr[0] "Ajouter le fichier comme &pièce jointe"
 msgstr[1] "Ajouter les fichiers comme &pièces jointes"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
-msgstr "Insérer le texte du presse-papiers comme pièce jointe"
+msgstr "Insérer le texte du presse-papier comme pièce jointe"
 
 #: editor/kmcomposerwin.cpp:2631
 #, kde-format
@@ -3763,29 +3757,25 @@ msgid "&Remove"
 msgstr "Supprime&r"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Ajouter..."
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Modifier…"
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Renommer"
 
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "Définir par défaut"
@@ -6928,8 +6918,7 @@ msgid "Add New Tag…"
 msgstr "Ajouter une nouvelle étiquette…"
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Search tag…"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Rechercher une étiquette..."
