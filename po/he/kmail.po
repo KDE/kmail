@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:39+0000\n"
-"PO-Revision-Date: 2024-07-06 14:14+0300\n"
+"PO-Revision-Date: 2024-07-09 14:39+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -885,10 +885,10 @@ msgid "Always"
 msgstr "תמיד"
 
 #: configuredialog/configureappearancepage.cpp:528
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "רשימת התיקיות"
+msgstr "חלוניות עצה לתיקיות:"
 
 #: configuredialog/configureappearancepage.cpp:602
 #, kde-format
@@ -1500,15 +1500,13 @@ msgid "No limit"
 msgstr "אין מגבלה"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "הוספה"
 
 #: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "הסרה"
@@ -1867,11 +1865,10 @@ msgid "S&ubject:"
 msgstr "&נושא:"
 
 #: editor/kmcomposerwin.cpp:484
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Composer"
-msgstr "כתבן"
+msgstr "חלונית כתיבה"
 
 #: editor/kmcomposerwin.cpp:1262 editor/kmcomposerwin.cpp:1296
 #, kde-format
@@ -2125,10 +2122,10 @@ msgid "&Cryptographic Message Format"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1522
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "הסר זהות"
+msgstr "נא לבחור תצורה קריפטוגרפית להודעה הזאת"
 
 #: editor/kmcomposerwin.cpp:1527
 #, kde-format
@@ -2241,22 +2238,19 @@ msgid "Insert File"
 msgstr "הוספת קובץ"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "הוספה כתמונה מו&טבעת"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "הוספה כ&צרופה"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2296,11 +2290,10 @@ msgstr[2] ""
 msgstr[3] ""
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
-msgstr "הוספת תוכן לוח הגזירים כצרופה"
+msgstr "הוספת טקסט מלוח הגזירים כצרופה"
 
 #: editor/kmcomposerwin.cpp:2631
 #, kde-format
@@ -2542,6 +2535,8 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"מפתח ההצפנה מפוקפק. הוא לא אמין מספיק. אפשר לחתום על המפתח, אם מסרת את טביעת "
+"האצבע בערוץ אחר. לחיצה על הסמל תציג פרטים נוספים."
 
 #: editor/kmcomposerwin.cpp:3854
 #, kde-format
@@ -3214,10 +3209,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:537
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
-msgstr "כתובות עותק &סמוי:"
+msgstr "כתובות &עותק:"
 
 #: identity/identitydialog.cpp:543
 #, fuzzy, kde-format
@@ -3235,8 +3230,7 @@ msgstr ""
 "אינך בטוח מה לעשות, השאר שדה זה ריק.</p> </qt>"
 
 #: identity/identitydialog.cpp:559
-#, fuzzy, kde-format
-#| msgid "&BCC addresses:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "כתובות עותק &סמוי:"
@@ -3552,29 +3546,25 @@ msgid "&Remove"
 msgstr "ה&סרה"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "&Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr "הו&ספה…"
+msgstr "הוספה…"
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "עריכה…"
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "שינוי שם"
 
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "הגדרה כברירת מחדל"
