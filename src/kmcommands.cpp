@@ -593,11 +593,6 @@ KMCommand::Result KMEditItemCommand::execute()
         return Failed;
     }
 
-    if (mDeleteFromSource) {
-        setDeletesItself(true);
-        auto job = new Akonadi::ItemDeleteJob(item);
-        connect(job, &KIO::Job::result, this, &KMEditItemCommand::slotDeleteItem);
-    }
     KMail::Composer *win = KMail::makeComposer();
     bool lastEncrypt = false;
     bool lastSign = false;
@@ -624,8 +619,14 @@ KMCommand::Result KMEditItemCommand::execute()
         win->setFcc(QString::number(sentAttribute->moveToCollection().id()));
     }
     win->show();
+
     if (mDeleteFromSource) {
         win->setModified(true);
+
+        setDeletesItself(true);
+        setEmitsCompletedItself(true);
+        auto job = new Akonadi::ItemDeleteJob(item);
+        connect(job, &KIO::Job::result, this, &KMEditItemCommand::slotDeleteItem);
     }
 
     return OK;
