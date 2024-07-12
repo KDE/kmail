@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-05 00:39+0000\n"
-"PO-Revision-Date: 2024-07-09 14:39+0300\n"
+"PO-Revision-Date: 2024-07-11 08:27+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -7451,7 +7451,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:33
 #, kde-format
 msgid "Validate certificates online (OCSP)"
-msgstr ""
+msgstr "תיקוף אישורים באופן מקוון (OCSP)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, OCSPGroupBox)
 #: ui/smimeconfiguration.ui:40
@@ -7493,6 +7493,8 @@ msgid ""
 "certificate policy is allowed. If this option is selected, policies are not "
 "checked."
 msgstr ""
+"כברירת מחדל, GnuPG משתמש בקובץ ‎~/.gnupg/policies.txt אם מדיניות האישור "
+"מורשית. אם האפשרות הזאת נבחרת, לא תתבצע בדיקה מדיניות."
 
 #. i18n: ectx: property (text), widget (QCheckBox, doNotCheckCertPolicyCB)
 #: ui/smimeconfiguration.ui:104
@@ -7507,6 +7509,8 @@ msgid ""
 "If this option is checked, Certificate Revocation Lists are never used to "
 "validate S/MIME certificates."
 msgstr ""
+"אם האפשרות הזאת מסומנת, רשימות שלילת האישורים אף פעם לא תשמשנה לתיקוף אישורי "
+"S/MIME."
 
 #. i18n: ectx: property (text), widget (QCheckBox, neverConsultCB)
 #: ui/smimeconfiguration.ui:114
