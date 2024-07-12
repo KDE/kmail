@@ -79,7 +79,7 @@ KMMainWin::KMMainWin(QWidget *)
         if (status != PimCommon::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
             auto needUpdateVersionWidget = new PimCommon::NeedUpdateVersionWidget(this);
             mainWidgetLayout->addWidget(needUpdateVersionWidget);
-            qDebug() << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
+            qCDebug(KMAIL_LOG) << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
             needUpdateVersionWidget->setObsoleteVersion(status);
         }
     }
