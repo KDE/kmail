@@ -38,14 +38,14 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::start()
             }
         });
     } else {
-        qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
+        qCDebug(KMAIL_LOG) << "Invalid toplevel collection";
         deleteLater();
     }
 }
 
 void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotFetchCollectionFailed()
 {
-    qCDebug(KMAIL_LOG()) << "Fetch toplevel collection failed";
+    qCDebug(KMAIL_LOG) << "Fetch toplevel collection failed";
     deleteLater();
 }
 
@@ -62,16 +62,16 @@ void MarkAllMessagesAsReadInFolderAndSubFolderJob::slotMarkAsResult(Akonadi::Mar
 {
     switch (result) {
     case Akonadi::MarkAsCommand::Undefined:
-        qCDebug(KMAIL_LOG()) << "MarkAllMessagesAsReadInFolderAndSubFolderJob undefined result";
+        qCDebug(KMAIL_LOG) << "MarkAllMessagesAsReadInFolderAndSubFolderJob undefined result";
         break;
     case Akonadi::MarkAsCommand::OK:
-        qCDebug(KMAIL_LOG()) << "MarkAllMessagesAsReadInFolderAndSubFoldeJob Done";
+        qCDebug(KMAIL_LOG) << "MarkAllMessagesAsReadInFolderAndSubFoldeJob Done";
         break;
     case Akonadi::MarkAsCommand::Canceled:
-        qCDebug(KMAIL_LOG()) << "MarkAllMessagesAsReadInFolderAndSubFoldeJob was canceled";
+        qCDebug(KMAIL_LOG) << "MarkAllMessagesAsReadInFolderAndSubFoldeJob was canceled";
         break;
     case Akonadi::MarkAsCommand::Failed:
-        qCDebug(KMAIL_LOG()) << "MarkAllMessagesAsReadInFolderAndSubFoldeJob was failed";
+        qCDebug(KMAIL_LOG) << "MarkAllMessagesAsReadInFolderAndSubFoldeJob was failed";
         break;
     }
     deleteLater();

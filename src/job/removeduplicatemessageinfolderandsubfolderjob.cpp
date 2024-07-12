@@ -37,7 +37,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::start()
             }
         });
     } else {
-        qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
+        qCDebug(KMAIL_LOG) << "Invalid toplevel collection";
         deleteLater();
     }
 }
@@ -49,7 +49,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::setTopLevelCollection(const 
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionFailed()
 {
-    qCDebug(KMAIL_LOG()) << "Fetch toplevel collection failed";
+    qCDebug(KMAIL_LOG) << "Fetch toplevel collection failed";
     deleteLater();
 }
 
@@ -91,7 +91,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
         item = nullptr;
     }
     if (job->error()) {
-        qCDebug(KMAIL_LOG()) << " Error during remove duplicates " << job->errorString();
+        qCDebug(KMAIL_LOG) << " Error during remove duplicates " << job->errorString();
         KMessageBox::error(mParentWidget,
                            i18n("Error occurred during removing duplicate emails: \'%1\'", job->errorText()),
                            i18nc("@title:window", "Error while removing duplicates"));

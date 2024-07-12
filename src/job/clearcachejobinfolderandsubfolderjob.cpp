@@ -37,7 +37,7 @@ void ClearCacheJobInFolderAndSubFolderJob::start()
             }
         });
     } else {
-        qCDebug(KMAIL_LOG()) << "Invalid toplevel collection";
+        qCDebug(KMAIL_LOG) << "Invalid toplevel collection";
         deleteLater();
     }
 }
@@ -49,7 +49,7 @@ void ClearCacheJobInFolderAndSubFolderJob::setTopLevelCollection(const Akonadi::
 
 void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionFailed()
 {
-    qCDebug(KMAIL_LOG()) << "Fetch toplevel collection failed";
+    qCDebug(KMAIL_LOG) << "Fetch toplevel collection failed";
     deleteLater();
 }
 
