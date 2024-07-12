@@ -1384,7 +1384,7 @@ void KMComposerWin::setupActions()
     actionCollection()->addAction(QStringLiteral("clean_spaces"), action);
     connect(action, &QAction::triggered, mComposerBase->signatureController(), &MessageComposer::SignatureController::cleanSpace);
 
-    mFixedFontAction = new KToggleAction(i18n("Use Fi&xed Font"), this);
+    mFixedFontAction = new KToggleAction(i18nc("@action", "Use Fi&xed Font"), this);
     actionCollection()->addAction(QStringLiteral("toggle_fixedfont"), mFixedFontAction);
     connect(mFixedFontAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateFont);
     mFixedFontAction->setChecked(MessageViewer::MessageViewerSettings::self()->useFixedFont());
@@ -1392,26 +1392,26 @@ void KMComposerWin::setupActions()
     // these are checkable!!!
     mUrgentAction = new KToggleAction(i18nc("@action:inmenu Mark the email as urgent.", "&Urgent"), this);
     actionCollection()->addAction(QStringLiteral("urgent"), mUrgentAction);
-    mRequestMDNAction = new KToggleAction(i18n("&Request Disposition Notification"), this);
+    mRequestMDNAction = new KToggleAction(i18nc("@action", "&Request Disposition Notification"), this);
     actionCollection()->addAction(QStringLiteral("options_request_mdn"), mRequestMDNAction);
     mRequestMDNAction->setChecked(KMailSettings::self()->requestMDN());
 
-    mRequestDeliveryConfirmation = new KToggleAction(i18n("&Request Delivery Confirmation"), this);
+    mRequestDeliveryConfirmation = new KToggleAction(i18nc("@action", "&Request Delivery Confirmation"), this);
     actionCollection()->addAction(QStringLiteral("options_request_delivery_confirmation"), mRequestDeliveryConfirmation);
     // TOOD mRequestDeliveryConfirmation->setChecked(KMailSettings::self()->requestMDN());
 
     //----- Message-Encoding Submenu
-    mWordWrapAction = new KToggleAction(i18n("&Wordwrap"), this);
+    mWordWrapAction = new KToggleAction(i18nc("@action", "&Wordwrap"), this);
     actionCollection()->addAction(QStringLiteral("wordwrap"), mWordWrapAction);
     mWordWrapAction->setChecked(MessageComposer::MessageComposerSettings::self()->wordWrap());
     connect(mWordWrapAction, &KToggleAction::toggled, this, &KMComposerWin::slotWordWrapToggled);
 
-    mSnippetAction = new KToggleAction(i18n("&Snippets"), this);
+    mSnippetAction = new KToggleAction(i18nc("@action", "&Snippets"), this);
     actionCollection()->addAction(QStringLiteral("snippets"), mSnippetAction);
     connect(mSnippetAction, &KToggleAction::toggled, this, &KMComposerWin::slotSnippetWidgetVisibilityChanged);
     mSnippetAction->setChecked(KMailSettings::self()->showSnippetManager());
 
-    mAutoSpellCheckingAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")), i18n("&Automatic Spellchecking"), this);
+    mAutoSpellCheckingAction = new KToggleAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")), i18nc("@action", "&Automatic Spellchecking"), this);
     actionCollection()->addAction(QStringLiteral("options_auto_spellchecking"), mAutoSpellCheckingAction);
     const bool spellChecking = KMailSettings::self()->autoSpellChecking();
     const bool useKmailEditor = !KMailSettings::self()->useExternalEditor();
@@ -1427,29 +1427,29 @@ void KMComposerWin::setupActions()
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorClosed, this, &KMComposerWin::slotExternalEditorClosed);
     connect(mComposerBase->editor(), &MessageComposer::RichTextComposerNg::externalEditorStarted, this, &KMComposerWin::slotExternalEditorStarted);
     // these are checkable!!!
-    mMarkupAction = new KToggleAction(i18n("Rich Text Editing"), this);
+    mMarkupAction = new KToggleAction(i18nc("@action", "Rich Text Editing"), this);
     mMarkupAction->setIcon(QIcon::fromTheme(QStringLiteral("preferences-desktop-font")));
     mMarkupAction->setIconText(i18n("Rich Text"));
     mMarkupAction->setToolTip(i18nc("@info:tooltip", "Toggle rich text editing mode"));
     actionCollection()->addAction(QStringLiteral("html"), mMarkupAction);
     connect(mMarkupAction, &KToggleAction::triggered, this, &KMComposerWin::slotToggleMarkup);
 
-    mAllFieldsAction = new KToggleAction(i18n("&All Fields"), this);
+    mAllFieldsAction = new KToggleAction(i18nc("@action", "&All Fields"), this);
     actionCollection()->addAction(QStringLiteral("show_all_fields"), mAllFieldsAction);
     connect(mAllFieldsAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
-    mIdentityAction = new KToggleAction(i18n("&Identity"), this);
+    mIdentityAction = new KToggleAction(i18nc("@action", "&Identity"), this);
     actionCollection()->addAction(QStringLiteral("show_identity"), mIdentityAction);
     connect(mIdentityAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
-    mDictionaryAction = new KToggleAction(i18n("&Dictionary"), this);
+    mDictionaryAction = new KToggleAction(i18nc("@action", "&Dictionary"), this);
     actionCollection()->addAction(QStringLiteral("show_dictionary"), mDictionaryAction);
     connect(mDictionaryAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
-    mFccAction = new KToggleAction(i18n("&Sent-Mail Folder"), this);
+    mFccAction = new KToggleAction(i18nc("@action", "&Sent-Mail Folder"), this);
     actionCollection()->addAction(QStringLiteral("show_fcc"), mFccAction);
     connect(mFccAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
-    mTransportAction = new KToggleAction(i18n("&Mail Transport"), this);
+    mTransportAction = new KToggleAction(i18nc("@action", "&Mail Transport"), this);
     actionCollection()->addAction(QStringLiteral("show_transport"), mTransportAction);
     connect(mTransportAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
-    mFromAction = new KToggleAction(i18n("&From"), this);
+    mFromAction = new KToggleAction(i18nc("@action", "&From"), this);
     actionCollection()->addAction(QStringLiteral("show_from"), mFromAction);
     connect(mFromAction, &KToggleAction::triggered, this, &KMComposerWin::slotUpdateView);
     mSubjectAction = new KToggleAction(i18nc("@action:inmenu Show the subject in the composer window.", "S&ubject"), this);

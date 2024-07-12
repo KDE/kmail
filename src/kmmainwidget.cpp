@@ -3137,7 +3137,7 @@ void KMMainWidget::setupActions()
     connect(mDisplayMessageFormatMenu, &DisplayMessageFormatActionMenu::changeDisplayMessageFormat, this, &KMMainWidget::slotChangeDisplayMessageFormat);
     actionCollection()->addAction(QStringLiteral("display_format_message"), mDisplayMessageFormatMenu);
 
-    mPreferHtmlLoadExtAction = new KToggleAction(i18n("Load E&xternal References"), this);
+    mPreferHtmlLoadExtAction = new KToggleAction(i18nc("@action", "Load E&xternal References"), this);
     actionCollection()->addAction(QStringLiteral("prefer_html_external_refs"), mPreferHtmlLoadExtAction);
     connect(mPreferHtmlLoadExtAction, &KToggleAction::triggered, this, &KMMainWidget::slotOverrideHtmlLoadExt);
 
