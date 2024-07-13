@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -2064,7 +2064,9 @@ msgid "Cl&ean Spaces"
 msgstr "G&lan Spásanna"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Ú&sáid Cló Aonleithid"
 
@@ -2076,32 +2078,40 @@ msgstr "&Práinneach"
 
 #: editor/kmcomposerwin.cpp:1395
 #, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Timfhilleadh Focal"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippet:"
+msgctxt "@action"
 msgid "&Snippets"
-msgstr ""
+msgstr "&Blúire:"
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
 #| msgid "Lose the formatting?"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Úsáid gnáth-théacs mar sin féin?"
 
@@ -2118,32 +2128,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Úsáid gnáth-théacs mar sin féin?"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "G&ach Réimse"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "A&itheantas"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Foclóir"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Sent-mail &folder:"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr ""
+msgstr "&Fillteán na dteachtaireachtaí seolta:"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail Error"
+msgctxt "@action"
 msgid "&Mail Transport"
-msgstr ""
+msgstr "Earráid KMail"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Ó"
 
@@ -5102,9 +5124,11 @@ msgid "&Archive Folder…"
 msgstr "Comh&ad Cartlainne:"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Send Later"
+msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "Seol Níos Déanaí"
 
 #: kmmainwidget.cpp:3163
 #, fuzzy, kde-format
@@ -8068,7 +8092,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgid " min"
 msgid "5 minutes"
@@ -8155,17 +8179,20 @@ msgstr "Stádas na Teachtaireachta"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Global Options"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Roghanna Comhchoiteanna"
 
@@ -9489,9 +9516,6 @@ msgstr "Súmáil"
 #~ msgctxt "Group to which the snippet belongs."
 #~ msgid "Group:"
 #~ msgstr "Grúpa:"
-
-#~ msgid "&Snippet:"
-#~ msgstr "&Blúire:"
 
 #~ msgid "Sh&ortcut:"
 #~ msgstr "&Aicearra:"

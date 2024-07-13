@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -2140,7 +2140,9 @@ msgid "Cl&ean Spaces"
 msgstr "Pu&hasta tühikutest"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Fikseeri&tud fondi kasutamine"
 
@@ -2151,32 +2153,44 @@ msgid "&Urgent"
 msgstr "&Kiire"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Lugemise kinnituse &soov"
 
 #: editor/kmcomposerwin.cpp:1399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Delivery Confirmation"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Kättesaamise kinnituse &soov"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Reamurdmine"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "Teksti&jupid"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "A&utomaatne õigekirja kontroll"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Vormindatud teksti redigeerimine"
 
@@ -2193,32 +2207,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Vormindatud teksti redigeerimise režiimi lülitamine"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "Kõik &väljad"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identiteet"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Sõnaraamat"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Saadetud kirjade ka&ust"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Kirja saatmise viis"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Kellelt"
 
@@ -5276,7 +5302,9 @@ msgid "&Archive Folder…"
 msgstr "Kausta arhiveerimine"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "&Väliste viidete laadimine"
 
@@ -8433,7 +8461,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr "%1 sekundi järel"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -8511,17 +8539,23 @@ msgid "Message Default Format"
 msgstr "Kirja vaikevormindus"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&Eelista HTML-i tavalisele tekstile"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Ee&lista tavalist teksti HTML-ile"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Globaalse seadistuse kasutamine"
 

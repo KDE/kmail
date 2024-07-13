@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -2063,7 +2063,9 @@ msgid "Cl&ean Spaces"
 msgstr "Boşluqları t&əmizləyin"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Sabit&lənmiş şriftdən istifadə edin"
 
@@ -2074,32 +2076,44 @@ msgid "&Urgent"
 msgstr "&Təcili məktub"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "İşlənməsi haqqında bildiriş tələb &edin"
 
 #: editor/kmcomposerwin.cpp:1399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Delivery Confirmation"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Çatdırılma bildirişi tələb &edin"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "Sətirə &keçid"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "&Hissələr"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Avtomatik imla yoxlaması"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Formatlama ilə düzəliş"
 
@@ -2116,32 +2130,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Formatlama ilə düzəliş rejiminə keçid"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "Bütün s&ahələr"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "K&imlik"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Lüğət"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Göndərilən-poçt qovluğu"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Poçt göndərişi"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "Kimdən"
 
@@ -5189,7 +5215,9 @@ msgid "&Archive Folder…"
 msgstr "Arxiv qovluğu"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "&Xarici keçidlər yüklənsin"
 
@@ -8297,7 +8325,7 @@ msgstr "Cari rejim haqqında məlumatlı mətn!"
 msgid "%1 seconds"
 msgstr "%1 saniyə"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 dəqiqə"
@@ -8371,17 +8399,23 @@ msgid "Message Default Format"
 msgstr "Məktubun ilkin formatı"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&HTML formatına üstünlük verin"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Adi &mətn formatına üstünlük verin"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Ümumi ayarlardan istifadə edin"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -1918,6 +1918,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1387
 #, kde-format
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr ""
 
@@ -1929,31 +1930,37 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1395
 #, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
 #, kde-format
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1409
 #, kde-format
+msgctxt "@action"
 msgid "&Snippets"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1430
 #, kde-format
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr ""
 
@@ -1970,31 +1977,37 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
 #, kde-format
+msgctxt "@action"
 msgid "&All Fields"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1440
 #, kde-format
+msgctxt "@action"
 msgid "&Identity"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1443
 #, kde-format
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1446
 #, kde-format
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1449
 #, kde-format
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1452
 #, kde-format
+msgctxt "@action"
 msgid "&From"
 msgstr ""
 
@@ -4699,6 +4712,7 @@ msgstr ""
 
 #: kmmainwidget.cpp:3140
 #, kde-format
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr ""
 
@@ -7461,7 +7475,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr ""
@@ -7536,16 +7550,19 @@ msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, kde-format
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr ""
 

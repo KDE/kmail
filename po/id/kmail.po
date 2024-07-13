@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2023-06-08 19:02+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: Indonesian <kde-i18n-doc@kde.org>\n"
@@ -1954,9 +1954,11 @@ msgid "Cl&ean Spaces"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Fixed Width Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
-msgstr ""
+msgstr "Font Lebar Tetap"
 
 #: editor/kmcomposerwin.cpp:1393
 #, kde-format
@@ -1966,31 +1968,38 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1395
 #, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
 #, kde-format
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "&Cuplikan"
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1430
 #, kde-format
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr ""
 
@@ -2006,32 +2015,44 @@ msgid "Toggle rich text editing mode"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Expire All Folders"
+msgctxt "@action"
 msgid "&All Fields"
-msgstr ""
+msgstr "Semua Folder &Kedaluwarsa"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identitas"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "Ka&mus"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr ""
+msgstr "Hapus Folder"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "Transpor Surat &Mail"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Dari"
 
@@ -4822,6 +4843,7 @@ msgstr "Folder Arsip"
 
 #: kmmainwidget.cpp:3140
 #, kde-format
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr ""
 
@@ -7683,7 +7705,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr "%1 detik"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 menit"
@@ -7758,16 +7780,19 @@ msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, kde-format
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr ""
 

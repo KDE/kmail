@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2024-07-04 09:28+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1995,7 +1995,9 @@ msgid "Cl&ean Spaces"
 msgstr "Počisti pr&esledke"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Uporabi pisavo stalne širine"
 
@@ -2006,32 +2008,44 @@ msgid "&Urgent"
 msgstr "N&ujno"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Zahtevaj obvestilo o usodi"
 
 #: editor/kmcomposerwin.cpp:1399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Delivery Confirmation"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Zahtevaj obvestilo o dostavi"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "Prelom vrstic"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "Izrezki"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "S&amodejno preverjanje črkovanja"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Urejanje z bogatim besedilom"
 
@@ -2047,32 +2061,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Preklopi način urejanja z obogatenim besedilom"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "Vs&a polja"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Istovetnost"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "Slovar"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Mapa po&slanih sporočil"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "Prenos pošte"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "Od"
 
@@ -5034,7 +5060,9 @@ msgid "&Archive Folder…"
 msgstr "&Arhiviraj mapo…"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Naloži zunanje sklice"
 
@@ -8022,7 +8050,7 @@ msgstr "Informativno besedilo o trenutnem modelu!"
 msgid "%1 seconds"
 msgstr "%1 sekund"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 minut"
@@ -8099,17 +8127,23 @@ msgid "Message Default Format"
 msgstr "Privzeta oblika sporočila"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&HTML-ju daj prednost pred navadnim besedilom"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Navadnemu besedilu daj prednost pred HTML-jem"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Uporabi splošne nastavitve"
 

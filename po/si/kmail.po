@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -2064,7 +2064,9 @@ msgid "Cl&ean Spaces"
 msgstr "ඉඩ ලබාගන්න (&e)"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "ස්ථිර පෙළ භාවිත කරන්න (&x)"
 
@@ -2075,34 +2077,44 @@ msgid "&Urgent"
 msgstr "ඉතා හදිසියි (&U)"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "ස්වභාව දැනූම් දීමක් ඉල්ලන්න (&R)"
 
 #: editor/kmcomposerwin.cpp:1399
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "ස්වභාව දැනූම් දීමක් ඉල්ලන්න (&R)"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "වචන එතුම (&W)"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "කැබලිති (&S)"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "ස්වයංක්‍රීය අක්‍ෂර පිරික්සුම (&A)"
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "හැඩසවි අහිමි කරන්න"
 
@@ -2119,32 +2131,44 @@ msgid "Toggle rich text editing mode"
 msgstr "හැඩසවි අහිමි කරන්න"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "සියළුම ක්‍ෂේත්‍ර (&A)"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "අනන්‍යතාව (&I)"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "ශබ්දකෝෂ (&D)"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "යැවූ-ලිපි බහලුම (&S)"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "ලිපි හුවමාරුව (&M)"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "වෙතින් (&F)"
 
@@ -5052,7 +5076,9 @@ msgid "&Archive Folder…"
 msgstr "බහලුම සංරක්‍ෂණය"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "බාහිර යොමු පූර්‍ණය කරන්න (&x)"
 
@@ -8014,7 +8040,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgid " min"
 msgid "5 minutes"
@@ -8097,19 +8123,23 @@ msgid "Message Default Format"
 msgstr "නව පණිවිඩ (වෙත)..."
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "පැතලි පෙළ වෙත &HTML නිර්දේශ කරන්න"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "පැතලි පෙළ වෙත &HTML නිර්දේශ කරන්න"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Reset Font Settings"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "අකුරු සැකසිම් පෙරනිමියට "
 

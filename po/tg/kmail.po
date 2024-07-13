@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -2175,7 +2175,9 @@ msgid "Cl&ean Spaces"
 msgstr "&Пок кардани фосилот"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Истифода аз &ҳуруфи қалбакӣ"
 
@@ -2187,33 +2189,42 @@ msgid "&Urgent"
 msgstr "&Иттилооти фаврӣ"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Дархост кардани &маълумот оиди коркард"
 
 #: editor/kmcomposerwin.cpp:1399
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Дархост кардани &маълумот оиди коркард"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Гузаронидани калима"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Snippets"
-msgstr ""
+msgstr "Тағйир кардан..."
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Тафтиши имлои худкор"
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Тасдиқоти фиристониш"
 
@@ -2229,32 +2240,43 @@ msgid "Toggle rich text editing mode"
 msgstr "Тасдиқоти фиристониш"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Тамоми заминаҳо"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Ихтисос"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Луғат"
 
 #: editor/kmcomposerwin.cpp:1446
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Папкаи &фиристодашуда"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Тарзи фиристод"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Фиристанда"
 
@@ -5326,9 +5348,10 @@ msgid "&Archive Folder…"
 msgstr "&Папкаи нав..."
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "Файл"
 
 #: kmmainwidget.cpp:3163
 #, fuzzy, kde-format
@@ -8471,7 +8494,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgid " min"
 msgid "5 minutes"
@@ -8549,19 +8572,23 @@ msgid "Message Default Format"
 msgstr "Формати иттилооти хавфнок"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Кор карда баромадани &коди HTML дар иттилоотҳо"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Кор карда баромадани &коди HTML дар иттилоотҳо"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Reset Font Settings"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Барқарор кардани танзимоти стандартии ҳуруфот"
 
@@ -11231,10 +11258,6 @@ msgstr ""
 #~ msgctxt "Group to which the snippet belongs."
 #~ msgid "Group:"
 #~ msgstr "&Кори муштарак"
-
-#, fuzzy
-#~ msgid "&Snippet:"
-#~ msgstr "Тағйир кардан..."
 
 #, fuzzy
 #~ msgid "&Cancel"

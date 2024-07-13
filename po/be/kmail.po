@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2024-06-05 07:03\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -1951,6 +1951,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1387
 #, kde-format
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr ""
 
@@ -1961,32 +1962,39 @@ msgid "&Urgent"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr ""
+msgstr "Запыт абвяшчэння аб апрацоўцы паведамлення"
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
 #, kde-format
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Edit Script..."
+msgctxt "@action"
 msgid "&Snippets"
-msgstr ""
+msgstr "Рэдагаваць скрыпт..."
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1430
 #, kde-format
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr ""
 
@@ -2002,34 +2010,47 @@ msgid "Toggle rich text editing mode"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Add Header"
+msgctxt "@action"
 msgid "&All Fields"
-msgstr ""
+msgstr "&Усе загалоўкі"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "New Identity"
+msgctxt "@action"
 msgid "&Identity"
-msgstr ""
+msgstr "Новыя асабістыя даныя"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Слоўнік"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Delete Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr ""
+msgstr "&Выдаліць тэчку"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Modify Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
-msgstr ""
+msgstr "Змяніць транспарт"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "From"
+msgctxt "@action"
 msgid "&From"
-msgstr ""
+msgstr "Ад"
 
 #: editor/kmcomposerwin.cpp:1455
 #, kde-format
@@ -4768,9 +4789,11 @@ msgid "&Archive Folder…"
 msgstr ""
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Send Later"
+msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "Даслаць пазней"
 
 #: kmmainwidget.cpp:3163
 #, kde-format
@@ -7540,7 +7563,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr "%1 секунд(а)"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 хвілін"
@@ -7616,17 +7639,21 @@ msgid "Message Default Format"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
-msgstr ""
+msgstr "Апрацоўваць HTML у паведамленнях"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
-msgstr ""
+msgstr "Апрацоўваць HTML-код у паведамленнях"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Выкарыстоўваць глабальныя налады"
 
@@ -8129,14 +8156,6 @@ msgstr ""
 #~| msgid "Time"
 #~ msgid "Theme"
 #~ msgstr "Час"
-
-#, fuzzy
-#~ msgid "Prefer HTML to text"
-#~ msgstr "Апрацоўваць HTML у паведамленнях"
-
-#, fuzzy
-#~ msgid "Prefer text to HTML"
-#~ msgstr "Апрацоўваць HTML-код у паведамленнях"
 
 #, fuzzy
 #~ msgid "Use Global Settings"
@@ -9791,11 +9810,6 @@ msgstr ""
 #~ msgstr "Захаваць далучэнне як"
 
 #, fuzzy
-#~| msgid "Send Later"
-#~ msgid "Send Later Preferences..."
-#~ msgstr "Даслаць пазней"
-
-#, fuzzy
 #~| msgid "Configure &Filters..."
 #~ msgid "Configure Send Later Agent..."
 #~ msgstr "Наставіць &фільтры..."
@@ -9826,9 +9840,6 @@ msgstr ""
 #~ "<qt><p>This setting has been fixed by your administrator.</p><p>If you "
 #~ "think this is an error, please contact him.</p></qt>"
 #~ msgstr "<qt><p>Гэты параметр заблакаваны адміністратарам.</p></qt>"
-
-#~ msgid "&Delete Folder"
-#~ msgstr "&Выдаліць тэчку"
 
 #, fuzzy
 #~| msgid "Moving messages failed."
@@ -10645,11 +10656,6 @@ msgstr ""
 #~ msgstr "Сумесная праца"
 
 #, fuzzy
-#~| msgid "Edit Script..."
-#~ msgid "&Snippet:"
-#~ msgstr "Рэдагаваць скрыпт..."
-
-#, fuzzy
 #~| msgid "Shortcut:"
 #~ msgid "Sh&ortcut:"
 #~ msgstr "Скарот:"
@@ -11245,10 +11251,6 @@ msgstr ""
 #~ "\n"
 #~ "Вы можаце праігнараваць запыт або жа адправіць адказ, які змяшчае "
 #~ "абвяшчэнне або адмова ад атрымання."
-
-#, fuzzy
-#~ msgid "Message Disposition Notification Request"
-#~ msgstr "Запыт абвяшчэння аб апрацоўцы паведамлення"
 
 #, fuzzy
 #~ msgid "Send \"&denied\""
@@ -17678,12 +17680,6 @@ msgstr ""
 #~ msgstr "Паказаць поўны спіс загалоўкаў паведамлення"
 
 #, fuzzy
-#~| msgid "Add Header"
-#~ msgctxt "View->headers->"
-#~ msgid "&All Headers"
-#~ msgstr "&Усе загалоўкі"
-
-#, fuzzy
 #~ msgid "Show all message headers"
 #~ msgstr "Паказаць усе загалоўкі"
 
@@ -21171,9 +21167,6 @@ msgstr ""
 #~ "default transport"
 #~ msgid "%1 (Default)"
 #~ msgstr "%1 (па змаўчанні)"
-
-#~ msgid "Modify Transport"
-#~ msgstr "Змяніць транспарт"
 
 #, fuzzy
 #~ msgid "Unrecognized transport protocol. Unable to send message."

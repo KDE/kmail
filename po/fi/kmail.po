@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2024-03-11 16:38+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -2076,7 +2076,9 @@ msgid "Cl&ean Spaces"
 msgstr "P&uhdista välilyönnit"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "K&äytä tasavälistä fonttia"
 
@@ -2087,32 +2089,44 @@ msgid "&Urgent"
 msgstr "K&iireinen"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "&Pyydä vastaanottokuittaus"
 
 #: editor/kmcomposerwin.cpp:1399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Delivery Confirmation"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "&Pyydä vastaanottokuittausta"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Rivitys"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "L&eikkeet"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Automaattinen oikoluku"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Muotoillun tekstin muokkaus"
 
@@ -2129,32 +2143,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Ota muotoillun tekstin muokkaustila käyttöön tai poista se käytöstä"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Kaikki kentät"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Henkilöys"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Sanakirja"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Lähetettyjen &kansio"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Postinvälitys"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Lähettäjä"
 
@@ -5173,7 +5199,9 @@ msgid "&Archive Folder…"
 msgstr "Arkistoi kansio"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Lataa &ulkoiset viittaukset"
 
@@ -8270,7 +8298,7 @@ msgstr "Tiedottava teksti nykyisestä tilasta!"
 msgid "%1 seconds"
 msgstr "%1 sekuntia"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 minuuttia"
@@ -8346,17 +8374,23 @@ msgid "Message Default Format"
 msgstr "Viestien oletusmuoto"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Suosi &HTML:ää pelkän tekstin asemesta"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Suosi &pelkkää tekstiä HTML:n asemesta"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Käytä järjestelmän asetusta"
 

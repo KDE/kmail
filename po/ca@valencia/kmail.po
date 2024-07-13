@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2024-07-04 13:59+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -2014,7 +2014,9 @@ msgid "Cl&ean Spaces"
 msgstr "Neteja els &espais"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Utilitza una lletra d'amplària fi&xa"
 
@@ -2025,32 +2027,44 @@ msgid "&Urgent"
 msgstr "&Urgent"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Sol·licitud de notificació de p&rocessament (MDN)"
 
 #: editor/kmcomposerwin.cpp:1399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Delivery Confirmation"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Sol·licitud de confirmació d'ent&rega"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Talla les paraules"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "F&ragments"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "Verificació &automàtica de l'ortografia"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Edició de text enriquit"
 
@@ -2066,32 +2080,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Alterna el mode edició de text enriquit"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Tots els camps"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identitat"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Diccionari"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Carpeta del c&orreu enviat"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "Transport de &correu"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&De"
 
@@ -5041,7 +5067,9 @@ msgid "&Archive Folder…"
 msgstr "&Arxiva la carpeta…"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Carrega les referències e&xternes"
 
@@ -8047,7 +8075,7 @@ msgstr "Un text informatiu sobre el mode actual!"
 msgid "%1 seconds"
 msgstr "%1 segons"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 minuts"
@@ -8121,17 +8149,23 @@ msgid "Message Default Format"
 msgstr "Format predeterminat del missatge"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Preferix &HTML sobre text net"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Preferix text &net sobre HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Utilitza l'opció global"
 

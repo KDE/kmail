@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -2177,7 +2177,9 @@ msgid "Cl&ean Spaces"
 msgstr "Бос орындарын к&етіру"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Қаріп ені б&ірыңғай болсын"
 
@@ -2188,33 +2190,44 @@ msgid "&Urgent"
 msgstr "&Жедел"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Не істелген туралы хабарламаны &сұрау"
 
 #: editor/kmcomposerwin.cpp:1399
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Не істелген туралы хабарламаны &сұрау"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Сөздерді тасымалдау"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "&Үзінділер"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "Емлені &автоматты түрде тексеру"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Пішімдеуін өзгерту"
 
@@ -2231,32 +2244,44 @@ msgid "Toggle rich text editing mode"
 msgstr "Пішімдеуін өзгерту режімін ауыстыру"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Барлық өрістер"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Іс-әлпеті"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Сөздік"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Жіберілген пошта қапшығы"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Жіберу әдісі"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Кімден"
 
@@ -5316,7 +5341,9 @@ msgid "&Archive Folder…"
 msgstr "Архив қапшығы"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "С&ыртқы сілтемелерді жүктеу"
 
@@ -8523,7 +8550,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -8606,19 +8633,23 @@ msgid "Message Default Format"
 msgstr "Қауіпсіз емес хат пішімі"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&HTML-ді жай мәтіннен артық көру"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "&HTML-ді жай мәтіннен артық көру"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Reset Font Settings"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Қаріп параметрлерін ысыру"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -2134,7 +2134,9 @@ msgid "Cl&ean Spaces"
 msgstr "スペースをクリア(&E)"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "固定幅フォントを使う(&X)"
 
@@ -2145,35 +2147,45 @@ msgid "&Urgent"
 msgstr "至急(&U)"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "開封通知を要求(&R)"
 
 #: editor/kmcomposerwin.cpp:1399
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "開封通知を要求(&R)"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "行を折り返す(&W)"
 
 # ACCELERATOR changed by translator
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "定型表現(&N)"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "自動スペルチェック(&A)"
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "書式を失う"
 
@@ -2190,32 +2202,44 @@ msgid "Toggle rich text editing mode"
 msgstr "書式を失う"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "すべてのフィールド(&A)"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "個人情報(&I)"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "辞書(&D)"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "送信済みフォルダ(&S)"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "メール送信手段(&M)"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "差出人(&F)"
 
@@ -5277,7 +5301,9 @@ msgid "&Archive Folder…"
 msgstr "フォルダをアーカイブ"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "外部参照をロードする(&X)"
 
@@ -8511,7 +8537,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgid " min"
 msgid "5 minutes"
@@ -8593,19 +8619,23 @@ msgid "Message Default Format"
 msgstr "新しいメッセージ..."
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "プレーンテキストより HTML を優先(&H)"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "プレーンテキストより HTML を優先(&H)"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "書式を失う"
 

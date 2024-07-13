@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -2007,7 +2007,9 @@ msgid "Cl&ean Spaces"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Gebruik vaste grootte skrif tipe"
 
@@ -2019,33 +2021,41 @@ msgid "&Urgent"
 msgstr "Dringend"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr ""
+msgstr "Boodskap"
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "Woord omvloei"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Snippets"
-msgstr ""
+msgstr "Intekening..."
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "Outimatiese Speltoetsing"
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
 #| msgid "Formatting (HTML)"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Formateering (HTML)"
 
@@ -2062,34 +2072,45 @@ msgid "Toggle rich text editing mode"
 msgstr "Formateering (HTML)"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "Alle Velde"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "Identiteit"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary:"
+msgctxt "@action"
 msgid "&Dictionary"
-msgstr ""
+msgstr "Woordeboek:"
 
 #: editor/kmcomposerwin.cpp:1446
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Vee Gids Uit"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail &Introduction"
+msgctxt "@action"
 msgid "&Mail Transport"
-msgstr ""
+msgstr "KMail Inleiding"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "From: "
+msgctxt "@action"
 msgid "&From"
-msgstr ""
+msgstr "Vanaf: "
 
 #: editor/kmcomposerwin.cpp:1455
 #, fuzzy, kde-format
@@ -4892,9 +4913,11 @@ msgid "&Archive Folder…"
 msgstr "Nuwe Gids..."
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Configure &Filters..."
+msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "Stel Filters op..."
 
 #: kmmainwidget.cpp:3163
 #, fuzzy, kde-format
@@ -7788,7 +7811,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr ""
@@ -7865,19 +7888,23 @@ msgid "Message Default Format"
 msgstr "Boodskap"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Verkies HTML bo Skoon Teks"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Verkies HTML bo Skoon Teks"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Formatting (HTML)"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Formateering (HTML)"
 
@@ -8928,10 +8955,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Add Snippet"
-#~ msgstr "Intekening..."
-
-#, fuzzy
-#~ msgid "&Snippet:"
 #~ msgstr "Intekening..."
 
 #, fuzzy

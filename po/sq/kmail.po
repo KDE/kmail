@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -1969,6 +1969,7 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1387
 #, kde-format
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr ""
 
@@ -1980,33 +1981,40 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1395
 #, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
 #, kde-format
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1409
 #, kde-format
+msgctxt "@action"
 msgid "&Snippets"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Cancel"
+msgctxt "@action"
 msgid "Rich Text Editing"
-msgstr ""
+msgstr "&Anullo"
 
 #: editor/kmcomposerwin.cpp:1432
 #, kde-format
@@ -2021,33 +2029,42 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
 #, kde-format
+msgctxt "@action"
 msgid "&All Fields"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1440
 #, kde-format
+msgctxt "@action"
 msgid "&Identity"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1443
 #, kde-format
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr ""
+msgstr "Zgjidheni Dosjen"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail"
+msgctxt "@action"
 msgid "&Mail Transport"
-msgstr ""
+msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "From: "
+msgctxt "@action"
 msgid "&From"
-msgstr ""
+msgstr "Nga: "
 
 #: editor/kmcomposerwin.cpp:1455
 #, kde-format
@@ -4819,6 +4836,7 @@ msgstr "Kartela"
 
 #: kmmainwidget.cpp:3140
 #, kde-format
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr ""
 
@@ -7704,7 +7722,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr ""
@@ -7783,16 +7801,19 @@ msgstr "Gjithsej Mesazhe"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, kde-format
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr ""
 

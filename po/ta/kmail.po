@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2024-07-06 21:41+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1994,7 +1994,9 @@ msgid "Cl&ean Spaces"
 msgstr "&இடைவெளிகளை சீராக்கு"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "சம‍அகல &எழுத்துருவை பயன்படுத்து"
 
@@ -2005,32 +2007,43 @@ msgid "&Urgent"
 msgstr "&அவசரமானது"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Disposition Notification"
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "பெற்றதன் உறுதிப்பாட்டை &கோரு"
 
 #: editor/kmcomposerwin.cpp:1399
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Request Delivery Confirmation"
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "சென்றடைந்த‍தன் உறுதிப்பாட்டை &கோரு"
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&வரிமடிப்பு"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Snippets"
-msgstr ""
+msgstr "தொகு..."
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&தானியக்க சொல்திருத்தம்"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "மேம்பட்ட உரைதிருத்தம்"
 
@@ -2046,32 +2059,44 @@ msgid "Toggle rich text editing mode"
 msgstr "மேம்பட்ட உரைத்திருத்த முறையை (rich text-ஐ) இயக்கும்/முடக்கும்"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&அனைத்து புலங்கள்"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "அ&டையாளம்"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "அ&கராதி"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "அ&னுப்பிய அஞ்சலுக்கான அடைவு"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "அஞ்சலனுப்பும் க&ணக்கு"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "அனுப்பு&நர்"
 
@@ -4936,7 +4961,9 @@ msgid "&Archive Folder…"
 msgstr "&அடைவை காப்பகப்படுத்து…"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "வெளி &இணைப்புகளை ஏற்று"
 
@@ -7860,7 +7887,7 @@ msgstr "தற்போதைய பயன்முறையை பற்றி�
 msgid "%1 seconds"
 msgstr "%1 நொடி"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 நிமிடம்"
@@ -7935,17 +7962,23 @@ msgid "Message Default Format"
 msgstr "இயல்பிருப்பு அஞ்சல் வடிவம்"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "வெறும் உரையை காட்டிலும் HTML-&ஐ விரும்பு"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "HTML-ஐ காட்டிலும் வெறும் &உரையை விரும்பு"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "பொதுவான விருப்பத்தை பயன்படுத்து"
 
@@ -10601,10 +10634,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~ msgctxt "Group to which the snippet belongs."
 #~ msgid "Group:"
 #~ msgstr "&குழுகலன்"
-
-#, fuzzy
-#~ msgid "&Snippet:"
-#~ msgstr "தொகு..."
 
 #, fuzzy
 #~| msgid "Shortcut:"

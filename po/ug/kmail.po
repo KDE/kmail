@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -1997,7 +1997,9 @@ msgid "Cl&ean Spaces"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "تەڭ كەڭلىكتىكى خەت نۇسخىسى(&X)"
 
@@ -2009,31 +2011,38 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1395
 #, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
 #, kde-format
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1409
 #, kde-format
+msgctxt "@action"
 msgid "&Snippets"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "ئاپتوماتىك ئىملا تەكشۈرۈش(&A)"
 
 #: editor/kmcomposerwin.cpp:1430
 #, kde-format
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr ""
 
@@ -2049,34 +2058,47 @@ msgid "Toggle rich text editing mode"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Available Filters"
+msgctxt "@action"
 msgid "&All Fields"
-msgstr ""
+msgstr "ئىشلەتكىلى بولىدىغان سۈزگۈچلەر"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "كىملىك(&I)"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "لۇغەت(&D)"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Delete Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr ""
+msgstr "قىسقۇچ ئۆچۈر"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "KMail Error"
+msgctxt "@action"
 msgid "&Mail Transport"
-msgstr ""
+msgstr "KMail  خاتالىقى"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "sender address field"
+#| msgid "&From:"
+msgctxt "@action"
 msgid "&From"
-msgstr ""
+msgstr "ئورنى(&F):"
 
 #: editor/kmcomposerwin.cpp:1455
 #, kde-format
@@ -4909,9 +4931,12 @@ msgid "&Archive Folder…"
 msgstr "ئارخىپلاش"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "continuation of \"obtain picture from\""
+#| msgid "External Source"
+msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "سىرتقى مەنبە"
 
 #: kmmainwidget.cpp:3163
 #, fuzzy, kde-format
@@ -7794,7 +7819,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgid " min"
 msgid "5 minutes"
@@ -7875,17 +7900,20 @@ msgstr "ئۇچۇرلار"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, kde-format
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "پىچىمىنى يوق قىلىش"
 

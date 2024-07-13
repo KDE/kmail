@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -2115,7 +2115,9 @@ msgid "Cl&ean Spaces"
 msgstr "&Coca Izithuba"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Se&benzisa Ubungakanani bamagama Obungatshintshiyo"
 
@@ -2127,32 +2129,39 @@ msgid "&Urgent"
 msgstr "&Ingxamisekile"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr ""
+msgstr "Iposi Entsha Eqatshelweyo"
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Usongelo lwegama"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Snippets"
-msgstr ""
+msgstr "Hlela..."
 
 #: editor/kmcomposerwin.cpp:1414
 #, kde-format
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Ulwazi lobuntu bakho"
 
@@ -2168,32 +2177,42 @@ msgid "Toggle rich text editing mode"
 msgstr "Ulwazi lobuntu bakho"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Yonke Imihlaba"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&Uchazo"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Dictionary"
-msgstr ""
+msgstr "&Inkcazelo:"
 
 #: editor/kmcomposerwin.cpp:1446
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Incwadi eneenkcukacha Yeposi-Ethunyelwey&o"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Uthutho Lweposi"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&Ivela"
 
@@ -5044,9 +5063,10 @@ msgid "&Archive Folder…"
 msgstr "&Incwadi enenkcukacha Entsha..."
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr ""
+msgstr "Ifayile"
 
 #: kmmainwidget.cpp:3163
 #, fuzzy, kde-format
@@ -8018,7 +8038,7 @@ msgstr ""
 msgid "%1 seconds"
 msgstr ""
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, fuzzy, kde-format
 #| msgid " min"
 msgid "5 minutes"
@@ -8095,18 +8115,22 @@ msgid "Message Default Format"
 msgstr "Indawo Yempahla Zomyalezo"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&Khetha i HTML kumbhalo Ocacileyo"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "&Khetha i HTML kumbhalo Ocacileyo"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Izicwangciso Zofihlo"
 
@@ -10265,10 +10289,6 @@ msgstr ""
 #~ msgctxt "Group to which the snippet belongs."
 #~ msgid "Group:"
 #~ msgstr "Qwalasela i Akhawunti"
-
-#, fuzzy
-#~ msgid "&Snippet:"
-#~ msgstr "Hlela..."
 
 #, fuzzy
 #~ msgid "Sh&ortcut:"

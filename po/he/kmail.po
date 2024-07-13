@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-05 00:39+0000\n"
-"PO-Revision-Date: 2024-07-11 08:27+0300\n"
+"POT-Creation-Date: 2024-07-13 00:40+0000\n"
+"PO-Revision-Date: 2024-07-12 09:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1288,14 +1288,14 @@ msgid "No autosave"
 msgstr "ללא שמירה אוטומטית"
 
 #: configuredialog/configurecomposerpage.cpp:456
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
 msgid_plural " minutes"
-msgstr[0] " דקות"
-msgstr[1] " דקות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] " דק׳"
+msgstr[1] " דק׳"
+msgstr[2] " דק׳"
+msgstr[3] " דק׳"
 
 #: configuredialog/configurecomposerpage.cpp:458
 #, kde-format
@@ -1325,7 +1325,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "הו&ספה"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
@@ -1368,7 +1368,7 @@ msgstr "ה&סרה"
 #: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "הוספה…"
 
 #: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
@@ -1981,7 +1981,9 @@ msgid "Cl&ean Spaces"
 msgstr "&ניקוי רווחים"
 
 #: editor/kmcomposerwin.cpp:1387
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Fi&xed Font"
+msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "להשתמש ב&גופן ברוחב קבוע"
 
@@ -1992,32 +1994,42 @@ msgid "&Urgent"
 msgstr "&דחוף"
 
 #: editor/kmcomposerwin.cpp:1395
-#, kde-format
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr ""
+msgstr "רשימת ההודעות"
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
+msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wordwrap"
+msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&גלישת שורות"
 
 #: editor/kmcomposerwin.cpp:1409
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Snippets"
+msgctxt "@action"
 msgid "&Snippets"
 msgstr "מ&קטעי טקסט"
 
 #: editor/kmcomposerwin.cpp:1414
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Automatic Spellchecking"
+msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "בדיקת איות &אוטומטית"
 
 #: editor/kmcomposerwin.cpp:1430
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rich Text Editing"
+msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "עריכת טקסט עשיר"
 
@@ -2033,32 +2045,44 @@ msgid "Toggle rich text editing mode"
 msgstr "החלפת מצב עריכת טקסט עשיר"
 
 #: editor/kmcomposerwin.cpp:1437
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&All Fields"
+msgctxt "@action"
 msgid "&All Fields"
 msgstr "&כל השדות"
 
 #: editor/kmcomposerwin.cpp:1440
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Identity"
+msgctxt "@action"
 msgid "&Identity"
 msgstr "&זהות"
 
 #: editor/kmcomposerwin.cpp:1443
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Dictionary"
+msgctxt "@action"
 msgid "&Dictionary"
 msgstr "מי&לון"
 
 #: editor/kmcomposerwin.cpp:1446
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Sent-Mail Folder"
+msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "תיקיית דואר &נשלח"
 
 #: editor/kmcomposerwin.cpp:1449
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Mail Transport"
+msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&תעבורת דוא״ל"
 
 #: editor/kmcomposerwin.cpp:1452
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&From"
+msgctxt "@action"
 msgid "&From"
 msgstr "&מאת"
 
@@ -4850,7 +4874,9 @@ msgid "&Archive Folder…"
 msgstr "העברת תיקייה ל&ארכיון…"
 
 #: kmmainwidget.cpp:3140
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Load E&xternal References"
+msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "טען הפניות &חיצוניות"
 
@@ -7548,7 +7574,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:144
 #, kde-format
 msgid "Do not perform any HTTP requests"
-msgstr ""
+msgstr "לא לבצע כלל בקשות ב־HTTP"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:151
@@ -7575,18 +7601,20 @@ msgid ""
 "(which comes from the environment variable http_proxy) will be used for any "
 "HTTP request."
 msgstr ""
+"אם האפשרות הזאת נבחרה, ערך מתווך ה־HTTP משמאל (שמקורו במשתנה הסביבה "
+"http_proxy) ישמש לכל בקשות ה־HTTP."
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
 #, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr ""
+msgstr "להשתמש במתווך ה־HTTP של המ&ערכת:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
 #, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr ""
+msgstr "להשתמש במתווך ה&זה לבקשות HTTP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
@@ -7607,13 +7635,13 @@ msgstr "בקשות LDAP"
 #: ui/smimeconfiguration.ui:224
 #, kde-format
 msgid "Entirely disables the use of LDAP for S/MIME."
-msgstr ""
+msgstr "משבית לחלוטין את השימוש של LDAP ל־S/MIME."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableLDAPCB)
 #: ui/smimeconfiguration.ui:227
 #, kde-format
 msgid "Do not perform any LDAP requests"
-msgstr ""
+msgstr "לא לבצע כלל בקשות מול LDAP"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:234
@@ -7636,7 +7664,7 @@ msgstr "אל תשלח תעו&דות"
 #: ui/smimeconfiguration.ui:246
 #, kde-format
 msgid "Primary host for LDAP requests:"
-msgstr ""
+msgstr "מארח ראשי לבקשות LDAP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customLDAPProxy)
 #: ui/smimeconfiguration.ui:257
@@ -7673,13 +7701,13 @@ msgstr "לא לשלוח"
 #: ui/xfaceconfigurator.ui:35
 #, kde-format
 msgid "Send color (Face)"
-msgstr ""
+msgstr "שליחה בצבע (Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:40
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr ""
+msgstr "שליחה בשחור לבן (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:45
@@ -7710,7 +7738,7 @@ msgstr "טקסט שנועד ליידע אותך על המצב הנוכחי!"
 msgid "%1 seconds"
 msgstr "%1 שניות"
 
-#: undosend/undosendcombobox.cpp:24
+#: undosend/undosendcombobox.cpp:25
 #, kde-format
 msgid "5 minutes"
 msgstr "5 דקות"
@@ -7786,17 +7814,23 @@ msgid "Message Default Format"
 msgstr "תצורת ההודעות כברירת מחדל"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &HTML to Plain Text"
+msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "ה&עדפת HTML על פני טקסט רגיל"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Prefer &Plain Text to HTML"
+msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "העדפת טקסט &פשוט על פני HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Global Setting"
+msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "להשתמש בהגדרות כלליות"
 
