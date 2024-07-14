@@ -1952,7 +1952,6 @@ msgstr "清理空格(&E)"
 
 #: editor/kmcomposerwin.cpp:1387
 #, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "使用等宽字体(&X)"
@@ -1965,42 +1964,36 @@ msgstr "标记为紧急(&U)"
 
 #: editor/kmcomposerwin.cpp:1395
 #, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "请求处理回执(&R)"
 
 #: editor/kmcomposerwin.cpp:1399
 #, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "请求送达通知(&R)"
 
 #: editor/kmcomposerwin.cpp:1404
 #, fuzzy, kde-format
-#| msgid "&Wordwrap"
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "自动换行(&W)"
 
 #: editor/kmcomposerwin.cpp:1409
 #, fuzzy, kde-format
-#| msgid "&Snippets"
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "片断(&S)"
 
 #: editor/kmcomposerwin.cpp:1414
 #, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "自动拼写检查(&A)"
 
 #: editor/kmcomposerwin.cpp:1430
 #, fuzzy, kde-format
-#| msgid "Rich Text Editing"
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "富文本编辑"
@@ -2018,42 +2011,36 @@ msgstr "切换富文本编辑模式"
 
 #: editor/kmcomposerwin.cpp:1437
 #, fuzzy, kde-format
-#| msgid "&All Fields"
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "全部字段(&A)"
 
 #: editor/kmcomposerwin.cpp:1440
 #, fuzzy, kde-format
-#| msgid "&Identity"
 msgctxt "@action"
 msgid "&Identity"
 msgstr "身份(&I)"
 
 #: editor/kmcomposerwin.cpp:1443
 #, fuzzy, kde-format
-#| msgid "&Dictionary"
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "字典(&D)"
 
 #: editor/kmcomposerwin.cpp:1446
 #, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "已发文件夹(&S)"
 
 #: editor/kmcomposerwin.cpp:1449
 #, fuzzy, kde-format
-#| msgid "&Mail Transport"
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "邮件传送(&M)"
 
 #: editor/kmcomposerwin.cpp:1452
 #, fuzzy, kde-format
-#| msgid "&From"
 msgctxt "@action"
 msgid "&From"
 msgstr "发件人(&F)"
@@ -4821,7 +4808,6 @@ msgstr "归档文件夹(&A)..."
 
 #: kmmainwidget.cpp:3140
 #, fuzzy, kde-format
-#| msgid "Load E&xternal References"
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "加载外部引用(&X)"
@@ -7798,21 +7784,18 @@ msgstr "消息默认格式"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "优先使用 &HTML 格式"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "优先使用纯文本格式(&P)"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
-#| msgid "Use Global Setting"
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "使用全局设置"
