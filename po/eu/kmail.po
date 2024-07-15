@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-13 00:40+0000\n"
-"PO-Revision-Date: 2024-05-19 12:10+0200\n"
+"PO-Revision-Date: 2024-07-14 08:12+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -402,8 +402,7 @@ msgid "Folder holds a mailing list"
 msgstr "Karpetak posta-zerrenda bat du"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Hauteman automatikoki"
@@ -424,11 +423,10 @@ msgid "Preferred handler:"
 msgstr "Hobetsitako kudeatzailea:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
-msgstr "Abiatu kudeatzailea"
+msgstr "Deitu kudeatzaileaari"
 
 #: collectionpage/collectionmailinglistpage.cpp:101
 #, kde-format
@@ -436,11 +434,10 @@ msgid "Address type:"
 msgstr "Helbide-mota:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, fuzzy, kde-format
-#| msgid "URL for mailing list posting:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
-msgstr "Posta-zerrenda batera posta bidaltzeko URL:"
+msgstr "Posta-zerrenda batera posta bidaltzeko URLa:"
 
 #: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
 #, kde-format
@@ -493,22 +490,19 @@ msgstr ""
 "Bete helbideak eskuz."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Kuota"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, fuzzy, kde-format
-#| msgid "Usage:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Erabilera:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, fuzzy, kde-format
-#| msgid "Status:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Egoera:"
@@ -530,11 +524,7 @@ msgid "Shortcut"
 msgstr "Lasterbidea"
 
 #: collectionpage/collectionshortcutpage.cpp:44
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>To choose a key or a combination of keys which select the current "
-#| "folder, click the button below and then press the key(s) you wish to "
-#| "associate with this folder.</qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
@@ -546,8 +536,7 @@ msgstr ""
 "d(it)uzun tekla(k).</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Txantiloiak"
@@ -611,11 +600,10 @@ msgid "LDAP server"
 msgstr "LDAP zerbitzaria"
 
 #: configuredialog/configureaccountpage.cpp:84
-#, fuzzy, kde-format
-#| msgid "Outgoing accounts (add at least one):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
-msgstr "Irteerako kontuak (gehitu bat bederen):"
+msgstr "Irteerako kontuak (gehitu bat gutxienez):"
 
 #: configuredialog/configureaccountpage.cpp:91
 #, kde-format
@@ -790,8 +778,7 @@ msgid "&Use custom fonts"
 msgstr "&Erabili neurrira ipinitako letra-tipoa"
 
 #: configuredialog/configureappearancepage.cpp:172
-#, fuzzy, kde-format
-#| msgid "Apply &to:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "&Honi aplikatu:"
@@ -856,8 +843,7 @@ msgid "&Do not change color from original HTML mail"
 msgstr "E&z aldatu jatorrizko HTML postaren kolorea"
 
 #: configuredialog/configureappearancepage.cpp:363
-#, fuzzy, kde-format
-#| msgid "Close to quota threshold:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Kuota-atalasetik gertu:"
@@ -935,8 +921,7 @@ msgid "Default theme:"
 msgstr "Gai lehenetsia:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, fuzzy, kde-format
-#| msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
@@ -1001,10 +986,7 @@ msgid "Message Window"
 msgstr "Mezuen leihoa"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -1033,10 +1015,9 @@ msgid "Show unread email in Taskbar"
 msgstr "Erakutsi ataza-barran irakurri gabeko e-posta"
 
 #: configuredialog/configureappearancepage.cpp:902
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgid "Plasma activities"
-msgstr "&Erregistratu iragazki ekintzak egunkarian"
+msgstr "Plasma jarduerak"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
@@ -1049,29 +1030,25 @@ msgid "A&vailable Tags"
 msgstr "Etiketa era&bilgarriak"
 
 #: configuredialog/configureappearancepage.cpp:987
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Gehitu etiketa berria"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Kendu hautatutako etiketa"
 
 #: configuredialog/configureappearancepage.cpp:1001
-#, fuzzy, kde-format
-#| msgid "Increase tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Handiagotu etiketaren lehentasuna"
 
 #: configuredialog/configureappearancepage.cpp:1007
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Txikiagotu etiketaren lehentasuna"
@@ -1251,8 +1228,7 @@ msgid "Set the default forwarded message format"
 msgstr "Ezarri birbidalitako mezuen formatu lehenetsia"
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, fuzzy, kde-format
-#| msgid "Default forwarding type:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Birbidaltzeko mota lehenetsia:"
@@ -1264,18 +1240,16 @@ msgid "Recipients"
 msgstr "Hartzaileak"
 
 #: configuredialog/configurecomposerpage.cpp:352
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Ohartarazi hartzaile gehiegi zehazten direnean"
 
 #: configuredialog/configurecomposerpage.cpp:361
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
-msgstr "Ezarri ohartarazteko gehienezko hartzaile kopurua"
+msgstr "Oharpenerako gehienezko hartzaile kopurua ezarri"
 
 #: configuredialog/configurecomposerpage.cpp:379
 #, kde-format
@@ -1308,11 +1282,10 @@ msgid "No save"
 msgstr "Ez gorde"
 
 #: configuredialog/configurecomposerpage.cpp:419
-#, fuzzy, kde-format
-#| msgid "Maximum recent addresses retained:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
-msgstr "Gordetako berriki erabilitako gehienezko helbideak:"
+msgstr "Gehienez atxikitako azken aldiko helbideak:"
 
 #: configuredialog/configurecomposerpage.cpp:423
 #, kde-format
@@ -1324,8 +1297,7 @@ msgstr ""
 "gehienezko kopurua"
 
 #: configuredialog/configurecomposerpage.cpp:436
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Konfiguratu osatzea..."
@@ -1361,10 +1333,7 @@ msgstr "Erant&zunen gaiaren aurrizkia"
 
 #: configuredialog/configurecomposerpage.cpp:669
 #: configuredialog/configurecomposerpage.cpp:699
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any sequence of the following prefixes (entries are case-"
-#| "insensitive regular expressions):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
@@ -1387,15 +1356,14 @@ msgstr "&Kendu"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "Aldatu..."
+msgstr "Al&datu..."
 
 #: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new reply prefix:"
-msgstr "Sartu erantzunaren aurrizki berria:"
+msgstr "Sartu erantzun-aurrizki berria:"
 
 #: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
@@ -1449,15 +1417,13 @@ msgid "&Use custom message-id suffix"
 msgstr "&Erabili neurrira ipinitako mezu-ID atzizkia"
 
 #: configuredialog/configurecomposerpage.cpp:775
-#, fuzzy, kde-format
-#| msgid "Custom message-&id suffix:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Neurrira ipinitako mezu-&ID atzizkia:"
 
 #: configuredialog/configurecomposerpage.cpp:787
-#, fuzzy, kde-format
-#| msgid "Define custom mime header fields:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definitu neurrira ipinitako goiburuko MIME eremuak:"
@@ -1481,11 +1447,10 @@ msgid "Ne&w"
 msgstr "&Berria"
 
 #: configuredialog/configurecomposerpage.cpp:808
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
-msgstr "&Kendu"
+msgstr "Ke&ndu"
 
 #: configuredialog/configurecomposerpage.cpp:817
 #, kde-format
@@ -1494,8 +1459,7 @@ msgid "&Name:"
 msgstr "&Izena:"
 
 #: configuredialog/configurecomposerpage.cpp:827
-#, fuzzy, kde-format
-#| msgid "&Value:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Balioa:"
@@ -1517,12 +1481,10 @@ msgid "E&nable detection of missing attachments"
 msgstr "&Gaitu falta diren eranskinen detekzioa"
 
 #: configuredialog/configurecomposerpage.cpp:1013
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any of the following key words as intention to attach a file:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
-msgstr "Hartu honako gako-hitzetariko bat fitxategi bat eransteko:"
+msgstr "Fitxategi bat eransteko, ondoko gako-hitzetako edozein ezagutzea:"
 
 #: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
@@ -1540,11 +1502,10 @@ msgid "Attachment Word:"
 msgstr "Eranskinaren hitza:"
 
 #: configuredialog/configurecomposerpage.cpp:1034
-#, fuzzy, kde-format
-#| msgid "Maximum Attachment Size:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "Eranskinaren neurri maximoa:"
+msgstr "Eranskinaren gehienezko neurria:"
 
 #: configuredialog/configurecomposerpage.cpp:1041
 #, kde-format
@@ -1558,15 +1519,13 @@ msgid "No limit"
 msgstr "Mugarik ez"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Gehitu"
 
 #: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Kendu"
@@ -1706,10 +1665,7 @@ msgid "GnuPG Settings"
 msgstr "GnuPG ezarpenak"
 
 #: configuredialog/configuresecuritypage.cpp:341
-#, fuzzy, kde-format
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1769,15 +1725,13 @@ msgid "Archive"
 msgstr "Artxibatu"
 
 #: dialog/archivefolderdialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Karpeta:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "F&ormatua:"
@@ -1803,11 +1757,10 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ-rekin konprimitutako Tar artxiboa (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, fuzzy, kde-format
-#| msgid "&Archive File:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
-msgstr "&Artxibo fitxategia:"
+msgstr "&Artxibo-fitxategia:"
 
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
@@ -1849,15 +1802,13 @@ msgstr[0] "eranskin 1 (%2)"
 msgstr[1] "%1 eranskin (%2)"
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Hide attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Ezkutatu eranskinen zerrenda"
 
 #: editor/attachment/attachmentview.cpp:202
-#, fuzzy, kde-format
-#| msgid "Show attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Erakutsi eranskinen zerrenda"
@@ -1869,59 +1820,50 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
 "Aukeratu mezu honen azterketa ortografikoa egiteko erabili beharreko hiztegia"
 
 #: editor/kmcomposerwin.cpp:366
-#, fuzzy, kde-format
-#| msgid ""
-#| "Select the sent-mail folder where a copy of this message will be saved"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Aukeratu mezu honen kopia bat gordetzeko bidalitako posten karpeta"
 
 #: editor/kmcomposerwin.cpp:374
-#, fuzzy, kde-format
-#| msgid "Select the outgoing account to use for sending this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Aukeratu mezu hau bidaltzeko erabili beharreko irteerako kontua"
 
 #: editor/kmcomposerwin.cpp:382
-#, fuzzy, kde-format
-#| msgid "Set the \"From:\" email address for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Ezarri mezu honetako «Nork:» e-posta helbidea"
+msgstr "Ezarri mezu honetako \"Nork:\" e-posta helbidea"
 
 #: editor/kmcomposerwin.cpp:410
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Nortasuna:"
 
 #: editor/kmcomposerwin.cpp:411
-#, fuzzy, kde-format
-#| msgid "&Dictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Hiztegia:"
 
 #: editor/kmcomposerwin.cpp:412
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "&Bidalitako posta karpeta:"
 
 #: editor/kmcomposerwin.cpp:413
-#, fuzzy, kde-format
-#| msgid "&Mail transport:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "&Posta garraioa:"
@@ -2055,11 +1997,10 @@ msgid "Cl&ean Spaces"
 msgstr "&Garbitu zuriuneak"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
-msgstr "Erabili zabalera &finkoko letra-tipoak"
+msgstr "Erabili zabalera &finkoko letra-tipoa"
 
 #: editor/kmcomposerwin.cpp:1393
 #, kde-format
@@ -2068,43 +2009,37 @@ msgid "&Urgent"
 msgstr "&Premiazkoa"
 
 #: editor/kmcomposerwin.cpp:1395
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "&Eskatu jakinarazpena eskuratzean"
+msgstr "Xedapena jakinarazteko es&kaera"
 
 #: editor/kmcomposerwin.cpp:1399
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Entrega baieztatzeko eskae&ra"
 
 #: editor/kmcomposerwin.cpp:1404
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Itzulbiratu"
 
 #: editor/kmcomposerwin.cpp:1409
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "Te&stu-zatiak"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
-msgstr "Ortografia zuzentzaile a&utomatikoa"
+msgstr "Ortografia zuzentze a&utomatikoa"
 
 #: editor/kmcomposerwin.cpp:1430
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Testu aberastua editatzea"
@@ -2115,50 +2050,43 @@ msgid "Rich Text"
 msgstr "Testu aberastua"
 
 #: editor/kmcomposerwin.cpp:1433
-#, fuzzy, kde-format
-#| msgid "Toggle rich text editing mode"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Txandakatu testu aberastua editatzeko modua"
 
 #: editor/kmcomposerwin.cpp:1437
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
-msgstr "Eremu &guztiak"
+msgstr "Eremu &denak"
 
 #: editor/kmcomposerwin.cpp:1440
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Nortasuna"
 
 #: editor/kmcomposerwin.cpp:1443
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Hiztegia"
 
 #: editor/kmcomposerwin.cpp:1446
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Bidalitako posta karpeta"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Posta garraioa"
 
 #: editor/kmcomposerwin.cpp:1452
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&Nork"
@@ -2223,8 +2151,7 @@ msgid "&Cryptographic Message Format"
 msgstr "En&kriptatutako mezuaren formatua"
 
 #: editor/kmcomposerwin.cpp:1522
-#, fuzzy, kde-format
-#| msgid "Select a cryptographic format for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Aukeratu mezu hau zifratzeko formatu bat"
@@ -2261,8 +2188,7 @@ msgid " Line: %1 "
 msgstr "Lerroa: %1 "
 
 #: editor/kmcomposerwin.cpp:1696
-#, fuzzy, kde-format
-#| msgid " Column: %1 "
+#, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Zutabea: %1 "
@@ -2342,22 +2268,19 @@ msgid "Insert File"
 msgstr "Txertatu fitxategia"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
-msgstr "Gorde lerro &barruko irudi gisa"
+msgstr "Gehitu lerro &barruko irudi gisa"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Gehitu er&anskin gisa"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2393,8 +2316,7 @@ msgstr[0] "Gehitu fitxategi bat er&anskin gisa"
 msgstr[1] "Gehitu fitxategiak er&anskin gisa"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Txertatu arbeleko testua eranskin gisa"
@@ -2808,8 +2730,7 @@ msgid "Details"
 msgstr "Xehetasunak"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
-#, fuzzy, kde-format
-#| msgid "Select email to put in whitelist:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
 msgstr "Hautatu zerrenda-zurian ipini beharreko e-posta:"
@@ -2830,11 +2751,10 @@ msgid "Send Now"
 msgstr "Bidali orain"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr "Ezarri mezu honen gaia"
+msgstr "Mezu honetarako gai bat ezartzea"
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -3103,8 +3023,7 @@ msgid "&From existing vCard"
 msgstr "Aurrez dagoen vCard bateti&k"
 
 #: identity/identityaddvcarddialog.cpp:66
-#, fuzzy, kde-format
-#| msgid "&vCard path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr "&vCard bide-izena:"
@@ -3115,11 +3034,10 @@ msgid "&Duplicate existing vCard"
 msgstr "vCard txartela &bikoiztea"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Existing identities:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
-msgstr "&Dauden identitateak:"
+msgstr "&Dauden nortasunak:"
 
 #: identity/identitydialog.cpp:173
 #, kde-format
@@ -3159,8 +3077,7 @@ msgid "General"
 msgstr "Orokorra"
 
 #: identity/identitydialog.cpp:272
-#, fuzzy, kde-format
-#| msgid "&Your name:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Zure izena:"
@@ -3178,8 +3095,7 @@ msgstr ""
 "helbide elektronikoa baizik.</p></qt>"
 
 #: identity/identitydialog.cpp:288
-#, fuzzy, kde-format
-#| msgid "Organi&zation:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Erak&undea:"
@@ -3196,11 +3112,10 @@ msgstr ""
 "(eta normala) da hau hutsik uztea.</p></qt>"
 
 #: identity/identitydialog.cpp:305
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
-msgstr "&Helbide elektronikoa:"
+msgstr "&E-posta helbidea:"
 
 #: identity/identitydialog.cpp:310
 #, kde-format
@@ -3218,11 +3133,10 @@ msgstr ""
 "hutsik uzten baduzu, jendeak zuri erantzuteko arazoak izango ditu.</p></qt>"
 
 #: identity/identitydialog.cpp:329
-#, fuzzy, kde-format
-#| msgid "Email a&liases:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
-msgstr "E-posta ezizenak:"
+msgstr "E-posta goiti&zenak:"
 
 #: identity/identitydialog.cpp:334
 #, kde-format
@@ -3262,11 +3176,10 @@ msgstr ""
 "gehiago aurkitu dezakezu hemen, <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:363
-#, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
-msgstr "OpenPGP sindadura gakoa:"
+msgstr "OpenPGP sindadura-gakoa:"
 
 #: identity/identitydialog.cpp:369
 #, kde-format
@@ -3301,11 +3214,10 @@ msgstr ""
 "gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:411
-#, fuzzy, kde-format
-#| msgid "OpenPGP encryption key:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
-msgstr "OpenPGP enkriptazio gakoa:"
+msgstr "OpenPGP zifratzeko gakoa:"
 
 #: identity/identitydialog.cpp:421
 #, kde-format
@@ -3321,11 +3233,10 @@ msgstr ""
 "arruntetan eraginik izango.</p></qt>"
 
 #: identity/identitydialog.cpp:426
-#, fuzzy, kde-format
-#| msgid "S/MIME signing certificate:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
-msgstr "S/MIME sinadura ziurtagiria:"
+msgstr "S/MIME sinadura-ziurtagiria:"
 
 #: identity/identitydialog.cpp:440
 #, kde-format
@@ -3342,11 +3253,10 @@ msgstr ""
 "digitalki sinatu. Ez du posta-funtzio arruntetan eraginik izango.</p></qt>"
 
 #: identity/identitydialog.cpp:446
-#, fuzzy, kde-format
-#| msgid "S/MIME encryption certificate:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
-msgstr "S/MIME enkriptazio ziurtagiria:"
+msgstr "S/MIME zifratzeko ziurtagiria:"
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3360,8 +3270,7 @@ msgid "Enable Autocrypt"
 msgstr "Gaitu zifratze-automatikoa"
 
 #: identity/identitydialog.cpp:472
-#, fuzzy, kde-format
-#| msgid "Autocrypt:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Zifratze-automatikoa:"
@@ -3377,11 +3286,10 @@ msgid "Overwrite global settings for security defaults"
 msgstr "Gainidatzi segurtasun lehenespenen ezarpen orokorrak"
 
 #: identity/identitydialog.cpp:483
-#, fuzzy, kde-format
-#| msgid "Overwrite defaults:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "Gainidatzi lehenespenak:"
+msgstr "Lehenespenak gainidatzi:"
 
 #: identity/identitydialog.cpp:488
 #, kde-format
@@ -3412,8 +3320,7 @@ msgid "Advanced"
 msgstr "Aurreratua"
 
 #: identity/identitydialog.cpp:515
-#, fuzzy, kde-format
-#| msgid "&Reply-To address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "E&rantzun-honi helbidea:"
@@ -3437,8 +3344,7 @@ msgstr ""
 "hutsik.</p></qt>"
 
 #: identity/identitydialog.cpp:537
-#, fuzzy, kde-format
-#| msgid "&CC addresses:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&CC helbideak:"
@@ -3461,8 +3367,7 @@ msgstr ""
 "eremu hau hutsik.</p></qt>"
 
 #: identity/identitydialog.cpp:559
-#, fuzzy, kde-format
-#| msgid "&BCC addresses:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&BCC helbideak:"
@@ -3485,8 +3390,7 @@ msgstr ""
 "zerrenda banatzeko.</p><p>Zalantzarik baduzu, utzi eremu hau hutsik.</p></qt>"
 
 #: identity/identitydialog.cpp:577
-#, fuzzy, kde-format
-#| msgid "D&ictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "Hizte&gia:"
@@ -3507,8 +3411,7 @@ msgid "Select Draft Folder"
 msgstr "Hautatu Zirriborro karpeta"
 
 #: identity/identitydialog.cpp:593
-#, fuzzy, kde-format
-#| msgid "&Drafts folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Z&irriborroen karpeta:"
@@ -3519,8 +3422,7 @@ msgid "Select Templates Folder"
 msgstr "Hautatu Txantiloi karpeta"
 
 #: identity/identitydialog.cpp:601
-#, fuzzy, kde-format
-#| msgid "&Templates folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Txantiloien karpeta:"
@@ -3536,29 +3438,25 @@ msgid "Attach my vCard to message"
 msgstr "Erantsi nire vCard mezuari"
 
 #: identity/identitydialog.cpp:614
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Sortu..."
 
 #: identity/identitydialog.cpp:618
-#, fuzzy, kde-format
-#| msgid "Autocorrection language:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Zuzenketa automatikorako hizkuntza:"
 
 #: identity/identitydialog.cpp:630
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Berrezarri domeinu-izen lehenetsia"
 
 #: identity/identitydialog.cpp:633
-#, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Domeinu le&henetsia:"
@@ -3578,11 +3476,10 @@ msgid "&Use custom message templates for this identity"
 msgstr "Era&bili neurrira ipinitako mezu-txantiloiak nortasun honetarako"
 
 #: identity/identitydialog.cpp:670
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
-msgstr "&Kopiatu txantiloi orokorrak"
+msgstr "&Kopiatu txantiloi globalak"
 
 #: identity/identitydialog.cpp:677
 #, kde-format
@@ -3796,29 +3693,25 @@ msgid "&Remove"
 msgstr "&Kendu"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Gehitu..."
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Aldatu..."
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Berrizendatu"
 
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "Ezarri lehenetsi gisa"
@@ -3830,11 +3723,10 @@ msgid "New Identity"
 msgstr "Nortasun berria"
 
 #: identity/newidentitydialog.cpp:61
-#, fuzzy, kde-format
-#| msgid "&New identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&New identity:"
-msgstr "I&dentitate berria:"
+msgstr "Nortasun &berria:"
 
 #: identity/newidentitydialog.cpp:76
 #, kde-format
@@ -4093,11 +3985,10 @@ msgid "Save File as"
 msgstr "Gorde fitxategia honela"
 
 #: kmail_options.h:16
-#, fuzzy, kde-format
-#| msgid "Set subject of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set subject of message"
-msgstr " Ezarri mezuaren gaia"
+msgstr "Ezarri mezuaren gaia"
 
 #: kmail_options.h:19
 #, kde-format
@@ -4115,85 +4006,74 @@ msgid "Set replyTo to 'address'"
 msgstr "Ezarri erantzunHoni «helbide»arekin"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
-msgstr "Gehitu «goiburua» mezuari. Hau errepikatu daiteke"
+msgstr "Mezuari \"goiburua\" gehitzea. Hau errepikatu daiteke"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Read message body from 'file'"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Irakurri mezuaren gorputza 'fitxategi'tik"
 
 #: kmail_options.h:31
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Ezarri mezuaren gorputza"
 
 #: kmail_options.h:32
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr "Gehitu eranskina mezuan: hau errepika daiteke"
+msgstr "Postari eranskin bat gehitu. hau errepika daiteke"
 
 #: kmail_options.h:33
-#, fuzzy, kde-format
-#| msgid "Only check for new mail"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
-msgstr "Bakarrik posta berririk dagoen begiratu"
+msgstr "Posta berria dagoen bakarrik egiaztatu"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Hasi erretiluan ikonotuta"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Only open composer window"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
-msgstr "Ireki mezu-prestatzailearen leihoa bakarrik"
+msgstr "Leiho konposatzailea bakarrik ireki"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Set identity name"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Ezarri nortasun-izena"
 
 #: kmail_options.h:37
-#, fuzzy, kde-format
-#| msgid "View the given message file"
+#, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Ikusi emandako mezu-fitxategia"
 
 #: kmail_options.h:38
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "Ezarri mezuaren gorputza"
+msgstr "Ezarri mezuaren gorputza HTML gisa"
 
 #: kmail_options.h:40
-#, fuzzy, kde-format
-#| msgid "Lists the available options for user feedback"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
-msgstr "Erabiltzaileen erreakzioetarako aukera erabilgarriak zerrendatzen ditu"
+msgstr ""
+"Erabiltzailearen atzera-elikaduraren aukera erabilgarriak zerrendatzen ditu"
 
 #: kmail_options.h:45
-#, fuzzy, kde-format
-#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "Bidali mezua 'helbidera' edo erantsi 'URL'ak erakusten duen fitxategia"
@@ -4511,8 +4391,7 @@ msgid "Sending messages"
 msgstr "Mezuak bidaltzen"
 
 #: kmkernel.cpp:1479
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
 msgstr "Bidaltzeko prozesuaren hasiera..."
 
@@ -4981,8 +4860,7 @@ msgid "Check Mail"
 msgstr "Begiratu postarik dagoen"
 
 #: kmmainwidget.cpp:2937
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Begiratu postarik dagoen"
@@ -5130,11 +5008,10 @@ msgid "&Archive Folder…"
 msgstr "&Artxibatu karpeta..."
 
 #: kmmainwidget.cpp:3140
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr "Kargatu &kanpoko erreferentziak"
+msgstr "Zamatu &kanpoko erreferentziak"
 
 #: kmmainwidget.cpp:3163
 #, kde-format
@@ -5764,8 +5641,7 @@ msgid "Akonadi restarted."
 msgstr "Akonadi berrabiatu da."
 
 #: kmmainwin.cpp:53
-#, fuzzy, kde-format
-#| msgid "Starting…"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Abiatzen..."
@@ -6068,8 +5944,7 @@ msgid "%1 / %2"
 msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
-#, fuzzy, kde-format
-#| msgid "No unread messages in your monitored folders"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Irakurri gabeko mezurik ez gainbegiratutako zure karpetetan"
@@ -6086,8 +5961,7 @@ msgid "Summary Plugin Name"
 msgstr "Laburpen pluginaren izena"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:76
-#, fuzzy, kde-format
-#| msgid "Select the plugin summaries to show on the summary page."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr "Aukeratu laburpen orrian erakusteko laburpen pluginak."
@@ -6923,8 +6797,7 @@ msgid "Add New Tag…"
 msgstr "Gehitu etiketa berria..."
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Search tag…"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Bilatu etiketa..."
@@ -8194,25 +8067,22 @@ msgid "Message Default Format"
 msgstr "Mezuaren formatu lehenetsia"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
-msgstr "HTM&L hobesten da"
+msgstr "&HTML testu arruntaren gainetik hobetsi"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
-msgstr "Hobetsi testu &soila HTML-ren ordez"
+msgstr "Testu &arrunta HTML-ren gainetik hobetsi"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
-msgstr "Erabili ezarpen orokorra"
+msgstr "Erabili ezarpen globala"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
 #, kde-format
