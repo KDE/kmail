@@ -371,7 +371,7 @@ void KTNEFMain::cleanup()
 void KTNEFMain::extractTo(const QString &dirname)
 {
     QString dir = dirname;
-    if (dir.right(1) != QLatin1Char('/')) {
+    if (!dir.endsWith(QLatin1Char('/'))) {
         dir.append(QLatin1Char('/'));
     }
     const QList<KTNEFAttach *> list = mView->getSelection();
