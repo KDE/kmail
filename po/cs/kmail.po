@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-13 00:40+0000\n"
-"PO-Revision-Date: 2024-07-04 14:39+0200\n"
+"PO-Revision-Date: 2024-07-16 15:34+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1956,8 +1956,7 @@ msgid "Cl&ean Spaces"
 msgstr "Zruš&it mezery"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "&Použít neproporcionální font"
@@ -1969,51 +1968,45 @@ msgid "&Urgent"
 msgstr "Nalé&havé"
 
 #: editor/kmcomposerwin.cpp:1395
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "&Požadovat upozornění na naložení"
 
 #: editor/kmcomposerwin.cpp:1399
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Vyžádat potv&rzení přijetí"
 
 #: editor/kmcomposerwin.cpp:1404
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Zalamování slov"
 
 #: editor/kmcomposerwin.cpp:1409
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "Ú&ryvky"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Automatická kontrola pravopisu"
 
 #: editor/kmcomposerwin.cpp:1430
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
-msgstr "Rich text"
+msgstr "Úprava formátovaného textu"
 
 #: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgid "Rich Text"
-msgstr "Rich text"
+msgstr "Formátovaný text"
 
 #: editor/kmcomposerwin.cpp:1433
 #, kde-format
@@ -2022,43 +2015,37 @@ msgid "Toggle rich text editing mode"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "Všechn&a pole"
 
 #: editor/kmcomposerwin.cpp:1440
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identita"
 
 #: editor/kmcomposerwin.cpp:1443
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "S&lovník"
 
 #: editor/kmcomposerwin.cpp:1446
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Složka odeslané pošty"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Přenos pošty"
 
 #: editor/kmcomposerwin.cpp:1452
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&Od"
@@ -4890,8 +4877,7 @@ msgid "&Archive Folder…"
 msgstr "Složka pro &archivaci…"
 
 #: kmmainwidget.cpp:3140
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Načíst e&xterní odkazy"
@@ -7882,22 +7868,19 @@ msgid "Message Default Format"
 msgstr "Výchozí formát zprávy"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Upřednostňovat &HTML před čistým textem"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Upřednostňovat čistý text &před HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Použít globální nastavení"
