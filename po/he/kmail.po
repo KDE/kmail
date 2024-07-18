@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-13 00:40+0000\n"
-"PO-Revision-Date: 2024-07-12 09:54+0300\n"
+"PO-Revision-Date: 2024-07-16 22:03+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -71,16 +71,13 @@ msgid "Some of the new features in this release of KMail include:"
 msgstr "חלק מהיכולות החדשות של המהדורה הזאת של KMail כוללות:"
 
 #: about/introduction_kmail.html:34
-#, fuzzy
 msgid ""
 "Please take a moment to fill in the KMail configuration panel at Settings-"
 ">Configure KMail. You need to create at least a default identity and "
 "incoming as well as outgoing mail account."
 msgstr ""
-"<p> אנא הקדש רגע מזמנך כדי למלא את לוח ההגדרות של KMail, אליו ניתן לגשת דרך "
-"הגדרות-&gt;הגדרות KMail.\n"
-"עליך ליצור לפחות זהות וחשבון דואר שישמשו כברירת מחדל, וכן חשבון דואר יוצא. </"
-"p>\n"
+"נא למלא את לוח ההגדרות של KMail תחת הגדרות->הגדרת KMail. יש ליצור זהות אחת "
+"לפחות וחשבון דוא״ל נכנס ויוצא."
 
 #: about/introduction_kmail.html:38
 msgid "We hope that you will enjoy KMail."
@@ -268,7 +265,7 @@ msgstr "מגוון טלאים"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
-msgstr ""
+msgstr "הפעלת טעינת הפניות חיצוניות לתיקייה שלמה"
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
@@ -280,7 +277,7 @@ msgstr "מסנני POP"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr ""
+msgstr "טלאי לקריסה ב־Solaris"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
@@ -340,7 +337,7 @@ msgstr "תמיכה ב־X-Face"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
-msgstr ""
+msgstr "בחירת נמענים אוטומטית"
 
 #: aboutdata.cpp:175
 msgid "Beta testing of PGP 6 support"
@@ -364,7 +361,7 @@ msgstr "שיפור פריסת עורך הנמענים"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
-msgstr ""
+msgstr "חותמת זמן להודעות מצב ‚ההעברה הושלמה’"
 
 #: aboutdata.cpp:186
 msgid "Multiple encryption keys per address"
@@ -1622,11 +1619,10 @@ msgid "Do you want to remove this email address?"
 msgstr "להסיר את כתובת הדוא״ל הזאת?"
 
 #: configuredialog/configuresecuritypage.cpp:145
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
-msgstr ""
-"שינוי הגדרת השרשור הגלובלית יביא לעקיפה של כל הערכים הייחודיים לתיקיות."
+msgstr "החלפת הגדרת ה־HTML הכללית תדרוס את כל הערכים הנקודתיים לתיקייה."
 
 #: configuredialog/configuresecuritypage.cpp:297
 #: configuredialog/configuresecuritypage.cpp:299
@@ -1749,9 +1745,9 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "קובץ ארכיון (‎*.tar‏ ‎*.zip‏ ‎*.tar.gz‏ ‎*.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Delete folder and subfolders after completion"
-msgstr "מוחק תיקיות מהשרת"
+msgstr "מחיקת ה&תיקייה ותת־התיקיות שלה לאחר השלמת התהליך"
 
 #: dialog/archivefolderdialog.cpp:113
 #, kde-format
@@ -2013,8 +2009,7 @@ msgid "&Wordwrap"
 msgstr "&גלישת שורות"
 
 #: editor/kmcomposerwin.cpp:1409
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "מ&קטעי טקסט"
@@ -2027,8 +2022,7 @@ msgid "&Automatic Spellchecking"
 msgstr "בדיקת איות &אוטומטית"
 
 #: editor/kmcomposerwin.cpp:1430
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "עריכת טקסט עשיר"
@@ -2045,15 +2039,13 @@ msgid "Toggle rich text editing mode"
 msgstr "החלפת מצב עריכת טקסט עשיר"
 
 #: editor/kmcomposerwin.cpp:1437
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&כל השדות"
 
 #: editor/kmcomposerwin.cpp:1440
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&זהות"
@@ -4874,11 +4866,10 @@ msgid "&Archive Folder…"
 msgstr "העברת תיקייה ל&ארכיון…"
 
 #: kmmainwidget.cpp:3140
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr "טען הפניות &חיצוניות"
+msgstr "טעינת הפניות &חיצוניות"
 
 #: kmmainwidget.cpp:3163
 #, kde-format
@@ -6631,8 +6622,7 @@ msgid "Add New Tag…"
 msgstr "הוספת תגית חדשה…"
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Search tag…"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "חיפוש תגית…"
@@ -7835,13 +7825,13 @@ msgid "Use Global Setting"
 msgstr "להשתמש בהגדרות כלליות"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, fuzzy, kde-format
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
-msgstr[0] "ערוך הודעות \"מחוץ למשרד\"..."
-msgstr[1] "ערוך הודעות \"מחוץ למשרד\"..."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "תגובת מחוץ למשרד פעילה בשרת"
+msgstr[1] "תגובה מחוץ למשרד פעילה בשרתים"
+msgstr[2] "תגובה מחוץ למשרד פעילה בשרתים"
+msgstr[3] "תגובה מחוץ למשרד פעילה בשרתים"
 
 #: widgets/zoomlabelwidget.cpp:20
 #, kde-format
