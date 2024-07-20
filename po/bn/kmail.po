@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-13 00:40+0000\n"
+"POT-Creation-Date: 2024-07-20 00:40+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -3087,7 +3087,7 @@ msgid "Reopen Closed Viewer"
 msgstr "নতুন বার্তা"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4308,67 +4308,67 @@ msgstr[1] "%1-টি বার্তা আনা হচ্ছে, অনুগ�
 msgid "Save To File"
 msgstr "ফাইলে সংরক্ষণ করো"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, kde-format
 msgid "Open Message"
 msgstr "বার্তা খোলো"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&রচনা"
 
-#: kmcommands.cpp:739
+#: kmcommands.cpp:740
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "ফাইলটিতে কোন বার্তা নেই।"
 
-#: kmcommands.cpp:812
+#: kmcommands.cpp:813
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "ফাইলটিতে একাধিক বার্তা রয়েছে। শুধু প্রথম বার্তাটি প্রদর্শিত হচ্ছে।"
 
-#: kmcommands.cpp:923
+#: kmcommands.cpp:924
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:928
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "প্রের&ণ"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1315
+#: kmcommands.cpp:1316
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "বার্তা মুছে ফেলা হচ্ছে"
 
-#: kmcommands.cpp:1325
+#: kmcommands.cpp:1326
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 থেকে %2-টি বার্তার %3 নম্বরটি স্থানান্তরিত করা হচ্ছে।"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1665
+#: kmcommands.cpp:1534 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "বার্তা সরানো হচ্ছে"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1675
+#: kmcommands.cpp:1534 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "বার্তা মুছে ফেলা হচ্ছে"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

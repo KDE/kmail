@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-13 00:40+0000\n"
+"POT-Creation-Date: 2024-07-20 00:40+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -2945,7 +2945,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Nuwe boodskap"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4096,67 +4096,67 @@ msgstr[1] ""
 msgid "Save To File"
 msgstr "Stoor na Lêer"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, kde-format
 msgid "Open Message"
 msgstr "Maak Boodskap Oop"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "Boodskap"
 
-#: kmcommands.cpp:739
+#: kmcommands.cpp:740
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "Gaan na die vorige ongeleesde boodskap"
 
-#: kmcommands.cpp:812
+#: kmcommands.cpp:813
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:923
+#: kmcommands.cpp:924
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:928
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Skep Filter"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1315
+#: kmcommands.cpp:1316
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Vee boodskappe uit"
 
-#: kmcommands.cpp:1325
+#: kmcommands.cpp:1326
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Vee boodskappe uit"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1665
+#: kmcommands.cpp:1534 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Skuif boodskappe"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1675
+#: kmcommands.cpp:1534 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Vee boodskappe uit"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-13 00:40+0000\n"
+"POT-Creation-Date: 2024-07-20 00:40+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -3146,7 +3146,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Poster novea messaedje"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4391,30 +4391,30 @@ msgstr[1] "Tårdjîz s' i vs plait tins k' les %1 messaedjes sont berwetés"
 msgid "Save To File"
 msgstr "Schaper en on fitchî"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, kde-format
 msgid "Open Message"
 msgstr "Drovi messaedje"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Messaedje"
 
-#: kmcommands.cpp:739
+#: kmcommands.cpp:740
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "I gn a pont d' messaedje e fitchî."
 
-#: kmcommands.cpp:812
+#: kmcommands.cpp:813
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 "I gn a sacwants messaedjes e fitchî. I gn a kel prumî messaedje ki srè "
 "mostré."
 
-#: kmcommands.cpp:923
+#: kmcommands.cpp:924
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4423,41 +4423,41 @@ msgstr ""
 "Voloz vs ricassî les messaedjes tchoezis come des ataetchmints dins on seu "
 "messaedje (come on MIME groupé) ou come de messaedjes diferins ?"
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:928
 #, fuzzy, kde-format
 #| msgid "Send As Digest"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Evoyî come groupé"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 #| msgid "Send Individually"
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Evoyî come diferins"
 
-#: kmcommands.cpp:1315
+#: kmcommands.cpp:1316
 #, kde-format
 msgid "Filtering messages"
 msgstr "Dji passe les messaedjes al passete"
 
-#: kmcommands.cpp:1325
+#: kmcommands.cpp:1326
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Dji passe li messaedje %1 di %2 al passete"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1665
+#: kmcommands.cpp:1534 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Dji bodje les messaedjes"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1675
+#: kmcommands.cpp:1534 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Dji disface les messaedjes"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"

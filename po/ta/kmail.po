@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-13 00:40+0000\n"
+"POT-Creation-Date: 2024-07-20 00:40+0000\n"
 "PO-Revision-Date: 2024-07-06 21:41+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -2958,7 +2958,7 @@ msgid "Reopen Closed Viewer"
 msgstr "முடிய காட்டியைத் திற"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4148,27 +4148,27 @@ msgstr[1] "%1 அஞ்சல்கள் அனுப்பப்படும�
 msgid "Save To File"
 msgstr "கோப்பிற்கு சேமி"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, kde-format
 msgid "Open Message"
 msgstr "அஞ்சலை திற"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, kde-format
 msgid "Message"
 msgstr "அஞ்சல்"
 
-#: kmcommands.cpp:739
+#: kmcommands.cpp:740
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "இக்கோப்பு ஓர் அஞ்சலை கொண்டிருக்கவில்லை."
 
-#: kmcommands.cpp:812
+#: kmcommands.cpp:813
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "இக்கோப்பில் பல அஞ்சல்கள் உள்ளன. முதல் அஞ்சல் மட்டும் காட்டப்படுகிறது."
 
-#: kmcommands.cpp:923
+#: kmcommands.cpp:924
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4177,39 +4177,39 @@ msgstr ""
 "தேர்ந்தெடுத்த அஞ்சல்களை ஒரே அஞ்சலில் உடனிணைப்புகளாக (MIME digest-ஆக) முன்னனுப்ப "
 "விரும்புகிறீர்களா, அல்லது தனித்தனி அஞ்சல்களாகவா?"
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:928
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "ஒருங்கே அனுப்பு"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "தனித்தனியாக அனுப்பு"
 
-#: kmcommands.cpp:1315
+#: kmcommands.cpp:1316
 #, kde-format
 msgid "Filtering messages"
 msgstr "அஞ்சல்கள் வடிகட்டப்படுகின்றன"
 
-#: kmcommands.cpp:1325
+#: kmcommands.cpp:1326
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%2 அஞ்சல்களில் %1-வது வடிகட்டப்படுகிறது"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1665
+#: kmcommands.cpp:1534 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "அஞ்சல்கள் நகர்த்தப்படுகின்றன"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1675
+#: kmcommands.cpp:1534 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "அஞ்சல்கள் நீக்கப்படுகின்றன"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

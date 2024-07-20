@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-13 00:40+0000\n"
+"POT-Creation-Date: 2024-07-20 00:40+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -3090,7 +3090,7 @@ msgid "Reopen Closed Viewer"
 msgstr "ប្រកាស​សារ​ថ្មី"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4395,28 +4395,28 @@ msgstr[0] "សូម​រង់ចាំ​ខណៈពេល​សារ​ច
 msgid "Save To File"
 msgstr "​រក្សាទុក​ទៅ​ឯកសារ"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, kde-format
 msgid "Open Message"
 msgstr "បើក​សារ"
 
-#: kmcommands.cpp:710
+#: kmcommands.cpp:711
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "សារ"
 
-#: kmcommands.cpp:739
+#: kmcommands.cpp:740
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "ឯកសារ​មិនមាន​សារឡើយ ។"
 
-#: kmcommands.cpp:812
+#: kmcommands.cpp:813
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "ឯកសារ​មាន​សារ​ច្រើន​ ។ មាន​តែ​សារ​ដំបូង​គេ​ប៉ុណ្ណោះ ដែល​នឹង​ត្រូវ​បង្ហាញ ។"
 
-#: kmcommands.cpp:923
+#: kmcommands.cpp:924
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4425,41 +4425,41 @@ msgstr ""
 "តើ​អ្នក​ចង់​បញ្ជូន​សារ​ដែល​បាន​ជ្រើស​បន្ត​ជា​ឯកសារ​ភ្ជាប់​នៅ​ក្នុង​សារ​មួយ (as a MIME digest) ឬ​​ជា​សារ​"
 "នីមួយៗ ?"
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:928
 #, fuzzy, kde-format
 #| msgid "Send As Digest"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "ផ្ញើ​ជា​សេចក្ដីពន្យល់"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 #| msgid "Send Individually"
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "ផ្ញើ​ផ្សេងៗ​គ្នា"
 
-#: kmcommands.cpp:1315
+#: kmcommands.cpp:1316
 #, kde-format
 msgid "Filtering messages"
 msgstr "កំពុង​ត្រងសារ"
 
-#: kmcommands.cpp:1325
+#: kmcommands.cpp:1326
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "កំពុង​ត្រងសារ %1 នៃ %2"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1665
+#: kmcommands.cpp:1534 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "កំពុង​ផ្លាស់ទី​សារ"
 
-#: kmcommands.cpp:1533 kmcommands.cpp:1675
+#: kmcommands.cpp:1534 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "កំពុង​លុបសារ"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@info:progress"
