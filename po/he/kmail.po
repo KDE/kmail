@@ -21,14 +21,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-07-16 22:03+0300\n"
+"PO-Revision-Date: 2024-07-20 19:41+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -53,6 +53,8 @@ msgid ""
 "KMail is the email client by KDE. It is designed to be fully compatible with "
 "Internet mailing standards including IMAP, POP3 and SMTP."
 msgstr ""
+"KMail הוא לקוח הדוא״ל מבית KDE. הוא מתוכנן לתאימות מרבית עם תקני דוא״ל "
+"אינטרנטיים כגון IMAP,‏ POP3 ו־SMTP."
 
 #: about/introduction_kmail.html:10
 msgid ""
@@ -281,15 +283,15 @@ msgstr "טלאי לקריסה ב־Solaris"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr ""
+msgstr "בחירת גופנים להודעות חדשות/לא נקראו/חשובות"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
-msgstr ""
+msgstr "תיקון לניווט מקלדת בחיפוש המהיר"
 
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
-msgstr ""
+msgstr "תוקנה גרירה מפנקס הכתובות לאזור כתיבת ההודעות"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
@@ -297,7 +299,7 @@ msgstr "תורם ניכר"
 
 #: aboutdata.cpp:149
 msgid "Improve configuration dialog"
-msgstr ""
+msgstr "שיפור חלונית ההגדרות"
 
 #: aboutdata.cpp:150
 msgid "Improved message importing"
@@ -309,7 +311,7 @@ msgstr "שיפור הודעות שורת המצב"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
-msgstr ""
+msgstr "טלאי לבעיית שינוי גודל החלון"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
@@ -321,7 +323,7 @@ msgstr "מבחני שימושיות ושיפורים"
 
 #: aboutdata.cpp:165
 msgid "Patch composer configuration"
-msgstr ""
+msgstr "טלאי להגדרות כתיבת הודעות"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -695,7 +697,7 @@ msgstr "לכלול בבדיקות דוא״ל ידניות"
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
-msgstr ""
+msgstr "לעבור למצב לא מקוון עם כיבוי KMail"
 
 #: configuredialog/configureaccountpage.cpp:276
 #, kde-format
@@ -707,7 +709,7 @@ msgstr "לבדוק דוא״ל בעלייה"
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
-msgstr ""
+msgstr "לא נרשם סוכן התראות על דוא״ל חדש. נא ליצור קשר עם הנהלת המערכת."
 
 #: configuredialog/configureappearancepage.cpp:86
 #, kde-format
@@ -809,7 +811,7 @@ msgstr "הודעות עם משימות לביצוע"
 
 #: configuredialog/configureappearancepage.cpp:314
 msgid "HTML Status Bar Background - No HTML Message"
-msgstr ""
+msgstr "רקע שורת מצב ב־HTML - לא הודעת HTML"
 
 #: configuredialog/configureappearancepage.cpp:315
 msgid "HTML Status Bar Foreground - No HTML Message"
@@ -817,11 +819,11 @@ msgstr "חזית טקסט שורת מצב HTML - אין הודעת HTML"
 
 #: configuredialog/configureappearancepage.cpp:316
 msgid "HTML Status Bar Background - HTML Message"
-msgstr ""
+msgstr "רקע שורת מצב ב־HTML - הודעת HTML"
 
 #: configuredialog/configureappearancepage.cpp:317
 msgid "HTML Status Bar Foreground - HTML Message"
-msgstr ""
+msgstr "חזית טקסט שורת מצב HTML - הודעת HTML"
 
 #: configuredialog/configureappearancepage.cpp:322
 #, kde-format
@@ -842,7 +844,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
-msgstr ""
+msgstr "סף קירבה למכסה:"
 
 #: configuredialog/configureappearancepage.cpp:368
 #, kde-format
@@ -898,14 +900,13 @@ msgid "Locali&zed format (%1)"
 msgstr "התבנית המ&קומית (%1)"
 
 #: configuredialog/configureappearancepage.cpp:604
-#, fuzzy, kde-format
+#, kde-format
 msgid "Smart for&mat (%1)"
-msgstr "תבנית מהו&דרת (%1)"
+msgstr "תבנית &חכמה (%1)"
 
 #: configuredialog/configureappearancepage.cpp:605
-#, fuzzy
 msgid "C&ustom format:"
-msgstr "תבנית תאריכים מותאמת אישית"
+msgstr "עיצוב מותאם &אישית:"
 
 #: configuredialog/configureappearancepage.cpp:632
 #, kde-format
@@ -1227,10 +1228,10 @@ msgid "Warn if too many recipients are specified"
 msgstr "להזהיר אם צוינו יותר מדי נמענים"
 
 #: configuredialog/configurecomposerpage.cpp:361
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
-msgstr "הצג אזהרה אם תעודת השורש &פגה תוך פחות מ:"
+msgstr "הגדרת מספר הנמענים המרבי לאזהרה"
 
 #: configuredialog/configurecomposerpage.cpp:379
 #, kde-format
@@ -1255,10 +1256,10 @@ msgid "No save"
 msgstr "לא לשמור"
 
 #: configuredialog/configurecomposerpage.cpp:419
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
-msgstr "ערוך כתובות אחרונות"
+msgstr "כמות כתובות אחרונות מרבית לשמירה:"
 
 #: configuredialog/configurecomposerpage.cpp:423
 #, kde-format
@@ -1306,17 +1307,13 @@ msgstr "&קידומות לנושאי תשובות"
 
 #: configuredialog/configurecomposerpage.cpp:669
 #: configuredialog/configurecomposerpage.cpp:699
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any sequence of the following prefixes\n"
-#| "(entries are case-insensitive regular expressions):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
-"זהה כל רצף של הקידומות הבאות\n"
-"(הרשומות הן ביטויים סדירים שאינם תלויי רישיות):"
+"זהה כל רצף שהוא של הקידומות הבאות (הרשומות הן ביטויים רגולריים תלויי רישיות):"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
@@ -1842,11 +1839,10 @@ msgid "&Sent-Mail folder:"
 msgstr "תיקיית דואר &נשלח:"
 
 #: editor/kmcomposerwin.cpp:413
-#, fuzzy, kde-format
-#| msgid "&Mail transport:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
-msgstr "מעביר &דואר:"
+msgstr "&תעבורת דוא״ל:"
 
 #: editor/kmcomposerwin.cpp:414
 #, kde-format
@@ -1977,11 +1973,10 @@ msgid "Cl&ean Spaces"
 msgstr "&ניקוי רווחים"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
-msgstr "להשתמש ב&גופן ברוחב קבוע"
+msgstr "להשתמש בגופן ב&רוחב קבוע"
 
 #: editor/kmcomposerwin.cpp:1393
 #, kde-format
@@ -2002,8 +1997,7 @@ msgid "&Request Delivery Confirmation"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&גלישת שורות"
@@ -4732,7 +4726,7 @@ msgstr "ל&שלוח הודעות שבתור"
 #: kmmainwidget.cpp:2949
 #, kde-format
 msgid "Online status (unknown)"
-msgstr ""
+msgstr "מצב מקוון (לא ידוע)"
 
 #: kmmainwidget.cpp:2954
 #, kde-format
