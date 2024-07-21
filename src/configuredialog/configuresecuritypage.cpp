@@ -73,38 +73,18 @@ SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
     mSGTab.setupUi(this);
 
     connect(mSGTab.mConfigureExternalReference, &QPushButton::clicked, this, &SecurityPageGeneralTab::slotOpenExternalReferenceExceptions);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mSGTab.mHtmlMailCheck, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#else
     connect(mSGTab.mHtmlMailCheck, &QCheckBox::checkStateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#endif
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mSGTab.mExternalReferences, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#else
     connect(mSGTab.mExternalReferences, &QCheckBox::checkStateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#endif
     connect(mSGTab.labelWarnHTML, &QLabel::linkActivated, this, &SecurityPageGeneralTab::slotLinkClicked);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mSGTab.mAlwaysDecrypt, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#else
     connect(mSGTab.mAlwaysDecrypt, &QCheckBox::checkStateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#endif
 
     connect(mSGTab.mAutomaticallyImportAttachedKeysCheck, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
 
     connect(mSGTab.mScamDetection, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mSGTab.mCheckUrl, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#else
     connect(mSGTab.mCheckUrl, &QCheckBox::checkStateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#endif
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mSGTab.mCheckMailUrlTracking, &QCheckBox::stateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#else
     connect(mSGTab.mCheckMailUrlTracking, &QCheckBox::checkStateChanged, this, &SecurityPageGeneralTab::slotEmitChanged);
-#endif
     connect(mSGTab.scamWhiteList, &PimCommon::SimpleStringListEditor::changed, this, &ConfigModuleTab::slotEmitChanged);
     mSGTab.scamWhiteList->setAddDialogLabel(i18n("Email Address:"));
     mSGTab.scamWhiteList->setRemoveDialogLabel(i18n("Do you want to remove this email address?"));

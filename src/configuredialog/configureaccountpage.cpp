@@ -177,11 +177,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
 
     connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
     connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);

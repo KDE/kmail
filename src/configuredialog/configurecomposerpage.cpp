@@ -136,11 +136,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoAppSignFileCheck->setToolTip(helpText);
     mAutoAppSignFileCheck->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mAutoAppSignFileCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mAutoAppSignFileCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupVBoxLayout->addWidget(mAutoAppSignFileCheck);
 
     // "Insert signature above quoted text" checkbox
@@ -150,11 +146,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mTopQuoteCheck->setToolTip(helpText);
     mTopQuoteCheck->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mTopQuoteCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mTopQuoteCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     connect(mAutoAppSignFileCheck, &QAbstractButton::toggled, mTopQuoteCheck, &QWidget::setEnabled);
     groupVBoxLayout->addWidget(mTopQuoteCheck);
 
@@ -165,11 +157,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mDashDashCheck->setToolTip(helpText);
     mDashDashCheck->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mDashDashCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mDashDashCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     connect(mAutoAppSignFileCheck, &QAbstractButton::toggled, mDashDashCheck, &QWidget::setEnabled);
     groupVBoxLayout->addWidget(mDashDashCheck);
 
@@ -180,11 +168,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mStripSignatureCheck->setToolTip(helpText);
     mStripSignatureCheck->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mStripSignatureCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mStripSignatureCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupVBoxLayout->addWidget(mStripSignatureCheck);
     groupVBoxLayout->addStretch(1);
 
@@ -201,11 +185,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mQuoteSelectionOnlyCheck->setToolTip(helpText);
     mQuoteSelectionOnlyCheck->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mQuoteSelectionOnlyCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mQuoteSelectionOnlyCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupVBoxLayout->addWidget(mQuoteSelectionOnlyCheck);
 
     // "Use smart quoting" checkbox
@@ -216,11 +196,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mSmartQuoteCheck->setToolTip(helpText);
     mSmartQuoteCheck->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mSmartQuoteCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mSmartQuoteCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupVBoxLayout->addWidget(mSmartQuoteCheck);
 
     // "Word wrap at column" checkbox/spinbox
@@ -241,11 +217,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mWrapColumnSpin->setToolTip(helpText);
     mWrapColumnSpin->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mWordWrapCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mWordWrapCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     connect(mWrapColumnSpin, &QSpinBox::valueChanged, this, &ComposerPageGeneralTab::slotEmitChanged);
     // only enable the spinbox if the checkbox is checked
     connect(mWordWrapCheck, &QAbstractButton::toggled, mWrapColumnSpin, &QWidget::setEnabled);
@@ -265,11 +237,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mReplyUsingVisualFormat->setToolTip(helpText);
     mReplyUsingVisualFormat->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mReplyUsingVisualFormat, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mReplyUsingVisualFormat, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupVBoxLayout->addWidget(mReplyUsingVisualFormat);
 
     // "Improve plain text of HTML" checkbox
@@ -281,11 +249,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mImprovePlainTextOfHtmlMessage->setToolTip(helpText);
     mImprovePlainTextOfHtmlMessage->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupVBoxLayout->addWidget(mImprovePlainTextOfHtmlMessage);
     QLabel *label = nullptr;
 #if KDEPIM_ENTERPRISE_BUILD
@@ -337,11 +301,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     // "Use Baloo search in composer" checkbox
     mShowAkonadiSearchAddressesInComposer = new QCheckBox(MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem()->label(), this);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupGridLayout->addWidget(mShowAkonadiSearchAddressesInComposer, row, 0, 1, -1);
     ++row;
 
@@ -401,11 +361,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mShowRecentAddressesInComposer->setToolTip(helpText);
     mShowRecentAddressesInComposer->setWhatsThis(helpText);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mShowRecentAddressesInComposer, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mShowRecentAddressesInComposer, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     groupGridLayout->addWidget(mShowRecentAddressesInComposer, row, 0, 1, -1);
     ++row;
 
@@ -681,11 +637,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 2: "replace […]" check box:
     mReplaceReplyPrefixCheck = new QCheckBox(MessageCore::MessageCoreSettings::self()->replaceReplyPrefixItem()->label(), group);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mReplaceReplyPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mReplaceReplyPrefixCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     layout->addWidget(label);
     layout->addWidget(mReplyListEditor);
     layout->addWidget(mReplaceReplyPrefixCheck);
@@ -709,11 +661,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
     // row 3: "replace […]" check box:
     mReplaceForwardPrefixCheck = new QCheckBox(MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem()->label(), group);
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mReplaceForwardPrefixCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mReplaceForwardPrefixCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     layout->addWidget(label);
     layout->addWidget(mForwardListEditor);
     layout->addWidget(mReplaceForwardPrefixCheck);
@@ -758,11 +706,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     // "Use custom Message-Id suffix" checkbox:
-#if QT_VERSION < QT_VERSION_CHECK(6, 7, 0)
-    connect(mCreateOwnMessageIdCheck, &QCheckBox::stateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#else
     connect(mCreateOwnMessageIdCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-#endif
     vlay->addWidget(mCreateOwnMessageIdCheck);
 
     // "Message-Id suffix" line edit and label:
