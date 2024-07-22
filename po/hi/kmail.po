@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-20 00:40+0000\n"
+"POT-Creation-Date: 2024-07-22 00:40+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -718,19 +718,19 @@ msgstr "डिफ़ॉल्ट प्रेषण विधिः (&u)"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:190
+#: configuredialog/configureaccountpage.cpp:186
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Add Mail Account…"
 msgstr "खाता जोड़ें"
 
-#: configuredialog/configureaccountpage.cpp:191
+#: configuredialog/configureaccountpage.cpp:187
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Custom Account…"
 msgstr "खाता जोड़ें"
 
-#: configuredialog/configureaccountpage.cpp:211
+#: configuredialog/configureaccountpage.cpp:207
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
@@ -739,7 +739,7 @@ msgid ""
 "properly installed."
 msgstr "प्रमाणपत्र प्रबंधक प्रारंभ नहीं कर सका. कृपया अपना संस्थापन जांचें."
 
-#: configuredialog/configureaccountpage.cpp:213
+#: configuredialog/configureaccountpage.cpp:209
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
@@ -747,27 +747,27 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "खाता बनाने में अक्षम."
 
-#: configuredialog/configureaccountpage.cpp:261
+#: configuredialog/configureaccountpage.cpp:257
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "हस्तचालित जांच में शामिल करें (&k)"
 
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:265
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:276
+#: configuredialog/configureaccountpage.cpp:272
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "प्रारंभ में डाक चेक करें (&k)"
 
-#: configuredialog/configureaccountpage.cpp:323
+#: configuredialog/configureaccountpage.cpp:319
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -844,172 +844,172 @@ msgstr "आउटपुट मुद्रित किया जा रहा �
 msgid "&Use custom fonts"
 msgstr "अनुकूलित फ़ॉन्ट का उपयोग करें (&U)"
 
-#: configuredialog/configureappearancepage.cpp:172
+#: configuredialog/configureappearancepage.cpp:168
 #, fuzzy, kde-format
 #| msgid "Apply &to:"
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "यहाँ लागू करें: (&t)"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - First Level"
 msgstr "उद्दृत पाठ - प्रथम स्तर"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Quoted Text - Second Level"
 msgstr "उद्दृत पाठ - द्वितीय स्तर"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:305
 msgid "Quoted Text - Third Level"
 msgstr "उद्दृत पाठ - तृतीय स्तर"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:306
 msgid "Link"
 msgstr "लिंक "
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:307
 msgid "Unread Message"
 msgstr "बिनपढ़ा संदेश"
 
-#: configuredialog/configureappearancepage.cpp:312
+#: configuredialog/configureappearancepage.cpp:308
 msgid "Important Message"
 msgstr "मह्त्वपूर्ण संदेश"
 
-#: configuredialog/configureappearancepage.cpp:313
+#: configuredialog/configureappearancepage.cpp:309
 #, fuzzy
 msgid "Action Item Message"
 msgstr "मह्त्वपूर्ण संदेश"
 
-#: configuredialog/configureappearancepage.cpp:314
+#: configuredialog/configureappearancepage.cpp:310
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "एचटीएमएल स्थिति पट्टी पृष्ठभूमि - कोई एचटीएमएल संदेश नहीं"
 
-#: configuredialog/configureappearancepage.cpp:315
+#: configuredialog/configureappearancepage.cpp:311
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "एचटीएमएल स्थिति पट्टी अग्रभूमि - कोई एचटीएमएल संदेश नहीं"
 
-#: configuredialog/configureappearancepage.cpp:316
+#: configuredialog/configureappearancepage.cpp:312
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "एचटीएमएल स्थिति पट्टी पृष्ठभूमि - एचटीएमएल संदेश"
 
-#: configuredialog/configureappearancepage.cpp:317
+#: configuredialog/configureappearancepage.cpp:313
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "एचटीएमएल स्थिति पट्टी अग्रभूमि - एचटीएमएल संदेश"
 
-#: configuredialog/configureappearancepage.cpp:322
+#: configuredialog/configureappearancepage.cpp:318
 #, kde-format
 msgid "&Use custom colors"
 msgstr "मनपसंद रंग इस्तेमाल करें (&U)"
 
-#: configuredialog/configureappearancepage.cpp:324
+#: configuredialog/configureappearancepage.cpp:320
 #, kde-format
 msgid "Recycle colors on deep &quoting"
 msgstr "गहरे &quoting पर रंग रीसायकल करें"
 
-#: configuredialog/configureappearancepage.cpp:326
+#: configuredialog/configureappearancepage.cpp:322
 #, kde-format
 msgid "&Do not change color from original HTML mail"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:363
+#: configuredialog/configureappearancepage.cpp:347
 #, fuzzy, kde-format
 #| msgid "Close to quota threshold"
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "कोटा थ्रेशोल्ड पर बन्द करें"
 
-#: configuredialog/configureappearancepage.cpp:368
+#: configuredialog/configureappearancepage.cpp:352
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:499
+#: configuredialog/configureappearancepage.cpp:479
 #, fuzzy, kde-format
 #| msgid "Show quick search line edit"
 msgid "Show folder quick search field"
 msgstr "तेजी से ढूंढें पंक्ति संपादन दिखाएँ"
 
-#: configuredialog/configureappearancepage.cpp:507
-#: configuredialog/configureappearancepage.cpp:530
+#: configuredialog/configureappearancepage.cpp:487
+#: configuredialog/configureappearancepage.cpp:510
 #, fuzzy, kde-format
 #| msgid "Receiver"
 msgid "Never"
 msgstr "पाने वाला"
 
-#: configuredialog/configureappearancepage.cpp:510
+#: configuredialog/configureappearancepage.cpp:490
 #, fuzzy, kde-format
 #| msgid "Show favorite folder view"
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "मनपसंद फ़ोल्डर व्यू दिखाएँ"
 
-#: configuredialog/configureappearancepage.cpp:512
+#: configuredialog/configureappearancepage.cpp:492
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&As Icons"
 msgid "As icons"
 msgstr "प्रतीक के रूप में (&A)"
 
-#: configuredialog/configureappearancepage.cpp:517
+#: configuredialog/configureappearancepage.cpp:497
 #, kde-format
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:526
+#: configuredialog/configureappearancepage.cpp:506
 #, fuzzy, kde-format
 #| msgid "Always send"
 msgid "Always"
 msgstr "हमेशा भेजें"
 
-#: configuredialog/configureappearancepage.cpp:528
+#: configuredialog/configureappearancepage.cpp:508
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "फ़ोल्डर सूची"
 
-#: configuredialog/configureappearancepage.cpp:602
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "मानक फॉर्मेट (%1) (&n)"
 
-#: configuredialog/configureappearancepage.cpp:603
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "स्थानीयकृत फॉर्मेट (%1) (&z)"
 
-#: configuredialog/configureappearancepage.cpp:604
+#: configuredialog/configureappearancepage.cpp:584
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Smart for&mat (%1)"
 msgstr "दिलचस्प फॉर्मेट (%1) (&m)"
 
-#: configuredialog/configureappearancepage.cpp:605
+#: configuredialog/configureappearancepage.cpp:585
 #, fuzzy
 #| msgid "&Use custom fonts"
 msgid "C&ustom format:"
 msgstr "अनुकूलित फ़ॉन्ट का उपयोग करें (&U)"
 
-#: configuredialog/configureappearancepage.cpp:632
+#: configuredialog/configureappearancepage.cpp:608
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Default aggregation:"
 msgstr "कड़ी मिटाएँ (&h)"
 
-#: configuredialog/configureappearancepage.cpp:650
+#: configuredialog/configureappearancepage.cpp:626
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Default theme:"
 msgstr "कड़ी मिटाएँ (&h)"
 
-#: configuredialog/configureappearancepage.cpp:687
+#: configuredialog/configureappearancepage.cpp:663
 #, fuzzy, kde-format
 #| msgid "<a href=\"whatsthis\">How does this work?</a>"
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<a href=\"whatsthis\">यह कैसे कार्य करता है?</a>"
 
-#: configuredialog/configureappearancepage.cpp:693
+#: configuredialog/configureappearancepage.cpp:669
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -1035,118 +1035,118 @@ msgid ""
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:730
+#: configuredialog/configureappearancepage.cpp:706
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "दिनांक दर्शाएँ"
 
-#: configuredialog/configureappearancepage.cpp:838
+#: configuredialog/configureappearancepage.cpp:814
 #, fuzzy, kde-format
 #| msgid "Message W&indow"
 msgid "Message Window"
 msgstr "संदेश विंडो (&i)"
 
-#: configuredialog/configureappearancepage.cpp:845
+#: configuredialog/configureappearancepage.cpp:821
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:829
 #, fuzzy, kde-format
 #| msgid "System &Tray"
 msgid "System Tray"
 msgstr "तंत्र तश्तरी (&T)"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: configuredialog/configureappearancepage.cpp:863 settings/kmail.kcfg.in:88
+#: configuredialog/configureappearancepage.cpp:835 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "तंत्र तश्तरी प्रतीक सक्षम करें"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
+#: configuredialog/configureappearancepage.cpp:839 settings/kmail.kcfg.in:92
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:893
+#: configuredialog/configureappearancepage.cpp:857
 #, fuzzy, kde-format
 #| msgid "Always show KMail in system tray"
 msgid "Show unread email in Taskbar"
 msgstr "के-मेल को हमेशा तंत्र तश्तरी में दिखाएँ"
 
-#: configuredialog/configureappearancepage.cpp:902
+#: configuredialog/configureappearancepage.cpp:862
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgid "Plasma activities"
 msgstr "लॉग फ़िल्टर क्रियाएँ (&L)"
 
-#: configuredialog/configureappearancepage.cpp:907
+#: configuredialog/configureappearancepage.cpp:867
 #, kde-format
 msgid "Enable"
 msgstr "सक्षम करें"
 
-#: configuredialog/configureappearancepage.cpp:974
+#: configuredialog/configureappearancepage.cpp:930
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "उपलब्ध टैग्स (&v)"
 
-#: configuredialog/configureappearancepage.cpp:987
+#: configuredialog/configureappearancepage.cpp:943
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "नया टैग जोड़ें"
 
-#: configuredialog/configureappearancepage.cpp:992
+#: configuredialog/configureappearancepage.cpp:948
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "चयनित टैग मिटाएँ"
 
-#: configuredialog/configureappearancepage.cpp:1001
+#: configuredialog/configureappearancepage.cpp:957
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "टैग प्राथमिकता बढ़ाएँ"
 
-#: configuredialog/configureappearancepage.cpp:1007
+#: configuredialog/configureappearancepage.cpp:963
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "टैग प्राथमिकता घटाएँ"
 
-#: configuredialog/configureappearancepage.cpp:1031
+#: configuredialog/configureappearancepage.cpp:987
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "टैग विन्यास (&g)"
 
-#: configuredialog/configureappearancepage.cpp:1081
+#: configuredialog/configureappearancepage.cpp:1037
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgid "Delete"
 msgstr "मिटाएँ"
 
-#: configuredialog/configureappearancepage.cpp:1211
+#: configuredialog/configureappearancepage.cpp:1167
 #, fuzzy, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>क्या आप सचमुच उपयोक्ता नाम <b>%1</b> मिटाना चाहेंगे?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1212
+#: configuredialog/configureappearancepage.cpp:1168
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "हटाएँ"
 
-#: configuredialog/configureappearancepage.cpp:1257
-#: configuredialog/configureappearancepage.cpp:1292
+#: configuredialog/configureappearancepage.cpp:1213
+#: configuredialog/configureappearancepage.cpp:1248
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -1215,39 +1215,39 @@ msgid ""
 "message"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:149
+#: configuredialog/configurecomposerpage.cpp:145
 #, fuzzy, kde-format
 #| msgid "Use smaller font for quoted text"
 msgid "Insert the signature above any quoted text"
 msgstr "उद्घृत पाठ के लिए छोटे फ़ॉन्ट उपयोग में लें"
 
-#: configuredialog/configurecomposerpage.cpp:164
+#: configuredialog/configurecomposerpage.cpp:156
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:167
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:195
+#: configuredialog/configurecomposerpage.cpp:179
 #, fuzzy, kde-format
 #| msgid "&Normal:"
 msgctxt "@title:group"
 msgid "Format"
 msgstr "सामान्य: (&N)"
 
-#: configuredialog/configurecomposerpage.cpp:200
+#: configuredialog/configurecomposerpage.cpp:184
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:214
+#: configuredialog/configurecomposerpage.cpp:194
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1255,31 +1255,31 @@ msgid ""
 "wrapping the text."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:229
+#: configuredialog/configurecomposerpage.cpp:205
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:240
+#: configuredialog/configurecomposerpage.cpp:216
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:236
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:280
+#: configuredialog/configurecomposerpage.cpp:248
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:294
+#: configuredialog/configurecomposerpage.cpp:258
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -1287,45 +1287,45 @@ msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "इनलाइन (&I)"
 
-#: configuredialog/configurecomposerpage.cpp:294
+#: configuredialog/configurecomposerpage.cpp:258
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgid "As Attachment"
 msgstr "संलग्नक है"
 
-#: configuredialog/configurecomposerpage.cpp:296
+#: configuredialog/configurecomposerpage.cpp:260
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:300
+#: configuredialog/configurecomposerpage.cpp:264
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "डिफ़ॉल्ट डोमेनः (&t)"
 
-#: configuredialog/configurecomposerpage.cpp:318
+#: configuredialog/configurecomposerpage.cpp:282
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "अतिरिक्त प्राप्तकर्ता"
 
-#: configuredialog/configurecomposerpage.cpp:352
+#: configuredialog/configurecomposerpage.cpp:312
 #, fuzzy, kde-format
 #| msgid "No recipients"
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "कोई प्राप्तकर्ता नहीं"
 
-#: configuredialog/configurecomposerpage.cpp:361
+#: configuredialog/configurecomposerpage.cpp:321
 #, fuzzy, kde-format
 #| msgid "Maximum number of recipient editor lines."
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "प्राप्तकर्ता संपादक के पंक्तियों की अधिकतम संख्या."
 
-#: configuredialog/configurecomposerpage.cpp:379
+#: configuredialog/configurecomposerpage.cpp:339
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1335,53 +1335,53 @@ msgid ""
 "account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:400
+#: configuredialog/configurecomposerpage.cpp:360
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:372
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "स्वचालित नहीं सहेजें"
 
-#: configuredialog/configurecomposerpage.cpp:419
+#: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
 #| msgid "Recent Addresses"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "हालिया पते"
 
-#: configuredialog/configurecomposerpage.cpp:423
+#: configuredialog/configurecomposerpage.cpp:379
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:436
+#: configuredialog/configurecomposerpage.cpp:392
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "पूर्णता अनुक्रम कॉन्फ़िगर करें..."
 
-#: configuredialog/configurecomposerpage.cpp:445
+#: configuredialog/configurecomposerpage.cpp:401
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "स्वचालित नहीं सहेजें"
 
-#: configuredialog/configurecomposerpage.cpp:455
+#: configuredialog/configurecomposerpage.cpp:411
 #, kde-format
 msgid "No autosave"
 msgstr "स्वचालित नहीं सहेजें"
 
-#: configuredialog/configurecomposerpage.cpp:456
+#: configuredialog/configurecomposerpage.cpp:412
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1390,19 +1390,19 @@ msgid_plural " minutes"
 msgstr[0] "मि."
 msgstr[1] "मि."
 
-#: configuredialog/configurecomposerpage.cpp:458
+#: configuredialog/configurecomposerpage.cpp:414
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "संदेश डिस्पॉज़िशन सूचना स्वचलित निवेदित करें (&m)"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "विषय उपसर्ग के साथ जवाब भेजें (&y)"
 
-#: configuredialog/configurecomposerpage.cpp:669
-#: configuredialog/configurecomposerpage.cpp:699
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1410,194 +1410,194 @@ msgid ""
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:677
-#: configuredialog/configurecomposerpage.cpp:1024
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:968
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:677
-#: configuredialog/configurecomposerpage.cpp:1024
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:968
 #, kde-format
 msgid "Re&move"
 msgstr "मिटाएँ (&m)"
 
-#: configuredialog/configurecomposerpage.cpp:677
-#: configuredialog/configurecomposerpage.cpp:1024
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:968
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "सुधारें..."
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "नया जवाब उपसर्ग भरें:"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:634
 #, fuzzy, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>क्या आप सचमुच उपयोक्ता नाम <b>%1</b> मिटाना चाहेंगे?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "विषय उपसर्ग के साथ जवाब भेजें (&y)"
 
-#: configuredialog/configurecomposerpage.cpp:695
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "विषय उपसर्ग आगे भेजें (&w)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:705 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:657 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "मिटाएँ (&v)"
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "सुधारें..."
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "नया आगे भेजने का उपसर्ग भरें:"
 
-#: configuredialog/configurecomposerpage.cpp:706
+#: configuredialog/configurecomposerpage.cpp:658
 #, fuzzy, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>क्या आप सचमुच उपयोक्ता नाम <b>%1</b> मिटाना चाहेंगे?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "विषय उपसर्ग आगे भेजें (&w)"
 
-#: configuredialog/configurecomposerpage.cpp:755
+#: configuredialog/configurecomposerpage.cpp:703
 #, kde-format
 msgid "&Use custom message-id suffix"
 msgstr "मनपसंद संदेश आईडी प्रत्यय इस्तेमाल करें (&U)"
 
-#: configuredialog/configurecomposerpage.cpp:775
+#: configuredialog/configurecomposerpage.cpp:719
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "मनपसंद संदेश आईडी प्रत्ययः (&i)"
 
-#: configuredialog/configurecomposerpage.cpp:787
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "मनपसंद माइम शीर्ष फ़ील्ड्स पारिभाषित करें:"
 
-#: configuredialog/configurecomposerpage.cpp:795
+#: configuredialog/configurecomposerpage.cpp:739
 #, fuzzy, kde-format
 #| msgid "Name"
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "नाम"
 
-#: configuredialog/configurecomposerpage.cpp:796
+#: configuredialog/configurecomposerpage.cpp:740
 #, fuzzy, kde-format
 #| msgid "Value"
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "मान"
 
-#: configuredialog/configurecomposerpage.cpp:804
+#: configuredialog/configurecomposerpage.cpp:748
 #, fuzzy, kde-format
 #| msgid "Ne&w"
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "नया (&w)"
 
-#: configuredialog/configurecomposerpage.cpp:808
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "मिटाएँ (&m)"
 
-#: configuredialog/configurecomposerpage.cpp:817
+#: configuredialog/configurecomposerpage.cpp:761
 #, fuzzy, kde-format
 #| msgid "&Name:"
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "नाम: (&N)"
 
-#: configuredialog/configurecomposerpage.cpp:827
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "मान: (&V)"
 
-#: configuredialog/configurecomposerpage.cpp:966
+#: configuredialog/configurecomposerpage.cpp:910
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:966
+#: configuredialog/configurecomposerpage.cpp:910
 #, fuzzy, kde-format
 msgid "Invalid header"
 msgstr "हस्ताक्षर सक्षम करें (&E)"
 
-#: configuredialog/configurecomposerpage.cpp:1007
+#: configuredialog/configurecomposerpage.cpp:951
 #, kde-format
 msgid "E&nable detection of missing attachments"
 msgstr "गुमे संलग्नकों का पता लगाना सक्षम करें (&n)"
 
-#: configuredialog/configurecomposerpage.cpp:1013
+#: configuredialog/configurecomposerpage.cpp:957
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:1024
+#: configuredialog/configurecomposerpage.cpp:968
 #, kde-format
 msgid "Enter new key word:"
 msgstr "नया कुंजी-शब्द भरें:"
 
-#: configuredialog/configurecomposerpage.cpp:1026
+#: configuredialog/configurecomposerpage.cpp:970
 #, fuzzy, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>क्या आप सचमुच उपयोक्ता नाम <b>%1</b> मिटाना चाहेंगे?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:1027
+#: configuredialog/configurecomposerpage.cpp:971
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "संलग्नक (&t)"
 
-#: configuredialog/configurecomposerpage.cpp:1034
+#: configuredialog/configurecomposerpage.cpp:978
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "संलग्नक है"
 
-#: configuredialog/configurecomposerpage.cpp:1041
+#: configuredialog/configurecomposerpage.cpp:985
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "मे.बा."
 
-#: configuredialog/configurecomposerpage.cpp:1043
+#: configuredialog/configurecomposerpage.cpp:987
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
@@ -1730,18 +1730,18 @@ msgstr "एनक्रिप्शन"
 msgid "S/MIME Validation"
 msgstr "एस/माइम वेलिडेशन (&V)"
 
-#: configuredialog/configuresecuritypage.cpp:109
+#: configuredialog/configuresecuritypage.cpp:89
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "ई-मेल पता"
 
-#: configuredialog/configuresecuritypage.cpp:110
+#: configuredialog/configuresecuritypage.cpp:90
 #, fuzzy, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "<qt>क्या आप सचमुच उपयोक्ता नाम <b>%1</b> मिटाना चाहेंगे?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:145
+#: configuredialog/configuresecuritypage.cpp:125
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1750,24 +1750,24 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "वैश्विक थ्रेडिंग सेटिंग को बदलने से यह सभी विशिष्ट फ़ोल्डरों के मूल्यों को बदल देगा."
 
-#: configuredialog/configuresecuritypage.cpp:297
-#: configuredialog/configuresecuritypage.cpp:299
-#: configuredialog/configuresecuritypage.cpp:301
-#: configuredialog/configuresecuritypage.cpp:303
+#: configuredialog/configuresecuritypage.cpp:277
+#: configuredialog/configuresecuritypage.cpp:279
+#: configuredialog/configuresecuritypage.cpp:281
+#: configuredialog/configuresecuritypage.cpp:283
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " दिन"
 msgstr[1] " दिनों"
 
-#: configuredialog/configuresecuritypage.cpp:334
+#: configuredialog/configuresecuritypage.cpp:314
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "विन्यास (&S)"
 
-#: configuredialog/configuresecuritypage.cpp:341
+#: configuredialog/configuresecuritypage.cpp:321
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1775,23 +1775,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:346
+#: configuredialog/configuresecuritypage.cpp:326
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:413
+#: configuredialog/configuresecuritypage.cpp:393
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "इस विकल्प को आवश्यक है dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:552 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:532 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "प्रॉक्सी नहीं"
 
-#: configuredialog/configuresecuritypage.cpp:554
+#: configuredialog/configuresecuritypage.cpp:534
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(वर्तमान तंत्र विन्यास: %1)"
