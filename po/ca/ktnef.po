@@ -358,10 +358,3 @@ msgstr "Mida del fitxer:"
 #, kde-format
 msgid "MIME type:"
 msgstr "Tipus MIME:"
-
-#~ msgid "Save..."
-#~ msgstr "Desa..."
-
-#~ msgctxt "@title:menu"
-#~ msgid "&Open With..."
-#~ msgstr "&Obre amb..."

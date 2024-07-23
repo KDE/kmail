@@ -216,9 +216,3 @@ msgstr "Modifica…"
 #, kde-format
 msgid "Delete"
 msgstr "Suprimeix"
-
-#~ msgid "Remove items"
-#~ msgstr "Elimina els elements"
-
-#~ msgid "Remove"
-#~ msgstr "Elimina"
