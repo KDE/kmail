@@ -43,13 +43,21 @@
 
 #include <KLineEditEventHandler>
 #include <PimCommonAkonadi/AddresseeLineEdit>
+
 // libkleopatra:
 #include <Libkleo/DefaultKeyFilter>
-#include <Libkleo/DefaultKeyGenerationJob>
+#include <Libkleo/Formatting>
+#include <Libkleo/KeyParameters>
 #include <Libkleo/KeySelectionCombo>
+#include <Libkleo/OpenPGPCertificateCreationDialog>
 #include <Libkleo/ProgressDialog>
 
 // gpgme++
+#include <QGpgME/KeyGenerationJob>
+#include <QGpgME/Protocol>
+#include <gpgme++/context.h>
+#include <gpgme++/interfaces/passphraseprovider.h>
+#include <gpgme++/key.h>
 #include <gpgme++/keygenerationresult.h>
 
 #include <KEmailAddress>
@@ -81,7 +89,6 @@ using MailTransport::TransportManager;
 
 // other headers:
 #include <algorithm>
-#include <gpgme++/key.h>
 #include <iterator>
 
 #include <Akonadi/CollectionFetchJob>
@@ -95,6 +102,19 @@ using MailTransport::TransportManager;
 using namespace MailTransport;
 using namespace MailCommon;
 using namespace Qt::Literals::StringLiterals;
+
+class EmptyPassphraseProvider : public GpgME::PassphraseProvider
+{
+public:
+    char *getPassphrase(const char *useridHint, const char *description, bool previousWasBad, bool &canceled) override
+    {
+        Q_UNUSED(useridHint);
+        Q_UNUSED(description);
+        Q_UNUSED(previousWasBad);
+        Q_UNUSED(canceled);
+        return gpgrt_strdup("");
+    }
+};
 
 namespace KMail
 {
@@ -123,62 +143,133 @@ private:
     const GpgME::Protocol mProtocol;
 };
 
-class KeyGenerationJob : public QGpgME::Job
+class KMailKeyGenerationJob : public KJob
 {
     Q_OBJECT
 
 public:
-    explicit KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
-    ~KeyGenerationJob() override;
+    enum {
+        GpgError = UserDefinedError,
+    };
+    explicit KMailKeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent);
+    ~KMailKeyGenerationJob() override;
 
-    void slotCancel() override;
-    void start();
+    bool doKill() override;
+    void start() override;
 
 private:
+    void createCertificate(const Kleo::KeyParameters &keyParameters, bool protectKeyWithPassword);
     void keyGenerated(const GpgME::KeyGenerationResult &result);
     const QString mName;
     const QString mEmail;
     QGpgME::Job *mJob = nullptr;
+    EmptyPassphraseProvider emptyPassphraseProvider;
 };
 
-KeyGenerationJob::KeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)
-    : QGpgME::Job(parent)
+KMailKeyGenerationJob::KMailKeyGenerationJob(const QString &name, const QString &email, KeySelectionCombo *parent)
+    : KJob(parent)
     , mName(name)
     , mEmail(email)
 {
 }
 
-KeyGenerationJob::~KeyGenerationJob() = default;
+KMailKeyGenerationJob::~KMailKeyGenerationJob() = default;
 
-void KeyGenerationJob::slotCancel()
+bool KMailKeyGenerationJob::doKill()
 {
     if (mJob) {
         mJob->slotCancel();
     }
+    return true;
 }
 
-void KeyGenerationJob::start()
+void KMailKeyGenerationJob::start()
 {
-    auto job = new Kleo::DefaultKeyGenerationJob(this);
-    connect(job, &Kleo::DefaultKeyGenerationJob::result, this, &KeyGenerationJob::keyGenerated);
-    job->start(mEmail, mName);
-    mJob = job;
+    auto dialog = new Kleo::OpenPGPCertificateCreationDialog(qobject_cast<KeySelectionCombo *>(parent()));
+    dialog->setName(mName);
+    dialog->setEmail(mEmail);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    connect(dialog, &QDialog::accepted, this, [this, dialog]() {
+        const auto keyParameters = dialog->keyParameters();
+        const auto protectKeyWithPassword = dialog->protectKeyWithPassword();
+
+        QMetaObject::invokeMethod(
+            this,
+            [this, keyParameters, protectKeyWithPassword] {
+                createCertificate(keyParameters, protectKeyWithPassword);
+            },
+            Qt::QueuedConnection);
+    });
+    connect(dialog, &QDialog::rejected, this, [this]() {
+        emitResult();
+    });
+
+    dialog->show();
 }
 
-void KeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
+void KMailKeyGenerationJob::createCertificate(const Kleo::KeyParameters &keyParameters, bool protectKeyWithPassword)
+{
+    Q_ASSERT(keyParameters.protocol() == Kleo::KeyParameters::OpenPGP);
+
+    auto keyGenJob = QGpgME::openpgp()->keyGenerationJob();
+    if (!keyGenJob) {
+        setError(GpgError);
+        setErrorText(i18nc("@info:status", "Could not start OpenPGP certificate generation."));
+        emitResult();
+        return;
+    }
+    if (!protectKeyWithPassword) {
+        auto ctx = QGpgME::Job::context(keyGenJob);
+        ctx->setPassphraseProvider(&emptyPassphraseProvider);
+        ctx->setPinentryMode(GpgME::Context::PinentryLoopback);
+    }
+
+    connect(keyGenJob, &QGpgME::KeyGenerationJob::result, this, &KMailKeyGenerationJob::keyGenerated);
+    if (const GpgME::Error err = keyGenJob->start(keyParameters.toString())) {
+        setError(GpgError);
+        setErrorText(i18n("Could not start OpenPGP certificate generation: %1", Kleo::Formatting::errorAsString(err)));
+        emitResult();
+        return;
+    } else {
+        mJob = keyGenJob;
+    }
+    auto progressDialog = new QProgressDialog;
+    progressDialog->setAttribute(Qt::WA_DeleteOnClose);
+    progressDialog->setModal(true);
+    progressDialog->setWindowTitle(i18nc("@title", "Generating an OpenPGP Certificate…"));
+    progressDialog->setLabelText(
+        i18n("The process of generating an OpenPGP certificate requires large amounts of random numbers. This may require several minutes…"));
+    progressDialog->setRange(0, 0);
+    connect(progressDialog, &QProgressDialog::canceled, this, [this]() {
+        kill();
+    });
+    connect(mJob, &QGpgME::Job::done, this, [progressDialog]() {
+        if (progressDialog) {
+            progressDialog->accept();
+        }
+    });
+    progressDialog->show();
+}
+
+void KMailKeyGenerationJob::keyGenerated(const GpgME::KeyGenerationResult &result)
 {
     mJob = nullptr;
     if (result.error()) {
-        KMessageBox::error(qobject_cast<QWidget *>(parent()),
-                           i18n("Error while generating new key pair: %1", QString::fromUtf8(result.error().asString())),
-                           i18n("Key Generation Error"));
-        Q_EMIT done();
+        setError(GpgError);
+        setErrorText(i18n("Could not generate an OpenPGP certificate: %1", Kleo::Formatting::errorAsString(result.error())));
+        emitResult();
+        return;
+    } else if (result.error().isCanceled()) {
+        setError(GpgError);
+        setErrorText(i18nc("@info:status", "Key generation was cancelled."));
+        emitResult();
         return;
     }
 
     auto combo = qobject_cast<KeySelectionCombo *>(parent());
     combo->setDefaultKey(QLatin1StringView(result.fingerprint()));
-    connect(combo, &KeySelectionCombo::keyListingFinished, this, &KeyGenerationJob::done);
+    connect(combo, &KeySelectionCombo::keyListingFinished, this, &KMailKeyGenerationJob::emitResult);
     combo->refreshKeys();
 }
 
@@ -213,7 +304,7 @@ void KeySelectionCombo::init()
     setKeyFilter(keyFilter);
     prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
     if (mProtocol == GpgME::OpenPGP) {
-        appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")), i18n("Generate a new key pair"), QStringLiteral("generate-new-key"));
+        appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")), i18n("Generate a new OpenPGP certificate"), QStringLiteral("generate-new-key"));
     }
 
     connect(this, &KeySelectionCombo::customItemSelected, this, &KeySelectionCombo::onCustomItemSelected);
@@ -224,11 +315,12 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
     if (type == "no-key"_L1) {
         return;
     } else if (type == "generate-new-key"_L1) {
-        auto job = new KeyGenerationJob(mName, mEmail, this);
-        auto dlg = new Kleo::ProgressDialog(job, i18n("Generating new key pair…"), parentWidget());
-        dlg->setModal(true);
+        auto job = new KMailKeyGenerationJob(mName, mEmail, this);
         setEnabled(false);
-        connect(job, &KeyGenerationJob::done, this, [this]() {
+        connect(job, &KMailKeyGenerationJob::finished, this, [this, job]() {
+            if (job->error() != KJob::NoError) {
+                KMessageBox::error(qobject_cast<QWidget *>(parent()), job->errorText(), i18n("Key Generation Error"));
+            }
             setEnabled(true);
         });
         job->start();

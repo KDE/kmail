@@ -487,6 +487,7 @@ target_link_libraries(kmailprivate
     KF6::GuiAddons
     KF6::TextUtils
     KF6::StatusNotifierItem
+    LibGpgError::LibGpgError
     ${kmail_userfeedback_LIB}
 )
 if(TARGET KF6::TextEditTextToSpeech)
