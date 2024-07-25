@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:40+0000\n"
+"POT-Creation-Date: 2024-07-25 00:39+0000\n"
 "PO-Revision-Date: 2015-11-02 01:45+0200\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3274,55 +3274,81 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Υπάρχουσ&ες ταυτότητες:"
 
-#: identity/identitydialog.cpp:173
-#, fuzzy, kde-format
-#| msgid "Error while trying to rename folder %1"
-msgid "Error while generating new key pair: %1"
-msgstr "Σφάλμα κατά τη μετονομασία του φακέλου %1"
-
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:218
 #, kde-format
-msgid "Key Generation Error"
+msgctxt "@info:status"
+msgid "Could not start OpenPGP certificate generation."
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:231
+#, fuzzy, kde-format
+#| msgid "Could not start process for %1."
+msgid "Could not start OpenPGP certificate generation: %1"
+msgstr "Αδύνατη η εκκίνηση διεργασίας για το %1."
+
+#: identity/identitydialog.cpp:240
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgctxt "@title"
+msgid "Generating an OpenPGP Certificate…"
+msgstr "Εισάγετε νέα λέξη κλειδί:"
+
+#: identity/identitydialog.cpp:242
+#, kde-format
+msgid ""
+"The process of generating an OpenPGP certificate requires large amounts of "
+"random numbers. This may require several minutes…"
+msgstr ""
+
+#: identity/identitydialog.cpp:260
+#, kde-format
+msgid "Could not generate an OpenPGP certificate: %1"
+msgstr ""
+
+#: identity/identitydialog.cpp:265
+#, fuzzy, kde-format
+#| msgid "The operation was canceled by the user."
+msgctxt "@info:status"
+msgid "Key generation was cancelled."
+msgstr "Η διαδικασία ακυρώθηκε από τον χρήστη."
+
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:307
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
-msgid "Generate a new key pair"
+msgid "Generate a new OpenPGP certificate"
 msgstr "Εισάγετε νέα λέξη κλειδί:"
 
-#: identity/identitydialog.cpp:228
-#, fuzzy, kde-format
-#| msgid "Enter new key word:"
-msgid "Generating new key pair…"
-msgstr "Εισάγετε νέα λέξη κλειδί:"
+#: identity/identitydialog.cpp:322
+#, kde-format
+msgid "Key Generation Error"
+msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:333
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Επεξεργασία ταυτότητας"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Γενικά"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:364
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Το όνομα σας:"
 
-#: identity/identitydialog.cpp:277
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3334,14 +3360,14 @@ msgstr ""
 "p><p>Αν το αφήσετε κενό, θα εμφανίζεται μόνο η διεύθυνση αλληλογραφίας σας.</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:288
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Ορ&γανισμός:"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:385
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3352,14 +3378,14 @@ msgstr ""
 "σας όπως θέλετε να εμφανίζεται στην κεφαλίδα του μηνύματος που θα αποσταλεί."
 "</p><p>Είναι ασφαλές (και τυπικό) να το αφήσετε κενό.</p></qt>"
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:397
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "Διεύθυνση &αλληλογραφίας:"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:402
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3376,14 +3402,14 @@ msgstr ""
 "διευθύνσεων στο παρακάτω πεδίο.</p><p>Αν το αφήσετε κενό, ή το γράψετε "
 "λάθος, οι παραλήπτες σας θα έχουν πρόβλημα να σας απαντήσουν.</p></qt>"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:421
 #, fuzzy, kde-format
 #| msgid "Email a&liases:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "Ψευδώνυμα ηλ. α&λληλογραφίας:"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3400,12 +3426,12 @@ msgstr ""
 "tr><tr><th>Ψευδώνυμα:</th><td>first@example.org<br>last@example.org</td></"
 "tr></table><p>Πληκτρολογήστε ένα ψευδώνυμα διεύθυνσης ανά γραμμή.</p></qt> "
 
-#: identity/identitydialog.cpp:351
+#: identity/identitydialog.cpp:443
 #, kde-format
 msgid "Cryptography"
 msgstr "Κρυπτογράφηση"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3427,30 +3453,30 @@ msgstr ""
 "ηλ. αλληλογραφίας δεν θα επηρεαστούν.</p><p>Μπορείτε να μάθετε περισσότερα "
 "για τα κλειδιά στο: <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:455
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "Κλειδί υπογραφής OpenPGP:"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:471
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "Κλειδί OpenPGP 0x%1"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Κλειδί υπογραφής OpenPGP:"
 
-#: identity/identitydialog.cpp:404
+#: identity/identitydialog.cpp:496
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3476,14 +3502,14 @@ msgstr ""
 "να μάθετε περισσότερα για τα κλειδιά στο: <a>http://www.gnupg.org</a></p></"
 "qt>"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:503
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "Κλειδί κρυπτογράφησης OpenPGP:"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3496,14 +3522,14 @@ msgstr ""
 "το KMail δεν θα είναι σε θέση να υπογράφει ψηφιακά τα μηνύματά σας με χρήση "
 "S/MIME. Οι κανονικές λειτουργίες αλληλογραφίας δεν θα επηρεαστούν.</p></qt>"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:518
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "Πιστοποιητικό υπογραφής S/MIME:"
 
-#: identity/identitydialog.cpp:440
+#: identity/identitydialog.cpp:532
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3519,89 +3545,89 @@ msgstr ""
 "κρυπτογραφημένα αντίγραφα των εξερχομένων μηνυμάτων σας, με χρήση S/MIME, "
 "στον εαυτό σας. Οι υπόλοιπες λειτουργίες δεν θα επηρεαστούν.</p></qt>"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:538
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "Πιστοποιητικό κρυπτογράφησης S/MIME:"
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:555
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Προτιμώμενη μορφή:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:560
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgid "Enable Autocrypt"
 msgstr "Ενεργοποίηση εγγραφής:"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Ενεργοποίηση εγγραφής:"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:572
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:575
 #, fuzzy, kde-format
 #| msgid "Overwrite &All"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Αντικατάσταση ό&λων"
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "&Υπογραφή μηνύματος"
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "Αυτόματη κρυπτογράφηση μηνυμάτων &αν γίνεται"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
+#: identity/identitydialog.cpp:586 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Προειδοποίηση κατά την προσπάθεια αποστολής αν&υπόγραφων μηνυμάτων"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:589 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Προειδοποίηση σε προσπά&θεια αποστολής μη κρυπτογραφημένων μηνυμάτων"
 
-#: identity/identitydialog.cpp:507
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Για προχωρημένους"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "Διεύθυνση απάντ&ησης:"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3619,14 +3645,14 @@ msgstr ""
 "<tt>Από:</tt>, αλλά οι απαντήσεις να στέλνονται σε μία ομαδική διεύθυνση.</"
 "p><p>Αν δεν είστε σίγουροι για τη χρήση της, αφήστε την κενή.</p></qt>"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:629
 #, fuzzy, kde-format
 #| msgid "&CC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Διευθύνσεις κοι&νοποίησης:"
 
-#: identity/identitydialog.cpp:543
+#: identity/identitydialog.cpp:635
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3644,14 +3670,14 @@ msgstr ""
 "να διαχωρίσετε τη λίστα παραληπτών CC.</p><p>Αν έχετε αμφιβολίες, αφήστε "
 "αυτό το πεδίο κενό.</p></qt>"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:651
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "Διευθύνσεις &κρυφής κοινοποίησης:"
 
-#: identity/identitydialog.cpp:563
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3670,89 +3696,89 @@ msgstr ""
 "διαχωρίσετε τη λίστα παραληπτών BCC.</p><p>Αν έχετε αμφιβολίες, αφήστε κενό "
 "αυτό το πεδίο.</p></qt>"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:669
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&Λεξικό:"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:675
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "Φάκελ&ος απεσταλμένων"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "&Φάκελος απεσταλμένων:"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:683
 #, fuzzy, kde-format
 #| msgid "Select Date"
 msgid "Select Draft Folder"
 msgstr "Επιλογή ημερομηνίας"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:685
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Φάκελος προσχε&δίων:"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:691
 #, fuzzy, kde-format
 #| msgid "Multiple Folders"
 msgid "Select Templates Folder"
 msgstr "Πολλαπλοί φάκελοι"
 
-#: identity/identitydialog.cpp:601
+#: identity/identitydialog.cpp:693
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Φάκελος &προτύπων:"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:698
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Λογαριασμός εξερχομένων:"
 
-#: identity/identitydialog.cpp:613
+#: identity/identitydialog.cpp:705
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Επισύναψη της κάρτας μου vCard στο μήνυμα"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:706
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Δημιουργία..."
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:710
 #, fuzzy, kde-format
 #| msgid "Autocorrection language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Γλώσσα αυτόματης διόρθωσης:"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:722
 #, fuzzy, kde-format
 #| msgid "Restore default domain name"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Επαναφορά προκαθορισμένου ονόματος τομέα"
 
-#: identity/identitydialog.cpp:633
+#: identity/identitydialog.cpp:725
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "&Προκαθορισμένος τομέας:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3761,57 +3787,57 @@ msgstr ""
 "<qt><p>Ο προκαθορισμένος τομέας χρησιμεύει στη συμπλήρωση διευθύνσεων ηλ. "
 "αλληλογραφίας που περιέχουν μόνο το όνομα χρήστη.</p></qt>"
 
-#: identity/identitydialog.cpp:656
+#: identity/identitydialog.cpp:748
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Χρήση προσαρμοσμένων προτύπων μηνύματος για αυτήν την ταυτότητα"
 
-#: identity/identitydialog.cpp:670
+#: identity/identitydialog.cpp:762
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Αντιγρα&φή καθολικών προτύπων"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:769
 #, kde-format
 msgid "Templates"
 msgstr "Πρότυπα"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgid "Signature"
 msgstr "Υπογραφή"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:782
 #, kde-format
 msgid "Picture"
 msgstr "Εικόνα"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Μη έγκυρο ψευδώνυμο ηλ. αλληλογραφίας «%1»"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "&Χρήση προσαρμοσμένων προτύπων μηνύματος για αυτήν την ταυτότητα"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "Copy Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Αντιγραφή διεύθυνσης Email"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Μη έγκυρη διεύθυνση ηλ. αλληλογραφίας"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:905
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3825,7 +3851,7 @@ msgstr ""
 "κατά την προσπάθεια επαλήθευσης υπογραφών που δημιουργήθηκαν με αυτή τη "
 "διαμόρφωση."
 
-#: identity/identitydialog.cpp:822
+#: identity/identitydialog.cpp:914
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3835,7 +3861,7 @@ msgstr ""
 "χρήστη με τη διαμορφωμένη διεύθυνση ηλ. αλληλογραφίας για αυτή την ταυτότητα "
 "(%1)."
 
-#: identity/identitydialog.cpp:829
+#: identity/identitydialog.cpp:921
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3850,7 +3876,7 @@ msgstr ""
 "κατά την προσπάθεια επαλήθευσης υπογραφών που δημιουργήθηκαν με αυτή τη "
 "διαμόρφωση."
 
-#: identity/identitydialog.cpp:838
+#: identity/identitydialog.cpp:930
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3860,26 +3886,26 @@ msgstr ""
 "χρήστη με τη διαμορφωμένη διεύθυνση ηλ. αλληλογραφίας για αυτή την ταυτότητα "
 "(%1)."
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Η διεύθυνση ηλ. αλληλογραφίας δεν βρέθηκε στα κλειδιά/πιστοποιητικά"
 
-#: identity/identitydialog.cpp:860
+#: identity/identitydialog.cpp:952
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Το αρχείο υπογραφής δεν είναι έγκυρο"
 
-#: identity/identitydialog.cpp:876
+#: identity/identitydialog.cpp:968
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Επεξεργασία ταυτότητας \"%1\""
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:1037
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3891,13 +3917,13 @@ msgstr ""
 "Ο προσαρμοσμένος φάκελος προσχεδίων για την ταυτότητα \"%1\" δεν υπάρχει "
 "(πια), και γι' αυτό θα χρησιμοποιηθεί ο προκαθορισμένος φάκελος προσχεδίων."
 
-#: identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:1255
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Δημιουργία..."
 
-#: identity/identitydialog.cpp:1165
+#: identity/identitydialog.cpp:1257
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"
@@ -8835,6 +8861,11 @@ msgstr[1] "Απάντηση εκτός γραφείου ενεργή στους 
 msgid "Zoom: %1%"
 msgstr "Εστίαση"
 
+#, fuzzy
+#~| msgid "Error while trying to rename folder %1"
+#~ msgid "Error while generating new key pair: %1"
+#~ msgstr "Σφάλμα κατά τη μετονομασία του φακέλου %1"
+
 #~ msgid "Remove"
 #~ msgstr "Αφαίρεση"
 
@@ -11867,9 +11898,6 @@ msgstr "Εστίαση"
 #~ msgstr ""
 #~ "Μετονομασία του φίλτρου \"%1\" σε:\n"
 #~ "(αφήστε το πεδίο κενό για αυτόματη ονομασία)"
-
-#~ msgid "The operation was canceled by the user."
-#~ msgstr "Η διαδικασία ακυρώθηκε από τον χρήστη."
 
 #~ msgid "Failed to archive the folder '%1'."
 #~ msgstr "Η αρχειοθέτηση του φακέλου « %1 » απέτυχε."
@@ -16483,9 +16511,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Account:"
 #~ msgstr "Λογαριασμός:"
-
-#~ msgid "Could not start process for %1."
-#~ msgstr "Αδύνατη η εκκίνηση διεργασίας για το %1."
 
 #~ msgid "Error while trying to subscribe to %1:"
 #~ msgstr "Σφάλμα κατά την προσπάθεια εγγραφής στο %1:"

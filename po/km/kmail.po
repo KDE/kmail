@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:40+0000\n"
+"POT-Creation-Date: 2024-07-25 00:39+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -3152,54 +3152,80 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "អត្ត​សញ្ញាណ​ដែល​មាន​ស្រាប់ ៖"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:218
 #, kde-format
-msgid "Error while generating new key pair: %1"
+msgctxt "@info:status"
+msgid "Could not start OpenPGP certificate generation."
 msgstr ""
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:231
 #, kde-format
-msgid "Key Generation Error"
+msgid "Could not start OpenPGP certificate generation: %1"
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:240
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgctxt "@title"
+msgid "Generating an OpenPGP Certificate…"
+msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
+
+#: identity/identitydialog.cpp:242
+#, kde-format
+msgid ""
+"The process of generating an OpenPGP certificate requires large amounts of "
+"random numbers. This may require several minutes…"
+msgstr ""
+
+#: identity/identitydialog.cpp:260
+#, kde-format
+msgid "Could not generate an OpenPGP certificate: %1"
+msgstr ""
+
+#: identity/identitydialog.cpp:265
+#, fuzzy, kde-format
+#| msgid "Deleting messages canceled."
+msgctxt "@info:status"
+msgid "Key generation was cancelled."
+msgstr "បាន​បោះបង់​ការ​លុប​សារ ។"
+
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:307
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
-msgid "Generate a new key pair"
+msgid "Generate a new OpenPGP certificate"
 msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
 
-#: identity/identitydialog.cpp:228
-#, fuzzy, kde-format
-#| msgid "Enter new key word:"
-msgid "Generating new key pair…"
-msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
+#: identity/identitydialog.cpp:322
+#, kde-format
+msgid "Key Generation Error"
+msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:333
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "កែសម្រួល​អត្តសញ្ញាណ"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "ទូទៅ"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:364
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "ឈ្មោះ​របស់​អ្នក ៖"
 
-#: identity/identitydialog.cpp:277
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3210,14 +3236,14 @@ msgstr ""
 "នៅក្នុង​​ក្បាល​អ៊ីមែល​ដែល​ត្រូវផ្ញើចេញ ។</p><p>ប្រសិនបើ​អ្នក​ទុក​វា​ឲ្យ​ទទេ​ឈ្មោះ​ពិត​របស់​អ្នក​នឹង​មិន​បង្ហាញ​ទេ "
 "បង្ហាញ​តែ​អាសយដ្ឋាន​អ៊ីមែល​ប៉ុណ្ណោះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:288
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "ស្ថាប័ន ៖"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:385
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3228,14 +3254,14 @@ msgstr ""
 "ក្នុង​បឋមកថា​អ៊ីមែល​ដែល​ត្រូវ​បាន​ផ្ញើ​ចេញ ។</p><p>វា​មាន​សុវត្ថិភាព (និង​ធម្មតា) ដើម្បីទុក​ឲ្យ​ទំនេរ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:397
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "​អាសយដ្ឋាន​អ៊ីមែល ៖"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:402
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3249,14 +3275,14 @@ msgstr ""
 "មួយ បង្កើត​អត្តសញ្ញា​ថ្មី ឬ​បន្ថែម​អាសយដ្ឋាន​ក្លែងក្លាយ​ថ្មី​នៅ​ក្នុង​វាល​ខាង​ក្រោម ។</p><p>ប្រសិនបើ​អ្នក​ទុក​"
 "ឲ្យ​វា​ទំនេរ ឬ​ដាក់​វា​ខុស នោះ​អ្នក​ទទួល​​នឹង​មាន​បញ្ហា​ក្នុង​ការ​ឆ្លើយតប​មក​អ្នក​វិញ ។</p></qt>"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:421
 #, fuzzy, kde-format
 #| msgid "Email a&liases:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​អ៊ីមែល ៖"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3272,12 +3298,12 @@ msgstr ""
 "tr><tr><th>ឈ្មោះ​ក្លែងក្លាយ ៖</th><td>first@example.org<br>last@example.org</"
 "td></tr></table><p>វាយ​អាសយដ្ឋាន​ក្លែងក្លាយ​មួយ​ក្នុង​មួយ​បន្ទាត់ ។</p></qt>"
 
-#: identity/identitydialog.cpp:351
+#: identity/identitydialog.cpp:443
 #, kde-format
 msgid "Cryptography"
 msgstr "កូដសាស្ត្រ"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3297,30 +3323,30 @@ msgstr ""
 "ចុះហត្ថលេខា​អ៊ីមែល​តាមលក្ខណៈ​ឌីជីថល​ដោយប្រើ​ OpenPGP បានឡើយ ។ មុខងារ​សំបុត្រ​ធម្មតា នឹង​មិនត្រូវបាន​"
 "ប៉ះពាល់ឡើយ ។</p><p>អ្នកអាច​ស្វែងយល់​បន្ថែម​អំពីសោ​នៅ <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:455
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:471
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "កូនសោ​ហត្ថលេខា OpenPGP ៖"
 
-#: identity/identitydialog.cpp:404
+#: identity/identitydialog.cpp:496
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3343,14 +3369,14 @@ msgstr ""
 "អ្នក ដោយ OpenPGP បានទេ មុខងារ​សំបុត្រ​ធម្មតា​នឹង​មិន​ត្រូវ​បាន​ប៉ះពានល់ ។</p><p>អ្នក​អាច​ស្វែងយល់​"
 "បន្ថែម​អំពីសោ​នៅ <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:503
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "កូនសោ​អ៊ិនគ្រីប OpenPGP ៖"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3363,14 +3389,14 @@ msgstr ""
 "អ៊ីមែលដោយប្រើ S/MIME តាមលក្ខណៈ​ឌីជីថល​បាន​ឡើយ ។ មុខងារ​សំបុត្រ​​ធម្មតា​នឹងមិនត្រូវបាន​ប៉ះពាល់ឡើយ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:518
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "វិញ្ញាបនបត្រ​ការចុះហត្ថលេខា S/MIME ៖"
 
-#: identity/identitydialog.cpp:440
+#: identity/identitydialog.cpp:532
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3384,89 +3410,89 @@ msgstr ""
 "វា​ឲ្យ​នៅ​ទទេ ប៉ុន្តែ​ KMail នឹង​មិន​អាច​អ៊ិនគ្រីប​ច្បាប់​ចម្លង​នៃ​សារ​ផ្ញើ​ចេញ​ទៅ​ឲ្យអ្នក​ដោយ​ប្រើ S/MIME ។ "
 "មុខងារ​សំបុត្រ​ធម្មតា​នឹង​មិន​ត្រូវ​បាន​ប៉ះពាល់ឡើយ ។</p></qt>"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:538
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "វិញ្ញាបនបត្រ​ការអ៊ិនគ្រីប S/MIME ៖"
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:555
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "ទ្រង់ទ្រាយ​ដែល​ពេញចិត្ត ៖"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:560
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "​អ៊ិនគ្រីប"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "​អ៊ិនគ្រីប"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:572
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:575
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "​កំណត់​ជា​លំនាំដើម"
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "ចុះហត្ថលេខា​លើសារ"
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "អ៊ិនគ្រីប​សារ​ដោយស្វ័យប្រវត្តិ​នៅពេល​ណា​ក៏ដោយ​ឲ្យ​តែ​អាច​ធ្វើ​ទៅ​បាន"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
+#: identity/identitydialog.cpp:586 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "ព្រមាន​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនទាន់​បាន​ចុះហត្ថលេខា"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:589 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "ព្រមាន​ នៅ​ពេល​កំពុង​ព្យាយាម​ផ្ញើ​សារ​ដែល​មិនបាន​អ៊ិនគ្រីប"
 
-#: identity/identitydialog.cpp:507
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "​កម្រិត​ខ្ពស់"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "ឆ្លើយតប​ទៅកាន់​អាសយដ្ឋាន ៖"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3482,14 +3508,14 @@ msgstr ""
 "ទៅ មាន​អ៊ីមែល​របស់​អ្នក​នៅ​ក្នុង​វាល <tt>មក​ពី ៖</tt> ប៉ុន្តែ​ចង់​ឲ្យ​ការ​ឆ្លើយតប​នានា​ចូល​ទៅ​អាសយដ្ឋាន​"
 "ក្រុម ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​វា​នៅ​ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:629
 #, fuzzy, kde-format
 #| msgid "&CC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "អាសយដ្ឋាន​ចម្លង​ជូន ៖"
 
-#: identity/identitydialog.cpp:543
+#: identity/identitydialog.cpp:635
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3505,14 +3531,14 @@ msgstr ""
 "សូម​ប្រើ​សញ្ញា​ក្បៀស (,) ដើម្បី​បំបែក​បញ្ជី​អ្នក​ទទួល​ច្បាប់​ចម្លង​ជូន ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​វាល​នេះ​នៅ​"
 "ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:651
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "ចម្លងជា​សម្ងាត់​ជូន​អាសយដ្ឋាន ៖"
 
-#: identity/identitydialog.cpp:563
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3529,90 +3555,90 @@ msgstr ""
 "ជាងមួយ សូម​ប្រើ​សញ្ញាក្បៀស ដើម្បី​បំបែក​អ្នក​ទទួល​ច្បាប់ចម្លង​សម្ងាត់​របស់​អ្នក ។</p><p>បើ​នៅ​សង្ស័យ សូម​ទុក​"
 "វាល​នេះ​នៅ​ទទេ​ចុះ ។</p></qt>"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:669
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "វចនានុក្រម ៖"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:675
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "ថត សំបុត្រផ្ញើចេញ"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "ថត សំបុត្រ​ផ្ញើចេញ ៖"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:683
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgid "Select Draft Folder"
 msgstr "ជ្រើស​ពុម្ពអក្សរ"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:685
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "ថត សេចក្ដី​ព្រាង ៖"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:691
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgid "Select Templates Folder"
 msgstr "លុប​ថត"
 
-#: identity/identitydialog.cpp:601
+#: identity/identitydialog.cpp:693
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "ថត​ពុម្ព ៖"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:698
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "គណនី​ចេញ ៖"
 
-#: identity/identitydialog.cpp:613
+#: identity/identitydialog.cpp:705
 #, fuzzy, kde-format
 #| msgid "Attach my vcard to message"
 msgid "Attach my vCard to message"
 msgstr "ភ្ជាប់​ជាមួយ​ vcard ទៅ​កាន់​សារ"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:706
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "បាន​បង្កើត..."
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:710
 #, fuzzy, kde-format
 #| msgid "Autocorrection Language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "ភាសា​​ការ​កែ​ស្វ័យប្រវត្តិ ៖"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:722
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "ដែន​លំនាំដើម ៖"
 
-#: identity/identitydialog.cpp:633
+#: identity/identitydialog.cpp:725
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "ដែន​លំនាំដើម ៖"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3621,57 +3647,57 @@ msgstr ""
 "<qt><p>ដែន​លំនាំដើម​គឺត្រូវបាន​ប្រើ​ដើម្បី​បំពេញ​អាសយដ្ឋាន​អ៊ីមែល​​ដែលមាន​តែ​ឈ្មោះរបស់អ្នកប្រើ​ប៉ុណ្ណោះ ។</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:656
+#: identity/identitydialog.cpp:748
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "ប្រើ​ពុម្ព​សារ​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ​នេះ"
 
-#: identity/identitydialog.cpp:670
+#: identity/identitydialog.cpp:762
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "ចម្លង​ពុម្ព​សកល"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:769
 #, kde-format
 msgid "Templates"
 msgstr "ពុម្ព"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgid "Signature"
 msgstr "​ហត្ថលេខា"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:782
 #, kde-format
 msgid "Picture"
 msgstr "រូបភាព"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "ឈ្មោះ​ក្លែងក្លាយ​អ៊ីមែល​មិន​ត្រឹមត្រូវ \"%1\""
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "ប្រើ​ពុម្ព​សារ​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ​នេះ"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:905
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3684,7 +3710,7 @@ msgstr ""
 "ការនេះ​អាច​មានលទ្ធផល​នៅក្នុង​សារព្រមាន​នៅលើ​ផ្នែក​ការទទួល​នៅពេល​ដែលកំពុង​ព្យាយាមផ្ទៀងផ្ទាត់​ហត្ថលេខា​"
 "ដែលបានធ្វើ​ដោយ​ការកំណត់​រចនាសម្ព័ន្ធ​នេះ ។"
 
-#: identity/identitydialog.cpp:822
+#: identity/identitydialog.cpp:914
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3693,7 +3719,7 @@ msgstr ""
 "កូនសោ​អ៊ិនគ្រីប​ OpenPGP ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​មិន​មាន​លេខ​សម្គាល់​របស់​អ្នក​ប្រើ​ណាមួយ​ដែល​បាន​ភ្ជាប់​ជា​មួយ​​"
 "អាសយដ្ឋាន​អ៊ីមែល​ដែល​បាន​កំណត់​រចនា​សម្ព័ន្ធ​សម្រាប់​អត្តសញ្ញាណ (%1) នេះ​ឡើយ ។"
 
-#: identity/identitydialog.cpp:829
+#: identity/identitydialog.cpp:921
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3706,7 +3732,7 @@ msgstr ""
 "ការ​នេះ​​អាច​មាន​លទ្ធផល​នៅ​ក្នុង​សារ​ព្រមាន​នៅ​លើ​ផ្នែក​ទទួល​ នៅ​ពេល​ដែល​កំពុង​ព្យាយាម​ផ្ទៀងផ្ទាត់​ហត្ថលេខា​"
 "ដែលបានធ្វើ​ដោយ​ការ​កំណត់​រចនា​សម្ព័ន្ធ​នេះ ។"
 
-#: identity/identitydialog.cpp:838
+#: identity/identitydialog.cpp:930
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3715,26 +3741,26 @@ msgstr ""
 "វិញ្ញាបនបត្រ​អ៊ិនគ្រីប​ S/MIME ដែលបានកំណត់​រចនាសម្ព័ន្ធ​មួយ មិន​មាន​អាសយដ្ឋាន​អ៊ីមែល​ដែល​បាន​កំណត់​​"
 "រចនាសម្ព័ន្ធ​សម្រាប់​អត្តសញ្ញាណ (%1) នេះ ។"
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "រក​អាសយដ្ឋាន​អ៊ីមែល​នៅក្នុង សោ/វិញ្ញាបនបត្រ​មិឃើញឡើយ"
 
-#: identity/identitydialog.cpp:860
+#: identity/identitydialog.cpp:952
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ឯកសារ​ហត្ថលេខា​មិនត្រឹមត្រូវ"
 
-#: identity/identitydialog.cpp:876
+#: identity/identitydialog.cpp:968
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "កែសម្រួល​អត្តសញ្ញាណ \"%1\""
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:1037
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3746,13 +3772,13 @@ msgstr ""
 "មិនមាន​ថត​សេចក្ដីព្រាង​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ \"%1\" (តទៅទៀត​ឡើយ) ។ ដូច្នេះ ថត​សេចក្ដីព្រាង​"
 "លំនាំដើម​នឹងត្រូវបានប្រើ ។"
 
-#: identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:1255
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "បាន​បង្កើត..."
 
-#: identity/identitydialog.cpp:1165
+#: identity/identitydialog.cpp:1257
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:40+0000\n"
+"POT-Creation-Date: 2024-07-25 00:39+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -3301,54 +3301,81 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Postojeći identiteti:"
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:218
 #, kde-format
-msgid "Error while generating new key pair: %1"
-msgstr "Greška pri generisanju novog para ključeva: %1"
+msgctxt "@info:status"
+msgid "Could not start OpenPGP certificate generation."
+msgstr ""
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:231
 #, kde-format
-msgid "Key Generation Error"
-msgstr "Greška pri generisanju ključa"
+msgid "Could not start OpenPGP certificate generation: %1"
+msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:240
+#, fuzzy, kde-format
+#| msgid "Generating new key pair..."
+msgctxt "@title"
+msgid "Generating an OpenPGP Certificate…"
+msgstr "Generišem novi par ključeva..."
+
+#: identity/identitydialog.cpp:242
+#, kde-format
+msgid ""
+"The process of generating an OpenPGP certificate requires large amounts of "
+"random numbers. This may require several minutes…"
+msgstr ""
+
+#: identity/identitydialog.cpp:260
+#, kde-format
+msgid "Could not generate an OpenPGP certificate: %1"
+msgstr ""
+
+#: identity/identitydialog.cpp:265
+#, fuzzy, kde-format
+#| msgid "Deleting messages canceled."
+msgctxt "@info:status"
+msgid "Key generation was cancelled."
+msgstr "Brisanje poruka je otkazano."
+
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "No key"
 msgstr "Nema ključa"
 
-#: identity/identitydialog.cpp:216
-#, kde-format
-msgid "Generate a new key pair"
+#: identity/identitydialog.cpp:307
+#, fuzzy, kde-format
+#| msgid "Generate a new key pair"
+msgid "Generate a new OpenPGP certificate"
 msgstr "Generiši novi par ključeva"
 
-#: identity/identitydialog.cpp:228
-#, fuzzy, kde-format
-#| msgid "Generating new key pair..."
-msgid "Generating new key pair…"
-msgstr "Generišem novi par ključeva..."
+#: identity/identitydialog.cpp:322
+#, kde-format
+msgid "Key Generation Error"
+msgstr "Greška pri generisanju ključa"
 
 # >> @title:window
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:333
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Uređivanje identiteta"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Opšte"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:364
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Vaše ime:"
 
-#: identity/identitydialog.cpp:277
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3360,7 +3387,7 @@ msgstr ""
 "ostavite prazno, vaše ime se neće javljati u zaglavlju, već samo adresa "
 "e‑pošte.</p></qt>"
 
-#: identity/identitydialog.cpp:288
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
@@ -3368,7 +3395,7 @@ msgid "Organi&zation:"
 msgstr "Or&ganizacija:"
 
 # rewrite-msgid: /email header/message header/
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:385
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3379,14 +3406,14 @@ msgstr ""
 "ako želite da ono bude sadržano u zaglavlju poslate poruke.</p><p>Slobodno "
 "možete (i tako je uobičajeno) ovo ostaviti nepopunjeno.</p></qt>"
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:397
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&Adresa e‑pošte:"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:402
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3401,14 +3428,14 @@ msgstr ""
 "dodajte kao adrese alijase u polju ispod.</p><p>Ako ovo ostavite prazno, ili "
 "pogrešno popunite, drugi će imati problema da vam odgovore.</p></qt>"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:421
 #, fuzzy, kde-format
 #| msgid "Email a&liases:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "&Alijasi e‑pošte:"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3425,12 +3452,12 @@ msgstr ""
 "th><td>pera@nikadodjija.org<br />peric@nikadodjija.org</td></tr></"
 "table><p>Unosite jedan alijas po redu.</p></qt>"
 
-#: identity/identitydialog.cpp:351
+#: identity/identitydialog.cpp:443
 #, kde-format
 msgid "Cryptography"
 msgstr "Kriptografija"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3452,30 +3479,30 @@ msgstr ""
 "p><p>O ključevima možete saznati više na <a>http://www.gnupg.org</a>.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:455
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP ključ za potpisivanje:"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:471
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "OpenPGP ključ za potpisivanje:"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP ključ za potpisivanje:"
 
-#: identity/identitydialog.cpp:404
+#: identity/identitydialog.cpp:496
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3500,14 +3527,14 @@ msgstr ""
 "p><p>O ključevima možete saznati više na <a>http://www.gnupg.org</a>.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:503
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP ključ za šifrovanje:"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3520,14 +3547,14 @@ msgstr ""
 "ali onda K‑pošta neće moći da digitalno potpisuje vaše poruke S/MIME‑om. Ovo "
 "neće uticati na uobičajene poštanske funkcije.</p></qt>"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:518
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME sertifikat za potpisivanje:"
 
-#: identity/identitydialog.cpp:440
+#: identity/identitydialog.cpp:532
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3542,89 +3569,89 @@ msgstr ""
 "šifruje kopije odlaznih poruka vama samima S/MIME‑om. Ovo neće uticati na "
 "uobičajene poštanske funkcije.</p></qt>"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:538
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME sertifikat za šifrovanje:"
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:555
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Željeni format:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:560
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "Šifruj"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Šifruj"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:572
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:575
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Ovo je podrazumevani"
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "&Potpiši poruku"
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt messages when possible"
 msgid "Encrypt messages when possible"
 msgstr "Automatski šifruj poruke kad je to moguće"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
+#: identity/identitydialog.cpp:586 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Upozori pri pokušaju slanja ne&potpisanih poruka"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:589 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Upozori pri pokušaju slanja ne&šifrovanih poruka"
 
-#: identity/identitydialog.cpp:507
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Napredno"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "Adresa za &odgovore:"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3641,14 +3668,14 @@ msgstr ""
 "adresu u polju <tt>Od:</tt>, a da odgovori idu na grupnu adresu.</p><p>Ako "
 "ste u nedoumici, ostavite ovo polje prazno.</p></qt>"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:629
 #, fuzzy, kde-format
 #| msgid "&CC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "CC a&drese:"
 
-#: identity/identitydialog.cpp:543
+#: identity/identitydialog.cpp:635
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3664,14 +3691,14 @@ msgstr ""
 "p><p>Možete navesti više od jedne adrese, razdvajajući ih zapetama.</"
 "p><p>Ako ste u nedoumici, ostavite ovo polje prazno.</p></qt>"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:651
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "BCC a&drese:"
 
-#: identity/identitydialog.cpp:563
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3688,89 +3715,89 @@ msgstr ""
 "od jedne adrese, razdvajajući ih zapetama.</p><p>Ako ste u nedoumici, "
 "ostavite ovo polje prazno.</p></qt>"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:669
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&Rečnik:"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:675
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "Fascikla p&oslate pošte"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Fascikla &poslatih:"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:683
 #, fuzzy, kde-format
 #| msgid "Select folders..."
 msgid "Select Draft Folder"
 msgstr "Izaberi fascikle..."
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:685
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Fascikla &nedovršenih:"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:691
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgid "Select Templates Folder"
 msgstr "Fascikla &šablona:"
 
-#: identity/identitydialog.cpp:601
+#: identity/identitydialog.cpp:693
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Fascikla &šablona:"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:698
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "Odlazni nalog:"
 
-#: identity/identitydialog.cpp:613
+#: identity/identitydialog.cpp:705
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Priloži moj vCard uz poruku"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:706
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Napravi..."
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:710
 #, fuzzy, kde-format
 #| msgid "Autocorrection language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Jezik samoispravljanja:"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:722
 #, fuzzy, kde-format
 #| msgid "Restore default domain name"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Povrati podrazumevano ime domena"
 
-#: identity/identitydialog.cpp:633
+#: identity/identitydialog.cpp:725
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Podra&zumevani domen:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3779,60 +3806,60 @@ msgstr ""
 "<qt><p>Podrazumevani domen se koristi za dovršavanje adresa e‑pošte koje se "
 "sastoje samo od korisničkog imena.</p></qt>"
 
-#: identity/identitydialog.cpp:656
+#: identity/identitydialog.cpp:748
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "&Posebni šabloni za poruke za ovaj identitet"
 
-#: identity/identitydialog.cpp:670
+#: identity/identitydialog.cpp:762
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Kopiraj globalne šablone"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:769
 #, kde-format
 msgid "Templates"
 msgstr "Šabloni"
 
 # >> @title:tab
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgid "Signature"
 msgstr "Potpis"
 
 # >> @title:tab
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:782
 #, kde-format
 msgid "Picture"
 msgstr "Slika"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Loš alijas e‑pošte „%1“"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "&Posebni šabloni za poruke za ovaj identitet"
 
 # >> @title:column
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "adresa e‑pošte"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Loša adresa e‑pošte"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:905
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3845,7 +3872,7 @@ msgstr ""
 "Ovo može prouzrokovati upozorenja na strani primaoca prilikom pokušaja "
 "provere potpisa nastalih po ovoj postavi."
 
-#: identity/identitydialog.cpp:822
+#: identity/identitydialog.cpp:914
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3854,7 +3881,7 @@ msgstr ""
 "Jedan od podešenih OpenPGP ključeva za šifrovanje ne sadrži nijedan "
 "korisnički ID sa podešenom adresom e‑pošte za ovaj identitet (%1)."
 
-#: identity/identitydialog.cpp:829
+#: identity/identitydialog.cpp:921
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3867,7 +3894,7 @@ msgstr ""
 "Ovo može prouzrokovati upozorenja na strani primaoca prilikom pokušaja "
 "provere potpisa nastalih po ovoj postavi."
 
-#: identity/identitydialog.cpp:838
+#: identity/identitydialog.cpp:930
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3876,27 +3903,27 @@ msgstr ""
 "Jedan od podešenih S/MIME sertifikata za šifrovanje ne sadrži podešenu "
 "adresu e‑pošte za ovaj identitet (%1)."
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Nema adrese e‑pošte u ključu ili sertifikatima"
 
-#: identity/identitydialog.cpp:860
+#: identity/identitydialog.cpp:952
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Fajl potpisa nije dobar"
 
 # >> @title:window
-#: identity/identitydialog.cpp:876
+#: identity/identitydialog.cpp:968
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Uređivanje identiteta „%1“"
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:1037
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3905,13 +3932,13 @@ msgstr ""
 "Neka posebna fascikla za identitet ne postoji (više). Zato će se koristiti "
 "podrazumevane fascikle."
 
-#: identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:1255
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Napravi..."
 
-#: identity/identitydialog.cpp:1165
+#: identity/identitydialog.cpp:1257
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -8785,6 +8812,9 @@ msgstr[3] "Odgovor van‑kancelarije je aktivan na serveru"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Uveličanje"
+
+#~ msgid "Error while generating new key pair: %1"
+#~ msgstr "Greška pri generisanju novog para ključeva: %1"
 
 #~ msgid "Remove"
 #~ msgstr "Ukloni"

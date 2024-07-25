@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:40+0000\n"
+"POT-Creation-Date: 2024-07-25 00:39+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -3281,56 +3281,82 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Núv&erandi auðkenni:"
 
-#: identity/identitydialog.cpp:173
-#, fuzzy, kde-format
-#| msgid "Error while trying to rename folder %1"
-msgid "Error while generating new key pair: %1"
-msgstr "Villa við endurnefningu möppunnar %1"
-
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:218
 #, kde-format
-msgid "Key Generation Error"
+msgctxt "@info:status"
+msgid "Could not start OpenPGP certificate generation."
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:231
+#, fuzzy, kde-format
+#| msgid "Could not start process for %1."
+msgid "Could not start OpenPGP certificate generation: %1"
+msgstr "Ekki tókst að ræsa ferli fyrir %1"
+
+#: identity/identitydialog.cpp:240
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgctxt "@title"
+msgid "Generating an OpenPGP Certificate…"
+msgstr "Sláðu inn nýtt stikkorð:"
+
+#: identity/identitydialog.cpp:242
+#, kde-format
+msgid ""
+"The process of generating an OpenPGP certificate requires large amounts of "
+"random numbers. This may require several minutes…"
+msgstr ""
+
+#: identity/identitydialog.cpp:260
+#, kde-format
+msgid "Could not generate an OpenPGP certificate: %1"
+msgstr ""
+
+#: identity/identitydialog.cpp:265
+#, fuzzy, kde-format
+#| msgid "Deleting messages canceled."
+msgctxt "@info:status"
+msgid "Key generation was cancelled."
+msgstr "Hætt við að eyða bréfum."
+
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:307
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
-msgid "Generate a new key pair"
+msgid "Generate a new OpenPGP certificate"
 msgstr "Sláðu inn nýtt stikkorð:"
 
-#: identity/identitydialog.cpp:228
-#, fuzzy, kde-format
-#| msgid "Enter new key word:"
-msgid "Generating new key pair…"
-msgstr "Sláðu inn nýtt stikkorð:"
+#: identity/identitydialog.cpp:322
+#, kde-format
+msgid "Key Generation Error"
+msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:333
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Sýsla með auðkenni"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:357
 #, fuzzy, kde-format
 #| msgid "General"
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Almennt"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:364
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Nafnið þitt:"
 
-#: identity/identitydialog.cpp:277
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3341,14 +3367,14 @@ msgstr ""
 "vilt að það birtist í pósthaus allra senda bréfa.</p> <p>Ef þú hefur þetta "
 "svæði tómt mun nafnið þitt ekki birtast, heldur bara netfangið þitt.</p></qt>"
 
-#: identity/identitydialog.cpp:288
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "&Fyrirtæki/félag:"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:385
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3363,14 +3389,14 @@ msgstr ""
 "þíns eða félags ef þú vilt að það birtist í haus bréfa sem þú sendir.</"
 "p><p>Það er í lagi (og eðlilegt) að hafa þetta svæði autt.</p></qt>"
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:397
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "N&etfang:"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:402
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Email address</h3><p>This field should have your full email "
@@ -3387,14 +3413,14 @@ msgstr ""
 "þú hefur þetta svæði autt eða skrifar netfangið vitlaust mun fólk eiga "
 "erfitt með að svara póstinum þínum.</p></qt>"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:421
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "N&etfang:"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3405,13 +3431,13 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:351
+#: identity/identitydialog.cpp:443
 #, fuzzy, kde-format
 #| msgid "Cryptograph&y"
 msgid "Cryptography"
 msgstr "&Dulritun"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3432,30 +3458,30 @@ msgstr ""
 "dulkóðun. Þetta hefur ekki áhrif á venjulega póstnotkun.</p> Þú getur fundið "
 "nánari upplýsingar um lykla á <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:455
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP undirritunarlykill:"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:471
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "OpenPGP lykill 0x%1"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP undirritunarlykill:"
 
-#: identity/identitydialog.cpp:404
+#: identity/identitydialog.cpp:496
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3479,14 +3505,14 @@ msgstr ""
 "dulkóðun. Þetta hefur ekki áhrif á venjulega póstnotkun.</p> Þú getur fundið "
 "nánari upplýsingar um lykla á <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:503
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP dulritunarlykill:"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3499,14 +3525,14 @@ msgstr ""
 "mun KMail ekki getað undirritað tölvupóstinn með S/MIME; þetta hefur engin "
 "áhrif á venjulegar póstaðgerðir.</p></qt>"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:518
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME undirritunarskírteini:"
 
-#: identity/identitydialog.cpp:440
+#: identity/identitydialog.cpp:532
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3521,91 +3547,91 @@ msgstr ""
 "afrit af skeytum með S/MIME; þetta hefur hinsvegar engin áhrif á venjulegar "
 "póstaðgerðir.</p></qt>"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:538
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME dulritunarskírteini:"
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:555
 #, fuzzy, kde-format
 #| msgid "Preferred crypto message format:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Sjálfgefin dulkóðunaraðferð:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:560
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgid "Enable Autocrypt"
 msgstr "Virkja áskrift?"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Virkja áskrift?"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:572
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:575
 #, fuzzy, kde-format
 #| msgid "Overwrite File?"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Skrifa yfir skrá?"
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "&Undirrita bréf"
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "&Dulrita bréf sjálfkrafa þegar mögulegt er"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
+#: identity/identitydialog.cpp:586 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Vara þig við ef þú sendir ó&undirituð bréf"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:589 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&Vara við þegar reynt er að senda ódulrituð bréf"
 
-#: identity/identitydialog.cpp:507
+#: identity/identitydialog.cpp:599
 #, fuzzy, kde-format
 #| msgid "Advanced"
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Ítarlegt"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "S&varnetfang:"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3622,14 +3648,14 @@ msgstr ""
 "öll svör fari á netfang hópsins.</p> <p>Ef þú ert í vafa skaltu hafa svæðið "
 "autt.</p></qt>"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:629
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&Dulin netföng:"
 
-#: identity/identitydialog.cpp:543
+#: identity/identitydialog.cpp:635
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3654,14 +3680,14 @@ msgstr ""
 "netfang skaltu nota kommur til að aðgreina lista dulinna móttakenda.</"
 "p><p>Ef þú ert í vafa skildu þá svæðið eftir autt.</p></qt>"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:651
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Dulin netföng:"
 
-#: identity/identitydialog.cpp:563
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3678,87 +3704,87 @@ msgstr ""
 "netfang skaltu nota kommur til að aðgreina lista dulinna móttakenda.</"
 "p><p>Ef þú ert í vafa skildu þá svæðið eftir autt.</p></qt>"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:669
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&Orðabók:"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:675
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "&Sendur póstur"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Mappa &fyrir sendan póst:"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:683
 #, fuzzy, kde-format
 msgid "Select Draft Folder"
 msgstr "Veldu möppu"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:685
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Mappa fyrir &uppköst:"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:691
 #, fuzzy, kde-format
 msgid "Select Templates Folder"
 msgstr "Mappa"
 
-#: identity/identitydialog.cpp:601
+#: identity/identitydialog.cpp:693
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Ruslmappa:"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:698
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgid "Outgoing Account:"
 msgstr "Stilla tengingu"
 
-#: identity/identitydialog.cpp:613
+#: identity/identitydialog.cpp:705
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Attach my vCard to message"
 msgstr "Bæta 'haus' við bréfið"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:706
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Endurnefna..."
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:710
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr ""
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:722
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Sjálf&gefið lén:"
 
-#: identity/identitydialog.cpp:633
+#: identity/identitydialog.cpp:725
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Sjálf&gefið lén:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3767,57 +3793,57 @@ msgstr ""
 "<qt> <p>Sjálfgefið lén er notað til að klára netföng sem innihalda aðeins "
 "notandanafn.</p></qt>"
 
-#: identity/identitydialog.cpp:656
+#: identity/identitydialog.cpp:748
 #, fuzzy, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Nota sérsniðna ending&u á kennistreng"
 
-#: identity/identitydialog.cpp:670
+#: identity/identitydialog.cpp:762
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Skipta út"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:769
 #, fuzzy, kde-format
 msgid "Templates"
 msgstr "Sniðmát"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgid "Signature"
 msgstr "Undirskrift"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:782
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "&Mynd"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:835
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ógilt netfang"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Nota sérsniðna ending&u á kennistreng"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Netfang"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Ógilt netfang"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:905
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3830,7 +3856,7 @@ msgstr ""
 "Það gæti valdið því að móttakandi fær viðvörun þegar reynt er að staðfesta "
 "undirskriftina."
 
-#: identity/identitydialog.cpp:822
+#: identity/identitydialog.cpp:914
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3839,7 +3865,7 @@ msgstr ""
 "Einn af uppsettu OpenPGP undirritunarlyklunum inniheldur ekki "
 "notandaauðkenni með netfanginu sem er notað fyrir þessa tengingu (%1)."
 
-#: identity/identitydialog.cpp:829
+#: identity/identitydialog.cpp:921
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3852,7 +3878,7 @@ msgstr ""
 "Það gæti valdið því að móttakandi fær viðvörun þegar reynt er að staðfesta "
 "undirskriftina."
 
-#: identity/identitydialog.cpp:838
+#: identity/identitydialog.cpp:930
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3861,26 +3887,26 @@ msgstr ""
 "Eitt af uppsettu S/MIME undirritunarskírteinunum inniheldur ekki netfangið "
 "sem er notað fyrir þessa tengingu (%1)."
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Netfang fannst ekki í lykli/skírteini"
 
-#: identity/identitydialog.cpp:860
+#: identity/identitydialog.cpp:952
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Undirritunarskráin er ekki gild"
 
-#: identity/identitydialog.cpp:876
+#: identity/identitydialog.cpp:968
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Sýsla með auðkenni \"%1\""
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:1037
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3892,13 +3918,13 @@ msgstr ""
 "Sérsniðna mappan \"Uppköst\" fyrir \"%1\" er ekki til (lengur). Því verður "
 "sjálfgefna mappan fyrir uppköst notuð."
 
-#: identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:1255
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Endurnefna..."
 
-#: identity/identitydialog.cpp:1165
+#: identity/identitydialog.cpp:1257
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Hætta"
@@ -8778,6 +8804,11 @@ msgstr[1] "Breyta \"Ekki við\" svörum..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Error while trying to rename folder %1"
+#~ msgid "Error while generating new key pair: %1"
+#~ msgstr "Villa við endurnefningu möppunnar %1"
 
 #, fuzzy
 #~ msgid "Remove"
@@ -15940,9 +15971,6 @@ msgstr ""
 
 #~ msgid "Account:"
 #~ msgstr "Tenging:"
-
-#~ msgid "Could not start process for %1."
-#~ msgstr "Ekki tókst að ræsa ferli fyrir %1"
 
 #~ msgid "Error while trying to subscribe to %1:"
 #~ msgstr "Villa við áskrift á %1:"

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:40+0000\n"
+"POT-Creation-Date: 2024-07-25 00:39+0000\n"
 "PO-Revision-Date: 2024-05-30 22:11+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2956,50 +2956,78 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "現有身份(&E)："
 
-#: identity/identitydialog.cpp:173
+#: identity/identitydialog.cpp:218
 #, kde-format
-msgid "Error while generating new key pair: %1"
-msgstr "產生新金鑰對時發生錯誤：%1"
+msgctxt "@info:status"
+msgid "Could not start OpenPGP certificate generation."
+msgstr ""
 
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:231
 #, kde-format
-msgid "Key Generation Error"
-msgstr "金鑰產生錯誤"
+msgid "Could not start OpenPGP certificate generation: %1"
+msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:240
+#, fuzzy, kde-format
+#| msgid "Generating new key pair…"
+msgctxt "@title"
+msgid "Generating an OpenPGP Certificate…"
+msgstr "產生金鑰對中…"
+
+#: identity/identitydialog.cpp:242
+#, kde-format
+msgid ""
+"The process of generating an OpenPGP certificate requires large amounts of "
+"random numbers. This may require several minutes…"
+msgstr ""
+
+#: identity/identitydialog.cpp:260
+#, kde-format
+msgid "Could not generate an OpenPGP certificate: %1"
+msgstr ""
+
+#: identity/identitydialog.cpp:265
+#, fuzzy, kde-format
+#| msgid "Deleting messages canceled."
+msgctxt "@info:status"
+msgid "Key generation was cancelled."
+msgstr "取消刪除信件。"
+
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "No key"
 msgstr "無金鑰"
 
-#: identity/identitydialog.cpp:216
-#, kde-format
-msgid "Generate a new key pair"
+#: identity/identitydialog.cpp:307
+#, fuzzy, kde-format
+#| msgid "Generate a new key pair"
+msgid "Generate a new OpenPGP certificate"
 msgstr "產生新的金鑰對"
 
-#: identity/identitydialog.cpp:228
+#: identity/identitydialog.cpp:322
 #, kde-format
-msgid "Generating new key pair…"
-msgstr "產生金鑰對中…"
+msgid "Key Generation Error"
+msgstr "金鑰產生錯誤"
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:333
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "編輯身份"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "一般"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:364
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "您的姓名(&Y)："
 
-#: identity/identitydialog.cpp:277
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3009,13 +3037,13 @@ msgstr ""
 "<qt><h3>您的姓名</h3><p>這個欄位是您想要顯示在信件標頭中的名稱。</p> <p>如果"
 "空白，則標頭中只會顯示您的電子郵件地址。</p></qt>"
 
-#: identity/identitydialog.cpp:288
+#: identity/identitydialog.cpp:380
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "組織(&Z)："
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:385
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3025,13 +3053,13 @@ msgstr ""
 "<qt><h3>組織</h3><p>如果您要在信件標頭中顯示您所工作的單位名稱，請填寫在這個"
 "欄位。</p><p>這個欄位留空白並沒有影響。</p></qt>"
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:397
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "電子郵件地址(&E)："
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:402
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3045,13 +3073,13 @@ msgstr ""
 "可以建立一個新的身份，或是在下方的欄位中加入別名。</p><p>如果填寫錯誤或留空"
 "白，收信人就無法回信給您了。</p></qt>"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:421
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "電子郵件地址別名(&L)："
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3066,12 +3094,12 @@ msgstr ""
 "td></tr> <tr><th>別名：</th><td>first@example.org<br/>last@example.org</td></"
 "tr></table> <p>每一行輸入一個別名。</p></qt>"
 
-#: identity/identitydialog.cpp:351
+#: identity/identitydialog.cpp:443
 #, kde-format
 msgid "Cryptography"
 msgstr "加密"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3084,28 +3112,28 @@ msgstr ""
 "位您可以留白，但 KMail 就無法簽署數位簽章。</p> <p>更多詳細資料請參閱"
 "<a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "簽署用的 OpenPGP 金鑰："
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr "為加密和簽署使用同一個金鑰"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:471
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP 金鑰："
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "簽署用的 OpenPGP 金鑰："
 
-#: identity/identitydialog.cpp:404
+#: identity/identitydialog.cpp:496
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3119,13 +3147,13 @@ msgstr ""
 "用 GnuPG 金鑰。</p> <p>您可以將這個欄位留白，不過 KMail 就無法用 OpenPGP 加"
 "密。</p> <p>更多詳細資料請參閱<a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:503
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "加密用的 OpenPGP 金鑰："
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3136,13 +3164,13 @@ msgstr ""
 "<qt><p>您選擇的 S/MIME (X.509) 憑證是用來簽署數位簽章的。</p> <p>您可以將這個"
 "欄位留白，但 KMail 就無法使用 S/MIME 來簽署您的信件。</p></qt>"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:518
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME 簽署憑證："
 
-#: identity/identitydialog.cpp:440
+#: identity/identitydialog.cpp:532
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3155,80 +3183,80 @@ msgstr ""
 "用 GnuPG 金鑰。</p> <p>您可以將這個欄位留白，不過 KMail 就無法用 S/MIME 加"
 "密。</p> <p>更多詳細資料請參閱<a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:538
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME 加密憑證："
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:555
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "預設格式："
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:560
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "啟用 Autocrypt"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Autocrypt："
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr "讓其他人知道您希望使用加密"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:572
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "覆寫安全性預設值的全域設定"
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:575
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "覆寫預設值："
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:580
 #, kde-format
 msgid "Sign messages"
 msgstr "簽署信件"
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:583
 #, kde-format
 msgid "Encrypt messages when possible"
 msgstr "可能的話加密信件"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
+#: identity/identitydialog.cpp:586 ui/securitypageencryptiontab.ui:106
 #, kde-format
 msgid "Warn when trying to send unsigned messages"
 msgstr "送出未簽署信件時提出警告"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:589 ui/securitypageencryptiontab.ui:113
 #, kde-format
 msgid "Warn when trying to send unencrypted messages"
 msgstr "送出未加密信件時提出警告"
 
-#: identity/identitydialog.cpp:507
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "進階"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:607
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "回信地址(&R)："
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3242,13 +3270,13 @@ msgstr ""
 "如果您要讓回信送到跟發信不同的位置，您可以設定這個欄位。</p> <p>如果不懂得怎"
 "麼使用，請留白即可。</p></qt>"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:629
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "副本地址(&C)："
 
-#: identity/identitydialog.cpp:543
+#: identity/identitydialog.cpp:635
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3262,13 +3290,13 @@ msgstr ""
 "副本。</p> <p>通常是用來發送信件備份給自己其他的帳號。</p> <p>若要發送給一個"
 "以上的地址，請用逗號隔開。</p> <p>如果不懂得怎麼使用，請留白即可。</p></qt>"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:651
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "密件副本(&B)："
 
-#: identity/identitydialog.cpp:563
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3283,135 +3311,135 @@ msgstr ""
 "<p>若要發送給一個以上的地址，請用逗號隔開。</p> <p>如果不懂得怎麼使用，請留白"
 "即可。</p></qt>"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:669
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "字典(&I)："
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:675
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "選擇寄件備份資料夾"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "寄件備份(&F)："
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:683
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "選擇草稿資料夾"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:685
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "草稿夾(&D)："
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:691
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "選擇樣本資料夾"
 
-#: identity/identitydialog.cpp:601
+#: identity/identitydialog.cpp:693
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "樣本資料夾(&T)："
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:698
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "外送帳號："
 
-#: identity/identitydialog.cpp:613
+#: identity/identitydialog.cpp:705
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "將我的 vCard 加入信件"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:706
 #, fuzzy, kde-format
 #| msgid "Create…"
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "建立…"
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:710
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "自動修正語言："
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:722
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "回復預設網域名稱"
 
-#: identity/identitydialog.cpp:633
+#: identity/identitydialog.cpp:725
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "預設域名(&T)："
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr "<qt><p>預設域名是用來補齊所輸入的電子郵件地址。</p></qt>"
 
-#: identity/identitydialog.cpp:656
+#: identity/identitydialog.cpp:748
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "此身份使用自訂的信件樣本(&U)"
 
-#: identity/identitydialog.cpp:670
+#: identity/identitydialog.cpp:762
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "複製全域樣本(&C)"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:769
 #, kde-format
 msgid "Templates"
 msgstr "樣本"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgid "Signature"
 msgstr "簽名"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:782
 #, kde-format
 msgid "Picture"
 msgstr "圖片"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "不合法的電子郵件地址別名 \"%1\""
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "您必須為此身份提供電子郵件。"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "空的電子郵件地址"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "不合法的電子郵件地址"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:905
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3423,7 +3451,7 @@ msgstr ""
 "(%1)。\n"
 "這樣可能導致收件人確認數位簽章時會接獲警告。"
 
-#: identity/identitydialog.cpp:822
+#: identity/identitydialog.cpp:914
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3432,7 +3460,7 @@ msgstr ""
 "其中一個 OpenPGP 加密金鑰未含有任何屬於這個身份的使用者代號與電子郵件地址"
 "(%1)。"
 
-#: identity/identitydialog.cpp:829
+#: identity/identitydialog.cpp:921
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3444,7 +3472,7 @@ msgstr ""
 "(%1)。\n"
 "這樣可能導致收件人確認數位簽章時會接獲警告。"
 
-#: identity/identitydialog.cpp:838
+#: identity/identitydialog.cpp:930
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3453,36 +3481,36 @@ msgstr ""
 "其中一個 S/MIME 加密金鑰未含有任何屬於這個身份的使用者代號與電子郵件地址"
 "(%1)。"
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "在金鑰或憑證中找不到電子郵件地址"
 
-#: identity/identitydialog.cpp:860
+#: identity/identitydialog.cpp:952
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "簽章已經過期。"
 
-#: identity/identitydialog.cpp:876
+#: identity/identitydialog.cpp:968
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "編輯身份 \"%1\""
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:1037
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr "身份的某些自訂資料夾不存在或不復存在；因此將會使用預設資料夾。"
 
-#: identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:1255
 #, kde-format
 msgid "Create…"
 msgstr "建立…"
 
-#: identity/identitydialog.cpp:1165
+#: identity/identitydialog.cpp:1257
 #, kde-format
 msgid "Edit…"
 msgstr "編輯…"
@@ -7862,6 +7890,9 @@ msgstr[0] "「不在辦公室」的自動回覆已在伺服器上啟動"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "縮放：%1%"
+
+#~ msgid "Error while generating new key pair: %1"
+#~ msgstr "產生新金鑰對時發生錯誤：%1"
 
 #~ msgid "Remove"
 #~ msgstr "移除"

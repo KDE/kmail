@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-22 00:40+0000\n"
+"POT-Creation-Date: 2024-07-25 00:39+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -3234,55 +3234,81 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Бар &іс-әлпеттері:"
 
-#: identity/identitydialog.cpp:173
-#, fuzzy, kde-format
-#| msgid "Error while trying to rename folder %1"
-msgid "Error while generating new key pair: %1"
-msgstr "%1 қапшығын қайта атау кезінде қате пайда болды"
-
-#: identity/identitydialog.cpp:174
+#: identity/identitydialog.cpp:218
 #, kde-format
-msgid "Key Generation Error"
+msgctxt "@info:status"
+msgid "Could not start OpenPGP certificate generation."
 msgstr ""
 
-#: identity/identitydialog.cpp:214
+#: identity/identitydialog.cpp:231
+#, fuzzy, kde-format
+#| msgid "Could not start process for %1."
+msgid "Could not start OpenPGP certificate generation: %1"
+msgstr "%1 үшін процесс жегілмеді."
+
+#: identity/identitydialog.cpp:240
+#, fuzzy, kde-format
+#| msgid "Enter new key word:"
+msgctxt "@title"
+msgid "Generating an OpenPGP Certificate…"
+msgstr "Жаңа кілт сөзді келтіріңіз:"
+
+#: identity/identitydialog.cpp:242
+#, kde-format
+msgid ""
+"The process of generating an OpenPGP certificate requires large amounts of "
+"random numbers. This may require several minutes…"
+msgstr ""
+
+#: identity/identitydialog.cpp:260
+#, kde-format
+msgid "Could not generate an OpenPGP certificate: %1"
+msgstr ""
+
+#: identity/identitydialog.cpp:265
+#, fuzzy, kde-format
+#| msgid "The operation was canceled by the user."
+msgctxt "@info:status"
+msgid "Key generation was cancelled."
+msgstr "Істі пайдаланушысы доғарды. "
+
+#: identity/identitydialog.cpp:305
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:216
+#: identity/identitydialog.cpp:307
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
-msgid "Generate a new key pair"
+msgid "Generate a new OpenPGP certificate"
 msgstr "Жаңа кілт сөзді келтіріңіз:"
 
-#: identity/identitydialog.cpp:228
-#, fuzzy, kde-format
-#| msgid "Enter new key word:"
-msgid "Generating new key pair…"
-msgstr "Жаңа кілт сөзді келтіріңіз:"
+#: identity/identitydialog.cpp:322
+#, kde-format
+msgid "Key Generation Error"
+msgstr ""
 
-#: identity/identitydialog.cpp:241
+#: identity/identitydialog.cpp:333
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Іс-әлпетін өңдеу"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:357
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Жалпы"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:364
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Есіміңіз:"
 
-#: identity/identitydialog.cpp:277
+#: identity/identitydialog.cpp:369
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3294,14 +3320,14 @@ msgstr ""
 "p><p>Егер өріс бос қалса, хат айдарында тек эл.пошта адресіңіз ғана "
 "көрсетіледі.</p></qt>"
 
-#: identity/identitydialog.cpp:288
+#: identity/identitydialog.cpp:380
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "&Ұйымыңыз:"
 
-#: identity/identitydialog.cpp:293
+#: identity/identitydialog.cpp:385
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3312,14 +3338,14 @@ msgstr ""
 "көрсетілетін Сіз істейтін ұйымыңызды келтіруге болады.</p><p>Бұны бос "
 "қалдыру да ерсі емес.</p></qt>"
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:397
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&Эл.пошта адресі:"
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:402
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3334,14 +3360,14 @@ msgstr ""
 "ретінде келтіріңіз.</p><p>Егер бұны бос қалдырсаңыз не қате толтырсаңыз, "
 "хатыңызға жауап беруге мүмкін болмайды.</p></qt>"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:421
 #, fuzzy, kde-format
 #| msgid "Email a&liases:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "Бүркеншік эл.пошта адрестері:"
 
-#: identity/identitydialog.cpp:334
+#: identity/identitydialog.cpp:426
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3358,12 +3384,12 @@ msgstr ""
 "org<br>last@example.org</td></tr></table><p>Бір жолда бір адресті келтіріңіз."
 "</p></qt>"
 
-#: identity/identitydialog.cpp:351
+#: identity/identitydialog.cpp:443
 #, kde-format
 msgid "Cryptography"
 msgstr "Шифрлау"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:449
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3385,30 +3411,30 @@ msgstr ""
 "p><p>Кілттер туралы толығырақ мынадан оқыңыз: <a>http://www.gnupg.org</a></"
 "p></qt>"
 
-#: identity/identitydialog.cpp:363
+#: identity/identitydialog.cpp:455
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP қолтаңбалау кілті:"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:471
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "OpenPGP 0x%1-кілті"
 
-#: identity/identitydialog.cpp:387
+#: identity/identitydialog.cpp:479
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP қолтаңбалау кілті:"
 
-#: identity/identitydialog.cpp:404
+#: identity/identitydialog.cpp:496
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3433,14 +3459,14 @@ msgstr ""
 "<p>Кілттер туралы толығырақ мынадан оқыңыз: <a>http://www.gnupg.org</a> </"
 "p></qt>"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:503
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP шифрлау кілті:"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3453,14 +3479,14 @@ msgstr ""
 "қолданып хатты цифрлық қолтанбалай алмайды, ал кәдімгі пошта айналымына "
 "бұның әсері жоқ.</p></qt>"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:518
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME қолтаңбалау куәлігі:"
 
-#: identity/identitydialog.cpp:440
+#: identity/identitydialog.cpp:532
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3475,89 +3501,89 @@ msgstr ""
 "жіберетін хаттың көшірмесін өзіңізге шифрлай алмайды, ал кәдімгі пошта "
 "айналымына бұның әсері жоқ.</p></qt>"
 
-#: identity/identitydialog.cpp:446
+#: identity/identitydialog.cpp:538
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME шифрлау куәлігі:"
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:555
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Артық көретін пішімі:"
 
-#: identity/identitydialog.cpp:468
+#: identity/identitydialog.cpp:560
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgid "Enable Autocrypt"
 msgstr "Жазылуды рұқсат етуді қалайсыз ба?"
 
-#: identity/identitydialog.cpp:472
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Жазылуды рұқсат етуді қалайсыз ба?"
 
-#: identity/identitydialog.cpp:477
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:572
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:483
+#: identity/identitydialog.cpp:575
 #, fuzzy, kde-format
 #| msgid "Overwrite File?"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Файл үстінен жаза берейік пе?"
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:580
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgid "Sign messages"
 msgstr "Хатты қ&олтаңбалау"
 
-#: identity/identitydialog.cpp:491
+#: identity/identitydialog.cpp:583
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Encrypt messages when possible"
 msgstr "Мейлінше, хаттар &автоматты түрде шифрлансын"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
-#: identity/identitydialog.cpp:494 ui/securitypageencryptiontab.ui:106
+#: identity/identitydialog.cpp:586 ui/securitypageencryptiontab.ui:106
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Қолтаңбалан&баған хатты жібергенде ескертілсін"
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
-#: identity/identitydialog.cpp:497 ui/securitypageencryptiontab.ui:113
+#: identity/identitydialog.cpp:589 ui/securitypageencryptiontab.ui:113
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Шифрланбаған хаттарды жібергенде &ескертілсін"
 
-#: identity/identitydialog.cpp:507
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "&Қосымша"
 
-#: identity/identitydialog.cpp:515
+#: identity/identitydialog.cpp:607
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Жауап беру адресі:"
 
-#: identity/identitydialog.cpp:519
+#: identity/identitydialog.cpp:611
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3575,14 +3601,14 @@ msgstr ""
 "жеке адресті келтіруге болады.</p><p>Күмәндансаңыз бұл өрісті бос қалдырыңыз."
 "</p></qt>"
 
-#: identity/identitydialog.cpp:537
+#: identity/identitydialog.cpp:629
 #, fuzzy, kde-format
 #| msgid "&CC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "'&Жасырып кімге' адрестері:"
 
-#: identity/identitydialog.cpp:543
+#: identity/identitydialog.cpp:635
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3598,14 +3624,14 @@ msgstr ""
 "p><p>Бірнеше адресті келтіруге (үтірмен бөліп) келтіруге болады.</"
 "p><p>Күмәндансаңыз бұл өрісті бос қалдырыңыз.</p></qt>"
 
-#: identity/identitydialog.cpp:559
+#: identity/identitydialog.cpp:651
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Жасырып кімге адрестері:"
 
-#: identity/identitydialog.cpp:563
+#: identity/identitydialog.cpp:655
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3621,88 +3647,88 @@ msgstr ""
 "тіркелгіңізге жіберу үшін қолданады.</p><p>Күмәндансаңыз бұл өрісті бос "
 "қалдырыңыз.</p></qt>"
 
-#: identity/identitydialog.cpp:577
+#: identity/identitydialog.cpp:669
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "Сөзд&ік:"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:675
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "&Жіберілген пошта қапшығы"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:677
 #, kde-format
 msgid "Sent-mail &folder:"
 msgstr "Жіберілген хаттар қап&шығы:"
 
-#: identity/identitydialog.cpp:591
+#: identity/identitydialog.cpp:683
 #, fuzzy, kde-format
 #| msgid "Select Style"
 msgid "Select Draft Folder"
 msgstr "Стилін таңдау"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:685
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "&Жоба жазба қапшығы:"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:691
 #, fuzzy, kde-format
 msgid "Select Templates Folder"
 msgstr "Қапшық"
 
-#: identity/identitydialog.cpp:601
+#: identity/identitydialog.cpp:693
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Үлгілер қапшығы:"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:698
 #, kde-format
 msgid "Outgoing Account:"
 msgstr "IШығыс тіркелгісі"
 
-#: identity/identitydialog.cpp:613
+#: identity/identitydialog.cpp:705
 #, kde-format
 msgid "Attach my vCard to message"
 msgstr "Хатқа vCard-ты қосу"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:706
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Құру..."
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:710
 #, fuzzy, kde-format
 #| msgid "Autocorrection language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Автотүзету тілі:"
 
-#: identity/identitydialog.cpp:630
+#: identity/identitydialog.cpp:722
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Әде&тті домені:"
 
-#: identity/identitydialog.cpp:633
+#: identity/identitydialog.cpp:725
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Әде&тті домені:"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3711,57 +3737,57 @@ msgstr ""
 "<qt><p>Әдетті домен тек пайдаланушының атауынан тұратын эл.пошта адресін "
 "толықтыру үшін қолданылады.</p></qt>"
 
-#: identity/identitydialog.cpp:656
+#: identity/identitydialog.cpp:748
 #, kde-format
 msgid "&Use custom message templates for this identity"
 msgstr "Бұл іс-әлпеті үшін өзінің үлгілері қол&данылсын"
 
-#: identity/identitydialog.cpp:670
+#: identity/identitydialog.cpp:762
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Жалпы үлгілерін көшірмелеу"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:769
 #, kde-format
 msgid "Templates"
 msgstr "Үлгілері"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgid "Signature"
 msgstr "Қолтаңба"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:782
 #, kde-format
 msgid "Picture"
 msgstr "Сурет"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:835
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Жарамсыз эл.пошта бүркеншігі: \"%1\""
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "Бұл іс-әлпеті үшін өзінің үлгілері қол&данылсын"
 
-#: identity/identitydialog.cpp:751
+#: identity/identitydialog.cpp:843
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Эл.пошта адресі"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Address"
 msgstr "Жарамсыз эл.пошта адресі"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:905
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3774,7 +3800,7 @@ msgstr ""
 "Бұл алушы жағында қолтаңбаны тексеру кезінде ескерту хабарларының пайда "
 "болуға себеп болуы мүмкін."
 
-#: identity/identitydialog.cpp:822
+#: identity/identitydialog.cpp:914
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3783,7 +3809,7 @@ msgstr ""
 "Бапталған OpenPGP шифрлау кілттерінің біреуінде, осы іс-әлпеті (%1) үшін, эл."
 "пошта адресі көрсетілген пайдаланушының идентификаторы жоқ."
 
-#: identity/identitydialog.cpp:829
+#: identity/identitydialog.cpp:921
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3796,7 +3822,7 @@ msgstr ""
 "Бұл алушы жағында қолтаңбаны тексеру кезінде ескерту хабарларының пайда "
 "болуға себеп болуы мүмкін."
 
-#: identity/identitydialog.cpp:838
+#: identity/identitydialog.cpp:930
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3805,26 +3831,26 @@ msgstr ""
 "Бапталған S/MIME шифрлау куәлігінің біреуінде, осы іс-әлпеті (%1) үшін, эл."
 "пошта адресі көрсетілген пайдаланушының идентификаторы жоқ."
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:940
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Кілтте/куәлікте эл.пошта адресі табылмады"
 
-#: identity/identitydialog.cpp:860
+#: identity/identitydialog.cpp:952
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Қолтаңба файлы жарамсыз"
 
-#: identity/identitydialog.cpp:876
+#: identity/identitydialog.cpp:968
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" іс-әлпетін өңдеу"
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:1037
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3836,13 +3862,13 @@ msgstr ""
 "\"%1\" іс-әлпетінде жоба жазбаға арнап қойған қапшығы (енді) жоқ; сондықтан "
 "әдеттегі қапшық қолданылады."
 
-#: identity/identitydialog.cpp:1163
+#: identity/identitydialog.cpp:1255
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Құру..."
 
-#: identity/identitydialog.cpp:1165
+#: identity/identitydialog.cpp:1257
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"
@@ -8666,6 +8692,11 @@ msgstr[0] "%1 серверде \"Кеңседе жоқ\" жауабы істей
 msgid "Zoom: %1%"
 msgstr "Масштаб"
 
+#, fuzzy
+#~| msgid "Error while trying to rename folder %1"
+#~ msgid "Error while generating new key pair: %1"
+#~ msgstr "%1 қапшығын қайта атау кезінде қате пайда болды"
+
 #~ msgid "Remove"
 #~ msgstr "Өшіру"
 
@@ -11560,9 +11591,6 @@ msgstr "Масштаб"
 #~ msgstr ""
 #~ "\"%1\" сүзгіcін қайта атау:\n"
 #~ "(автоматты түрде атау үшін өрісті бос қалдырыңыз)"
-
-#~ msgid "The operation was canceled by the user."
-#~ msgstr "Істі пайдаланушысы доғарды. "
 
 #~ msgid "Failed to archive the folder '%1'."
 #~ msgstr "'%1' қапшығын архивтеу жаңылысы.."
@@ -16140,9 +16168,6 @@ msgstr "Масштаб"
 
 #~ msgid "Account:"
 #~ msgstr "Тіркелгі:"
-
-#~ msgid "Could not start process for %1."
-#~ msgstr "%1 үшін процесс жегілмеді."
 
 #~ msgid "Error while trying to subscribe to %1:"
 #~ msgstr "%1 дегенге жазылу кезінде қате пайда болды:"
