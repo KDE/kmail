@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-07-05 10:39+0200\n"
+"PO-Revision-Date: 2024-07-14 10:07+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -2042,8 +2042,7 @@ msgid "Cl&ean Spaces"
 msgstr "Supprim&er les espaces"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Utiliser une police à largeur fi&xe"
@@ -2055,46 +2054,40 @@ msgid "&Urgent"
 msgstr "&Urgent"
 
 #: editor/kmcomposerwin.cpp:1395
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "Accusé de &réception"
+msgstr "Notification d'accusé de &réception"
 
 #: editor/kmcomposerwin.cpp:1399
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Confirmation de la transmission de la &requête"
 
 #: editor/kmcomposerwin.cpp:1404
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "R&etour à la ligne"
 
 #: editor/kmcomposerwin.cpp:1409
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "&Fragments"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "Correction orthographique &automatique"
 
 #: editor/kmcomposerwin.cpp:1430
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
-msgstr "Édition de texte enrichi"
+msgstr "Modification de texte enrichi"
 
 #: editor/kmcomposerwin.cpp:1432
 #, kde-format
@@ -2108,43 +2101,37 @@ msgid "Toggle rich text editing mode"
 msgstr "Activer / désactiver l'éditeur de texte enrichi"
 
 #: editor/kmcomposerwin.cpp:1437
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
-msgstr "Tous les c&hamps"
+msgstr "Tous les ch&amps"
 
 #: editor/kmcomposerwin.cpp:1440
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identité"
 
 #: editor/kmcomposerwin.cpp:1443
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Dictionnaire"
 
 #: editor/kmcomposerwin.cpp:1446
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr "Dossier des messages envo&yés"
+msgstr "Do&ssier des messages envoyés"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Transport du courriel"
 
 #: editor/kmcomposerwin.cpp:1452
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "D&e"
@@ -5130,8 +5117,7 @@ msgid "&Archive Folder…"
 msgstr "&Archiver le dossier..."
 
 #: kmmainwidget.cpp:3140
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Charger les références e&xternes"
@@ -8239,22 +8225,19 @@ msgid "Message Default Format"
 msgstr "Format de courriel par défaut"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
-msgstr "Préférer le &HTML au texte simple"
+msgstr "Préférer le format &HTML au texte simple"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
-msgstr "Préférer le &texte simple au HTML"
+msgstr "Préférer le &texte simple au format « HTML »"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Utiliser la configuration globale"
