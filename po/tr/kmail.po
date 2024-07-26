@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-07-13 08:58+0300\n"
+"PO-Revision-Date: 2024-07-25 13:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3030,19 +3030,18 @@ msgstr "&Var olan kimlikler:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "OpenPGP sertifika üretimi başlatılamadı."
 
 #: identity/identitydialog.cpp:231
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "OpenPGP sertifika üretimi başlatılamadı: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Yeni anahtar çifti oluşturuluyor…"
+msgstr "Bir OpenPGP sertifikası üretiliyor…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3050,18 +3049,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"OpenPGP sertifika üretimi süreci çok sayıda rastgele sayı gerektirir. Bu "
+"işlem birkaç dakika sürebilir…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Bir OpenPGP sertifikası üretilemedi: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "İletileri silme işlemi iptal edildi."
+msgstr "Anahtar üretimi iptal edildi."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3069,10 +3069,9 @@ msgid "No key"
 msgstr "Anahtar yok"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Yeni bir anahtar çifti oluştur"
+msgstr "Yeni bir OpenPGP sertifikası üret"
 
 #: identity/identitydialog.cpp:322
 #, kde-format

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-07-14 08:12+0200\n"
+"PO-Revision-Date: 2024-07-25 17:39+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3043,20 +3043,18 @@ msgstr "&Dauden nortasunak:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Ezin izan du OpenPGP ziurtagiri-sorrera abiatu."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "Ezin izan  da %1(r)en prozesua hasi."
+msgstr "Ezin izan du OpenPGP ziurtagiri-sorrera abiatu: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Gako pare berria sortzen..."
+msgstr "OpenPGP ziurtagiri bat sortzen..."
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3064,18 +3062,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"OpenPGP ziurtagiri bat sortzeko prozesuak ausazko zenbakien kopurua handia "
+"behar du. Baliteke horrek minutu batzuk behar izatea…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Ezin izan du OpenPGP ziurtagiri bat sortu: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Mezuen ezabaketa bertan behera utzi da."
+msgstr "Gako sorrera bertan behera utzi da."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3083,10 +3082,9 @@ msgid "No key"
 msgstr "Gakorik gabe"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Sortu gako-pare berri bat"
+msgstr "Sortu OpenPGP ziurtagiri berri bat"
 
 #: identity/identitydialog.cpp:322
 #, kde-format

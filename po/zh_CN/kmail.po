@@ -2927,11 +2927,10 @@ msgid "Could not start OpenPGP certificate generation: %1"
 msgstr ""
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "正在生成新的密钥对"
+msgstr ""
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -2946,11 +2945,10 @@ msgid "Could not generate an OpenPGP certificate: %1"
 msgstr ""
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "消息删除已取消。"
+msgstr ""
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -2958,10 +2956,9 @@ msgid "No key"
 msgstr "没有密钥"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "生成新密钥对"
+msgstr ""
 
 #: identity/identitydialog.cpp:322
 #, kde-format
@@ -7838,6 +7835,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Error while generating new key pair: %1"
-#~ msgstr "生成密钥对时出错：%1"
