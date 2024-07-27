@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-07-16 15:34+0200\n"
+"PO-Revision-Date: 2024-07-26 14:49+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -2936,19 +2936,18 @@ msgstr "&Existující identity:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Nelze spustit generování certifikátu OpenPGP."
 
 #: identity/identitydialog.cpp:231
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "Nelze spustit generování certifikátu OpenPGP: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Generuje se nový pár klíčů…"
+msgstr "Generování certifikátu OpenPGP…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -2960,14 +2959,13 @@ msgstr ""
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Nelze generovat certifikát OpenPGP: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Mazání zpráv zrušeno."
+msgstr "Generování klíče bylo zrušeno."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -2975,10 +2973,9 @@ msgid "No key"
 msgstr "Žádný klíč"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Generovat nový pár klíčů"
+msgstr "Generovat nový certifikát OpenPGP"
 
 #: identity/identitydialog.cpp:322
 #, kde-format
@@ -7925,6 +7922,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgid "Error while generating new key pair: %1"
-#~ msgstr "Chyba při generování nového páru klíčů: %1"

@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-07-13 07:51+0200\n"
+"PO-Revision-Date: 2024-07-26 20:56+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -3032,20 +3032,18 @@ msgstr "B&efintliga identiteter:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Kunde inte starta OpenPGP certifikatgenerering."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "Kunde inte starta process för %1."
+msgstr "Kunde inte starta OpenPGP certifikatgenerering: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Skapar nytt nyckelpar…"
+msgstr "Genererar ett OpenPGP-certifikat…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3053,18 +3051,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"Processen för att genererar ett OpenPGP-certifikat kräver ett stort antal "
+"slumptal. Den kan ta flera minuter…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Kunde inte generera ett OpenPGP-certifikat: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "The operation was canceled by the user."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Åtgärden avbröts av användaren."
+msgstr "Nyckelgenerering avbröts."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3072,10 +3071,9 @@ msgid "No key"
 msgstr "Ingen nyckel"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Skapa ett nytt nyckelpar"
+msgstr "Generera ett nytt OpenPGP-certifikat"
 
 #: identity/identitydialog.cpp:322
 #, kde-format
