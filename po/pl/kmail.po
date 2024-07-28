@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-07-14 12:50+0200\n"
+"PO-Revision-Date: 2024-07-27 10:02+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -3044,20 +3044,18 @@ msgstr "Istniejąc&e tożsamości:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Nie można uruchomić tworzenia certyfikatów OpenPGP."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "Nie można uruchomić procesu %1."
+msgstr "Nie można uruchomić tworzenia certyfikatów OpenPGP: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Tworzenie nowej pary kluczy…"
+msgstr "Tworzenie certyfikatu OpenPGP…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3065,18 +3063,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"Tworzenie certyfikatu OpenPGP wymaga dużej liczby liczb losowych. Może to "
+"potrwać kilka minut…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Nie można utworzyć nowego certyfikatu OpenPGP: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "The operation was canceled by the user."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Operacja przerwana przez użytkownika."
+msgstr "Tworzenie klucza zostało zaniechane."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3084,10 +3083,9 @@ msgid "No key"
 msgstr "Brak klucza"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Utwórz nową parę kluczy"
+msgstr "Utwórz nowy certyfikat OpenPGP"
 
 #: identity/identitydialog.cpp:322
 #, kde-format

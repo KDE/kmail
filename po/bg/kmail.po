@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-07-14 22:11+0200\n"
+"PO-Revision-Date: 2024-07-27 21:59+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -3054,19 +3054,18 @@ msgstr "С&ъществуващи самоличности:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Не успя да се стартира генерирането на OpenPGP сертификат."
 
 #: identity/identitydialog.cpp:231
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "Генерирането на OpenPGP сертификат не успя да се стартира: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Генериране на нова двойка ключове…"
+msgstr "Генериране на OpenPGP сертификат…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3074,18 +3073,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"Процесът на генериране на OpenPGP сертификат изисква голям брой произволни "
+"числа. Това може да отнеме няколко минути…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Не успя да се генерира OpenPGP сертификат: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Изтриването на съобщенията беше отменено."
+msgstr "Генерирането на ключове е отменено."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3093,10 +3093,9 @@ msgid "No key"
 msgstr "Без ключ"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Генериране на нова двойка ключове"
+msgstr "Генериране на OpenPGP сертификат"
 
 #: identity/identitydialog.cpp:322
 #, kde-format
