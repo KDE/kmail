@@ -86,8 +86,7 @@ void FillComposerJob::slotOpenComposer()
             msgPart->setBody(mSettings.mAttachData); // TODO: check if was setBodyEncoded
             auto ct = msgPart->contentType(); // Create
             ct->setMimeType(mSettings.mAttachType + '/' + mSettings.mAttachSubType);
-            ct->setParameter(QLatin1StringView(mSettings.mAttachParamAttr),
-                             mSettings.mAttachParamValue); // TODO: Check if the content disposition parameter needs to be set!
+            ct->setParameter(mSettings.mAttachParamAttr, mSettings.mAttachParamValue); // TODO: Check if the content disposition parameter needs to be set!
             if (!MessageViewer::MessageViewerSettings::self()->exchangeCompatibleInvitations()) {
                 msgPart->contentDisposition()->fromUnicodeString(QLatin1StringView(mSettings.mAttachContDisp));
             }
