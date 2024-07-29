@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-25 00:39+0000\n"
-"PO-Revision-Date: 2024-06-26 18:32+0400\n"
+"PO-Revision-Date: 2024-07-28 13:02+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1499,15 +1499,13 @@ msgid "No limit"
 msgstr "لا حدّ"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "أضف"
 
 #: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "أزل"
@@ -1982,8 +1980,7 @@ msgid "Cl&ean Spaces"
 msgstr "ام&حُ الفراغات"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "استخدم &خطًّا ثابتًا"
@@ -1995,43 +1992,37 @@ msgid "&Urgent"
 msgstr "&عاجل"
 
 #: editor/kmcomposerwin.cpp:1395
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "ا&طلب إخطار التّجميع"
 
 #: editor/kmcomposerwin.cpp:1399
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "ا&طلب تأكيد التسليم"
 
 #: editor/kmcomposerwin.cpp:1404
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "طيّ ال&كلمات"
 
 #: editor/kmcomposerwin.cpp:1409
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "ال&قصاصات"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "دقّق اله&جاء آليًّا"
 
 #: editor/kmcomposerwin.cpp:1430
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "تحرير النّصّ الغنيّ"
@@ -2048,43 +2039,37 @@ msgid "Toggle rich text editing mode"
 msgstr "افتح/أغلق وضع تحرير النّصّ الغنيّ"
 
 #: editor/kmcomposerwin.cpp:1437
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&كلّ الحقول"
 
 #: editor/kmcomposerwin.cpp:1440
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "ال&هويّة"
 
 #: editor/kmcomposerwin.cpp:1443
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "ال&قاموس"
 
 #: editor/kmcomposerwin.cpp:1446
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "مجلّد البريد المُر&سل"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "نقل ال&بريد"
 
 #: editor/kmcomposerwin.cpp:1452
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&من"
@@ -2263,22 +2248,19 @@ msgid "Insert File"
 msgstr "أدرج ملفًّا"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "أضف كصورة &سياقيّة"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "أضف ك&مرفق"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "بريدك"
@@ -2322,8 +2304,7 @@ msgstr[4] "أضف الملفّات &كملحقات"
 msgstr[5] "أضف الملفّات &كملحقات"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "أدرج نصّ الحافظة كمرفق"
@@ -3021,20 +3002,18 @@ msgstr "الهويّات ال&موجودة:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "لم يتمكن من بدء توليد شهادة OpenPGP."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "لا يمكن بدء الاجراء ل- %1."
+msgstr "لم يتمكن من بدء توليد شهادة OpenPGP:‏ %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "يولّد زوج مفاتيح جديد…"
+msgstr "يولّد شهادة OpenPGP جديدة…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3042,18 +3021,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"تتطلب عملية توليد شهادة OpenPGP كميات كبيرة من الأرقام العشوائية. وقد يستغرق "
+"هذا عدة دقائق…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "لم يتمكن من توليد شهادة OpenPGP:‏ %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "أُلغي حذف الرّسائل."
+msgstr "أُلغي توليد المفتاح."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3061,10 +3041,9 @@ msgid "No key"
 msgstr "لا مفتاح"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "ولّد زوج مفاتيح جديد"
+msgstr "ولّد شهادة OpenPGP جديدة"
 
 #: identity/identitydialog.cpp:322
 #, kde-format
@@ -3699,29 +3678,25 @@ msgid "&Remove"
 msgstr "أ&زل"
 
 #: identity/identitypage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "أضف…"
 
 #: identity/identitypage.cpp:274
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "عدّل…"
 
 #: identity/identitypage.cpp:275
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "أعد التّسمية"
 
 #: identity/identitypage.cpp:281
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "اضبطها كمبدئيّة"
@@ -5046,8 +5021,7 @@ msgid "&Archive Folder…"
 msgstr "أر&شف مجلّدًا…"
 
 #: kmmainwidget.cpp:3140
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "حمّل المراجع ال&خارجيّة"
@@ -6840,8 +6814,7 @@ msgid "Add New Tag…"
 msgstr "أضف وسمًا جديدًا…"
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Search tag…"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "ابحث عن وسم…"
@@ -8092,22 +8065,19 @@ msgid "Message Default Format"
 msgstr "نسق الرّسالة المبدئيّ"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&فضّل HTML على النّصّ الصّرف"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "فضّل النّ&صّ الصّرف على HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "استخدم الإعداد العموميّ"
