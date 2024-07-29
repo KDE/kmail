@@ -484,17 +484,17 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFavoriteFoldersViewGroup = new QButtonGroup(this);
     connect(mFavoriteFoldersViewGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
-    auto favoriteFoldersViewHiddenRadio = new QRadioButton(i18n("Never"), this);
+    auto favoriteFoldersViewHiddenRadio = new QRadioButton(i18nc("@option:radio", "Never"), this);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewHiddenRadio,
                                          static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::HiddenMode));
     formLayout->addRow(i18nc("@label", "Show favorite folders view:"), favoriteFoldersViewHiddenRadio);
 
-    auto favoriteFoldersViewIconsRadio = new QRadioButton(i18n("As icons"), this);
+    auto favoriteFoldersViewIconsRadio = new QRadioButton(i18nc("@option:radio", "As icons"), this);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewIconsRadio,
                                          static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::IconMode));
     formLayout->addRow(nullptr, favoriteFoldersViewIconsRadio);
 
-    auto favoriteFoldersViewListRadio = new QRadioButton(i18n("As list"), this);
+    auto favoriteFoldersViewListRadio = new QRadioButton(i18nc("@option:radio", "As list"), this);
     mFavoriteFoldersViewGroup->addButton(favoriteFoldersViewListRadio,
                                          static_cast<int>(MailCommon::MailCommonSettings::EnumFavoriteCollectionViewMode::ListMode));
     formLayout->addRow(nullptr, favoriteFoldersViewListRadio);
@@ -503,11 +503,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     mFolderToolTipsGroup = new QButtonGroup(this);
     connect(mFolderToolTipsGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
-    auto folderToolTipsAlwaysRadio = new QRadioButton(i18n("Always"), this);
+    auto folderToolTipsAlwaysRadio = new QRadioButton(i18nc("@option:radio", "Always"), this);
     mFolderToolTipsGroup->addButton(folderToolTipsAlwaysRadio, static_cast<int>(FolderTreeWidget::DisplayAlways));
     formLayout->addRow(i18nc("@label", "Folder tooltips:"), folderToolTipsAlwaysRadio);
 
-    auto folderToolTipsNeverRadio = new QRadioButton(i18n("Never"), this);
+    auto folderToolTipsNeverRadio = new QRadioButton(i18nc("@option:radio", "Never"), this);
     mFolderToolTipsGroup->addButton(folderToolTipsNeverRadio, static_cast<int>(FolderTreeWidget::DisplayNever));
     formLayout->addRow(nullptr, folderToolTipsNeverRadio);
 

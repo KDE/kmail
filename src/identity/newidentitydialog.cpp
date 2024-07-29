@@ -67,18 +67,18 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagementCore::IdentityManager *m
     mButtonGroup = new QButtonGroup(page);
 
     // row 1: radio button
-    auto radio = new QRadioButton(i18n("&With empty fields"), page);
+    auto radio = new QRadioButton(i18nc("@option:radio", "&With empty fields"), page);
     radio->setChecked(true);
     vlay->addWidget(radio);
     mButtonGroup->addButton(radio, static_cast<int>(Empty));
 
     // row 2: radio button
-    radio = new QRadioButton(i18n("&Use System Settings values"), page);
+    radio = new QRadioButton(i18nc("@option:radio", "&Use System Settings values"), page);
     vlay->addWidget(radio);
     mButtonGroup->addButton(radio, static_cast<int>(ControlCenter));
 
     // row 3: radio button
-    radio = new QRadioButton(i18n("&Duplicate existing identity"), page);
+    radio = new QRadioButton(i18nc("@option:radio", "&Duplicate existing identity"), page);
     vlay->addWidget(radio);
     mButtonGroup->addButton(radio, static_cast<int>(ExistingEntry));
 

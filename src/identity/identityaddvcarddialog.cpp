@@ -45,13 +45,13 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     mButtonGroup->setObjectName("buttongroup"_L1);
 
     // row 1: radio button
-    auto radio = new QRadioButton(i18n("&With empty fields"), this);
+    auto radio = new QRadioButton(i18nc("@option:radio", "&With empty fields"), this);
     radio->setChecked(true);
     vlay->addWidget(radio);
     mButtonGroup->addButton(radio, static_cast<int>(Empty));
 
     // row 2: radio button
-    auto fromExistingVCard = new QRadioButton(i18n("&From existing vCard"), this);
+    auto fromExistingVCard = new QRadioButton(i18nc("@option:radio", "&From existing vCard"), this);
     vlay->addWidget(fromExistingVCard);
     mButtonGroup->addButton(fromExistingVCard, static_cast<int>(FromExistingVCard));
 
@@ -74,7 +74,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     connect(fromExistingVCard, &QRadioButton::toggled, mVCardPath, &KUrlRequester::setEnabled);
 
     // row 4: radio button
-    auto duplicateExistingVCard = new QRadioButton(i18n("&Duplicate existing vCard"), this);
+    auto duplicateExistingVCard = new QRadioButton(i18nc("@option:radio", "&Duplicate existing vCard"), this);
     vlay->addWidget(duplicateExistingVCard);
     mButtonGroup->addButton(duplicateExistingVCard, static_cast<int>(ExistingEntry));
 
