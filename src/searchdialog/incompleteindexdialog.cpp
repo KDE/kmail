@@ -134,7 +134,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QList<qint64> &unindexedColle
     connect(mUi->selectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::selectAll);
     connect(mUi->unselectAllBtn, &QPushButton::clicked, this, &IncompleteIndexDialog::unselectAll);
     mUi->buttonBox->button(QDialogButtonBox::Ok)->setText(i18n("Reindex"));
-    mUi->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18n("Search Anyway"));
+    mUi->buttonBox->button(QDialogButtonBox::Cancel)->setText(i18nc("@action:button", "Search Anyway"));
     connect(mUi->buttonBox, &QDialogButtonBox::accepted, this, &IncompleteIndexDialog::waitForIndexer);
     connect(mUi->buttonBox, &QDialogButtonBox::rejected, this, &IncompleteIndexDialog::reject);
     readConfig();
