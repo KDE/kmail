@@ -522,7 +522,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     QString recentDirClass;
     QUrl startUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///OpenMessage")), recentDirClass);
     startUrl.setPath(startUrl.path() + QLatin1Char('/') + mUrl.fileName());
-    const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget(), i18n("Save To File"), startUrl);
+    const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget(), i18nc("@title:window", "Save To File"), startUrl);
     if (saveUrl.isEmpty()) {
         return Canceled;
     }
@@ -708,7 +708,10 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url, const QStri
 KMCommand::Result KMOpenMsgCommand::execute()
 {
     if (mUrl.isEmpty()) {
-        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18n("Open Message"), QUrl(), QStringLiteral("%1 (*.mbox *.eml)").arg(i18n("Message")));
+        mUrl = QFileDialog::getOpenFileUrl(parentWidget(),
+                                           i18nc("@title:window", "Open Message"),
+                                           QUrl(),
+                                           QStringLiteral("%1 (*.mbox *.eml)").arg(i18n("Message")));
     }
     if (mUrl.isEmpty()) {
         return Canceled;

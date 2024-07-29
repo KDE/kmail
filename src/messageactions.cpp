@@ -744,7 +744,10 @@ void MessageActions::slotAddFollowupReminder()
 void MessageActions::slotExportToPdf()
 {
     QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, QStringLiteral(".pdf"));
-    fileName = QFileDialog::getSaveFileName(mParent, i18n("Export to PDF"), QDir::homePath() + QLatin1Char('/') + fileName, i18n("PDF document (*.pdf)"));
+    fileName = QFileDialog::getSaveFileName(mParent,
+                                            i18nc("@title:window", "Export to PDF"),
+                                            QDir::homePath() + QLatin1Char('/') + fileName,
+                                            i18n("PDF document (*.pdf)"));
     if (!fileName.isEmpty()) {
         mMessageView->viewer()->exportToPdf(fileName);
     }
