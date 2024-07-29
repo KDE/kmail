@@ -3174,7 +3174,7 @@ bool KMComposerWin::checkRecipientNumber() const
     if (KMailSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
         if (KMessageBox::questionTwoActions(mMainWidget,
                                             i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
-                                            i18n("Too many recipients"),
+                                            i18nc("@title:window", "Too many recipients"),
                                             KGuiItem(i18nc("@action:button", "&Send as Is")),
                                             KGuiItem(i18nc("@action:button", "&Edit Recipients")))
             == KMessageBox::ButtonCode::SecondaryAction) {
@@ -3215,7 +3215,7 @@ void KMComposerWin::disableHtml(MessageComposer::ComposerViewBase::Confirmation 
         int choice = KMessageBox::warningTwoActionsCancel(this,
                                                           i18n("Turning HTML mode off "
                                                                "will cause the text to lose the formatting. Are you sure?"),
-                                                          i18n("Lose the formatting?"),
+                                                          i18nc("@title:window", "Lose the formatting?"),
                                                           KGuiItem(i18nc("@action:button", "Lose Formatting")),
                                                           KGuiItem(i18nc("@action:button", "Add Markup Plain Text")),
                                                           KStandardGuiItem::cancel(),
@@ -4337,7 +4337,7 @@ void KMComposerWin::slotSelectionChanged()
 
 void KMComposerWin::slotMessage(const QString &str)
 {
-    KMessageBox::information(this, str, i18n("Plugin Editor Information"));
+    KMessageBox::information(this, str, i18nc("@title:window", "Plugin Editor Information"));
 }
 
 void KMComposerWin::slotEditorPluginInsertText(const QString &str)

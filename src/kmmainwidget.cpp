@@ -1469,7 +1469,7 @@ void KMMainWidget::slotEmptyFolder()
         return;
     }
     const bool isTrash = CommonKernel->folderIsTrash(mCurrentCollection);
-    const QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
+    const QString title = (isTrash) ? i18nc("@title:window", "Empty Trash") : i18nc("@title:window", "Move to Trash");
     const QString text = (isTrash) ? i18n("Are you sure you want to empty the trash folder?")
                                    : i18n(
                                        "<qt>Are you sure you want to move all messages from "
@@ -1579,7 +1579,7 @@ void KMMainWidget::slotOverrideHtmlLoadExt()
                                                         i18n("Loading external references in html mail will make you more vulnerable to "
                                                              "\"spam\" and may increase the likelihood that your system will be "
                                                              "compromised by other present and anticipated security exploits."),
-                                                        i18n("Security Warning"),
+                                                        i18nc("@title:window", "Security Warning"),
                                                         KGuiItem(i18nc("@action:button", "Load External References")),
                                                         KStandardGuiItem::cancel(),
                                                         QStringLiteral("OverrideHtmlLoadExtWarning"),
@@ -1651,15 +1651,16 @@ void KMMainWidget::moveMessageSelected(MessageList::Core::MessageItemSetReferenc
     // If this is a deletion, ask for confirmation
     if (confirmOnDeletion) {
         const int selectedMessageCount = selectMsg.count();
-        int ret = KMessageBox::warningContinueCancel(this,
-                                                     i18np("<qt>Do you really want to delete the selected message?<br />"
-                                                           "Once deleted, it cannot be restored.</qt>",
-                                                           "<qt>Do you really want to delete the %1 selected messages?<br />"
-                                                           "Once deleted, they cannot be restored.</qt>",
-                                                           selectedMessageCount),
-                                                     selectedMessageCount > 1 ? i18n("Delete Messages") : i18n("Delete Message"),
-                                                     KStandardGuiItem::del(),
-                                                     KStandardGuiItem::cancel());
+        int ret =
+            KMessageBox::warningContinueCancel(this,
+                                               i18np("<qt>Do you really want to delete the selected message?<br />"
+                                                     "Once deleted, it cannot be restored.</qt>",
+                                                     "<qt>Do you really want to delete the %1 selected messages?<br />"
+                                                     "Once deleted, they cannot be restored.</qt>",
+                                                     selectedMessageCount),
+                                               selectedMessageCount > 1 ? i18nc("@title:window", "Delete Messages") : i18nc("@title:window", "Delete Message"),
+                                               KStandardGuiItem::del(),
+                                               KStandardGuiItem::cancel());
         if (ret == KMessageBox::Cancel) {
             mMessagePane->deletePersistentSet(ref);
             return; // user canceled the action
@@ -4959,7 +4960,7 @@ void KMMainWidget::slotClearCacheDone()
     } else {
         if (KMessageBox::questionTwoActions(this,
                                             i18n("Do you want to restart Akonadi?"),
-                                            i18n("Restart Akonadi"),
+                                            i18nc("@title:window", "Restart Akonadi"),
                                             KGuiItem(i18nc("@action:button", "Restart")),
                                             KStandardGuiItem::cancel())
             == KMessageBox::ButtonCode::PrimaryAction) {

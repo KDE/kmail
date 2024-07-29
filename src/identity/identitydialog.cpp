@@ -319,7 +319,7 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
         setEnabled(false);
         connect(job, &KMailKeyGenerationJob::finished, this, [this, job]() {
             if (job->error() != KJob::NoError) {
-                KMessageBox::error(qobject_cast<QWidget *>(parent()), job->errorText(), i18n("Key Generation Error"));
+                KMessageBox::error(qobject_cast<QWidget *>(parent()), job->errorText(), i18nc("@title:window", "Key Generation Error"));
             }
             setEnabled(true);
         });
@@ -845,7 +845,7 @@ void IdentityDialog::slotAccepted()
     }
     if (!KEmailAddress::isValidSimpleAddress(email)) {
         const QString errorMsg(KEmailAddress::simpleEmailAddressErrorMsg());
-        KMessageBox::error(this, errorMsg, i18n("Invalid Email Address"));
+        KMessageBox::error(this, errorMsg, i18nc("@title:window", "Invalid Email Address"));
         return;
     }
 

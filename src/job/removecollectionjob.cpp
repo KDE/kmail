@@ -55,14 +55,14 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
     QString buttonLabel;
     const QString colNameHtmlEscaped{col.name().toHtmlEscaped()};
     if (col.resource() == "akonadi_search_resource"_L1) {
-        title = i18n("Delete Search");
+        title = i18nc("@title:window", "Delete Search");
         str = i18n(
             "<qt>Are you sure you want to delete the search <b>%1</b>?<br />"
             "Any messages it shows will still be available in their original folder.</qt>",
             colNameHtmlEscaped);
         buttonLabel = i18nc("@action:button Delete search", "&Delete");
     } else {
-        title = i18n("Delete Folder");
+        title = i18nc("@title:window", "Delete Folder");
 
         if (col.statistics().count() == 0) {
             if (hasNotSubDirectory) {
