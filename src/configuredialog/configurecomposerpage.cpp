@@ -700,7 +700,7 @@ QString ComposerPageHeadersTab::helpAnchor() const
 
 ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mCreateOwnMessageIdCheck(new QCheckBox(i18n("&Use custom message-id suffix"), this))
+    , mCreateOwnMessageIdCheck(new QCheckBox(i18nc("@option:check", "&Use custom message-id suffix"), this))
     , mMessageIdSuffixEdit(new QLineEdit(this))
 {
     auto vlay = new QVBoxLayout(this);
@@ -950,7 +950,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
     auto vlay = new QVBoxLayout(this);
 
     // "Enable detection of missing attachments" check box
-    mMissingAttachmentDetectionCheck = new QCheckBox(i18n("E&nable detection of missing attachments"), this);
+    mMissingAttachmentDetectionCheck = new QCheckBox(i18nc("@option:check", "E&nable detection of missing attachments"), this);
     mMissingAttachmentDetectionCheck->setObjectName(u"kcfg_ShowForgottenAttachmentWarning"_s);
     vlay->addWidget(mMissingAttachmentDetectionCheck);
 

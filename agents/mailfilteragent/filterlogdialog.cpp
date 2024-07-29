@@ -82,7 +82,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     purposeMenu->setEditorWidget(mTextEdit->editor());
     buttonBox->addButton(mShareButton, QDialogButtonBox::ActionRole);
 
-    mLogActiveBox = new QCheckBox(i18n("&Log filter activities"), page);
+    mLogActiveBox = new QCheckBox(i18nc("@option:check", "&Log filter activities"), page);
     pageVBoxLayout->addWidget(mLogActiveBox);
     mLogActiveBox->setChecked(FilterLog::instance()->isLogging());
     connect(mLogActiveBox, &QCheckBox::clicked, this, &FilterLogDialog::slotSwitchLogState);
@@ -98,12 +98,12 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mLogDetailsBox->setEnabled(mLogActiveBox->isChecked());
     connect(mLogActiveBox, &QCheckBox::toggled, mLogDetailsBox, &QGroupBox::setEnabled);
 
-    mLogPatternDescBox = new QCheckBox(i18n("Log pattern description"), mLogDetailsBox);
+    mLogPatternDescBox = new QCheckBox(i18nc("@option:check", "Log pattern description"), mLogDetailsBox);
     layout->addWidget(mLogPatternDescBox);
     mLogPatternDescBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription));
     connect(mLogPatternDescBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
 
-    mLogRuleEvaluationBox = new QCheckBox(i18n("Log filter &rule evaluation"), mLogDetailsBox);
+    mLogRuleEvaluationBox = new QCheckBox(i18nc("@option:check", "Log filter &rule evaluation"), mLogDetailsBox);
     layout->addWidget(mLogRuleEvaluationBox);
     mLogRuleEvaluationBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult));
     connect(mLogRuleEvaluationBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
@@ -115,12 +115,12 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
              "feedback about the result of the evaluation of all rules "
              "of a single filter will be given."));
 
-    mLogPatternResultBox = new QCheckBox(i18n("Log filter pattern evaluation"), mLogDetailsBox);
+    mLogPatternResultBox = new QCheckBox(i18nc("@option:check", "Log filter pattern evaluation"), mLogDetailsBox);
     layout->addWidget(mLogPatternResultBox);
     mLogPatternResultBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternResult));
     connect(mLogPatternResultBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);
 
-    mLogFilterActionBox = new QCheckBox(i18n("Log filter actions"), mLogDetailsBox);
+    mLogFilterActionBox = new QCheckBox(i18nc("@option:check", "Log filter actions"), mLogDetailsBox);
     layout->addWidget(mLogFilterActionBox);
     mLogFilterActionBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction));
     connect(mLogFilterActionBox, &QCheckBox::clicked, this, &FilterLogDialog::slotChangeLogDetail);

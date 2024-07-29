@@ -141,7 +141,7 @@ static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
 AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mCustomFontCheck(new QCheckBox(i18n("&Use custom fonts"), this))
+    , mCustomFontCheck(new QCheckBox(i18nc("@option:check", "&Use custom fonts"), this))
     , mFontLocationCombo(new QComboBox(this))
     , mFontChooser(new KFontChooser(KFontChooser::DisplayFrame, this))
 {
@@ -315,11 +315,11 @@ static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
 AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mCustomColorCheck(new QCheckBox(i18n("&Use custom colors"), this))
+    , mCustomColorCheck(new QCheckBox(i18nc("@option:check", "&Use custom colors"), this))
     , mColorList(new ColorListBox(this))
-    , mRecycleColorCheck(new QCheckBox(i18n("Recycle colors on deep &quoting"), this))
+    , mRecycleColorCheck(new QCheckBox(i18nc("@option:check", "Recycle colors on deep &quoting"), this))
     , mCloseToQuotaThreshold(new QSpinBox(this))
-    , mUseInlineStyle(new QCheckBox(i18n("&Do not change color from original HTML mail"), this))
+    , mUseInlineStyle(new QCheckBox(i18nc("@option:check", "&Do not change color from original HTML mail"), this))
 {
     // "use custom colors" check box
     auto vlay = new QVBoxLayout(this);
@@ -476,7 +476,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
 
     connect(mFolderListGroup, &QButtonGroup::buttonClicked, this, &ConfigModuleTab::slotEmitChanged);
 
-    mFolderQuickSearchCB = new QCheckBox(i18n("Show folder quick search field"), this);
+    mFolderQuickSearchCB = new QCheckBox(i18nc("@option:check", "Show folder quick search field"), this);
     connect(mFolderQuickSearchCB, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     formLayout->addRow(nullptr, mFolderQuickSearchCB);
 
@@ -832,11 +832,11 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     auto systrayBoxlayout = new QVBoxLayout(systrayBox);
 
     // "Enable system tray applet" check box
-    mSystemTrayCheck = new QCheckBox(i18n("Enable system tray icon"), this);
+    mSystemTrayCheck = new QCheckBox(i18nc("@option:check", "Enable system tray icon"), this);
     systrayBoxlayout->addWidget(mSystemTrayCheck);
 
     // "Enable start in system tray" check box
-    mStartInTrayCheck = new QCheckBox(i18n("Start minimized to tray"));
+    mStartInTrayCheck = new QCheckBox(i18nc("@option:check", "Start minimized to tray"));
     systrayBoxlayout->addWidget(mStartInTrayCheck);
 
     // Dependencies between the two checkboxes
@@ -854,7 +854,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     });
 
     // "Enable system tray applet" check box
-    mShowNumberInTaskBar = new QCheckBox(i18n("Show unread email in Taskbar"), this);
+    mShowNumberInTaskBar = new QCheckBox(i18nc("@option:check", "Show unread email in Taskbar"), this);
     systrayBoxlayout->addWidget(mShowNumberInTaskBar);
     connect(mShowNumberInTaskBar, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
@@ -864,7 +864,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
 
     auto plasmaActivitiesBoxlayout = new QVBoxLayout(plasmaActivitiesBox);
 
-    mEnablePlasmaActivities = new QCheckBox(i18n("Enable"), this);
+    mEnablePlasmaActivities = new QCheckBox(i18nc("@option:check", "Enable"), this);
     plasmaActivitiesBoxlayout->addWidget(mEnablePlasmaActivities);
     connect(mEnablePlasmaActivities, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
 #endif

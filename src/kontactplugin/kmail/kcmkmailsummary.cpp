@@ -29,7 +29,7 @@ K_PLUGIN_CLASS_WITH_JSON(KCMKMailSummary, "kcmkmailsummary.json")
 KCMKMailSummary::KCMKMailSummary(QObject *parent, const KPluginMetaData &data)
     : KCModule(parent, data)
     , mCheckedCollectionWidget(new PimCommon::CheckedCollectionWidget(KMime::Message::mimeType()))
-    , mFullPath(new QCheckBox(i18n("Show full path for folders"), widget()))
+    , mFullPath(new QCheckBox(i18nc("@option:check", "Show full path for folders"), widget()))
 {
     initGUI();
 

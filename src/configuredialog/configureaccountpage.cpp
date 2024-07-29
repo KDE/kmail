@@ -88,11 +88,11 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     formLayout->addRow(tmw);
 
     // "confirm before send" check box:
-    mConfirmSendCheck = new QCheckBox(i18n("&Confirm action"), this);
+    mConfirmSendCheck = new QCheckBox(i18nc("@option:check", "&Confirm action"), this);
     mConfirmSendCheck->setObjectName(u"kcfg_ConfirmBeforeSend"_s);
     formLayout->addRow(i18n("Before sending:"), mConfirmSendCheck);
 
-    mCheckSpellingBeforeSending = new QCheckBox(i18n("Check spelling"), this);
+    mCheckSpellingBeforeSending = new QCheckBox(i18nc("@option:check", "Check spelling"), this);
     mCheckSpellingBeforeSending->setObjectName(u"kcfg_CheckSpellingBeforeSend"_s);
     formLayout->addRow(QString(), mCheckSpellingBeforeSending);
 
@@ -112,7 +112,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     connect(mSendMethodCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
     auto hLayout = new QHBoxLayout;
-    mUndoSend = new QCheckBox(i18n("Enable Undo Send"), this);
+    mUndoSend = new QCheckBox(i18nc("@option:check", "Enable Undo Send"), this);
     mUndoSend->setObjectName(u"kcfg_EnabledUndoSend"_s);
     hLayout->addWidget(mUndoSend);
     connect(mUndoSend, &QCheckBox::toggled, this, [this](bool state) {

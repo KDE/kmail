@@ -458,7 +458,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setWhatsThis(msg);
 
     auto vbox = new QVBoxLayout;
-    mPGPSameKey = new QCheckBox(i18n("Use same key for encryption and signing"), this);
+    mPGPSameKey = new QCheckBox(i18nc("@option:check", "Use same key for encryption and signing"), this);
     vbox->addWidget(mPGPSigningKeyRequester);
     vbox->addWidget(mPGPSameKey);
     formLayout->addRow(label, vbox);
@@ -566,7 +566,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     vlay = new QVBoxLayout(mAutocrypt);
 
-    mAutocryptPrefer = new QCheckBox(i18n("Let others know you prefer encryption"));
+    mAutocryptPrefer = new QCheckBox(i18nc("@option:check", "Let others know you prefer encryption"));
     vlay->addWidget(mAutocryptPrefer);
 
     mOverrideDefault = new QGroupBox(i18n("Overwrite global settings for security defaults"));
@@ -577,16 +577,16 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     vlay = new QVBoxLayout(mOverrideDefault);
 
-    mAutoSign = new QCheckBox(i18n("Sign messages"), tab);
+    mAutoSign = new QCheckBox(i18nc("@option:check", "Sign messages"), tab);
     vlay->addWidget(mAutoSign);
 
-    mAutoEncrypt = new QCheckBox(i18n("Encrypt messages when possible"), tab);
+    mAutoEncrypt = new QCheckBox(i18nc("@option:check", "Encrypt messages when possible"), tab);
     vlay->addWidget(mAutoEncrypt);
 
-    mWarnNotSign = new QCheckBox(i18n("Warn when trying to send unsigned messages"), tab);
+    mWarnNotSign = new QCheckBox(i18nc("@option:check", "Warn when trying to send unsigned messages"), tab);
     vlay->addWidget(mWarnNotSign);
 
-    mWarnNotEncrypt = new QCheckBox(i18n("Warn when trying to send unencrypted messages"), tab);
+    mWarnNotEncrypt = new QCheckBox(i18nc("@option:check", "Warn when trying to send unencrypted messages"), tab);
     vlay->addWidget(mWarnNotEncrypt);
 
     //
@@ -674,7 +674,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mFccFolderRequester = new IdentityFolderRequester(tab);
     mFccFolderRequester->setSelectFolderTitleDialog(i18n("Select Send-mail Folder"));
     mFccFolderRequester->setShowOutbox(false);
-    mSentMailFolderCheck = new QCheckBox(i18n("Sent-mail &folder:"), tab);
+    mSentMailFolderCheck = new QCheckBox(i18nc("@option:check", "Sent-mail &folder:"), tab);
     connect(mSentMailFolderCheck, &QCheckBox::toggled, mFccFolderRequester, &MailCommon::FolderRequester::setEnabled);
     formLayout->addRow(mSentMailFolderCheck, mFccFolderRequester);
 
@@ -695,14 +695,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     formLayout->addRow(label, mTemplatesFolderRequester);
 
     // "Special transport" combobox and label:
-    mTransportCheck = new QCheckBox(i18n("Outgoing Account:"), tab);
+    mTransportCheck = new QCheckBox(i18nc("@option:check", "Outgoing Account:"), tab);
     mTransportCombo = new TransportComboBox(tab);
     mTransportCombo->setEnabled(false); // since !mTransportCheck->isChecked()
     formLayout->addRow(mTransportCheck, mTransportCombo);
 
     connect(mTransportCheck, &QCheckBox::toggled, mTransportCombo, &MailTransport::TransportComboBox::setEnabled);
 
-    mAttachMyVCard = new QCheckBox(i18n("Attach my vCard to message"), tab);
+    mAttachMyVCard = new QCheckBox(i18nc("@option:check", "Attach my vCard to message"), tab);
     mEditVCard = new QPushButton(i18nc("@action:button", "Create…"), tab);
     connect(mEditVCard, &QPushButton::clicked, this, &IdentityDialog::slotEditVcard);
     formLayout->addRow(mAttachMyVCard, mEditVCard);
@@ -745,7 +745,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     auto tlay = new QHBoxLayout();
     vlay->addLayout(tlay);
 
-    mCustom = new QCheckBox(i18n("&Use custom message templates for this identity"), tab);
+    mCustom = new QCheckBox(i18nc("@option:check", "&Use custom message templates for this identity"), tab);
     tlay->addWidget(mCustom, Qt::AlignLeft);
 
     mWidget = new TemplateParser::TemplatesConfiguration(tab, QStringLiteral("identity-templates"));

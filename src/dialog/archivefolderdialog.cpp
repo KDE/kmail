@@ -106,11 +106,11 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
     row++;
 
     // TODO: Make this appear more dangerous!
-    mDeleteCheckBox = new QCheckBox(i18n("&Delete folder and subfolders after completion"), mainWidget);
+    mDeleteCheckBox = new QCheckBox(i18nc("@option:check", "&Delete folder and subfolders after completion"), mainWidget);
     mainLayout->addWidget(mDeleteCheckBox, row, 0, 1, 2, Qt::AlignLeft);
     row++;
 
-    mRecursiveCheckBox = new QCheckBox(i18n("Archive all subfolders"), mainWidget);
+    mRecursiveCheckBox = new QCheckBox(i18nc("@option:check", "Archive all subfolders"), mainWidget);
     connect(mRecursiveCheckBox, &QCheckBox::clicked, this, &ArchiveFolderDialog::slotRecursiveCheckboxClicked);
     mainLayout->addWidget(mRecursiveCheckBox, row, 0, 1, 2, Qt::AlignLeft);
     mRecursiveCheckBox->setChecked(true);

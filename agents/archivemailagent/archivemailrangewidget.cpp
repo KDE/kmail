@@ -19,7 +19,7 @@ ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     : QWidget{parent}
     , mStartRange(new HourComboBox(this))
     , mEndRange(new HourComboBox(this))
-    , mRangeEnabled(new QCheckBox(i18n("Use Range"), this))
+    , mRangeEnabled(new QCheckBox(i18nc("@option:check", "Use Range"), this))
 {
     auto mainLayout = new QHBoxLayout(this);
     mainLayout->setObjectName("mainLayout"_L1);

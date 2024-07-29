@@ -54,7 +54,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         Q_ASSERT(innerLayout != nullptr);
 
         // icons
-        mIconsCheckBox = new QCheckBox(i18n("Use custom &icons"), this);
+        mIconsCheckBox = new QCheckBox(i18nc("@option:check", "Use custom &icons"), this);
         mIconsCheckBox->setChecked(false);
         innerLayout->insertRow(0, QString(), mIconsCheckBox);
 

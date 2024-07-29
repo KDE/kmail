@@ -25,7 +25,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     , mFolderRequester(new MailCommon::FolderRequester(this))
     , mFormatComboBox(new FormatComboBox(this))
     , mUnits(new UnitComboBox(this))
-    , mRecursiveCheckBox(new QCheckBox(i18n("Archive all subfolders"), this))
+    , mRecursiveCheckBox(new QCheckBox(i18nc("@option:check", "Archive all subfolders"), this))
     , mPath(new KUrlRequester(this))
     , mDays(new QSpinBox(this))
     , mMaximumArchive(new QSpinBox(this))
