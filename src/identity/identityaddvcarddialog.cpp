@@ -92,7 +92,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     hlay->addWidget(label);
     hlay->addWidget(mComboBox, 1);
 
-    vlay->addWidget(new KSeparator);
+    vlay->addWidget(new KSeparator(this));
     vlay->addStretch(1); // spacer
 
     // enable/disable combobox and label depending on the third radio

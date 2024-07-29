@@ -120,7 +120,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
     // TODO: Warn that user should do mail check for online IMAP and possibly cached IMAP as well
 
-    mainLayout->addWidget(new KSeparator(), row, 0, 1, 2);
+    mainLayout->addWidget(new KSeparator(this), row, 0, 1, 2);
     row++;
     mainLayout->setColumnStretch(1, 1);
     mainLayout->addItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Expanding), row, 0);

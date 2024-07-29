@@ -33,7 +33,7 @@ IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidge
 
     if (QFileInfo::exists(fileName)) {
         setWindowTitle(i18nc("@title:window", "Edit own vCard"));
-        auto user1Button = new QPushButton;
+        auto user1Button = new QPushButton(this);
         buttonBox->addButton(user1Button, QDialogButtonBox::ActionRole);
         user1Button->setText(i18n("Delete current vCard"));
         connect(user1Button, &QPushButton::clicked, this, &IdentityEditVcardDialog::slotDeleteCurrentVCard);
