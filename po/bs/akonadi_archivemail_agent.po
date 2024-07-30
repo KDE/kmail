@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2014-01-31 18:56+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -35,7 +35,9 @@ msgid "Add Archive Mail"
 msgstr "Dodaj arhivnu poštu"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arhiviraj sve poddirektorije"
 
@@ -87,6 +89,7 @@ msgstr "Arhiva"
 
 #: archivemailrangewidget.cpp:22
 #, kde-format
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr ""
 

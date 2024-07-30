@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2013-07-10 02:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -31,7 +31,9 @@ msgid "Share…"
 msgstr ""
 
 #: filterlogdialog.cpp:85
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Сүзгі журналы жүргізілсін"
 
@@ -50,12 +52,16 @@ msgid "Logging Details"
 msgstr "Журналды жүргізу тәртібі"
 
 #: filterlogdialog.cpp:101
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log pattern description"
+msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Үлгі сипаттамасын жазу"
 
 #: filterlogdialog.cpp:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter &rule evaluation"
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Сүзгілеу &ережесінің жұмысын жазу"
 
@@ -73,12 +79,16 @@ msgstr ""
 "жазылады, әйтпесе сүзгінің барлық ережелелінің нәтижесі бірден жазылады."
 
 #: filterlogdialog.cpp:118
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter pattern evaluation"
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Сүзгілеу үлгінің жұмысын жазу"
 
 #: filterlogdialog.cpp:123
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Сүзгі амалдарының журналы жүргізілсін"
 

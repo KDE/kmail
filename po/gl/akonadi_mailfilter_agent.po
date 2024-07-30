@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-06-18 19:51+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -32,7 +32,9 @@ msgid "Share…"
 msgstr "Compartir…"
 
 #: filterlogdialog.cpp:85
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Rexistrar a actividade de filtrado"
 
@@ -51,12 +53,16 @@ msgid "Logging Details"
 msgstr "Detalles do rexistro"
 
 #: filterlogdialog.cpp:101
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log pattern description"
+msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Descrición do padrón de rexistro"
 
 #: filterlogdialog.cpp:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter &rule evaluation"
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Avaliación do rexistro da &regra de filtrado"
 
@@ -75,12 +81,16 @@ msgstr ""
 "resultado da avaliación completa de todas as regras de cada filtro."
 
 #: filterlogdialog.cpp:118
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter pattern evaluation"
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Rexistrar a avaliación dos padróns de filtrado"
 
 #: filterlogdialog.cpp:123
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Rexistrar as accións de filtrado"
 

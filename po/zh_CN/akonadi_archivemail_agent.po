@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -30,7 +30,9 @@ msgid "Add Archive Mail"
 msgstr "添加存档邮件"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "归档全部子文件夹"
 
@@ -77,6 +79,7 @@ msgstr "归档"
 
 #: archivemailrangewidget.cpp:22
 #, kde-format
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr ""
 

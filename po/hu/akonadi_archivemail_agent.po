@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-01-22 11:33+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -32,7 +32,9 @@ msgid "Add Archive Mail"
 msgstr "Archivált levél hozzáadása"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Minden almappa archiválása"
 
@@ -83,7 +85,9 @@ msgid "Archive"
 msgstr "Archívum"
 
 #: archivemailrangewidget.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Range"
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Tartomány használata"
 

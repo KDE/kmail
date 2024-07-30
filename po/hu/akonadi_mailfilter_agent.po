@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-01-22 11:36+0100\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -33,7 +33,9 @@ msgid "Share…"
 msgstr "Megosztás…"
 
 #: filterlogdialog.cpp:85
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Szűrési tevékenységek nap&lózása"
 
@@ -52,12 +54,16 @@ msgid "Logging Details"
 msgstr "Naplózási részletek"
 
 #: filterlogdialog.cpp:101
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log pattern description"
+msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Naplóminta leírása"
 
 #: filterlogdialog.cpp:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter &rule evaluation"
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Naplószű&rési szabály kiértékelése"
 
@@ -76,12 +82,16 @@ msgstr ""
 "összes szabálya kiértékelésének eredmény lesz megadva."
 
 #: filterlogdialog.cpp:118
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter pattern evaluation"
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Naplószűrési minta kiértékelése"
 
 #: filterlogdialog.cpp:123
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Naplószűrési műveletek"
 

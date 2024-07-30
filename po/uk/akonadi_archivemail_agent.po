@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-07-04 22:08+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -33,7 +33,9 @@ msgid "Add Archive Mail"
 msgstr "Додавання архіву з поштою"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Архівувати всі підтеки"
 
@@ -79,7 +81,9 @@ msgid "Archive"
 msgstr "Архів"
 
 #: archivemailrangewidget.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Range"
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Використати діапазон"
 

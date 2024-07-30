@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-07-14 15:51+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -30,7 +30,9 @@ msgid "Add Archive Mail"
 msgstr "Aggiungi archivio di posta"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Archivia tutte le sottocartelle"
 
@@ -76,7 +78,9 @@ msgid "Archive"
 msgstr "Archivio"
 
 #: archivemailrangewidget.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Range"
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Usa intervallo"
 

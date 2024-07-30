@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2015-02-07 19:01+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -32,7 +32,9 @@ msgid "Add Archive Mail"
 msgstr ""
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arkiver alle undermapper"
 
@@ -84,6 +86,7 @@ msgstr "Arkiv"
 
 #: archivemailrangewidget.cpp:22
 #, kde-format
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr ""
 

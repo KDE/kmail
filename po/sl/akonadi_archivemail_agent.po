@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-07-04 10:31+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -35,7 +35,9 @@ msgid "Add Archive Mail"
 msgstr "Dodaj arhiviranje pošte"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arhiviraj vse podmape"
 
@@ -81,7 +83,9 @@ msgid "Archive"
 msgstr "Arhiv"
 
 #: archivemailrangewidget.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Range"
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Uporabi obseg"
 

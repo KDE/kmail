@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-04 00:39+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2024-02-19 12:11+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -32,7 +32,9 @@ msgid "Add Archive Mail"
 msgstr "Lisää postiarkisto"
 
 #: addarchivemailwidget.cpp:28
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Archive all subfolders"
+msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arkistoi kaikki alikansiot"
 
@@ -83,7 +85,9 @@ msgid "Archive"
 msgstr "Arkisto"
 
 #: archivemailrangewidget.cpp:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Use Range"
+msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Käytä aluetta"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2011-09-17 13:45-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -28,6 +28,7 @@ msgstr ""
 
 #: filterlogdialog.cpp:85
 #, kde-format
+msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr ""
 
@@ -45,11 +46,13 @@ msgstr ""
 
 #: filterlogdialog.cpp:101
 #, kde-format
+msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr ""
 
 #: filterlogdialog.cpp:106
 #, kde-format
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr ""
 
@@ -65,11 +68,13 @@ msgstr ""
 
 #: filterlogdialog.cpp:118
 #, kde-format
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr ""
 
 #: filterlogdialog.cpp:123
 #, kde-format
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr ""
 

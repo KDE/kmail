@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
@@ -30,9 +30,11 @@ msgid "Share…"
 msgstr ""
 
 #: filterlogdialog.cpp:85
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "&Log filter activities"
-msgstr ""
+msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
 #: filterlogdialog.cpp:90
 #, kde-format
@@ -47,14 +49,18 @@ msgid "Logging Details"
 msgstr ""
 
 #: filterlogdialog.cpp:101
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log pattern description"
-msgstr ""
+msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
 #: filterlogdialog.cpp:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
-msgstr ""
+msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
 #: filterlogdialog.cpp:111
 #, kde-format
@@ -67,12 +73,16 @@ msgid ""
 msgstr ""
 
 #: filterlogdialog.cpp:118
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr ""
+msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
 #: filterlogdialog.cpp:123
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 

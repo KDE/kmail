@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2013-03-12 17:51+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -31,6 +31,7 @@ msgstr ""
 
 #: filterlogdialog.cpp:85
 #, kde-format
+msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr ""
 
@@ -48,11 +49,13 @@ msgstr ""
 
 #: filterlogdialog.cpp:101
 #, kde-format
+msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr ""
 
 #: filterlogdialog.cpp:106
 #, kde-format
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr ""
 
@@ -68,11 +71,13 @@ msgstr ""
 
 #: filterlogdialog.cpp:118
 #, kde-format
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr ""
 
 #: filterlogdialog.cpp:123
 #, kde-format
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr ""
 

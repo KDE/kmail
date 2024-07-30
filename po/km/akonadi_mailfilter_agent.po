@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-07-30 00:42+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -34,7 +34,9 @@ msgid "Share…"
 msgstr ""
 
 #: filterlogdialog.cpp:85
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Log filter activities"
+msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​របស់​តម្រង"
 
@@ -53,12 +55,16 @@ msgid "Logging Details"
 msgstr "សេចក្ដី​លម្អិត​អំពី​ការ​ចុះ​កំណត់ហេតុ"
 
 #: filterlogdialog.cpp:101
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log pattern description"
+msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "ចុះ​កំណត់ហេតុ​ការ​ពិពណ៌នា​អំពី​លំនាំ"
 
 #: filterlogdialog.cpp:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter &rule evaluation"
+msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "ចុះ​កំណត់ហេតុ​ការ​វាយតម្លៃ​អំពី​ច្បាប់​តម្រង"
 
@@ -76,12 +82,16 @@ msgstr ""
 "អំពី​លទ្ធផល​នៃ​ការ​វាយតម្លៃ​ទាក់ទង​នឹង​ច្បាប់​ទាំងអស់​របស់​តម្រង​ទោល​ប៉ុណ្ណោះ​នឹង​ត្រូវ​បាន​ផ្ដល់ ។"
 
 #: filterlogdialog.cpp:118
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter pattern evaluation"
+msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "ចុះ​កំណត់ហេតុ​ការ​វាយតម្លៃ​អំពី​លំនាំតម្រង"
 
 #: filterlogdialog.cpp:123
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Log filter actions"
+msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​តម្រង"
 
