@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-31 00:41+0000\n"
 "PO-Revision-Date: 2024-07-03 12:57+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -128,9 +128,11 @@ msgid "Follow Up Reminder"
 msgstr "Anımsatıcıyı Takip Et"
 
 #: followupremindernoanswerdialog.cpp:45
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@label:textbox"
+#| msgid "You still wait an answer about this mail:"
 msgctxt "@label:textbox"
-msgid "You still wait an answer about this mail:"
+msgid "You are still waiting for answers to these mails:"
 msgstr "Bu posta için hâlâ yanıt bekliyorsunuz:"
 
 #~ msgid "Configure"

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-25 08:45+0300\n"
+"PO-Revision-Date: 2024-07-30 09:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -398,8 +398,7 @@ msgid "Mailing List"
 msgstr "Список листування"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "Тека містить список листування"
@@ -551,8 +550,7 @@ msgid "View"
 msgstr "Перегляд"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "&Використовувати нетипові піктограми"
@@ -611,8 +609,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Вихідні облікові записи (додайте хоча б один):"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Підтвердити дію"
@@ -623,8 +620,7 @@ msgid "Before sending:"
 msgstr "До надсилання:"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Перевірка правопису"
@@ -665,8 +661,7 @@ msgid "Defa&ult send method:"
 msgstr "&Типовий метод надсилання:"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Уможливити скасування надсилання"
@@ -784,8 +779,7 @@ msgid "Printing Output"
 msgstr "Вихід друку"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "&Використовувати нетипові шрифти"
@@ -841,22 +835,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Текст смужки стану HTML — повідомлення в HTML-форматі"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "&Використовувати нетипові кольори"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "&Повторювати кольори при глибокому цитуванні"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "&Не змінювати колір з початкового повідомлення HTML"
@@ -873,16 +864,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "Показувати поле швидкого пошуку у теці"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Ніколи"
@@ -894,22 +883,19 @@ msgid "Show favorite folders view:"
 msgstr "Показ панелі улюблених тек:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "Як піктограми"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "Як список"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Завжди"
@@ -1025,22 +1011,19 @@ msgid "System Tray"
 msgstr "Системний лоток"
 
 #: configuredialog/configureappearancepage.cpp:835
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Ввімкнути піктограму у системному лотку"
 
 #: configuredialog/configureappearancepage.cpp:839
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Запускати згорнутим до лотка"
 
 #: configuredialog/configureappearancepage.cpp:857
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Показувати кількість непрочитаних повідомлень на панелі задач"
@@ -1051,8 +1034,7 @@ msgid "Plasma activities"
 msgstr "Простори дій Плазми"
 
 #: configuredialog/configureappearancepage.cpp:867
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Увімкнути"
@@ -1452,8 +1434,7 @@ msgid "Forward Prefix:"
 msgstr "Префікс переспрямовування:"
 
 #: configuredialog/configurecomposerpage.cpp:703
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Використовувати власний суфікс ідентифікації повідомлення"
@@ -1514,15 +1495,13 @@ msgstr ""
 "«Content-Type» не є дозволеним рядком. Цей заголовок не буде збережено."
 
 #: configuredialog/configurecomposerpage.cpp:912
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Некоректний заголовок"
 
 #: configuredialog/configurecomposerpage.cpp:953
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Уві&мкнути визначення відсутніх долучень"
@@ -1817,15 +1796,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "файл архіву (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "Ви&лучати теку і підтеки після обробки"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Архівувати всі підтеки"
@@ -2514,8 +2491,7 @@ msgstr ""
 "процедуру надсилання повідомлення?"
 
 #: editor/kmcomposerwin.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Забагато адресатів"
@@ -2542,8 +2518,7 @@ msgstr ""
 "цього бажаєте?"
 
 #: editor/kmcomposerwin.cpp:3218
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Відкинути форматування?"
@@ -2794,8 +2769,7 @@ msgid "Encryption Key Selection"
 msgstr "Вибір ключа для шифрування"
 
 #: editor/kmcomposerwin.cpp:4340
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "Інформація щодо додатка редактора"
@@ -3094,15 +3068,13 @@ msgid "Create own vCard"
 msgstr "Створення вашої візитівки"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "&З порожніми полями"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&На основі наявної візитівки"
@@ -3114,8 +3086,7 @@ msgid "&vCard path:"
 msgstr "&Шлях до візитівки:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "З&дублювати вже створену візитівку"
@@ -3174,8 +3145,7 @@ msgid "Generate a new OpenPGP certificate"
 msgstr "Створити сертифікат OpenPGP"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "Помилка під час створення ключа"
@@ -3302,8 +3272,7 @@ msgid "OpenPGP signing key:"
 msgstr "Ключ OpenPGP для підписів:"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Використовувати один ключ для шифрування та підписування"
@@ -3402,8 +3371,7 @@ msgid "Autocrypt:"
 msgstr "Автошифрування:"
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Повідомити іншим, що ви надаєте перевагу шифруванню"
@@ -3420,29 +3388,25 @@ msgid "Overwrite defaults:"
 msgstr "Перезаписати типове:"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Підписувати повідомлення"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Шифрувати повідомлення, якщо можливо"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Попереджувати при спробі відіслати непідписане повідомлення"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Попереджати при надсиланні незашифрованих повідомлень"
@@ -3536,8 +3500,7 @@ msgid "Select Send-mail Folder"
 msgstr "Вибір теки надісланої пошти"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "Тека надіслани&х повідомлень:"
@@ -3565,15 +3528,13 @@ msgid "&Templates folder:"
 msgstr "&Тека шаблонів:"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Обліковий запис вихідної пошти:"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Долучити до повідомлення вашу візитівку"
@@ -3612,8 +3573,7 @@ msgstr ""
 "пошти, якщо вона складається тільки з імені користувача.</p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Використовувати власні шаблони повідомлень для цього профілю"
@@ -3880,15 +3840,13 @@ msgid "&New identity:"
 msgstr "&Новий профіль:"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
 msgstr "В&икористовувати значення з Системних параметрів"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "З&дублювати існуючий профіль"
@@ -4038,8 +3996,7 @@ msgid "Do Not Attach"
 msgstr "Не долучати"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "Вилучити пошук"
@@ -4060,8 +4017,7 @@ msgid "&Delete"
 msgstr "&Вилучити"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "Вилучити теку"
@@ -4352,15 +4308,13 @@ msgstr[2] "Будь ласка, зачекайте поки %1 повідомл�
 msgstr[3] "Будь ласка, зачекайте поки %1 повідомлення буде перенесено"
 
 #: kmcommands.cpp:525
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Зберегти до файла"
 
 #: kmcommands.cpp:712
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Відкрити повідомлення"
@@ -4727,15 +4681,13 @@ msgid "&Expire"
 msgstr "В&илучити застарілі повідомлення"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Спорожнити смітник"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Пересунути в смітник"
@@ -4820,15 +4772,13 @@ msgstr[3] ""
 "неможливо скасувати.</qt>"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Вилучити повідомлення"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Вилучити повідомлення"
@@ -5823,8 +5773,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "Хочете перезапустити Akonadi?"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Перезапустити Akonadi"
@@ -6082,8 +6031,7 @@ msgstr[2] "%1 непрочитаних повідомлень"
 msgstr[3] "%1 непрочитане повідомлення"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "Показувати повний шлях до тек"
@@ -6451,8 +6399,7 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Експорт до PDF"
@@ -6468,8 +6415,7 @@ msgid "Reindex"
 msgstr "Повторно індексувати"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Шукати попри все"

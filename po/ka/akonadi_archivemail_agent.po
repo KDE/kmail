@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-04 05:48+0200\n"
+"PO-Revision-Date: 2024-07-30 06:38+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -31,8 +31,7 @@ msgid "Add Archive Mail"
 msgstr "არქივი ელფოსტის დამატება"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "ყველა ქვესაქაღალდის დაარქივება"
@@ -79,8 +78,7 @@ msgid "Archive"
 msgstr "არქივი"
 
 #: archivemailrangewidget.cpp:22
-#, fuzzy, kde-format
-#| msgid "Use Range"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
 msgstr "დიაპაზონის გამოყენება"

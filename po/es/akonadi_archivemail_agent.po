@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-05 02:13+0200\n"
+"PO-Revision-Date: 2024-07-30 16:41+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -31,8 +31,7 @@ msgid "Add Archive Mail"
 msgstr "Añadir archivo de correo"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Archivar todas las subcarpetas"
@@ -79,8 +78,7 @@ msgid "Archive"
 msgstr "Archivo comprimido"
 
 #: archivemailrangewidget.cpp:22
-#, fuzzy, kde-format
-#| msgid "Use Range"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Usar intervalo"

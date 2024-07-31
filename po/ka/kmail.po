@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-25 04:52+0200\n"
+"PO-Revision-Date: 2024-07-30 06:38+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -387,8 +387,7 @@ msgid "Mailing List"
 msgstr "ელ-ფოსტის სიები"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "საქაღალდე დაგზავნის სიას შეიცავს"
@@ -540,8 +539,7 @@ msgid "View"
 msgstr "ხედი"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "ხატულების &ხელით მითითება"
@@ -600,8 +598,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "გამავალი ანგარიშები (დაამატეთ ერთი მაინც):"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&ქმედების დადასტურება"
@@ -612,8 +609,7 @@ msgid "Before sending:"
 msgstr "გაგზავნამდე:"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "მართლწერის შემოწმება"
@@ -654,8 +650,7 @@ msgid "Defa&ult send method:"
 msgstr "გაგზავნის &ნაგულისხმები მეთოდი:"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "გაგზავნის გაუქმების ჩართვა"
@@ -773,8 +768,7 @@ msgid "Printing Output"
 msgstr "გამოტანის დაბეჭდვა"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "&ხელით მითითებული ფონტების გამოყენება"
@@ -830,22 +824,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "HTML სტატუსის პანელის წინა პლანი - HTML შეტყობინება"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "ფერების &ხელით მითითება"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "ღრმა &ციტირებისას ფერების თავიდან გამოყენება"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "&საწყისი HTML ელფოსტის ფერი არ შეიცვლება"
@@ -862,16 +853,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "საქაღალდის სწრაფი ძებნის ველის ჩვენება"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "არასდროს"
@@ -883,22 +872,19 @@ msgid "Show favorite folders view:"
 msgstr "რჩეული საქაღალდეების ხედის ჩვენება:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "როგორც ხატულები"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "როგორც სია"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "ყოველთვის"
@@ -1012,22 +998,19 @@ msgid "System Tray"
 msgstr "სისტემს კუთხე"
 
 #: configuredialog/configureappearancepage.cpp:835
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "სისტემის კუთხეში ხატულის ჩართვა"
 
 #: configuredialog/configureappearancepage.cpp:839
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "ჩაკეცილად გაშვება"
 
 #: configuredialog/configureappearancepage.cpp:857
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "წაუკითხავი ელფოსტების ამოცანების პანელზე ჩვენება"
@@ -1038,8 +1021,7 @@ msgid "Plasma activities"
 msgstr "Plasma-ის აქტივობები"
 
 #: configuredialog/configureappearancepage.cpp:867
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "ჩართვა"
@@ -1428,8 +1410,7 @@ msgid "Forward Prefix:"
 msgstr "გადაგზავნის პრეფიქსი:"
 
 #: configuredialog/configurecomposerpage.cpp:703
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&მომხმარებლის message-id სუფიქსის გამოყენება"
@@ -1490,15 +1471,13 @@ msgstr ""
 "'Content-Type' ავტორიზებული სტრიქონი არაა. ეს თავსართი შენახული არ იქნება."
 
 #: configuredialog/configurecomposerpage.cpp:912
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "არასწორი თავსართი"
 
 #: configuredialog/configurecomposerpage.cpp:953
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&ნაკლული მიმაგრებული ფაილების დადგენის ჩართვა"
@@ -1791,15 +1770,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "არქივის ფაილი (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "&დასრულების შემდეგ საქაღალდისა და ქვესაქაღალდების წაშლა"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "ყველა ქვესაქაღალდის დაარქივება"
@@ -2473,8 +2450,7 @@ msgstr ""
 "ცდილობთ, ელფოსტა, %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
 
 #: editor/kmcomposerwin.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "მეტისმეტად ბევრი მიმღები"
@@ -2501,8 +2477,7 @@ msgstr ""
 "ბრძანდებით?"
 
 #: editor/kmcomposerwin.cpp:3218
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "დაკარგავთ დაფორმატებას?"
@@ -2751,8 +2726,7 @@ msgid "Encryption Key Selection"
 msgstr "დაშიფვრის გასაღების არჩევანი"
 
 #: editor/kmcomposerwin.cpp:4340
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "დამატების რედაქტორის ინფორმაცია"
@@ -3041,15 +3015,13 @@ msgid "Create own vCard"
 msgstr "საკუთარი vCard-ს შექმნა"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "&ცარიელი ველებით"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&არსებული vCard-დან"
@@ -3061,8 +3033,7 @@ msgid "&vCard path:"
 msgstr "&vCard -ის ბილიკი:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "&არსებული vCard-ის დუბლირება"
@@ -3121,8 +3092,7 @@ msgid "Generate a new OpenPGP certificate"
 msgstr "OpenPGP-ის სერტიფიკატის გენერაცია"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "გასაღების გენერაციის შეცდომა"
@@ -3246,8 +3216,7 @@ msgid "OpenPGP signing key:"
 msgstr "OpenPGP ხელმოწერის გასაღები:"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "ერთი და იგივე გასაღების გამოყენება დაშიფვრისა და ხელმოწერისთვის"
@@ -3344,8 +3313,7 @@ msgid "Autocrypt:"
 msgstr "ავტომატური დაშიფვრა:"
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "გააგებინეთ სხვებსაც, რომ დაშიფვრა გირჩევნიათ"
@@ -3362,29 +3330,25 @@ msgid "Overwrite defaults:"
 msgstr "ნაგულისხმევების თავზე გადაწერა:"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "შეტყობინებების ხელმოწერა"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "შეტყობინებების დაშიფვრა, თუ შესაძლებელია"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "გაფრთხილება ხელმოუწერელი შეტყობინებების გაგზავნისას"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "გაფრთხილება დაუშიფრავი შეტყობინებების გაგზავნისას"
@@ -3477,8 +3441,7 @@ msgid "Select Send-mail Folder"
 msgstr "აირჩიეთ გაგზავნილი ელფოსტების საქაღალდე"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "გაგზავნილი ელფოსტების &საქაღალდე:"
@@ -3506,15 +3469,13 @@ msgid "&Templates folder:"
 msgstr "&ნიმუშების საქაღალდე:"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "გამავალი ანგარიში:"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "შეტყობინებისთვის ჩემი vCard-ის მიმაგრება"
@@ -3553,8 +3514,7 @@ msgstr ""
 "რომლებიც, მხოლოდ, მომხმარებლის სახელისგან შედგებიან.</p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&ამ იდენტიფიკატორისთვის მომხმარებლის შეტყობინების ნიმუშების გამოყენება"
@@ -3817,15 +3777,13 @@ msgid "&New identity:"
 msgstr "&ახალი იდენტიფიკატორი:"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
 msgstr "&სისტემური პარამეტრების გამოყენება"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "არსებული &იდენტიფიკატორის დუბლირება"
@@ -3973,8 +3931,7 @@ msgid "Do Not Attach"
 msgstr "არ მიამაგრო"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "ძებნის წაშლა"
@@ -3995,8 +3952,7 @@ msgid "&Delete"
 msgstr "&წაშლა"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "საქაღალდის წაშლა"
@@ -4287,15 +4243,13 @@ msgstr[0] "დაელოდეთ. მიმდინარეობს შე
 msgstr[1] "დაელოდეთ. მიმდინარეობს %1 შეტყობინების გადაცემა"
 
 #: kmcommands.cpp:525
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "ფაილში შენახვა"
 
 #: kmcommands.cpp:712
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "შეტყობინების გახსნა"
@@ -4658,15 +4612,13 @@ msgid "&Expire"
 msgstr "&ვადა"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "ნაგვის დაცარიელება"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "ნაგავში გადატანა"
@@ -4745,15 +4697,13 @@ msgstr[1] ""
 "ვეღარ აღადგენთ.</qt>"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "შეტყობინებების წაშლა"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "შეტყობინების წაშლა"
@@ -5736,8 +5686,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "გნებავთ Akonadi-ის გადატვირთვა?"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi-ის გადატვირთვა"
@@ -5988,8 +5937,7 @@ msgstr[0] "1 წაუკითხავი შეტყობინება"
 msgstr[1] "%1 წაუკითხავი შეტყობინება"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "საქაღალდეების სრული ბილიკის ჩვენება"
@@ -6353,8 +6301,7 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF-ად გატანა"
@@ -6370,8 +6317,7 @@ msgid "Reindex"
 msgstr "რეინდექსი"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "მაინც ძებნა"

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-26 20:56+0200\n"
+"PO-Revision-Date: 2024-07-30 07:22+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -392,8 +392,7 @@ msgid "Mailing List"
 msgstr "Sändlista"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "Korgen innehåller en sändlista"
@@ -545,8 +544,7 @@ msgid "View"
 msgstr "Visa"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "Använd egna &ikoner"
@@ -605,8 +603,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Utgående konton (lägg till minst ett konto):"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Bekräfta åtgärd"
@@ -617,8 +614,7 @@ msgid "Before sending:"
 msgstr "Innan brev skickas:"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Kontrollera stavning"
@@ -659,8 +655,7 @@ msgid "Defa&ult send method:"
 msgstr "Fö&rvald metod för att skicka:"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Aktivera ångring av skicka"
@@ -778,11 +773,10 @@ msgid "Printing Output"
 msgstr "Utskrift"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "Anv&änd egna teckensnitt"
+msgstr "An&vänd egna teckensnitt"
 
 #: configuredialog/configureappearancepage.cpp:168
 #, kde-format
@@ -835,22 +829,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Förgrund för HTML-statusrad - HTML-brev"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
-msgstr "Anv&änd egna färger"
+msgstr "An&vänd egna färger"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "Återanvänd färger vid djup &citering"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "Än&dra inte färg från HTML-originalbrevet"
@@ -867,16 +858,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "Visa snabbsökningsfältet för korgar"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Aldrig"
@@ -888,22 +877,19 @@ msgid "Show favorite folders view:"
 msgstr "Visa favoritkorgar:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "Som ikoner"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "Som lista"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Alltid"
@@ -1021,22 +1007,19 @@ msgid "System Tray"
 msgstr "Systembricka"
 
 #: configuredialog/configureappearancepage.cpp:835
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Aktivera ikon i systembrickan"
 
 #: configuredialog/configureappearancepage.cpp:839
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Starta minimerad i systembrickan"
 
 #: configuredialog/configureappearancepage.cpp:857
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Visa olästa brev i aktivitetsraden"
@@ -1047,8 +1030,7 @@ msgid "Plasma activities"
 msgstr "Plasma-aktiviteter"
 
 #: configuredialog/configureappearancepage.cpp:867
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Aktivera"
@@ -1439,11 +1421,10 @@ msgid "Forward Prefix:"
 msgstr "Vidarebefordransprefix:"
 
 #: configuredialog/configurecomposerpage.cpp:703
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
-msgstr "Använd eget &suffix för meddelande-id"
+msgstr "An&vänd eget suffix för meddelande-id"
 
 #: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
@@ -1501,15 +1482,13 @@ msgstr ""
 "'Content-Type' är inte en godkänd sträng. Huvudet kommer inte att sparas."
 
 #: configuredialog/configurecomposerpage.cpp:912
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Ogiltigt huvud"
 
 #: configuredialog/configurecomposerpage.cpp:953
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Aktivera ide&ntifiering av saknade bilagor"
@@ -1802,15 +1781,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "Arkivfil (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
-msgstr "&Ta bort korgar och underkorgar när färdig"
+msgstr "&Ta bort korgar och underkorgar efter slutförande"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arkivera alla underkorgar"
@@ -2482,8 +2459,7 @@ msgstr ""
 "Du försöker skicka brevet till mer än %1 mottagare. Skicka brevet ändå?"
 
 #: editor/kmcomposerwin.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "För många mottagare"
@@ -2510,11 +2486,10 @@ msgstr ""
 "säker?"
 
 #: editor/kmcomposerwin.cpp:3218
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
-msgstr "Förlora formatering?"
+msgstr "Utan formatering?"
 
 #: editor/kmcomposerwin.cpp:3219
 #, kde-format
@@ -2763,8 +2738,7 @@ msgid "Encryption Key Selection"
 msgstr "Val av krypteringsnyckel"
 
 #: editor/kmcomposerwin.cpp:4340
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "Information om insticksprogrameditor"
@@ -3052,15 +3026,13 @@ msgid "Create own vCard"
 msgstr "Skapa eget visitkort"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "Med to&mma fält"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&Från befintligt visitkort"
@@ -3072,8 +3044,7 @@ msgid "&vCard path:"
 msgstr "Sökväg till &visitkort:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "&Duplicera befintligt visitkort"
@@ -3132,11 +3103,10 @@ msgid "Generate a new OpenPGP certificate"
 msgstr "Generera ett nytt OpenPGP-certifikat"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
-msgstr "Fel för skapa nyckel"
+msgstr "Fel vid nyckelgenerering"
 
 #: identity/identitydialog.cpp:333
 #, kde-format
@@ -3254,8 +3224,7 @@ msgid "OpenPGP signing key:"
 msgstr "OpenPGP-signeringsnyckel:"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Använd samma nyckel för kryptering och signering"
@@ -3351,8 +3320,7 @@ msgid "Autocrypt:"
 msgstr "Kryptera automatiskt:"
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Låt andra veta att du föredrar kryptering"
@@ -3369,29 +3337,25 @@ msgid "Overwrite defaults:"
 msgstr "Skriv över förval:"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Signera brev"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Kryptera brev om möjligt"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Varna vid försök att skicka osignerade brev"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Varna vid försök att skicka okrypterade brev"
@@ -3484,8 +3448,7 @@ msgid "Select Send-mail Folder"
 msgstr "Välj Skickade brev-korg"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "Ski&ckade brev-korg:"
@@ -3513,18 +3476,16 @@ msgid "&Templates folder:"
 msgstr "&Mallkorg:"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Utgående konto:"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
-msgstr "Lägg till mitt visitkort till brevet"
+msgstr "Lägg till mitt visitkort i brevet"
 
 #: identity/identitydialog.cpp:706
 #, kde-format
@@ -3560,8 +3521,7 @@ msgstr ""
 "endast består av användarens namn.</p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "An&vänd egna brevmallar för identiteten"
@@ -3822,18 +3782,16 @@ msgid "&New identity:"
 msgstr "&Ny identitet:"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
-msgstr "Använd &värden från systeminställningarna"
+msgstr "Använd systeminställningarnas &värden"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
-msgstr "Kopiera befintlig i&dentitet"
+msgstr "&Duplicera befintlig identitet"
 
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
@@ -3979,8 +3937,7 @@ msgid "Do Not Attach"
 msgstr "Bilägg inte"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "Ta bort sökning"
@@ -4002,8 +3959,7 @@ msgid "&Delete"
 msgstr "&Ta bort"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "Ta bort korg"
@@ -4289,15 +4245,13 @@ msgstr[0] "Vänta medan brevet överförs"
 msgstr[1] "Vänta medan %1 brev överförs"
 
 #: kmcommands.cpp:525
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Spara i fil"
 
 #: kmcommands.cpp:712
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Öppna brev"
@@ -4656,18 +4610,16 @@ msgid "&Expire"
 msgstr "&Utgå"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Töm papperskorgen"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
-msgstr "Flytta till papperskorg"
+msgstr "Flytta till papperskorgen"
 
 #: kmmainwidget.cpp:1473
 #, kde-format
@@ -4743,15 +4695,13 @@ msgstr[1] ""
 "tagits bort, kan de inte återställas.</qt>"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Ta bort brev"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Ta bort brev"
@@ -5730,8 +5680,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "Vill du starta om Akonadi?"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Starta om Akonadi"
@@ -5984,8 +5933,7 @@ msgstr[0] "1 oläst brev"
 msgstr[1] "%1 olästa brev"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "Visa fullständig sökväg för korgar"
@@ -6347,8 +6295,7 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Exportera till PDF"
@@ -6364,8 +6311,7 @@ msgid "Reindex"
 msgstr "Indexera igen"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Sök ändå"

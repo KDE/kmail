@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-25 09:27+0200\n"
+"PO-Revision-Date: 2024-07-30 10:16+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -402,8 +402,7 @@ msgid "Mailing List"
 msgstr "Llista de correu"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "La carpeta manté una llista de correu"
@@ -555,8 +554,7 @@ msgid "View"
 msgstr "Visualització"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "Empra &icones personalitzades"
@@ -615,8 +613,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Comptes de sortida (afegiu-ne un com a mínim):"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Confirma l'acció"
@@ -627,8 +624,7 @@ msgid "Before sending:"
 msgstr "Abans d'enviar:"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Verifica l'ortografia"
@@ -669,8 +665,7 @@ msgid "Defa&ult send method:"
 msgstr "Mètode d'enviament &predeterminat:"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Activa «Desfés l'enviament»"
@@ -788,8 +783,7 @@ msgid "Printing Output"
 msgstr "Sortida de la impressió"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "&Empra lletres personalitzades"
@@ -845,22 +839,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Primer pla de la barra d'estat HTML - Missatge HTML"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "&Usa colors personalitzats"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "Recicla els colors en te&xts molt citats"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "&No canviïs el color del correu HTML original"
@@ -877,16 +868,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "Mostra el camp de cerca ràpida de carpeta"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Mai"
@@ -898,22 +887,19 @@ msgid "Show favorite folders view:"
 msgstr "Mostra la vista de carpetes preferides:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "Com a icones"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "Com a llista"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Sempre"
@@ -1033,22 +1019,19 @@ msgid "System Tray"
 msgstr "Safata del sistema"
 
 #: configuredialog/configureappearancepage.cpp:835
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Activa la icona a la safata del sistema"
 
 #: configuredialog/configureappearancepage.cpp:839
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Inicia minimitzat a la safata"
 
 #: configuredialog/configureappearancepage.cpp:857
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Mostra els correus sense llegir a la barra de tasques"
@@ -1059,8 +1042,7 @@ msgid "Plasma activities"
 msgstr "Activitats del Plasma"
 
 #: configuredialog/configureappearancepage.cpp:867
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Activa"
@@ -1455,8 +1437,7 @@ msgid "Forward Prefix:"
 msgstr "Prefix en reenviar:"
 
 #: configuredialog/configurecomposerpage.cpp:703
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Usa el sufix personalitzat d'identificador del missatge"
@@ -1517,15 +1498,13 @@ msgstr ""
 "«Content-Type» no és cap cadena autoritzada. Aquesta capçalera no es desarà."
 
 #: configuredialog/configurecomposerpage.cpp:912
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Capçalera no vàlida"
 
 #: configuredialog/configurecomposerpage.cpp:953
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Ha&bilita la detecció de la falta d'adjunts"
@@ -1820,15 +1799,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "Fitxer d'arxiu (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "Su&primeix les carpetes i subcarpetes després de finalitzar"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arxiva totes les subcarpetes"
@@ -2504,8 +2481,7 @@ msgstr ""
 "Esteu intentant enviar el correu a més de %1 destinataris. L'envio igualment?"
 
 #: editor/kmcomposerwin.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Massa destinataris"
@@ -2530,8 +2506,7 @@ msgid ""
 msgstr "Desactivar el mode HTML farà que el text perdi el format. Esteu segur?"
 
 #: editor/kmcomposerwin.cpp:3218
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Perdo el format?"
@@ -2781,8 +2756,7 @@ msgid "Encryption Key Selection"
 msgstr "Selecció de la clau d'encriptatge"
 
 #: editor/kmcomposerwin.cpp:4340
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "Informació del connector d'edició"
@@ -3077,15 +3051,13 @@ msgid "Create own vCard"
 msgstr "Creació d'una vCard pròpia"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "&Amb els camps buits"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&Des d'una vCard existent"
@@ -3097,8 +3069,7 @@ msgid "&vCard path:"
 msgstr "Camí a la &vCard:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "&Duplica una vCard existent"
@@ -3157,8 +3128,7 @@ msgid "Generate a new OpenPGP certificate"
 msgstr "Genera un certificat OpenPGP nou"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "Error en generar la clau"
@@ -3284,8 +3254,7 @@ msgid "OpenPGP signing key:"
 msgstr "Clau de signatura OpenPGP:"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Usa la mateixa clau per a l'encriptatge i la signatura"
@@ -3382,8 +3351,7 @@ msgid "Autocrypt:"
 msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Permet que els altres coneguin que preferiu l'encriptatge"
@@ -3402,29 +3370,25 @@ msgid "Overwrite defaults:"
 msgstr "Paràmetres de sobreescriptura:"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Signatura dels missatges"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Encripta els missatges sempre que sigui possible"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Avisa si s'intenten enviar missatges sense signar"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Avisa si s'intenten enviar missatges sense encriptar"
@@ -3518,8 +3482,7 @@ msgid "Select Send-mail Folder"
 msgstr "Selecció de la carpeta de correu enviat"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "Carpeta del correu &enviat:"
@@ -3547,15 +3510,13 @@ msgid "&Templates folder:"
 msgstr "Carpeta de les plan&tilles:"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Compte sortint:"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Adjunta la meva vCard al missatge"
@@ -3594,8 +3555,7 @@ msgstr ""
 "adreces de correu que tan sols consisteixin en un nom d'usuari.</p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Usa plantilles de missatges personalitzades per a aquesta identitat"
@@ -3856,15 +3816,13 @@ msgid "&New identity:"
 msgstr "Identitat &nova:"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
 msgstr "&Usa els valors de l'Arranjament del sistema"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "&Duplica la identitat existent"
@@ -4016,8 +3974,7 @@ msgid "Do Not Attach"
 msgstr "No adjuntis"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "Suprimeix la cerca"
@@ -4038,8 +3995,7 @@ msgid "&Delete"
 msgstr "Su&primeix"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "Suprimeix la carpeta"
@@ -4327,15 +4283,13 @@ msgstr[0] "Espereu mentre es transfereix el missatge"
 msgstr[1] "Espereu mentre es transfereixen %1 missatges"
 
 #: kmcommands.cpp:525
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Desa a un fitxer"
 
 #: kmcommands.cpp:712
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Obre el missatge"
@@ -4703,15 +4657,13 @@ msgid "&Expire"
 msgstr "Fes que &caduqui"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Buida la paperera"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Mou a la paperera"
@@ -4790,15 +4742,13 @@ msgstr[1] ""
 "els hàgiu suprimit no es podran restaurar.</qt>"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Suprimeix els missatges"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Suprimeix el missatge"
@@ -5784,8 +5734,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "Voleu reiniciar l'Akonadi?"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Reinicia l'Akonadi"
@@ -6039,8 +5988,7 @@ msgstr[0] "1 missatge sense llegir"
 msgstr[1] "%1 missatges sense llegir"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "Mostra el camí complet de les carpetes"
@@ -6408,8 +6356,7 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Exporta a PDF"
@@ -6425,8 +6372,7 @@ msgid "Reindex"
 msgstr "Torna a indexar"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Cerca tanmateix"

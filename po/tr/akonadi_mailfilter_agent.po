@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-06-18 12:57+0300\n"
+"PO-Revision-Date: 2024-07-30 18:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -30,8 +30,7 @@ msgid "Share…"
 msgstr "Paylaş…"
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Süzme eylemlerini gün&lükle"
@@ -51,15 +50,13 @@ msgid "Logging Details"
 msgstr "Günlükleme Ayrıntıları"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Günlük dizgisi açıklaması"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Günlük süzgeci kuralı değerlendirmesi"
@@ -80,18 +77,16 @@ msgstr ""
 "hakkında geri bildirim de verilecektir."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Günlük süzgeci dizgisi değerlendirmesi"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
-msgstr "Günlük süzgeç eylemleri"
+msgstr "Günlük süzgeci eylemleri"
 
 #: filterlogdialog.cpp:133
 #, kde-format

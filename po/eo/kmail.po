@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-27 14:20+0200\n"
+"PO-Revision-Date: 2024-07-30 21:06+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -152,7 +152,7 @@ msgstr "PGP-6-subteno kaj pluaj pliboniĝaĵoj de la ĉifrada subteno"
 
 #: aboutdata.cpp:63
 msgid "Original encryption support PGP 2 and PGP 5 support"
-msgstr "Originala ĉifrado subteno PGP 2 kaj PGP 5 subteno"
+msgstr "Origina ĉifrado subteno PGP 2 kaj PGP 5 subteno"
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
@@ -393,8 +393,7 @@ msgid "Mailing List"
 msgstr "Dissendolisto"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "Dosierujo enhavas dissendoliston"
@@ -546,8 +545,7 @@ msgid "View"
 msgstr "Rigardi"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "Uzi proprajn p&iktogramojn"
@@ -606,8 +604,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Elirantaj Kontoj (aldonu almenaŭ unu):"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Konfirmi agon"
@@ -618,8 +615,7 @@ msgid "Before sending:"
 msgstr "Antaŭ sendi:"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Kontroli literumadon"
@@ -660,8 +656,7 @@ msgid "Defa&ult send method:"
 msgstr "&Apriora sendmetodo:"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Ebligi Malfaron de Sendo"
@@ -779,8 +774,7 @@ msgid "Printing Output"
 msgstr "Elpresaĵo"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "&Uzi proprajn tiparojn"
@@ -836,25 +830,22 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Tekstkoloro de statobreto - HTML-mesaĝo"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "&Uzi proprajn kolorojn"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "&Recikligi kolorojn ĉe profunda citado"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
-msgstr "Ne ŝanĝi koloron &de originala HTML-poŝto"
+msgstr "Ne ŝanĝi koloron &de origina HTML-poŝto"
 
 #: configuredialog/configureappearancepage.cpp:347
 #, kde-format
@@ -868,16 +859,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
-msgstr "Montri rapidan serĉkampon pri dosierujo"
+msgstr "Montri rapidserĉan kampon pri dosierujo"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Neniam"
@@ -889,22 +878,19 @@ msgid "Show favorite folders view:"
 msgstr "Montri vidon de ŝatataj dosierujoj:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "Kiel piktogramoj"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "Kiel listo"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Ĉiam"
@@ -1020,22 +1006,19 @@ msgid "System Tray"
 msgstr "Sistema Pleto"
 
 #: configuredialog/configureappearancepage.cpp:835
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Ebligi taskopletan piktogramon"
 
 #: configuredialog/configureappearancepage.cpp:839
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Komenci minimumigita al pleto"
 
 #: configuredialog/configureappearancepage.cpp:857
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Montri nelegitan retpoŝton en Taskbreto"
@@ -1046,8 +1029,7 @@ msgid "Plasma activities"
 msgstr "Plasma-aktivecoj"
 
 #: configuredialog/configureappearancepage.cpp:867
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Ebligi"
@@ -1226,8 +1208,8 @@ msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
-"Kiam vi respondas aŭ plusendas, citi la mesaĝon en la originala formato, "
-"kiun ĝi ricevis. Se nemarkite, la respondo estos kiel simpla teksto defaŭlte."
+"Kiam vi respondas aŭ plusendas, citi la mesaĝon en la origina formato, kiun "
+"ĝi ricevis. Se nemarkite, la respondo estos kiel simpla teksto defaŭlte."
 
 #: configuredialog/configurecomposerpage.cpp:248
 #, kde-format
@@ -1438,8 +1420,7 @@ msgid "Forward Prefix:"
 msgstr "Antaŭen Prefikso:"
 
 #: configuredialog/configurecomposerpage.cpp:703
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Uzi propran sufikson por mesaĝ-identigiloj:"
@@ -1500,15 +1481,13 @@ msgstr ""
 "'Content-Type' ne estas rajtigita ĉeno. Ĉi tiu kaplinio ne estos konservita."
 
 #: configuredialog/configurecomposerpage.cpp:912
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
-msgstr "Nevalida kaplinio"
+msgstr "Nevalida kapo"
 
 #: configuredialog/configurecomposerpage.cpp:953
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Ebligi ekkonon de ma&nkaj kunsendaĵoj"
@@ -1801,15 +1780,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "Arkivdosiero (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "Forigi &dosierujon kaj subdosierujojn post kompletigo"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arkivi ĉiujn subdosierujojn"
@@ -2482,8 +2459,7 @@ msgstr ""
 "Vi provas sendi la poŝton al pli ol %1 ricevantoj. Ĉu sendi mesaĝon ĉiukaze?"
 
 #: editor/kmcomposerwin.cpp:3177
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Tro da ricevantoj"
@@ -2509,8 +2485,7 @@ msgstr ""
 "Malŝalti HTML-reĝimon igos la tekston perdi la formatadon. Ĉu vi certas?"
 
 #: editor/kmcomposerwin.cpp:3218
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Ĉu perdi la formatadon?"
@@ -2760,11 +2735,10 @@ msgid "Encryption Key Selection"
 msgstr "Elekto de Ĉifrada Ŝlosilo"
 
 #: editor/kmcomposerwin.cpp:4340
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
-msgstr "Informoj pri Kromredaktilo"
+msgstr "Informoj pri Kromprograma Redaktilo"
 
 #: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:29
 #, kde-format
@@ -3053,15 +3027,13 @@ msgid "Create own vCard"
 msgstr "Krei propran vCard"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
-msgstr "&Kun malplenaj valoroj"
+msgstr "&Kun malplenaj kampoj"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&De ekzistanta vCard"
@@ -3073,8 +3045,7 @@ msgid "&vCard path:"
 msgstr "Vojo de &vCard:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "&Duobligi ekzistantan vCard"
@@ -3133,8 +3104,7 @@ msgid "Generate a new OpenPGP certificate"
 msgstr "Generi novan OpenPGP-atestilon"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "Ŝlosila Gener-Eraro"
@@ -3257,8 +3227,7 @@ msgid "OpenPGP signing key:"
 msgstr "OpenPGP-subskriba ŝlosilo:"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Uzi la saman ŝlosilon por ĉifrado kaj subskribo"
@@ -3354,8 +3323,7 @@ msgid "Autocrypt:"
 msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Sciigi aliajn, ke vi preferas ĉifradon"
@@ -3372,29 +3340,25 @@ msgid "Overwrite defaults:"
 msgstr "Anstataŭigi defaŭltojn:"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Subskribi mesaĝojn"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Ĉifri mesaĝojn kiam eblas"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Averti kiam vi provas sendi nesubskribitajn mesaĝojn"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Averti kiam vi provas sendi neĉifritajn mesaĝojn"
@@ -3485,8 +3449,7 @@ msgid "Select Send-mail Folder"
 msgstr "Elekti Send-poŝtan leterujon"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "Send-poŝta &leterujo:"
@@ -3514,15 +3477,13 @@ msgid "&Templates folder:"
 msgstr "&Ŝablonujo:"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Elira Konto:"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Kunsendi mian vCard al mesaĝo"
@@ -3561,8 +3522,7 @@ msgstr ""
 "kiuj nur konsistas de uzantulaj nomoj.</p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Uzi proprajn mesaĝoŝablonojn por ĉi tiu identeco"
@@ -3823,15 +3783,13 @@ msgid "&New identity:"
 msgstr "&Nova identeco:"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
 msgstr "&Uzi la valorojn de Sistemagordo"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "&Doubligi ekzistantan identecon"
@@ -3979,8 +3937,7 @@ msgid "Do Not Attach"
 msgstr "Ne kunsendi"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "Forviŝi serĉon"
@@ -4001,11 +3958,10 @@ msgid "&Delete"
 msgstr "&Forigi"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
-msgstr "Forigi leterujon"
+msgstr "Forigi Dosierujon"
 
 #: job/removecollectionjob.cpp:70
 #, kde-format
@@ -4288,18 +4244,16 @@ msgstr[0] "Bonvolu atendi dum kiam la mesaĝo estas transigita"
 msgstr[1] "Bonvolu atendi dum kiam la %1 mesaĝoj estas transigitaj"
 
 #: kmcommands.cpp:525
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Konservi al Dosiero"
 
 #: kmcommands.cpp:712
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
-msgstr "Malfermi mesaĝon"
+msgstr "Malfermi Mesaĝon"
 
 #: kmcommands.cpp:714
 #, kde-format
@@ -4652,18 +4606,16 @@ msgid "&Expire"
 msgstr "&Eksvalidigi"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Malplenigi rubujon"
 
 #: kmmainwidget.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
-msgstr "Movi al rubujo"
+msgstr "Movi al Rubujo"
 
 #: kmmainwidget.cpp:1473
 #, kde-format
@@ -4739,18 +4691,16 @@ msgstr[1] ""
 "forigitaj, ili ne povas esti restaŭrataj.</qt>"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
-msgstr "Forigi mesaĝojn"
+msgstr "Forigi Mesaĝojn"
 
 #: kmmainwidget.cpp:1661
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
-msgstr "Forigi mesaĝon"
+msgstr "Forigi Mesaĝon"
 
 #: kmmainwidget.cpp:1676
 #, kde-format
@@ -5729,8 +5679,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "Ĉu vi volas rekomenci Akonadi?"
 
 #: kmmainwidget.cpp:4963
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Rekomenci Akonadi"
@@ -5981,8 +5930,7 @@ msgstr[0] "1 nelegita mesaĝo"
 msgstr[1] "%1 nelegitaj mesaĝoj"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "Montri plenan vojon por dosierujoj"
@@ -6345,8 +6293,7 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Eksporti al PDF"
@@ -6362,8 +6309,7 @@ msgid "Reindex"
 msgstr "Reindeksigi"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Serĉi Ĉiukaze"
@@ -6454,7 +6400,7 @@ msgstr "Forigi la elekton"
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
-msgstr "Salti al originala dosierujo"
+msgstr "Salti al origina dosierujo"
 
 #: searchdialog/searchwindow.cpp:294
 #, kde-format
@@ -8227,9 +8173,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid "Invalid Email Address"
-#~ msgstr "Nelaŭregula retpoŝtadreso"
-
-#~ msgid "Security Warning"
-#~ msgstr "Sekurecaverto"

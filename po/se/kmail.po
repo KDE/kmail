@@ -8005,9 +8005,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Invalid Email Address"
-#~ msgstr "Gustohis e-boastačujuhus"
-
-#~ msgid "Security Warning"
-#~ msgstr "Sihkkarvuohtaváruhus"

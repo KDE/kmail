@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-07-31 00:41+0000\n"
 "PO-Revision-Date: 2024-07-03 23:06+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -128,7 +128,9 @@ msgid "Follow Up Reminder"
 msgstr "Напомняне за последващи действия"
 
 #: followupremindernoanswerdialog.cpp:45
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@label:textbox"
+#| msgid "You still wait an answer about this mail:"
 msgctxt "@label:textbox"
-msgid "You still wait an answer about this mail:"
+msgid "You are still waiting for answers to these mails:"
 msgstr "Все още чакате отговор за това писмо:"

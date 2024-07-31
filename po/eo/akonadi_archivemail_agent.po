@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-04 21:35+0200\n"
+"PO-Revision-Date: 2024-07-30 21:06+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -33,8 +33,7 @@ msgid "Add Archive Mail"
 msgstr "Aldoni Arkivan Poŝton"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arkivi ĉiujn subdosierujojn"
@@ -81,8 +80,7 @@ msgid "Archive"
 msgstr "Arkivo"
 
 #: archivemailrangewidget.cpp:22
-#, fuzzy, kde-format
-#| msgid "Use Range"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Uzi Gamon"

@@ -15,21 +15,22 @@
 # Torbjörn Klatt <opensource@torbjoern-klatt.de>, 2011.
 # Jürgen Jäckle <divmails1@gmx.net>, 2021.
 # Frank Steinmetzger <dev-kde@felsenfleischer.de>, 2022.
+# SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 # Intevation GmbH, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-04-23 23:19+0200\n"
-"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
+"PO-Revision-Date: 2024-07-30 09:15+0200\n"
+"Last-Translator: aheinecke <aheinecke@gnupg.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -412,8 +413,7 @@ msgid "Folder holds a mailing list"
 msgstr "Ordner enthält eine Mailingliste"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Automatisch feststellen"
@@ -434,8 +434,7 @@ msgid "Preferred handler:"
 msgstr "Bevorzugtes Programm:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Programm aufrufen"
@@ -446,8 +445,7 @@ msgid "Address type:"
 msgstr "Adresstyp:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, fuzzy, kde-format
-#| msgid "URL for mailing list posting:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Adresse für Nachricht an Mailingliste:"
@@ -503,22 +501,19 @@ msgstr ""
 "tragen Sie die erforderlichen Adressen von Hand ein."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Speicherplatzkontingent"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, fuzzy, kde-format
-#| msgid "Usage:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Ausnutzung:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, fuzzy, kde-format
-#| msgid "Status:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Status:"
@@ -540,11 +535,7 @@ msgid "Shortcut"
 msgstr "Kurzbefehl"
 
 #: collectionpage/collectionshortcutpage.cpp:44
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>To choose a key or a combination of keys which select the current "
-#| "folder, click the button below and then press the key(s) you wish to "
-#| "associate with this folder.</qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
@@ -556,8 +547,7 @@ msgstr ""
 "betätigen.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Vorlagen"
@@ -623,8 +613,7 @@ msgid "LDAP server"
 msgstr "LDAP-Server "
 
 #: configuredialog/configureaccountpage.cpp:84
-#, fuzzy, kde-format
-#| msgid "Outgoing accounts (add at least one):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Ausgangspostfächer (fügen Sie mindestens eines hinzu):"
@@ -691,14 +680,12 @@ msgid "Enable Undo Send"
 msgstr "Senden rückgängig machen aktivieren"
 
 #: configuredialog/configureaccountpage.cpp:186
-#, fuzzy, kde-format
-#| msgid "Add Mail Account..."
+#, kde-format
 msgid "Add Mail Account…"
 msgstr "E-Mail-Postfach hinzufügen ..."
 
 #: configuredialog/configureaccountpage.cpp:187
-#, fuzzy, kde-format
-#| msgid "Custom Account..."
+#, kde-format
 msgid "Custom Account…"
 msgstr "Benutzerdefiniertes Postfach ..."
 
@@ -732,8 +719,7 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "Beim Beenden in Offline-Modus wechseln"
 
 #: configuredialog/configureaccountpage.cpp:272
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Beim Start nach E-Mail sehen"
@@ -813,8 +799,7 @@ msgid "&Use custom fonts"
 msgstr "E&igene Schriftarten benutzen"
 
 #: configuredialog/configureappearancepage.cpp:168
-#, fuzzy, kde-format
-#| msgid "Apply &to:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Anwenden &auf:"
@@ -885,8 +870,7 @@ msgid "&Do not change color from original HTML mail"
 msgstr "Farbe der ursprünglichen HTML-E-Mail nicht än&dern"
 
 #: configuredialog/configureappearancepage.cpp:347
-#, fuzzy, kde-format
-#| msgid "Close to quota threshold:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Schwellwert für Annäherung an Speicherplatzkontingent:"
@@ -974,8 +958,7 @@ msgid "Default theme:"
 msgstr "Standard-Design:"
 
 #: configuredialog/configureappearancepage.cpp:663
-#, fuzzy, kde-format
-#| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
@@ -1039,10 +1022,7 @@ msgid "Message Window"
 msgstr "Nachrichtenfenster"
 
 #: configuredialog/configureappearancepage.cpp:821
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -1095,8 +1075,7 @@ msgid "A&vailable Tags"
 msgstr "Verfügbare &Markierungen"
 
 #: configuredialog/configureappearancepage.cpp:943
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Neue Markierung hinzufügen"
@@ -1432,7 +1411,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "&Hinzufügen..."
 
 #: configuredialog/configurecomposerpage.cpp:633
 #: configuredialog/configurecomposerpage.cpp:970
@@ -1476,7 +1455,7 @@ msgstr "&Entfernen"
 #: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "Hinzufügen..."
 
 #: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
@@ -3260,13 +3239,12 @@ msgstr "E&xistierende Identitäten:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Die OpenPGP Zertifikatserstellung konnte nicht gestartet werden."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "Prozess %1 kann nicht gestartet werden."
+msgstr "Die OpenPGP Zertifikatserstellung konnte nicht gestartet werden: %1"
 
 #: identity/identitydialog.cpp:240
 #, fuzzy, kde-format
@@ -3281,11 +3259,13 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"Die Erstellung eines OpenPGP-Zertifikats erfordert große Mengen an "
+"Zufallszahlen. Dies kann mehrere Minuten dauern…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "OpenPGP Zertifikatserstellung fehlgeschlagen: %1"
 
 #: identity/identitydialog.cpp:265
 #, fuzzy, kde-format
@@ -4002,7 +3982,7 @@ msgstr "&Entfernen"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "Hinzufügen..."
 
 #: identity/identitypage.cpp:274
 #, fuzzy, kde-format
@@ -7325,7 +7305,7 @@ msgstr "Neue Markierung hinzufügen"
 #, kde-format
 msgctxt "@action"
 msgid "More…"
-msgstr ""
+msgstr "Mehr..."
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -7411,7 +7391,7 @@ msgstr "Eine neue Identität hinzufügen"
 #: ui/identitypage.ui:27
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Hinzufügen..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:37

@@ -3,21 +3,22 @@
 # Frederik Schwarzer <schwarzer@kde.org>, 2019, 2022, 2023.
 # Burkhard Lück <lueck@hube-lueck.de>, 2019, 2020, 2021.
 # SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
+# SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-03-20 21:32+0100\n"
-"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
+"PO-Revision-Date: 2024-07-30 09:09+0200\n"
+"Last-Translator: aheinecke <aheinecke@gnupg.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.0\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -40,8 +41,7 @@ msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 msgstr "© 2019-2024 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -73,8 +73,7 @@ msgid "Finish"
 msgstr "Fertigstellen"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Aufräumen"
@@ -105,8 +104,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Einstellungen zur Dialoggröße in Datei „%1“ aufräumen: Abgeschlossen"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Schließen Sie bitte KMail/Kontact, ehe Sie das Programm benutzen."
