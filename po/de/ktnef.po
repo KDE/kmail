@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 # Thomas Diehl <thd@kde.org>, 2003.
 # Stefan Winter <swinter@kde.org>, 2003, 2004.
 # Stephan Johach <hunsum@gmx.de>, 2003, 2004, 2005, 2007.
@@ -9,14 +10,15 @@ msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2021-05-14 10:34+0200\n"
-"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"PO-Revision-Date: 2024-07-30 08:41+0200\n"
+"Last-Translator: aheinecke <aheinecke@gnupg.org>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,7 +33,7 @@ msgstr "swinter@kde.org"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr ""
+msgstr "Speichern..."
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -89,12 +91,10 @@ msgid "View"
 msgstr "Ansicht"
 
 #: ktnefmain.cpp:115
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "View With..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr "Ansehen mit ..."
+msgstr "Betrachten mit ..."
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -103,17 +103,13 @@ msgid "Extract"
 msgstr "Entpacken"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
 msgstr "Entpacken nach ..."
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract All To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Alles entpacken nach ..."
@@ -137,17 +133,13 @@ msgid "Show Message Text"
 msgstr "Nachrichtentext anzeigen"
 
 #: ktnefmain.cpp:147
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Save Message Text As..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
 msgstr "Nachrichtentext speichern unter ..."
 
 #: ktnefmain.cpp:160
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Default Folder..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
 msgstr "Standardordner ..."
@@ -224,20 +216,16 @@ msgid "&Open With"
 msgstr "&Öffnen mit"
 
 #: ktnefmain.cpp:570
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
+#, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "&Weitere ..."
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "&Öffnen mit"
+msgstr "&Open With…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -301,8 +289,7 @@ msgstr ""
 "Copyright 2012  Allen Winter"
 
 #: main.cpp:37
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
@@ -313,8 +300,7 @@ msgid "Author"
 msgstr "Autor"
 
 #: main.cpp:39
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
