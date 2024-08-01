@@ -450,7 +450,7 @@
 ><guimenuitem
 >Envia més tard</guimenuitem
 ></menuchoice
-> de l'editor. Pot modificar-los i/o eliminar-los. Cal recordar que els missatges endarrerits s'emmagatzemen a la carpeta esborranys, no a la carpeta bústia de sortida.</para
+> de l'editor. Pot modificar-los i/o suprimir-los. Cal recordar que els missatges endarrerits s'emmagatzemen a la carpeta esborranys, no a la carpeta bústia de sortida.</para
 ></listitem>
 </varlistentry>
 
@@ -473,7 +473,7 @@
 ><guimenuitem
 >Crea un recordatori de seguiment...</guimenuitem
 ></menuchoice
-> de l'editor apareixerà en aquest diàleg. Podeu eliminar aquests missatges amb el menú contextual del &BDR;.</para
+> de l'editor apareixerà en aquest diàleg. Podeu suprimir aquests missatges amb el menú contextual del &BDR;.</para
 ></listitem>
 </varlistentry>
 

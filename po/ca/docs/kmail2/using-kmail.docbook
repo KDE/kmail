@@ -599,7 +599,7 @@
 >. Si no esteu satisfet amb les predeterminades, podeu canviar-les!</para>
 
 <para
->Hi ha dues accions del ratolí que s'han de mencionar aquí. Primera, podeu seleccionar múltiples missatges no contigus per a processar-los tots alhora (&pex;, copiar, eliminar o moure) prement &Ctrl; i seleccionant-los amb el &BER;. Segona, podeu obrir un missatge en una finestra externa fent doble clic sobre un element en la llista de missatges. Si el missatge es troba a la carpeta bústia de sortida, esborranys o plantilles, s'obrirà en una finestra d'edició. En cas contrari, s'obrirà amb el visualitzador extern de missatges, una versió abreujada de la finestra principal del &kmail; sense les llistes de carpetes i de missatges, i amb menús més curts.</para>
+>Hi ha dues accions del ratolí que s'han de mencionar aquí. Primera, podeu seleccionar múltiples missatges no contigus per a processar-los tots alhora (&pex;, copiar, suprimir o moure) prement &Ctrl; i seleccionant-los amb el &BER;. Segona, podeu obrir un missatge en una finestra externa fent doble clic sobre un element en la llista de missatges. Si el missatge es troba a la carpeta bústia de sortida, esborranys o plantilles, s'obrirà en una finestra d'edició. En cas contrari, s'obrirà amb el visualitzador extern de missatges, una versió abreujada de la finestra principal del &kmail; sense les llistes de carpetes i de missatges, i amb menús més curts.</para>
 
 </sect1>
 
@@ -1622,9 +1622,9 @@
 <title
 >La pestanya Caducitat</title>
 <para
->Podeu configurar la neteja automàtica o eliminació dels missatges de correu electrònic. Marqueu la casella si voleu fer caducar automàticament els missatges llegits o sense llegir respectivament. Indiqueu la quantitat de dies en el botó de selecció de valors. Si no voleu suprimir els missatges de forma permanent, podeu assignar una carpeta per a mantenir-los al quadre de text <guilabel
+>Podeu configurar la neteja automàtica o supressió dels missatges de correu electrònic. Marqueu la casella si voleu fer caducar automàticament els missatges llegits o sense llegir respectivament. Indiqueu la quantitat de dies en el botó de selecció de valors. Si no voleu suprimir els missatges de forma permanent, podeu assignar una carpeta per a mantenir-los al quadre de text <guilabel
 >Mou els missatges caducats a:</guilabel
-> o al diàleg per a la selecció de carpetes. Una vegada hàgiu revisat els missatges i els vulgueu eliminar de forma permanent, podeu anar a les opcions de caducitat de la carpeta que escolliu per a moure'ls i establiu l'opció <guilabel
+> o al diàleg per a la selecció de carpetes. Una vegada hàgiu revisat els missatges i els vulgueu suprimir de forma permanent, podeu anar a les opcions de caducitat de la carpeta que escolliu per a moure'ls i establiu l'opció <guilabel
 >Suprimeix permanentment els missatges caducats</guilabel
 >, després feu clic al botó <guibutton
 >Desa la configuració i fes caducar ara</guibutton
