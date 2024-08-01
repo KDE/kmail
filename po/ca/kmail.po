@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-30 10:16+0200\n"
+"PO-Revision-Date: 2024-07-31 12:14+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -4016,8 +4016,8 @@ msgstr ""
 "<qt>Esteu segur que voleu suprimir la carpeta buida <resource>%1</resource> "
 "i totes les seves subcarpetes? Aquestes subcarpetes podrien no estar buides "
 "i els seus continguts també seran descartats. <p><b>Cal tenir en compte</b> "
-"que els missatges descartats no es desaran a la carpeta Paperera i seran "
-"eliminats de forma permanent.</p></qt>"
+"que els missatges descartats no es desaran a la carpeta Paperera i se "
+"suprimiran de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:85
 #, kde-format
@@ -4028,8 +4028,8 @@ msgid ""
 msgstr ""
 "<qt>Esteu segur que voleu suprimir la carpeta <resource>%1</resource>, i "
 "descartar tot el seu contingut? <p><b>Cal tenir en compte</b> que els "
-"missatges descartats no es desaran a la carpeta Paperera i seran eliminats "
-"de forma permanent.</p></qt>"
+"missatges descartats no es desaran a la carpeta Paperera i se suprimiran de "
+"forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:92
 #, kde-format
@@ -4042,7 +4042,7 @@ msgstr ""
 "<qt>Esteu segur que voleu suprimir la carpeta buida <resource>%1</resource> "
 "i totes les seves subcarpetes, descartant tot el seu contingut? <p><b>Cal "
 "tenir en compte</b> que els missatges descartats no es desaran a la carpeta "
-"Paperera i seran eliminats de forma permanent.</p></qt>"
+"Paperera i se suprimiran de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:99
 #, kde-format

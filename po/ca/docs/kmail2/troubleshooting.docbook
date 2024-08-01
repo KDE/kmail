@@ -880,7 +880,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
   <para
 >Aquest problema està directament relacionat amb l'<ulink url="https://bugs.kde.org/show_bug.cgi?id=283682"
 >error núm. 283682 de l'&akonadi;</ulink
->, el qual ha estat una espina al costat del &kmail; des d'octubre de 2011. Hi ha un problema de temps/coordinació amb el processament asíncron dels filtres de missatges. De tant en tant, una regla de filtre mou els missatges a una carpeta diferent «hiccups», i produeix més d'una entrada a la base de dades per a un missatge que s'ha mogut. Quan s'intenta obrir la segona còpia del missatge, s'obté el missatge d'error «No s'ha pogut obtenir l'element des del dorsal «...» [LRCONFLICT]». Aquests missatges fantasma no es poden eliminar o moure a la paperera amb les funcions incorporades del &kmail;. Però <emphasis
+>, el qual ha estat una espina al costat del &kmail; des d'octubre de 2011. Hi ha un problema de temps/coordinació amb el processament asíncron dels filtres de missatges. De tant en tant, una regla de filtre mou els missatges a una carpeta diferent «hiccups», i produeix més d'una entrada a la base de dades per a un missatge que s'ha mogut. Quan s'intenta obrir la segona còpia del missatge, s'obté el missatge d'error «No s'ha pogut obtenir l'element des del dorsal «...» [LRCONFLICT]». Aquests missatges fantasma no es poden suprimir o moure a la paperera amb les funcions incorporades del &kmail;. Però <emphasis
 >podeu</emphasis
 > desfer-vos-en. Així és com ho fareu.</para>
 

@@ -588,7 +588,7 @@
 >Compacta automàticament les carpetes</guilabel
 > a la pestanya de configuració <guilabel
 >Avançat</guilabel
->, el &kmail; eliminarà del servidor els missatges esborrats tan aviat com abandoneu la carpeta a on es troben. D'altra manera els missatges tan sols es marcaran com a esborrats i haureu de compactar manualment les carpetes.</para>
+>, el &kmail; eliminarà del servidor els missatges suprimits tan aviat com abandoneu la carpeta a on es troben. D'altra manera els missatges tan sols es marcaran com a suprimits i haureu de compactar manualment les carpetes.</para>
     
   </sect3>
 

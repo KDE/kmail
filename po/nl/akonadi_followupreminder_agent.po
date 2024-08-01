@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-31 00:41+0000\n"
-"PO-Revision-Date: 2024-07-03 10:45+0200\n"
+"PO-Revision-Date: 2024-07-31 10:02+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -128,12 +128,10 @@ msgid "Follow Up Reminder"
 msgstr "Herinneren aan vervolgactie"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "U wacht nog steeds op een antwoord op dit e-mailbericht:"
+msgstr "U wacht nog steeds op antwoorden op deze e-mailberichten:"
 
 #~ msgid "Configure"
 #~ msgstr "Instellen"
