@@ -808,6 +808,8 @@ QString AppearancePageGeneralTab::helpAnchor() const
 
 AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mDisplayOwnIdentity(new QCheckBox(i18nc("@option:check", "Display Own Identity"), this))
+
 {
     auto topLayout = new QVBoxLayout(this);
 
@@ -825,6 +827,10 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     mViewerSettings = new MessageViewer::ConfigureWidget;
     connect(mViewerSettings, &MessageViewer::ConfigureWidget::settingsChanged, this, &ConfigModuleTab::slotEmitChanged);
     readerBoxLayout->addWidget(mViewerSettings);
+
+    populateCheckBox(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
+    connect(mDisplayOwnIdentity, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    readerBoxLayout->addWidget(mDisplayOwnIdentity);
 
     auto systrayBox = new QGroupBox(i18n("System Tray"), this);
     topLayout->addWidget(systrayBox);
@@ -878,6 +884,7 @@ void AppearancePageGeneralTab::doLoadOther()
     loadWidget(mStartInTrayCheck, KMailSettings::self()->startInTrayItem());
     loadWidget(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
+    loadWidget(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
     mViewerSettings->readConfig();
 }
 
@@ -888,6 +895,8 @@ void AppearancePageGeneralTab::save()
     saveCheckBox(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     KMailSettings::self()->save();
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
+
+    saveCheckBox(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
     mViewerSettings->writeConfig();
 }
 
