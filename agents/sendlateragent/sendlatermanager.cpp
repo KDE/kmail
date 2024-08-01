@@ -191,7 +191,7 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
         case CanNotCreateTransport: {
             const int answer = KMessageBox::questionTwoActions(nullptr,
                                                                i18n("An error was found. Do you want to resend it?"),
-                                                               i18n("Error found"),
+                                                               i18nc("@title:window", "Error found"),
                                                                KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
                                                                KStandardGuiItem::cancel());
             if (answer == KMessageBox::ButtonCode::SecondaryAction) {
