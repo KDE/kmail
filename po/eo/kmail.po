@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2024-07-30 21:06+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -987,12 +987,20 @@ msgstr ""
 msgid "Date Display:"
 msgstr "Montro de la dato:"
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:811
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "New Identity"
+msgctxt "@option:check"
+msgid "Display Own Identity"
+msgstr "Nova identeco"
+
+#: configuredialog/configureappearancepage.cpp:816
 #, kde-format
 msgid "Message Window"
 msgstr "Mesaĝa Fenestro"
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1000,92 +1008,92 @@ msgid ""
 msgstr ""
 "Fermu la memstaran mesaĝan fenestron post respondo aŭ plusendado de la mesaĝo"
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:835
 #, kde-format
 msgid "System Tray"
 msgstr "Sistema Pleto"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:841
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Ebligi taskopletan piktogramon"
 
-#: configuredialog/configureappearancepage.cpp:839
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Komenci minimumigita al pleto"
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:863
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Montri nelegitan retpoŝton en Taskbreto"
 
-#: configuredialog/configureappearancepage.cpp:862
+#: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
 msgstr "Plasma-aktivecoj"
 
-#: configuredialog/configureappearancepage.cpp:867
+#: configuredialog/configureappearancepage.cpp:873
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Ebligi"
 
-#: configuredialog/configureappearancepage.cpp:930
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Ha&veblaj Etikedoj"
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:952
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Aldoni novan etikedon"
 
-#: configuredialog/configureappearancepage.cpp:948
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Forigi elektitan etikedon"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:966
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Pliigi etikedprioritaton"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:972
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Malpliigi etikedan prioritaton"
 
-#: configuredialog/configureappearancepage.cpp:987
+#: configuredialog/configureappearancepage.cpp:996
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Etiked-A&gordoj"
 
-#: configuredialog/configureappearancepage.cpp:1037
+#: configuredialog/configureappearancepage.cpp:1046
 #, kde-format
 msgid "Delete"
 msgstr "Forigi"
 
-#: configuredialog/configureappearancepage.cpp:1167
+#: configuredialog/configureappearancepage.cpp:1176
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Ĉu vi volas forigi etikedon '%1'?"
 
-#: configuredialog/configureappearancepage.cpp:1168
+#: configuredialog/configureappearancepage.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Forigi Etikedon"
 
-#: configuredialog/configureappearancepage.cpp:1213
-#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1222
+#: configuredialog/configureappearancepage.cpp:1257
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Ni ne povas krei etikedon. Etikedo kun sama nomo jam ekzistas."
@@ -4421,7 +4429,9 @@ msgstr ""
 "Kialo: %2"
 
 #: kmkernel.cpp:879
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Opening Autosave File Failed"
+msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Malfermo de Aŭtomata Konservado de Dosiero Malsukcesis"
 

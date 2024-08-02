@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -201,7 +201,9 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Našla sa chyba. Chcete to preposlať?"
 
 #: sendlatermanager.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Error found"
+msgctxt "@title:window"
 msgid "Error found"
 msgstr "Našla sa chyba"
 

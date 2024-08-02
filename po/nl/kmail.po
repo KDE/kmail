@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2024-07-30 12:56+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -1003,12 +1003,20 @@ msgstr ""
 msgid "Date Display:"
 msgstr "Datumweergave:"
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:811
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "New Identity"
+msgctxt "@option:check"
+msgid "Display Own Identity"
+msgstr "Nieuwe identiteit"
+
+#: configuredialog/configureappearancepage.cpp:816
 #, kde-format
 msgid "Message Window"
 msgstr "Berichtenvenster"
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1017,92 +1025,92 @@ msgstr ""
 "Sluit het alleenstaande berichtenvenster na beantwoorden of doorsturen van "
 "het bericht"
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:835
 #, kde-format
 msgid "System Tray"
 msgstr "Systeemvak"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:841
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Systeemvakpictogram inschakelen"
 
-#: configuredialog/configureappearancepage.cpp:839
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Geminimaliseerd starten in systeemvak"
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:863
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Ongelezen e-mail in takenbalk tonen"
 
-#: configuredialog/configureappearancepage.cpp:862
+#: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
 msgstr "Activiteiten van Plasma"
 
-#: configuredialog/configureappearancepage.cpp:867
+#: configuredialog/configureappearancepage.cpp:873
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Inschakelen"
 
-#: configuredialog/configureappearancepage.cpp:930
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Beschi&kbare tags"
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:952
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Nieuwe tag toevoegen"
 
-#: configuredialog/configureappearancepage.cpp:948
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Geselecteerde tag verwijderen"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:966
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Tagprioriteit verhogen"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:972
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Tagprioriteit verlagen"
 
-#: configuredialog/configureappearancepage.cpp:987
+#: configuredialog/configureappearancepage.cpp:996
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Ta&ginstellingen"
 
-#: configuredialog/configureappearancepage.cpp:1037
+#: configuredialog/configureappearancepage.cpp:1046
 #, kde-format
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: configuredialog/configureappearancepage.cpp:1167
+#: configuredialog/configureappearancepage.cpp:1176
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Wilt u tag '%1' verwijderen?"
 
-#: configuredialog/configureappearancepage.cpp:1168
+#: configuredialog/configureappearancepage.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Tag verwijderen"
 
-#: configuredialog/configureappearancepage.cpp:1213
-#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1222
+#: configuredialog/configureappearancepage.cpp:1257
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
@@ -4471,7 +4479,9 @@ msgstr ""
 "Reden: %2"
 
 #: kmkernel.cpp:879
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Opening Autosave File Failed"
+msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Openen van het bestand voor automatisch opslaan is mislukt"
 

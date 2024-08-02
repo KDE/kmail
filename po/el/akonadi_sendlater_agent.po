@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2020-09-20 09:37+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -201,7 +201,9 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Βρέθηκε σφάλμα. Επιθυμείτε να το στείλετε ξανά;"
 
 #: sendlatermanager.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Error found"
+msgctxt "@title:window"
 msgid "Error found"
 msgstr "Βρέθηκε σφάλμα"
 

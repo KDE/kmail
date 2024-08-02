@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -215,7 +215,9 @@ msgstr "Дошло је до грешке. Желите ли да пошаљет
 
 # >> @title:window
 #: sendlatermanager.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Error found"
+msgctxt "@title:window"
 msgid "Error found"
 msgstr "Грешка"
 

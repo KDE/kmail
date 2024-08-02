@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2024-07-30 16:43+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -986,12 +986,20 @@ msgstr ""
 msgid "Date Display:"
 msgstr "Visor de fechas:"
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:811
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "New Identity"
+msgctxt "@option:check"
+msgid "Display Own Identity"
+msgstr "Nueva identidad"
+
+#: configuredialog/configureappearancepage.cpp:816
 #, kde-format
 msgid "Message Window"
 msgstr "Ventana de mensajes"
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1000,92 +1008,92 @@ msgstr ""
 "Cerrar la ventana independiente de mensajes tras responder o reenviar el "
 "mensaje"
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:835
 #, kde-format
 msgid "System Tray"
 msgstr "Bandeja del sistema"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:841
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Activar icono en la bandeja del sistema"
 
-#: configuredialog/configureappearancepage.cpp:839
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Iniciar minimizado en la bandeja del sistema"
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:863
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Mostrar correo no leído en la barra de tareas"
 
-#: configuredialog/configureappearancepage.cpp:862
+#: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
 msgstr "Actividades de Plasma"
 
-#: configuredialog/configureappearancepage.cpp:867
+#: configuredialog/configureappearancepage.cpp:873
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Activar"
 
-#: configuredialog/configureappearancepage.cpp:930
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Etiq&uetas disponibles"
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:952
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Añadir nueva etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:948
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Eliminar la etiqueta seleccionada"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:966
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Incrementar la prioridad de la etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:972
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Disminuir la prioridad de la etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:987
+#: configuredialog/configureappearancepage.cpp:996
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Pre&ferencias de etiquetas"
 
-#: configuredialog/configureappearancepage.cpp:1037
+#: configuredialog/configureappearancepage.cpp:1046
 #, kde-format
 msgid "Delete"
 msgstr "Borrar"
 
-#: configuredialog/configureappearancepage.cpp:1167
+#: configuredialog/configureappearancepage.cpp:1176
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "¿Desea eliminar la etiqueta «%1»?"
 
-#: configuredialog/configureappearancepage.cpp:1168
+#: configuredialog/configureappearancepage.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Eliminar etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:1213
-#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1222
+#: configuredialog/configureappearancepage.cpp:1257
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "No podemos crear etiqueta. Una etiqueta con el mismo nombre ya existe."
@@ -4458,7 +4466,9 @@ msgstr ""
 "Motivo: %2"
 
 #: kmkernel.cpp:879
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Opening Autosave File Failed"
+msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "La apertura del archivo de autoguardado ha fallado"
 

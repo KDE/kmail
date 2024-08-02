@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2024-07-03 10:45+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -191,7 +191,9 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Er is een fout gevonden Wilt u het opnieuw verzenden?"
 
 #: sendlatermanager.cpp:194
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Error found"
+msgctxt "@title:window"
 msgid "Error found"
 msgstr "Fout gevonden"
 

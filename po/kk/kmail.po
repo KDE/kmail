@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1065,12 +1065,19 @@ msgstr ""
 msgid "Date Display:"
 msgstr "Күнін көрсету"
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:811
+#, fuzzy, kde-format
+#| msgid "New Identity"
+msgctxt "@option:check"
+msgid "Display Own Identity"
+msgstr "Жаңа іс-әлпеті"
+
+#: configuredialog/configureappearancepage.cpp:816
 #, kde-format
 msgid "Message Window"
 msgstr "Хат терезесі"
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:823
 #, fuzzy, kde-format
 #| msgid ""
 #| "Close the standalone message window after replying or forwarding the "
@@ -1081,103 +1088,103 @@ msgid ""
 msgstr ""
 "Хатқа жауап берген не оны басқаға жолдаған соң, бөлек хат терезесі жабылсын"
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:835
 #, kde-format
 msgid "System Tray"
 msgstr "Жүйелік сөре"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:841
 #, fuzzy, kde-format
 #| msgid "Enable system tray icon"
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Жүйелік сөреде таңбашасы болсын"
 
-#: configuredialog/configureappearancepage.cpp:839
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:863
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Оқылмаған пошта жүйелік сөреде көрсетілсін"
 
-#: configuredialog/configureappearancepage.cpp:862
+#: configuredialog/configureappearancepage.cpp:868
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgid "Plasma activities"
 msgstr "&Сүзгі журналы жүргізілсін"
 
-#: configuredialog/configureappearancepage.cpp:867
+#: configuredialog/configureappearancepage.cpp:873
 #, fuzzy, kde-format
 #| msgid "Enable"
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Рұқсат ету"
 
-#: configuredialog/configureappearancepage.cpp:930
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Қол жеткізер белгілер"
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:952
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Жаңа белгіні қосу"
 
-#: configuredialog/configureappearancepage.cpp:948
+#: configuredialog/configureappearancepage.cpp:957
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Таңдалған белгісін өшіру"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:966
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Белгінің басымдылығын көтеру"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Белгінің басымдылығын түсіру"
 
-#: configuredialog/configureappearancepage.cpp:987
+#: configuredialog/configureappearancepage.cpp:996
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "&Белгінің параметрлері"
 
-#: configuredialog/configureappearancepage.cpp:1037
+#: configuredialog/configureappearancepage.cpp:1046
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgid "Delete"
 msgstr "Өшіру"
 
-#: configuredialog/configureappearancepage.cpp:1167
+#: configuredialog/configureappearancepage.cpp:1176
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove tag '%1'?"
 msgstr "'%1' тіркелгісін өшірмексіз бе?"
 
-#: configuredialog/configureappearancepage.cpp:1168
+#: configuredialog/configureappearancepage.cpp:1177
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Өшіру"
 
-#: configuredialog/configureappearancepage.cpp:1213
-#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1222
+#: configuredialog/configureappearancepage.cpp:1257
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Тег-белгісі қойылмады. Осылай аталған белгі бар екен."
@@ -4765,7 +4772,9 @@ msgstr ""
 "Себебі: %2"
 
 #: kmkernel.cpp:879
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Opening Autosave File Failed"
+msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Автосақтау файлды ашу жаңылысы"
 

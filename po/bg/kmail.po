@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
 "PO-Revision-Date: 2024-07-27 21:59+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -1006,12 +1006,20 @@ msgstr ""
 msgid "Date Display:"
 msgstr "Показване на датата:"
 
-#: configuredialog/configureappearancepage.cpp:814
+#: configuredialog/configureappearancepage.cpp:811
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "New Identity"
+msgctxt "@option:check"
+msgid "Display Own Identity"
+msgstr "Нова самоличност"
+
+#: configuredialog/configureappearancepage.cpp:816
 #, kde-format
 msgid "Message Window"
 msgstr "Прозорец за съобщения"
 
-#: configuredialog/configureappearancepage.cpp:821
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -1020,96 +1028,96 @@ msgstr ""
 "Затваряне на прозореца на самостоятелното съобщение след отговор или "
 "препращане на съобщението"
 
-#: configuredialog/configureappearancepage.cpp:829
+#: configuredialog/configureappearancepage.cpp:835
 #, kde-format
 msgid "System Tray"
 msgstr "Системен поднос"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:841
 #, fuzzy, kde-format
 #| msgid "Enable system tray icon"
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Икона в системния панел"
 
-#: configuredialog/configureappearancepage.cpp:839
+#: configuredialog/configureappearancepage.cpp:845
 #, fuzzy, kde-format
 #| msgid "Start minimized to tray"
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Минимизиране в системната област при стартиране"
 
-#: configuredialog/configureappearancepage.cpp:857
+#: configuredialog/configureappearancepage.cpp:863
 #, fuzzy, kde-format
 #| msgid "Show unread email in Taskbar"
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Показване на непрочетени имейли в лентата на задачите"
 
-#: configuredialog/configureappearancepage.cpp:862
+#: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
 msgstr "Дейности на Plasma"
 
-#: configuredialog/configureappearancepage.cpp:867
+#: configuredialog/configureappearancepage.cpp:873
 #, fuzzy, kde-format
 #| msgid "Enable"
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Активиране"
 
-#: configuredialog/configureappearancepage.cpp:930
+#: configuredialog/configureappearancepage.cpp:939
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "&Налични тагове"
 
-#: configuredialog/configureappearancepage.cpp:943
+#: configuredialog/configureappearancepage.cpp:952
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Добавяне на нов таг"
 
-#: configuredialog/configureappearancepage.cpp:948
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Премахване на маркирания таг"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:966
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Увеличаване приоритета на тага"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:972
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Намаляване приоритета на тага"
 
-#: configuredialog/configureappearancepage.cpp:987
+#: configuredialog/configureappearancepage.cpp:996
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Настройки на &таг"
 
-#: configuredialog/configureappearancepage.cpp:1037
+#: configuredialog/configureappearancepage.cpp:1046
 #, kde-format
 msgid "Delete"
 msgstr "Изтриване"
 
-#: configuredialog/configureappearancepage.cpp:1167
+#: configuredialog/configureappearancepage.cpp:1176
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Искате ли да премахнете маркера \"%1\" ?"
 
-#: configuredialog/configureappearancepage.cpp:1168
+#: configuredialog/configureappearancepage.cpp:1177
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Премахване на етикет"
 
-#: configuredialog/configureappearancepage.cpp:1213
-#: configuredialog/configureappearancepage.cpp:1248
+#: configuredialog/configureappearancepage.cpp:1222
+#: configuredialog/configureappearancepage.cpp:1257
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Не можем да създадем етикет. Вече съществува етикет със същото име."
@@ -4501,7 +4509,9 @@ msgstr ""
 "Причина: %2"
 
 #: kmkernel.cpp:879
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Opening Autosave File Failed"
+msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Отварянето на файл с автоматично запазване е неуспешно"
 
