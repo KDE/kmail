@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-05-18 14:25+0200\n"
+"PO-Revision-Date: 2024-08-02 22:29+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -28,7 +28,7 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "ulysses@fsf.hu,griechisch.erika@gmail.com,kelemeng@gnome.hu,"
-"tszanto@interware.hu,urbalazs@gmail.com"
+"tszanto@interware.hu,ur.balazs@fsf.hu"
 
 #: about/introduction_kmail.html:5
 #, kde-format
@@ -395,11 +395,10 @@ msgid "Folder holds a mailing list"
 msgstr "A mappa levelezőlistát tartalmaz"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
-msgstr "Automatikus detektálás"
+msgstr "Automatikus felismerés"
 
 #: collectionpage/collectionmailinglistpage.cpp:74
 #, kde-format
@@ -417,11 +416,10 @@ msgid "Preferred handler:"
 msgstr "Elsődleges kezelőprogram:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
-msgstr "A kezelőprogram meghívása"
+msgstr "Kezelőprogram meghívása"
 
 #: collectionpage/collectionmailinglistpage.cpp:101
 #, kde-format
@@ -429,8 +427,7 @@ msgid "Address type:"
 msgstr "Címtípus:"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
-#, fuzzy, kde-format
-#| msgid "URL for mailing list posting:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "URL a listára íráshoz:"
@@ -486,22 +483,19 @@ msgstr ""
 "írja be a címeket kézzel."
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
 msgstr "Kvóta"
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, fuzzy, kde-format
-#| msgid "Usage:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Használt:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, fuzzy, kde-format
-#| msgid "Status:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Állapot:"
@@ -523,11 +517,7 @@ msgid "Shortcut"
 msgstr "Gyorsbillentyű"
 
 #: collectionpage/collectionshortcutpage.cpp:44
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>To choose a key or a combination of keys which select the current "
-#| "folder, click the button below and then press the key(s) you wish to "
-#| "associate with this folder.</qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "<qt>To choose a key or a combination of keys which select the current "
@@ -538,8 +528,7 @@ msgstr ""
 "alábbi gombra és nyomja le a kívánt billentyűkombinációt.</qt>"
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Sablonok"
@@ -603,8 +592,7 @@ msgid "LDAP server"
 msgstr "LDAP kiszolgáló"
 
 #: configuredialog/configureaccountpage.cpp:84
-#, fuzzy, kde-format
-#| msgid "Outgoing accounts (add at least one):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Üzenetküldési azonosítók (legalább egyet hozzon létre):"
@@ -665,14 +653,12 @@ msgid "Enable Undo Send"
 msgstr "Küldésvisszavonás engedélyezése"
 
 #: configuredialog/configureaccountpage.cpp:190
-#, fuzzy, kde-format
-#| msgid "Add Mail Account..."
+#, kde-format
 msgid "Add Mail Account…"
 msgstr "Levelezési fiók hozzáadása…"
 
 #: configuredialog/configureaccountpage.cpp:191
-#, fuzzy, kde-format
-#| msgid "Custom Account..."
+#, kde-format
 msgid "Custom Account…"
 msgstr "Saját fiók…"
 
@@ -706,8 +692,7 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "Váltás kapcsolat nélküli módba a KMail kikapcsolásakor"
 
 #: configuredialog/configureaccountpage.cpp:276
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Levelek keresése indításkor"
@@ -785,8 +770,7 @@ msgid "&Use custom fonts"
 msgstr "A betűtíp&usok testreszabása"
 
 #: configuredialog/configureappearancepage.cpp:172
-#, fuzzy, kde-format
-#| msgid "Apply &to:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Alkalm&azás erre:"
@@ -851,8 +835,7 @@ msgid "&Do not change color from original HTML mail"
 msgstr "Ne mó&dosítsa az eredeti HTML levél színét"
 
 #: configuredialog/configureappearancepage.cpp:363
-#, fuzzy, kde-format
-#| msgid "Close to quota threshold:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Közel a kvótahatár:"
@@ -930,12 +913,11 @@ msgid "Default theme:"
 msgstr "Alapértelmezett téma:"
 
 #: configuredialog/configureappearancepage.cpp:687
-#, fuzzy, kde-format
-#| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
-"<qt><a href=\"whatsthis1\">Segítség egyedi formátum megadásához...</a></qt>"
+"<qt><a href=\"whatsthis1\">Segítség egyedi formátum megadásához…</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:693
 #, kde-format
@@ -993,10 +975,7 @@ msgid "Message Window"
 msgstr "Üzenetablak"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -1025,10 +1004,9 @@ msgid "Show unread email in Taskbar"
 msgstr "Olvasatlan levél megjelenítése a feladatsávon"
 
 #: configuredialog/configureappearancepage.cpp:902
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgid "Plasma activities"
-msgstr "A szűrési műveletek napló&zása"
+msgstr "Plasma aktivitások"
 
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
@@ -1041,29 +1019,25 @@ msgid "A&vailable Tags"
 msgstr "A &választható címkék"
 
 #: configuredialog/configureappearancepage.cpp:987
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
-msgstr "Új címke"
+msgstr "Új címke hozzáadása"
 
 #: configuredialog/configureappearancepage.cpp:992
-#, fuzzy, kde-format
-#| msgid "Remove selected tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "A kijelölt címke törlése"
 
 #: configuredialog/configureappearancepage.cpp:1001
-#, fuzzy, kde-format
-#| msgid "Increase tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Címke prioritásának növelése"
 
 #: configuredialog/configureappearancepage.cpp:1007
-#, fuzzy, kde-format
-#| msgid "Decrease tag priority"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Címke prioritásának csökkentése"
@@ -1243,8 +1217,7 @@ msgid "Set the default forwarded message format"
 msgstr "Az alapértelmezett továbbított üzenetformátum beállítása"
 
 #: configuredialog/configurecomposerpage.cpp:300
-#, fuzzy, kde-format
-#| msgid "Default forwarding type:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Alapértelmezett továbbítási típus:"
@@ -1256,27 +1229,19 @@ msgid "Recipients"
 msgstr "Címzettek"
 
 #: configuredialog/configurecomposerpage.cpp:352
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Figyelmeztetés, ha túl sok címzett van megadva"
 
 #: configuredialog/configurecomposerpage.cpp:361
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "A címzettek maximális számának beállítása a figyelmeztetéshez"
 
 #: configuredialog/configurecomposerpage.cpp:379
-#, fuzzy, kde-format
-#| msgid ""
-#| "Only allow this many recipients to be specified for the message. This "
-#| "applies to doing a \"Reply to All\", entering recipients manually or "
-#| "using the \"Select...\" picker.  Setting this limit helps you to avoid "
-#| "accidentally sending a message to too many people.  Note, however, that "
-#| "it does not take account of distribution lists or mailing lists."
+#, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
 "applies to doing a \"Reply to All\", entering recipients manually or using "
@@ -1305,8 +1270,7 @@ msgid "No save"
 msgstr "Ne legyen mentés"
 
 #: configuredialog/configurecomposerpage.cpp:419
-#, fuzzy, kde-format
-#| msgid "Maximum recent addresses retained:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Megőrzött legutóbbi címek maximális értéke:"
@@ -1321,8 +1285,7 @@ msgstr ""
 "kiegészítéshez"
 
 #: configuredialog/configurecomposerpage.cpp:436
-#, fuzzy, kde-format
-#| msgid "Configure Completion..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Kiegészítés beállítása…"
@@ -1358,10 +1321,7 @@ msgstr "A tárgysor &előtagja válaszüzenetben"
 
 #: configuredialog/configurecomposerpage.cpp:669
 #: configuredialog/configurecomposerpage.cpp:699
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any sequence of the following prefixes (entries are case-"
-#| "insensitive regular expressions):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
@@ -1374,7 +1334,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:1024
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "Hozzáa&dás…"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
@@ -1384,10 +1344,9 @@ msgstr "Eltá&volítás"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Mod&ify…"
-msgstr "Módosítás…"
+msgstr "Mód&osítás…"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
@@ -1418,11 +1377,10 @@ msgstr "Eltá&volítás"
 #: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "Hozzáadás…"
 
 #: configuredialog/configurecomposerpage.cpp:705
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
 msgstr "Módosítás…"
 
@@ -1447,15 +1405,13 @@ msgid "&Use custom message-id suffix"
 msgstr "Egyéni üzenetazonosító-&utótag használata"
 
 #: configuredialog/configurecomposerpage.cpp:775
-#, fuzzy, kde-format
-#| msgid "Custom message-&id suffix:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Egyéni üzenet&azonosító-utótag:"
 
 #: configuredialog/configurecomposerpage.cpp:787
-#, fuzzy, kde-format
-#| msgid "Define custom mime header fields:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Egyéni MIME fejlécmezők definiálása:"
@@ -1479,8 +1435,7 @@ msgid "Ne&w"
 msgstr "Ú&j"
 
 #: configuredialog/configurecomposerpage.cpp:808
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Eltá&volítás"
@@ -1492,8 +1447,7 @@ msgid "&Name:"
 msgstr "&Név:"
 
 #: configuredialog/configurecomposerpage.cpp:827
-#, fuzzy, kde-format
-#| msgid "&Value:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "É&rték:"
@@ -1516,9 +1470,7 @@ msgid "E&nable detection of missing attachments"
 msgstr "A &hiányzó mellékletek felismerése"
 
 #: configuredialog/configurecomposerpage.cpp:1013
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any of the following key words as intention to attach a file:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Az alábbi kulcsszavak bármelyike fájlcsatolási szándékot jelez:"
@@ -1539,11 +1491,10 @@ msgid "Attachment Word:"
 msgstr "Mellékletszó:"
 
 #: configuredialog/configurecomposerpage.cpp:1034
-#, fuzzy, kde-format
-#| msgid "Maximum Attachment Size:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "Maximális mellékletméret"
+msgstr "Maximális mellékletméret:"
 
 #: configuredialog/configurecomposerpage.cpp:1041
 #, kde-format
@@ -1557,15 +1508,13 @@ msgid "No limit"
 msgstr "Nincs korlát"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Hozzáadás"
 
 #: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Eltávolítás"
@@ -1705,10 +1654,7 @@ msgid "GnuPG Settings"
 msgstr "GnuPG beállítások"
 
 #: configuredialog/configuresecuritypage.cpp:341
-#, fuzzy, kde-format
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1768,15 +1714,13 @@ msgid "Archive"
 msgstr "Archívum"
 
 #: dialog/archivefolderdialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "Ma&ppa:"
 
 #: dialog/archivefolderdialog.cpp:82
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "&Formátum:"
@@ -1802,8 +1746,7 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "GZ-vel tömörített Tar archívum (.tar.gz)"
 
 #: dialog/archivefolderdialog.cpp:97
-#, fuzzy, kde-format
-#| msgid "&Archive File:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "Ar&chívum:"
@@ -1848,18 +1791,16 @@ msgstr[0] "1 melléklet (%2)"
 msgstr[1] "%1 melléklet (%2)"
 
 #: editor/attachment/attachmentview.cpp:200
-#, fuzzy, kde-format
-#| msgid "Hide attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
-msgstr "A csatoláslista elrejtése"
+msgstr "Mellékletlista elrejtése"
 
 #: editor/attachment/attachmentview.cpp:202
-#, fuzzy, kde-format
-#| msgid "Show attachment list"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
-msgstr "A csatoláslista elrejtése"
+msgstr "Mellékletlista elrejtése"
 
 #: editor/kmcomposerwin.cpp:329 kmail_part.cpp:40 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:475 kontactplugin/kmail/kmail_plugin.cpp:41
@@ -1868,58 +1809,49 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:359
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Válassza ki az üzenet helyesírás-ellenőrzéséhez használandó szótárat"
 
 #: editor/kmcomposerwin.cpp:366
-#, fuzzy, kde-format
-#| msgid ""
-#| "Select the sent-mail folder where a copy of this message will be saved"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Válassza ki az elküldött üzenet mappát, ahova az üzenet másolata kerül"
 
 #: editor/kmcomposerwin.cpp:374
-#, fuzzy, kde-format
-#| msgid "Select the outgoing account to use for sending this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Válassza ki az üzenet küldéséhez használandó kimenő azonosítót"
 
 #: editor/kmcomposerwin.cpp:382
-#, fuzzy, kde-format
-#| msgid "Set the \"From:\" email address for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Az üzenet „Feladó:” mezőjének beállítása"
 
 #: editor/kmcomposerwin.cpp:410
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "Azonos&ító:"
 
 #: editor/kmcomposerwin.cpp:411
-#, fuzzy, kde-format
-#| msgid "&Dictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Szótár:"
 
 #: editor/kmcomposerwin.cpp:412
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Az elkül&dött üzenetek mappája:"
 
 #: editor/kmcomposerwin.cpp:413
-#, fuzzy, kde-format
-#| msgid "&Mail transport:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Üze&nettovábbítási mód:"
@@ -2004,8 +1936,7 @@ msgid "Save email as text or html file"
 msgstr "E-mail mentése szövegként vagy HTML-fájlként"
 
 #: editor/kmcomposerwin.cpp:1327
-#, fuzzy, kde-format
-#| msgid "&Insert Text File..."
+#, kde-format
 msgid "&Insert Text File…"
 msgstr "Szövegfájl &beszúrása…"
 
@@ -2030,37 +1961,31 @@ msgid "&New Composer"
 msgstr "Ú&j üzenet"
 
 #: editor/kmcomposerwin.cpp:1355
-#, fuzzy, kde-format
-#| msgid "Select Recipient"
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "Címzett kijelölése"
+msgstr "&Címzett kijelölése…"
 
 #: editor/kmcomposerwin.cpp:1358
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Save Distribution List"
+#, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
-msgstr "A címlista mentése"
+msgstr "Cí&mlista mentése…"
 
 #: editor/kmcomposerwin.cpp:1379
-#, fuzzy, kde-format
-#| msgid "Paste as Attac&hment"
+#, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Be&illesztés mellékletként"
 
 #: editor/kmcomposerwin.cpp:1383
-#, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
+#, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
-msgstr "A s&zóközök normalizálása"
+msgstr "S&zóközök normalizálása"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Állandó szé&lességű betűtípus"
@@ -2072,15 +1997,13 @@ msgid "&Urgent"
 msgstr "&Sürgős"
 
 #: editor/kmcomposerwin.cpp:1395
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "&Feldolgozási visszajelzés kérése"
 
 #: editor/kmcomposerwin.cpp:1399
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Kézbesítési visszaigazolás ké&rése"

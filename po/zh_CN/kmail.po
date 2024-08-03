@@ -997,7 +997,7 @@ msgstr "Plasma活动"
 #: configuredialog/configureappearancepage.cpp:907
 #, kde-format
 msgid "Enable"
-msgstr "启用"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:974
 #, kde-format
