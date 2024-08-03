@@ -189,8 +189,7 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "遇到错误。您想重新发送吗？"
 
 #: sendlatermanager.cpp:194
-#, fuzzy, kde-format
-#| msgid "Error found"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "发现错误"

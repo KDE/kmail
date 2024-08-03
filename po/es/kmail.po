@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-02 00:41+0000\n"
-"PO-Revision-Date: 2024-07-30 16:43+0200\n"
+"PO-Revision-Date: 2024-08-02 17:40+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -987,12 +987,10 @@ msgid "Date Display:"
 msgstr "Visor de fechas:"
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "Nueva identidad"
+msgstr "Mostrar identidad propia"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -4462,15 +4460,14 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
-"Ha fallado al abrir el archivo de autoguardado en %1.\n"
+"No se ha podido abrir el archivo para guardar automáticamente en %1.\n"
 "Motivo: %2"
 
 #: kmkernel.cpp:879
-#, fuzzy, kde-format
-#| msgid "Opening Autosave File Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
-msgstr "La apertura del archivo de autoguardado ha fallado"
+msgstr "La apertura del archivo para guardar automáticamente ha fallado"
 
 #: kmkernel.cpp:1439
 #, kde-format

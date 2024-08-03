@@ -128,9 +128,7 @@ msgid "Follow Up Reminder"
 msgstr "后续提醒"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "您仍然在等待此邮件的应答："
+msgstr ""

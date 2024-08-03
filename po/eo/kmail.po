@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-02 00:41+0000\n"
-"PO-Revision-Date: 2024-07-30 21:06+0200\n"
+"PO-Revision-Date: 2024-08-02 22:29+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -985,15 +985,13 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:706
 #, kde-format
 msgid "Date Display:"
-msgstr "Montro de la dato:"
+msgstr "Montro de Dato:"
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "Nova identeco"
+msgstr "Montru Propran Identecon"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -4425,15 +4423,14 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
-"Malsukcesis malfermi aŭtomatan konservadon ĉe %1.\n"
+"Malsukcesis malfermi aŭtokonservan dosieron ĉe %1.\n"
 "Kialo: %2"
 
 #: kmkernel.cpp:879
-#, fuzzy, kde-format
-#| msgid "Opening Autosave File Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
-msgstr "Malfermo de Aŭtomata Konservado de Dosiero Malsukcesis"
+msgstr "Malfermo de Aŭtokonserva Dosiero Malsukcesis"
 
 #: kmkernel.cpp:1439
 #, kde-format

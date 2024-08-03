@@ -30,8 +30,7 @@ msgid "Add Archive Mail"
 msgstr "添加存档邮件"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "归档全部子文件夹"
