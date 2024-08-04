@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-02 10:48+0300\n"
+"PO-Revision-Date: 2024-08-03 22:07+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1752,9 +1752,9 @@ msgid "Archive all subfolders"
 msgstr "אחסון כל תת־התיקיות בארכיון"
 
 #: dialog/archivefolderdialog.cpp:171
-#, fuzzy, kde-format
+#, kde-format
 msgid "Please select the folder that should be archived."
-msgstr "בחר את המפתח הציבורי שיש לצרף."
+msgstr "נא לבחור את התיקייה להעברה לארכיון."
 
 #: dialog/archivefolderdialog.cpp:171
 #, kde-format
@@ -2051,22 +2051,19 @@ msgid "&Dictionary"
 msgstr "מי&לון"
 
 #: editor/kmcomposerwin.cpp:1446
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr "תיקיית דואר &נשלח"
+msgstr "תיקיית דואר ש&נשלח"
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&תעבורת דוא״ל"
 
 #: editor/kmcomposerwin.cpp:1452
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&מאת"
@@ -4315,17 +4312,19 @@ msgid "Unable to start import wizard"
 msgstr "לא ניתן להפעיל את אשף הייבוא"
 
 #: kmlaunchexternalcomponent.cpp:117
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
-msgstr "אין אפשרות להפעיל את מנהל התעודות. בדוק את ההתקנה שלך."
+msgstr ""
+"לא ניתן להפעיל את התוכנית „PIM Data Exporter” (מייצא נתוני קשר). נא לבדוק "
+"שההתקנה שלך תקינה."
 
 #: kmlaunchexternalcomponent.cpp:119
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "אין אפשרות להפעיל את העורך החיצוני."
+msgstr "לא ניתן להפעיל את התוכנית „PIM Data Exporter” (מייצא נתוני קשר)"
 
 #: kmlaunchexternalcomponent.cpp:137
 #, kde-format
@@ -6741,9 +6740,9 @@ msgstr "ביטול בחירה"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Ask for action after dragging messages to another folder"
-msgstr "שאל לגבי הפעולה המבוקשת לאחר גרירת הודעות אל &תיקייה אחרת"
+msgstr "לשאול לגבי הפעולה המבוקשת לאחר גרירת הודעות ל&תיקייה אחרת"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EmptyTrashOnExit)
 #: ui/miscpagemaintab.ui:26
