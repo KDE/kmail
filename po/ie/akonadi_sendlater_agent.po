@@ -1,0 +1,221 @@
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+#
+# SPDX-FileCopyrightText: 2024 OIS <mistresssilvara@hotmail.com>
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"PO-Revision-Date: 2024-08-01 21:41+0700\n"
+"Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
+"Language-Team: Interlingue <>\n"
+"Language: ie\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 24.07.70\n"
+
+#: sendlaterconfiguredialog.cpp:33
+#, kde-format
+msgctxt "@title:window"
+msgid "Configure"
+msgstr ""
+
+#: sendlaterconfiguredialog.cpp:51
+#, fuzzy, kde-format
+msgid "Send Later Agent"
+msgstr "Reveni plu tard."
+
+#: sendlaterconfiguredialog.cpp:53
+#, fuzzy, kde-format
+msgid "Send emails later agent."
+msgstr "mistresssilvara@hotmail.com"
+
+#: sendlaterconfiguredialog.cpp:55
+#, fuzzy, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "(c) 1997-2019, Li developatores de Ark"
+
+#: sendlaterconfiguredialog.cpp:57
+#, fuzzy, kde-format
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterconfiguredialog.cpp:57
+#, kde-format
+msgid "Maintainer"
+msgstr "Mantenetor"
+
+#: sendlaterconfiguredialog.cpp:60
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "OIS"
+
+#: sendlaterconfiguredialog.cpp:60
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mistresssilvara@hotmail.com"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "To"
+msgstr "A"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "Subject"
+msgstr "Tema"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "Send around"
+msgstr ""
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "Recurrent"
+msgstr ""
+
+#: sendlaterconfigurewidget.cpp:58
+#, fuzzy, kde-format
+msgid "Message Id"
+msgstr "Proprietás de missage"
+
+#: sendlaterconfigurewidget.cpp:69
+#, fuzzy, kde-format
+msgid "No messages waiting…"
+msgstr "no"
+
+#: sendlaterconfigurewidget.cpp:94
+#, kde-format
+msgctxt "@action"
+msgid "Send now"
+msgstr "Inviar nu"
+
+#: sendlaterconfigurewidget.cpp:97
+#, kde-format
+msgctxt "@action"
+msgid "Delete"
+msgstr "Remover"
+
+#: sendlaterconfigurewidget.cpp:158
+#, kde-format
+msgid "Yes"
+msgstr "Yes"
+
+#: sendlaterconfigurewidget.cpp:158
+#, kde-format
+msgid "No"
+msgstr "No"
+
+#: sendlaterconfigurewidget.cpp:208
+#, fuzzy, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] ""
+"Li intern visor ne posse previder ti file<nl/>(%1).<nl/><nl/>Esque vu vole "
+"previder it quam un simplic textu?"
+msgstr[1] "Remover files"
+
+#: sendlaterconfigurewidget.cpp:209
+#, fuzzy, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr "Remover un file"
+
+#: sendlaterconfigurewidget.cpp:217
+#, fuzzy, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] "Proprietás de missage"
+msgstr[1] "Remover files"
+
+#: sendlaterconfigurewidget.cpp:218
+#, fuzzy, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr "Remover un file"
+
+#: sendlaterconfigurewidget.cpp:220
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr "Ne remover"
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, fuzzy, kde-format
+msgid "Not message found."
+msgstr "Proprietás de missage"
+
+#: sendlaterjob.cpp:67
+#, fuzzy, kde-format
+msgid "No message found."
+msgstr "Proprietás de missage"
+
+#: sendlaterjob.cpp:76
+#, fuzzy, kde-format
+msgid "Error during fetching message."
+msgstr "Proprietás de missage"
+
+#: sendlaterjob.cpp:82
+#, fuzzy, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "Proprietás de missage"
+
+#: sendlaterjob.cpp:87
+#, fuzzy, kde-format
+msgid "We can't create transport"
+msgstr "Adjunter un nov"
+
+#: sendlaterjob.cpp:94
+#, fuzzy, kde-format
+msgid "Message is not a real message"
+msgstr "Proprietás de missage"
+
+#: sendlaterjob.cpp:101
+#, fuzzy, kde-format
+msgid "Cannot send message."
+msgstr "Proprietás de missage"
+
+#: sendlaterjob.cpp:132
+#, fuzzy, kde-format
+msgid "Message sent"
+msgstr "Proprietás de missage"
+
+#: sendlatermanager.cpp:193
+#, fuzzy, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr ""
+"Un errore evenit extraente <filename>%1</filename>. Omni sequent archives ne "
+"va esser extraet."
+
+#: sendlatermanager.cpp:194
+#, fuzzy, kde-format
+msgctxt "@title:window"
+msgid "Error found"
+msgstr ""
+"Un errore evenit extraente <filename>%1</filename>. Omni sequent archives ne "
+"va esser extraet."
+
+#: sendlatermanager.cpp:195
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr "Inviar denov"
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify…"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "Remover"
