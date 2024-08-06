@@ -14,14 +14,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-07-04 13:59+0200\n"
+"PO-Revision-Date: 2024-08-02 12:45+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -2196,7 +2196,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
-msgstr "Oculta la barra de menús"
+msgstr "Ocultació de la barra de menús"
 
 #: editor/kmcomposerwin.cpp:1693 editor/kmcomposerwin.cpp:4024
 #, kde-format
@@ -3954,8 +3954,8 @@ msgstr ""
 "<qt>Segur que voleu suprimir la carpeta buida <resource>%1</resource> i "
 "totes les seues subcarpetes? Estes subcarpetes podrien no estar buides i els "
 "seus continguts també seran descartats. <p><b>Cal tindre en compte</b> que "
-"els missatges descartats no es guardaran a dins de la carpeta Paperera i "
-"seran eliminats de forma permanent.</p></qt>"
+"els missatges descartats no es guardaran a dins de la carpeta Paperera i se "
+"suprimiran de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:85
 #, kde-format
@@ -3966,8 +3966,8 @@ msgid ""
 msgstr ""
 "<qt>Segur que voleu suprimir la carpeta <resource>%1</resource>, i descartar "
 "tot el seu contingut? <p><b>Cal tindre en compte</b> que els missatges "
-"descartats no es guardaran a dins de la carpeta Paperera i seran eliminats "
-"de forma permanent.</p></qt>"
+"descartats no es guardaran a dins de la carpeta Paperera i se suprimiran de "
+"forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:92
 #, kde-format
@@ -3980,7 +3980,7 @@ msgstr ""
 "<qt>Segur que voleu suprimir la carpeta buida <resource>%1</resource> i "
 "totes les seues subcarpetes, descartant tot el seu contingut? <p><b>Cal "
 "tindre en compte</b> que els missatges descartats no es guardaran a dins de "
-"la carpeta Paperera i seran eliminats de forma permanent.</p></qt>"
+"la carpeta Paperera i se suprimiran de forma permanent.</p></qt>"
 
 #: job/removecollectionjob.cpp:99
 #, kde-format
