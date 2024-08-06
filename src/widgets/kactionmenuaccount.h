@@ -43,6 +43,7 @@ private:
     void updateAccountMenu();
     void slotCheckTransportMenu();
     void slotSelectAccount(QAction *act);
+    void forceUpdateAccountMenu();
 
     QStringList mOrderIdentifier;
     bool mInitialized = false;

@@ -19,9 +19,9 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
     setPopupMode(QToolButton::DelayedPopup);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuAccount::slotCheckTransportMenu);
     connect(menu(), &QMenu::triggered, this, &KActionMenuAccount::slotSelectAccount);
-    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceNameChanged, this, &KActionMenuAccount::updateAccountMenu);
-    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KActionMenuAccount::updateAccountMenu);
-    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KActionMenuAccount::updateAccountMenu);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceNameChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KActionMenuAccount::forceUpdateAccountMenu);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KActionMenuAccount::forceUpdateAccountMenu);
 }
 
 KActionMenuAccount::~KActionMenuAccount() = default;
@@ -56,6 +56,11 @@ void KActionMenuAccount::slotSelectAccount(QAction *act)
     } else {
         qCDebug(KMAIL_LOG) << "account with identifier" << act->data().toString() << "not found";
     }
+}
+
+void KActionMenuAccount::forceUpdateAccountMenu()
+{
+    mInitialized = false;
 }
 
 void KActionMenuAccount::slotCheckTransportMenu()
