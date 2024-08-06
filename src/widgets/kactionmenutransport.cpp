@@ -8,7 +8,9 @@
 #include "config-kmail.h"
 #include <MailTransport/TransportManager>
 #include <QMenu>
-// TODO add plasma activities support
+#if HAVE_ACTIVITY_SUPPORT
+#include "activities/transportactivities.h"
+#endif
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)
 {
@@ -43,9 +45,15 @@ void KActionMenuTransport::updateTransportMenu()
         QMap<QString, int> menuTransportLst;
 
         for (MailTransport::Transport *transport : transports) {
+#if HAVE_ACTIVITY_SUPPORT
+            if (mTransportActivities) {
+                if (mTransportActivities->hasActivitySupport() && !mTransportActivities->filterAcceptsRow(transport->activities())) {
+                    break;
+                }
+            }
+#endif
             const QString name = transport->name().replace(QLatin1Char('&'), QStringLiteral("&&"));
             menuTransportLst.insert(name, transport->id());
-            // TODO use it transport->activities();
         }
         QMapIterator<QString, int> i(menuTransportLst);
         while (i.hasNext()) {
