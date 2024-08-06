@@ -10,6 +10,7 @@
 
 // KMail includes
 #include "kmmainwidget.h"
+#include "config-kmail.h"
 #include "editor/composer.h"
 #include "job/clearcachejobinfolderandsubfolderjob.h"
 #include "job/composenewmessagejob.h"
@@ -156,6 +157,9 @@
 #include <QStatusBar>
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
+#if HAVE_ACTIVITY_SUPPORT
+#include <activities/activitiesmanager.h>
+#endif
 
 #include <KColorSchemeManager>
 #include <QDBusConnection>
@@ -2933,6 +2937,9 @@ void KMMainWidget::setupActions()
     mAccountActionMenu = new KActionMenuAccount(this);
     mAccountActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-receive")));
     mAccountActionMenu->setText(i18n("Check Mail In"));
+#if HAVE_ACTIVITY_SUPPORT
+    mAccountActionMenu->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
+#endif
 
     mAccountActionMenu->setIconText(i18n("Check Mail"));
     mAccountActionMenu->setToolTip(i18nc("@info:tooltip", "Check Mail"));
@@ -2953,6 +2960,9 @@ void KMMainWidget::setupActions()
     mSendActionMenu = new KActionMenuTransport(this);
     mSendActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
     mSendActionMenu->setText(i18n("Send Queued Messages Via"));
+#if HAVE_ACTIVITY_SUPPORT
+    mSendActionMenu->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
+#endif
     actionCollection()->addAction(QStringLiteral("send_queued_via"), mSendActionMenu);
 
     connect(mSendActionMenu, &KActionMenuTransport::transportSelected, this, &KMMainWidget::slotSendQueuedVia);
