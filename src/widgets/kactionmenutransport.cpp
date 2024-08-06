@@ -57,7 +57,7 @@ void KActionMenuTransport::updateTransportMenu()
 #if HAVE_ACTIVITY_SUPPORT
             if (mTransportActivities) {
                 if (mTransportActivities->hasActivitySupport() && !mTransportActivities->filterAcceptsRow(transport->activities())) {
-                    break;
+                    continue;
                 }
             }
 #endif
