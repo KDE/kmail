@@ -30,6 +30,7 @@ KActionMenuAccount::~KActionMenuAccount() = default;
 void KActionMenuAccount::setAccountActivitiesAbstract(AccountActivities *activities)
 {
     mAccountActivities = activities;
+    connect(mAccountActivities, &AccountActivities::activitiesChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
 }
 #endif
 
