@@ -23,7 +23,7 @@ public:
     explicit KActionMenuTransport(QObject *parent = nullptr);
     ~KActionMenuTransport() override;
 #if HAVE_ACTIVITY_SUPPORT
-    void setIdentityActivitiesAbstract(TransportActivities *activities);
+    void setTransportActivitiesAbstract(TransportActivities *activities);
 #endif
 Q_SIGNALS:
     void transportSelected(MailTransport::Transport *transport);
@@ -32,6 +32,7 @@ private:
     KMAIL_NO_EXPORT void updateTransportMenu();
     KMAIL_NO_EXPORT void slotCheckTransportMenu();
     KMAIL_NO_EXPORT void slotSelectTransport(QAction *act);
+    KMAIL_NO_EXPORT void forceUpdateTransportMenu();
 
     bool mInitialized = false;
 #if HAVE_ACTIVITY_SUPPORT

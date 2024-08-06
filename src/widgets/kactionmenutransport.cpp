@@ -15,7 +15,10 @@ KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)
 {
     setPopupMode(QToolButton::DelayedPopup);
-    connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportsChanged, this, &KActionMenuTransport::updateTransportMenu);
+    connect(MailTransport::TransportManager::self(),
+            &MailTransport::TransportManager::transportsChanged,
+            this,
+            &KActionMenuTransport::forceUpdateTransportMenu);
     connect(menu(), &QMenu::aboutToShow, this, &KActionMenuTransport::slotCheckTransportMenu);
     connect(menu(), &QMenu::triggered, this, &KActionMenuTransport::slotSelectTransport);
 }
@@ -31,11 +34,17 @@ void KActionMenuTransport::slotCheckTransportMenu()
 }
 
 #if HAVE_ACTIVITY_SUPPORT
-void KActionMenuTransport::setIdentityActivitiesAbstract(TransportActivities *activities)
+void KActionMenuTransport::setTransportActivitiesAbstract(TransportActivities *activities)
 {
     mTransportActivities = activities;
+    connect(mTransportActivities, &TransportActivities::activitiesChanged, this, &KActionMenuTransport::forceUpdateTransportMenu);
 }
 #endif
+
+void KActionMenuTransport::forceUpdateTransportMenu()
+{
+    mInitialized = false;
+}
 
 void KActionMenuTransport::updateTransportMenu()
 {
