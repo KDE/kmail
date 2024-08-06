@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "config-kmail.h"
 #include <KActionMenu>
 
 class AgentIdentifier
@@ -24,7 +25,9 @@ public:
     QString mName;
     int mIndex = -1;
 };
-
+#if HAVE_ACTIVITY_SUPPORT
+class AccountActivities;
+#endif
 class KActionMenuAccount : public KActionMenu
 {
     Q_OBJECT
@@ -33,7 +36,9 @@ public:
     ~KActionMenuAccount() override;
 
     void setAccountOrder(const QStringList &identifier);
-
+#if HAVE_ACTIVITY_SUPPORT
+    void setAccountActivitiesAbstract(AccountActivities *activities);
+#endif
 private:
     void updateAccountMenu();
     void slotCheckTransportMenu();
@@ -41,4 +46,7 @@ private:
 
     QStringList mOrderIdentifier;
     bool mInitialized = false;
+#if HAVE_ACTIVITY_SUPPORT
+    AccountActivities *mAccountActivities = nullptr;
+#endif
 };

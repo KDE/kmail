@@ -10,7 +10,9 @@
 #include <Akonadi/AgentManager>
 #include <MailCommon/MailUtil>
 #include <QMenu>
-// TODO add plasma activities support
+#if HAVE_ACTIVITY_SUPPORT
+#include "activities/accountactivities.h"
+#endif
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
     : KActionMenu(parent)
 {
@@ -23,6 +25,13 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
 }
 
 KActionMenuAccount::~KActionMenuAccount() = default;
+
+#if HAVE_ACTIVITY_SUPPORT
+void KActionMenuAccount::setAccountActivitiesAbstract(AccountActivities *activities)
+{
+    mAccountActivities = activities;
+}
+#endif
 
 void KActionMenuAccount::setAccountOrder(const QStringList &identifier)
 {
