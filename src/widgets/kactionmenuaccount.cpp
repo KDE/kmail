@@ -87,6 +87,15 @@ void KActionMenuAccount::updateAccountMenu()
         agentIdentifierList.reserve(lst.count());
 
         for (const Akonadi::AgentInstance &type : lst) {
+#if HAVE_ACTIVITY_SUPPORT
+#if 0 // TODO
+            if (mAccountActivities && mAccountActivities->hasActivitySupport()) {
+                if (mAccountActivities->filterAcceptsRow()) {
+                    // TODO
+                }
+            }
+#endif
+#endif
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
             const QString identifierName = type.identifier();
