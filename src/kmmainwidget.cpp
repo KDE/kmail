@@ -158,7 +158,7 @@
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
 #if HAVE_ACTIVITY_SUPPORT
-#include <activities/activitiesmanager.h>
+#include "activities/activitiesmanager.h"
 #endif
 
 #include <KColorSchemeManager>
