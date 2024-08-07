@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-03 22:07+0300\n"
+"PO-Revision-Date: 2024-08-06 10:56+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6326,7 +6326,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:96
 #, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr ""
+msgstr "הצגת כמות ההודעות שלא נקראו בסרגל המשימות"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.in:100
@@ -6370,7 +6370,7 @@ msgstr "לאפשר כדי להתחיל בתיקייה מסוימת"
 #: settings/kmail.kcfg.in:126
 #, kde-format
 msgid "Specify the folder to open when the program is started"
-msgstr ""
+msgstr "לציין את התיקייה לפתיחה עם טעינת התוכנית"
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg.in:160
@@ -6379,6 +6379,8 @@ msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
 "email accounts are detected. We only ever ask once."
 msgstr ""
+"האם לשאול אם משתמשים רוצים להפעיל תיבות דוא״ל אחודות אם זוהתה יותר מתיבת "
+"דוא״ל אחרת. אנו נשאל רק פעם אחת."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
 #: settings/kmail.kcfg.in:168
@@ -6386,7 +6388,7 @@ msgstr ""
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
-msgstr ""
+msgstr "הערך הזה משמש להחליט האם מסך קבלת הפנים של KMail יופיע."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:175
@@ -6415,6 +6417,8 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
+"אם מספר הנמענים גדול מהערך הזה, KMail יזהיר ויבקש אישור טרום שליחת ההודעה. "
+"אפשר לכבות את האזהרה."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:209
@@ -6518,7 +6522,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane next to the message list"
-msgstr ""
+msgstr "הצגת חלונית תצוגה מקדימה של הודעה ליד רשימת ההודעות"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:347
@@ -6572,7 +6576,7 @@ msgstr "סימני ציטוט"
 #: settings/kmail.kcfg.in:397
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
-msgstr ""
+msgstr "לציין את המדיניות בשימוש בהצגת מדיניות"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
 #, kde-format
@@ -6772,7 +6776,7 @@ msgstr "ב&כניסה לתיקייה:"
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
-msgstr ""
+msgstr "ה&חרגת הודעות חשובות מתפוגה"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
