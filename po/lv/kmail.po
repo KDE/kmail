@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"POT-Creation-Date: 2024-08-07 00:40+0000\n"
 "PO-Revision-Date: 2024-05-26 23:25+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -1790,7 +1790,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Mapes arhivēšana"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3629
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3639
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -2040,7 +2040,7 @@ msgstr "&Ievietot teksta datni…"
 msgid "&Insert Recent Text File"
 msgstr "&Ievietot neseno teksta datni"
 
-#: editor/kmcomposerwin.cpp:1341 kmmainwidget.cpp:2962
+#: editor/kmcomposerwin.cpp:1341 kmmainwidget.cpp:2972
 #, kde-format
 msgid "&Address Book"
 msgstr "&Adrešu grāmata"
@@ -4317,7 +4317,7 @@ msgid "F&older"
 msgstr "&Mape"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3478 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3488 kmmainwin.rc:134
 #: kmmainwin.rc:291
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4349,7 +4349,7 @@ msgid "&Forward"
 msgstr "Pā&rsūtīt"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3294 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3304 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&Pielietot filtru"
@@ -4505,12 +4505,12 @@ msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "„KMail“ ir pārslēgta nesaistes režīmā. Visas tīkla darbības tiek atliktas"
 
-#: kmkernel.cpp:645 kmmainwidget.cpp:2463 kmmainwidget.cpp:2478
+#: kmkernel.cpp:645 kmmainwidget.cpp:2467 kmmainwidget.cpp:2482
 #, kde-format
 msgid "Send Email"
 msgstr "Nosūtīt e-pastu"
 
-#: kmkernel.cpp:646 kmmainwidget.cpp:2464 kmmainwidget.cpp:2479
+#: kmkernel.cpp:646 kmmainwidget.cpp:2468 kmmainwidget.cpp:2483
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Nav iespējams nosūtīt e-pastu"
@@ -4701,87 +4701,87 @@ msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Neizdevās palaist „ImportWizard“"
 
-#: kmmainwidget.cpp:303
+#: kmmainwidget.cpp:307
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 "Sistēmā atrasts cits e-pasta piegādātājs. Vai vēlaties no tā importēt datus?"
 
-#: kmmainwidget.cpp:306
+#: kmmainwidget.cpp:310
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "Importēt"
 
-#: kmmainwidget.cpp:307
+#: kmmainwidget.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "Neimportēt"
 
-#: kmmainwidget.cpp:312
+#: kmmainwidget.cpp:316
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "Neizdevās palaist importēšanas vedni. Pārbaudiet instalāciju."
 
-#: kmmainwidget.cpp:314
+#: kmmainwidget.cpp:318
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Neizdevās palaist importēšanas vedni"
 
-#: kmmainwidget.cpp:1383
+#: kmmainwidget.cpp:1387
 #, kde-format
 msgid "No Subject"
 msgstr "Nav temata"
 
-#: kmmainwidget.cpp:1396
+#: kmmainwidget.cpp:1400
 #, kde-format
 msgid "(no templates)"
 msgstr "(nav veidņu)"
 
-#: kmmainwidget.cpp:1448
+#: kmmainwidget.cpp:1452
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Šai mapei nav novecošanas iestatījumu"
 
-#: kmmainwidget.cpp:1454
+#: kmmainwidget.cpp:1458
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Vai tiešām vēlaties dzēst vēstules ar beigušos derīgumu no mapes <b>%1</"
 "b>?</qt>"
 
-#: kmmainwidget.cpp:1455
+#: kmmainwidget.cpp:1459
 #, kde-format
 msgid "Expire Folder"
 msgstr "Dzēst vecas vēstules no mapes"
 
-#: kmmainwidget.cpp:1455
+#: kmmainwidget.cpp:1459
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Dzēst pēc derīguma"
 
-#: kmmainwidget.cpp:1472
+#: kmmainwidget.cpp:1476
 #, fuzzy, kde-format
 #| msgid "Empty Trash"
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Iztukšot atkritni"
 
-#: kmmainwidget.cpp:1472
+#: kmmainwidget.cpp:1476
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Pārvietot uz atkritni"
 
-#: kmmainwidget.cpp:1473
+#: kmmainwidget.cpp:1477
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Vai tiešām vēlaties iztukšot atkritnes mapi?"
 
-#: kmmainwidget.cpp:1475
+#: kmmainwidget.cpp:1479
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4790,30 +4790,30 @@ msgstr ""
 "<qt>Vai tiešām vēlaties pārvietot visas vēstules no mapes<b>%1</b> uz "
 "atkritni?</qt>"
 
-#: kmmainwidget.cpp:1498
+#: kmmainwidget.cpp:1502
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Visas vēstules pārvietotas uz atkritni"
 
-#: kmmainwidget.cpp:1552
+#: kmmainwidget.cpp:1556
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr ""
 "Vai tiešām vēlaties dzēst visas vecās vēstules, kurām beidzies noteiktais "
 "derīgums?"
 
-#: kmmainwidget.cpp:1553
+#: kmmainwidget.cpp:1557
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "Dzēst vecās vēstules?"
 
-#: kmmainwidget.cpp:1554
+#: kmmainwidget.cpp:1558
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Dzēst pēc derīguma"
 
-#: kmmainwidget.cpp:1579
+#: kmmainwidget.cpp:1583
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4824,19 +4824,19 @@ msgstr ""
 "sūtītājiem un palielina iespēju ka jūsu sistēma tiks uzlauzta, izmantojot "
 "kādu esošu vai nākotnes drošības ievainojamību."
 
-#: kmmainwidget.cpp:1582 kmmainwidget.cpp:4775
+#: kmmainwidget.cpp:1586 kmmainwidget.cpp:4785
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Drošības brīdinājums"
 
-#: kmmainwidget.cpp:1583
+#: kmmainwidget.cpp:1587
 #, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Ielādēt ārējās atsauces"
 
-#: kmmainwidget.cpp:1656
+#: kmmainwidget.cpp:1660
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4854,139 +4854,139 @@ msgstr[2] ""
 "<qt>Vai tiešām vēlaties dzēst izvēlētās %1 vēstules?<br />Pēc dzēšanas tās "
 "nebūs iespējams atjaunot.</qt>"
 
-#: kmmainwidget.cpp:1661
+#: kmmainwidget.cpp:1665
 #, fuzzy, kde-format
 #| msgid "Delete Messages"
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Dzēst vēstules"
 
-#: kmmainwidget.cpp:1661
+#: kmmainwidget.cpp:1665
 #, fuzzy, kde-format
 #| msgid "Delete Message"
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Izdzēst vēstuli"
 
-#: kmmainwidget.cpp:1676
+#: kmmainwidget.cpp:1680
 #, kde-format
 msgid "Moving messages…"
 msgstr "Pārvieto vēstules…"
 
-#: kmmainwidget.cpp:1678 kmmainwidget.cpp:1872
+#: kmmainwidget.cpp:1682 kmmainwidget.cpp:1876
 #, kde-format
 msgid "Deleting messages…"
 msgstr "Dzēš vēstules…"
 
-#: kmmainwidget.cpp:1693 kmmainwidget.cpp:1892
+#: kmmainwidget.cpp:1697 kmmainwidget.cpp:1896
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "Vēstules veiksmīgi izdzēstas."
 
-#: kmmainwidget.cpp:1695
+#: kmmainwidget.cpp:1699
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "Vēstules veiksmīgi pārvietotas."
 
-#: kmmainwidget.cpp:1700 kmmainwidget.cpp:1905
+#: kmmainwidget.cpp:1704 kmmainwidget.cpp:1909
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "Neizdevās izdzēst vēstules."
 
-#: kmmainwidget.cpp:1702 kmmainwidget.cpp:1918
+#: kmmainwidget.cpp:1706 kmmainwidget.cpp:1922
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "Vēstuļu dzēšana atcelta."
 
-#: kmmainwidget.cpp:1706
+#: kmmainwidget.cpp:1710
 #, kde-format
 msgid "Moving messages failed."
 msgstr "Neizdevās pārvietot vēstules."
 
-#: kmmainwidget.cpp:1708
+#: kmmainwidget.cpp:1712
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "Vēstuļu pārvietošana atcelta."
 
-#: kmmainwidget.cpp:1774
+#: kmmainwidget.cpp:1778
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "Pārvietot vēstules uz mapi"
 
-#: kmmainwidget.cpp:1801
+#: kmmainwidget.cpp:1805
 #, kde-format
 msgid "Copying messages…"
 msgstr "Kopē vēstules…"
 
-#: kmmainwidget.cpp:1809
+#: kmmainwidget.cpp:1813
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "Vēstules ir veiksmīgi nokopētas."
 
-#: kmmainwidget.cpp:1812
+#: kmmainwidget.cpp:1816
 #, kde-format
 msgid "Copying messages failed."
 msgstr "Neizdevās nokopēt vēstules."
 
-#: kmmainwidget.cpp:1814
+#: kmmainwidget.cpp:1818
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "Vēstuļu kopēšana atcelta."
 
-#: kmmainwidget.cpp:1824
+#: kmmainwidget.cpp:1828
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Kopēt vēstules uz mapi"
 
-#: kmmainwidget.cpp:1869
+#: kmmainwidget.cpp:1873
 #, kde-format
 msgid "Moving messages to trash…"
 msgstr "Pārvieto vēstules uz atkritni…"
 
-#: kmmainwidget.cpp:1876
+#: kmmainwidget.cpp:1880
 #, kde-format
 msgid "Deleting and moving messages to trash…"
 msgstr "Dzēš un pārvieto vēstules uz atkritni…"
 
-#: kmmainwidget.cpp:1889
+#: kmmainwidget.cpp:1893
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Vēstules veiksmīgi pārvietotas uz atkritni."
 
-#: kmmainwidget.cpp:1896
+#: kmmainwidget.cpp:1900
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Vēstules veiksmīgi pārvietotas uz atkritni vai dzēstas"
 
-#: kmmainwidget.cpp:1902
+#: kmmainwidget.cpp:1906
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Neizdevās pārvietot vēstules uz atkritni."
 
-#: kmmainwidget.cpp:1909
+#: kmmainwidget.cpp:1913
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "Neizdevās vēstules dzēst vai pārvietot uz atkritni."
 
-#: kmmainwidget.cpp:1915
+#: kmmainwidget.cpp:1919
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Vēstuļu pārvietošana uz atkritni ir atcelta."
 
-#: kmmainwidget.cpp:1922
+#: kmmainwidget.cpp:1926
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Vēstuļu dzēšana vai pārvietošana uz atkritni ir atcelta."
 
-#: kmmainwidget.cpp:2203
+#: kmmainwidget.cpp:2207
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Pāriet uz mapi"
 
-#: kmmainwidget.cpp:2395
+#: kmmainwidget.cpp:2399
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -5004,7 +5004,7 @@ msgstr[2] ""
 "Atlasītas ir tikai šifrētas vēstules. Šobrīd nav iespējams dzēst šifrētas "
 "vēstules pielikumus."
 
-#: kmmainwidget.cpp:2398
+#: kmmainwidget.cpp:2402
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -5013,7 +5013,7 @@ msgstr[0] "Dzēst šifrētas vēstules pielikumu"
 msgstr[1] "Dzēst šifrētu vēstuļu pielikumus"
 msgstr[2] "Dzēst šifrētu vēstuļu pielikumus"
 
-#: kmmainwidget.cpp:2403
+#: kmmainwidget.cpp:2407
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -5031,7 +5031,7 @@ msgstr[2] ""
 "<html><p>Vai tiešām vēlaties dzēst visus %1 izvēlēto vēstuļu pielikumus?<br /"
 ">Pēc dzēšanas tos vairs nevarēs atjaunot.</p></html>"
 
-#: kmmainwidget.cpp:2410
+#: kmmainwidget.cpp:2414
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
@@ -5040,7 +5040,7 @@ msgstr ""
 "<html><p>Ievērojiet, ka pielikumu dzēšana no kriptogrāfiski parakstītas "
 "vēstules tās parakstu padarīs nederīgu.</p></html>"
 
-#: kmmainwidget.cpp:2415
+#: kmmainwidget.cpp:2419
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
@@ -5049,480 +5049,480 @@ msgstr ""
 "<html><p>Šobrīd nav iespējams dzēst pielikumus un šifrētām vēstulēm.<br /"
 ">Šifrētās vēstules tiks ignorētas.</p></html>"
 
-#: kmmainwidget.cpp:2420
+#: kmmainwidget.cpp:2424
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "Dzēst pielikumus"
 
-#: kmmainwidget.cpp:2449
+#: kmmainwidget.cpp:2453
 #, kde-format
 msgid "Work Offline"
 msgstr "Strādāt nesaistē"
 
-#: kmmainwidget.cpp:2452
+#: kmmainwidget.cpp:2456
 #, kde-format
 msgid "Work Online"
 msgstr "Strādāt tiešsaistē"
 
-#: kmmainwidget.cpp:2911
+#: kmmainwidget.cpp:2915
 #, kde-format
 msgid "Save &As…"
 msgstr "Saglabāt &kā…"
 
-#: kmmainwidget.cpp:2922
+#: kmmainwidget.cpp:2926
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Dzēst &novecojušo no visām mapēm"
 
-#: kmmainwidget.cpp:2927
+#: kmmainwidget.cpp:2931
 #, kde-format
 msgid "Check &Mail"
 msgstr "&Pārbaudīt pastu"
 
-#: kmmainwidget.cpp:2935
+#: kmmainwidget.cpp:2939
 #, kde-format
 msgid "Check Mail In"
 msgstr "Pārbaudīt pastu no"
 
-#: kmmainwidget.cpp:2937
+#: kmmainwidget.cpp:2944
 #, kde-format
 msgid "Check Mail"
 msgstr "Pārbaudīt pastu"
 
-#: kmmainwidget.cpp:2938
+#: kmmainwidget.cpp:2945
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Pārbaudīt pastu"
 
-#: kmmainwidget.cpp:2942
+#: kmmainwidget.cpp:2949
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "No&sūtīt ierindotās vēstules"
 
-#: kmmainwidget.cpp:2950
+#: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Tiešsaistes statuss (nezināms)"
 
-#: kmmainwidget.cpp:2955
+#: kmmainwidget.cpp:2962
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Nosūtīt ierindotās vēstules ar"
 
-#: kmmainwidget.cpp:2971
+#: kmmainwidget.cpp:2981
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Sertifikātu pārvaldnieks"
 
-#: kmmainwidget.cpp:2981
+#: kmmainwidget.cpp:2991
 #, kde-format
 msgid "&Import Messages…"
 msgstr "&Importēt vēstules…"
 
-#: kmmainwidget.cpp:2991
+#: kmmainwidget.cpp:3001
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "Atkļū&dot „Sieve“…"
 
-#: kmmainwidget.cpp:2998
+#: kmmainwidget.cpp:3008
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Filtru žurnāla skatītājs…"
 
-#: kmmainwidget.cpp:3003
+#: kmmainwidget.cpp:3013
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Paziņojumu vēsture…"
 
-#: kmmainwidget.cpp:3008
+#: kmmainwidget.cpp:3018
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&Importēt no cita e-pasta klienta…"
 
-#: kmmainwidget.cpp:3013
+#: kmmainwidget.cpp:3023
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Rediģēt „Neesmu birojā“ atbildes…"
 
-#: kmmainwidget.cpp:3019
+#: kmmainwidget.cpp:3029
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "Ko&nfigurēt automātisko arhivēšanu…"
 
-#: kmmainwidget.cpp:3025
+#: kmmainwidget.cpp:3035
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Atliktās vēstules…"
 
-#: kmmainwidget.cpp:3031
+#: kmmainwidget.cpp:3041
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Vēstuļu atgādinājumi…"
 
-#: kmmainwidget.cpp:3042 util.cpp:149
+#: kmmainwidget.cpp:3052 util.cpp:149
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Dzēst"
 
-#: kmmainwidget.cpp:3047
+#: kmmainwidget.cpp:3057
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Pārviet&ot pavedienu uz atkritni"
 
-#: kmmainwidget.cpp:3051
+#: kmmainwidget.cpp:3061
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Pārvietot pavedienu uz atkritni"
 
-#: kmmainwidget.cpp:3054 kmmainwidget.cpp:4113
+#: kmmainwidget.cpp:3064 kmmainwidget.cpp:4123
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Dzēst pa&vedienu"
 
-#: kmmainwidget.cpp:3060 kmmainwidget.cpp:4115
+#: kmmainwidget.cpp:3070 kmmainwidget.cpp:4125
 #, kde-format
 msgid "&Find Messages…"
 msgstr "&Atrast vēstules…"
 
-#: kmmainwidget.cpp:3065
+#: kmmainwidget.cpp:3075
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Atlasīt &visas vēstules"
 
-#: kmmainwidget.cpp:3072
+#: kmmainwidget.cpp:3082
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Vēst&kopu pārvaldība…"
 
-#: kmmainwidget.cpp:3080
+#: kmmainwidget.cpp:3090
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "&Notīrīt „Akonadi“ kešatmiņu…"
 
-#: kmmainwidget.cpp:3085
+#: kmmainwidget.cpp:3095
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "&Notīrīt „Akonadi“ kešatmiņu šajā mapē un visās tās apakšmapēs"
 
-#: kmmainwidget.cpp:3090
+#: kmmainwidget.cpp:3100
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "&Piešķirt saīsni…"
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3118
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "Nove&cošanās iestatījumi"
 
-#: kmmainwidget.cpp:3133
+#: kmmainwidget.cpp:3143
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Mapes &arhivēšana…"
 
-#: kmmainwidget.cpp:3141
+#: kmmainwidget.cpp:3151
 #, fuzzy, kde-format
 #| msgid "Load E&xternal References"
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Ielādēt ā&rējās saites"
 
-#: kmmainwidget.cpp:3164
+#: kmmainwidget.cpp:3174
 #, kde-format
 msgid "Copy Message To…"
 msgstr "Kopēt vēstuli uz..."
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3176
 #, kde-format
 msgid "Move Message To…"
 msgstr "Pārvietot vēstuli uz…"
 
-#: kmmainwidget.cpp:3171
+#: kmmainwidget.cpp:3181
 #, kde-format
 msgid "&New Message…"
 msgstr "&Jauna vēstule"
 
-#: kmmainwidget.cpp:3173
+#: kmmainwidget.cpp:3183
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Jauna"
 
-#: kmmainwidget.cpp:3181
+#: kmmainwidget.cpp:3191
 #, kde-format
 msgid "Message From &Template"
 msgstr "&Vēstule no veidnes"
 
-#: kmmainwidget.cpp:3187
+#: kmmainwidget.cpp:3197
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "Jauna vēstule vēstk&opai…"
 
-#: kmmainwidget.cpp:3193
+#: kmmainwidget.cpp:3203
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Izveidot filtru"
 
-#: kmmainwidget.cpp:3197
+#: kmmainwidget.cpp:3207
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Filtrēt pēc &temata…"
 
-#: kmmainwidget.cpp:3204
+#: kmmainwidget.cpp:3214
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Filtrēt pēc &sūtītāja…"
 
-#: kmmainwidget.cpp:3210
+#: kmmainwidget.cpp:3220
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Filtru pēc &saņēmēja……"
 
-#: kmmainwidget.cpp:3216
+#: kmmainwidget.cpp:3226
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Filtrēt pēc &CC lauka…"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgid "Mark &Thread"
 msgstr "A&tzīmēt pavedienu"
 
-#: kmmainwidget.cpp:3233
+#: kmmainwidget.cpp:3243
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Atzīmēt pavedienu kā &lasītu"
 
-#: kmmainwidget.cpp:3236
+#: kmmainwidget.cpp:3246
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Atzīmēt visas vēstules izvēlētajā pavedienā kā lasītas"
 
-#: kmmainwidget.cpp:3239
+#: kmmainwidget.cpp:3249
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "At&zīmēt pavedienu kā nelasītu"
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Atzīmēt visas vēstules izvēlētajā pavedienā kā nelasītas"
 
-#: kmmainwidget.cpp:3248
+#: kmmainwidget.cpp:3258
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Atzī&mēt pavedienu kā svarīgu"
 
-#: kmmainwidget.cpp:3251
+#: kmmainwidget.cpp:3261
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "&Noņemt pavedienam „svarīgs“ iezīmi"
 
-#: kmmainwidget.cpp:3254
+#: kmmainwidget.cpp:3264
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Atzīmēt pavedienu kā d&arāmu"
 
-#: kmmainwidget.cpp:3257
+#: kmmainwidget.cpp:3267
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Noņemt pavedienam „&Darāms“ iezīmi"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&Vērot pavedienu"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3275
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Ignorēt pavedienu"
 
-#: kmmainwidget.cpp:3273 kmreadermainwin.cpp:486
+#: kmmainwidget.cpp:3283 kmreadermainwin.cpp:486
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Saglabāt &pielikumus…"
 
-#: kmmainwidget.cpp:3277
+#: kmmainwidget.cpp:3287
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Dzēst visus pielikumus"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "Kopēt atšifrētu uz…"
 
-#: kmmainwidget.cpp:3289
+#: kmmainwidget.cpp:3299
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Pielietot visus &filtrus"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3308
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Izvērst pav&edienu / grupu"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3311
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Izvērst aktīvo pavedienu vai grupu"
 
-#: kmmainwidget.cpp:3305
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Sakļaut pavedienu / grupu"
 
-#: kmmainwidget.cpp:3308
+#: kmmainwidget.cpp:3318
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Sakļaut aktīvo pavedienu vai grupu"
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Izvērst visus &pavedienus"
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3325
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Izvēst visus pavedienus aktīvajā mapē"
 
-#: kmmainwidget.cpp:3319
+#: kmmainwidget.cpp:3329
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Sa&kļaut visus pavedienus"
 
-#: kmmainwidget.cpp:3322
+#: kmmainwidget.cpp:3332
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Sakļaut visus pavedienus aktīvajā mapē"
 
-#: kmmainwidget.cpp:3326
+#: kmmainwidget.cpp:3336
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "Pa&rādīt vēstuli"
 
-#: kmmainwidget.cpp:3333
+#: kmmainwidget.cpp:3343
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Nākamā vēstule"
 
-#: kmmainwidget.cpp:3336
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgid "Go to the next message"
 msgstr "Doties uz nākamo vēstuli"
 
-#: kmmainwidget.cpp:3340
+#: kmmainwidget.cpp:3350
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Nākamā ne&lasītā vēstule"
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3358
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Nākamā"
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3359
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Doties uz nākamo nelasīto vēstuli"
 
-#: kmmainwidget.cpp:3353
+#: kmmainwidget.cpp:3363
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "Ie&priekšējā vēstule"
 
-#: kmmainwidget.cpp:3355
+#: kmmainwidget.cpp:3365
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Doties uz iepriekšējo vēstuli"
 
-#: kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3370
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "&Iepriekšējā nelasītā vēstule"
 
-#: kmmainwidget.cpp:3368
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Iepriekšējā"
 
-#: kmmainwidget.cpp:3369
+#: kmmainwidget.cpp:3379
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Doties uz iepriekšējo nelasīto vēstuli"
 
-#: kmmainwidget.cpp:3373
+#: kmmainwidget.cpp:3383
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Nākamā nelasītā &mape"
 
-#: kmmainwidget.cpp:3379
+#: kmmainwidget.cpp:3389
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Doties uz nākamo mapi ar nelasītām vēstulēm"
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3392
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Iepriekšējā nelasītā m&ape"
 
-#: kmmainwidget.cpp:3388
+#: kmmainwidget.cpp:3398
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Doties uz iepriekšējo mapi ar nelasītām vēstulēm"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3402
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Nākamais nelasītais &teksts"
 
-#: kmmainwidget.cpp:3395
+#: kmmainwidget.cpp:3405
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Doties uz nākamo nelasīto tekstu"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3407
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5531,271 +5531,271 @@ msgstr ""
 "Ritina uz priekšu aktīvo vēstuli. Kad sasniegtas tās beigas, dodas uz nākamo "
 "nelasīto vēstuli."
 
-#: kmmainwidget.cpp:3405
+#: kmmainwidget.cpp:3415
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "Konfigurēt &filtrus…"
 
-#: kmmainwidget.cpp:3411
+#: kmmainwidget.cpp:3421
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Pārvaldīt „Sieve“ skriptus…"
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3426
 #, kde-format
 msgid "&Add Account…"
 msgstr "&Pievienot kontu…"
 
-#: kmmainwidget.cpp:3421
+#: kmmainwidget.cpp:3431
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "&Ievads programmā „KMail“"
 
-#: kmmainwidget.cpp:3423
+#: kmmainwidget.cpp:3433
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Parāda „KMail“ ievada lapu"
 
-#: kmmainwidget.cpp:3430
+#: kmmainwidget.cpp:3440
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "Ko&nfigurēt paziņojumus…"
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3447
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "&Konfigurēt „KMail“…"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3454
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Dzēst pēc derīguma…"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Pievienot mapi iecienītajām…"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Serverside Subscription…"
 msgstr "Servera puses pieraksts…"
 
-#: kmmainwidget.cpp:3462 kmmainwidget.cpp:3470
+#: kmmainwidget.cpp:3472 kmmainwidget.cpp:3480
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Pielietot visus filtrus"
 
-#: kmmainwidget.cpp:3483
+#: kmmainwidget.cpp:3493
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Pielietot filtrus mapei un tās apakšmapēm"
 
-#: kmmainwidget.cpp:3488
+#: kmmainwidget.cpp:3498
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "Importēt/eksportēt „KMail“ datus…"
 
-#: kmmainwidget.cpp:3494
+#: kmmainwidget.cpp:3504
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "Jauns adrešu grāmatas kontakts…"
 
-#: kmmainwidget.cpp:3502 kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:3512 kmmainwidget.cpp:4164
 #, kde-format
 msgid "Account &Settings"
 msgstr "&Konta iestatījumi"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3516
 #, kde-format
 msgid "Restart Account"
 msgstr "Pārstartēt kontu"
 
-#: kmmainwidget.cpp:3522
+#: kmmainwidget.cpp:3532
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Kopēt vēstuli uz mapi"
 
-#: kmmainwidget.cpp:3528
+#: kmmainwidget.cpp:3538
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "Pāriet uz mapi…"
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3544
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Pārtraukt aktīvo darbību"
 
-#: kmmainwidget.cpp:3540
+#: kmmainwidget.cpp:3550
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Pāriet uz nākamo mapi"
 
-#: kmmainwidget.cpp:3546
+#: kmmainwidget.cpp:3556
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Pāriet uz iepriekšējo mapi"
 
-#: kmmainwidget.cpp:3552
+#: kmmainwidget.cpp:3562
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Atlasīt aktīvo mapi"
 
-#: kmmainwidget.cpp:3559
+#: kmmainwidget.cpp:3569
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Pāriet uz pirmo mapi"
 
-#: kmmainwidget.cpp:3565
+#: kmmainwidget.cpp:3575
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Pāriet uz pēdējo mapi"
 
-#: kmmainwidget.cpp:3571
+#: kmmainwidget.cpp:3581
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Pāriet uz nākamo vēstuli"
 
-#: kmmainwidget.cpp:3577
+#: kmmainwidget.cpp:3587
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Pāriet uz iepriekšējo vēstuli"
 
-#: kmmainwidget.cpp:3583
+#: kmmainwidget.cpp:3593
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Atlasīt pirmo vēstuli"
 
-#: kmmainwidget.cpp:3589
+#: kmmainwidget.cpp:3599
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Atlasīt pēdējo vēstuli"
 
-#: kmmainwidget.cpp:3595
+#: kmmainwidget.cpp:3605
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Atlasīt aktīvo vēstuli"
 
-#: kmmainwidget.cpp:3602
+#: kmmainwidget.cpp:3612
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Padarīt aktīvu ātro meklēšanu"
 
-#: kmmainwidget.cpp:3610
+#: kmmainwidget.cpp:3620
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Paplašināt atlasi uz iepriekšējo vēstuli"
 
-#: kmmainwidget.cpp:3616
+#: kmmainwidget.cpp:3626
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Paplašināt atlasi uz nākamo vēstuli"
 
-#: kmmainwidget.cpp:3623
+#: kmmainwidget.cpp:3633
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Pārvietot vēstuli uz mapi"
 
-#: kmmainwidget.cpp:3633
+#: kmmainwidget.cpp:3643
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Marķēt visas vēstules šajā mapē un visās apakšmapēs kā izlasītas"
 
-#: kmmainwidget.cpp:3638
+#: kmmainwidget.cpp:3648
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Noņemtu dublikātus šajā mapē un tās apakšmapēs"
 
-#: kmmainwidget.cpp:3644
+#: kmmainwidget.cpp:3654
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Iepriekšējā atlasītā mape"
 
-#: kmmainwidget.cpp:3651
+#: kmmainwidget.cpp:3661
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Nākamā atlasītā mape"
 
-#: kmmainwidget.cpp:3680
+#: kmmainwidget.cpp:3690
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Pievienot mapi iecienītajām"
 
-#: kmmainwidget.cpp:4101
+#: kmmainwidget.cpp:4111
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Dzēst meklēšanu"
 
-#: kmmainwidget.cpp:4113
+#: kmmainwidget.cpp:4123
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Pārviet&ot pavedienu uz atkritni"
 
-#: kmmainwidget.cpp:4115
+#: kmmainwidget.cpp:4125
 #, kde-format
 msgid "Edit Search…"
 msgstr "Rediģēt meklēšanu…"
 
-#: kmmainwidget.cpp:4152
+#: kmmainwidget.cpp:4162
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Konfigurēt apvienoto e-pasta kastīti"
 
-#: kmmainwidget.cpp:4163
+#: kmmainwidget.cpp:4173
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Iztukšot &atkritni"
 
-#: kmmainwidget.cpp:4163
+#: kmmainwidget.cpp:4173
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Pārvietot visas vēstules uz atkritni"
 
-#: kmmainwidget.cpp:4237
+#: kmmainwidget.cpp:4247
 #, kde-format
 msgid "&Undo"
 msgstr "&Atsaukt"
 
-#: kmmainwidget.cpp:4239
+#: kmmainwidget.cpp:4249
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Atsaukt: „%1“"
 
-#: kmmainwidget.cpp:4296
+#: kmmainwidget.cpp:4306
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtrēt %1"
 
-#: kmmainwidget.cpp:4764
+#: kmmainwidget.cpp:4774
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Meklē… <%1>"
 
-#: kmmainwidget.cpp:4772
+#: kmmainwidget.cpp:4782
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5806,13 +5806,13 @@ msgstr ""
 "palielina iespēju ka jūsu sistēma tiks uzlauzta izmantojot kādu esošu vai "
 "nākotnes drošības ievainojamību."
 
-#: kmmainwidget.cpp:4776
+#: kmmainwidget.cpp:4786
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Izmantot HTML"
 
-#: kmmainwidget.cpp:4922
+#: kmmainwidget.cpp:4932
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5827,42 +5827,42 @@ msgstr ""
 "Apvienotās e-pasta kastītes varat konfigurēt, izveidot pielāgotas vai\n"
 "šo funkciju pilnībā izslēgt „KMail“ spraudņu iestatījumos."
 
-#: kmmainwidget.cpp:4925
+#: kmmainwidget.cpp:4935
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Vai ieslēgt apvienotās e-pastu kastītes?"
 
-#: kmmainwidget.cpp:4926
+#: kmmainwidget.cpp:4936
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Ieslēgt apvienotās e-pastu kastītes"
 
-#: kmmainwidget.cpp:4927
+#: kmmainwidget.cpp:4937
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Atcelt"
 
-#: kmmainwidget.cpp:4962
+#: kmmainwidget.cpp:4972
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Vai tiešām vēlaties pārstartēt „Akonadi“?"
 
-#: kmmainwidget.cpp:4963
+#: kmmainwidget.cpp:4973
 #, fuzzy, kde-format
 #| msgid "Restart Akonadi"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Pārstartēt „Akonadi“"
 
-#: kmmainwidget.cpp:4964
+#: kmmainwidget.cpp:4974
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Pārstartēt"
 
-#: kmmainwidget.cpp:4971
+#: kmmainwidget.cpp:4981
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "„Akonadi“ ir pārstartēts."
