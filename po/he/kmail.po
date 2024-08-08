@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-06 10:56+0300\n"
+"PO-Revision-Date: 2024-08-07 13:30+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1985,10 +1985,10 @@ msgid "&Urgent"
 msgstr "&דחוף"
 
 #: editor/kmcomposerwin.cpp:1395
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "רשימת ההודעות"
+msgstr "&בקשת הודעת תנועת הודעה"
 
 #: editor/kmcomposerwin.cpp:1399
 #, kde-format
