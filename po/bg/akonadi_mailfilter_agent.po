@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-05 15:58+0200\n"
+"PO-Revision-Date: 2024-08-07 20:03+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: filterlogdialog.cpp:45
@@ -30,11 +30,10 @@ msgid "Share…"
 msgstr "Споделяне…"
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
-msgstr "&Регистрация на филтърни дейности"
+msgstr "&Регистриране в дневник на филтърни дейности"
 
 #: filterlogdialog.cpp:90
 #, kde-format
@@ -52,18 +51,16 @@ msgid "Logging Details"
 msgstr "Подробности за регистриране"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
-msgstr "Описание на схемата на дневника"
+msgstr "Регистриране в дневник на шаблон на описанието"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
-msgstr "Филтърен дневник и &правила за оценка"
+msgstr "Регистриране в дневник на филтърни шаблони"
 
 #: filterlogdialog.cpp:111
 #, kde-format
@@ -81,18 +78,16 @@ msgstr ""
 "всички правила на един филтър."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr "Схема на оценка на филтърен дневник"
+msgstr "Регистриране в дневник на филтърни шаблони"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
-msgstr "Действия на филтърен дневник"
+msgstr "Регистриране в дневник на филтърни действие"
 
 #: filterlogdialog.cpp:133
 #, kde-format
