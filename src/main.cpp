@@ -143,7 +143,6 @@ int main(int argc, char *argv[])
     KLocalizedString::setApplicationDomain(QByteArrayLiteral("kmail"));
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
-    KCrash::initialize();
 
 #if HAVE_STYLE_MANAGER
     KStyleManager::initStyle();
@@ -155,6 +154,7 @@ int main(int argc, char *argv[])
 
     KMail::AboutData about;
     app.setAboutData(about);
+    KCrash::initialize();
 
     QCommandLineParser *cmdArgs = app.cmdArgs();
     kmail_options(cmdArgs);

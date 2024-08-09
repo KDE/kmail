@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain(QByteArrayLiteral("ktnef"));
-    KCrash::initialize();
 
     KAboutData aboutData(QStringLiteral("ktnef"),
                          i18n("KTnef"),
@@ -39,6 +38,7 @@ int main(int argc, char *argv[])
     aboutData.addAuthor(i18nc("@info:credit", "Allen Winter"), i18n("Author, Ported to Qt4/KDE4"), QStringLiteral("winter@kde.org"));
 
     KAboutData::setApplicationData(aboutData);
+    KCrash::initialize();
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QApplication::applicationDisplayName());
