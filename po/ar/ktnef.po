@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-08-10 02:39+0000\n"
 "PO-Revision-Date: 2024-06-26 18:31+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -262,17 +262,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "الحجم"
 
-#: main.cpp:31
+#: main.cpp:30
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:33
+#: main.cpp:32
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "عارض مرفقات البريد باستخدام تنسيق TNEF"
 
-#: main.cpp:35
+#: main.cpp:34
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -281,24 +281,24 @@ msgstr ""
 "الحقوق محفوظة 2000   Michael Goffioul \n"
 "الحقوق محفوظة 2012  Allen Winter "
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "مايكل جوفيول"
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgid "Author"
 msgstr "المؤلف "
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "ألين وينتر"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "المؤلف، نُقل إلى Qt4/KDE4"

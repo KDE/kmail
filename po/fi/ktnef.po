@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-08-10 02:39+0000\n"
 "PO-Revision-Date: 2021-08-18 19:15+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -277,17 +277,17 @@ msgstr "Koko"
 
 # pmap: =:gen=KTnefin:
 # pmap: =:elat=KTnefistä:
-#: main.cpp:31
+#: main.cpp:30
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:33
+#: main.cpp:32
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "TNEF-muotoisten sähköpostiliitteiden katselin"
 
-#: main.cpp:35
+#: main.cpp:34
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -296,26 +296,26 @@ msgstr ""
 "Tekijänoikeudet © 2000 Michael Goffioul\n"
 "Tekijänoikeudet © 2012 Allen Winter"
 
-#: main.cpp:37
+#: main.cpp:36
 #, fuzzy, kde-format
 #| msgid "Michael Goffioul"
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgid "Author"
 msgstr "Tekijä"
 
-#: main.cpp:39
+#: main.cpp:38
 #, fuzzy, kde-format
 #| msgid "Allen Winter"
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Tekijä, sovitus Qt4:ään/KDE4:ään"

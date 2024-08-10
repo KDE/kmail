@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-08-10 02:39+0000\n"
 "PO-Revision-Date: 2024-07-05 15:58+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -258,17 +258,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "Големина"
 
-#: main.cpp:31
+#: main.cpp:30
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:33
+#: main.cpp:32
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "Преглед на прикачени файлове с използване на TNEF формат"
 
-#: main.cpp:35
+#: main.cpp:34
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -277,24 +277,24 @@ msgstr ""
 "Copyright 2000 Michael Goffioul \n"
 "Copyright 2012  Allen Winter"
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgid "Author"
 msgstr "Автор"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Автор, разработено за Qt4/KDE4"

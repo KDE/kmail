@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-08-10 02:39+0000\n"
 "PO-Revision-Date: 2013-10-23 13:25+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -273,17 +273,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "Velicina"
 
-#: main.cpp:31
+#: main.cpp:30
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:33
+#: main.cpp:32
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "Pregledač priloga poruke koji koristi TNEF format"
 
-#: main.cpp:35
+#: main.cpp:34
 #, fuzzy, kde-format
 #| msgid ""
 #| "Copyright 2000 Michael Goffioul\n"
@@ -295,26 +295,26 @@ msgstr ""
 "Copyright 2000 Michael Goffioul\n"
 "Copyright 2012  Allen Winter"
 
-#: main.cpp:37
+#: main.cpp:36
 #, fuzzy, kde-format
 #| msgid "Michael Goffioul"
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgid "Author"
 msgstr "Autor"
 
-#: main.cpp:39
+#: main.cpp:38
 #, fuzzy, kde-format
 #| msgid "Allen Winter"
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Autor, prebacio na Qt4/KDE4"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-08-10 02:39+0000\n"
 "PO-Revision-Date: 2024-08-02 22:24+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -260,17 +260,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "Méret"
 
-#: main.cpp:31
+#: main.cpp:30
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:33
+#: main.cpp:32
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "Megjelenítő TNEF formátumot használó levélcsatolmányokhoz"
 
-#: main.cpp:35
+#: main.cpp:34
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -279,24 +279,24 @@ msgstr ""
 "Copyright Michael Goffioul, 2000. \n"
 "Copyright Allen Winter, 2012."
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:37
+#: main.cpp:36
 #, kde-format
 msgid "Author"
 msgstr "Szerző"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:39
+#: main.cpp:38
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Szerző, portolás Qt4/KDE4 alá"
