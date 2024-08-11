@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-07 13:30+0300\n"
+"PO-Revision-Date: 2024-08-10 23:19+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -838,7 +838,7 @@ msgstr "מ&חזור צבעים בציטוט עמוק"
 #: configuredialog/configureappearancepage.cpp:326
 #, kde-format
 msgid "&Do not change color from original HTML mail"
-msgstr ""
+msgstr "&לא לשנות את הצבע מהודעת ה־HTML המקורית"
 
 #: configuredialog/configureappearancepage.cpp:363
 #, kde-format
@@ -2044,8 +2044,7 @@ msgid "&Identity"
 msgstr "&זהות"
 
 #: editor/kmcomposerwin.cpp:1443
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "מי&לון"
@@ -5770,7 +5769,7 @@ msgstr "הודעות חדשות"
 #: kontactplugin/kmail/summarywidget.cpp:141
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
-msgstr ""
+msgstr "<qt><b>%1</b><br/>סך הכול: %2<br/>לא נקראו: %3</qt>"
 
 #: kontactplugin/kmail/summarywidget.cpp:155
 #, kde-format
