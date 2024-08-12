@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-07 00:40+0000\n"
-"PO-Revision-Date: 2024-08-10 23:19+0300\n"
+"PO-Revision-Date: 2024-08-11 10:36+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3136,7 +3136,7 @@ msgstr "מפתח חתימת OpenPGP:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "להשתמש באותו מפתח להצפנה ולחתימה"
 
 #: identity/identitydialog.cpp:471
 #, kde-format
@@ -3671,12 +3671,12 @@ msgstr "&שכפול זהות קיימת"
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
 msgid "Face"
-msgstr ""
+msgstr "Face (פנים)"
 
 #: identity/xfaceconfigurator.cpp:41
 #, kde-format
 msgid "X-Face"
-msgstr ""
+msgstr "X-Face (פנים בשחור לבן)"
 
 #: identity/xfaceconfigurator.cpp:42
 #, kde-format
@@ -3704,12 +3704,12 @@ msgstr "לא תישלח תמונה."
 #: identity/xfaceconfigurator.cpp:128
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
-msgstr ""
+msgstr "KMail ישלח תמונה צבעונית דרך כותרת Face (פנים)."
 
 #: identity/xfaceconfigurator.cpp:131
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
-msgstr ""
+msgstr "KMail ישלח תמונה בשחור לבן דרך כותרת X-Face (פנים בשחור לבן)."
 
 #: identity/xfaceconfigurator.cpp:134
 #, kde-format
@@ -3997,6 +3997,8 @@ msgstr "הצגת אפשרויות זמינות למשוב משתמש"
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
+"שליחת הודעה ל־‚address’ (כתובת) או לצרף את הקובץ אליו מצביע ה־‚URL’ (כתובת "
+"אתר)"
 
 #. i18n: ectx: Menu (file)
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
@@ -4046,7 +4048,7 @@ msgstr "החלת מסננים על תיקייה"
 #: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:296
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
-msgstr ""
+msgstr "החלת המסננים על התיקייה ועל כל תת־תיקיותיה"
 
 #. i18n: ectx: Menu (file)
 #. i18n: ectx: Menu (message)
@@ -4105,13 +4107,13 @@ msgid "Please wait"
 msgstr "נא להמתין"
 
 #: kmcommands.cpp:306 kmcommands.cpp:377
-#, fuzzy, kde-format
+#, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
-msgstr[0] "נא המתן בעת שההודעה מועברת"
-msgstr[1] "נא המתן בעת ש%1- ההודעות מועברות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "נא להמתין להעברת ההודעה הזאת"
+msgstr[1] "נא להמתין להעברת שתי הההודעות האלו"
+msgstr[2] "נא להמתין להעברת %1 הההודעות האלו"
+msgstr[3] "נא להמתין להעברת %1 הההודעות האלו"
 
 #: kmcommands.cpp:525
 #, kde-format
@@ -4146,6 +4148,8 @@ msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
+"להעביר את ההודעות הנבחרות כקבצים מצורפים בהודעה אחת (כתקציר MIME) או כהודעות "
+"נפרדות?"
 
 #: kmcommands.cpp:931
 #, kde-format
@@ -7253,7 +7257,7 @@ msgstr "הגדרות GnuPG…"
 #: ui/securitypageencryptiontab.ui:386
 #, kde-format
 msgid "Re-enable All \"Do not Ask Again\" Warnings"
-msgstr ""
+msgstr "להפעיל מחדש את כל האזהרות עם „לא לשאול שוב”"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: ui/securitypagegeneraltab.ui:23
@@ -7370,6 +7374,7 @@ msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
 "techniques used to deceive you"
 msgstr ""
+"KMail יכול לנתח הודעות לאיתור הונאות דוא״ל על ידי חיפוש טכניקות הטעיה נפוצות"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
 #: ui/securitypagegeneraltab.ui:110
