@@ -5,7 +5,6 @@
 */
 
 #include "kactionmenutransport.h"
-#include "config-kmail.h"
 #include <MailTransport/TransportManager>
 #include <QMenu>
 #if HAVE_ACTIVITY_SUPPORT

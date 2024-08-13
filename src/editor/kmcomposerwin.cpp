@@ -68,8 +68,6 @@
 #include <KIdentityManagementCore/Signature>
 #include <KIdentityManagementWidgets/IdentityCombo>
 
-#include <KMime/Message>
-
 #include <KPIMTextEdit/RichTextComposerActions>
 #include <KPIMTextEdit/RichTextComposerControler>
 #include <KPIMTextEdit/RichTextComposerImages>

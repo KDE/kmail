@@ -49,7 +49,6 @@ using namespace Qt::Literals::StringLiterals;
 #include <KIdentityManagementCore/IdentityManager>
 
 #include <KMime/MDN>
-#include <KMime/Message>
 
 #include <Akonadi/ItemCopyJob>
 #include <Akonadi/ItemCreateJob>

@@ -49,7 +49,6 @@ using namespace Qt::Literals::StringLiterals;
 #include <Akonadi/ContactSearchJob>
 #include <KActionCollection>
 #include <KEmailAddress>
-#include <KMime/Message>
 #include <WebEngineViewer/WebHitTestResult>
 
 #include <Akonadi/ItemCopyJob>
