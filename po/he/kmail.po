@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-07 00:40+0000\n"
-"PO-Revision-Date: 2024-08-11 10:36+0300\n"
+"PO-Revision-Date: 2024-08-12 08:38+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1164,11 +1164,12 @@ msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
+"הוספת מפריד החתימות שתואם ל־RFC (שני מינוסים ורווח בשורה נפרדת) לפני החתימה"
 
 #: configuredialog/configurecomposerpage.cpp:167
 #, kde-format
 msgid "When replying, do not quote any existing signature"
-msgstr ""
+msgstr "בעת כתיבת תגובה, לא לצטט חתימות מהמקור"
 
 #: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
@@ -1182,6 +1183,8 @@ msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
+"בעת כתיבת תגובה, לצטט רק את הטקסט הנבחר (במקום את ההודעה במלואה), אם נבחר "
+"טקסט בחלון ההודעה."
 
 #: configuredialog/configurecomposerpage.cpp:194
 #, kde-format
@@ -1194,7 +1197,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:205
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
-msgstr ""
+msgstr "הפעלת גלישת מילים אוטומטית ברוחב שצוין"
 
 #: configuredialog/configurecomposerpage.cpp:216
 #, kde-format
@@ -1229,7 +1232,7 @@ msgstr "כצרופה"
 #: configuredialog/configurecomposerpage.cpp:260
 #, kde-format
 msgid "Set the default forwarded message format"
-msgstr ""
+msgstr "הגדרת תבנית ההודעה המועברת כברירת מחדל"
 
 #: configuredialog/configurecomposerpage.cpp:264
 #, kde-format
