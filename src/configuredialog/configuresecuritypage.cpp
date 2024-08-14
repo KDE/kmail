@@ -26,12 +26,14 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KMessageBox>
 #include <KPluginMetaData>
 
+#include <KLocalization>
 #include <KWindowConfig>
 #include <QButtonGroup>
 #include <QDBusConnection>
 #include <QPointer>
 #include <QWhatsThis>
 #include <QWindow>
+#include <ki18n_version.h>
 
 QString SecurityPage::helpAnchor() const
 {
@@ -231,10 +233,10 @@ SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
     connect(mWidget->warnUnencryptedCB, &QCheckBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
 
     connect(mWidget->warnGroupBox, &QGroupBox::toggled, this, &SecurityPageEncryptionTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrOwnKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrKeyExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrChainCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
-    connect(mWidget->mWarnEncrRootCertExpiresSB, &KPluralHandlingSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrOwnKeyExpiresSB, &QSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrKeyExpiresSB, &QSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrChainCertExpiresSB, &QSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
+    connect(mWidget->mWarnEncrRootCertExpiresSB, &QSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
 
     connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotConfigureGnupg);
     connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotReenableAllWarningsClicked);
@@ -274,13 +276,16 @@ void SecurityPageEncryptionTab::doLoadOther()
     mWidget->warnGroupBox->setChecked(MessageComposer::MessageComposerSettings::self()->cryptoWarnWhenNearExpire());
 
     loadWidget(mWidget->mWarnEncrOwnKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnOwnEncrKeyNearExpiryThresholdDaysItem());
-    mWidget->mWarnEncrOwnKeyExpiresSB->setSuffix(ki18np(" day", " days"));
     loadWidget(mWidget->mWarnEncrKeyExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrKeyNearExpiryThresholdDaysItem());
-    mWidget->mWarnEncrKeyExpiresSB->setSuffix(ki18np(" day", " days"));
     loadWidget(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
-    mWidget->mWarnEncrChainCertExpiresSB->setSuffix(ki18np(" day", " days"));
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
-    mWidget->mWarnEncrRootCertExpiresSB->setSuffix(ki18np(" day", " days"));
+
+#if KI18N_VERSION > QT_VERSION_CHECK(6, 5, 0)
+    KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrOwnKeyExpiresSB, ki18np(" day", " days"));
+    KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrKeyExpiresSB, ki18np(" day", " days"));
+    KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrChainCertExpiresSB, ki18np(" day", " days"));
+    KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrRootCertExpiresSB, ki18np(" day", " days"));
+#endif
 
     mWidget->enableAllWarningsPB->setEnabled(true);
 }
