@@ -29,9 +29,9 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <PimCommonAkonadi/RecentAddresses>
 using PimCommon::RecentAddresses;
 
+#include <KLocalization>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KPluralHandlingSpinBox>
 #include <KSeparator>
 #include <QHBoxLayout>
 #include <QSpinBox>
@@ -402,14 +402,16 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupHBoxLayout = new QHBoxLayout(groupBox);
 
     // "Autosave interval" spinbox
-    mAutoSave = new KPluralHandlingSpinBox(this);
+    mAutoSave = new QSpinBox(this);
     mAutoSave->setMaximum(60);
     mAutoSave->setMinimum(0);
     mAutoSave->setSingleStep(1);
     mAutoSave->setValue(1);
     mAutoSave->setObjectName("kcfg_AutosaveInterval"_L1);
     mAutoSave->setSpecialValueText(i18n("No autosave"));
-    mAutoSave->setSuffix(ki18ncp("Interval suffix", " minute", " minutes"));
+#if KI18N_VERSION > QT_VERSION_CHECK(6, 5, 0)
+    KLocalization::setupSpinBoxFormatString(mAutoSave, ki18ncp("Interval suffix", " minute", " minutes"));
+#endif
 
     helpText = i18n("Automatically save the message at this specified interval");
     mAutoSave->setToolTip(helpText);

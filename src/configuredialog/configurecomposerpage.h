@@ -17,7 +17,7 @@ class QLineEdit;
 class ListView;
 class QPushButton;
 class QLabel;
-class KPluralHandlingSpinBox;
+class QSpinBox;
 namespace TemplateParser
 {
 class CustomTemplates;
@@ -63,7 +63,7 @@ private:
     QCheckBox *mShowRecentAddressesInComposer = nullptr;
     QCheckBox *mWordWrapCheck = nullptr;
     QSpinBox *mWrapColumnSpin = nullptr;
-    KPluralHandlingSpinBox *mAutoSave = nullptr;
+    QSpinBox *mAutoSave = nullptr;
     QSpinBox *mMaximumRecipients = nullptr;
     QCheckBox *mImprovePlainTextOfHtmlMessage = nullptr;
     QSpinBox *mMaximumRecentAddress = nullptr;
