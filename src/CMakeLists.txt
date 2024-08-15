@@ -337,7 +337,7 @@ target_sources(kmailprivate PRIVATE
     historyclosedreader/historyclosedreadermenu.cpp
 )
 
-if(TARGET Plasma::Activities)
+if(HAVE_ACTIVITY_SUPPORT)
     target_sources(kmailprivate PRIVATE
         activities/activitiesmanager.h
         activities/activitiesmanager.cpp
