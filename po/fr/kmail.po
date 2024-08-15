@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-14 00:39+0000\n"
+"POT-Creation-Date: 2024-08-15 00:40+0000\n"
 "PO-Revision-Date: 2024-07-14 10:07+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -1393,7 +1393,7 @@ msgstr "Enregistrement automatique"
 msgid "No autosave"
 msgstr "Pas d'enregistrement automatique"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgctxt "Interval suffix"
 msgid " minute"
@@ -1401,18 +1401,18 @@ msgid_plural " minutes"
 msgstr[0] " minute"
 msgstr[1] " minutes"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Automatiquement enregistrer le message à l'intervalle spécifié"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:622
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Préfixes pour le su&jet d'une réponse"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:627
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1422,131 +1422,131 @@ msgstr ""
 "Reconnaître toute séquence des préfixes suivants (Les entrées sont des "
 "expressions rationnelles non sensibles à la casse) :"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "A&dd…"
 msgstr "A&jouter..."
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Re&move"
 msgstr "Su&pprimer"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Mod&ifier…"
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:635
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Saisissez un nouveau préfixe de réponse :"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:636
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Voulez-vous vraiment supprimer le préfixe de réponse ?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:638
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Préfixe pour la réponse :"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:649
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Pré&fixes pour le sujet d'un message transmis"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "Su&pprimer"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Add…"
 msgstr "Ajouter..."
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Modify…"
 msgstr "Modifier…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Saisissez un nouveau préfixe de transmission :"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:660
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Voulez-vous vraiment supprimer le préfixe de transfert ?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:661
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Préfixe pour un transfert :"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Utiliser un suffixe personnalisé pour le champ « Message-Id »"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:721
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Suff&ixe personnalisé pour le champ « Message-Id » :"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:733
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Définir des champs d'en-tête « MIME » personnalisés :"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:741
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nom"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:742
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valeur"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:750
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Nouveau"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:754
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Suppri&mer"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:763
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "No&m :"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:773
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Valeur :"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:913
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1554,21 +1554,21 @@ msgstr ""
 "« Content-Type » n'est pas une chaîne permise. Cette en-tête ne sera pas "
 "enregistrée."
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:914
 #, fuzzy, kde-format
 #| msgid "Invalid header"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "En-tête non valable"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:955
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Acti&ver la détection des pièces jointes manquantes"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:961
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1576,34 +1576,34 @@ msgstr ""
 "Reconnaître n'importe lequel des mots clés suivants comme une intention pour "
 "joindre un fichier :"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Saisissez un nouveau mot clé :"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:974
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Voulez-vous vraiment supprimer le texte de pièce jointe ?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:975
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Mot pour pièce jointe :"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:982
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Taille maximale de pièce jointe :"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ko"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "No limit"
 msgstr "Pas de limite"
@@ -1700,37 +1700,37 @@ msgstr "Confirmer la suppression des modules externes de courriels"
 msgid "Akonadi Agents"
 msgstr "Agents Akonadi"
 
-#: configuredialog/configuresecuritypage.cpp:48
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "Consultation"
 
-#: configuredialog/configuresecuritypage.cpp:50
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Accusés de réception"
 
-#: configuredialog/configuresecuritypage.cpp:56
+#: configuredialog/configuresecuritypage.cpp:58
 #, kde-format
 msgid "Encryption"
 msgstr "Chiffrement"
 
-#: configuredialog/configuresecuritypage.cpp:62
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "Validation S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:91
 #, kde-format
 msgid "Email Address:"
 msgstr "Adresse électronique :"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:92
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "Voulez-vous vraiment supprimer cette adresse de courriel ?"
 
-#: configuredialog/configuresecuritypage.cpp:125
+#: configuredialog/configuresecuritypage.cpp:127
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1738,23 +1738,23 @@ msgstr ""
 "Le fait de modifier la configuration HTML globale écrasera toutes les "
 "valeurs propres à un dossier."
 
-#: configuredialog/configuresecuritypage.cpp:277
-#: configuredialog/configuresecuritypage.cpp:279
-#: configuredialog/configuresecuritypage.cpp:281
-#: configuredialog/configuresecuritypage.cpp:283
+#: configuredialog/configuresecuritypage.cpp:284
+#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " jour"
 msgstr[1] " jours"
 
-#: configuredialog/configuresecuritypage.cpp:314
+#: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Configuration de GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:321
+#: configuredialog/configuresecuritypage.cpp:326
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1764,23 +1764,23 @@ msgstr ""
 "Impossible de trouver ce module. Veuillez vérifier votre installation. Ce "
 "module est fourni par Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:326
+#: configuredialog/configuresecuritypage.cpp:331
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Erreur du module de configuration de GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:393
+#: configuredialog/configuresecuritypage.cpp:398
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Cette option nécessite une version de « dirmngr » supérieure à 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:532 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:537 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "aucun serveur mandataire"
 
-#: configuredialog/configuresecuritypage.cpp:534
+#: configuredialog/configuresecuritypage.cpp:539
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Configuration actuelle du système : %1)"
@@ -7559,17 +7559,17 @@ msgstr ""
 msgid "For end-user certificates/&keys:"
 msgstr "Pour les certificats et &clés de l'utilisateur final :"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
 #: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "Déterminer le nombre de jours ici"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
@@ -7590,7 +7590,7 @@ msgstr ""
 "Le réglage recommandé par SPHINX est de 14 jours.\n"
 "</p></qt>"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
@@ -7617,7 +7617,7 @@ msgstr ""
 msgid "For own certificates:"
 msgstr "Pour vos propres certificats :"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
 #, kde-format
 msgid ""
@@ -7643,7 +7643,7 @@ msgstr ""
 msgid "For &root certificates:"
 msgstr "Pour les certificats &racines :"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""

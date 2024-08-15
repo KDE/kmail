@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-14 00:39+0000\n"
+"POT-Creation-Date: 2024-08-15 00:40+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1407,7 +1407,7 @@ msgstr "គ្មានការ​រក្សាទុក​ដោយ​ស្
 msgid "No autosave"
 msgstr "គ្មានការ​រក្សាទុក​ដោយ​ស្វ័យប្រវត្តិ​ទេ"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:413
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1415,19 +1415,19 @@ msgid " minute"
 msgid_plural " minutes"
 msgstr[0] "​ នាទី"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:416
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "ស្នើ​ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​ដោយស្វ័យប្រវត្តិ"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:622
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​ឆ្លើយតប"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:627
+#: configuredialog/configurecomposerpage.cpp:653
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1440,161 +1440,161 @@ msgstr ""
 "ទទួល​ស្គាល់​លំដាប់​នៃ​បុព្វបទ​នានា​ខាងក្រោម\n"
 "(ធាតុ​គឺ​ជា​កន្សោម​ធម្មតា​ដែល​មិន​ប្រកាន់​តួអក្សរ​តូច​ធំ) ៖"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Re&move"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "​កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:635
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "បញ្ចូល​បុព្វបទ​ឆ្លើយតប​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:638
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​ឆ្លើយតប"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:649
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​បញ្ជូនបន្ត"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "​កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "បញ្ចូល​បុព្វបទ​​បញ្ជូន​បន្ត​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:660
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:661
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​បញ្ជូនបន្ត"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "ប្រើ​បច្ច័យ​​លេខសម្គាល់​សារ​ផ្ទាល់​ខ្លួន"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:721
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "បច្ច័យ​លេខសម្គាល់​សារ​ផ្ទាល់​ខ្លួន ៖"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:733
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "កំណត់​វាល​បឋមកថា​ mime ផ្ទាល់ខ្លួន ៖"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:741
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "ឈ្មោះ"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:742
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "តម្លៃ"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:750
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "​ថ្មី"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:754
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:763
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "ឈ្មោះ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:773
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "តម្លៃ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:913
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:914
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:955
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "បើក​ការ​រក​​នៃ​ឯកសារ​ភ្ជាប់​ដែល​បាត់"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:961
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1602,25 +1602,25 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "ទទួល​ស្គាល់​​​ពាក្យ​គន្លឹះ​មួយ​ចំនួន​ខាងក្រោម​ នៅពេល​មាន​បំណង​ភ្ជាប់​ឯកសារ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Enter new key word:"
 msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:974
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:975
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:982
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
@@ -1628,13 +1628,13 @@ msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "គីឡូបៃ"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "No limit"
 msgstr "គ្មាន​ព្រំដែន"
@@ -1742,40 +1742,40 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:48
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "ការ​អាន"
 
-#: configuredialog/configuresecuritypage.cpp:50
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "ការជូន​ដំណឹង​អំពី​ការរៀបចំ​សារ​"
 
-#: configuredialog/configuresecuritypage.cpp:56
+#: configuredialog/configuresecuritypage.cpp:58
 #, fuzzy, kde-format
 #| msgid "Encrypting"
 msgid "Encryption"
 msgstr "កំពុង​អ៊ិនគ្រីប"
 
-#: configuredialog/configuresecuritypage.cpp:62
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "ការធ្វើ​សុពល​កម្ម S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:92
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this email address?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configuresecuritypage.cpp:125
+#: configuredialog/configuresecuritypage.cpp:127
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global HTML setting will override all folder specific values."
@@ -1783,23 +1783,23 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "ការ​ផ្លាស់ប្ដូរ​​ការកំណត់​ HTML សកល នឹង​បដិសេធ​រាល់​តម្លៃ​ជាក់លាក់​របស់​ថត​ទាំងអស់ ។"
 
-#: configuredialog/configuresecuritypage.cpp:277
-#: configuredialog/configuresecuritypage.cpp:279
-#: configuredialog/configuresecuritypage.cpp:281
-#: configuredialog/configuresecuritypage.cpp:283
+#: configuredialog/configuresecuritypage.cpp:284
+#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " ថ្ងៃ"
 
-#: configuredialog/configuresecuritypage.cpp:314
+#: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "ការ​កំណត់ GnuPG​..."
 
-#: configuredialog/configuresecuritypage.cpp:321
+#: configuredialog/configuresecuritypage.cpp:326
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1807,23 +1807,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:326
+#: configuredialog/configuresecuritypage.cpp:331
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:393
+#: configuredialog/configuresecuritypage.cpp:398
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ជម្រើស​នេះ​ទាមទារ dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:532 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:537 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "គ្មាន​ប្រូកស៊ី"
 
-#: configuredialog/configuresecuritypage.cpp:534
+#: configuredialog/configuresecuritypage.cpp:539
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(ការ​កំណត់​ប្រព័ន្ធ​បច្ចុប្បន្ន ៖ %1)"
@@ -7811,17 +7811,17 @@ msgstr "ព្រមាន ប្រសិនបើ​វញ្ញាបនប�
 msgid "For end-user certificates/&keys:"
 msgstr "សម្រាប់​សោ/​វិញ្ញាបនបត្រ​អ្នកប្រើ ៖"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
 #: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "ជ្រើស​ចំនួន​ថ្ងៃ​នៅទីនេះ"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
@@ -7840,7 +7840,7 @@ msgstr ""
 "ការកំណត់​ SPHINX ដែលបាន​ផ្ដល់អនុសាសន៍គឺ 14 ថ្ងៃ ។\n"
 "</p></qt>"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
@@ -7866,7 +7866,7 @@ msgstr ""
 msgid "For own certificates:"
 msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
 #, fuzzy, kde-format
 #| msgid ""
@@ -7900,7 +7900,7 @@ msgstr ""
 msgid "For &root certificates:"
 msgstr "សម្រាប់​វិញ្ញាបនបត្រ​ដើម ៖"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-14 00:39+0000\n"
+"POT-Creation-Date: 2024-08-15 00:40+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -1419,7 +1419,7 @@ msgstr "ไม่ต้องบันทึกอัตโนมัติ"
 msgid "No autosave"
 msgstr "ไม่ต้องบันทึกอัตโนมัติ"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:413
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1427,19 +1427,19 @@ msgid " minute"
 msgid_plural " minutes"
 msgstr[0] " นาที"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:416
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "รับการร้องขอการแจ้งการจัดการจดหมาย โดยอัตโนมัติ"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:622
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "คำนำหน้าหัวเรื่องตอบกลับ"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:627
+#: configuredialog/configurecomposerpage.cpp:653
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1452,161 +1452,161 @@ msgstr ""
 "จัดลำดับเหตุการณ์ที่ต่อเนื่องโดยแทรกด้วยคำนำหน้าเหล่านี้\n"
 "(เงื่อนไขมีการพิจารณาตัวอักษรเล็ก/ใหญ่):"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Re&move"
 msgstr "ลบออ&ก"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "แก้ไข..."
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:635
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "เติมคำนำหน้าการตอบกลับใหม่:"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:638
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "คำนำหน้าหัวเรื่องตอบกลับ"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:649
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "คำนำหน้าหัวเรื่องที่ส่งต่อ"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
 #, kde-format
 msgid "Remo&ve"
 msgstr "ลบ&ออก"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "แก้ไข..."
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "เติมคำนำหน้าการส่งต่อใหม่:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:660
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:661
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "คำนำหน้าหัวเรื่องที่ส่งต่อ"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "ต่อท้ายด้วยเลขจดหมายกำหนดเอง"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:721
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "เลขจดหมายกำหนดเองที่จะใช้ต่อท้าย:"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:733
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "แท็กส่วนหัวแบบ mime ที่กำหนดเอง:"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:741
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "ชื่อ"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:742
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "ค่า"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:750
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&สร้างใหม่"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:754
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "ลบออ&ก"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:763
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&ชื่อ:"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:773
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&ค่า:"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:913
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:914
 #, fuzzy, kde-format
 #| msgid "Invalid signature."
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "ลายเซ็นใช้ไม่ได้"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:955
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "เ&ปิดการตรวจสอบสิ่งที่แนบมาด้วยที่ผิดพลาด"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:961
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1614,25 +1614,25 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "จำแนกส่วนของคีย์เวิร์ดต่อไปนี้เช่นเดียวกับการแนบแฟ้ม:"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Enter new key word:"
 msgstr "เติมคีย์เวิร์ดใหม่:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:974
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:975
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "สิ่งที่แนบมาด้วย"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:982
 #, fuzzy, kde-format
 #| msgctxt "message status"
 #| msgid "Has Attachment"
@@ -1640,14 +1640,14 @@ msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "มีสิ่งที่แนบมาด้วย"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:989
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " เมกะไบต์"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
@@ -1757,39 +1757,39 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:48
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "การอ่านจดหมาย"
 
-#: configuredialog/configuresecuritypage.cpp:50
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "การแจ้งให้ทราบก่อนจัดการจดหมาย"
 
-#: configuredialog/configuresecuritypage.cpp:56
+#: configuredialog/configuresecuritypage.cpp:58
 #, kde-format
 msgid "Encryption"
 msgstr "การเข้ารหัส"
 
-#: configuredialog/configuresecuritypage.cpp:62
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "ความถูกต้องของ S/MIME"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "ที่อยู่อีเมล"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:92
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>คุณต้องการลบรายการแสดงตัว <b>%1</b> นี้ จริงหรือไม่ ?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:125
+#: configuredialog/configuresecuritypage.cpp:127
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1798,23 +1798,23 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "กำลังเปลี่ยนการตั้งค่าทั่วไปของการทำเธรด ที่จะกำหนดใช้กับทุกโฟลเดอร์"
 
-#: configuredialog/configuresecuritypage.cpp:277
-#: configuredialog/configuresecuritypage.cpp:279
-#: configuredialog/configuresecuritypage.cpp:281
-#: configuredialog/configuresecuritypage.cpp:283
+#: configuredialog/configuresecuritypage.cpp:284
+#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
 #, kde-format
 msgid " day"
 msgid_plural " days"
 msgstr[0] " วัน"
 
-#: configuredialog/configuresecuritypage.cpp:314
+#: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "ตั้งค่า"
 
-#: configuredialog/configuresecuritypage.cpp:321
+#: configuredialog/configuresecuritypage.cpp:326
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1822,23 +1822,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:326
+#: configuredialog/configuresecuritypage.cpp:331
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:393
+#: configuredialog/configuresecuritypage.cpp:398
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ตัวเลือกนี้ต้องการใช้โปรแกรม dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:532 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:537 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ไม่ใช้พร็อกซี"
 
-#: configuredialog/configuresecuritypage.cpp:534
+#: configuredialog/configuresecuritypage.cpp:539
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(การตั้งค่าปัจจุบันของระบบ: %1)"
@@ -7716,17 +7716,17 @@ msgstr "แจ้งเตือนหากใบรับรอง/กุญ�
 msgid "For end-user certificates/&keys:"
 msgstr "สำหรับใบรับรอง/กุญแจต่าง ๆ ของผู้ใช้:"
 
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
-#. i18n: ectx: property (toolTip), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (toolTip), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:154 ui/securitypageencryptiontab.ui:190
 #: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
 msgstr "เลือกจำนวนของวันที่นี่"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrChainCertExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:162
 #, kde-format
 msgid ""
@@ -7739,7 +7739,7 @@ msgid ""
 "</p></qt>"
 msgstr ""
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrKeyExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:198
 #, kde-format
 msgid ""
@@ -7759,7 +7759,7 @@ msgstr ""
 msgid "For own certificates:"
 msgstr "สำหรับใบรับรองราก:"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrOwnKeyExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
 #, kde-format
 msgid ""
@@ -7779,7 +7779,7 @@ msgstr ""
 msgid "For &root certificates:"
 msgstr "สำหรับใบรับรองราก:"
 
-#. i18n: ectx: property (whatsThis), widget (KPluralHandlingSpinBox, mWarnEncrRootCertExpiresSB)
+#. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:300
 #, kde-format
 msgid ""

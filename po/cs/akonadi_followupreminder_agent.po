@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-31 00:41+0000\n"
-"PO-Revision-Date: 2024-07-03 10:50+0200\n"
+"PO-Revision-Date: 2024-08-14 11:27+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -130,9 +130,7 @@ msgid "Follow Up Reminder"
 msgstr "Připomínka pro následnou činnost"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "Stále čekáte na odpověď na tento e-mail?"
+msgstr "Stále čekáte na odpověď na tyto e-maily:"

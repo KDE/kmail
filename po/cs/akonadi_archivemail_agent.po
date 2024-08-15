@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-04 14:39+0200\n"
+"PO-Revision-Date: 2024-08-14 11:27+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -30,8 +30,7 @@ msgid "Add Archive Mail"
 msgstr ""
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Archivovat všechny podsložky"
@@ -78,8 +77,7 @@ msgid "Archive"
 msgstr "Archiv"
 
 #: archivemailrangewidget.cpp:22
-#, fuzzy, kde-format
-#| msgid "Use Range"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Použít rozsah"

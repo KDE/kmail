@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-02 00:41+0000\n"
-"PO-Revision-Date: 2024-07-03 13:09+0200\n"
+"PO-Revision-Date: 2024-08-14 11:27+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.05.2\n"
 
 #: sendlaterconfiguredialog.cpp:33
 #, kde-format
@@ -193,8 +193,7 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Byla nalezena chyba. Chcete ji znovu poslat?"
 
 #: sendlatermanager.cpp:194
-#, fuzzy, kde-format
-#| msgid "Error found"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Nalezena chyba"
