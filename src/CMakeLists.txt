@@ -495,8 +495,8 @@ if(TARGET KF6::TextEditTextToSpeech)
         PRIVATE KF6::TextEditTextToSpeech)
 endif()
 
-if(TARGET Plasma::Activities)
-    target_link_libraries(kmailprivate PRIVATE Plasma::Activities)
+if(HAVE_ACTIVITY_SUPPORT)
+    target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
 endif()
 
 target_link_libraries(kmailprivate PRIVATE qt6keychain)

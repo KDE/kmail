@@ -6,6 +6,7 @@
 
 #pragma once
 #include "kmail_private_export.h"
+#include <PimCommonActivities/ActivitiesBaseManager>
 #include <QObject>
 namespace KActivities
 {
@@ -15,7 +16,7 @@ class TransportActivities;
 class IdentityActivities;
 class LdapActivities;
 class AccountActivities;
-class KMAILTESTS_TESTS_EXPORT ActivitiesManager : public QObject
+class KMAILTESTS_TESTS_EXPORT ActivitiesManager : public PimCommonActivities::ActivitiesBaseManager
 {
     Q_OBJECT
 public:
@@ -24,21 +25,16 @@ public:
     explicit ActivitiesManager(QObject *parent = nullptr);
     ~ActivitiesManager() override;
 
-    [[nodiscard]] bool enabled() const;
+    [[nodiscard]] bool enabled() const override;
     void setEnabled(bool newEnabled);
 
     [[nodiscard]] TransportActivities *transportActivities() const;
 
     [[nodiscard]] IdentityActivities *identityActivities() const;
 
-    [[nodiscard]] bool isInCurrentActivity(const QStringList &lst) const;
-    [[nodiscard]] QString currentActivity() const;
     [[nodiscard]] LdapActivities *ldapActivities() const;
 
     [[nodiscard]] AccountActivities *accountActivities() const;
-
-Q_SIGNALS:
-    void activitiesChanged();
 
 private:
     TransportActivities *const mTransportActivities;
