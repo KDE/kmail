@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-12 08:38+0300\n"
+"PO-Revision-Date: 2024-08-15 08:38+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1400,8 +1400,7 @@ msgid "Custom message-&id suffix:"
 msgstr "סיומת זיהוי הו&דעה מותאמת אישית:"
 
 #: configuredialog/configurecomposerpage.cpp:787
-#, fuzzy, kde-format
-#| msgid "Define custom mime header fields:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "הגדרת שדות כותרות Mime (תוכן) מותאמים אישית:"
@@ -1817,11 +1816,10 @@ msgid "Select the outgoing account to use for sending this message"
 msgstr "נא לבחור את החשבון היוצא שישמש לשליחת ההודעה הזאת"
 
 #: editor/kmcomposerwin.cpp:382
-#, fuzzy, kde-format
-#| msgid "Set a subject for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "הגדרת נושא להודעה הזאת"
+msgstr "הגדרת כתובת דוא״ל „מאת:” להודעה הזאת"
 
 #: editor/kmcomposerwin.cpp:410
 #, kde-format
@@ -3785,6 +3783,10 @@ msgid ""
 "contents will be discarded as well. <p><b>Beware</b> that discarded messages "
 "are not saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
+"<qt>למחוק את התיקייה הריקה <resource>%1</resource> ואת כל תת־התיקיות שלה? תת־"
+"התיקיות האלו עלולות שלא להיות ריקות וגם התוכן שלהן יימחק לחלוטין. <p><b>רצוי "
+"לשים לב</b> שהודעות שנמחקות לחלוטין אינן נשמרות בתיקיית סל האשפה שלך והן "
+"נמחקות לצמיתות.</p></qt>"
 
 #: job/removecollectionjob.cpp:85
 #, kde-format
@@ -4788,10 +4790,10 @@ msgid "Delayed Messages…"
 msgstr "הודעות מעוכבות…"
 
 #: kmmainwidget.cpp:3030
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "&חיפוש הודעות..."
+msgstr "הודעות תזכורת לטיפול…"
 
 #: kmmainwidget.cpp:3041 util.cpp:149
 #, kde-format
