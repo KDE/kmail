@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-31 00:41+0000\n"
-"PO-Revision-Date: 2024-07-28 13:03+0400\n"
+"PO-Revision-Date: 2024-08-15 11:48+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -134,12 +134,10 @@ msgid "Follow Up Reminder"
 msgstr "متابعة التّذكيريات"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "ما زلت تنتظر جوابًا لهذا البريد:"
+msgstr "ما زلت تنتظر جوابًا لهذا الرسائل:"
 
 #~ msgid "Configure"
 #~ msgstr "اضبط"
