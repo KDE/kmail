@@ -410,7 +410,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoSave->setObjectName("kcfg_AutosaveInterval"_L1);
     mAutoSave->setSpecialValueText(i18n("No autosave"));
 #if KI18N_VERSION > QT_VERSION_CHECK(6, 5, 0)
-    KLocalization::setupSpinBoxFormatString(mAutoSave, ki18ncp("Interval suffix", " minute", " minutes"));
+    KLocalization::setupSpinBoxFormatString(mAutoSave, ki18ncp("Interval suffix", "%v minute", "%v minutes"));
 #endif
 
     helpText = i18n("Automatically save the message at this specified interval");
