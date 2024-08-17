@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2022-02-26 11:47+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: Hindi <kde-l10n-hi@kde.org>\n"
@@ -1414,8 +1414,8 @@ msgstr "स्वचालित नहीं सहेजें"
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] "मि."
 msgstr[1] "मि."
 
@@ -1788,9 +1788,11 @@ msgstr "वैश्विक थ्रेडिंग सेटिंग को
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
+#, fuzzy, kde-format
+#| msgid " day"
+#| msgid_plural " days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " दिन"
 msgstr[1] " दिनों"
 

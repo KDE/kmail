@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -1333,8 +1333,8 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -1677,11 +1677,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy, kde-format
+msgid "%v day"
+msgid_plural "%v days"
+msgstr[0] "in proses"
+msgstr[1] "in proses"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
@@ -9425,13 +9425,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Mail Expiry Properties"
 #~ msgstr "Eienskappe"
-
-#, fuzzy
-#~ msgctxt "Expire messages after %1"
-#~ msgid " day"
-#~ msgid_plural " days"
-#~ msgstr[0] "in proses"
-#~ msgstr[1] "in proses"
 
 #, fuzzy
 #~ msgid "Expire unread messages after"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -1416,8 +1416,8 @@ msgstr "स्वयंचलित साठवणे नाही"
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] " मिनिट"
 msgstr[1] " मिनिट"
 
@@ -1795,9 +1795,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
+#, fuzzy, kde-format
+#| msgid " day"
+#| msgid_plural " days"
+msgid "%v day"
+msgid_plural "%v days"
 msgstr[0] " दिवस"
 msgstr[1] " दिवस"
 

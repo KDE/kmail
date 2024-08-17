@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1456,8 +1456,8 @@ msgstr "Ғайри худнигоҳдорӣ"
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] " дақиқа"
 msgstr[1] " дақиқа"
 
@@ -1843,11 +1843,12 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy, kde-format
+#| msgid " days"
+msgid "%v day"
+msgid_plural "%v days"
+msgstr[0] " рӯз"
+msgstr[1] " рӯз"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
@@ -12354,14 +12355,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Expire read messages after"
 #~ msgstr "Озод кардан аз &хондашуда, баъди:"
-
-#, fuzzy
-#~| msgid " days"
-#~ msgctxt "Expire messages after %1"
-#~ msgid " day"
-#~ msgid_plural " days"
-#~ msgstr[0] " рӯз"
-#~ msgstr[1] " рӯз"
 
 #, fuzzy
 #~ msgid "Expire unread messages after"

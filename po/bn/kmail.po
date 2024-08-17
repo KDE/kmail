@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -1393,8 +1393,8 @@ msgstr "স্বয়ংক্রিয় সংরক্ষণ কোরো না
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] " মিনিট"
 msgstr[1] " মিনিট"
 
@@ -1765,11 +1765,12 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy, kde-format
+#| msgid " days"
+msgid "%v day"
+msgid_plural "%v days"
+msgstr[0] " দিনের জন্য রেখে দাও"
+msgstr[1] " দিনের জন্য রেখে দাও"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
@@ -10693,14 +10694,6 @@ msgstr ""
 #~| msgid "Expunging deleted messages"
 #~ msgid "Expire read messages after"
 #~ msgstr "মুছে ফেলা বার্তা ফেলে দেওয়া হচ্ছে"
-
-#, fuzzy
-#~| msgid " days"
-#~ msgctxt "Expire messages after %1"
-#~ msgid " day"
-#~ msgid_plural " days"
-#~ msgstr[0] " দিনের জন্য রেখে দাও"
-#~ msgstr[1] " দিনের জন্য রেখে দাও"
 
 #, fuzzy
 #~| msgid "There are no unread messages"

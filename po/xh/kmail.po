@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -1416,8 +1416,8 @@ msgstr "Akukho data."
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] " min"
 msgstr[1] " min"
 
@@ -1789,11 +1789,12 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy, kde-format
+#| msgid " days"
+msgid "%v day"
+msgid_plural "%v days"
+msgstr[0] " imihla"
+msgstr[1] " imihla"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
@@ -11230,14 +11231,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Expire read messages after"
 #~ msgstr "Uphelisoa &lufunda i email mva"
-
-#, fuzzy
-#~| msgid " days"
-#~ msgctxt "Expire messages after %1"
-#~ msgid " day"
-#~ msgid_plural " days"
-#~ msgstr[0] " imihla"
-#~ msgstr[1] " imihla"
 
 #, fuzzy
 #~ msgid "Expire unread messages after"

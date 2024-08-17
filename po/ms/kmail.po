@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-15 00:40+0000\n"
+"POT-Creation-Date: 2024-08-17 00:40+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -1454,8 +1454,8 @@ msgstr "Tiada autosimpan"
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
-msgid " minute"
-msgid_plural " minutes"
+msgid "%v minute"
+msgid_plural "%v minutes"
 msgstr[0] " min"
 msgstr[1] " min"
 
@@ -1839,11 +1839,12 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, kde-format
-msgid " day"
-msgid_plural " days"
-msgstr[0] ""
-msgstr[1] ""
+#, fuzzy, kde-format
+#| msgid " days"
+msgid "%v day"
+msgid_plural "%v days"
+msgstr[0] "hari"
+msgstr[1] "hari"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, fuzzy, kde-format
@@ -12329,14 +12330,6 @@ msgstr ""
 #~| msgid "Expire read mails after"
 #~ msgid "Expire read messages after"
 #~ msgstr "Luputkan mel sudah baca selepas"
-
-#, fuzzy
-#~| msgid " days"
-#~ msgctxt "Expire messages after %1"
-#~ msgid " day"
-#~ msgid_plural " days"
-#~ msgstr[0] "hari"
-#~ msgstr[1] "hari"
 
 #, fuzzy
 #~| msgid "Expire unread mails after"
