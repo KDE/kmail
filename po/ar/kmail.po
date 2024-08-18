@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:40+0000\n"
-"PO-Revision-Date: 2024-08-15 11:47+0400\n"
+"PO-Revision-Date: 2024-08-17 20:33+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1312,19 +1312,16 @@ msgid "No autosave"
 msgstr "لا تحفظ آليًّا"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " أقل من دقيقة"
-msgstr[1] " (دقيقة واحدة)"
-msgstr[2] " (دقيقتان)"
-msgstr[3] " دقائق"
-msgstr[4] " دقيقة"
-msgstr[5] " دقيقة"
+msgstr[0] "أقل من دقيقة"
+msgstr[1] "دقيقة واحدة"
+msgstr[2] "دقيقتان"
+msgstr[3] "%v دقائق"
+msgstr[4] "%v دقيقة"
+msgstr[5] "%v دقيقة"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1658,17 +1655,15 @@ msgstr "تغيير إعداد HTML العموميّ سيلغي كلّ القيم
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " (لا أيّام)"
-msgstr[1] " (يوم واحد)"
-msgstr[2] " (يومان)"
-msgstr[3] " أيّام"
-msgstr[4] " يومًا"
-msgstr[5] " يوم"
+msgstr[0] "لا أيّام"
+msgstr[1] "يوم واحد"
+msgstr[2] "يومان"
+msgstr[3] "%v أيّام"
+msgstr[4] "%v يومًا"
+msgstr[5] "%v يوم"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format

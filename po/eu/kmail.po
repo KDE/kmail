@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:40+0000\n"
-"PO-Revision-Date: 2024-08-02 23:59+0200\n"
+"PO-Revision-Date: 2024-08-17 10:05+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -1336,15 +1336,12 @@ msgid "No autosave"
 msgstr "Ez autogorde"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " minutu"
-msgstr[1] " minutu"
+msgstr[0] "minutu %v"
+msgstr[1] "%v minutu"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1680,13 +1677,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " egun"
-msgstr[1] " egun"
+msgstr[0] "egun %v"
+msgstr[1] "%v egun"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
