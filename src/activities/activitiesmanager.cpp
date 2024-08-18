@@ -7,7 +7,6 @@
 #include "activitiesmanager.h"
 #include "accountactivities.h"
 #include "identityactivities.h"
-#include "kmail_activities_debug.h"
 #include "ldapactivities.h"
 #include "transportactivities.h"
 
