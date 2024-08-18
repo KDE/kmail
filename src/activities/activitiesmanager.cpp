@@ -10,14 +10,11 @@
 #include "ldapactivities.h"
 #include "transportactivities.h"
 
-#include <PlasmaActivities/Consumer>
-
 ActivitiesManager::ActivitiesManager(QObject *parent)
     : PimCommonActivities::ActivitiesBaseManager{parent}
     , mTransportActivities(new TransportActivities(this))
     , mIdentityActivities(new IdentityActivities(this))
     , mLdapActivities(new LdapActivities(this))
-    , mActivitiesConsumer(new KActivities::Consumer(this))
     , mAccountActivities(new AccountActivities(this))
 {
     connect(this, &ActivitiesManager::activitiesChanged, this, [this]() {

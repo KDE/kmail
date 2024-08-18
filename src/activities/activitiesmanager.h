@@ -8,10 +8,6 @@
 #include "kmail_private_export.h"
 #include <PimCommonActivities/ActivitiesBaseManager>
 #include <QObject>
-namespace KActivities
-{
-class Consumer;
-}
 class TransportActivities;
 class IdentityActivities;
 class LdapActivities;
@@ -40,7 +36,6 @@ private:
     TransportActivities *const mTransportActivities;
     IdentityActivities *const mIdentityActivities;
     LdapActivities *const mLdapActivities;
-    KActivities::Consumer *const mActivitiesConsumer;
     AccountActivities *const mAccountActivities;
     bool mEnabled = false;
 };
