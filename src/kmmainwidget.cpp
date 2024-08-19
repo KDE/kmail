@@ -1104,6 +1104,9 @@ void KMMainWidget::createWidgets()
         orderProxy->setOrderConfig(KMKernel::self()->config()->group(QStringLiteral("FavoriteCollectionsOrder")));
         orderProxy->setSourceModel(mFavoritesModel);
         orderProxy->sort(0, Qt::AscendingOrder);
+#if HAVE_ACTIVITY_SUPPORT
+        orderProxy->setAccountActivities(ActivitiesManager::self()->accountActivities());
+#endif
 
         mFavoriteCollectionsView->setModel(orderProxy);
 
