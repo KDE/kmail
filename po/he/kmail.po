@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-15 08:38+0300\n"
+"PO-Revision-Date: 2024-08-18 08:27+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -421,9 +421,9 @@ msgid "Browser"
 msgstr "דפדפן"
 
 #: collectionpage/collectionmailinglistpage.cpp:82
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preferred handler:"
-msgstr "מועדף"
+msgstr "מטפל מעדף:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
 #, kde-format
@@ -7807,15 +7807,13 @@ msgid "Message Default Format"
 msgstr "תצורת ההודעות כברירת מחדל"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "ה&עדפת HTML על פני טקסט רגיל"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "העדפת טקסט &פשוט על פני HTML"
