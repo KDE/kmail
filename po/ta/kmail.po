@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:40+0000\n"
-"PO-Revision-Date: 2024-07-06 21:41+0530\n"
+"PO-Revision-Date: 2024-08-18 17:54+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -273,7 +273,7 @@ msgstr "பல மாற்றங்கள்"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
-msgstr ""
+msgstr "முழு அடைவிற்கு வெளி இணைப்புகளை ஏற்றும் வசதி"
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
@@ -406,8 +406,7 @@ msgid "Mailing List"
 msgstr "அஞ்சல் பட்டியல்"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "அடைவு ஓர் அஞ்சல் பட்டியலை கொண்டுள்ளது"
@@ -558,8 +557,7 @@ msgid "View"
 msgstr "பார்வை"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "தனிப்பட்ட &சின்னங்களை பயன்படுத்து"
@@ -618,8 +616,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "அஞ்சலனுப்ப பயன்படும் கணக்குகள் (ஒன்றையாவது சேர்க்கவும்):"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "செயலை &உறுதிப்படுத்து"
@@ -630,8 +627,7 @@ msgid "Before sending:"
 msgstr "அனுப்புவதற்கு முன்:"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "எழுத்தாக்கத்தை சரிபார்"
@@ -672,8 +668,7 @@ msgid "Defa&ult send method:"
 msgstr "&இயல்பாக அனுப்பும் முறை:"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "அனுப்பியவற்றை திரும்பப்பெற விடு"
@@ -790,11 +785,10 @@ msgid "Printing Output"
 msgstr "அச்சிடும்போது"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "தனிப்பட்ட எழுத்துருக்களை பயன்படுத்து"
+msgstr "&தனிப்பட்ட எழுத்துருக்களை பயன்படுத்து"
 
 #: configuredialog/configureappearancepage.cpp:168
 #, kde-format
@@ -847,22 +841,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "HTML நிலைப்பட்டையின் முன்புலம் - HTML செய்தி உள்ளபோது"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
-msgstr "வேறுபட்ட நிறங்களை &பயன்படுத்து"
+msgstr "தனிப்பயன் நிறங்களை &பயன்படுத்து"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "பல மட்டங்களை கொண்ட &மேற்கோள்களில் நிறங்களை சுழற்சியாக பயன்படுத்து"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "&பெறப்பட்ட HTML அஞ்சலின் நிறங்களை மாற்றாதே"
@@ -879,16 +870,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "விரை தேடல் பெட்டியை காட்டு"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "காட்டாதே"
@@ -900,22 +889,19 @@ msgid "Show favorite folders view:"
 msgstr "பிடித்த அடைவுகளை காட்டுவது:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "சின்னங்களாக"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "பட்டியலாக"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "எப்போதும்"
@@ -1011,12 +997,10 @@ msgid "Date Display:"
 msgstr "தேதியை காட்டுவது:"
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "புதிய அடையாளம்"
+msgstr "சொந்த அடையாளத்தைக் காட்டு"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -1038,22 +1022,19 @@ msgid "System Tray"
 msgstr "கணினித் தட்டு"
 
 #: configuredialog/configureappearancepage.cpp:841
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "கணினித் தட்டில் சின்னத்தை காட்டு"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "துவக்கும்போது கணினித் தட்டிற்கு ஒதுக்கு"
 
 #: configuredialog/configureappearancepage.cpp:863
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "பணிப்பட்டையில் படிக்காத அஞ்சல்களை காட்டு"
@@ -1064,8 +1045,7 @@ msgid "Plasma activities"
 msgstr "பிளாஸ்மா செயல்பாடுகள்"
 
 #: configuredialog/configureappearancepage.cpp:873
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "இயக்கு"
@@ -1352,15 +1332,12 @@ msgid "No autosave"
 msgstr "சேமிக்காதே"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " நிமிடம்"
-msgstr[1] " நிமிடங்கள்"
+msgstr[0] "%v நிமிடம்"
+msgstr[1] "%v நிமிடங்கள்"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1453,11 +1430,10 @@ msgid "Forward Prefix:"
 msgstr "முன்னனுப்பியதற்கான முன்னொட்டு:"
 
 #: configuredialog/configurecomposerpage.cpp:705
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
-msgstr "&வேறு message-id பின்னொட்டை பயன்படுத்து"
+msgstr "த&னிப்பயன் message-id பின்னொட்டை பயன்படுத்து"
 
 #: configuredialog/configurecomposerpage.cpp:721
 #, kde-format
@@ -1515,18 +1491,16 @@ msgstr ""
 "'Content-Type' ஒரு அனுமதிக்கப்படும் சரம் அல்ல. இந்த தலைப்புப்புலம் சேமிக்கப்படாது."
 
 #: configuredialog/configurecomposerpage.cpp:914
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "செல்லுபடியாகாத தலைப்புப்புலம்"
 
 #: configuredialog/configurecomposerpage.cpp:955
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "இ&ணைக்க மறந்துவிட்ட உடனிணைப்புகளை கண்டறிவதை இயக்கு"
+msgstr "இ&ணைக்க மறந்துவிட்ட உடனிணைப்புகளை கண்டறி"
 
 #: configuredialog/configurecomposerpage.cpp:961
 #, kde-format
@@ -1700,13 +1674,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " நாள்"
-msgstr[1] " நாட்கள்"
+msgstr[0] "%v நாள்"
+msgstr[1] "%v நாட்கள்"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
@@ -1816,15 +1788,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "காப்பக‍க் கோப்பு (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "முடிந்தபிறகு அடைவையும் சார் அடைவுகளையும் &நீக்கு"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "அனைத்து சார் அடைவுகளையும் காப்பகப்படுத்து"
@@ -2051,8 +2021,7 @@ msgid "Cl&ean Spaces"
 msgstr "&இடைவெளிகளை சீராக்கு"
 
 #: editor/kmcomposerwin.cpp:1385
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "சம‍அகல &எழுத்துருவை பயன்படுத்து"
@@ -2064,42 +2033,37 @@ msgid "&Urgent"
 msgstr "&அவசரமானது"
 
 #: editor/kmcomposerwin.cpp:1393
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "பெற்றதன் உறுதிப்பாட்டை &கோரு"
 
 #: editor/kmcomposerwin.cpp:1397
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "சென்றடைந்த‍தன் உறுதிப்பாட்டை &கோரு"
 
 #: editor/kmcomposerwin.cpp:1402
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&வரிமடிப்பு"
 
 #: editor/kmcomposerwin.cpp:1407
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
-msgstr "தொகு..."
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1412
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&தானியக்க சொல்திருத்தம்"
 
 #: editor/kmcomposerwin.cpp:1428
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "மேம்பட்ட உரைதிருத்தம்"
@@ -2116,43 +2080,37 @@ msgid "Toggle rich text editing mode"
 msgstr "மேம்பட்ட உரைத்திருத்த முறையை (rich text-ஐ) இயக்கும்/முடக்கும்"
 
 #: editor/kmcomposerwin.cpp:1435
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&அனைத்து புலங்கள்"
 
 #: editor/kmcomposerwin.cpp:1438
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "அ&டையாளம்"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
-msgstr "அ&கராதி"
+msgstr "அ&கரமுதலி"
 
 #: editor/kmcomposerwin.cpp:1444
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "அ&னுப்பிய அஞ்சலுக்கான அடைவு"
 
 #: editor/kmcomposerwin.cpp:1447
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "அஞ்சலனுப்பும் க&ணக்கு"
 
 #: editor/kmcomposerwin.cpp:1450
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "அனுப்பு&நர்"
@@ -2511,8 +2469,7 @@ msgstr ""
 "அனுப்பவேண்டுமா?"
 
 #: editor/kmcomposerwin.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "அதிகப்படியான பெறுநர்கள்"
@@ -2538,8 +2495,7 @@ msgstr ""
 "HTML பயன்முறையை முடக்கினால், உரை அதன் வடிவமைப்பை இழக்கும். உறுதியாக முடக்க வேண்டுமா?"
 
 #: editor/kmcomposerwin.cpp:3216
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "வடிவமைப்பை இழக்கலாமா?"
@@ -2765,8 +2721,7 @@ msgid "Encryption Key Selection"
 msgstr "Encryption Key Selection"
 
 #: editor/kmcomposerwin.cpp:4338
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "செருகுநிரல் திருத்தி விவரங்கள்"
@@ -3052,15 +3007,13 @@ msgid "Create own vCard"
 msgstr "சொந்த vCard-ஐ உருவாக்கு"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "&காலியான புலங்களுடன்"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&ஏற்கனவேயுள்ள vCard-இலிருந்து"
@@ -3072,8 +3025,7 @@ msgid "&vCard path:"
 msgstr "vCard-இற்கான &பாதை:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "ஏற்கனவேயுள்ள vCard-ஐ &நகலெடு"
@@ -3088,20 +3040,18 @@ msgstr "&ஏற்கனவேயுள்ள அடையாளங்கள்:
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "OpenPGP சான்றிதழ் உருவாக்கத்தைத் துவக்க முடியவில்லை."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "%1 இன் அனுமதிகளை மாற்ற முடியவில்லை"
+msgstr "OpenPGP சான்றிதழ் உருவாக்கத்தைத் துவக்க முடியவில்லை: %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "புதிய சாவி ஜோடி உருவாக்கப்படுகிறது…"
+msgstr "OpenPGP சான்றிதழ் உருவாக்கப்படுகிறது…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3109,18 +3059,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"OpenPGP சான்றிதழை உருவாக்க, சமவாய்ப்பான பல எண்களை உருவாக்க வேண்டும். இதற்கு சில "
+"நிமிடங்கள் ஆகலாம்…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "OpenPGP சான்றிதழை உருவாக்க முடியவில்லை: %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "அஞ்சல்களை நீக்குதல் ரத்து செய்யப்பட்டது."
+msgstr "சாவி உருவாக்கம் ரத்து செய்யப்பட்டது."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3128,14 +3079,12 @@ msgid "No key"
 msgstr "சாவி இல்லை"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "புதிய சாவி ஜோடியை உருவாக்கு"
+msgstr "புதிய OpenPGP சான்றிதழை உருவாக்கு"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "சாவியை உருவாக்குவதில் சிக்கல்"
@@ -3251,8 +3200,7 @@ msgid "OpenPGP signing key:"
 msgstr "OpenPGP கையொப்ப சாவி:"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "கையொப்பமிடுவதற்கும் மறையாக்குவதற்கும் ஒரே சாவியை பயன்படுத்து"
@@ -3350,11 +3298,10 @@ msgid "Autocrypt:"
 msgstr ""
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
-msgstr "நீங்கள் மறையாக்கத்தை விரும்புவதை மற்றவர்களிடம் கூறு"
+msgstr "மறையாக்கத்தை விரும்புவதாக மற்றவர்களிடம் கூறு"
 
 #: identity/identitydialog.cpp:572
 #, kde-format
@@ -3368,29 +3315,25 @@ msgid "Overwrite defaults:"
 msgstr "இயல்பிருப்புகளை மேலெழுது:"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "அஞ்சல்களுக்கு கையொப்பமிடு"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "முடிந்தால் அஞ்சல்களை மறையாக்கம் செய்"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "கையொப்பமிடாத அஞ்சல்களை அனுப்பும் போது எச்சரி"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "மறையாக்கப்படாத அஞ்சல்களை அனுப்பும்போது எச்சரி"
@@ -3470,8 +3413,7 @@ msgid "Select Send-mail Folder"
 msgstr "அனுப்பியுள்ள அஞ்சலுக்கான அடைவை தேர்வு செய்தல்"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "அ&னுப்பியுள்ள அஞ்சலுக்கான அடைவு:"
@@ -3499,15 +3441,13 @@ msgid "&Templates folder:"
 msgstr "&வார்ப்புருகளுக்கான அடைவு:"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "அஞ்சலனுப்பும் கணக்கு:"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "அஞ்சலுடன் என் vCard-ஐ இணை"
@@ -3546,8 +3486,7 @@ msgstr ""
 "பயன்படுத்தப்படும்.</p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&இந்த அடையாளத்திற்கு தனிப்பட்ட அஞ்சல் வார்ப்புருகளை பயன்படுத்து"
@@ -3805,18 +3744,16 @@ msgid "&New identity:"
 msgstr "&புதிய அடையாளம்:"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
 msgstr "&கணினி அமைப்புகளிலுள்ள மதிப்புகளை பயன்படுத்து"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
-msgstr "ஏற்கனவேயுள்ள அடையாளத்தை நகலெடு"
+msgstr "&ஏற்கனவேயுள்ள அடையாளத்தின் நகலெடு"
 
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
@@ -3961,11 +3898,10 @@ msgid "Do Not Attach"
 msgstr "இணைக்க வேண்டாம்"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
-msgstr "தேடலை நீக்குதல்"
+msgstr "தேடலை நீக்குவது"
 
 #: job/removecollectionjob.cpp:60
 #, kde-format
@@ -3983,11 +3919,10 @@ msgid "&Delete"
 msgstr "&நீக்கு"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
-msgstr "அடைவை நீக்குதல்"
+msgstr "அடைவை நீக்குவது"
 
 #: job/removecollectionjob.cpp:70
 #, kde-format
@@ -4266,18 +4201,16 @@ msgstr[0] "அஞ்சல் அனுப்பப்படும்வரை �
 msgstr[1] "%1 அஞ்சல்கள் அனுப்பப்படும்வரை காத்திருங்கள்"
 
 #: kmcommands.cpp:524
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
-msgstr "கோப்பிற்கு சேமி"
+msgstr "கோப்பிற்கு சேமிப்பது"
 
 #: kmcommands.cpp:711
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
-msgstr "அஞ்சலை திற"
+msgstr "அஞ்சலைத் திறப்பது"
 
 #: kmcommands.cpp:713
 #, kde-format
@@ -4447,11 +4380,10 @@ msgstr ""
 "காரணம்: %2"
 
 #: kmkernel.cpp:879
-#, fuzzy, kde-format
-#| msgid "Opening Autosave File Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
-msgstr "தானியக்க சேமிப்பு கோப்பை திறத்தல் தோல்வியடைந்தது"
+msgstr "தானியக்க சேமிப்பு கோப்பைத் திறப்பது தோல்வியடைந்தது"
 
 #: kmkernel.cpp:1439
 #, kde-format
@@ -4633,18 +4565,16 @@ msgid "&Expire"
 msgstr "கா&லாவதியாக்கு"
 
 #: kmmainwidget.cpp:1476
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
-msgstr "அகற்றிடத்தை காலியாக்கு"
+msgstr "அகற்றிடத்தை காலியாக்குவது"
 
 #: kmmainwidget.cpp:1476
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
-msgstr "அகற்றிடத்துக்கு நகர்த்து"
+msgstr "அகற்றிடத்துக்கு நகர்த்துவது"
 
 #: kmmainwidget.cpp:1477
 #, kde-format
@@ -4720,18 +4650,16 @@ msgstr[1] ""
 "திரும்ப‍ப்பெற முடியாது.</qt>"
 
 #: kmmainwidget.cpp:1665
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
-msgstr "அஞ்சல்களை நீக்கு"
+msgstr "அஞ்சல்களை நீக்குவது"
 
 #: kmmainwidget.cpp:1665
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
-msgstr "அஞ்சலை நீக்கு"
+msgstr "அஞ்சலை நீக்குவது"
 
 #: kmmainwidget.cpp:1680
 #, kde-format
@@ -5098,8 +5026,7 @@ msgid "&Archive Folder…"
 msgstr "&அடைவை காப்பகப்படுத்து…"
 
 #: kmmainwidget.cpp:3151
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "வெளி &இணைப்புகளை ஏற்று"
@@ -5396,10 +5323,10 @@ msgid "Configure &Filters…"
 msgstr "&வடிகட்டிகளை அமை…"
 
 #: kmmainwidget.cpp:3421
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
-msgstr "இருக்கும் வடிகட்டிகள்"
+msgstr "வடிகட்டி &சிறுநிரல்களை நிர்வகி…"
 
 #: kmmainwidget.cpp:3426
 #, kde-format
@@ -5709,8 +5636,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi-யை மீள்துவக்க வேண்டுமா?"
 
 #: kmmainwidget.cpp:4973
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi-யை மீள்துவக்கு"
@@ -5961,8 +5887,7 @@ msgstr[0] "1 படிக்காத அஞ்சல்"
 msgstr[1] "%1 படிக்காத அஞ்சல்கள்"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "அடைவுகளுக்கான முழு பாதையை காட்டு"
@@ -6319,11 +6244,10 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
-msgstr "PDF-ஆக ஏற்றுமதி செய்"
+msgstr "PDF-ஆக ஏற்றுமதி செய்வது"
 
 #: messageactions.cpp:750
 #, kde-format
@@ -6336,8 +6260,7 @@ msgid "Reindex"
 msgstr "மீண்டும் அட்டவணையாக்கு"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "இருப்பினும் தேடு"

@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:40+0000\n"
-"PO-Revision-Date: 2024-08-02 14:13+0300\n"
+"PO-Revision-Date: 2024-08-18 20:28+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -71,7 +71,7 @@ msgstr "Son sürümden bu yana önemli değişiklikler:"
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
-msgstr "K Posta’nın bu sürümündeki yeni özelliklerin bazıları:"
+msgstr "K Posta’nın bu sürümündeki yeni özelliklerden bazıları:"
 
 #: about/introduction_kmail.html:34
 msgid ""
@@ -1330,15 +1330,12 @@ msgid "No autosave"
 msgstr "Kendiliğinden kaydetme yok"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " dakika"
-msgstr[1] " dakika"
+msgstr[0] "%v dakika"
+msgstr[1] "%v dakika"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1676,13 +1673,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " gün"
-msgstr[1] " gün"
+msgstr[0] "%v gün"
+msgstr[1] "%v gün"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format

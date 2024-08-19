@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-17 00:40+0000\n"
-"PO-Revision-Date: 2024-08-15 08:38+0300\n"
+"PO-Revision-Date: 2024-08-18 08:27+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -422,9 +422,9 @@ msgid "Browser"
 msgstr "דפדפן"
 
 #: collectionpage/collectionmailinglistpage.cpp:82
-#, fuzzy, kde-format
+#, kde-format
 msgid "Preferred handler:"
-msgstr "מועדף"
+msgstr "מטפל מעדף:"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
 #, kde-format
@@ -1311,17 +1311,14 @@ msgid "No autosave"
 msgstr "ללא שמירה אוטומטית"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " דק׳"
-msgstr[1] " דק׳"
-msgstr[2] " דק׳"
-msgstr[3] " דק׳"
+msgstr[0] "דקה"
+msgstr[1] "שתי דקות"
+msgstr[2] "%v דקות"
+msgstr[3] "%v דקות"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1655,15 +1652,13 @@ msgstr "החלפת הגדרת ה־HTML הכללית תדרוס את כל הער�
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " יום"
-msgstr[1] " יומיים"
-msgstr[2] " ימים"
-msgstr[3] " ימים"
+msgstr[0] "יום"
+msgstr[1] "יומיים"
+msgstr[2] "%v יום"
+msgstr[3] "%v ימים"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
@@ -7914,15 +7909,13 @@ msgid "Message Default Format"
 msgstr "תצורת ההודעות כברירת מחדל"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "ה&עדפת HTML על פני טקסט רגיל"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "העדפת טקסט &פשוט על פני HTML"
