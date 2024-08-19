@@ -158,6 +158,7 @@
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
 #if HAVE_ACTIVITY_SUPPORT
+#include "activities/accountactivities.h"
 #include "activities/activitiesmanager.h"
 #endif
 
@@ -1018,6 +1019,9 @@ void KMMainWidget::createWidgets()
     opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
+#if HAVE_ACTIVITY_SUPPORT
+    mFolderTreeWidget->setAccountActivities(ActivitiesManager::self()->accountActivities());
+#endif
     mFolderTreeWidget->folderTreeView()->setEnableDragDrop(KMailSettings::self()->enableFolderDnD());
 
     connect(mFolderTreeWidget->folderTreeView(),
