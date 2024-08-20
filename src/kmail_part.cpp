@@ -16,7 +16,6 @@ using namespace Qt::Literals::StringLiterals;
 #include <QVBoxLayout>
 
 #include "foldershortcutactionmanager.h"
-#include "kmail_debug.h"
 #include "tag/tagactionmanager.h"
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/Collection>
@@ -25,7 +24,6 @@ using namespace Qt::Literals::StringLiterals;
 #include <KParts/GUIActivateEvent>
 #include <KPluginFactory>
 #include <KSharedConfig>
-#include <MailCommon/FolderTreeView>
 #include <kmailpartadaptor.h>
 #include <kparts/mainwindow.h>
 #include <kparts/statusbarextension.h>

@@ -1762,6 +1762,9 @@ FolderSelectionDialog *KMMainWidget::moveOrCopyToDialog()
     if (!mMoveOrCopyToDialog) {
         FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
         mMoveOrCopyToDialog = new FolderSelectionDialog(this, options);
+#if HAVE_ACTIVITY_SUPPORT
+        mMoveOrCopyToDialog->setAccountActivities(ActivitiesManager::self()->accountActivities());
+#endif
         mMoveOrCopyToDialog->setModal(true);
     }
     return mMoveOrCopyToDialog;
@@ -1774,6 +1777,9 @@ FolderSelectionDialog *KMMainWidget::selectFromAllFoldersDialog()
         options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
         mSelectFromAllFoldersDialog = new FolderSelectionDialog(this, options);
+#if HAVE_ACTIVITY_SUPPORT
+        mSelectFromAllFoldersDialog->setAccountActivities(ActivitiesManager::self()->accountActivities());
+#endif
         mSelectFromAllFoldersDialog->setModal(true);
     }
     return mSelectFromAllFoldersDialog;
