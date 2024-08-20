@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Shinjo Park <kde@peremen.name>, 2013, 2015, 2019, 2020, 2023.
+# SPDX-FileCopyrightText: 2013, 2015, 2019, 2020, 2023, 2024 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2023-10-08 23:17+0200\n"
+"PO-Revision-Date: 2024-08-19 23:25+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
@@ -24,15 +24,13 @@ msgid "Filter Log Viewer"
 msgstr "필터 기록 뷰어"
 
 #: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr "공유..."
+msgstr "공유…"
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "필터 활동 기록(&L)"
@@ -52,18 +50,16 @@ msgid "Logging Details"
 msgstr "기록 설정"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
-msgstr "패턴 설명 기록하기"
+msgstr "패턴 설명 기록"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
-msgstr "필터 규칙 검사 기록하기(&R)"
+msgstr "필터 규칙 평가 기록(&R)"
 
 #: filterlogdialog.cpp:111
 #, kde-format
@@ -79,22 +75,19 @@ msgstr ""
 "필터 규칙이 적용되었는지 여부만 기록합니다."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr "필터 패턴 검사 기록하기"
+msgstr "필터 패턴 평가 기록"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
-msgstr "필터 동작 기록하기"
+msgstr "필터 동작 기록"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "기록 크기 제한:"
@@ -140,7 +133,7 @@ msgstr "KMail 오류"
 #: filtermanager.cpp:100
 #, kde-format
 msgid "Filtering message %1 of %2"
-msgstr "메시지 %2개 중 %1개 거르는 중"
+msgstr "메시지 %2개 중 %1개 필터 중"
 
 #: filtermanager.cpp:187
 #, kde-format
@@ -175,7 +168,7 @@ msgstr "<b>\"%3\"에서 \"%2\"부터 메시지 \"%1\"에 필터 적용 중</b>"
 #: filtermanager.cpp:589 filtermanager.cpp:617
 #, kde-format
 msgid "Filtering messages"
-msgstr "메시지 거르는 중"
+msgstr "메시지 필터 중"
 
 #: mailfilteragent.cpp:102
 #, kde-format
@@ -191,4 +184,4 @@ msgstr "준비"
 #: mailfilteragent.cpp:252
 #, kde-format
 msgid "Filtering in %1"
-msgstr "%1 거르는 중"
+msgstr "%1 필터 중"
