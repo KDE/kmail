@@ -53,6 +53,10 @@ Dependencies:
     'third-party/qtkeychain': '@latest-kf6'
     'libraries/ktextaddons': '@latest-kf6'
 
+- 'on': ['Linux', 'FreeBSD']
+  'require':
+    'plasma/plasma-activities': '@latest-kf6'
+
 Options:
   cmake-options: "-DAKONADI_RUN_MYSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_PGSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_SQLITE_ISOLATED_TESTS=FALSE"
   require-passing-tests-on: [ 'Linux', 'FreeBSD' ]      
