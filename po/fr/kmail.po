@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-21 00:48+0000\n"
-"PO-Revision-Date: 2024-07-14 10:07+0200\n"
+"PO-Revision-Date: 2024-08-18 09:34+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -429,11 +429,10 @@ msgid "Mailing List"
 msgstr "Liste de diffusion"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
-msgstr "Le dossier gère une liste de diffusion"
+msgstr "Le dossier gère une liste de diffusion."
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -583,8 +582,7 @@ msgid "View"
 msgstr "Afficher"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "Utiliser des icônes personnal&isées"
@@ -643,8 +641,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Comptes d'envoi (Ajoutez au moins un compte !) :"
 
 #: configuredialog/configureaccountpage.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Confirmer une action"
@@ -655,8 +652,7 @@ msgid "Before sending:"
 msgstr "Avant l'envoi :"
 
 #: configuredialog/configureaccountpage.cpp:95
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Vérification de l'orthographe"
@@ -697,11 +693,10 @@ msgid "Defa&ult send method:"
 msgstr "Type d'envoi par &défaut :"
 
 #: configuredialog/configureaccountpage.cpp:115
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
-msgstr "Activer l'annulation d'envoi"
+msgstr "Activer l'envoi d'annulations"
 
 #: configuredialog/configureaccountpage.cpp:186
 #, kde-format
@@ -816,11 +811,10 @@ msgid "Printing Output"
 msgstr "Sortie sur imprimante"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "Utiliser des polices p&ersonnalisées"
+msgstr "&Utiliser des fontes personnalisées"
 
 #: configuredialog/configureappearancepage.cpp:168
 #, kde-format
@@ -873,25 +867,22 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Barre d'état d'avant-plan pour le HTML - message HTML"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
-msgstr "Utiliser des coule&urs personnalisées"
+msgstr "&Utiliser des couleurs personnalisées"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
-msgstr "&Réutiliser ces couleurs pour les citations plus profondes"
+msgstr "Réutiliser les couleurs pour les citations plus &profondes"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
-msgstr "&Ne pas changer la couleur du mail HTML original"
+msgstr "Ne pas changer la couleur &du courriel originel au format « HTML »"
 
 #: configuredialog/configureappearancepage.cpp:347
 #, kde-format
@@ -905,16 +896,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
-msgstr "Afficher le champ de recherche rapide"
+msgstr "Afficher le champ de recherche rapide de dossiers"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Jamais"
@@ -926,22 +915,19 @@ msgid "Show favorite folders view:"
 msgstr "Afficher la vue des dossiers favoris :"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "En icônes"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "En liste"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Toujours"
@@ -1041,12 +1027,10 @@ msgid "Date Display:"
 msgstr "Affichage de la date :"
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "Nouvelle identité"
+msgstr "Afficher sa propre identité"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -1066,22 +1050,19 @@ msgid "System Tray"
 msgstr "Boîte à miniatures"
 
 #: configuredialog/configureappearancepage.cpp:841
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "Activer l'icône"
+msgstr "Activer la boîte à miniatures du système"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Démarrer en mode réduit dans la barre à miniatures"
 
 #: configuredialog/configureappearancepage.cpp:863
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Afficher les courriels non lus dans la barre de tâches"
@@ -1092,8 +1073,7 @@ msgid "Plasma activities"
 msgstr "Activités de Plasma"
 
 #: configuredialog/configureappearancepage.cpp:873
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Activer"
@@ -1394,15 +1374,12 @@ msgid "No autosave"
 msgstr "Pas d'enregistrement automatique"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " minute"
-msgstr[1] " minutes"
+msgstr[0] "%v minute"
+msgstr[1] "%v minutes"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1495,8 +1472,7 @@ msgid "Forward Prefix:"
 msgstr "Préfixe pour un transfert :"
 
 #: configuredialog/configurecomposerpage.cpp:705
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Utiliser un suffixe personnalisé pour le champ « Message-Id »"
@@ -1558,18 +1534,16 @@ msgstr ""
 "enregistrée."
 
 #: configuredialog/configurecomposerpage.cpp:914
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "En-tête non valable"
 
 #: configuredialog/configurecomposerpage.cpp:955
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "Acti&ver la détection des pièces jointes manquantes"
+msgstr "Activer la détection des pièces joi&ntes manquantes"
 
 #: configuredialog/configurecomposerpage.cpp:961
 #, kde-format
@@ -1676,7 +1650,7 @@ msgstr "Afficheur de messages"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
 #, kde-format
 msgid "Webengine Plugins"
-msgstr "Modules complémentaires Webengine"
+msgstr "Modules complémentaires pour WebEngine"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
 #, kde-format
@@ -1745,13 +1719,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " jour"
-msgstr[1] " jours"
+msgstr[0] "jour %v"
+msgstr[1] "%v jours"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
@@ -1863,15 +1835,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "Fichier d'archives (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
-msgstr "&Supprimer les dossiers une fois l'archivage terminé."
+msgstr "Supprimer les &dossiers et les sous-dossiers à terminaison."
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Archiver tous les sous-dossiers"
@@ -2552,8 +2522,7 @@ msgstr ""
 "tout de même envoyer ce courrier électronique ?"
 
 #: editor/kmcomposerwin.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Trop de destinataires"
@@ -2580,8 +2549,7 @@ msgstr ""
 "vous vraiment continuer ? "
 
 #: editor/kmcomposerwin.cpp:3216
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Perdre la mise en page ?"
@@ -2838,11 +2806,10 @@ msgid "Encryption Key Selection"
 msgstr "Sélection de la clé de chiffrement"
 
 #: editor/kmcomposerwin.cpp:4338
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
-msgstr "Informations sur l'éditeur de module externe"
+msgstr "Informations sur l'éditeur de modules externes"
 
 #: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:29
 #, kde-format
@@ -3136,18 +3103,16 @@ msgid "Create own vCard"
 msgstr "Créer ma propre vCard"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "Avec des champs &vides"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
-msgstr "À partir d'une vCard &existante"
+msgstr "À partir d'un élément « vCard » &existante"
 
 #: identity/identityaddvcarddialog.cpp:66
 #, kde-format
@@ -3156,11 +3121,10 @@ msgid "&vCard path:"
 msgstr "Emplacement des &vCard : "
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
-msgstr "&Dupliquer une vCard existante"
+msgstr "&Dupliquer un élément « vCard » existant"
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -3172,20 +3136,18 @@ msgstr "Id&entités existantes :"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Impossible de lancer la génération de certificats « OpenPGP »."
 
 #: identity/identitydialog.cpp:231
-#, fuzzy, kde-format
-#| msgid "Could not start process for %1."
+#, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr "Impossible de lancer le traitement pour « %1 »."
+msgstr "Impossible de lancer la génération de certificats « OpenPGP » : %1"
 
 #: identity/identitydialog.cpp:240
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Génération d'une nouvelle paire de clés…"
+msgstr "Génération d'un certificat « OpenPGP » en cours…"
 
 #: identity/identitydialog.cpp:242
 #, kde-format
@@ -3193,18 +3155,19 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"Le processus de génération d'un certificat « OpenPGP » nécessite de grandes "
+"quantités de nombres aléatoires. Cela peut prendre plusieurs minutes..."
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Impossible de générer un certificat « OpenPGP » : %1"
 
 #: identity/identitydialog.cpp:265
-#, fuzzy, kde-format
-#| msgid "The operation was canceled by the user."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Opération annulée par l'utilisateur."
+msgstr "La génération de clé a été annulée."
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3212,17 +3175,15 @@ msgid "No key"
 msgstr "Aucune clé"
 
 #: identity/identitydialog.cpp:307
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "Générer une nouvelle paire de clés"
+msgstr "Générer un nouveau certificat « OpenPGP »"
 
 #: identity/identitydialog.cpp:322
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
-msgstr "Erreur à la génération de clés"
+msgstr "Erreur lors de la génération des clés"
 
 #: identity/identitydialog.cpp:333
 #, kde-format
@@ -3346,11 +3307,10 @@ msgid "OpenPGP signing key:"
 msgstr "Clé de signature « OpenPGP » :"
 
 #: identity/identitydialog.cpp:461
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
-msgstr "Utiliser la même clé pour le chiffrement et la signature"
+msgstr "Utiliser la même clé de chiffrement et de signature"
 
 #: identity/identitydialog.cpp:471
 #, kde-format
@@ -3445,11 +3405,10 @@ msgid "Autocrypt:"
 msgstr "Chiffrement automatique :"
 
 #: identity/identitydialog.cpp:569
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
-msgstr "Indiquer aux autres que vous préférez un chiffrement"
+msgstr "Indiquer aux autres que vous préférez le chiffrement"
 
 #: identity/identitydialog.cpp:572
 #, kde-format
@@ -3464,29 +3423,25 @@ msgid "Overwrite defaults:"
 msgstr "Écraser la configuration par défaut :"
 
 #: identity/identitydialog.cpp:580
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Signer les messages"
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Chiffrer les messages lorsque possible"
 
 #: identity/identitydialog.cpp:586
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Émettre une alarme lors d'une tentative d'envoi de messages non signés"
 
 #: identity/identitydialog.cpp:589
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr ""
@@ -3582,8 +3537,7 @@ msgid "Select Send-mail Folder"
 msgstr "Sélectionner le dossier des messages envoyés"
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "Dossier des messages envo&yés :"
@@ -3611,18 +3565,16 @@ msgid "&Templates folder:"
 msgstr "Dossier des &modèles :"
 
 #: identity/identitydialog.cpp:698
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Compte sortant :"
 
 #: identity/identitydialog.cpp:705
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
-msgstr "Ajouter ma vCard au message"
+msgstr "Ajouter mon élément « vCard » au message"
 
 #: identity/identitydialog.cpp:706
 #, kde-format
@@ -3659,11 +3611,10 @@ msgstr ""
 "p></qt>"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
-msgstr "&Utiliser les modèles de messages personnalisés pour cette identité"
+msgstr "&Utiliser des modèles de messages personnalisés pour cette identité"
 
 #: identity/identitydialog.cpp:762
 #, kde-format
@@ -3926,15 +3877,13 @@ msgid "&New identity:"
 msgstr "&Nouvelle identité :"
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
-msgstr "&Utiliser les paramètres du système"
+msgstr "&Utiliser les valeurs de la configuration du système"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "&Dupliquer une identité existante"
@@ -4089,8 +4038,7 @@ msgid "Do Not Attach"
 msgstr "Ne pas joindre"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "Supprimer la recherche"
@@ -4112,8 +4060,7 @@ msgid "&Delete"
 msgstr "&Supprimer"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "Supprimer le dossier"
@@ -4407,15 +4354,13 @@ msgstr[0] "Veuillez patienter pendant le transfert de ce message"
 msgstr[1] "Veuillez patienter pendant le transfert de ces %1 messages"
 
 #: kmcommands.cpp:524
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Enregistrer dans un fichier"
 
 #: kmcommands.cpp:711
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Ouvrir un message"
@@ -4586,11 +4531,10 @@ msgstr ""
 "Raison : %2"
 
 #: kmkernel.cpp:879
-#, fuzzy, kde-format
-#| msgid "Opening Autosave File Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
-msgstr "Échec de l'ouverture du fichier enregistré automatiquement"
+msgstr "Impossible d'ouvrir le fichier d'enregistrement automatique"
 
 #: kmkernel.cpp:1439
 #, kde-format
@@ -4784,15 +4728,13 @@ msgid "&Expire"
 msgstr "Faire &expirer"
 
 #: kmmainwidget.cpp:1483
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Vider la corbeille"
 
 #: kmmainwidget.cpp:1483
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Déplacer dans la corbeille"
@@ -4871,18 +4813,16 @@ msgstr[1] ""
 "fois supprimés, ils ne pourront pas être restaurés.</qt>"
 
 #: kmmainwidget.cpp:1672
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Supprimer les messages"
 
 #: kmmainwidget.cpp:1672
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
-msgstr "Supprimer le message"
+msgstr "Supprimer un message"
 
 #: kmmainwidget.cpp:1687
 #, kde-format
@@ -5868,8 +5808,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "Voulez-vous vraiment ré-initialiser Akonadi ?"
 
 #: kmmainwidget.cpp:4986
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Ré-initialiser Akonadi"
@@ -6127,8 +6066,7 @@ msgstr[0] "1 message non lu"
 msgstr[1] "%1 messages non lus"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "Afficher l'emplacement complet des dossiers"
@@ -6499,11 +6437,10 @@ msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
-msgstr "Exporter au format PDF"
+msgstr "Exporter au format « PDF »"
 
 #: messageactions.cpp:750
 #, kde-format
@@ -6516,11 +6453,10 @@ msgid "Reindex"
 msgstr "Ré-indexer"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
-msgstr "Chercher de toute façon"
+msgstr "Rechercher malgré tout"
 
 #: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
