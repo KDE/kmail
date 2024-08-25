@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-21 00:48+0000\n"
-"PO-Revision-Date: 2024-08-18 08:27+0300\n"
+"PO-Revision-Date: 2024-08-24 13:26+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -6567,19 +6567,19 @@ msgstr ""
 #: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
+msgstr "כשהאפשרות מסומנת, הודעות שנשלחו תאוחסנה בצורה המוצפנת"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
 #: settings/kmail.kcfg.in:261
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr ""
+msgstr "רשימה של כל הכתובות שהיו בשימוש לאחרונה"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg.in:267
 #, kde-format
 msgid "A list of all the recently used encodings"
-msgstr ""
+msgstr "רשימה של כל צורות הקידוד שהיו בשימוש לאחרונה"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.in:273
@@ -6609,7 +6609,7 @@ msgstr "לא להציג לוח תצוגה מקדימה של הודעה"
 #: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Show the message preview pane below the message list"
-msgstr ""
+msgstr "הצגת חלונית תצוגה מקדימה של הודעה מתחת לרשימת ההודעות"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:340
