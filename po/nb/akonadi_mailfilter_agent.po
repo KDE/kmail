@@ -86,7 +86,6 @@ msgstr "Logg filterhandlinger"
 
 #: filterlogdialog.cpp:133
 #, fuzzy, kde-format
-#| msgid "Log size limit:"
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Maksimal størrelse for loggen:"
@@ -126,7 +125,6 @@ msgstr ""
 
 #: filterlogdialog.cpp:330
 #, fuzzy, kde-format
-#| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-feil"

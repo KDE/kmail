@@ -42,7 +42,6 @@ msgstr ""
 
 #: sendlaterconfiguredialog.cpp:57
 #, fuzzy, kde-format
-#| msgid "Laurent Montel"
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -91,20 +90,17 @@ msgstr "Meldings-ID"
 
 #: sendlaterconfigurewidget.cpp:69
 #, fuzzy, kde-format
-#| msgid "No messages waiting..."
 msgid "No messages waiting…"
 msgstr "Ingen meldinger venter …"
 
 #: sendlaterconfigurewidget.cpp:94
 #, fuzzy, kde-format
-#| msgid "Send now"
 msgctxt "@action"
 msgid "Send now"
 msgstr "Send nå"
 
 #: sendlaterconfigurewidget.cpp:97
 #, fuzzy, kde-format
-#| msgid "Delete"
 msgctxt "@action"
 msgid "Delete"
 msgstr "Slett"
@@ -210,7 +206,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
 #, fuzzy, kde-format
-#| msgid "Modify..."
 msgid "Modify…"
 msgstr "Endre …"
 

@@ -36,7 +36,6 @@ msgstr ""
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, fuzzy, kde-format
-#| msgid "Laurent Montel"
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -90,21 +89,18 @@ msgstr "På vent"
 
 #: followupreminderinfowidget.cpp:219
 #, fuzzy, kde-format
-#| msgid "Show Message"
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Vis melding"
 
 #: followupreminderinfowidget.cpp:222
 #, fuzzy, kde-format
-#| msgid "Show Message"
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Vis melding"
 
 #: followupreminderinfowidget.cpp:225
 #, fuzzy, kde-format
-#| msgid "Delete"
 msgctxt "@action"
 msgid "Delete"
 msgstr "Slett"
@@ -135,7 +131,6 @@ msgstr ""
 
 #: followupremindernoanswerdialog.cpp:45
 #, fuzzy, kde-format
-#| msgid "You still wait an answer about this mail:"
 msgctxt "@label:textbox"
 msgid "You still wait an answer about this mail:"
 msgstr "Du venter fortsatt på et svar om denne e-posten:"

@@ -387,7 +387,6 @@ msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, fuzzy, kde-format
-#| msgid "Detect Automatically"
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Áicca automáhtalaččat"
@@ -409,7 +408,6 @@ msgstr "Oidojuvvon gieđahalli: "
 
 #: collectionpage/collectionmailinglistpage.cpp:94
 #, fuzzy, kde-format
-#| msgid "Invoke Handler"
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Geavat gieđahalli"
@@ -421,7 +419,6 @@ msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:103
 #, fuzzy, kde-format
-#| msgid "Mailing list description:"
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "E-boastalisttu válddahus:"
@@ -482,14 +479,12 @@ msgstr ""
 
 #: collectionpage/collectionquotawidget.cpp:24
 #, fuzzy, kde-format
-#| msgid "Message"
 msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "Diehtu"
 
 #: collectionpage/collectionquotawidget.cpp:30
 #, fuzzy, kde-format
-#| msgid "Status:"
 msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "Stáhtus:"
@@ -521,7 +516,6 @@ msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
 #, fuzzy, kde-format
-#| msgid "Templates"
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Mállet"
@@ -588,7 +582,6 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:84
 #, fuzzy, kde-format
-#| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Manni konttut (lasit unnimus ovtta):"
@@ -650,7 +643,6 @@ msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:190
 #, fuzzy, kde-format
-#| msgid "&Add Account..."
 msgid "Add Mail Account…"
 msgstr "&Lasit konttu …"
 
@@ -764,7 +756,6 @@ msgstr "Geavat &iežat fonttaid"
 
 #: configuredialog/configureappearancepage.cpp:172
 #, fuzzy, kde-format
-#| msgid "Apply &to:"
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Bija atnui &dása:"
@@ -852,7 +843,6 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:510
 #, fuzzy, kde-format
-#| msgid "Show full path for folders"
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "Čájet máhpáid olles bálgáid"
@@ -874,7 +864,6 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:528
 #, fuzzy, kde-format
-#| msgid "Folder List"
 msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "Máhppalistu"
@@ -1020,7 +1009,6 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:992
 #, fuzzy, kde-format
-#| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Váldde eret válljejuvvon gilkora"
@@ -1203,7 +1191,6 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:300
 #, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "S&tandárddomeana:"
@@ -1263,7 +1250,6 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:436
 #, fuzzy, kde-format
-#| msgid "Configure &Notifications..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Heivet &muittuhusaid …"
@@ -1321,7 +1307,6 @@ msgstr "Váldde &eret"
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
 #, fuzzy, kde-format
-#| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Rievdat …"
 
@@ -1358,7 +1343,6 @@ msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
-#| msgid "Modify..."
 msgid "Modify…"
 msgstr "Rievdat …"
 
@@ -1384,14 +1368,12 @@ msgstr "&Geavat iesdefinerejuvvon message-id-suffivssa"
 
 #: configuredialog/configurecomposerpage.cpp:775
 #, fuzzy, kde-format
-#| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Iešdefinerejuvvon message-&id-suffiksa:"
 
 #: configuredialog/configurecomposerpage.cpp:787
 #, fuzzy, kde-format
-#| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definere iežat MIME-bajilčála-gietti:"
@@ -1419,7 +1401,6 @@ msgstr "Ođđ&a"
 
 #: configuredialog/configurecomposerpage.cpp:808
 #, fuzzy, kde-format
-#| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Váldde &eret"
@@ -1433,7 +1414,6 @@ msgstr "&Namma:"
 
 #: configuredialog/configurecomposerpage.cpp:827
 #, fuzzy, kde-format
-#| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "Á&rvu:"
@@ -1478,7 +1458,6 @@ msgstr ""
 # unreviewed-context
 #: configuredialog/configurecomposerpage.cpp:1034
 #, fuzzy, kde-format
-#| msgid "As Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Mielddusin"
@@ -1496,14 +1475,12 @@ msgstr ""
 
 #: configuredialog/configuredialoglistview.cpp:55
 #, fuzzy, kde-format
-#| msgid "Add"
 msgctxt "@action"
 msgid "Add"
 msgstr "Lasit"
 
 #: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
 #, fuzzy, kde-format
-#| msgid "Remove"
 msgctxt "@action"
 msgid "Remove"
 msgstr "Váldde eret"
@@ -1702,7 +1679,6 @@ msgstr ""
 
 #: dialog/archivefolderdialog.cpp:72
 #, fuzzy, kde-format
-#| msgid "Folders"
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "Máhpat"
@@ -1710,8 +1686,6 @@ msgstr "Máhpat"
 # unreviewed-context
 #: dialog/archivefolderdialog.cpp:82
 #, fuzzy, kde-format
-#| msgctxt "Icon used for folders with no unread messages."
-#| msgid "&Normal:"
 msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "&Dábálaš:"
@@ -1738,7 +1712,6 @@ msgstr ""
 
 #: dialog/archivefolderdialog.cpp:97
 #, fuzzy, kde-format
-#| msgid "Delete Folder"
 msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "Sihko máhpa"
@@ -1784,16 +1757,12 @@ msgstr[1] ""
 
 #: editor/attachment/attachmentview.cpp:200
 #, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Mildosat"
 
 #: editor/attachment/attachmentview.cpp:202
 #, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Mildosat"
@@ -1830,28 +1799,24 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:410
 #, fuzzy, kde-format
-#| msgid "&Identity:"
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identitehta:"
 
 #: editor/kmcomposerwin.cpp:411
 #, fuzzy, kde-format
-#| msgid "&Dictionary:"
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Sátnelistu:"
 
 #: editor/kmcomposerwin.cpp:412
 #, fuzzy, kde-format
-#| msgid "&Sent-Mail folder:"
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Sáddejuvvon-boastta &máhppa:"
 
 #: editor/kmcomposerwin.cpp:413
 #, fuzzy, kde-format
-#| msgid "&Mail transport:"
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "E-boastta fie&vrrideapmi:"
@@ -1963,35 +1928,30 @@ msgstr "&Ođđa reive"
 
 #: editor/kmcomposerwin.cpp:1355
 #, fuzzy, kde-format
-#| msgid "Select &Recipients..."
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "&Vállje vuostáiválddiid …"
 
 #: editor/kmcomposerwin.cpp:1358
 #, fuzzy, kde-format
-#| msgid "Save &Distribution List..."
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Vurke &distribušuvdnalisttu …"
 
 #: editor/kmcomposerwin.cpp:1379
 #, fuzzy, kde-format
-#| msgid "Paste as Attac&hment"
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Liibme &mielddusin"
 
 #: editor/kmcomposerwin.cpp:1383
 #, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "&Čorge sátnegaskkaid"
 
 #: editor/kmcomposerwin.cpp:1387
 #, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Geavat &fontta mas lea giddes govdodat"
@@ -2017,7 +1977,6 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1404
 #, fuzzy, kde-format
-#| msgid "&Wordwrap"
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Teakstadoadjin"
@@ -2030,7 +1989,6 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1414
 #, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Automáhtalaš čállindárkkisteapmi"
@@ -2054,42 +2012,36 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1437
 #, fuzzy, kde-format
-#| msgid "&All Fields"
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Buot giettit"
 
 #: editor/kmcomposerwin.cpp:1440
 #, fuzzy, kde-format
-#| msgid "&Identity"
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identitehta"
 
 #: editor/kmcomposerwin.cpp:1443
 #, fuzzy, kde-format
-#| msgid "&Dictionary"
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Sátnegirji"
 
 #: editor/kmcomposerwin.cpp:1446
 #, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Sáddejuvvon e-boasta má&hppa"
 
 #: editor/kmcomposerwin.cpp:1449
 #, fuzzy, kde-format
-#| msgid "&Mail Transport"
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&E-boasta-fievrrideapmi"
 
 #: editor/kmcomposerwin.cpp:1452
 #, fuzzy, kde-format
-#| msgid "&From"
 msgctxt "@action"
 msgid "&From"
 msgstr "&Sáddejeaddji"
@@ -2103,14 +2055,12 @@ msgstr "F&áddá"
 
 #: editor/kmcomposerwin.cpp:1460
 #, fuzzy, kde-format
-#| msgid "Append S&ignature"
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Goallos &vuolláičállaga"
 
 #: editor/kmcomposerwin.cpp:1464
 #, fuzzy, kde-format
-#| msgid "Append S&ignature"
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Goallos &vuolláičállaga"
@@ -2123,7 +2073,6 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1483
 #, fuzzy, kde-format
-#| msgid "Spellchecker"
 msgid "&Spellchecker…"
 msgstr "Čállindárkkisteapmi"
 
@@ -2170,7 +2119,6 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:1561
 #, fuzzy, kde-format
-#| msgid "Configure KMail..."
 msgid "Configure KMail…"
 msgstr "Heivet KMail …"
 
@@ -2196,7 +2144,6 @@ msgstr " Linnjá: %1 "
 
 #: editor/kmcomposerwin.cpp:1696
 #, fuzzy, kde-format
-#| msgid " Column: %1 "
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Čuolda: %1 "
@@ -2252,21 +2199,18 @@ msgstr "Hálidatgo bálkestit vai vurket reivve maŋŋelebbui dahje bálkestit d
 
 #: editor/kmcomposerwin.cpp:2095
 #, fuzzy, kde-format
-#| msgid "Close Composer"
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Gidde čállinprográmma"
 
 #: editor/kmcomposerwin.cpp:2163
 #, fuzzy, kde-format
-#| msgid "Move Message to Folder"
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Sirdde reivve máhppii: "
 
 #: editor/kmcomposerwin.cpp:2164
 #, fuzzy, kde-format
-#| msgid "Sending messages"
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Sáddemin reivviid"
@@ -2285,14 +2229,12 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:2416
 #, fuzzy, kde-format
-#| msgid "Add as &Attachment"
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Lasit &mielddusin"
 
 #: editor/kmcomposerwin.cpp:2431
 #, fuzzy, kde-format
-#| msgid "KMail"
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2310,7 +2252,6 @@ msgstr ""
 # unreviewed-context
 #: editor/kmcomposerwin.cpp:2437
 #, fuzzy, kde-format
-#| msgid "As Attachment"
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Mielddusin"
@@ -2331,7 +2272,6 @@ msgstr[1] ""
 
 #: editor/kmcomposerwin.cpp:2535
 #, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Liibme čuohpusbeavddi teavstta mielddusin"
@@ -2351,7 +2291,6 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:2664
 #, fuzzy, kde-format
-#| msgid "Undefined Signing Key"
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Ii meroštuvvon vuolláičállinčoavdda"
@@ -2381,21 +2320,18 @@ msgstr "Fáddágieddi lea guorus. Sádde liikká?"
 
 #: editor/kmcomposerwin.cpp:2846
 #, fuzzy, kde-format
-#| msgid "No To: specified"
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Vuostáiváldigieddi lea guorus"
 
 #: editor/kmcomposerwin.cpp:2847 editor/kmcomposerwin.cpp:2861
 #, fuzzy, kde-format
-#| msgid "S&end as Is"
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Sádde &reivdadankeahttá"
 
 #: editor/kmcomposerwin.cpp:2848
 #, fuzzy, kde-format
-#| msgid "&Specify the Subject"
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "Čá&le fáttá"
@@ -2407,14 +2343,12 @@ msgstr "Fáddá lea guorus. Sádde dattege?"
 
 #: editor/kmcomposerwin.cpp:2860
 #, fuzzy, kde-format
-#| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Ii makkár fáddá"
 
 #: editor/kmcomposerwin.cpp:2862
 #, fuzzy, kde-format
-#| msgid "&Specify the Subject"
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "Čá&le fáttá"
@@ -2428,27 +2362,23 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:3093
 #, fuzzy, kde-format
-#| msgid "About to send email..."
 msgid "About to send email…"
 msgstr "Sáddegoađán boastta …"
 
 #: editor/kmcomposerwin.cpp:3094
 #, fuzzy, kde-format
-#| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Sádde nannema"
 
 #: editor/kmcomposerwin.cpp:3095
 #, fuzzy, kde-format
-#| msgid "&Send Now"
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Sádde &dál"
 
 #: editor/kmcomposerwin.cpp:3096
 #, fuzzy, kde-format
-#| msgid "Send &Later"
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Sádde &maŋibut"
@@ -2467,14 +2397,12 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:3178
 #, fuzzy, kde-format
-#| msgid "&Send as Is"
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Sádde &reivdadankeahttá"
 
 #: editor/kmcomposerwin.cpp:3179
 #, fuzzy, kde-format
-#| msgid "&Edit Recipients"
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Doaimmat vuostáiváldiid"
@@ -2493,7 +2421,6 @@ msgstr ""
 
 #: editor/kmcomposerwin.cpp:3219
 #, fuzzy, kde-format
-#| msgid "Use Global Setting"
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Geavat oppalaš heivehusa"
@@ -2714,14 +2641,12 @@ msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, fuzzy, kde-format
-#| msgid "Send Now"
 msgctxt "@action"
 msgid "Send Now"
 msgstr "Sádde dál"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
 #, fuzzy, kde-format
-#| msgid "Set subject of message"
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Mearrit reivve fáttá"
@@ -2946,7 +2871,6 @@ msgstr ""
 #: identity/encodedimagepicker.cpp:134 identity/encodedimagepicker.cpp:144
 #: identity/encodedimagepicker.cpp:152
 #, fuzzy, kde-format
-#| msgid "No Picture"
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Ii leat govva"
@@ -2986,7 +2910,6 @@ msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
 #, fuzzy, kde-format
-#| msgid "&Existing identities:"
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Identitehtat mat juo gávdnojit:"
@@ -3031,7 +2954,6 @@ msgstr "Oppalaš"
 
 #: identity/identitydialog.cpp:272
 #, fuzzy, kde-format
-#| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Du namma:"
@@ -3049,7 +2971,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:288
 #, fuzzy, kde-format
-#| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Orga&nisašuvdna:"
@@ -3067,7 +2988,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:305
 #, fuzzy, kde-format
-#| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&E-boastačujuhus:"
@@ -3084,7 +3004,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:329
 #, fuzzy, kde-format
-#| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "&E-boastačujuhus:"
@@ -3117,7 +3036,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:363
 #, fuzzy, kde-format
-#| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-vuolláičállinčoavdda:"
@@ -3150,7 +3068,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:411
 #, fuzzy, kde-format
-#| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP-krypterenčoavdda:"
@@ -3166,7 +3083,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:426
 #, fuzzy, kde-format
-#| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-vuolláicállinduođaštus:"
@@ -3183,7 +3099,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:446
 #, fuzzy, kde-format
-#| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-krypterenduođaštus:"
@@ -3251,7 +3166,6 @@ msgstr "Erenoamáš"
 
 #: identity/identitydialog.cpp:515
 #, fuzzy, kde-format
-#| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Vástidančujuhus:"
@@ -3269,7 +3183,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:537
 #, fuzzy, kde-format
-#| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Č&iegusmáŋgusčujuhusat:"
@@ -3287,7 +3200,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:559
 #, fuzzy, kde-format
-#| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "Č&iegusmáŋgusčujuhusat:"
@@ -3311,7 +3223,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:577
 #, fuzzy, kde-format
-#| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "Sá&tnelistu:"
@@ -3333,7 +3244,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:593
 #, fuzzy, kde-format
-#| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Álgo&divodusaid máhppa:"
@@ -3345,7 +3255,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:601
 #, fuzzy, kde-format
-#| msgid "&Templates folder:"
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Malliid máhppa:"
@@ -3368,21 +3277,18 @@ msgstr ""
 
 #: identity/identitydialog.cpp:618
 #, fuzzy, kde-format
-#| msgid "Autocorrection"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Autodivvodeapmi"
 
 #: identity/identitydialog.cpp:630
 #, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "S&tandárddomeana:"
 
 #: identity/identitydialog.cpp:633
 #, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "S&tandárddomeana:"
@@ -3403,7 +3309,6 @@ msgstr "&Geavat iesdefinerejuvvon reivemálliid dán identitehta várás"
 
 #: identity/identitydialog.cpp:670
 #, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Máŋge globála málliid"
@@ -3435,7 +3340,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:751
 #, fuzzy, kde-format
-#| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "E-boastačujuhus:"
@@ -3479,7 +3383,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:848
 #, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-boastačujuhus ii gávdnon čoavdagis dahje duođaštusain"
@@ -3509,7 +3412,6 @@ msgstr ""
 
 #: identity/identitydialog.cpp:1165
 #, fuzzy, kde-format
-#| msgid "&Edit"
 msgid "Edit…"
 msgstr "&Doaimmat"
 
@@ -3532,7 +3434,6 @@ msgstr ""
 #: identity/identityeditvcarddialog.cpp:58
 #: identity/identityeditvcarddialog.cpp:78
 #, fuzzy, kde-format
-#| msgid "Delete Folder"
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Sihko máhpa"
@@ -3606,7 +3507,6 @@ msgstr[1] "Váldde eret identitehta"
 
 #: identity/identitypage.cpp:221
 #, fuzzy, kde-format
-#| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Váldde eret"
@@ -3619,21 +3519,18 @@ msgstr ""
 
 #: identity/identitypage.cpp:274
 #, fuzzy, kde-format
-#| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Rievdat …"
 
 #: identity/identitypage.cpp:275
 #, fuzzy, kde-format
-#| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Rievdat nama"
 
 #: identity/identitypage.cpp:281
 #, fuzzy, kde-format
-#| msgid "Set as Default"
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "Geavat standárdan"
@@ -3646,7 +3543,6 @@ msgstr ""
 
 #: identity/newidentitydialog.cpp:61
 #, fuzzy, kde-format
-#| msgid "&New identity:"
 msgctxt "@label:textbox"
 msgid "&New identity:"
 msgstr "&Ođđa identitehta:"
@@ -3741,7 +3637,6 @@ msgstr[1] ""
 
 #: job/addressvalidationjob.cpp:81 job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
-#| msgid "Invalid Email Address"
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Gustohis e-boastačujuhus"
@@ -3788,7 +3683,6 @@ msgstr ""
 
 #: job/opencomposerjob.cpp:123
 #, fuzzy, kde-format
-#| msgid "Delete Folder"
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Sihko máhpa"
@@ -3893,7 +3787,6 @@ msgstr ""
 
 #: kmail_options.h:16
 #, fuzzy, kde-format
-#| msgid "Set subject of message"
 msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Mearrit reivve fáttá"
@@ -3915,35 +3808,30 @@ msgstr ""
 
 #: kmail_options.h:28
 #, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Lasit mildusa reivii. Dát leat geardduhahtti."
 
 #: kmail_options.h:30
 #, fuzzy, kde-format
-#| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Viečča reivesisdoalu «fiillas»"
 
 #: kmail_options.h:31
 #, fuzzy, kde-format
-#| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Vállje reivve sisdoalu."
 
 #: kmail_options.h:32
 #, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Lasit mildusa reivii. Dát leat geardduhahtti."
 
 #: kmail_options.h:33
 #, fuzzy, kde-format
-#| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Iskka dušše leago ođđa e-boasta"
@@ -3956,28 +3844,24 @@ msgstr ""
 
 #: kmail_options.h:35
 #, fuzzy, kde-format
-#| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Raba dušše čállinprográmma"
 
 #: kmail_options.h:36
 #, fuzzy, kde-format
-#| msgid "Identity Name"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Identitehtanamma"
 
 #: kmail_options.h:37
 #, fuzzy, kde-format
-#| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Čájet meroštuvvon reivefiilla"
 
 #: kmail_options.h:38
 #, fuzzy, kde-format
-#| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Vállje reivve sisdoalu."
@@ -4142,7 +4026,6 @@ msgstr ""
 
 #: kmcommands.cpp:928
 #, fuzzy, kde-format
-#| msgid "&Send as Is"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Sádde &reivdadankeahttá"
@@ -4243,7 +4126,6 @@ msgstr ""
 
 #: kmkernel.cpp:754
 #, fuzzy, kde-format
-#| msgid "Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Ii laktašuvvon"
@@ -4256,7 +4138,6 @@ msgstr ""
 
 #: kmkernel.cpp:756
 #, fuzzy, kde-format
-#| msgid "Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Ii laktašuvvon"
@@ -4351,7 +4232,6 @@ msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:89
 #, fuzzy, kde-format
-#| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-meattáhusdieđáhus"
@@ -4450,7 +4330,6 @@ msgstr "Sihko máhpa boaresmuvvan reivviid"
 
 #: kmmainwidget.cpp:1455
 #, fuzzy, kde-format
-#| msgid "&Expire"
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Boarásmuvvan"
@@ -4496,7 +4375,6 @@ msgstr "Sihko boarásmuvvan reivviid?"
 
 #: kmmainwidget.cpp:1554
 #, fuzzy, kde-format
-#| msgid "Expire"
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Boarásmuvvan"
@@ -4543,13 +4421,11 @@ msgstr ""
 
 #: kmmainwidget.cpp:1675
 #, fuzzy, kde-format
-#| msgid "Moving messages"
 msgid "Moving messages…"
 msgstr "Sirdimin reivviid"
 
 #: kmmainwidget.cpp:1677 kmmainwidget.cpp:1871
 #, fuzzy, kde-format
-#| msgid "Deleting messages"
 msgid "Deleting messages…"
 msgstr "Sihkomin reivviid"
 
@@ -4591,7 +4467,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:1800
 #, fuzzy, kde-format
-#| msgid "Moving messages"
 msgid "Copying messages…"
 msgstr "Sirdimin reivviid"
 
@@ -4618,7 +4493,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:1868
 #, fuzzy, kde-format
-#| msgid "Move message to trashcan"
 msgid "Moving messages to trash…"
 msgstr "Sirdde reivve ruskalihtái"
 
@@ -4725,13 +4599,11 @@ msgstr ""
 
 #: kmmainwidget.cpp:2910
 #, fuzzy, kde-format
-#| msgid "Save &As..."
 msgid "Save &As…"
 msgstr "Vurke &danin …"
 
 #: kmmainwidget.cpp:2921
 #, fuzzy, kde-format
-#| msgid "&Expire All Folders"
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Sihko &boarásmuvvan reivviid buot máhpain"
@@ -4753,7 +4625,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:2937
 #, fuzzy, kde-format
-#| msgid "Check &Mail"
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Iskka &boastta"
@@ -4780,7 +4651,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:2980
 #, fuzzy, kde-format
-#| msgid "&Import Messages..."
 msgid "&Import Messages…"
 msgstr "&Sisafievrrit reivviid …"
 
@@ -4792,14 +4662,12 @@ msgstr ""
 
 #: kmmainwidget.cpp:2997
 #, fuzzy, kde-format
-#| msgid "Filter on &From..."
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "&Sille sáddejeaddji bokte …"
 
 #: kmmainwidget.cpp:3002
 #, fuzzy, kde-format
-#| msgid "Configure &Notifications..."
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Heivet &muittuhusaid …"
@@ -4812,28 +4680,24 @@ msgstr ""
 
 #: kmmainwidget.cpp:3012
 #, fuzzy, kde-format
-#| msgid "Edit \"Out of Office\" Replies..."
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Doaimmat «Eret-kántuvrras»-dieđáhusaid …"
 
 #: kmmainwidget.cpp:3018
 #, fuzzy, kde-format
-#| msgid "&Configure Summary View..."
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "H&eivet čoahkkáigeasu čájeheami …"
 
 #: kmmainwidget.cpp:3024
 #, fuzzy, kde-format
-#| msgid "Delete Messages"
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Sihko reivviid"
 
 #: kmmainwidget.cpp:3030
 #, fuzzy, kde-format
-#| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Oza reivviid …"
@@ -4846,7 +4710,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:3046
 #, fuzzy, kde-format
-#| msgid "Move to Trash"
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Sirdde ruskalihtái"
@@ -4863,13 +4726,11 @@ msgstr ""
 
 #: kmmainwidget.cpp:3059 kmmainwidget.cpp:4114
 #, fuzzy, kde-format
-#| msgid "&Find Messages..."
 msgid "&Find Messages…"
 msgstr "&Oza reivviid …"
 
 #: kmmainwidget.cpp:3064
 #, fuzzy, kde-format
-#| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Merke &buot reivviid"
@@ -4899,14 +4760,12 @@ msgstr ""
 
 #: kmmainwidget.cpp:3107
 #, fuzzy, kde-format
-#| msgid "&Existing identities:"
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Identitehtat mat juo gávdnojit:"
 
 #: kmmainwidget.cpp:3132
 #, fuzzy, kde-format
-#| msgid "Delete Folder"
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Sihko máhpa"
@@ -4919,19 +4778,16 @@ msgstr ""
 
 #: kmmainwidget.cpp:3163
 #, fuzzy, kde-format
-#| msgid "Copy Message to Folder"
 msgid "Copy Message To…"
 msgstr "Máŋge reivve máhppii"
 
 #: kmmainwidget.cpp:3165
 #, fuzzy, kde-format
-#| msgid "Move Message to Folder"
 msgid "Move Message To…"
 msgstr "Sirdde reivve máhppii: "
 
 #: kmmainwidget.cpp:3170
 #, fuzzy, kde-format
-#| msgid "New Messages"
 msgid "&New Message…"
 msgstr "Ođđa reivvet"
 
@@ -4949,7 +4805,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:3186
 #, fuzzy, kde-format
-#| msgid "New Message t&o Mailing-List..."
 msgid "New Message t&o Mailing-List…"
 msgstr "Ođđa &reive e-boastalistui …"
 
@@ -4960,28 +4815,24 @@ msgstr "&Ráhkat silli"
 
 #: kmmainwidget.cpp:3196
 #, fuzzy, kde-format
-#| msgid "Filter on &Subject..."
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Sille &fáttáid bokte …"
 
 #: kmmainwidget.cpp:3203
 #, fuzzy, kde-format
-#| msgid "Filter on &From..."
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "&Sille sáddejeaddji bokte …"
 
 #: kmmainwidget.cpp:3209
 #, fuzzy, kde-format
-#| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Sille vuos&táiváldi bokte …"
 
 #: kmmainwidget.cpp:3215
 #, fuzzy, kde-format
-#| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Sille vuos&táiváldi bokte …"
@@ -5045,7 +4896,6 @@ msgstr "Badjelgeahča &gođđasa"
 
 #: kmmainwidget.cpp:3272 kmreadermainwin.cpp:486
 #, fuzzy, kde-format
-#| msgid "Save A&ttachments..."
 msgid "Save A&ttachments…"
 msgstr "Vurke &mildosiid nugo …"
 
@@ -5111,14 +4961,12 @@ msgstr "Čiega buot gođđosiid dán máhpas"
 
 #: kmmainwidget.cpp:3325
 #, fuzzy, kde-format
-#| msgid "&Sign Message"
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&Vuolláičále reivve"
 
 #: kmmainwidget.cpp:3332
 #, fuzzy, kde-format
-#| msgid "&Next Message"
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Boahtte reive"
@@ -5130,7 +4978,6 @@ msgstr "Mana boahtte reivii"
 
 #: kmmainwidget.cpp:3339
 #, fuzzy, kde-format
-#| msgid "Next &Unread Message"
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Mana &boahtte logakeahtes reivii"
@@ -5148,7 +4995,6 @@ msgstr "Mana boahtte logakeahtes reivii"
 
 #: kmmainwidget.cpp:3352
 #, fuzzy, kde-format
-#| msgid "&Previous Message"
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Ovddit reivii"
@@ -5160,7 +5006,6 @@ msgstr "Mana ovddit reivii"
 
 #: kmmainwidget.cpp:3359
 #, fuzzy, kde-format
-#| msgid "Previous Unread &Message"
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Ovddit logakeahtes &reive"
@@ -5178,7 +5023,6 @@ msgstr "Mana ovddit logakeahtes reivii"
 
 #: kmmainwidget.cpp:3372
 #, fuzzy, kde-format
-#| msgid "Next Unread &Folder"
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Boahtte logakeahtes &máhppii"
@@ -5190,7 +5034,6 @@ msgstr "Mana boahtte máhppii mas leat logakeahtes reivvet"
 
 #: kmmainwidget.cpp:3381
 #, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Ovddit &logakeahtes máhppa"
@@ -5222,7 +5065,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:3404
 #, fuzzy, kde-format
-#| msgid "Configure &Filters..."
 msgid "Configure &Filters…"
 msgstr "Heivet &silliid …"
 
@@ -5234,7 +5076,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:3415
 #, fuzzy, kde-format
-#| msgid "&Add Account..."
 msgid "&Add Account…"
 msgstr "&Lasit konttu …"
 
@@ -5250,32 +5091,27 @@ msgstr "Čájet KMail:a bures boahttin siiddu."
 
 #: kmmainwidget.cpp:3429
 #, fuzzy, kde-format
-#| msgid "Configure &Notifications..."
 msgid "Configure &Notifications…"
 msgstr "Heivet &muittuhusaid …"
 
 #: kmmainwidget.cpp:3436
 #, fuzzy, kde-format
-#| msgid "&Configure KMail..."
 msgid "&Configure KMail…"
 msgstr "&Heivet KMail:a …"
 
 #: kmmainwidget.cpp:3443
 #, fuzzy, kde-format
-#| msgid "Expire"
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Boarásmuvvan"
 
 #: kmmainwidget.cpp:3449
 #, fuzzy, kde-format
-#| msgid "Add Favorite Folder..."
 msgid "Add Favorite Folder…"
 msgstr "Lasit favorihttamáhpaid …"
 
 #: kmmainwidget.cpp:3455
 #, fuzzy, kde-format
-#| msgid "Serverside Subscription..."
 msgid "Serverside Subscription…"
 msgstr "Bálvábeal diŋgomat …"
 
@@ -5296,7 +5132,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:3493
 #, fuzzy, kde-format
-#| msgid "Open Address Book"
 msgid "New AddressBook Contact…"
 msgstr "Raba čujuhusgirjji"
 
@@ -5312,7 +5147,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:3521
 #, fuzzy, kde-format
-#| msgid "Copy Message to Folder"
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Máŋge reivve máhppii"
@@ -5324,77 +5158,66 @@ msgstr ""
 
 #: kmmainwidget.cpp:3533
 #, fuzzy, kde-format
-#| msgid "Abort Current Operation"
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Gaskkalduhte dán doaimma"
 
 #: kmmainwidget.cpp:3539
 #, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Fohkus boahtte máhppii"
 
 #: kmmainwidget.cpp:3545
 #, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Fohkus ovddit máhppii"
 
 #: kmmainwidget.cpp:3551
 #, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Vállje máhpa fohkusis"
 
 #: kmmainwidget.cpp:3558
 #, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Fohkus boahtte máhppii"
 
 #: kmmainwidget.cpp:3564
 #, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Fohkus boahtte máhppii"
 
 #: kmmainwidget.cpp:3570
 #, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Fohkus boahtte máhppii"
 
 #: kmmainwidget.cpp:3576
 #, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Fohkus ovddit máhppii"
 
 #: kmmainwidget.cpp:3582
 #, fuzzy, kde-format
-#| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Merke &buot reivviid"
 
 #: kmmainwidget.cpp:3588
 #, fuzzy, kde-format
-#| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Merke &buot reivviid"
 
 #: kmmainwidget.cpp:3594
 #, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Vállje máhpa fohkusis"
@@ -5407,21 +5230,18 @@ msgstr ""
 
 #: kmmainwidget.cpp:3609
 #, fuzzy, kde-format
-#| msgid "Go to the previous message"
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Mana ovddit reivii"
 
 #: kmmainwidget.cpp:3615
 #, fuzzy, kde-format
-#| msgid "Action Item Message"
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Reive masa lea čadnon doaibma"
 
 #: kmmainwidget.cpp:3622
 #, fuzzy, kde-format
-#| msgid "Move Message to Folder"
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Sirdde reivve máhppii: "
@@ -5440,14 +5260,12 @@ msgstr ""
 
 #: kmmainwidget.cpp:3643
 #, fuzzy, kde-format
-#| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Ovddit &logakeahtes máhppa"
 
 #: kmmainwidget.cpp:3650
 #, fuzzy, kde-format
-#| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Sihko máhpa"
@@ -5470,7 +5288,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:4114
 #, fuzzy, kde-format
-#| msgid "Last Search"
 msgid "Edit Search…"
 msgstr "Ovddit ohcan"
 
@@ -5520,14 +5337,12 @@ msgstr ""
 
 #: kmmainwidget.cpp:4774
 #, fuzzy, kde-format
-#| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Sihkkarvuohtaváruhus"
 
 #: kmmainwidget.cpp:4775
 #, fuzzy, kde-format
-#| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Geavat HTML:a"
@@ -5571,7 +5386,6 @@ msgstr ""
 
 #: kmmainwidget.cpp:4963
 #, fuzzy, kde-format
-#| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Álggat ođđasit"
@@ -5583,7 +5397,6 @@ msgstr ""
 
 #: kmmainwin.cpp:53
 #, fuzzy, kde-format
-#| msgid "&Settings"
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "&Heivehusat"
@@ -5616,19 +5429,16 @@ msgstr ""
 
 #: kmreaderwin.cpp:122
 #, fuzzy, kde-format
-#| msgid "New Message To..."
 msgid "New Message To…"
 msgstr "Ođđa reive dása …"
 
 #: kmreaderwin.cpp:128
 #, fuzzy, kde-format
-#| msgid "Reply To..."
 msgid "Reply To…"
 msgstr "Sádde vástádusa čujuhussii …"
 
 #: kmreaderwin.cpp:134
 #, fuzzy, kde-format
-#| msgid "Forward To..."
 msgid "Forward To…"
 msgstr "Sádde viidáset čujuhussii …"
 
@@ -5659,27 +5469,23 @@ msgstr ""
 
 #: kmreaderwin.cpp:167
 #, fuzzy, kde-format
-#| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Vurke liŋkka nugo …"
 
 #: kmreaderwin.cpp:173
 #, fuzzy, kde-format
-#| msgid "&Find in Message..."
 msgid "&Find in Message…"
 msgstr "&Oza reivves …"
 
 #: kmreaderwin.cpp:179
 #, fuzzy, kde-format
-#| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Vurke liŋkka nugo …"
 
 #: kmreaderwin.cpp:185
 #, fuzzy, kde-format
-#| msgid "Open Message"
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Raba reivve"
@@ -5703,7 +5509,6 @@ msgstr ""
 
 #: kmreaderwin.cpp:204
 #, fuzzy, kde-format
-#| msgid "Open Message"
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Raba reivve"
@@ -5840,7 +5645,6 @@ msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, fuzzy, kde-format
-#| msgid "New Messages"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Ođđa reivvet"
@@ -5884,7 +5688,6 @@ msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:196
 #, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Sádde &reivviid olggosbovssas:"
@@ -5908,7 +5711,6 @@ msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, fuzzy, kde-format
-#| msgid "&Configure Summary View..."
 msgid "&Configure Summary View…"
 msgstr "H&eivet čoahkkáigeasu čájeheami …"
 
@@ -5970,7 +5772,6 @@ msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
 #, fuzzy, kde-format
-#| msgid "Cornelius Schumacher"
 msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
 msgstr "Cornelius Schumacher"
@@ -6005,32 +5806,26 @@ msgstr "&Vástit"
 
 #: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
 #, fuzzy, kde-format
-#| msgctxt "Message->"
-#| msgid "&Reply"
 msgid "&Reply…"
 msgstr "&Vástit"
 
 #: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
 #, fuzzy, kde-format
-#| msgid "Reply to &All..."
 msgid "Reply to &All…"
 msgstr "Vástit &buohkaide …"
 
 #: messageactions.cpp:64
 #, fuzzy, kde-format
-#| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "Vástit čá&llái …"
 
 #: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
 #, fuzzy, kde-format
-#| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "Vástit e-boasta&listui …"
 
 #: messageactions.cpp:66
 #, fuzzy, kde-format
-#| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Vástit &siterenkeahttá …"
@@ -6038,8 +5833,6 @@ msgstr "Vástit &siterenkeahttá …"
 # unreviewed-context
 #: messageactions.cpp:67
 #, fuzzy, kde-format
-#| msgctxt "@action:inmenu Message->Forward->"
-#| msgid "&Inline..."
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Dieđáhusa siskkobealde …"
@@ -6047,7 +5840,6 @@ msgstr "&Dieđáhusa siskkobealde …"
 # unreviewed-context
 #: messageactions.cpp:68
 #, fuzzy, kde-format
-#| msgid "As Attachment"
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Mielddusin"
@@ -6060,7 +5852,6 @@ msgstr ""
 
 #: messageactions.cpp:70
 #, fuzzy, kde-format
-#| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Ođđa &reive e-boastalistui …"
@@ -6089,7 +5880,6 @@ msgstr ""
 
 #: messageactions.cpp:75
 #, fuzzy, kde-format
-#| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Si&lle e-boastalisttu bokte …"
@@ -6102,7 +5892,6 @@ msgstr ""
 
 #: messageactions.cpp:78
 #, fuzzy, kde-format
-#| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Sádde &ođđasit …"
@@ -6119,14 +5908,12 @@ msgstr ""
 
 #: messageactions.cpp:82
 #, fuzzy, kde-format
-#| msgid "Action Item Message"
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Reive masa lea čadnon doaibma"
 
 #: messageactions.cpp:398
 #, fuzzy, kde-format
-#| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "E-boastalisttu filttar …"
 
@@ -6173,7 +5960,6 @@ msgstr ""
 
 #: messageactions.cpp:464
 #, fuzzy, kde-format
-#| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "E-boastalisttu %1 sillen …"
 
@@ -6277,8 +6063,6 @@ msgstr ""
 # unreviewed-context
 #: searchdialog/searchwindow.cpp:173
 #, fuzzy, kde-format
-#| msgctxt "@action:inmenu Forward message inline."
-#| msgid "&Inline..."
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Dieđáhusa siskkobealde …"
@@ -6286,20 +6070,17 @@ msgstr "&Dieđáhusa siskkobealde …"
 # unreviewed-context
 #: searchdialog/searchwindow.cpp:177
 #, fuzzy, kde-format
-#| msgid "As Attachment"
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Mielddusin"
 
 #: searchdialog/searchwindow.cpp:192
 #, fuzzy, kde-format
-#| msgid "Save Attachments..."
 msgid "Save Attachments…"
 msgstr "Vurke mildosiid …"
 
 #: searchdialog/searchwindow.cpp:199
 #, fuzzy, kde-format
-#| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Sálke merkejuvvon"
@@ -6355,7 +6136,6 @@ msgstr ""
 
 #: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
-#| msgid "Searching..."
 msgid "Searching…"
 msgstr "Ohcamin …"
 
@@ -6477,7 +6257,6 @@ msgstr ""
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:114
 #, fuzzy, kde-format
-#| msgid "Empty local &trash folder on program exit"
 msgid "Empty the local trash folder on program exit"
 msgstr "Gurre báikkálaš ruskalihti prográmma heaittihettiin"
 
@@ -6518,7 +6297,6 @@ msgstr ""
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:175
 #, fuzzy, kde-format
-#| msgid "Show folder quick search field"
 msgid "Show folder quick search line edit"
 msgstr "Čájet ohcanlinnjá"
 
@@ -6627,7 +6405,6 @@ msgstr ""
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:331
 #, fuzzy, kde-format
-#| msgid "Message will be signed"
 msgid "Message preview pane:"
 msgstr "Reive vuolláičállo"
 
@@ -6652,7 +6429,6 @@ msgstr ""
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:347
 #, fuzzy, kde-format
-#| msgid "Folder List"
 msgid "Folder list:"
 msgstr "Máhppalistu"
 
@@ -6665,7 +6441,6 @@ msgstr ""
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:353
 #, fuzzy, kde-format
-#| msgid "Show full path for folders"
 msgid "Short folder list"
 msgstr "Čájet máhpáid olles bálgáid"
 
@@ -6678,7 +6453,6 @@ msgstr "Reivemálle ođđa reivve várás"
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
 #: settings/kmail.kcfg.in:367
 #, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
 msgid "Message template for reply"
 msgstr "&Geavat iesdefinerejuvvon reivemálliid dán identitehta várás"
 
@@ -6745,7 +6519,6 @@ msgstr ""
 
 #: tag/tagselectdialog.cpp:67
 #, fuzzy, kde-format
-#| msgid "Searching..."
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "Ohcamin …"
@@ -6777,14 +6550,12 @@ msgstr "Bienalaš muittuhus ođđa e-boasta boađedettiin"
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
 #, fuzzy, kde-format
-#| msgid "Other Actio&ns..."
 msgid "Other Actio&ns…"
 msgstr "Eará &doaimmat …"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
 #, fuzzy, kde-format
-#| msgid "Open Message"
 msgid "Open Image…"
 msgstr "Raba reivve"
 
@@ -6815,7 +6586,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identitypage.ui:40
 #, fuzzy, kde-format
-#| msgid "&Modify..."
 msgid "&Modify…"
 msgstr "&Rievdat …"
 
@@ -7054,7 +6824,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
 #, fuzzy, kde-format
-#| msgid "Delete Folder"
 msgid "Select Folders…"
 msgstr "Sihko máhpa"
 
@@ -7246,7 +7015,6 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:347
 #, fuzzy, kde-format
-#| msgid "&Settings"
 msgid "GnuPG Settings…"
 msgstr "&Heivehusat"
 
@@ -7849,21 +7617,18 @@ msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Oidde &HTML:a, iige čabu teavstta"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Oidde &HTML:a, iige čabu teavstta"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, fuzzy, kde-format
-#| msgid "Use Global Setting"
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Geavat oppalaš heivehusa"

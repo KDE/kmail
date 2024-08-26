@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-24 13:26+0300\n"
+"PO-Revision-Date: 2024-08-25 08:13+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2877,7 +2877,7 @@ msgstr "ההודעות הועברו לארכיון"
 #: foldershortcutactionmanager.cpp:123 foldershortcutactionmanager.cpp:124
 #, kde-format
 msgid "Folder Shortcut %1"
-msgstr ""
+msgstr "קיצור דרך לתיקייה %1"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:15
 #, kde-format
@@ -2941,7 +2941,7 @@ msgstr "מכרטיס ביקור &קיים"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&vCard path:"
-msgstr ""
+msgstr "נתיב כרטיס &ביקור/vCard:"
 
 #: identity/identityaddvcarddialog.cpp:77
 #, kde-format
@@ -5715,13 +5715,13 @@ msgid "There are no unread messages"
 msgstr "אין הודעות שלא נקראו"
 
 #: kmsystemtray.cpp:268
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "הודעה שלא נקראה"
-msgstr[1] "הודעה שלא נקראה"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[1] "שתי הודעות שלא נקראו"
+msgstr[2] "%1 הודעות שלא נקראו"
+msgstr[3] "%1 הודעות שלא נקראו"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
 #, kde-format
@@ -5832,6 +5832,8 @@ msgid ""
 "Choosing this will show a dialog where you can select which summaries you "
 "want to see and also allow you to configure the summaries to your liking."
 msgstr ""
+"בחירה בזה תציג חלונית בה ניתן לבחור אילו תקצירים יופיעו וגם יתאפשר לך להתאים "
+"את התקצירים לטעמך."
 
 #: kontactplugin/summary/summaryview_part.cpp:107
 #, kde-format
@@ -6144,7 +6146,7 @@ msgstr "תיקייה"
 #: searchdialog/searchpatternwarning.cpp:27
 #, kde-format
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
-msgstr ""
+msgstr "החיפוש נכשל ונמצאו כמה שגיאות: <ul><li>%1</li></ul>"
 
 #: searchdialog/searchwindow.cpp:75
 #, kde-format
@@ -7450,6 +7452,8 @@ msgid ""
 "If this option is selected, S/MIME certificates are validated using "
 "Certificate Revocation Lists (CRLs)."
 msgstr ""
+"אם האפשרות הזאת מסומנת, אישורי S/MIME יתוקפו באמצעות רשימות שלילת אישורים "
+"(CRLs)."
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
@@ -7465,6 +7469,8 @@ msgid ""
 "the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP "
 "responder below."
 msgstr ""
+"אם האפשרות הזאת מסומנת, אישורי S/MIME יתוקפו דרך האינטרנט מול פרוטוקול מצב "
+"אישורים מקוון (OCSP). נא למלא את כתובת משיב ה־OCSP להלן."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
@@ -7497,6 +7503,8 @@ msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
+"נא למלא כאן את כתובת השרת לאימות אישורים מקוון (משיב OCSP). הכתובת בדרך כלל "
+"מתחילה ב־http://‎"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
@@ -7544,6 +7552,8 @@ msgid ""
 "If this option is checked, missing issuer certificates are fetched when "
 "necessary (this applies to both validation methods, CRLs and OCSP)"
 msgstr ""
+"אם האפשרות הזאת מסומנת, אישורי מנפיקים חסרים נמשכים במידת הצורך (חל על שתי "
+"שיטות האימות: CRLs ו־OCSP)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, fetchMissingCB)
 #: ui/smimeconfiguration.ui:124
@@ -7561,7 +7571,7 @@ msgstr "בקשות HTTP"
 #: ui/smimeconfiguration.ui:141
 #, kde-format
 msgid "Entirely disables the use of HTTP for S/MIME."
-msgstr ""
+msgstr "משבית לחלוטין את השימוש ב־HTTP ל־S/MIME."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableHTTPCB)
 #: ui/smimeconfiguration.ui:144
@@ -7628,7 +7638,7 @@ msgstr "בקשות LDAP"
 #: ui/smimeconfiguration.ui:224
 #, kde-format
 msgid "Entirely disables the use of LDAP for S/MIME."
-msgstr "משבית לחלוטין את השימוש של LDAP ל־S/MIME."
+msgstr "משבית לחלוטין את השימוש ב־LDAP ל־S/MIME."
 
 #. i18n: ectx: property (text), widget (QCheckBox, disableLDAPCB)
 #: ui/smimeconfiguration.ui:227

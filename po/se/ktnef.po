@@ -212,8 +212,6 @@ msgstr ""
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
 msgctxt "@title:menu"
 msgid "&Open With…"
 msgstr "&Raba geavahettiin"
