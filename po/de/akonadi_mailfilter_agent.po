@@ -2,13 +2,14 @@
 # Burkhard Lück <lueck@hube-lueck.de>, 2011, 2012, 2013, 2014, 2018, 2020.
 # Torbjörn Klatt <opensource@torbjoern-klatt.de>, 2011.
 # Frederik Schwarzer <schwarzer@kde.org>, 2011, 2012, 2023.
+# SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-07-30 08:46+0200\n"
-"Last-Translator: aheinecke <aheinecke@gnupg.org>\n"
+"PO-Revision-Date: 2024-08-19 22:34+0200\n"
+"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -30,8 +31,7 @@ msgid "Share…"
 msgstr "Freigeben ..."
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Filtervorgänge protokollieren"
@@ -52,15 +52,13 @@ msgid "Logging Details"
 msgstr "Details zur Protokollierung"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Beschreibung der Protokollmuster"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Protokollierung der Filter&regeln"
@@ -80,15 +78,13 @@ msgstr ""
 "der Anwendung aller Regeln eines Filters protokolliert."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Protokollierung der Filtermusterauswertung"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Filteraktionen protokollieren"

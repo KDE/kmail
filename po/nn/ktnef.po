@@ -208,16 +208,12 @@ msgstr "&Opna med"
 
 #: ktnefmain.cpp:570
 #, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "&Anna …"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
 msgctxt "@title:menu"
 msgid "&Open With…"
 msgstr "&Opna med"
@@ -283,7 +279,6 @@ msgstr ""
 
 #: main.cpp:36
 #, fuzzy, kde-format
-#| msgid "Michael Goffioul"
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
@@ -295,7 +290,6 @@ msgstr ""
 
 #: main.cpp:38
 #, fuzzy, kde-format
-#| msgid "Allen Winter"
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"

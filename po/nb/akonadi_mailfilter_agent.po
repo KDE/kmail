@@ -33,7 +33,6 @@ msgstr ""
 
 #: filterlogdialog.cpp:85
 #, fuzzy, kde-format
-#| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Logg filteraktiviteter"
@@ -54,14 +53,12 @@ msgstr "Loggedetaljer"
 
 #: filterlogdialog.cpp:101
 #, fuzzy, kde-format
-#| msgid "Log pattern description"
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Beskrivelse av loggmønster"
 
 #: filterlogdialog.cpp:106
 #, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Logg behandling av filter&regler"
@@ -82,21 +79,18 @@ msgstr ""
 
 #: filterlogdialog.cpp:118
 #, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Logg behandling av filtermønstre"
 
 #: filterlogdialog.cpp:123
 #, fuzzy, kde-format
-#| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Logg filterhandlinger"
 
 #: filterlogdialog.cpp:133
 #, fuzzy, kde-format
-#| msgid "Log size limit:"
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Maksimal størrelse for loggen:"
@@ -136,7 +130,6 @@ msgstr ""
 
 #: filterlogdialog.cpp:330
 #, fuzzy, kde-format
-#| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-feil"

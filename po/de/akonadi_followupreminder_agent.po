@@ -1,13 +1,14 @@
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 # Frederik Schwarzer <schwarzer@kde.org>, 2014, 2016, 2022.
 # Burkhard Lück <lueck@hube-lueck.de>, 2014, 2015, 2017, 2018, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-31 00:41+0000\n"
-"PO-Revision-Date: 2024-07-30 09:02+0200\n"
-"Last-Translator: aheinecke <aheinecke@gnupg.org>\n"
+"PO-Revision-Date: 2024-08-19 22:33+0200\n"
+"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -127,12 +128,10 @@ msgid "Follow Up Reminder"
 msgstr "Erinnerung an Folgenachrichten"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "Sie warten immer noch auf eine Antwort auf diese E-Mails:"
+msgstr "Sie warten weiterhin auf Antworten zu diesen E-Mails:"
 
 #~ msgid "Configure"
 #~ msgstr "Einrichten"
