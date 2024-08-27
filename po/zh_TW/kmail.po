@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-21 00:48+0000\n"
-"PO-Revision-Date: 2024-05-30 22:11+0900\n"
+"PO-Revision-Date: 2024-08-26 16:07+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1329,14 +1329,11 @@ msgid "No autosave"
 msgstr "不自動儲存"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " 分"
+msgstr[0] "%v 分鐘"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1374,10 +1371,9 @@ msgstr "移除(&M)"
 
 #: configuredialog/configurecomposerpage.cpp:635
 #: configuredialog/configurecomposerpage.cpp:972
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "修改…"
+msgstr "修改(&I)…"
 
 #: configuredialog/configurecomposerpage.cpp:635
 #, kde-format
@@ -1470,8 +1466,7 @@ msgid "Ne&w"
 msgstr "新的(&W)"
 
 #: configuredialog/configurecomposerpage.cpp:754
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "移除(&M)"
@@ -1495,8 +1490,7 @@ msgid ""
 msgstr "'Content-Type' 是不被允許的字串。這個標頭不會被儲存。"
 
 #: configuredialog/configurecomposerpage.cpp:914
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "無效的標頭"
@@ -2032,8 +2026,7 @@ msgid "Cl&ean Spaces"
 msgstr "清除空間(&E)"
 
 #: editor/kmcomposerwin.cpp:1385
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "使用固定寬度文字(&X)"
@@ -2059,32 +2052,28 @@ msgid "&Request Delivery Confirmation"
 msgstr "請求收件確認(&R)"
 
 #: editor/kmcomposerwin.cpp:1402
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "自動換行(&W)"
 
 #: editor/kmcomposerwin.cpp:1407
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "片段(&S)"
 
 #: editor/kmcomposerwin.cpp:1412
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "自動檢查拼字(&A)"
 
 #: editor/kmcomposerwin.cpp:1428
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
-msgstr "Richtext 編輯"
+msgstr "豐富格式文字編輯"
 
 #: editor/kmcomposerwin.cpp:1430
 #, kde-format
@@ -2098,29 +2087,25 @@ msgid "Toggle rich text editing mode"
 msgstr "切換豐富格式文字編輯模式"
 
 #: editor/kmcomposerwin.cpp:1435
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "全部欄位(&A)"
 
 #: editor/kmcomposerwin.cpp:1438
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "身份(&I)"
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "字典(&D)"
 
 #: editor/kmcomposerwin.cpp:1444
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "寄件備份(&S)"
@@ -2133,8 +2118,7 @@ msgid "&Mail Transport"
 msgstr "發送信件帳號(&M)"
 
 #: editor/kmcomposerwin.cpp:1450
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "寄件者(&F)"
@@ -2158,8 +2142,7 @@ msgid "Pr&epend Signature"
 msgstr "在前面附上簽名(&E)"
 
 #: editor/kmcomposerwin.cpp:1466
-#, fuzzy, kde-format
-#| msgid "Insert Signature At C&ursor Position"
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "在游標位置插入簽名(&U)"
@@ -2314,22 +2297,19 @@ msgid "Insert File"
 msgstr "插入檔案"
 
 #: editor/kmcomposerwin.cpp:2413
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "新增為內含影像(&I)"
 
 #: editor/kmcomposerwin.cpp:2414
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "以附件加入(&A)"
 
 #: editor/kmcomposerwin.cpp:2429
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -2485,8 +2465,7 @@ msgid ""
 msgstr "您正試圖傳送電子郵件給多於 %1 個收件者。確定要傳送嗎？"
 
 #: editor/kmcomposerwin.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "太多收件者"
@@ -2511,8 +2490,7 @@ msgid ""
 msgstr "關閉 HTML 模式會造成失去文字排版格式。您確定要這樣做嗎？"
 
 #: editor/kmcomposerwin.cpp:3216
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "要拿掉排版格式嗎？"
@@ -2714,8 +2692,7 @@ msgid "Encryption Key Selection"
 msgstr "選擇加密金鑰"
 
 #: editor/kmcomposerwin.cpp:4338
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "外掛程式編輯器資訊"
@@ -4056,15 +4033,13 @@ msgid "Start minimized to tray"
 msgstr "啟動時最小化至系統匣"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Only open composer window"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
-msgstr "只開啟編寫器視窗。"
+msgstr "只開啟編寫器視窗"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Set identity name"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "設定身份名稱"
@@ -4084,15 +4059,13 @@ msgid "Set body of message as html"
 msgstr "設定信件內文。"
 
 #: kmail_options.h:40
-#, fuzzy, kde-format
-#| msgid "Lists the available options for user feedback"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "列出能用於使用者回饋的選項"
 
 #: kmail_options.h:45
-#, fuzzy, kde-format
-#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "將信件送到 'address'，或附上 'URL' 指向的檔案。"
@@ -4210,15 +4183,13 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 封信件傳送中，請稍候…"
 
 #: kmcommands.cpp:524
-#, fuzzy, kde-format
-#| msgid "Save To File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "儲存到檔案"
 
 #: kmcommands.cpp:711
-#, fuzzy, kde-format
-#| msgid "Open Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "開啟訊息"
@@ -4384,8 +4355,7 @@ msgstr ""
 "理由：%2"
 
 #: kmkernel.cpp:879
-#, fuzzy, kde-format
-#| msgid "Opening Autosave File Failed"
+#, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "開啟自動儲存檔失敗"
@@ -4410,10 +4380,9 @@ msgid "Sending messages"
 msgstr "送出信件中"
 
 #: kmkernel.cpp:1479
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
-msgstr "正在起始寄件程序…"
+msgstr "正在初始化寄件程序…"
 
 #: kmkernel.cpp:1558
 #, kde-format
@@ -4561,15 +4530,13 @@ msgid "&Expire"
 msgstr "設為過期(&E)"
 
 #: kmmainwidget.cpp:1483
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "清空垃圾桶"
 
 #: kmmainwidget.cpp:1483
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "移到垃圾桶"
@@ -4640,15 +4607,13 @@ msgid_plural ""
 msgstr[0] "<qt>您確定要刪除這 %1 封信件嗎？<br /> 刪除後就無法回復了。</qt>"
 
 #: kmmainwidget.cpp:1672
-#, fuzzy, kde-format
-#| msgid "Delete Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "刪除信件"
 
 #: kmmainwidget.cpp:1672
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "刪除信件"
@@ -5004,8 +4969,7 @@ msgid "&Archive Folder…"
 msgstr "封存資料夾(&A)…"
 
 #: kmmainwidget.cpp:3164
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "載入遠端連結(&X)"
@@ -5612,8 +5576,7 @@ msgid "Do you want to restart Akonadi?"
 msgstr "您確定要重新啟動 Akonadi 嗎？"
 
 #: kmmainwidget.cpp:4986
-#, fuzzy, kde-format
-#| msgid "Restart Akonadi"
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "重新啟動 Akonadi"
@@ -5861,8 +5824,7 @@ msgid_plural "%1 unread messages"
 msgstr[0] "%1 封未讀信件"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:32
-#, fuzzy, kde-format
-#| msgid "Show full path for folders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
 msgstr "顯示資料夾的完整路徑"
@@ -6221,8 +6183,7 @@ msgid "%1 (%2)"
 msgstr "%1（%2）"
 
 #: messageactions.cpp:748
-#, fuzzy, kde-format
-#| msgid "Export to PDF"
+#, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "匯出 PDF"
@@ -6238,8 +6199,7 @@ msgid "Reindex"
 msgstr "重新索引"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
-#| msgid "Search Anyway"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "還是要搜尋"
@@ -6779,8 +6739,7 @@ msgid "Add New Tag…"
 msgstr "新增標籤…"
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Search tag…"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "搜尋標籤…"
@@ -7999,25 +7958,22 @@ msgid "Message Default Format"
 msgstr "信件預設格式"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "偏好使用 HTML 而非純文字(&H)"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "偏好使用純文字而非 HTML(&P)"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
-msgstr "（使用全域設定）"
+msgstr "使用全域設定"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
 #, kde-format

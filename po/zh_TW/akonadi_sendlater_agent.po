@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-02 00:41+0000\n"
-"PO-Revision-Date: 2024-05-30 03:15+0900\n"
+"PO-Revision-Date: 2024-08-26 16:04+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -89,21 +89,18 @@ msgid "Message Id"
 msgstr "信件代碼"
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
 msgstr "沒有等待中的信件..."
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "立即傳送"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "刪除"
@@ -194,8 +191,7 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "發現了一個錯誤。您要重新傳送嗎？"
 
 #: sendlatermanager.cpp:194
-#, fuzzy, kde-format
-#| msgid "Error found"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "發現錯誤"
@@ -208,10 +204,9 @@ msgstr "重新傳送"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "變更..."
+msgstr "修改…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/sendlaterconfigurewidget.ui:38
