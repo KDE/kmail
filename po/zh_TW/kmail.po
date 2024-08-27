@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-05-30 22:11+0900\n"
+"PO-Revision-Date: 2024-08-26 16:07+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -1329,10 +1329,9 @@ msgstr "移除(&M)"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #: configuredialog/configurecomposerpage.cpp:1024
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgid "Mod&ify…"
-msgstr "修改…"
+msgstr "修改(&I)…"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
@@ -1423,8 +1422,7 @@ msgid "Ne&w"
 msgstr "新的(&W)"
 
 #: configuredialog/configurecomposerpage.cpp:808
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "移除(&M)"
@@ -1975,8 +1973,7 @@ msgid "Cl&ean Spaces"
 msgstr "清除空間(&E)"
 
 #: editor/kmcomposerwin.cpp:1387
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "使用固定寬度文字(&X)"
@@ -2002,32 +1999,28 @@ msgid "&Request Delivery Confirmation"
 msgstr "請求收件確認(&R)"
 
 #: editor/kmcomposerwin.cpp:1404
-#, fuzzy, kde-format
-#| msgid "&Wordwrap"
+#, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "自動換行(&W)"
 
 #: editor/kmcomposerwin.cpp:1409
-#, fuzzy, kde-format
-#| msgid "&Snippets"
+#, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "片段(&S)"
 
 #: editor/kmcomposerwin.cpp:1414
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "自動檢查拼字(&A)"
 
 #: editor/kmcomposerwin.cpp:1430
-#, fuzzy, kde-format
-#| msgid "Rich Text Editing"
+#, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
-msgstr "Richtext 編輯"
+msgstr "豐富格式文字編輯"
 
 #: editor/kmcomposerwin.cpp:1432
 #, kde-format
@@ -2041,29 +2034,25 @@ msgid "Toggle rich text editing mode"
 msgstr "切換豐富格式文字編輯模式"
 
 #: editor/kmcomposerwin.cpp:1437
-#, fuzzy, kde-format
-#| msgid "&All Fields"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "全部欄位(&A)"
 
 #: editor/kmcomposerwin.cpp:1440
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "身份(&I)"
 
 #: editor/kmcomposerwin.cpp:1443
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "字典(&D)"
 
 #: editor/kmcomposerwin.cpp:1446
-#, fuzzy, kde-format
-#| msgid "&Sent-Mail Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "寄件備份(&S)"
@@ -2076,8 +2065,7 @@ msgid "&Mail Transport"
 msgstr "發送信件帳號(&M)"
 
 #: editor/kmcomposerwin.cpp:1452
-#, fuzzy, kde-format
-#| msgid "&From"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "寄件者(&F)"
@@ -2101,8 +2089,7 @@ msgid "Pr&epend Signature"
 msgstr "在前面附上簽名(&E)"
 
 #: editor/kmcomposerwin.cpp:1468
-#, fuzzy, kde-format
-#| msgid "Insert Signature At C&ursor Position"
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "在游標位置插入簽名(&U)"
@@ -2257,22 +2244,19 @@ msgid "Insert File"
 msgstr "插入檔案"
 
 #: editor/kmcomposerwin.cpp:2415
-#, fuzzy, kde-format
-#| msgid "Add as &Inline Image"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "新增為內含影像(&I)"
 
 #: editor/kmcomposerwin.cpp:2416
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "以附件加入(&A)"
 
 #: editor/kmcomposerwin.cpp:2431
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
@@ -3935,15 +3919,13 @@ msgid "Start minimized to tray"
 msgstr "啟動時最小化至系統匣"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Only open composer window"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
-msgstr "只開啟編寫器視窗。"
+msgstr "只開啟編寫器視窗"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Set identity name"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "設定身份名稱"
@@ -3963,15 +3945,13 @@ msgid "Set body of message as html"
 msgstr "設定信件內文。"
 
 #: kmail_options.h:40
-#, fuzzy, kde-format
-#| msgid "Lists the available options for user feedback"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "列出能用於使用者回饋的選項"
 
 #: kmail_options.h:45
-#, fuzzy, kde-format
-#| msgid "Send message to 'address' or attach the file the 'URL' points to"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr "將信件送到 'address'，或附上 'URL' 指向的檔案。"
@@ -4283,10 +4263,9 @@ msgid "Sending messages"
 msgstr "送出信件中"
 
 #: kmkernel.cpp:1479
-#, fuzzy, kde-format
-#| msgid "Initiating sending process..."
+#, kde-format
 msgid "Initiating sending process…"
-msgstr "正在起始寄件程序…"
+msgstr "正在初始化寄件程序…"
 
 #: kmkernel.cpp:1558
 #, kde-format
@@ -4868,8 +4847,7 @@ msgid "&Archive Folder…"
 msgstr "封存資料夾(&A)…"
 
 #: kmmainwidget.cpp:3140
-#, fuzzy, kde-format
-#| msgid "Load E&xternal References"
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "載入遠端連結(&X)"
@@ -6629,8 +6607,7 @@ msgid "Add New Tag…"
 msgstr "新增標籤…"
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Search tag…"
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
 msgstr "搜尋標籤…"
@@ -7832,25 +7809,22 @@ msgid "Message Default Format"
 msgstr "信件預設格式"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "偏好使用 HTML 而非純文字(&H)"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "偏好使用純文字而非 HTML(&P)"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
-msgstr "（使用全域設定）"
+msgstr "使用全域設定"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
 #, kde-format
