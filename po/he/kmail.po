@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-25 08:13+0300\n"
+"PO-Revision-Date: 2024-08-27 16:56+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -7289,7 +7289,7 @@ msgstr ""
 #: ui/securitypagegeneraltab.ui:110
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
-msgstr ""
+msgstr "הכרזה האם קריאת ההודעה חשודה כהונאת דוא״ל"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/securitypagegeneraltab.ui:117
@@ -7331,7 +7331,7 @@ msgstr "לנסות לפענח הודעות מוצפנות בעת הצפייה"
 #: ui/securitypagegeneraltab.ui:181
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
-msgstr ""
+msgstr "צרופות מאגד אישור ומפתח"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
 #: ui/securitypagegeneraltab.ui:187
