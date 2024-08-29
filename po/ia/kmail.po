@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-21 00:48+0000\n"
-"PO-Revision-Date: 2024-08-02 09:29+0200\n"
+"PO-Revision-Date: 2024-08-28 16:35+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1331,15 +1331,12 @@ msgid "No autosave"
 msgstr "Necun salvamento de modo automatic"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " minuta"
-msgstr[1] " minutas"
+msgstr[0] "%v minuta"
+msgstr[1] "%v minutas"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1679,13 +1676,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " die"
-msgstr[1] "dies"
+msgstr[0] "%v die"
+msgstr[1] "%v dies"
 
 #: configuredialog/configuresecuritypage.cpp:319
 #, kde-format
