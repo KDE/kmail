@@ -14,6 +14,7 @@
 #include "editor/composer.h"
 #include "job/clearcachejobinfolderandsubfolderjob.h"
 #include "job/composenewmessagejob.h"
+#include "kcolorscheme_version.h"
 #include "kmcommands.h"
 #include "kmreadermainwin.h"
 #include "searchdialog/searchwindow.h"
@@ -3680,7 +3681,11 @@ void KMMainWidget::setupActions()
 
         mCollectionSwitcherTreeViewManager->addActions(listActions);
     }
+#if KCOLORSCHEME_VERSION < QT_VERSION_CHECK(6, 6, 0)
     auto manager = new KColorSchemeManager(this);
+#else
+    auto manager = KColorSchemeManager::instance();
+#endif
     actionCollection()->addAction(QStringLiteral("colorscheme_menu"), KColorSchemeMenu::createMenu(manager, this));
 }
 
