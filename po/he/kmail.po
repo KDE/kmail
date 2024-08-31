@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-21 00:48+0000\n"
-"PO-Revision-Date: 2024-08-29 07:30+0300\n"
+"PO-Revision-Date: 2024-08-30 10:32+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1295,7 +1295,7 @@ msgstr "כמות כתובות אחרונות מרבית לשמירה:"
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
-msgstr ""
+msgstr "המספר המרבי של הכתובות האחרונות שהוקלדו וייזכרו להשלמה"
 
 #: configuredialog/configurecomposerpage.cpp:392
 #, kde-format
@@ -1472,7 +1472,7 @@ msgstr "&ערך:"
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
-msgstr ""
+msgstr "‚Content-Type’ (סוג תוכן) היא מחרוזת שאינה מאושרת. הכותרת לא תישמר."
 
 #: configuredialog/configurecomposerpage.cpp:914
 #, kde-format
@@ -1490,7 +1490,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
-msgstr ""
+msgstr "לזהות כל אחת ממילות המפתח הבאות ככוונה לצרף קובץ:"
 
 #: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
