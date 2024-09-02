@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-01 00:39+0000\n"
-"PO-Revision-Date: 2024-08-18 09:34+0200\n"
+"PO-Revision-Date: 2024-08-27 15:51+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -58,7 +58,7 @@ msgstr ""
 "vpinon@kde.org, kde@macolu.org, caulier.gilles@free.fr, jcornavi@kde-france."
 "org, cousin@kde.org, gerard@delafond.org, duranceau@kde.org, "
 "shadowcatcher@free.fr, nicolas.ternisien@gmail.com, renard@kde.org,"
-"sdepiets@gmail.com, xavier.besnard@xavier.besnard@kde.org"
+"sdepiets@gmail.com, xavier.besnard@kde.org"
 
 #: about/introduction_kmail.html:5
 #, kde-format
