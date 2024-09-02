@@ -7,3 +7,4 @@ include:
       - /gitlab-templates/linux-qt6.yml
       - /gitlab-templates/freebsd-qt6.yml
       - /gitlab-templates/cppcheck.yml
+      - /gitlab-templates/clang-format.yml
