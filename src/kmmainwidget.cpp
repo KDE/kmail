@@ -995,7 +995,7 @@ void KMMainWidget::deleteWidgets()
     mMsgView = nullptr;
     mFolderViewSplitter = nullptr;
     if (mFavoriteCollectionsView) {
-        static_cast<MailCommon::FavoriteCollectionOrderProxyModel*>(mFavoriteCollectionsView->model())->setSourceModel(nullptr);
+        static_cast<MailCommon::FavoriteCollectionOrderProxyModel *>(mFavoriteCollectionsView->model())->setSourceModel(nullptr);
         mFavoriteCollectionsView->setModel(nullptr);
         mFavoriteCollectionsView = nullptr;
     }
@@ -1484,9 +1484,9 @@ void KMMainWidget::slotEmptyFolder()
     const QString title = (isTrash) ? i18nc("@title:window", "Empty Trash") : i18nc("@title:window", "Move to Trash");
     const QString text = (isTrash) ? i18n("Are you sure you want to empty the trash folder?")
                                    : i18n(
-                                       "<qt>Are you sure you want to move all messages from "
-                                       "folder <b>%1</b> to the trash?</qt>",
-                                       mCurrentCollection.name().toHtmlEscaped());
+                                         "<qt>Are you sure you want to move all messages from "
+                                         "folder <b>%1</b> to the trash?</qt>",
+                                         mCurrentCollection.name().toHtmlEscaped());
     const QString icon = (isTrash) ? QStringLiteral("edit-delete-shred") : QStringLiteral("edit-delete");
 
     if (KMessageBox::warningContinueCancel(this, text, title, KGuiItem(title, icon)) != KMessageBox::Continue) {
