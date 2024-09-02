@@ -885,6 +885,9 @@ void AppearancePageGeneralTab::doLoadOther()
     loadWidget(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     loadWidget(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
+#if HAVE_ACTIVITY_SUPPORT
+    loadWidget(mEnablePlasmaActivities, KMailSettings::self()->plasmaActivitySupportItem());
+#endif
     mViewerSettings->readConfig();
 }
 
@@ -897,6 +900,9 @@ void AppearancePageGeneralTab::save()
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
 
     saveCheckBox(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
+#if HAVE_ACTIVITY_SUPPORT
+    saveCheckBox(mEnablePlasmaActivities, KMailSettings::self()->plasmaActivitySupportItem());
+#endif
     mViewerSettings->writeConfig();
 }
 
