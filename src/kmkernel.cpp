@@ -2,7 +2,7 @@
 
 #include "kmkernel.h"
 using namespace Qt::Literals::StringLiterals;
-
+#include "config-kmail.h"
 #include "job/fillcomposerjob.h"
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
@@ -105,6 +105,9 @@ using KMail::MailServiceImpl;
 
 #include "kmail_options.h"
 #include "searchdialog/searchdescriptionattribute.h"
+#if HAVE_ACTIVITY_SUPPORT
+#include "activities/activitiesmanager.h"
+#endif
 #ifdef WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
 #include <KUserFeedback/Provider>
@@ -199,6 +202,9 @@ KMKernel::KMKernel(QObject *parent)
     CommonKernel->registerKernelIf(this);
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
+#if HAVE_ACTIVITY_SUPPORT
+    CommonKernel->registerActivitiesBaseManager(ActivitiesManager::self());
+#endif
 
     mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
     mCheckIndexingManager = new CheckIndexingManager(mIndexedItems, this);
