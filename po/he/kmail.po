@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-30 10:32+0300\n"
+"PO-Revision-Date: 2024-09-02 08:16+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2333,6 +2333,8 @@ msgid ""
 "your email address for all identities, so that you do not have to enter it "
 "for each message."
 msgstr ""
+"יש למלא את כתובת הדוא״ל שלך בשדה מאת:, יש גם להגדיר את כתובת הדוא״ל שלך לכל "
+"הזהויות, כדי שלא יהיה צורך למלא אותה בכל הודעה מחדש."
 
 #: editor/kmcomposerwin.cpp:2838
 #, kde-format
@@ -2528,6 +2530,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
+"לנמען הזה נעשה שימוש במפתח הצפנה אוטומטי. המפתח הזה לא מאומת. הנמען מעדיף "
+"תגובות מוצפנות."
 
 #: editor/kmcomposerwin.cpp:3819
 #, kde-format
@@ -2536,6 +2540,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
+"לנמען הזה נעשה שימוש במפתח הצפנה אוטומטי. המפתח הזה לא מאומת. הנמען לא מעדיף "
+"תגובות מוצפנות."
 
 #: editor/kmcomposerwin.cpp:3846
 #, kde-format
@@ -2557,6 +2563,9 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"מפתח ההצפנה לא מהימן. לא נעשה בו שימוש בשום מקום כדי להבטיח שהוא שייך למי "
+"שנטען שהוא שייך. על ידי שימוש במפתח האמון בו יגבר. או שאפשר לחתום על המפתח, "
+"אם מסרת את טביעת האצבע דרך נתיב אחר. יש ללחוץ על הסמל לפרטים נוספים."
 
 #: editor/kmcomposerwin.cpp:3862
 #, kde-format
@@ -2695,6 +2704,9 @@ msgid ""
 "Mail can be send accidentally.\n"
 "What do you want to do?"
 msgstr ""
+"קיצור הדרך הזה מאפשר לשלוח הודעות ישירות.\n"
+"הודעות עלולות להישלח בטעות.\n"
+"מה כדאי לעשות בשלב הזה?"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
