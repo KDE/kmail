@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-01 00:39+0000\n"
+"POT-Creation-Date: 2024-09-03 00:39+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1079,62 +1079,62 @@ msgctxt "@option:check"
 msgid "Enable"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:939
+#: configuredialog/configureappearancepage.cpp:945
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Mö&vcud yarlıqlar"
 
-#: configuredialog/configureappearancepage.cpp:952
+#: configuredialog/configureappearancepage.cpp:958
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Yeni yarlıq əlavə edin"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:963
 #, fuzzy, kde-format
 #| msgid "Remove selected tag"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Seçilmiş yarlığı silin"
 
-#: configuredialog/configureappearancepage.cpp:966
+#: configuredialog/configureappearancepage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Increase tag priority"
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Yarlığın üstünlüyünü artırın"
 
-#: configuredialog/configureappearancepage.cpp:972
+#: configuredialog/configureappearancepage.cpp:978
 #, fuzzy, kde-format
 #| msgid "Decrease tag priority"
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Yarlığın üstünlüyünü azaldın"
 
-#: configuredialog/configureappearancepage.cpp:996
+#: configuredialog/configureappearancepage.cpp:1002
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Yar&lıq ayarları"
 
-#: configuredialog/configureappearancepage.cpp:1046
+#: configuredialog/configureappearancepage.cpp:1052
 #, kde-format
 msgid "Delete"
 msgstr "Sil"
 
-#: configuredialog/configureappearancepage.cpp:1176
+#: configuredialog/configureappearancepage.cpp:1182
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "'%1' yarlığını silmək istəyirsiniz?"
 
-#: configuredialog/configureappearancepage.cpp:1177
+#: configuredialog/configureappearancepage.cpp:1183
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Yarlığı silin"
 
-#: configuredialog/configureappearancepage.cpp:1222
-#: configuredialog/configureappearancepage.cpp:1257
+#: configuredialog/configureappearancepage.cpp:1228
+#: configuredialog/configureappearancepage.cpp:1263
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Yarlıq yarada bilmədik. Eyni adla yarlıq artıq var."
@@ -6940,37 +6940,37 @@ msgid "The most recently selected folder in the folder selection dialog."
 msgstr "Qovluq seçimi dialoqunda daha əvvəl seçilmiş qovluq."
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg.in:88
+#: settings/kmail.kcfg.in:91
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Sistem çəkməcəsində nişan görünsün"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg.in:92
+#: settings/kmail.kcfg.in:95
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Çəkməcəyə yığılmış şəkildə başlasın"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.in:96
+#: settings/kmail.kcfg.in:99
 #, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Oxunmamış məktub tapşırıq panelində göstərilsin"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.in:100
+#: settings/kmail.kcfg.in:103
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "R&edaktoru göstərin:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.in:104
+#: settings/kmail.kcfg.in:107
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Daxili redaktor əvəzinə &xarici redaktordan istifadə edin"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:110
+#: settings/kmail.kcfg.in:113
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6980,31 +6980,31 @@ msgstr ""
 "ediləcəyi vaxt həddi."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:114
+#: settings/kmail.kcfg.in:117
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Proqram bağlandıqda yerli səbət qovluğu təmizlənsin"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:118
+#: settings/kmail.kcfg.in:121
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Məktublar təsdiq edilmədən silinsin"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:122
+#: settings/kmail.kcfg.in:125
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Göstərilmiş qovluğu başlatmağa icazə verilsin"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:126
+#: settings/kmail.kcfg.in:129
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Proqramla birlikdə açılacaq qovluğu təyin edin"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:160
+#: settings/kmail.kcfg.in:163
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -7014,7 +7014,7 @@ msgstr ""
 "Qutuları funksiyasını aktiv etməyi istəyib istəməməsini soruşacaqdır."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:168
+#: settings/kmail.kcfg.in:171
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -7024,26 +7024,26 @@ msgstr ""
 "istifadə olunur."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:175
+#: settings/kmail.kcfg.in:178
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Qovluqda daha sürətli axtarış sahəsini göstərir"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:183
+#: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Standart olaraq yeni məktub mətnində göndərin."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg.in:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Alıcıların sayı bundan çox olduqda xəbərdarlıq edilsin:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:188 settings/kmail.kcfg.in:195
+#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -7055,25 +7055,25 @@ msgstr ""
 "bilər."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:209
+#: settings/kmail.kcfg.in:212
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Göndərmədən ö&ncə təsdiq etmək"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:216
+#: settings/kmail.kcfg.in:219
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Göndərmədən öncə imla yoxlaması"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:220
+#: settings/kmail.kcfg.in:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Məktubun işlənməsi bildirişlərini avtomatik tələb etmək"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:221
+#: settings/kmail.kcfg.in:224
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -7089,13 +7089,13 @@ msgstr ""
 "soruşun</em> elementini seçin.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:243
+#: settings/kmail.kcfg.in:246
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Avtomatik saxlama aralığı:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:244
+#: settings/kmail.kcfg.in:247
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -7107,13 +7107,13 @@ msgstr ""
 "söndürmək üçün ayarlarda dəyəri 0 göstərin."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:251
+#: settings/kmail.kcfg.in:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "Məktub yazma pəncərəsində ifadələr yerləşdirmə panelini göstərmək."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:257
+#: settings/kmail.kcfg.in:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
@@ -7121,105 +7121,105 @@ msgstr ""
 "saxlanılacaqlar"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:261
+#: settings/kmail.kcfg.in:264
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Az əvvəl istifadə edilmiş bütün URL-ların siyahısı"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:267
+#: settings/kmail.kcfg.in:270
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Az əvvəl istifadə edilmiş şifrələmələrin siyahısı"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:273
+#: settings/kmail.kcfg.in:276
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "İmzalama və ya şifrələmə indikatorunu göstərmək"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:277
+#: settings/kmail.kcfg.in:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Standart göndəriş üçün qısayolu yoxlayın"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:331
+#: settings/kmail.kcfg.in:334
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "Məktuba önbaxış paneli"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:334
+#: settings/kmail.kcfg.in:337
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Məktuba önbaxış paneli göstərilməsin"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:337
+#: settings/kmail.kcfg.in:340
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Məktuba önbaxış paneli məktublar siyahısının sonunda göstərilsin"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:340
+#: settings/kmail.kcfg.in:343
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Məktuba önbaxış paneli məktub siyahısının sağında göstərilsin"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:347
+#: settings/kmail.kcfg.in:350
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "Qovluq siyahısı"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:350
+#: settings/kmail.kcfg.in:353
 #, kde-format
 msgid "Long folder list"
 msgstr "Uzun qovluq siyahısı"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:353
+#: settings/kmail.kcfg.in:356
 #, kde-format
 msgid "Short folder list"
 msgstr "Qısa qovluq siyahısı"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:362
+#: settings/kmail.kcfg.in:365
 #, kde-format
 msgid "Message template for new message"
 msgstr "Yeni məktub üçün şablon"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:367
+#: settings/kmail.kcfg.in:370
 #, kde-format
 msgid "Message template for reply"
 msgstr "Cavab məktubu üçün şablon"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:372
+#: settings/kmail.kcfg.in:375
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Hamısına cavab üçün şablon"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:377
+#: settings/kmail.kcfg.in:380
 #, kde-format
 msgid "Message template for forward"
 msgstr "Yönləndirilən məktub şablonu"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:382
+#: settings/kmail.kcfg.in:385
 #, kde-format
 msgid "Quote characters"
 msgstr "Sitat simvolları"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:397
+#: settings/kmail.kcfg.in:400
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Qaydaıların göstərilməsində istifadə olunan qaydanı göstərir"
