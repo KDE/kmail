@@ -36,6 +36,9 @@ using MailTransport::TransportManagementWidgetNg;
 #include <QMenu>
 #include <QProcess>
 
+#include "activities/activitiesmanager.h"
+#include "activities/transportactivities.h"
+
 #include <memory>
 
 QString AccountsPage::helpAnchor() const
@@ -89,7 +92,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     formLayout->addRow(tmw);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     tmw->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
-    // TODO tmw->set
+    tmw->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
 #endif
 
     // "confirm before send" check box:
