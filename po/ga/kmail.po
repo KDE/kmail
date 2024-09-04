@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-03 00:39+0000\n"
+"POT-Creation-Date: 2024-09-04 00:40+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -4468,40 +4468,40 @@ msgstr "Barra Uirlisí HTML"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:625
+#: kmkernel.cpp:631
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "Tá KMail as líne; tá gach jab líonra curtha ar fionraí"
 
-#: kmkernel.cpp:645 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:651 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:646 kmmainwidget.cpp:2482 kmmainwidget.cpp:2497
+#: kmkernel.cpp:652 kmmainwidget.cpp:2482 kmmainwidget.cpp:2497
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
 
-#: kmkernel.cpp:677
+#: kmkernel.cpp:683
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:679
+#: kmkernel.cpp:685
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:752
+#: kmkernel.cpp:758
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:754
+#: kmkernel.cpp:760
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
@@ -4512,7 +4512,7 @@ msgstr "Ar Líne/As Líne"
 #
 #
 #
-#: kmkernel.cpp:755
+#: kmkernel.cpp:761
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
@@ -4523,38 +4523,38 @@ msgstr "Oibrigh As Líne"
 #
 #
 #
-#: kmkernel.cpp:756
+#: kmkernel.cpp:762
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Oibrigh As Líne"
 
-#: kmkernel.cpp:780
+#: kmkernel.cpp:786
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:783
+#: kmkernel.cpp:789
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Níl aon cheangal líonra ar fáil, tá gach jab líonra curtha ar fionraí"
 
-#: kmkernel.cpp:878
+#: kmkernel.cpp:884
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:879
+#: kmkernel.cpp:885
 #, fuzzy, kde-format
 #| msgid "Sending Message Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Theip ar Sheoladh"
 
-#: kmkernel.cpp:1439
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4565,7 +4565,7 @@ msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
 
-#: kmkernel.cpp:1463
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4576,24 +4576,24 @@ msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
 
-#: kmkernel.cpp:1478
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Teachtaireachtaí á seoladh"
 
-#: kmkernel.cpp:1479
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process…"
 msgstr ""
 
-#: kmkernel.cpp:1558
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1734 kmkernel.cpp:1740
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

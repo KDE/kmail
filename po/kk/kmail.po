@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-03 00:39+0000\n"
+"POT-Creation-Date: 2024-09-04 00:40+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -4698,30 +4698,30 @@ msgstr "HTML құралдары"
 msgid "Text Direction Toolbar"
 msgstr "Мәтін бағытының құралдары"
 
-#: kmkernel.cpp:625
+#: kmkernel.cpp:631
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail желіден тыс режімге ауысты. Барлық желілік тапсырмалар аялдатылды"
 
-#: kmkernel.cpp:645 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:651 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:646 kmmainwidget.cpp:2482 kmmainwidget.cpp:2497
+#: kmkernel.cpp:652 kmmainwidget.cpp:2482 kmmainwidget.cpp:2497
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Хат жіберілуге дайын..."
 
-#: kmkernel.cpp:677
+#: kmkernel.cpp:683
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail желіге қосылды. Барлық желілік тапсырмалар жалғастырылды"
 
-#: kmkernel.cpp:679
+#: kmkernel.cpp:685
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4730,44 +4730,44 @@ msgstr ""
 "KMail желіде істемек. Желіге қосылғаны байқалғанда барлық желілік "
 "тапсырмалар жалғастырылды"
 
-#: kmkernel.cpp:752
+#: kmkernel.cpp:758
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail желіден тыс режімде істеп тұр. Нені қалайсыз?"
 
-#: kmkernel.cpp:754
+#: kmkernel.cpp:760
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Желіде/Желіден тыс"
 
-#: kmkernel.cpp:755
+#: kmkernel.cpp:761
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Желіде істеу"
 
-#: kmkernel.cpp:756
+#: kmkernel.cpp:762
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Желіден тыс істеу"
 
-#: kmkernel.cpp:780
+#: kmkernel.cpp:786
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "KMail желіге қосығаны байқалды, барлық желілік тапсырмалар жалғастырылды"
 
-#: kmkernel.cpp:783
+#: kmkernel.cpp:789
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail желіден тыс екенін байқады, барлық желілік тапсырмалар аялдады"
 
-#: kmkernel.cpp:878
+#: kmkernel.cpp:884
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4776,39 +4776,39 @@ msgstr ""
 "%1 дегендегі автоматты түрінде сақтайтын файлды ашу жаңылысы.\n"
 "Себебі: %2"
 
-#: kmkernel.cpp:879
+#: kmkernel.cpp:885
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Автосақтау файлды ашу жаңылысы"
 
-#: kmkernel.cpp:1439
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "Мынау %1 іс-әлпеті әдетті жіберу әдісіне ауыстырылған:"
 
-#: kmkernel.cpp:1463
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "Бұл %1 іс-әлпеті өзгертілген жіберу әдісіне ауыстырылған:"
 
-#: kmkernel.cpp:1478
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Хаттары жіберу"
 
-#: kmkernel.cpp:1479
+#: kmkernel.cpp:1485
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Жіберу әрекетін бастау..."
 
-#: kmkernel.cpp:1558
+#: kmkernel.cpp:1564
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4816,7 +4816,7 @@ msgid ""
 "%2"
 msgstr "%1 деректер көзі істемейді. Бұл ресурс енді %2"
 
-#: kmkernel.cpp:1734 kmkernel.cpp:1740
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
