@@ -7,6 +7,7 @@
 #include "configureaccountpage.h"
 using namespace Qt::Literals::StringLiterals;
 
+#include "config-kmail.h"
 #include "configagentdelegate.h"
 #include "kmkernel.h"
 #include "newmailnotifierinterface.h"
@@ -86,6 +87,10 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     auto tmw = new TransportManagementWidgetNg(this);
     tmw->layout()->setContentsMargins({});
     formLayout->addRow(tmw);
+#if HAVE_ACTIVITY_SUPPORT
+    tmw->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
+    // TODO tmw->set
+#endif
 
     // "confirm before send" check box:
     mConfirmSendCheck = new QCheckBox(i18nc("@option:check", "&Confirm action"), this);
