@@ -36,9 +36,10 @@ using MailTransport::TransportManagementWidgetNg;
 #include <QMenu>
 #include <QProcess>
 
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"
 #include "activities/transportactivities.h"
-
+#endif
 #include <memory>
 
 QString AccountsPage::helpAnchor() const
