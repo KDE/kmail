@@ -7,7 +7,7 @@
 #include "kactionmenutransport.h"
 #include <MailTransport/TransportManager>
 #include <QMenu>
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/transportactivities.h"
 #endif
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
@@ -32,7 +32,7 @@ void KActionMenuTransport::slotCheckTransportMenu()
     }
 }
 
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 void KActionMenuTransport::setTransportActivitiesAbstract(TransportActivities *activities)
 {
     mTransportActivities = activities;
@@ -53,7 +53,7 @@ void KActionMenuTransport::updateTransportMenu()
         QMap<QString, int> menuTransportLst;
 
         for (MailTransport::Transport *transport : transports) {
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
             if (mTransportActivities) {
                 if (mTransportActivities->hasActivitySupport() && !mTransportActivities->filterAcceptsRow(transport->activities())) {
                     continue;

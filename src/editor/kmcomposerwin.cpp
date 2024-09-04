@@ -47,7 +47,7 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"
 #include "activities/identityactivities.h"
 #include "activities/transportactivities.h"
@@ -343,7 +343,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     auto identity = new KIdentityManagementWidgets::IdentityCombo(kmkernel->identityManager(), mHeadersArea);
     identity->setCurrentIdentity(mId);
     identity->setObjectName("identitycombo"_L1);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     identity->setIdentityActivitiesAbstract(ActivitiesManager::self()->identityActivities());
 #endif
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
@@ -366,7 +366,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mFccFolder, &MailCommon::FolderRequester::invalidFolder, this, &KMComposerWin::slotFccIsInvalid);
 
     auto transport = new MailTransport::TransportComboBox(mHeadersArea);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     transport->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
 #endif
     transport->setToolTip(i18nc("@info:tooltip", "Select the outgoing account to use for sending this message"));

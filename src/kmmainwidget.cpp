@@ -158,7 +158,7 @@
 #include <QStatusBar>
 #include <QVBoxLayout>
 #include <WebEngineViewer/WebHitTestResult>
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/accountactivities.h"
 #include "activities/activitiesmanager.h"
 #endif
@@ -1020,7 +1020,7 @@ void KMMainWidget::createWidgets()
     opt |= FolderTreeWidget::ShowCollectionStatisticAnimation;
     opt |= FolderTreeWidget::DontKeyFilter;
     mFolderTreeWidget = new FolderTreeWidget(this, mGUIClient, opt);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     mFolderTreeWidget->setAccountActivities(ActivitiesManager::self()->accountActivities());
 #endif
     mFolderTreeWidget->folderTreeView()->setEnableDragDrop(KMailSettings::self()->enableFolderDnD());
@@ -1105,7 +1105,7 @@ void KMMainWidget::createWidgets()
         orderProxy->setOrderConfig(KMKernel::self()->config()->group(QStringLiteral("FavoriteCollectionsOrder")));
         orderProxy->setSourceModel(mFavoritesModel);
         orderProxy->sort(0, Qt::AscendingOrder);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
         orderProxy->setAccountActivities(ActivitiesManager::self()->accountActivities());
 #endif
 
@@ -1763,7 +1763,7 @@ FolderSelectionDialog *KMMainWidget::moveOrCopyToDialog()
     if (!mMoveOrCopyToDialog) {
         FolderSelectionDialog::SelectionFolderOption options = FolderSelectionDialog::HideVirtualFolder;
         mMoveOrCopyToDialog = new FolderSelectionDialog(this, options);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
         mMoveOrCopyToDialog->setAccountActivities(ActivitiesManager::self()->accountActivities());
 #endif
         mMoveOrCopyToDialog->setModal(true);
@@ -1778,7 +1778,7 @@ FolderSelectionDialog *KMMainWidget::selectFromAllFoldersDialog()
         options |= FolderSelectionDialog::NotAllowToCreateNewFolder;
 
         mSelectFromAllFoldersDialog = new FolderSelectionDialog(this, options);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
         mSelectFromAllFoldersDialog->setAccountActivities(ActivitiesManager::self()->accountActivities());
 #endif
         mSelectFromAllFoldersDialog->setModal(true);
@@ -2951,7 +2951,7 @@ void KMMainWidget::setupActions()
     mAccountActionMenu = new KActionMenuAccount(this);
     mAccountActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-receive")));
     mAccountActionMenu->setText(i18n("Check Mail In"));
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     mAccountActionMenu->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
 #endif
 
@@ -2974,7 +2974,7 @@ void KMMainWidget::setupActions()
     mSendActionMenu = new KActionMenuTransport(this);
     mSendActionMenu->setIcon(QIcon::fromTheme(QStringLiteral("mail-send")));
     mSendActionMenu->setText(i18n("Send Queued Messages Via"));
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     mSendActionMenu->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
 #endif
     actionCollection()->addAction(QStringLiteral("send_queued_via"), mSendActionMenu);

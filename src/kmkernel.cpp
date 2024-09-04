@@ -105,7 +105,7 @@ using KMail::MailServiceImpl;
 
 #include "kmail_options.h"
 #include "searchdialog/searchdescriptionattribute.h"
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"
 #endif
 #ifdef WITH_KUSERFEEDBACK
@@ -202,7 +202,7 @@ KMKernel::KMKernel(QObject *parent)
     CommonKernel->registerKernelIf(this);
     CommonKernel->registerSettingsIf(this);
     CommonKernel->registerFilterIf(this);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     CommonKernel->registerActivitiesBaseManager(ActivitiesManager::self());
 #endif
 

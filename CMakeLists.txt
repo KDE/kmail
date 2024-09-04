@@ -216,7 +216,7 @@ if(TARGET KPim6::PimCommonActivities)
         endif()
 
         if(TARGET Plasma::Activities)
-            set(HAVE_ACTIVITY_SUPPORT TRUE)
+            set(KMAIL_HAVE_ACTIVITY_SUPPORT TRUE)
         endif()
     endif()
 endif()

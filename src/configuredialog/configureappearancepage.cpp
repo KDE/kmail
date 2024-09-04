@@ -864,7 +864,7 @@ AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
     systrayBoxlayout->addWidget(mShowNumberInTaskBar);
     connect(mShowNumberInTaskBar, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     auto plasmaActivitiesBox = new QGroupBox(i18n("Plasma activities"), this);
     topLayout->addWidget(plasmaActivitiesBox);
 
@@ -885,7 +885,7 @@ void AppearancePageGeneralTab::doLoadOther()
     loadWidget(mShowNumberInTaskBar, KMailSettings::self()->showUnreadInTaskbarItem());
     loadWidget(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
     loadWidget(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     loadWidget(mEnablePlasmaActivities, KMailSettings::self()->plasmaActivitySupportItem());
 #endif
     mViewerSettings->readConfig();
@@ -900,7 +900,7 @@ void AppearancePageGeneralTab::save()
     saveCheckBox(mCloseAfterReplyOrForwardCheck, MessageViewer::MessageViewerSettings::self()->closeAfterReplyOrForwardItem());
 
     saveCheckBox(mDisplayOwnIdentity, MessageCore::MessageCoreSettings::self()->displayOwnIdentityItem());
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     saveCheckBox(mEnablePlasmaActivities, KMailSettings::self()->plasmaActivitySupportItem());
 #endif
     mViewerSettings->writeConfig();

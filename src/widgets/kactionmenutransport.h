@@ -13,7 +13,7 @@ namespace MailTransport
 {
 class Transport;
 }
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 class TransportActivities;
 #endif
 class KMAILTESTS_TESTS_EXPORT KActionMenuTransport : public KActionMenu
@@ -22,7 +22,7 @@ class KMAILTESTS_TESTS_EXPORT KActionMenuTransport : public KActionMenu
 public:
     explicit KActionMenuTransport(QObject *parent = nullptr);
     ~KActionMenuTransport() override;
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     void setTransportActivitiesAbstract(TransportActivities *activities);
 #endif
 Q_SIGNALS:
@@ -35,7 +35,7 @@ private:
     KMAIL_NO_EXPORT void forceUpdateTransportMenu();
 
     bool mInitialized = false;
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     TransportActivities *mTransportActivities = nullptr;
 #endif
 };

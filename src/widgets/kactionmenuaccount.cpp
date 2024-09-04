@@ -10,7 +10,7 @@
 #include <Akonadi/AgentManager>
 #include <MailCommon/MailUtil>
 #include <QMenu>
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/accountactivities.h"
 #endif
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
@@ -26,7 +26,7 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
 
 KActionMenuAccount::~KActionMenuAccount() = default;
 
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 void KActionMenuAccount::setAccountActivitiesAbstract(AccountActivities *activities)
 {
     mAccountActivities = activities;
@@ -93,7 +93,7 @@ void KActionMenuAccount::updateAccountMenu()
         agentIdentifierList.reserve(lst.count());
 
         for (const Akonadi::AgentInstance &type : lst) {
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
 #if 0 // TODO
             if (mAccountActivities && mAccountActivities->hasActivitySupport()) {
                 if (!mAccountActivities->filterAcceptsRow(type.activities())) {

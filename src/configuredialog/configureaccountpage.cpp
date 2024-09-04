@@ -87,7 +87,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     auto tmw = new TransportManagementWidgetNg(this);
     tmw->layout()->setContentsMargins({});
     formLayout->addRow(tmw);
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     tmw->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
     // TODO tmw->set
 #endif

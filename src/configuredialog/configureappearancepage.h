@@ -159,7 +159,7 @@ private: // data
     QCheckBox *mStartInTrayCheck = nullptr;
     QCheckBox *mShowNumberInTaskBar = nullptr;
     QCheckBox *const mDisplayOwnIdentity;
-#if HAVE_ACTIVITY_SUPPORT
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
     QCheckBox *mEnablePlasmaActivities = nullptr;
 #endif
 };

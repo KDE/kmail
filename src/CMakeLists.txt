@@ -337,7 +337,7 @@ target_sources(kmailprivate PRIVATE
     historyclosedreader/historyclosedreadermenu.cpp
 )
 
-if(HAVE_ACTIVITY_SUPPORT)
+if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_sources(kmailprivate PRIVATE
         activities/activitiesmanager.h
         activities/activitiesmanager.cpp
@@ -495,7 +495,7 @@ if(TARGET KF6::TextEditTextToSpeech)
         PRIVATE KF6::TextEditTextToSpeech)
 endif()
 
-if(HAVE_ACTIVITY_SUPPORT)
+if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
 endif()
 

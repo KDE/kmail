@@ -4,4 +4,4 @@
   SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-#cmakedefine01 HAVE_ACTIVITY_SUPPORT
+#cmakedefine01 KMAIL_HAVE_ACTIVITY_SUPPORT
