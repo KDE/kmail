@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: archivemailagent\n"
+"Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-04 00:39+0000\n"
 "PO-Revision-Date: 2024-07-30 09:08+0200\n"
