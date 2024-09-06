@@ -10,6 +10,7 @@
  */
 
 #include "identitypage.h"
+#include "config-kmail.h"
 using namespace Qt::Literals::StringLiterals;
 
 #include "identitydialog.h"
@@ -42,7 +43,6 @@ IdentityPage::IdentityPage(QWidget *parent)
     }
     mIdentityManager = KernelIf->identityManager();
     connect(mIdentityManager, &KIdentityManagementCore::IdentityManager::needToReloadIdentitySettings, this, &IdentityPage::load);
-
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
 
@@ -60,10 +60,16 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(mIPage.mRenameButton, &QPushButton::clicked, this, &IdentityPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
+    mIPage.identitiesOnCurrentActivity->setVisible(false);
     load();
 }
 
 IdentityPage::~IdentityPage() = default;
+
+void IdentityPage::setEnablePlasmaActivities(bool enable)
+{
+    mIPage.identitiesOnCurrentActivity->setVisible(enable);
+}
 
 void IdentityPage::load()
 {

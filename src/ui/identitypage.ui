@@ -7,10 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>177</height>
+    <height>224</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QCheckBox" name="identitiesOnCurrentActivity">
+     <property name="text">
+      <string>Show only identity on current activity</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -86,7 +93,7 @@
        <item>
         <spacer name="verticalSpacer_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>

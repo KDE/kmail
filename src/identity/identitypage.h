@@ -38,6 +38,8 @@ public:
     void load();
     void save() override;
 
+    void setEnablePlasmaActivities(bool enable);
+
 private:
     KMAIL_NO_EXPORT void slotNewIdentity();
     KMAIL_NO_EXPORT void slotModifyIdentity();
