@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-05 00:40+0000\n"
+"POT-Creation-Date: 2024-09-07 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1364,7 +1364,7 @@ msgid "For&ward Subject Prefixes"
 msgstr "转发时主题的前缀(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "删除(&V)"
@@ -1510,7 +1510,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "添加"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3584,48 +3584,48 @@ msgstr "身份名称"
 msgid "Email Address"
 msgstr "邮件地址："
 
-#: identity/identitypage.cpp:214
+#: identity/identitypage.cpp:220
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>您是否要删除名为 <b>%1</b> 的身份？</qt>"
 
-#: identity/identitypage.cpp:217
+#: identity/identitypage.cpp:223
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "您是否要移除这些 %1 身份？"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:226
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "删除身份"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:227
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "删除(&R)"
 
-#: identity/identitypage.cpp:272
+#: identity/identitypage.cpp:278
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:274
+#: identity/identitypage.cpp:280
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr ""
 
-#: identity/identitypage.cpp:275
+#: identity/identitypage.cpp:281
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "重命名"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:287
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -6700,56 +6700,62 @@ msgstr "打开图像"
 msgid "Set from Address Book"
 msgstr "从地址簿中设置"
 
+#. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
+#: ui/identitypage.ui:17
+#, kde-format
+msgid "Show only identity on current activity"
+msgstr ""
+
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:24
+#: ui/identitypage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "添加新身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:27
+#: ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr "添加(&A)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:37
+#: ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "修改选中的身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:40
+#: ui/identitypage.ui:47
 #, kde-format
 msgid "&Modify…"
 msgstr "修改(&M)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:50
+#: ui/identitypage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "重命名选中的身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:53
+#: ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "重命名(&R)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:63
+#: ui/identitypage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "删除选中的身份"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:79
+#: ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "默认使用选中的身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:82
+#: ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "设置为默认(&D)"

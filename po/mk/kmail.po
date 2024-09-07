@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-05 00:40+0000\n"
+"POT-Creation-Date: 2024-09-07 00:40+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -1542,7 +1542,7 @@ msgid "For&ward Subject Prefixes"
 msgstr "Префикси за тема при &препраќање"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Отстрани"
@@ -1712,7 +1712,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Дод&ај..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -4078,13 +4078,13 @@ msgstr "Име на идентитет"
 msgid "Email Address"
 msgstr "Е-поштенска адреса"
 
-#: identity/identitypage.cpp:214
+#: identity/identitypage.cpp:220
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Дали навистина сакате да го отстраните идентитетот <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:217
+#: identity/identitypage.cpp:223
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4096,7 +4096,7 @@ msgstr[1] ""
 msgstr[2] ""
 "<qt>Дали навистина сакате да го отстраните идентитетот <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:226
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4105,33 +4105,33 @@ msgstr[0] "Отстранување на идентитет"
 msgstr[1] "Отстранување на идентитет"
 msgstr[2] "Отстранување на идентитет"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:227
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Отстрани"
 
-#: identity/identitypage.cpp:272
+#: identity/identitypage.cpp:278
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:274
+#: identity/identitypage.cpp:280
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Измени..."
 
-#: identity/identitypage.cpp:275
+#: identity/identitypage.cpp:281
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Преименувај"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -7577,60 +7577,66 @@ msgstr "Зачувај ја врската како..."
 msgid "Set from Address Book"
 msgstr "Постави од адресарот"
 
+#. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
+#: ui/identitypage.ui:17
+#, kde-format
+msgid "Show only identity on current activity"
+msgstr ""
+
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:24
+#: ui/identitypage.ui:31
 #, fuzzy, kde-format
 #| msgid "&Sender identity:"
 msgid "Add a new identity"
 msgstr "Идентитет на и&спраќачот:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:27
+#: ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:37
+#: ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:40
+#: ui/identitypage.ui:47
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "&Modify…"
 msgstr "&Измени..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:50
+#: ui/identitypage.ui:57
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Rename the selected identity"
 msgstr "Отстрани ги дупликатите на пораки"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:53
+#: ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "&Преименувај"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:63
+#: ui/identitypage.ui:70
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Remove the selected identity"
 msgstr "Отстрани ги дупликатите на пораки"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:79
+#: ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:82
+#: ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "Како стан&дарден"

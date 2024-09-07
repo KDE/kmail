@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-05 00:40+0000\n"
+"POT-Creation-Date: 2024-09-07 00:40+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -1459,7 +1459,7 @@ msgid "For&ward Subject Prefixes"
 msgstr "ফর&ওয়ার্ড করা বার্তার বিষয় উপপদ"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&সরিয়ে ফেলো"
@@ -1624,7 +1624,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "যো&গ করো..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3837,13 +3837,13 @@ msgstr "পরিচিতির নাম"
 msgid "Email Address"
 msgstr "ই-মেইল ঠিকানা"
 
-#: identity/identitypage.cpp:214
+#: identity/identitypage.cpp:220
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>আপনি কি সত্যিই <b>%1</b> নামক পরিচিতিটি সরিয়ে ফেলতে চান?</qt>"
 
-#: identity/identitypage.cpp:217
+#: identity/identitypage.cpp:223
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3851,7 +3851,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>আপনি কি সত্যিই <b>%1</b> নামক পরিচিতিটি সরিয়ে ফেলতে চান?</qt>"
 msgstr[1] "<qt>আপনি কি সত্যিই <b>%1</b> নামক পরিচিতিটি সরিয়ে ফেলতে চান?</qt>"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:226
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3859,33 +3859,33 @@ msgid_plural "Remove Identities"
 msgstr[0] "পরিচিতি সরিয়ে ফেলো"
 msgstr[1] "পরিচিতি সরিয়ে ফেলো"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:227
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&সরিয়ে ফেলো"
 
-#: identity/identitypage.cpp:272
+#: identity/identitypage.cpp:278
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:274
+#: identity/identitypage.cpp:280
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "বদলাও..."
 
-#: identity/identitypage.cpp:275
+#: identity/identitypage.cpp:281
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "না&ম পাল্টাও"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -7198,60 +7198,66 @@ msgstr "লিঙ্ক নতুন নামে সংরক্ষণ কর�
 msgid "Set from Address Book"
 msgstr "ঠিকানা তালিকায় যোগ করো"
 
+#. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
+#: ui/identitypage.ui:17
+#, kde-format
+msgid "Show only identity on current activity"
+msgstr ""
+
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:24
+#: ui/identitypage.ui:31
 #, fuzzy, kde-format
 #| msgid "&Sender identity:"
 msgid "Add a new identity"
 msgstr "প্রেরক &পরিচিতি:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:27
+#: ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:37
+#: ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:40
+#: ui/identitypage.ui:47
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "&Modify…"
 msgstr "&বদলাও..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:50
+#: ui/identitypage.ui:57
 #, fuzzy, kde-format
 #| msgid "&Sender identity:"
 msgid "Rename the selected identity"
 msgstr "প্রেরক &পরিচিতি:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:53
+#: ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "না&ম পাল্টাও"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:63
+#: ui/identitypage.ui:70
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove the selected identity"
 msgstr "পরিচিতি সরিয়ে ফেলো"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:79
+#: ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:82
+#: ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "ডি&ফল্ট হিসেবে নির্দিষ্ট করো"

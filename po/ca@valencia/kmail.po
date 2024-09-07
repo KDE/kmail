@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-05 00:40+0000\n"
+"POT-Creation-Date: 2024-09-07 00:40+0000\n"
 "PO-Revision-Date: 2024-08-17 11:17+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1412,7 +1412,7 @@ msgid "For&ward Subject Prefixes"
 msgstr "&Prefixos per a l'assumpte en reenviar"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Elimina"
@@ -1561,7 +1561,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Afig"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3762,50 +3762,50 @@ msgstr "Nom de la identitat"
 msgid "Email Address"
 msgstr "Adreça de correu"
 
-#: identity/identitypage.cpp:214
+#: identity/identitypage.cpp:220
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Segur que voleu eliminar la identitat anomenada <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:217
+#: identity/identitypage.cpp:223
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Segur que voleu eliminar esta identitat %1?"
 msgstr[1] "Segur que voleu eliminar estes identitats %1?"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:226
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Elimina la identitat"
 msgstr[1] "Elimina les identitats"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:227
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Elimina"
 
-#: identity/identitypage.cpp:272
+#: identity/identitypage.cpp:278
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Afig…"
 
-#: identity/identitypage.cpp:274
+#: identity/identitypage.cpp:280
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Modifica…"
 
-#: identity/identitypage.cpp:275
+#: identity/identitypage.cpp:281
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Canvia el nom"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:287
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -6997,56 +6997,62 @@ msgstr "Obri una imatge…"
 msgid "Set from Address Book"
 msgstr "Establix des de la llibreta d'adreces"
 
+#. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
+#: ui/identitypage.ui:17
+#, kde-format
+msgid "Show only identity on current activity"
+msgstr ""
+
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:24
+#: ui/identitypage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "Afig una identitat nova"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:27
+#: ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr "Afi&g…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:37
+#: ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "Modifica la identitat seleccionada"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:40
+#: ui/identitypage.ui:47
 #, kde-format
 msgid "&Modify…"
 msgstr "&Modifica…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:50
+#: ui/identitypage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "Canvia el nom de la identitat seleccionada"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:53
+#: ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "Ca&nvia el nom"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:63
+#: ui/identitypage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "Elimina la identitat seleccionada"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:79
+#: ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "Utilitza la identitat seleccionada de manera predeterminada"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:82
+#: ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "E&stablix com a predeterminada"

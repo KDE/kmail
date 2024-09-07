@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-05 00:40+0000\n"
+"POT-Creation-Date: 2024-09-07 00:40+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -1488,7 +1488,7 @@ msgid "For&ward Subject Prefixes"
 msgstr "फॉर्वर्ड विषय प्रीफिक्स (&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:66
+#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "काढून टाका (&V)"
@@ -1652,7 +1652,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "जोडा"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:277
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3954,14 +3954,14 @@ msgstr "ओळख नाव"
 msgid "Email Address"
 msgstr "इमेल पत्ता"
 
-#: identity/identitypage.cpp:214
+#: identity/identitypage.cpp:220
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt>तुम्हाला खरोखरच <b>%1</b> या नावाची ऑनलाईन ओळख काढून टाकायची आहे का?</qt>"
 
-#: identity/identitypage.cpp:217
+#: identity/identitypage.cpp:223
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3971,7 +3971,7 @@ msgstr[0] ""
 msgstr[1] ""
 "<qt>तुम्हाला खरोखरच <b>%1</b> या नावाची ऑनलाईन ओळख काढून टाकायची आहे का?</qt>"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:226
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3979,34 +3979,34 @@ msgid_plural "Remove Identities"
 msgstr[0] "ओळख काढून टाका"
 msgstr[1] "ओळख काढून टाका"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:227
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "काढून टाका (&R)"
 
-#: identity/identitypage.cpp:272
+#: identity/identitypage.cpp:278
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:274
+#: identity/identitypage.cpp:280
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "बदला..."
 
-#: identity/identitypage.cpp:275
+#: identity/identitypage.cpp:281
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "नाव बदला"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -7371,57 +7371,63 @@ msgstr "प्रतिमा डिस्कमध्ये संग्रह�
 msgid "Set from Address Book"
 msgstr "पत्ते नोंदवहीतून निश्चीत करा"
 
+#. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
+#: ui/identitypage.ui:17
+#, kde-format
+msgid "Show only identity on current activity"
+msgstr ""
+
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:24
+#: ui/identitypage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "नवीन ऑनलाईन ओळख वाढवा/समाविष्ट करा"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:27
+#: ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:37
+#: ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "निवडलेली ऑनलाईन ओळख संपादित करा"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:40
+#: ui/identitypage.ui:47
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "&Modify…"
 msgstr "बदला (&M)..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:50
+#: ui/identitypage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "निवडलेल्या ऑनलाईन ओळखीला नवीन नाव द्या"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:53
+#: ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "नाव बदला (&R)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:63
+#: ui/identitypage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "निवडलेली ऑनलाईन ओळख काढून टाका"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:79
+#: ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "पूर्वनिर्धारित पद्धतीने निवडलेली ऑनलाईन ओळख उपयोगात आणा"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:82
+#: ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "मूलभूतसारखे निश्चित करा (&D)"
