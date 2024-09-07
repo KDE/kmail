@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-02 08:16+0300\n"
+"PO-Revision-Date: 2024-09-05 15:08+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1254,7 +1254,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
-msgstr ""
+msgstr "לזכור את הכתובות האחרונות שמולאו ולהציע אותן כהשלמת נמענים"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -2582,6 +2582,7 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"מפתח ההצפנה לא אמין. התוקף שלו לא ידוע בנתוני TOFU. יש ללחוץ על הסמל לפרטים."
 
 #: editor/kmcomposerwin.cpp:3874
 #, kde-format
@@ -2590,6 +2591,7 @@ msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
+"מפתח ההצפנה אינו אמין. המפתח מסומן כגרוע. יש ללחוץ על הסמל לפרטים נוספים."
 
 #: editor/kmcomposerwin.cpp:3882
 #, kde-format
@@ -2600,6 +2602,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"מפתח ההצפנה אמין באופן גבולי ולא נעשה בו שימוש מספיק זמן כדי להבטיח שהוא "
+"שייך למי שנטען שהוא שייך. על ידי שימוש במפתח האמון בו יגבר. או שאפשר לחתום "
+"על המפתח, אם מסרת את טביעת האצבע דרך נתיב אחר. יש ללחוץ על הסמל לפרטים "
+"נוספים."
 
 #: editor/kmcomposerwin.cpp:3890
 #, kde-format
@@ -2608,6 +2614,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"מפתח ההצפנה אמין באופן גבולי. אפשר לחתום על המפתח, אם מסרת את טביעת האצבע "
+"באמצעים אחרים. יש ללחוץ על הסמל לפרטים."
 
 #: editor/kmcomposerwin.cpp:3896
 #, kde-format

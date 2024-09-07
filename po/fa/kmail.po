@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-14 00:32+0330\n"
+"PO-Revision-Date: 2024-09-06 22:32+0330\n"
 "Last-Translator: Mohi Mirdamadi <mohi.pub@gmail.com>\n"
 "Language-Team: fa\n"
 "Language: fa\n"
@@ -137,7 +137,7 @@ msgstr ""
 #, fuzzy
 #| msgid "system tray notification"
 msgid "System tray notification"
-msgstr "اخطار سینی سیستم"
+msgstr "اخطار سینی سامانه"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
@@ -1119,13 +1119,13 @@ msgstr "بستن پنجره‌ی خوداتکای پیام پس از پاسخ د
 #: configuredialog/configureappearancepage.cpp:857
 #, kde-format
 msgid "System Tray"
-msgstr "سینی سیستم"
+msgstr "سینی سامانه"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: configuredialog/configureappearancepage.cpp:863 settings/kmail.kcfg.in:88
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "فعال‌سازی شمایل سینی سیستم"
+msgstr "فعال‌سازی شمایل سینی سامانه"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: configuredialog/configureappearancepage.cpp:867 settings/kmail.kcfg.in:92
@@ -1137,7 +1137,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Always show KMail in system tray"
 msgid "Show unread email in Taskbar"
-msgstr "نمایش همیشگی KMail در سینی سیستم"
+msgstr "نمایش همیشگی KMail در سینی سامانه"
 
 #: configuredialog/configureappearancepage.cpp:902
 #, fuzzy, kde-format
@@ -1856,7 +1856,7 @@ msgstr "بدون پیشکار"
 #: configuredialog/configuresecuritypage.cpp:554
 #, kde-format
 msgid "(Current system setting: %1)"
-msgstr ")تنظیم جاری سیستم: %1("
+msgstr ")تنظیم جاری سامانه: %1("
 
 #: dialog/addemailtoexistingcontactdialog.cpp:35
 #, fuzzy, kde-format
@@ -4984,8 +4984,8 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 "بارگذاری مرجعهای خارجی در نامه زنگام، شما را نسبت به »هرزنامه« آسیب‌پذیر‌تر "
-"می‌کند و  ممکن است احتمال این که سیستمتان با اعمال امنیتی کنونی و پیش‌بینی شده "
-"سازش یابد را افزایش دهد."
+"می‌کند و  ممکن است احتمال این که سامانهتان با اعمال امنیتی کنونی و پیش‌بینی "
+"شده سازش یابد را افزایش دهد."
 
 #: kmmainwidget.cpp:1582
 #, kde-format
@@ -6050,8 +6050,8 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 "استفاده از زنگام در نامه، شما را برای »هرزنامه« آسیب‌پذیرتر می‌کند و ممکن است "
-"احتمال این که سیستمتان با اعمال امنیتی کنونی و پیش‌بینی شده سازش یابد، افزایش "
-"یابد."
+"احتمال این که سامانهتان با اعمال امنیتی کنونی و پیش‌بینی شده سازش یابد، "
+"افزایش یابد."
 
 #: kmmainwidget.cpp:4774
 #, fuzzy, kde-format
@@ -7071,7 +7071,7 @@ msgstr "جدیدترین پوشه برگزیده در محاوره گزینش پ
 #, fuzzy, kde-format
 #| msgid "Always show KMail in system tray"
 msgid "Show Unread Email in TaskBar"
-msgstr "نمایش همیشگی KMail در سینی سیستم"
+msgstr "نمایش همیشگی KMail در سینی سامانه"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg.in:100
@@ -8097,7 +8097,7 @@ msgid ""
 "href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
-"<b>اخطار:</b> اجازه دادن به زنگام در رایانامه ممکن است خطر این که سیستمتان "
+"<b>اخطار:</b> اجازه دادن به زنگام در رایانامه ممکن است خطر این که سامانهتان "
 "توسط اعمال امنیتی کنونی و پیش‌بینی شده به خطر بیفتد را افزایش دهد.<a href="
 "\"whatsthis1\">اطلاعات بیشتر در مورد نامه‌های زنگام...</a> <a href="
 "\"whatsthis2\">اطلاعات بیشتر در مورد مرجعهای خارجی...</a>"
@@ -8527,7 +8527,7 @@ msgstr ""
 #, fuzzy, kde-format
 #| msgid "Use system HTTP proxy:"
 msgid "Use s&ystem HTTP proxy:"
-msgstr "استفاده از پیشکار قام سیستم:"
+msgstr "استفاده از پیشکار قام سامانه:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
