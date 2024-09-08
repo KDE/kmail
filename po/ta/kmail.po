@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-07 00:40+0000\n"
-"PO-Revision-Date: 2024-08-18 17:54+0530\n"
+"PO-Revision-Date: 2024-09-07 20:34+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2691,14 +2691,7 @@ msgid " Column: %1 "
 msgstr " நெடுவரிசை:%1 "
 
 #: editor/kmcomposerwin.cpp:4241
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "if in your language something like 'key(s)' isn't possible please use the "
-#| "plural in the translation"
-#| msgid ""
-#| "No valid and trusted encryption key was found for \"%1\".\n"
-#| "\n"
-#| "Select the key(s) which should be used for this recipient."
+#, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
 "use the plural in the translation"
@@ -2709,11 +2702,6 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-": தங்களின் மொழியில் சில சமயத்தில் விசைகள் இல்லையெனில் தயவுச் செய்து பன்மையினை "
-"மொழிப்பெயர்க்கும் பொழுது பயன்படுத்தவும்.\n"
-"நம்பக்கூடிய மறையாக்க விசைகள் கிடைக்கவில்லை\"%1\".\n"
-"\n"
-"பெறுநரைப் பயன்படுத்தக்கூடிய விசையினை தேர்ந்தெடுக்கவும்."
 
 #: editor/kmcomposerwin.cpp:4253
 #, kde-format
@@ -6682,10 +6670,9 @@ msgstr "சமீபமாக பயன்படுத்தப்பட்ட �
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
 #: settings/kmail.kcfg.in:276
-#, fuzzy, kde-format
-#| msgid "Show crypto &icons"
+#, kde-format
 msgid "Show crypto label indicator"
-msgstr "க்ரிப்டோ சின்னங்களை காட்டு"
+msgstr "மறையாக்க நிலைகாட்டியை காட்டு"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:280
@@ -6860,7 +6847,7 @@ msgstr "முகவரிபுத்தகத்திலிருந்து
 #: ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "தற்போதைய செயல்பாட்டிலுள்ள அடையாளங்களை மட்டும் காட்டு"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:31
@@ -8059,22 +8046,19 @@ msgid "Message Default Format"
 msgstr "இயல்பிருப்பு அஞ்சல் வடிவம்"
 
 #: widgets/displaymessageformatactionmenu.cpp:26
-#, fuzzy, kde-format
-#| msgid "Prefer &HTML to Plain Text"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "வெறும் உரையை காட்டிலும் HTML-&ஐ விரும்பு"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
-#, fuzzy, kde-format
-#| msgid "Prefer &Plain Text to HTML"
+#, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "HTML-ஐ காட்டிலும் வெறும் &உரையை விரும்பு"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "பொதுவான விருப்பத்தை பயன்படுத்து"

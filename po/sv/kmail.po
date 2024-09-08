@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-07 00:40+0000\n"
-"PO-Revision-Date: 2024-08-17 08:29+0200\n"
+"PO-Revision-Date: 2024-09-07 07:26+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -6925,7 +6925,7 @@ msgstr "Ange från adressbok"
 #: ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "Visa bara identitet på nuvarande aktivitet"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:31
