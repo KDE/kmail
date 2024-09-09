@@ -794,6 +794,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mNameEdit->setFocus();
 
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
+    // TODO show/hide when we activate or not plasma activities
     mTabWidget->addTab(mConfigureActivitiesWidget, i18n("Activities"));
 #endif
 
