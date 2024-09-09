@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-07 00:40+0000\n"
-"PO-Revision-Date: 2024-08-17 09:54+0300\n"
+"PO-Revision-Date: 2024-09-07 09:08+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -7046,7 +7046,7 @@ msgstr "Вибрати з адресної книги"
 #: ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "Показувати профіль лише у поточному просторі дій"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identitypage.ui:31

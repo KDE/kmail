@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-07 00:40+0000\n"
-"PO-Revision-Date: 2024-09-05 15:08+0300\n"
+"PO-Revision-Date: 2024-09-08 17:01+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1214,6 +1214,8 @@ msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
+"בעת כתיבת תגובה או העברה, לצטט את ההודעה בעיצוב המקורי שלה. אם האפשרות לא "
+"מסומנת, התגובה תצוטט כטקסט פשוט כברירת מחדל."
 
 #: configuredialog/configurecomposerpage.cpp:248
 #, kde-format
@@ -1221,6 +1223,8 @@ msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
+"לעצב את חלק הטקסט הפשוט של הודעה לפי סימון ה־HTML. יש תמיכה בטקסט מודגש, "
+"נטוי ועם קו תחתי, רשימות והפניות חיצוניות."
 
 #: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
@@ -1271,6 +1275,10 @@ msgid ""
 "sending a message to too many people.  Note, however, that it does not take "
 "account of distribution lists or mailing lists."
 msgstr ""
+"לאפשר לציין רק עד כמות כזאת של נמענים בהודעה. חל על „להגיב לכולם”, מילוי "
+"נמענים ידנית או שימוש בבורר „בחירה…”. הגדרת המגבלה הזאת מסייעת לך להימנע "
+"משליחת הודעה ליותר מדי אנשים בטעות. עם זאת, נא לשים לב, שהיכולת הזאת לא "
+"לוקחת בחשבון רשימות הפצה או דיוור."
 
 #: configuredialog/configurecomposerpage.cpp:360
 #, kde-format
@@ -1484,7 +1492,7 @@ msgstr "כותרת שגויה"
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr ""
+msgstr "ה&פעלת זיהוי צרופות חסרות"
 
 #: configuredialog/configurecomposerpage.cpp:961
 #, kde-format
@@ -3015,12 +3023,12 @@ msgstr "זהויות &קיימות:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "לא ניתן להתחיל יצירת אישור OpenPGP."
 
 #: identity/identitydialog.cpp:231
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "לא ניתן להתחיל יצירת אישור OpenPGP:‏ %1"
 
 #: identity/identitydialog.cpp:240
 #, kde-format
@@ -3034,11 +3042,13 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"תהליך יצירת אישור OpenPGP דורש כמות גדולה של מספרים אקראיים. הוא יכול לארוך "
+"מספר דקות…"
 
 #: identity/identitydialog.cpp:260
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "לא ניתן לייצר אישור OpenPGP:‏ %1"
 
 #: identity/identitydialog.cpp:265
 #, kde-format
@@ -3771,10 +3781,10 @@ msgstr "כתובת הדוא״ל נוספה בהצלחה."
 #, kde-format
 msgid "Distribution list %2 is empty, it cannot be used."
 msgid_plural "Distribution lists %2 are empty, they cannot be used."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "רשימת התפוצה %2 ריקה, אי אפשר להשתמש בה."
+msgstr[1] "רשימות התפוצה %2 ריקות, לא ניתן להשתמש בהן."
+msgstr[2] "רשימות התפוצה %2 ריקות, לא ניתן להשתמש בהן."
+msgstr[3] "רשימות התפוצה %2 ריקות, לא ניתן להשתמש בהן."
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, kde-format
@@ -7754,6 +7764,8 @@ msgid ""
 "requests relating to S/MIME. The syntax is host:port, for instance myproxy."
 "nowhere.com:3128."
 msgstr ""
+"נא למלא כאן את מקום מתווך ה־HTTP שלך, שישמש לכל בקשות ה־HTTP שקשורות ב־S/"
+"MIME. התחביר הוא host:port (מארח:פתחה), למשל: myproxy.israel.com:3128."
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabLDAP)
 #: ui/smimeconfiguration.ui:216
