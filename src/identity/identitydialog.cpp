@@ -101,6 +101,7 @@ using MailTransport::TransportManager;
 #include <QStandardPaths>
 
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
+#include <PimCommonActivities/ActivitiesBaseManager>
 #include <PimCommonActivities/ConfigureActivitiesWidget>
 #endif
 
@@ -338,7 +339,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     , mConfigureActivitiesWidget(new PimCommonActivities::ConfigureActivitiesWidget(this))
 #endif
 {
-    // TODO add activity
     setWindowTitle(i18nc("@title:window", "Edit Identity"));
     auto mainLayout = new QVBoxLayout(this);
 
@@ -968,7 +968,10 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
             return;
         }
     }
-
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    const PimCommonActivities::ActivitiesBaseManager::ActivitySettings settings = mConfigureActivitiesWidget->activitiesSettings();
+    // TODO
+#endif
     accept();
 }
 
@@ -1087,6 +1090,9 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     mXFaceConfigurator->setXFaceEnabled(ident.isXFaceEnabled());
     mXFaceConfigurator->setFace(ident.face());
     mXFaceConfigurator->setFaceEnabled(ident.isFaceEnabled());
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    // TODO mConfigureActivitiesWidget->setActivitiesSettings();
+#endif
 }
 
 void IdentityDialog::unregisterSpecialCollection(qint64 colId)
@@ -1207,6 +1213,11 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     ident.setXFaceEnabled(mXFaceConfigurator->isXFaceEnabled());
     ident.setFace(mXFaceConfigurator->face());
     ident.setFaceEnabled(mXFaceConfigurator->isFaceEnabled());
+
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    // TODO mConfigureActivitiesWidget->setActivitiesSettings();
+    // ident.setActivities(
+#endif
 }
 
 void IdentityDialog::slotEditVcard()
