@@ -871,6 +871,7 @@ void IdentityDialog::slotAccepted()
     job->setProperty("email", email);
     connect(job, &AddressValidationJob::result, this, &IdentityDialog::slotDelayedButtonClicked);
     job->start();
+    // TODO save activities
 }
 
 bool IdentityDialog::keyMatchesEmailAddress(const GpgME::Key &key, const QString &email_)
@@ -1103,6 +1104,7 @@ void IdentityDialog::unregisterSpecialCollection(qint64 colId)
 
 void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
 {
+    // TODO load plasma activities
     // "General" tab:
     ident.setFullName(mNameEdit->text());
     ident.setOrganization(mOrganizationEdit->text());
