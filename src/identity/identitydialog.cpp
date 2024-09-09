@@ -9,6 +9,7 @@
 */
 
 #include "identitydialog.h"
+#include "config-kmail.h"
 #include "identityaddvcarddialog.h"
 #include "identityeditvcarddialog.h"
 #include "identityfolderrequester.h"
@@ -330,6 +331,7 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
 {
+    // TODO add activity
     setWindowTitle(i18nc("@title:window", "Edit Identity"));
     auto mainLayout = new QVBoxLayout(this);
 

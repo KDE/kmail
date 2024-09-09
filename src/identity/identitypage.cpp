@@ -60,6 +60,7 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(mIPage.mRenameButton, &QPushButton::clicked, this, &IdentityPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
+    // Identity
     mIPage.identitiesOnCurrentActivity->setVisible(false);
     load();
 }
