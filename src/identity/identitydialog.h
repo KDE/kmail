@@ -8,6 +8,7 @@
 */
 
 #pragma once
+#include "config-kmail.h"
 #include <QDialog>
 class QCheckBox;
 
@@ -58,6 +59,13 @@ namespace TextAutoCorrectionWidgets
 {
 class AutoCorrectionLanguage;
 }
+
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+namespace PimCommonActivities
+{
+class ConfigureActivitiesWidget;
+}
+#endif
 
 namespace KMail
 {
@@ -141,5 +149,8 @@ private:
     KMail::XFaceConfigurator *mXFaceConfigurator = nullptr;
     QTabWidget *mTabWidget = nullptr;
     IdentityInvalidFolder *mIdentityInvalidFolder = nullptr;
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    PimCommonActivities::ConfigureActivitiesWidget *const mConfigureActivitiesWidget;
+#endif
 };
 } // namespace KMail

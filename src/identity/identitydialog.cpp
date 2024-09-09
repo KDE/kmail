@@ -9,7 +9,7 @@
 */
 
 #include "identitydialog.h"
-#include "config-kmail.h"
+
 #include "identityaddvcarddialog.h"
 #include "identityeditvcarddialog.h"
 #include "identityfolderrequester.h"
@@ -99,6 +99,10 @@ using MailTransport::TransportManager;
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QStandardPaths>
+
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+#include <PimCommonActivities/ConfigureActivitiesWidget>
+#endif
 
 using namespace MailTransport;
 using namespace MailCommon;
@@ -330,6 +334,9 @@ void KeySelectionCombo::onCustomItemSelected(const QVariant &type)
 
 IdentityDialog::IdentityDialog(QWidget *parent)
     : QDialog(parent)
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    , mConfigureActivitiesWidget(new PimCommonActivities::ConfigureActivitiesWidget(this))
+#endif
 {
     // TODO add activity
     setWindowTitle(i18nc("@title:window", "Edit Identity"));
@@ -785,6 +792,10 @@ IdentityDialog::IdentityDialog(QWidget *parent)
 
     resize(KMailSettings::self()->identityDialogSize());
     mNameEdit->setFocus();
+
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    mTabWidget->addTab(mConfigureActivitiesWidget, i18n("Activities"));
+#endif
 
     connect(mTabWidget, &QTabWidget::currentChanged, this, &IdentityDialog::slotAboutToShow);
 }
