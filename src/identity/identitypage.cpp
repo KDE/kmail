@@ -62,6 +62,11 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityPage::slotSetAsDefault);
     // Identity
     mIPage.identitiesOnCurrentActivity->setVisible(false);
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    mIPage.identitiesOnCurrentActivity->setVisible(KMailSettings::self()->plasmaActivitySupport());
+    // mIPage.identitiesOnCurrentActivity->s
+
+#endif
     load();
 }
 

@@ -797,7 +797,6 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     // TODO show/hide when we activate or not plasma activities
     mTabWidget->addTab(mConfigureActivitiesWidget, i18n("Activities"));
 #endif
-
     connect(mTabWidget, &QTabWidget::currentChanged, this, &IdentityDialog::slotAboutToShow);
 }
 
