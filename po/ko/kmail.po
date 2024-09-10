@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-07 00:40+0000\n"
+"POT-Creation-Date: 2024-09-10 00:39+0000\n"
 "PO-Revision-Date: 2024-08-21 00:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1520,7 +1520,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "추가"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3019,24 +3019,24 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "기존 프로필(&E):"
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:224
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr "OpenPGP 인증서 생성을 시작할 수 없습니다."
 
-#: identity/identitydialog.cpp:231
+#: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "OpenPGP 인증서 생성을 시작할 수 없습니다: %1"
 
-#: identity/identitydialog.cpp:240
+#: identity/identitydialog.cpp:246
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "OpenPGP 인증서 생성 중…"
 
-#: identity/identitydialog.cpp:242
+#: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
@@ -3045,52 +3045,52 @@ msgstr ""
 "OpenPGP 인증서 생성에는 다량의 난수가 필요합니다. 이 과정에는 시간이 걸릴 수 "
 "있습니다…"
 
-#: identity/identitydialog.cpp:260
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "OpenPGP 인증서를 생성할 수 없음: %1"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:271
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "키 생성이 취소되었습니다."
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "No key"
 msgstr "키 없음"
 
-#: identity/identitydialog.cpp:307
+#: identity/identitydialog.cpp:313
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
 msgstr "새 OpenPGP 인증서 생성"
 
-#: identity/identitydialog.cpp:322
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "키 생성 오류"
 
-#: identity/identitydialog.cpp:333
+#: identity/identitydialog.cpp:342
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "프로필 편집"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:366
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "일반"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:373
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "이름(&Y):"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3101,13 +3101,13 @@ msgstr ""
 "만약 이 필드를 비워 두면 실명이 나타나지 않고 이메일 주소만 나타납니다.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:380
+#: identity/identitydialog.cpp:389
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "조직(&Z):"
 
-#: identity/identitydialog.cpp:385
+#: identity/identitydialog.cpp:394
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3118,13 +3118,13 @@ msgstr ""
 "더에 조직 정보를 나타내려면 여기에 입력하십시오.</p> <p>이 필드는 비워 두어"
 "도 됩니다.</p></qt>"
 
-#: identity/identitydialog.cpp:397
+#: identity/identitydialog.cpp:406
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "이메일 주소(&E):"
 
-#: identity/identitydialog.cpp:402
+#: identity/identitydialog.cpp:411
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3139,13 +3139,13 @@ msgstr ""
 "이 필드를 비워 놓거나 잘못된 주소를 입력하면 답장을 못 받을 수도 있습니다.</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "추가 이메일 주소(&L):"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3161,12 +3161,12 @@ msgstr ""
 "first@example.org<br>last@example.org</td></tr></table><p>추가 주소를 한 줄"
 "에 하나씩 입력하십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "Cryptography"
 msgstr "암호화"
 
-#: identity/identitydialog.cpp:449
+#: identity/identitydialog.cpp:458
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3180,29 +3180,29 @@ msgstr ""
 "p><p>키에 대한 자세한 정보를 보려면 <a>https://www.gnupg.org</a> 사이트를 참"
 "고하십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:455
+#: identity/identitydialog.cpp:464
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP 서명 키:"
 
-#: identity/identitydialog.cpp:461
+#: identity/identitydialog.cpp:470
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "서명과 암호화에 같은 키 사용"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP 키:"
 
-#: identity/identitydialog.cpp:479
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP 서명 키:"
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:505
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3218,13 +3218,13 @@ msgstr ""
 "니다.</p><p>키에 대한 자세한 정보를 보려면 <a>https://www.gnupg.org</a> 사이"
 "트를 참고하십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:503
+#: identity/identitydialog.cpp:512
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP 암호화 키:"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:522
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3237,13 +3237,13 @@ msgstr ""
 "다.</p><p>키에 대한 자세한 정보를 보려면 <a>http://www.gnupg.org</a> 사이트"
 "를 참고하십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:518
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME 서명 인증서:"
 
-#: identity/identitydialog.cpp:532
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3256,83 +3256,83 @@ msgstr ""
 "을 때 첨부할 S/MIME 인증서입니다.</p><p>인증서를 지정하지 않으면 S/MIME으로 "
 "암호화할 수 없으며, 일반적인 메일 작성은 가능합니다. </p></qt>"
 
-#: identity/identitydialog.cpp:538
+#: identity/identitydialog.cpp:547
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME 암호화 인증서:"
 
-#: identity/identitydialog.cpp:555
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "선호하는 암호화 메시지 형식:"
 
-#: identity/identitydialog.cpp:560
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "자동 암호화 활성화"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:573
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "자동 암호화:"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:578
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "다른 사람에게 내 암호화 선호도 알리기"
 
-#: identity/identitydialog.cpp:572
+#: identity/identitydialog.cpp:581
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "보안 기본값 전역 설정 덮어쓰기"
 
-#: identity/identitydialog.cpp:575
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "기본값 덮어쓰기:"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "메시지에 서명"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "가능하다면 자동으로 메시지 암호화"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:595
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "서명되지 않은 메시지를 보내려고 할 때 알림"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "암호화되지 않은 메시지를 보내려고 할 때 알림"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:608
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "고급"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "답장 받을 주소(&R):"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:620
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3348,13 +3348,13 @@ msgstr ""
 "를 들어 <tt>From:</tt> 헤더에는 자기 주소를 입력하고, 답장을 받을 주소로는 그"
 "룹의 주소를 지정할 수 있습니다. </p><p>잘 모르겠으면 비워 두십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:629
+#: identity/identitydialog.cpp:638
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "참조 주소(&C):"
 
-#: identity/identitydialog.cpp:635
+#: identity/identitydialog.cpp:644
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3369,13 +3369,13 @@ msgstr ""
 "니다.</p><p>한 명 이상의 참조를 추가하려면 쉼표를 사용하십시오.</p><p>잘 모르"
 "겠으면 비워 두십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:651
+#: identity/identitydialog.cpp:660
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "숨은 참조 주소(&B):"
 
-#: identity/identitydialog.cpp:655
+#: identity/identitydialog.cpp:664
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3391,82 +3391,82 @@ msgstr ""
 "낼 때 주로 사용합니다.</p><p>한 명 이상의 숨은 참조를 추가하려면 쉼표를 사용"
 "하십시오.</p><p>잘 모르겠으면 비워 두십시오.</p></qt>"
 
-#: identity/identitydialog.cpp:669
+#: identity/identitydialog.cpp:678
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "사전(&I):"
 
-#: identity/identitydialog.cpp:675
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "보낸 편지함 폴더 선택"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:686
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "보낸 편지함 폴더(&F):"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:692
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "임시 보관함 폴더 선택"
 
-#: identity/identitydialog.cpp:685
+#: identity/identitydialog.cpp:694
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "임시 보관함 폴더(&D):"
 
-#: identity/identitydialog.cpp:691
+#: identity/identitydialog.cpp:700
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "템플릿 폴더 선택"
 
-#: identity/identitydialog.cpp:693
+#: identity/identitydialog.cpp:702
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "템플릿 폴더(&T):"
 
-#: identity/identitydialog.cpp:698
+#: identity/identitydialog.cpp:707
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "발신 계정:"
 
-#: identity/identitydialog.cpp:705
+#: identity/identitydialog.cpp:714
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "메시지에 내 vCard 첨부"
 
-#: identity/identitydialog.cpp:706
+#: identity/identitydialog.cpp:715
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "생성…"
 
-#: identity/identitydialog.cpp:710
+#: identity/identitydialog.cpp:719
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "자동 고침 언어:"
 
-#: identity/identitydialog.cpp:722
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "기본 도메인 이름 복원"
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:734
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "기본 도메인(&T):"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3475,57 +3475,63 @@ msgstr ""
 "<qt><p>이메일 주소에 사용되는 기본 도메인은 사용자 이름만으로 이루어져 있습니"
 "다.</p></qt>"
 
-#: identity/identitydialog.cpp:748
+#: identity/identitydialog.cpp:757
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "이 프로필에서 사용자 정의 메시지 템플릿 사용(&U)"
 
-#: identity/identitydialog.cpp:762
+#: identity/identitydialog.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "전역 템플릿 복사(&C)"
 
-#: identity/identitydialog.cpp:769
+#: identity/identitydialog.cpp:778
 #, kde-format
 msgid "Templates"
 msgstr "템플릿"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:784
 #, kde-format
 msgid "Signature"
 msgstr "서명"
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:791
 #, kde-format
 msgid "Picture"
 msgstr "그림"
 
-#: identity/identitydialog.cpp:835
+#: identity/identitydialog.cpp:798
+#, fuzzy, kde-format
+#| msgid "Activate"
+msgid "Activities"
+msgstr "활성화"
+
+#: identity/identitydialog.cpp:849
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "잘못된 추가 이메일 주소 \"%1\""
 
-#: identity/identitydialog.cpp:843
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "프로필에 이메일을 지정해야 합니다."
 
-#: identity/identitydialog.cpp:843
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "비어 있는 이메일 주소"
 
-#: identity/identitydialog.cpp:848 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "잘못된 이메일 주소"
 
-#: identity/identitydialog.cpp:905
+#: identity/identitydialog.cpp:920
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3538,7 +3544,7 @@ msgstr ""
 "받는 쪽에서 이 설정을 사용하여 보낸 메시지의 서명을 검사하려고 할 때 경고 메"
 "시지가 표시될 수도 있습니다."
 
-#: identity/identitydialog.cpp:914
+#: identity/identitydialog.cpp:929
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3547,7 +3553,7 @@ msgstr ""
 "설정한 OpenPGP 암호화 키에 이 프로필에서 사용된 이메일 주소와 일치하는 사용"
 "자 ID가 없습니다. (%1)"
 
-#: identity/identitydialog.cpp:921
+#: identity/identitydialog.cpp:936
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3560,7 +3566,7 @@ msgstr ""
 "받는 쪽에서 이 설정을 사용하여 보낸 메시지의 서명을 검사하려고 할 때 경고 메"
 "시지가 표시될 수도 있습니다."
 
-#: identity/identitydialog.cpp:930
+#: identity/identitydialog.cpp:945
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3568,24 +3574,24 @@ msgid ""
 msgstr ""
 "설정한 S/MIME 암호화 키에 이 프로필에서 사용된 이메일 주소가 없습니다. (%1)"
 
-#: identity/identitydialog.cpp:940
+#: identity/identitydialog.cpp:955
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "키/인증서에 이메일 주소가 없음"
 
-#: identity/identitydialog.cpp:952
+#: identity/identitydialog.cpp:967
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "서명 파일이 올바르지 않음"
 
-#: identity/identitydialog.cpp:968
+#: identity/identitydialog.cpp:986
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" 프로필 편집"
 
-#: identity/identitydialog.cpp:1037
+#: identity/identitydialog.cpp:1055
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3593,12 +3599,12 @@ msgid ""
 msgstr ""
 "프로필에 정의한 사용자 정의 폴더가 더 이상 없습니다. 기본 폴더를 사용합니다."
 
-#: identity/identitydialog.cpp:1255
+#: identity/identitydialog.cpp:1282
 #, kde-format
 msgid "Create…"
 msgstr "생성…"
 
-#: identity/identitydialog.cpp:1257
+#: identity/identitydialog.cpp:1284
 #, kde-format
 msgid "Edit…"
 msgstr "편집…"
@@ -3673,48 +3679,48 @@ msgstr "프로필 이름"
 msgid "Email Address"
 msgstr "이메일 주소"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:221
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt><b>%1</b> 프로필을 삭제하시겠습니까?</qt>"
 
-#: identity/identitypage.cpp:223
+#: identity/identitypage.cpp:224
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "프로필 %1개를 삭제하시겠습니까?"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:227
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "프로필 삭제"
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:228
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "삭제(&R)"
 
-#: identity/identitypage.cpp:278
+#: identity/identitypage.cpp:279
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "추가…"
 
-#: identity/identitypage.cpp:280
+#: identity/identitypage.cpp:281
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "수정…"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:282
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "이름 바꾸기"
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:288
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -9828,9 +9834,6 @@ msgstr "크기 조정: %1%"
 
 #~ msgid "Paste Without Formatting"
 #~ msgstr "서식 없이 붙여넣기"
-
-#~ msgid "Activate"
-#~ msgstr "활성화"
 
 #~ msgid "Configure..."
 #~ msgstr "설정..."

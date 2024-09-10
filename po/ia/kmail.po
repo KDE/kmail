@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-07 00:40+0000\n"
+"POT-Creation-Date: 2024-09-10 00:39+0000\n"
 "PO-Revision-Date: 2024-08-28 16:35+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1548,7 +1548,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Adde"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3082,24 +3082,24 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Identitates &Existente:"
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:224
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr "Non poteva startar le generation de certificato de OpenPGP"
 
-#: identity/identitydialog.cpp:231
+#: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "Non poteva startar le generation de certificato de OpenPGP: %1"
 
-#: identity/identitydialog.cpp:240
+#: identity/identitydialog.cpp:246
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "Generante unCVertificato de OpenPGP..."
 
-#: identity/identitydialog.cpp:242
+#: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
@@ -3108,52 +3108,52 @@ msgstr ""
 "Le processo de generar un certificato OpenPGP require un grande quantitate "
 "de numeros aleatori. Isto pote requirer plure minutos... "
 
-#: identity/identitydialog.cpp:260
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "Non poteva generar un certificato de OpenPGP: %1"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:271
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "Le generation de clave esseva cancellate."
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "No key"
 msgstr "Necun clave"
 
-#: identity/identitydialog.cpp:307
+#: identity/identitydialog.cpp:313
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
 msgstr "Genera un nove certificato de OpenPGP"
 
-#: identity/identitydialog.cpp:322
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "Error de generation de clave"
 
-#: identity/identitydialog.cpp:333
+#: identity/identitydialog.cpp:342
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Modifica Identitate"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:366
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "General"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:373
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Tu nomine:"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3165,13 +3165,13 @@ msgstr ""
 "vacue tu ver nomine non apparera, solmente le adresse de e-posta apparera.</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:380
+#: identity/identitydialog.cpp:389
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Organi&zation:"
 
-#: identity/identitydialog.cpp:385
+#: identity/identitydialog.cpp:394
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3182,13 +3182,13 @@ msgstr ""
 "organization si tu placerea que illo es monstrate in le capite de e-posta "
 "que il es inviate.</p><p>Il es secur (e normal) lassar lo vacue</p></qt>"
 
-#: identity/identitydialog.cpp:397
+#: identity/identitydialog.cpp:406
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "Adresse de &E-Posta:"
 
-#: identity/identitydialog.cpp:402
+#: identity/identitydialog.cpp:411
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3204,13 +3204,13 @@ msgstr ""
 "campo vacue, o tu lo mitte errate, altere personas habera problemas quando "
 "illos te respondera.</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "Pseudon&ymos de e-posta"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3227,12 +3227,12 @@ msgstr ""
 "td><tr><tr><th>Aliases:</th><td>prime@exemplo.org<br>ultime@exemplo.org</"
 "td></tr></table><p>Tu typa un adresse de alias per linea.</p></qt>"
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "Cryptography"
 msgstr "Cryptographia"
 
-#: identity/identitydialog.cpp:449
+#: identity/identitydialog.cpp:458
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3247,29 +3247,29 @@ msgstr ""
 "usante  OpenPGP; functiones de posta normal non essera influentiate.</p><p> "
 "Tu pote trovar altere cosas re claves a <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:455
+#: identity/identitydialog.cpp:464
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "Clave de signatura de OpenPGP:"
 
-#: identity/identitydialog.cpp:461
+#: identity/identitydialog.cpp:470
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Usa le mesme clave per cryptation e signar"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP Key:"
 
-#: identity/identitydialog.cpp:479
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Clave de signatura de OpenPGP:"
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:505
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3287,13 +3287,13 @@ msgstr ""
 "influentiate.</p><p> Tu pote saper altere cosas re claves a <a>https://www."
 "gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:503
+#: identity/identitydialog.cpp:512
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "Clave de cryptation de OpenPGP:"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:522
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3306,13 +3306,13 @@ msgstr ""
 "essera capace de signar digitalmente tu e-postas usante S/MIME; normal "
 "functiones non essera influentiate.</p></qt>"
 
-#: identity/identitydialog.cpp:518
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "Certificato de signatura de S/MIME:"
 
-#: identity/identitydialog.cpp:532
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3327,83 +3327,83 @@ msgstr ""
 "cryptar copias de messages de partita a te usante S/MIME; functiones normal "
 "de e-posta non essera influentiate.</p></qt>"
 
-#: identity/identitydialog.cpp:538
+#: identity/identitydialog.cpp:547
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "Certificato de Cryptation de S/MIME:"
 
-#: identity/identitydialog.cpp:555
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Formato preferite:"
 
-#: identity/identitydialog.cpp:560
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "Habilita auto cryptation"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:573
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Autocryptar:"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:578
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Permitet que qlteres sape que tu prefere cryptation"
 
-#: identity/identitydialog.cpp:572
+#: identity/identitydialog.cpp:581
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "Superscribe preferentias global per predefinitones de securitate"
 
-#: identity/identitydialog.cpp:575
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Superscribe predefiniziones:"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Signa messages"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Crypta messages quando il es possibile"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:595
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Avisa quando on cerca de inviar messages non signate"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Avisa quando on cerca de inviar messages non cryptate"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:608
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Avantiate"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "Adresse de &Responder-A:"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:620
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3421,13 +3421,13 @@ msgstr ""
 "a un gruppo de adresse.</p><p>Si tu dubita, tu lassa iste campo vacue.</p></"
 "qt> "
 
-#: identity/identitydialog.cpp:629
+#: identity/identitydialog.cpp:638
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Adresses &CC:"
 
-#: identity/identitydialog.cpp:635
+#: identity/identitydialog.cpp:644
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3444,13 +3444,13 @@ msgstr ""
 "adresse, tu usa virgulas pro separar le lista de destinatarios CC.</p><p>Si "
 "tu dubita, tu lassa iste campo vacue.</p></qt> "
 
-#: identity/identitydialog.cpp:651
+#: identity/identitydialog.cpp:660
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "Adresses &BCC:"
 
-#: identity/identitydialog.cpp:655
+#: identity/identitydialog.cpp:664
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3468,82 +3468,82 @@ msgstr ""
 "adresse, tu usa virgulas pro separar le lista de destinatarios BCC.</p><p>Si "
 "tu dubita, tu lassa iste campo vacue.</p></qt> "
 
-#: identity/identitydialog.cpp:669
+#: identity/identitydialog.cpp:678
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "D&ictionario:"
 
-#: identity/identitydialog.cpp:675
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Selige Dossier de posta inviate"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:686
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "&Dossier de posta inviate:"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:692
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Selige dossier de version provvisori"
 
-#: identity/identitydialog.cpp:685
+#: identity/identitydialog.cpp:694
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Dossier de &Version Provisori:"
 
-#: identity/identitydialog.cpp:691
+#: identity/identitydialog.cpp:700
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Selige Dossier de patronos"
 
-#: identity/identitydialog.cpp:693
+#: identity/identitydialog.cpp:702
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Dossier de &Patronos:"
 
-#: identity/identitydialog.cpp:698
+#: identity/identitydialog.cpp:707
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Conto de exito:"
 
-#: identity/identitydialog.cpp:705
+#: identity/identitydialog.cpp:714
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Attacha mi vCard a message"
 
-#: identity/identitydialog.cpp:706
+#: identity/identitydialog.cpp:715
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Crea…"
 
-#: identity/identitydialog.cpp:710
+#: identity/identitydialog.cpp:719
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Linguage de Autocorrection"
 
-#: identity/identitydialog.cpp:722
+#: identity/identitydialog.cpp:731
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Restabili nomine de dominio predefini&e:"
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:734
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Dominio predefini&te:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3552,57 +3552,63 @@ msgstr ""
 "<qt><p>Le dominio predefinite es usate pro completar adresses de e-posta que "
 "solmente consiste del nomine de usator.</p></qt>"
 
-#: identity/identitydialog.cpp:748
+#: identity/identitydialog.cpp:757
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Usa patronos de message personalisate pro iste identitate"
 
-#: identity/identitydialog.cpp:762
+#: identity/identitydialog.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Copia patronos global"
 
-#: identity/identitydialog.cpp:769
+#: identity/identitydialog.cpp:778
 #, kde-format
 msgid "Templates"
 msgstr "Patronos"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:784
 #, kde-format
 msgid "Signature"
 msgstr "Signatura"
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:791
 #, kde-format
 msgid "Picture"
 msgstr "Photo"
 
-#: identity/identitydialog.cpp:835
+#: identity/identitydialog.cpp:798
+#, fuzzy, kde-format
+#| msgid "Activate"
+msgid "Activities"
+msgstr "Activa"
+
+#: identity/identitydialog.cpp:849
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Alias de E-Posta invalide \"%1\""
 
-#: identity/identitydialog.cpp:843
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Tu debe fornir un eposta per iste identitate"
 
-#: identity/identitydialog.cpp:843
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Vacua Adresse de E-Posta"
 
-#: identity/identitydialog.cpp:848 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Adresse de e-posta invalide"
 
-#: identity/identitydialog.cpp:905
+#: identity/identitydialog.cpp:920
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3615,7 +3621,7 @@ msgstr ""
 "Isto pote originar messages de aviso sur le parte recipente quando on cerca "
 "de verificar signaturas facite con iste configuration."
 
-#: identity/identitydialog.cpp:914
+#: identity/identitydialog.cpp:929
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3624,7 +3630,7 @@ msgstr ""
 "Uno del claves de cryptation de OpenPGP configurate non contine alcun ID de "
 "usator con le configurate adresse de e-posta pro iste identitate (%1)."
 
-#: identity/identitydialog.cpp:921
+#: identity/identitydialog.cpp:936
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3637,7 +3643,7 @@ msgstr ""
 "Isto pote originar messages de aviso sur le parte recipente quando on cerca "
 "de verificar signaturas facite con iste configuration."
 
-#: identity/identitydialog.cpp:930
+#: identity/identitydialog.cpp:945
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3646,24 +3652,24 @@ msgstr ""
 "Uno del configurate certificatos de cryptation S/MIME non contine le adresse "
 "de e-posta configurate pro iste identitate (%1)."
 
-#: identity/identitydialog.cpp:940
+#: identity/identitydialog.cpp:955
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Adresse de e-posta non trovate in Clave/Certificatos"
 
-#: identity/identitydialog.cpp:952
+#: identity/identitydialog.cpp:967
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Le file de signatura non es valide"
 
-#: identity/identitydialog.cpp:968
+#: identity/identitydialog.cpp:986
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Edita identitate \"%1\""
 
-#: identity/identitydialog.cpp:1037
+#: identity/identitydialog.cpp:1055
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3672,12 +3678,12 @@ msgstr ""
 "Alcun dossier personalisate per identitate non existe (plus), assi on usara "
 "le dossier predefinite."
 
-#: identity/identitydialog.cpp:1255
+#: identity/identitydialog.cpp:1282
 #, kde-format
 msgid "Create…"
 msgstr "Crea…"
 
-#: identity/identitydialog.cpp:1257
+#: identity/identitydialog.cpp:1284
 #, kde-format
 msgid "Edit…"
 msgstr "Edita…"
@@ -3752,50 +3758,50 @@ msgstr "Nomine de identitate"
 msgid "Email Address"
 msgstr "Adresse de E-Posta"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:221
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Tu realmente vole remover le identitate appellate <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:223
+#: identity/identitypage.cpp:224
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Tu realmente vole remover iste identitate %1?"
 msgstr[1] "Tu realmente vole remover iste identitates %1?"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:227
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Remove Identitate"
 msgstr[1] "Remove identitates"
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:228
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Remove"
 
-#: identity/identitypage.cpp:278
+#: identity/identitypage.cpp:279
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Adde…"
 
-#: identity/identitypage.cpp:280
+#: identity/identitypage.cpp:281
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Modifica…"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:282
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Renomina"
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:288
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -10217,9 +10223,6 @@ msgstr "Zoom: %1"
 
 #~ msgid "Paste Without Formatting"
 #~ msgstr "Colla sin formattar"
-
-#~ msgid "Activate"
-#~ msgstr "Activa"
 
 #~ msgid "Configure..."
 #~ msgstr "Configura..."

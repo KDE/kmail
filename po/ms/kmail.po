@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-07 00:40+0000\n"
+"POT-Creation-Date: 2024-09-10 00:39+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -1695,7 +1695,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "T&ambah..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:283
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3280,82 +3280,82 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "Identiti &Sedia ada:"
 
-#: identity/identitydialog.cpp:218
+#: identity/identitydialog.cpp:224
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr ""
 
-#: identity/identitydialog.cpp:231
+#: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr ""
 
-#: identity/identitydialog.cpp:240
+#: identity/identitydialog.cpp:246
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "Masukkan kata kunci baru:"
 
-#: identity/identitydialog.cpp:242
+#: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
 
-#: identity/identitydialog.cpp:260
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr ""
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:271
 #, fuzzy, kde-format
 #| msgid "Deleting messages canceled."
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "Penghapusan mesej dibatalkan."
 
-#: identity/identitydialog.cpp:305
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:307
+#: identity/identitydialog.cpp:313
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new OpenPGP certificate"
 msgstr "Masukkan kata kunci baru:"
 
-#: identity/identitydialog.cpp:322
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:333
+#: identity/identitydialog.cpp:342
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Edit Identiti"
 
-#: identity/identitydialog.cpp:357
+#: identity/identitydialog.cpp:366
 #, fuzzy, kde-format
 #| msgid "General"
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Umum"
 
-#: identity/identitydialog.cpp:364
+#: identity/identitydialog.cpp:373
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "Nama &anda:"
 
-#: identity/identitydialog.cpp:369
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3367,14 +3367,14 @@ msgstr ""
 "nama anda ;</p><p>Jika anda membiarkan bahagian ini kosong, hanya alamat e-"
 "mel muncul, tidak nama sebenar anda</p></qt>"
 
-#: identity/identitydialog.cpp:380
+#: identity/identitydialog.cpp:389
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Organi&sasi:"
 
-#: identity/identitydialog.cpp:385
+#: identity/identitydialog.cpp:394
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3390,14 +3390,14 @@ msgstr ""
 "nama organisasi.</p><p>Membiarkannya kosong adalah selamat (dan normal).</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:397
+#: identity/identitydialog.cpp:406
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "Alamat &e-mel:"
 
-#: identity/identitydialog.cpp:402
+#: identity/identitydialog.cpp:411
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Email address</h3><p>This field should have your full email "
@@ -3414,14 +3414,14 @@ msgstr ""
 "penuh anda.</p><p>Jika anda membiarkannya kosong, atau silap isi, orang lain "
 "akan menghadapi masalah menjawab e-mel anda.</p></qt>"
 
-#: identity/identitydialog.cpp:421
+#: identity/identitydialog.cpp:430
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "Alamat &e-mel:"
 
-#: identity/identitydialog.cpp:426
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3432,13 +3432,13 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:443
+#: identity/identitydialog.cpp:452
 #, fuzzy, kde-format
 #| msgid "Cryptograph&y"
 msgid "Cryptography"
 msgstr "Kriptograf&i"
 
-#: identity/identitydialog.cpp:449
+#: identity/identitydialog.cpp:458
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3460,31 +3460,31 @@ msgstr ""
 "normal tidak akan terganggu.</p><p>Anda boleh mengetahui lebih tentang "
 "kekunci di  <a>http://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:455
+#: identity/identitydialog.cpp:464
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "Kekunci tandatangan OpenPGP:"
 
-#: identity/identitydialog.cpp:461
+#: identity/identitydialog.cpp:470
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:480
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgid "OpenPGP key:"
 msgstr "Kekunci tandatangan OpenPGP:"
 
-#: identity/identitydialog.cpp:479
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "Kekunci tandatangan OpenPGP:"
 
-#: identity/identitydialog.cpp:496
+#: identity/identitydialog.cpp:505
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3509,14 +3509,14 @@ msgstr ""
 "OpenPGP; fungsi mel normal tidak akan terjejas.</p><p>Anda boleh mengetahui "
 "lebih tentang kekunci di <a>http://www.gnupg.org</a></qt>"
 
-#: identity/identitydialog.cpp:503
+#: identity/identitydialog.cpp:512
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "Kekunci penyulitan OpenPGP"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:522
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3529,14 +3529,14 @@ msgstr ""
 "tetapi KMail tidak akan dapat menandatangani e-mel secara digital "
 "menggunakan S/MIME; fungsi normal e-mel tidak akan terganggu.</p></qt>"
 
-#: identity/identitydialog.cpp:518
+#: identity/identitydialog.cpp:527
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "Sijil tandatangan S/MIME"
 
-#: identity/identitydialog.cpp:532
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3551,94 +3551,94 @@ msgstr ""
 "tetapi KMail tidak akan dapat menyulitkan salinan mesej keluar kepada anda "
 "menggunakan S/MIME; fungsi normal mel tidak akan terganggu.</p></qt>"
 
-#: identity/identitydialog.cpp:538
+#: identity/identitydialog.cpp:547
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "Sijil penyulitan S/MIME:"
 
-#: identity/identitydialog.cpp:555
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Preferred crypto message format:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Format mesej kripto yang diutamakan:"
 
-#: identity/identitydialog.cpp:560
+#: identity/identitydialog.cpp:569
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Enable Autocrypt"
 msgstr "Sulitkan"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:573
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Sulitkan"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:578
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:572
+#: identity/identitydialog.cpp:581
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:575
+#: identity/identitydialog.cpp:584
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Set sebagai Piawai"
 
-#: identity/identitydialog.cpp:580
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "&Tandatangan Mesej"
 
-#: identity/identitydialog.cpp:583
+#: identity/identitydialog.cpp:592
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Autosulitkan &mesej apabila boleh dilakukan"
 
-#: identity/identitydialog.cpp:586
+#: identity/identitydialog.cpp:595
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Beri amaran jika cuba menghantar mesej &tak bertandatangan"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:598
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&Beri amaran apabila cuba menghantar mesej yang tak disulitkan"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:608
 #, fuzzy, kde-format
 #| msgid "Advanced"
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Lanjutan"
 
-#: identity/identitydialog.cpp:607
+#: identity/identitydialog.cpp:616
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Jawapan Kepada:"
 
-#: identity/identitydialog.cpp:611
+#: identity/identitydialog.cpp:620
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3656,14 +3656,14 @@ msgstr ""
 "responsnya dihantar kepada alamat kumpulan.</p><p>Jika ragu-ragu, biarkan "
 "medan ini kosong.</p></qt>"
 
-#: identity/identitydialog.cpp:629
+#: identity/identitydialog.cpp:638
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "Alamat &BCC:"
 
-#: identity/identitydialog.cpp:635
+#: identity/identitydialog.cpp:644
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3688,14 +3688,14 @@ msgstr ""
 "daripada satu alamat, gunakan koma untuk mengasingkan senarai penerima SRk.</"
 "p><p>Jika ragu, biarkan medan ini kosong.</p></qt>"
 
-#: identity/identitydialog.cpp:651
+#: identity/identitydialog.cpp:660
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "Alamat &BCC:"
 
-#: identity/identitydialog.cpp:655
+#: identity/identitydialog.cpp:664
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3712,92 +3712,92 @@ msgstr ""
 "daripada satu alamat, gunakan koma untuk mengasingkan senarai penerima SRk.</"
 "p><p>Jika ragu, biarkan medan ini kosong.</p></qt>"
 
-#: identity/identitydialog.cpp:669
+#: identity/identitydialog.cpp:678
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "K&amus:"
 
-#: identity/identitydialog.cpp:675
+#: identity/identitydialog.cpp:684
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "Folder Mel &Hantaran"
 
-#: identity/identitydialog.cpp:677
+#: identity/identitydialog.cpp:686
 #, fuzzy, kde-format
 #| msgid "Sent-mail &folder:"
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "&Folder mel dihantar:"
 
-#: identity/identitydialog.cpp:683
+#: identity/identitydialog.cpp:692
 #, fuzzy, kde-format
 msgid "Select Draft Folder"
 msgstr "Pilih Folder"
 
-#: identity/identitydialog.cpp:685
+#: identity/identitydialog.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "Folder &Draf:"
 
-#: identity/identitydialog.cpp:691
+#: identity/identitydialog.cpp:700
 #, fuzzy, kde-format
 #| msgid "Select Folder"
 msgid "Select Templates Folder"
 msgstr "Pilih Folder"
 
-#: identity/identitydialog.cpp:693
+#: identity/identitydialog.cpp:702
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Folder &Sampah"
 
-#: identity/identitydialog.cpp:698
+#: identity/identitydialog.cpp:707
 #, fuzzy, kde-format
 #| msgid "Add..."
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Tambah..."
 
-#: identity/identitydialog.cpp:705
+#: identity/identitydialog.cpp:714
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Tambahkan 'pengepala' kepada mesej"
 
-#: identity/identitydialog.cpp:706
+#: identity/identitydialog.cpp:715
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Namakan semula..."
 
-#: identity/identitydialog.cpp:710
+#: identity/identitydialog.cpp:719
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr ""
 
-#: identity/identitydialog.cpp:722
+#: identity/identitydialog.cpp:731
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Domain pia&wai:"
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:734
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Domain pia&wai:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3806,53 +3806,59 @@ msgstr ""
 "<qt><p>Domain piawai digunakan untuk melengkapkan alamat e-mel yang "
 "mengandungi nama pengguna sahaja.</p></qt>"
 
-#: identity/identitydialog.cpp:748
+#: identity/identitydialog.cpp:757
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Gunakan akhiran id mesej kebiasaan"
 
-#: identity/identitydialog.cpp:762
+#: identity/identitydialog.cpp:771
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Gantikan"
 
-#: identity/identitydialog.cpp:769
+#: identity/identitydialog.cpp:778
 #, kde-format
 msgid "Templates"
 msgstr ""
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:784
 #, kde-format
 msgid "Signature"
 msgstr "Tandatangan"
 
-#: identity/identitydialog.cpp:782
+#: identity/identitydialog.cpp:791
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "&Gambar"
 
-#: identity/identitydialog.cpp:835
+#: identity/identitydialog.cpp:798
+#, fuzzy, kde-format
+#| msgid "Remove &Important Message Mark"
+msgid "Activities"
+msgstr "Buang Tanda Mesej &Penting"
+
+#: identity/identitydialog.cpp:849
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Alamat E-mel Tidak Sah"
 
-#: identity/identitydialog.cpp:843
+#: identity/identitydialog.cpp:857
 #, fuzzy, kde-format
 msgid "You must provide an email for this identity."
 msgstr "&Gunakan akhiran id mesej kebiasaan"
 
-#: identity/identitydialog.cpp:843
+#: identity/identitydialog.cpp:857
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Alamat E-mel"
 
-#: identity/identitydialog.cpp:848 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3860,7 +3866,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Alamat E-mel Tidak Sah"
 
-#: identity/identitydialog.cpp:905
+#: identity/identitydialog.cpp:920
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3874,7 +3880,7 @@ msgstr ""
 "Ini mungkin menyebabkan mesej amaran kepada penerima semasa cuba mengesahkan "
 "tandatangan yang dibuat menggunakan konfigurasi ini."
 
-#: identity/identitydialog.cpp:914
+#: identity/identitydialog.cpp:929
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3884,7 +3890,7 @@ msgstr ""
 "sebarang ID pengguna dengan alamat e-mel yang dikonfigurasi bagi identiti "
 "ini (%1)."
 
-#: identity/identitydialog.cpp:921
+#: identity/identitydialog.cpp:936
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3897,7 +3903,7 @@ msgstr ""
 "Ini mungkin menyebabkan mesej amaran di pihak penerima semasa cuba "
 "mengesahkan tandatangan yang dibuat menggunakan konfigurasi ini."
 
-#: identity/identitydialog.cpp:930
+#: identity/identitydialog.cpp:945
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3906,26 +3912,26 @@ msgstr ""
 "Salah satu sijil penyulitan S/MIME yang dikonfigurasi tidak mengandungi "
 "alamat e-mel yang dikonfigurasi dengan identiti ini (%1)."
 
-#: identity/identitydialog.cpp:940
+#: identity/identitydialog.cpp:955
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Alamat E-mel Tidak Ditemui Dalam Kekunci/Sijil"
 
-#: identity/identitydialog.cpp:952
+#: identity/identitydialog.cpp:967
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Fail tandatangan  tidak sah"
 
-#: identity/identitydialog.cpp:968
+#: identity/identitydialog.cpp:986
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Edit Identiti \"%1\""
 
-#: identity/identitydialog.cpp:1037
+#: identity/identitydialog.cpp:1055
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3937,13 +3943,13 @@ msgstr ""
 "Folder draf langganan untuk identiti \"%1\" tidak wujud (lagi); oleh itu, "
 "folder draf piawai akan digunakan."
 
-#: identity/identitydialog.cpp:1255
+#: identity/identitydialog.cpp:1282
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Namakan semula..."
 
-#: identity/identitydialog.cpp:1257
+#: identity/identitydialog.cpp:1284
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Keluar"
@@ -4023,13 +4029,13 @@ msgstr "Nama Identiti"
 msgid "Email Address"
 msgstr "Alamat E-mel"
 
-#: identity/identitypage.cpp:220
+#: identity/identitypage.cpp:221
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Anda pasti ingin mengeluarkan identiti bernama <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:223
+#: identity/identitypage.cpp:224
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4037,7 +4043,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>Anda pasti ingin mengeluarkan identiti bernama <b>%1</b>?</qt>"
 msgstr[1] "<qt>Anda pasti ingin mengeluarkan identiti bernama <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:227
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4045,33 +4051,33 @@ msgid_plural "Remove Identities"
 msgstr[0] "Buang Identiti"
 msgstr[1] "Buang Identiti"
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:228
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Buang"
 
-#: identity/identitypage.cpp:278
+#: identity/identitypage.cpp:279
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:280
+#: identity/identitypage.cpp:281
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Ubahsuai..."
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:282
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Namakan semula"
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:288
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -10500,11 +10506,6 @@ msgstr ""
 #~| msgid "Login Information"
 #~ msgid "Paste Without Formatting"
 #~ msgstr "Maklumat Log Masuk"
-
-#, fuzzy
-#~| msgid "Remove &Important Message Mark"
-#~ msgid "Activate"
-#~ msgstr "Buang Tanda Mesej &Penting"
 
 #, fuzzy
 #~ msgid "Configure..."
