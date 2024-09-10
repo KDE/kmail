@@ -1091,7 +1091,8 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     mXFaceConfigurator->setFace(ident.face());
     mXFaceConfigurator->setFaceEnabled(ident.isFaceEnabled());
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
-    // TODO mConfigureActivitiesWidget->setActivitiesSettings();
+    const PimCommonActivities::ActivitiesBaseManager::ActivitySettings settings{ident.activities(), ident.enabledActivities()};
+    mConfigureActivitiesWidget->setActivitiesSettings(settings);
 #endif
 }
 
@@ -1215,8 +1216,9 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     ident.setFaceEnabled(mXFaceConfigurator->isFaceEnabled());
 
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
-    // TODO mConfigureActivitiesWidget->setActivitiesSettings();
-    // ident.setActivities(
+    const PimCommonActivities::ActivitiesBaseManager::ActivitySettings settings = mConfigureActivitiesWidget->activitiesSettings();
+    ident.setActivities(settings.activities);
+    ident.setEnabledActivities(settings.enabled);
 #endif
 }
 
