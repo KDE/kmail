@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-09 19:04+0300\n"
+"PO-Revision-Date: 2024-09-10 06:52+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4801,7 +4801,7 @@ msgstr "היסטוריית התראות…"
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr ""
+msgstr "יי&בוא מלקוח דוא״ל אחר…"
 
 #: kmmainwidget.cpp:3012
 #, kde-format
@@ -5644,6 +5644,8 @@ msgid ""
 "KMail is now based on the Akonadi Personal Information Management framework, "
 "which brings many changes all around."
 msgstr ""
+"KMail מבוסס מעתה על תשתית ניהול המידע האישי Akonadi, שמביאה איתהשינויים "
+"גורפים."
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
@@ -6222,13 +6224,13 @@ msgid "Jump to original folder"
 msgstr "קפיצה לתיקייה המקורית"
 
 #: searchdialog/searchwindow.cpp:294
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
-msgstr[0] "%1 התאמה"
-msgstr[1] "%1 התאמות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "תוצאה"
+msgstr[1] "שתי תוצאות"
+msgstr[2] "%1 תוצאות"
+msgstr[3] "%1 תוצאות"
 
 #: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
@@ -6298,6 +6300,8 @@ msgid ""
 "that another search folder with the same name already exists. Error returned "
 "\"%1\"."
 msgstr ""
+"אירעה תקלה בשינוי שם תיקיית החיפוש שלך. הסיבה הנפוצה לכך היא שתיקיית חיפוש "
+"אחרת באותו השם כבר קיים. השגיאה שדווחה היא „%1”."
 
 #: searchdialog/searchwindow.cpp:779
 #, kde-format
