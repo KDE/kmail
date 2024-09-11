@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-10 00:39+0000\n"
+"POT-Creation-Date: 2024-09-11 00:39+0000\n"
 "PO-Revision-Date: 2024-06-05 07:03\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -1519,7 +1519,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Дадаць"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3422,30 +3422,30 @@ msgstr "Выява"
 msgid "Activities"
 msgstr "Зняць адзнаку \"важнае\""
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr ""
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr ""
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr ""
 
-#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr ""
 
-#: identity/identitydialog.cpp:920
+#: identity/identitydialog.cpp:919
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3454,14 +3454,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:929
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:936
+#: identity/identitydialog.cpp:935
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3470,43 +3470,43 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:955
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr ""
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, kde-format
 msgid "The signature file is not valid"
 msgstr ""
 
-#: identity/identitydialog.cpp:986
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr ""
 
-#: identity/identitydialog.cpp:1055
+#: identity/identitydialog.cpp:1054
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
 
-#: identity/identitydialog.cpp:1282
+#: identity/identitydialog.cpp:1283
 #, kde-format
 msgid "Create…"
 msgstr "Стварыць…"
 
-#: identity/identitydialog.cpp:1284
+#: identity/identitydialog.cpp:1285
 #, kde-format
 msgid "Edit…"
 msgstr "Рэдагаванне…"
@@ -3581,12 +3581,12 @@ msgstr ""
 msgid "Email Address"
 msgstr "Адрас электроннай пошты"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:226
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 
-#: identity/identitypage.cpp:224
+#: identity/identitypage.cpp:229
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3595,7 +3595,7 @@ msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:232
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3604,34 +3604,34 @@ msgstr[1] "Выдаліць асабістыя даныя"
 msgstr[2] "Выдаліць асабістыя даныя"
 msgstr[3] "Выдаліць асабістыя даныя"
 
-#: identity/identitypage.cpp:228
+#: identity/identitypage.cpp:233
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Выдаліць"
 
-#: identity/identitypage.cpp:279
+#: identity/identitypage.cpp:284
 #, fuzzy, kde-format
 #| msgid "Add…"
 msgctxt "@action"
 msgid "Add…"
 msgstr "Дадаць…"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:286
 #, fuzzy, kde-format
 #| msgid "Modify…"
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Змяніць…"
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Змяніць назву"
 
-#: identity/identitypage.cpp:288
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

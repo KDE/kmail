@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-10 00:39+0000\n"
+"POT-Creation-Date: 2024-09-11 00:39+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -1700,7 +1700,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Dodaj"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3822,25 +3822,25 @@ msgstr "Slika"
 msgid "Activities"
 msgstr "Aktiviraj"
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Pogrešan alias e-maila \"%1\""
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "&Koristi obične šablone poruka za ovaj identitet"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Email adresa:"
 
-#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3848,7 +3848,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Pogrešna e-mail adresa"
 
-#: identity/identitydialog.cpp:920
+#: identity/identitydialog.cpp:919
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3861,7 +3861,7 @@ msgstr ""
 "Ovo može rezultirati porukama upozorenja na strani primatelja kada pokuša "
 "provjeriti potpise napravljene ovom konfiguracijom."
 
-#: identity/identitydialog.cpp:929
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3870,7 +3870,7 @@ msgstr ""
 "Jedan od podešenih OpenPGP ključeva za šifrovanje ne sadrži ID korisnika sa "
 "podešenom e-mail adresom za ovaj identitet (%1)."
 
-#: identity/identitydialog.cpp:936
+#: identity/identitydialog.cpp:935
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3883,7 +3883,7 @@ msgstr ""
 "Ovo može rezultirati porukama upozorenja na strani primatelja kada pokuša "
 "provjeriti potpise napravljene ovom konfiguracijom."
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3892,26 +3892,26 @@ msgstr ""
 "Jedan od podešenih S/MIME ključeva za šifrovanje ne sadrži ID korisnika sa "
 "podešenom e-mail adresom za ovaj identitet (%1)."
 
-#: identity/identitydialog.cpp:955
+#: identity/identitydialog.cpp:954
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mail adresa nije pronađena u ključu/certifikatu"
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Datoteka potpisa nije ispravan"
 
-#: identity/identitydialog.cpp:986
+#: identity/identitydialog.cpp:985
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Izmijeni identitet \"%1\""
 
-#: identity/identitydialog.cpp:1055
+#: identity/identitydialog.cpp:1054
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3923,13 +3923,13 @@ msgstr ""
 "Vlastiti fascikl nacrta za identitet \"%1\" (više) ne postoji. Stoga će biti "
 "korišten uobičajeni fascikl za nacrte."
 
-#: identity/identitydialog.cpp:1282
+#: identity/identitydialog.cpp:1283
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Kreiraj..."
 
-#: identity/identitydialog.cpp:1284
+#: identity/identitydialog.cpp:1285
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -4010,14 +4010,14 @@ msgstr "Naziv identiteta"
 msgid "Email Address"
 msgstr "Email adresa:"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:226
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Da li stvarno želite pobrisati identitet pod imenom <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:224
+#: identity/identitypage.cpp:229
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4029,7 +4029,7 @@ msgstr[1] ""
 msgstr[2] ""
 "<qt>Da li stvarno želite pobrisati identitet pod imenom <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4038,34 +4038,34 @@ msgstr[0] "Ukloni identitet"
 msgstr[1] "Ukloni identitet"
 msgstr[2] "Ukloni identitet"
 
-#: identity/identitypage.cpp:228
+#: identity/identitypage.cpp:233
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Ukloni"
 
-#: identity/identitypage.cpp:279
+#: identity/identitypage.cpp:284
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:286
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Izmijeni..."
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: identity/identitypage.cpp:288
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

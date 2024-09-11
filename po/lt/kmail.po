@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-10 00:39+0000\n"
+"POT-Creation-Date: 2024-09-11 00:39+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -1624,7 +1624,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Pridėti"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3725,25 +3725,25 @@ msgstr "Paveikslėlis"
 msgid "Activities"
 msgstr "Aktyvuoti"
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Neteisinga el. pašto alternatyva „%1“"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "Naudoti savadarbį laiško šabloną šiai tapatybei"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "El. pašto adresas"
 
-#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3751,7 +3751,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Neteisingas el. pašto adresas"
 
-#: identity/identitydialog.cpp:920
+#: identity/identitydialog.cpp:919
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3764,7 +3764,7 @@ msgstr ""
 "Dėl šio neatitikimo gavėjo pusėje gali būti rodomi perspėjimo pranešimai, "
 "nes bus bandoma patikrinti parašus, padarytus su šia konfigūracija."
 
-#: identity/identitydialog.cpp:929
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3773,7 +3773,7 @@ msgstr ""
 "Vienas iš konfigūruotų OpenPGP šifravimo raktų neturi jokio naudotojo ID su "
 "šiai tapatybei konfigūruotu el. pašto adresu (%1)."
 
-#: identity/identitydialog.cpp:936
+#: identity/identitydialog.cpp:935
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3786,7 +3786,7 @@ msgstr ""
 " Dėl šio neatitikimo gavėjo pusėje gali būti rodomi perspėjimo pranešimai, "
 "nes bus bandoma patikrinti parašus, padarytus su šia konfigūracija."
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3795,26 +3795,26 @@ msgstr ""
 "Vienas iš konfigūruotų S/MIME šifravimo liudijimų neturi jokio šiai "
 "tapatybei konfigūruoto el. pašto adreso (%1)"
 
-#: identity/identitydialog.cpp:955
+#: identity/identitydialog.cpp:954
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "El. pašto adresas nerastas tarp raktų/liudijimų"
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Parašo failas neteisingas"
 
-#: identity/identitydialog.cpp:986
+#: identity/identitydialog.cpp:985
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Redaguoti tapatybę „%1“"
 
-#: identity/identitydialog.cpp:1055
+#: identity/identitydialog.cpp:1054
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3826,13 +3826,13 @@ msgstr ""
 "Tapatybės „%1“ parinkto juodraščių aplanko nėra (arba, jau nebėra). Todėl "
 "bus naudojamas numatytasis juodraščių aplankas."
 
-#: identity/identitydialog.cpp:1282
+#: identity/identitydialog.cpp:1283
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Sukurti..."
 
-#: identity/identitydialog.cpp:1284
+#: identity/identitydialog.cpp:1285
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -3913,13 +3913,13 @@ msgstr "Tapatybės vardas"
 msgid "Email Address"
 msgstr "El. pašto adresas"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:226
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Ar tikrai norite pašalinti tapatybę vardu <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:224
+#: identity/identitypage.cpp:229
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3929,7 +3929,7 @@ msgstr[1] "<qt>Ar tikrai norite pašalinti tapatybę vardu <b>%1</b>?</qt>"
 msgstr[2] "<qt>Ar tikrai norite pašalinti tapatybę vardu <b>%1</b>?</qt>"
 msgstr[3] "<qt>Ar tikrai norite pašalinti tapatybę vardu <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3939,34 +3939,34 @@ msgstr[1] "Šalinti tapatybę"
 msgstr[2] "Šalinti tapatybę"
 msgstr[3] "Šalinti tapatybę"
 
-#: identity/identitypage.cpp:228
+#: identity/identitypage.cpp:233
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Pašalinti"
 
-#: identity/identitypage.cpp:279
+#: identity/identitypage.cpp:284
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:286
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Keisti..."
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Pervadinti"
 
-#: identity/identitypage.cpp:288
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

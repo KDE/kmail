@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-10 00:39+0000\n"
+"POT-Creation-Date: 2024-09-11 00:39+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1709,7 +1709,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "&افزودن...‌"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3875,26 +3875,26 @@ msgstr "عکس"
 msgid "Activities"
 msgstr "پیام مهم"
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:848
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "نشانی رایانامه‌ای نامعتبر"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates"
 msgid "You must provide an email for this identity."
 msgstr "&استفاده از قالبهای پیام سفارشی‌"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "نشانی رایانامه"
 
-#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3902,7 +3902,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "نشانی رایانامه‌ای نامعتبر"
 
-#: identity/identitydialog.cpp:920
+#: identity/identitydialog.cpp:919
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3915,7 +3915,7 @@ msgstr ""
 "هنگامی که سعی می‌کنید امضاهایی که با این پیکربندی ساخته‌شده‌اند را تغییر دهید، "
 "ممکن است منجر به پیامهای خطا در سمت دریافت بشود."
 
-#: identity/identitydialog.cpp:929
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3924,7 +3924,7 @@ msgstr ""
 "یکی از کلیدهای پیکربندی‌شده رمز‌بندی OpenPGP، حاوی شناسه کاربر دارای نشانی "
 "رایانامه پیکربندی‌شده برای این هویت )%1( نیست."
 
-#: identity/identitydialog.cpp:936
+#: identity/identitydialog.cpp:935
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3937,7 +3937,7 @@ msgstr ""
 "هنگامی که سعی می‌کنید امضاها را با این پیکربندی تغییر دهید، ممکن است منجر به "
 "پیامهای اخطار در سمت دریافت شود."
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3946,26 +3946,26 @@ msgstr ""
 "یکی از گواهی‌نامه‌های پیکربندی‌شده رمز‌بندی S/مایم، حاوی نشانی رایانامه "
 "پیکربندی‌شده برای این هویت )%1( نمی‌باشد."
 
-#: identity/identitydialog.cpp:955
+#: identity/identitydialog.cpp:954
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "نشانی رایانامه‌ای در کلید/گواهی‌نامه‌ها یافت نشد"
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "پرونده امضا معتبر نیست"
 
-#: identity/identitydialog.cpp:986
+#: identity/identitydialog.cpp:985
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "ویرایش هویت »%1«"
 
-#: identity/identitydialog.cpp:1055
+#: identity/identitydialog.cpp:1054
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3977,13 +3977,13 @@ msgstr ""
 "پوشه سفارشی پیش‌نویسها برای هویت »%1« )دیگر( موجود نیست؛ بنابراین، از پوشه "
 "پیش‌فرض پیش‌نویسها استفاده می‌شود."
 
-#: identity/identitydialog.cpp:1282
+#: identity/identitydialog.cpp:1283
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "تغییر نام..."
 
-#: identity/identitydialog.cpp:1284
+#: identity/identitydialog.cpp:1285
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"
@@ -4068,13 +4068,13 @@ msgstr "نام هویت"
 msgid "Email Address"
 msgstr "نشانی رایانامه"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:226
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: identity/identitypage.cpp:224
+#: identity/identitypage.cpp:229
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4082,7 +4082,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 msgstr[1] ""
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4090,34 +4090,34 @@ msgid_plural "Remove Identities"
 msgstr[0] "حذف هویت"
 msgstr[1] ""
 
-#: identity/identitypage.cpp:228
+#: identity/identitypage.cpp:233
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&حذف‌"
 
-#: identity/identitypage.cpp:279
+#: identity/identitypage.cpp:284
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:286
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "تغییر..."
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:287
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&تغییر نام‌"
 
-#: identity/identitypage.cpp:288
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

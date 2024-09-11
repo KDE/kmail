@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-10 00:39+0000\n"
-"PO-Revision-Date: 2024-09-09 19:04+0300\n"
+"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"PO-Revision-Date: 2024-09-10 06:52+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1538,7 +1538,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "הוספה"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:284
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3470,30 +3470,30 @@ msgstr "תמונה"
 msgid "Activities"
 msgstr "פעילויות פלזמה"
 
-#: identity/identitydialog.cpp:849
+#: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "כינוי הדוא״ל „%1” שגוי"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "חובה לציין דוא״ל לזהות הזאת."
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:856
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "כתובת דוא״ל ריקה"
 
-#: identity/identitydialog.cpp:862 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "כתובת דוא״ל שגויה"
 
-#: identity/identitydialog.cpp:920
+#: identity/identitydialog.cpp:919
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3502,14 +3502,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:929
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:936
+#: identity/identitydialog.cpp:935
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3518,31 +3518,31 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:945
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:955
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "כתובת הדוא״ל לא נמצאה במפתח/אישורים"
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "קובץ החתימה לא תקף"
 
-#: identity/identitydialog.cpp:986
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "עריכת הזהות „%1”"
 
-#: identity/identitydialog.cpp:1055
+#: identity/identitydialog.cpp:1054
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3551,12 +3551,12 @@ msgstr ""
 "תיקיית הטיוטות המותאמת אישית עבור הזהות \"%1\" אינה קיימת (עוד). לכן, ייעשה "
 "שימוש בתיקיית הטיוטות המוגדרת כברירת מחדל."
 
-#: identity/identitydialog.cpp:1282
+#: identity/identitydialog.cpp:1283
 #, kde-format
 msgid "Create…"
 msgstr "יצירה…"
 
-#: identity/identitydialog.cpp:1284
+#: identity/identitydialog.cpp:1285
 #, kde-format
 msgid "Edit…"
 msgstr "עריכה…"
@@ -3631,12 +3631,12 @@ msgstr "שם הזהות"
 msgid "Email Address"
 msgstr "כתובת דוא״ל"
 
-#: identity/identitypage.cpp:221
+#: identity/identitypage.cpp:226
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>להסיר את הזהות בשם <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:224
+#: identity/identitypage.cpp:229
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3645,7 +3645,7 @@ msgstr[1] "להסיר את שתי הזהויות האלה?"
 msgstr[2] "להסיר את %1 הזהויות האלה?"
 msgstr[3] "להסיר את %1 הזהויות האלה?"
 
-#: identity/identitypage.cpp:227
+#: identity/identitypage.cpp:232
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3654,31 +3654,31 @@ msgstr[1] "הסרת זהויות"
 msgstr[2] "הסרת זהויות"
 msgstr[3] "הסרת זהויות"
 
-#: identity/identitypage.cpp:228
+#: identity/identitypage.cpp:233
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "ה&סרה"
 
-#: identity/identitypage.cpp:279
+#: identity/identitypage.cpp:284
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "הוספה…"
 
-#: identity/identitypage.cpp:281
+#: identity/identitypage.cpp:286
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "עריכה…"
 
-#: identity/identitypage.cpp:282
+#: identity/identitypage.cpp:287
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "שינוי שם"
 
-#: identity/identitypage.cpp:288
+#: identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -4884,7 +4884,7 @@ msgstr "היסטוריית התראות…"
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr ""
+msgstr "יי&בוא מלקוח דוא״ל אחר…"
 
 #: kmmainwidget.cpp:3037
 #, kde-format
@@ -5722,6 +5722,8 @@ msgid ""
 "KMail is now based on the Akonadi Personal Information Management framework, "
 "which brings many changes all around."
 msgstr ""
+"KMail מבוסס מעתה על תשתית ניהול המידע האישי Akonadi, שמביאה איתהשינויים "
+"גורפים."
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
@@ -6303,13 +6305,13 @@ msgid "Jump to original folder"
 msgstr "קפיצה לתיקייה המקורית"
 
 #: searchdialog/searchwindow.cpp:294
-#, fuzzy, kde-format
+#, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
-msgstr[0] "%1 התאמה"
-msgstr[1] "%1 התאמות"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "תוצאה"
+msgstr[1] "שתי תוצאות"
+msgstr[2] "%1 תוצאות"
+msgstr[3] "%1 תוצאות"
 
 #: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
@@ -6379,6 +6381,8 @@ msgid ""
 "that another search folder with the same name already exists. Error returned "
 "\"%1\"."
 msgstr ""
+"אירעה תקלה בשינוי שם תיקיית החיפוש שלך. הסיבה הנפוצה לכך היא שתיקיית חיפוש "
+"אחרת באותו השם כבר קיים. השגיאה שדווחה היא „%1”."
 
 #: searchdialog/searchwindow.cpp:779
 #, kde-format
