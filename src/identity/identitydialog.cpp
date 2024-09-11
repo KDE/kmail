@@ -967,10 +967,6 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
             return;
         }
     }
-#if KMAIL_HAVE_ACTIVITY_SUPPORT
-    const PimCommonActivities::ActivitiesBaseManager::ActivitySettings settings = mConfigureActivitiesWidget->activitiesSettings();
-    // TODO
-#endif
     accept();
 }
 
