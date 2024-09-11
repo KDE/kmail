@@ -70,6 +70,7 @@ void KMailPluginEditorManagerInterface::initializePlugins()
             connect(interface, &MessageComposer::PluginEditorInterface::message, this, &KMailPluginEditorManagerInterface::message);
             connect(interface, &MessageComposer::PluginEditorInterface::errorMessage, this, &KMailPluginEditorManagerInterface::errorMessage);
             connect(interface, &MessageComposer::PluginEditorInterface::successMessage, this, &KMailPluginEditorManagerInterface::successMessage);
+            connect(interface, &MessageComposer::PluginEditorInterface::insertText, this, &KMailPluginEditorManagerInterface::insertText);
             mListPluginInterface.append(interface);
         }
     }
