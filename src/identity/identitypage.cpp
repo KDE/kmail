@@ -28,6 +28,11 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <QTreeWidgetItem>
 
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+#include "activities/activitiesmanager.h"
+#include "activities/identityactivities.h"
+#endif
+
 using namespace KMail;
 
 QString IdentityPage::helpAnchor() const
@@ -64,7 +69,8 @@ IdentityPage::IdentityPage(QWidget *parent)
     mIPage.identitiesOnCurrentActivity->setVisible(false);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     mIPage.identitiesOnCurrentActivity->setVisible(KMailSettings::self()->plasmaActivitySupport());
-    // mIPage.identitiesOnCurrentActivity->s
+    // TODO add identifyactivities support
+    // mIPage.mIdentityList->setIdentityManager(ActivitiesManager::self()->identityActivities());
 
 #endif
     load();
