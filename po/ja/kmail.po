@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"POT-Creation-Date: 2024-09-12 00:40+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1654,7 +1654,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "追加..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3853,14 +3853,14 @@ msgstr "メールアドレスが鍵/証明書の中に見つかりません"
 msgid "The signature file is not valid"
 msgstr "署名ファイルは無効です"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:981
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "個人情報 “%1” を編集"
 
-#: identity/identitydialog.cpp:1054
+#: identity/identitydialog.cpp:1050
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3873,13 +3873,13 @@ msgstr ""
 "の下書きフォルダを使用します。"
 
 # ACCELERATOR removed by translator
-#: identity/identitydialog.cpp:1283
+#: identity/identitydialog.cpp:1279
 #, fuzzy, kde-format
 #| msgid "Chang&e..."
 msgid "Create…"
 msgstr "変更..."
 
-#: identity/identitydialog.cpp:1285
+#: identity/identitydialog.cpp:1281
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -3961,53 +3961,53 @@ msgstr "個人情報名"
 msgid "Email Address"
 msgstr "メールアドレス"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
 
-#: identity/identitypage.cpp:229
+#: identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
 
-#: identity/identitypage.cpp:232
+#: identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "個人情報を削除"
 
-#: identity/identitypage.cpp:233
+#: identity/identitypage.cpp:239
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "削除(&R)"
 
-#: identity/identitypage.cpp:284
+#: identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:286
+#: identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "編集..."
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "名前変更(&R)"
 
-#: identity/identitypage.cpp:293
+#: identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"POT-Creation-Date: 2024-09-12 00:40+0000\n"
 "PO-Revision-Date: 2024-09-10 09:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -1556,7 +1556,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Додати"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3690,13 +3690,13 @@ msgstr "Електронну адресу не знайдено в ключах/
 msgid "The signature file is not valid"
 msgstr "Некоректний файл підпису"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:981
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Редагування профілю «%1»"
 
-#: identity/identitydialog.cpp:1054
+#: identity/identitydialog.cpp:1050
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3705,12 +3705,12 @@ msgstr ""
 "Якоїсь із нетипових тек профілю вже не існує. Тому буде використано типові "
 "теки."
 
-#: identity/identitydialog.cpp:1283
+#: identity/identitydialog.cpp:1279
 #, kde-format
 msgid "Create…"
 msgstr "Створити"
 
-#: identity/identitydialog.cpp:1285
+#: identity/identitydialog.cpp:1281
 #, kde-format
 msgid "Edit…"
 msgstr "Змінити…"
@@ -3785,12 +3785,12 @@ msgstr "Назва профілю"
 msgid "Email Address"
 msgstr "Адреса електронної пошти"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Ви справді хочете вилучити профіль із назвою <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:229
+#: identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3799,7 +3799,7 @@ msgstr[1] "Ви дійсно хочете вилучити ці %1 профіл�
 msgstr[2] "Ви дійсно хочете вилучити ці %1 профілів?"
 msgstr[3] "Ви дійсно хочете вилучити цей профіль?"
 
-#: identity/identitypage.cpp:232
+#: identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3808,31 +3808,31 @@ msgstr[1] "Вилучити профілі"
 msgstr[2] "Вилучити профілі"
 msgstr[3] "Вилучити профіль"
 
-#: identity/identitypage.cpp:233
+#: identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Ви&лучити"
 
-#: identity/identitypage.cpp:284
+#: identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Додати…"
 
-#: identity/identitypage.cpp:286
+#: identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Змінити…"
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Перейменувати"
 
-#: identity/identitypage.cpp:293
+#: identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"

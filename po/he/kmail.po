@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"POT-Creation-Date: 2024-09-12 00:40+0000\n"
 "PO-Revision-Date: 2024-09-10 06:52+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -1538,7 +1538,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "הוספה"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3536,13 +3536,13 @@ msgstr "כתובת הדוא״ל לא נמצאה במפתח/אישורים"
 msgid "The signature file is not valid"
 msgstr "קובץ החתימה לא תקף"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:981
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "עריכת הזהות „%1”"
 
-#: identity/identitydialog.cpp:1054
+#: identity/identitydialog.cpp:1050
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3551,12 +3551,12 @@ msgstr ""
 "תיקיית הטיוטות המותאמת אישית עבור הזהות \"%1\" אינה קיימת (עוד). לכן, ייעשה "
 "שימוש בתיקיית הטיוטות המוגדרת כברירת מחדל."
 
-#: identity/identitydialog.cpp:1283
+#: identity/identitydialog.cpp:1279
 #, kde-format
 msgid "Create…"
 msgstr "יצירה…"
 
-#: identity/identitydialog.cpp:1285
+#: identity/identitydialog.cpp:1281
 #, kde-format
 msgid "Edit…"
 msgstr "עריכה…"
@@ -3631,12 +3631,12 @@ msgstr "שם הזהות"
 msgid "Email Address"
 msgstr "כתובת דוא״ל"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>להסיר את הזהות בשם <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:229
+#: identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3645,7 +3645,7 @@ msgstr[1] "להסיר את שתי הזהויות האלה?"
 msgstr[2] "להסיר את %1 הזהויות האלה?"
 msgstr[3] "להסיר את %1 הזהויות האלה?"
 
-#: identity/identitypage.cpp:232
+#: identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3654,31 +3654,31 @@ msgstr[1] "הסרת זהויות"
 msgstr[2] "הסרת זהויות"
 msgstr[3] "הסרת זהויות"
 
-#: identity/identitypage.cpp:233
+#: identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "ה&סרה"
 
-#: identity/identitypage.cpp:284
+#: identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "הוספה…"
 
-#: identity/identitypage.cpp:286
+#: identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "עריכה…"
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "שינוי שם"
 
-#: identity/identitypage.cpp:293
+#: identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"POT-Creation-Date: 2024-09-12 00:40+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -1700,7 +1700,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "Dodaj"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3904,14 +3904,14 @@ msgstr "E-mail adresa nije pronađena u ključu/certifikatu"
 msgid "The signature file is not valid"
 msgstr "Datoteka potpisa nije ispravan"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:981
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Izmijeni identitet \"%1\""
 
-#: identity/identitydialog.cpp:1054
+#: identity/identitydialog.cpp:1050
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3923,13 +3923,13 @@ msgstr ""
 "Vlastiti fascikl nacrta za identitet \"%1\" (više) ne postoji. Stoga će biti "
 "korišten uobičajeni fascikl za nacrte."
 
-#: identity/identitydialog.cpp:1283
+#: identity/identitydialog.cpp:1279
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Kreiraj..."
 
-#: identity/identitydialog.cpp:1285
+#: identity/identitydialog.cpp:1281
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -4010,14 +4010,14 @@ msgstr "Naziv identiteta"
 msgid "Email Address"
 msgstr "Email adresa:"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Da li stvarno želite pobrisati identitet pod imenom <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:229
+#: identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4029,7 +4029,7 @@ msgstr[1] ""
 msgstr[2] ""
 "<qt>Da li stvarno želite pobrisati identitet pod imenom <b>%1</b>?</qt>"
 
-#: identity/identitypage.cpp:232
+#: identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4038,34 +4038,34 @@ msgstr[0] "Ukloni identitet"
 msgstr[1] "Ukloni identitet"
 msgstr[2] "Ukloni identitet"
 
-#: identity/identitypage.cpp:233
+#: identity/identitypage.cpp:239
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Ukloni"
 
-#: identity/identitypage.cpp:284
+#: identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:286
+#: identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Izmijeni..."
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: identity/identitypage.cpp:293
+#: identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

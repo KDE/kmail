@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"POT-Creation-Date: 2024-09-12 00:40+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -1696,7 +1696,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "&Афзудан..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3904,14 +3904,14 @@ msgstr "Адреси E-mail дар калид/сертификат ёфт наш
 msgid "The signature file is not valid"
 msgstr "Имзо таъхир карда шудааст."
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:981
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Тағйири ихтисос \"%1\""
 
-#: identity/identitydialog.cpp:1054
+#: identity/identitydialog.cpp:1050
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3923,13 +3923,13 @@ msgstr ""
 "Мизоҷон нақшаҳои папкаро барои ҳамони \"%1\"вуҷуд надорад(ягон вақт); Барои "
 "ин нақшаҳои зикр нагаштаи папка метавонад истифода бурда шавад."
 
-#: identity/identitydialog.cpp:1283
+#: identity/identitydialog.cpp:1279
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Тағйири ном..."
 
-#: identity/identitydialog.cpp:1285
+#: identity/identitydialog.cpp:1281
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Баромадан"
@@ -4009,13 +4009,13 @@ msgstr "Номи ихтисос"
 msgid "Email Address"
 msgstr "Адреси e-mail"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 
-#: identity/identitypage.cpp:229
+#: identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4023,7 +4023,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 msgstr[1] "<qt>Оё ҳақиқатан мехоҳед профили <b>%1</b>-ро ҳузф кунед?</qt>"
 
-#: identity/identitypage.cpp:232
+#: identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4031,33 +4031,33 @@ msgid_plural "Remove Identities"
 msgstr[0] "Ҳузфи профил"
 msgstr[1] "Ҳузфи профил"
 
-#: identity/identitypage.cpp:233
+#: identity/identitypage.cpp:239
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Ҳу&зф кардан"
 
-#: identity/identitypage.cpp:284
+#: identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:286
+#: identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Таъғир додан..."
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Таъғири ном"
 
-#: identity/identitypage.cpp:293
+#: identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

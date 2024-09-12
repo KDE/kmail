@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-11 00:39+0000\n"
+"POT-Creation-Date: 2024-09-12 00:40+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1724,7 +1724,7 @@ msgctxt "@action"
 msgid "Add"
 msgstr "थप्नुहोस्..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:289
+#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3973,14 +3973,14 @@ msgstr "कुञ्जी/प्रमाणपत्रमा इमेल ठ
 msgid "The signature file is not valid"
 msgstr "हस्ताक्षर फाइल वैध छैन"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:981
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "परिचय \"%1\" सम्पादन गर्नुहोस्"
 
-#: identity/identitydialog.cpp:1054
+#: identity/identitydialog.cpp:1050
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3992,13 +3992,13 @@ msgstr ""
 "परिचय \"%1\" का लागि अनुकूल ड्राफ्ट फोल्डर अवस्थित छैन (यसपछि); त्यसैले, पूर्वनिर्धारित "
 "ड्राफ्ट फोल्डर प्रयोग गरिन्छ ।"
 
-#: identity/identitydialog.cpp:1283
+#: identity/identitydialog.cpp:1279
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "पुन: नामकरण गर्नुहोस्..."
 
-#: identity/identitydialog.cpp:1285
+#: identity/identitydialog.cpp:1281
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "बाहिरिनुहोस्"
@@ -4082,13 +4082,13 @@ msgstr "परिचय नाम"
 msgid "Email Address"
 msgstr "इमेल ठेगाना"
 
-#: identity/identitypage.cpp:226
+#: identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: identity/identitypage.cpp:229
+#: identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4096,7 +4096,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 msgstr[1] "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: identity/identitypage.cpp:232
+#: identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4104,34 +4104,34 @@ msgid_plural "Remove Identities"
 msgstr[0] "परिचय हटाउनुहोस्"
 msgstr[1] "परिचय हटाउनुहोस्"
 
-#: identity/identitypage.cpp:233
+#: identity/identitypage.cpp:239
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "हटाउनुहोस्"
 
-#: identity/identitypage.cpp:284
+#: identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identitypage.cpp:286
+#: identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "परिमार्जन गर्नुहोस्..."
 
-#: identity/identitypage.cpp:287
+#: identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "पुन: नामकरण गर्नुहोस्"
 
-#: identity/identitypage.cpp:293
+#: identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
