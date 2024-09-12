@@ -9,8 +9,14 @@
 IdentityTreeNgWidget::IdentityTreeNgWidget(QWidget *parent)
     : KIdentityManagementWidgets::IdentityTreeView(parent)
 {
+    connect(this, &QTreeView::customContextMenuRequested, this, &IdentityTreeNgWidget::slotCustomContextMenuRequested);
 }
 
 IdentityTreeNgWidget::~IdentityTreeNgWidget() = default;
+
+void IdentityTreeNgWidget::slotCustomContextMenuRequested(const QPoint &pos)
+{
+    // TODO
+}
 
 #include "moc_identitytreengwidget.cpp"

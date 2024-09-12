@@ -15,4 +15,7 @@ class IdentityTreeNgWidget : public KIdentityManagementWidgets::IdentityTreeView
 public:
     explicit IdentityTreeNgWidget(QWidget *parent = nullptr);
     ~IdentityTreeNgWidget() override;
+
+private:
+    void slotCustomContextMenuRequested(const QPoint &pos);
 };
