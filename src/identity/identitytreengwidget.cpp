@@ -12,3 +12,5 @@ IdentityTreeNgWidget::IdentityTreeNgWidget(QWidget *parent)
 }
 
 IdentityTreeNgWidget::~IdentityTreeNgWidget() = default;
+
+#include "moc_identitytreengwidget.cpp"
