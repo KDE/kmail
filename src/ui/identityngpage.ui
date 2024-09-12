@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>IdentityNgPage</class>
+ <widget class="QWidget" name="IdentityNgPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>224</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QCheckBox" name="identitiesOnCurrentActivity">
+     <property name="text">
+      <string>Show only identity on current activity</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="KMail::IdentityTreeWidget" name="mIdentityList" native="true"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QPushButton" name="mButtonAdd">
+         <property name="toolTip">
+          <string>Add a new identity</string>
+         </property>
+         <property name="text">
+          <string>&amp;Add…</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="mModifyButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Modify the selected identity</string>
+         </property>
+         <property name="text">
+          <string>&amp;Modify…</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="mRenameButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Rename the selected identity</string>
+         </property>
+         <property name="text">
+          <string>&amp;Rename</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="mRemoveButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Remove the selected identity</string>
+         </property>
+         <property name="text">
+          <string>Remo&amp;ve</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KSeparator" name="kseparator"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="mSetAsDefaultButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="toolTip">
+          <string>Use the selected identity by default</string>
+         </property>
+         <property name="text">
+          <string>Set as &amp;Default</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KSeparator</class>
+   <extends>QFrame</extends>
+   <header>kseparator.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KMail::IdentityTreeWidget</class>
+   <extends>QWidget</extends>
+   <header>identity/identitytreewidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

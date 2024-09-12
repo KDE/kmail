@@ -101,6 +101,8 @@ target_sources(kmailprivate PRIVATE
 
     identity/identitytreengwidget.h
     identity/identitytreengwidget.cpp
+    identity/identityngpage.cpp
+    identity/identityngpage.h
 
     editor/kmcomposereditorng.cpp
     editor/encryptionstate.cpp
@@ -416,6 +418,7 @@ ki18n_wrap_ui(kmailprivate
     ui/incompleteindexdialog.ui
     ui/xfaceconfigurator.ui
     ui/encodedimagepicker.ui
+    ui/identityngpage.ui
 )
 
 # KCFG files. The main kmail.kcfg is configured by CMake and put
