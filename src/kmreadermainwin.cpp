@@ -90,7 +90,12 @@ void KMReaderMainWin::initKMReaderMainWin()
     setupAccel();
     setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
-    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Separate Reader Window")));
+
+    KConfigGroup grp(KMKernel::self()->config()->group(QStringLiteral("Separate Reader Window")));
+    setStateConfigGroup(grp.name());
+    applyMainWindowSettings(stateConfigGroup());
+    setAutoSaveSettings(grp, true);
+
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
@@ -866,7 +871,7 @@ void KMReaderMainWin::slotEditToolbars()
 void KMReaderMainWin::slotUpdateToolbars()
 {
     createGUI(QStringLiteral("kmreadermainwin.rc"));
-    applyMainWindowSettings(KConfigGroup(KMKernel::self()->config(), QStringLiteral("ReaderWindow")));
+    applyMainWindowSettings(stateConfigGroup());
 }
 
 #include "moc_kmreadermainwin.cpp"

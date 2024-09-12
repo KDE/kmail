@@ -531,8 +531,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     updateSignatureAndEncryptionStateIndicators();
 
-    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Composer")));
-
     mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
     mIdentityConnection = connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
@@ -580,6 +578,8 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mDummyComposer->globalPart()->setParentWidgetForGui(this);
 
     KConfigGroup grp(KMKernel::self()->config()->group(QStringLiteral("Composer")));
+    setStateConfigGroup(grp.name());
+    applyMainWindowSettings(stateConfigGroup());
     setAutoSaveSettings(grp, true);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, this, &KMComposerWin::slotTooManyRecipients);
 }
@@ -3952,7 +3952,7 @@ void KMComposerWin::slotEditToolbars()
 void KMComposerWin::slotUpdateToolbars()
 {
     createGUI(QStringLiteral("kmcomposerui.rc"));
-    applyMainWindowSettings(KMKernel::self()->config()->group(QStringLiteral("Composer")));
+    applyMainWindowSettings(stateConfigGroup());
 }
 
 void KMComposerWin::slotEditKeys()
