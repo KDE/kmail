@@ -98,6 +98,10 @@ target_sources(kmailprivate PRIVATE
     identity/identityaddvcarddialog.cpp
     identity/identityinvalidfolder.cpp
     identity/identityfolderrequester.cpp
+
+    identity/identitytreengwidget.h
+    identity/identitytreengwidget.cpp
+
     editor/kmcomposereditorng.cpp
     editor/encryptionstate.cpp
     editor/subjectlineeditwithautocorrection.cpp
@@ -235,6 +239,7 @@ target_sources(kmailprivate PRIVATE
     identity/identityaddvcarddialog.h
     identity/identityinvalidfolder.h
     identity/identityfolderrequester.h
+
     editor/kmcomposereditorng.h
     editor/composer.h
     editor/encryptionstate.h
