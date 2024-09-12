@@ -88,7 +88,7 @@ target_sources(kmailprivate PRIVATE
     searchdialog/searchwindow.cpp
     searchdialog/searchdescriptionattribute.cpp
     searchdialog/incompleteindexdialog.cpp
-    identity/identitylistview.cpp
+    identity/identitytreewidget.cpp
     identity/identitydialog.cpp
     identity/xfaceconfigurator.cpp
     identity/encodedimagepicker.cpp
@@ -225,7 +225,7 @@ target_sources(kmailprivate PRIVATE
     searchdialog/searchwindow.h
     searchdialog/searchdescriptionattribute.h
     searchdialog/incompleteindexdialog.h
-    identity/identitylistview.h
+    identity/identitytreewidget.h
     identity/identitydialog.h
     identity/xfaceconfigurator.h
     identity/encodedimagepicker.h

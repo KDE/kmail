@@ -21,16 +21,16 @@ class IdentityManager;
 
 namespace KMail
 {
-class IdentityListView;
+class IdentityTreeWidget;
 
 /** @short A QWidgetTreeItem for use in IdentityListView
  *  @author Marc Mutz <mutz@kde.org>
  **/
-class IdentityListViewItem : public QTreeWidgetItem
+class IdentityTreeWidgetItem : public QTreeWidgetItem
 {
 public:
-    IdentityListViewItem(IdentityListView *parent, const KIdentityManagementCore::Identity &ident);
-    IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagementCore::Identity &ident);
+    IdentityTreeWidgetItem(IdentityTreeWidget *parent, const KIdentityManagementCore::Identity &ident);
+    IdentityTreeWidgetItem(IdentityTreeWidget *parent, QTreeWidgetItem *after, const KIdentityManagementCore::Identity &ident);
 
     [[nodiscard]] uint uoid() const;
 
@@ -46,12 +46,12 @@ private:
 /** @short A QTreeWidget for KIdentityManagementCore::Identity
  * @author Marc Mutz <mutz@kde.org>
  **/
-class IdentityListView : public QTreeWidget
+class IdentityTreeWidget : public QTreeWidget
 {
     Q_OBJECT
 public:
-    explicit IdentityListView(QWidget *parent = nullptr);
-    ~IdentityListView() override = default;
+    explicit IdentityTreeWidget(QWidget *parent = nullptr);
+    ~IdentityTreeWidget() override = default;
 
 public:
     void editItem(QTreeWidgetItem *item, int column = 0);
@@ -62,8 +62,8 @@ protected Q_SLOTS:
     void commitData(QWidget *editor) override;
 
 Q_SIGNALS:
-    void contextMenu(KMail::IdentityListViewItem *, const QPoint &);
-    void rename(KMail::IdentityListViewItem *, const QString &);
+    void contextMenu(KMail::IdentityTreeWidgetItem *, const QPoint &);
+    void rename(KMail::IdentityTreeWidgetItem *, const QString &);
 
 protected:
 #ifndef QT_NO_DRAGANDDROP

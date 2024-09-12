@@ -54,11 +54,11 @@ IdentityPage::IdentityPage(QWidget *parent)
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityPage::slotIdentitySelectionChanged);
     connect(this, qOverload<bool>(&IdentityPage::changed), this, &IdentityPage::slotIdentitySelectionChanged);
     connect(mIPage.mIdentityList,
-            qOverload<KMail::IdentityListViewItem *, const QString &>(&IdentityListView::rename),
+            qOverload<KMail::IdentityTreeWidgetItem *, const QString &>(&IdentityTreeWidget::rename),
             this,
             &IdentityPage::slotRenameIdentityFromItem);
     connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityPage::slotModifyIdentity);
-    connect(mIPage.mIdentityList, &IdentityListView::contextMenu, this, &IdentityPage::slotContextMenu);
+    connect(mIPage.mIdentityList, &IdentityTreeWidget::contextMenu, this, &IdentityPage::slotContextMenu);
 
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityPage::slotModifyIdentity);
@@ -95,7 +95,7 @@ void IdentityPage::load()
     KIdentityManagementCore::IdentityManager::Iterator end(mIdentityManager->modifyEnd());
 
     for (KIdentityManagementCore::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
-        item = new IdentityListViewItem(mIPage.mIdentityList, item, *it);
+        item = new IdentityTreeWidgetItem(mIPage.mIdentityList, item, *it);
     }
     if (auto currentItem = mIPage.mIdentityList->currentItem()) {
         currentItem->setSelected(true);
@@ -165,9 +165,9 @@ void IdentityPage::slotNewIdentity()
 
         QTreeWidgetItem *newItem = nullptr;
         if (item) {
-            newItem = new IdentityListViewItem(mIPage.mIdentityList, mIPage.mIdentityList->itemAbove(item), newIdent);
+            newItem = new IdentityTreeWidgetItem(mIPage.mIdentityList, mIPage.mIdentityList->itemAbove(item), newIdent);
         } else {
-            newItem = new IdentityListViewItem(mIPage.mIdentityList, newIdent);
+            newItem = new IdentityTreeWidgetItem(mIPage.mIdentityList, newIdent);
         }
 
         mIPage.mIdentityList->selectionModel()->clearSelection();
@@ -184,9 +184,9 @@ void IdentityPage::slotModifyIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    IdentityListViewItem *item = nullptr;
+    IdentityTreeWidgetItem *item = nullptr;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
+        item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().first());
     }
     if (!item) {
         return;
@@ -216,11 +216,11 @@ void IdentityPage::slotRemoveIdentity()
 
     const int numberOfIdentity = mIPage.mIdentityList->selectedItems().count();
     QString identityName;
-    IdentityListViewItem *item = nullptr;
+    IdentityTreeWidgetItem *item = nullptr;
     const QList<QTreeWidgetItem *> selectedItems = mIPage.mIdentityList->selectedItems();
     if (numberOfIdentity == 1) {
         if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-            item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().at(0));
+            item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().at(0));
         }
         if (!item) {
             return;
@@ -239,7 +239,7 @@ void IdentityPage::slotRemoveIdentity()
                                            KGuiItem(i18nc("@action:button", "&Remove"), QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
         for (QTreeWidgetItem *selecteditem : selectedItems) {
-            auto identityItem = dynamic_cast<IdentityListViewItem *>(selecteditem);
+            auto identityItem = dynamic_cast<IdentityTreeWidgetItem *>(selecteditem);
             identityName = identityItem->identity().identityName();
             if (mIdentityManager->removeIdentity(identityName)) {
                 delete selecteditem;
@@ -269,7 +269,7 @@ void IdentityPage::slotRenameIdentity()
     mIPage.mIdentityList->editItem(item);
 }
 
-void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item, const QString &text)
+void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *item, const QString &text)
 {
     if (!item) {
         return;
@@ -284,7 +284,7 @@ void IdentityPage::slotRenameIdentityFromItem(KMail::IdentityListViewItem *item,
     item->redisplay();
 }
 
-void IdentityPage::slotContextMenu(IdentityListViewItem *item, const QPoint &pos)
+void IdentityPage::slotContextMenu(IdentityTreeWidgetItem *item, const QPoint &pos)
 {
     QMenu menu(this);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &IdentityPage::slotNewIdentity);
@@ -306,9 +306,9 @@ void IdentityPage::slotSetAsDefault()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    IdentityListViewItem *item = nullptr;
+    IdentityTreeWidgetItem *item = nullptr;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
+        item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().first());
     }
     if (!item) {
         return;
@@ -323,7 +323,7 @@ void IdentityPage::refreshList()
 {
     const int numberOfTopLevel(mIPage.mIdentityList->topLevelItemCount());
     for (int i = 0; i < numberOfTopLevel; ++i) {
-        auto item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->topLevelItem(i));
+        auto item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->topLevelItem(i));
         if (item) {
             item->redisplay();
         }
@@ -342,9 +342,9 @@ void IdentityPage::updateButtons()
     mIPage.mRemoveButton->setEnabled(numSelectedItems >= 1);
     mIPage.mModifyButton->setEnabled(numSelectedItems == 1);
     mIPage.mRenameButton->setEnabled(numSelectedItems == 1);
-    IdentityListViewItem *item = nullptr;
+    IdentityTreeWidgetItem *item = nullptr;
     if (numSelectedItems > 0) {
-        item = dynamic_cast<IdentityListViewItem *>(mIPage.mIdentityList->selectedItems().first());
+        item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().first());
     }
     const bool enableDefaultButton = (numSelectedItems == 1) && item && !item->identity().isDefault();
     mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);

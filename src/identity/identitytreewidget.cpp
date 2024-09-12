@@ -8,7 +8,7 @@
     SPDX-License-Identifier: GPL-2.0-only
 */
 
-#include "identitylistview.h"
+#include "identitytreewidget.h"
 
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
@@ -24,48 +24,48 @@
 using namespace KMail;
 //
 //
-// IdentityListViewItem
+// IdentityTreeWidgetItem
 //
 //
 
-IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, const KIdentityManagementCore::Identity &ident)
+IdentityTreeWidgetItem::IdentityTreeWidgetItem(IdentityTreeWidget *parent, const KIdentityManagementCore::Identity &ident)
     : QTreeWidgetItem(parent)
     , mUOID(ident.uoid())
 {
     init(ident);
 }
 
-IdentityListViewItem::IdentityListViewItem(IdentityListView *parent, QTreeWidgetItem *after, const KIdentityManagementCore::Identity &ident)
+IdentityTreeWidgetItem::IdentityTreeWidgetItem(IdentityTreeWidget *parent, QTreeWidgetItem *after, const KIdentityManagementCore::Identity &ident)
     : QTreeWidgetItem(parent, after)
     , mUOID(ident.uoid())
 {
     init(ident);
 }
 
-uint IdentityListViewItem::uoid() const
+uint IdentityTreeWidgetItem::uoid() const
 {
     return mUOID;
 }
 
-KIdentityManagementCore::Identity &IdentityListViewItem::identity() const
+KIdentityManagementCore::Identity &IdentityTreeWidgetItem::identity() const
 {
-    KIdentityManagementCore::IdentityManager *im = qobject_cast<IdentityListView *>(treeWidget())->identityManager();
+    KIdentityManagementCore::IdentityManager *im = qobject_cast<IdentityTreeWidget *>(treeWidget())->identityManager();
     Q_ASSERT(im);
     return im->modifyIdentityForUoid(mUOID);
 }
 
-void IdentityListViewItem::setIdentity(const KIdentityManagementCore::Identity &ident)
+void IdentityTreeWidgetItem::setIdentity(const KIdentityManagementCore::Identity &ident)
 {
     mUOID = ident.uoid();
     init(ident);
 }
 
-void IdentityListViewItem::redisplay()
+void IdentityTreeWidgetItem::redisplay()
 {
     init(identity());
 }
 
-void IdentityListViewItem::init(const KIdentityManagementCore::Identity &ident)
+void IdentityTreeWidgetItem::init(const KIdentityManagementCore::Identity &ident)
 {
     if (ident.isDefault()) {
         // Add "(Default)" to the end of the default identity's name:
@@ -90,11 +90,11 @@ void IdentityListViewItem::init(const KIdentityManagementCore::Identity &ident)
 
 //
 //
-// IdentityListView
+// IdentityTreeWidget
 //
 //
 
-IdentityListView::IdentityListView(QWidget *parent)
+IdentityTreeWidget::IdentityTreeWidget(QWidget *parent)
     : QTreeWidget(parent)
 {
 #ifndef QT_NO_DRAGANDDROP
@@ -113,13 +113,13 @@ IdentityListView::IdentityListView(QWidget *parent)
     setColumnWidth(0, 175);
 
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &IdentityListView::customContextMenuRequested, this, &IdentityListView::slotCustomContextMenuRequested);
+    connect(this, &IdentityTreeWidget::customContextMenuRequested, this, &IdentityTreeWidget::slotCustomContextMenuRequested);
 }
 
-void IdentityListView::editItem(QTreeWidgetItem *item, int column)
+void IdentityTreeWidget::editItem(QTreeWidgetItem *item, int column)
 {
     if (column == 0 && item) {
-        auto lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        auto lvItem = dynamic_cast<IdentityTreeWidgetItem *>(item);
         if (lvItem) {
             KIdentityManagementCore::Identity &ident = lvItem->identity();
             if (ident.isDefault()) {
@@ -134,25 +134,25 @@ void IdentityListView::editItem(QTreeWidgetItem *item, int column)
     }
 }
 
-void IdentityListView::commitData(QWidget *editor)
+void IdentityTreeWidget::commitData(QWidget *editor)
 {
     qCDebug(KMAIL_LOG) << "after editing";
 
     if (!selectedItems().isEmpty()) {
         auto edit = qobject_cast<QLineEdit *>(editor);
         if (edit) {
-            IdentityListViewItem *item = dynamic_cast<IdentityListViewItem *>(selectedItems().at(0));
+            IdentityTreeWidgetItem *item = dynamic_cast<IdentityTreeWidgetItem *>(selectedItems().at(0));
             const QString text = edit->text();
             Q_EMIT rename(item, text);
         }
     }
 }
 
-void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
+void IdentityTreeWidget::slotCustomContextMenuRequested(const QPoint &pos)
 {
     QTreeWidgetItem *item = itemAt(pos);
     if (item) {
-        auto lvItem = dynamic_cast<IdentityListViewItem *>(item);
+        auto lvItem = dynamic_cast<IdentityTreeWidgetItem *>(item);
         if (lvItem) {
             Q_EMIT contextMenu(lvItem, viewport()->mapToGlobal(pos));
         }
@@ -162,9 +162,9 @@ void IdentityListView::slotCustomContextMenuRequested(const QPoint &pos)
 }
 
 #ifndef QT_NO_DRAGANDDROP
-void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
+void IdentityTreeWidget::startDrag(Qt::DropActions /*supportedActions*/)
 {
-    auto item = dynamic_cast<IdentityListViewItem *>(currentItem());
+    auto item = dynamic_cast<IdentityTreeWidgetItem *>(currentItem());
     if (!item) {
         return;
     }
@@ -179,15 +179,15 @@ void IdentityListView::startDrag(Qt::DropActions /*supportedActions*/)
 
 #endif
 
-KIdentityManagementCore::IdentityManager *IdentityListView::identityManager() const
+KIdentityManagementCore::IdentityManager *IdentityTreeWidget::identityManager() const
 {
     Q_ASSERT(mIdentityManager);
     return mIdentityManager;
 }
 
-void IdentityListView::setIdentityManager(KIdentityManagementCore::IdentityManager *im)
+void IdentityTreeWidget::setIdentityManager(KIdentityManagementCore::IdentityManager *im)
 {
     mIdentityManager = im;
 }
 
-#include "moc_identitylistview.cpp"
+#include "moc_identitytreewidget.cpp"
