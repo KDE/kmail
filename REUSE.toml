@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "pim-sieve-editor"
+SPDX-PackageSupplier = "Montel Laurent <montel@kde.org>"
+SPDX-PackageDownloadLocation = "https://invent.kde.org/pim/pim-sieve-editor"
+
+[[annotations]]
+path = ["src/autotests/data/autocrypt/**", "src/autotests/**.mbox", "src/autotests/unittestenv/**", "agents/unifiedmailboxagent/autotests/**", "agents/sendlateragent/TODO", "ktnef/MAINTAINERS", "ktnef/src/AUTHORS", "src/HACKING", "MAINTAINERS", "readme-build-ftime.txt"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "none"
+SPDX-License-Identifier = "CC0-1.0"
