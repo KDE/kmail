@@ -16,7 +16,7 @@ IdentityTreeNgWidget::~IdentityTreeNgWidget() = default;
 
 void IdentityTreeNgWidget::slotCustomContextMenuRequested(const QPoint &pos)
 {
-    // TODO
+    Q_EMIT contextMenuRequested(pos);
 }
 
 #include "moc_identitytreengwidget.cpp"

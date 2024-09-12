@@ -16,6 +16,9 @@ public:
     explicit IdentityTreeNgWidget(QWidget *parent = nullptr);
     ~IdentityTreeNgWidget() override;
 
+Q_SIGNALS:
+    void contextMenuRequested(const QPoint &);
+
 private:
     void slotCustomContextMenuRequested(const QPoint &pos);
 };
