@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-12 00:40+0000\n"
+"POT-Creation-Date: 2024-09-13 00:40+0000\n"
 "PO-Revision-Date: 2024-09-11 21:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1383,7 +1383,8 @@ msgid "For&ward Subject Prefixes"
 msgstr "بادئات عنوان التّم&رير"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
+#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "أز&ل"
@@ -1529,7 +1530,8 @@ msgctxt "@action"
 msgid "Add"
 msgstr "أضف"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
+#: configuredialog/configuredialoglistview.cpp:57
+#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3675,30 +3677,12 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "لا تُلغ"
 
-#: identity/identitylistview.cpp:76
-#, kde-format
-msgctxt ""
-"%1: identity name. Used in the config dialog, section Identity, to indicate "
-"the default identity"
-msgid "%1 (Default)"
-msgstr "%1 (المبدئيّ)"
-
-#: identity/identitylistview.cpp:104
-#, kde-format
-msgid "Identity Name"
-msgstr "اسم الهويّة"
-
-#: identity/identitylistview.cpp:104
-#, kde-format
-msgid "Email Address"
-msgstr "عنوان البريد الإلكترونيّ"
-
-#: identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>أتريد حقًّا حذف الهويّة المسمَّاة <b>%1</b>؟</qt>"
 
-#: identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3709,7 +3693,7 @@ msgstr[3] "أتريد حقًّا حذف هذه  %1 الهويّات؟"
 msgstr[4] "أتريد حقًّا حذف هذه  %1 هوية؟"
 msgstr[5] "أتريد حقًّا حذف هذه  %1 هوية؟"
 
-#: identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3720,35 +3704,53 @@ msgstr[3] "أزل الهويّة"
 msgstr[4] "أزل الهويّة"
 msgstr[5] "أزل الهويّة"
 
-#: identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "أ&زل"
 
-#: identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "أضف…"
 
-#: identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "عدّل…"
 
-#: identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "أعد التّسمية"
 
-#: identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "اضبطها كمبدئيّة"
+
+#: identity/identitytreewidget.cpp:76
+#, kde-format
+msgctxt ""
+"%1: identity name. Used in the config dialog, section Identity, to indicate "
+"the default identity"
+msgid "%1 (Default)"
+msgstr "%1 (المبدئيّ)"
+
+#: identity/identitytreewidget.cpp:104
+#, kde-format
+msgid "Identity Name"
+msgstr "اسم الهويّة"
+
+#: identity/identitytreewidget.cpp:104
+#, kde-format
+msgid "Email Address"
+msgstr "عنوان البريد الإلكترونيّ"
 
 #: identity/newidentitydialog.cpp:38
 #, kde-format
@@ -6927,61 +6929,61 @@ msgid "Set from Address Book"
 msgstr "عين من دفتر العناوين"
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
-#: ui/identitypage.ui:17
+#: ui/identityngpage.ui:17 ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
 msgstr "أظهر الهوية فقط في النشاط الحالي"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:31
+#: ui/identityngpage.ui:31 ui/identitypage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "أضف هويّة جديدة"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:34
+#: ui/identityngpage.ui:34 ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr "أ&ضف…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:44
+#: ui/identityngpage.ui:44 ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "عدّل الهويّة المحدّدة"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:47
+#: ui/identityngpage.ui:47 ui/identitypage.ui:47
 #, kde-format
 msgid "&Modify…"
 msgstr "&عدّل…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:57
+#: ui/identityngpage.ui:57 ui/identitypage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "أعد تسمية الهويّة المحدّدة"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:60
+#: ui/identityngpage.ui:60 ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "أعد التّ&سمية"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:70
+#: ui/identityngpage.ui:70 ui/identitypage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "أزل الهويّة المحدّدة"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:86
+#: ui/identityngpage.ui:86 ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "استخدم الهويّة المحدّدة مبدئيًّا"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:89
+#: ui/identityngpage.ui:89 ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "ا&ضبطها كمبدئيّة"

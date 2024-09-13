@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-12 00:40+0000\n"
+"POT-Creation-Date: 2024-09-13 00:40+0000\n"
 "PO-Revision-Date: 2024-08-21 00:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1373,7 +1373,8 @@ msgid "For&ward Subject Prefixes"
 msgstr "전달 제목 접두사(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
+#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "삭제(&V)"
@@ -1520,7 +1521,8 @@ msgctxt "@action"
 msgid "Add"
 msgstr "추가"
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
+#: configuredialog/configuredialoglistview.cpp:57
+#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3661,7 +3663,54 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "취소하지 않기"
 
-#: identity/identitylistview.cpp:76
+#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
+#, kde-format
+msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
+msgstr "<qt><b>%1</b> 프로필을 삭제하시겠습니까?</qt>"
+
+#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
+#, kde-format
+msgid "Do you really want to remove this %1 identity?"
+msgid_plural "Do you really want to remove these %1 identities?"
+msgstr[0] "프로필 %1개를 삭제하시겠습니까?"
+
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
+#, kde-format
+msgid "Remove Identity"
+msgid_plural "Remove Identities"
+msgstr[0] "프로필 삭제"
+
+#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
+#, kde-format
+msgctxt "@action:button"
+msgid "&Remove"
+msgstr "삭제(&R)"
+
+#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
+#, kde-format
+msgctxt "@action"
+msgid "Add…"
+msgstr "추가…"
+
+#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
+#, kde-format
+msgctxt "@action"
+msgid "Modify…"
+msgstr "수정…"
+
+#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
+#, kde-format
+msgctxt "@action"
+msgid "Rename"
+msgstr "이름 바꾸기"
+
+#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
+#, kde-format
+msgctxt "@action"
+msgid "Set as Default"
+msgstr "기본값으로 설정"
+
+#: identity/identitytreewidget.cpp:76
 #, kde-format
 msgctxt ""
 "%1: identity name. Used in the config dialog, section Identity, to indicate "
@@ -3669,62 +3718,15 @@ msgctxt ""
 msgid "%1 (Default)"
 msgstr "%1(기본값)"
 
-#: identity/identitylistview.cpp:104
+#: identity/identitytreewidget.cpp:104
 #, kde-format
 msgid "Identity Name"
 msgstr "프로필 이름"
 
-#: identity/identitylistview.cpp:104
+#: identity/identitytreewidget.cpp:104
 #, kde-format
 msgid "Email Address"
 msgstr "이메일 주소"
-
-#: identity/identitypage.cpp:232
-#, kde-format
-msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-msgstr "<qt><b>%1</b> 프로필을 삭제하시겠습니까?</qt>"
-
-#: identity/identitypage.cpp:235
-#, kde-format
-msgid "Do you really want to remove this %1 identity?"
-msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "프로필 %1개를 삭제하시겠습니까?"
-
-#: identity/identitypage.cpp:238
-#, kde-format
-msgid "Remove Identity"
-msgid_plural "Remove Identities"
-msgstr[0] "프로필 삭제"
-
-#: identity/identitypage.cpp:239
-#, kde-format
-msgctxt "@action:button"
-msgid "&Remove"
-msgstr "삭제(&R)"
-
-#: identity/identitypage.cpp:290
-#, kde-format
-msgctxt "@action"
-msgid "Add…"
-msgstr "추가…"
-
-#: identity/identitypage.cpp:292
-#, kde-format
-msgctxt "@action"
-msgid "Modify…"
-msgstr "수정…"
-
-#: identity/identitypage.cpp:293
-#, kde-format
-msgctxt "@action"
-msgid "Rename"
-msgstr "이름 바꾸기"
-
-#: identity/identitypage.cpp:299
-#, kde-format
-msgctxt "@action"
-msgid "Set as Default"
-msgstr "기본값으로 설정"
 
 #: identity/newidentitydialog.cpp:38
 #, kde-format
@@ -6832,61 +6834,61 @@ msgid "Set from Address Book"
 msgstr "주소록에서 선택"
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
-#: ui/identitypage.ui:17
+#: ui/identityngpage.ui:17 ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:31
+#: ui/identityngpage.ui:31 ui/identitypage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "새 프로필 추가"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:34
+#: ui/identityngpage.ui:34 ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr "추가(&A)…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:44
+#: ui/identityngpage.ui:44 ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "선택한 프로필 수정"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:47
+#: ui/identityngpage.ui:47 ui/identitypage.ui:47
 #, kde-format
 msgid "&Modify…"
 msgstr "수정(&M)…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:57
+#: ui/identityngpage.ui:57 ui/identitypage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "선택한 프로필 이름 바꾸기"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:60
+#: ui/identityngpage.ui:60 ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "이름 바꾸기(&R)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:70
+#: ui/identityngpage.ui:70 ui/identitypage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "선택한 프로필 삭제"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:86
+#: ui/identityngpage.ui:86 ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "선택한 프로필 기본값으로 사용"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:89
+#: ui/identityngpage.ui:89 ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "기본값으로 설정(&D)"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-12 00:40+0000\n"
+"POT-Creation-Date: 2024-09-13 00:40+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -1489,7 +1489,8 @@ msgid "For&ward Subject Prefixes"
 msgstr "転送の件名の接頭句(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identitypage.ui:73
+#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "削除(&V)"
@@ -1654,7 +1655,8 @@ msgctxt "@action"
 msgid "Add"
 msgstr "追加..."
 
-#: configuredialog/configuredialoglistview.cpp:57 identity/identitypage.cpp:295
+#: configuredialog/configuredialoglistview.cpp:57
+#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3943,7 +3945,60 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr ""
 
-#: identity/identitylistview.cpp:76
+#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
+#, kde-format
+msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
+msgstr "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
+
+#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
+#, fuzzy, kde-format
+#| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
+msgid "Do you really want to remove this %1 identity?"
+msgid_plural "Do you really want to remove these %1 identities?"
+msgstr[0] "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
+
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
+#, fuzzy, kde-format
+#| msgid "Remove Identity"
+msgid "Remove Identity"
+msgid_plural "Remove Identities"
+msgstr[0] "個人情報を削除"
+
+#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
+#, fuzzy, kde-format
+#| msgid "&Remove"
+msgctxt "@action:button"
+msgid "&Remove"
+msgstr "削除(&R)"
+
+#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
+#, kde-format
+msgctxt "@action"
+msgid "Add…"
+msgstr ""
+
+#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgctxt "@action"
+msgid "Modify…"
+msgstr "編集..."
+
+#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
+#, fuzzy, kde-format
+#| msgid "&Rename"
+msgctxt "@action"
+msgid "Rename"
+msgstr "名前変更(&R)"
+
+#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
+#, fuzzy, kde-format
+#| msgid "Set as Default"
+msgctxt "@action"
+msgid "Set as Default"
+msgstr "デフォルトにする"
+
+#: identity/identitytreewidget.cpp:76
 #, kde-format
 msgctxt ""
 "%1: identity name. Used in the config dialog, section Identity, to indicate "
@@ -3951,68 +4006,15 @@ msgctxt ""
 msgid "%1 (Default)"
 msgstr "%1 (デフォルト)"
 
-#: identity/identitylistview.cpp:104
+#: identity/identitytreewidget.cpp:104
 #, kde-format
 msgid "Identity Name"
 msgstr "個人情報名"
 
-#: identity/identitylistview.cpp:104
+#: identity/identitytreewidget.cpp:104
 #, kde-format
 msgid "Email Address"
 msgstr "メールアドレス"
-
-#: identity/identitypage.cpp:232
-#, kde-format
-msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-msgstr "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
-
-#: identity/identitypage.cpp:235
-#, fuzzy, kde-format
-#| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
-msgid "Do you really want to remove this %1 identity?"
-msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "<qt>本当に個人情報 “%1” を削除しますか？</qt>"
-
-#: identity/identitypage.cpp:238
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
-msgid "Remove Identity"
-msgid_plural "Remove Identities"
-msgstr[0] "個人情報を削除"
-
-#: identity/identitypage.cpp:239
-#, fuzzy, kde-format
-#| msgid "&Remove"
-msgctxt "@action:button"
-msgid "&Remove"
-msgstr "削除(&R)"
-
-#: identity/identitypage.cpp:290
-#, kde-format
-msgctxt "@action"
-msgid "Add…"
-msgstr ""
-
-#: identity/identitypage.cpp:292
-#, fuzzy, kde-format
-#| msgid "Modify..."
-msgctxt "@action"
-msgid "Modify…"
-msgstr "編集..."
-
-#: identity/identitypage.cpp:293
-#, fuzzy, kde-format
-#| msgid "&Rename"
-msgctxt "@action"
-msgid "Rename"
-msgstr "名前変更(&R)"
-
-#: identity/identitypage.cpp:299
-#, fuzzy, kde-format
-#| msgid "Set as Default"
-msgctxt "@action"
-msgid "Set as Default"
-msgstr "デフォルトにする"
 
 #: identity/newidentitydialog.cpp:38
 #, fuzzy, kde-format
@@ -7408,62 +7410,62 @@ msgid "Set from Address Book"
 msgstr "アドレス帳からセット"
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
-#: ui/identitypage.ui:17
+#: ui/identityngpage.ui:17 ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:31
+#: ui/identityngpage.ui:31 ui/identitypage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "新しい個人情報を追加します"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identitypage.ui:34
+#: ui/identityngpage.ui:34 ui/identitypage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:44
+#: ui/identityngpage.ui:44 ui/identitypage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "選択した個人情報を編集します"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identitypage.ui:47
+#: ui/identityngpage.ui:47 ui/identitypage.ui:47
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "&Modify…"
 msgstr "編集(&M)..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:57
+#: ui/identityngpage.ui:57 ui/identitypage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "選択した個人情報の名前を変更します"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identitypage.ui:60
+#: ui/identityngpage.ui:60 ui/identitypage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "名前変更(&R)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identitypage.ui:70
+#: ui/identityngpage.ui:70 ui/identitypage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "選択した個人情報を削除します"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:86
+#: ui/identityngpage.ui:86 ui/identitypage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "選択した個人情報をデフォルトで使います"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identitypage.ui:89
+#: ui/identityngpage.ui:89 ui/identitypage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "デフォルトにする(&F)"
