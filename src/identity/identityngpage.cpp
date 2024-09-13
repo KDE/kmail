@@ -95,19 +95,6 @@ void IdentityNgPage::load()
         return;
     }
     mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
-    // Fill the list:
-#if 0
-    mIPage.mIdentityList->clear();
-    QTreeWidgetItem *item = nullptr;
-    KIdentityManagementCore::IdentityManager::Iterator end(mIdentityManager->modifyEnd());
-
-    for (KIdentityManagementCore::IdentityManager::Iterator it = mIdentityManager->modifyBegin(); it != end; ++it) {
-        item = new IdentityTreeWidgetItem(mIPage.mIdentityList, item, *it);
-    }
-    if (auto currentItem = mIPage.mIdentityList->currentItem()) {
-        currentItem->setSelected(true);
-    }
-#endif
 }
 
 void IdentityNgPage::save()
@@ -158,7 +145,8 @@ void IdentityNgPage::slotNewIdentity()
             break;
         case NewIdentityDialog::Empty:
             mIdentityManager->newFromScratch(identityName);
-        default:;
+        default:
+            break;
         }
 
         //
@@ -191,16 +179,17 @@ void IdentityNgPage::slotNewIdentity()
 void IdentityNgPage::slotModifyIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
-#if 0
-
-    IdentityTreeWidgetItem *item = nullptr;
-    if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().first());
-    }
-    if (!item) {
+    if (!mIPage.mIdentityList->selectionModel()->hasSelection()) {
         return;
     }
+    const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+    if (!index.isValid()) {
+        return;
+    }
+    qDebug() << " index " << index;
+
     mIdentityDialog = new IdentityDialog(this);
+#if 0
     mIdentityDialog->setIdentity(item->identity());
 
     // Hmm, an unmodal dialog would be nicer, but a modal one is easier ;-)
@@ -221,8 +210,8 @@ void IdentityNgPage::slotRemoveIdentity()
     if (mIdentityManager->shadowIdentities().count() < 2) {
         qCritical() << "Attempted to remove the last identity!";
     }
+    const int numberOfIdentity = mIPage.mIdentityList->selectionModel()->selectedRows().count();
 #if 0
-    const int numberOfIdentity = mIPage.mIdentityList->selectedItems().count();
     QString identityName;
     IdentityTreeWidgetItem *item = nullptr;
     const QList<QTreeWidgetItem *> selectedItems = mIPage.mIdentityList->selectedItems();
@@ -300,13 +289,11 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
         if (mIPage.mIdentityList->model()->rowCount() > 1) {
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
-
-#if 0
-        if (!item->identity().isDefault()) {
+        const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
+        if (!modelIndex.data().toBool()) {
             menu.addSeparator();
             menu.addAction(i18nc("@action", "Set as Default"), this, &IdentityNgPage::slotSetAsDefault);
         }
-#endif
     }
     menu.exec(mIPage.mIdentityList->viewport()->mapToGlobal(pos));
 }
