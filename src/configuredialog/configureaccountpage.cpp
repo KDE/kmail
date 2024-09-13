@@ -19,6 +19,7 @@ using namespace Qt::Literals::StringLiterals;
 using MailTransport::TransportManagementWidgetNg;
 #include <MailCommon/MailUtil>
 
+#include "identity/identityngpage.h"
 #include "identity/identitypage.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
@@ -53,6 +54,10 @@ AccountsPage::AccountsPage(QObject *parent, const KPluginMetaData &data)
     // Identity Tab:
     auto identityTab = new KMail::IdentityPage();
     addTab(identityTab, i18nc("@title:tab Tab page where the user configures identities", "Identities"));
+
+    // Identity Tab:
+    auto identityNgTab = new KMail::IdentityNgPage();
+    addTab(identityNgTab, QStringLiteral("Test identity ng"));
 
     //
     // "Receiving" tab:

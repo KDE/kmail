@@ -22,6 +22,7 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
+#include <KIdentityManagementCore/IdentityModel>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -52,15 +53,18 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
 #if 0
-    connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityNgPage::slotIdentitySelectionChanged);
-    connect(this, qOverload<bool>(&IdentityNgPage::changed), this, &IdentityNgPage::slotIdentitySelectionChanged);
     connect(mIPage.mIdentityList,
             qOverload<KMail::IdentityTreeWidgetItem *, const QString &>(&IdentityTreeWidget::rename),
             this,
             &IdentityNgPage::slotRenameIdentityFromItem);
-    connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityNgPage::slotModifyIdentity);
-
 #endif
+    connect(this, qOverload<bool>(&IdentityNgPage::changed), this, &IdentityNgPage::slotIdentitySelectionChanged);
+    connect(mIPage.mIdentityList, &QTreeView::doubleClicked, this, &IdentityNgPage::slotModifyIdentity);
+
+    connect(mIPage.mIdentityList->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this]() {
+        updateButtons();
+    });
+
     connect(mIPage.mIdentityList, &IdentityTreeNgWidget::contextMenuRequested, this, &IdentityNgPage::slotContextMenu);
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityNgPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityNgPage::slotModifyIdentity);
@@ -261,18 +265,12 @@ void IdentityNgPage::slotRemoveIdentity()
 void IdentityNgPage::slotRenameIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
-#if 0
-    QTreeWidgetItem *item = nullptr;
 
-    if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-        item = mIPage.mIdentityList->selectedItems().first();
-    }
-    if (!item) {
+    if (!mIPage.mIdentityList->selectionModel()->hasSelection()) {
         return;
     }
-
-    mIPage.mIdentityList->editItem(item);
-#endif
+    const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+    mIPage.mIdentityList->edit(index);
 }
 
 void IdentityNgPage::slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *item, const QString &text)
@@ -295,26 +293,34 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &IdentityNgPage::slotNewIdentity);
-#if 0
-    if (item) {
+    const QModelIndex index = mIPage.mIdentityList->indexAt(pos);
+    if (index.isValid()) {
         menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
         if (mIPage.mIdentityList->model()->rowCount() > 1) {
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
+
+#if 0
         if (!item->identity().isDefault()) {
             menu.addSeparator();
             menu.addAction(i18nc("@action", "Set as Default"), this, &IdentityNgPage::slotSetAsDefault);
         }
-    }
 #endif
-    menu.exec(pos);
+    }
+    menu.exec(mIPage.mIdentityList->viewport()->mapToGlobal(pos));
 }
 
 void IdentityNgPage::slotSetAsDefault()
 {
-#if 0
     Q_ASSERT(!mIdentityDialog);
+    if (!mIPage.mIdentityList->selectionModel()->hasSelection()) {
+        return;
+    }
+    const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+    const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::UoidRole);
+    mIdentityManager->setAsDefault(modelIndex.data().toInt());
+#if 0
 
     IdentityTreeWidgetItem *item = nullptr;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
@@ -326,8 +332,8 @@ void IdentityNgPage::slotSetAsDefault()
 
     mIdentityManager->setAsDefault(item->identity().uoid());
     refreshList();
-    mIPage.mSetAsDefaultButton->setEnabled(false);
 #endif
+    mIPage.mSetAsDefaultButton->setEnabled(false);
 }
 
 void IdentityNgPage::refreshList()
@@ -340,8 +346,8 @@ void IdentityNgPage::refreshList()
             item->redisplay();
         }
     }
-    save();
 #endif
+    save();
 }
 
 void IdentityNgPage::slotIdentitySelectionChanged()
@@ -355,14 +361,13 @@ void IdentityNgPage::updateButtons()
     mIPage.mRemoveButton->setEnabled(numSelectedItems >= 1);
     mIPage.mModifyButton->setEnabled(numSelectedItems == 1);
     mIPage.mRenameButton->setEnabled(numSelectedItems == 1);
-#if 0
-    IdentityTreeWidgetItem *item = nullptr;
+    bool enableDefaultButton = false;
     if (numSelectedItems > 0) {
-        item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().first());
+        const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+        const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
+        enableDefaultButton = modelIndex.data().toBool();
     }
-    const bool enableDefaultButton = (numSelectedItems == 1) && item && !item->identity().isDefault();
     mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
-#endif
 }
 
 #include "moc_identityngpage.cpp"
