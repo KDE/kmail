@@ -113,8 +113,7 @@ void IdentityNgPage::save()
     }
     mIdentityManager->sort();
     mIdentityManager->commit();
-#if 0
-    if (mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1) {
+    if (mOldNumberOfIdentities < 2 && mIPage.mIdentityList->model()->rowCount() > 1) {
         // have more than one identity, so better show the combo in the
         // composer now:
         int showHeaders = KMailSettings::self()->headers();
@@ -122,13 +121,12 @@ void IdentityNgPage::save()
         KMailSettings::self()->setHeaders(showHeaders);
     }
     // and now the reverse
-    if (mOldNumberOfIdentities > 1 && mIPage.mIdentityList->topLevelItemCount() < 2) {
+    if (mOldNumberOfIdentities > 1 && mIPage.mIdentityList->model()->rowCount() < 2) {
         // have only one identity, so remove the combo in the composer:
         int showHeaders = KMailSettings::self()->headers();
         showHeaders &= ~KMail::Composer::HDR_IDENTITY;
         KMailSettings::self()->setHeaders(showHeaders);
     }
-#endif
 }
 
 void IdentityNgPage::slotNewIdentity()
@@ -301,7 +299,7 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
     if (item) {
         menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
-        if (mIPage.mIdentityList->topLevelItemCount() > 1) {
+        if (mIPage.mIdentityList->model()->rowCount() > 1) {
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
         if (!item->identity().isDefault()) {
@@ -335,7 +333,7 @@ void IdentityNgPage::slotSetAsDefault()
 void IdentityNgPage::refreshList()
 {
 #if 0
-    const int numberOfTopLevel(mIPage.mIdentityList->topLevelItemCount());
+    const int numberOfTopLevel(mIPage.mIdentityList->model()->rowCount());
     for (int i = 0; i < numberOfTopLevel; ++i) {
         auto item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->topLevelItem(i));
         if (item) {
@@ -353,11 +351,11 @@ void IdentityNgPage::slotIdentitySelectionChanged()
 
 void IdentityNgPage::updateButtons()
 {
-#if 0
-    const int numSelectedItems = mIPage.mIdentityList->selectedItems().count();
+    const int numSelectedItems = mIPage.mIdentityList->selectionModel()->selectedRows().count();
     mIPage.mRemoveButton->setEnabled(numSelectedItems >= 1);
     mIPage.mModifyButton->setEnabled(numSelectedItems == 1);
     mIPage.mRenameButton->setEnabled(numSelectedItems == 1);
+#if 0
     IdentityTreeWidgetItem *item = nullptr;
     if (numSelectedItems > 0) {
         item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().first());
