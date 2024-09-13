@@ -23,6 +23,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
 #include <KIdentityManagementCore/IdentityModel>
+#include <KIdentityManagementCore/IdentityTreeSortProxyModel>
 
 #include <KLocalizedString>
 #include <KMessageBox>
@@ -351,7 +352,14 @@ void IdentityNgPage::updateButtons()
     bool enableDefaultButton = false;
     if (numSelectedItems > 0) {
         const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+        const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(index);
+        const QModelIndex modelIndex2 = mIPage.mIdentityList->model()->index(newModelIndex.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
+        qDebug() << " modelIndex2*************" << modelIndex2 << " newModelIndex.row() " << newModelIndex.row();
+
+        qDebug() << " index" << index
+                 << mIPage.mIdentityList->identityProxyModel()->mapToSource(index).data(KIdentityManagementCore::IdentityModel::DefaultRole).toBool();
         const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
+        qDebug() << " modelIndex" << modelIndex;
         enableDefaultButton = modelIndex.data().toBool();
     }
     mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
