@@ -50,7 +50,7 @@ private:
     /** connected to @p mIdentityList's renamed() signal. Validates the
       new name and sets it in the KIdentityManagementCore::IdentityManager */
     KMAIL_NO_EXPORT void slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *, const QString &);
-    KMAIL_NO_EXPORT void slotContextMenu(KMail::IdentityTreeWidgetItem *, const QPoint &);
+    KMAIL_NO_EXPORT void slotContextMenu(const QPoint &);
     KMAIL_NO_EXPORT void slotSetAsDefault();
     KMAIL_NO_EXPORT void slotIdentitySelectionChanged();
 

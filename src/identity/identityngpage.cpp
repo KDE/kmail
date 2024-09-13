@@ -14,6 +14,7 @@
 using namespace Qt::Literals::StringLiterals;
 
 #include "identitydialog.h"
+#include "identitytreengwidget.h"
 #include "newidentitydialog.h"
 #include "settings/kmailsettings.h"
 
@@ -58,14 +59,14 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
             this,
             &IdentityNgPage::slotRenameIdentityFromItem);
     connect(mIPage.mIdentityList, &QTreeWidget::itemDoubleClicked, this, &IdentityNgPage::slotModifyIdentity);
-    connect(mIPage.mIdentityList, &IdentityTreeWidget::contextMenu, this, &IdentityNgPage::slotContextMenu);
 
+#endif
+    connect(mIPage.mIdentityList, &IdentityTreeNgWidget::contextMenuRequested, this, &IdentityNgPage::slotContextMenu);
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityNgPage::slotNewIdentity);
     connect(mIPage.mModifyButton, &QPushButton::clicked, this, &IdentityNgPage::slotModifyIdentity);
     connect(mIPage.mRenameButton, &QPushButton::clicked, this, &IdentityNgPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityNgPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityNgPage::slotSetAsDefault);
-#endif
     // Identity
     mIPage.identitiesOnCurrentActivity->setVisible(false);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
@@ -89,9 +90,9 @@ void IdentityNgPage::load()
     if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
         return;
     }
-#if 0
     mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
     // Fill the list:
+#if 0
     mIPage.mIdentityList->clear();
     QTreeWidgetItem *item = nullptr;
     KIdentityManagementCore::IdentityManager::Iterator end(mIdentityManager->modifyEnd());
@@ -292,11 +293,11 @@ void IdentityNgPage::slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *i
 #endif
 }
 
-void IdentityNgPage::slotContextMenu(IdentityTreeWidgetItem *item, const QPoint &pos)
+void IdentityNgPage::slotContextMenu(const QPoint &pos)
 {
-#if 0
     QMenu menu(this);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &IdentityNgPage::slotNewIdentity);
+#if 0
     if (item) {
         menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
@@ -308,8 +309,8 @@ void IdentityNgPage::slotContextMenu(IdentityTreeWidgetItem *item, const QPoint 
             menu.addAction(i18nc("@action", "Set as Default"), this, &IdentityNgPage::slotSetAsDefault);
         }
     }
-    menu.exec(pos);
 #endif
+    menu.exec(pos);
 }
 
 void IdentityNgPage::slotSetAsDefault()
