@@ -21,7 +21,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="KMail::IdentityTreeWidget" name="mIdentityList" native="true"/>
+      <widget class="KMail::IdentityTreeNgWidget" name="mIdentityList" native="true"/>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -116,9 +116,9 @@
    <header>kseparator.h</header>
   </customwidget>
   <customwidget>
-   <class>KMail::IdentityTreeWidget</class>
+   <class>KMail::IdentityTreeNgWidget</class>
    <extends>QWidget</extends>
-   <header>identity/identitytreewidget.h</header>
+   <header>identity/identitytreengwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

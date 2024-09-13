@@ -50,7 +50,7 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
     connect(mIdentityManager, &KIdentityManagementCore::IdentityManager::needToReloadIdentitySettings, this, &IdentityNgPage::load);
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
-
+#if 0
     connect(mIPage.mIdentityList, &QTreeWidget::itemSelectionChanged, this, &IdentityNgPage::slotIdentitySelectionChanged);
     connect(this, qOverload<bool>(&IdentityNgPage::changed), this, &IdentityNgPage::slotIdentitySelectionChanged);
     connect(mIPage.mIdentityList,
@@ -65,6 +65,7 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
     connect(mIPage.mRenameButton, &QPushButton::clicked, this, &IdentityNgPage::slotRenameIdentity);
     connect(mIPage.mRemoveButton, &QPushButton::clicked, this, &IdentityNgPage::slotRemoveIdentity);
     connect(mIPage.mSetAsDefaultButton, &QPushButton::clicked, this, &IdentityNgPage::slotSetAsDefault);
+#endif
     // Identity
     mIPage.identitiesOnCurrentActivity->setVisible(false);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
@@ -88,6 +89,7 @@ void IdentityNgPage::load()
     if (!MailCommon::Kernel::self()->kernelIsRegistered()) {
         return;
     }
+#if 0
     mOldNumberOfIdentities = mIdentityManager->shadowIdentities().count();
     // Fill the list:
     mIPage.mIdentityList->clear();
@@ -100,6 +102,7 @@ void IdentityNgPage::load()
     if (auto currentItem = mIPage.mIdentityList->currentItem()) {
         currentItem->setSelected(true);
     }
+#endif
 }
 
 void IdentityNgPage::save()
@@ -109,7 +112,7 @@ void IdentityNgPage::save()
     }
     mIdentityManager->sort();
     mIdentityManager->commit();
-
+#if 0
     if (mOldNumberOfIdentities < 2 && mIPage.mIdentityList->topLevelItemCount() > 1) {
         // have more than one identity, so better show the combo in the
         // composer now:
@@ -124,6 +127,7 @@ void IdentityNgPage::save()
         showHeaders &= ~KMail::Composer::HDR_IDENTITY;
         KMailSettings::self()->setHeaders(showHeaders);
     }
+#endif
 }
 
 void IdentityNgPage::slotNewIdentity()
@@ -158,6 +162,7 @@ void IdentityNgPage::slotNewIdentity()
         // Insert into listview:
         //
         KIdentityManagementCore::Identity &newIdent = mIdentityManager->modifyIdentityForName(identityName);
+#if 0
         QTreeWidgetItem *item = nullptr;
         if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
             item = mIPage.mIdentityList->selectedItems().at(0);
@@ -174,7 +179,7 @@ void IdentityNgPage::slotNewIdentity()
         if (newItem) {
             newItem->setSelected(true);
         }
-
+#endif
         slotModifyIdentity();
         updateButtons();
     }
@@ -183,6 +188,7 @@ void IdentityNgPage::slotNewIdentity()
 void IdentityNgPage::slotModifyIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
+#if 0
 
     IdentityTreeWidgetItem *item = nullptr;
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
@@ -191,7 +197,6 @@ void IdentityNgPage::slotModifyIdentity()
     if (!item) {
         return;
     }
-
     mIdentityDialog = new IdentityDialog(this);
     mIdentityDialog->setIdentity(item->identity());
 
@@ -201,7 +206,7 @@ void IdentityNgPage::slotModifyIdentity()
         item->redisplay();
         save();
     }
-
+#endif
     delete mIdentityDialog;
     mIdentityDialog = nullptr;
 }
@@ -213,7 +218,7 @@ void IdentityNgPage::slotRemoveIdentity()
     if (mIdentityManager->shadowIdentities().count() < 2) {
         qCritical() << "Attempted to remove the last identity!";
     }
-
+#if 0
     const int numberOfIdentity = mIPage.mIdentityList->selectedItems().count();
     QString identityName;
     IdentityTreeWidgetItem *item = nullptr;
@@ -251,12 +256,13 @@ void IdentityNgPage::slotRemoveIdentity()
             updateButtons();
         }
     }
+#endif
 }
 
 void IdentityNgPage::slotRenameIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
-
+#if 0
     QTreeWidgetItem *item = nullptr;
 
     if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
@@ -267,6 +273,7 @@ void IdentityNgPage::slotRenameIdentity()
     }
 
     mIPage.mIdentityList->editItem(item);
+#endif
 }
 
 void IdentityNgPage::slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *item, const QString &text)
@@ -274,7 +281,7 @@ void IdentityNgPage::slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *i
     if (!item) {
         return;
     }
-
+#if 0
     const QString newName = text.trimmed();
     if (!newName.isEmpty() && !mIdentityManager->shadowIdentities().contains(newName)) {
         KIdentityManagementCore::Identity &ident = item->identity();
@@ -282,10 +289,12 @@ void IdentityNgPage::slotRenameIdentityFromItem(KMail::IdentityTreeWidgetItem *i
         save();
     }
     item->redisplay();
+#endif
 }
 
 void IdentityNgPage::slotContextMenu(IdentityTreeWidgetItem *item, const QPoint &pos)
 {
+#if 0
     QMenu menu(this);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &IdentityNgPage::slotNewIdentity);
     if (item) {
@@ -300,10 +309,12 @@ void IdentityNgPage::slotContextMenu(IdentityTreeWidgetItem *item, const QPoint 
         }
     }
     menu.exec(pos);
+#endif
 }
 
 void IdentityNgPage::slotSetAsDefault()
 {
+#if 0
     Q_ASSERT(!mIdentityDialog);
 
     IdentityTreeWidgetItem *item = nullptr;
@@ -317,10 +328,12 @@ void IdentityNgPage::slotSetAsDefault()
     mIdentityManager->setAsDefault(item->identity().uoid());
     refreshList();
     mIPage.mSetAsDefaultButton->setEnabled(false);
+#endif
 }
 
 void IdentityNgPage::refreshList()
 {
+#if 0
     const int numberOfTopLevel(mIPage.mIdentityList->topLevelItemCount());
     for (int i = 0; i < numberOfTopLevel; ++i) {
         auto item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->topLevelItem(i));
@@ -329,6 +342,7 @@ void IdentityNgPage::refreshList()
         }
     }
     save();
+#endif
 }
 
 void IdentityNgPage::slotIdentitySelectionChanged()
@@ -338,6 +352,7 @@ void IdentityNgPage::slotIdentitySelectionChanged()
 
 void IdentityNgPage::updateButtons()
 {
+#if 0
     const int numSelectedItems = mIPage.mIdentityList->selectedItems().count();
     mIPage.mRemoveButton->setEnabled(numSelectedItems >= 1);
     mIPage.mModifyButton->setEnabled(numSelectedItems == 1);
@@ -348,6 +363,7 @@ void IdentityNgPage::updateButtons()
     }
     const bool enableDefaultButton = (numSelectedItems == 1) && item && !item->identity().isDefault();
     mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
+#endif
 }
 
 #include "moc_identityngpage.cpp"
