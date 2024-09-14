@@ -23,6 +23,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
 #include <KIdentityManagementCore/IdentityModel>
+#include <KIdentityManagementCore/IdentityTreeModel>
 #include <KIdentityManagementCore/IdentityTreeSortProxyModel>
 
 #include <KLocalizedString>
@@ -243,6 +244,7 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
         if (mIPage.mIdentityList->model()->rowCount() > 1) {
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
+
         const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
         if (!modelIndex.data().toBool()) {
             menu.addSeparator();
@@ -283,14 +285,9 @@ void IdentityNgPage::updateButtons()
     bool enableDefaultButton = false;
     if (numSelectedItems > 0) {
         const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
-        const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(index);
-        qDebug() << "newModelIndex " << newModelIndex << " index " << index;
-        const QModelIndex modelIndex2 = mIPage.mIdentityList->model()->index(newModelIndex.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
-
-        qDebug() << " modelIndex2*************" << modelIndex2 << " newModelIndex.row() " << newModelIndex.row() << modelIndex2.data().toBool();
-
-        const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
-        enableDefaultButton = modelIndex.data().toBool();
+        const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+            mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DefaultRole));
+        enableDefaultButton = !newModelIndex.data().toBool();
     }
     mIPage.mSetAsDefaultButton->setEnabled(enableDefaultButton);
 }
