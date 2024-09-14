@@ -22,7 +22,6 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <KIdentityManagementCore/Identity>
 #include <KIdentityManagementCore/IdentityManager>
-#include <KIdentityManagementCore/IdentityModel>
 #include <KIdentityManagementCore/IdentityTreeModel>
 #include <KIdentityManagementCore/IdentityTreeSortProxyModel>
 
@@ -245,8 +244,10 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
 
-        const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::DefaultRole);
-        if (!modelIndex.data().toBool()) {
+        const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+        const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+            mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DefaultRole));
+        if (!newModelIndex.data().toBool()) {
             menu.addSeparator();
             menu.addAction(i18nc("@action", "Set as Default"), this, &IdentityNgPage::slotSetAsDefault);
         }
@@ -261,7 +262,9 @@ void IdentityNgPage::slotSetAsDefault()
         return;
     }
     const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
-    const QModelIndex modelIndex = mIPage.mIdentityList->model()->index(index.row(), KIdentityManagementCore::IdentityModel::UoidRole);
+    const QModelIndex modelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
+
     mIdentityManager->setAsDefault(modelIndex.data().toInt());
     mIPage.mSetAsDefaultButton->setEnabled(false);
 }
