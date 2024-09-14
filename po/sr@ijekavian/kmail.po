@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:40+0000\n"
+"POT-Creation-Date: 2024-09-14 00:41+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -606,52 +606,52 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Опције добављања"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Идентитети"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:66
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Примање"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:73
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Слање"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:79
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:94
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Одлазни налози (додајте бар један):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:105
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Пошаљи потврду"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:107
 #, fuzzy, kde-format
 #| msgid "Ask Before Sending"
 msgid "Before sending:"
 msgstr "Питај пре слања"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:109
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgctxt "@option:check"
@@ -659,64 +659,64 @@ msgid "Check spelling"
 msgstr "Провери правопис пре слања"
 
 # >> @item:inlistbox Send messages in outbox folder:
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Never Automatically"
 msgstr "никада аутоматски"
 
 # >> @item:inlistbox Send messages in outbox folder:
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "при ручним проверама поште"
 
 # >> @item:inlistbox Send messages in outbox folder:
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "при свим проверама поште"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Пошаљи &поруке из отпремне фасцикле:"
 
 # >> @item:inlistbox Default send method:
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Now"
 msgstr "пошаљи одмах"
 
 # >> @item:inlistbox Default send method:
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Later"
 msgstr "пошаљи касније"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Подраз&умевани начин слања:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:129
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:200
 #, fuzzy, kde-format
 #| msgid "Add Mail Account..."
 msgid "Add Mail Account…"
 msgstr "&Додај поштански налог..."
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "Custom Account..."
 msgid "Custom Account…"
 msgstr "Посебан налог..."
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:221
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -726,7 +726,7 @@ msgstr ""
 "Не могу да покренем чаробњак за налоге. Проверите да ли је чаробњак за "
 "налоге правилно инсталиран."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:223
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -734,26 +734,26 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Не могу да покренем чаробњак за налоге"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:271
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Укључи у ручну проверу поште"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:279
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Пребаци ван везе при гашењу К‑поште"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:286
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Провери пошту по покретању"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:333
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1738,7 +1738,7 @@ msgid "Add"
 msgstr "Додај"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:244 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -2062,7 +2062,7 @@ msgid "Show attachment list"
 msgstr "Прикажи списак прилога"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:97
-#: kmreadermainwin.cpp:474 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "К‑пошта 2"
@@ -2455,7 +2455,7 @@ msgstr "Направи подсетник на одговор..."
 msgid "Configure KMail…"
 msgstr "Подеси К‑пошту..."
 
-#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:222 kmreadermainwin.cpp:533
+#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:226 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2464,7 +2464,7 @@ msgstr ""
 "<qt>Ово ће потпуно сакрити траку менија. Можете је поново приказати "
 "притиском на %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:229
 #, fuzzy, kde-format
 #| msgid "Hide menu bar"
 msgctxt "@title:window"
@@ -4081,12 +4081,12 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr ""
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:199 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Желите ли заиста да уклоните идентитет <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:202 identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4097,7 +4097,7 @@ msgstr[2] "<qt>Желите ли заиста да уклоните иденти
 msgstr[3] "<qt>Желите ли заиста да уклоните идентитет <b>%1</b>?</qt>"
 
 # >> @title:window
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:205 identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4107,34 +4107,34 @@ msgstr[1] "Уклањање идентитета"
 msgstr[2] "Уклањање идентитета"
 msgstr[3] "Уклањање идентитета"
 
-#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:206 identity/identitypage.cpp:239
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Уклони"
 
-#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:241 identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Измени..."
 
-#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:242 identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Преименуј"
 
-#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:249 identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -5731,7 +5731,7 @@ msgstr "&Прати нит"
 msgid "&Ignore Thread"
 msgstr "&Игнориши нит"
 
-#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:485
+#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:490
 #, fuzzy, kde-format
 #| msgid "Save A&ttachments..."
 msgid "Save A&ttachments…"
@@ -6298,28 +6298,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Почињем..."
 
-#: kmreadermainwin.cpp:488 util.cpp:149
+#: kmreadermainwin.cpp:493 util.cpp:149
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Пре&мести у смеће"
 
-#: kmreadermainwin.cpp:489
+#: kmreadermainwin.cpp:494
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "У смеће"
 
-#: kmreadermainwin.cpp:490
+#: kmreadermainwin.cpp:495
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Премести поруку у смеће"
 
-#: kmreadermainwin.cpp:536
+#: kmreadermainwin.cpp:541
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Сакриј траку менија"
 
-#: kmreadermainwin.cpp:619
+#: kmreadermainwin.cpp:624
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Не могу да копирам ставку. %1"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:40+0000\n"
+"POT-Creation-Date: 2024-09-14 00:41+0000\n"
 "PO-Revision-Date: 2024-09-11 19:23+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -571,106 +571,106 @@ msgstr "(%1 %)"
 msgid "Retrieval Options"
 msgstr "Hämtningsalternativ"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Identiteter"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:66
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Ta emot"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:73
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Skicka"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:79
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP-server "
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:94
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Utgående konton (lägg till minst ett konto):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Bekräfta åtgärd"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:107
 #, kde-format
 msgid "Before sending:"
 msgstr "Innan brev skickas:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:109
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Kontrollera stavning"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Never Automatically"
 msgstr "Aldrig automatiskt"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Vid manuell postkontroll"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "Vid alla postkontroller"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Skicka &brev i utkorgen:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Now"
 msgstr "Skicka nu"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Later"
 msgstr "Skicka senare"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Fö&rvald metod för att skicka:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:129
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Aktivera ångring av skicka"
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:200
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "Lägg till e-postkonto…"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:201
 #, kde-format
 msgid "Custom Account…"
 msgstr "Eget konto…"
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:221
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -680,32 +680,32 @@ msgstr ""
 "Kunde inte starta kontoguiden. Försäkra dig om att kontoguiden är riktigt "
 "installerad."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:223
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Kan inte starta kontoguiden"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:271
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Inkludera i manuell brevkontroll"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:279
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Koppla ner när Kmail stängs av"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:286
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Titta efter nya brev vid start"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:333
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1545,7 +1545,7 @@ msgid "Add"
 msgstr "Lägg till"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:244 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -1837,7 +1837,7 @@ msgid "Show attachment list"
 msgstr "Visa lista med bilagor"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:97
-#: kmreadermainwin.cpp:474 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "Kmail 2"
@@ -2188,7 +2188,7 @@ msgstr "Skapa påminnelse om uppföljning…"
 msgid "Configure KMail…"
 msgstr "Anpassa Kmail…"
 
-#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:222 kmreadermainwin.cpp:533
+#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:226 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2197,7 +2197,7 @@ msgstr ""
 "<qt>Detta döljer menyraden fullständigt. Du kan visa den igen genom att "
 "skriva in %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:229
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -3715,50 +3715,50 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "Avbryt inte"
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:199 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Vill du verkligen ta bort identiteten med namnet <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:202 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Vill du verkligen ta bort %1 identitet?"
 msgstr[1] "Vill du verkligen ta bort de här %1 identiteterna?"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:205 identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Ta bort identitet"
 msgstr[1] "Ta bort identitet"
 
-#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:206 identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Ta bort"
 
-#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Lägg till…"
 
-#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:241 identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Ändra…"
 
-#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:242 identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Byt namn"
 
-#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:249 identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5206,7 +5206,7 @@ msgstr "&Bevaka tråd"
 msgid "&Ignore Thread"
 msgstr "&Ignorera tråd"
 
-#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:485
+#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:490
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Spara &bilagor…"
@@ -5716,28 +5716,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Startar…"
 
-#: kmreadermainwin.cpp:488 util.cpp:149
+#: kmreadermainwin.cpp:493 util.cpp:149
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Flytta till papperskor&g"
 
-#: kmreadermainwin.cpp:489
+#: kmreadermainwin.cpp:494
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Till papperskorg"
 
-#: kmreadermainwin.cpp:490
+#: kmreadermainwin.cpp:495
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Flytta brev till papperskorg"
 
-#: kmreadermainwin.cpp:536
+#: kmreadermainwin.cpp:541
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Dölj menyrad"
 
-#: kmreadermainwin.cpp:619
+#: kmreadermainwin.cpp:624
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Kan inte kopiera objekt. %1"

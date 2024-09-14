@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:40+0000\n"
+"POT-Creation-Date: 2024-09-14 00:41+0000\n"
 "PO-Revision-Date: 2024-09-07 20:34+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -584,106 +584,106 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "மீட்பு விருப்பங்கள்"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&அடையாளங்கள்"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:66
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "பெறுதல்"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:73
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "அனுப்புதல்"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:79
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP சேவையகம்"
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:94
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "அஞ்சலனுப்ப பயன்படும் கணக்குகள் (ஒன்றையாவது சேர்க்கவும்):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "செயலை &உறுதிப்படுத்து"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:107
 #, kde-format
 msgid "Before sending:"
 msgstr "அனுப்புவதற்கு முன்:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:109
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "எழுத்தாக்கத்தை சரிபார்"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Never Automatically"
 msgstr "ஒருபோதும் தானாக வேண்டாம்"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "கைமுறையாக அஞ்சலுள்ளதா என பார்க்கும்போது"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "அஞ்சலுள்ளதா என்று எப்போது பார்த்தாலும்"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "வெளிப்பெட்டி அடைவிலுள்ள &அஞ்சல்களை அனுப்புதல்:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Now"
 msgstr "உடனே அனுப்பு"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Later"
 msgstr "பின்னர் அனுப்பு"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "&இயல்பாக அனுப்பும் முறை:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:129
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "அனுப்பியவற்றை திரும்பப்பெற விடு"
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:200
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "அஞ்சல் கணக்கை சேர்…"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:201
 #, kde-format
 msgid "Custom Account…"
 msgstr "வேறுபட்ட கணக்கு…"
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:221
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -692,32 +692,32 @@ msgid ""
 msgstr ""
 "கணக்கு உதவிநிரலை துவக்க முடியவில்லை. அது சரியாக நிறுவப்பட்டுள்ளதா என பாருங்கள்."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:223
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "கணக்கு உதவிநிரலை துவக்க முடியவில்லை"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:271
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "அஞ்சலுள்ளதா என கைமுறையாக பார்க்கும்போது இதற்கும் பார்"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:279
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "கேமெயில் நிறுத்தப்படும்போது தொடர்பற்ற நிலைக்கு மாற்று"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:286
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "துவக்கும்போது அஞ்சலுள்ளதா என பார்"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:333
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1548,7 +1548,7 @@ msgid "Add"
 msgstr "சேர்"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:244 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -1838,7 +1838,7 @@ msgid "Show attachment list"
 msgstr "உடனிணைப்புகளின் பட்டியலை காட்டும்"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:97
-#: kmreadermainwin.cpp:474 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "கேமெயில் 2"
@@ -2192,7 +2192,7 @@ msgstr "பதிலளிக்குமாறு நினைவூட்ட�
 msgid "Configure KMail…"
 msgstr "கேமெயிலை அமை…"
 
-#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:222 kmreadermainwin.cpp:533
+#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:226 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2201,7 +2201,7 @@ msgstr ""
 "<qt>இது பட்டிப் பட்டையை முழுதாக மறைத்துவிடும். %1 என்பதை தட்டி நீங்கள் மறுபடியும் அதை "
 "காட்டலாம்.</qt>"
 
-#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:229
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -3659,51 +3659,51 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "ரத்து செய்யாதே"
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:199 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt><b>%1</b> என்ற பெயரை கொண்ட அடையாளத்தை உறுதியாக நீக்க விரும்புகிறீர்களா?</qt>"
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:202 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "இந்த %1 அடையாளத்தை உறுதியாக நீக்க விரும்புகிறீர்களா?"
 msgstr[1] "இந்த %1 அடையாளங்களை உறுதியாக நீக்க விரும்புகிறீர்களா?"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:205 identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "அடையாளத்தை நீக்குதல்"
 msgstr[1] "அடையாளங்களை நீக்குதல்"
 
-#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:206 identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&நீக்கு"
 
-#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "சேர்…"
 
-#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:241 identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "திருத்து…"
 
-#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:242 identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "மறுபெயரிடு"
 
-#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:249 identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5144,7 +5144,7 @@ msgstr "சார்ந்தவற்றை &கவனி"
 msgid "&Ignore Thread"
 msgstr "சார்ந்தவற்றை பொ&ருட்படுத்தாதே"
 
-#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:485
+#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:490
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "&உடனிணைப்புகளை சேமி…"
@@ -5654,28 +5654,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "துவங்குகிறது…"
 
-#: kmreadermainwin.cpp:488 util.cpp:149
+#: kmreadermainwin.cpp:493 util.cpp:149
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&அகற்றிடத்துக்கு நகர்த்து"
 
-#: kmreadermainwin.cpp:489
+#: kmreadermainwin.cpp:494
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "அகற்றிடப்படுத்து"
 
-#: kmreadermainwin.cpp:490
+#: kmreadermainwin.cpp:495
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "அஞ்சலை அகற்றிடத்திற்கு நகர்த்தும்"
 
-#: kmreadermainwin.cpp:536
+#: kmreadermainwin.cpp:541
 #, kde-format
 msgid "Hide menu bar"
 msgstr "பட்டிப் பட்டையை மறை"
 
-#: kmreadermainwin.cpp:619
+#: kmreadermainwin.cpp:624
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "இதனை நகலெடுக்க முடியவில்லை. %1"

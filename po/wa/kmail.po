@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-13 00:40+0000\n"
+"POT-Creation-Date: 2024-09-14 00:41+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -639,112 +639,112 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Tchuzes d' abagaedje"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&Idintité"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:66
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Dji rçû"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:73
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Dj' evoye"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:79
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:94
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Contes rexhants (radjoutez è onk pol moens!):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:105
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Evoyî racertinaedje"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:107
 #, fuzzy, kde-format
 msgid "Before sending:"
 msgstr "E&voyî"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:109
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Verifyî l' ortografeye divant d' evoyî"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "Never Automatically"
 msgstr "Måy otomaticmint"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Ås waitaedjes des emiles al mwin"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:116
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "A tos les waitaedjes des emiles"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Evoyî &messaedjes e ridant d' rexhowe:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Now"
 msgstr "Evoyî sol côp"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgid "Send Later"
 msgstr "Evoyî pus tård"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Prémet&owe metôde d' evoyaedje"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:129
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:200
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Add Mail Account…"
 msgstr "Radjouter on conte"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Custom Account…"
 msgstr "Mete l' ôre des contes a vosse môde..."
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:221
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
@@ -755,7 +755,7 @@ msgstr ""
 "Dji n' a savou abaguer l' macrea des contes. Verifyîz vost astalaedje, s' i "
 "vs plait."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:223
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -763,26 +763,26 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Dji n' sai enonder l' macrea des contes"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:271
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Mete divins l' waitaedje al mwin s' i gn a des emiles"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:279
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Si disraloyî a l' aresse di KMail"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:286
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Waitî s' i gn a des emiles a l' enondaedje"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:333
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1687,7 +1687,7 @@ msgid "Add"
 msgstr "Radjouter"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:295 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:244 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -2006,7 +2006,7 @@ msgid "Show attachment list"
 msgstr "Mostrer l' djivêye des ataetchmints"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:97
-#: kmreadermainwin.cpp:474 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:41
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2397,7 +2397,7 @@ msgstr "&Trover des messaedjes..."
 msgid "Configure KMail…"
 msgstr "Apontyî KMail..."
 
-#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:222 kmreadermainwin.cpp:533
+#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:226 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2406,7 +2406,7 @@ msgstr ""
 "<qt>Çoula catchrè ttafwait l' båre del dressêye. Vos l' savoz rmostrer tot "
 "tapant so %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:229
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -3916,13 +3916,13 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "&Ni nén Ecripter"
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:199 identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Voloz po do bon disfacer l' idintité lomêye <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:202 identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3930,7 +3930,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>Voloz po do bon disfacer l' idintité lomêye <b>%1</b>?</qt>"
 msgstr[1] "<qt>Voloz po do bon disfacer l' idintité lomêye <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:205 identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3938,34 +3938,34 @@ msgid_plural "Remove Identities"
 msgstr[0] "Oister Idintité"
 msgstr[1] "Oister Idintité"
 
-#: identity/identityngpage.cpp:239 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:206 identity/identitypage.cpp:239
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Oister"
 
-#: identity/identityngpage.cpp:290 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:292 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:241 identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Candjî..."
 
-#: identity/identityngpage.cpp:293 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:242 identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "Rilomer"
 
-#: identity/identityngpage.cpp:299 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:249 identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -5525,7 +5525,7 @@ msgstr "Marker li Li&gnoûle"
 msgid "&Ignore Thread"
 msgstr "&Passer houte li lignoûle"
 
-#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:485
+#: kmmainwidget.cpp:3297 kmreadermainwin.cpp:490
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save A&ttachments…"
@@ -6085,28 +6085,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Dj' enonde..."
 
-#: kmreadermainwin.cpp:488 util.cpp:149
+#: kmreadermainwin.cpp:493 util.cpp:149
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Taper å &batch"
 
-#: kmreadermainwin.cpp:489
+#: kmreadermainwin.cpp:494
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Batch"
 
-#: kmreadermainwin.cpp:490
+#: kmreadermainwin.cpp:495
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Taper li messaedje å batch"
 
-#: kmreadermainwin.cpp:536
+#: kmreadermainwin.cpp:541
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:619
+#: kmreadermainwin.cpp:624
 #, fuzzy, kde-format
 #| msgid "Can not copy item. %1"
 msgid "Cannot copy item. %1"
