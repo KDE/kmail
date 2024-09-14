@@ -202,19 +202,18 @@ void IdentityNgPage::slotRemoveIdentity()
                                            i18np("Remove Identity", "Remove Identities", numberOfIdentity),
                                            KGuiItem(i18nc("@action:button", "&Remove"), QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
-#if 0
-        for (QTreeWidgetItem *selecteditem : selectedItems) {
-            auto identityItem = dynamic_cast<IdentityTreeWidgetItem *>(selecteditem);
-            identityName = identityItem->identity().identityName();
-            if (mIdentityManager->removeIdentity(identityName)) {
-                delete selecteditem;
-            }
-            if (mIPage.mIdentityList->currentItem()) {
-                mIPage.mIdentityList->currentItem()->setSelected(true);
-            }
-            updateButtons();
+        QStringList listIdentityNames;
+        for (const auto &index : mIPage.mIdentityList->selectionModel()->selectedRows()) {
+            const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+                mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::IdentityNameRole));
+            listIdentityNames.append(newModelIndex.data().toString());
         }
-#endif
+        for (const QString &name : listIdentityNames) {
+            if (!mIdentityManager->removeIdentity(name)) {
+                qWarning() << " impossible to remove identity " << name;
+            }
+        }
+        updateButtons();
     }
 }
 
