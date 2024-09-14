@@ -184,16 +184,13 @@ void IdentityNgPage::slotRemoveIdentity()
     }
     const int numberOfIdentity = mIPage.mIdentityList->selectionModel()->selectedRows().count();
     QString identityName;
-#if 0
     if (numberOfIdentity == 1) {
-        if (!mIPage.mIdentityList->selectedItems().isEmpty()) {
-            item = dynamic_cast<IdentityTreeWidgetItem *>(mIPage.mIdentityList->selectedItems().at(0));
-        }
-        if (!item) {
-            return;
-        }
-        identityName = item->identity().identityName();
+        const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+        const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+            mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::IdentityNameRole));
+        identityName = newModelIndex.data().toString();
     }
+
     const QString msg = numberOfIdentity == 1
         ? i18n(
               "<qt>Do you really want to remove the identity named "
@@ -205,6 +202,7 @@ void IdentityNgPage::slotRemoveIdentity()
                                            i18np("Remove Identity", "Remove Identities", numberOfIdentity),
                                            KGuiItem(i18nc("@action:button", "&Remove"), QStringLiteral("edit-delete")))
         == KMessageBox::Continue) {
+#if 0
         for (QTreeWidgetItem *selecteditem : selectedItems) {
             auto identityItem = dynamic_cast<IdentityTreeWidgetItem *>(selecteditem);
             identityName = identityItem->identity().identityName();
@@ -214,11 +212,10 @@ void IdentityNgPage::slotRemoveIdentity()
             if (mIPage.mIdentityList->currentItem()) {
                 mIPage.mIdentityList->currentItem()->setSelected(true);
             }
-            refreshList();
             updateButtons();
         }
-    }
 #endif
+    }
 }
 
 void IdentityNgPage::slotRenameIdentity()
