@@ -11,7 +11,6 @@
 
 #include "identityngpage.h"
 #include "config-kmail.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "identitydialog.h"
 #include "identitytreengwidget.h"
@@ -36,6 +35,7 @@ using namespace Qt::Literals::StringLiterals;
 #include "activities/identityactivities.h"
 #endif
 
+using namespace Qt::Literals::StringLiterals;
 using namespace KMail;
 
 QString IdentityNgPage::helpAnchor() const
@@ -161,16 +161,17 @@ void IdentityNgPage::slotModifyIdentity()
     qDebug() << " index " << index;
 
     mIdentityDialog = new IdentityDialog(this);
-#if 0
-    mIdentityDialog->setIdentity(item->identity());
+    const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
+    const int uoid = newModelIndex.data().toInt();
+    auto &identity = mIPage.mIdentityList->modifyIdentityForUoid(uoid);
+    mIdentityDialog->setIdentity(identity);
 
     // Hmm, an unmodal dialog would be nicer, but a modal one is easier ;-)
     if (mIdentityDialog->exec() == QDialog::Accepted) {
-        mIdentityDialog->updateIdentity(item->identity());
-        item->redisplay();
+        mIdentityDialog->updateIdentity(identity);
         save();
     }
-#endif
     delete mIdentityDialog;
     mIdentityDialog = nullptr;
 }
