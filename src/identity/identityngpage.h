@@ -51,7 +51,6 @@ private:
     KMAIL_NO_EXPORT void slotSetAsDefault();
     KMAIL_NO_EXPORT void slotIdentitySelectionChanged();
 
-    KMAIL_NO_EXPORT void refreshList();
     KMAIL_NO_EXPORT void updateButtons();
 
 private: // data members

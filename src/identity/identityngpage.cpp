@@ -11,6 +11,7 @@
 
 #include "identityngpage.h"
 #include "config-kmail.h"
+#include "kmail_debug.h"
 
 #include "identitydialog.h"
 #include "identitytreengwidget.h"
@@ -158,8 +159,6 @@ void IdentityNgPage::slotModifyIdentity()
     if (!index.isValid()) {
         return;
     }
-    qDebug() << " index " << index;
-
     mIdentityDialog = new IdentityDialog(this);
     const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
         mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
@@ -211,7 +210,7 @@ void IdentityNgPage::slotRemoveIdentity()
         }
         for (const QString &name : listIdentityNames) {
             if (!mIdentityManager->removeIdentity(name)) {
-                qWarning() << " impossible to remove identity " << name;
+                qCWarning(KMAIL_LOG) << " impossible to remove identity " << name;
             }
         }
         updateButtons();
@@ -264,11 +263,6 @@ void IdentityNgPage::slotSetAsDefault()
 
     mIdentityManager->setAsDefault(modelIndex.data().toInt());
     mIPage.mSetAsDefaultButton->setEnabled(false);
-}
-
-void IdentityNgPage::refreshList()
-{
-    save();
 }
 
 void IdentityNgPage::slotIdentitySelectionChanged()
