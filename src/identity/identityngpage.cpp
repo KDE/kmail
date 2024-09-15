@@ -55,12 +55,10 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
     mIPage.setupUi(this);
     mIPage.mIdentityList->setIdentityManager(mIdentityManager);
 
-    connect(this, qOverload<bool>(&IdentityNgPage::changed), this, &IdentityNgPage::slotIdentitySelectionChanged);
+    connect(this, qOverload<bool>(&IdentityNgPage::changed), this, &IdentityNgPage::updateButtons);
     connect(mIPage.mIdentityList, &QTreeView::doubleClicked, this, &IdentityNgPage::slotModifyIdentity);
 
-    connect(mIPage.mIdentityList->selectionModel(), &QItemSelectionModel::selectionChanged, this, [this]() {
-        updateButtons();
-    });
+    connect(mIPage.mIdentityList->selectionModel(), &QItemSelectionModel::selectionChanged, this, &IdentityNgPage::updateButtons);
 
     connect(mIPage.mIdentityList, &IdentityTreeNgWidget::contextMenuRequested, this, &IdentityNgPage::slotContextMenu);
     connect(mIPage.mButtonAdd, &QPushButton::clicked, this, &IdentityNgPage::slotNewIdentity);
@@ -263,11 +261,6 @@ void IdentityNgPage::slotSetAsDefault()
 
     mIdentityManager->setAsDefault(modelIndex.data().toInt());
     mIPage.mSetAsDefaultButton->setEnabled(false);
-}
-
-void IdentityNgPage::slotIdentitySelectionChanged()
-{
-    updateButtons();
 }
 
 void IdentityNgPage::updateButtons()

@@ -49,7 +49,6 @@ private:
     KMAIL_NO_EXPORT void slotRenameIdentity();
     KMAIL_NO_EXPORT void slotContextMenu(const QPoint &);
     KMAIL_NO_EXPORT void slotSetAsDefault();
-    KMAIL_NO_EXPORT void slotIdentitySelectionChanged();
 
     KMAIL_NO_EXPORT void updateButtons();
 
