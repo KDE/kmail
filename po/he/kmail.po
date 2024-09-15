@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-14 00:41+0000\n"
-"PO-Revision-Date: 2024-09-13 06:06+0300\n"
+"POT-Creation-Date: 2024-09-15 00:41+0000\n"
+"PO-Revision-Date: 2024-09-14 17:31+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1540,7 +1540,7 @@ msgid "Add"
 msgstr "הוספה"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:244 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:240 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -2612,7 +2612,7 @@ msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
-msgstr ""
+msgstr "מפתח ההצפנה לא אמין. נתוני ה־TOFU שלו סותרים. יש ללחוץ על הסמל לפרטים."
 
 #: editor/kmcomposerwin.cpp:3866
 #, kde-format
@@ -2673,6 +2673,8 @@ msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
+"מפתח האבטחה מהימן לחלוטין. אפשר להגביר את רמת האבטחה על ידי חתימה על המפתח. "
+"לחיצה על הסמל תציג פרטים נוספים."
 
 #: editor/kmcomposerwin.cpp:3907
 #, kde-format
@@ -3099,6 +3101,9 @@ msgid ""
 "like it to appear in the email header that is sent out;</p><p>if you leave "
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
+"<qt><h3>השם שלך</h3><p>השדה הזה אמור להכיל את השם שלך כפי שחשוב לך שיופיע "
+"בכותרת הודעות הדוא״ל שנשלחות;</p><p>אם הוא יישאר ריק השם האמיתי שלך לא "
+"יופיע, רק כותרת הדוא״ל.</p></qt>"
 
 #: identity/identitydialog.cpp:389
 #, kde-format
@@ -3113,6 +3118,9 @@ msgid ""
 "organization if you would like it to be shown in the email header that is "
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
+"<qt><h3>ארגון</h3><p>בשדה הזה אמור להיות שם הארגון שלך כפי שחשוב לך שיופיע "
+"בכותרת הודעות הדוא״ל שנשלחות. </p><p>אין שום סיכון (וזה אפילו די מקובל) "
+"להשאיר את השדה הזה ריק.</p></qt>"
 
 #: identity/identitydialog.cpp:406
 #, kde-format
@@ -3209,6 +3217,9 @@ msgid ""
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
+"<qt><p>אישור ה־S/MIME (X.509) שנבחר כאן ישמש לחתום הודעות דיגיטלית.</"
+"p><p>אפשר להשאיר את זה ריק אבל KMail לא יוכל לחתום על הודעות דיגיטלית עם S/"
+"MIME; תפקודי הדוא״ל הרגילים לא יושפעו.</p></qt>"
 
 #: identity/identitydialog.cpp:527
 #, kde-format
@@ -3617,12 +3628,12 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "לא לבטל"
 
-#: identity/identityngpage.cpp:199 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:196 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>להסיר את הזהות בשם <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:202 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:199 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3631,7 +3642,7 @@ msgstr[1] "להסיר את שתי הזהויות האלה?"
 msgstr[2] "להסיר את %1 הזהויות האלה?"
 msgstr[3] "להסיר את %1 הזהויות האלה?"
 
-#: identity/identityngpage.cpp:205 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:202 identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3640,31 +3651,31 @@ msgstr[1] "הסרת זהויות"
 msgstr[2] "הסרת זהויות"
 msgstr[3] "הסרת זהויות"
 
-#: identity/identityngpage.cpp:206 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:203 identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "ה&סרה"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:234 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "הוספה…"
 
-#: identity/identityngpage.cpp:241 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:237 identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "עריכה…"
 
-#: identity/identityngpage.cpp:242 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "שינוי שם"
 
-#: identity/identityngpage.cpp:249 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:248 identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -4335,6 +4346,8 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
+"פתיחת קובץ שמירה אוטומטית %1 נכשלה.\n"
+"סיבה: %2"
 
 #: kmkernel.cpp:885
 #, kde-format
@@ -6434,7 +6447,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
-msgstr ""
+msgstr "לאפשר דגלונים מקומיים בתיקיות לקריאה בלבד"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:64
@@ -6455,7 +6468,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
-msgstr ""
+msgstr "התיקייה האחרונה שנבחרה בחלונית בחירת התיקיות."
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg.in:91
@@ -6493,7 +6506,7 @@ msgstr "ה&שתמש בעורך חיצוני במקום הכתבן"
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
-msgstr ""
+msgstr "הסף מתי להזהיר את המשתמש שהתיקייה מתקרבת לגבול המכסה שלה."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:117
@@ -7612,9 +7625,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Validate certificates using CRLs"
-msgstr "השתמש ברשימות בי&טול תעודות (CRL)"
+msgstr "אימות אישורים מול רשימות ש&לילת אישורים (CRL)"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:30
@@ -7641,15 +7654,15 @@ msgstr "אימות אישורים מקוון"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/smimeconfiguration.ui:50
-#, fuzzy, kde-format
+#, kde-format
 msgid "OCSP responder URL:"
-msgstr "חתימה תקינה"
+msgstr "כתובת משיב OCSP:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ui/smimeconfiguration.ui:60
-#, fuzzy, kde-format
+#, kde-format
 msgid "OCSP responder signature:"
-msgstr "חתימה תקינה"
+msgstr "חתימת משיב OCSP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74

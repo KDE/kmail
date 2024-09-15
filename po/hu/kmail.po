@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-14 00:41+0000\n"
+"POT-Creation-Date: 2024-09-15 00:41+0000\n"
 "PO-Revision-Date: 2024-08-05 21:32+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -1566,7 +1566,7 @@ msgid "Add"
 msgstr "Hozzáadás"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:244 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:240 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3760,50 +3760,50 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "Ne szakítsa meg"
 
-#: identity/identityngpage.cpp:199 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:196 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Biztosan törölni szeretné a(z) <b>%1</b> azonosítót?</qt>"
 
-#: identity/identityngpage.cpp:202 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:199 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Biztosan törölni szeretné a(z) <b>%1</b> azonosítót?"
 msgstr[1] "Biztosan törölni szeretné ezt a(z) %1 azonosítót?"
 
-#: identity/identityngpage.cpp:205 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:202 identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Azonosító eltávolítása"
 msgstr[1] "Azonosítók eltávolítása"
 
-#: identity/identityngpage.cpp:206 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:203 identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Eltá&volítás"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:234 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Hozzáadás…"
 
-#: identity/identityngpage.cpp:241 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:237 identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Módosítás…"
 
-#: identity/identityngpage.cpp:242 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Átnevezés"
 
-#: identity/identityngpage.cpp:249 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:248 identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
