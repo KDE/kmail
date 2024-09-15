@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-10 06:52+0300\n"
+"PO-Revision-Date: 2024-09-14 17:31+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2581,7 +2581,7 @@ msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
-msgstr ""
+msgstr "מפתח ההצפנה לא אמין. נתוני ה־TOFU שלו סותרים. יש ללחוץ על הסמל לפרטים."
 
 #: editor/kmcomposerwin.cpp:3868
 #, kde-format
@@ -2642,6 +2642,8 @@ msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
+"מפתח האבטחה מהימן לחלוטין. אפשר להגביר את רמת האבטחה על ידי חתימה על המפתח. "
+"לחיצה על הסמל תציג פרטים נוספים."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -3036,6 +3038,9 @@ msgid ""
 "like it to appear in the email header that is sent out;</p><p>if you leave "
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
+"<qt><h3>השם שלך</h3><p>השדה הזה אמור להכיל את השם שלך כפי שחשוב לך שיופיע "
+"בכותרת הודעות הדוא״ל שנשלחות;</p><p>אם הוא יישאר ריק השם האמיתי שלך לא "
+"יופיע, רק כותרת הדוא״ל.</p></qt>"
 
 #: identity/identitydialog.cpp:288
 #, kde-format
@@ -3050,6 +3055,9 @@ msgid ""
 "organization if you would like it to be shown in the email header that is "
 "sent out.</p><p>It is safe (and normal) to leave this blank.</p></qt>"
 msgstr ""
+"<qt><h3>ארגון</h3><p>בשדה הזה אמור להיות שם הארגון שלך כפי שחשוב לך שיופיע "
+"בכותרת הודעות הדוא״ל שנשלחות. </p><p>אין שום סיכון (וזה אפילו די מקובל) "
+"להשאיר את השדה הזה ריק.</p></qt>"
 
 #: identity/identitydialog.cpp:305
 #, kde-format
@@ -3145,6 +3153,9 @@ msgid ""
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
+"<qt><p>אישור ה־S/MIME (X.509) שנבחר כאן ישמש לחתום הודעות דיגיטלית.</"
+"p><p>אפשר להשאיר את זה ריק אבל KMail לא יוכל לחתום על הודעות דיגיטלית עם S/"
+"MIME; תפקודי הדוא״ל הרגילים לא יושפעו.</p></qt>"
 
 #: identity/identitydialog.cpp:426
 #, kde-format
@@ -3447,6 +3458,8 @@ msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
+"אחד מאישורי הצפנת S/MIME המוגדרים לא מכילים את כתובת הדוא״ל המוגדרת לזהות "
+"הזאת (%1)."
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -3675,12 +3688,12 @@ msgstr "KMail ישלח תמונה בשחור לבן דרך כותרת X-Face (פ
 #: identity/xfaceconfigurator.cpp:134
 #, kde-format
 msgid "KMail will send both a colored and a black-and-white image."
-msgstr ""
+msgstr "KMail ישלח גם תמונה צבעונית וגם בשחור לבן."
 
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
-msgstr ""
+msgstr "צמצום גודל התמונה כדי שתשתלב בכותרת נכשל."
 
 #: identity/xfaceconfigurator.cpp:174
 #, kde-format
@@ -3688,6 +3701,8 @@ msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
 "better compression results."
 msgstr ""
+"צמצום גודל התמונה כדי שתשתלב בכותרת נכשל. יש להתקין את pngquant כדי לקבל "
+"תוצאות דחיסה טובות יותר."
 
 #: identity/xfaceconfigurator.cpp:182
 #, kde-format
@@ -5693,7 +5708,7 @@ msgstr "נוספה תמיכה במשאב etesync"
 
 #: kmreaderwin.cpp:280
 msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
+msgstr "נוספה תמיכה במשאבי Microsoft Exchange Web Services"
 
 #: kmreaderwin.cpp:309
 #, kde-format
@@ -5776,6 +5791,8 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
+"יש להפעיל את האפשרות הזאת כדי לצפות בנתיב המלא של כל אחת מהתיקיות שמוצגות "
+"בתקציר. אם האפשרות הזאת אינה פעילה, אז רק נתיב תיקיית הבסיס יוצג."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, kde-format
@@ -6345,7 +6362,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
-msgstr ""
+msgstr "לאפשר דגלונים מקומיים בתיקיות לקריאה בלבד"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
 #: settings/kmail.kcfg.in:64
@@ -6366,7 +6383,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
-msgstr ""
+msgstr "התיקייה האחרונה שנבחרה בחלונית בחירת התיקיות."
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg.in:96
@@ -6392,7 +6409,7 @@ msgstr "ה&שתמש בעורך חיצוני במקום הכתבן"
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
 "limit."
-msgstr ""
+msgstr "הסף מתי להזהיר את המשתמש שהתיקייה מתקרבת לגבול המכסה שלה."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg.in:114
