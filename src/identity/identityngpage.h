@@ -44,8 +44,6 @@ private:
     KMAIL_NO_EXPORT void slotNewIdentity();
     KMAIL_NO_EXPORT void slotModifyIdentity();
     KMAIL_NO_EXPORT void slotRemoveIdentity();
-    /** Connected to @p mRenameButton's clicked() signal. Just does a
-      QTreeWidget::editItem on the selected item */
     KMAIL_NO_EXPORT void slotRenameIdentity();
     KMAIL_NO_EXPORT void slotContextMenu(const QPoint &);
     KMAIL_NO_EXPORT void slotSetAsDefault();
