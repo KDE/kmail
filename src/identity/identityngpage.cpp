@@ -239,6 +239,7 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
         menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
         if (mIPage.mIdentityList->model()->rowCount() > 1) {
+            menu.addSeparator();
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
 
