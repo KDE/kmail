@@ -213,6 +213,7 @@ void IdentityNgPage::slotRemoveIdentity()
         }
         updateButtons();
     }
+    save();
 }
 
 void IdentityNgPage::slotRenameIdentity()
@@ -223,7 +224,10 @@ void IdentityNgPage::slotRenameIdentity()
         return;
     }
     const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
-    mIPage.mIdentityList->edit(index);
+    const QModelIndex modelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DisplayIdentityNameRole));
+    mIPage.mIdentityList->edit(modelIndex);
+    save();
 }
 
 void IdentityNgPage::slotContextMenu(const QPoint &pos)
@@ -257,10 +261,12 @@ void IdentityNgPage::slotSetAsDefault()
     }
     const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
     const QModelIndex modelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
-        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
+        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DefaultRole));
 
-    mIdentityManager->setAsDefault(modelIndex.data().toInt());
+    mIPage.mIdentityList->identityTreeModel()->setData(modelIndex, true, Qt::EditRole);
+
     mIPage.mSetAsDefaultButton->setEnabled(false);
+    save();
 }
 
 void IdentityNgPage::updateButtons()
