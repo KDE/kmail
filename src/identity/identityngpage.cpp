@@ -171,7 +171,6 @@ void IdentityNgPage::slotModifyIdentity()
     if (!index.isValid()) {
         return;
     }
-    Q_ASSERT(!mIdentityDialog);
     const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
         mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
     const int uoid = newModelIndex.data().toInt();
