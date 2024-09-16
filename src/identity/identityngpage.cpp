@@ -130,19 +130,18 @@ void IdentityNgPage::slotNewIdentity()
         switch (dialog->duplicateMode()) {
         case NewIdentityDialog::ExistingEntry: {
             KIdentityManagementCore::Identity &dupThis = mIdentityManager->modifyIdentityForName(dialog->duplicateIdentity());
-            mIdentityManager->newFromExisting(dupThis, identityName);
+            modifyIdentity(mIdentityManager->newFromExisting(dupThis, identityName));
             break;
         }
         case NewIdentityDialog::ControlCenter:
-            mIdentityManager->newFromControlCenter(identityName);
+            modifyIdentity(mIdentityManager->newFromControlCenter(identityName));
             break;
         case NewIdentityDialog::Empty:
-            mIdentityManager->newFromScratch(identityName);
+            modifyIdentity(mIdentityManager->newFromScratch(identityName));
         default:
             break;
         }
 
-        slotModifyIdentity();
         updateButtons();
     }
 }
