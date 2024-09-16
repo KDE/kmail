@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-15 00:41+0000\n"
+"POT-Creation-Date: 2024-09-16 00:40+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -1507,7 +1507,7 @@ msgid "Add"
 msgstr "Lasit"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:240 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3544,51 +3544,51 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr ""
 
-#: identity/identityngpage.cpp:196 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:194 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Háliidat go duođaid váldit identitehta nammaduvvon <b>«%1»</b> eret?</qt>"
 
-#: identity/identityngpage.cpp:199 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:197 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: identity/identityngpage.cpp:202 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:200 identity/identitypage.cpp:238
 #, fuzzy, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Váldde eret identitehta"
 msgstr[1] "Váldde eret identitehta"
 
-#: identity/identityngpage.cpp:203 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:201 identity/identitypage.cpp:239
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Váldde eret"
 
-#: identity/identityngpage.cpp:234 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:232 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:237 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:235 identity/identitypage.cpp:292
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Rievdat …"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:236 identity/identitypage.cpp:293
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Rievdat nama"
 
-#: identity/identityngpage.cpp:248 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:246 identity/identitypage.cpp:299
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Set as Default"

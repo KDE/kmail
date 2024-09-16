@@ -13,15 +13,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-15 00:41+0000\n"
-"PO-Revision-Date: 2024-08-17 11:17+0200\n"
+"POT-Creation-Date: 2024-09-16 00:40+0000\n"
+"PO-Revision-Date: 2024-09-10 10:34+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -1563,7 +1563,7 @@ msgid "Add"
 msgstr "Afig"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:240 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:295
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3592,10 +3592,9 @@ msgid "Picture"
 msgstr "Imatge"
 
 #: identity/identitydialog.cpp:798
-#, fuzzy, kde-format
-#| msgid "Plasma activities"
+#, kde-format
 msgid "Activities"
-msgstr "Activitats de Plasma"
+msgstr "Activitats"
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -3752,50 +3751,50 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "No la cancel·les"
 
-#: identity/identityngpage.cpp:196 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:194 identity/identitypage.cpp:232
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Segur que voleu eliminar la identitat anomenada <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:199 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:197 identity/identitypage.cpp:235
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Segur que voleu eliminar esta identitat %1?"
 msgstr[1] "Segur que voleu eliminar estes identitats %1?"
 
-#: identity/identityngpage.cpp:202 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:200 identity/identitypage.cpp:238
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Elimina la identitat"
 msgstr[1] "Elimina les identitats"
 
-#: identity/identityngpage.cpp:203 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:201 identity/identitypage.cpp:239
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Elimina"
 
-#: identity/identityngpage.cpp:234 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:232 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Afig…"
 
-#: identity/identityngpage.cpp:237 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:235 identity/identitypage.cpp:292
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Modifica…"
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:236 identity/identitypage.cpp:293
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Canvia el nom"
 
-#: identity/identityngpage.cpp:248 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:246 identity/identitypage.cpp:299
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -7009,7 +7008,7 @@ msgstr "Establix des de la llibreta d'adreces"
 #: ui/identityngpage.ui:17 ui/identitypage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "Mostra només la identitat en l'activitat actual"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31 ui/identitypage.ui:31

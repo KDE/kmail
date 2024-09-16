@@ -41,8 +41,7 @@ msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Copyright (C) 2013-2020 Laurent Montel"
 
 #: sendlaterconfiguredialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -90,21 +89,18 @@ msgid "Message Id"
 msgstr "Αναγνωριστικό μηνύματος"
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
-msgstr "Κανένα μήνυμα σε αναμονή..."
+msgstr "Κανένα μήνυμα σε αναμονή…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Αποστολή τώρα"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Διαγραφή"
@@ -201,8 +197,7 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Βρέθηκε σφάλμα. Επιθυμείτε να το στείλετε ξανά;"
 
 #: sendlatermanager.cpp:194
-#, fuzzy, kde-format
-#| msgid "Error found"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Βρέθηκε σφάλμα"
@@ -215,10 +210,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "Τροποποίηση..."
+msgstr "Τροποποίηση…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/sendlaterconfigurewidget.ui:38

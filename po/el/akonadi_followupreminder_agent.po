@@ -34,8 +34,7 @@ msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-2020 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -89,8 +88,7 @@ msgid "On hold"
 msgstr "Σε αναμονή"
 
 #: followupreminderinfowidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Show Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Εμφάνιση μηνύματος"
@@ -103,8 +101,7 @@ msgid "Show Original Message"
 msgstr "Εμφάνιση μηνύματος"
 
 #: followupreminderinfowidget.cpp:225
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Διαγραφή"

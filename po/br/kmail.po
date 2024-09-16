@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail-1.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-15 00:41+0000\n"
+"POT-Creation-Date: 2024-09-16 00:40+0000\n"
 "PO-Revision-Date: 2005-01-23 05:51+0100\n"
 "Last-Translator: Jañ-Mai Drapier <jan-mai.drapier@mail.dotcom.fr>\n"
 "Language-Team: Brezhoneg <Suav.Icb@wanadoo.fr>\n"
@@ -1616,7 +1616,7 @@ msgid "Add"
 msgstr "&Ouzhpennañ ..."
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:240 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:238 identity/identitypage.cpp:295
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3789,7 +3789,7 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "Ne vevit ket"
 
-#: identity/identityngpage.cpp:196 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:194 identity/identitypage.cpp:232
 #, fuzzy, kde-format
 #| msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
@@ -3797,7 +3797,7 @@ msgstr ""
 "<qt>Ha sur oc'h bezañ mennet da zilemel ar renkell goullo <strong>%1</"
 "strong> ?</qt>"
 
-#: identity/identityngpage.cpp:199 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:197 identity/identitypage.cpp:235
 #, fuzzy, kde-format
 #| msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3809,7 +3809,7 @@ msgstr[1] ""
 "<qt>Ha sur oc'h bezañ mennet da zilemel ar renkell goullo <strong>%1</"
 "strong> ?</qt>"
 
-#: identity/identityngpage.cpp:202 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:200 identity/identitypage.cpp:238
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3817,34 +3817,34 @@ msgid_plural "Remove Identities"
 msgstr[0] "Lemel an anvelezh"
 msgstr[1] "Lemel an anvelezh"
 
-#: identity/identityngpage.cpp:203 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:201 identity/identitypage.cpp:239
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Lemel"
 
-#: identity/identityngpage.cpp:234 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:232 identity/identitypage.cpp:290
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:237 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:235 identity/identitypage.cpp:292
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Kemmañ ..."
 
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:236 identity/identitypage.cpp:293
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "&Adenvel"
 
-#: identity/identityngpage.cpp:248 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:246 identity/identitypage.cpp:299
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

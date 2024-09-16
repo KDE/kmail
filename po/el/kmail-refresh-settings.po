@@ -39,8 +39,7 @@ msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 msgstr "(c) 2019-2020 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -72,8 +71,7 @@ msgid "Finish"
 msgstr "Τέλος"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Καθαρισμός"
@@ -104,8 +102,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Καθαρισμός μεγέθους διαλόγου στο αρχείο ρυθμίσεων '%1': Έγινε"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Κλείστε το KMail/Kontact πριν το χρησιμοποιήσετε."

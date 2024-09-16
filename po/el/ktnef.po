@@ -88,12 +88,10 @@ msgid "View"
 msgstr "Προβολή"
 
 #: ktnefmain.cpp:115
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "View With..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr "Προβολή με..."
+msgstr "Προβολή με…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -102,20 +100,16 @@ msgid "Extract"
 msgstr "Εξαγωγή"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "Εξαγωγή στο..."
+msgstr "Εξαγωγή στο…"
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract All To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "Εξαγωγή όλων στο..."
+msgstr "Εξαγωγή όλων στο…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -136,20 +130,16 @@ msgid "Show Message Text"
 msgstr "Εμφάνιση κειμένου μηνύματος"
 
 #: ktnefmain.cpp:147
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Save Message Text As..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
-msgstr "Αποθήκευση κειμένου μηνύματος ως..."
+msgstr "Αποθήκευση κειμένου μηνύματος ως…"
 
 #: ktnefmain.cpp:160
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Default Folder..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
-msgstr "Προκαθορισμένος φάκελος..."
+msgstr "Προκαθορισμένος φάκελος…"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -221,20 +211,16 @@ msgid "&Open With"
 msgstr "Άν&οιγμα με"
 
 #: ktnefmain.cpp:570
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
+#, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
-msgstr "Άλλ&ο..."
+msgstr "Άλλ&ο…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "Άν&οιγμα με"
+msgstr "Άν&οιγμα με…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -298,8 +284,7 @@ msgstr ""
 "Copyright 2012  Allen Winter"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
@@ -310,8 +295,7 @@ msgid "Author"
 msgstr "Συγγραφέας"
 
 #: main.cpp:38
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"

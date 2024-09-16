@@ -33,43 +33,37 @@ msgid "Add Archive Mail"
 msgstr "Προσθήκη αρχειοθήκης ηλ. αλληλογραφίας"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Αρχειοθέτηση όλων των υποφακέλων"
 
 #: addarchivemailwidget.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
-msgstr "&Φάκελος:"
+msgstr "Φάκελος:"
 
 #: addarchivemailwidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "Format:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Τύπος αποθήκευσης:"
 
 #: addarchivemailwidget.cpp:56
-#, fuzzy, kde-format
-#| msgid "Path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Διαδρομή:"
 
 #: addarchivemailwidget.cpp:63
-#, fuzzy, kde-format
-#| msgid "Backup each:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Εφεδρικό αντίγραφο κάθε:"
 
 #: addarchivemailwidget.cpp:75
-#, fuzzy, kde-format
-#| msgid "Maximum number of archive:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Μέγιστο πλήθος αρχειοθηκών:"
@@ -128,8 +122,7 @@ msgid "Copyright (C) 2014-%1 Laurent Montel"
 msgstr "Copyright (C) 2014-2020 Laurent Montel"
 
 #: archivemailwidget.cpp:96
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -158,15 +151,13 @@ msgid "Add…"
 msgstr ""
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder..."
+#, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
-msgstr "Άνοιγμα περιέχοντος φακέλου..."
+msgstr "Άνοιγμα περιέχοντος φακέλου…"
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Διαγραφή"

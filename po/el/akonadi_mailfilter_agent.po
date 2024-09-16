@@ -26,15 +26,13 @@ msgid "Filter Log Viewer"
 msgstr "Προβολέας καταγραφών φίλτρου"
 
 #: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr "Διαμοιρασμός..."
+msgstr "Διαμοιρασμός…"
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Καταγραφές δραστηριοτήτων φίλτρου"
@@ -55,15 +53,13 @@ msgid "Logging Details"
 msgstr "Λεπτομέρειες καταγραφής"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Περιγραφή μοτίβου καταγραφής"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Αξιολόγηση κανόνων φίλτ&ρου καταγραφής"
@@ -84,22 +80,19 @@ msgstr ""
 "ενός φίλτρου."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Αξιολόγηση μοτίβου φίλτρου καταγραφής"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Ενέργειες φίλτρου καταγραφής"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Όριο μεγέθους καταγραφής:"
@@ -139,8 +132,7 @@ msgstr ""
 "\"%2\" είναι η λεπτομερής περιγραφή σφάλματος."
 
 #: filterlogdialog.cpp:330
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Σφάλμα του KMail"
