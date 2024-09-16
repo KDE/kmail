@@ -88,11 +88,9 @@ target_sources(kmailprivate PRIVATE
     searchdialog/searchwindow.cpp
     searchdialog/searchdescriptionattribute.cpp
     searchdialog/incompleteindexdialog.cpp
-    identity/identitytreewidget.cpp
     identity/identitydialog.cpp
     identity/xfaceconfigurator.cpp
     identity/encodedimagepicker.cpp
-    identity/identitypage.cpp
     identity/newidentitydialog.cpp
     identity/identityeditvcarddialog.cpp
     identity/identityaddvcarddialog.cpp
@@ -231,11 +229,9 @@ target_sources(kmailprivate PRIVATE
     searchdialog/searchwindow.h
     searchdialog/searchdescriptionattribute.h
     searchdialog/incompleteindexdialog.h
-    identity/identitytreewidget.h
     identity/identitydialog.h
     identity/xfaceconfigurator.h
     identity/encodedimagepicker.h
-    identity/identitypage.h
     identity/newidentitydialog.h
     identity/identityeditvcarddialog.h
     identity/identityaddvcarddialog.h
@@ -412,7 +408,6 @@ ki18n_wrap_ui(kmailprivate
     ui/securitypageencryptiontab.ui
     ui/securitypagegeneraltab.ui
     ui/securitypagemdntab.ui
-    ui/identitypage.ui
     ui/accountspagereceivingtab.ui
     ui/searchwindow.ui
     ui/incompleteindexdialog.ui
