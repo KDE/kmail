@@ -18,6 +18,7 @@
 namespace KIdentityManagementCore
 {
 class IdentityManager;
+class Identity;
 }
 
 namespace KMail
@@ -49,6 +50,7 @@ private:
     KMAIL_NO_EXPORT void slotSetAsDefault();
 
     KMAIL_NO_EXPORT void updateButtons();
+    KMAIL_NO_EXPORT void modifyIdentity(KIdentityManagementCore::Identity &identity);
 
 private: // data members
     Ui_IdentityNgPage mIPage;

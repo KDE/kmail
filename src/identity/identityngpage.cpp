@@ -147,21 +147,10 @@ void IdentityNgPage::slotNewIdentity()
     }
 }
 
-void IdentityNgPage::slotModifyIdentity()
+void IdentityNgPage::modifyIdentity(KIdentityManagementCore::Identity &identity)
 {
     Q_ASSERT(!mIdentityDialog);
-    if (!mIPage.mIdentityList->selectionModel()->hasSelection()) {
-        return;
-    }
-    const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
-    if (!index.isValid()) {
-        return;
-    }
     mIdentityDialog = new IdentityDialog(this);
-    const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
-        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
-    const int uoid = newModelIndex.data().toInt();
-    auto &identity = mIPage.mIdentityList->modifyIdentityForUoid(uoid);
     mIdentityDialog->setIdentity(identity);
 
     // Hmm, an unmodal dialog would be nicer, but a modal one is easier ;-)
@@ -171,6 +160,23 @@ void IdentityNgPage::slotModifyIdentity()
     }
     delete mIdentityDialog;
     mIdentityDialog = nullptr;
+}
+
+void IdentityNgPage::slotModifyIdentity()
+{
+    if (!mIPage.mIdentityList->selectionModel()->hasSelection()) {
+        return;
+    }
+    const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
+    if (!index.isValid()) {
+        return;
+    }
+    Q_ASSERT(!mIdentityDialog);
+    const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
+        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::UoidRole));
+    const int uoid = newModelIndex.data().toInt();
+    auto &identity = mIPage.mIdentityList->modifyIdentityForUoid(uoid);
+    modifyIdentity(identity);
 }
 
 void IdentityNgPage::slotRemoveIdentity()
