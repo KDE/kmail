@@ -228,8 +228,8 @@ void IdentityNgPage::slotRenameIdentity()
         return;
     }
     const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
-    const QModelIndex modelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
-        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DisplayIdentityNameRole));
+    const QModelIndex modelIndex =
+        mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DisplayIdentityNameRole);
     mIPage.mIdentityList->edit(modelIndex);
     save();
 }
