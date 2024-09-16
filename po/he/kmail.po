@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-14 17:31+0300\n"
+"PO-Revision-Date: 2024-09-15 15:31+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1942,9 +1942,9 @@ msgid "&Insert Text File…"
 msgstr "הוספת קובץ &טקסט…"
 
 #: editor/kmcomposerwin.cpp:1331
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Insert Recent Text File"
-msgstr "&הוסף קובץ אחרון"
+msgstr "הוספת קבצים שצירפת ל&אחרונה"
 
 #: editor/kmcomposerwin.cpp:1341 kmmainwidget.cpp:2961
 #, kde-format
@@ -3074,6 +3074,11 @@ msgid ""
 "alias addresses in the field below.</p><p>If you leave this blank, or get it "
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
+"<qt><h3>כתובת דוא״ל</h3><p>בשדה הזה אמורה להיות כתובת הדוא״ל המלאה שלך.</"
+"p><p>זאת הכתובת העיקרית, שמשמשת לכל הדוא״ל היוצר. אם יש לך יותר מכתובת אחת, "
+"אפשר ליצור זהות חדשה, או להוסיף כתובות כינוי נוספות בשדה להלן.</p><p>אם בחרת "
+"להשאיר את זה ריק, או ששגית בהקלדה, עלול להתעורר קושי אצל הנמענים להשיב לך "
+"להודעות.</p></qt>"
 
 #: identity/identitydialog.cpp:329
 #, kde-format
@@ -3091,6 +3096,11 @@ msgid ""
 "th><td>first@example.org<br>last@example.org</td></tr></table><p>Type one "
 "alias address per line.</p></qt>"
 msgstr ""
+"<qt><h3>כינויי דוא״ל</h3><p>השדה הזה מכיל כתובות כינוי שיש להתחשב בהן מבחינת "
+"שייכות לזהות הזאת (בניגוד לייצוג זהות אחרת.</p><p>למשל:</"
+"p><table><tr><th>כתובת עיקרית:</th><td>prati.mishpakha@doogma.org</td></"
+"tr><tr><th>כינויים:</th><td>prati@doogma.org<br>mishpakha@doogma.org</td></"
+"tr></table><p>יש להקליד עד כינוי אחד בכל שורה.</p></qt>"
 
 #: identity/identitydialog.cpp:351
 #, kde-format
@@ -3106,6 +3116,10 @@ msgid ""
 "functions will not be affected.</p><p>You can find out more about keys at "
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
+"<qt><p>מפתח ה־OpenPGP שייבחר כאן ישמש לחתום הודעות דיגיטלית. אפשר גם להשתמש "
+"במפתחות GnuPG.</p><p>אפשר להשאיר את זה ריק, אבל KMail לא יוכל לחתום על "
+"הודעות דיגיטלית עם OpenPGP; תפקודי הדוא״ל הרגילים לא יושפעו. </p><p>אפשר "
+"למצוא מידע נוסף על מפתחות בכתובת <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:363
 #, kde-format
@@ -3442,6 +3456,8 @@ msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
+"אחד ממפתחות הצפנת OpenPGP המוגדרים לא מכיל מזהה משתמש עם כתובת הדוא״ל "
+"המוגדרת לזהות הזאת (%1)."
 
 #: identity/identitydialog.cpp:829
 #, kde-format
@@ -3451,6 +3467,10 @@ msgid ""
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
+"אחד מאישורי חתימת S/MIME המוגדרים לא מכיל את כתובת הדוא״ל המוגדרת לזהות הזאת "
+"(%1).\n"
+"המצב הזה עלול להוביל להודעות אזהרה בצד המקבל כשמנסים לאמת חתימות עם ההגדרה "
+"הזאת."
 
 #: identity/identitydialog.cpp:838
 #, kde-format
@@ -3479,13 +3499,13 @@ msgid "Edit Identity \"%1\""
 msgstr "עריכת הזהות „%1”"
 
 #: identity/identitydialog.cpp:945
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
-"תיקיית הטיוטות המותאמת אישית עבור הזהות \"%1\" אינה קיימת (עוד). לכן, ייעשה "
-"שימוש בתיקיית הטיוטות המוגדרת כברירת מחדל."
+"תיקייה מותאמת אישית לזהות לא קיימת (עוד), לכן, ייעשה שימוש בתיקיות ברירת "
+"המחדל."
 
 #: identity/identitydialog.cpp:1163
 #, kde-format
@@ -4204,7 +4224,7 @@ msgstr "סרגל כלי כיוון טקסט"
 #: kmkernel.cpp:625
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
-msgstr ""
+msgstr "KMail מוגדר לניתוק מהאינטרנט, כל משימות התקשורת מושבתות"
 
 #: kmkernel.cpp:645 kmmainwidget.cpp:2462 kmmainwidget.cpp:2477
 #, kde-format
@@ -4219,7 +4239,7 @@ msgstr "אי אפשר לשלוח דוא״ל"
 #: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
-msgstr ""
+msgstr "KMail מוגדר לחיבור לאינטרנט, כל משימות התקשורת חודשו"
 
 #: kmkernel.cpp:679
 #, kde-format
@@ -4227,6 +4247,7 @@ msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
+"KMail מוגדר לחיבור לאינטרנט, כל משימות התקשורת תמשכנה כשיזוהה חיבור לרשת"
 
 #: kmkernel.cpp:752
 #, kde-format
@@ -4278,20 +4299,20 @@ msgstr "פתיחת קובץ שמירה אוטומטי נכשלה"
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "הזהות הוחלפה לשימוש בתעבורת ברירת המחדל:"
+msgstr[1] "שתי הזהויות האלו הוחלפו לשימוש בתעבורת ברירת המחדל:"
+msgstr[2] "%1 הזהויות האלו הוחלפו לשימוש בתעבורת ברירת המחדל:"
+msgstr[3] "%1 הזהויות האלו הוחלפו לשימוש בתעבורת ברירת המחדל:"
 
 #: kmkernel.cpp:1463
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "הזהות הוחלפה לשימוש בתעבורה שנערכה:"
+msgstr[1] "שתי הזהויות האלו הוחלפו לשימוש בתעבורה שנערכה:"
+msgstr[2] "%1 הזהויות האלו הוחלפו לשימוש בתעבורה שנערכה:"
+msgstr[3] "%1 הזהויות האלו הוחלפו לשימוש בתעבורה שנערכה:"
 
 #: kmkernel.cpp:1478
 #, kde-format
@@ -5497,6 +5518,11 @@ msgid ""
 "You can configure unified mailboxes, create custom ones or\n"
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
+"מוגדר אצלך יותר מחשבון דוא״ל אחד.\n"
+"להפעיל את יכולת תיבת הדוא״ל האחודה כדי להציג תוכן מאוחד של תיבת הדוא״ל "
+"הנכנס, הנשלח והטיוטות שלך?\n"
+"אפשר להגדיר תיבות דוא״ל אחודות, ליצור כאלו מותאמות אישית או\n"
+"להשבית את היכולת לחלוטין בהגדרות התוספים של KMail."
 
 #: kmmainwidget.cpp:4924
 #, kde-format
@@ -6357,6 +6383,8 @@ msgid ""
 "(or moving to an archive folder) the messages that are marked 'Important' or "
 "'Action Item'"
 msgstr ""
+"מונע מפקיעת תוקף אוטומטית של הודעות ישנות בתיקייה למחוק (או להעביר לתיקיית "
+"ארכיון) את ההודעות שמסומנות כ‚חשובה’ או ‚פריט משימה’"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
 #: settings/kmail.kcfg.in:58
