@@ -210,11 +210,7 @@ void IdentityNgPage::slotRemoveIdentity()
                 mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::IdentityNameRole));
             listIdentityNames.append(newModelIndex.data().toString());
         }
-        for (const QString &name : listIdentityNames) {
-            if (!mIdentityManager->removeIdentity(name)) {
-                qCWarning(KMAIL_LOG) << " impossible to remove identity " << name;
-            }
-        }
+        mIPage.mIdentityList->identityTreeModel()->removeIdentities(listIdentityNames);
         updateButtons();
     }
     save();
