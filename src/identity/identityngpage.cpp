@@ -69,7 +69,7 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
     // Identity
     mIPage.identitiesOnCurrentActivity->setVisible(false);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
-    mIPage.identitiesOnCurrentActivity->setVisible(KMailSettings::self()->plasmaActivitySupport());
+    setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
     mIPage.mIdentityList->setIdentityActivitiesAbstract(ActivitiesManager::self()->identityActivities());
 #endif
     load();
