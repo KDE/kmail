@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:40+0000\n"
+"POT-Creation-Date: 2024-09-17 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -563,106 +563,106 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "获取选项"
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:55
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "身份"
 
-#: configuredialog/configureaccountpage.cpp:66
+#: configuredialog/configureaccountpage.cpp:61
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "接收"
 
-#: configuredialog/configureaccountpage.cpp:73
+#: configuredialog/configureaccountpage.cpp:68
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "发送"
 
-#: configuredialog/configureaccountpage.cpp:79
+#: configuredialog/configureaccountpage.cpp:74
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP 服务器"
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:89
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "发送账户(至少添加一个)："
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:100
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "确认操作(&C)"
 
-#: configuredialog/configureaccountpage.cpp:107
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Before sending:"
 msgstr "发送前："
 
-#: configuredialog/configureaccountpage.cpp:109
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "拼写检查"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Never Automatically"
 msgstr "不自动"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "手动检查邮件时"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "检查全部邮件时"
 
-#: configuredialog/configureaccountpage.cpp:118
+#: configuredialog/configureaccountpage.cpp:113
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "发送发件箱中的消息(&M)："
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Now"
 msgstr "现在发送"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Later"
 msgstr "稍后发送"
 
-#: configuredialog/configureaccountpage.cpp:125
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "默认发送方式(&U)："
 
-#: configuredialog/configureaccountpage.cpp:129
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "启用撤销发送"
 
-#: configuredialog/configureaccountpage.cpp:200
+#: configuredialog/configureaccountpage.cpp:195
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "添加邮箱账户"
 
-#: configuredialog/configureaccountpage.cpp:201
+#: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Custom Account…"
 msgstr "自定义账户"
 
-#: configuredialog/configureaccountpage.cpp:221
+#: configuredialog/configureaccountpage.cpp:216
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -670,32 +670,32 @@ msgid ""
 "properly installed."
 msgstr "无法启动账户向导。请确保您正确安装了账户向导。"
 
-#: configuredialog/configureaccountpage.cpp:223
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "无法启动账户向导"
 
-#: configuredialog/configureaccountpage.cpp:271
+#: configuredialog/configureaccountpage.cpp:266
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "手动检查邮件时包含"
 
-#: configuredialog/configureaccountpage.cpp:279
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "关闭 KMail 时切换到脱机模式"
 
-#: configuredialog/configureaccountpage.cpp:286
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "启动时检查邮件"
 
-#: configuredialog/configureaccountpage.cpp:333
+#: configuredialog/configureaccountpage.cpp:328
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1365,7 +1365,6 @@ msgstr "转发时主题的前缀(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
-#: ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "删除(&V)"
@@ -1512,7 +1511,7 @@ msgid "Add"
 msgstr "添加"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3423,7 +3422,7 @@ msgstr "签名"
 msgid "Picture"
 msgstr "图像"
 
-#: identity/identitydialog.cpp:798
+#: identity/identitydialog.cpp:797
 #, fuzzy, kde-format
 #| msgid "Plasma activities"
 msgid "Activities"
@@ -3574,70 +3573,52 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "不要取消"
 
-#: identity/identityngpage.cpp:194 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:198
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>您是否要删除名为 <b>%1</b> 的身份？</qt>"
 
-#: identity/identityngpage.cpp:197 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:201
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "您是否要移除这些 %1 身份？"
 
-#: identity/identityngpage.cpp:200 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:204
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "删除身份"
 
-#: identity/identityngpage.cpp:201 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:205
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "删除(&R)"
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:236
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:239
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr ""
 
-#: identity/identityngpage.cpp:236 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:240
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "重命名"
 
-#: identity/identityngpage.cpp:246 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:251
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "设置为默认"
-
-#: identity/identitytreewidget.cpp:76
-#, kde-format
-msgctxt ""
-"%1: identity name. Used in the config dialog, section Identity, to indicate "
-"the default identity"
-msgid "%1 (Default)"
-msgstr "%1 (默认)"
-
-#: identity/identitytreewidget.cpp:104
-#, kde-format
-msgid "Identity Name"
-msgstr "身份名称"
-
-#: identity/identitytreewidget.cpp:104
-#, kde-format
-msgid "Email Address"
-msgstr "邮件地址："
 
 #: identity/newidentitydialog.cpp:38
 #, kde-format
@@ -6709,61 +6690,61 @@ msgid "Set from Address Book"
 msgstr "从地址簿中设置"
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
-#: ui/identityngpage.ui:17 ui/identitypage.ui:17
+#: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identityngpage.ui:31 ui/identitypage.ui:31
+#: ui/identityngpage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr "添加新身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identityngpage.ui:34 ui/identitypage.ui:34
+#: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr "添加(&A)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identityngpage.ui:44 ui/identitypage.ui:44
+#: ui/identityngpage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr "修改选中的身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identityngpage.ui:47 ui/identitypage.ui:47
+#: ui/identityngpage.ui:47
 #, kde-format
 msgid "&Modify…"
 msgstr "修改(&M)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identityngpage.ui:57 ui/identitypage.ui:57
+#: ui/identityngpage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr "重命名选中的身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identityngpage.ui:60 ui/identitypage.ui:60
+#: ui/identityngpage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "重命名(&R)"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identityngpage.ui:70 ui/identitypage.ui:70
+#: ui/identityngpage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr "删除选中的身份"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identityngpage.ui:86 ui/identitypage.ui:86
+#: ui/identityngpage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr "默认使用选中的身份"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identityngpage.ui:89 ui/identitypage.ui:89
+#: ui/identityngpage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "设置为默认(&D)"
@@ -7926,3 +7907,15 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
+
+#~ msgctxt ""
+#~ "%1: identity name. Used in the config dialog, section Identity, to "
+#~ "indicate the default identity"
+#~ msgid "%1 (Default)"
+#~ msgstr "%1 (默认)"
+
+#~ msgid "Identity Name"
+#~ msgstr "身份名称"
+
+#~ msgid "Email Address"
+#~ msgstr "邮件地址："

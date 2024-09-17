@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:40+0000\n"
+"POT-Creation-Date: 2024-09-17 00:40+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -656,14 +656,14 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "साधारण विकल्प"
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "परिचय"
 
-#: configuredialog/configureaccountpage.cpp:66
+#: configuredialog/configureaccountpage.cpp:61
 #, fuzzy, kde-format
 #| msgid "&Receiving"
 msgctxt ""
@@ -671,100 +671,100 @@ msgctxt ""
 msgid "Receiving"
 msgstr "प्राप्ति"
 
-#: configuredialog/configureaccountpage.cpp:73
+#: configuredialog/configureaccountpage.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "प्रेषण"
 
-#: configuredialog/configureaccountpage.cpp:79
+#: configuredialog/configureaccountpage.cpp:74
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:89
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "बाह्यगमन खाता (कम्तिमा एकमा थप्नुहोस्):"
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:100
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "यकीन पठाउनुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:107
+#: configuredialog/configureaccountpage.cpp:102
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Before sending:"
 msgstr "पठाउन परित्याग गरिदैछ"
 
-#: configuredialog/configureaccountpage.cpp:109
+#: configuredialog/configureaccountpage.cpp:104
 #, fuzzy, kde-format
 #| msgid "Confirm &before send"
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "पठाउन पहिला यकीन गर्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Never Automatically"
 msgstr "कहिल्यै पनि स्वचालित रूपमा होइन"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "म्यानुअलमा मेल जाँच गर्छ"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "सबैमा मेल जाँच गर्छ"
 
-#: configuredialog/configureaccountpage.cpp:118
+#: configuredialog/configureaccountpage.cpp:113
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "प्रेषण-मञ्जूषा फोल्डरमा सन्देश पठाउनुहोस्:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Now"
 msgstr "अहिले पठाउनुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Later"
 msgstr "पछि पठाउनुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:125
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "पूर्वनिर्धारित पठाउने बिधि:"
 
-#: configuredialog/configureaccountpage.cpp:129
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:200
+#: configuredialog/configureaccountpage.cpp:195
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Add Mail Account…"
 msgstr "खाता थप्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:201
+#: configuredialog/configureaccountpage.cpp:196
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Custom Account…"
 msgstr "खाता थप्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:221
+#: configuredialog/configureaccountpage.cpp:216
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
@@ -773,7 +773,7 @@ msgid ""
 "properly installed."
 msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: configuredialog/configureaccountpage.cpp:223
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
@@ -781,27 +781,27 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "खाता सिर्जना गर्न असमर्थ"
 
-#: configuredialog/configureaccountpage.cpp:271
+#: configuredialog/configureaccountpage.cpp:266
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "म्यानुअल मेल जाँचमा समावेश गर्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:279
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:286
+#: configuredialog/configureaccountpage.cpp:281
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "सुरुआतमा मेल जाँच गर्नुहोस्"
 
-#: configuredialog/configureaccountpage.cpp:333
+#: configuredialog/configureaccountpage.cpp:328
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1556,7 +1556,6 @@ msgstr "विषयवस्तु उपसर्ग पठाउनुहो�
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
-#: ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "हटाउनुहोस्"
@@ -1726,7 +1725,7 @@ msgid "Add"
 msgstr "थप्नुहोस्..."
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:243
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3886,7 +3885,7 @@ msgstr "हस्ताक्षर"
 msgid "Picture"
 msgstr "तस्वीर"
 
-#: identity/identitydialog.cpp:798
+#: identity/identitydialog.cpp:797
 #, fuzzy, kde-format
 #| msgid "Remove &Important Message Mark"
 msgid "Activities"
@@ -4066,13 +4065,13 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "सक्षम नपार्नुहोस्"
 
-#: identity/identityngpage.cpp:194 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:198
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: identity/identityngpage.cpp:197 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:201
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -4080,7 +4079,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 msgstr[1] "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: identity/identityngpage.cpp:200 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:204
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -4088,57 +4087,39 @@ msgid_plural "Remove Identities"
 msgstr[0] "परिचय हटाउनुहोस्"
 msgstr[1] "परिचय हटाउनुहोस्"
 
-#: identity/identityngpage.cpp:201 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:205
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "हटाउनुहोस्"
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:236
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:239
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "परिमार्जन गर्नुहोस्..."
 
-#: identity/identityngpage.cpp:236 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:240
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "पुन: नामकरण गर्नुहोस्"
 
-#: identity/identityngpage.cpp:246 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:251
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "पूर्वनिर्धारतका रूपमा सेट गर्नुहोस्"
-
-#: identity/identitytreewidget.cpp:76
-#, kde-format
-msgctxt ""
-"%1: identity name. Used in the config dialog, section Identity, to indicate "
-"the default identity"
-msgid "%1 (Default)"
-msgstr "%1 (पूर्वनिर्धारित)"
-
-#: identity/identitytreewidget.cpp:104
-#, kde-format
-msgid "Identity Name"
-msgstr "परिचय नाम"
-
-#: identity/identitytreewidget.cpp:104
-#, kde-format
-msgid "Email Address"
-msgstr "इमेल ठेगाना"
 
 #: identity/newidentitydialog.cpp:38
 #, fuzzy, kde-format
@@ -7551,65 +7532,65 @@ msgid "Set from Address Book"
 msgstr "ठेगाना पुस्तकबाट सेट गर्नुहोस्"
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
-#: ui/identityngpage.ui:17 ui/identitypage.ui:17
+#: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identityngpage.ui:31 ui/identitypage.ui:31
+#: ui/identityngpage.ui:31
 #, fuzzy, kde-format
 #| msgid "&Sender identity:"
 msgid "Add a new identity"
 msgstr "प्रेषक परिचय:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identityngpage.ui:34 ui/identitypage.ui:34
+#: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identityngpage.ui:44 ui/identitypage.ui:44
+#: ui/identityngpage.ui:44
 #, fuzzy, kde-format
 msgid "Modify the selected identity"
 msgstr "सार्दै चयन गरिएको हो होइन"
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identityngpage.ui:47 ui/identitypage.ui:47
+#: ui/identityngpage.ui:47
 #, fuzzy, kde-format
 #| msgid "&Modify..."
 msgid "&Modify…"
 msgstr "परिमार्जन गर्नुहोस्..."
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identityngpage.ui:57 ui/identitypage.ui:57
+#: ui/identityngpage.ui:57
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Rename the selected identity"
 msgstr "नक्कल सन्देश हटाउनुहोस्"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identityngpage.ui:60 ui/identitypage.ui:60
+#: ui/identityngpage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "पुन: नामकरण गर्नुहोस्"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identityngpage.ui:70 ui/identitypage.ui:70
+#: ui/identityngpage.ui:70
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgid "Remove the selected identity"
 msgstr "नक्कल सन्देश हटाउनुहोस्"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identityngpage.ui:86 ui/identitypage.ui:86
+#: ui/identityngpage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identityngpage.ui:89 ui/identitypage.ui:89
+#: ui/identityngpage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "पूर्वनिर्धारितका रूपमा सेट गर्नुहोस्"
@@ -8920,6 +8901,18 @@ msgstr[1] "\"अफिस बाहिरको\" जवाफ सम्पा�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgctxt ""
+#~ "%1: identity name. Used in the config dialog, section Identity, to "
+#~ "indicate the default identity"
+#~ msgid "%1 (Default)"
+#~ msgstr "%1 (पूर्वनिर्धारित)"
+
+#~ msgid "Identity Name"
+#~ msgstr "परिचय नाम"
+
+#~ msgid "Email Address"
+#~ msgstr "इमेल ठेगाना"
 
 #~ msgid "Invalid Email Address"
 #~ msgstr "अवैध इमेल ठेगाना"

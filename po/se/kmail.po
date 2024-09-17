@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-16 00:40+0000\n"
+"POT-Creation-Date: 2024-09-17 00:40+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -557,106 +557,106 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:55
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:66
+#: configuredialog/configureaccountpage.cpp:61
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Vuostáiváldin"
 
-#: configuredialog/configureaccountpage.cpp:73
+#: configuredialog/configureaccountpage.cpp:68
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Sádden"
 
-#: configuredialog/configureaccountpage.cpp:79
+#: configuredialog/configureaccountpage.cpp:74
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:94
+#: configuredialog/configureaccountpage.cpp:89
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Manni konttut (lasit unnimus ovtta):"
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:100
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Sádde nannema"
 
-#: configuredialog/configureaccountpage.cpp:107
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Before sending:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:109
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Never Automatically"
 msgstr "Ii goassege automáhtalaččat"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Go ieš iskkat e-boastta"
 
-#: configuredialog/configureaccountpage.cpp:116
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "Juohke háve go e-boasta iskojuvvo"
 
-#: configuredialog/configureaccountpage.cpp:118
+#: configuredialog/configureaccountpage.cpp:113
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Sádde &reivviid olggosbovssas:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Now"
 msgstr "Sádde dál"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Later"
 msgstr "Sádde maŋibut"
 
-#: configuredialog/configureaccountpage.cpp:125
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "&Standárda sáddenvuohki:"
 
-#: configuredialog/configureaccountpage.cpp:129
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:200
+#: configuredialog/configureaccountpage.cpp:195
 #, fuzzy, kde-format
 msgid "Add Mail Account…"
 msgstr "&Lasit konttu …"
 
-#: configuredialog/configureaccountpage.cpp:201
+#: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Custom Account…"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:221
+#: configuredialog/configureaccountpage.cpp:216
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -664,32 +664,32 @@ msgid ""
 "properly installed."
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:223
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:271
+#: configuredialog/configureaccountpage.cpp:266
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:279
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:286
+#: configuredialog/configureaccountpage.cpp:281
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:333
+#: configuredialog/configureaccountpage.cpp:328
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1354,7 +1354,6 @@ msgstr "«Sádde viidáset» fáddáprefivssat"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
-#: ui/identitypage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Váldde eret"
@@ -1507,7 +1506,7 @@ msgid "Add"
 msgstr "Lasit"
 
 #: configuredialog/configuredialoglistview.cpp:57
-#: identity/identityngpage.cpp:238 identity/identitypage.cpp:295
+#: identity/identityngpage.cpp:243
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3398,7 +3397,7 @@ msgstr "Vuolláičála"
 msgid "Picture"
 msgstr "Govva"
 
-#: identity/identitydialog.cpp:798
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Activities"
 msgstr ""
@@ -3544,73 +3543,55 @@ msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr ""
 
-#: identity/identityngpage.cpp:194 identity/identitypage.cpp:232
+#: identity/identityngpage.cpp:198
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Háliidat go duođaid váldit identitehta nammaduvvon <b>«%1»</b> eret?</qt>"
 
-#: identity/identityngpage.cpp:197 identity/identitypage.cpp:235
+#: identity/identityngpage.cpp:201
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: identity/identityngpage.cpp:200 identity/identitypage.cpp:238
+#: identity/identityngpage.cpp:204
 #, fuzzy, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Váldde eret identitehta"
 msgstr[1] "Váldde eret identitehta"
 
-#: identity/identityngpage.cpp:201 identity/identitypage.cpp:239
+#: identity/identityngpage.cpp:205
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Váldde eret"
 
-#: identity/identityngpage.cpp:232 identity/identitypage.cpp:290
+#: identity/identityngpage.cpp:236
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:235 identity/identitypage.cpp:292
+#: identity/identityngpage.cpp:239
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Rievdat …"
 
-#: identity/identityngpage.cpp:236 identity/identitypage.cpp:293
+#: identity/identityngpage.cpp:240
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Rievdat nama"
 
-#: identity/identityngpage.cpp:246 identity/identitypage.cpp:299
+#: identity/identityngpage.cpp:251
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "Geavat standárdan"
-
-#: identity/identitytreewidget.cpp:76
-#, kde-format
-msgctxt ""
-"%1: identity name. Used in the config dialog, section Identity, to indicate "
-"the default identity"
-msgid "%1 (Default)"
-msgstr "%1 (Standárda)"
-
-#: identity/identitytreewidget.cpp:104
-#, kde-format
-msgid "Identity Name"
-msgstr "Identitehtanamma"
-
-#: identity/identitytreewidget.cpp:104
-#, kde-format
-msgid "Email Address"
-msgstr "E-boastačujuhus:"
 
 #: identity/newidentitydialog.cpp:38
 #, kde-format
@@ -6659,61 +6640,61 @@ msgid "Set from Address Book"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
-#: ui/identityngpage.ui:17 ui/identitypage.ui:17
+#: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
-#: ui/identityngpage.ui:31 ui/identitypage.ui:31
+#: ui/identityngpage.ui:31
 #, kde-format
 msgid "Add a new identity"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mButtonAdd)
-#: ui/identityngpage.ui:34 ui/identitypage.ui:34
+#: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
-#: ui/identityngpage.ui:44 ui/identitypage.ui:44
+#: ui/identityngpage.ui:44
 #, kde-format
 msgid "Modify the selected identity"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
-#: ui/identityngpage.ui:47 ui/identitypage.ui:47
+#: ui/identityngpage.ui:47
 #, fuzzy, kde-format
 msgid "&Modify…"
 msgstr "&Rievdat …"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
-#: ui/identityngpage.ui:57 ui/identitypage.ui:57
+#: ui/identityngpage.ui:57
 #, kde-format
 msgid "Rename the selected identity"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mRenameButton)
-#: ui/identityngpage.ui:60 ui/identitypage.ui:60
+#: ui/identityngpage.ui:60
 #, kde-format
 msgid "&Rename"
 msgstr "&Rievdat nama"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRemoveButton)
-#: ui/identityngpage.ui:70 ui/identitypage.ui:70
+#: ui/identityngpage.ui:70
 #, kde-format
 msgid "Remove the selected identity"
 msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identityngpage.ui:86 ui/identitypage.ui:86
+#: ui/identityngpage.ui:86
 #, kde-format
 msgid "Use the selected identity by default"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mSetAsDefaultButton)
-#: ui/identityngpage.ui:89 ui/identitypage.ui:89
+#: ui/identityngpage.ui:89
 #, kde-format
 msgid "Set as &Default"
 msgstr "&Geavat standárdan"
@@ -7760,3 +7741,15 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgctxt ""
+#~ "%1: identity name. Used in the config dialog, section Identity, to "
+#~ "indicate the default identity"
+#~ msgid "%1 (Default)"
+#~ msgstr "%1 (Standárda)"
+
+#~ msgid "Identity Name"
+#~ msgstr "Identitehtanamma"
+
+#~ msgid "Email Address"
+#~ msgstr "E-boastačujuhus:"
