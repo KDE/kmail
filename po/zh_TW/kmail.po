@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-08-26 16:07+0900\n"
+"PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
@@ -127,7 +127,7 @@ msgstr "數個技術性修正"
 
 #: aboutdata.cpp:47
 msgid "System tray notification"
-msgstr "系統閘通知"
+msgstr "系統匣通知"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
