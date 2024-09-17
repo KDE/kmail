@@ -14,7 +14,6 @@
 #include "editor/composer.h"
 #include "job/clearcachejobinfolderandsubfolderjob.h"
 #include "job/composenewmessagejob.h"
-#include "kcolorscheme_version.h"
 #include "kmcommands.h"
 #include "kmreadermainwin.h"
 #include "searchdialog/searchwindow.h"

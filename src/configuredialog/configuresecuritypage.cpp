@@ -33,7 +33,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QPointer>
 #include <QWhatsThis>
 #include <QWindow>
-#include <ki18n_version.h>
 
 QString SecurityPage::helpAnchor() const
 {
