@@ -71,6 +71,10 @@ IdentityNgPage::IdentityNgPage(QWidget *parent)
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
     mIPage.mIdentityList->setIdentityActivitiesAbstract(ActivitiesManager::self()->identityActivities());
+    connect(mIPage.identitiesOnCurrentActivity,
+            &QCheckBox::clicked,
+            mIPage.mIdentityList,
+            &KIdentityManagementWidgets::IdentityTreeView::setEnablePlasmaActivities);
 #endif
     load();
 }
