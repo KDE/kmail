@@ -105,5 +105,5 @@ private:
     bool mHtmlBody = false;
 };
 
-Q_DECLARE_TYPEINFO(CommandLineInfo, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(CommandLineInfo, Q_RELOCATABLE_TYPE);
 KMAILTESTS_TESTS_EXPORT QDebug operator<<(QDebug d, const CommandLineInfo &t);

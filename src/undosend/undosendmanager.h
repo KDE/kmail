@@ -27,4 +27,4 @@ public:
 
     void addItem(const UndoSendManagerInfo &info);
 };
-Q_DECLARE_TYPEINFO(UndoSendManager::UndoSendManagerInfo, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(UndoSendManager::UndoSendManagerInfo, Q_RELOCATABLE_TYPE);

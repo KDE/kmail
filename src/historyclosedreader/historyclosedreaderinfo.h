@@ -30,5 +30,5 @@ private:
     Akonadi::Item::Id mItem = Akonadi::Item::Id(-1);
     // TODO add Item::Collection ?
 };
-Q_DECLARE_TYPEINFO(HistoryClosedReaderInfo, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(HistoryClosedReaderInfo, Q_RELOCATABLE_TYPE);
 QDebug operator<<(QDebug d, const HistoryClosedReaderInfo &t);
