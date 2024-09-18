@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-16 07:54+0300\n"
+"PO-Revision-Date: 2024-09-17 20:10+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2656,6 +2656,8 @@ msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
+"מפתח ההצפנה אמין לחלוטין או שהוא נחתם על ידי מפתח אמין לחלוטין אחר. אפשר "
+"ללחוץ על הסמל לפרטים נוספים."
 
 #: editor/kmcomposerwin.cpp:4026
 #, kde-format
@@ -3190,6 +3192,10 @@ msgid ""
 "encrypt copies of outgoing messages to you using S/MIME; normal mail "
 "functions will not be affected.</p></qt>"
 msgstr ""
+"<qt><p>אישור ה־S/MIME שייבחר כאן ישמש להצפנות ההודעות לעצמך וליכולת „צירוף "
+"האישור שלי” בחלונית כתיבת ההודעות.</p><p>אפשר להשאיר את זה ריק, אבל KMail לא "
+"יוכל להצפין עותקים של הודעות יוצאות אליך עם S/MIME, תפקודי הדוא״ל הרגילים לא "
+"יושפעו.</p></qt>"
 
 #: identity/identitydialog.cpp:446
 #, kde-format
@@ -3453,6 +3459,10 @@ msgid ""
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
+"אחד ממפתחות חתימת OpenPGP המוגדרים לא מכיל אף מזהה משתמש עם כתובת הדוא״ל "
+"המוגדרת לזהות הזאת (%1).\n"
+"המצב הזה עלול להוביל להודעות אזהרה בצד המקבל כשמנסים לאמת חתימות עם ההגדרה "
+"הזאת."
 
 #: identity/identitydialog.cpp:822
 #, kde-format
@@ -3920,19 +3930,19 @@ msgid "Set subject of message"
 msgstr "הגדרת נושא ההודעה"
 
 #: kmail_options.h:19
-#, fuzzy, kde-format
+#, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "הוסף מצורף למכתב. ניתן לחזור על זאת"
+msgstr "שליחת עותק: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
 
 #: kmail_options.h:22
-#, fuzzy, kde-format
+#, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "הוסף מצורף למכתב. ניתן לחזור על זאת"
+msgstr "שליחת עותק סמוי: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
 
 #: kmail_options.h:25
-#, fuzzy, kde-format
+#, kde-format
 msgid "Set replyTo to 'address'"
-msgstr "          \"address\" שלח עותק לכתובת"
+msgstr "שליחת תגובה (replyTo) אל ‚כתובת’ (address)"
 
 #: kmail_options.h:28
 #, kde-format
@@ -4700,9 +4710,9 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] "ההודעה הנבחרת מוצפנת. אי אפשר למחוק קבצים מצורפים מהודעות מוצפנות."
-msgstr[1] "הבחירה מכילה הודעות מוצפנות, מהן אי אפשר כרגע למחוק קבצים מצורפים."
-msgstr[2] ""
-msgstr[3] ""
+msgstr[1] "הבחירה מכילה הודעות מוצפנות, שאי אפשר למחוק מהן קבצים מצורפים כרגע."
+msgstr[2] "הבחירה מכילה הודעות מוצפנות, שאי אפשר למחוק מהן קבצים מצורפים כרגע."
+msgstr[3] "הבחירה מכילה הודעות מוצפנות, שאי אפשר למחוק מהן קבצים מצורפים כרגע."
 
 #: kmmainwidget.cpp:2397
 #, kde-format
@@ -4737,6 +4747,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>נא לשים לב שמחיקת קבצים מצורפים מהודעה שחתומה קריפטוגרפית יפגום "
+"באישור שלה.</p></html>"
 
 #: kmmainwidget.cpp:2414
 #, kde-format
@@ -4744,6 +4756,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>אי אפשר למחוק קבצים מצורפים מהודעות מוצפנות. <br />הודעות מוצפנות "
+"לא תהיינה חלק מהמחיקה.</p></html>"
 
 #: kmmainwidget.cpp:2419
 #, kde-format
@@ -4823,7 +4837,7 @@ msgstr "יי&בוא הודעות…"
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
-msgstr ""
+msgstr "&ניפוי שגיאות בסקריפט Sieve…"
 
 #: kmmainwidget.cpp:2997
 #, kde-format
@@ -5722,7 +5736,7 @@ msgstr "נוספה בדיקה לכתובות דיוג"
 
 #: kmreaderwin.cpp:276
 msgid "Added Check DKIM"
-msgstr ""
+msgstr "נוספה בדיקת DKIM"
 
 #: kmreaderwin.cpp:277
 msgid "Added Markdown Editing Support"
@@ -6410,6 +6424,8 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
+"<qt><p>נא לבחור האם להורות ל־KMail לשלוח את כל ההודעות בדוא״ל היוצא בבדיקות "
+"דוא״ל ידניות או בכולן, או האם לא לשלוח הודעות אוטומטית כלל.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg.in:77
@@ -6558,12 +6574,14 @@ msgid ""
 "The interval used to create the backups is set here. You can disable "
 "autosaving by setting it to the value 0."
 msgstr ""
+"אפשר ליצור עותק גיבוי של הטקסט בחלונית עריכת ההודעות באופן סדיר. ההפרש בין "
+"ביצוע הגיבויים מוגדר כאן. אפשר להשבית שמירה אוטומטית על ידי הגדרת הערך ל־0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg.in:251
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr ""
+msgstr "הצגת לוח ניהול מקטעי טקסט והוספה בחלונית עריכת ההודעות."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.in:257
@@ -7916,8 +7934,7 @@ msgid "Prefer &Plain Text to HTML"
 msgstr "העדפת טקסט &פשוט על פני HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Use Global Setting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "להשתמש בהגדרות כלליות"
