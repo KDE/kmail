@@ -120,11 +120,9 @@ KMMainWin::KMMainWin(QWidget *)
     createGUI(QStringLiteral("kmmainwin.rc"));
 
     // must be after createGUI, otherwise e.g toolbar settings are not loaded
-
-    KConfigGroup grp(KMKernel::self()->config()->group(QStringLiteral("Main Window")));
-    setStateConfigGroup(grp.name());
-    applyMainWindowSettings(stateConfigGroup());
-    setAutoSaveSettings(grp, true);
+    setStateConfigGroup(QStringLiteral("Main Window"));
+    // The next line implicitly calls applyMainWindowSettings(stateConfigGroup())
+    setAutoSaveSettings(stateConfigGroup(), true);
 
     connect(PimCommon::BroadcastStatus::instance(), &PimCommon::BroadcastStatus::statusMsg, this, &KMMainWin::displayStatusMessage);
 

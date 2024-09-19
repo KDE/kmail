@@ -32,8 +32,29 @@ void SecondaryWindow::closeEvent(QCloseEvent *e)
     // window is closed.
     if (kmkernel->haveSystemTrayApplet()) {
         // BEGIN of code borrowed from KMainWindow::closeEvent
-        // Save settings if auto-save is enabled, and settings have changed
-        if (settingsDirty() && autoSaveSettings()) {
+
+        // Clear the flag that tells KMainWindow to not restore the window
+        // position for the next window to be opened, see KMainWindow::closeEvent()
+        // and KMainWindow::applyMainWindowSettings().  We are not going to pass
+        // the event on to KMainWindow so this needs to be done here.
+        KConfigGroup grp = stateConfigGroup();
+        if (grp.isValid()) {
+            grp.deleteEntry("RestorePositionForNextInstance");
+        }
+
+        // Save settings if auto-save is enabled.  We want to save the window
+        // position as well as the size, so save the settings regardless of
+        // whether they have changed.  Otherwise, the applyMainWindowSettings()
+        // done when opening the window will have set the state to "clean" and
+        // the window position will not be saved even if the window has been
+        // moved.  On Unix platforms the state is set to "dirty" if the window
+        // is resized but not if it is simply moved, see KMainWindow::event().
+        //
+        // saveAutoSaveSettings() saves the settings to the autoSaveGroup().
+        // This will have been set at construction time to be the same as
+        // the stateConfigGroup();  the settings must be saved to that group
+        // because applyMainWindowSettings() always restores from there.
+        if (autoSaveSettings()) {
             saveAutoSaveSettings();
         }
 
