@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-09-18 00:40+0000\n"
-"PO-Revision-Date: 2024-09-17 20:10+0300\n"
+"PO-Revision-Date: 2024-09-18 23:04+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -1631,9 +1631,9 @@ msgid "Reading"
 msgstr "קריאה"
 
 #: configuredialog/configuresecuritypage.cpp:51
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message Disposition Notifications"
-msgstr "רשימת ההודעות"
+msgstr "דיווחי מצב הודעה"
 
 #: configuredialog/configuresecuritypage.cpp:57
 #, kde-format
@@ -2029,13 +2029,13 @@ msgstr "&דחוף"
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "&בקשת הודעת תנועת הודעה"
+msgstr "&בקשת דיווח מצב הודעה"
 
 #: editor/kmcomposerwin.cpp:1397
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
-msgstr ""
+msgstr "&בקשת אישור מסירה"
 
 #: editor/kmcomposerwin.cpp:1402
 #, kde-format
@@ -2165,7 +2165,7 @@ msgstr "חתימה"
 #: editor/kmcomposerwin.cpp:1517
 #, kde-format
 msgid "&Cryptographic Message Format"
-msgstr ""
+msgstr "תבנית הודעה &קריפטוגרפית"
 
 #: editor/kmcomposerwin.cpp:1520
 #, kde-format
@@ -3221,6 +3221,11 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
+"<qt><p>מפתח ה־OpenPGP שייבחר כאן ישמש להצפנת הודעות לעצמך וליכולת „צירוף "
+"המפתח הציבורי שלי” בחלון עריכת ההודעות. אפשר גם להשתמש במפתחות GnuPG.</"
+"p><p>אפשר להשאיר את זה ריק אבל KMail לא יוכל להצפין את העותקים של ההודעות "
+"היוצאות אליך באמצעות OpenPGP, תפקודי הדוא״ל הרגילים לאיושפעו.</p><p>אפשר "
+"ללמוד עוד על מפתחות דרך <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:512
 #, kde-format
@@ -6622,9 +6627,9 @@ msgstr "בדיקת האיות לפני השליחה"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:223
-#, fuzzy, kde-format
+#, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "רשימת ההודעות"
+msgstr "לשלוח &דיווחי מצב הודעה אוטומטית"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:224
@@ -6636,6 +6641,10 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
+"<qt><p>יש להפעיל אפשרות זו כדי ש־KMail יבקש דיווחי מצב הודעה (MDN) עבור כל "
+"הודעה יוצאת.</p><p>אפשרות זו משפיעה רק על ברירת המחדל, עדיין ניתן להפעיל או "
+"לכבות בקשת דיווח מצב הודעה עבור כל הודעה בנפרד בחלונית כתיבת ההודעות, בתפריט "
+"<em>אפשרויות</em>-><em>בקשת דיווח מצב הודעה</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
@@ -7162,7 +7171,7 @@ msgstr "יש לבחור באפשרות הזאת כדי לשמור את ההוד�
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Store Messages Encrypted</h1>\n"
@@ -7175,13 +7184,13 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>שמור הודעות בצורה מוצפנת</h1>\n"
-"אם אפשרות זו נבחרת, הודעות שנשלחו יישמרו בצורתן המוצפנת, כפי שהן נשלחו. דבר "
-"זה אינו מומלץ, מכיוון שלא תוכל עוד לקרוא את ההודעות במקרה שתוקף תעודה דרושה "
-"כלשהי יפוג.\n"
+"<h1>אחסון הודעות בצורה מוצפנת</h1>\n"
+"אם האפשרות הזאת מסומנת, הודעות שנשלחו תאוחסנה בצורתן המוצפנת, כפי שנשלחו. "
+"ההגדרה הזאת לא מומלצת, מכיוון שלא יתאפשר עוד לקרוא את ההודעות במקרה שתוקף "
+"אישור הכרחי כלשהיויפוג.\n"
 "<p>\n"
-"עם זאת, ייתכן שישנם כללים מקומיים שדורשים שתפעיל אפשרות זו. אם אינך בטוח מה "
-"לעשות, שאל את המנהל המקומי שלך."
+"עם זאת, ייתכן שישנם כללים מקומיים שדורשים להפעיל את האפשרות הזאת. במקרה של "
+"ספק, מוטב לשאול את ההנהלה המקומית שלך."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
@@ -7578,6 +7587,22 @@ msgid ""
 "sense e.g. for customer relationship management, it has been made available."
 "</li></ul></qt>"
 msgstr ""
+"<qt><h3>מדיניות דיווח מצב הודעה</h3><p>דיווחי מצב הודעה (MDN) הם הכללה של מה "
+"שמכונה בדרך כלל <b>אישור קריאה</b>. מחבר ההודעה מבקש דיווח מצב, ותוכנת "
+"הדוא״ל של הנמען מייצרת תשובה שממנה יכול המחבר ללמוד מה קרה להודעה. סוגי "
+"מצבים נפוצים כוללים <b>הוצגה</b> (כלומר נקראה), <b>נמחקה</b> ו<b>הועברה</b> "
+"(למשל, נשלחה הלאה).</p><p>האפשרויות הבאות זמינות כדי לשלוט באופן שבו KMail "
+"שולח דיווחי מצב הודעה:</p><ul><li><em>התעלמות</em>: מתעלם מכל בקשה לדיווח "
+"מצב הודעה. לעולם לא יישלח דיווח מצב באופן אוטומטי (מומלץ).</"
+"li><li><em>לשאול</em>: עונה לבקשות רק לאחר בקשת אישור מהמשתמש. כך ניתן לשלוח "
+"דיווחי מצב עבור הודעות נבחרות, תוך דחייה או התעלמות מאחרות.</"
+"li><li><em>דחייה</em>: תמיד שולח הודעת <b>דחייה</b>. זה רק <em>מעט</em> יותר "
+"טוב מאשר תמיד לשלוח דיווחי מצב. המחבר עדיין יידע שננקטה פעולה על ההודעה, אך "
+"לא יוכל לדעת אם היא נמחקה או נקראה וכו׳.</li><li><em>לשלוח תמיד</em>: תמיד "
+"שולח את דיווח מצב ההודעה המבוקש. משמעות הדבר היא שמוען ההודעה ידע מתי ננקטה "
+"פעולה על ההודעה, ובנוסף, מה קרה לה (הוצגה, נמחקה וכו'׳. אפשרות זו אינה "
+"מומלצת כלל, אך מכיוון שהיא הגיונית, למשל, לניהול קשרי לקוחות, היא זמינה.</"
+"li></ul></qt>"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioIgnore)
 #: ui/securitypagemdntab.ui:33
@@ -7631,17 +7656,17 @@ msgstr "כותרות בלבד"
 #: ui/securitypagemdntab.ui:142
 #, kde-format
 msgid "Do not send MDNs in response to encrypted messages"
-msgstr ""
+msgstr "לא לשלוח דיווחי מצב הודעה בתגובה להודעות מוצפנות"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarning)
 #: ui/securitypagemdntab.ui:152
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
 "privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
-"<b>אזהרה:</b> החזרת אישורים ללא הבחנה פוגעת בפרטיותך. <a href=\"whatsthis:"
-"%1\">עוד...</a>"
+"<b>אזהרה:</b> החזרת אישורים ללא אבחנה מערערת את פרטיותך. <a href=\"whatsthis-"
+"mdn\">עוד על דיווחי מצב הודעה…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:17
@@ -7790,9 +7815,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ignore HTTP CRL distribution point of certificates"
-msgstr "אל תשלח תעו&דות"
+msgstr "התעלמות מנקודת הפצת רשימות שלילת אישורים ב־HTTP של אישורים"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:176
@@ -7859,9 +7884,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:237
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ignore LDAP CRL distribution point of certificates"
-msgstr "אל תשלח תעו&דות"
+msgstr "התעלמות מנקודת הפצת רשימות שלילת אישורים ב־LDAP של אישורים"
 
 #. i18n: ectx: property (text), widget (QLabel, customLDAPLabel)
 #: ui/smimeconfiguration.ui:246
