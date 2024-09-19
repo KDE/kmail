@@ -91,10 +91,8 @@ void KMReaderMainWin::initKMReaderMainWin()
     setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
     mMsgActions->setupForwardingActionsList(this);
 
-    KConfigGroup grp(KMKernel::self()->config()->group(QStringLiteral("Separate Reader Window")));
-    setStateConfigGroup(grp.name());
-    applyMainWindowSettings(stateConfigGroup());
-    setAutoSaveSettings(grp, true);
+    setStateConfigGroup(QStringLiteral("Separate Reader Window"));
+    setAutoSaveSettings(stateConfigGroup(), true);
 
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
