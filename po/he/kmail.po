@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-18 23:04+0300\n"
+"PO-Revision-Date: 2024-09-19 22:12+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4307,6 +4307,8 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
+"פתיחת קובץ שמירה אוטומטית %1 נכשלה.\n"
+"סיבה: %2"
 
 #: kmkernel.cpp:879
 #, kde-format
@@ -4730,7 +4732,7 @@ msgstr[2] "מחיקת צרופות מהודעה מוצפנת"
 msgstr[3] "מחיקת צרופות מהודעות מוצפנות"
 
 #: kmmainwidget.cpp:2402
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4738,13 +4740,17 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>האם אתה בטוח שברצונך למחוק את ההודעה הנבחרת?<br>מרגע שהיא תימחק, לא ניתן "
-"יהיה לשחזר אותה.</qt>"
+"<html><p>למחוק את כל הקבצים המצורפים מההודעה הנבחרת?<br />לאחר מחיקתם לא "
+"ניתן לשחזר אותם.</p></html>"
 msgstr[1] ""
-"<qt>האם אתה בטוח שברצונך למחוק את %1 ההודעות הנבחרות?<br>מרגע שהן יימחקו, לא "
-"ניתן יהיה לשחזר אותן.</qt>"
+"<html><p>למחוק את כל הקבצים המצורפים משתי ההודעות הנבחרות?<br />לאחר מחיקתם "
+"לא ניתן לשחזר אותם.</p></html>"
 msgstr[2] ""
+"<html><p>למחוק את כל הקבצים המצורפים מ־%1 ההודעות הנבחרות?<br />לאחר מחיקתם "
+"לא ניתן לשחזר אותם.</p></html>"
 msgstr[3] ""
+"<html><p>למחוק את כל הקבצים המצורפים מ־%1 ההודעות הנבחרות?<br />לאחר מחיקתם "
+"לא ניתן לשחזר אותם.</p></html>"
 
 #: kmmainwidget.cpp:2409
 #, kde-format
@@ -7585,9 +7591,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Validate certificates using CRLs"
-msgstr "השתמש ברשימות בי&טול תעודות (CRL)"
+msgstr "אימות אישורים מול רשימות ש&לילת אישורים (CRL)"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:30
@@ -7614,15 +7620,15 @@ msgstr "אימות אישורים מקוון"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/smimeconfiguration.ui:50
-#, fuzzy, kde-format
+#, kde-format
 msgid "OCSP responder URL:"
-msgstr "חתימה תקינה"
+msgstr "כתובת משיב OCSP:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ui/smimeconfiguration.ui:60
-#, fuzzy, kde-format
+#, kde-format
 msgid "OCSP responder signature:"
-msgstr "חתימה תקינה"
+msgstr "חתימת משיב OCSP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
@@ -7811,6 +7817,12 @@ msgid ""
 "The syntax is \"HOST\" or \"HOST:PORT\". If PORT is omitted, port 389 "
 "(standard LDAP port) is used."
 msgstr ""
+"מילוי שרת LDAP כאן יגרום לכל בקשות ה־LDAP לעבור דרך השרת הזה קודם.\n"
+"ליתר דיוק, ההגדרה הזאת דורסת כל חלק שהוגדר של מארח ופתחה בכתובת ה־LDAP ואפשר "
+"גם להשתמש בו אם המארח והפתחה הושמטו מהכתובת. ייעשה שימוש בשרתי LDAP אחרים אם "
+"החיבור ל„מתווך” נכשל.\n"
+"התחביר הוא „מארח” או „מארח:פתחה” (באנגלית זה הפוך). אם הושמטה הפתחה, ייעשה "
+"שימוש בפתחה 389 (פתחת ברירת המחדל של LDAP)."
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
 #: ui/xfaceconfigurator.ui:14
