@@ -7958,15 +7958,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (standard)"
-
-#~ msgid "Identity Name"
-#~ msgstr "Identitetsnavn"
-
-#~ msgid "Email Address"
-#~ msgstr "E-postadresse"

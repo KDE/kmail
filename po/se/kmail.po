@@ -7741,15 +7741,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (Standárda)"
-
-#~ msgid "Identity Name"
-#~ msgstr "Identitehtanamma"
-
-#~ msgid "Email Address"
-#~ msgstr "E-boastačujuhus:"
