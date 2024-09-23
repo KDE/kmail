@@ -1673,7 +1673,10 @@ void KMComposerWin::changeCryptoAction()
         const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
-        setSigning((canOpenPGPSign || canSMIMESign) && ident.pgpAutoSign());
+        // Must use KMComposerWin::pgpAutoSign() here and not Identity::pgpAutoSign(),
+        // because the former takes account of both the global defaults and the
+        // identity-specific override.
+        setSigning((canOpenPGPSign || canSMIMESign) && pgpAutoSign());
     }
 }
 
