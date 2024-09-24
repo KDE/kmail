@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -8728,49 +8728,41 @@ msgstr ""
 "Синтакса је „domacin“ или „domacin:port“. Ако се порт изостави, узима се 389 "
 "(стандардни ЛДАП порт)."
 
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Format"
-msgid "Form"
-msgstr "Формат"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, fuzzy, kde-format
 #| msgid "&Send picture with every message"
 msgid "Send picture with every message:"
 msgstr "Пошаљи &слику са сваком поруком"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr ""
 
 # >> @item:inlistbox Default send method:
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, fuzzy, kde-format
 #| msgid "Send Now"
 msgid "Send both"
 msgstr "пошаљи одмах"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>KMail can send a small (48x48 pixels), low-quality, monochrome "
@@ -8787,7 +8779,7 @@ msgstr ""
 "симбол. Приказује се у поштанском клијенту примаоца (ако је подржано).</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr ""
@@ -8921,6 +8913,12 @@ msgstr[3] "Одговор ван‑канцеларије је активан н
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Увеличање"
+
+#, fuzzy
+#~| msgctxt "@title:group"
+#~| msgid "Format"
+#~ msgid "Form"
+#~ msgstr "Формат"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -7744,44 +7744,38 @@ msgstr ""
 "务器。\n"
 "语法为：“主机名”或“主机名:端口”。如果省略端口，则默认采用标准 LDAP 端口 389。"
 
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, kde-format
-msgid "Form"
-msgstr "表单"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, kde-format
 msgid "Send picture with every message:"
 msgstr "每封信都发送图像："
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr "不发送"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr "发送彩色图像 (Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr "发送黑白图像 (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, kde-format
 msgid "Send both"
 msgstr "发送两种图像"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, kde-format
 msgid ""
 "KMail can send a small (48x48 pixels) low-quality picture with every "
@@ -7792,7 +7786,7 @@ msgstr ""
 "像或是一个符号。如果收件人的邮件客户端支持，它会被恰当显示。"
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr "关于当前模式的信息文本！"
@@ -7907,6 +7901,9 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
+
+#~ msgid "Form"
+#~ msgstr "表单"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

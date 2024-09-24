@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2024-09-11 21:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -7994,44 +7994,38 @@ msgstr ""
 "فشل الاتصال ب 'الوكيل'بنية الأمر \"HOST\" أو \"HOST:PORT\". إذا حُذف المنفذ، "
 "سيستخدم منفذ 389 (منفذ LADP معياري)."
 
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, kde-format
-msgid "Form"
-msgstr "استمارة"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, kde-format
 msgid "Send picture with every message:"
 msgstr "أرسل صورة مع كلّ رسالة:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr "لا تُرْسل"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr "أرسل لون (وجه)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr "أَرسَل صورة أُحاديَّة اللَّون (وجه-إكس)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, kde-format
 msgid "Send both"
 msgstr "أرسل كليهما"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, kde-format
 msgid ""
 "KMail can send a small (48x48 pixels) low-quality picture with every "
@@ -8043,7 +8037,7 @@ msgstr ""
 "مدعومة) ."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr "نص إعلاميّ حول الوضع الحالي!"
@@ -8168,6 +8162,9 @@ msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "التكبير: %1٪"
+
+#~ msgid "Form"
+#~ msgstr "استمارة"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

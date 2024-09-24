@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -8657,48 +8657,40 @@ msgstr ""
 "Sintaksa je „DOMACIN“ ili „DOMACIN:PORT“. Ako se port izostavi, koristiće se "
 "389 (standardni LDAP port)."
 
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, fuzzy, kde-format
-#| msgctxt "@title:group"
-#| msgid "Format"
-msgid "Form"
-msgstr "Format"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, fuzzy, kde-format
 #| msgid "&Send picture with every message"
 msgid "Send picture with every message:"
 msgstr "Pošalji &sliku sa svakom porukom"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, fuzzy, kde-format
 #| msgid "Send Now"
 msgid "Send both"
 msgstr "Pošalji odmah"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>KMail can send a small (48x48 pixels), low-quality, monochrome "
@@ -8715,7 +8707,7 @@ msgstr ""
 "prikazana u klijentu primaoca e-pošte (ako je podržan).</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr ""
@@ -8848,6 +8840,12 @@ msgstr[2] "Odgovor „van kancelarije“ aktivan na serveruma"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Zumiraj"
+
+#, fuzzy
+#~| msgctxt "@title:group"
+#~| msgid "Format"
+#~ msgid "Form"
+#~ msgstr "Format"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

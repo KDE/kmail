@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2024-09-10 10:34+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -8095,44 +8095,38 @@ msgstr ""
 "La sintaxi és «màquina» o «màquina:port». Si s'omet el port, s'utilitzarà el "
 "port 389 (que és l'estàndard LDAP)."
 
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, kde-format
-msgid "Form"
-msgstr "Formulari"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, kde-format
 msgid "Send picture with every message:"
 msgstr "Envia la imatge amb cada missatge:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr "No envies"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr "Envia en color (cara)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr "Envia en monocrom (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, kde-format
 msgid "Send both"
 msgstr "Envia ambdós"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, kde-format
 msgid ""
 "KMail can send a small (48x48 pixels) low-quality picture with every "
@@ -8144,7 +8138,7 @@ msgstr ""
 "mostrarà en el client de correu del destinatari (si ho admet)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr "Un text informatiu sobre el mode actual!"
@@ -8261,6 +8255,9 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid "Form"
+#~ msgstr "Formulari"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "
