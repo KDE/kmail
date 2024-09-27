@@ -351,10 +351,3 @@ msgstr "Размер на файл:"
 #, kde-format
 msgid "MIME type:"
 msgstr "Вид по MIME:"
-
-#~ msgid "Save..."
-#~ msgstr "Запазване..."
-
-#~ msgctxt "@title:menu"
-#~ msgid "&Open With..."
-#~ msgstr "&Отваряне с..."
