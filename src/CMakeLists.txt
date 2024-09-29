@@ -449,8 +449,8 @@ generate_export_header(kmailprivate BASE_NAME kmail)
 target_link_libraries(kmailprivate
     PRIVATE
     KF6::KCMUtils
-    KF6::TextWidgets
     KF6::I18n
+    KF6::SonnetUi
     KPim6::Gravatar
     KPim6::Mime
     KPim6::AkonadiCore
@@ -516,7 +516,7 @@ set_target_properties(kmailprivate
 add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
 target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
-target_link_libraries(kcm_kmail_static  kmailprivate KF6::KCMUtils KF6::Completion KF6::I18n KF6::TextWidgets)
+target_link_libraries(kcm_kmail_static  kmailprivate KF6::KCMUtils KF6::Completion KF6::I18n)
 
 kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
 
