@@ -204,6 +204,7 @@ KMKernel::KMKernel(QObject *parent)
     CommonKernel->registerFilterIf(this);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     CommonKernel->registerActivitiesBaseManager(ActivitiesManager::self());
+    ActivitiesManager::self()->setEnabled(KMailSettings::self()->plasmaActivitySupport());
 #endif
 
     mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
