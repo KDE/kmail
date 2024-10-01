@@ -37,6 +37,7 @@ using MailTransport::TransportManagementWidgetNg;
 #include <QProcess>
 
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
+#include "activities/accountactivities.h"
 #include "activities/activitiesmanager.h"
 #include "activities/transportactivities.h"
 #endif
@@ -176,7 +177,10 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
     mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList()
                                                                   << QStringLiteral("MailTransport") << QStringLiteral("Notes") << QStringLiteral("Autostart"));
-
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    mAccountsReceiving.mAccountsReceiving->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
+    mAccountsReceiving.mAccountsReceiving->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
+#endif
     KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc"));
     if (specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
         KConfigGroup grp = specialMailCollection.group(QStringLiteral("SpecialCollections"));
