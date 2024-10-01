@@ -253,7 +253,6 @@ void SearchWindow::createSearchModel()
     mResultModel->setCollectionMonitored(mFolder);
     monitor->setParent(mResultModel);
     auto sortproxy = new QSortFilterProxyModel(mResultModel);
-    sortproxy->setDynamicSortFilter(true);
     sortproxy->setSortRole(Qt::EditRole);
     sortproxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
     sortproxy->setSourceModel(mResultModel);
