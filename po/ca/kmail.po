@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-24 00:39+0000\n"
+"POT-Creation-Date: 2024-10-01 00:40+0000\n"
 "PO-Revision-Date: 2024-09-10 10:34+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -4381,31 +4381,31 @@ msgstr "Barra d'eines HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra d'eines de direcció del text"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:632
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "S'ha establert que el KMail estigui desconnectat; s'han suspès tots els "
 "treballs de xarxa"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Envia el correu"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "És impossible enviar el correu"
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:684
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "S'ha establert que el KMail estigui connectat; s'han reprès tots els "
 "treballs de xarxa"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:686
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4414,43 +4414,43 @@ msgstr ""
 "S'ha establert que el KMail estigui connectat; es reprendran tots els "
 "treballs de xarxa en detectar-se una connexió de xarxa"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:759
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "El KMail està actualment en el mode desconnectat. Com voleu continuar?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:761
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Connectat/desconnectat"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:762
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Treballa en línia"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:763
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Treballa desconnectat"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:787
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "S'ha detectat una connexió de xarxa, s'han reprès tots els treballs de xarxa"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:790
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "No s'ha detectat cap connexió de xarxa, s'han suspès tots els treballs de "
 "xarxa"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:885
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4459,13 +4459,13 @@ msgstr ""
 "Ha fallat en obrir el fitxer de desament automàtic a %1.\n"
 "Motiu: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:886
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Ha fallat l'obertura del fitxer de desament automàtic"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1446
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4475,7 +4475,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Aquestes %1 identitats s'han canviat per a usar el transport predeterminat:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1470
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4484,17 +4484,17 @@ msgstr[0] "Aquesta identitat s'ha canviat per a usar el transport modificat:"
 msgstr[1] ""
 "Aquestes %1 identitats s'han canviat per a usar el transport modificat:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Sending messages"
 msgstr "S'estan enviant els missatges"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1486
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "S'està iniciant el procés d'enviament…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1565
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4503,7 +4503,7 @@ msgstr ""
 "El recurs %1 està trencat.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1741 kmkernel.cpp:1747
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

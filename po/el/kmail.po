@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-24 00:39+0000\n"
+"POT-Creation-Date: 2024-10-01 00:40+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4511,31 +4511,31 @@ msgstr "Γραμμή εργαλείων HTML"
 msgid "Text Direction Toolbar"
 msgstr "Γραμμή εργαλείων κατεύθυνσης κειμένου"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:632
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "Το KMail λειτουργεί χωρίς σύνδεση. Όλες οι δικτυακές εργασίες έχουν ανασταλεί"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Έτοιμο για αποστολή αλληλογραφίας..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:684
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "Το KMail λειτουργεί με σύνδεση. Όλες οι δικτυακές εργασίες συνεχίζονται"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:686
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4544,44 +4544,44 @@ msgstr ""
 "Η ρύθμιση της κατάστασης λειτουργίας του KMail είναι σε σύνδεση. Όλες οι "
 "δικτυακές εργασίες θα συνεχίσουν όταν εντοπιστεί μια σύνδεση με το δίκτυο"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:759
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 "Το KMail είναι σε λειτουργία χωρίς σύνδεση. Πώς επιθυμείτε να συνεχίσετε;"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:761
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Με σύνδεση/χωρίς σύνδεση"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:762
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Εργασία με σύνδεση"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:763
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Εργασία χωρίς σύνδεση"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:787
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "Εντοπίστηκε σύνδεση με το δίκτυο, όλες οι δικτυακές εργασίες συνεχίζονται"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:790
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Δεν εντοπίστηκε κάποια σύνδεση σε ένα δίκτυο, όλες οι εργασίες δικτύου θα "
 "ανασταλούν"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:885
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4590,13 +4590,13 @@ msgstr ""
 "Αδυναμία ανοίγματος του αρχείου αυτόματης αποθήκευσης στο %1.\n"
 "Αιτία: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:886
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Το άνοιγμα του αρχείου αυτόματης αποθήκευσης απέτυχε"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1446
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4608,7 +4608,7 @@ msgstr[1] ""
 "Αυτές οι %1 ταυτότητες τροποποιήθηκαν ώστε να χρησιμοποιούν τον "
 "προκαθορισμένο μεταφορέα:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1470
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4620,17 +4620,17 @@ msgstr[1] ""
 "Αυτές οι %1 ταυτότητες τροποποιήθηκαν ώστε να χρησιμοποιούν τον "
 "τροποποιημένο μεταφορέα:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Sending messages"
 msgstr "Αποστολή μηνυμάτων"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1486
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Αρχικοποίηση διαδικασίας αποστολής…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1565
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4638,7 +4638,7 @@ msgid ""
 "%2"
 msgstr "Ο πόρος %1 είναι σπασμένος."
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1741 kmkernel.cpp:1747
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-24 00:39+0000\n"
+"POT-Creation-Date: 2024-10-01 00:40+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -4780,29 +4780,29 @@ msgstr "HTML traka"
 msgid "Text Direction Toolbar"
 msgstr "Traka usmerenja teksta"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:632
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "K‑pošta je postavljena van veze. Svi mrežni poslovi su suspendovani."
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&Pošalji poštu"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Pripremam slanje e‑pošte..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:684
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "K‑pošta je postavljena na vezu. Svi mrežni poslovi su nastavljeni."
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:686
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4811,43 +4811,43 @@ msgstr ""
 "K‑pošta je postavljena na vezu. Svi mrežni poslovi biće nastavljeni kada se "
 "otkrije veza sa mrežom."
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:759
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "K‑pošta je trenutno van veze. Kako želite da se nastavi?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:761
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Na vezi, van veze"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:762
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Radi na vezi"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:763
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Radi van veze"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:787
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Otkrivena je veza sa mrežom, svi mrežni poslovi su nastavljeni."
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:790
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Nije otkrivena veza sa mrežom, svi mrežni poslovi su suspendovani."
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:885
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4856,14 +4856,14 @@ msgstr ""
 "Ne mogu da otvorim automatski sačuvani fajl iz %1.\n"
 "Razlog: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:886
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Otvaranje automatski sačuvanog fajla nije uspelo"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1446
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4873,7 +4873,7 @@ msgstr[1] "Ova %1 identiteta su prebačena na podrazumevani transport:"
 msgstr[2] "Ovih %1 identiteta je prebačeno na podrazumevani transport:"
 msgstr[3] "Ovaj identitet je prebačen na podrazumevani transport:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1470
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4883,18 +4883,18 @@ msgstr[1] "Ova %1 identiteta su prebačena na izmenjeni transport:"
 msgstr[2] "Ovih %1 identiteta je prebačeno na izmenjeni transport:"
 msgstr[3] "Ovaj identitet je prebačen na izmenjeni transport:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Sending messages"
 msgstr "Šaljem poruke"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1486
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Započinjem postupak slanja..."
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1565
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4902,7 +4902,7 @@ msgid ""
 "%2"
 msgstr "Resurs %1 je iskvaren."
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1741 kmkernel.cpp:1747
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

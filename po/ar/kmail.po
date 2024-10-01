@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-24 00:39+0000\n"
+"POT-Creation-Date: 2024-10-01 00:40+0000\n"
 "PO-Revision-Date: 2024-09-11 21:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -4315,67 +4315,67 @@ msgstr "شريط أدوات HTML"
 msgid "Text Direction Toolbar"
 msgstr "شريط أدوات اتّجاه النّصّ"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:632
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "«بريدك» في وضع عدم الاتّصال، عُلّقت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "أرسل بريدًا"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "تعذَّر إرسال البريد"
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:684
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "«بريدك» متّصل بالإنترنت، استُكملت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:686
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "«بريدك» متّصل بالإنترنت، ستُستكمل كلّ مهامّ الشّبكة عند اكتشاف شبكة"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:759
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "«بريدك» في وضع عدم الاتّصال حاليًّا. أتريد المتابعة؟"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:761
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "متّصل/غير متّصل"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:762
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "اعمل متّصلًا"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:763
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "اعمل بلا اتّصال"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:787
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "اكتُشف اتّصال بالشّبكة، استُكملت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:790
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "لم يُكتشف أيّ اتّصال بالشّبكة، عُلّقت كلّ مهامّ الشّبكة"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:885
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4384,13 +4384,13 @@ msgstr ""
 "فشل فتح الملفّ المحفوظ آليًّا في %1.\n"
 "السّبب: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:886
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "فشل فتح الملفّ المحفوظ آليًّا"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1446
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4402,7 +4402,7 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل الافتر
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1470
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4414,17 +4414,17 @@ msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل المعدّ
 msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل المعدّل:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Sending messages"
 msgstr "يرسل الرّسائل"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1486
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "يمهّد عمليّة الإرسال…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1565
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4433,7 +4433,7 @@ msgstr ""
 "المورد %1 معطوب.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1741 kmkernel.cpp:1747
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
