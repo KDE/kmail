@@ -22,8 +22,6 @@ using MailTransport::TransportManagementWidgetNg;
 #include "identity/identityngpage.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
-#include <Akonadi/AgentType>
-#include <Akonadi/AgentTypeDialog>
 #include <KConfigGroup>
 #include <KLDAPWidgets/LdapConfigureWidget>
 #include <KLocalizedString>
