@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-01 00:40+0000\n"
+"POT-Creation-Date: 2024-10-02 00:40+0000\n"
 "PO-Revision-Date: 2024-09-10 09:22+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -568,106 +568,106 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "Optiones de recuperar"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Identitates"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Il es recipiente"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Il es inviante"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "Servitor LDAP "
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:90
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Contos de partita (adder al minus uno):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Confirma action"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Before sending:"
 msgstr "Ante inviar:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Controlo Orthographic"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "Jammais Automaticamente"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Super verificationes de posta manual"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "Super verificationes de omne e-postas"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Invia  &messages in dossier de partita:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Now"
 msgstr "Invia ora"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "Invia plus tarde"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Methodo de invio &predefinite:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Habilita annullar invio"
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:199
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "Adde conto de posta…"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:200
 #, kde-format
 msgid "Custom Account…"
 msgstr "Conto personalisate..."
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:220
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -677,32 +677,32 @@ msgstr ""
 "Il non pote initiar le assistente de conto. Pro favor, tu verifica que tu ha "
 "AccountWizard propriemente installate.."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Il non pote initiar assistente de conto"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:270
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Include in verificationes de posta manual"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:278
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Commuta foras de linea sur clausura de KMail"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:285
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Verifica posta quando on initia"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:332
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -4369,28 +4369,28 @@ msgstr "Barra de instrumento de HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra de Instrumento de direction de texto"
 
-#: kmkernel.cpp:632
+#: kmkernel.cpp:631
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "Kmal es fixate de modo foras de linea; omne labores de rete es suspendite"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Invia e-posta"
 
-#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Impossibile  inviar e-posta"
 
-#: kmkernel.cpp:684
+#: kmkernel.cpp:683
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "Kmal es fixate de modo in linea; omne labores de rete es recuperate"
 
-#: kmkernel.cpp:686
+#: kmkernel.cpp:685
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4399,40 +4399,40 @@ msgstr ""
 "Kmal es fixate de modo in linea; omne labores de rete es recuperate quando "
 "un connexion es relevate"
 
-#: kmkernel.cpp:759
+#: kmkernel.cpp:758
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Kmail currentemente es in modo foras de linea. Como tu vole proceder?"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:760
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "In linea/ Foras de Linea"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:761
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Travaliar in linea"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Travaliar Foras de linea"
 
-#: kmkernel.cpp:787
+#: kmkernel.cpp:786
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Connexion de rete relevate; omne labores de rete es recuperate"
 
-#: kmkernel.cpp:790
+#: kmkernel.cpp:789
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Nulle connexion de rete relevate; omne labores de rete es recuperate"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:884
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4441,13 +4441,13 @@ msgstr ""
 "Il falleva a aperir file de salveguardar automatic a %1.\n"
 "Motivation: %2"
 
-#: kmkernel.cpp:886
+#: kmkernel.cpp:885
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Il falleva a aperir file de salveguardar automatic"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4457,7 +4457,7 @@ msgstr[0] ""
 msgstr[1] ""
 "Iste %1 identitates ha essite cambiate pro usar le transporto predefinite:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4467,17 +4467,17 @@ msgstr[0] ""
 msgstr[1] ""
 "Iste %1 identitates ha essite cambiate pro usar le transporto modificate:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Inviante messages"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Il es initiante processo de inviar..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4486,7 +4486,7 @@ msgstr ""
 "Ressource %1 es rupte.\n"
 "%2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6438,44 +6438,44 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Salta a dossier original"
 
-#: searchdialog/searchwindow.cpp:294
+#: searchdialog/searchwindow.cpp:293
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 coincidentia"
 msgstr[1] "%1 coincidentias"
 
-#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
+#: searchdialog/searchwindow.cpp:363 searchdialog/searchwindow.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Ultime cerca"
 
-#: searchdialog/searchwindow.cpp:432
+#: searchdialog/searchwindow.cpp:431
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Tu non seligeva un valide dossier."
 
-#: searchdialog/searchwindow.cpp:446
+#: searchdialog/searchwindow.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Tu oblidava seliger collectiones"
 
-#: searchdialog/searchwindow.cpp:464
+#: searchdialog/searchwindow.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Tu oblidava definir condition."
 
-#: searchdialog/searchwindow.cpp:469
+#: searchdialog/searchwindow.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Tote dossieres seligite es vacue o non esseva indicisate."
 
-#: searchdialog/searchwindow.cpp:475
+#: searchdialog/searchwindow.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Tu oblidava adder conditiones."
 
-#: searchdialog/searchwindow.cpp:479
+#: searchdialog/searchwindow.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
@@ -6483,32 +6483,32 @@ msgstr ""
 "Condition de continer non pote esser usate con un numero de characteres "
 "inferior a 4."
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr "On initia cerca..."
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Non pote obtener exito de cerca. %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "Cerca falleva."
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "Cerca complete."
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "Cerca stoppate."
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6519,21 +6519,21 @@ msgstr ""
 "pro isto pote esser que un altere dossier de cerca con le mesme nomine ja "
 "existe. Le error retornate es \"%1\"."
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Copia message"
 msgstr[1] "Copia %1 messages"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Talia message"
 msgstr[1] "Talia %1 messages"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, kde-format
 msgid "Checking index status…"
 msgstr "Verificante stato de indice..."

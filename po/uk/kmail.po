@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-01 00:40+0000\n"
+"POT-Creation-Date: 2024-10-02 00:40+0000\n"
 "PO-Revision-Date: 2024-09-10 09:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -577,106 +577,106 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "Параметри отримання пошти"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Профілі"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Отримування"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Надсилання"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "Сервер LDAP"
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:90
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Вихідні облікові записи (додайте хоча б один):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Підтвердити дію"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Before sending:"
 msgstr "До надсилання:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Перевірка правопису"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "Не робити це автоматично"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "при перевірці пошти вручну"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "при будь-який перевірці пошти"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Надсилати пошту з &теки «вихідні»:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Now"
 msgstr "Надіслати зараз"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "Надіслати пізніше"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "&Типовий метод надсилання:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Уможливити скасування надсилання"
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:199
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "Додати обліковий запис пошти…"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:200
 #, kde-format
 msgid "Custom Account…"
 msgstr "Нетиповий обліковий запис…"
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:220
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -686,32 +686,32 @@ msgstr ""
 "Не вдається запустити майстер створення облікових записів. Будь ласка, "
 "перевірте, чи належним чином встановлено AccountWizard."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Не вдалося запустити майстер створення облікових записів"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:270
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Включити до перевірки вручну"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:278
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Переходити у режим «поза мережею» під час закриття KMail"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:285
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Перевіряти пошту при запуску"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:332
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -4405,27 +4405,27 @@ msgstr "Пенал HTML"
 msgid "Text Direction Toolbar"
 msgstr "Панель напрямку тексту"
 
-#: kmkernel.cpp:632
+#: kmkernel.cpp:631
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail працює в автономному режимі; всі мережні дії не доступні"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Надіслати пошту"
 
-#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Неможливо надіслати пошту"
 
-#: kmkernel.cpp:684
+#: kmkernel.cpp:683
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail працює в мережі; всі мережні дії доступні"
 
-#: kmkernel.cpp:686
+#: kmkernel.cpp:685
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4434,41 +4434,41 @@ msgstr ""
 "KMail налаштовано на роботу у мережі. Щойно буде виявлено з’єднання, "
 "програма поновити виконання завдань з роботи у мережі."
 
-#: kmkernel.cpp:759
+#: kmkernel.cpp:758
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail працює в автономному режимі. Що робити далі?"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:760
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "В мережі/Поза мережею"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:761
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Працювати в мережі"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Працювати автономно"
 
-#: kmkernel.cpp:787
+#: kmkernel.cpp:786
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Виявлено з’єднання з мережею; поновлено виконання всіх дій у мережі"
 
-#: kmkernel.cpp:790
+#: kmkernel.cpp:789
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Не виявлено з’єднання з мережею; всі завдання з роботи у мережі відкладено"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:884
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4477,13 +4477,13 @@ msgstr ""
 "Не вдалося відкрити файл автоматичного збереження у %1.\n"
 "Причина: %2"
 
-#: kmkernel.cpp:886
+#: kmkernel.cpp:885
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Невдала спроба відкриття файла автозбереження"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4493,7 +4493,7 @@ msgstr[1] "%1 профілі було змінено, щоб використо�
 msgstr[2] "%1 профілів було змінено, щоб використовувати типовий транспорт:"
 msgstr[3] "%1 профіль було змінено, щоб використовувати типовий транспорт:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4506,17 +4506,17 @@ msgstr[2] ""
 msgstr[3] ""
 "Цей %1 профіль було змінено, щоб використовувати змінений транспорт:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Надсилання повідомлень"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Запуск процесу надсилання…"
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4525,7 +4525,7 @@ msgstr ""
 "Ресурс %1 пошкоджено.\n"
 "%2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6503,7 +6503,7 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Перейти до початкової теки"
 
-#: searchdialog/searchwindow.cpp:294
+#: searchdialog/searchwindow.cpp:293
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
@@ -6512,37 +6512,37 @@ msgstr[1] "%1 відповідності"
 msgstr[2] "%1 відповідностей"
 msgstr[3] "%1 відповідність"
 
-#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
+#: searchdialog/searchwindow.cpp:363 searchdialog/searchwindow.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Останній пошук"
 
-#: searchdialog/searchwindow.cpp:432
+#: searchdialog/searchwindow.cpp:431
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Вами не вказано чинної теки."
 
-#: searchdialog/searchwindow.cpp:446
+#: searchdialog/searchwindow.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Ви забули позначити збірки."
 
-#: searchdialog/searchwindow.cpp:464
+#: searchdialog/searchwindow.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Ви забули визначити умову."
 
-#: searchdialog/searchwindow.cpp:469
+#: searchdialog/searchwindow.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Усі позначені теки або порожні, або вміст цих тек не було індексовано."
 
-#: searchdialog/searchwindow.cpp:475
+#: searchdialog/searchwindow.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Ви забули визначити умови."
 
-#: searchdialog/searchwindow.cpp:479
+#: searchdialog/searchwindow.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
@@ -6550,32 +6550,32 @@ msgstr ""
 "Не можна використовувати умову щодо вмісту, якщо кількість символів у "
 "критерії є меншою за 4."
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr "Шукаємо…"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Не вдалося отримати результат пошуку. %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "Невдалий пошук."
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "Пошук завершено"
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "Пошук зупинено."
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6586,7 +6586,7 @@ msgstr ""
 "причиною подібних проблем є існування іншої теки пошуку з тією самою назвою. "
 "Повернуте повідомлення про помилку: «%1»."
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
@@ -6595,7 +6595,7 @@ msgstr[1] "Скопіювати %1 повідомлення"
 msgstr[2] "Скопіювати %1 повідомлень"
 msgstr[3] "Скопіювати %1 повідомлення"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
@@ -6604,7 +6604,7 @@ msgstr[1] "Вирізати %1 повідомлення"
 msgstr[2] "Вирізати %1 повідомлень"
 msgstr[3] "Вирізати %1 повідомлення"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, kde-format
 msgid "Checking index status…"
 msgstr "Перевіряємо стан покажчика…"

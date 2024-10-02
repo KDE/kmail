@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-01 00:40+0000\n"
+"POT-Creation-Date: 2024-10-02 00:40+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -612,113 +612,113 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "ជម្រើស​ទៅ​យក"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "​អត្តសញ្ញាណ"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "ការទទួល"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "ការផ្ញើ"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:90
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "គណនីផ្ញើចេញ (បន្ថែម​យ៉ាងហោចណាស់​មួយ) ៖"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:101
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "​ផ្ញើ​ការ​អះអាង"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:103
 #, fuzzy, kde-format
 #| msgid "Check spelling before sending"
 msgid "Before sending:"
 msgstr "ពិនិត្យ​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:105
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "ពិនិត្យមើល​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "កុំ​ដោយស្វ័យប្រវត្តិ"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "ពេល​ពិនិត្យមើលសំបុត្រដោយដៃ"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "ពេលពិនិត្យមើលសំបុត្រទាំងអស់"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "ផ្ញើ​សារ​ក្នុង​ថត​ប្រអប់ចេញ ៖"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Now"
 msgstr "​ផ្ញើ​ឥឡូវ"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "​ផ្ញើ​ពេល​ក្រោយ"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "វិធីសាស្ត្រ​ផ្ញើ​លំនាំដើម ៖"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:199
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "Add Mail Account…"
 msgstr "បន្ថែម​ចំណាំ..."
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:200
 #, fuzzy, kde-format
 #| msgid "Customize accounts order..."
 msgid "Custom Account…"
 msgstr "ប្ដូរ​លំដាប់​គណនី​តាម​បំណង..."
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:220
 #: kmlaunchexternalcomponent.cpp:148
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
@@ -727,7 +727,7 @@ msgid ""
 "properly installed."
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​គណនី​បានទេ ។ សូម​ពិនិត្យ​មើល​ការ​ដំឡើង​របស់​អ្នក ។"
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -735,26 +735,26 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "មិន​អាច​ចាប់ផ្ដើម​អ្នក​ជំនួយការ​គណនី​បានទេ"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:270
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "រួម​បញ្ចូល​ក្នុងការ​ពិនិត្យ​មើល​ដោយ​ដៃ"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:278
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "បើក​ក្រៅ​បណ្ដាញ នៅពេល​បិទ KMail"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:285
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "ពិនិត្យ​មើល​សំបុត្រ​នៅ​ពេល​ចាប់ផ្ដើម"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:332
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -4581,29 +4581,29 @@ msgstr "របា​ឧបករណ៍​ HTML"
 msgid "Text Direction Toolbar"
 msgstr "របារ​ឧបករណ៍​ទិស​អត្ថបទ"
 
-#: kmkernel.cpp:632
+#: kmkernel.cpp:631
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail ត្រូវបាន​កំណត់​ឲ្យនៅ​ក្រៅ​បណ្ដាញ ។ រាល់ការងារ​នៅលើបណ្ដាញ​ទាំងអស់​ត្រូវបាន​ផ្អាក"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "ផ្ញើ​សំបុត្រ"
 
-#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ប្រុង​នឹង​ផ្ញើ​សំបុត្រ​ហើយ..."
 
-#: kmkernel.cpp:684
+#: kmkernel.cpp:683
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​បណ្ដាញ ។ រាល់​ការងារ​នៅ​លើ​បណ្ដាញ​ទាំងអស់​បាន​បន្ត"
 
-#: kmkernel.cpp:686
+#: kmkernel.cpp:685
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4612,43 +4612,43 @@ msgstr ""
 "KMail ត្រូវ​បាន​កំណត់​ឲ្យ​នៅ​លើ​​បណ្ដាញ រាល់​ការងារ​ដែល​នៅ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បន្ត នៅ​ពេល​ដែល​ការ​តភ្ជាប់​"
 "បណ្ដាញ​ត្រូវ​បាន​រកឃើញ"
 
-#: kmkernel.cpp:759
+#: kmkernel.cpp:758
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "បច្ចុប្បន្ន KMail នៅក្នុង​របៀប​ក្រៅបណ្ដាញ ។ តើអ្នក​ចង់​បន្ត​ដោយ​របៀបណា ?"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:760
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "លើបណ្ដាញ/ក្រៅបណ្ដាញ"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:761
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "ធ្វើការ​នៅលើ​បណ្ដាញ"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "ធ្វើការ​នៅក្រៅ​បណ្ដាញ"
 
-#: kmkernel.cpp:787
+#: kmkernel.cpp:786
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ រាល់​ការងារ​លើ​បណ្ដាញ​នឹង​ត្រូវ​បាន​បន្ត"
 
-#: kmkernel.cpp:790
+#: kmkernel.cpp:789
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "គ្មាន​ការ​តភ្ជាប់​បណ្ដាញ​ត្រូវ​បាន​រក​ឃើញ​ទេ រាល់​ការងារ​លើ​បណ្ដាញ​ទាំងអស់​នឹង​ត្រូវ​បាន​ផ្អាក"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:884
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4657,39 +4657,39 @@ msgstr ""
 "បាន​បរាជ័យ​ក្នុងការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ​នៅ %1 ។\n"
 "មូលហេតុ​ ៖ %2"
 
-#: kmkernel.cpp:886
+#: kmkernel.cpp:885
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ​រក្សាទុក​ដោយ​ស្វ័យ​ប្រវត្តិ"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ​ត្រូវ​បាន​ផ្លាស់ប្ដូរ​ ដើម្បី​ប្រើ​កា​រដឹកជញ្ជូន​លំនាំដើម ៖"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "អត្តសញ្ញាណ %1 ត្រូវ​បាន​ផ្លាស់ប្ដូរ​​ដើម្បី​ប្រើ​កា​របញ្ជូនអ្វី​​ដែល​បាន​កែប្រែ ៖"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "កំពុង​ផ្ញើ​សារ"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "កំពុង​ចាប់ផ្ដើម​ដំណើរការ​ផ្ញើ..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4697,7 +4697,7 @@ msgid ""
 "%2"
 msgstr "ធនធាន %1 ខូច ។ ធនធាន​នេះ​ឥឡូវ​គឺជា %2"
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6798,79 +6798,79 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "លោត​ទៅ​ថត"
 
-#: searchdialog/searchwindow.cpp:294
+#: searchdialog/searchwindow.cpp:293
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "ផ្គូផ្គង %1"
 
-#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
+#: searchdialog/searchwindow.cpp:363 searchdialog/searchwindow.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "​ការស្វែងរក​ចុង​ក្រោយ"
 
-#: searchdialog/searchwindow.cpp:432
+#: searchdialog/searchwindow.cpp:431
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:446
+#: searchdialog/searchwindow.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:464
+#: searchdialog/searchwindow.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:469
+#: searchdialog/searchwindow.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:475
+#: searchdialog/searchwindow.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:479
+#: searchdialog/searchwindow.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Searching…"
 msgstr "កំពុង​ចាប់ផ្ដើម..."
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, fuzzy, kde-format
 #| msgid "Can not get search result. %1"
 msgid "Cannot get search result. %1"
 msgstr "មិន​អាច​ទទួលយក​លទ្ធផល​ស្វែងរក ។ %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgid "Search failed."
 msgstr "ស្លាក​ស្វែង​រក"
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgid "Search complete."
 msgstr "ស្លាក​ស្វែង​រក"
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgid "Search stopped."
 msgstr "ស្លាក​ស្វែង​រក"
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, fuzzy, kde-format
 #| msgid ""
 #| "There was a problem renaming your search folder. A common reason for this "
@@ -6883,19 +6883,19 @@ msgstr ""
 "មាន​បញ្ហា​ក្នុងកា​រប្ដូរ​ឈ្មោះ​ថត​ស្វែងរក​របស់​អ្នក ។ ហេតុ​ផល​ធម្មតា​សម្រាប់​បញ្ហា​នេះ គឺ​ថត​ស្វែងរក​ផ្សេង​ទៀត​"
 "មាន​ឈ្មោះ​ដូច​គ្នា ។"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "ចម្លង​សារ %1"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "កាត់សារ %1"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgid "Checking index status…"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-01 00:40+0000\n"
+"POT-Creation-Date: 2024-10-02 00:40+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -606,52 +606,52 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Опције добављања"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Идентитети"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Примање"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Слање"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:90
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Одлазни налози (додајте бар један):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:101
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Пошаљи потврду"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:103
 #, fuzzy, kde-format
 #| msgid "Ask Before Sending"
 msgid "Before sending:"
 msgstr "Питај пре слања"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:105
 #, fuzzy, kde-format
 #| msgid "Check spelling before send"
 msgctxt "@option:check"
@@ -659,64 +659,64 @@ msgid "Check spelling"
 msgstr "Провери правопис пре слања"
 
 # >> @item:inlistbox Send messages in outbox folder:
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "никада аутоматски"
 
 # >> @item:inlistbox Send messages in outbox folder:
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "при ручним проверама поште"
 
 # >> @item:inlistbox Send messages in outbox folder:
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "при свим проверама поште"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Пошаљи &поруке из отпремне фасцикле:"
 
 # >> @item:inlistbox Default send method:
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Now"
 msgstr "пошаљи одмах"
 
 # >> @item:inlistbox Default send method:
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "пошаљи касније"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Подраз&умевани начин слања:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:199
 #, fuzzy, kde-format
 #| msgid "Add Mail Account..."
 msgid "Add Mail Account…"
 msgstr "&Додај поштански налог..."
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:200
 #, fuzzy, kde-format
 #| msgid "Custom Account..."
 msgid "Custom Account…"
 msgstr "Посебан налог..."
 
-#: configuredialog/configureaccountpage.cpp:216
+#: configuredialog/configureaccountpage.cpp:220
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -726,7 +726,7 @@ msgstr ""
 "Не могу да покренем чаробњак за налоге. Проверите да ли је чаробњак за "
 "налоге правилно инсталиран."
 
-#: configuredialog/configureaccountpage.cpp:218
+#: configuredialog/configureaccountpage.cpp:222
 #: kmlaunchexternalcomponent.cpp:150
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
@@ -734,26 +734,26 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Не могу да покренем чаробњак за налоге"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:270
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Укључи у ручну проверу поште"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:278
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Пребаци ван везе при гашењу К‑поште"
 
-#: configuredialog/configureaccountpage.cpp:281
+#: configuredialog/configureaccountpage.cpp:285
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Провери пошту по покретању"
 
-#: configuredialog/configureaccountpage.cpp:328
+#: configuredialog/configureaccountpage.cpp:332
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -4775,29 +4775,29 @@ msgstr "ХТМЛ трака"
 msgid "Text Direction Toolbar"
 msgstr "Трака усмерења текста"
 
-#: kmkernel.cpp:632
+#: kmkernel.cpp:631
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "К‑пошта је постављена ван везе. Сви мрежни послови су суспендовани."
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&Пошаљи пошту"
 
-#: kmkernel.cpp:653 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Припремам слање е‑поште..."
 
-#: kmkernel.cpp:684
+#: kmkernel.cpp:683
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "К‑пошта је постављена на везу. Сви мрежни послови су настављени."
 
-#: kmkernel.cpp:686
+#: kmkernel.cpp:685
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4806,43 +4806,43 @@ msgstr ""
 "К‑пошта је постављена на везу. Сви мрежни послови биће настављени када се "
 "открије веза са мрежом."
 
-#: kmkernel.cpp:759
+#: kmkernel.cpp:758
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "К‑пошта је тренутно ван везе. Како желите да се настави?"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:760
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "На вези, ван везе"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:761
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Ради на вези"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Ради ван везе"
 
-#: kmkernel.cpp:787
+#: kmkernel.cpp:786
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Откривена је веза са мрежом, сви мрежни послови су настављени."
 
-#: kmkernel.cpp:790
+#: kmkernel.cpp:789
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Није откривена веза са мрежом, сви мрежни послови су суспендовани."
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:884
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4851,14 +4851,14 @@ msgstr ""
 "Не могу да отворим аутоматски сачувани фајл из %1.\n"
 "Разлог: %2"
 
-#: kmkernel.cpp:886
+#: kmkernel.cpp:885
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Отварање аутоматски сачуваног фајла није успело"
 
-#: kmkernel.cpp:1446
+#: kmkernel.cpp:1445
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4868,7 +4868,7 @@ msgstr[1] "Ова %1 идентитета су пребачена на подр�
 msgstr[2] "Ових %1 идентитета је пребачено на подразумевани транспорт:"
 msgstr[3] "Овај идентитет је пребачен на подразумевани транспорт:"
 
-#: kmkernel.cpp:1470
+#: kmkernel.cpp:1469
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4878,18 +4878,18 @@ msgstr[1] "Ова %1 идентитета су пребачена на изме�
 msgstr[2] "Ових %1 идентитета је пребачено на измењени транспорт:"
 msgstr[3] "Овај идентитет је пребачен на измењени транспорт:"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1484
 #, kde-format
 msgid "Sending messages"
 msgstr "Шаљем поруке"
 
-#: kmkernel.cpp:1486
+#: kmkernel.cpp:1485
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Започињем поступак слања..."
 
-#: kmkernel.cpp:1565
+#: kmkernel.cpp:1564
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4897,7 +4897,7 @@ msgid ""
 "%2"
 msgstr "Ресурс %1 је искварен."
 
-#: kmkernel.cpp:1741 kmkernel.cpp:1747
+#: kmkernel.cpp:1740 kmkernel.cpp:1746
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -7039,7 +7039,7 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Скочи на изворну фасциклу"
 
-#: searchdialog/searchwindow.cpp:294
+#: searchdialog/searchwindow.cpp:293
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
@@ -7048,69 +7048,69 @@ msgstr[1] "%1 поклапања"
 msgstr[2] "%1 поклапања"
 msgstr[3] "1 поклапање"
 
-#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
+#: searchdialog/searchwindow.cpp:363 searchdialog/searchwindow.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "последња претрага"
 
-#: searchdialog/searchwindow.cpp:432
+#: searchdialog/searchwindow.cpp:431
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Нисте добро изабрали фасциклу."
 
-#: searchdialog/searchwindow.cpp:446
+#: searchdialog/searchwindow.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Заборавили сте да изаберете збирке."
 
-#: searchdialog/searchwindow.cpp:464
+#: searchdialog/searchwindow.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Заборавили сте да задате услов."
 
-#: searchdialog/searchwindow.cpp:469
+#: searchdialog/searchwindow.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Све изабране фасцикле или су празне или нису индексиране."
 
-#: searchdialog/searchwindow.cpp:475
+#: searchdialog/searchwindow.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Заборавили сте да додате услове."
 
-#: searchdialog/searchwindow.cpp:479
+#: searchdialog/searchwindow.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Услов садржања не може да се употреби са мање од 4 знака."
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgid "Searching…"
 msgstr "Тражим..."
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Не могу да добавим резултат претраге. %1"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "Претрага пропала."
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "Претрага завршена."
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "Претрага заустављена."
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -7120,7 +7120,7 @@ msgstr ""
 "Проблем при преименовању фасцикле претраге. До овога обично дође када већ "
 "постоји истоимена фасцикла претраге. Враћена грешка „%1“."
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
@@ -7129,7 +7129,7 @@ msgstr[1] "Копирај %1 поруке"
 msgstr[2] "Копирај %1 порука"
 msgstr[3] "Копирај поруку"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
@@ -7138,7 +7138,7 @@ msgstr[1] "Исијеци %1 поруке"
 msgstr[2] "Исијеци %1 порука"
 msgstr[3] "Исијеци поруку"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, fuzzy, kde-format
 #| msgid "Checking index status..."
 msgid "Checking index status…"
