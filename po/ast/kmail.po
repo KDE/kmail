@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-02 00:40+0000\n"
+"POT-Creation-Date: 2024-10-03 00:40+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -553,106 +553,106 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:54
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:62
+#: configuredialog/configureaccountpage.cpp:60
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:69
+#: configuredialog/configureaccountpage.cpp:67
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:75
+#: configuredialog/configureaccountpage.cpp:73
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:90
+#: configuredialog/configureaccountpage.cpp:88
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:99
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgid "Before sending:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:105
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Never Automatically"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "On All Mail Checks"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:114
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send Now"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send Later"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:121
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:125
+#: configuredialog/configureaccountpage.cpp:123
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:199
+#: configuredialog/configureaccountpage.cpp:197
 #, kde-format
 msgid "Add Mail Account…"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:200
+#: configuredialog/configureaccountpage.cpp:198
 #, kde-format
 msgid "Custom Account…"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:220
+#: configuredialog/configureaccountpage.cpp:218
 #: kmlaunchexternalcomponent.cpp:148
 #, kde-format
 msgid ""
@@ -660,32 +660,32 @@ msgid ""
 "properly installed."
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:222
+#: configuredialog/configureaccountpage.cpp:220
 #: kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:270
+#: configuredialog/configureaccountpage.cpp:268
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:278
+#: configuredialog/configureaccountpage.cpp:276
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:285
+#: configuredialog/configureaccountpage.cpp:283
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:332
+#: configuredialog/configureaccountpage.cpp:330
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
