@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-02 00:41+0000\n"
-"PO-Revision-Date: 2024-05-26 21:08+0300\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-10-02 16:11+0300\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #: sendlaterconfiguredialog.cpp:33
 #, kde-format
@@ -38,7 +38,7 @@ msgstr "Atliktas e-pastu nosūtīšanas aģents."
 #: sendlaterconfiguredialog.cpp:55
 #, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "Autortiesības (C) 2013–%1 Laurent Montel"
+msgstr "Autortiesības (C) 2013—%1 Laurent Montel"
 
 #: sendlaterconfiguredialog.cpp:57
 #, kde-format
@@ -89,21 +89,18 @@ msgid "Message Id"
 msgstr "Vēstules ID"
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
-msgstr "Rindā nav vēstuļu..."
+msgstr "Gaidīšanas rindā nav vēstuļu…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Nosūtīt tagad"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Dzēst"
@@ -198,8 +195,7 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Atrasta kļūda. Vai vēlaties sūtīt no jauna?"
 
 #: sendlatermanager.cpp:194
-#, fuzzy, kde-format
-#| msgid "Error found"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Atrasta kļūda"
@@ -212,10 +208,9 @@ msgstr "Sūtīt no jauna"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "Rediģēt..."
+msgstr "Rediģēt…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/sendlaterconfigurewidget.ui:38

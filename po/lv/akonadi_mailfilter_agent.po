@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-02-01 10:11+0200\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-10-02 16:10+0300\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
@@ -25,15 +25,13 @@ msgid "Filter Log Viewer"
 msgstr "Filtrēšanas žurnāla skatītājs"
 
 #: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr "Kopīgot..."
+msgstr "Kopīgot…"
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Reģistrēt filtra darbības"
@@ -54,15 +52,13 @@ msgid "Logging Details"
 msgstr "Žurnāla ierakstu informācija"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Žurnāla modeļu apraksts"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Ž&urnāla filtra noteikumu izvērtējums"
@@ -83,22 +79,19 @@ msgstr ""
 "rezultātu."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr "Žurnāla filtra modeļa izvērtējuma"
+msgstr "Žurnāla filtra modeļa izvērtējums"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Žurnāla filtra darbības"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Žurnāla izmēra ierobežojums:"

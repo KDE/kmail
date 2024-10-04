@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-10-03 00:40+0000\n"
-"PO-Revision-Date: 2024-08-05 21:32+0200\n"
+"PO-Revision-Date: 2024-10-03 21:54+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -390,8 +390,7 @@ msgid "Mailing List"
 msgstr "Levelezőlista"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "A mappa levelezőlistát tartalmaz"
@@ -542,8 +541,7 @@ msgid "View"
 msgstr "Nézet"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "Egyéni ikonok &használata"
@@ -602,8 +600,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "Üzenetküldési azonosítók (legalább egyet hozzon létre):"
 
 #: configuredialog/configureaccountpage.cpp:99
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Művelet &megerősítése"
@@ -614,8 +611,7 @@ msgid "Before sending:"
 msgstr "Küldés előtt:"
 
 #: configuredialog/configureaccountpage.cpp:103
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Helyesírás-ellenőrzés"
@@ -656,8 +652,7 @@ msgid "Defa&ult send method:"
 msgstr "Az ala&pértelmezett küldési mód:"
 
 #: configuredialog/configureaccountpage.cpp:123
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Küldésvisszavonás engedélyezése"
@@ -775,11 +770,10 @@ msgid "Printing Output"
 msgstr "A kimenet nyomtatása"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "A betűtíp&usok testreszabása"
+msgstr "&Egyéni betűkészlet használata"
 
 #: configuredialog/configureappearancepage.cpp:168
 #, kde-format
@@ -832,22 +826,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "A HTML-állapotsor előtere - ha HTML-üzenet"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "A színek &testreszabása"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "A színek ú&jrafelhasználása többszörös idézésnél"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "Ne mó&dosítsa az eredeti HTML levél színét"
@@ -864,16 +855,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "Gyorskereső mező megjelenítése"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Soha"
@@ -885,22 +874,19 @@ msgid "Show favorite folders view:"
 msgstr "Kedvenc mappák nézet megjelenítése:"
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "Ikonokként"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "Listaként"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Mindig"
@@ -998,12 +984,10 @@ msgid "Date Display:"
 msgstr "Dátumkijelzés:"
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "Új azonosító"
+msgstr "Saját azonosító megjelenítése"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -1023,22 +1007,19 @@ msgid "System Tray"
 msgstr "Paneltálca"
 
 #: configuredialog/configureappearancepage.cpp:841
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Ikon megjelenítése a paneltálcán"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Indítás a tálcára minimalizálva"
 
 #: configuredialog/configureappearancepage.cpp:863
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Olvasatlan levél megjelenítése a feladatsávon"
@@ -1049,8 +1030,7 @@ msgid "Plasma activities"
 msgstr "Plasma aktivitások"
 
 #: configuredialog/configureappearancepage.cpp:873
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Engedélyezés"
@@ -1344,15 +1324,12 @@ msgid "No autosave"
 msgstr "Ne legyen automatikus mentés"
 
 #: configuredialog/configurecomposerpage.cpp:413
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " perc"
-msgstr[1] " perc"
+msgstr[0] "%v perc"
+msgstr[1] "%v perc"
 
 #: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
@@ -1445,8 +1422,7 @@ msgid "Forward Prefix:"
 msgstr "Továbbítási előtag:"
 
 #: configuredialog/configurecomposerpage.cpp:705
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "Egyéni üzenetazonosító-&utótag használata"
@@ -1507,15 +1483,13 @@ msgstr ""
 "A „Content-Type” nem hitelesített karakterlánc. A fejléc nem lesz mentve."
 
 #: configuredialog/configurecomposerpage.cpp:914
-#, fuzzy, kde-format
-#| msgid "Invalid header"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Érvénytelen fejléc"
 
 #: configuredialog/configurecomposerpage.cpp:955
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "A &hiányzó mellékletek felismerése"
@@ -1693,13 +1667,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
 #: configuredialog/configuresecuritypage.cpp:286
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " nap"
-msgstr[1] " nap"
+msgstr[0] "%v nap"
+msgstr[1] "%v nap"
 
 #: configuredialog/configuresecuritypage.cpp:318
 #, kde-format
@@ -1811,18 +1783,16 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "Archívumfájl (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "Befejezés után a mappák és almappák &törlése"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
-msgstr "Összes alkönyvtár archiválása"
+msgstr "Minden almappa archiválása"
 
 #: dialog/archivefolderdialog.cpp:171
 #, kde-format
@@ -2491,8 +2461,7 @@ msgstr ""
 "Biztosan el szeretné küldeni az üzenetet?"
 
 #: editor/kmcomposerwin.cpp:3175
-#, fuzzy, kde-format
-#| msgid "Too many recipients"
+#, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Túl sok címzett"
@@ -2517,8 +2486,7 @@ msgid ""
 msgstr "A HTML mód kikapcsolása megszünteti a szöveg formázását. Biztos benne?"
 
 #: editor/kmcomposerwin.cpp:3216
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Megszünteti a formázást?"
@@ -2765,8 +2733,7 @@ msgid "Encryption Key Selection"
 msgstr "Titkosítási kulcs kiválasztása"
 
 #: editor/kmcomposerwin.cpp:4338
-#, fuzzy, kde-format
-#| msgid "Plugin Editor Information"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "Bővítményszerkesztő adatai"
@@ -3059,15 +3026,13 @@ msgid "Create own vCard"
 msgstr "Saját vCard létrehozása"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "Üres &mezőkkel"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&Létező vCard-ból"
@@ -3079,8 +3044,7 @@ msgid "&vCard path:"
 msgstr "&vCard útvonal:"
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "Már létező vCard &kettőzése"

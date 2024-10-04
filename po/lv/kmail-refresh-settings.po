@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-06-18 00:40+0000\n"
-"PO-Revision-Date: 2024-05-26 21:09+0300\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-10-02 16:12+0300\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -71,8 +71,7 @@ msgid "Finish"
 msgstr "Pabeigt"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Uzkopt"
@@ -103,8 +102,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Uzkopt loga izmēra iestatījumus datnē „%1“: pabeigts"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Pirms izmantošanas aizveriet „KMail“/„Kontact“."

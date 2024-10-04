@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-31 00:41+0000\n"
-"PO-Revision-Date: 2024-08-02 22:22+0200\n"
+"PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
 "Language: hu\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -131,11 +131,10 @@ msgid "Follow Up Reminder"
 msgstr "Nyomkövető emlékeztető"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "Még mindig választ vár erre a levélre:"
+msgstr "Még mindig választ vár ezekre a levelekre:"
 
 #~ msgid "Configure"
 #~ msgstr "Beállítás"

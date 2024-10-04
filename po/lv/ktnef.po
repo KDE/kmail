@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-10 00:42+0000\n"
-"PO-Revision-Date: 2024-05-26 23:26+0300\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-10-02 16:32+0300\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -31,7 +31,7 @@ msgstr "toms.trasuns@posteo.net"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr ""
+msgstr "Saglabāt…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -83,12 +83,10 @@ msgid "View"
 msgstr "Apskatīt"
 
 #: ktnefmain.cpp:115
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "View With..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr "Apskatīt ar..."
+msgstr "Apskatīt ar…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -97,20 +95,16 @@ msgid "Extract"
 msgstr "Atspiest"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "Atspiest uz..."
+msgstr "Atspiest uz…"
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract All To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "Atspiest visu uz..."
+msgstr "Atspiest visu uz…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -131,20 +125,16 @@ msgid "Show Message Text"
 msgstr "Parādīt vēstules tekstu"
 
 #: ktnefmain.cpp:147
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Save Message Text As..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
-msgstr "Parādīt vēstules tekstu kā..."
+msgstr "Parādīt vēstules tekstu kā…"
 
 #: ktnefmain.cpp:160
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Default Folder..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
-msgstr "Noklusējuma mape..."
+msgstr "Noklusējuma mape…"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -215,20 +205,16 @@ msgid "&Open With"
 msgstr "&Atvērt ar"
 
 #: ktnefmain.cpp:570
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
+#, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
-msgstr "&Cits..."
+msgstr "&Cits…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "&Atvērt ar"
+msgstr "&Atvērt ar…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6

@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2024-05-26 21:08+0300\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-10-02 16:08+0300\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -33,43 +33,37 @@ msgid "Add Archive Mail"
 msgstr "Pievienot arhivēto pastu"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arhivēt visas apakšmapes"
 
 #: addarchivemailwidget.cpp:38
-#, fuzzy, kde-format
-#| msgid "Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Mape:"
 
 #: addarchivemailwidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "Format:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Formāts:"
 
 #: addarchivemailwidget.cpp:56
-#, fuzzy, kde-format
-#| msgid "Path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Ceļš:"
 
 #: addarchivemailwidget.cpp:63
-#, fuzzy, kde-format
-#| msgid "Backup each:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Dublējumkopija ik pēc:"
 
 #: addarchivemailwidget.cpp:75
-#, fuzzy, kde-format
-#| msgid "Maximum number of archive:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Maksimālais arhīvu skaits:"
@@ -86,8 +80,7 @@ msgid "Archive"
 msgstr "Arhīvs"
 
 #: archivemailrangewidget.cpp:22
-#, fuzzy, kde-format
-#| msgid "Use Range"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Izmantot diapazonu"
@@ -154,18 +147,16 @@ msgstr "toms.trasuns@posteo.net"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "Pievienot…"
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder..."
+#, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
-msgstr "Atvērt saturošo mapi..."
+msgstr "Atvērt saturošo mapi…"
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Dzēst"

@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-31 00:41+0000\n"
-"PO-Revision-Date: 2024-05-26 21:08+0300\n"
-"Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
+"PO-Revision-Date: 2024-10-02 16:09+0300\n"
+"Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.08.0\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -31,7 +31,7 @@ msgstr "Atgādinājumi"
 #: followupreminderinfoconfigwidget.cpp:29
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "Autortiesības (C) 2014–%1 Laurent Montel"
+msgstr "Autortiesības (C) 2014—%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
@@ -87,22 +87,19 @@ msgid "On hold"
 msgstr "Gaida"
 
 #: followupreminderinfowidget.cpp:219
-#, fuzzy, kde-format
-#| msgid "Show Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Rādīt vēstuli"
 
 #: followupreminderinfowidget.cpp:222
-#, fuzzy, kde-format
-#| msgid "Show Original Message"
+#, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Rādīt sākotnējo vēstuli"
 
 #: followupreminderinfowidget.cpp:225
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Dzēst"
@@ -133,8 +130,7 @@ msgid "Follow Up Reminder"
 msgstr "Atgādinājums"
 
 #: followupremindernoanswerdialog.cpp:45
-#, fuzzy, kde-format
-#| msgid "You still wait an answer about this mail:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
-msgstr "Joprojām gaidāt atbildi par šo e-pastu:"
+msgstr "Joprojām gaidāt atbildi uz šo e-pastu:"
