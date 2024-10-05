@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -8596,48 +8596,40 @@ msgstr ""
 "形式は “HOST” または “HOST:PORT” のいずれかです。PORT が省略された場合、標準"
 "的な LDAP ポートである 389 が使われます。"
 
-# ACCELERATOR changed by translator
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
-msgid "Form"
-msgstr "フォーマット(&R):"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, fuzzy, kde-format
 #| msgid "&Send picture with every message"
 msgid "Send picture with every message:"
 msgstr "すべての送信メッセージに画像を添付する(&S)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, fuzzy, kde-format
 #| msgid "Send Now"
 msgid "Send both"
 msgstr "今すぐ送信"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>KMail can send a small (48x48 pixels), low-quality, monochrome "
@@ -8654,7 +8646,7 @@ msgstr ""
 "ば、受信者のメールクライアントにも表示されます。</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr ""
@@ -8782,6 +8774,12 @@ msgstr[0] "不在返信がアクティブです"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+# ACCELERATOR changed by translator
+#, fuzzy
+#~| msgid "F&ormat:"
+#~ msgid "Form"
+#~ msgstr "フォーマット(&R):"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

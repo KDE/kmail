@@ -1,0 +1,230 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Arhivski poštni agent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>&i18n-archivemailagent; Priročnik</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Jan</firstname
+><surname
+>Napast</surname
+><affiliation
+><address
+><email
+>jan.napast153@gmail.com</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>21.09.2019</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Uvod</title>
+
+<para
+>&i18n-archivemailagent; je agent Akonadi, ki omogoča samodejno arhiviranje poštnih map. </para>
+
+<sect2 id="using-kapp">
+<title
+>Uporaba &i18n-archivemailagent;</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Uporabite <menuchoice
+><guimenu
+>Nastavitve</guimenu
+><guimenuitem
+>Konfiguriraj samodejno arhiviranje ...</guimenuitem
+> </menuchoice
+><action
+> v oknu bralnika &kmail;, da odprete pogovorno okno za nastavitev samodejnega arhiviranja pošte mape.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>To je zmogljivo orodje, ki vam lahko pomaga pri varnostnem kopiranju vaše e-pošte. Če želite to uporabiti, kliknite gumb <guibutton
+>Dodaj...</guibutton
+> in pojavilo se bo pogovorno okno <guilabel
+>Dodaj arhivsko pošto</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>Pogovorno okno Dodaj arhivsko pošto</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Pogovorno okno Dodaj arhivsko pošto</phrase>
+    </textobject>
+    <caption>
+      <para
+>Pogovorno okno Dodaj arhivsko pošto</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Najprej izberite mapo, ki jo želite arhivirati.</para
+></listitem>
+<listitem
+><para
+>Izberite obliko, v kateri jo želite shraniti. &eg; <literal role="extension"
+>.tar.bz2</literal
+> na spustnem seznamu. Ime arhivske datoteke bo sestavljeno iz predpone <userinput
+>Arhiv_</userinput
+>, poti izbrane mape na seznamu map &kmail;, datuma v obliki <userinput
+>leto-mesec-dan</userinput
+> in izbranega pripona datoteke &eg; <filename
+>Archive_Local Folder_Inbox_2019-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Privzeto je omogočeno <guilabel
+>Arhiviraj vse podmape</guilabel
+>. Počistite to polje, če želite arhivirati samo nadrejeno mapo.</para
+></listitem>
+<listitem
+><para
+>Vnesete lahko mesto, kamor želite shraniti svoj arhiv, ali kliknete gumb <guibutton
+>Odpri pogovorno okno datoteke</guibutton
+>, da izberete mapo.</para
+></listitem>
+<listitem
+><para
+>V spustnih menijih poleg <guilabel
+>Varnostno kopiraj vsako:</guilabel
+> izberite, kako pogosto želite varnostno kopirati.</para
+></listitem>
+<listitem
+><para
+>Če imate omejen prostor na disku, boste želeli nastaviti omejitev <guilabel
+>Največje število arhivov:</guilabel
+></para
+></listitem>
+</itemizedlist>
+<para
+>Če ste dodali ali spremenili arhivsko opravilo, se bo samodejno izvršilo po zaprtju pogovornega okna. </para>
+
+<para
+>Če ste že dodali poštna arhivska opravila, bo prikazano pogovorno okno <guilabel
+>Konfiguriraj arhivskega poštnega agenta</guilabel
+> in omogočilo njihovo spreminjanje. </para>
+<screenshot>
+<screeninfo
+>Konfigurirajte arhivskega poštnega agenta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Konfiguriraj arhivskega poštnega agenta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Konfigurirajte arhivskega poštnega agenta</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>S potrditvenim poljem na levi strani vsakega vnosa na seznamu lahko omogočite ali onemogočite arhiviranje tega posla. </para>
+<para
+>Do tega konfiguracijskega pogovornega okna lahko dostopate kadar koli pozneje z uporabo <menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj &kmail;...</guimenuitem
+></menuchoice
+> nato izberite <guilabel
+>Vtičniki</guilabel 
+> stran v &kmail; glavno okno in pritisnite gumb za konfiguracijo proti elementu <guilabel
+>Arhivski poštni agent</guilabel
+>. </para>
+<para
+>Z uporabo kontekstnega menija, ki ga zaženete z &RMB; kliknite na arhivsko opravilo, lahko odprete mapo z arhivi ali takoj začnete arhivsko opravilo. To bo prepisalo obstoječi arhiv, ustvarjen prej na isti dan brez obvestila. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Zasluge in licenca</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Avtorske pravice za program 2013-2019 Laurent Montel montel@kde.org </para>
+<para
+>Dokumentacija Copyright &copy; 2013-2019 Laurent Montel montel@kde.org </para>
+
+<para
+>Prevod: Jan Napast<email
+>jan.napast153@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

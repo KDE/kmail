@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -8330,46 +8330,40 @@ msgid ""
 "(standard LDAP port) is used."
 msgstr ""
 
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, kde-format
-msgid "Form"
-msgstr "จาก"
-
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, fuzzy, kde-format
 #| msgid "&Send picture with every message"
 msgid "Send picture with every message:"
 msgstr "ส่งรูปภาพไปพร้อมกับจดหมายทุกฉบับ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, fuzzy, kde-format
 #| msgid "Send Now"
 msgid "Send both"
 msgstr "ส่งทันที"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>KMail can send a small (48x48 pixels), low-quality, monochrome "
@@ -8386,7 +8380,7 @@ msgstr ""
 "ซึ่งจะถูกแสดงในโปรแกรมอ่านจดหมายของผู้รับ (ถ้าโปรมแกรมของผู้รับรองรับคุณสมบัตินี้)</qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr ""
@@ -8514,6 +8508,9 @@ msgstr[0] "ตอบกลับเมื่อไม่อยู่ที่อ
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid "Form"
+#~ msgstr "จาก"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

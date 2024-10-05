@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-09-18 00:40+0000\n"
-"PO-Revision-Date: 2024-09-18 23:04+0300\n"
+"POT-Creation-Date: 2024-09-24 00:39+0000\n"
+"PO-Revision-Date: 2024-09-20 09:51+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -430,7 +430,7 @@ msgstr "מטפל מעדף:"
 #, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
-msgstr ""
+msgstr "הפעלת מנגנון הטיפול"
 
 #: collectionpage/collectionmailinglistpage.cpp:101
 #, kde-format
@@ -941,7 +941,7 @@ msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">פרטי עיצוב מותאם…</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:669
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
 "p><ul><li>d - the day as a number without a leading zero (1-31)</li><li>dd - "
@@ -965,26 +965,26 @@ msgid ""
 "- time zone in numeric form (-0500)</li></ul><p><strong>All other input "
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
-"<qt><p><strong>ניתן להשתמש בצירופים הבאים עבור תאריכים:</strong></p><ul><li "
-"dir=\"rtl\">d - היום כמספר בלי אפס מוביל (1-31)</li><li dir=\"rtl\">dd - "
-"היום כמספר עם אפס מוביל (01-31)</li><li dir=\"rtl\">ddd - קיצור השם של היום "
-"(יום א' - שבת)</li><li dir=\"rtl\">dddd - השם המלא של היום (יום ראשון - שבת</"
-"li><li dir=\"rtl\">M - החודש כמספר בלי אפס מוביל (1-12)</li><li dir=\"rtl"
-"\">MM - החודש כמספר עם אפס מוביל (01-12)</li><li dir=\"rtl\">MMM - קיצור השם "
-"של החודש (ינו - דצמ)</li><li dir=\"rtl\">MMMM - השם המלא של החודש (ינואר - "
-"דצמבר)</li><li dir=\"rtl\">yy - השנה כמספר בן שתי ספרות (00-99)</li><li dir="
-"\"rtl\">yyyy - השנה כמספר בן ארבע ספרות (0000-9999)</li></ul><p><strong>ניתן "
-"להשתמש בצירופים הבאים עבור שעות:</string></p><ul><li dir=\"rtl\">h - השעה "
-"בלי אפס מוביל (0-23 או 1-12 עם AM/PM)</li><li dir=\"rtl\">hh - השעה עם אפס "
-"מוביל (00-23 או 01-12 עם AM/PM)</li><li dir=\"rtl\">m - הדקות בלי אפס מוביל "
-"(0-59)</li><li dir=\"rtl\">mm - הדקות עם אפס מוביל (00-59)</li><li dir=\"rtl"
-"\">s - השניות בלי אפס מוביל (0-59)</li><li dir=\"rtl\">ss - השניות עם אפס "
-"מוביל (00-59)</li><li dir=\"rtl\">z - אלפיות השנייה בלי אפס מוביל (0-999)</"
-"li><li dir=\"rtl\">zzz - אלפיות השנייה עם אפס מוביל (000-999)</li><li dir="
-"\"rtl\">AP - מעבר לתצוגת AM/PM. הצירוף יוחלף ב־\"AM\" או \"PM\".</li><li dir="
-"\"rtl\">ap - מעבר לתצוגת AM/PM. הצירוף יוחלף ב־\"am\" או \"pm\".</li><li dir="
-"\"rtl\">Z - איזור הזמן בצורת מספר (+0200)</li></ul><p><strong>התוכנית תתעלם "
-"מכל שאר התווים.</strong></p></qt>"
+"<qt><p><strong>ניתן להשתמש בביטויים הבאים לציון תאריכים:</strong></p><ul><li "
+"dir=\"rtl\">d - היום כמספר בלי אפס בהתחלה (1-31)</li><li dir=\"rtl\">dd - "
+"היום כמספר עם אפס בהתחלה (01-31)</li><li dir=\"rtl\">ddd - קיצור השם של היום "
+"(יום א׳ - שבת)</li><li dir=\"rtl\">dddd - השם המלא של היום (יום ראשון - שבת</"
+"li><li dir=\"rtl\">M - החודש כמספר בלי אפס בהתחלה (1-12)</li><li dir=\"rtl"
+"\">MM - החודש כמספר עם אפס בהתחלה (01-12)</li><li dir=\"rtl\">MMM - קיצור "
+"השם של החודש (ינו׳ - דצמ׳)</li><li dir=\"rtl\">MMMM - השם המלא של החודש "
+"(ינואר - דצמבר)</li><li dir=\"rtl\">yy - השנה כמספר בן שתי ספרות (00-99)</"
+"li><li dir=\"rtl\">yyyy - השנה כמספר בן ארבע ספרות (0000-9999)</li></"
+"ul><p><strong>ניתן להשתמש בצירופים הבאים עבור שעות:</string></p><ul><li dir="
+"\"rtl\">h - השעה בלי אפס בהתחלה (0-23 או 1-12 עם AM/PM)</li><li dir=\"rtl"
+"\">hh - השעה עם אפס בהתחלה (00-23 או 01-12 עם AM/PM)</li><li dir=\"rtl\">m - "
+"הדקות בלי אפס בהתחלה (0-59)</li><li dir=\"rtl\">mm - הדקות עם אפס בהתחלה "
+"(00-59)</li><li dir=\"rtl\">s - השניות בלי אפס בהתחלה (0-59)</li><li dir="
+"\"rtl\">ss - השניות עם אפס בהתחלה (00-59)</li><li dir=\"rtl\">z - אלפיות "
+"השנייה בלי אפס בהתחלה (0-999)</li><li dir=\"rtl\">zzz - אלפיות השנייה עם אפס "
+"בהתחלה (000-999)</li><li dir=\"rtl\">AP - מעבר לתצוגת AM/PM. הצירוף יוחלף ב־"
+"„AM” או „PM”.</li><li dir=\"rtl\">ap - מעבר לתצוגת AM/PM. הצירוף יוחלף ב־"
+"„am” או „pm”.</li><li dir=\"rtl\">Z - אזור הזמן בצורת מספר (+0200)</li></"
+"ul><p><strong>המנגנון יתעלם מכל שאר התווים.</strong></p></qt>"
 
 #: configuredialog/configureappearancepage.cpp:706
 #, kde-format
@@ -1428,11 +1428,10 @@ msgid "&Use custom message-id suffix"
 msgstr "להשתמש ב&סיומת זיהוי הודעה מותאמת אישית"
 
 #: configuredialog/configurecomposerpage.cpp:721
-#, fuzzy, kde-format
-#| msgid "Custom message-&id suffix:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
-msgstr "סיומת זיהוי הו&דעה מותאמת אישית:"
+msgstr "&סיומת מזהה הודעה (message-id) מותאמת:"
 
 #: configuredialog/configurecomposerpage.cpp:733
 #, kde-format
@@ -1811,13 +1810,13 @@ msgid "Notification"
 msgstr "התראה"
 
 #: editor/attachment/attachmentview.cpp:168
-#, fuzzy, kde-format
+#, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
-msgstr[0] "מצורף:  %1"
-msgstr[1] "מצורף:  %1"
-msgstr[2] ""
-msgstr[3] ""
+msgstr[0] "קובץ מצורף (%2)"
+msgstr[1] "שני קבצים מצורפים (%2)"
+msgstr[2] "%1 קבצים מצורפים (%2)"
+msgstr[3] "%1 קבצים מצורפים (%2)"
 
 #: editor/attachment/attachmentview.cpp:200
 #, kde-format
@@ -2560,6 +2559,8 @@ msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
+"לנמען הזה נעשה שימוש במפתח gossip (רכילות) מבית Autocrypt. קיבלנו את המפתח "
+"הזה מגורמי צד־שלישי. המפתח לא מאומת."
 
 #: editor/kmcomposerwin.cpp:3813
 #, kde-format
@@ -3351,6 +3352,12 @@ msgid ""
 "email in the <tt>From:</tt> field, but any responses to go to a group "
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
+"<qt><h3>כתובות תגובה-אל (Reply-To)</h3><p>מגדיר את כותרת <tt>Reply-to:</tt> "
+"כך שתכיל כתובת דוא״ל שונה מכתובת ה־<tt>From:</tt> (מאת) הרגילה.</p><p>ההגדרה "
+"הזאת יכולה להיות שימושית למקרים של אנשים שעובדים יחד בתפקידים דומים. למשל, "
+"יכול להיות שעדיף לך שבהודעות שנשלחות תופיע כתובת הדוא״ל שלך בשדה <tt>From:</"
+"tt> אבל התגובות תישלחנה לכתובת הקבוצה.</p><p>במקרה של ספק, להשאיר את השדה "
+"הזה ריק.</p></qt>"
 
 #: identity/identitydialog.cpp:638
 #, kde-format
@@ -3359,7 +3366,7 @@ msgid "&CC addresses:"
 msgstr "כתובות &עותק:"
 
 #: identity/identitydialog.cpp:644
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
 "will be added to each outgoing mail that is sent with this identity.</"
@@ -3368,10 +3375,11 @@ msgid ""
 "separate the list of CC recipients.</p><p>If in doubt, leave this field "
 "blank.</p></qt>"
 msgstr ""
-"<qt><h3>כתובות עותק סמוי</h3><p> הכתובות שתזין כאן יתווספו לכל הודעה יוצאת "
-"שתישלח על ידי זהות זו. כתובות אלה לא   יהיו גלויות לנמענים אחרים.</p><p> דבר "
-"זה משמש בדרך כלל כדי לשלוח עותק מכל הודעה לחשבון נוסף ששייך לך.</p><p> אם "
-"אינך בטוח מה לעשות, השאר שדה זה ריק.</p> </qt>"
+"<qt><h3>כתובות עותק (Carbon Copy)</h3><p>הכתובות שתוקלדנה לכאן תתווספנה לכל "
+"הודעה יוצאת שנשלחת עם הזהות הזאת.</p><p>בדרך כלל משמשות לשליחת עותק של כל "
+"הודעה שנשלחת לחשבון אחר שלך. </p><p>כדי לציין יותר מכתובת אחת, יש להשתמש "
+"בפסיקים כדי להפריד בין הכתובות ברשימת הנמענים כעותק.</p><p>במקרה של ספק, יש "
+"להשאיר את השדה הזה ריק.</p></qt>"
 
 #: identity/identitydialog.cpp:660
 #, kde-format
@@ -4551,11 +4559,10 @@ msgid "Expire Folder"
 msgstr "הפגת תוקף תיקייה"
 
 #: kmmainwidget.cpp:1466
-#, fuzzy, kde-format
-#| msgid "&Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
-msgstr "&הפג"
+msgstr "ל&הפיג תוקף"
 
 #: kmmainwidget.cpp:1483
 #, kde-format
@@ -4597,11 +4604,10 @@ msgid "Expire Old Messages?"
 msgstr "להפיג את תוקף הודעות ישנות?"
 
 #: kmmainwidget.cpp:1565
-#, fuzzy, kde-format
-#| msgid "Expire"
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
-msgstr "הפג"
+msgstr "להפיג תוקף"
 
 #: kmmainwidget.cpp:1590
 #, kde-format
@@ -4797,7 +4803,7 @@ msgstr[2] "מחיקת צרופות מהודעה מוצפנת"
 msgstr[3] "מחיקת צרופות מהודעות מוצפנות"
 
 #: kmmainwidget.cpp:2420
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4805,13 +4811,17 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>האם אתה בטוח שברצונך למחוק את ההודעה הנבחרת?<br>מרגע שהיא תימחק, לא ניתן "
-"יהיה לשחזר אותה.</qt>"
+"<html><p>למחוק את כל הקבצים המצורפים מההודעה הנבחרת?<br />לאחר מחיקתם לא "
+"ניתן לשחזר אותם.</p></html>"
 msgstr[1] ""
-"<qt>האם אתה בטוח שברצונך למחוק את %1 ההודעות הנבחרות?<br>מרגע שהן יימחקו, לא "
-"ניתן יהיה לשחזר אותן.</qt>"
+"<html><p>למחוק את כל הקבצים המצורפים משתי ההודעות הנבחרות?<br />לאחר מחיקתם "
+"לא ניתן לשחזר אותם.</p></html>"
 msgstr[2] ""
+"<html><p>למחוק את כל הקבצים המצורפים מ־%1 ההודעות הנבחרות?<br />לאחר מחיקתם "
+"לא ניתן לשחזר אותם.</p></html>"
 msgstr[3] ""
+"<html><p>למחוק את כל הקבצים המצורפים מ־%1 ההודעות הנבחרות?<br />לאחר מחיקתם "
+"לא ניתן לשחזר אותם.</p></html>"
 
 #: kmmainwidget.cpp:2427
 #, kde-format
@@ -4853,11 +4863,10 @@ msgid "Save &As…"
 msgstr "שמירה &בשם…"
 
 #: kmmainwidget.cpp:2939
-#, fuzzy, kde-format
-#| msgid "&Expire All Folders"
+#, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
-msgstr "הפ&ג את כל התיקיות"
+msgstr "להפיג את התוקף של &כל התיקיות"
 
 #: kmmainwidget.cpp:2944
 #, kde-format
@@ -6234,7 +6243,7 @@ msgstr "דוא״ל"
 #: messageactions.cpp:644
 #, kde-format
 msgid "web"
-msgstr ""
+msgstr "אתר"
 
 #: messageactions.cpp:649
 #, kde-format
@@ -6697,7 +6706,7 @@ msgstr "הצגת מחוון תווית קריפטוגרפית"
 #: settings/kmail.kcfg.in:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr ""
+msgstr "אימות קיצור הדרך כברירת המחדל לשליחה"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:334
@@ -7054,6 +7063,39 @@ msgid ""
 "been marked with the folder property \"Act on new/unread mail in this folder"
 "\".</p></body></html>"
 msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"https://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"body { direction: rtl;}\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">בקשה לקפוץ להודעה הבאה שלא "
+"נקראה יכולה להיתקל במצב שבו אין עוד הודעות שלא נקראו מתחת להודעה הנוכחית.</"
+"p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">לא לחזור בלולאה:</span> החיפוש ייעצר בהודעה האחרונה בתיקייה "
+"הנוכחית.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">חזרה בלולאה בתיקייה הנוכחית:</span> החיפוש ימשיך מראש רשימת "
+"ההודעות אבל לא יזלוג לתיקייה אחרת.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">חזרה בלולאה על כל התיקיות:</span> החיפוש ימשיך מראש רשימת "
+"ההודעות. אם לא נמצאו הודעות שלא נקרא אז החיפוש ימשיך לתיקייה הבאה.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">בדומה, חיפוש אחר ההודעה "
+"הקודמת, החיפוש יתחיל מתחתית רשימת ההודעות וימשיך לתיקייה הקודמת כתלות "
+"באפשרות שנבחרה.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">חזרה בלולאה על כל התיקיות שנבחרות: </span>אותו דבר כמו „חזרה "
+"בלולאה על כל התיקיות” למעט העובדה שרק התיקיות שסומן להן מאפיין התיקייה לפעול "
+"על הודעות חדשות/שלא נקראו בתיקייה הזאת„.</p></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
@@ -7383,7 +7425,7 @@ msgstr "הודעות HTML"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:29
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>Some mail advertisements are in HTML and contain references to, for "
 "example, images that the advertisers employ to find out that you have read "
@@ -7395,14 +7437,14 @@ msgid ""
 "messages that were not attached to it, you can enable this option, but you "
 "should be aware of the possible problem.</p></qt>"
 msgstr ""
-"<qt><p> חלק מפרסומות הדואר באות בתבנית HTML ומכילות הפניות לפריטים כגון "
-"תמונות, בהן משתמשות פרסומות אלה כדי לברר האם קראת את ההודעה שלהן (&quot;"
-"ציתותים אינטרנטיים&quot;). </p> <p> אין כל סיבה ברת הצדקה לטעון תמונות "
-"מהאינטרנט בצורה כזו, וזאת מכיוון שהשולח יכול תמיד לצרף ישירות להודעה את "
-"התמונות הדרושות.</p> <p> כדי להישמר מפני סוג כזה של שימוש לרעה בתכונת ההצגה "
-"של HTML של KMail, אפשרות זו <em>כבויה</em> כברירת מחדל.</p> <p> אם למרות זאת "
-"ברצונך, למשל, לצפות בתוך הודעות HTML בתמונות שלא צורפו אל ההודעה, באפשרותך "
-"לאפשר אפשרות זו, אך עליך להיות מודע לבעייתיות האפשרית. </p> </qt>"
+"<qt><p>חלק מפרסומות הדוא״ל הן ב־HTML ומכילות הפניות אל, למשל, תמונות "
+"שמטמיעים המפרסמים כדי לבדוק האם קראת את ההודעה שלהם (&quot;תקלות "
+"אתרים&quot;).</p><p>אין סיבה הגיוני לטעון תמונות ישירות מהאינטרנט בצורה "
+"הזאת, מאחר שהשולח תמיד יכול לצרף את התמונות הנחוצות ישירות להורדה.</p><p>כדי "
+"להגן מפני שימוש לרעה ביכולת הצגת ה־HTML שלKMail האפשרות הזאת <em>כבויה</em> "
+"כברירת מחדל.</p><p>עם זאת,אם יש לך סיבה הגיונית כלשהי, לדוגמה, כדי לצפות "
+"בתמונות בהודעות HTML אבל כאלה שלא צורפו אליהן, אפשר להפעיל את האפשרות הזאת, "
+"אבל חשוב לקחת בחשבון את הסיכון האפשרי שטמון בחובה של הפעלת האפשרות.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:32
@@ -7418,34 +7460,20 @@ msgstr "החרגות"
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
 #: ui/securitypagegeneraltab.ui:62
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
 "system will be compromised by present and anticipated security exploits. <a "
 "href=\"whatsthis1\">More about HTML mails…</a> <a href=\"whatsthis2\">More "
 "about external references...</a>"
 msgstr ""
-"<qt><b>אזהרה:</b> התרת שימוש ב־HTML בדוא\"ל עלולה להגדיל את הסיכון שהמערכת "
-"שלך תהיה פגיעה לניצולי אבטחה קיימים ועתידיים. <a href=\"whatsthis:%1\">עוד "
-"אודות דוא&quot;ל HTML...</a> <a href=\"whatsthis:%2\">עוד אודות קישורים "
-"חיצוניים.... </a>"
+"<b>אזהרה:</b> לאפשר HTML בהודעות דוא״ל יכול להגביר את הסיכון להשחתת המערכת "
+"בעקבות חולשות אבטחה עדכניות ועתידיות. <a href=\"whatsthis1\">מידע נוסף על "
+"הודעות HTML…</a> <a href=\"whatsthis2\">מידע נוסף על הפניות חיצוניות…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:75
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Messages sometimes come in both formats. This option controls "
-#| "whether you want the HTML part or the plain text part to be displayed.</"
-#| "p><p>Displaying the HTML part makes the message look better, but at the "
-#| "same time increases the risk of security holes being exploited.</"
-#| "p><p>Displaying the plain text part loses much of the message's "
-#| "formatting, but makes it almost <em>impossible</em> to exploit security "
-#| "holes in the HTML renderer (Konqueror).</p><p>The option below guards "
-#| "against one common misuse of HTML messages, but it cannot guard against "
-#| "security issues that were not known at the time this version of KMail was "
-#| "written.</p><p>It is therefore advisable to <em>not</em> prefer HTML to "
-#| "plain text.</p><p><b>Note:</b> You can set this option on a per-folder "
-#| "basis from the <i>Folder</i> menu of KMail's main window.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Messages sometimes come in both formats. This option controls whether "
 "you want the HTML part or the plain text part to be displayed.</"
@@ -7460,16 +7488,16 @@ msgid ""
 "can set this option on a per-folder basis from the <i>Folder</i> menu of "
 "KMail's main window.</p></qt>"
 msgstr ""
-"<qt><p> לעתים באות הודעות דוא&quot;ל בשתי התבניות. אפשרויות אלה קובעות האם "
-"ברצונך להציג את החלק של ה־HTML או את החלק של הטקסט הרגיל.</p><p> הצגת החלק "
-"של ה־HTML משפרת את המראה של ההודעה, אך בה בעת היא מגדילה את הסיכון לניצול של "
-"פרצות אבטחה.</p><p> הצגת החלק הרגיל גורמת לאבדן של מרבית העיצוב של ההודעה, "
-"אך היא גם הופכת את הניצול של פרצות אבטחה במציג ה־Konqueror) HTML) לדבר כמעט "
-"<em>בלתי אפשרי</em>.</p><p>האפשרות הבאה מגינה מפני סוג אחד של שימוש לרעה "
-"בהודעות HTML, אך היא אינה יכולה להגן מפני סוגיות אבטחה שלא היו ידועות בעת "
-"כתיבת גירסה זו של KMail.</p><p>לפיכך, מומלץ <em>לא</em> להעדיף HTML על פני "
-"טקסט רגיל.</p><p><b>שים לב:</b> באפשרותך להגדיר אפשרות זו לכל תיקייה בנפרד "
-"דרך התפריט <i>תיקייה</i> בחלון הראשי של KMail.</p></qt>"
+"<qt><p>לפעמים הודעות מגיעות במגוון תבניות. האפשרות הזאת שולטת האם להציג את "
+"חלק ה־HTML או את חלק הטקסט הפשוט.</p><p>חלק ה־HTML מייפה את ההודעה, ובעותה "
+"העת מגדיל את הסיכוי לניצול חולשות אבטחה.</p><p>הצגת חלק הטקסט הפשוט מפשיטה "
+"את רוב עיצוב ההודעה, ועם זאת מצמצמת את היכולת לנצל חולשות אבטחה במנוע עיבוד "
+"ה־HTML‏ (QtWebEngine) עד לרמה שכמעט <em>בלתי אפשרי</em> לנצל אותן.</"
+"p><p>האפשרות הזאת מגנה כנגד אחת מהשיטות הנפוצות לניצול לרעה של הודעות HTML, "
+"אך אין לה איך להגן מפני בעיות אבטחה שלא היו ידועות בתקופה בה נוצר KMail.</"
+"p><p>לכן מומלץ <em>לא</em> להעדיף HTML על פני טקסט פשוט.</p><p><b>לתשומת "
+"ליבך:</b> אפשר להגדיר את האפשרות הזאת לפי תיקיות  באופן פרטי דרך תפריט "
+"ה<i>תיקייה</i> בחלון הראשי של KMail.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:78
@@ -7812,6 +7840,11 @@ msgid ""
 "used.  With this option all entries using the HTTP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
+"בעת איתור מקום רשימת שלילת האישורים (CRL), האישור לבחינה בדרך כלל מכיל "
+"רשומות שמוכרות בתור „נקודת הפצת רשימת שלילת אישורים” (DP), שהן כתובות "
+"שמתארות את אופן הגישה לכתובת. רשומת ה־DP הראשונה שנמצאת היא זו שבה ייעשה "
+"שימוש. עם האפשרות הזאת כל הרשומות שכוללות את סכמת HTTP נפסחות בעת חיפוש אחר "
+"DP מתאים."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreHTTPDPCB)
 #: ui/smimeconfiguration.ui:154
@@ -7881,6 +7914,11 @@ msgid ""
 "used.  With this option all entries using the LDAP scheme are ignored when "
 "looking for a suitable DP."
 msgstr ""
+"בעת איתור מקום רשימת שלילת האישורים (CRL), האישור לבחינה בדרך כלל מכיל "
+"רשומות שמוכרות בתור „נקודת הפצת רשימת שלילת אישורים” (DP), שהן כתובות "
+"שמתארות את אופן הגישה לכתובת. רשומת ה־DP הראשונה שנמצאת היא זו שבה ייעשה "
+"שימוש. עם האפשרות הזאת כל הרשומות שכוללות את סכמת LDAP נפסחות בעת חיפוש אחר "
+"DP מתאים."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreLDAPDPCB)
 #: ui/smimeconfiguration.ui:237
@@ -7906,45 +7944,45 @@ msgid ""
 "The syntax is \"HOST\" or \"HOST:PORT\". If PORT is omitted, port 389 "
 "(standard LDAP port) is used."
 msgstr ""
-
-#. i18n: ectx: property (windowTitle), widget (QWidget, XFaceConfigurator)
-#: ui/xfaceconfigurator.ui:14
-#, kde-format
-msgid "Form"
-msgstr "טופס"
+"מילוי שרת LDAP כאן יגרום לכל בקשות ה־LDAP לעבור דרך השרת הזה קודם.\n"
+"ליתר דיוק, ההגדרה הזאת דורסת כל חלק שהוגדר של מארח ופתחה בכתובת ה־LDAP ואפשר "
+"גם להשתמש בו אם המארח והפתחה הושמטו מהכתובת. ייעשה שימוש בשרתי LDAP אחרים אם "
+"החיבור ל„מתווך” נכשל.\n"
+"התחביר הוא „מארח” או „מארח:פתחה” (באנגלית זה הפוך). אם הושמטה הפתחה, ייעשה "
+"שימוש בפתחה 389 (פתחת ברירת המחדל של LDAP)."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/xfaceconfigurator.ui:22
+#: ui/xfaceconfigurator.ui:19
 #, kde-format
 msgid "Send picture with every message:"
 msgstr "לשלוח תמונה עם כל הודעה:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:30
+#: ui/xfaceconfigurator.ui:27
 #, kde-format
 msgid "Don't send"
 msgstr "לא לשלוח"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:35
+#: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
 msgstr "שליחה בצבע (Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:40
+#: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
 msgstr "שליחה בשחור לבן (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
-#: ui/xfaceconfigurator.ui:45
+#: ui/xfaceconfigurator.ui:42
 #, kde-format
 msgid "Send both"
 msgstr "לשלוח את שניהם"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/xfaceconfigurator.ui:68
+#: ui/xfaceconfigurator.ui:65
 #, kde-format
 msgid ""
 "KMail can send a small (48x48 pixels) low-quality picture with every "
@@ -7956,7 +7994,7 @@ msgstr ""
 "תומך בזה)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
-#: ui/xfaceconfigurator.ui:78
+#: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
 msgstr "טקסט שנועד ליידע אותך על המצב הנוכחי!"
@@ -8077,6 +8115,9 @@ msgstr[3] "תגובה מחוץ למשרד פעילה בשרתים"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "תקריב: %1%"
+
+#~ msgid "Form"
+#~ msgstr "טופס"
 
 #~ msgctxt ""
 #~ "%1: identity name. Used in the config dialog, section Identity, to "

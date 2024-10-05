@@ -1,0 +1,195 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Pošlji pozneje agent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>&i18n-sendlateragent; Priročnik</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Jan</firstname
+><surname
+>Napast</surname
+><affiliation
+><address
+><email
+>jan.napast153@gmail.com</email
+></address
+></affiliation
+><contrib
+>Prevod</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21.09.2019</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Uvod</title>
+
+<para
+>&i18n-sendlateragent; je posrednik akonadi, ki vam omogoča pošiljanje načrtovane pošte enkrat ali večkrat. </para>
+
+<sect2 id="using-kapp">
+<title
+>Uporaba &i18n-sendlateragent;</title>
+
+<para
+>Uporabite <menuchoice
+><guimenu
+>Sporočilo</guimenu
+><guimenuitem
+>Pošlji pozneje</guimenuitem
+></menuchoice
+> v oknu za ustvarjanje &kmail;, da odprete pogovorno okno, ki vam omogoča, da načrtujete pošiljanje svojih e-poštnih sporočil na določen datum in čas.</para>
+
+<screenshot>
+<screeninfo
+>&i18n-sendlateragent; Pogovorno okno</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-sendlateragent; Pogovorno okno</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-sendlateragent; Pogovorno okno</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Recimo, da ste sestavili odlično e-poštno sporočilo, v katerem so opisane naloge, za katere želite, da jih vaši zaposleni opravijo, medtem ko ste na konferenci, vendar boste na letalu, ko boste želeli, da se e-poštno sporočilo pošlje. Uporabite to funkcijo za pošiljanje e-pošte ob natančnem datumu in uri. Če želite načrtovati pošiljanje e-pošte pozneje, najprej označite polje <guilabel
+>Zakasnitev</guilabel
+> in nato izberite datum in uro v meniju <guilabel
+>Pošlji na:</guilabel
+>.</para>
+<para
+>Če morate svojim zaposlenim poslati tedenski e-poštni opomnik, ga lahko konfigurirate za ponavljajoče se pošiljanje sporočila, tako da potrdite polje <guilabel
+>Ponovi vsak</guilabel
+> in izberete želene intervale.</para>
+<para
+>Sporočilo lahko postavite med sporočila v čakalni vrsti tako, da izberete gumb <guibutton
+>Pošlji pozneje</guibutton
+>, da takoj razporedite sporočilo. </para>
+<para
+>Ta agent deluje neodvisno od &kmail; in ne potrebuje delujočega &kmail; primerek ali &kmail; v spletnem načinu za pošiljanje načrtovanih e-poštnih sporočil.</para>
+<para
+>Če nimate omrežne povezave, ko bi moralo biti poslano načrtovano sporočilo, bo posrednik sporočil napako in vas vprašal, ali ga želite znova poslati pozneje.</para>
+<para
+>Ob prijavi v &kde; seji agent preveri načrtovana sporočila in po potrebi pošlje vsa sporočila, ki so zapadla od zadnje odjave. </para>
+<para
+>Če želite spremeniti možnosti za e-pošto, ki ste jo načrtovali za pošiljanje pozneje, uporabite <menuchoice
+><guimenu
+>Nastavitve</guimenu
+> <guimenuitem
+>Konfiguriraj &kmail;...</guimenuitem
+></menuchoice
+> nato izberite <guilabel
+>Vtičniki</guilabel
+> strani v &kmail; in pritisnite gumb za konfiguracijo proti elementu <guilabel
+>Pošlji agenta pozneje</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Konfigurirajte &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Konfigurirajte &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Konfigurirajte &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Prikaže se pogovorno okno, ki vam omogoča spreminjanje urnika in odstranjevanje e-poštnih sporočil, ki so bila poslana s funkcijo pošiljanja pozneje.</action>
+</para>
+<para
+>Vsebine (telesa, glave &etc;) načrtovanega sporočila ni mogoče spremeniti. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Zasluge in licenca</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Avtorske pravice za program 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Dokumentacija Copyright &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Prevod: Jan Napast<email
+>jan.napast153@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->
