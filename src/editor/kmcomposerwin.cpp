@@ -274,7 +274,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(mComposerBase, &MessageComposer::ComposerViewBase::failed, this, &KMComposerWin::slotSendFailed);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::sentSuccessfully, this, &KMComposerWin::slotSendSuccessful);
     connect(mComposerBase, &MessageComposer::ComposerViewBase::modified, this, &KMComposerWin::setModified);
-    connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, this, &KMComposerWin::slotTooManyRecipients);
 
     (void)new MailcomposerAdaptor(this);
 
@@ -582,6 +581,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     setStateConfigGroup(QStringLiteral("Composer"));
     setAutoSaveSettings(stateConfigGroup(), true);
+    connect(mComposerBase, &MessageComposer::ComposerViewBase::tooManyRecipient, this, &KMComposerWin::slotTooManyRecipients);
 }
 
 KMComposerWin::~KMComposerWin()
