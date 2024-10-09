@@ -368,6 +368,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     auto transport = new MailTransport::TransportComboBox(mHeadersArea);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     transport->setTransportActivitiesAbstract(ActivitiesManager::self()->transportActivities());
+    transport->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
 #endif
     transport->setToolTip(i18nc("@info:tooltip", "Select the outgoing account to use for sending this message"));
     mComposerBase->setTransportCombo(transport);
