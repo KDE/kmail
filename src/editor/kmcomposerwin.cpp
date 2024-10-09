@@ -345,6 +345,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     identity->setObjectName("identitycombo"_L1);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     identity->setIdentityActivitiesAbstract(ActivitiesManager::self()->identityActivities());
+    identity->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
 #endif
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityDeleted, this, &KMComposerWin::slotIdentityDeleted);
     connect(identity, &KIdentityManagementWidgets::IdentityCombo::invalidIdentity, this, &KMComposerWin::slotInvalidIdentity);
