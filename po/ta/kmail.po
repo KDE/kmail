@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-03 00:40+0000\n"
+"POT-Creation-Date: 2024-10-10 00:40+0000\n"
 "PO-Revision-Date: 2024-09-07 20:34+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1842,7 +1842,7 @@ msgstr "உடனிணைப்புகளின் பட்டியலை �
 msgid "KMail2"
 msgstr "கேமெயில் 2"
 
-#: editor/kmcomposerwin.cpp:357
+#: editor/kmcomposerwin.cpp:358
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
@@ -1850,348 +1850,348 @@ msgstr ""
 "இவ்வஞ்சலின் எழுத்தாக்கத்தை சரிபாரக்கும்போது பயன்படுத்த வேண்டிய அகரமுதலியை தேர்ந்தெடுக்க "
 "விடும்"
 
-#: editor/kmcomposerwin.cpp:364
+#: editor/kmcomposerwin.cpp:365
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 "இந்த அஞ்சலை அனுப்பிய பின் அதன் நகல் எந்த அடைவில் சேமிக்கப்பட வேண்டுமென தேர்ந்தெடுக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:372
+#: editor/kmcomposerwin.cpp:374
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "இந்த அஞ்சலை அனுப்ப பயன்படுத்த வேண்டிய வெளிசெல்லும் கணக்கை தேர்ந்தெடுக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:380
+#: editor/kmcomposerwin.cpp:382
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "இந்த அஞ்சலுக்கான \"அனுப்புநர்\" முகவரியை அமைக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:408
+#: editor/kmcomposerwin.cpp:410
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "அ&டையாளம்:"
 
-#: editor/kmcomposerwin.cpp:409
+#: editor/kmcomposerwin.cpp:411
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "அ&கரமுதலி:"
 
-#: editor/kmcomposerwin.cpp:410
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "அ&னுப்பிய அஞ்சலுக்கான அடைவு:"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:413
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "அ&ஞ்சலனுப்பும் கணக்கு:"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:414
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&அனுப்புநர்:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&தலைப்பு:"
 
-#: editor/kmcomposerwin.cpp:482
+#: editor/kmcomposerwin.cpp:484
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "அஞ்சலெழுதும் இடம்"
 
-#: editor/kmcomposerwin.cpp:1260 editor/kmcomposerwin.cpp:1294
+#: editor/kmcomposerwin.cpp:1262 editor/kmcomposerwin.cpp:1296
 #, kde-format
 msgid "&Send Mail"
 msgstr "அஞ்&சலை அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:1267 editor/kmcomposerwin.cpp:1300
+#: editor/kmcomposerwin.cpp:1269 editor/kmcomposerwin.cpp:1302
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "அஞ்சலை &இவ்வாறு அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:1269
+#: editor/kmcomposerwin.cpp:1271
 #, kde-format
 msgid "Send"
 msgstr "அ&னுப்பு"
 
-#: editor/kmcomposerwin.cpp:1272 editor/kmcomposerwin.cpp:1284
+#: editor/kmcomposerwin.cpp:1274 editor/kmcomposerwin.cpp:1286
 #, kde-format
 msgid "Send &Later"
 msgstr "பி&றகு அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:1278 editor/kmcomposerwin.cpp:1291
+#: editor/kmcomposerwin.cpp:1280 editor/kmcomposerwin.cpp:1293
 #, kde-format
 msgid "Send &Later Via"
 msgstr "இ&வ்வாறு பிறகு அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:1280
+#: editor/kmcomposerwin.cpp:1282
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "அனுப்புவரிசையில் சேர்"
 
-#: editor/kmcomposerwin.cpp:1309
+#: editor/kmcomposerwin.cpp:1311
 #, kde-format
 msgid "Save as &Draft"
 msgstr "வ&ரைவாக சேமி"
 
-#: editor/kmcomposerwin.cpp:1311
+#: editor/kmcomposerwin.cpp:1313
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "வரைவுகளுக்கான அடைவில் அஞ்சலை சேமிக்கும்"
 
-#: editor/kmcomposerwin.cpp:1315
+#: editor/kmcomposerwin.cpp:1317
 #, kde-format
 msgid "Save as &Template"
 msgstr "வார்ப்புருவாக சே&மி"
 
-#: editor/kmcomposerwin.cpp:1316
+#: editor/kmcomposerwin.cpp:1318
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "வார்ப்புருகளுக்கான அடைவில் அஞ்சலை சேமிக்கும்"
 
-#: editor/kmcomposerwin.cpp:1320
+#: editor/kmcomposerwin.cpp:1322
 #, kde-format
 msgid "Save as &File"
 msgstr "கோ&ப்பாக சேமி"
 
-#: editor/kmcomposerwin.cpp:1321
+#: editor/kmcomposerwin.cpp:1323
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "அஞ்சலை உரைக்கோப்பாகவோ html கோப்பாகவோ சேமிக்கும்"
 
-#: editor/kmcomposerwin.cpp:1325
+#: editor/kmcomposerwin.cpp:1327
 #, kde-format
 msgid "&Insert Text File…"
 msgstr "&உரைக்கோப்பை நுழை…"
 
-#: editor/kmcomposerwin.cpp:1329
+#: editor/kmcomposerwin.cpp:1331
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "சமீபமான உரைக்கோப்பை நு&ழை"
 
-#: editor/kmcomposerwin.cpp:1339 kmmainwidget.cpp:2985
+#: editor/kmcomposerwin.cpp:1341 kmmainwidget.cpp:2985
 #, kde-format
 msgid "&Address Book"
 msgstr "&முகவரி புத்தகம்"
 
-#: editor/kmcomposerwin.cpp:1340
+#: editor/kmcomposerwin.cpp:1342
 #, kde-format
 msgid "Open Address Book"
 msgstr "முகவரி புத்தகத்தை திறக்கும்"
 
-#: editor/kmcomposerwin.cpp:1347
+#: editor/kmcomposerwin.cpp:1349
 #, kde-format
 msgid "&New Composer"
 msgstr "&புதிய அஞ்சலெழுது"
 
-#: editor/kmcomposerwin.cpp:1353
+#: editor/kmcomposerwin.cpp:1355
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "பெ&றுநர்களை தேர்ந்தெடு…"
 
-#: editor/kmcomposerwin.cpp:1356
+#: editor/kmcomposerwin.cpp:1358
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "பெறுந&ர்பட்டியலை சேமி…"
 
-#: editor/kmcomposerwin.cpp:1377
+#: editor/kmcomposerwin.cpp:1379
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "உடனிணைப்பாக &ஒட்டு"
 
-#: editor/kmcomposerwin.cpp:1381
+#: editor/kmcomposerwin.cpp:1383
 #, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "&இடைவெளிகளை சீராக்கு"
 
-#: editor/kmcomposerwin.cpp:1385
+#: editor/kmcomposerwin.cpp:1387
 #, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "சம‍அகல &எழுத்துருவை பயன்படுத்து"
 
-#: editor/kmcomposerwin.cpp:1391
+#: editor/kmcomposerwin.cpp:1393
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&அவசரமானது"
 
-#: editor/kmcomposerwin.cpp:1393
+#: editor/kmcomposerwin.cpp:1395
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "பெற்றதன் உறுதிப்பாட்டை &கோரு"
 
-#: editor/kmcomposerwin.cpp:1397
+#: editor/kmcomposerwin.cpp:1399
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "சென்றடைந்த‍தன் உறுதிப்பாட்டை &கோரு"
 
-#: editor/kmcomposerwin.cpp:1402
+#: editor/kmcomposerwin.cpp:1404
 #, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&வரிமடிப்பு"
 
-#: editor/kmcomposerwin.cpp:1407
+#: editor/kmcomposerwin.cpp:1409
 #, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1412
+#: editor/kmcomposerwin.cpp:1414
 #, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&தானியக்க சொல்திருத்தம்"
 
-#: editor/kmcomposerwin.cpp:1428
+#: editor/kmcomposerwin.cpp:1430
 #, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "மேம்பட்ட உரைதிருத்தம்"
 
-#: editor/kmcomposerwin.cpp:1430
+#: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgid "Rich Text"
 msgstr "மேம்பட்ட உரை"
 
-#: editor/kmcomposerwin.cpp:1431
+#: editor/kmcomposerwin.cpp:1433
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "மேம்பட்ட உரைத்திருத்த முறையை (rich text-ஐ) இயக்கும்/முடக்கும்"
 
-#: editor/kmcomposerwin.cpp:1435
+#: editor/kmcomposerwin.cpp:1437
 #, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&அனைத்து புலங்கள்"
 
-#: editor/kmcomposerwin.cpp:1438
+#: editor/kmcomposerwin.cpp:1440
 #, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "அ&டையாளம்"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1443
 #, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "அ&கரமுதலி"
 
-#: editor/kmcomposerwin.cpp:1444
+#: editor/kmcomposerwin.cpp:1446
 #, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "அ&னுப்பிய அஞ்சலுக்கான அடைவு"
 
-#: editor/kmcomposerwin.cpp:1447
+#: editor/kmcomposerwin.cpp:1449
 #, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "அஞ்சலனுப்பும் க&ணக்கு"
 
-#: editor/kmcomposerwin.cpp:1450
+#: editor/kmcomposerwin.cpp:1452
 #, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "அனுப்பு&நர்"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1455
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&தலைப்பு"
 
-#: editor/kmcomposerwin.cpp:1458
+#: editor/kmcomposerwin.cpp:1460
 #, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "கை&யொப்பத்தை பின்சேர்"
 
-#: editor/kmcomposerwin.cpp:1462
+#: editor/kmcomposerwin.cpp:1464
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "கையொப்பத்தை &முன்சேர்"
 
-#: editor/kmcomposerwin.cpp:1466
+#: editor/kmcomposerwin.cpp:1468
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "இடஞ்&சுட்டியிருக்குமிடத்தில் கையொப்பத்தை நுழை"
 
-#: editor/kmcomposerwin.cpp:1481
+#: editor/kmcomposerwin.cpp:1483
 #, kde-format
 msgid "&Spellchecker…"
 msgstr "சொ&ல்திருத்தி…"
 
-#: editor/kmcomposerwin.cpp:1482
+#: editor/kmcomposerwin.cpp:1484
 #, kde-format
 msgid "Spellchecker"
 msgstr "சொல்திருத்தி"
 
-#: editor/kmcomposerwin.cpp:1486
+#: editor/kmcomposerwin.cpp:1488
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "அஞ்சலை ம&றையாக்கம் செய்"
 
-#: editor/kmcomposerwin.cpp:1487
+#: editor/kmcomposerwin.cpp:1489
 #, kde-format
 msgid "Encrypt"
 msgstr "மறையாக்கம் செய்"
 
-#: editor/kmcomposerwin.cpp:1489
+#: editor/kmcomposerwin.cpp:1491
 #, kde-format
 msgid "&Sign Message"
 msgstr "அ&ஞ்சலுக்கு கையொப்பமிடு"
 
-#: editor/kmcomposerwin.cpp:1490
+#: editor/kmcomposerwin.cpp:1492
 #, kde-format
 msgid "Sign"
 msgstr "கையொப்பமிடு"
 
-#: editor/kmcomposerwin.cpp:1517
+#: editor/kmcomposerwin.cpp:1519
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "மறையாக்கம் செய்யும் &வடிவம்"
 
-#: editor/kmcomposerwin.cpp:1520
+#: editor/kmcomposerwin.cpp:1522
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "இவ்வஞ்சலை மறையாக்கம் செய்யும் வித‍த்தை தேர்ந்தெடுக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:1525
+#: editor/kmcomposerwin.cpp:1527
 #, kde-format
 msgid "Create Follow Up Reminder…"
 msgstr "பதிலளிக்குமாறு நினைவூட்டலை உருவாக்கு…"
 
-#: editor/kmcomposerwin.cpp:1559
+#: editor/kmcomposerwin.cpp:1561
 #, kde-format
 msgid "Configure KMail…"
 msgstr "கேமெயிலை அமை…"
 
-#: editor/kmcomposerwin.cpp:1590 kmmainwin.cpp:226 kmreadermainwin.cpp:538
+#: editor/kmcomposerwin.cpp:1592 kmmainwin.cpp:226 kmreadermainwin.cpp:538
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2200,55 +2200,55 @@ msgstr ""
 "<qt>இது பட்டிப் பட்டையை முழுதாக மறைத்துவிடும். %1 என்பதை தட்டி நீங்கள் மறுபடியும் அதை "
 "காட்டலாம்.</qt>"
 
-#: editor/kmcomposerwin.cpp:1593 kmmainwin.cpp:229
+#: editor/kmcomposerwin.cpp:1595 kmmainwin.cpp:229
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "பட்டிப் பட்டையை மறை"
 
-#: editor/kmcomposerwin.cpp:1691 editor/kmcomposerwin.cpp:4022
+#: editor/kmcomposerwin.cpp:1693 editor/kmcomposerwin.cpp:4024
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " வரி:%1 "
 
-#: editor/kmcomposerwin.cpp:1694
+#: editor/kmcomposerwin.cpp:1696
 #, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " நெடுவரிசை:%1 "
 
-#: editor/kmcomposerwin.cpp:1699
+#: editor/kmcomposerwin.cpp:1701
 #, kde-format
 msgid "OVR"
 msgstr "OVR"
 
-#: editor/kmcomposerwin.cpp:1699
+#: editor/kmcomposerwin.cpp:1701
 #, kde-format
 msgid "INS"
 msgstr "INS"
 
-#: editor/kmcomposerwin.cpp:1707
+#: editor/kmcomposerwin.cpp:1709
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "சொல்திருத்தி: இயக்கம்"
 
-#: editor/kmcomposerwin.cpp:1707
+#: editor/kmcomposerwin.cpp:1709
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "சொல்திருத்தி: முடக்கம்"
 
-#: editor/kmcomposerwin.cpp:2085
+#: editor/kmcomposerwin.cpp:2087
 #, kde-format
 msgid "Re&save as Template"
 msgstr "வார்ப்புருவாக மீ&ளச்சேமி"
 
-#: editor/kmcomposerwin.cpp:2085
+#: editor/kmcomposerwin.cpp:2087
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&வரைவாக சேமி"
 
-#: editor/kmcomposerwin.cpp:2086
+#: editor/kmcomposerwin.cpp:2088
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2257,7 +2257,7 @@ msgstr ""
 "இவ்வஞ்சலை வார்ப்புருகளுக்கான அடைவில் சேமிக்கும். இவ்வாறு சேமிக்கும் அஞ்சல்களை நீங்கள் பின்பு "
 "பலமுறை பயன்படுத்தலாம்."
 
-#: editor/kmcomposerwin.cpp:2088
+#: editor/kmcomposerwin.cpp:2090
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2266,95 +2266,95 @@ msgstr ""
 "இவ்வஞ்சலை வரைவுகளுக்கான அடைவில் சேமிக்கும். இவ்வாறு சேமிக்கும் அஞ்சல்களை நீங்கள் பின்னர் "
 "திருத்தி அனுப்பலாம்."
 
-#: editor/kmcomposerwin.cpp:2092
+#: editor/kmcomposerwin.cpp:2094
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "அஞ்சலை கைவிட வேண்டுமா, அல்லது பின்னர் திருத்துவதற்காக சேமிக்க வேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:2093
+#: editor/kmcomposerwin.cpp:2095
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "அஞ்சலெழுதும் இடத்தை மூடுவது"
 
-#: editor/kmcomposerwin.cpp:2161
+#: editor/kmcomposerwin.cpp:2163
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "தானாக சேமிப்பது தோல்வியடைந்தது"
 
-#: editor/kmcomposerwin.cpp:2162
+#: editor/kmcomposerwin.cpp:2164
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "அஞ்சலை அனுப்புவது தோல்வியடைந்தது"
 
-#: editor/kmcomposerwin.cpp:2348
+#: editor/kmcomposerwin.cpp:2350
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "கோப்பை நுழைத்தல்"
 
-#: editor/kmcomposerwin.cpp:2413
+#: editor/kmcomposerwin.cpp:2415
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "உரையுடன் &ஒருங்கிணைந்த படமாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2414
+#: editor/kmcomposerwin.cpp:2416
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "&உடனிணைப்பாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2429
+#: editor/kmcomposerwin.cpp:2431
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "கேமெயில்"
 
-#: editor/kmcomposerwin.cpp:2429 editor/kmcomposerwin.cpp:2534
+#: editor/kmcomposerwin.cpp:2431 editor/kmcomposerwin.cpp:2536
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "உடனிணைப்பின் பெயர்:"
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "உடனிணைப்பின் பெயர் காலியாக இருக்கக்கூடாது"
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "உடனிணைப்பின் பெயர் செல்லுபடியாகாதது"
 
-#: editor/kmcomposerwin.cpp:2486
+#: editor/kmcomposerwin.cpp:2488
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "அஞ்சலில் இணைய முகவரியை சேர்"
 msgstr[1] "அஞ்சலில் இணைய முகவரிகளை சேர்"
 
-#: editor/kmcomposerwin.cpp:2487
+#: editor/kmcomposerwin.cpp:2489
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "கோப்பை &உடனிணைப்பாக சேர்"
 msgstr[1] "கோப்புகளை &உடனிணைப்புகளாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2533
+#: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "பிடிப்புப்பலகையிலுள்ள உரையை உடனிணைப்பாக சேர்"
 
-#: editor/kmcomposerwin.cpp:2629
+#: editor/kmcomposerwin.cpp:2631
 #, kde-format
 msgid "unnamed"
 msgstr "பெயரிடப்படாதது"
 
-#: editor/kmcomposerwin.cpp:2655
+#: editor/kmcomposerwin.cpp:2657
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2365,13 +2365,13 @@ msgstr ""
 "MIME) சாவியை நீங்கள் குறிப்பிட வேண்டும்.</p><p> முதலில் அடையாள அமைப்புகளில் சென்று, "
 "பயன்படுத்த வேண்டிய சாவியை தேர்வு செய்யுங்கள்.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2662
+#: editor/kmcomposerwin.cpp:2664
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "குறிப்பிடப்படாத கையொப்ப சாவி"
 
-#: editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2829
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2381,7 +2381,7 @@ msgstr ""
 "அனுப்புநர் புலத்தில் உங்கள் மின்னஞ்சல் முகவரியை உள்ளிட வேண்டும். ஒவ்வொரு அஞ்சலுக்கும் இதை "
 "நிரப்புவதற்கு பதிலாக, நீங்கள் அடையாள அமைப்புகளில் இம்முகவரியை அமைக்கலாம்."
 
-#: editor/kmcomposerwin.cpp:2836
+#: editor/kmcomposerwin.cpp:2838
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2390,77 +2390,77 @@ msgstr ""
 "குறைந்தபட்சம் ஒரு பெறுநரையாவது நீங்கள் குறிப்பிட வேண்டும். அது பெறுநர் புலத்திலோ, நகல் "
 "புலத்திலோ, மறைநகல் புலத்திலோ இருக்கலாம்."
 
-#: editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2844
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "பெறுநர் புலம் காலியாக உள்ளது. இருப்பினும் அஞ்சலை அனுப்பவேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:2844
+#: editor/kmcomposerwin.cpp:2846
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "பெறுநர் குறிப்பிடப்படவில்லை"
 
-#: editor/kmcomposerwin.cpp:2845 editor/kmcomposerwin.cpp:2859
+#: editor/kmcomposerwin.cpp:2847 editor/kmcomposerwin.cpp:2861
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "&அப்படியே அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:2846
+#: editor/kmcomposerwin.cpp:2848
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&பெறுநர் புலத்தை நிரப்பவிடு"
 
-#: editor/kmcomposerwin.cpp:2856
+#: editor/kmcomposerwin.cpp:2858
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "நீங்கள் அஞ்சலுக்கான தலைப்பை குறிப்பிடவில்லை. இருப்பினும் அஞ்சலை அனுப்பவேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:2858
+#: editor/kmcomposerwin.cpp:2860
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "தலைப்பு குறிப்பிடப்படவில்லை"
 
-#: editor/kmcomposerwin.cpp:2860
+#: editor/kmcomposerwin.cpp:2862
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "தலைப்பை &நிரப்பவிடு"
 
-#: editor/kmcomposerwin.cpp:2905
+#: editor/kmcomposerwin.cpp:2907
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "வரைவை மறையாக்கம் செய்ய, ஒரு பெறுநரையாவது நீங்கள் குறிப்பிட வேண்டும்."
 
-#: editor/kmcomposerwin.cpp:3091
+#: editor/kmcomposerwin.cpp:3093
 #, kde-format
 msgid "About to send email…"
 msgstr "அஞ்சல் அனுப்பப்படவிருக்கிறது…"
 
-#: editor/kmcomposerwin.cpp:3092
+#: editor/kmcomposerwin.cpp:3094
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "அஞ்சலனுப்புவதன் உறுதிப்பாடு"
 
-#: editor/kmcomposerwin.cpp:3093
+#: editor/kmcomposerwin.cpp:3095
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&இப்போது அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:3094
+#: editor/kmcomposerwin.cpp:3096
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "பி&றகு அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2469,25 +2469,25 @@ msgstr ""
 "நீங்கள் %1-க்கு அதிகமான பெறுநர்களுக்கு இந்த அஞ்சலை அனுப்ப முயற்சிக்கிறீர்கள். உறுதியாக "
 "அனுப்பவேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "அதிகப்படியான பெறுநர்கள்"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&அப்படியே அனுப்பு"
 
-#: editor/kmcomposerwin.cpp:3177
+#: editor/kmcomposerwin.cpp:3179
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "பெறுநர்களை &மாற்று"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3216
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2495,25 +2495,25 @@ msgid ""
 msgstr ""
 "HTML பயன்முறையை முடக்கினால், உரை அதன் வடிவமைப்பை இழக்கும். உறுதியாக முடக்க வேண்டுமா?"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3218
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "வடிவமைப்பை இழக்கலாமா?"
 
-#: editor/kmcomposerwin.cpp:3217
+#: editor/kmcomposerwin.cpp:3219
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "வடிவமைப்பை இழ"
 
-#: editor/kmcomposerwin.cpp:3218
+#: editor/kmcomposerwin.cpp:3220
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "சாதாரண உரையில் markup-ஐ சேர்"
 
-#: editor/kmcomposerwin.cpp:3430
+#: editor/kmcomposerwin.cpp:3432
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2523,7 +2523,7 @@ msgstr ""
 "தேர்ந்தெடுத்துள்ள PGP சாவி (%1) உங்கள் சாவிக்கொத்தில் இல்லை, அல்லது மறையாக்கத்திற்கு உகந்த‍"
 "தல்ல."
 
-#: editor/kmcomposerwin.cpp:3443
+#: editor/kmcomposerwin.cpp:3445
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2533,7 +2533,7 @@ msgstr ""
 "தேர்ந்தெடுத்துள்ள PGP கையொப்ப சாவி (%1) உங்கள் சாவிக்கொத்தில் இல்லை, அல்லது "
 "கையொப்பமிடுவதற்கு உகந்த‍தல்ல."
 
-#: editor/kmcomposerwin.cpp:3459
+#: editor/kmcomposerwin.cpp:3461
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2543,7 +2543,7 @@ msgstr ""
 "தேர்ந்தெடுத்துள்ள SMIME சாவி (%1) உங்கள் சாவிக்கொத்தில் இல்லை, அல்லது மறையாக்கத்திற்கு உகந்த‍"
 "தல்ல."
 
-#: editor/kmcomposerwin.cpp:3472
+#: editor/kmcomposerwin.cpp:3474
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2553,25 +2553,25 @@ msgstr ""
 "தேர்ந்தெடுத்துள்ள SMIME கையொப்ப சாவி (%1) உங்கள் சாவிக்கொத்தில் இல்லை, அல்லது "
 "கையொப்பமிடுவதற்கு உகந்த‍தல்ல."
 
-#: editor/kmcomposerwin.cpp:3645
+#: editor/kmcomposerwin.cpp:3647
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "மறையாக்கம் செய்"
 
-#: editor/kmcomposerwin.cpp:3647
+#: editor/kmcomposerwin.cpp:3649
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "மறையாக்கம் செய்யவேண்டாம்"
 
-#: editor/kmcomposerwin.cpp:3787
+#: editor/kmcomposerwin.cpp:3789
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "பெறுநருக்கான சாவி கண்டுபிடிக்கப்படவில்லை."
 
-#: editor/kmcomposerwin.cpp:3809
+#: editor/kmcomposerwin.cpp:3811
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2579,7 +2579,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3813
+#: editor/kmcomposerwin.cpp:3815
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2589,7 +2589,7 @@ msgstr ""
 "இப்பெறுநருக்கு Autocrypt சாவி பயன்படுத்தப்படுகிறது. இச்சாவி சரிபார்க்கப்படாது. பெறுநர் "
 "மறையாக்கப்பட்டுள்ள பதில்களை விரும்புகிறார்."
 
-#: editor/kmcomposerwin.cpp:3817
+#: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2599,7 +2599,7 @@ msgstr ""
 "இப்பெறுநருக்கு Autocrypt சாவி பயன்படுத்தப்படுகிறது. இச்சாவி சரிபார்க்கப்படாது. பெறுநர் "
 "மறையாக்கப்பட்டுள்ள பதில்களை விரும்பவில்லை."
 
-#: editor/kmcomposerwin.cpp:3844
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2608,7 +2608,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3852
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2618,7 +2618,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3860
+#: editor/kmcomposerwin.cpp:3862
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2626,7 +2626,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2634,7 +2634,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2642,7 +2642,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3880
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2652,7 +2652,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3888
+#: editor/kmcomposerwin.cpp:3890
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2660,7 +2660,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3894
+#: editor/kmcomposerwin.cpp:3896
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2670,7 +2670,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3902
+#: editor/kmcomposerwin.cpp:3904
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2678,7 +2678,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3907
+#: editor/kmcomposerwin.cpp:3909
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2686,12 +2686,12 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4024
+#: editor/kmcomposerwin.cpp:4026
 #, kde-format
 msgid " Column: %1 "
 msgstr " நெடுவரிசை:%1 "
 
-#: editor/kmcomposerwin.cpp:4241
+#: editor/kmcomposerwin.cpp:4243
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2704,12 +2704,12 @@ msgid ""
 "certificates.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4253
+#: editor/kmcomposerwin.cpp:4255
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Encryption Key Selection"
 
-#: editor/kmcomposerwin.cpp:4338
+#: editor/kmcomposerwin.cpp:4340
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
