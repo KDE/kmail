@@ -3423,10 +3423,9 @@ msgid "Picture"
 msgstr "图像"
 
 #: identity/identitydialog.cpp:797
-#, fuzzy, kde-format
-#| msgid "Plasma activities"
+#, kde-format
 msgid "Activities"
-msgstr "Plasma活动"
+msgstr ""
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -7901,18 +7900,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Form"
-#~ msgstr "表单"
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (默认)"
-
-#~ msgid "Identity Name"
-#~ msgstr "身份名称"
-
-#~ msgid "Email Address"
-#~ msgstr "邮件地址："
