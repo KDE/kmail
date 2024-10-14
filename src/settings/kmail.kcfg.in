@@ -343,7 +343,7 @@
            <label>Show the message preview pane next to the message list</label>
          </choice>
        </choices>
-       <default>below</default>
+       <default>right</default>
       </entry>
 
       <entry name="FolderList" type="Enum">
