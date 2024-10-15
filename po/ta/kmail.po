@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-14 00:40+0000\n"
+"POT-Creation-Date: 2024-10-15 00:40+0000\n"
 "PO-Revision-Date: 2024-09-07 20:34+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -1836,13 +1836,13 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "உடனிணைப்புகளின் பட்டியலை காட்டும்"
 
-#: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:97
+#: editor/kmcomposerwin.cpp:328 kmail_part.cpp:38 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "கேமெயில் 2"
 
-#: editor/kmcomposerwin.cpp:358
+#: editor/kmcomposerwin.cpp:359
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
@@ -1850,62 +1850,62 @@ msgstr ""
 "இவ்வஞ்சலின் எழுத்தாக்கத்தை சரிபாரக்கும்போது பயன்படுத்த வேண்டிய அகரமுதலியை தேர்ந்தெடுக்க "
 "விடும்"
 
-#: editor/kmcomposerwin.cpp:365
+#: editor/kmcomposerwin.cpp:366
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 "இந்த அஞ்சலை அனுப்பிய பின் அதன் நகல் எந்த அடைவில் சேமிக்கப்பட வேண்டுமென தேர்ந்தெடுக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:374
+#: editor/kmcomposerwin.cpp:375
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "இந்த அஞ்சலை அனுப்ப பயன்படுத்த வேண்டிய வெளிசெல்லும் கணக்கை தேர்ந்தெடுக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:382
+#: editor/kmcomposerwin.cpp:383
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "இந்த அஞ்சலுக்கான \"அனுப்புநர்\" முகவரியை அமைக்க விடும்"
 
-#: editor/kmcomposerwin.cpp:410
+#: editor/kmcomposerwin.cpp:411
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "அ&டையாளம்:"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "அ&கரமுதலி:"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:413
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "அ&னுப்பிய அஞ்சலுக்கான அடைவு:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:414
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "அ&ஞ்சலனுப்பும் கணக்கு:"
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&அனுப்புநர்:"
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&தலைப்பு:"
 
-#: editor/kmcomposerwin.cpp:484
+#: editor/kmcomposerwin.cpp:485
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
