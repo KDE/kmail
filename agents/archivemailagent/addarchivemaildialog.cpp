@@ -12,7 +12,7 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
-
+using namespace Qt::Literals::StringLiterals;
 AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *parent)
     : QDialog(parent)
     , mAddArchiveMailWidget(new AddArchiveMailWidget(info, this))
@@ -26,9 +26,9 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
     setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
 
     auto topLayout = new QVBoxLayout(this);
-    topLayout->setObjectName(QStringLiteral("topLayout"));
+    topLayout->setObjectName("topLayout"_L1);
 
-    mAddArchiveMailWidget->setObjectName(QStringLiteral("mAddArchiveMailWidget"));
+    mAddArchiveMailWidget->setObjectName("mAddArchiveMailWidget"_L1);
     topLayout->addWidget(mAddArchiveMailWidget);
     connect(mAddArchiveMailWidget, &AddArchiveMailWidget::enableOkButton, this, [this](bool state) {
         mOkButton->setEnabled(state);

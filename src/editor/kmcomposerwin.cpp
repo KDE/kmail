@@ -284,9 +284,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
             [&](const GpgME::Key &key, QString msg, Kleo::ExpiryChecker::ExpiryInformation info, bool isNewMessage) {
                 Q_UNUSED(isNewMessage);
                 if (info == Kleo::ExpiryChecker::OwnKeyExpired || info == Kleo::ExpiryChecker::OwnKeyNearExpiry) {
-                    const auto plainMsg = msg.replace(QStringLiteral("<p>"), QStringLiteral(" "))
-                                              .replace(QStringLiteral("</p>"), QStringLiteral(" "))
-                                              .replace(QStringLiteral("<p align=center>"), QStringLiteral(" "));
+                    const auto plainMsg = msg.replace("<p>"_L1, " "_L1).replace("</p>"_L1, " "_L1).replace("<p align=center>"_L1, " "_L1);
                     mNearExpiryWarning->addInfo(plainMsg);
                     mNearExpiryWarning->setWarning(info == Kleo::ExpiryChecker::OwnKeyExpired);
                     mNearExpiryWarning->animatedShow();
@@ -2091,7 +2089,7 @@ bool KMComposerWin::queryClose()
         const int rc = KMessageBox::warningTwoActionsCancel(this,
                                                             i18n("Do you want to save the message for later or discard it?"),
                                                             i18nc("@title:window", "Close Composer"),
-                                                            KGuiItem(savebut, QStringLiteral("document-save"), QString(), savetext),
+                                                            KGuiItem(savebut, "document-save"_L1, QString(), savetext),
                                                             KStandardGuiItem::discard(),
                                                             KStandardGuiItem::cancel());
         if (rc == KMessageBox::Cancel) {
@@ -2856,8 +2854,8 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
                                                            i18n("You did not specify a subject. "
                                                                 "Send message anyway?"),
                                                            i18nc("@title:window", "No Subject Specified"),
-                                                           KGuiItem(i18nc("@action:button", "S&end as Is"), QStringLiteral("mail-send")),
-                                                           KGuiItem(i18nc("@action:button", "&Specify the Subject"), QStringLiteral("edit-rename")));
+                                                           KGuiItem(i18nc("@action:button", "S&end as Is"), "mail-send"_L1),
+                                                           KGuiItem(i18nc("@action:button", "&Specify the Subject"), "edit-rename"_L1));
             if (rc == KMessageBox::ButtonCode::SecondaryAction) {
                 return;
             }
