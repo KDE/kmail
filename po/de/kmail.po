@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-16 00:41+0000\n"
+"POT-Creation-Date: 2024-10-18 00:40+0000\n"
 "PO-Revision-Date: 2024-09-13 12:45+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -2230,49 +2230,49 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menüleiste ausblenden"
 
-#: editor/kmcomposerwin.cpp:1689 editor/kmcomposerwin.cpp:4020
+#: editor/kmcomposerwin.cpp:1692 editor/kmcomposerwin.cpp:4023
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Zeile: %1 "
 
-#: editor/kmcomposerwin.cpp:1692
+#: editor/kmcomposerwin.cpp:1695
 #, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Spalte: %1 "
 
-#: editor/kmcomposerwin.cpp:1697
+#: editor/kmcomposerwin.cpp:1700
 #, kde-format
 msgid "OVR"
 msgstr "Überschr"
 
-#: editor/kmcomposerwin.cpp:1697
+#: editor/kmcomposerwin.cpp:1700
 #, kde-format
 msgid "INS"
 msgstr "Einf"
 
-#: editor/kmcomposerwin.cpp:1705
+#: editor/kmcomposerwin.cpp:1708
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Rechtschreibprüfung: an"
 
-#: editor/kmcomposerwin.cpp:1705
+#: editor/kmcomposerwin.cpp:1708
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Rechtschreibprüfung: aus"
 
-#: editor/kmcomposerwin.cpp:2083
+#: editor/kmcomposerwin.cpp:2086
 #, kde-format
 msgid "Re&save as Template"
 msgstr "Als &Vorlage erneut speichern"
 
-#: editor/kmcomposerwin.cpp:2083
+#: editor/kmcomposerwin.cpp:2086
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Als &Entwurf speichern"
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2087
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2281,7 +2281,7 @@ msgstr ""
 "Diese Nachricht wieder im Vorlagenordner speichern. Von dort aus kann sie "
 "später benutzt werden."
 
-#: editor/kmcomposerwin.cpp:2086
+#: editor/kmcomposerwin.cpp:2089
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2290,95 +2290,95 @@ msgstr ""
 "Diese Nachricht im Entwurfsordner speichern. Dort kann sie später weiter "
 "bearbeitet und gesendet werden."
 
-#: editor/kmcomposerwin.cpp:2090
+#: editor/kmcomposerwin.cpp:2093
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Möchten Sie die Nachricht verwerfen oder für später speichern?"
 
-#: editor/kmcomposerwin.cpp:2091
+#: editor/kmcomposerwin.cpp:2094
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Editor schließen"
 
-#: editor/kmcomposerwin.cpp:2159
+#: editor/kmcomposerwin.cpp:2162
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Automatisches Speichern der Nachricht ist fehlgeschlagen"
 
-#: editor/kmcomposerwin.cpp:2160
+#: editor/kmcomposerwin.cpp:2163
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Das Senden der Nachricht ist fehlgeschlagen"
 
-#: editor/kmcomposerwin.cpp:2346
+#: editor/kmcomposerwin.cpp:2349
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Datei einfügen"
 
-#: editor/kmcomposerwin.cpp:2411
+#: editor/kmcomposerwin.cpp:2414
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Als &eingebettetes Bild hinzufügen"
 
-#: editor/kmcomposerwin.cpp:2412
+#: editor/kmcomposerwin.cpp:2415
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Als &Anhang hinzufügen"
 
-#: editor/kmcomposerwin.cpp:2427
+#: editor/kmcomposerwin.cpp:2430
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2427 editor/kmcomposerwin.cpp:2532
+#: editor/kmcomposerwin.cpp:2430 editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Name des Anhangs:"
 
-#: editor/kmcomposerwin.cpp:2433
+#: editor/kmcomposerwin.cpp:2436
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Der Name des Anhangs darf nicht leer sein"
 
-#: editor/kmcomposerwin.cpp:2433
+#: editor/kmcomposerwin.cpp:2436
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Ungültiger Name des Anhangs"
 
-#: editor/kmcomposerwin.cpp:2484
+#: editor/kmcomposerwin.cpp:2487
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Adresse (URL) zur Nachricht hinzufügen"
 msgstr[1] "Adressen (URLs) zur Nachricht hinzufügen"
 
-#: editor/kmcomposerwin.cpp:2485
+#: editor/kmcomposerwin.cpp:2488
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Datei als &Anhang hinzufügen"
 msgstr[1] "Dateien als &Anhang hinzufügen"
 
-#: editor/kmcomposerwin.cpp:2531
+#: editor/kmcomposerwin.cpp:2534
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Inhalt der Zwischenablage als Anhang einfügen"
 
-#: editor/kmcomposerwin.cpp:2627
+#: editor/kmcomposerwin.cpp:2630
 #, kde-format
 msgid "unnamed"
 msgstr "unbenannt"
 
-#: editor/kmcomposerwin.cpp:2653
+#: editor/kmcomposerwin.cpp:2656
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2389,13 +2389,13 @@ msgstr ""
 "oder S/MIME-Schlüssel dafür festgelegt werden.</p><p>Bitte legen Sie den zu "
 "verwendenden Schlüssel in den Identitätseinstellungen fest.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2660
+#: editor/kmcomposerwin.cpp:2663
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Signaturschlüssel nicht definiert"
 
-#: editor/kmcomposerwin.cpp:2825
+#: editor/kmcomposerwin.cpp:2828
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2406,7 +2406,7 @@ msgstr ""
 "in allen Identitäten Ihre E-Mail-Adresse eintragen, damit Sie diese nicht "
 "für jede Nachricht angeben müssen."
 
-#: editor/kmcomposerwin.cpp:2834
+#: editor/kmcomposerwin.cpp:2837
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2415,49 +2415,49 @@ msgstr ""
 "Sie müssen zumindest einen Empfänger im Feld „An:“ oder unter „Kopie:“ (CC) "
 "oder „Blindkopie:“ (BCC) angeben."
 
-#: editor/kmcomposerwin.cpp:2840
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Das Feld „An:“ ist leer. Soll die Nachricht trotzdem versendet werden?"
 
-#: editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2845
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Kein Hauptempfänger („An:“) angegeben"
 
-#: editor/kmcomposerwin.cpp:2843 editor/kmcomposerwin.cpp:2857
+#: editor/kmcomposerwin.cpp:2846 editor/kmcomposerwin.cpp:2860
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Ohne Änderung &senden"
 
-#: editor/kmcomposerwin.cpp:2844
+#: editor/kmcomposerwin.cpp:2847
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "Hauptempfänger &angeben"
 
-#: editor/kmcomposerwin.cpp:2854
+#: editor/kmcomposerwin.cpp:2857
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr ""
 "Sie haben keinen Betreff angegeben. Soll die Nachricht trotzdem versendet "
 "werden?"
 
-#: editor/kmcomposerwin.cpp:2856
+#: editor/kmcomposerwin.cpp:2859
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Keinen Betreff angegeben"
 
-#: editor/kmcomposerwin.cpp:2858
+#: editor/kmcomposerwin.cpp:2861
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "Betreff &angeben"
 
-#: editor/kmcomposerwin.cpp:2903
+#: editor/kmcomposerwin.cpp:2906
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2466,30 +2466,30 @@ msgstr ""
 "Sie müssen zumindest einen Empfänger angeben, um einen Entwurf verschlüsseln "
 "zu können."
 
-#: editor/kmcomposerwin.cpp:3089
+#: editor/kmcomposerwin.cpp:3092
 #, kde-format
 msgid "About to send email…"
 msgstr "Nachricht ist vor dem Versand …"
 
-#: editor/kmcomposerwin.cpp:3090
+#: editor/kmcomposerwin.cpp:3093
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Absenden bestätigen"
 
-#: editor/kmcomposerwin.cpp:3091
+#: editor/kmcomposerwin.cpp:3094
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Jetzt senden"
 
-#: editor/kmcomposerwin.cpp:3092
+#: editor/kmcomposerwin.cpp:3095
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "S&päter senden"
 
-#: editor/kmcomposerwin.cpp:3172
+#: editor/kmcomposerwin.cpp:3175
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2498,25 +2498,25 @@ msgstr ""
 "Sie versenden diese Nachricht an mehr als %1 Empfänger. Soll die Nachricht "
 "trotzdem gesendet werden?"
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3176
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Zu viele Empfänger"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3177
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Ohne Änderung &senden"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Empfänger ä&ndern"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3215
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2525,25 +2525,25 @@ msgstr ""
 "Durch das Abschalten des HTML-Modus wird der Text seine Formatierungen "
 "verlieren. Sind Sie sicher?"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3217
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Formatierungen verwerfen?"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3218
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Formatierungen verwerfen"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3219
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Kennzeichnung für einfachen Text hinzufügen"
 
-#: editor/kmcomposerwin.cpp:3428
+#: editor/kmcomposerwin.cpp:3431
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2553,7 +2553,7 @@ msgstr ""
 "Der ausgewählte PGP-Schlüssel (%1) befindet sich nicht in Ihrem "
 "Schlüsselbund oder passt nicht für die Verschlüsselung."
 
-#: editor/kmcomposerwin.cpp:3441
+#: editor/kmcomposerwin.cpp:3444
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2563,7 +2563,7 @@ msgstr ""
 "Der ausgewählte PGP-Signierschlüssel (%1) befindet sich nicht in Ihrem "
 "Schlüsselbund oder passt nicht für das Signieren."
 
-#: editor/kmcomposerwin.cpp:3457
+#: editor/kmcomposerwin.cpp:3460
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2573,7 +2573,7 @@ msgstr ""
 "Der ausgewählte SMIME-Schlüssel (%1) befindet sich nicht in Ihrem "
 "Schlüsselbund oder passt nicht für die Verschlüsselung."
 
-#: editor/kmcomposerwin.cpp:3470
+#: editor/kmcomposerwin.cpp:3473
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2583,25 +2583,25 @@ msgstr ""
 "Der ausgewählte SMIME-Signierschlüssel (%1) befindet sich nicht in Ihrem "
 "Schlüsselbund oder passt nicht für das Signieren."
 
-#: editor/kmcomposerwin.cpp:3643
+#: editor/kmcomposerwin.cpp:3646
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Verschlüsseln"
 
-#: editor/kmcomposerwin.cpp:3645
+#: editor/kmcomposerwin.cpp:3648
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Nicht verschlüsseln"
 
-#: editor/kmcomposerwin.cpp:3785
+#: editor/kmcomposerwin.cpp:3788
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Zu diesem Empfänger wurde kein Schlüssel gefunden."
 
-#: editor/kmcomposerwin.cpp:3807
+#: editor/kmcomposerwin.cpp:3810
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2611,7 +2611,7 @@ msgstr ""
 "Für diesen Empfänger wird Autocrypt Gossip verwendet. Dieser Schlüssel kommt "
 "von Drittanbieter-Empfängern. Der Schlüssel ist nicht verifiziert."
 
-#: editor/kmcomposerwin.cpp:3811
+#: editor/kmcomposerwin.cpp:3814
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2622,7 +2622,7 @@ msgstr ""
 "Schlüssel ist nicht verifiziert. Der Empfänger bevorzugt verschlüsselte "
 "Antworten."
 
-#: editor/kmcomposerwin.cpp:3815
+#: editor/kmcomposerwin.cpp:3818
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2633,7 +2633,7 @@ msgstr ""
 "Schlüssel ist nicht verifiziert. Der Empfänger bevorzugt verschlüsselte "
 "Antworten nicht."
 
-#: editor/kmcomposerwin.cpp:3842
+#: editor/kmcomposerwin.cpp:3845
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2646,7 +2646,7 @@ msgstr ""
 "Fingerabdruck über einen anderen Kanal übermittelt wurde. Klicken Sie auf "
 "das Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3853
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2661,7 +2661,7 @@ msgstr ""
 "können Sie ihn signieren, wenn der Fingerabdruck über einen anderen Kanal "
 "übermittelt wurde. Klicken Sie auf das Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3861
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2672,7 +2672,7 @@ msgstr ""
 "widersprechende TOFU-Daten. Klicken Sie auf das Symbol für weitere "
 "Informationen."
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3867
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2683,7 +2683,7 @@ msgstr ""
 "sind von unbekannter Aussagekraft. Klicken Sie auf das Symbol für weitere "
 "Informationen."
 
-#: editor/kmcomposerwin.cpp:3870
+#: editor/kmcomposerwin.cpp:3873
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2693,7 +2693,7 @@ msgstr ""
 "Der Verschlüsselungsschlüssel ist nicht vertrauenswürdig. Er ist als "
 "böswillig definiert. Klicken Sie auf das Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3878
+#: editor/kmcomposerwin.cpp:3881
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2709,7 +2709,7 @@ msgstr ""
 "einen anderen Kanal übermittelt wurde. Klicken Sie auf das Symbol für "
 "weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3886
+#: editor/kmcomposerwin.cpp:3889
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2720,7 +2720,7 @@ msgstr ""
 "Schlüssel signieren, wenn der Fingerabdruck über einen anderen Kanal "
 "übermittelt wurde. Klicken Sie auf das Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3892
+#: editor/kmcomposerwin.cpp:3895
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2736,7 +2736,7 @@ msgstr ""
 "Fingerabdruck über einen anderen Kanal übermittelt wurde. Klicken Sie auf "
 "das Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3900
+#: editor/kmcomposerwin.cpp:3903
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2747,7 +2747,7 @@ msgstr ""
 "Sicherheitsstufe durch das Signieren des Schlüssels anheben. Klicken Sie auf "
 "das Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:3905
+#: editor/kmcomposerwin.cpp:3908
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2758,12 +2758,12 @@ msgstr ""
 "anderen absolut vertrauenswürdigen Schlüssel signiert. Klicken Sie auf das "
 "Symbol für weitere Informationen."
 
-#: editor/kmcomposerwin.cpp:4022
+#: editor/kmcomposerwin.cpp:4025
 #, kde-format
 msgid " Column: %1 "
 msgstr " Spalte: %1 "
 
-#: editor/kmcomposerwin.cpp:4239
+#: editor/kmcomposerwin.cpp:4242
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2781,12 +2781,12 @@ msgstr ""
 "finden können, gibt es auch die Möglichkeit nach externen Zertifikaten zu "
 "suchen, indem Sie den Knopf „Suche nach externen Zertifikaten“ drücken.</qt>"
 
-#: editor/kmcomposerwin.cpp:4251
+#: editor/kmcomposerwin.cpp:4254
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Auswahl des Verschlüsselungsschlüssels"
 
-#: editor/kmcomposerwin.cpp:4336
+#: editor/kmcomposerwin.cpp:4339
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
