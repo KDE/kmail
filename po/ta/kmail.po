@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-07 20:34+0200\n"
+"PO-Revision-Date: 2024-10-20 14:25+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -258,10 +258,8 @@ msgid "Anti-virus support"
 msgstr "வைரஸ்-எதிர்ப்பு துணை"
 
 #: aboutdata.cpp:123
-#, fuzzy
-#| msgid "Fixed Width Font"
 msgid "Fixed widget styles"
-msgstr "எழுத்துருவின் நிலைத்த அகலம்"
+msgstr ""
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
@@ -301,7 +299,7 @@ msgstr "முகவரிப்புத்தகத்திலிருந்
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
-msgstr ""
+msgstr "வெகுவாக பங்களித்தவர்"
 
 #: aboutdata.cpp:149
 msgid "Improve configuration dialog"
@@ -5691,6 +5689,8 @@ msgid ""
 "KMail is now based on the Akonadi Personal Information Management framework, "
 "which brings many changes all around."
 msgstr ""
+"கேமெயில், இப்போது Akonadi தனிவிவர மேலாண்மை சேவையைப் பயன்படுத்துகிறது. இதனால் பல "
+"மாற்றங்கள் உள்ளன."
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
@@ -5724,19 +5724,19 @@ msgstr "ஏமாற்று முகவரியா என சோதிக்
 
 #: kmreaderwin.cpp:276
 msgid "Added Check DKIM"
-msgstr ""
+msgstr "DKIM சரிபார்ப்பு சேர்க்கப்பட்டுள்ளது"
 
 #: kmreaderwin.cpp:277
 msgid "Added Markdown Editing Support"
-msgstr ""
+msgstr "Markdown திருத்த ஆதரவு சேர்க்கப்பட்டுள்ளது"
 
 #: kmreaderwin.cpp:278
 msgid "Added Grammar Plugin Support"
-msgstr ""
+msgstr "இலக்கண செருகுநிரல் ஆதரவு சேர்க்கப்பட்டுள்ளது"
 
 #: kmreaderwin.cpp:279
 msgid "Added etesync resource support"
-msgstr ""
+msgstr "Etesync ஆதரவு சேர்க்கப்பட்டுள்ளது"
 
 #: kmreaderwin.cpp:280
 msgid "Added Microsoft Exchange Web Services resource support"
@@ -6567,7 +6567,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:257
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
+msgstr "குறிக்கப்பட்டிருந்தால், அனுப்பியுள்ள அஞ்சல்கள் மறையாக்கியே சேமிக்கப்படும்"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
 #: settings/kmail.kcfg.in:261
@@ -7957,8 +7957,8 @@ msgstr "பொதுவான விருப்பத்தை பயன்ப�
 #, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "அலுவலகத்தில் இல்லாததாக பதிலளிக்கும் அம்சம் சேவையகத்தில் செயலிலுள்ளது"
+msgstr[1] "அலுவலகத்தில் இல்லாததாக பதிலளிக்கும் அம்சம் சேவையகங்களில் செயலிலுள்ளது"
 
 #: widgets/zoomlabelwidget.cpp:20
 #, kde-format
