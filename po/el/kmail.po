@@ -1550,7 +1550,7 @@ msgstr "&Νέο"
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
-msgstr "&αφαίρεση"
+msgstr "&Αφαίρεση"
 
 #: configuredialog/configurecomposerpage.cpp:763
 #, kde-format
@@ -1581,7 +1581,7 @@ msgstr "Μη έγκυρη ημερομηνία"
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "&ενεργοποίηση ανίχνευσης έλλειψης συνημμένων"
+msgstr "&Ενεργοποίηση ανίχνευσης έλλειψης συνημμένων"
 
 #: configuredialog/configurecomposerpage.cpp:961
 #, kde-format
@@ -3573,7 +3573,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
-msgstr "&λεξικό:"
+msgstr "&Λεξικό:"
 
 #: identity/identitydialog.cpp:684
 #, fuzzy, kde-format
@@ -3585,7 +3585,7 @@ msgstr "Φάκελ&ος απεσταλμένων"
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
-msgstr "&φάκελος απεσταλμένων:"
+msgstr "&Φάκελος απεσταλμένων:"
 
 #: identity/identitydialog.cpp:692
 #, fuzzy, kde-format
@@ -3645,7 +3645,7 @@ msgstr "Επαναφορά προκαθορισμένου ονόματος το�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "&προκαθορισμένος τομέας:"
+msgstr "&Προκαθορισμένος τομέας:"
 
 #: identity/identitydialog.cpp:740
 #, kde-format
