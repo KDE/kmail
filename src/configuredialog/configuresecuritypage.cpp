@@ -279,12 +279,10 @@ void SecurityPageEncryptionTab::doLoadOther()
     loadWidget(mWidget->mWarnEncrChainCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrChaincertNearExpiryThresholdDaysItem());
     loadWidget(mWidget->mWarnEncrRootCertExpiresSB, MessageComposer::MessageComposerSettings::self()->cryptoWarnEncrRootNearExpiryThresholdDaysItem());
 
-#if KI18N_VERSION > QT_VERSION_CHECK(6, 5, 0)
     KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrOwnKeyExpiresSB, ki18np("%v day", "%v days"));
     KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrKeyExpiresSB, ki18np("%v day", "%v days"));
     KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrChainCertExpiresSB, ki18np("%v day", "%v days"));
     KLocalization::setupSpinBoxFormatString(mWidget->mWarnEncrRootCertExpiresSB, ki18np("%v day", "%v days"));
-#endif
 
     mWidget->enableAllWarningsPB->setEnabled(true);
 }
