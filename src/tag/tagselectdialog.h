@@ -31,7 +31,9 @@ private:
     KMAIL_NO_EXPORT void writeConfig();
     KMAIL_NO_EXPORT void readConfig();
     KMAIL_NO_EXPORT void createTagList(bool updateList);
-    enum ItemType { UrlTag = Qt::UserRole + 1 };
+    enum ItemType {
+        UrlTag = Qt::UserRole + 1
+    };
     const int mNumberOfSelectedMessages = -1;
     const Akonadi::Item mSelectedItem;
 
