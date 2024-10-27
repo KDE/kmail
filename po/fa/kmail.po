@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-18 00:40+0000\n"
+"POT-Creation-Date: 2024-10-27 00:41+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1468,7 +1468,7 @@ msgstr "بدون ذخیره خودکار"
 msgid "No autosave"
 msgstr "بدون ذخیره خودکار"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:412
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1477,19 +1477,19 @@ msgid_plural "%v minutes"
 msgstr[0] " دقیقه"
 msgstr[1] ""
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:414
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "درخواست خودکار اخطارهای وضع &پیام‌"
 
-#: configuredialog/configurecomposerpage.cpp:622
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "پیشوندهای موضوع‌ &پاسخ‌"
 
-#: configuredialog/configurecomposerpage.cpp:627
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1502,161 +1502,161 @@ msgstr ""
 "شناخت هر دنباله پیشوندهای زیر\n"
 ")مدخلها، عبارتهای منظم حساس به حالت هستند(:"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Re&move"
 msgstr "&حذف‌"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "تغییر..."
 
-#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "وارد کردن پیشوند پاسخ جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:634
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:638
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "پیشوندهای موضوع‌ &پاسخ‌"
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "پیشوندهای موضوع &پیش‌سو‌"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&حذف‌"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "تغییر..."
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "وارد کردن پیشوند پیش‌سوی جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:660
+#: configuredialog/configurecomposerpage.cpp:658
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:661
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "پیشوندهای موضوع &پیش‌سو‌"
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:703
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&استفاده از پسوند شناسه پیام سفارشی‌"
 
-#: configuredialog/configurecomposerpage.cpp:721
+#: configuredialog/configurecomposerpage.cpp:719
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "پسوند &شناسه پیام سفارشی‌:‌"
 
-#: configuredialog/configurecomposerpage.cpp:733
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "تعریف حوزه‌های سرآیند مایم سفارشی:"
 
-#: configuredialog/configurecomposerpage.cpp:741
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "نام"
 
-#: configuredialog/configurecomposerpage.cpp:742
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "مقدار"
 
-#: configuredialog/configurecomposerpage.cpp:750
+#: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&جدید‌"
 
-#: configuredialog/configurecomposerpage.cpp:754
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&حذف‌"
 
-#: configuredialog/configurecomposerpage.cpp:763
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&نام:‌"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&مقدار:‌"
 
-#: configuredialog/configurecomposerpage.cpp:913
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:914
+#: configuredialog/configurecomposerpage.cpp:912
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "&فعال‌سازی امضا‌"
 
-#: configuredialog/configurecomposerpage.cpp:955
+#: configuredialog/configurecomposerpage.cpp:953
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&فعال‌سازی آشکارسازی پیوستهای از دست‌ رفته‌"
 
-#: configuredialog/configurecomposerpage.cpp:961
+#: configuredialog/configurecomposerpage.cpp:959
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1664,39 +1664,39 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "شناخت هر کدام از واژه‌های کلیدی زیر به عنوان هدف برای پیوست پرونده:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Enter new key word:"
 msgstr "وارد کردن واژه کلیدی جدید:"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:975
+#: configuredialog/configurecomposerpage.cpp:973
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "&پیوستها‌"
 
-#: configuredialog/configurecomposerpage.cpp:982
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr " پیوست دارد"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:987
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " مگابایت"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
@@ -1849,24 +1849,24 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "تغییر تنظیم سراسری نخ‌کشی، تمام مقادیر مشخص پوشه را لغو می‌کند."
 
+#: configuredialog/configuresecuritypage.cpp:282
 #: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
-#: configuredialog/configuresecuritypage.cpp:286
 #, fuzzy, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] " روز"
 msgstr[1] ""
 
-#: configuredialog/configuresecuritypage.cpp:318
+#: configuredialog/configuresecuritypage.cpp:316
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "تنظیمات GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:325
+#: configuredialog/configuresecuritypage.cpp:323
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1874,23 +1874,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:330
+#: configuredialog/configuresecuritypage.cpp:328
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:397
+#: configuredialog/configuresecuritypage.cpp:395
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "این گزینه به dirmngr >= ۰.۹.۰ نیاز دارد"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:536 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "بدون پیشکار"
 
-#: configuredialog/configuresecuritypage.cpp:538
+#: configuredialog/configuresecuritypage.cpp:536
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ")تنظیم جاری سیستم: %1("
@@ -5069,7 +5069,7 @@ msgstr ""
 "می‌کند و  ممکن است احتمال این که سیستمتان با اعمال امنیتی کنونی و پیش‌بینی شده "
 "سازش یابد را افزایش دهد."
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4802
+#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4798
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5447,12 +5447,12 @@ msgstr "&حرکت رشته به زباله‌"
 msgid "Move thread to trashcan"
 msgstr "حرکت رشته به زباله‌دان"
 
-#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4136
 #, kde-format
 msgid "Delete T&hread"
 msgstr "حذف &رشته‌"
 
-#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4138
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
@@ -5911,7 +5911,7 @@ msgstr "&پیکربندی KMail...‌"
 msgid "New AddressBook Contact…"
 msgstr "کتاب &نشانی...‌"
 
-#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -6069,68 +6069,68 @@ msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "حذف پوشه"
 
-#: kmmainwidget.cpp:3707
+#: kmmainwidget.cpp:3703
 #, fuzzy, kde-format
 #| msgid "Paste Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "چسباندن پوشه"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Delete Search"
 msgstr "&حذف جستجو‌"
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&حرکت رشته به زباله‌"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4138
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search…"
 msgstr "ویرایش دست‌نوشته..."
 
-#: kmmainwidget.cpp:4179
+#: kmmainwidget.cpp:4175
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "پیکربندی KMail..."
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&خالی کردن زباله‌"
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&حرکت همه پیامها به زباله‌"
 
-#: kmmainwidget.cpp:4264
+#: kmmainwidget.cpp:4260
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4323
+#: kmmainwidget.cpp:4319
 #, kde-format
 msgid "Filter %1"
 msgstr "پالایه %1"
 
-#: kmmainwidget.cpp:4791
+#: kmmainwidget.cpp:4787
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "آغاز..."
 
-#: kmmainwidget.cpp:4799
+#: kmmainwidget.cpp:4795
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6141,14 +6141,14 @@ msgstr ""
 "احتمال این که سیستمتان با اعمال امنیتی کنونی و پیش‌بینی شده سازش یابد، افزایش "
 "یابد."
 
-#: kmmainwidget.cpp:4803
+#: kmmainwidget.cpp:4799
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "استفاده از زنگام"
 
-#: kmmainwidget.cpp:4949
+#: kmmainwidget.cpp:4945
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6158,46 +6158,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4948
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4953
+#: kmmainwidget.cpp:4949
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "پیکربندی KMail..."
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:4950
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "&لغو‌"
 
-#: kmmainwidget.cpp:4989
+#: kmmainwidget.cpp:4985
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>واقعاً می‌خواهید هویت با نام <b>%1</b> را حذف کنید؟</qt>"
 
-#: kmmainwidget.cpp:4990
+#: kmmainwidget.cpp:4986
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "نام هویت"
 
-#: kmmainwidget.cpp:4991
+#: kmmainwidget.cpp:4987
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "بازآغازی"
 
-#: kmmainwidget.cpp:4998
+#: kmmainwidget.cpp:4994
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

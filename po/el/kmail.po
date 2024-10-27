@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-18 00:40+0000\n"
+"POT-Creation-Date: 2024-10-27 00:41+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1405,7 +1405,7 @@ msgstr "Χωρίς αυτόματη αποθήκευση"
 msgid "No autosave"
 msgstr "Χωρίς αυτόματη αποθήκευση"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:412
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1416,18 +1416,18 @@ msgid_plural "%v minutes"
 msgstr[0] " λεπτό"
 msgstr[1] " λεπτά"
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Αυτόματη αποθήκευση του μηνύματος στο συγκεκριμένο χρονικό διάστημα"
 
-#: configuredialog/configurecomposerpage.cpp:622
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Προθέματα θέματος &απάντησης"
 
-#: configuredialog/configurecomposerpage.cpp:627
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1437,153 +1437,153 @@ msgstr ""
 "Αναγνώριση οποιουδήποτε συνδυασμού από τα ακόλουθα προθέματα (οι "
 "καταχωρήσεις είναι κανονικές εκφράσεις χωρίς διάκριση πεζών/κεφαλαίων):"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Re&move"
 msgstr "&Αφαίρεση"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Τροποποί&ηση…"
 
-#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Εισάγετε νέο πρόθεμα απάντησης:"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:634
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "Επιθυμείτε την αφαίρεση της ετικέτας «%1»;"
 
-#: configuredialog/configurecomposerpage.cpp:638
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Προθέματα θέματος &απάντησης"
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Προθέματα θέματος &προώθησης"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Αφαίρεση"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Modify…"
 msgstr "Τροποποίηση…"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Εισάγετε νέο πρόθεμα προώθησης:"
 
-#: configuredialog/configurecomposerpage.cpp:660
+#: configuredialog/configurecomposerpage.cpp:658
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "Επιθυμείτε την αφαίρεση της ετικέτας «%1»;"
 
-#: configuredialog/configurecomposerpage.cpp:661
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Προθέματα θέματος &προώθησης"
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:703
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Χρήση προσαρμοσμένου επιθέματος message-id"
 
-#: configuredialog/configurecomposerpage.cpp:721
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Προσαρμοσμένο επίθεμα message-&id:"
 
-#: configuredialog/configurecomposerpage.cpp:733
+#: configuredialog/configurecomposerpage.cpp:731
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Ορισμός προσαρμοσμένων mime πεδίων κεφαλίδων:"
 
-#: configuredialog/configurecomposerpage.cpp:741
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Όνομα"
 
-#: configuredialog/configurecomposerpage.cpp:742
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Τιμή"
 
-#: configuredialog/configurecomposerpage.cpp:750
+#: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Νέο"
 
-#: configuredialog/configurecomposerpage.cpp:754
+#: configuredialog/configurecomposerpage.cpp:752
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Αφαίρεση"
 
-#: configuredialog/configurecomposerpage.cpp:763
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "Ό&νομα:"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Τιμή:"
 
-#: configuredialog/configurecomposerpage.cpp:913
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:914
+#: configuredialog/configurecomposerpage.cpp:912
 #, fuzzy, kde-format
 #| msgid "Invalid date"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Μη έγκυρη ημερομηνία"
 
-#: configuredialog/configurecomposerpage.cpp:955
+#: configuredialog/configurecomposerpage.cpp:953
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&Ενεργοποίηση ανίχνευσης έλλειψης συνημμένων"
 
-#: configuredialog/configurecomposerpage.cpp:961
+#: configuredialog/configurecomposerpage.cpp:959
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1591,37 +1591,37 @@ msgstr ""
 "Αναγνώριση οποιασδήποτε από τις ακόλουθες λέξεις κλειδιά ως πρόθεση για "
 "επισύναψη ενός αρχείου:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Εισάγετε νέα λέξη κλειδί:"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "Επιθυμείτε την αφαίρεση του λογαριασμού: «%1» ;"
 
-#: configuredialog/configurecomposerpage.cpp:975
+#: configuredialog/configurecomposerpage.cpp:973
 #, fuzzy, kde-format
 #| msgid "Attachment:"
 msgid "Attachment Word:"
 msgstr "Συνημμένο:"
 
-#: configuredialog/configurecomposerpage.cpp:982
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Έχει επισύναψη"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:987
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " KB"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "No limit"
 msgstr "Χωρίς όριο"
@@ -1771,10 +1771,10 @@ msgstr ""
 "Η αλλαγή της καθολικής ρύθμισης για τα νήματα θα υπερισχύσει όλων των τιμών "
 "που πιθανώς έχουν οριστεί για επιμέρους φακέλους."
 
+#: configuredialog/configuresecuritypage.cpp:282
 #: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
-#: configuredialog/configuresecuritypage.cpp:286
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1783,13 +1783,13 @@ msgid_plural "%v days"
 msgstr[0] " ημέρα"
 msgstr[1] " ημέρες"
 
-#: configuredialog/configuresecuritypage.cpp:318
+#: configuredialog/configuresecuritypage.cpp:316
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Ρυθμίσεις GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:325
+#: configuredialog/configuresecuritypage.cpp:323
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1797,23 +1797,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:330
+#: configuredialog/configuresecuritypage.cpp:328
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:397
+#: configuredialog/configuresecuritypage.cpp:395
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Αυτή η επιλογή απαιτεί το dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:536 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "χωρίς διαμεσολαβητή"
 
-#: configuredialog/configuresecuritypage.cpp:538
+#: configuredialog/configuresecuritypage.cpp:536
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Τρέχουσα ρύθμιση συστήματος: %1)"
@@ -4858,7 +4858,7 @@ msgstr ""
 "αυξήσει την πιθανότητα άλωσης του συστήματός σας μέσω των τωρινών και "
 "μελλοντικών προβλημάτων ασφαλείας."
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4802
+#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4798
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5214,12 +5214,12 @@ msgstr "Μετακίνηση νήματος στα απορρίμμα&τα"
 msgid "Move thread to trashcan"
 msgstr "Μετακίνηση νήματος στα απορρίμματα"
 
-#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4136
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Δια&γραφή νήματος"
 
-#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4138
 #, kde-format
 msgid "&Find Messages…"
 msgstr "Αναζήτηση μην&υμάτων…"
@@ -5637,7 +5637,7 @@ msgstr "&Εξαγωγή δεδομένων του KMail..."
 msgid "New AddressBook Contact…"
 msgstr "Νέα επαφή βιβλίου διευθύνσεων…"
 
-#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5778,59 +5778,59 @@ msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Διαγραφή φακέλου"
 
-#: kmmainwidget.cpp:3707
+#: kmmainwidget.cpp:3703
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Προσθήκη αγαπημένου φακέλου"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Διαγραφή αναζήτησης"
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Μετακίνηση νήματος στα απορρίμμα&τα"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4138
 #, kde-format
 msgid "Edit Search…"
 msgstr "Επεξεργασία αναζήτησης…"
 
-#: kmmainwidget.cpp:4179
+#: kmmainwidget.cpp:4175
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Διαμόρφωση του KMail..."
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Ά&δειασμα απορριμμάτων"
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Μετακίνηση όλων των μηνυμάτων στα απορρίμματα"
 
-#: kmmainwidget.cpp:4264
+#: kmmainwidget.cpp:4260
 #, kde-format
 msgid "&Undo"
 msgstr "Α&ναίρεση"
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Α&ναίρεση: «%1»"
 
-#: kmmainwidget.cpp:4323
+#: kmmainwidget.cpp:4319
 #, kde-format
 msgid "Filter %1"
 msgstr "Φίλτρο %1"
 
-#: kmmainwidget.cpp:4791
+#: kmmainwidget.cpp:4787
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search...<%1>"
@@ -5838,7 +5838,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Αναζήτηση...<%1>"
 
-#: kmmainwidget.cpp:4799
+#: kmmainwidget.cpp:4795
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5849,13 +5849,13 @@ msgstr ""
 "\"spam\" (διαφημιστικά κλπ) και ίσως αυξήσει την πιθανότητα άλωσης του "
 "συστήματός σας μέσω των τωρινών και μελλοντικών προβλημάτων ασφαλείας."
 
-#: kmmainwidget.cpp:4803
+#: kmmainwidget.cpp:4799
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Χρήση HTML"
 
-#: kmmainwidget.cpp:4949
+#: kmmainwidget.cpp:4945
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5865,44 +5865,44 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4948
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4953
+#: kmmainwidget.cpp:4949
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Διαμόρφωση του KMail..."
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:4950
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: kmmainwidget.cpp:4989
+#: kmmainwidget.cpp:4985
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Επιθυμείτε την αφαίρεση της ετικέτας «%1»;"
 
-#: kmmainwidget.cpp:4990
+#: kmmainwidget.cpp:4986
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Όνομα ταυτότητας"
 
-#: kmmainwidget.cpp:4991
+#: kmmainwidget.cpp:4987
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Επανεκκίνηση"
 
-#: kmmainwidget.cpp:4998
+#: kmmainwidget.cpp:4994
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."

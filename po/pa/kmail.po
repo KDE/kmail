@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-18 00:40+0000\n"
+"POT-Creation-Date: 2024-10-27 00:41+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -1383,7 +1383,7 @@ msgstr "ਆਟੋ-ਸੰਭਾਲ ਨਹੀਂ"
 msgid "No autosave"
 msgstr "ਆਟੋ-ਸੰਭਾਲ ਨਹੀਂ"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:412
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1392,19 +1392,19 @@ msgid_plural "%v minutes"
 msgstr[0] " ਮਿੰਟ"
 msgstr[1] " ਮਿੰਟ"
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:414
 #, fuzzy, kde-format
 #| msgid "Message Sort Direction"
 msgid "Automatically save the message at this specified interval"
 msgstr "ਸੁਨੇਹਾ ਲੜੀਬੱਧ ਦਿਸ਼ਾ"
 
-#: configuredialog/configurecomposerpage.cpp:622
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "ਜਵਾਬੀ ਵਿਸ਼ਾ ਅਗੇਤਰ(&y)"
 
-#: configuredialog/configurecomposerpage.cpp:627
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1412,196 +1412,196 @@ msgid ""
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Re&move"
 msgstr "ਹਟਾਓ(&m)"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "ਸੋਧ..."
 
-#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "ਨਵਾਂ ਜਵਾਬੀ ਅਗੇਤਰ ਦਿਓ:"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:634
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account: %1"
 msgid "Do you want to remove reply prefix?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਊਂਟ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ: %1"
 
-#: configuredialog/configurecomposerpage.cpp:638
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "ਜਵਾਬੀ ਵਿਸ਼ਾ ਅਗੇਤਰ(&y)"
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "ਅੱਗੇ ਭੇਜਣ ਵਿਸ਼ਾ ਅਗੇਤਰ(&w)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "ਹਟਾਓ(&v)"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "ਸੋਧ..."
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "ਨਵਾਂ ਅੱਗੇ ਭੇਜਣ ਅਗੇਤਰ ਦਿਓ:"
 
-#: configuredialog/configurecomposerpage.cpp:660
+#: configuredialog/configurecomposerpage.cpp:658
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account: %1"
 msgid "Do you want to remove forward prefix?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਊਂਟ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ: %1"
 
-#: configuredialog/configurecomposerpage.cpp:661
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "ਅੱਗੇ ਭੇਜਣ ਵਿਸ਼ਾ ਅਗੇਤਰ(&w)"
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:703
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates in this folder"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "ਇਸ ਫੋਲਡਰ ਵਿੱਚ ਪਸੰਦੀਦਾ ਸੁਨੇਹੇ ਟੈਪਲੇਟ ਵਰਤੋਂ(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:721
+#: configuredialog/configurecomposerpage.cpp:719
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:733
+#: configuredialog/configurecomposerpage.cpp:731
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:741
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "ਨਾਂ"
 
-#: configuredialog/configurecomposerpage.cpp:742
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
-#: configuredialog/configurecomposerpage.cpp:750
+#: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "ਨਵਾਂ(&w)"
 
-#: configuredialog/configurecomposerpage.cpp:754
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "ਹਟਾਓ(&m)"
 
-#: configuredialog/configurecomposerpage.cpp:763
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "ਨਾਂ(&N):"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "ਮੁੱਲ(&V):"
 
-#: configuredialog/configurecomposerpage.cpp:913
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:914
+#: configuredialog/configurecomposerpage.cpp:912
 #, fuzzy, kde-format
 #| msgid "Invalid signature."
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "ਗਲਤ ਦਸਤਖਤ ਹਨ।"
 
-#: configuredialog/configurecomposerpage.cpp:955
+#: configuredialog/configurecomposerpage.cpp:953
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "ਗੁੰਮ ਅਟੈਚ ਦੀ ਖੋਜ ਯੋਗ(&n)"
 
-#: configuredialog/configurecomposerpage.cpp:961
+#: configuredialog/configurecomposerpage.cpp:959
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Enter new key word:"
 msgstr "ਨਵਾਂ ਸ਼ਬਦ ਦਿਓ:"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account: %1"
 msgid "Do you want to remove this attachment word?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਊਂਟ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ: %1"
 
-#: configuredialog/configurecomposerpage.cpp:975
+#: configuredialog/configurecomposerpage.cpp:973
 #, fuzzy, kde-format
 #| msgid "Attachments:"
 msgid "Attachment Word:"
 msgstr "ਅਟੈਚਮੈਂਟ:"
 
-#: configuredialog/configurecomposerpage.cpp:982
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "ਅਟੈਚਮੈਂਟ ਹੈ"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:987
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " MB"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
@@ -1751,10 +1751,10 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
 
+#: configuredialog/configuresecuritypage.cpp:282
 #: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
-#: configuredialog/configuresecuritypage.cpp:286
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1763,14 +1763,14 @@ msgid_plural "%v days"
 msgstr[0] "  ਦਿਨ"
 msgstr[1] " ਦਿਨ"
 
-#: configuredialog/configuresecuritypage.cpp:318
+#: configuredialog/configuresecuritypage.cpp:316
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG ਸੈਟਿੰਗ..."
 
-#: configuredialog/configuresecuritypage.cpp:325
+#: configuredialog/configuresecuritypage.cpp:323
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1778,23 +1778,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:330
+#: configuredialog/configuresecuritypage.cpp:328
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:397
+#: configuredialog/configuresecuritypage.cpp:395
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ਇਹ ਚੋਣ ਲਈ dirmngr >= 0.9.0 ਚਾਹੀਦਾ ਹੈ।"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:536 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ਪਰਾਕਸੀ ਨਹੀਂ"
 
-#: configuredialog/configuresecuritypage.cpp:538
+#: configuredialog/configuresecuritypage.cpp:536
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(ਮੌਜੂਦਾ ਸਿਸਟਮ ਸੈਟਿੰਗ: %1)"
@@ -4834,7 +4834,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4802
+#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4798
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5211,12 +5211,12 @@ msgstr "ਮਾਮਲਾ ਰੱਦੀ 'ਚ ਭੇਜੋ(&o)"
 msgid "Move thread to trashcan"
 msgstr "ਮਾਮਲਾ ਰੱਦੀ ਵਿੱਚ ਭੇਜੋ"
 
-#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4136
 #, kde-format
 msgid "Delete T&hread"
 msgstr "ਮਾਮਲਾ ਹਟਾਓ(&h)"
 
-#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4138
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
@@ -5672,7 +5672,7 @@ msgstr "ਕੇਮੇਲ ਸੰਰਚਨਾ(&C)..."
 msgid "New AddressBook Contact…"
 msgstr "ਐਡਰੈੱਸ ਬੁੱਕ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
-#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5830,68 +5830,68 @@ msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "ਫੋਲਡਰ ਹਟਾਓ"
 
-#: kmmainwidget.cpp:3707
+#: kmmainwidget.cpp:3703
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "ਪਸੰਦ ਫੋਲਡਰ ਸ਼ਾਮਲ"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Delete Search"
 msgstr "ਖੋਜ ਹਟਾਓ(&D)"
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "ਮਾਮਲਾ ਰੱਦੀ 'ਚ ਭੇਜੋ(&o)"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4138
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search…"
 msgstr "ਸਕ੍ਰਿਪਟ ਸੋਧ..."
 
-#: kmmainwidget.cpp:4179
+#: kmmainwidget.cpp:4175
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "ਕੇ-ਮੇਲ ਸੰਰਚਨਾ..."
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "ਰੱਦੀ ਖਾਲੀ ਕਰੋ(&m)"
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "ਸਭ ਸੁਨੇਹੇ ਰੱਦੀ 'ਚ ਭੇਜੋ(&M)"
 
-#: kmmainwidget.cpp:4264
+#: kmmainwidget.cpp:4260
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4323
+#: kmmainwidget.cpp:4319
 #, kde-format
 msgid "Filter %1"
 msgstr "ਫਿਲਟਰ %1"
 
-#: kmmainwidget.cpp:4791
+#: kmmainwidget.cpp:4787
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "ਸ਼ੁਰੂ ਕੀਤਾ ਜਾਂਦਾ ਹੈ..."
 
-#: kmmainwidget.cpp:4799
+#: kmmainwidget.cpp:4795
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5899,14 +5899,14 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4803
+#: kmmainwidget.cpp:4799
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML ਵਰਤੋਂ"
 
-#: kmmainwidget.cpp:4949
+#: kmmainwidget.cpp:4945
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5916,46 +5916,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4948
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4953
+#: kmmainwidget.cpp:4949
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "ਕੇ-ਮੇਲ ਸੰਰਚਨਾ..."
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:4950
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "ਰੱਦ ਕਰੋ(&a)"
 
-#: kmmainwidget.cpp:4989
+#: kmmainwidget.cpp:4985
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account: %1"
 msgid "Do you want to restart Akonadi?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਊਂਟ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ: %1"
 
-#: kmmainwidget.cpp:4990
+#: kmmainwidget.cpp:4986
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "ਪਛਾਣ ਨਾਂ"
 
-#: kmmainwidget.cpp:4991
+#: kmmainwidget.cpp:4987
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "ਪਛਾਣ ਨਾਂ"
 
-#: kmmainwidget.cpp:4998
+#: kmmainwidget.cpp:4994
 #, fuzzy, kde-format
 #| msgid "Akonadi porting"
 msgid "Akonadi restarted."

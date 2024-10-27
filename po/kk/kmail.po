@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-10-18 00:40+0000\n"
+"POT-Creation-Date: 2024-10-27 00:41+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -1467,7 +1467,7 @@ msgstr "Автосақтамау"
 msgid "No autosave"
 msgstr "Автосақтамау"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:412
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1477,18 +1477,18 @@ msgid "%v minute"
 msgid_plural "%v minutes"
 msgstr[0] " минут"
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Хат, келтірілген аралықта, автоматты түрде сақталсын"
 
-#: configuredialog/configurecomposerpage.cpp:622
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Жа&уап тақырыбының префикстері"
 
-#: configuredialog/configurecomposerpage.cpp:627
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1501,161 +1501,161 @@ msgstr ""
 "Келесі префикстердің тізбегін біліп тану\n"
 "(әріптің үлкен-кішісін ескермейтін үлгі өрнегі):"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Re&move"
 msgstr "Ө&шіру"
 
-#: configuredialog/configurecomposerpage.cpp:635
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Өзгерту..."
 
-#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Жауаптың жаңа префиксін келтіріңіз:"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:634
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "'%1' тіркелгісін өшірмексіз бе?"
 
-#: configuredialog/configurecomposerpage.cpp:638
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Жа&уап тақырыбының префикстері"
 
-#: configuredialog/configurecomposerpage.cpp:649
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Ба&сқаға жіберілетінін тақырып префикстері"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:659 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "Өші&ру"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Өзгерту..."
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Басқаға жіберілетін жаңа префиксі:"
 
-#: configuredialog/configurecomposerpage.cpp:660
+#: configuredialog/configurecomposerpage.cpp:658
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "'%1' тіркелгісін өшірмексіз бе?"
 
-#: configuredialog/configurecomposerpage.cpp:661
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Ба&сқаға жіберілетінін тақырып префикстері"
 
-#: configuredialog/configurecomposerpage.cpp:705
+#: configuredialog/configurecomposerpage.cpp:703
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Басқа message-id жұрнағы қолданылсын"
 
-#: configuredialog/configurecomposerpage.cpp:721
+#: configuredialog/configurecomposerpage.cpp:719
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "message-&id жұрнағы:"
 
-#: configuredialog/configurecomposerpage.cpp:733
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Қалаған mime айдар өрісін анықтау:"
 
-#: configuredialog/configurecomposerpage.cpp:741
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Атауы"
 
-#: configuredialog/configurecomposerpage.cpp:742
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Мәні"
 
-#: configuredialog/configurecomposerpage.cpp:750
+#: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Жаңа"
 
-#: configuredialog/configurecomposerpage.cpp:754
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Ө&шіру"
 
-#: configuredialog/configurecomposerpage.cpp:763
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Атауы:"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Мәні:"
 
-#: configuredialog/configurecomposerpage.cpp:913
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:914
+#: configuredialog/configurecomposerpage.cpp:912
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Қолтаңбалау рұқсат &етілсін"
 
-#: configuredialog/configurecomposerpage.cpp:955
+#: configuredialog/configurecomposerpage.cpp:953
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Жолғалған тіркемелерін байқау рұқсат &етілсін"
 
-#: configuredialog/configurecomposerpage.cpp:961
+#: configuredialog/configurecomposerpage.cpp:959
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1664,38 +1664,38 @@ msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 "Тіркеменің болу мүмкін екендігін келесі сөздердің әрқайсы айғақ бола алады:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Жаңа кілт сөзді келтіріңіз:"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "'%1' тіркелгісін өшірмексіз бе?"
 
-#: configuredialog/configurecomposerpage.cpp:975
+#: configuredialog/configurecomposerpage.cpp:973
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "&Тіркемелер"
 
-#: configuredialog/configurecomposerpage.cpp:982
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Тіркемесі бар"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:987
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " кБ"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "No limit"
 msgstr "Шегі жоқ"
@@ -1848,10 +1848,10 @@ msgstr ""
 "Ілеспе хаттар жөніндегі жалпы баптауды өзгерту барлық қапшықтардың "
 "параметрлеріне әсерін тигізеді."
 
+#: configuredialog/configuresecuritypage.cpp:282
 #: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
-#: configuredialog/configuresecuritypage.cpp:286
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1859,14 +1859,14 @@ msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] " күн"
 
-#: configuredialog/configuresecuritypage.cpp:318
+#: configuredialog/configuresecuritypage.cpp:316
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG-ні баптау ..."
 
-#: configuredialog/configuresecuritypage.cpp:325
+#: configuredialog/configuresecuritypage.cpp:323
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1874,23 +1874,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:330
+#: configuredialog/configuresecuritypage.cpp:328
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:397
+#: configuredialog/configuresecuritypage.cpp:395
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Бұл параметр dirmngr >= 0.9.0 орнатылғанын кажет етеді"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:536 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "прокси-сервері жоқ"
 
-#: configuredialog/configuresecuritypage.cpp:538
+#: configuredialog/configuresecuritypage.cpp:536
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Жүйелік баптаулар: %1)"
@@ -5019,7 +5019,7 @@ msgstr ""
 "қарсылығыңызды осалдатады да, жүйеңізді қазір мәлім немесе болашақтағы "
 "шабулдау әдістермен бұзу ықтималдығын ұлғайтады."
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4802
+#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4798
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5388,12 +5388,12 @@ msgstr "Ілеспе хаттарды өшірілгендерге та&стау
 msgid "Move thread to trashcan"
 msgstr "Ілеспе хаттарды өшірілгендерге тастау"
 
-#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:3077 kmmainwidget.cpp:4136
 #, kde-format
 msgid "Delete T&hread"
 msgstr "І&леспеледі өшіру"
 
-#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3083 kmmainwidget.cpp:4138
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
@@ -5842,7 +5842,7 @@ msgstr "KMail дерегін &импорттау..."
 msgid "New AddressBook Contact…"
 msgstr "Жаңа Адрестік кітапша контакты..."
 
-#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:3525 kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5998,68 +5998,68 @@ msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Қапшықты өшіру"
 
-#: kmmainwidget.cpp:3707
+#: kmmainwidget.cpp:3703
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Таңдаулыларға қапшықты қосу"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4124
 #, kde-format
 msgid "&Delete Search"
 msgstr "Іздеуді ө&шіру"
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Ілеспе хаттарды өшірілгендерге та&стау"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4138
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search…"
 msgstr "Cкриптті өңдеу..."
 
-#: kmmainwidget.cpp:4179
+#: kmmainwidget.cpp:4175
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "KMail-ді &баптау"
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Шелегін б&осату"
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4186
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Барлық хаттарды Шелекке тастау"
 
-#: kmmainwidget.cpp:4264
+#: kmmainwidget.cpp:4260
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4323
+#: kmmainwidget.cpp:4319
 #, kde-format
 msgid "Filter %1"
 msgstr "%1 сүзгісі"
 
-#: kmmainwidget.cpp:4791
+#: kmmainwidget.cpp:4787
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Іздеп жатыр..."
 
-#: kmmainwidget.cpp:4799
+#: kmmainwidget.cpp:4795
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6070,14 +6070,14 @@ msgstr ""
 "қазір мәлім немесе болашақтағы шабуылдау әдістермен бұзу ықтималдығын "
 "ұлғайтады."
 
-#: kmmainwidget.cpp:4803
+#: kmmainwidget.cpp:4799
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML-ды қолдану"
 
-#: kmmainwidget.cpp:4949
+#: kmmainwidget.cpp:4945
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6087,46 +6087,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4948
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4953
+#: kmmainwidget.cpp:4949
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "KMail-ді &баптау"
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:4950
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Қ&айту"
 
-#: kmmainwidget.cpp:4989
+#: kmmainwidget.cpp:4985
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "'%1' тіркелгісін өшірмексіз бе?"
 
-#: kmmainwidget.cpp:4990
+#: kmmainwidget.cpp:4986
 #, fuzzy, kde-format
 #| msgid "Identity account"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Іс-әлпетінің тіркелгісі"
 
-#: kmmainwidget.cpp:4991
+#: kmmainwidget.cpp:4987
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Қайта бастау"
 
-#: kmmainwidget.cpp:4998
+#: kmmainwidget.cpp:4994
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."
