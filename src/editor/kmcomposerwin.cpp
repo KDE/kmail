@@ -1355,22 +1355,25 @@ void KMComposerWin::setupActions()
     actionCollection()->addAction(QStringLiteral("save_distribution_list"), action);
     connect(action, &QAction::triggered, mComposerBase->recipientsEditor(), &MessageComposer::RecipientsEditor::saveDistributionList);
 
-    KStandardAction::print(this, &KMComposerWin::slotPrint, actionCollection());
-    KStandardAction::printPreview(this, &KMComposerWin::slotPrintPreview, actionCollection());
-    KStandardAction::close(this, &KMComposerWin::close, actionCollection());
+    KStandardActions::print(this, &KMComposerWin::slotPrint, actionCollection());
+    KStandardActions::printPreview(this, &KMComposerWin::slotPrintPreview, actionCollection());
+    KStandardActions::close(this, &KMComposerWin::close, actionCollection());
 
-    KStandardAction::undo(mGlobalAction, &KMComposerGlobalAction::slotUndo, actionCollection());
-    KStandardAction::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
-    KStandardAction::cut(mGlobalAction, &KMComposerGlobalAction::slotCut, actionCollection());
-    KStandardAction::copy(mGlobalAction, &KMComposerGlobalAction::slotCopy, actionCollection());
-    KStandardAction::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
-    mSelectAll = KStandardAction::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
+    KStandardActions::undo(mGlobalAction, &KMComposerGlobalAction::slotUndo, actionCollection());
+    KStandardActions::redo(mGlobalAction, &KMComposerGlobalAction::slotRedo, actionCollection());
+    KStandardActions::cut(mGlobalAction, &KMComposerGlobalAction::slotCut, actionCollection());
+    KStandardActions::copy(mGlobalAction, &KMComposerGlobalAction::slotCopy, actionCollection());
+    KStandardActions::paste(mGlobalAction, &KMComposerGlobalAction::slotPaste, actionCollection());
+    mSelectAll = KStandardActions::selectAll(mGlobalAction, &KMComposerGlobalAction::slotMarkAll, actionCollection());
 
-    mFindText = KStandardAction::find(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotFind, actionCollection());
-    mFindNextText = KStandardAction::findNext(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotFindNext, actionCollection());
+    mFindText = KStandardActions::find(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotFind, actionCollection());
+    mFindNextText = KStandardActions::findNext(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotFindNext, actionCollection());
 
-    mReplaceText = KStandardAction::replace(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotReplace, actionCollection());
-    actionCollection()->addAction(KStandardAction::Spelling, QStringLiteral("spellcheck"), mComposerBase->editor(), SLOT(slotCheckSpelling()));
+    mReplaceText = KStandardActions::replace(mRichTextEditorWidget, &TextCustomEditor::RichTextEditorWidget::slotReplace, actionCollection());
+    actionCollection()->addAction(KStandardActions::Spelling,
+                                  QStringLiteral("spellcheck"),
+                                  mComposerBase->editor(),
+                                  &MessageComposer::RichTextComposerNg::slotCheckSpelling);
 
     action = new QAction(i18nc("@action", "Paste as Attac&hment"), this);
     actionCollection()->addAction(QStringLiteral("paste_att"), action);
@@ -1472,9 +1475,9 @@ void KMComposerWin::setupActions()
 
     setStandardToolBarMenuEnabled(true);
 
-    KStandardAction::keyBindings(this, &KMComposerWin::slotEditKeys, actionCollection());
-    KStandardAction::configureToolbars(this, &KMComposerWin::slotEditToolbars, actionCollection());
-    KStandardAction::preferences(kmkernel, &KMKernel::slotShowConfigurationDialog, actionCollection());
+    KStandardActions::keyBindings(this, &KMComposerWin::slotEditKeys, actionCollection());
+    KStandardActions::configureToolbars(this, &KMComposerWin::slotEditToolbars, actionCollection());
+    KStandardActions::preferences(kmkernel, &KMKernel::slotShowConfigurationDialog, actionCollection());
 
     action = new QAction(QIcon::fromTheme(QStringLiteral("tools-check-spelling")), i18n("&Spellchecker…"), this);
     action->setIconText(i18n("Spellchecker"));
@@ -1564,15 +1567,15 @@ void KMComposerWin::updateHamburgerMenu()
     auto menu = new QMenu(this);
     menu->addAction(actionCollection()->action(QStringLiteral("new_composer")));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Undo)));
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Redo)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Undo)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Redo)));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Print)));
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::PrintPreview)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Print)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::PrintPreview)));
     menu->addSeparator();
     menu->addAction(actionCollection()->action(QStringLiteral("attach_menu")));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Close)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Close)));
     mHamburgerMenu->setMenu(menu);
 }
 

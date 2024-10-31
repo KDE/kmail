@@ -119,8 +119,8 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     connect(mEditAsNewAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
     ac->setDefaultShortcut(mEditAsNewAction, Qt::Key_T);
 
-    mPrintAction = KStandardAction::print(this, &MessageActions::slotPrintMessage, ac);
-    mPrintPreviewAction = KStandardAction::printPreview(this, &MessageActions::slotPrintPreviewMsg, ac);
+    mPrintAction = KStandardActions::print(this, &MessageActions::slotPrintMessage, ac);
+    mPrintPreviewAction = KStandardActions::printPreview(this, &MessageActions::slotPrintPreviewMsg, ac);
 
     ac->addAction(QStringLiteral("message_forward"), mForwardActionMenu);
 

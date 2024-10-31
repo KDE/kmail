@@ -13,7 +13,7 @@
 
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <KStandardAction>
+#include <KStandardActions>
 #include <QFileDialog>
 #include <QIcon>
 #include <QVBoxLayout>
@@ -345,7 +345,7 @@ void FilterLogTextEdit::addExtraMenuEntry(QMenu *menu, QPoint pos)
         auto sep = new QAction(menu);
         sep->setSeparator(true);
         menu->addAction(sep);
-        QAction *clearAllAction = KStandardAction::clear(this, &FilterLogTextEdit::clear, menu);
+        QAction *clearAllAction = KStandardActions::clear(this, &FilterLogTextEdit::clear, menu);
         menu->addAction(clearAllAction);
     }
 }

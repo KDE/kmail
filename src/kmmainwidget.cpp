@@ -2930,7 +2930,7 @@ void KMMainWidget::setupActions()
     connect(mSaveAsAction, &QAction::triggered, this, &KMMainWidget::slotSaveMsg);
     actionCollection()->setDefaultShortcut(mSaveAsAction, KStandardShortcut::save().first());
 
-    mOpenAction = KStandardAction::open(this, &KMMainWidget::slotOpenMsg, actionCollection());
+    mOpenAction = KStandardActions::open(this, &KMMainWidget::slotOpenMsg, actionCollection());
 
     mOpenRecentMenu = new KRecentFilesMenu(this);
     actionCollection()->addAction(QStringLiteral("kmail_file_open_recent"), mOpenRecentMenu->menuAction());

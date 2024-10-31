@@ -186,15 +186,13 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
         mForwardActionMenu->addAction(mForwardInlineAction);
     }
 
-    mSaveAsAction = actionCollection()->addAction(KStandardAction::SaveAs, QStringLiteral("search_file_save_as"));
-    connect(mSaveAsAction, &QAction::triggered, this, &SearchWindow::slotSaveMsg);
+    mSaveAsAction = actionCollection()->addAction(KStandardActions::SaveAs, QStringLiteral("search_file_save_as"), this, &SearchWindow::slotSaveMsg);
 
     mSaveAtchAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save Attachments…"), this);
     actionCollection()->addAction(QStringLiteral("search_save_attachments"), mSaveAtchAction);
     connect(mSaveAtchAction, &QAction::triggered, this, &SearchWindow::slotSaveAttachments);
 
-    mPrintAction = actionCollection()->addAction(KStandardAction::Print, QStringLiteral("search_print"));
-    connect(mPrintAction, &QAction::triggered, this, &SearchWindow::slotPrintMsg);
+    mPrintAction = actionCollection()->addAction(KStandardActions::Print, QStringLiteral("search_print"), this, &SearchWindow::slotPrintMsg);
 
     mClearAction = new QAction(i18nc("@action", "Clear Selection"), this);
     actionCollection()->addAction(QStringLiteral("search_clear_selection"), mClearAction);

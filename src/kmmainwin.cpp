@@ -98,9 +98,9 @@ KMMainWin::KMMainWin(QWidget *)
     }
     setStandardToolBarMenuEnabled(true);
 
-    KStandardAction::configureToolbars(this, &KMMainWin::slotEditToolbars, actionCollection());
+    KStandardActions::configureToolbars(this, &KMMainWin::slotEditToolbars, actionCollection());
 
-    KStandardAction::keyBindings(this, &KMMainWin::slotConfigureShortcuts, actionCollection());
+    KStandardActions::keyBindings(this, &KMMainWin::slotConfigureShortcuts, actionCollection());
 
     mShowMenuBarAction = KStandardAction::showMenubar(this, &KMMainWin::slotToggleMenubar, actionCollection());
     if (menuBar()) {
@@ -116,7 +116,7 @@ KMMainWin::KMMainWin(QWidget *)
         });
     }
 
-    KStandardAction::quit(this, &KMMainWin::slotQuit, actionCollection());
+    KStandardActions::quit(this, &KMMainWin::slotQuit, actionCollection());
     createGUI(QStringLiteral("kmmainwin.rc"));
 
     // must be after createGUI, otherwise e.g toolbar settings are not loaded
@@ -170,9 +170,9 @@ void KMMainWin::updateHamburgerMenu()
 {
     delete mHamburgerMenu->menu();
     auto menu = new QMenu(this);
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Open)));
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::SaveAs)));
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Print)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Open)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::SaveAs)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Print)));
     menu->addSeparator();
     menu->addAction(actionCollection()->action(QStringLiteral("check_mail")));
     menu->addAction(actionCollection()->action(QStringLiteral("check_mail_in")));
@@ -184,7 +184,7 @@ void KMMainWin::updateHamburgerMenu()
     menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_notifications")));
     menu->addSeparator();
 
-    menu->addAction(actionCollection()->action(KStandardAction::name(KStandardAction::Quit)));
+    menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Quit)));
     mHamburgerMenu->setMenu(menu);
 }
 
