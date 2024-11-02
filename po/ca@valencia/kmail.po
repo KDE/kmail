@@ -8,20 +8,19 @@
 # David Gil <al016950@yahoo.es>, 2005.
 # Joan Maspons <joanmaspons@gmail.com>, 2009.
 # Manuel Tortosa Moreno <manutortosa@chakra-project.org>, 2009, 2010, 2011.
-# Josep M. Ferrer <txemaq@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-01 00:40+0000\n"
-"PO-Revision-Date: 2024-09-10 10:34+0200\n"
+"PO-Revision-Date: 2024-10-31 10:28+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 22.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -6989,7 +6988,7 @@ msgstr "Establix des de la llibreta d'adreces"
 #: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr "Mostra només la identitat en l'activitat actual"
+msgstr "Mostra la identitat només en l'activitat actual"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31
@@ -8255,18 +8254,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid "Form"
-#~ msgstr "Formulari"
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (Predeterminada)"
-
-#~ msgid "Identity Name"
-#~ msgstr "Nom de la identitat"
-
-#~ msgid "Email Address"
-#~ msgstr "Adreça de correu"
