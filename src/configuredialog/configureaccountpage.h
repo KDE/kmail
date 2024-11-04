@@ -16,7 +16,7 @@ class UndoSendCombobox;
 class OrgFreedesktopAkonadiNewMailNotifierInterface;
 namespace KLDAPWidgets
 {
-class LdapConfigureWidget;
+class LdapConfigureWidgetNg;
 }
 // subclasses: one class per tab:
 class AccountsPageSendingTab : public ConfigModuleTab
@@ -55,7 +55,7 @@ private:
     void doLoadOther() override;
 
 private:
-    KLDAPWidgets::LdapConfigureWidget *const mLdapConfigureWidget;
+    KLDAPWidgets::LdapConfigureWidgetNg *const mLdapConfigureWidget;
 };
 
 class AccountsPageReceivingTab : public ConfigModuleTab

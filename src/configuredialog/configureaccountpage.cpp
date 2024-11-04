@@ -23,7 +23,7 @@ using MailTransport::TransportManagementWidgetNg;
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
 #include <KConfigGroup>
-#include <KLDAPWidgets/LdapConfigureWidget>
+#include <KLDAPWidgets/LdapConfigureWidgetNg>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QComboBox>
@@ -37,6 +37,7 @@ using MailTransport::TransportManagementWidgetNg;
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/accountactivities.h"
 #include "activities/activitiesmanager.h"
+#include "activities/ldapactivities.h"
 #include "activities/transportactivities.h"
 #endif
 #include <memory>
@@ -367,14 +368,19 @@ void AccountsPageReceivingTab::save()
 
 LdapCompetionTab::LdapCompetionTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mLdapConfigureWidget(new KLDAPWidgets::LdapConfigureWidget(this))
+    , mLdapConfigureWidget(new KLDAPWidgets::LdapConfigureWidgetNg(this))
 {
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins({});
 
     layout->addWidget(mLdapConfigureWidget);
 
-    connect(mLdapConfigureWidget, &KLDAPWidgets::LdapConfigureWidget::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    mLdapConfigureWidget->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
+    mLdapConfigureWidget->setLdapActivitiesAbstract(ActivitiesManager::self()->ldapActivities());
+#endif
+
+    connect(mLdapConfigureWidget, &KLDAPWidgets::LdapConfigureWidgetNg::changed, this, qOverload<bool>(&LdapCompetionTab::changed));
 }
 
 LdapCompetionTab::~LdapCompetionTab() = default;
