@@ -28,7 +28,7 @@ target_link_libraries(createfollowupreminderonexistingmessagejobtest Qt::Test Qt
 add_executable(cryptostateindicatorwidgettest cryptostateindicatorwidgettest.cpp cryptostateindicatorwidgettest.h)
 add_test(NAME cryptostateindicatorwidgettest COMMAND cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
-target_link_libraries(cryptostateindicatorwidgettest Qt::Test  KPim6::MessageCore Qt::Widgets KF6::ConfigWidgets KF6::I18n kmailprivate)
+target_link_libraries(cryptostateindicatorwidgettest Qt::Test  KPim6::MessageCore Qt::Widgets KF6::I18n kmailprivate)
 #####
 
 add_executable(encryptionstatetest encryptionstatetest.cpp encryptionstatetest.h)
@@ -42,12 +42,12 @@ ecm_mark_as_test(kactionmenutransporttest)
 target_link_libraries(kactionmenutransporttest Qt::Test  KPim6::AkonadiMime KF6::WidgetsAddons KF6::I18n KF6::ConfigGui kmailprivate)
 
 add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
-	"Qt::Test;KPim6::IdentityManagementWidgets;KPim6::Libkleo;KPim6::MessageCore;KPim6::MessageComposer;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::ConfigWidgets;KF6::I18n;kmailprivate;KF6::Codecs")
+	"Qt::Test;KPim6::IdentityManagementWidgets;KPim6::Libkleo;KPim6::MessageCore;KPim6::MessageComposer;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::I18n;kmailprivate;KF6::Codecs")
 
 add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim6::MailCommon;KPim6::Libkdepim;KF6::ItemViews;KPim6::TemplateParser;KF6::XmlGui;KF6::Completion;KF6::I18n")
 
 add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
-    "Qt::Test;Qt::Widgets;KPim6::AkonadiCore;KF6::XmlGui;KF6::Bookmarks;KF6::ConfigWidgets;KF6::Contacts;KF6::I18n;KPim6::IdentityManagementCore;KF6::KIOCore;KF6::KIOFileWidgets;KPim6::MessageCore;KPim6::MessageComposer;KPim6::MessageList;KPim6::MessageViewer;KPim6::MailCommon;KPim6::AkonadiMime;KPim6::Libkdepim;KPim6::TemplateParser;kmailprivate")
+    "Qt::Test;Qt::Widgets;KPim6::AkonadiCore;KF6::XmlGui;KF6::Bookmarks;KF6::Contacts;KF6::I18n;KPim6::IdentityManagementCore;KF6::KIOCore;KF6::KIOFileWidgets;KPim6::MessageCore;KPim6::MessageComposer;KPim6::MessageList;KPim6::MessageViewer;KPim6::MailCommon;KPim6::AkonadiMime;KPim6::Libkdepim;KPim6::TemplateParser;kmailprivate")
 
 
 add_executable(commandlineinfotest commandlineinfotest.cpp commandlineinfotest.h)

@@ -89,7 +89,6 @@ find_package(Gpgmepp ${GPGMEPP_LIB_VERSION} CONFIG REQUIRED)
 # Find KF6 package
 find_package(KF6Bookmarks ${KF_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6Config ${KF_MIN_VERSION} CONFIG REQUIRED)
-find_package(KF6ConfigWidgets ${KF_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6Crash ${KF_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6DBusAddons ${KF_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6DocTools ${KF_MIN_VERSION})
