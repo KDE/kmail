@@ -50,14 +50,13 @@ public:
 
     void setVacationScriptActive(bool active, const QString &serverName);
 
-    void updateIndicator();
-
     [[nodiscard]] bool hasVacationScriptActive() const;
 
 Q_SIGNALS:
     void clicked(const QString &serverName);
 
 private:
+    void updateIndicator();
     void slotVacationLabelClicked();
     void createIndicator();
     QStringList mServerActive;
