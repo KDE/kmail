@@ -26,7 +26,6 @@ public:
     explicit ManageShowCollectionProperties(KMMainWidget *mainWidget, QObject *parent = nullptr);
     ~ManageShowCollectionProperties() override;
 
-public Q_SLOTS:
     void slotFolderMailingListProperties();
     void slotShowFolderShortcutDialog();
     void slotShowExpiryProperties();
