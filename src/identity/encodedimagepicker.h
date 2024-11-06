@@ -45,8 +45,6 @@ private:
     void setFromFileDone(KJob *);
     void selectFromAddressBook();
     void selectFromAddressBookDone(KJob *);
-
-private:
     std::unique_ptr<Ui::EncodedImagePicker> mUi;
 };
 } // namespace KMail
