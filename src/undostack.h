@@ -40,15 +40,10 @@ public:
     explicit UndoStack(int size);
     ~UndoStack() override;
 
-    void clear();
-    [[nodiscard]] int size() const;
     [[nodiscard]] int newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
     void addMsgToAction(int undoId, const Akonadi::Item &item);
     [[nodiscard]] bool isEmpty() const;
     void undo();
-
-    void pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &, const Akonadi::Collection &destFolder);
-    void folderDestroyed(const Akonadi::Collection &folder);
 
     [[nodiscard]] QString undoInfo() const;
 
@@ -56,6 +51,7 @@ Q_SIGNALS:
     void undoStackChanged();
 
 private:
+    KMAIL_NO_EXPORT void clear();
     KMAIL_NO_EXPORT void slotMoveResult(KJob *);
     QList<UndoInfo *> mStack;
     const int mSize = 0;

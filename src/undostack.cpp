@@ -35,11 +35,6 @@ void UndoStack::clear()
     mStack.clear();
 }
 
-int UndoStack::size() const
-{
-    return mStack.count();
-}
-
 QString UndoStack::undoInfo() const
 {
     if (!mStack.isEmpty()) {
@@ -107,27 +102,6 @@ void UndoStack::slotMoveResult(KJob *job)
     if (job->error()) {
         KMessageBox::error(kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString()));
     }
-}
-
-void UndoStack::pushSingleAction(const Akonadi::Item &item, const Akonadi::Collection &folder, const Akonadi::Collection &destFolder)
-{
-    const int id = newUndoAction(folder, destFolder);
-    addMsgToAction(id, item);
-}
-
-void UndoStack::folderDestroyed(const Akonadi::Collection &folder)
-{
-    QList<UndoInfo *>::iterator it = mStack.begin();
-    while (it != mStack.end()) {
-        UndoInfo *info = *it;
-        if (info && ((info->srcFolder == folder) || (info->destFolder == folder))) {
-            delete info;
-            it = mStack.erase(it);
-        } else {
-            ++it;
-        }
-    }
-    Q_EMIT undoStackChanged();
 }
 
 #include "moc_undostack.cpp"
