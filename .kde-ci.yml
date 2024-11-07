@@ -10,7 +10,6 @@ Dependencies:
     'pim/akonadi' : '@same'
     'pim/akonadi-contacts' : '@same'
     'pim/akonadi-mime' : '@same'
-    'pim/akonadi-search' : '@same'
     'pim/kcalutils' : '@same'
     'pim/kidentitymanagement' : '@same'
     'pim/kldap' : '@same'
@@ -55,6 +54,9 @@ Dependencies:
 - 'on': ['Linux', 'FreeBSD']
   'require':
     'plasma/plasma-activities': '@latest-kf6'
+    'pim/akonadi-search' : '@same'
+
+
 
 Options:
   cmake-options: "-DAKONADI_RUN_MYSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_PGSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_SQLITE_ISOLATED_TESTS=FALSE"
