@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-05 00:41+0000\n"
+"POT-Creation-Date: 2024-11-07 00:40+0000\n"
 "PO-Revision-Date: 2024-10-20 14:25+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -7968,24 +7968,24 @@ msgstr "<b>பெறுநர்:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>தலைப்பு:</b> %1"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, kde-format
 msgid "Move To Trash"
 msgstr "அகற்றிடத்துக்கு நகர்த்து"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "அஞ்சலை நகர்த்து"
 msgstr[1] "அஞ்சல்களை நகர்த்து"
 
-#: undostack.cpp:101
+#: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "செயல்நீக்க ஒன்றும் இல்லை."
 
-#: undostack.cpp:108
+#: undostack.cpp:103
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "அஞ்சலை நகர்த்த முடியவில்லை. %1"

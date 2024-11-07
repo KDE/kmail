@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-05 00:41+0000\n"
+"POT-Creation-Date: 2024-11-07 00:40+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -8157,25 +8157,25 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Yiya Kwinkunkuma"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, fuzzy, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "&Umyalezo Omtsha..."
 msgstr[1] "&Umyalezo Omtsha..."
 
-#: undostack.cpp:101
+#: undostack.cpp:96
 #, fuzzy, kde-format
 msgid "There is nothing to undo."
 msgstr "Akukho nto ezakungenziwa!"
 
-#: undostack.cpp:108
+#: undostack.cpp:103
 #, fuzzy, kde-format
 msgid "Cannot move message. %1"
 msgstr "Hambisa Umyalezo Kwincwadi eneenkcukacha"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-05 00:41+0000\n"
+"POT-Creation-Date: 2024-11-07 00:40+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -7732,24 +7732,24 @@ msgstr "A"
 msgid "<b>Subject:</b> %1"
 msgstr "&Tema"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, kde-format
 msgid "Move To Trash"
 msgstr "Mover al Paper-corb"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, fuzzy, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Ciffrat missages"
 
-#: undostack.cpp:101
+#: undostack.cpp:96
 #, fuzzy, kde-format
 msgid "There is nothing to undo."
 msgstr "&Defar"
 
-#: undostack.cpp:108
+#: undostack.cpp:103
 #, fuzzy, kde-format
 msgid "Cannot move message. %1"
 msgstr "Proprietás de missage"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-05 00:41+0000\n"
+"POT-Creation-Date: 2024-11-07 00:40+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -8168,25 +8168,25 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Чиқиндилар қутисига кўчириш"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Хат жўнатиш"
 
-#: undostack.cpp:101
+#: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr ""
 
-#: undostack.cpp:108
+#: undostack.cpp:103
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot move message. %1"

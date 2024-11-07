@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-05 00:41+0000\n"
+"POT-Creation-Date: 2024-11-07 00:40+0000\n"
 "PO-Revision-Date: 2024-10-02 16:31+0300\n"
 "Last-Translator: Toms Trasūns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -8089,12 +8089,12 @@ msgstr "<b>Kam:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Temats:</b> %1"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, kde-format
 msgid "Move To Trash"
 msgstr "Pārvietot uz atkritni"
 
-#: undostack.cpp:47
+#: undostack.cpp:42
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -8102,12 +8102,12 @@ msgstr[0] "Pārvietot vēstuli"
 msgstr[1] "Pārvietot vēstules"
 msgstr[2] "Pārvietot vēstules"
 
-#: undostack.cpp:101
+#: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Nav nekā, ko atcelt."
 
-#: undostack.cpp:108
+#: undostack.cpp:103
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "Nevar pārvietot vēstuli. %1"
