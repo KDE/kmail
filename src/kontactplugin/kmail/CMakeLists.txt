@@ -18,7 +18,7 @@ target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp km
 pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
-target_link_libraries(kontact_kmailplugin KPim6::Mime KF6::I18n KPim6::KontactInterface KF6::CalendarCore KPim6::CalendarUtils KPim6::AkonadiCore KF6::Contacts KPim6::AkonadiWidgets)
+target_link_libraries(kontact_kmailplugin KPim6::Mime KF6::I18n KPim6::KontactInterface KF6::CalendarCore KPim6::CalendarUtils KPim6::AkonadiCore KF6::Contacts KPim6::AkonadiWidgets Qt::DBus)
 
 ########### next target ###############
 
