@@ -360,7 +360,7 @@ if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     endif()
 endif()
 
-if(NOT FORCE_DISABLE_AKONADI_SEARCH)
+if(KPim6AkonadiSearch_FOUND)
     target_sources(kmailprivate PRIVATE
         search/checkindexingmanager.cpp
         search/checkindexingjob.cpp
@@ -508,7 +508,7 @@ if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
 endif()
 
-if(NOT FORCE_DISABLE_AKONADI_SEARCH)
+if(KPim6AkonadiSearch_FOUND)
     target_link_libraries(kmailprivate PRIVATE KPim6::AkonadiSearchDebug KPim6::AkonadiSearchPIM)
 endif()
 
