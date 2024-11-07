@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-10 02:39+0000\n"
-"PO-Revision-Date: 2024-07-05 15:58+0200\n"
+"PO-Revision-Date: 2024-11-06 23:19+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 24.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -147,7 +147,7 @@ msgstr "Не е зареден файл"
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\"."
-msgstr "Не може да се отвори файл \"%1\"."
+msgstr "Не може да се отвори файл „%1“."
 
 #: ktnefmain.cpp:200
 #, kde-format
@@ -185,7 +185,7 @@ msgstr "Съобщението не съдържа данни в Rich Text фо�
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
-msgstr "Неуспешно зареждане на файл \"%1\" за запис, проверете разрешенията."
+msgstr "Неуспешно зареждане на файл „%1“ за запис, проверете разрешенията."
 
 #: ktnefmain.cpp:527
 #, kde-format
