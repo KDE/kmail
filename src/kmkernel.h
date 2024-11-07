@@ -1,6 +1,7 @@
 //
 
 #pragma once
+#include "config-kmail.h"
 #include <MailCommon/MailInterfaces>
 
 #include <QDBusObjectPath>
@@ -30,6 +31,7 @@ class EntityTreeModel;
 class EntityMimeTypeFilterModel;
 }
 
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 namespace Akonadi
 {
 namespace Search
@@ -40,7 +42,7 @@ class IndexedItems;
 }
 }
 }
-
+#endif
 namespace KIO
 {
 class Job;
@@ -104,7 +106,9 @@ class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;
 class FolderArchiveManager;
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 class CheckIndexingManager;
+#endif
 
 /**
  * @short Central point of coordination in KMail
@@ -484,8 +488,9 @@ public:
     FolderArchiveManager *folderArchiveManager() const;
 
     [[nodiscard]] bool allowToDebug() const;
-
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
     [[nodiscard]] Akonadi::Search::PIM::IndexedItems *indexedItems() const;
+#endif
 
     void cleanupTemporaryFiles();
     [[nodiscard]] MailCommon::MailCommonSettings *mailCommonSettings() const;
@@ -616,8 +621,10 @@ private:
     QPointer<MailCommon::KMFilterDialog> mFilterEditDialog;
     TextAutoCorrectionCore::AutoCorrection *mAutoCorrection = nullptr;
     FolderArchiveManager *const mFolderArchiveManager;
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
     CheckIndexingManager *mCheckIndexingManager = nullptr;
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
+#endif
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
 #ifdef WITH_KUSERFEEDBACK
     KMailUserFeedbackProvider *mUserFeedbackProvider = nullptr;

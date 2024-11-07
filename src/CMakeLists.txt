@@ -168,8 +168,7 @@ target_sources(kmailprivate PRIVATE
     editor/plugininterface/kmailplugineditorinitmanagerinterface.cpp
     editor/plugininterface/kmailplugineditorconverttextmanagerinterface.cpp
     editor/plugininterface/kmailplugingrammareditormanagerinterface.cpp
-    search/checkindexingmanager.cpp
-    search/checkindexingjob.cpp
+
     sieveimapinterface/kmailsieveimapinstanceinterface.cpp
     sieveimapinterface/kmsieveimappasswordprovider.cpp
     undosend/undosendcombobox.cpp
@@ -300,8 +299,7 @@ target_sources(kmailprivate PRIVATE
     editor/plugininterface/kmailplugineditorinitmanagerinterface.h
     editor/plugininterface/kmailplugineditorconverttextmanagerinterface.h
     editor/plugininterface/kmailplugingrammareditormanagerinterface.h
-    search/checkindexingmanager.h
-    search/checkindexingjob.h
+
     sieveimapinterface/kmailsieveimapinstanceinterface.h
     sieveimapinterface/kmsieveimappasswordprovider.h
     undosend/undosendcombobox.h
@@ -360,6 +358,15 @@ if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     if(BUILD_TESTING)
        add_subdirectory(activities/autotests)
     endif()
+endif()
+
+if(NOT FORCE_DISABLE_AKONADI_SEARCH)
+    target_sources(kmailprivate PRIVATE
+        search/checkindexingmanager.cpp
+        search/checkindexingjob.cpp
+        search/checkindexingmanager.h
+        search/checkindexingjob.h
+    )
 endif()
 
 
@@ -483,8 +490,7 @@ target_link_libraries(kmailprivate
     KF6::XmlGui
     KF6::Completion
     KPim6::LdapWidgets
-    KPim6::AkonadiSearchDebug
-    KPim6::AkonadiSearchPIM
+
     KPim6::WebEngineViewer
     KF6::SyntaxHighlighting
     KF6::GuiAddons
@@ -500,6 +506,10 @@ endif()
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
+endif()
+
+if(NOT FORCE_DISABLE_AKONADI_SEARCH)
+    target_link_libraries(kmailprivate PRIVATE KPim6::AkonadiSearchDebug KPim6::AkonadiSearchPIM)
 endif()
 
 target_link_libraries(kmailprivate PRIVATE qt6keychain)

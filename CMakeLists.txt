@@ -94,7 +94,7 @@ else()
 endif()
 
 if(NOT KPim6AkonadiSearch_FOUND)
-    set(FORCE_DISABLE_AKONADI_SEARCH TRUE)
+    set(KMAIL_FORCE_DISABLE_AKONADI_SEARCH TRUE)
 endif()
 
 set(GPGMEPP_LIB_VERSION "1.23.2")

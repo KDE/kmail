@@ -7,7 +7,6 @@ using namespace Qt::Literals::StringLiterals;
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
 #include "job/opencomposerjob.h"
-#include <PIM/indexeditems.h>
 #include <PimCommon/BroadcastStatus>
 #include <PimCommonAkonadi/ProgressManagerAkonadi>
 using PimCommon::BroadcastStatus;
@@ -18,7 +17,10 @@ using PimCommon::BroadcastStatus;
 #include "kmreadermainwin.h"
 #include "undostack.h"
 
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 #include "search/checkindexingmanager.h"
+#include <PIM/indexeditems.h>
+#endif
 #include <PimCommonAkonadi/RecentAddresses>
 using PimCommon::RecentAddresses;
 #include "configuredialog/configuredialog.h"
@@ -206,8 +208,10 @@ KMKernel::KMKernel(QObject *parent)
     ActivitiesManager::self()->setEnabled(KMailSettings::self()->plasmaActivitySupport());
 #endif
 
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
     mIndexedItems = new Akonadi::Search::PIM::IndexedItems(this);
     mCheckIndexingManager = new CheckIndexingManager(mIndexedItems, this);
+#endif
     mUnityServiceManager = new KMail::UnityServiceManager(this);
 }
 
@@ -1327,9 +1331,11 @@ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
     if (KMailSettings::self()->autoExpiring()) {
         mFolderCollectionMonitor->expireAllFolders(false /*scheduled, not immediate*/, entityTreeModel());
     }
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
     if (KMailSettings::self()->checkCollectionsIndexing()) {
         mCheckIndexingManager->start(entityTreeModel());
     }
+#endif
 #ifdef DEBUG_SCHEDULER // for debugging, see jobscheduler.h
     mBackgroundTasksTimer->start(1m);
 #else
@@ -1408,11 +1414,12 @@ MailCommon::MailCommonSettings *KMKernel::mailCommonSettings() const
     return mMailCommonSettings;
 }
 
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 Akonadi::Search::PIM::IndexedItems *KMKernel::indexedItems() const
 {
     return mIndexedItems;
 }
-
+#endif
 // can't be inline, since KMSender isn't known to implement
 // KMail::MessageSender outside this .cpp file
 MessageComposer::MessageSender *KMKernel::msgSender()

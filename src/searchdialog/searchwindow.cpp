@@ -10,6 +10,7 @@
  */
 
 #include "searchwindow.h"
+#include "config-kmail.h"
 using namespace Qt::Literals::StringLiterals;
 
 #include "incompleteindexdialog.h"
@@ -45,7 +46,9 @@ using namespace Qt::Literals::StringLiterals;
 #include <KMime/Message>
 #include <KStandardAction>
 #include <KStandardGuiItem>
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 #include <PIM/indexeditems.h>
+#endif
 #include <QIcon>
 #include <QSortFilterProxyModel>
 
@@ -908,10 +911,12 @@ QList<qint64> SearchWindow::checkIncompleteIndex(const Akonadi::Collection::List
     mUi.mStatusLbl->setText(i18n("Checking index status…"));
     // Fetch collection ?
     for (const Akonadi::Collection &col : std::as_const(cols)) {
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
         const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());
         if (col.statistics().count() != num) {
             results.push_back(col.id());
         }
+#endif
     }
     return results;
 }

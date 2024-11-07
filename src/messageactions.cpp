@@ -5,6 +5,7 @@
 */
 
 #include "messageactions.h"
+#include "config-kmail.h"
 using namespace Qt::Literals::StringLiterals;
 
 #include "kmcommands.h"
@@ -24,7 +25,9 @@ using namespace Qt::Literals::StringLiterals;
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/MessageParts>
+#if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 #include <Debug/akonadisearchdebugdialog.h>
+#endif
 #include <KIO/KUriFilterSearchProviderActions>
 #include <QAction>
 
@@ -698,12 +701,16 @@ void MessageActions::slotDebugAkonadiSearch()
     if (!mCurrentItem.isValid()) {
         return;
     }
+#if KMAIL_FORCE_DISABLE_AKONADI_SEARCH
+    qCWarning(KMAIL_LOG) << "AkonadiSearch is not implement on windows";
+#else
     QPointer<Akonadi::Search::AkonadiSearchDebugDialog> dlg = new Akonadi::Search::AkonadiSearchDebugDialog;
     dlg->setAkonadiId(mCurrentItem.id());
     dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->setSearchType(Akonadi::Search::AkonadiSearchDebugSearchPathComboBox::Emails);
     dlg->doSearch();
     dlg->show();
+#endif
 }
 
 void MessageActions::slotResendMessage()
