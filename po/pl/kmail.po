@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2024-09-21 11:46+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -439,7 +439,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Adres URL do wysyłania na listę dyskusyjną:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Zapisywanie na listę"
@@ -4357,31 +4357,31 @@ msgstr "Pasek narzędzi HTML"
 msgid "Text Direction Toolbar"
 msgstr "Pasek narzędzi kierunku tekstu"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail został odłączony od sieci, wszystkie zadania sieciowe zostały "
 "wstrzymane"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Wyślij wiadomość"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Nie można wysłać wiadomości"
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail jest ustawiony w tryb z siecią, wszystkie zadania sieciowe zostały "
 "wznowione"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4390,41 +4390,41 @@ msgstr ""
 "KMail jest ustawiony w tryb z siecią; wszystkie zadania sieciowe zostaną "
 "wznowione, gdy zostanie wykryte połączenie sieciowe"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "W tej chwili KMail jest ustawiony w tryb z siecią. Co zrobić?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Z siecią/Bez sieci"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Podłącz do sieci"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Odłącz od sieci"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Wykryto połączenie sieciowe, wznowiono wszystkie zadania sieciowe"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Nie wykryto połączenia sieciowego, wstrzymano wszystkie zadania sieciowe"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4433,13 +4433,13 @@ msgstr ""
 "Błąd otwierania pliku okresowego zapisu w %1.\n"
 "Powód: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Nie udało się otwarcie pliku okresowego zapisu"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4449,7 +4449,7 @@ msgstr[1] "Te %1 tożsamości będą teraz używać domyślnego serwera pocztowe
 msgstr[2] ""
 "Tych %1 tożsamości będzie teraz używać domyślnego serwera pocztowego:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4459,17 +4459,17 @@ msgstr[1] "Te %1 tożsamości będą teraz używać zmienionego serwera pocztowe
 msgstr[2] ""
 "Tych %1 tożsamości będzie teraz używać zmienionego serwera pocztowego:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "Wysyłanie wiadomości"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Rozpoczynanie wysyłania…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4478,7 +4478,7 @@ msgstr ""
 "Zasób %1 jest uszkodzony.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6139,180 +6139,180 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Właściwości katalogu %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Odpowiedz"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, kde-format
 msgid "&Reply…"
 msgstr "&Odpowiedz…"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr "&Odpowiedz wszystkim…"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "Odpowiedz a&utorowi…"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "Odpowiedz na &listę dyskusyjną…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Odpowiedz &bez cytowania…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "W treśc&i…"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Jako z&ałącznik…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "Przekie&ruj…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Nowa wiadomość do odbiorców…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&Oznacz wiadomość"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Prześlij dalej"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Lista &dyskusyjna"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "&Edytuj jako nową"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Odfiltruj po &listach dyskusyjnych…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Dodaj przypomnienie…"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "W&yślij ponownie…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Nowa wiadomość ze &wzorca"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
 msgstr "Wyeksportuj do PDFa…"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Zarchiwizuj wiadomość"
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Odfiltruj po listach dyskusyjnych…"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<nieznany>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Nazwa listy dyskusyjnej: %1"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Otwórz wiadomość w archiwum listy"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "Wyślij nową wiadomość"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "Przejdź do archiwum"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "Zażądaj pomocy"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Właściciel kontaktu"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Wypisz z listy"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Odfiltruj po listach dyskusyjnych %1…"
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "e-mail"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "strona www"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6320,13 +6320,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Eksport do PDFa"
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "Dokument PDF (*.pdf)"
@@ -6389,48 +6389,48 @@ msgstr "Katalog"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "Wyszukiwanie nie udało się, bo: <ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Szukaj wiadomości"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Szukaj"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "W treśc&i…"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Jako z&ałącznik…"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, kde-format
 msgid "Save Attachments…"
 msgstr "Zapisz załączniki…"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Wyczyść wybór"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Skocz do pierwotnego katalogu"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
@@ -6438,69 +6438,69 @@ msgstr[0] "%1 pasująca"
 msgstr[1] "%1 pasujące"
 msgstr[2] "%1 pasujących"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "Ostatnie wyszukiwanie"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Nie wybrałeś prawidłowego katalogu."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Nie wybrano katalogu do wyszukiwania."
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Nie określono warunków wyszukiwania."
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Wszystkie wybrane katalogi są puste lub nie zostały zaindeksowane."
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Nie dodano warunków wyszukiwania."
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 "Warunek \"zawiera\" nie może zostać użyty z liczbą znaków mniejszą niż 4."
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, kde-format
 msgid "Searching…"
 msgstr "Szukanie…"
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Nie można uzyskać wyników znajdywania. %1"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "Nieudane wyszukiwanie."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "Ukończono wyszukiwanie."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "Zatrzymano znajdywanie."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6511,7 +6511,7 @@ msgstr ""
 "powodem jest to, że istnieje już inny katalog wyszukiwania o takiej nazwie. "
 "Zwrócony błąd \"%1\"."
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
@@ -6519,7 +6519,7 @@ msgstr[0] "Skopiuj wiadomość"
 msgstr[1] "Skopiuj %1 wiadomości"
 msgstr[2] "Skopiuj %1 wiadomości"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
@@ -6527,7 +6527,7 @@ msgstr[0] "Wytnij wiadomość"
 msgstr[1] "Wytnij %1 wiadomości"
 msgstr[2] "Wytnij %1 wiadomości"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, kde-format
 msgid "Checking index status…"
 msgstr "Sprawdzanie postępu indeksowania…"

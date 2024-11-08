@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2024-03-11 16:38+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -459,7 +459,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Sähköpostilistalle lähettämisen verkko-osoite:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Liity listalle"
@@ -4566,31 +4566,31 @@ msgstr "HTML-työkalurivi"
 msgid "Text Direction Toolbar"
 msgstr "Tekstin suunta -työkalurivi"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail on asetettu verkottomaan tilaan ja kaikki verkkotoimenpiteet "
 "keskeytetty"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Lähetä sähköposti"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Sähköpostin lähettäminen on mahdotonta"
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail on asetettu verkolliseen tilaan ja kaikkia verkkotoimenpiteitä "
 "jatketaan"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4599,42 +4599,42 @@ msgstr ""
 "KMail on asetettu verkolliseen tilaan: kaikkia verkkotoimenpiteitä jatketaan "
 "heti, kun verkko on havaittu"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail ei ole nyt verkossa. Kuinka haluat edetä?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Verkossa/Ei verkossa"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Työskentele verkollisessa tilassa"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Työskentele verkottomassa tilassa"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Verkkoyhteys havaittiin: kaikkia verkkotoimenpiteitä jatketaan"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Verkkoyhteyttä ei havaittu: kaikki verkkotoimenpiteet on keskeytetty"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4643,14 +4643,14 @@ msgstr ""
 "Automaattitallennustiedoston avaus kohteesta %1 epäonnistui.\n"
 "Syy: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Automaattitallennustiedoston avaus epäonnistui"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4658,7 +4658,7 @@ msgid_plural ""
 msgstr[0] "Tämä henkilöys muutettiin käyttämään oletuslähetystapaa."
 msgstr[1] "Nämä %1 henkilöyttä muutettiin käyttämään oletuslähetystapaa."
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4666,18 +4666,18 @@ msgid_plural ""
 msgstr[0] "Tämä henkilöys muutettiin käyttämään muutettua lähetystapaa:"
 msgstr[1] "Nämä %1 henkilöyttä muutettiin käyttämään muutettua lähetystapaa:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "Lähettää viestejä"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Käynnistetään lähetysprosessia…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4686,7 +4686,7 @@ msgstr ""
 "Resurssi %1 on rikki.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6448,45 +6448,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Kansion %1 ominaisuudet"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Vastaa"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "&Vastaa"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, fuzzy, kde-format
 #| msgid "Reply to All"
 msgid "Reply to &All…"
 msgstr "Vastaa kaikille"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "Vastaa &lähettäjälle…"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "Vastaa postitusl&istalle…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Vastaa &lainaamatta…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6494,14 +6494,14 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Sisällytettynä"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgid "As Attachment"
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Liitteenä"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6509,137 +6509,137 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "Ohjaa &uudelleen…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message to Recipients..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Uusi viesti vastaanottajille…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Merkitse viest&i"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Välitä"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Postitus&lista"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "Muokkaa &uutena"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Suodata pos&tituslistalla…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "Add Followup Reminder..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Lisää vastaamisen seurannasta muistuttaja…"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Lähetä uu&delleen…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Uusi viesti &mallista"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Export to PDF"
 msgid "Export to PDF…"
 msgstr "Vie PDF:ksi"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Arkistoi viesti"
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "Suodata postituslistalla…"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<tuntematon>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Postituslistan nimi: %1"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Avaa viesti listan arkistosta"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "Lähetä uusi viesti"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "Siirry arkistoon"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "Pyydä ohjeita"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Yhteystiedon omistaja"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Poistu listalta"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "Suodata postituslistalla %1…"
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "sähköposti"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6647,14 +6647,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, fuzzy, kde-format
 #| msgid "Export to PDF"
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Vie PDF:ksi"
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF-tiedosto (*.pdf)"
@@ -6719,19 +6719,19 @@ msgstr "Kansio"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "Haku epäonnistui joidenkin virheiden takia:<ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Etsi viestejä"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Etsi"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6739,103 +6739,103 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Sisällytettynä"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, fuzzy, kde-format
 #| msgid "As Attachment"
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Liitteenä"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachment"
 msgid "Save Attachments…"
 msgstr "Tallenna liite"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, fuzzy, kde-format
 #| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Tyhjennä valinta"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, fuzzy, kde-format
 #| msgid "Jump to original folder"
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Siirry alkuperäiseen kansioon"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 osuma"
 msgstr[1] "%1 osumaa"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "Edellinen haku"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Et valinnut kelvollista kansiota."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Unohdit valita kokoelmat."
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Unohdit määrittää ehdon."
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Kaikki valitut kansiot ovat tyhjiä tai niitä ei indeksoitu."
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Unohdit lisätä ehdot."
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Sisältää-ehtoa ei voi käyttää, jos merkkien määrä on pienempi kuin 4."
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgid "Searching…"
 msgstr "Etsitään…"
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Hakutuloksia ei saada. %1"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "Haku epäonnistui."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "Haku valmis."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "Haku pysäytetty."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6845,21 +6845,21 @@ msgstr ""
 "Hakukansiosi nimen muuttamisessa ilmeni ongelmia. Yleinen syy tähän on, että "
 "toinen saman niminen hakukansio on jo olemassa. Virhe oli: %1."
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Kopioi viesti"
 msgstr[1] "Kopioi %1 viestiä"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Leikkaa viesti"
 msgstr[1] "Leikkaa %1 viestiä"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Checking index status..."
 msgid "Checking index status…"

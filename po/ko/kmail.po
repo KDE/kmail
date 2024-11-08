@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2024-08-21 00:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -434,7 +434,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "메일링 리스트에 글을 쓰는 URL:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "메일링 리스트에 가입"
@@ -4282,27 +4282,27 @@ msgstr "HTML 도구 모음"
 msgid "Text Direction Toolbar"
 msgstr "텍스트 방향 도구 모음"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail이 오프라인입니다. 모든 네트워크 작업이 중단되었습니다"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "이메일 보내기"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "이메일을 보낼 수 없음"
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail이 온라인입니다. 모든 네트워크 작업이 다시 시작되었습니다"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4311,42 +4311,42 @@ msgstr ""
 "KMail이 온라인입니다. 네트워크 연결이 감지된 후 모든 네트워크 작업을 다시 시"
 "작합니다"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail이 현재 오프라인 모드입니다. 무엇을 하시겠습니까?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "온라인/오프라인"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "온라인으로 작업"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "오프라인으로 작업"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "네트워크 연결이 감지되었습니다. 모든 네트워크 작업이 다시 시작되었습니다"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "네트워크 연결이 감지되지 않았습니다. 모든 네트워크 작업이 중단되었습니다"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4355,37 +4355,37 @@ msgstr ""
 "%1에 자동 저장 파일을 열 수 없습니다.\n"
 "이유: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "자동 저장 파일 열기 실패"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "다음 프로필 %1개가 기본 전송 방식을 사용하도록 변경되었습니다:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "다음 프로필 %1개가 수정된 전송 방식을 사용하도록 변경되었습니다:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "메시지 보내는 중"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "전송 작업 초기화 중…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4394,7 +4394,7 @@ msgstr ""
 "리소스 %1이(가) 깨졌습니다.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6024,180 +6024,180 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "%1 폴더 속성"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "답장(&R)"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, kde-format
 msgid "&Reply…"
 msgstr "답장 쓰기(&R)…"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr "전체 답장 쓰기(&A)…"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "작성자에게 답장 쓰기(&U)…"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "메일링 리스트에 답장 쓰기(&L)…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "인용하지 않고 답장 쓰기(&Q)…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "인라인(&I)…"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "첨부 파일로(&A)…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "다음으로 전달(&R)…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "수신자에게 새 메시지 보내기…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "메시지 표시(&K)"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "전달(&F)"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "메일링 리스트(&L)"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "새 메시지로 편집(&E)"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "메일링 리스트에 필터 적용(&L)…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "후속 작업 알림 추가…"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "다시 보내기(&G)…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "템플릿에서 새 메시지 만들기(&T)"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
 msgstr "PDF로 내보내기…"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "메시지 파일로 압축"
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "메일링 리스트에 필터 적용…"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<알 수 없음>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "메일링 리스트 이름: %1"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "리스트 보관함에서 메시지 열기"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "새 메시지 쓰기"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "보관함으로 이동"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "도움 요청"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "소유자에게 연락"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "메일링 리스트에서 탈퇴"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "메일링 리스트 %1에 필터 적용…"
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "이메일"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "웹"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6205,13 +6205,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1(%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF로 내보내기"
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF 문서 (*.pdf)"
@@ -6274,115 +6274,115 @@ msgstr "폴더"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "검색 실패. 오류: <ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "메시지 찾기"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "찾기(&S)"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "인라인(&I)…"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "첨부 파일로(&A)…"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, kde-format
 msgid "Save Attachments…"
 msgstr "첨부 파일 저장(&T)…"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "선택 취소"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "원래 폴더로 이동"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1개 일치함"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "마지막 검색"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "올바른 폴더를 선택하지 않았습니다."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "조건을 선택하지 않았습니다."
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "조건을 정의하지 않았습니다."
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "선택한 모든 폴더가 비어 있거나 색인이 진행되지 않았습니다."
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "조건을 추가하지 않았습니다."
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "4글자 미만 문자열에서 사용할 수 없는 조건이 들어 있습니다."
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, kde-format
 msgid "Searching…"
 msgstr "찾는 중…"
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "검색 결과를 가져올 수 없습니다. %1"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "검색 실패."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "검색 완료."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "검색이 중단되었습니다."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6392,19 +6392,19 @@ msgstr ""
 "검색 폴더의 이름을 바꾸는 중 문제가 발생했습니다. 대개 같은 이름을 가지는 검"
 "색 폴더가 이미 존재합니다. 반환값: \"%1\"."
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "메시지 %1개 복사"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "메시지 %1개 잘라내기"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, kde-format
 msgid "Checking index status…"
 msgstr "색인 상태 확인 중…"

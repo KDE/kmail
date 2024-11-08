@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -490,7 +490,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Περιγραφή λίστας ταχυδρομείου:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Εγγραφή στη λίστα"
@@ -4511,31 +4511,31 @@ msgstr "Γραμμή εργαλείων HTML"
 msgid "Text Direction Toolbar"
 msgstr "Γραμμή εργαλείων κατεύθυνσης κειμένου"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "Το KMail λειτουργεί χωρίς σύνδεση. Όλες οι δικτυακές εργασίες έχουν ανασταλεί"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Έτοιμο για αποστολή αλληλογραφίας..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "Το KMail λειτουργεί με σύνδεση. Όλες οι δικτυακές εργασίες συνεχίζονται"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4544,44 +4544,44 @@ msgstr ""
 "Η ρύθμιση της κατάστασης λειτουργίας του KMail είναι σε σύνδεση. Όλες οι "
 "δικτυακές εργασίες θα συνεχίσουν όταν εντοπιστεί μια σύνδεση με το δίκτυο"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 "Το KMail είναι σε λειτουργία χωρίς σύνδεση. Πώς επιθυμείτε να συνεχίσετε;"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Με σύνδεση/χωρίς σύνδεση"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Εργασία με σύνδεση"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Εργασία χωρίς σύνδεση"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "Εντοπίστηκε σύνδεση με το δίκτυο, όλες οι δικτυακές εργασίες συνεχίζονται"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Δεν εντοπίστηκε κάποια σύνδεση σε ένα δίκτυο, όλες οι εργασίες δικτύου θα "
 "ανασταλούν"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4590,13 +4590,13 @@ msgstr ""
 "Αδυναμία ανοίγματος του αρχείου αυτόματης αποθήκευσης στο %1.\n"
 "Αιτία: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Το άνοιγμα του αρχείου αυτόματης αποθήκευσης απέτυχε"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4608,7 +4608,7 @@ msgstr[1] ""
 "Αυτές οι %1 ταυτότητες τροποποιήθηκαν ώστε να χρησιμοποιούν τον "
 "προκαθορισμένο μεταφορέα:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4620,17 +4620,17 @@ msgstr[1] ""
 "Αυτές οι %1 ταυτότητες τροποποιήθηκαν ώστε να χρησιμοποιούν τον "
 "τροποποιημένο μεταφορέα:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "Αποστολή μηνυμάτων"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Αρχικοποίηση διαδικασίας αποστολής…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4638,7 +4638,7 @@ msgid ""
 "%2"
 msgstr "Ο πόρος %1 είναι σπασμένος."
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6354,117 +6354,117 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Ιδιότητες του φακέλου %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Απάντηση"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, kde-format
 msgid "&Reply…"
 msgstr "&Απάντηση…"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr "Α&πάντηση σε όλους…"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "Απάντηση στο &συγγραφέα…"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "Απάντηση στη λίστα τα&χυδρομείου…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Απάντηση &χωρίς παράθεση…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Εμβόλιμα…"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Σ&αν συνημμένο…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "Ανακατεύθ&υνση…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Νέο μήνυμα &σε λίστα ταχυδρομείου..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&Σημείωση μηνύματος"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "Προώ&θηση"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Λίστα αλληλογραφίας"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&Επεξεργασία μηνύματος"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Φίλτρο στη λίστα τα&χυδρομείου…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Αναζήτηση μ&ηνυμάτων..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "&Επαναποστολή…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Νέο μήνυμα από &πρότυπο"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Export to HTML..."
 msgid "Export to PDF…"
 msgstr "Εξαγωγή σε HTML..."
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"
@@ -6472,72 +6472,72 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Μετακίνηση του μηνύματος"
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Φίλτρο στη λίστα ταχυδρομείου…"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<άγνωστο>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgctxt "@title:tab Mailing list settings for a folder."
 #| msgid "Mailing List"
 msgid "Mailing List Name: %1"
 msgstr "Λίστα αλληλογραφίας"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Άνοιγμα του μηνύματος στην αρχειοθήκη της λίστας"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "Αποστολή νέου μηνύματος"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "Μετάβαση στην αρχειοθήκη"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "Ζητήστε βοήθεια"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Επικοινωνήστε με τον ιδιοκτήτη"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Διαγραφή από τη λίστα"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Φίλτρο στη λίστα ταχυδρομείου %1…"
 
 # Εγγραφή στη λίστα αλληλογραφίας με αποστολή ηλ. αλληλογαφίας
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "ηλ. αλληλογραφία"
 
 # Εγγραφή στην λίστα αλληλογραφίας από την ιστοσελίδα
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "ιστοσελίδα"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6545,14 +6545,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, fuzzy, kde-format
 #| msgid "Export to HTML..."
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Εξαγωγή σε HTML..."
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6619,86 +6619,86 @@ msgstr "Φάκελος"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "Η αναζήτηση απέτυχε. Βρέθηκαν τα σφάλματα: <ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Αναζήτηση μηνυμάτων"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "Αναζήτη&ση"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Εμβόλιμα…"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Σαν συν&ημμένο…"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachment"
 msgid "Save Attachments…"
 msgstr "Αποθήκευση συνημμένου"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Καθαρισμός επιλογής"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Μετάβαση στον αρχικό φάκελο"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 αποτέλεσμα"
 msgstr[1] "%1 αποτελέσματα"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "Τελευταία αναζήτηση"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Δεν έχετε επιλέξει έναν έγκυρο φάκελο."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Ξεχάσατε να ορίσετε συλλογές."
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Ξεχάσατε να ορίσετε την κατάσταση."
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Όλοι οι επιλεγμένοι φάκελοι είναι κενοί ή δεν έχουν δεικτοδοτηθεί."
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Ξεχάσατε να προσθέσετε συνθήκες."
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
@@ -6706,32 +6706,32 @@ msgstr ""
 "Η συνθήκη Περιέχει δεν μπορεί να χρησιμοποιηθεί με λιγότερους χαρακτήρες από "
 "4."
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, kde-format
 msgid "Searching…"
 msgstr "Αναζήτηση…"
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Αδυναμία ανάκτησης των αποτελεσμάτων αναζήτησης. %1"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "Η αναζήτηση απέτυχε."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "Η αναζήτηση ολοκληρώθηκε."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "Η αναζήτηση διακόπηκε."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6742,21 +6742,21 @@ msgstr ""
 "κοινή αιτία για αυτό είναι πως ένα άλλος φάκελος αναζήτησης με το ίδιο όνομα "
 "υπάρχει ήδη. Επιστρεφόμενο σφάλμα: «%1»."
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Αντιγραφή μηνύματος"
 msgstr[1] "Αντιγραφή %1 μηνυμάτων"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Αποκοπή μηνύματος"
 msgstr[1] "Αποκοπή %1 μηνυμάτων"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgid "Checking index status…"

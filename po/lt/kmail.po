@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -466,7 +466,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Pašto sąrašo aprašymas:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Prenumeruoti sąrašą"
@@ -4560,29 +4560,29 @@ msgstr "HTML įrankinė"
 msgid "Text Direction Toolbar"
 msgstr "Teksto krypties įrankinė"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail nustatytas dirbti atsijungus; visi darbai tinkle sustabdyti"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "Siųsti &paštą"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Ruošiuosi siųsti laišką..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail nustatytas dirbti prisijungus; visi darbai tinkle atnaujinami"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4591,57 +4591,57 @@ msgstr ""
 "KMail nustatytas dirbti prisijungus; visi darbai bus pratęsti kai tik bus "
 "prisijungta prie tinklo"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail šiuo metu veikia neprisijungęs. Ar norite prisijungti?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Prisijungęs/atsijungęs"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Dirbti prisijungus"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Dirbti neprisijungus"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Tinklo sujungimas nustatytas, visi tinklo darbai atnaujinti"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Nėra tinklo sujungimo, visi tinklo darbai yra sulaikyti"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Nepavyko atidaryti automatinio saugojimo failo"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4651,7 +4651,7 @@ msgstr[1] "Šios %1 tapatybės buvo pakeistos ir naudos numatytą transportą:"
 msgstr[2] "Šios %1 tapatybių buvo pakeistos ir naudos numatytą transportą:"
 msgstr[3] "%1 tapatybė buvo pakeista ir naudos numatytą transportą:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4663,18 +4663,18 @@ msgstr[2] ""
 "Šios %1 tapatybių buvo pakeistos ir turi naudoti modifikuotą transportą:"
 msgstr[3] "%1 tapatybė buvo pakeista ir turi naudoti modifikuotą transportą:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "Siunčiami laiškai"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Ruošiamasi siųsti..."
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken."
 msgid ""
@@ -4682,7 +4682,7 @@ msgid ""
 "%2"
 msgstr "Resursas %1 yra sugadintas."
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6487,45 +6487,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Aplanko „%1“ savybės"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "At&sakyti"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "At&sakyti"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, fuzzy, kde-format
 #| msgid "Reply to &All..."
 msgid "Reply to &All…"
 msgstr "Atsakyti &visiems..."
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "Atsakyti &autoriui..."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "Atsakyti pašto są&rašui..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Atsakyti &be citavimo..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox Inline mail forwarding"
 #| msgid "Inline"
@@ -6533,14 +6533,14 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "Įdėtas tekste"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgid "As Attachment"
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Kaip priedas"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6548,68 +6548,68 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&Nukreipti..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Naujas laiškas pašto s&ąrašui..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Žymėti &laišką"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "Pe&rsiųsti"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "E&l. pašto grupė"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "R&edaguoti laišką"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Fi&ltruoti pagal pašto sąrašą..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "&Ieškoti laiškų..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "S&iųsti iš naujo..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Naujas laiškas iš ša&blono"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
 msgstr ""
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"
@@ -6617,72 +6617,72 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Perkelti laišką"
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "Filtruoti pagal pašto sąrašą..."
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr ""
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgctxt "@title:tab Mailing list settings for a folder."
 #| msgid "Mailing List"
 msgid "Mailing List Name: %1"
 msgstr "El. pašto grupė"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Atverti laišką laiškų archyve"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "Siųsti naują laišką"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "Eiti į archyvą"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "Paprašyti pagalbos"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Susisiekti su savininku"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Atsisakyti sąrašo prenumeratos"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "Filtruoti pagal pašto sąrašą %1..."
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "el. paštas"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "žiniatinklis"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6690,13 +6690,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr ""
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6762,20 +6762,20 @@ msgstr "Aplankas"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Rasti laiškus"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Ieškoti"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "@item:inlistbox Inline mail forwarding"
 #| msgid "Inline"
@@ -6783,34 +6783,34 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "Įdėtas tekste"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, fuzzy, kde-format
 #| msgid "As Attachment"
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Kaip priedas"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgid "Save Attachments…"
 msgstr "Įrašyti priedus..."
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, fuzzy, kde-format
 #| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Išvalyti pažymėjimą"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, fuzzy, kde-format
 #| msgid "Jump to original folder"
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Šokti į originalų aplanką"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
@@ -6819,69 +6819,69 @@ msgstr[1] "%1 atitikmenys"
 msgstr[2] "%1 atitikmenų"
 msgstr[3] "%1 atitikmuo"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "Naujausia paieška"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgid "Searching…"
 msgstr "Ieškoma..."
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Nepavyksta gauti paieškos rezultatų. %1"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "Paieška nepavyko."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "Paieška baigta."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "Paieška sustabdyta."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6891,7 +6891,7 @@ msgstr ""
 "Yra problemų pervadinant paieškos aplanką. Dažniausia to problema yra kito "
 "paieškos aplanko buvimas tuo pačiu pavadinimu. Klaida gražino „%1“."
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
@@ -6900,7 +6900,7 @@ msgstr[1] "Kopijuoti %1 laiškus"
 msgstr[2] "Kopijuoti %1 laiškų"
 msgstr[3] "Kopijuoti %1 laišką"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
@@ -6909,7 +6909,7 @@ msgstr[1] "Iškirpti %1 laiškus"
 msgstr[2] "Iškirpti %1 laiškų"
 msgstr[3] "Iškirpti %1 laišką"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgid "Checking index status…"

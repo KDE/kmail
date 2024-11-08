@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -475,7 +475,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Iintshukumo Zecebo lokucoca ulwelo"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, fuzzy, kde-format
 msgid "Subscribe to List"
 msgstr "Inkcazelo"
@@ -4412,82 +4412,82 @@ msgstr ""
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Thumela iposi"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Ilungisele ukuthumela i email..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Umsebenzi"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4495,7 +4495,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4503,25 +4503,25 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, fuzzy, kde-format
 msgid "Sending messages"
 msgstr "Tyikitya Imiyalezo"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process…"
 msgstr "Yazisa uqhubekeko lomthumeli..."
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6219,41 +6219,41 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Izinto zobumnini Zencwadi eneenkcukacha ze %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, fuzzy, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Yisa phambili"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, fuzzy, kde-format
 msgid "&Reply…"
 msgstr "&Yisa phambili"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, fuzzy, kde-format
 msgid "Reply to &All…"
 msgstr "&Phendula kubo Bonke..."
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 msgid "Reply to A&uthor…"
 msgstr "&Phendula kubo Bonke..."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "Phendula ku Luhlu-&Lokuposa..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "&Phendula Ngaphandle Kokucaphula..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6261,13 +6261,13 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Kwi layini"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Uncamathelo: "
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6275,140 +6275,140 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&Phinda ulawule..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Imiyalezo Emitsha k&u Luhlu-Lweposi..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Phawul&a Umyalezo"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Yisa phambili"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Phendula ku Luhlu-&Lokuposa..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&Hlela Umyalezo"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Yenza ucoco Kuluhlu-&Loposo..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "&Fumana Imiyalezo..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "&Thumela Kwakhona..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, fuzzy, kde-format
 msgid "New Message From &Template"
 msgstr "Bonisa imiyalezo &phi"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF…"
 msgstr "Phelisa"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "&Umyalezo Omtsha..."
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "Icebo lokucoca ulwelo Kuluhlu-Lokuposa..."
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 msgid "<unknown>"
 msgstr "ayaziwa"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "Phendula ku Luhlu-&Lokuposa..."
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, fuzzy, kde-format
 msgid "Open Message in List Archive"
 msgstr "Umyalezo we OpenPGP - utyikityo olubi"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, fuzzy, kde-format
 msgid "Post New Message"
 msgstr "Umyalezo omtsha"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, fuzzy, kde-format
 msgid "Go to Archive"
 msgstr "&Posela Kuluhlu-Loposo"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr ""
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, fuzzy, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Umxholo"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, fuzzy, kde-format
 msgid "Unsubscribe from List"
 msgstr "Inkcazelo"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "Icebo lokucoca ulwelo Kuluhlu-Lokuposa %1..."
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, fuzzy, kde-format
 msgid "email"
 msgstr "Email:"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6417,14 +6417,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "Iposi"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Phelisa"
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6491,20 +6491,20 @@ msgstr "Incwadi eneenkcukacha"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "&Fumana Imiyalezo..."
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, fuzzy, kde-format
 #| msgid "&Search"
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Phendla"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6512,102 +6512,102 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Kwi layini"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, fuzzy, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Uncamathelo: "
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save Attachments…"
 msgstr "Gcina Izincamatheliso Njenge"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Iintshukumo Yecebo lokucoca ulwelo"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "&Incwadi eneenkcukacha engenanto"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] " %1 telekisa"
 msgstr[1] "%1 iintelekiso"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, fuzzy, kde-format
 msgid "Last Search"
 msgstr "&Phendla"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, fuzzy, kde-format
 msgid "You did not selected a valid folder."
 msgstr ""
 "Ayikwazi ukwenza ngaxesha linye ulawulo lweposi lwencwadi eneenkcukacha. "
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 msgid "Searching…"
 msgstr "Inkcazelo"
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, fuzzy, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Hambisa Umyalezo Kwincwadi eneenkcukacha"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, fuzzy, kde-format
 msgid "Search failed."
 msgstr "Uphendla lurhoxisiwe"
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, fuzzy, kde-format
 #| msgid " Spell check complete."
 msgid "Search complete."
 msgstr " Ukhangelo lopelo lugqibekile."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, fuzzy, kde-format
 #| msgid " Spell check stopped."
 msgid "Search stopped."
 msgstr " Ukhangelo lopelo lumisiwe."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6615,21 +6615,21 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, fuzzy, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "&Hlela Umyalezo"
 msgstr[1] "&Hlela Umyalezo"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, fuzzy, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Cima Imiyalezo"
 msgstr[1] "Cima Imiyalezo"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 msgid "Checking index status…"
 msgstr "Khangel&a Iposi Kwi"

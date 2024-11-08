@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2024-10-20 14:25+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -447,7 +447,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "பட்டியலுக்கு அஞ்சலிடுவதற்கான முகவரி:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "பட்டியலில் சேர்"
@@ -4278,31 +4278,31 @@ msgstr "HTML கருவிப்பட்டை"
 msgid "Text Direction Toolbar"
 msgstr "உரையின் திசைக்கான கருவிப்பட்டை"
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "கேமெயில் தொடர்பற்ற நிலைக்கு மாற்றப்பட்டுள்ளது; இணையத்தை பயன்படுத்தும் அனைத்து அம்சங்களும் "
 "முடக்கப்பட்டுள்ளன"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "மின்னஞ்சலை அனுப்பு"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "மின்னஞ்சலை அனுப்ப இயலாது"
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "கேமெயில் தொடர்புள்ள நிலைக்கு மாற்றப்பட்டுள்ளது; இணையத்தை பயன்படுத்தும் அனைத்து அம்சங்களும் "
 "இயங்குகின்றன"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4311,40 +4311,40 @@ msgstr ""
 "கேமெயில் தொடர்புள்ள நிலைக்கு மாற்றப்பட்டுள்ளது; இணைய இணைப்பு கண்டறியப்படும்போது அதை "
 "பயன்படுத்தும் அனைத்து அம்சங்களும் இயங்கும்"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "கேமெயில் தொடர்பற்ற நிலைக்கு மாற்றப்பட்டுள்ளது; என்ன செய்ய விரும்புகிறீர்கள்?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "தொடர்புள்ள/தொடர்பற்ற நிலை"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "தொடர்புள்ள நிலையில் இயங்கு"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "தொடர்பற்ற நிலையில் இயங்கு"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "பிணைய இணைப்பு கண்டறியப்பட்டது, இணைய பணிகள் தொடரும்"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "பிணைய இணைப்பு இல்லை, இணைய பணிகள் முடங்கியுள்ளன"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4353,13 +4353,13 @@ msgstr ""
 "%1 என்ற தானியக்க சேமிப்பு கோப்பை திறக்க முடியவில்லை.\n"
 "காரணம்: %2"
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "தானியக்க சேமிப்பு கோப்பைத் திறப்பது தோல்வியடைந்தது"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4367,7 +4367,7 @@ msgid_plural ""
 msgstr[0] "இந்த அடையாளம், இயல்பிருப்பு கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளது:"
 msgstr[1] "இந்த %1 அடையாளங்கள், இயல்பிருப்பு கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளன:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4375,17 +4375,17 @@ msgid_plural ""
 msgstr[0] "இந்த அடையாளம், திருத்தப்பட்ட கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளது:"
 msgstr[1] "இந்த %1 அடையாளங்கள், திருத்தப்பட்ட கணக்கை பயன்படுத்துமாறு மாற்றப்பட்டுள்ளன:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "அஞ்சல்கள் அனுப்பப்படுகின்றன"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "அனுப்பும் பணி துவக்கப்படுகிறது…"
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4394,7 +4394,7 @@ msgstr ""
 "%1 என்பது முடங்கியுள்ளது.\n"
 "%2"
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6038,180 +6038,180 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "%1 அடைவின் பண்புகள்"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&பதிலளி"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, kde-format
 msgid "&Reply…"
 msgstr "&பதிலளி…"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr "&அனைவருக்கும் பதிலளி…"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "அ&னுப்புநருக்கு பதிலளி…"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "அஞ்சல் ப&ட்டியலுக்கு பதிலளி…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "மேற்கோளிடாமல் பதி&லளி…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&உரையாகவே…"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "உ&டனிணைப்பாக…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&வழிமாற்று…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "பெறுநர்களுக்கு புதிய அஞ்சல்…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "அ&ஞ்சலை குறி"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&முன்ன‍னுப்பு"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "அஞ்சல் ப&ட்டியல்"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "புதியதாக &திருத்து"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "அஞ்சல் பட்டியலின்படி &வடிகட்டு…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "பதிலளிக்க நினைவூட்டு…"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "&மறுபடியும் அனுப்பு…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "வா&ர்ப்புருவிலிருந்து புதிய அஞ்சல்"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
 msgstr "PDF-ஆக ஏற்றுமதி செய்…"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "அஞ்சலை காப்பகப்படுத்து"
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "அஞ்சல் பட்டியலின்படி வடிகட்டு…"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<தெரியாதது>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "அஞ்சல் பட்டியலின் பெயர்: %1"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "அஞ்சலை பட்டியலின் காப்பகத்தில் திற"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "புதிய அஞ்சலை அனுப்பு"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "காப்பகத்திற்கு செல்"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "உதவி கோரு"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "உரிமையாளரை தொடர்பு கொள்"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "பட்டியலிலிருந்து விலகு"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "%1 அஞ்சல் பட்டியலின்படி வடிகட்டு…"
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "மின்னஞ்சல்"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "இணையம்"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6219,13 +6219,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF-ஆக ஏற்றுமதி செய்வது"
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF ஆவணம் (*.pdf)"
@@ -6288,116 +6288,116 @@ msgstr "அடைவு"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "தேடல் இச்சிக்கல்களால் தோல்வியடைந்த‍து: <ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "அஞ்சல்களை கண்டுபிடித்தல்"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&தேடு"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&உரையாகவே…"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "உ&டனிணைப்பாக…"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, kde-format
 msgid "Save Attachments…"
 msgstr "உடனிணைப்புகளை சேமி…"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "தேர்வை கைவிடு"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "உள்ள அடைவிற்கு தாவு"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 பொருத்தம்"
 msgstr[1] "%1 பொருத்தங்கள்"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "கடைசி தேடல்"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "செல்லுபடியாகும் அடைவை நீங்கள் தேர்ந்தெடுக்கவில்லை."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "தொகுப்புகளை தேர்ந்தெடுக்க மறந்துவிட்டீர்கள்"
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "நிபந்தனையை குறிப்பிட மறந்துவிட்டீர்கள்."
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "தேர்ந்தெடுக்கப்பட்ட அனைத்து கோப்புகளும் காலியாகவோ அட்டவணையாக்கப்படாமலோ உள்ளன."
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "நிபந்தனைகளை சேர்க்க மறந்துவிட்டீர்கள்."
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "'கொண்டது' என்ற நிபந்தனைக்கு, 4 எழுத்தக்களைவிட சிறிய சரத்தை பயன்படுத்த முடியாது."
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, kde-format
 msgid "Searching…"
 msgstr "தேடுகிறது…"
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "தேடலின் முடிவை பெற முடியவில்லை. %1"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "தேடல் தோல்வியடைந்தது."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "தேடல் முடிவடைந்தது."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "தேடல் நிறுத்தப்பட்டது."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6407,21 +6407,21 @@ msgstr ""
 "உங்கள் தேடல் அடைவிற்கு மறுபெயரிடுவதில் சிக்கல் ஏற்பட்டது. புதிய பெயரில் வேறொரு அடைவு "
 "ஏற்கனவே இருத்தலால் இது நேரக்கூடும். கிடைத்த பதில்: \"%1\"."
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "அஞ்சலை நகலெடு"
 msgstr[1] "%1 அஞ்சல்களை நகலெடு"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "அஞ்சலை வெட்டு"
 msgstr[1] "%1 அஞ்சல்களை வெட்டு"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, kde-format
 msgid "Checking index status…"
 msgstr "அட்டவணையின் நிலை கண்டறியப்படுகிறது…"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2010-02-28 20:19+0700\n"
 "Last-Translator: Thanomsub Noppaburana <donga.nb@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
@@ -503,7 +503,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "คำอธิบายจดหมายเวียน:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "สมัครขอรับจดหมายเวียน"
@@ -4558,118 +4558,118 @@ msgstr "แถบเครื่องมือ HTML"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "เกี่ยวกับการส่งจดหมาย..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "ออนไลน์/ออฟไลน์"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "ทำงานออนไลน์"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "ทำงานออฟไลน์"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "การบันทึกอัตโนมัติล้มเหลว"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] ""
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] ""
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "กำลังส่งจดหมาย"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process…"
 msgstr "กำลังเริ่มประมวลผลผู้ส่ง..."
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6453,45 +6453,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "คุณสมบัติของโฟลเดอร์ %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "ตอบกลับ"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "ตอบกลับ"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, fuzzy, kde-format
 #| msgid "Reply to All"
 msgid "Reply to &All…"
 msgstr "ตอบกลับทั้งหมด"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "ตอบกลับไปยังผู้เขียน..."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "ตอบกลับไปยังผู้รับจดหมายเวียน..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "ตอบกลับโดยไม่อ้างข้อความเดิม..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6499,7 +6499,7 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "แสดงในตัวจดหมาย"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgctxt "message status"
 #| msgid "Has Attachment"
@@ -6507,7 +6507,7 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "มีสิ่งที่แนบมาด้วย"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6515,142 +6515,142 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "เป&ลี่ยนปลายทาง..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "ส่งจดหมายใหม่ไปยังผู้รับจดหมายเวียน..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "ตั้ง&สถานะจดหมาย"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "ส่งต่อ"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "จดหมายเ&วียน"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "แ&ก้ไขจดหมาย"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "กรองบนรายการจดหมายเวียน..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "ค้นหาจดหมาย..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "ส่งอีกครั้ง..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "สร้างจดหมายใหม่จากแ&ม่แบบจดหมาย"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Export..."
 msgid "Export to PDF…"
 msgstr "หมดอายุ..."
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "เขียนจดหมายใหม่ไปยัง..."
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "กรองบนรายการจดหมายเวียน..."
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<ไม่ทราบ>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "Mailing-&List"
 msgid "Mailing List Name: %1"
 msgstr "จดหมายเ&วียน"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "เปิดจดหมายที่อยู่ในรายการแฟ้มจัดเก็บ"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, kde-format
 msgid "Post New Message"
 msgstr "ส่งจดหมายใหม่"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, kde-format
 msgid "Go to Archive"
 msgstr "ไปยังแฟ้มจัดเก็บ"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, kde-format
 msgid "Request Help"
 msgstr "ขอความช่วยเหลือ"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, fuzzy, kde-format
 #| msgid "Contact Owner"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "ติดต่อเจ้าของ"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "ยกเลิกการขอรับจดหมายเวียน"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "กรองบนจดหมายเวียน %1..."
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, kde-format
 msgid "email"
 msgstr "อีเมล"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr "เว็บ"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6658,14 +6658,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, fuzzy, kde-format
 #| msgid "Export..."
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "หมดอายุ..."
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6739,14 +6739,14 @@ msgstr "โฟลเดอร์"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "ค้นหาจดหมาย"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, fuzzy, kde-format
 #| msgctxt "@action:button Search for messags"
 #| msgid "&Search"
@@ -6754,7 +6754,7 @@ msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&ค้นหา"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6762,7 +6762,7 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "แสดงในตัวจดหมาย"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, fuzzy, kde-format
 #| msgctxt "message status"
 #| msgid "Has Attachment"
@@ -6770,94 +6770,94 @@ msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "มีสิ่งที่แนบมาด้วย"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachment"
 msgid "Save Attachments…"
 msgstr "บันทึกสิ่งที่แนบมาด้วย"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, fuzzy, kde-format
 #| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "ล้างส่วนการเลือก"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "กระโดดไปยังโฟลเดอร์"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "พบทั้งสิ้น %1 ที่"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "ค้นหาล่าสุด"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, fuzzy, kde-format
 #| msgid "Could not sync maildir folder."
 msgid "You did not selected a valid folder."
 msgstr "ไม่สามารถปรับเทียบโฟลเดอร์จดหมาย maildir ได้"
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Searching…"
 msgstr "กำลังเริ่ม..."
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot get search result. %1"
 msgstr "ย้ายจดหมายไปยังโฟลเดอร์"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, fuzzy, kde-format
 #| msgid "Search canceled"
 msgid "Search failed."
 msgstr "ยกเลิกการค้นหาแล้ว"
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, fuzzy, kde-format
 #| msgid " completed"
 msgid "Search complete."
 msgstr " แล้วเสร็จ"
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
@@ -6865,7 +6865,7 @@ msgstr " แล้วเสร็จ"
 msgid "Search stopped."
 msgstr "ค้นหา"
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6873,19 +6873,19 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "คัดลอกจดหมาย %1 ฉบับ"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "ตัดจดหมาย %1 ฉบับ"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Checking index status…"

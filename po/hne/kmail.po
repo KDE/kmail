@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -471,7 +471,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "डाकपता सूची वर्नन"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "सूची मं सब्सक्राइब करव"
@@ -4506,29 +4506,29 @@ msgstr "एचटीएमएल औजार-पट्टी"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "केमेल ल आफलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम निलंबित हे"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "सेंडमेल"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ई-मेल भेजे में..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "केमेल ल आनलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम फिर से चालू हे"
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4536,59 +4536,59 @@ msgid ""
 "connection is detected"
 msgstr "केमेल ल आनलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम फिर से चालू हे"
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "केमेल अभी आफलाइन मोड मं हे. आप मन कऊन जइसन आगू बढ़ना चाहथो ?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "आनलाइन/ओफलाइन"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "आनलाइन काम करव"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "आफलाइन काम करव"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "केमेल ल आनलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम फिर से चालू हे"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "केमेल ल आफलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम निलंबित हे"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "अपने अपन सहेजना फेल"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4596,7 +4596,7 @@ msgid_plural ""
 msgstr[0] "डिफाल्ट ट्रांसपोर्ट के परयोग करे बर एखर पहिचान ल बदल दे गे हे:"
 msgstr[1] "डिफाल्ट ट्रांसपोर्ट के परयोग करे बर ए %1 पहिचानों ल बदल दे गे हे:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4604,25 +4604,25 @@ msgid_plural ""
 msgstr[0] "परिवर्धित ट्रांसपोर्ट के परयोग करे बर एखर पहिचान ल बदल दे गे हे:"
 msgstr[1] "परिवर्धित ट्रांसपोर्ट के परयोग करे बर ए %1 पहिचानों ल बदल दे गे हे:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "संदेस मन ल भेजिस जात हे"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process…"
 msgstr "भेजने के काम चालू करत हे..."
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6403,45 +6403,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "फोल्डर %1 के विसेसता"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "जवाब... (&R)"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "जवाब... (&R)"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, fuzzy, kde-format
 #| msgid "Reply to All"
 msgid "Reply to &All…"
 msgstr "सब ल जवाब भेजव"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "लेखक ल जवाब भेजव... (&u)"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "डाक-सूची ल जवाब भेजव... (&L)"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "बिना उदाहरन के जवाब भेजव... (&Q)"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6449,13 +6449,13 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "इनलाइन (&I)"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "संलग्नक हे"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6463,118 +6463,118 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "रीडायरेक्ट करव... (&R)"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "डाक-सूची मं नवा संदेस... (&o)"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "संदेस चिनहा लगाव (&k)"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "आगू (&F)"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "डाक-सूची ल जवाब भेजव... (&L)"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "संदेस संपादन (&E)"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "डाक-सूची मं फिल्टर... (&L)"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "संदेस खोजव... (&F)"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "फिर भेजव... (&g)"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "टैम्प्लेट से एक नवा संदेस (&T)"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Export to HTML..."
 msgid "Export to PDF…"
 msgstr "एचटीएमएल मं निर्यात करव..."
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "को नवा संदेस..."
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "डाक-सूची मं फिल्टर..."
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<अग्यात>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "डाक-सूची ल जवाब भेजव... (&L)"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "ओपन-पीजीपी संदेस - खराब दसखत"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "नवा संदेस"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgid "Go to Archive"
 msgstr "अभिलेखों के सूची"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "मदद सूची"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, fuzzy, kde-format
 #| msgctxt "type of folder content"
 #| msgid "Contacts"
@@ -6582,31 +6582,31 @@ msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "सम्पर्क"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, fuzzy, kde-format
 #| msgid "Unsubscribe From List"
 msgid "Unsubscribe from List"
 msgstr "सूची से अनसब्सक्राइब करव"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "डाक-सूची %1 मं फिल्टर..."
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, fuzzy, kde-format
 #| msgctxt "@title:column Email of the recipient."
 #| msgid "Email"
 msgid "email"
 msgstr "ईमेल"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, fuzzy, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6614,14 +6614,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "मोर %1 (%2)"
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, fuzzy, kde-format
 #| msgid "Export to HTML..."
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "एचटीएमएल मं निर्यात करव..."
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6693,14 +6693,14 @@ msgstr "फोल्डर"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "संदेस खोजव"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, fuzzy, kde-format
 #| msgctxt "@action:button Search for messags"
 #| msgid "&Search"
@@ -6708,7 +6708,7 @@ msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "खोजव (&S)"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6716,107 +6716,107 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "इनलाइन (&I)"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, fuzzy, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "संलग्नक हे"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save Attachments…"
 msgstr "संलग्नक अइसन सहेजव"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, fuzzy, kde-format
 #| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "चयन साफ करव"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "ये फोल्डर मं जाव"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 एक जैसा"
 msgstr[1] "%1 एक जइसन"
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "पिछला खोज"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, fuzzy, kde-format
 #| msgid "Could not sync maildir folder."
 msgid "You did not selected a valid folder."
 msgstr "मेलडिर फोल्डर सिंक नइ कर सकिस."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Searching…"
 msgstr "सुरू करत हे..."
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, fuzzy, kde-format
 #| msgid "Copy or Move Messages to %1"
 msgid "Cannot get search result. %1"
 msgstr "संदेस मन ल %1 मं खिसकाव या नकल करव"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, fuzzy, kde-format
 #| msgid "Search canceled"
 msgid "Search failed."
 msgstr "ढूंढना खारिज"
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, fuzzy, kde-format
 #| msgid " Spell check complete."
 msgid "Search complete."
 msgstr "मात्रा के जांच पूरा होइस."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, fuzzy, kde-format
 #| msgid " Spell check stopped."
 msgid "Search stopped."
 msgstr "हिज्जा जांच रोका."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6824,7 +6824,7 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, fuzzy, kde-format
 #| msgid "Copy Messages"
 msgid "Copy Message"
@@ -6832,7 +6832,7 @@ msgid_plural "Copy %1 Messages"
 msgstr[0] "संदेस मन के नकल बनाव"
 msgstr[1] "संदेस मन के नकल बनाव"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, fuzzy, kde-format
 #| msgid "Cut Messages"
 msgid "Cut Message"
@@ -6840,7 +6840,7 @@ msgid_plural "Cut %1 Messages"
 msgstr[0] "संदेस काटव"
 msgstr[1] "संदेस काटव"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Checking index status…"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-07 00:40+0000\n"
+"POT-Creation-Date: 2024-11-08 00:41+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -501,7 +501,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Omskriuwing fan ferstjoerlist:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:452
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Foar list ynskriuwe"
@@ -4814,29 +4814,29 @@ msgstr "HTML arkbalke"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:631
+#: kmkernel.cpp:635
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail is sûnder ferbining setten. Alle netwurktaken binne útstelt"
 
-#: kmkernel.cpp:651 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:655 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:652 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:656 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Stiet op it punt om in berjocht te ferstjoeren..."
 
-#: kmkernel.cpp:683
+#: kmkernel.cpp:687
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail is op ferbining setten. Alle netwurktaken wurde ferfette."
 
-#: kmkernel.cpp:685
+#: kmkernel.cpp:689
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4844,59 +4844,59 @@ msgid ""
 "connection is detected"
 msgstr "KMail is op ferbining setten. Alle netwurktaken wurde ferfette."
 
-#: kmkernel.cpp:758
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail hat no gjin ferbining. Hoe wolle jo fierdergean?"
 
-#: kmkernel.cpp:760
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Ferbining/Sûnder ferbining"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Mei ferbining wurkje"
 
-#: kmkernel.cpp:762
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Sûnder ferbining wurkje"
 
-#: kmkernel.cpp:786
+#: kmkernel.cpp:790
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "KMail is op ferbining setten. Alle netwurktaken wurde ferfette."
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:793
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail is sûnder ferbining setten. Alle netwurktaken binne útstelt"
 
-#: kmkernel.cpp:884
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:885
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "It automatysk bewarjen is mislearre"
 
-#: kmkernel.cpp:1445
+#: kmkernel.cpp:1452
 #, fuzzy, kde-format
 #| msgid "This identity has been changed to use the default transport:"
 #| msgid_plural ""
@@ -4908,7 +4908,7 @@ msgstr[0] "Dizze identiteit is feroare om it standert transport te brûken:"
 msgstr[1] ""
 "Dizze %1 identiteiten binne feroare om it standert transport te brûken:"
 
-#: kmkernel.cpp:1469
+#: kmkernel.cpp:1476
 #, fuzzy, kde-format
 #| msgid "This identity has been changed to use the modified transport:"
 #| msgid_plural ""
@@ -4920,25 +4920,25 @@ msgstr[0] " Dizze identiteit is feroare om it oanpaste transport te brûken:"
 msgstr[1] ""
 "Dizze %1 identiteiten binne feroare om it oanpaste transport te brûken:"
 
-#: kmkernel.cpp:1484
+#: kmkernel.cpp:1491
 #, kde-format
 msgid "Sending messages"
 msgstr "Berjjochten wurde ferstjoerd"
 
-#: kmkernel.cpp:1485
+#: kmkernel.cpp:1492
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process…"
 msgstr "Ferstjoerdproses wurdt ïnitsjonalisearre..."
 
-#: kmkernel.cpp:1564
+#: kmkernel.cpp:1571
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1740 kmkernel.cpp:1746
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6771,45 +6771,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Eigenschippen foar map %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "Beäntwu&rdzje"
 
-#: messageactions.cpp:62 searchdialog/searchwindow.cpp:157
+#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "Beäntwu&rdzje"
 
-#: messageactions.cpp:63 searchdialog/searchwindow.cpp:161
+#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
 #, fuzzy, kde-format
 #| msgid "Reply to All"
 msgid "Reply to &All…"
 msgstr "Eltsenien beäntwurdzje"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "&Stjoerder beäntwurdzje..."
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:165
+#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "Beäntwurdzje oa&n diskusjegroep..."
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Beäntwurdzje &sûnder sitaten..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6817,14 +6817,14 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Ynsletten"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Hat taheaksel"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6832,148 +6832,148 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "Om&liede..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Nij berjocht oan diskusjegr&oep..."
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Berjocht ma&rkearje"
 
-#: messageactions.cpp:72 searchdialog/searchwindow.cpp:169
+#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Trochstjoere"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Beäntwurdzje oa&n diskusjegroep..."
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "Berjocht b&ewurkje"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Filterje op &Diskusjegroep..."
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Sy&kje..."
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Opnij stj&oere..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Nij berjocht fan &sjabloan"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF…"
 msgstr "Ferrine litte"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Nij berjocht oan..."
 
-#: messageactions.cpp:398
+#: messageactions.cpp:401
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "Filterje op diskusjegroep..."
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, kde-format
 msgid "<unknown>"
 msgstr "<ûnbekend>"
 
-#: messageactions.cpp:434
+#: messageactions.cpp:437
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "Beäntwurdzje oa&n diskusjegroep..."
 
-#: messageactions.cpp:437
+#: messageactions.cpp:440
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "OpenPGP-berjocht - Unjildige ûndertekening"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:443
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "Nij berjocht"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:446
 #, fuzzy, kde-format
 #| msgid "Post to List"
 msgid "Go to Archive"
 msgstr "Stjoer nei list"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:449
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "Listhelp"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:452
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Kontaktpersoanen"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:458
 #, fuzzy, kde-format
 #| msgid "Unsubscribe from List"
 msgid "Unsubscribe from List"
 msgstr "Fan list útskriuwe"
 
-#: messageactions.cpp:464
+#: messageactions.cpp:467
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "Filterje op diskusjegroep %1..."
 
-#: messageactions.cpp:641
+#: messageactions.cpp:644
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "E-post"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:647
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:649
+#: messageactions.cpp:652
 #, fuzzy, kde-format
 #| msgid "X-Mailer: "
 msgctxt ""
@@ -6982,14 +6982,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "X-Mailer: "
 
-#: messageactions.cpp:748
+#: messageactions.cpp:755
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Ferrine litte"
 
-#: messageactions.cpp:750
+#: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -7060,21 +7060,21 @@ msgstr "Map"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:75
+#: searchdialog/searchwindow.cpp:78
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Sy&kje berjiochten"
 
-#: searchdialog/searchwindow.cpp:91
+#: searchdialog/searchwindow.cpp:94
 #, fuzzy, kde-format
 #| msgid "&Search"
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Sykje"
 
-#: searchdialog/searchwindow.cpp:173
+#: searchdialog/searchwindow.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -7082,108 +7082,108 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Ynsletten"
 
-#: searchdialog/searchwindow.cpp:177
+#: searchdialog/searchwindow.cpp:180
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Hat taheaksel"
 
-#: searchdialog/searchwindow.cpp:191
+#: searchdialog/searchwindow.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save Attachments…"
 msgstr "Taheaksel bewarje as"
 
-#: searchdialog/searchwindow.cpp:197
+#: searchdialog/searchwindow.cpp:200
 #, fuzzy, kde-format
 #| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Seleksje opromje"
 
-#: searchdialog/searchwindow.cpp:201
+#: searchdialog/searchwindow.cpp:204
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Nei map ljeppe"
 
-#: searchdialog/searchwindow.cpp:291
+#: searchdialog/searchwindow.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 gelikense fûn."
 msgstr[1] "%1 gelikensen fûn."
 
-#: searchdialog/searchwindow.cpp:361 searchdialog/searchwindow.cpp:403
+#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "Lêste sykopjefte"
 
-#: searchdialog/searchwindow.cpp:429
+#: searchdialog/searchwindow.cpp:432
 #, fuzzy, kde-format
 #| msgid "Could not sync maildir folder."
 msgid "You did not selected a valid folder."
 msgstr "De maildir-map koe net syngronisearre wurde."
 
-#: searchdialog/searchwindow.cpp:443
+#: searchdialog/searchwindow.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:461
+#: searchdialog/searchwindow.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:466
+#: searchdialog/searchwindow.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:472
+#: searchdialog/searchwindow.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:476
+#: searchdialog/searchwindow.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:519
+#: searchdialog/searchwindow.cpp:522
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgid "Searching…"
 msgstr "Ynskriuwing..."
 
-#: searchdialog/searchwindow.cpp:532
+#: searchdialog/searchwindow.cpp:535
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot get search result. %1"
 msgstr "Berjochten nei map ferpleatse"
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:538
 #, fuzzy, kde-format
 #| msgid "Search canceled."
 msgid "Search failed."
 msgstr "Sykjen ôfbrutsen."
 
-#: searchdialog/searchwindow.cpp:576
+#: searchdialog/searchwindow.cpp:579
 #, fuzzy, kde-format
 #| msgid " Spell check complete."
 msgid "Search complete."
 msgstr " Staveringshifker foltôge."
 
-#: searchdialog/searchwindow.cpp:614
+#: searchdialog/searchwindow.cpp:617
 #, fuzzy, kde-format
 #| msgid " Spell check stopped."
 msgid "Search stopped."
 msgstr " Staveringshifker stoppe."
 
-#: searchdialog/searchwindow.cpp:672
+#: searchdialog/searchwindow.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -7191,7 +7191,7 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:776
+#: searchdialog/searchwindow.cpp:779
 #, fuzzy, kde-format
 #| msgid "Copy Messages"
 msgid "Copy Message"
@@ -7199,7 +7199,7 @@ msgid_plural "Copy %1 Messages"
 msgstr[0] "Berjochten kopiearje"
 msgstr[1] "Berjochten kopiearje"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:782
 #, fuzzy, kde-format
 #| msgid "Cut Messages"
 msgid "Cut Message"
@@ -7207,7 +7207,7 @@ msgid_plural "Cut %1 Messages"
 msgstr[0] "Berjochten knippe"
 msgstr[1] "Berjochten knippe"
 
-#: searchdialog/searchwindow.cpp:908
+#: searchdialog/searchwindow.cpp:911
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Checking index status…"
