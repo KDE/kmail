@@ -7,6 +7,7 @@
 #include "kmlaunchexternalcomponent.h"
 #include "kmail_debug.h"
 #include "newmailnotifierinterface.h"
+#include "util.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
 #include <KLocalizedString>
@@ -142,13 +143,7 @@ void KMLaunchExternalComponent::slotImport()
 
 void KMLaunchExternalComponent::slotAccountWizard()
 {
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
-    if (path.isEmpty() || !QProcess::startDetached(path, {})) {
-        KMessageBox::error(mParentWidget,
-                           i18n("Could not start the account wizard. "
-                                "Please make sure you have AccountWizard properly installed."),
-                           i18nc("@title:window", "Unable to start account wizard"));
-    }
+    KMail::Util::executeAccountWizard(mParentWidget);
 }
 
 void KMLaunchExternalComponent::slotFilterLogViewer()
