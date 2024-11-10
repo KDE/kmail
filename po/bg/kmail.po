@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-08 00:41+0000\n"
-"PO-Revision-Date: 2024-10-26 19:03+0200\n"
+"PO-Revision-Date: 2024-11-09 20:04+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 24.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1088,7 +1088,7 @@ msgstr "Изтриване"
 #: configuredialog/configureappearancepage.cpp:1182
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
-msgstr "Искате ли да премахнете маркера \"%1\" ?"
+msgstr "Искате ли да премахнете маркера „%1“ ?"
 
 #: configuredialog/configureappearancepage.cpp:1183
 #, kde-format
@@ -2749,9 +2749,9 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
-"<qt>Не беше намерен валиден и надежден сертификат за криптиране за \"%1\"."
-"<br/><br/>Изберете сертификата(ите), който(ито) трябва да се използва(т) за "
-"този получател. Ако няма подходящ сертификат в списъка, можете също така да "
+"<qt>Не беше намерен валиден и надежден сертификат за криптиране за „%1“.<br/"
+"><br/>Изберете сертификата(ите), който(ито) трябва да се използва(т) за този "
+"получател. Ако няма подходящ сертификат в списъка, можете също така да "
 "потърсите външни сертификати, като щракнете върху бутона: Търсене на външни "
 "сертификати.</qt>"
 
@@ -3591,7 +3591,7 @@ msgstr "Дейности"
 #: identity/identitydialog.cpp:848
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
-msgstr "Невалиден псевдоним на имейл \"%1\""
+msgstr "Невалиден псевдоним на имейл „%1“"
 
 #: identity/identitydialog.cpp:856
 #, kde-format
@@ -3670,7 +3670,7 @@ msgstr "Файлът за подпис е невалиден"
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr "Редактиране на самоличност \"%1\""
+msgstr "Редактиране на самоличност „%1“"
 
 #: identity/identitydialog.cpp:1050
 #, kde-format
@@ -3944,7 +3944,7 @@ msgstr "Запазването на контакта е неуспешно"
 #: job/opencomposerjob.cpp:122
 #, kde-format
 msgid "Do you want to attach this folder \"%1\"?"
-msgstr "Искате ли да прикачите тази папка \"%1\"?"
+msgstr "Искате ли да прикачите тази папка „%1“?"
 
 #: job/opencomposerjob.cpp:123
 #, kde-format
@@ -5647,7 +5647,7 @@ msgstr "&Отмяна"
 #: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
-msgstr "&Отмяна: \"%1\""
+msgstr "&Отмяна: „%1“"
 
 #: kmmainwidget.cpp:4319
 #, kde-format
@@ -6045,7 +6045,7 @@ msgstr "Няма непрочетени съобщения във вашите �
 #: kontactplugin/kmail/summarywidget.cpp:214
 #, kde-format
 msgid "Open Folder: \"%1\""
-msgstr "Отваряне на папка: \"%1\""
+msgstr "Отваряне на папка: „%1“"
 
 #: kontactplugin/summary/kcmkontactsummary.cpp:61
 #, kde-format
@@ -6522,7 +6522,7 @@ msgid ""
 msgstr ""
 "При преименуването на вашата папка за търсене възникна проблем. Честа "
 "причина за това е, че вече съществува друга папка за търсене със същото име. "
-"Върната грешка \"%1\"."
+"Върната грешка „%1“."
 
 #: searchdialog/searchwindow.cpp:779
 #, kde-format
