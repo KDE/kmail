@@ -58,5 +58,7 @@ KMAILTESTS_TESTS_EXPORT void addQActionHelpText(QAction *action, const QString &
  * in the trash folder (delete permanently) or any other (move to trash).
  */
 KMAILTESTS_TESTS_EXPORT void setActionTrashOrDelete(QAction *action, bool isInTrashFolder);
+
+void executeAccountWizard(QWidget *parentWidget);
 }
 }

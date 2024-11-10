@@ -13,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include "newmailnotifierinterface.h"
 #include "settings/kmailsettings.h"
 #include "undosend/undosendcombobox.h"
+#include "util.h"
 #include <MailCommon/AccountConfigOrderDialog>
 #include <MailTransport/TransportManagementWidgetNg>
 #include <MessageComposer/MessageComposerSettings>
@@ -213,13 +214,7 @@ void AccountsPageReceivingTab::slotAddCustomAccount()
 
 void AccountsPageReceivingTab::slotAddMailAccount()
 {
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
-    if (path.isEmpty() || !QProcess::startDetached(path, {})) {
-        KMessageBox::error(this,
-                           i18n("Could not start the account wizard. "
-                                "Please make sure you have AccountWizard properly installed."),
-                           i18nc("@title:window", "Unable to start account wizard"));
-    }
+    KMail::Util::executeAccountWizard(this);
 }
 
 void AccountsPageReceivingTab::slotCustomizeAccountOrder()

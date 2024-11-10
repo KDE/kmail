@@ -13,9 +13,11 @@ using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 #include <KLocalizedString>
+#include <KMessageBox>
 #include <KMime/Message>
 
 #include <QAction>
+#include <QProcess>
 #include <QStandardPaths>
 
 using namespace MailCommon;
@@ -150,5 +152,16 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
         action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
         // Use same text as in Text property. Change it in kf5
         action->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
+    }
+}
+
+void KMail::Util::executeAccountWizard(QWidget *parentWidget)
+{
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
+    if (path.isEmpty() || !QProcess::startDetached(path, {})) {
+        KMessageBox::error(parentWidget,
+                           i18n("Could not start the account wizard. "
+                                "Please make sure you have AccountWizard properly installed."),
+                           i18nc("@title:window", "Unable to start account wizard"));
     }
 }
