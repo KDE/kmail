@@ -12,8 +12,8 @@
 #include <Akonadi/AgentManager>
 #include <KLocalizedString>
 #include <KMessageBox>
-
 #include <MailCommon/FilterManager>
+#include <PimCommon/PimUtil>
 
 #include <KDialogJobUiDelegate>
 #include <KIO/ApplicationLauncherJob>
@@ -132,11 +132,7 @@ void KMLaunchExternalComponent::slotRunAddressBook()
 void KMLaunchExternalComponent::slotImport()
 {
     const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
-#if defined(Q_OS_WIN)
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard.exe"));
-#else
-    const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-#endif
+    const QString path = PimCommon::Util::findExecutable(QStringLiteral("akonadiimportwizard"));
     if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the ImportWizard. "

@@ -22,6 +22,7 @@
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
 #include <MailCommon/FolderSelectionDialog>
+#include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
 #include <TemplateParser/CustomTemplatesMenu>
 
@@ -311,11 +312,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
                                                                    KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
                                                                    KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
             if (answer == KMessageBox::ButtonCode::PrimaryAction) {
-#if defined(Q_OS_WIN)
-                const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard.exe"));
-#else
-                const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-#endif
+                const QString path = PimCommon::Util::findExecutable(QStringLiteral("akonadiimportwizard"));
                 if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this,
                                        i18n("Could not start the import wizard. "
@@ -2989,11 +2986,7 @@ void KMMainWidget::setupActions()
         auto action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QStringLiteral("addressbook"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotRunAddressBook);
-#if defined(Q_OS_WIN)
-        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kaddressbook.exe"));
-#else
-        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kaddressbook"));
-#endif
+        const QString exec = PimCommon::Util::findExecutable(QStringLiteral("kaddressbook"));
         if (exec.isEmpty()) {
             action->setEnabled(false);
         }
@@ -3004,12 +2997,7 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("tools_start_certman"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartCertManager);
         // disable action if no certman binary is around
-#if defined(Q_OS_WIN)
-        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra.exe"));
-#else
-        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
-#endif
-
+        const QString exec = PimCommon::Util::findExecutable(QStringLiteral("kleopatra"));
         if (exec.isEmpty()) {
             action->setEnabled(false);
         }
@@ -3019,12 +3007,7 @@ void KMMainWidget::setupActions()
         auto action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages…"), this);
         actionCollection()->addAction(QStringLiteral("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
-#if defined(Q_OS_WIN)
-        const QString exec = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard.exe"));
-#else
-        const QString exec = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
-#endif
-
+        const QString exec = PimCommon::Util::findExecutable(QStringLiteral("akonadiimportwizard"));
         if (exec.isEmpty()) {
             action->setEnabled(false);
         }
@@ -4998,11 +4981,7 @@ void KMMainWidget::slotClearFolderAndSubFolders()
 
 void KMMainWidget::slotClearCacheDone()
 {
-#if defined(Q_OS_WIN)
-    const QString akonadictlPath = QStandardPaths::findExecutable(QStringLiteral("akonadictl.exe"));
-#else
-    const QString akonadictlPath = QStandardPaths::findExecutable(QStringLiteral("akonadictl"));
-#endif
+    const QString akonadictlPath = PimCommon::Util::findExecutable(QStringLiteral("akonadictl"));
     if (akonadictlPath.isEmpty()) {
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
