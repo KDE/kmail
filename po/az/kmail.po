@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-08 00:41+0000\n"
+"POT-Creation-Date: 2024-11-11 00:41+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -578,149 +578,131 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Bərpa etmə parametrləri"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Profillər"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Qəbul edilmə"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Göndərilmə"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP serveri"
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:90
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Gedənlər (ən az bir hesab əlavə edin)"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:101
 #, fuzzy, kde-format
 #| msgid "&Confirm action"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Ə&məli təsdiq edin"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Before sending:"
 msgstr "Göndərmədən öncə:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:105
 #, fuzzy, kde-format
 #| msgid "Check spelling"
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Orfoqrafiya yoxlaması"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "Özü-özünə göndərilməsin"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Poçtu əl ilə yoxladıqda"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "Bütün poçtlar yoxlanıldıqda"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "&Məktubları Gedənlər qovluğunda göndərin:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Now"
 msgstr "İndi göndərin"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "Sonra göndərin"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "İl&kin göndərmə üsulu:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:125
 #, fuzzy, kde-format
 #| msgid "Enable Undo Send"
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Göndərməkdən imtinanı aktiv edin"
 
-#: configuredialog/configureaccountpage.cpp:198
+#: configuredialog/configureaccountpage.cpp:199
 #, fuzzy, kde-format
 #| msgid "Add Mail Account..."
 msgid "Add Mail Account…"
 msgstr "Poçt hesabı əlavə edin..."
 
-#: configuredialog/configureaccountpage.cpp:199
+#: configuredialog/configureaccountpage.cpp:200
 #, fuzzy, kde-format
 #| msgid "Custom Account..."
 msgid "Custom Account…"
 msgstr "Xüsusi hesab..."
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:148
-#, kde-format
-msgid ""
-"Could not start the account wizard. Please make sure you have AccountWizard "
-"properly installed."
-msgstr ""
-"Hesab yaradılması bələdçisi başladıla bilmədi. AccountWizard'ın düzgün "
-"quraşdırıldığını yoxlayın."
-
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:150
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
-msgctxt "@title:window"
-msgid "Unable to start account wizard"
-msgstr "Hesab bələdçisi başladıla bilmədi"
-
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:264
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Poçtun əl ilə yoxlanmasına daxil edin"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:272
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "KMail söndükdən sonra şəbəkədən ayrılsın"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:279
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Açıldıqda poçt yoxlanılsın"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:326
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -4695,27 +4677,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:41
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Poçtun arxivlənməsi təminatçısı qeydə alınmadı."
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Sonra göndərmək təminatçısı qeydə alınmadı."
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:63
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Poçtun birləşdirilməsi təminatçısı qeydə alınmadı."
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:75
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Xatırlatmanın izlənməsi təminatçısı qeydə alınmadı."
 
-#: kmlaunchexternalcomponent.cpp:87
+#: kmlaunchexternalcomponent.cpp:88
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4724,14 +4706,14 @@ msgstr ""
 "Sertifikar idarəçisi başladılmadı, Kleopatra proqramının quraşdırıldığına "
 "əmin olun."
 
-#: kmlaunchexternalcomponent.cpp:89
+#: kmlaunchexternalcomponent.cpp:90
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail xətası"
 
-#: kmlaunchexternalcomponent.cpp:102
+#: kmlaunchexternalcomponent.cpp:103
 #, kde-format
 msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
@@ -4740,14 +4722,14 @@ msgstr ""
 "İdxal bələdçisi başladıla bilmədi. ImportWizard proqramının quraşdırıldığına "
 "əmin olun."
 
-#: kmlaunchexternalcomponent.cpp:104
+#: kmlaunchexternalcomponent.cpp:105
 #, fuzzy, kde-format
 #| msgid "Unable to start import wizard"
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "İdxal bələdçisi başladıla bilmədi"
 
-#: kmlaunchexternalcomponent.cpp:117
+#: kmlaunchexternalcomponent.cpp:118
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4756,14 +4738,14 @@ msgstr ""
 "\"PİM verilənlərinin ixracı\" proqramı başladıla bilmədi. Bu proqramın "
 "quraşdırıldığına əmin olun."
 
-#: kmlaunchexternalcomponent.cpp:119
+#: kmlaunchexternalcomponent.cpp:120
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Data Exporter\" program"
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "\"PİM verilənlərinin ixracı\" proqramı başladıla bilmədi"
 
-#: kmlaunchexternalcomponent.cpp:137
+#: kmlaunchexternalcomponent.cpp:138
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4772,7 +4754,7 @@ msgstr ""
 "ImportWizard başladıla bilmədi. ImportWizard proqramının quraşdırıldığına "
 "əmin olun."
 
-#: kmlaunchexternalcomponent.cpp:139
+#: kmlaunchexternalcomponent.cpp:140
 #, fuzzy, kde-format
 #| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
@@ -5257,7 +5239,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Cavabsız qalan məktublar..."
 
-#: kmmainwidget.cpp:3065 util.cpp:149
+#: kmmainwidget.cpp:3065 util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6033,7 +6015,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Başladılır..."
 
-#: kmreadermainwin.cpp:491 util.cpp:149
+#: kmreadermainwin.cpp:491 util.cpp:151
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Səbətə &köçürün"
@@ -8536,16 +8518,32 @@ msgstr "Plaqin məlumatı"
 msgid "Plugins used in KMail."
 msgstr "KMail-də istifadə olunan plaqinlər."
 
-#: util.cpp:152
+#: util.cpp:154
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Silmək"
 
-#: util.cpp:152
+#: util.cpp:154
 #, kde-format
 msgid "Move to Trash"
 msgstr "Səbətə atın"
+
+#: util.cpp:163
+#, kde-format
+msgid ""
+"Could not start the account wizard. Please make sure you have AccountWizard "
+"properly installed."
+msgstr ""
+"Hesab yaradılması bələdçisi başladıla bilmədi. AccountWizard'ın düzgün "
+"quraşdırıldığını yoxlayın."
+
+#: util.cpp:165
+#, fuzzy, kde-format
+#| msgid "Unable to start account wizard"
+msgctxt "@title:window"
+msgid "Unable to start account wizard"
+msgstr "Hesab bələdçisi başladıla bilmədi"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

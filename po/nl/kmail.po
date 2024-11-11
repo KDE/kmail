@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-08 00:41+0000\n"
+"POT-Creation-Date: 2024-11-11 00:41+0000\n"
 "PO-Revision-Date: 2024-09-10 11:28+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -586,141 +586,124 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "Opties voor ophalen"
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Identiteiten"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Ontvangen"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Verzenden"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP-server"
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:90
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Uitgaande accounts (voeg tenminste één account toe):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Bevestigingsactie"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Before sending:"
 msgstr "Vragen alvorens te verzenden:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:105
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Spelling controleren"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Never Automatically"
 msgstr "Nooit automatisch"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Bij handmatige berichtencontroles"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "Bij alle berichtencontroles"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:114
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Berichte&n in postvak-uit verzenden:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Now"
 msgstr "Nu verzenden"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Send Later"
 msgstr "Later verzenden"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Standaar&d verzendwijze:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:125
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Ongedaan maken activeren"
 
-#: configuredialog/configureaccountpage.cpp:198
+#: configuredialog/configureaccountpage.cpp:199
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "E-mailaccount toevoegen…"
 
-#: configuredialog/configureaccountpage.cpp:199
+#: configuredialog/configureaccountpage.cpp:200
 #, kde-format
 msgid "Custom Account…"
 msgstr "Eigen account…"
 
-#: configuredialog/configureaccountpage.cpp:219
-#: kmlaunchexternalcomponent.cpp:148
-#, kde-format
-msgid ""
-"Could not start the account wizard. Please make sure you have AccountWizard "
-"properly installed."
-msgstr ""
-"De account-assistent kon niet worden gestart. Ga na dat AccountWizard op de "
-"juiste manier is geïnstalleerd."
-
-#: configuredialog/configureaccountpage.cpp:221
-#: kmlaunchexternalcomponent.cpp:150
-#, kde-format
-msgctxt "@title:window"
-msgid "Unable to start account wizard"
-msgstr "Account-assistent kon niet worden gestart"
-
-#: configuredialog/configureaccountpage.cpp:269
+#: configuredialog/configureaccountpage.cpp:264
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Meenemen in handmatige berichtencontrole"
 
-#: configuredialog/configureaccountpage.cpp:277
+#: configuredialog/configureaccountpage.cpp:272
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Offline zetten bij afsluiten van KMail"
 
-#: configuredialog/configureaccountpage.cpp:284
+#: configuredialog/configureaccountpage.cpp:279
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Berichten ophalen bij opstarten"
 
-#: configuredialog/configureaccountpage.cpp:331
+#: configuredialog/configureaccountpage.cpp:326
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -4519,27 +4502,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:41
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Archiveringsagent voor e-mail was niet geregistreerd"
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Agent voor later verzenden is niet geregistreerd."
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:63
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Samenvoegingsagent voor e-mail was niet geregistreerd."
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:75
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Agent voor herinneren aan vervolgactie is niet geregistreerd."
 
-#: kmlaunchexternalcomponent.cpp:87
+#: kmlaunchexternalcomponent.cpp:88
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4548,13 +4531,13 @@ msgstr ""
 "Het certificaatbeheer kon niet worden gestart; ga na dat Kleopatra op de "
 "juiste manier is geïnstalleerd."
 
-#: kmlaunchexternalcomponent.cpp:89
+#: kmlaunchexternalcomponent.cpp:90
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail - foutmelding"
 
-#: kmlaunchexternalcomponent.cpp:102
+#: kmlaunchexternalcomponent.cpp:103
 #, kde-format
 msgid ""
 "Could not start the import wizard. Please make sure you have ImportWizard "
@@ -4563,13 +4546,13 @@ msgstr ""
 "De assistent voor importeren kon niet worden gestart. Ga na dat ImportWizard "
 "op de juiste manier is geïnstalleerd."
 
-#: kmlaunchexternalcomponent.cpp:104
+#: kmlaunchexternalcomponent.cpp:105
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
 msgstr "De assistent voor importeren kon niet worden gestart"
 
-#: kmlaunchexternalcomponent.cpp:117
+#: kmlaunchexternalcomponent.cpp:118
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4578,13 +4561,13 @@ msgstr ""
 "Kon het \"PIM-exportprogramma van gegevens\" niet starten. Controleer uw "
 "installatie."
 
-#: kmlaunchexternalcomponent.cpp:119
+#: kmlaunchexternalcomponent.cpp:120
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Kon \"PIM-exportprogramma van gegevens\" niet starten"
 
-#: kmlaunchexternalcomponent.cpp:137
+#: kmlaunchexternalcomponent.cpp:138
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4593,7 +4576,7 @@ msgstr ""
 "ImportWizard kon niet worden gestart. Ga na dat ImportWizard op de juiste "
 "manier is geïnstalleerd."
 
-#: kmlaunchexternalcomponent.cpp:139
+#: kmlaunchexternalcomponent.cpp:140
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
@@ -5057,7 +5040,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Berichten van herinneren aan vervolgactie…"
 
-#: kmmainwidget.cpp:3065 util.cpp:149
+#: kmmainwidget.cpp:3065 util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5758,7 +5741,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Bezig met starten…"
 
-#: kmreadermainwin.cpp:491 util.cpp:149
+#: kmreadermainwin.cpp:491 util.cpp:151
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Naar prullenbak"
@@ -8220,16 +8203,31 @@ msgstr "Informatie over plug-ins"
 msgid "Plugins used in KMail."
 msgstr "In KMail gebruikte plug-ins."
 
-#: util.cpp:152
+#: util.cpp:154
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Verwijderen"
 
-#: util.cpp:152
+#: util.cpp:154
 #, kde-format
 msgid "Move to Trash"
 msgstr "Naar prullenbak verplaatsen"
+
+#: util.cpp:163
+#, kde-format
+msgid ""
+"Could not start the account wizard. Please make sure you have AccountWizard "
+"properly installed."
+msgstr ""
+"De account-assistent kon niet worden gestart. Ga na dat AccountWizard op de "
+"juiste manier is geïnstalleerd."
+
+#: util.cpp:165
+#, kde-format
+msgctxt "@title:window"
+msgid "Unable to start account wizard"
+msgstr "Account-assistent kon niet worden gestart"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
