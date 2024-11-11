@@ -157,7 +157,11 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
 
 void KMail::Util::executeAccountWizard(QWidget *parentWidget)
 {
+#if defined(Q_OS_WIN)
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard.exe"));
+#else
     const QString path = QStandardPaths::findExecutable(QStringLiteral("accountwizard"));
+#endif
     if (path.isEmpty() || !QProcess::startDetached(path, {})) {
         KMessageBox::error(parentWidget,
                            i18n("Could not start the account wizard. "
