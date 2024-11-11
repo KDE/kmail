@@ -1337,7 +1337,12 @@ void KMComposerWin::setupActions()
     action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QStringLiteral("addressbook"), action);
-    if (QStandardPaths::findExecutable(QStringLiteral("kaddressbook")).isEmpty()) {
+#if defined(Q_OS_WIN)
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("kaddressbook.exe"));
+#else
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("kaddressbook"));
+#endif
+    if (path.isEmpty()) {
         action->setEnabled(false);
     } else {
         connect(action, &QAction::triggered, this, &KMComposerWin::slotAddressBook);
@@ -4226,7 +4231,11 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
     const auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
 
     if (!recipient->key().isNull()) {
+#if defined(Q_OS_WIN)
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra.exe"));
+#else
         const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
+#endif
         if (exec.isEmpty()
             || !QProcess::startDetached(exec,
                                         {QStringLiteral("--query"),
