@@ -311,7 +311,11 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
                                                                    KGuiItem(i18nc("@action:button", "Import"), QStringLiteral("document-import")),
                                                                    KGuiItem(i18nc("@action:button", "Do Not Import"), QStringLiteral("dialog-cancel")));
             if (answer == KMessageBox::ButtonCode::PrimaryAction) {
+#if defined(Q_OS_WIN)
+                const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard.exe"));
+#else
                 const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
+#endif
                 if (path.isEmpty() || !QProcess::startDetached(path, QStringList())) {
                     KMessageBox::error(this,
                                        i18n("Could not start the import wizard. "
@@ -2985,7 +2989,12 @@ void KMMainWidget::setupActions()
         auto action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QStringLiteral("addressbook"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotRunAddressBook);
-        if (QStandardPaths::findExecutable(QStringLiteral("kaddressbook")).isEmpty()) {
+#if defined(Q_OS_WIN)
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kaddressbook.exe"));
+#else
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kaddressbook"));
+#endif
+        if (exec.isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -2995,7 +3004,13 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("tools_start_certman"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartCertManager);
         // disable action if no certman binary is around
-        if (QStandardPaths::findExecutable(QStringLiteral("kleopatra")).isEmpty()) {
+#if defined(Q_OS_WIN)
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra.exe"));
+#else
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("kleopatra"));
+#endif
+
+        if (exec.isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -3004,7 +3019,13 @@ void KMMainWidget::setupActions()
         auto action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages…"), this);
         actionCollection()->addAction(QStringLiteral("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
-        if (QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard")).isEmpty()) {
+#if defined(Q_OS_WIN)
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard.exe"));
+#else
+        const QString exec = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
+#endif
+
+        if (exec.isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -4977,7 +4998,11 @@ void KMMainWidget::slotClearFolderAndSubFolders()
 
 void KMMainWidget::slotClearCacheDone()
 {
+#if defined(Q_OS_WIN)
+    const QString akonadictlPath = QStandardPaths::findExecutable(QStringLiteral("akonadictl.exe"));
+#else
     const QString akonadictlPath = QStandardPaths::findExecutable(QStringLiteral("akonadictl"));
+#endif
     if (akonadictlPath.isEmpty()) {
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
@@ -4988,7 +5013,7 @@ void KMMainWidget::slotClearCacheDone()
                                             KStandardGuiItem::cancel())
             == KMessageBox::ButtonCode::PrimaryAction) {
             auto process = new QProcess(this);
-            process->setProgram(QStandardPaths::findExecutable(QStringLiteral("akonadictl")));
+            process->setProgram(akonadictlPath);
             process->setArguments(QStringList() << QStringLiteral("restart"));
             connect(process, &QProcess::finished, this, [this, process]() {
                 KMessageBox::information(this, i18n("Akonadi restarted."));

@@ -132,7 +132,11 @@ void KMLaunchExternalComponent::slotRunAddressBook()
 void KMLaunchExternalComponent::slotImport()
 {
     const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
+#if defined(Q_OS_WIN)
+    const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard.exe"));
+#else
     const QString path = QStandardPaths::findExecutable(QStringLiteral("akonadiimportwizard"));
+#endif
     if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the ImportWizard. "
