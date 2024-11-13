@@ -190,6 +190,11 @@ ecm_set_disabled_deprecation_versions(QT 6.8.0
 find_package(KF6UserFeedback ${KF_MIN_VERSION} CONFIG)
 set_package_properties(KF6UserFeedback PROPERTIES DESCRIPTION "User Feedback lib" TYPE OPTIONAL PURPOSE "Allow to send Telemetry Information (optional).")
 
+if(TARGET KF6::UserFeedbackWidgets)
+    set(KMAIL_WITH_KUSERFEEDBACK true)
+endif()
+
+
 option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
 
 set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)

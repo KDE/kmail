@@ -6,10 +6,10 @@
  *
  */
 
-#include <kontactinterface/pimuniqueapplication.h>
-
+#include "config-kmail.h"
 #include "kmail_options.h"
 #include "kmkernel.h" //control center
+#include <kontactinterface/pimuniqueapplication.h>
 
 #include "kmail_debug.h"
 #undef Status // stupid X headers
@@ -26,7 +26,7 @@
 #include <QSessionManager>
 #include <QWebEngineUrlScheme>
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
 #include <KUserFeedback/Provider>
 #endif
@@ -166,7 +166,7 @@ int main(int argc, char *argv[])
     cmdArgs->process(args);
     about.processCommandLine(cmdArgs);
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     if (cmdArgs->isSet(QStringLiteral("feedback"))) {
         KMailUserFeedbackProvider userFeedback(nullptr);
         QTextStream(stdout) << userFeedback.describeDataSources() << '\n';

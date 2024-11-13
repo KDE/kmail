@@ -11,10 +11,6 @@ add_custom_target(kmail_xml ALL
     COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
-if(TARGET KF6::UserFeedbackWidgets)
-    add_definitions(-DWITH_KUSERFEEDBACK)
-endif()
-
 add_subdirectory(pics)
 add_subdirectory(icons)
 add_subdirectory(kontactplugin)

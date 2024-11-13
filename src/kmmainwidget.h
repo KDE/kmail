@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "config-kmail.h"
 #include "kmail_export.h"
 #include "kmkernel.h" // for access to config
 #include "kmreaderwin.h" //for inline actions
@@ -25,7 +26,7 @@
 #include <QPointer>
 #include <QTimer>
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 namespace KUserFeedback
 {
 class NotificationPopup;
@@ -663,7 +664,7 @@ private:
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     KUserFeedback::NotificationPopup *mUserFeedBackNotificationPopup = nullptr;
 #endif
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;

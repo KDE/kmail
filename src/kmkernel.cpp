@@ -110,7 +110,7 @@ using KMail::MailServiceImpl;
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"
 #endif
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 #include "userfeedback/kmailuserfeedbackprovider.h"
 #include <KUserFeedback/Provider>
 #endif
@@ -134,7 +134,7 @@ KMKernel::KMKernel(QObject *parent)
     KSieveCore::SieveImapInstanceInterfaceManager::self()->setSieveImapInstanceInterface(new KMailSieveImapInstanceInterface);
     mDebug = !qEnvironmentVariableIsEmpty("KDEPIM_DEBUGGING");
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     mUserFeedbackProvider = new KMailUserFeedbackProvider(this);
 #endif
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->isOnline();
@@ -1915,7 +1915,7 @@ void KMKernel::expunge(Akonadi::Collection::Id col, bool sync)
     Q_UNUSED(sync)
 }
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 KUserFeedback::Provider *KMKernel::userFeedbackProvider() const
 {
     return mUserFeedbackProvider;

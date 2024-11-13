@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "kmail_export.h"
 #include "ui_miscpagemaintab.h"
@@ -77,7 +78,7 @@ private:
     MessageViewer::PrintingSettings *const mPrintingUi;
 };
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 namespace KUserFeedback
 {
 class FeedbackConfigWidget;

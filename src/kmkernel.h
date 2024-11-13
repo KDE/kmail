@@ -88,7 +88,7 @@ class KMFilterDialog;
 class MailCommonSettings;
 }
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 class KMailUserFeedbackProvider;
 namespace KUserFeedback
 {
@@ -494,7 +494,7 @@ public:
 
     void cleanupTemporaryFiles();
     [[nodiscard]] MailCommon::MailCommonSettings *mailCommonSettings() const;
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     KUserFeedback::Provider *userFeedbackProvider() const;
 #endif
 protected:
@@ -626,7 +626,7 @@ private:
     Akonadi::Search::PIM::IndexedItems *mIndexedItems = nullptr;
 #endif
     MailCommon::MailCommonSettings *mMailCommonSettings = nullptr;
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     KMailUserFeedbackProvider *mUserFeedbackProvider = nullptr;
 #endif
     std::shared_ptr<const Kleo::KeyCache> mKeyCache;

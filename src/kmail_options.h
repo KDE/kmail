@@ -5,9 +5,9 @@
  */
 #pragma once
 
+#include "config-kmail.h"
 #include <KLocalizedString>
 #include <QCommandLineParser>
-
 static void kmail_options(QCommandLineParser *parser)
 {
     QList<QCommandLineOption> options;
@@ -36,7 +36,7 @@ static void kmail_options(QCommandLineParser *parser)
             << QCommandLineOption(QStringLiteral("identity"), i18nc("@info:shell", "Set identity name"), QStringLiteral("identity"))
             << QCommandLineOption(QStringLiteral("view"), i18nc("@info:shell", "View the given message file"), QStringLiteral("url"))
             << QCommandLineOption(QStringLiteral("html"), i18nc("@info:shell", "Set body of message as html"), QStringLiteral("text"));
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     parser->addOption(QCommandLineOption(QStringLiteral("feedback"), i18nc("@info:shell", "Lists the available options for user feedback")));
 #endif
 

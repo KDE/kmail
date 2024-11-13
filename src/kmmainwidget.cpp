@@ -182,7 +182,7 @@
 #include "historyswitchfolder/collectionswitchertreeviewmanager.h"
 #include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 #include <KUserFeedback/NotificationPopup>
 #include <KUserFeedback/Provider>
 #endif
@@ -221,7 +221,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
             this,
             qOverload<bool, const QString &>(&KMMainWidget::updateVacationScriptStatus));
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     auto userFeedBackNotificationPopup = new KUserFeedback::NotificationPopup(this);
     userFeedBackNotificationPopup->setFeedbackProvider(kmkernel->userFeedbackProvider());
 #endif

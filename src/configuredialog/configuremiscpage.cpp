@@ -17,7 +17,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <KLocalizedString>
 #include <QHBoxLayout>
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 #include <KUserFeedback/FeedbackConfigWidget>
 #endif
 
@@ -38,7 +38,7 @@ MiscPage::MiscPage(QObject *parent, const KPluginMetaData &data)
 
     auto printingTab = new MiscPagePrintingTab();
     addTab(printingTab, i18n("Printing"));
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
     auto userFeedBackTab = new KuserFeedBackPageTab();
     addTab(userFeedBackTab, i18n("User Feedback"));
 #endif
@@ -148,7 +148,7 @@ void MiscPagePrintingTab::save()
     mPrintingUi->save();
 }
 
-#ifdef WITH_KUSERFEEDBACK
+#if KMAIL_WITH_KUSERFEEDBACK
 KuserFeedBackPageTab::KuserFeedBackPageTab(QWidget *parent)
     : ConfigModuleTab(parent)
     , mUserFeedbackWidget(new KUserFeedback::FeedbackConfigWidget(this))
