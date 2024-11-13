@@ -270,7 +270,6 @@ void SearchWindow::createSearchModel()
     mUi.mLbxMatches->header()->setSortIndicator(2, Qt::DescendingOrder);
     mUi.mLbxMatches->header()->setStretchLastSection(false);
     mUi.mLbxMatches->header()->restoreState(mHeaderState);
-    // mUi.mLbxMatches->header()->setResizeMode( 3, QHeaderView::Stretch );
     if (!mAkonadiStandardAction) {
         mAkonadiStandardAction = new Akonadi::StandardMailActionManager(actionCollection(), this);
     }
@@ -524,7 +523,7 @@ void SearchWindow::doSearch()
 
 void SearchWindow::searchDone(KJob *job)
 {
-    qDebug() << " void SearchWindow::searchDone(KJob *job)";
+    // qDebug() << " void SearchWindow::searchDone(KJob *job)";
     Q_ASSERT(job == mSearchJob);
     mSearchJob = nullptr;
     QMetaObject::invokeMethod(this, &SearchWindow::enableGUI, Qt::QueuedConnection);
