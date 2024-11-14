@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-12 00:41+0000\n"
+"POT-Creation-Date: 2024-11-14 00:41+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -6208,75 +6208,75 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "A"
 
-#: searchdialog/searchwindow.cpp:294
+#: searchdialog/searchwindow.cpp:293
 #, fuzzy, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "Correspondentie exact"
 msgstr[1] "Null corespondenties"
 
-#: searchdialog/searchwindow.cpp:364 searchdialog/searchwindow.cpp:406
+#: searchdialog/searchwindow.cpp:363 searchdialog/searchwindow.cpp:405
 #, fuzzy, kde-format
 msgid "Last Search"
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindow.cpp:432
+#: searchdialog/searchwindow.cpp:431
 #, fuzzy, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Liste de fólderes:"
 
-#: searchdialog/searchwindow.cpp:446
+#: searchdialog/searchwindow.cpp:445
 #, fuzzy, kde-format
 msgid "You forgot to select collections."
 msgstr "Selecter"
 
-#: searchdialog/searchwindow.cpp:464
+#: searchdialog/searchwindow.cpp:463
 #, fuzzy, kde-format
 msgid "You forgot to define condition."
 msgstr "Definir un nov término"
 
-#: searchdialog/searchwindow.cpp:469
+#: searchdialog/searchwindow.cpp:468
 #, fuzzy, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Fólderes"
 
-#: searchdialog/searchwindow.cpp:475
+#: searchdialog/searchwindow.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:479
+#: searchdialog/searchwindow.cpp:478
 #, fuzzy, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Files con li sequent rutes ja existe. Esque vu vole substituer les?"
 
-#: searchdialog/searchwindow.cpp:522
+#: searchdialog/searchwindow.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:535
+#: searchdialog/searchwindow.cpp:534
 #, fuzzy, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindow.cpp:538
+#: searchdialog/searchwindow.cpp:537
 #, fuzzy, kde-format
 msgid "Search failed."
 msgstr "Ne successat remover un element: %1"
 
-#: searchdialog/searchwindow.cpp:579
+#: searchdialog/searchwindow.cpp:578
 #, fuzzy, kde-format
 msgid "Search complete."
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindow.cpp:617
+#: searchdialog/searchwindow.cpp:616
 #, fuzzy, kde-format
 msgid "Search stopped."
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindow.cpp:675
+#: searchdialog/searchwindow.cpp:674
 #, fuzzy, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6284,21 +6284,21 @@ msgid ""
 "\"%1\"."
 msgstr "mistresssilvara@hotmail.com"
 
-#: searchdialog/searchwindow.cpp:779
+#: searchdialog/searchwindow.cpp:778
 #, fuzzy, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Ciffrat missages"
 
-#: searchdialog/searchwindow.cpp:782
+#: searchdialog/searchwindow.cpp:781
 #, fuzzy, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Ciffrat missages"
 
-#: searchdialog/searchwindow.cpp:911
+#: searchdialog/searchwindow.cpp:910
 #, fuzzy, kde-format
 msgid "Checking index status…"
 msgstr "Índex"
