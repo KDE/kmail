@@ -278,6 +278,8 @@ static const KLazyLocalizedString kmailNewFeatures[] = {
     kli18n("Added Grammar Plugin Support"),
     kli18n("Added etesync resource support"),
     kli18n("Added Microsoft Exchange Web Services resource support"),
+    kli18n("Add Windows Support"),
+    kli18n("Add Custom Syntax usable in the search text field"),
 };
 static const int numKMailNewFeatures = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 
