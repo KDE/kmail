@@ -16,17 +16,13 @@ ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debu
 
 
 set(libsendlateragent_SRCS
-    sendlaterconfiguredialog.cpp
     sendlaterconfigurewidget.cpp
     sendlatermanager.cpp
     sendlaterjob.cpp
-    sendlaterremovemessagejob.cpp
     sendlaterutil.cpp
-    sendlaterconfiguredialog.h
     sendlaterconfigurewidget.h
     sendlatermanager.h
     sendlaterjob.h
-    sendlaterremovemessagejob.h
     sendlaterutil.h
     ${sendlater_common_SRCS}
 )
@@ -81,7 +77,24 @@ install(TARGETS akonadi_sendlater_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES sendlateragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
-#kcoreaddons_add_plugin(sendlateragentconfig
-#    SOURCES ${sendlateragentconfig_SRCS}
-#    INSTALL_NAMESPACE pim6/akonadi/config
-#)
+
+########## Configuration ##############
+
+set(sendlateragentconfig_SRCS
+    sendlaterinfoconfigwidget.cpp
+    sendlaterinfoconfigwidget.h
+    sendlaterremovemessagejob.cpp
+    sendlaterremovemessagejob.h
+)
+
+kcoreaddons_add_plugin(sendlateragentconfig
+    SOURCES ${sendlateragentconfig_SRCS}
+    INSTALL_NAMESPACE pim6/akonadi/config
+)
+target_link_libraries(sendlateragentconfig
+    sendlateragent
+    KPim6::AkonadiCore
+    KF6::XmlGui
+    KF6::I18n
+)
+

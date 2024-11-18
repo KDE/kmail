@@ -11,5 +11,4 @@ macro(add_sendlater_agent_test _source)
 endmacro()
 
 add_sendlater_agent_test(sendlaterutiltest.cpp)
-add_sendlater_agent_test(sendlaterconfiguredialogtest.cpp)
 add_sendlater_agent_test(sendlaterconfigtest.cpp)

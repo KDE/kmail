@@ -171,10 +171,10 @@ void SendLaterWidget::createOrUpdateItem(MessageComposer::SendLaterInfo *info, S
     mWidget->treeWidget->setShowDefaultText(false);
 }
 
-void SendLaterWidget::save()
+bool SendLaterWidget::save()
 {
     if (!mChanged) {
-        return;
+        return false;
     }
     KSharedConfig::Ptr config = SendLaterUtil::defaultConfig();
 
@@ -194,6 +194,7 @@ void SendLaterWidget::save()
     }
     config->sync();
     config->reparseConfiguration();
+    return true;
 }
 
 void SendLaterWidget::slotDeleteItem()

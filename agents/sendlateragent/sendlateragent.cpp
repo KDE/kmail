@@ -8,9 +8,7 @@
 #include "sendlateragent_debug.h"
 #include "sendlateragentadaptor.h"
 #include "sendlateragentsettings.h"
-#include "sendlaterconfiguredialog.h"
 #include "sendlatermanager.h"
-#include "sendlaterremovemessagejob.h"
 #include "sendlaterutil.h"
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentManager>
@@ -38,6 +36,9 @@ SendLaterAgent::SendLaterAgent(const QString &id)
     , mManager(new SendLaterManager(this))
 {
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &SendLaterAgent::needUpdateConfigDialogBox);
+    connect(this, &SendLaterAgent::configurationDialogAccepted, mManager, [this]() {
+        mManager->load();
+    });
     new SendLaterAgentAdaptor(this);
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
 
@@ -113,27 +114,6 @@ void SendLaterAgent::setEnableAgent(bool enabled)
 bool SendLaterAgent::enabledAgent() const
 {
     return SendLaterAgentSettings::enabled();
-}
-
-void SendLaterAgent::configure(WId windowId)
-{
-    QPointer<SendLaterConfigureDialog> dialog = new SendLaterConfigureDialog();
-    if (windowId) {
-        dialog->setAttribute(Qt::WA_NativeWindow, true);
-        KWindowSystem::setMainWindow(dialog->windowHandle(), windowId);
-    }
-    connect(this, &SendLaterAgent::needUpdateConfigDialogBox, dialog.data(), &SendLaterConfigureDialog::slotNeedToReloadConfig);
-    connect(dialog.data(), &SendLaterConfigureDialog::sendNow, this, &SendLaterAgent::slotSendNow);
-    if (dialog->exec()) {
-        mManager->load();
-        const QList<Akonadi::Item::Id> listMessage = dialog->messagesToRemove();
-        if (!listMessage.isEmpty()) {
-            // Will delete in specific job when done.
-            auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage, this);
-            sendlaterremovejob->start();
-        }
-    }
-    delete dialog;
 }
 
 void SendLaterAgent::removeItem(qint64 item)

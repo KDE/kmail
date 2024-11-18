@@ -45,7 +45,8 @@ public:
         MessageId,
     };
 
-    void save();
+    void load();
+    [[nodiscard]] bool save();
     void saveTreeWidgetHeader(KConfigGroup &group);
     void restoreTreeWidgetHeader(const QByteArray &group);
     void needToReload();
@@ -61,7 +62,6 @@ private:
     void slotCustomContextMenuRequested(QPoint);
     void slotSendNow();
     void createOrUpdateItem(MessageComposer::SendLaterInfo *info, SendLaterItem *item = nullptr);
-    void load();
     QList<Akonadi::Item::Id> mListMessagesToRemove;
     bool mChanged = false;
     Ui::SendLaterConfigureWidget *mWidget = nullptr;

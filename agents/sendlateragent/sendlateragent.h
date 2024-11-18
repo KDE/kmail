@@ -29,7 +29,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void reload();
-    void configure(WId windowId) override;
     void removeItem(qint64 item);
     void
     addItem(qint64 timestamp, bool recurrence, int recurrenceValue, int recurrenceUnit, Akonadi::Item::Id itemId, const QString &subject, const QString &to);
