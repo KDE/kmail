@@ -57,9 +57,9 @@
 </copyright>
 
 <date
->2013-11-30</date>
+>2019-09-21</date>
 <releaseinfo
->&kde; 4.12</releaseinfo>
+>5.13 (Aplicaciones 19.12)</releaseinfo>
 
 </articleinfo>
 
@@ -122,13 +122,17 @@
 <para
 >Al iniciar una sesión de &kde;, el agente comprueba los mensajes planificados y envía todos los mensajes vencidos desde el último cierre de sesión si es necesario. </para>
 <para
->Para cambiar las opciones para correos que usted haya planificado para más tarde use <menuchoice
+>Para cambiar las opciones para los mensajes que haya programado para enviar más tarde, use <menuchoice
 ><guimenu
 >Preferencias</guimenu
 > <guimenuitem
->Configurar agente de enviar más tarde...</guimenuitem
+>Configurar &kmail;...</guimenuitem
 ></menuchoice
-> en &kmail;. </para>
+> y seleccione la página <guilabel
+>Complementos</guilabel
+> en &kmail; y pulse el botón de configuración del elemento <guilabel
+>Agente para enviar más tarde</guilabel
+>. </para>
 
 <screenshot>
 <screeninfo
@@ -164,16 +168,15 @@
 <para
 >&i18n-sendlateragent;</para>
 <para
->Derechos de autor del programa 2013 &Laurent.Montel; &Laurent.Montel.mail; </para>
+>Copyright del programa 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
 <para
->Derechos de autor de la documentación &copy; 2013 &Laurent.Montel; &Laurent.Montel.mail; </para>
+>Copyright de la documentación &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
 
 <para
 >Traducido por Javier Viñal <email
 >fjvinal@gmail.com</email
 ></para
-> 
-&underFDL; &underGPL; </sect2>
+> &underFDL; &underGPL; </sect2>
 
 </sect1>
 

@@ -3,27 +3,11 @@
 <chapterinfo>
 <authorgroup>
 <author
-><firstname
->Daniel</firstname
-> <surname
->Naber</surname
-> <affiliation
-><address
-> <email
->daniel.naber@t-online.de</email>
-</address
-></affiliation>
-</author>
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
 <author
-><firstname
->Scarlett</firstname
-> <surname
->Clark</surname
-> <affiliation
-><address
->&Scarlett.Clark.mail; </address
-></affiliation>
-</author>
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
 <othercredit role="translator"
 > <firstname
 >Juan Manuel</firstname
@@ -69,9 +53,9 @@
 > 
 </authorgroup>
 <date
->2013-12-12</date>
+>2020-08-16</date>
 <releaseinfo
->&kde; 4.12</releaseinfo>
+>5.14.2 (Aplicaciones 20.04.2)</releaseinfo>
 </chapterinfo>
 
 
@@ -105,72 +89,68 @@
 >.</para>
 <sect1 id="features">
 <title
->Algunas características de &kmail;</title>
+>Algunas funciones de &kmail;</title>
 <para
->Algunos enlaces a las grandes funcionalidades disponibles en &kmail;</para>
+>Esta es una guía breve de algunas de las excelentes funcionalidades disponibles en &kmail;</para>
 <itemizedlist>
 <listitem>
 <para
->No tiene que usar su ratón para usar &kmail;. Cualquier cosa puede hacerse usando <link linkend="keyboard-shortcuts"
->accesos rápidos de teclado</link
+>No tiene que usar el ratón cuando trabaje con &kmail;. Puede hacer todo con <link linkend="keyboard-shortcuts"
+>Atajos de teclado</link
 >.</para>
 </listitem>
 <listitem>
 <para
->Aunque &kmail; puede ser considerado fiable, debería mantener copias de respaldo de sus mensajes, &ie; usando una de las opciones de exportación/archivado listadas en <link linkend="backups"
->Opciones de copias de respaldo</link
-> para crear copias de respaldo de sus preferencias y correo a un lugar seguro.</para>
+>Aunque &kmail; es bastante fiable, debería mantener copias de seguridad de sus mensajes. Por ejemplo, puede usar alguna de las opciones de exportación/archivado que se listan en <link linkend="backups"
+>Opciones de copias de seguridad</link
+> para crear copias de respaldo de sus preferencias y correo en un lugar seguro.</para>
 </listitem>
 <listitem>
 <para
->&kmail; es capaz de importar correo en diversos formatos desde su anterior aplicación de correo, usando las opciones en <link linkend="import-restore"
+>&kmail; simplifica la importación de correo de distintas aplicaciones.Estas opciones se describen en <link linkend="import-restore"
 >Restaurar e importar en &kmail;</link
 >.</para>
 </listitem>
 <listitem>
 <para
->Organice sus carpetas con facilidad usando las opciones de <link linkend="folders"
+>Puede separar los mensajes en diferentes categorías usando las completas opciones de <link linkend="folders"
 >Carpetas</link
-> extensibles de &kmail;. Algunas de las características incluyen manejo por carpeta: listas de correo, acl (solo &imap;) y archivado.</para>
+> de &kmail;. Algunas de sus funciones incluyen el tratamiento especial de carpetas específicas: listas de correo, ACL (solo para &IMAP;) y archivado.</para
+> <!-- todo: start a glossary -->
 </listitem>
 <listitem>
 <para
->Complete su configuración de carpeta con <link linkend="filters"
+>Puede complementar la configuración de carpetas con <link linkend="filters"
 >filtros</link
-> altamente configurables.</para>
+> altamente personalizables.</para>
 </listitem>
 <listitem>
 <para
->Por omisión, &kmail; detectará el correo <link linkend="configure-security-email-scams"
->suplantado</link
->. Usted puede también disparar CORREO BASURA y virus con asistentes incorporados para trabajar con programas externos para explorar el correo tal como viene. Consulte <link linkend="the-anti-spam-wizard"
->Asistente anti correo basura</link
+>Por omisión, &kmail; detectará el correo de <link linkend="configure-security-email-scams"
+>suplantación</link
+>. También puede luchar contra el correo basura y los virus creando filtros que funcionan con programas externos para explorar el correo en cuanto llega. Consulte <link linkend="the-anti-spam-wizard"
+>Anti correo basura</link
 > y <link linkend="the-anti-virus-wizard"
->Asistente antivirus</link
+>Antivirus</link
 > para más detalles.</para>
 </listitem>
 <listitem>
 <para
->Configure fácilmente preferencias por cuenta usando varias <link linkend="configure-identity"
+>Es fácil trabajar con varias cuentas de correo usando distintas <link linkend="configure-identity"
 >identidades</link
 >.</para>
 </listitem>
 </itemizedlist>
 <para
->¡Esperamos qué disfrute de &kmail;!</para>
+>¡Esperamos que disfrute de &kmail;!</para>
 <sect2 id="getting-help">
 <title
 >Primeros pasos</title>
-<note
-><para
->Si usted experimenta cualquier problema en la migración a &kmail; 2, por favor, lea el capítulo <link linkend="troubleshooting"
->Resolución de problemas</link
->. </para
-></note>
+ 
 <para
->La página inicial de &kmail; se puede visitar en <ulink url="http://userbase.kde.org/KMail"
->http://userbase.kde.org/KMail</ulink
->. Allí podrá encontrar enlaces útiles, &eg; a las listas de correo de desarrolladores y usuarios. Haga el favor de informar sobre errores de &kmail; usando <menuchoice
+>Puede visitar la página web de &kmail; en <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail"
+>https://userbase.kde.org/KMail</ulink
+>. Allí encontrará enlaces útiles (por ejemplo, a las listas de correo de desarrolladores y a las páginas wiki de la comunidad). Informe de los errores de &kmail; usando <menuchoice
 ><guimenu
 >Ayuda</guimenu
 ><guimenuitem
