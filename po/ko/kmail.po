@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2024-08-21 00:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -369,7 +369,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "다양한 IMAP 버그 수정"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3824,12 +3824,12 @@ msgstr "주소록에 추가"
 msgid "Contact created successfully"
 msgstr "연락처 생성 완료됨"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "연락처를 저장할 수 없음: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5769,27 +5769,37 @@ msgstr "etesync 리소스 지원 추가"
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Microsoft Exchange 웹 서비스 리소스 지원 추가"
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+#| msgid "Added maildir support"
+msgid "Add Windows Support"
+msgstr "maildir 지원 추가"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE 메일 클라이언트"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "폴더 내용 가져오는 중"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Please wait . . ."
 msgstr "기다려 주십시오..."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
 msgid "Offline"
 msgstr "오프라인"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5798,7 +5808,7 @@ msgstr ""
 "KMail이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5807,7 +5817,7 @@ msgstr ""
 "계정이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goResourceOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "연락처를 성공적으로 수정함"

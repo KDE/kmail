@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2024-09-11 21:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -372,7 +372,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "أصلح العديد من علَّل IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "بريدك"
@@ -3853,12 +3853,12 @@ msgstr "أضف إلى دفتر العناوين"
 msgid "Contact created successfully"
 msgstr "أُنشئ المتراسل بنجاح"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "تعذّر تخزين المتراسل: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5842,27 +5842,37 @@ msgstr "إضافة دعم موارد etesync"
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "إضافة دعم موارد Microsoft Exchange Web Services "
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+#| msgid "Added maildir support"
+msgid "Add Windows Support"
+msgstr "أضاف دعم maildir"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "عميل بريد لكِيدِي"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "يجلب محتوى المجلّد"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Please wait . . ."
 msgstr "فضلًا انتظر . . ."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
 msgid "Offline"
 msgstr "غير متّصل"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5871,7 +5881,7 @@ msgstr ""
 "«بريدك» في وضع عدم الاتّصال حاليًّا. انقر <a href=\"kmail:goOnline\">هنا</a> "
 "لنتّصل بالإنترنت . . .</p>"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5880,7 +5890,7 @@ msgstr ""
 "الحساب في وضع عدم الاتّصال حاليًّا. انقر <a href=\"kmail:goResourceOnline"
 "\">هنا</a> لنتّصل بالإنترنت . . .</p>"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "عُدّل المتراسل بنجاح."

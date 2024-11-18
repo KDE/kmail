@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -400,7 +400,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4091,12 +4091,12 @@ msgstr "បន្ថែម​ទៅ​កាន់​សៀវភៅ​អាស
 msgid "Contact created successfully"
 msgstr "បាន​លុប​សារ​ដោយ​ជោគជ័យ ។"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -6198,31 +6198,41 @@ msgstr ""
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr ""
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+#| msgid "GnuPG support"
+msgid "Add Windows Support"
+msgstr "ការគាំទ្រ GnuPG"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "កម្មវិធី​អ៊ីមែល​របស់ KDE"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, fuzzy, kde-format
 #| msgid "Mailinglist Folder Properties"
 msgid "Retrieving Folder Contents"
 msgstr "លក្ខណៈ​សម្បត្តិ​នៃ​ថត​បញ្ជី​សំបុត្រ​រួម"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "សូមរង់ចាំ"
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, fuzzy, kde-format
 #| msgid "offline"
 msgid "Offline"
 msgstr "ក្រៅ​បណ្ដាញ"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6236,7 +6246,7 @@ msgstr ""
 "បណ្ដាញ ។ សូម​ចុច <a href=\"kmail:goOnline\">នៅទីនេះ</a> ដើម្បី​នៅលើបណ្ដាញ . . .</"
 "p>&nbsp;"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in "
@@ -6250,7 +6260,7 @@ msgstr ""
 "ចុច <a href=\"kmail:goResourceOnline\">នៅ​ទី​នេះ</a> ដើម្បី​ទៅ​លើ​បណ្ដាញ . . .</"
 "p>&nbsp;"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully."
 msgid "Contact modified successfully"

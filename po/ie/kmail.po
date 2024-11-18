@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -429,7 +429,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3763,12 +3763,12 @@ msgstr "Adjunter"
 msgid "Contact created successfully"
 msgstr "Li fólder <filename>%1</filename> ne posset esser creat."
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Li intern visor ne posse previder ti file."
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5683,43 +5683,52 @@ msgstr "Complet supporte por archives de formates zip e 7z"
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Complet supporte por archives de formates zip e 7z"
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+msgid "Add Windows Support"
+msgstr "Complet supporte por archives de formates zip e 7z"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 msgid "The KDE Mail Client"
 msgstr "Cliente de postage de KDE"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, fuzzy, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Liste de fólderes:"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, fuzzy, kde-format
 msgid "Please wait . . ."
 msgstr ""
 "Ne successat trovar li componente KPart de Ark; ples controlar vor "
 "installation."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
 msgid "Offline"
 msgstr ""
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, fuzzy, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr "KMail"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, fuzzy, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr "Extraer ad ci"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, fuzzy, kde-format
 msgid "Contact modified successfully"
 msgstr "Modificat"

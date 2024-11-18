@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2024-09-11 22:57+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -375,7 +375,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "IMAP akats asko konpontzea"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3890,12 +3890,12 @@ msgstr "Gehitu helbide-liburuan"
 msgid "Contact created successfully"
 msgstr "Kontaktua ondo sortu da"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktua ezin da biltegiratu: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5858,27 +5858,37 @@ msgstr "«etesync» baliabidearen euskarria gehitu zaio"
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Microsoft Exchange Web Services baliabidearen euskarria gehitu zaio"
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+#| msgid "Added maildir support"
+msgid "Add Windows Support"
+msgstr "«maildir» euskarria gehitu"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDEren posta bezeroa"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Karpetaren edukia eskuratzen"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Itxaron mesedez . . ."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
 msgid "Offline"
 msgstr "Lineaz kanpo"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5887,7 +5897,7 @@ msgstr ""
 "KMail une honetan lerroz kanpoko moduan dago. Egin klik <a href=\"kmail:"
 "goOnline\">hemen</a> lerroan jartzeko...</p>"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5896,7 +5906,7 @@ msgstr ""
 "Kontua une honetan lerroz kanpoko moduan dago. Egin klik <a href=\"kmail:"
 "goResourceOnline\">hemen</a> lerroan jartzeko . . .</p>"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontaktua ongi aldatu dira"

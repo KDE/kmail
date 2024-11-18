@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2024-09-15 10:43+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -369,7 +369,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Fixed many IMAP bugs"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3876,12 +3876,12 @@ msgstr "Add to Address Book"
 msgid "Contact created successfully"
 msgstr "Contact created successfully"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Contact cannot be stored: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5839,27 +5839,37 @@ msgstr "Added etesync resource support"
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Added Microsoft Exchange Web Services resource support"
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+#| msgid "Added maildir support"
+msgid "Add Windows Support"
+msgstr "Added maildir support"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "The KDE Mail Client"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Retrieving Folder Contents"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Please wait . . ."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5868,7 +5878,7 @@ msgstr ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5877,7 +5887,7 @@ msgstr ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Contact modified successfully"

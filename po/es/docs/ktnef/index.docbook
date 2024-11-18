@@ -66,7 +66,7 @@
 
 <abstract
 ><para
->El visor de archivos TNEF es una aplicación para adjuntos de correo <ulink url="http://en.wikipedia.org/wiki/TNEF"
+>El visor de archivos TNEF es una aplicación para adjuntos de correo <ulink url="https://en.wikipedia.org/wiki/TNEF"
 >TNEF</ulink
 >.</para
 ></abstract>
@@ -168,7 +168,6 @@
 >Traducido por Javier Viñal <email
 >fjvinal@gmail.com</email
 ></para
-> 
-&underFDL; &underGPL; </sect1>
+> &underFDL; &underGPL; </sect1>
 
 </article>

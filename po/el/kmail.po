@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-14 00:41+0000\n"
+"POT-Creation-Date: 2024-11-18 00:41+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -423,7 +423,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:306 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4033,12 +4033,12 @@ msgstr "Προσθήκη στο βιβλίο διευθύνσεων"
 msgid "Contact created successfully"
 msgstr "Η επαφή δημιουργήθηκε επιτυχώς"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Αδυναμία αποθήκευσης της επαφής: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:904
+#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -6075,29 +6075,39 @@ msgstr ""
 msgid "Added Microsoft Exchange Web Services resource support"
 msgstr ""
 
-#: kmreaderwin.cpp:309
+#: kmreaderwin.cpp:281
+#, fuzzy
+#| msgid "GnuPG support"
+msgid "Add Windows Support"
+msgstr "Υποστήριξη GnuPG"
+
+#: kmreaderwin.cpp:282
+msgid "Add Custom Syntax usable in the search text field"
+msgstr ""
+
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "Πελάτης ηλ. αλληλογραφίας του KDE"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, fuzzy, kde-format
 #| msgid "Retrieving folder properties"
 msgid "Retrieving Folder Contents"
 msgstr "Ανάκτηση ιδιοτήτων φακέλου"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:320
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Παρακαλώ περιμένετε."
 
-#: kmreaderwin.cpp:324 kmreaderwin.cpp:333
+#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
 msgid "Offline"
 msgstr "Χωρίς σύνδεση"
 
-#: kmreaderwin.cpp:326
+#: kmreaderwin.cpp:328
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6111,7 +6121,7 @@ msgstr ""
 "λειτουργία χωρίς σύνδεση. Κάντε κλικ <a href=\"kmail:goOnline\">εδώ</a> για "
 "να συνδεθείτε . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:335
+#: kmreaderwin.cpp:337
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in "
@@ -6125,7 +6135,7 @@ msgstr ""
 "τώρα σε λειτουργία χωρίς σύνδεση. Κάντε κλικ <a href=\"kmail:goResourceOnline"
 "\">εδώ</a> για να συνδεθείτε . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:914
+#: kmreaderwin.cpp:916
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Η επαφή τροποποιήθηκε επιτυχώς"

@@ -55,9 +55,9 @@
 >&FDLNotice;</legalnotice>
 
 <date
->2013-08-30</date>
+>2019-09-21</date>
 <releaseinfo
->&kde; 4.11</releaseinfo>
+>5.13 (Aplicaciones 19.12)</releaseinfo>
 </articleinfo>
 
 <sect1 id="introduction">
@@ -75,7 +75,7 @@
 <para
 >Use <menuchoice
 ><guimenu
->Herramientas</guimenu
+>Preferencias</guimenu
 ><guimenuitem
 >Configurar archivado automático...</guimenuitem
 > </menuchoice
@@ -123,7 +123,7 @@
 >, la ruta a la carpeta seleccionada en la lista de carpetas de &kmail;, la fecha en formato <userinput
 >año-mes-día</userinput
 > y la extensión de archivo seleccionada, &eg; <filename
->Archivo_Carpeta local_bandeja de entrada_2013-09-03.tar.bz2</filename
+>Archivo_Carpeta local_bandeja de entrada_2019-09-03.tar.bz2</filename
 >. </para
 ></listitem>
 <listitem
@@ -178,6 +178,18 @@
 <para
 >Usted puede usar la casilla de verificación de la izquierda de cada entrada de la lista para activar o desactivar el archivado de este trabajo. </para>
 <para
+>Se puede acceder a este diálogo de configuración en cualquier momento posterior usando <menuchoice
+><guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Configurar &kmail;...</guimenuitem
+></menuchoice
+> y seleccionando la página <guilabel
+>Complementos</guilabel
+> en la ventana principal de &kmail; y pulsando el botón de configuración del elemento <guilabel
+>Agente de archivado de correo</guilabel
+>. </para>
+<para
 >Usando el menú contextual lanzado con un &RMB; al pulsar sobre un trabajo de archivo, usted puede abrir la carpeta que contiene los archivos o iniciar el trabajo de archivo inmediatamente. Esto sobrescribirá un archivo existente creado antes en el mismo día sin notificación. </para>
 
 </sect2>
@@ -190,16 +202,15 @@
 <para
 >&i18n-archivemailagent;</para>
 <para
->Derechos de autor del programa 2013 Laurent Montel montel@kde.org </para>
+>Copyright del programa 2013-2019 Laurent Montel montel@kde.org </para>
 <para
->Derechos de autor de la documentación &copy; 2013 Laurent Montel montel@kde.org </para>
+>Copyright de la documentación &copy; 2013-2019 Laurent Montel montel@kde.org </para>
 
 <para
 >Traducido por Javier Viñal <email
 >fjvinal@gmail.com</email
 ></para
-> 
-&underFDL; &underGPL; </sect2>
+> &underFDL; &underGPL; </sect2>
 
 </sect1>
 
