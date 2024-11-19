@@ -10,11 +10,13 @@
 #include "util.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
+#include <KDialogJobUiDelegate>
+#include <KIO/ApplicationLauncherJob>
+#include <KIO/CommandLauncherJob>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <MailCommon/FilterManager>
 #include <PimCommon/PimUtil>
-
 #include <QPointer>
 
 #include <QProcess>
@@ -75,6 +77,19 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.kleopatra"));
+    if (service) {
+        auto job = new KIO::ApplicationLauncherJob(service);
+        job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+        job->start();
+    } else {
+        KMessageBox::error(mParentWidget,
+                           i18n("Could not start certificate manager; "
+                                "please make sure you have Kleopatra properly installed."),
+                           i18nc("@title:window", "KMail Error"));
+    }
+#else
     const QString path = PimCommon::Util::findExecutable(QStringLiteral("kleopatra"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
@@ -82,10 +97,24 @@ void KMLaunchExternalComponent::slotStartCertManager()
                                 "please make sure you have Kleopatra properly installed."),
                            i18nc("@title:window", "KMail Error"));
     }
+#endif
 }
 
 void KMLaunchExternalComponent::slotImportWizard()
 {
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.akonadiimportwizard"));
+    if (service) {
+        auto job = new KIO::ApplicationLauncherJob(service);
+        job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+        job->start();
+    } else {
+        KMessageBox::error(mParentWidget,
+                           i18n("Could not start \"ImportWizard\" program. "
+                                "Please check your installation."),
+                           i18nc("@title:window", "Unable to start \"ImportWizard\" program"));
+    }
+#else
     const QString path = PimCommon::Util::findExecutable(QStringLiteral("akonadiimportwizard"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
@@ -93,10 +122,25 @@ void KMLaunchExternalComponent::slotImportWizard()
                                 "Please check your installation."),
                            i18nc("@title:window", "Unable to start \"ImportWizard\" program"));
     }
+#endif
 }
 
 void KMLaunchExternalComponent::slotExportData()
 {
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+
+    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.pimdataexporter"));
+    if (service) {
+        auto job = new KIO::ApplicationLauncherJob(service);
+        job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+        job->start();
+    } else {
+        KMessageBox::error(mParentWidget,
+                           i18n("Could not start \"PIM Data Exporter\" program. "
+                                "Please check your installation."),
+                           i18nc("@title:window", "Unable to start \"PIM Data Exporter\" program"));
+    }
+#else
     const QString path = PimCommon::Util::findExecutable(QStringLiteral("pimdataexporter"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
@@ -104,10 +148,17 @@ void KMLaunchExternalComponent::slotExportData()
                                 "Please check your installation."),
                            i18nc("@title:window", "Unable to start \"PIM Data Exporter\" program"));
     }
+#endif
 }
 
 void KMLaunchExternalComponent::slotRunAddressBook()
 {
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
+    auto job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
+    job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
+    job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
+    job->start();
+#else
     const QString path = PimCommon::Util::findExecutable(QStringLiteral("kaddressbook"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
@@ -115,6 +166,7 @@ void KMLaunchExternalComponent::slotRunAddressBook()
                                 "Please check your installation."),
                            i18nc("@title:window", "Unable to start \"KAddressbook\" program"));
     }
+#endif
 }
 
 void KMLaunchExternalComponent::slotImport()

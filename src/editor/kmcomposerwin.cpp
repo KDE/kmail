@@ -2227,10 +2227,20 @@ void KMComposerWin::addAttach(KMime::Content *msgPart)
 
 void KMComposerWin::slotAddressBook()
 {
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
     auto job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
     job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
     job->start();
+#else
+    const QString path = PimCommon::Util::findExecutable(QStringLiteral("kaddressbook"));
+    if (path.isEmpty() || !QProcess::startDetached(path)) {
+        KMessageBox::error(this,
+                           i18n("Could not start \"KAddressbook\" program. "
+                                "Please check your installation."),
+                           i18nc("@title:window", "Unable to start \"KAddressbook\" program"));
+    }
+#endif
 }
 
 void KMComposerWin::slotInsertFile()
