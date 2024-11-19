@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2021-05-15 17:02+0100\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian\n"
@@ -17,52 +17,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
 "X-Generator: Lokalize 19.12.3\n"
-
-#: sendlaterconfiguredialog.cpp:33
-#, kde-format
-msgctxt "@title:window"
-msgid "Configure"
-msgstr "Configurează"
-
-#: sendlaterconfiguredialog.cpp:51
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Agent de trimitere mai târziu"
-
-#: sendlaterconfiguredialog.cpp:53
-#, kde-format
-msgid "Send emails later agent."
-msgstr "Agent de trimitere mai târziu a emailurilor."
-
-#: sendlaterconfiguredialog.cpp:55
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-2021 Laurent Montel"
-msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "Drept de autor (C) 2013-2021 Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgid "Maintainer"
-msgstr "Responsabil"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Arthur Țițeică"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "arthur.titeica@gmail.com"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -119,7 +73,7 @@ msgstr "Da"
 msgid "No"
 msgstr "Nu"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -127,14 +81,14 @@ msgstr[0] "Doriți să ștergeți elementul ales?"
 msgstr[1] "Doriți să ștergeți elementele alese?"
 msgstr[2] "Doriți să ștergeți elementele alese?"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:210
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Șterge"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:218
 #, fuzzy, kde-format
 #| msgid "Do you want to remove the messages as well?"
 msgid "Do you want to delete the message as well?"
@@ -143,19 +97,59 @@ msgstr[0] "Doriți și eliminarea mesajelor de asemenea?"
 msgstr[1] "Doriți și eliminarea mesajelor de asemenea?"
 msgstr[2] "Doriți și eliminarea mesajelor de asemenea?"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:219
 #, fuzzy, kde-format
 #| msgid "Remove messages"
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Elimină mesajele"
 
-#: sendlaterconfigurewidget.cpp:220
+#: sendlaterconfigurewidget.cpp:221
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Șterge"
+
+#: sendlaterinfoconfigwidget.cpp:33
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Agent de trimitere mai târziu"
+
+#: sendlaterinfoconfigwidget.cpp:35
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Agent de trimitere mai târziu a emailurilor."
+
+#: sendlaterinfoconfigwidget.cpp:37
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013-2021 Laurent Montel"
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Drept de autor (C) 2013-2021 Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, fuzzy, kde-format
+#| msgid "Laurent Montel"
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgid "Maintainer"
+msgstr "Responsabil"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Arthur Țițeică"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "arthur.titeica@gmail.com"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
@@ -227,6 +221,10 @@ msgstr "Modifică..."
 #, kde-format
 msgid "Delete"
 msgstr "Șterge"
+
+#~ msgctxt "@title:window"
+#~ msgid "Configure"
+#~ msgstr "Configurează"
 
 #~ msgid "Remove items"
 #~ msgstr "Elimină elementele"

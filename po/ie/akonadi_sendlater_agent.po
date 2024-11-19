@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2024-08-01 21:41+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -16,50 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.07.70\n"
-
-#: sendlaterconfiguredialog.cpp:33
-#, kde-format
-msgctxt "@title:window"
-msgid "Configure"
-msgstr ""
-
-#: sendlaterconfiguredialog.cpp:51
-#, fuzzy, kde-format
-msgid "Send Later Agent"
-msgstr "Reveni plu tard."
-
-#: sendlaterconfiguredialog.cpp:53
-#, fuzzy, kde-format
-msgid "Send emails later agent."
-msgstr "mistresssilvara@hotmail.com"
-
-#: sendlaterconfiguredialog.cpp:55
-#, fuzzy, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "(c) 1997-2019, Li developatores de Ark"
-
-#: sendlaterconfiguredialog.cpp:57
-#, fuzzy, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgid "Maintainer"
-msgstr "Mantenetor"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "OIS"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "mistresssilvara@hotmail.com"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -113,7 +69,7 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:209
 #, fuzzy, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -122,30 +78,68 @@ msgstr[0] ""
 "previder it quam un simplic textu?"
 msgstr[1] "Remover files"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:210
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Remover un file"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:218
 #, fuzzy, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Remover files"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:219
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Remover un file"
 
-#: sendlaterconfigurewidget.cpp:220
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Ne remover"
+
+#: sendlaterinfoconfigwidget.cpp:33
+#, fuzzy, kde-format
+msgid "Send Later Agent"
+msgstr "Reveni plu tard."
+
+#: sendlaterinfoconfigwidget.cpp:35
+#, fuzzy, kde-format
+msgid "Send emails later agent."
+msgstr "mistresssilvara@hotmail.com"
+
+#: sendlaterinfoconfigwidget.cpp:37
+#, fuzzy, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "(c) 1997-2019, Li developatores de Ark"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, fuzzy, kde-format
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgid "Maintainer"
+msgstr "Mantenetor"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "OIS"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "mistresssilvara@hotmail.com"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, fuzzy, kde-format

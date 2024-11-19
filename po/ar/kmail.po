@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2024-09-11 21:15+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -4423,54 +4423,58 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "لم يسجّل عميل أرشفة البريد."
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "لم يسجل وكيل الإرسال اللاحق."
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "لم يُسجِّل وكيل دمج البريد."
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "لم يُسجِّل وكيل تذكير بالمتابعة."
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr "تعذّر بدء مدير الشّهادات، فضلًا تحقّق من أنّ 'Kleopatra' مثبّت كما ينبغي."
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "خطأ في «بريدك»"
 
-#: kmlaunchexternalcomponent.cpp:103
-#, kde-format
+#: kmlaunchexternalcomponent.cpp:92
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Data Exporter\" program. Please check your "
+#| "installation."
 msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
+"Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"تعذّر بدء مرشد الاستيراد. فضلًا تحقّق من أنّ  مرشد الاستيراد مثبّت كما ينبغي."
+"تعذّر بدء برنامج \"مصدّر بيانات إدارة البيانات الشخصية\". فضلًا تحقّق من تثبيتك."
 
-#: kmlaunchexternalcomponent.cpp:105
-#, kde-format
+#: kmlaunchexternalcomponent.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
-msgstr "تعذّر بدء مرشّد الاستيراد"
+msgid "Unable to start \"ImportWizard\" program"
+msgstr "تعذّر بدء مرشد الاستيراد"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4478,13 +4482,31 @@ msgid ""
 msgstr ""
 "تعذّر بدء برنامج \"مصدّر بيانات إدارة البيانات الشخصية\". فضلًا تحقّق من تثبيتك."
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "تعذّر بدء برنامج ”مصدّر بيانات إدارة البيانات الشخصية“"
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Data Exporter\" program. Please check your "
+#| "installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr ""
+"تعذّر بدء برنامج \"مصدّر بيانات إدارة البيانات الشخصية\". فضلًا تحقّق من تثبيتك."
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Unable to start \"PIM Data Exporter\" program"
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "تعذّر بدء برنامج ”مصدّر بيانات إدارة البيانات الشخصية“"
+
+#: kmlaunchexternalcomponent.cpp:126
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4492,7 +4514,7 @@ msgid ""
 msgstr ""
 "تعذّر بدء مرشد الاستيراد. فضلًا تحقّق من أنّ مرشد الاستيراد مثبّت كما ينبغي."
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
@@ -8170,6 +8192,16 @@ msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "التكبير: %1٪"
+
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr ""
+#~ "تعذّر بدء مرشد الاستيراد. فضلًا تحقّق من أنّ  مرشد الاستيراد مثبّت كما ينبغي."
+
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "تعذّر بدء مرشّد الاستيراد"
 
 #~ msgid "Form"
 #~ msgstr "استمارة"

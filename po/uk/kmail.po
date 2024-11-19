@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
-"PO-Revision-Date: 2024-09-10 09:58+0300\n"
-"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"PO-Revision-Date: 2024-11-18 08:55+0200\n"
+"Last-Translator: Fracture dept <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -4514,27 +4514,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Агент архівування пошти не зареєстровано."
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Агент відкладеного надсилання не зареєстровано."
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Агент об'єднання пошти не зареєстровано."
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Агент стеження за нагадуваннями не зареєстровано."
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4543,28 +4543,32 @@ msgstr ""
 "Не вдається запустити менеджер сертифікатів. Будь ласка, перевірте чи "
 "належним чином встановлено Kleopatra."
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Помилка Kmail"
 
-#: kmlaunchexternalcomponent.cpp:103
-#, kde-format
+#: kmlaunchexternalcomponent.cpp:92
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Data Exporter\" program. Please check your "
+#| "installation."
 msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
+"Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Не вдалося запустити майстер імпортування. Будь ласка, перевірте, чи "
-"належним чином встановлено ImportWizard."
+"Не вдалося запустити інструмент експортування даних PIM для керування "
+"особистими даними. Будь ласка, перевірте, чи встановлено потрібні компоненти."
 
-#: kmlaunchexternalcomponent.cpp:105
-#, kde-format
+#: kmlaunchexternalcomponent.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
+msgid "Unable to start \"ImportWizard\" program"
 msgstr "Не вдалося запустити майстер імпортування"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4573,13 +4577,32 @@ msgstr ""
 "Не вдалося запустити інструмент експортування даних PIM для керування "
 "особистими даними. Будь ласка, перевірте, чи встановлено потрібні компоненти."
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Не вдалося запустити інструмент експортування даних"
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Data Exporter\" program. Please check your "
+#| "installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr ""
+"Не вдалося запустити інструмент експортування даних PIM для керування "
+"особистими даними. Будь ласка, перевірте, чи встановлено потрібні компоненти."
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Unable to start \"PIM Data Exporter\" program"
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "Не вдалося запустити інструмент експортування даних"
+
+#: kmlaunchexternalcomponent.cpp:126
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4588,7 +4611,7 @@ msgstr ""
 "Не вдалося запустити майстер імпортування. Будь ласка, перевірте, чи "
 "належним чином встановлено ImportWizard."
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
@@ -5947,14 +5970,13 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Додано підтримку ресурсу вебслужб Microsoft Exchange"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Додав підтримку maildir"
+msgstr "Додано підтримку Windows"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
+"Додано нетиповий синтаксис, яким можна скористатися у полі пошуку тексту"
 
 #: kmreaderwin.cpp:311
 #, kde-format
@@ -8317,6 +8339,17 @@ msgstr[3] "На сервері задіяно відповідь щодо від
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Масштаб: %1%"
+
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr ""
+#~ "Не вдалося запустити майстер імпортування. Будь ласка, перевірте, чи "
+#~ "належним чином встановлено ImportWizard."
+
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "Не вдалося запустити майстер імпортування"
 
 #~ msgid "Form"
 #~ msgstr "Форма"

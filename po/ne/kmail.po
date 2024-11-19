@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -4859,27 +4859,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager; please check your installation."
 msgid ""
@@ -4887,29 +4887,28 @@ msgid ""
 "properly installed."
 msgstr "प्रमाणपत्र प्रबन्धक सुरुआत गर्न सकेन; कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "केडीई मेल त्रुटि"
 
-#: kmlaunchexternalcomponent.cpp:103
+#: kmlaunchexternalcomponent.cpp:92
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
+"Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: kmlaunchexternalcomponent.cpp:105
+#: kmlaunchexternalcomponent.cpp:94
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
+msgid "Unable to start \"ImportWizard\" program"
 msgstr "खाता सिर्जना गर्न असमर्थ"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4917,14 +4916,28 @@ msgid ""
 "installation."
 msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, fuzzy, kde-format
 #| msgid "Unable to start external editor."
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "बाह्य सम्पादक सुरु गर्न असमर्थ ।"
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid "Could not start certificate manager. Please check your installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgid "Unable to start external editor."
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "बाह्य सम्पादक सुरु गर्न असमर्थ ।"
+
+#: kmlaunchexternalcomponent.cpp:126
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4932,7 +4945,7 @@ msgid ""
 "properly installed."
 msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"
@@ -8902,6 +8915,20 @@ msgstr[1] "\"अफिस बाहिरको\" जवाफ सम्पा�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#, fuzzy
+#~| msgid ""
+#~| "Could not start certificate manager. Please check your installation."
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
+
+#, fuzzy
+#~| msgid "Unable to create account"
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "खाता सिर्जना गर्न असमर्थ"
 
 #, fuzzy
 #~| msgid "&From"

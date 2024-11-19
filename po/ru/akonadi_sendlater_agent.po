@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2022-10-01 14:59+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -23,51 +23,6 @@ msgstr ""
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
-
-#: sendlaterconfiguredialog.cpp:33
-#, kde-format
-msgctxt "@title:window"
-msgid "Configure"
-msgstr "Настройка агента отложенной доставки"
-
-#: sendlaterconfiguredialog.cpp:51
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Агент «Отправить позже»"
-
-#: sendlaterconfiguredialog.cpp:53
-#, kde-format
-msgid "Send emails later agent."
-msgstr "Агент отложенной отправки"
-
-#: sendlaterconfiguredialog.cpp:55
-#, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "© Laurent Montel, 2013–%1"
-
-#: sendlaterconfiguredialog.cpp:57
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgid "Maintainer"
-msgstr "Сопровождение"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Александр Лахин,Олеся Герасименко"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "exclusion@gmail.com,gammaray@basealt.ru"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -124,7 +79,7 @@ msgstr "Да"
 msgid "No"
 msgstr "Нет"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -133,13 +88,13 @@ msgstr[1] "Удалить выбранные записи?"
 msgstr[2] "Удалить выбранные записи?"
 msgstr[3] "Удалить выбранную запись?"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Удаление записей"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -148,17 +103,56 @@ msgstr[1] "Также удалить сообщения?"
 msgstr[2] "Также удалить сообщения?"
 msgstr[3] "Также удалить сообщение?"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Удаление сообщений"
 
-#: sendlaterconfigurewidget.cpp:220
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Не удалять"
+
+#: sendlaterinfoconfigwidget.cpp:33
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Агент «Отправить позже»"
+
+#: sendlaterinfoconfigwidget.cpp:35
+#, kde-format
+msgid "Send emails later agent."
+msgstr "Агент отложенной отправки"
+
+#: sendlaterinfoconfigwidget.cpp:37
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "© Laurent Montel, 2013–%1"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, fuzzy, kde-format
+#| msgid "Laurent Montel"
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgid "Maintainer"
+msgstr "Сопровождение"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Александр Лахин,Олеся Герасименко"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "exclusion@gmail.com,gammaray@basealt.ru"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
@@ -230,6 +224,10 @@ msgstr "Изменить..."
 #, kde-format
 msgid "Delete"
 msgstr "Удалить"
+
+#~ msgctxt "@title:window"
+#~ msgid "Configure"
+#~ msgstr "Настройка агента отложенной доставки"
 
 #~ msgid "Remove items"
 #~ msgstr "Удаление записей"

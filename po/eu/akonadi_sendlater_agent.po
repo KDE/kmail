@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2024-08-03 00:12+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -19,50 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.05.2\n"
-
-#: sendlaterconfiguredialog.cpp:33
-#, kde-format
-msgctxt "@title:window"
-msgid "Configure"
-msgstr "Konfiguratu"
-
-#: sendlaterconfiguredialog.cpp:51
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Beranduago bidaltzeko agentea"
-
-#: sendlaterconfiguredialog.cpp:53
-#, kde-format
-msgid "Send emails later agent."
-msgstr "E-postak beranduago bidaltzeko agentea"
-
-#: sendlaterconfiguredialog.cpp:55
-#, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "Copyright (C) 2013-%1 Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgid "Maintainer"
-msgstr "Arduraduna"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Iñigo Salvador Azurmendi"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "xalba@ni.eus"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -116,37 +72,75 @@ msgstr "Bai"
 msgid "No"
 msgstr "Ez"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "Hautatutako elementua ezabatu nahi duzu?"
 msgstr[1] "Hautatutako elementuak ezabatu nahi dituzu?"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Ezabatu elementuak"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "Mezua ere ezabatu nahi duzu?"
 msgstr[1] "Mezuak ere ezabatu nahi dituzu?"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Ezabatu mezuak"
 
-#: sendlaterconfigurewidget.cpp:220
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Ez ezabatu"
+
+#: sendlaterinfoconfigwidget.cpp:33
+#, kde-format
+msgid "Send Later Agent"
+msgstr "Beranduago bidaltzeko agentea"
+
+#: sendlaterinfoconfigwidget.cpp:35
+#, kde-format
+msgid "Send emails later agent."
+msgstr "E-postak beranduago bidaltzeko agentea"
+
+#: sendlaterinfoconfigwidget.cpp:37
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Copyright (C) 2013-%1 Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgid "Maintainer"
+msgstr "Arduraduna"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñigo Salvador Azurmendi"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xalba@ni.eus"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
@@ -216,6 +210,10 @@ msgstr "Aldatu..."
 #, kde-format
 msgid "Delete"
 msgstr "Ezabatu"
+
+#~ msgctxt "@title:window"
+#~ msgid "Configure"
+#~ msgstr "Konfiguratu"
 
 #~ msgid "Remove items"
 #~ msgstr "Kendu elementuak"

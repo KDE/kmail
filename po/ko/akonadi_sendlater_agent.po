@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-02 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2024-08-19 23:25+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -16,50 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 23.08.5\n"
-
-#: sendlaterconfiguredialog.cpp:33
-#, kde-format
-msgctxt "@title:window"
-msgid "Configure"
-msgstr "설정"
-
-#: sendlaterconfiguredialog.cpp:51
-#, kde-format
-msgid "Send Later Agent"
-msgstr "나중에 보내기 에이전트"
-
-#: sendlaterconfiguredialog.cpp:53
-#, kde-format
-msgid "Send emails later agent."
-msgstr "이메일 나중에 보내기 에이전트."
-
-#: sendlaterconfiguredialog.cpp:55
-#, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "Copyright (C) 2013-%1 Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterconfiguredialog.cpp:57
-#, kde-format
-msgid "Maintainer"
-msgstr "관리자"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "박신조"
-
-#: sendlaterconfiguredialog.cpp:60
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "kde@peremen.name"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -113,35 +69,73 @@ msgstr "예"
 msgid "No"
 msgstr "아니요"
 
-#: sendlaterconfigurewidget.cpp:208
+#: sendlaterconfigurewidget.cpp:209
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "선택한 항목을 삭제하시겠습니까?"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "항목 삭제"
 
-#: sendlaterconfigurewidget.cpp:217
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "메시지도 같이 삭제하시겠습니까?"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "메시지 삭제"
 
-#: sendlaterconfigurewidget.cpp:220
+#: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "삭제 안 함"
+
+#: sendlaterinfoconfigwidget.cpp:33
+#, kde-format
+msgid "Send Later Agent"
+msgstr "나중에 보내기 에이전트"
+
+#: sendlaterinfoconfigwidget.cpp:35
+#, kde-format
+msgid "Send emails later agent."
+msgstr "이메일 나중에 보내기 에이전트."
+
+#: sendlaterinfoconfigwidget.cpp:37
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "Copyright (C) 2013-%1 Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr "Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgid "Maintainer"
+msgstr "관리자"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "박신조"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde@peremen.name"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
@@ -211,6 +205,10 @@ msgstr "수정…"
 #, kde-format
 msgid "Delete"
 msgstr "삭제"
+
+#~ msgctxt "@title:window"
+#~ msgid "Configure"
+#~ msgstr "설정"
 
 #~ msgid "Remove items"
 #~ msgstr "항목 삭제"

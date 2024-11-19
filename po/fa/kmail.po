@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -4847,27 +4847,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager; please check your installation."
 msgid ""
@@ -4875,29 +4875,28 @@ msgid ""
 "properly installed."
 msgstr "مدیر گواهی‌نامه را نتوانست آغاز کند، لطفاً، نصب خود را بررسی کنید."
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "خطای KMail"
 
-#: kmlaunchexternalcomponent.cpp:103
+#: kmlaunchexternalcomponent.cpp:92
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
+"Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "مدیر گواهی‌نامه را نمی‌توان آغاز کرد. لطفاً، نصب خود را بررسی کنید."
 
-#: kmlaunchexternalcomponent.cpp:105
+#: kmlaunchexternalcomponent.cpp:94
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
+msgid "Unable to start \"ImportWizard\" program"
 msgstr "قادر به ایجاد حساب‌ نیست"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4905,14 +4904,28 @@ msgid ""
 "installation."
 msgstr "مدیر گواهی‌نامه را نمی‌توان آغاز کرد. لطفاً، نصب خود را بررسی کنید."
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, fuzzy, kde-format
 #| msgid "Unable to start external editor."
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "قادر به آغاز کردن ویرایشگر خارجی نیست."
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid "Could not start certificate manager. Please check your installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr "مدیر گواهی‌نامه را نمی‌توان آغاز کرد. لطفاً، نصب خود را بررسی کنید."
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgid "Unable to start external editor."
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "قادر به آغاز کردن ویرایشگر خارجی نیست."
+
+#: kmlaunchexternalcomponent.cpp:126
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -4920,7 +4933,7 @@ msgid ""
 "properly installed."
 msgstr "مدیر گواهی‌نامه را نمی‌توان آغاز کرد. لطفاً، نصب خود را بررسی کنید."
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"
@@ -8921,6 +8934,20 @@ msgstr[1] ""
 #, fuzzy, kde-format
 msgid "Zoom: %1%"
 msgstr "بزرگ‌نمایی"
+
+#, fuzzy
+#~| msgid ""
+#~| "Could not start certificate manager. Please check your installation."
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr "مدیر گواهی‌نامه را نمی‌توان آغاز کرد. لطفاً، نصب خود را بررسی کنید."
+
+#, fuzzy
+#~| msgid "Unable to create account"
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "قادر به ایجاد حساب‌ نیست"
 
 #, fuzzy
 #~| msgid "&From"

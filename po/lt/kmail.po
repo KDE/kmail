@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -4670,29 +4670,29 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Pašto archyvavimo agentas nebuvo užregistruotas."
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Siuntimo vėliau agentas nebuvo užregistruotas."
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Mail Merge Agent was not registered."
 msgstr "Pašto archyvavimo agentas nebuvo užregistruotas."
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, fuzzy, kde-format
 #| msgid "Send Later Agent was not registered."
 msgid "Followup Reminder Agent was not registered."
 msgstr "Siuntimo vėliau agentas nebuvo užregistruotas."
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager; please check your installation."
 msgid ""
@@ -4700,30 +4700,31 @@ msgid ""
 "properly installed."
 msgstr "Negalima paleisti liudijimų tvarkyklės; Patikrinkite ar tai įdiegta."
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail klaida"
 
-#: kmlaunchexternalcomponent.cpp:103
+#: kmlaunchexternalcomponent.cpp:92
 #, fuzzy, kde-format
-#| msgid "Could not start the import wizard. Please check your installation."
+#| msgid ""
+#| "Could not start \"PIM Setting Exporter\" program. Please check your "
+#| "installation."
 msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
+"Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
 "Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
 
-#: kmlaunchexternalcomponent.cpp:105
+#: kmlaunchexternalcomponent.cpp:94
 #, fuzzy, kde-format
 #| msgid "Unable to start import wizard"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
+msgid "Unable to start \"ImportWizard\" program"
 msgstr "Nepavyksta paleisti importavimo vediklio"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4734,14 +4735,31 @@ msgid ""
 msgstr ""
 "Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Nepavyksta paleisti importavimo vediklio"
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Setting Exporter\" program. Please check your "
+#| "installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr ""
+"Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgid "Unable to start \"PIM Setting Exporter\" program"
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "Nepavyksta paleisti importavimo vediklio"
+
+#: kmlaunchexternalcomponent.cpp:126
 #, fuzzy, kde-format
 #| msgid "Could not start the import wizard. Please check your installation."
 msgid ""
@@ -4750,7 +4768,7 @@ msgid ""
 msgstr ""
 "Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, fuzzy, kde-format
 #| msgid "Unable to start import wizard"
 msgctxt "@title:window"
@@ -8637,6 +8655,21 @@ msgstr[3] "Suaktyvinti „Nesu darbo vietoje“ atsakymai serveriuose"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Mastelis"
+
+#, fuzzy
+#~| msgid "Could not start the import wizard. Please check your installation."
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr ""
+#~ "Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai "
+#~ "įdiegėte."
+
+#, fuzzy
+#~| msgid "Unable to start import wizard"
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "Nepavyksta paleisti importavimo vediklio"
 
 #, fuzzy
 #~| msgctxt "@title:group"

@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2024-02-11 11:40+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -4754,27 +4754,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Агент архивирования почты не был зарегистрирован."
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Агент отложенной отправки не был зарегистрирован."
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Агент объединения почты не был зарегистрирован."
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Агент напоминаний для поддержания разговора не был зарегистрирован."
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4783,28 +4783,32 @@ msgstr ""
 "Не удалось запустить программу управления сертификатами. Проверьте "
 "правильность установки программы Kleopatra."
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Ошибка KMail"
 
-#: kmlaunchexternalcomponent.cpp:103
-#, kde-format
+#: kmlaunchexternalcomponent.cpp:92
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Data Exporter\" program. Please check your "
+#| "installation."
 msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
+"Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Не удалось запустить мастер импорта. Проверьте правильность установки "
-"программы ImportWizard."
+"Запустить программу «Экспорт данных PIM» не удалось. Проверьте правильность "
+"установки."
 
-#: kmlaunchexternalcomponent.cpp:105
-#, kde-format
+#: kmlaunchexternalcomponent.cpp:94
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
+msgid "Unable to start \"ImportWizard\" program"
 msgstr "Не удалось запустить мастер импорта"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4813,13 +4817,32 @@ msgstr ""
 "Запустить программу «Экспорт данных PIM» не удалось. Проверьте правильность "
 "установки."
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Ошибка запуска программы «Экспорт данных PIM»"
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Data Exporter\" program. Please check your "
+#| "installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr ""
+"Запустить программу «Экспорт данных PIM» не удалось. Проверьте правильность "
+"установки."
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Unable to start \"PIM Data Exporter\" program"
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "Ошибка запуска программы «Экспорт данных PIM»"
+
+#: kmlaunchexternalcomponent.cpp:126
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4828,7 +4851,7 @@ msgstr ""
 "Не удалось запустить ImportWizard. Проверьте правильность установки этой "
 "программы."
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
@@ -8690,6 +8713,17 @@ msgstr[3] "На сервере включены ответы об отсутст
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Масштаб: %1%"
+
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr ""
+#~ "Не удалось запустить мастер импорта. Проверьте правильность установки "
+#~ "программы ImportWizard."
+
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "Не удалось запустить мастер импорта"
 
 #~ msgid "Form"
 #~ msgstr "Форма"

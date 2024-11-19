@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-18 00:41+0000\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -4890,28 +4890,28 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:41
+#: kmlaunchexternalcomponent.cpp:38
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Agent za arhiviranje pošte nije registrovan."
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:49
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Agent za kasnije slanje nije registrovan."
 
-#: kmlaunchexternalcomponent.cpp:63
+#: kmlaunchexternalcomponent.cpp:60
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Mail Merge Agent was not registered."
 msgstr "Agent za arhiviranje pošte nije registrovan."
 
-#: kmlaunchexternalcomponent.cpp:75
+#: kmlaunchexternalcomponent.cpp:72
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Agent podsetnika na odgovor nije registrovan."
 
-#: kmlaunchexternalcomponent.cpp:88
+#: kmlaunchexternalcomponent.cpp:81
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4920,30 +4920,30 @@ msgstr ""
 "Ne mogu da pokrenem menadžer sertifikata. Proverite da li je Kleopatra "
 "pravilno instalirana."
 
-#: kmlaunchexternalcomponent.cpp:90
+#: kmlaunchexternalcomponent.cpp:83
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Greška K‑pošte"
 
-#: kmlaunchexternalcomponent.cpp:103
-#, kde-format
-msgid ""
-"Could not start the import wizard. Please make sure you have ImportWizard "
-"properly installed."
-msgstr ""
-"Ne mogu da pokrenem čarobnjak za uvoz. Proverite da li je čarobnjak za uvoz "
-"pravilno instaliran."
-
-#: kmlaunchexternalcomponent.cpp:105
+#: kmlaunchexternalcomponent.cpp:92
 #, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#| msgid ""
+#| "Could not start \"PIM Setting Exporter\" program. Please check your "
+#| "installation."
+msgid ""
+"Could not start \"ImportWizard\" program. Please check your installation."
+msgstr "Ne mogu da pokrenem Izvoznik PIM postavki. Proverite instalaciju."
+
+#: kmlaunchexternalcomponent.cpp:94
+#, fuzzy, kde-format
+#| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
-msgid "Unable to start import wizard"
+msgid "Unable to start \"ImportWizard\" program"
 msgstr "Ne mogu da pokrenem čarobnjak za uvoz"
 
-#: kmlaunchexternalcomponent.cpp:118
+#: kmlaunchexternalcomponent.cpp:103
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4953,14 +4953,30 @@ msgid ""
 "installation."
 msgstr "Ne mogu da pokrenem Izvoznik PIM postavki. Proverite instalaciju."
 
-#: kmlaunchexternalcomponent.cpp:120
+#: kmlaunchexternalcomponent.cpp:105
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Ne mogu da pokrenem Izvoznik PIM postavki"
 
-#: kmlaunchexternalcomponent.cpp:138
+#: kmlaunchexternalcomponent.cpp:114
+#, fuzzy, kde-format
+#| msgid ""
+#| "Could not start \"PIM Setting Exporter\" program. Please check your "
+#| "installation."
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr "Ne mogu da pokrenem Izvoznik PIM postavki. Proverite instalaciju."
+
+#: kmlaunchexternalcomponent.cpp:116
+#, fuzzy, kde-format
+#| msgid "Unable to start \"PIM Setting Exporter\" program"
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr "Ne mogu da pokrenem Izvoznik PIM postavki"
+
+#: kmlaunchexternalcomponent.cpp:126
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4969,7 +4985,7 @@ msgstr ""
 "Ne mogu da pokrenem čarobnjak za uvoz. Proverite da li je čarobnjak za uvoz "
 "pravilno instaliran."
 
-#: kmlaunchexternalcomponent.cpp:140
+#: kmlaunchexternalcomponent.cpp:128
 #, fuzzy, kde-format
 #| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
@@ -8928,6 +8944,19 @@ msgstr[3] "Odgovor van‑kancelarije je aktivan na serveru"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Uveličanje"
+
+#~ msgid ""
+#~ "Could not start the import wizard. Please make sure you have ImportWizard "
+#~ "properly installed."
+#~ msgstr ""
+#~ "Ne mogu da pokrenem čarobnjak za uvoz. Proverite da li je čarobnjak za "
+#~ "uvoz pravilno instaliran."
+
+#, fuzzy
+#~| msgid "Unable to start import wizard"
+#~ msgctxt "@title:window"
+#~ msgid "Unable to start import wizard"
+#~ msgstr "Ne mogu da pokrenem čarobnjak za uvoz"
 
 #, fuzzy
 #~| msgctxt "@title:group"
