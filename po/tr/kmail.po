@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-12 02:35+0000\n"
-"PO-Revision-Date: 2024-09-23 15:20+0300\n"
+"PO-Revision-Date: 2024-11-19 21:45+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 25.03.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -209,7 +209,7 @@ msgstr "Gülümseme → Emoji işlemesi"
 
 #: aboutdata.cpp:94
 msgid "Improve 'Mark Message as' popup menu"
-msgstr "‘İletiyi Farklı İmle’ açılır menüsünü iyileştir"
+msgstr "“İletiyi Farklı İmle” açılır menüsünü iyileştir"
 
 #: aboutdata.cpp:97
 msgid "Bugzilla maintenance"
@@ -367,7 +367,7 @@ msgstr "İyileştirilmiş alıcılar düzenleyicisi yerleşimi"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
-msgstr "‘İletişim tamamlandı’ durum iletisi için zaman damgası"
+msgstr "“İletişim tamamlandı” durum iletisi için zaman damgası"
 
 #: aboutdata.cpp:186
 msgid "Multiple encryption keys per address"
@@ -1262,8 +1262,8 @@ msgid ""
 "sending a message to too many people.  Note, however, that it does not take "
 "account of distribution lists or mailing lists."
 msgstr ""
-"İleti için yalnızca bu kadar alıcı belirtilmesine izin ver. Bu; ‘Tümünü "
-"Yanıtla’, alıcıları elle belirtme veya ‘Seç…’ seçicisi kullanımında "
+"İleti için yalnızca bu kadar alıcı belirtilmesine izin ver. Bu; “Tümünü "
+"Yanıtla”, alıcıları elle belirtme veya “Seç…” seçicisi kullanımında "
 "geçerlidir. Bu sınırı belirlemek bir iletiyi yanlışlıkla çok sayıda kişiye "
 "göndermenizi engeller. Ancak bunun dağıtım veya posta listelerini hesaba "
 "katmadığını unutmayın."
@@ -1469,7 +1469,7 @@ msgstr "&Değer:"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
-"‘Content-Type’, izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
+"“Content-Type”, izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
 
 #: configuredialog/configurecomposerpage.cpp:912
 #, kde-format
@@ -3239,7 +3239,7 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Kendinizi şifrelemek ve oluşturucuda ‘Genel Anahtarımı İliştir’ "
+"<qt><p>Kendinizi şifrelemek ve oluşturucuda “Genel Anahtarımı İliştir” "
 "özelliğini kullanmak için OpenPGP anahtarını seçin. Ayrıca GnuPG "
 "anahtarlarını da kullanabilirsiniz.</p><p>Bu alanı boş bırakabilirsiniz; "
 "ancak K Posta giden iletilerinizi şifreleyemeyecektir. Bu durumdan normal "
@@ -3281,7 +3281,7 @@ msgid ""
 "functions will not be affected.</p></qt>"
 msgstr ""
 "<qt><p>Burada seçtiğiniz S/MIME sertifikası, iletileri kendinize şifrelemek "
-"ve oluşturucudaki ‘Sertifikamı İliştir’ özelliği için kullanılacaktır.</"
+"ve oluşturucudaki “Sertifikamı İliştir” özelliği için kullanılacaktır.</"
 "p><p>Bunu boş bırakabilirsiniz; ancak K Posta, S/MIME kullanarak size giden "
 "iletilerin kopyalarını şifreleyemez; normal posta işlevleri "
 "etkilenmeyecektir.</p></qt>"
@@ -4508,14 +4508,14 @@ msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr ""
-"‘PIM (Kişisel Bilgi Yöneticisi) Verisi Dışa Aktarıcısı’ programı "
-"başlatılamadı. Lütfen kurulumunuzu denetleyin."
+"“PIM Verisi Dışa Aktarıcısı” programı başlatılamadı. Lütfen kurulumunuzu "
+"denetleyin."
 
 #: kmlaunchexternalcomponent.cpp:120
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "‘PIM Verisi Dışa Aktarıcısı’ Başlatılamıyor"
+msgstr "“PIM Verisi Dışa Aktarıcısı” Başlatılamıyor"
 
 #: kmlaunchexternalcomponent.cpp:142
 #, kde-format
@@ -7122,9 +7122,9 @@ msgstr ""
 "seçilen yönteme bağlı olarak önceki klasörde sürdürülecektir.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Tüm imlenen klasörlerde döngüye gir: </span>Yalnızca ‘Bu "
-"klasöre yeni/okunmamış posta geldiğinde uyar’ özelliği işaretli olan "
-"klasörlerin dikkate alınması dışında ‘Tüm klasörlerde döngüye gir’ seçeneği "
+"weight:600;\">Tüm imlenen klasörlerde döngüye gir: </span>Yalnızca “Bu "
+"klasöre yeni/okunmamış posta geldiğinde uyar” özelliği işaretli olan "
+"klasörlerin dikkate alınması dışında “Tüm klasörlerde döngüye gir” seçeneği "
 "ile aynıdır.</p></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
