@@ -205,7 +205,3 @@ msgstr ""
 #, kde-format
 msgid "Delete"
 msgstr "删除"
-
-#~ msgctxt "@title:window"
-#~ msgid "Configure"
-#~ msgstr "配置"

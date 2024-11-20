@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"POT-Creation-Date: 2024-11-20 00:40+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -2220,7 +2220,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menú de servicie «Compresser»"
 
-#: editor/kmcomposerwin.cpp:1697 editor/kmcomposerwin.cpp:4028
+#: editor/kmcomposerwin.cpp:1697 editor/kmcomposerwin.cpp:4038
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2299,72 +2299,86 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Proprietás de missage"
 
-#: editor/kmcomposerwin.cpp:2354
+#: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
+#, fuzzy, kde-format
+msgid ""
+"Could not start \"KAddressbook\" program. Please check your installation."
+msgstr "mistresssilvara@hotmail.com"
+
+#: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
+#, fuzzy, kde-format
+msgctxt "@title:window"
+msgid "Unable to start \"KAddressbook\" program"
+msgstr ""
+"Ne successat trovar li componente KPart de Ark; ples controlar vor "
+"installation."
+
+#: editor/kmcomposerwin.cpp:2364
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Li file ja existe"
 
-#: editor/kmcomposerwin.cpp:2419
+#: editor/kmcomposerwin.cpp:2429
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Adjunter"
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2430
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Adjunter"
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2445
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2435 editor/kmcomposerwin.cpp:2540
+#: editor/kmcomposerwin.cpp:2445 editor/kmcomposerwin.cpp:2550
 #, fuzzy, kde-format
 msgid "Name of the attachment:"
 msgstr "Nómine"
 
-#: editor/kmcomposerwin.cpp:2441
+#: editor/kmcomposerwin.cpp:2451
 #, fuzzy, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Nómine"
 
-#: editor/kmcomposerwin.cpp:2441
+#: editor/kmcomposerwin.cpp:2451
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Nómine"
 
-#: editor/kmcomposerwin.cpp:2492
+#: editor/kmcomposerwin.cpp:2502
 #, fuzzy, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Adjunter"
 msgstr[1] "Adjunter"
 
-#: editor/kmcomposerwin.cpp:2493
+#: editor/kmcomposerwin.cpp:2503
 #, fuzzy, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Adjunter"
 msgstr[1] "Adjunter"
 
-#: editor/kmcomposerwin.cpp:2539
+#: editor/kmcomposerwin.cpp:2549
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Codification de atachament"
 
-#: editor/kmcomposerwin.cpp:2635
+#: editor/kmcomposerwin.cpp:2645
 #, kde-format
 msgid "unnamed"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2661
+#: editor/kmcomposerwin.cpp:2671
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2372,13 +2386,13 @@ msgid ""
 "in the identity configuration.</p></qt>"
 msgstr "Selecter"
 
-#: editor/kmcomposerwin.cpp:2668
+#: editor/kmcomposerwin.cpp:2678
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2833
+#: editor/kmcomposerwin.cpp:2843
 #, fuzzy, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2386,109 +2400,109 @@ msgid ""
 "for each message."
 msgstr "mistresssilvara@hotmail.com"
 
-#: editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2852
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2848
+#: editor/kmcomposerwin.cpp:2858
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Ne inviar"
 
-#: editor/kmcomposerwin.cpp:2850
+#: editor/kmcomposerwin.cpp:2860
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "A"
 
-#: editor/kmcomposerwin.cpp:2851 editor/kmcomposerwin.cpp:2865
+#: editor/kmcomposerwin.cpp:2861 editor/kmcomposerwin.cpp:2875
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "&Inviar nu"
 
-#: editor/kmcomposerwin.cpp:2852
+#: editor/kmcomposerwin.cpp:2862
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "A"
 
-#: editor/kmcomposerwin.cpp:2862
+#: editor/kmcomposerwin.cpp:2872
 #, fuzzy, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Inviar nu"
 
-#: editor/kmcomposerwin.cpp:2864
+#: editor/kmcomposerwin.cpp:2874
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "&Tema"
 
-#: editor/kmcomposerwin.cpp:2866
+#: editor/kmcomposerwin.cpp:2876
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Tema"
 
-#: editor/kmcomposerwin.cpp:2911
+#: editor/kmcomposerwin.cpp:2921
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Ciffrar"
 
-#: editor/kmcomposerwin.cpp:3097
+#: editor/kmcomposerwin.cpp:3107
 #, fuzzy, kde-format
 msgid "About to send email…"
 msgstr "A"
 
-#: editor/kmcomposerwin.cpp:3098
+#: editor/kmcomposerwin.cpp:3108
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Inviar nu"
 
-#: editor/kmcomposerwin.cpp:3099
+#: editor/kmcomposerwin.cpp:3109
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Inviar nu"
 
-#: editor/kmcomposerwin.cpp:3100
+#: editor/kmcomposerwin.cpp:3110
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Inviar p&lu tard"
 
-#: editor/kmcomposerwin.cpp:3180
+#: editor/kmcomposerwin.cpp:3190
 #, fuzzy, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "Plu…"
 
-#: editor/kmcomposerwin.cpp:3181
+#: editor/kmcomposerwin.cpp:3191
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Recipientes de missage"
 
-#: editor/kmcomposerwin.cpp:3182
+#: editor/kmcomposerwin.cpp:3192
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Inviar nu"
 
-#: editor/kmcomposerwin.cpp:3183
+#: editor/kmcomposerwin.cpp:3193
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Redacter"
 
-#: editor/kmcomposerwin.cpp:3220
+#: editor/kmcomposerwin.cpp:3230
 #, fuzzy, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2497,25 +2511,25 @@ msgstr ""
 "Li archive <filename>%1</filename> va esser creat quande vu va adjunter un "
 "file."
 
-#: editor/kmcomposerwin.cpp:3222
+#: editor/kmcomposerwin.cpp:3232
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Plugin de Unarchiver"
 
-#: editor/kmcomposerwin.cpp:3223
+#: editor/kmcomposerwin.cpp:3233
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3224
+#: editor/kmcomposerwin.cpp:3234
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Adjunter"
 
-#: editor/kmcomposerwin.cpp:3436
+#: editor/kmcomposerwin.cpp:3446
 #, fuzzy, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2523,7 +2537,7 @@ msgid ""
 "for encryption."
 msgstr "mistresssilvara@hotmail.com"
 
-#: editor/kmcomposerwin.cpp:3449
+#: editor/kmcomposerwin.cpp:3459
 #, fuzzy, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2531,7 +2545,7 @@ msgid ""
 "suitable for signing."
 msgstr "mistresssilvara@hotmail.com"
 
-#: editor/kmcomposerwin.cpp:3465
+#: editor/kmcomposerwin.cpp:3475
 #, fuzzy, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2539,7 +2553,7 @@ msgid ""
 "suitable for encryption."
 msgstr "mistresssilvara@hotmail.com"
 
-#: editor/kmcomposerwin.cpp:3478
+#: editor/kmcomposerwin.cpp:3488
 #, fuzzy, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2547,25 +2561,25 @@ msgid ""
 "suitable for signing."
 msgstr "mistresssilvara@hotmail.com"
 
-#: editor/kmcomposerwin.cpp:3651
+#: editor/kmcomposerwin.cpp:3661
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Ciffrar"
 
-#: editor/kmcomposerwin.cpp:3653
+#: editor/kmcomposerwin.cpp:3663
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Ne ciffrar"
 
-#: editor/kmcomposerwin.cpp:3793
+#: editor/kmcomposerwin.cpp:3803
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Null apt plugin trovat. Ark ne supporta ti tip de file."
 
-#: editor/kmcomposerwin.cpp:3815
+#: editor/kmcomposerwin.cpp:3825
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2573,7 +2587,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr "De"
 
-#: editor/kmcomposerwin.cpp:3819
+#: editor/kmcomposerwin.cpp:3829
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2581,7 +2595,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr "Ciffrat missages"
 
-#: editor/kmcomposerwin.cpp:3823
+#: editor/kmcomposerwin.cpp:3833
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2589,7 +2603,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr "Ciffrat missages"
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3860
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2598,7 +2612,7 @@ msgid ""
 "icon for details."
 msgstr "Previder li selectet file"
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3868
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2608,7 +2622,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr "Signar"
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3876
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2616,7 +2630,7 @@ msgid ""
 "icon for details."
 msgstr "Ciffration"
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3882
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2624,7 +2638,7 @@ msgid ""
 "Click the icon for details."
 msgstr "Ciffration"
 
-#: editor/kmcomposerwin.cpp:3878
+#: editor/kmcomposerwin.cpp:3888
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2632,7 +2646,7 @@ msgid ""
 "for details."
 msgstr "Aperter li selectet file con un programma extern"
 
-#: editor/kmcomposerwin.cpp:3886
+#: editor/kmcomposerwin.cpp:3896
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2642,7 +2656,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr "Signar"
 
-#: editor/kmcomposerwin.cpp:3894
+#: editor/kmcomposerwin.cpp:3904
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2650,7 +2664,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr "Signar"
 
-#: editor/kmcomposerwin.cpp:3900
+#: editor/kmcomposerwin.cpp:3910
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2660,7 +2674,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr "Signar"
 
-#: editor/kmcomposerwin.cpp:3908
+#: editor/kmcomposerwin.cpp:3918
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2668,7 +2682,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr "Ciffration"
 
-#: editor/kmcomposerwin.cpp:3913
+#: editor/kmcomposerwin.cpp:3923
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2676,12 +2690,12 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr "Aperter li selectet file con un programma extern"
 
-#: editor/kmcomposerwin.cpp:4030
+#: editor/kmcomposerwin.cpp:4040
 #, fuzzy, kde-format
 msgid " Column: %1 "
 msgstr "Serchabil columne"
 
-#: editor/kmcomposerwin.cpp:4247
+#: editor/kmcomposerwin.cpp:4257
 #, fuzzy, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2694,12 +2708,12 @@ msgid ""
 "certificates.</qt>"
 msgstr "Selecter"
 
-#: editor/kmcomposerwin.cpp:4259
+#: editor/kmcomposerwin.cpp:4269
 #, fuzzy, kde-format
 msgid "Encryption Key Selection"
 msgstr "Ciffration"
 
-#: editor/kmcomposerwin.cpp:4344
+#: editor/kmcomposerwin.cpp:4354
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -4310,59 +4324,59 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:38
+#: kmlaunchexternalcomponent.cpp:40
 #, fuzzy, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Archive"
 
-#: kmlaunchexternalcomponent.cpp:49
+#: kmlaunchexternalcomponent.cpp:51
 #, fuzzy, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Reveni plu tard"
 
-#: kmlaunchexternalcomponent.cpp:60
+#: kmlaunchexternalcomponent.cpp:62
 #, fuzzy, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Postage"
 
-#: kmlaunchexternalcomponent.cpp:72
+#: kmlaunchexternalcomponent.cpp:74
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:81
+#: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
 #, fuzzy, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr "Gerente de files"
 
-#: kmlaunchexternalcomponent.cpp:83
+#: kmlaunchexternalcomponent.cpp:90 kmlaunchexternalcomponent.cpp:98
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail"
 
-#: kmlaunchexternalcomponent.cpp:92
+#: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
 #, fuzzy, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmlaunchexternalcomponent.cpp:94
+#: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "A"
 
-#: kmlaunchexternalcomponent.cpp:103
+#: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, fuzzy, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmlaunchexternalcomponent.cpp:105
+#: kmlaunchexternalcomponent.cpp:141 kmlaunchexternalcomponent.cpp:149
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
@@ -4370,28 +4384,14 @@ msgstr ""
 "Ne successat trovar li componente KPart de Ark; ples controlar vor "
 "installation."
 
-#: kmlaunchexternalcomponent.cpp:114
-#, fuzzy, kde-format
-msgid ""
-"Could not start \"KAddressbook\" program. Please check your installation."
-msgstr "mistresssilvara@hotmail.com"
-
-#: kmlaunchexternalcomponent.cpp:116
-#, fuzzy, kde-format
-msgctxt "@title:window"
-msgid "Unable to start \"KAddressbook\" program"
-msgstr ""
-"Ne successat trovar li componente KPart de Ark; ples controlar vor "
-"installation."
-
-#: kmlaunchexternalcomponent.cpp:126
+#: kmlaunchexternalcomponent.cpp:178
 #, fuzzy, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr "Li fólder <filename>%1</filename> ne posset esser creat."
 
-#: kmlaunchexternalcomponent.cpp:128
+#: kmlaunchexternalcomponent.cpp:180
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
