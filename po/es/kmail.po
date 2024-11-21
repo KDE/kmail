@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-11 01:36+0200\n"
+"PO-Revision-Date: 2024-11-20 19:49+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2276,23 +2276,17 @@ msgid "Sending Message Failed"
 msgstr "El envío del mensaje ha fallado"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"No se ha podido iniciar el «Asistente de exportación PIM». Compruebe su "
-"instalación."
+"No se ha podido iniciar el programa «KAddressbook». Compruebe su instalación."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "No se ha podido iniciar el programa «Exportación de datos PIM»"
+msgstr "No se ha podido iniciar el programa «KAddressbook»"
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format
@@ -4538,23 +4532,18 @@ msgid "KMail Error"
 msgstr "Error de KMail"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"No se ha podido iniciar el «Asistente de exportación PIM». Compruebe su "
-"instalación."
+"No se ha podido iniciar el programa del «Asistente de importación». "
+"Compruebe su instalación."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "No se ha podido iniciar el asistente de importación"
+msgstr "No se ha podido iniciar el programa del «Asistente de importación»"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5867,7 +5856,7 @@ msgstr ""
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
-msgstr "Empujar correo (IMAP IDLE)"
+msgstr "Correo push (IMAP IDLE)"
 
 #: kmreaderwin.cpp:270
 msgid "Improved searches"
@@ -5875,13 +5864,13 @@ msgstr "Búsquedas mejoradas"
 
 #: kmreaderwin.cpp:271
 msgid "Support for adding notes (annotations) to mails"
-msgstr "Implementación de añadir notas (anotaciones) a correos"
+msgstr "Posibilidad de añadir notas (anotaciones) a los mensajes"
 
 #: kmreaderwin.cpp:272
 msgid "Less GUI freezes, mail checks happen in the background"
 msgstr ""
-"Menos cuelgues de la interfaz gráfica, las comprobaciones de correo se "
-"ejecutan como tareas de fondo"
+"Menos fallos de la interfaz gráfica, las comprobaciones de correo se "
+"ejecutan como tareas en segundo plano"
 
 #: kmreaderwin.cpp:273
 msgid "Plugins support"
@@ -5889,7 +5878,7 @@ msgstr "Uso de complementos"
 
 #: kmreaderwin.cpp:274
 msgid "New HTML renderer (QtWebEngine)"
-msgstr "Nuevo procesador de HTML (QtWebEngine)"
+msgstr "Nuevo renderizador de HTML (QtWebEngine)"
 
 #: kmreaderwin.cpp:275
 msgid "Added Check for Phishing URL"
@@ -5901,7 +5890,7 @@ msgstr "Añadida comprobación DKIM"
 
 #: kmreaderwin.cpp:277
 msgid "Added Markdown Editing Support"
-msgstr "Añadido uso de edición en Markdown"
+msgstr "Añadida compatibilidad de edición en Markdown"
 
 #: kmreaderwin.cpp:278
 msgid "Added Grammar Plugin Support"
@@ -5916,14 +5905,13 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Añadido uso del recurso de servicios web de Microsoft Exchange"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Añadió la implementación para maildir"
+msgstr "Añadida compatibilidad con Windows"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
+"Añadida sintaxis personalizada para usar en el campo de búsqueda de texto"
 
 #: kmreaderwin.cpp:311
 #, kde-format

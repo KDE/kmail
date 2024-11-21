@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-11-18 08:17+0200\n"
+"PO-Revision-Date: 2024-11-19 13:37+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -4464,23 +4464,18 @@ msgid "KMail Error"
 msgstr "שגיאת KMail"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"לא ניתן להפעיל את התוכנית „PIM Data Exporter” (מייצא נתוני קשר). נא לבדוק "
-"שההתקנה שלך תקינה."
+"לא ניתן להפעיל את התוכנית „ImportWizard” (אשף ייבוא). נא לבדוק שההתקנה שלך "
+"תקינה."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "לא ניתן להפעיל את ImportWizard (אשף הייבוא)"
+msgstr "לא ניתן להפעיל את התוכנית „ImportWizard” (אשף הייבוא)"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format

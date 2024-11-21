@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-11 10:15+0200\n"
+"PO-Revision-Date: 2024-11-19 09:21+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.08.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -6000,14 +6000,14 @@ msgstr ""
 "Ajout de la prise en charge des ressources Microsoft Exchange Web Services"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Ajout de la prise en charge de « maildir »"
+msgstr "Ajout de la prise en charge de Windows"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
+"Ajout d'une syntaxe personnalisée utilisable dans le champ de texte de "
+"recherche"
 
 #: kmreaderwin.cpp:311
 #, kde-format
