@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-12 02:35+0000\n"
-"PO-Revision-Date: 2024-09-11 01:36+0200\n"
+"PO-Revision-Date: 2024-11-20 19:49+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.0\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5844,7 +5844,7 @@ msgstr ""
 
 #: kmreaderwin.cpp:269
 msgid "Push email (IMAP IDLE)"
-msgstr "Empujar correo (IMAP IDLE)"
+msgstr "Correo push (IMAP IDLE)"
 
 #: kmreaderwin.cpp:270
 msgid "Improved searches"
@@ -5852,13 +5852,13 @@ msgstr "Búsquedas mejoradas"
 
 #: kmreaderwin.cpp:271
 msgid "Support for adding notes (annotations) to mails"
-msgstr "Implementación de añadir notas (anotaciones) a correos"
+msgstr "Posibilidad de añadir notas (anotaciones) a los mensajes"
 
 #: kmreaderwin.cpp:272
 msgid "Less GUI freezes, mail checks happen in the background"
 msgstr ""
-"Menos cuelgues de la interfaz gráfica, las comprobaciones de correo se "
-"ejecutan como tareas de fondo"
+"Menos fallos de la interfaz gráfica, las comprobaciones de correo se "
+"ejecutan como tareas en segundo plano"
 
 #: kmreaderwin.cpp:273
 msgid "Plugins support"
@@ -5866,7 +5866,7 @@ msgstr "Uso de complementos"
 
 #: kmreaderwin.cpp:274
 msgid "New HTML renderer (QtWebEngine)"
-msgstr "Nuevo procesador de HTML (QtWebEngine)"
+msgstr "Nuevo renderizador de HTML (QtWebEngine)"
 
 #: kmreaderwin.cpp:275
 msgid "Added Check for Phishing URL"
@@ -5878,7 +5878,7 @@ msgstr "Añadida comprobación DKIM"
 
 #: kmreaderwin.cpp:277
 msgid "Added Markdown Editing Support"
-msgstr "Añadido uso de edición en Markdown"
+msgstr "Añadida compatibilidad de edición en Markdown"
 
 #: kmreaderwin.cpp:278
 msgid "Added Grammar Plugin Support"
