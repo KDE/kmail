@@ -13,7 +13,6 @@ class KMailPluginInterface : public PimCommon::PluginInterface
 {
     Q_OBJECT
 public:
-    explicit KMailPluginInterface(QObject *parent = nullptr);
     ~KMailPluginInterface() override;
 
     void setMainWidget(KMMainWidget *mainwindow);
@@ -21,5 +20,6 @@ public:
     static KMailPluginInterface *self();
 
 private:
+    explicit KMailPluginInterface(QObject *parent = nullptr);
     KMMainWidget *mMainWindow = nullptr;
 };
