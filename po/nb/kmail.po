@@ -7971,8 +7971,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "Klarte ikke å starte importveiviseren"

@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-11-19 09:21+0100\n"
+"PO-Revision-Date: 2024-11-20 09:00+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -2321,23 +2321,18 @@ msgid "Sending Message Failed"
 msgstr "Échec de l'envoi du message"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Impossible de lancer le programme d'exportation des données PIM. Veuillez "
-"vérifier votre installation."
+"Impossible de lancer le programme « KAddressbook ». Veuillez vérifier votre "
+"installation."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Impossible de lancer le programme d'exportation de données « PIM »"
+msgstr "Impossible de lancer le programme « KAddressbook »."
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format
@@ -4609,23 +4604,19 @@ msgid "KMail Error"
 msgstr "Erreur de KMail"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Impossible de lancer le programme d'exportation des données PIM. Veuillez "
-"vérifier votre installation."
+"Impossible de lancer le programme d'assistant d'importation "
+"« ImportWizard ». Veuillez vérifier votre installation."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Impossible de démarrer l'assistant d'importation"
+msgstr ""
+"Impossible de lancer le programme d'assistant d'importation « ImportWizard »."
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format

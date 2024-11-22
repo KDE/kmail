@@ -7917,8 +7917,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "Klarte ikkje starta kontovegvisaren"
