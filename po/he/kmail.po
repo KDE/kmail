@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-11-19 13:37+0200\n"
+"PO-Revision-Date: 2024-11-21 00:32+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -2260,23 +2260,18 @@ msgid "Sending Message Failed"
 msgstr "שליחת ההודעה נכשלה"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"לא ניתן להפעיל את התוכנית „PIM Data Exporter” (מייצא נתוני קשר). נא לבדוק "
-"שההתקנה שלך תקינה."
+"לא ניתן להפעיל את התוכנית „KAddressbook” (פנקס כתובות). נא לבדוק שההתקנה שלך "
+"תקינה."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "לא ניתן להפעיל את התוכנית „PIM Data Exporter” (מייצא נתוני קשר)"
+msgstr "לא ניתן להפעיל את התוכנית „KAddressbook” (פנקס כתובות)"
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format

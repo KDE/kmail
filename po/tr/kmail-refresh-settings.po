@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-06-18 00:40+0000\n"
+"POT-Creation-Date: 2024-11-23 00:41+0000\n"
 "PO-Revision-Date: 2024-09-23 15:20+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -54,17 +54,17 @@ msgctxt "@title:window"
 msgid "KMail Refresh Settings"
 msgstr "K Posta Yenileme Ayarları"
 
-#: refreshsettingsassistant.cpp:39
+#: refreshsettingsassistant.cpp:44
 #, kde-format
 msgid "Warning"
 msgstr "Uyarı"
 
-#: refreshsettingsassistant.cpp:43
+#: refreshsettingsassistant.cpp:48
 #, kde-format
 msgid "Clean up Settings"
 msgstr "Ayarları Temizle"
 
-#: refreshsettingsassistant.cpp:47
+#: refreshsettingsassistant.cpp:52
 #, kde-format
 msgid "Finish"
 msgstr "Bitir"
