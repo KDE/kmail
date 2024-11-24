@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-15 10:43+0100\n"
+"PO-Revision-Date: 2024-11-23 12:08+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
 "Language: en_GB\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2266,23 +2266,17 @@ msgid "Sending Message Failed"
 msgstr "Sending Message Failed"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Could not start \"PIM Data Exporter\" program. Please check your "
-"installation."
+"Could not start \"KAddressbook\" program. Please check your installation."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Unable to start \"PIM Data Exporter\" program"
+msgstr "Unable to start \"KAddressbook\" program"
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format
@@ -4494,23 +4488,17 @@ msgid "KMail Error"
 msgstr "KMail Error"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Could not start \"PIM Data Exporter\" program. Please check your "
-"installation."
+"Could not start \"ImportWizard\" program. Please check your installation."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Unable to start ImportWizard"
+msgstr "Unable to start \"ImportWizard\" program"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5863,14 +5851,12 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Added Microsoft Exchange Web Services resource support"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Added maildir support"
+msgstr "Add Windows Support"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "Add Custom Syntax usable in the search text field"
 
 #: kmreaderwin.cpp:311
 #, kde-format
