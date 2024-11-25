@@ -237,7 +237,11 @@ SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
     connect(mWidget->mWarnEncrChainCertExpiresSB, &QSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
     connect(mWidget->mWarnEncrRootCertExpiresSB, &QSpinBox::valueChanged, this, &SecurityPageEncryptionTab::slotEmitChanged);
 
+#ifndef Q_OS_WIN
     connect(mWidget->gnupgButton, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotConfigureGnupg);
+#else
+    mWidget->gnupgButton->hide();
+#endif
     connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotReenableAllWarningsClicked);
 }
 
