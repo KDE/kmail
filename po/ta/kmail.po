@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-10-20 14:25+0530\n"
+"PO-Revision-Date: 2024-11-24 17:20+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2272,21 +2272,16 @@ msgid "Sending Message Failed"
 msgstr "அஞ்சலை அனுப்புவது தோல்வியடைந்தது"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr "\"PIM Data Exporter\"-ஐ துவக்க முடியவில்லை. நீங்கள் நிறுவியதை சரிபாருங்கள்"
+msgstr "\"கேமுகவரி புத்தகம்\" தனை துவக்க முடியவில்லை. அதை நிறுவியதை சரிபார்க்கவும்."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "\"PIM Data Exporter\"-ஐ துவக்க முடியவில்லை"
+msgstr "\"கேமுகவரி புத்தகம்\" தனை துவக்க முடியவில்லை"
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format
@@ -4446,12 +4441,10 @@ msgid ""
 msgstr "\"PIM Data Exporter\"-ஐ துவக்க முடியவில்லை. நீங்கள் நிறுவியதை சரிபாருங்கள்"
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "இறக்குமதி உதவிநிரலை துவக்க முடியவில்லை."
+msgstr "இறக்குமதி உதவிநிரலை (ImportWizard தனை) துவக்க முடியவில்லை."
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5806,10 +5799,8 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr ""
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "அஞ்சல் அடைவுகளுக்கான ஆதரவை சேர்த்தார்"
+msgstr "விண்டோஸ் ஆதரவை சேர்த்தார்"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
@@ -7295,15 +7286,7 @@ msgstr "&சொந்த சான்றிதழ்களுக்கு:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>\n"
-#| "<h1>Warn If Root Certificate Expires</h1>\n"
-#| "Select the minimum number of days the root certificate should be valid "
-#| "without issuing a warning.\n"
-#| "<p>\n"
-#| "The recommended SPHINX setting is 14 days.\n"
-#| "</qt>"
+#, kde-format
 msgid ""
 "<qt>\n"
 "<h1>Warn If own Certificates Expires</h1>\n"
@@ -7315,7 +7298,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>சொந்த சான்றிதழ் காலாவதியானால் எச்சரி</h1>\n"
-"எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் மூலச் சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
+"எச்சரிக்கை அளிக்காமல் குறைந்தபட்சம் எத்தனை நாட்கள் சொந்த சான்றிதழ் செல்லுப்படியாக வேண்டும்.\n"
 "<p>\n"
 "SPHINX அமைப்பாக 30 நாட்கள் பரிந்துரைக்கப்படுகிறது.\n"
 "</p></qt>"

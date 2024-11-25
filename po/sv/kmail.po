@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-20 00:40+0000\n"
-"PO-Revision-Date: 2024-09-11 19:23+0200\n"
+"PO-Revision-Date: 2024-11-24 18:05+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2269,25 +2269,17 @@ msgid "Sending Message Failed"
 msgstr "Misslyckades skicka brev"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Kunde inte starta programmet \"Export av data för personlig "
-"informationshantering\". Kontrollera installationen."
+"Kunde inte starta programmet \"Adressbok\". Kontrollera installationen."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr ""
-"Kan inte starta programmet \"Export av data för personlig "
-"informationshantering\""
+msgstr "Kan inte starta programmet \"Adressbok\""
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format
@@ -2930,7 +2922,7 @@ msgstr "Korgnamn ej definierat."
 #: folderarchive/folderarchiveagentcheckcollection.cpp:86
 #, kde-format
 msgid "Unable to create folder. %1"
-msgstr "Kunde inte skapa korg. %1"
+msgstr "Kan inte skapa korg. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:32
 #, kde-format
@@ -4502,23 +4494,17 @@ msgid "KMail Error"
 msgstr "Kmail-fel"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Kunde inte starta programmet \"Export av data för personlig "
-"informationshantering\". Kontrollera installationen."
+"Kunde inte starta programmet \"Importguide\". Kontrollera installationen."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Kan inte starta importguiden"
+msgstr "Kan inte starta programmet \"Importguide\""
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5876,14 +5862,12 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Stöd för Microsoft Exchange webbtjänst-resurs tillagt"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Tillägg av maildir-stöd"
+msgstr "Lägg till Windows-stöd"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "Lägg till egen syntax användbar i söktextfältet"
 
 #: kmreaderwin.cpp:311
 #, kde-format
