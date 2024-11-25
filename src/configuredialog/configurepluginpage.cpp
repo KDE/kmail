@@ -18,7 +18,9 @@ ConfigurePluginPage::ConfigurePluginPage(QObject *parent, const KPluginMetaData 
     l->setContentsMargins({});
     l->addWidget(mConfigurePlugins);
 
-    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::changed, this, &ConfigurePluginPage::markAsChanged);
+    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::wasChanged, this, [this](bool state) {
+        setNeedsSave(state);
+    });
 }
 
 ConfigurePluginPage::~ConfigurePluginPage() = default;
