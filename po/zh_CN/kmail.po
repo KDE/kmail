@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-20 00:40+0000\n"
+"POT-Creation-Date: 2024-11-26 00:41+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1618,22 +1618,22 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改变全局的 HTML 设置，将会覆盖所有文件夹的特定设置。"
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
-#: configuredialog/configuresecuritypage.cpp:284
-#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
+#: configuredialog/configuresecuritypage.cpp:288
+#: configuredialog/configuresecuritypage.cpp:289
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] ""
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 设置"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:327
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1641,23 +1641,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr "模块缺失。请验证您的安装是否完整。此模块由 Kleopatra 提供。"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 配置模块错误"
 
-#: configuredialog/configuresecuritypage.cpp:395
+#: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "此选项需要 dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "无代理"
 
-#: configuredialog/configuresecuritypage.cpp:536
+#: configuredialog/configuresecuritypage.cpp:540
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(当前系统设置：%1)"

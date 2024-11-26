@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-20 00:40+0000\n"
+"POT-Creation-Date: 2024-11-26 00:41+0000\n"
 "PO-Revision-Date: 2024-03-23 19:06-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -1749,10 +1749,10 @@ msgstr ""
 "Alterando a configuração global em HTML, todos os valores específicos das "
 "pastas serão substituídos."
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
-#: configuredialog/configuresecuritypage.cpp:284
-#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
+#: configuredialog/configuresecuritypage.cpp:288
+#: configuredialog/configuresecuritypage.cpp:289
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1761,13 +1761,13 @@ msgid_plural "%v days"
 msgstr[0] " dia"
 msgstr[1] " dias"
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Configurações do GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:327
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1780,23 +1780,23 @@ msgstr ""
 "O módulo está ausente, verifique sua instalação. Este módulo é fornecido "
 "pelo Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Erro no módulo de configuração do GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:395
+#: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Esta opção requer dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "sem proxy"
 
-#: configuredialog/configuresecuritypage.cpp:536
+#: configuredialog/configuresecuritypage.cpp:540
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Configuração atual do sistema: %1)"

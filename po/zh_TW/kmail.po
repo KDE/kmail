@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-20 00:40+0000\n"
+"POT-Creation-Date: 2024-11-26 00:41+0000\n"
 "PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1658,10 +1658,10 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改變全域的 HTML 設定，將會覆蓋個別資料夾原先的 HTML 設定。"
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
-#: configuredialog/configuresecuritypage.cpp:284
-#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
+#: configuredialog/configuresecuritypage.cpp:288
+#: configuredialog/configuresecuritypage.cpp:289
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1669,13 +1669,13 @@ msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] " 天"
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 設定"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:327
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1686,23 +1686,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr "缺乏該模組。請確認您的安裝。該模組由 Kleopatra 所提供。"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 設定模組錯誤"
 
-#: configuredialog/configuresecuritypage.cpp:395
+#: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "這個選項需要 dirmngr 版本 >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "沒有代理伺服器"
 
-#: configuredialog/configuresecuritypage.cpp:536
+#: configuredialog/configuresecuritypage.cpp:540
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(目前的系統設定: %1)"

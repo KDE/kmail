@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-20 00:40+0000\n"
+"POT-Creation-Date: 2024-11-26 00:41+0000\n"
 "PO-Revision-Date: 2024-11-19 19:44+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1657,23 +1657,23 @@ msgstr ""
 "HTML ezarpen orokorrak aldatzea, karpetetako berariazko balio denak "
 "indargabetuko ditu."
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
-#: configuredialog/configuresecuritypage.cpp:284
-#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
+#: configuredialog/configuresecuritypage.cpp:288
+#: configuredialog/configuresecuritypage.cpp:289
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] "egun %v"
 msgstr[1] "%v egun"
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG ezarpenak"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:327
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1683,23 +1683,23 @@ msgstr ""
 "Modulua falta da. Mesedez, egiaztatu zure instalazioa. Modulu hau Kleopatrak "
 "hornitzen du."
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG konfiguratzeko moduluaren errorea"
 
-#: configuredialog/configuresecuritypage.cpp:395
+#: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Aukera honek dirmngr >= 0.9.0 behar du"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "proxyrik ez"
 
-#: configuredialog/configuresecuritypage.cpp:536
+#: configuredialog/configuresecuritypage.cpp:540
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Uneko sistemaren ezarpena: %1)"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-20 00:40+0000\n"
+"POT-Creation-Date: 2024-11-26 00:41+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -1832,24 +1832,24 @@ msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "تغییر تنظیم سراسری نخ‌کشی، تمام مقادیر مشخص پوشه را لغو می‌کند."
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
-#: configuredialog/configuresecuritypage.cpp:284
-#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
+#: configuredialog/configuresecuritypage.cpp:288
+#: configuredialog/configuresecuritypage.cpp:289
 #, fuzzy, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] " روز"
 msgstr[1] ""
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:320
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "تنظیمات GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:327
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1857,23 +1857,23 @@ msgid ""
 "provided by Kleopatra."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:395
+#: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "این گزینه به dirmngr >= ۰.۹.۰ نیاز دارد"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "بدون پیشکار"
 
-#: configuredialog/configuresecuritypage.cpp:536
+#: configuredialog/configuresecuritypage.cpp:540
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ")تنظیم جاری سیستم: %1("

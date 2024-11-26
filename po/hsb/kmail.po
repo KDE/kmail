@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-20 00:40+0000\n"
+"POT-Creation-Date: 2024-11-26 00:41+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -1744,10 +1744,10 @@ msgstr ""
 "Změna globalneho HTML-postajenja přerjaduje wšitke rjadowanja jednotliwych "
 "zapiskow."
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
-#: configuredialog/configuresecuritypage.cpp:284
-#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
+#: configuredialog/configuresecuritypage.cpp:288
+#: configuredialog/configuresecuritypage.cpp:289
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1758,13 +1758,13 @@ msgstr[1] " dnaj"
 msgstr[2] " dny"
 msgstr[3] " dnjow"
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Podpěra za GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:327
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1777,23 +1777,23 @@ msgstr ""
 "Modul pobrachuje. Prošu prepruwujće swoju instalaciju. Tutón modul so wot "
 "Kleopatry k dispoziciji staji."
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:395
+#: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:534 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:536
+#: configuredialog/configuresecuritypage.cpp:540
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Aktualne systemowe postajenje: %1)"
