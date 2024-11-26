@@ -31,15 +31,9 @@
 #include <KUserFeedback/Provider>
 #endif
 
-#define HAVE_KICONTHEME __has_include(<KIconTheme>)
-#if HAVE_KICONTHEME
 #include <KIconTheme>
-#endif
 
-#define HAVE_STYLE_MANAGER __has_include(<KStyleManager>)
-#if HAVE_STYLE_MANAGER
 #include <KStyleManager>
-#endif
 
 //-----------------------------------------------------------------------------
 
@@ -131,9 +125,7 @@ void KMailApplication::delayedInstanceCreation(const QStringList &args, const QS
 
 int main(int argc, char *argv[])
 {
-#if HAVE_KICONTHEME
     KIconTheme::initTheme();
-#endif
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     // Necessary for "cid" support in kmail.
     QWebEngineUrlScheme cidScheme("cid");
@@ -147,13 +139,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
 
-#if HAVE_STYLE_MANAGER
     KStyleManager::initStyle();
-#else // !HAVE_STYLE_MANAGER
-#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
-    QApplication::setStyle(QStringLiteral("breeze"));
-#endif // defined(Q_OS_MACOS) || defined(Q_OS_WIN)
-#endif // HAVE_STYLE_MANAGER
 
     KMail::AboutData about;
     app.setAboutData(about);
