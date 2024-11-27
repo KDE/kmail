@@ -23,40 +23,10 @@
       <string>HTML Messages</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="mExternalReferences">
-        <property name="whatsThis">
-         <string>&lt;qt&gt;&lt;p&gt;Some mail advertisements are in HTML and contain references to, for example, images that the advertisers employ to find out that you have read their message (&amp;quot;web bugs&amp;quot;).&lt;/p&gt;&lt;p&gt;There is no valid reason to load images off the Internet like this, since the sender can always attach the required images directly to the message.&lt;/p&gt;&lt;p&gt;To guard from such a misuse of the HTML displaying feature of KMail, this option is &lt;em&gt;disabled&lt;/em&gt; by default.&lt;/p&gt;&lt;p&gt;However, if you wish to, for example, view images in HTML messages that were not attached to it, you can enable this option, but you should be aware of the possible problem.&lt;/p&gt;&lt;/qt&gt;</string>
-        </property>
-        <property name="text">
-         <string>Allow messages to load external references from the Internet</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>312</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="mConfigureExternalReference">
-        <property name="text">
-         <string>Exceptions</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="3">
+      <item row="0" column="0">
        <widget class="QLabel" name="labelWarnHTML">
         <property name="contextMenuPolicy">
-         <enum>Qt::NoContextMenu</enum>
+         <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
         </property>
         <property name="text">
          <string>&lt;b&gt;WARNING:&lt;/b&gt; Allowing HTML in email may increase the risk that your system will be compromised by present and anticipated security exploits. &lt;a href=&quot;whatsthis1&quot;&gt;More about HTML mails…&lt;/a&gt; &lt;a href=&quot;whatsthis2&quot;&gt;More about external references...&lt;/a&gt;</string>
@@ -65,11 +35,11 @@
          <bool>true</bool>
         </property>
         <property name="textInteractionFlags">
-         <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
+         <set>Qt::TextInteractionFlag::LinksAccessibleByKeyboard|Qt::TextInteractionFlag::LinksAccessibleByMouse</set>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="3">
+      <item row="1" column="0">
        <widget class="QCheckBox" name="mHtmlMailCheck">
         <property name="whatsThis">
          <string>&lt;qt&gt;&lt;p&gt;Messages sometimes come in both formats. This option controls whether you want the HTML part or the plain text part to be displayed.&lt;/p&gt;&lt;p&gt;Displaying the HTML part makes the message look better, but at the same time increases the risk of security holes being exploited.&lt;/p&gt;&lt;p&gt;Displaying the plain text part loses much of the message's formatting, but makes it almost &lt;em&gt;impossible&lt;/em&gt; to exploit security holes in the HTML renderer (QtWebEngine).&lt;/p&gt;&lt;p&gt;The option below guards against one common misuse of HTML messages, but it cannot guard against security issues that were not known at the time this version of KMail was written.&lt;/p&gt;&lt;p&gt;It is therefore advisable to &lt;em&gt;not&lt;/em&gt; prefer HTML to plain text.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; You can set this option on a per-folder basis from the &lt;i&gt;Folder&lt;/i&gt; menu of KMail's main window.&lt;/p&gt;&lt;/qt&gt;</string>
@@ -78,6 +48,40 @@
          <string>Prefer HTML to plain text</string>
         </property>
        </widget>
+      </item>
+      <item row="2" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QCheckBox" name="mExternalReferences">
+          <property name="whatsThis">
+           <string>&lt;qt&gt;&lt;p&gt;Some mail advertisements are in HTML and contain references to, for example, images that the advertisers employ to find out that you have read their message (&amp;quot;web bugs&amp;quot;).&lt;/p&gt;&lt;p&gt;There is no valid reason to load images off the Internet like this, since the sender can always attach the required images directly to the message.&lt;/p&gt;&lt;p&gt;To guard from such a misuse of the HTML displaying feature of KMail, this option is &lt;em&gt;disabled&lt;/em&gt; by default.&lt;/p&gt;&lt;p&gt;However, if you wish to, for example, view images in HTML messages that were not attached to it, you can enable this option, but you should be aware of the possible problem.&lt;/p&gt;&lt;/qt&gt;</string>
+          </property>
+          <property name="text">
+           <string>Allow messages to load external references from the Internet</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="mConfigureExternalReference">
+          <property name="text">
+           <string>Exceptions</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -119,7 +123,7 @@
        </widget>
       </item>
       <item>
-       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList" native="true"/>
+       <widget class="PimCommon::SimpleStringListEditor" name="scamWhiteList"/>
       </item>
      </layout>
     </widget>
