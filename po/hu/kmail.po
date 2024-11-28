@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-26 00:41+0000\n"
+"POT-Creation-Date: 2024-11-28 00:40+0000\n"
 "PO-Revision-Date: 2024-10-03 21:54+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -7515,44 +7515,8 @@ msgstr ""
 msgid "HTML Messages"
 msgstr "HTML-üzenetek"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:29
-#, kde-format
-msgid ""
-"<qt><p>Some mail advertisements are in HTML and contain references to, for "
-"example, images that the advertisers employ to find out that you have read "
-"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
-"images off the Internet like this, since the sender can always attach the "
-"required images directly to the message.</p><p>To guard from such a misuse "
-"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
-"default.</p><p>However, if you wish to, for example, view images in HTML "
-"messages that were not attached to it, you can enable this option, but you "
-"should be aware of the possible problem.</p></qt>"
-msgstr ""
-"<qt><p>Gyakran lehet találkozni olyan internetes reklámlevelekkel, melyeknél "
-"a HTML kódba távoli képekre mutató hivatkozásokat ágyaztak, hogy a hirdető "
-"meg tudja állapítani, a címzettek elolvasták-e a hirdetést.</p><p>Általában "
-"nincs sok értelme külső hivatkozásokat használni üzenetekben, mert a "
-"hivatkozott elemeket, képeket az üzenetbe is be lehet ágyazni.</p><p>Az "
-"ilyen visszaélések elkerülése érdekében alapértelmezés szerint ez az opció "
-"<em>le van tiltva</em>.</p><p>Ha meg szeretné tekinteni az üzenetek által "
-"hivatkozott külső képeket, jelölje be ezt az opciót, de ne felejtse el, hogy "
-"a lehetőség az említett módon kihasználható.</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:32
-#, kde-format
-msgid "Allow messages to load external references from the Internet"
-msgstr "Külső internetes hivatkozások engedélyezése az üzenetekben"
-
-#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
-#: ui/securitypagegeneraltab.ui:52
-#, kde-format
-msgid "Exceptions"
-msgstr "Kivételek"
-
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
-#: ui/securitypagegeneraltab.ui:62
+#: ui/securitypagegeneraltab.ui:32
 #, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
@@ -7567,7 +7531,7 @@ msgstr ""
 "információ a külső hivatkozásokról…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:75
+#: ui/securitypagegeneraltab.ui:45
 #, kde-format
 msgid ""
 "<qt><p>Messages sometimes come in both formats. This option controls whether "
@@ -7599,19 +7563,55 @@ msgstr ""
 "p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:78
+#: ui/securitypagegeneraltab.ui:48
 #, kde-format
 msgid "Prefer HTML to plain text"
 msgstr "HTML használata egyszerű szöveg helyett"
 
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:57
+#, kde-format
+msgid ""
+"<qt><p>Some mail advertisements are in HTML and contain references to, for "
+"example, images that the advertisers employ to find out that you have read "
+"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
+"images off the Internet like this, since the sender can always attach the "
+"required images directly to the message.</p><p>To guard from such a misuse "
+"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
+"default.</p><p>However, if you wish to, for example, view images in HTML "
+"messages that were not attached to it, you can enable this option, but you "
+"should be aware of the possible problem.</p></qt>"
+msgstr ""
+"<qt><p>Gyakran lehet találkozni olyan internetes reklámlevelekkel, melyeknél "
+"a HTML kódba távoli képekre mutató hivatkozásokat ágyaztak, hogy a hirdető "
+"meg tudja állapítani, a címzettek elolvasták-e a hirdetést.</p><p>Általában "
+"nincs sok értelme külső hivatkozásokat használni üzenetekben, mert a "
+"hivatkozott elemeket, képeket az üzenetbe is be lehet ágyazni.</p><p>Az "
+"ilyen visszaélések elkerülése érdekében alapértelmezés szerint ez az opció "
+"<em>le van tiltva</em>.</p><p>Ha meg szeretné tekinteni az üzenetek által "
+"hivatkozott külső képeket, jelölje be ezt az opciót, de ne felejtse el, hogy "
+"a lehetőség az említett módon kihasználható.</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:60
+#, kde-format
+msgid "Allow messages to load external references from the Internet"
+msgstr "Külső internetes hivatkozások engedélyezése az üzenetekben"
+
+#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
+#: ui/securitypagegeneraltab.ui:67
+#, kde-format
+msgid "Exceptions"
+msgstr "Kivételek"
+
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: ui/securitypagegeneraltab.ui:94
+#: ui/securitypagegeneraltab.ui:98
 #, kde-format
 msgid "E-mails Scams"
 msgstr "Becsapós levelek"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/securitypagegeneraltab.ui:100
+#: ui/securitypagegeneraltab.ui:104
 #, kde-format
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
@@ -7621,55 +7621,55 @@ msgstr ""
 "gyakori technikák keresésével, amelyeket arra használnak, hogy becsapják önt."
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
-#: ui/securitypagegeneraltab.ui:110
+#: ui/securitypagegeneraltab.ui:114
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
 msgstr "Értesítsen, ha az olvasott üzenet feltételezhetően becsapós levél"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/securitypagegeneraltab.ui:117
+#: ui/securitypagegeneraltab.ui:121
 #, kde-format
 msgid "Whitelist:"
 msgstr "Engedélyezési lista:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
-#: ui/securitypagegeneraltab.ui:130
+#: ui/securitypagegeneraltab.ui:134
 #, kde-format
 msgid "Safe Browsing"
 msgstr "Biztonságos böngészés"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
-#: ui/securitypagegeneraltab.ui:136
+#: ui/securitypagegeneraltab.ui:140
 #, kde-format
 msgid "Check URL With Phishing Google System"
 msgstr "Adathalász URL-ek ellenőrzése a Google rendszerével"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
-#: ui/securitypagegeneraltab.ui:143
+#: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
 msgstr "Követő URL-címek keresése az e-mailekben"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ui/securitypagegeneraltab.ui:159
+#: ui/securitypagegeneraltab.ui:163
 #, kde-format
 msgid "Encrypted Messages"
 msgstr "Titkosított üzenetek"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
-#: ui/securitypagegeneraltab.ui:165
+#: ui/securitypagegeneraltab.ui:169
 #, kde-format
 msgid "Attempt decryption of encrypted messages when viewing"
 msgstr "A titkosított üzenetek visszafejtése megjelenítés előtt"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
-#: ui/securitypagegeneraltab.ui:181
+#: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
 msgstr "Tanúsítvány- és kulcscsomag-csatolások"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
-#: ui/securitypagegeneraltab.ui:187
+#: ui/securitypagegeneraltab.ui:191
 #, kde-format
 msgid "Automatically import keys and certificate"
 msgstr "A kulcsok és tanúsítványok automatikus importálása"

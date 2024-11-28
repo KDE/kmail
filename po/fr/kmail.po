@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-26 00:41+0000\n"
+"POT-Creation-Date: 2024-11-28 00:40+0000\n"
 "PO-Revision-Date: 2024-11-20 09:00+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -7630,47 +7630,8 @@ msgstr "Réactiver tous les avertissements « Ne plus poser la question »"
 msgid "HTML Messages"
 msgstr "Messages HTML"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:29
-#, kde-format
-msgid ""
-"<qt><p>Some mail advertisements are in HTML and contain references to, for "
-"example, images that the advertisers employ to find out that you have read "
-"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
-"images off the Internet like this, since the sender can always attach the "
-"required images directly to the message.</p><p>To guard from such a misuse "
-"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
-"default.</p><p>However, if you wish to, for example, view images in HTML "
-"messages that were not attached to it, you can enable this option, but you "
-"should be aware of the possible problem.</p></qt>"
-msgstr ""
-"<qt><p>Certaines publicités envoyées par courrier électronique sont écrites "
-"en HTML et contiennent, par exemple, des liens vers des images permettant "
-"aux expéditeurs de savoir si vous avez lu leurs publicités (&quot;Bogues "
-"Internet&quot;).</p><p> Il n'y aucune bonne raison de télécharger des images "
-"depuis le Internet de cette façon, puisque l'expéditeur peut toujours "
-"attacher les images en pièces jointes directement dans le message.</"
-"p><p>Afin de vous protéger contre cet abus de la fonctionnalité d'affichage "
-"« HTML » de KMail, cette option est <em>désactivée</em> par défaut.</"
-"p><p>Cependant, si vous voulez, par exemple, afficher les images non "
-"incluses en pièces jointes dans les messages écrits en « HTML ». Mais, vous "
-"pouvez cocher cette option en étant conscient des problèmes que cela peut "
-"poser.</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:32
-#, kde-format
-msgid "Allow messages to load external references from the Internet"
-msgstr "Autoriser le téléchargement des références d'Internet"
-
-#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
-#: ui/securitypagegeneraltab.ui:52
-#, kde-format
-msgid "Exceptions"
-msgstr "Exceptions"
-
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
-#: ui/securitypagegeneraltab.ui:62
+#: ui/securitypagegeneraltab.ui:32
 #, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
@@ -7686,7 +7647,7 @@ msgstr ""
 "références externes…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:75
+#: ui/securitypagegeneraltab.ui:45
 #, kde-format
 msgid ""
 "<qt><p>Messages sometimes come in both formats. This option controls whether "
@@ -7718,19 +7679,58 @@ msgstr ""
 "i> dans la fenêtre principale de KMail.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:78
+#: ui/securitypagegeneraltab.ui:48
 #, kde-format
 msgid "Prefer HTML to plain text"
 msgstr "Préférer le HTML au texte simple"
 
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:57
+#, kde-format
+msgid ""
+"<qt><p>Some mail advertisements are in HTML and contain references to, for "
+"example, images that the advertisers employ to find out that you have read "
+"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
+"images off the Internet like this, since the sender can always attach the "
+"required images directly to the message.</p><p>To guard from such a misuse "
+"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
+"default.</p><p>However, if you wish to, for example, view images in HTML "
+"messages that were not attached to it, you can enable this option, but you "
+"should be aware of the possible problem.</p></qt>"
+msgstr ""
+"<qt><p>Certaines publicités envoyées par courrier électronique sont écrites "
+"en HTML et contiennent, par exemple, des liens vers des images permettant "
+"aux expéditeurs de savoir si vous avez lu leurs publicités (&quot;Bogues "
+"Internet&quot;).</p><p> Il n'y aucune bonne raison de télécharger des images "
+"depuis le Internet de cette façon, puisque l'expéditeur peut toujours "
+"attacher les images en pièces jointes directement dans le message.</"
+"p><p>Afin de vous protéger contre cet abus de la fonctionnalité d'affichage "
+"« HTML » de KMail, cette option est <em>désactivée</em> par défaut.</"
+"p><p>Cependant, si vous voulez, par exemple, afficher les images non "
+"incluses en pièces jointes dans les messages écrits en « HTML ». Mais, vous "
+"pouvez cocher cette option en étant conscient des problèmes que cela peut "
+"poser.</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:60
+#, kde-format
+msgid "Allow messages to load external references from the Internet"
+msgstr "Autoriser le téléchargement des références d'Internet"
+
+#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
+#: ui/securitypagegeneraltab.ui:67
+#, kde-format
+msgid "Exceptions"
+msgstr "Exceptions"
+
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: ui/securitypagegeneraltab.ui:94
+#: ui/securitypagegeneraltab.ui:98
 #, kde-format
 msgid "E-mails Scams"
 msgstr "Courriels d'arnaque"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/securitypagegeneraltab.ui:100
+#: ui/securitypagegeneraltab.ui:104
 #, kde-format
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
@@ -7740,55 +7740,55 @@ msgstr ""
 "méthodes classiques pour vous tromper"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
-#: ui/securitypagegeneraltab.ui:110
+#: ui/securitypagegeneraltab.ui:114
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
 msgstr "Indiquer si le message lu est une arnaque potentielle"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/securitypagegeneraltab.ui:117
+#: ui/securitypagegeneraltab.ui:121
 #, kde-format
 msgid "Whitelist:"
 msgstr "Liste blanche :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
-#: ui/securitypagegeneraltab.ui:130
+#: ui/securitypagegeneraltab.ui:134
 #, kde-format
 msgid "Safe Browsing"
 msgstr "Navigation privée"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
-#: ui/securitypagegeneraltab.ui:136
+#: ui/securitypagegeneraltab.ui:140
 #, kde-format
 msgid "Check URL With Phishing Google System"
 msgstr "Vérifier l'URL avec le système de Google contre le hameçonnage"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
-#: ui/securitypagegeneraltab.ui:143
+#: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
 msgstr "Détecter des URL de pistage dans les courriels"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ui/securitypagegeneraltab.ui:159
+#: ui/securitypagegeneraltab.ui:163
 #, kde-format
 msgid "Encrypted Messages"
 msgstr "Messages chiffrés"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
-#: ui/securitypagegeneraltab.ui:165
+#: ui/securitypagegeneraltab.ui:169
 #, kde-format
 msgid "Attempt decryption of encrypted messages when viewing"
 msgstr "Déchiffrer automatiquement les messages à l'affichage"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
-#: ui/securitypagegeneraltab.ui:181
+#: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
 msgstr "Pièces jointes contenant un certificat et une clé"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
-#: ui/securitypagegeneraltab.ui:187
+#: ui/securitypagegeneraltab.ui:191
 #, kde-format
 msgid "Automatically import keys and certificate"
 msgstr "Importer automatiquement les clés et certificats"

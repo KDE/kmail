@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-26 00:41+0000\n"
+"POT-Creation-Date: 2024-11-28 00:40+0000\n"
 "PO-Revision-Date: 2024-08-21 00:34+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7384,42 +7384,8 @@ msgstr "모든 \"다시 묻지 않음\" 경고 활성화"
 msgid "HTML Messages"
 msgstr "HTML 메시지"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:29
-#, kde-format
-msgid ""
-"<qt><p>Some mail advertisements are in HTML and contain references to, for "
-"example, images that the advertisers employ to find out that you have read "
-"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
-"images off the Internet like this, since the sender can always attach the "
-"required images directly to the message.</p><p>To guard from such a misuse "
-"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
-"default.</p><p>However, if you wish to, for example, view images in HTML "
-"messages that were not attached to it, you can enable this option, but you "
-"should be aware of the possible problem.</p></qt>"
-msgstr ""
-"<qt><p>일부 메일 광고는 HTML 메시지로 전달되며 광고주가 메시지를 읽었는지를 "
-"확인할 수 있게 해 주는 작은 그림(&quot;웹 버그&quot;)과 같은 외부 참조가 들"
-"어 있습니다.</p><p>필요한 경우에 메시지에 그림을 직접 첨부하면 되므로 이러한 "
-"그림을 불러올 필요는 없습니다.</p><p>HTML 메시지의 이러한 기능을 잘못 사용하"
-"는 것을 방지하도록 기본적으로 이 옵션은 <em>꺼져</em> 있습니다.</p><p>HTML 메"
-"시지에 첨부되지 않은 그림 등 외부 참조를 불러오려면 이 옵션을 활성화할 수 있"
-"으나 가능한 문제에 대해서는 이해하고 있어야 합니다.</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:32
-#, kde-format
-msgid "Allow messages to load external references from the Internet"
-msgstr "메시지 외부 참조를 인터넷에서 불러올 수 있도록 허용"
-
-#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
-#: ui/securitypagegeneraltab.ui:52
-#, kde-format
-msgid "Exceptions"
-msgstr "예외"
-
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
-#: ui/securitypagegeneraltab.ui:62
+#: ui/securitypagegeneraltab.ui:32
 #, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
@@ -7432,7 +7398,7 @@ msgstr ""
 "\"whatsthis2\">외부 참조에 대해서 더 알아보기...</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:75
+#: ui/securitypagegeneraltab.ui:45
 #, kde-format
 msgid ""
 "<qt><p>Messages sometimes come in both formats. This option controls whether "
@@ -7459,19 +7425,53 @@ msgstr ""
 "<i>폴더</i> 메뉴에서 개별 폴더별 설정을 변경할 수 있습니다.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:78
+#: ui/securitypagegeneraltab.ui:48
 #, kde-format
 msgid "Prefer HTML to plain text"
 msgstr "일반 텍스트보다 HTML 선호"
 
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:57
+#, kde-format
+msgid ""
+"<qt><p>Some mail advertisements are in HTML and contain references to, for "
+"example, images that the advertisers employ to find out that you have read "
+"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
+"images off the Internet like this, since the sender can always attach the "
+"required images directly to the message.</p><p>To guard from such a misuse "
+"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
+"default.</p><p>However, if you wish to, for example, view images in HTML "
+"messages that were not attached to it, you can enable this option, but you "
+"should be aware of the possible problem.</p></qt>"
+msgstr ""
+"<qt><p>일부 메일 광고는 HTML 메시지로 전달되며 광고주가 메시지를 읽었는지를 "
+"확인할 수 있게 해 주는 작은 그림(&quot;웹 버그&quot;)과 같은 외부 참조가 들"
+"어 있습니다.</p><p>필요한 경우에 메시지에 그림을 직접 첨부하면 되므로 이러한 "
+"그림을 불러올 필요는 없습니다.</p><p>HTML 메시지의 이러한 기능을 잘못 사용하"
+"는 것을 방지하도록 기본적으로 이 옵션은 <em>꺼져</em> 있습니다.</p><p>HTML 메"
+"시지에 첨부되지 않은 그림 등 외부 참조를 불러오려면 이 옵션을 활성화할 수 있"
+"으나 가능한 문제에 대해서는 이해하고 있어야 합니다.</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:60
+#, kde-format
+msgid "Allow messages to load external references from the Internet"
+msgstr "메시지 외부 참조를 인터넷에서 불러올 수 있도록 허용"
+
+#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
+#: ui/securitypagegeneraltab.ui:67
+#, kde-format
+msgid "Exceptions"
+msgstr "예외"
+
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: ui/securitypagegeneraltab.ui:94
+#: ui/securitypagegeneraltab.ui:98
 #, kde-format
 msgid "E-mails Scams"
 msgstr "이메일 사기"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/securitypagegeneraltab.ui:100
+#: ui/securitypagegeneraltab.ui:104
 #, kde-format
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
@@ -7479,55 +7479,55 @@ msgid ""
 msgstr "KMail은 자주 사용되는 이메일 사기 메시지를 감지하여 알려 줍니다"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
-#: ui/securitypagegeneraltab.ui:110
+#: ui/securitypagegeneraltab.ui:114
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
 msgstr "이메일 사기가 의심될 때 알려 주기"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/securitypagegeneraltab.ui:117
+#: ui/securitypagegeneraltab.ui:121
 #, kde-format
 msgid "Whitelist:"
 msgstr "허용 목록:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
-#: ui/securitypagegeneraltab.ui:130
+#: ui/securitypagegeneraltab.ui:134
 #, kde-format
 msgid "Safe Browsing"
 msgstr "안전한 브라우징"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
-#: ui/securitypagegeneraltab.ui:136
+#: ui/securitypagegeneraltab.ui:140
 #, kde-format
 msgid "Check URL With Phishing Google System"
 msgstr "Google 피싱 시스템으로 URL 확인"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
-#: ui/securitypagegeneraltab.ui:143
+#: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
 msgstr "이메일에서 추적기 URL 검색"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ui/securitypagegeneraltab.ui:159
+#: ui/securitypagegeneraltab.ui:163
 #, kde-format
 msgid "Encrypted Messages"
 msgstr "암호화된 메시지"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
-#: ui/securitypagegeneraltab.ui:165
+#: ui/securitypagegeneraltab.ui:169
 #, kde-format
 msgid "Attempt decryption of encrypted messages when viewing"
 msgstr "암호화된 메시지를 볼 때 복호화 시도"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
-#: ui/securitypagegeneraltab.ui:181
+#: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
 msgstr "인증서 및 키 번들 첨부"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
-#: ui/securitypagegeneraltab.ui:187
+#: ui/securitypagegeneraltab.ui:191
 #, kde-format
 msgid "Automatically import keys and certificate"
 msgstr "자동으로 키와 인증서 가져오기"

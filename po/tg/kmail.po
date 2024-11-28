@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-26 00:41+0000\n"
+"POT-Creation-Date: 2024-11-28 00:40+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -7999,56 +7999,8 @@ msgstr "Фаъол сохтани тамоми огоҳиҳои ғайрифаъ
 msgid "HTML Messages"
 msgstr "Иттилооти HTML"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:29
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Some mail advertisements are in HTML and contain references to, "
-#| "for example, images that the advertisers employ to find out that you have "
-#| "read their message (&quot;web bugs&quot;).</p><p>There is no valid reason "
-#| "to load images off the Internet like this, since the sender can always "
-#| "attach the required images directly to the message.</p><p>To guard from "
-#| "such a misuse of the HTML displaying feature of KMail, this option is "
-#| "<em>disabled</em> by default.</p><p>However, if you wish to, for example, "
-#| "view images in HTML messages that were not attached to it, you can enable "
-#| "this option, but you should be aware of the possible problem.</p></qt>"
-msgid ""
-"<qt><p>Some mail advertisements are in HTML and contain references to, for "
-"example, images that the advertisers employ to find out that you have read "
-"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
-"images off the Internet like this, since the sender can always attach the "
-"required images directly to the message.</p><p>To guard from such a misuse "
-"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
-"default.</p><p>However, if you wish to, for example, view images in HTML "
-"messages that were not attached to it, you can enable this option, but you "
-"should be aware of the possible problem.</p></qt>"
-msgstr ""
-"<qt><p>Якчанд иттилоотҳои рекламавӣ ба формати HTML меоянд ва дорои "
-"истинодот ба тасвирот мебошанд, ки фиристандаҳо барои қабул намудани хабари "
-"онки шумо ин иттилоотҳоро (&quot;web bugs&quot;) хондаед, истифода мекунанд."
-"</p><p>Сабабе нест, ки тасвиротро аз худи шабақа пурбор кунед, чунки "
-"фиристанда доимо метавонад тасвироти лозимиро ба худи иттилоот гузорад.</"
-"p><p>Барои ҳифз аз суиистифодаи HTML, инпараметр ба тарзи пешфарзӣ "
-"<em>ғайрифаъол</em> аст.</p><p>Агар шумо ба ҳеҷ чиз нигоҳ накарда хоҳед, ки "
-"иттилоотро бо тасвироте, ки ба худи иттилоот намераванд аз назар гузаронед, "
-"ин интихоботро фаъол созед, лекин оиди масъалаҳои имконпазир дар хотир доред."
-"</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:32
-#, fuzzy, kde-format
-#| msgid "Allow messages to load e&xternal references from the Internet"
-msgid "Allow messages to load external references from the Internet"
-msgstr "&Иҷозаи пурбор кардани истинодотҳои зоҳирӣ аз шабақа"
-
-#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
-#: ui/securitypagegeneraltab.ui:52
-#, fuzzy, kde-format
-msgid "Exceptions"
-msgstr "Параметрҳои умумӣ"
-
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
-#: ui/securitypagegeneraltab.ui:62
+#: ui/securitypagegeneraltab.ui:32
 #, fuzzy, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
@@ -8062,7 +8014,7 @@ msgstr ""
 "\"whatsthis:%2\">Муфассалтар оиди манбаъҳои зоҳирӣ...</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:75
+#: ui/securitypagegeneraltab.ui:45
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Messages sometimes come in both formats. This option controls "
@@ -8104,20 +8056,68 @@ msgstr ""
 "истифодаи<em>на</em> HTML, балки матни оддӣ низ дода мешавад.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:78
+#: ui/securitypagegeneraltab.ui:48
 #, fuzzy, kde-format
 #| msgid "Prefer H&TML to plain text"
 msgid "Prefer HTML to plain text"
 msgstr "Тарҷеҳ додани &HTML ба матни оддӣ"
 
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:57
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt><p>Some mail advertisements are in HTML and contain references to, "
+#| "for example, images that the advertisers employ to find out that you have "
+#| "read their message (&quot;web bugs&quot;).</p><p>There is no valid reason "
+#| "to load images off the Internet like this, since the sender can always "
+#| "attach the required images directly to the message.</p><p>To guard from "
+#| "such a misuse of the HTML displaying feature of KMail, this option is "
+#| "<em>disabled</em> by default.</p><p>However, if you wish to, for example, "
+#| "view images in HTML messages that were not attached to it, you can enable "
+#| "this option, but you should be aware of the possible problem.</p></qt>"
+msgid ""
+"<qt><p>Some mail advertisements are in HTML and contain references to, for "
+"example, images that the advertisers employ to find out that you have read "
+"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
+"images off the Internet like this, since the sender can always attach the "
+"required images directly to the message.</p><p>To guard from such a misuse "
+"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
+"default.</p><p>However, if you wish to, for example, view images in HTML "
+"messages that were not attached to it, you can enable this option, but you "
+"should be aware of the possible problem.</p></qt>"
+msgstr ""
+"<qt><p>Якчанд иттилоотҳои рекламавӣ ба формати HTML меоянд ва дорои "
+"истинодот ба тасвирот мебошанд, ки фиристандаҳо барои қабул намудани хабари "
+"онки шумо ин иттилоотҳоро (&quot;web bugs&quot;) хондаед, истифода мекунанд."
+"</p><p>Сабабе нест, ки тасвиротро аз худи шабақа пурбор кунед, чунки "
+"фиристанда доимо метавонад тасвироти лозимиро ба худи иттилоот гузорад.</"
+"p><p>Барои ҳифз аз суиистифодаи HTML, инпараметр ба тарзи пешфарзӣ "
+"<em>ғайрифаъол</em> аст.</p><p>Агар шумо ба ҳеҷ чиз нигоҳ накарда хоҳед, ки "
+"иттилоотро бо тасвироте, ки ба худи иттилоот намераванд аз назар гузаронед, "
+"ин интихоботро фаъол созед, лекин оиди масъалаҳои имконпазир дар хотир доред."
+"</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:60
+#, fuzzy, kde-format
+#| msgid "Allow messages to load e&xternal references from the Internet"
+msgid "Allow messages to load external references from the Internet"
+msgstr "&Иҷозаи пурбор кардани истинодотҳои зоҳирӣ аз шабақа"
+
+#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
+#: ui/securitypagegeneraltab.ui:67
+#, fuzzy, kde-format
+msgid "Exceptions"
+msgstr "Параметрҳои умумӣ"
+
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: ui/securitypagegeneraltab.ui:94
+#: ui/securitypagegeneraltab.ui:98
 #, fuzzy, kde-format
 msgid "E-mails Scams"
 msgstr "&Адреси e-mail:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/securitypagegeneraltab.ui:100
+#: ui/securitypagegeneraltab.ui:104
 #, kde-format
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
@@ -8125,44 +8125,44 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
-#: ui/securitypagegeneraltab.ui:110
+#: ui/securitypagegeneraltab.ui:114
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/securitypagegeneraltab.ui:117
+#: ui/securitypagegeneraltab.ui:121
 #, kde-format
 msgid "Whitelist:"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
-#: ui/securitypagegeneraltab.ui:130
+#: ui/securitypagegeneraltab.ui:134
 #, kde-format
 msgid "Safe Browsing"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
-#: ui/securitypagegeneraltab.ui:136
+#: ui/securitypagegeneraltab.ui:140
 #, kde-format
 msgid "Check URL With Phishing Google System"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
-#: ui/securitypagegeneraltab.ui:143
+#: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
 msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ui/securitypagegeneraltab.ui:159
+#: ui/securitypagegeneraltab.ui:163
 #, fuzzy, kde-format
 #| msgid "Encrypted message"
 msgid "Encrypted Messages"
 msgstr "Иттилооти рамзгузошташуда"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
-#: ui/securitypagegeneraltab.ui:165
+#: ui/securitypagegeneraltab.ui:169
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgid "Attempt decryption of encrypted messages when viewing"
@@ -8170,13 +8170,13 @@ msgstr ""
 "Агар ин имконпазир бошад, иттилоотро ба таври худкор &рамзгузорӣ кардан"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
-#: ui/securitypagegeneraltab.ui:181
+#: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
 msgstr "Идоракунӣ бо сертификатҳо"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
-#: ui/securitypagegeneraltab.ui:187
+#: ui/securitypagegeneraltab.ui:191
 #, fuzzy, kde-format
 #| msgid "Automatically import keys and certificates"
 msgid "Automatically import keys and certificate"

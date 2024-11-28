@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-26 00:41+0000\n"
-"PO-Revision-Date: 2024-11-26 17:26+0300\n"
+"POT-Creation-Date: 2024-11-28 00:40+0000\n"
+"PO-Revision-Date: 2024-11-27 14:02+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -2061,7 +2061,7 @@ msgid "&Urgent"
 msgstr "&Срочное письмо"
 
 #: editor/kmcomposerwin.cpp:1396
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Запросить &уведомление об обработке"
@@ -2070,7 +2070,7 @@ msgstr "Запросить &уведомление об обработке"
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
-msgstr "Запросить уведомление о &доставке"
+msgstr "Запросить подтверждение &получения"
 
 #: editor/kmcomposerwin.cpp:1405
 #, kde-format
@@ -2162,7 +2162,7 @@ msgid "Pr&epend Signature"
 msgstr "Добавить подпись &до курсора"
 
 #: editor/kmcomposerwin.cpp:1469
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Вставить подпись в текущей по&зиции"
@@ -2449,13 +2449,13 @@ msgid "No To: specified"
 msgstr "Не указан получатель"
 
 #: editor/kmcomposerwin.cpp:2861 editor/kmcomposerwin.cpp:2875
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Отправить &как есть"
 
 #: editor/kmcomposerwin.cpp:2862
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Указать значение поля «Кому»"
@@ -2472,7 +2472,7 @@ msgid "No Subject Specified"
 msgstr "Тема не указана"
 
 #: editor/kmcomposerwin.cpp:2876
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Указать тему"
@@ -2516,7 +2516,7 @@ msgid ""
 "anyway?"
 msgstr ""
 "Попытка отправить письмо более, чем %1 получателям.\n"
-" Отправить как есть?"
+" Отправить письмо, несмотря на это?"
 
 #: editor/kmcomposerwin.cpp:3191
 #, kde-format
@@ -3047,7 +3047,7 @@ msgstr "Клавиша открытия папки %1"
 #, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr ""
+msgstr "Закрытая панель просмотра"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
@@ -3055,10 +3055,10 @@ msgid "Clear History"
 msgstr "Очистить журнал"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "Отправить новое письмо"
+msgstr "Снова открыть закрытую панель просмотра"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
@@ -3133,10 +3133,10 @@ msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "Не удалось запустить генерацию сертификата OpenPGP: %1"
 
 #: identity/identitydialog.cpp:246
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Создание новой пары ключей..."
+msgstr "Генерация сертификата OpenPGP…"
 
 #: identity/identitydialog.cpp:248
 #, kde-format
@@ -3293,10 +3293,10 @@ msgid "OpenPGP signing key:"
 msgstr "Ключ подписи OpenPGP:"
 
 #: identity/identitydialog.cpp:470
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
-msgstr "Использовать один ключ для шифрования и подписания"
+msgstr "Использовать один ключ для шифрования и подписи"
 
 #: identity/identitydialog.cpp:480
 #, kde-format
@@ -3387,7 +3387,7 @@ msgid "Autocrypt:"
 msgstr "Сквозное шифрование:"
 
 #: identity/identitydialog.cpp:578
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Сообщать адресатам о предпочтении использования шифрования"
@@ -3411,19 +3411,19 @@ msgid "Sign messages"
 msgstr "Подписывать письма"
 
 #: identity/identitydialog.cpp:592
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Шифровать письма, если возможно"
 
 #: identity/identitydialog.cpp:595
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Предупреждать при отправке неподписанного письма"
 
 #: identity/identitydialog.cpp:598
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Предупреждать при отправке незашифрованного письма"
@@ -3589,7 +3589,7 @@ msgstr ""
 "электронной почты, содержащего только имя пользователя.</p></qt>"
 
 #: identity/identitydialog.cpp:757
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Другие шаблоны писем для этого профиля"
@@ -3817,7 +3817,7 @@ msgid "Modify…"
 msgstr "Изменить…"
 
 #: identity/identityngpage.cpp:244
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Переименовать"
@@ -4181,10 +4181,10 @@ msgid "Set body of message as html"
 msgstr "Задать тело письма как HTML"
 
 #: kmail_options.h:40
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
-msgstr "Показать список данных обратной связи"
+msgstr "Доступные варианты обратной связи"
 
 #: kmail_options.h:45
 #, kde-format
@@ -5072,10 +5072,10 @@ msgid "Notification History…"
 msgstr "Журнал уведомлений…"
 
 #: kmmainwidget.cpp:3035
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr "Импо&рт из другого почтового клиента..."
+msgstr "Импо&рт из другого почтового клиента…"
 
 #: kmmainwidget.cpp:3040
 #, kde-format
@@ -5129,7 +5129,7 @@ msgid "&Find Messages…"
 msgstr "&Найти письма…"
 
 #: kmmainwidget.cpp:3092
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Выделить &все письма"
@@ -5186,9 +5186,9 @@ msgid "Move Message To…"
 msgstr "Переместить письмо в…"
 
 #: kmmainwidget.cpp:3198
-#, fuzzy, kde-format
+#, kde-format
 msgid "&New Message…"
-msgstr "Новые письма"
+msgstr "&Создать письмо…"
 
 #: kmmainwidget.cpp:3200
 #, kde-format
@@ -5304,9 +5304,9 @@ msgid "Delete All Attachments"
 msgstr "Удалить все вложения"
 
 #: kmmainwidget.cpp:3312
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copy Decrypted To…"
-msgstr "Расшифровать и копировать в..."
+msgstr "Расшифровать и копировать в…"
 
 #: kmmainwidget.cpp:3316
 #, kde-format
@@ -5364,7 +5364,7 @@ msgid "&Display Message"
 msgstr "Показать &письмо"
 
 #: kmmainwidget.cpp:3360
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "Следующее &письмо"
@@ -5375,7 +5375,7 @@ msgid "Go to the next message"
 msgstr "Перейти к следующему письму"
 
 #: kmmainwidget.cpp:3367
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Следующее &непрочитанное"
@@ -5392,7 +5392,7 @@ msgid "Go to the next unread message"
 msgstr "Перейти к следующему непрочитанному письму"
 
 #: kmmainwidget.cpp:3380
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Предыдущее письмо"
@@ -5403,7 +5403,7 @@ msgid "Go to the previous message"
 msgstr "Перейти к предыдущему письму"
 
 #: kmmainwidget.cpp:3387
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Предыдущее н&епрочитанное"
@@ -5420,7 +5420,7 @@ msgid "Go to the previous unread message"
 msgstr "Перейти к предыдущему непрочитанному письму"
 
 #: kmmainwidget.cpp:3400
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Следующая непро&читанная папка"
@@ -5431,7 +5431,7 @@ msgid "Go to the next folder with unread messages"
 msgstr "Перейти в следующую папку с непрочитанными письмами"
 
 #: kmmainwidget.cpp:3409
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "П&редыдущая непрочитанная папка"
@@ -5488,9 +5488,9 @@ msgid "Display KMail's Welcome Page"
 msgstr "Показать страницу приветствия KMail"
 
 #: kmmainwidget.cpp:3457
-#, fuzzy, kde-format
+#, kde-format
 msgid "Configure &Notifications…"
-msgstr "Настроить &уведомления..."
+msgstr "Настроить &уведомления…"
 
 #: kmmainwidget.cpp:3464
 #, kde-format
@@ -5504,9 +5504,9 @@ msgid "Expire…"
 msgstr "Освободить от устаревших…"
 
 #: kmmainwidget.cpp:3477
-#, fuzzy, kde-format
+#, kde-format
 msgid "Add Favorite Folder…"
-msgstr "Добавление папки в список избранных"
+msgstr "Добавить папку в список избранных…"
 
 #: kmmainwidget.cpp:3483
 #, kde-format
@@ -5524,9 +5524,9 @@ msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Применить фильтры к этой папке и всем вложенным"
 
 #: kmmainwidget.cpp:3515
-#, fuzzy, kde-format
+#, kde-format
 msgid "Import/Export KMail Data…"
-msgstr "Импорт или экспорт данных KMail..."
+msgstr "Импорт или экспорт данных KMail…"
 
 #: kmmainwidget.cpp:3521
 #, kde-format
@@ -5544,81 +5544,81 @@ msgid "Restart Account"
 msgstr "Перезапустить учётную запись"
 
 #: kmmainwidget.cpp:3549
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
-msgstr "Копирование письма — выбор папки"
+msgstr "Копировать письмо в папку"
 
 #: kmmainwidget.cpp:3555
-#, fuzzy, kde-format
+#, kde-format
 msgid "Jump to Folder…"
-msgstr "Переход в папку"
+msgstr "Перейти в папку…"
 
 #: kmmainwidget.cpp:3561
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Отменить текущую операцию"
 
 #: kmmainwidget.cpp:3567
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
-msgstr "Перейти к следующей папке"
+msgstr "Фокус на следующей папке"
 
 #: kmmainwidget.cpp:3573
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
-msgstr "Перейти к предыдущей папке"
+msgstr "Фокус на предыдущей папке"
 
 #: kmmainwidget.cpp:3579
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
-msgstr "Выбор папки для перехода"
+msgstr "Выбрать папку с фокусом"
 
 #: kmmainwidget.cpp:3586
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
-msgstr "Перейти к первой папке"
+msgstr "Фокус на первой папке"
 
 #: kmmainwidget.cpp:3592
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
-msgstr "Перейти к последней папке"
+msgstr "Фокус на последней папке"
 
 #: kmmainwidget.cpp:3598
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
-msgstr "Перейти к следующему письму"
+msgstr "Фокус на следующем письме"
 
 #: kmmainwidget.cpp:3604
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
-msgstr "Перейти к предыдущему письму"
+msgstr "Фокус на предыдущем письме"
 
 #: kmmainwidget.cpp:3610
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Select First Message"
-msgstr "Выделить первое письмо"
+msgstr "Выбрать первое письмо"
 
 #: kmmainwidget.cpp:3616
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
-msgstr "Выделить последнее письмо"
+msgstr "Выбрать последнее письмо"
 
 #: kmmainwidget.cpp:3622
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
-msgstr "Выбор письма для перехода"
+msgstr "Выбрать письмо с фокусом"
 
 #: kmmainwidget.cpp:3629
 #, kde-format
@@ -5627,22 +5627,22 @@ msgid "Set Focus to Quick Search"
 msgstr "Перевести фокус на поле быстрого поиска"
 
 #: kmmainwidget.cpp:3637
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Добавить к выделению предыдущее письмо"
 
 #: kmmainwidget.cpp:3643
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Добавить к выделению следующее письмо"
 
 #: kmmainwidget.cpp:3650
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
-msgstr "Перемещение письма — выбор папки"
+msgstr "Переместить письмо в папку"
 
 #: kmmainwidget.cpp:3660
 #, kde-format
@@ -5685,9 +5685,9 @@ msgid "M&ove Thread to Trash"
 msgstr "У&далить дискуссию в корзину"
 
 #: kmmainwidget.cpp:4142
-#, fuzzy, kde-format
+#, kde-format
 msgid "Edit Search…"
-msgstr "Изменить параметры поиска..."
+msgstr "Изменить параметры поиска…"
 
 #: kmmainwidget.cpp:4179
 #, kde-format
@@ -5766,7 +5766,7 @@ msgid "Enable Unified Mailboxes?"
 msgstr "Использование объединённых папок"
 
 #: kmmainwidget.cpp:4953
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Использовать объединённые папки"
@@ -5867,15 +5867,15 @@ msgid "Bookmark This Link"
 msgstr "Добавить в закладки"
 
 #: kmreaderwin.cpp:161
-#, fuzzy, kde-format
+#, kde-format
 msgid "Edit contact…"
-msgstr "Редактировать контакт..."
+msgstr "Редактировать контакт…"
 
 #: kmreaderwin.cpp:167
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
-msgstr "Сохранить ссылку как..."
+msgstr "Сохранить ссылку как…"
 
 #: kmreaderwin.cpp:173
 #, kde-format
@@ -5889,7 +5889,7 @@ msgid "Save Image On Disk…"
 msgstr "Сохранить изображение на диск…"
 
 #: kmreaderwin.cpp:185
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Открыть изображение…"
@@ -6071,10 +6071,10 @@ msgstr ""
 "отключён, то будет показано только имя папки."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
-msgstr "Новые письма"
+msgstr "Создать письмо…"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -6246,20 +6246,20 @@ msgid "Reply to &All…"
 msgstr "Ответить &всем…"
 
 #: messageactions.cpp:67
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reply to A&uthor…"
-msgstr "Ответить &автору..."
+msgstr "Ответить &автору…"
 
 #: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reply to Mailing-&List…"
-msgstr "Ответить в &список рассылки..."
+msgstr "Ответить в &список рассылки…"
 
 #: messageactions.cpp:69
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
-msgstr "Ответить без &цитирования..."
+msgstr "Ответить без &цитирования…"
 
 #: messageactions.cpp:70
 #, kde-format
@@ -6274,10 +6274,10 @@ msgid "As &Attachment…"
 msgstr "Как &вложение…"
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
-msgstr "&Перенаправить..."
+msgstr "&Перенаправить…"
 
 #: messageactions.cpp:73
 #, kde-format
@@ -6308,10 +6308,10 @@ msgid "&Edit As New"
 msgstr "&Редактировать как новое"
 
 #: messageactions.cpp:78
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
-msgstr "Фильтровать по &списку рассылки..."
+msgstr "Фильтровать по &списку рассылки…"
 
 #: messageactions.cpp:79
 #, kde-format
@@ -6320,10 +6320,10 @@ msgid "Add Followup Reminder…"
 msgstr "Добавить напоминание для поддержания разговора…"
 
 #: messageactions.cpp:81
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
-msgstr "Отправить по&вторно..."
+msgstr "Отправить по&вторно…"
 
 #: messageactions.cpp:82
 #, kde-format
@@ -6331,9 +6331,9 @@ msgid "New Message From &Template"
 msgstr "Написать письмо на основе &шаблона"
 
 #: messageactions.cpp:84
-#, fuzzy, kde-format
+#, kde-format
 msgid "Export to PDF…"
-msgstr "Экспорт в PDF"
+msgstr "Экспорт в PDF…"
 
 # This message goes only in menu item Edit->"Undo %1" --aspotashev
 #: messageactions.cpp:85
@@ -6343,9 +6343,9 @@ msgid "Archive Message"
 msgstr "Архивировать письмо"
 
 #: messageactions.cpp:401
-#, fuzzy, kde-format
+#, kde-format
 msgid "Filter on Mailing-List…"
-msgstr "Фильтровать по списку рассылки..."
+msgstr "Фильтровать по списку рассылки…"
 
 #: messageactions.cpp:437
 #, kde-format
@@ -6389,9 +6389,9 @@ msgid "Unsubscribe from List"
 msgstr "Отписаться от рассылки"
 
 #: messageactions.cpp:467
-#, fuzzy, kde-format
+#, kde-format
 msgid "Filter on Mailing-List %1…"
-msgstr "Фильтр по списку рассылки %1..."
+msgstr "Фильтровать по списку рассылки %1…"
 
 #: messageactions.cpp:644
 #, kde-format
@@ -6428,10 +6428,10 @@ msgid "Reindex"
 msgstr "Проиндексировать заново"
 
 #: searchdialog/incompleteindexdialog.cpp:137
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
-msgstr "Искать вопреки этому"
+msgstr "Искать, несмотря на это"
 
 #: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
@@ -6510,13 +6510,13 @@ msgid "Save Attachments…"
 msgstr "Сохранить все вложения…"
 
 #: searchdialog/searchwindow.cpp:200
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Отменить выделение"
 
 #: searchdialog/searchwindow.cpp:204
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Перейти в исходную папку"
@@ -6567,9 +6567,9 @@ msgid ""
 msgstr "Содержит условие присутствия подстроки короче 4 символов."
 
 #: searchdialog/searchwindow.cpp:521
-#, fuzzy, kde-format
+#, kde-format
 msgid "Searching…"
-msgstr "Поиск..."
+msgstr "Поиск…"
 
 #: searchdialog/searchwindow.cpp:534
 #, kde-format
@@ -6873,9 +6873,9 @@ msgstr "Выбрано действие при нажатии комбинаци
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:334
-#, fuzzy, kde-format
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Письмо"
+msgstr "Письмо:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:337
@@ -6994,9 +6994,9 @@ msgstr "Поиск метки…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
-#, fuzzy, kde-format
+#, kde-format
 msgid "Customize accounts order…"
-msgstr "Сменить порядок учётных записей..."
+msgstr "Изменить порядок учётных записей…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -7018,13 +7018,13 @@ msgstr "Подроб&ное уведомление о приходе почты"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
-#, fuzzy, kde-format
+#, kde-format
 msgid "Other Actio&ns…"
-msgstr "&Другие действия..."
+msgstr "&Другие действия…"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open Image…"
 msgstr "Открыть изображение…"
 
@@ -7580,9 +7580,9 @@ msgstr "Для сертификатов промежуточных центро�
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:347
-#, fuzzy, kde-format
+#, kde-format
 msgid "GnuPG Settings…"
-msgstr "Параметры GnuPG"
+msgstr "Параметры GnuPG…"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:386
@@ -7596,44 +7596,8 @@ msgstr "Включить все отключённые предупрежден�
 msgid "HTML Messages"
 msgstr "HTML-письма"
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:29
-#, kde-format
-msgid ""
-"<qt><p>Some mail advertisements are in HTML and contain references to, for "
-"example, images that the advertisers employ to find out that you have read "
-"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
-"images off the Internet like this, since the sender can always attach the "
-"required images directly to the message.</p><p>To guard from such a misuse "
-"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
-"default.</p><p>However, if you wish to, for example, view images in HTML "
-"messages that were not attached to it, you can enable this option, but you "
-"should be aware of the possible problem.</p></qt>"
-msgstr ""
-"<qt><p>Некоторые рекламные письма приходят в формате HTML и содержат ссылки "
-"(например, на изображения), которые отправители используют для получения "
-"подтверждения прочтения письма («web bugs»).</p><p>Нет причин загружать "
-"изображения прямо из сети — отправитель всегда может вставить нужные "
-"изображения непосредственно в письмо.</p><p>Для обеспечения защиты от "
-"злоупотребления возможностями HTML этот параметр <em>отключён</em> по "
-"умолчанию.</p><p>Если всё же требуется просматривать письма с изображениями, "
-"которые не идут в самом письме, включите эту опцию, но помните о возможных "
-"проблемах.</p></qt>"
-
-#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
-#: ui/securitypagegeneraltab.ui:32
-#, kde-format
-msgid "Allow messages to load external references from the Internet"
-msgstr "Загружать из Интернета внешние объекты, используемые в письмах"
-
-#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
-#: ui/securitypagegeneraltab.ui:52
-#, kde-format
-msgid "Exceptions"
-msgstr "Исключения"
-
 #. i18n: ectx: property (text), widget (QLabel, labelWarnHTML)
-#: ui/securitypagegeneraltab.ui:62
+#: ui/securitypagegeneraltab.ui:32
 #, kde-format
 msgid ""
 "<b>WARNING:</b> Allowing HTML in email may increase the risk that your "
@@ -7646,7 +7610,7 @@ msgstr ""
 "a><br /> <a href=\"whatsthis2\">Подробнее о внешних ссылках…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:75
+#: ui/securitypagegeneraltab.ui:45
 #, kde-format
 msgid ""
 "<qt><p>Messages sometimes come in both formats. This option controls whether "
@@ -7676,19 +7640,55 @@ msgstr ""
 "<i>Папка</i> в главном окне KMail.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
-#: ui/securitypagegeneraltab.ui:78
+#: ui/securitypagegeneraltab.ui:48
 #, kde-format
 msgid "Prefer HTML to plain text"
 msgstr "Обрабатывать HTML в письмах"
 
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:57
+#, kde-format
+msgid ""
+"<qt><p>Some mail advertisements are in HTML and contain references to, for "
+"example, images that the advertisers employ to find out that you have read "
+"their message (&quot;web bugs&quot;).</p><p>There is no valid reason to load "
+"images off the Internet like this, since the sender can always attach the "
+"required images directly to the message.</p><p>To guard from such a misuse "
+"of the HTML displaying feature of KMail, this option is <em>disabled</em> by "
+"default.</p><p>However, if you wish to, for example, view images in HTML "
+"messages that were not attached to it, you can enable this option, but you "
+"should be aware of the possible problem.</p></qt>"
+msgstr ""
+"<qt><p>Некоторые рекламные письма приходят в формате HTML и содержат ссылки "
+"(например, на изображения), которые отправители используют для получения "
+"подтверждения прочтения письма («web bugs»).</p><p>Нет причин загружать "
+"изображения прямо из сети — отправитель всегда может вставить нужные "
+"изображения непосредственно в письмо.</p><p>Для обеспечения защиты от "
+"злоупотребления возможностями HTML этот параметр <em>отключён</em> по "
+"умолчанию.</p><p>Если всё же требуется просматривать письма с изображениями, "
+"которые не идут в самом письме, включите эту опцию, но помните о возможных "
+"проблемах.</p></qt>"
+
+#. i18n: ectx: property (text), widget (QCheckBox, mExternalReferences)
+#: ui/securitypagegeneraltab.ui:60
+#, kde-format
+msgid "Allow messages to load external references from the Internet"
+msgstr "Загружать из Интернета внешние объекты, используемые в письмах"
+
+#. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
+#: ui/securitypagegeneraltab.ui:67
+#, kde-format
+msgid "Exceptions"
+msgstr "Исключения"
+
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
-#: ui/securitypagegeneraltab.ui:94
+#: ui/securitypagegeneraltab.ui:98
 #, kde-format
 msgid "E-mails Scams"
 msgstr "Вредоносные письма"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
-#: ui/securitypagegeneraltab.ui:100
+#: ui/securitypagegeneraltab.ui:104
 #, kde-format
 msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
@@ -7698,37 +7698,37 @@ msgstr ""
 "выявляя приёмы, которыми пользуются злоумышленники"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
-#: ui/securitypagegeneraltab.ui:110
+#: ui/securitypagegeneraltab.ui:114
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
 msgstr "Информировать, если открываемое сообщение подозрительно"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
-#: ui/securitypagegeneraltab.ui:117
+#: ui/securitypagegeneraltab.ui:121
 #, kde-format
 msgid "Whitelist:"
 msgstr "Список разрешённых:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
-#: ui/securitypagegeneraltab.ui:130
+#: ui/securitypagegeneraltab.ui:134
 #, kde-format
 msgid "Safe Browsing"
 msgstr "Безопасный просмотр"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
-#: ui/securitypagegeneraltab.ui:136
+#: ui/securitypagegeneraltab.ui:140
 #, kde-format
 msgid "Check URL With Phishing Google System"
 msgstr "Проверять ссылки в системе поиска фишинга от Google"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
-#: ui/securitypagegeneraltab.ui:143
+#: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
 msgstr "Проверять письма на наличие отслеживающих URL"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
-#: ui/securitypagegeneraltab.ui:159
+#: ui/securitypagegeneraltab.ui:163
 #, kde-format
 msgid "Encrypted Messages"
 msgstr "Зашифрованные письма"
@@ -7736,19 +7736,19 @@ msgstr "Зашифрованные письма"
 # long translation: "Расшифровывать зашифрованные письма автоматически при их просмотре, если это
 # возможно" --aspotashev
 #. i18n: ectx: property (text), widget (QCheckBox, mAlwaysDecrypt)
-#: ui/securitypagegeneraltab.ui:165
+#: ui/securitypagegeneraltab.ui:169
 #, kde-format
 msgid "Attempt decryption of encrypted messages when viewing"
 msgstr "По возможности расшифровывать письма при просмотре"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_4)
-#: ui/securitypagegeneraltab.ui:181
+#: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
 msgstr "Управление сертификатами"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
-#: ui/securitypagegeneraltab.ui:187
+#: ui/securitypagegeneraltab.ui:191
 #, kde-format
 msgid "Automatically import keys and certificate"
 msgstr "Автоматически импортировать ключи и сертификаты"
@@ -7867,13 +7867,13 @@ msgstr "Не посылать уведомления, запрашиваемые
 
 #. i18n: ectx: property (text), widget (QLabel, labelWarning)
 #: ui/securitypagemdntab.ui:152
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<b>WARNING:</b> Unconditionally returning confirmations undermines your "
 "privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
-"<b>ВНИМАНИЕ!</b> Безусловная отправка уведомлений нарушает вашу "
-"конфиденциальность. <a href=\"whatsthis-mdn\">Подробнее о MDN...</a>"
+"<b>ВНИМАНИЕ!</b> Безусловная отправка подтверждений нарушает вашу "
+"конфиденциальность. <a href=\"whatsthis-mdn\">Подробнее о MDN…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:17
