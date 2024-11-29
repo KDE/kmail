@@ -25,7 +25,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <templateparser/templatesconfiguration_kfg.h>
 
 #include <KLDAPCore/LdapClientSearch>
-#include <PimCommonAkonadi/CompletionOrderEditor>
 #include <PimCommonAkonadi/RecentAddresses>
 using PimCommon::RecentAddresses;
 
