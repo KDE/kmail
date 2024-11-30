@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-28 00:40+0000\n"
+"POT-Creation-Date: 2024-11-30 00:41+0000\n"
 "PO-Revision-Date: 2024-11-19 04:55+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -1071,68 +1071,68 @@ msgstr "ჭდის წაშლა"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "ჭდე ვერ შევქმენი. მისი სახელი უკვე დაკავებულია."
 
-#: configuredialog/configurecomposerpage.cpp:65
+#: configuredialog/configurecomposerpage.cpp:64
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "მთავარი"
 
-#: configuredialog/configurecomposerpage.cpp:72
+#: configuredialog/configurecomposerpage.cpp:71
 #, kde-format
 msgid "Standard Templates"
 msgstr "სტანდარტული შაბლონები"
 
-#: configuredialog/configurecomposerpage.cpp:78
+#: configuredialog/configurecomposerpage.cpp:77
 #, kde-format
 msgid "Custom Templates"
 msgstr "ხელით მითითებული შაბლონი"
 
-#: configuredialog/configurecomposerpage.cpp:84
+#: configuredialog/configurecomposerpage.cpp:83
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "თემა"
 
-#: configuredialog/configurecomposerpage.cpp:91
+#: configuredialog/configurecomposerpage.cpp:90
 #, kde-format
 msgid "Headers"
 msgstr "სათაურები"
 
-#: configuredialog/configurecomposerpage.cpp:97
+#: configuredialog/configurecomposerpage.cpp:96
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "დანართი"
 
-#: configuredialog/configurecomposerpage.cpp:103
+#: configuredialog/configurecomposerpage.cpp:102
 #, kde-format
 msgid "Autocorrection"
 msgstr "ავტოკორექცია"
 
-#: configuredialog/configurecomposerpage.cpp:109
+#: configuredialog/configurecomposerpage.cpp:108
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "გამოსახულების ზომის ავტომატური შეცვლა"
 
-#: configuredialog/configurecomposerpage.cpp:130
+#: configuredialog/configurecomposerpage.cpp:129
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "ხელმოწერა"
 
-#: configuredialog/configurecomposerpage.cpp:135
+#: configuredialog/configurecomposerpage.cpp:134
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr "მორგებული ხელმოწერის ავტომატური ჩასმა შეტყობინების შედგენის დაწყებისას"
 
-#: configuredialog/configurecomposerpage.cpp:145
+#: configuredialog/configurecomposerpage.cpp:144
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "ზემო ხელმოწერის ჩასმა ნებისმიერ ციტირებულ ტექსტზე ზემოთ"
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:155
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
@@ -1141,18 +1141,18 @@ msgstr ""
 "ხელმოწერამდე RFC-სთან თავსებადი ხელმოწერის გამყოფის ჩასმა (ორი ტირე და "
 "გამოტოვება ერთ ხაზზე)"
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:166
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "პასუხისას არსებული ხელმოწერების ციტირება არ მოხდება"
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:178
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "_ფორმატი"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:183
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1161,7 +1161,7 @@ msgstr ""
 "პასუხისას, მთელი შეტყობინების მაგიერ, მხოლოდ, მონიშნული ტექსტის ციტირება, თუ "
 "შეტყობინების ფანჯარაში ტექსტი მონიშნულია."
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:193
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1171,17 +1171,17 @@ msgstr ""
 "პასუხისას, ციტირებული ტექსტის ყველა ხაზის წინ ციტირების ნიშნების დასმა "
 "მაშინაც კი, როცა ხაზი გადატანილია მისი სიგრძის გამო."
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:204
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "მითითებული სიგანისას სიტყვების ავტომატური გადატანის ჩართვა"
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:215
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "დააყენეთ ტექსტის ზომა ავტომატური სიტყვის გადატანისთვის"
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:235
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1190,7 +1190,7 @@ msgstr ""
 "პასუხისას ან გადაგზავნისას, შეტყობინების ორიგინალ, მიღებულ ფორმატში "
 "ციტირება. თუ ეს გამორთულია, პასუხი უბრალო ტექსტით მოხდება."
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:247
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1199,47 +1199,47 @@ msgstr ""
 "შეტყობინების უბრალო ტექსტის დაფორმატება HTML მარკიდებიდან. მხარდაჭერიია "
 "სქელი, კურსივი და ხაზგასმული ტექსტი, სიები და გარე მიმართვები."
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:257
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "ხაზში"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:257
 #, kde-format
 msgid "As Attachment"
 msgstr "მიმაგრებულ ფაილად"
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "დააყენეთ ნაგულისხმევი გადაგზავნილი შეტყობინების ფორმატი"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:263
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "გადაგზავნის ნაგულისხმები ტიპი:"
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:281
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "მიმღებები"
 
-#: configuredialog/configurecomposerpage.cpp:312
+#: configuredialog/configurecomposerpage.cpp:311
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "გაფრთხილება, თუ მითითებულია მეტისმეტად ბევრი მიმღები"
 
-#: configuredialog/configurecomposerpage.cpp:321
+#: configuredialog/configurecomposerpage.cpp:320
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "დააყენეთ მიმღებების მაქსიმალური რაოდენობა, გაფრთხილებისთვის"
 
-#: configuredialog/configurecomposerpage.cpp:339
+#: configuredialog/configurecomposerpage.cpp:338
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1254,7 +1254,7 @@ msgstr ""
 "გაუგზავნოთ.  დაიმახსოვრეთ, რომ ეს ფუნქცია დაგზავნის სიების არსებობას არ "
 "ითვალისწინებს."
 
-#: configuredialog/configurecomposerpage.cpp:360
+#: configuredialog/configurecomposerpage.cpp:359
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
@@ -1262,19 +1262,19 @@ msgstr ""
 "უახლესი შეყვანილი მისამართების დამახსოვრება და მიმღების მისამართის "
 "დასრულებისთვის გამოყენება"
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:371
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "შენახვის გარეშე"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:374
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "დამახსოვრებული მისამართების მაქსიმალური რაოდენობა:"
 
-#: configuredialog/configurecomposerpage.cpp:379
+#: configuredialog/configurecomposerpage.cpp:378
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
@@ -1283,24 +1283,24 @@ msgstr ""
 "ახლახანს შეყვანილი მისამართების რაოდენობა, რომელიც დასრულებისთვის იქნება "
 "დამახსოვრებული"
 
-#: configuredialog/configurecomposerpage.cpp:392
+#: configuredialog/configurecomposerpage.cpp:391
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "დასრულების მორგება…"
 
-#: configuredialog/configurecomposerpage.cpp:401
+#: configuredialog/configurecomposerpage.cpp:400
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "ავტომატური შენახვა"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:410
 #, kde-format
 msgid "No autosave"
 msgstr "ავტომატური შენახვის გარეშე"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:411
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
@@ -1308,18 +1308,18 @@ msgid_plural "%v minutes"
 msgstr[0] "%v წუთი"
 msgstr[1] "%v წუთი"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "შეტყობინების ავტომატური შენახვა მითითებულ ინტერვალში ერთხელ"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "&პასუხის სათაურის პრეფიქსები"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:624
+#: configuredialog/configurecomposerpage.cpp:650
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1329,182 +1329,182 @@ msgstr ""
 "შემდეგი პრეფიქსების ნებისმიერი მიმდევრობის გამოცნობა (ჩანაწერები რეგისტრზე-"
 "არადამოკიდებულებული რეგულარული გამოსახულებებია):"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:632
+#: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "A&dd…"
 msgstr "&დამატება…"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:632
+#: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "Re&move"
 msgstr "წა&შლა"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:632
+#: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "Mod&ify…"
 msgstr "ჩასწორება…"
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:632
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "შეიყვანეთ ახალი პასუხის პრეფიქსი:"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "გნებავთ პასუხის პრეფიქსის წაშლა?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:635
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "პასუხის პრეფიქსი:"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:646
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "&გადაგზავნის სათაურის პრეფიქსები"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:656 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&წაშლა"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Add…"
 msgstr "დამატება…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Modify…"
 msgstr "ჩასწორება…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "შეიყვანეთ ახალი გადაგზავნის პრეფიქსი:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "გნებავთ გადაგზავნის პრეფიქსის წაშლა?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:658
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "გადაგზავნის პრეფიქსი:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:702
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&მომხმარებლის message-id სუფიქსის გამოყენება"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:718
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "&მომხმარებლის message-id სუფიქსი:"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "აღწერეთ თქვენი MIME თავსართის ველები:"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:738
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "სახელი"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "მნიშვნელობა"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:747
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "ახა&ლი"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:751
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "წა&შლა"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:760
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&სახელი:"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:770
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "მნიშვნელობა:"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:910
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "'Content-Type' ავტორიზებული სტრიქონი არაა. ეს თავსართი შენახული არ იქნება."
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "არასწორი თავსართი"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:952
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&ნაკლული მიმაგრებული ფაილების დადგენის ჩართვა"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:958
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "შემდეგი საკვანძო სიტყვების აღქმა, როგორც ფაილის მიბმის სურვილი:"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "Enter new key word:"
 msgstr "შეიყვანეთ ახალი საკვანძო სიტყვა:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:971
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "გნებავთ, მიმაგრების სიტყვა წაშალოთ?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Attachment Word:"
 msgstr "მიმაგრების სიტყვა:"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:979
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "მიბმული ფაილის მაქსიმალური ზომა:"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:986
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " კბ"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:988
 #, kde-format
 msgid "No limit"
 msgstr "ლიმიტის გარეშე"
