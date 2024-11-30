@@ -13,20 +13,22 @@
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010, 2011, 2012.
 # Frederico Goncalves Guimaraes <frederico@teia.bio.br>, 2019.
+# SPDX-FileCopyrightText: 2024 joserafael <joserafaeltic@riseup.net>
+# SPDX-FileCopyrightText: 2024 Geraldo Simiao <geraldosimiao@fedoraproject.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-12 02:35+0000\n"
-"PO-Revision-Date: 2024-03-23 19:06-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"PO-Revision-Date: 2024-11-29 23:35-0300\n"
+"Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -407,15 +409,13 @@ msgid "Mailing List"
 msgstr "Lista de discussão"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "A pasta contém uma lista de discussão"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Detectar automaticamente"
@@ -594,7 +594,7 @@ msgstr "Não l&ida:"
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr ""
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -1072,13 +1072,13 @@ msgstr "Mostrar e-mails não lidos na barra de tarefas"
 #: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Atividades plasma"
 
 #: configuredialog/configureappearancepage.cpp:873
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
-msgstr ""
+msgstr "Habilitar"
 
 #: configuredialog/configureappearancepage.cpp:945
 #, kde-format
@@ -1387,15 +1387,12 @@ msgid "No autosave"
 msgstr "Sem salvamento automático"
 
 #: configuredialog/configurecomposerpage.cpp:412
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " minuto"
-msgstr[1] " minutos"
+msgstr[0] "%v minuto"
+msgstr[1] "%v minutos"
 
 #: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
@@ -1425,7 +1422,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "A&dicionar..."
 
 #: configuredialog/configurecomposerpage.cpp:633
 #: configuredialog/configurecomposerpage.cpp:970
@@ -1469,7 +1466,7 @@ msgstr "Remo&ver"
 #: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "Adicionar…"
 
 #: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
@@ -1753,13 +1750,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " dia"
-msgstr[1] " dias"
+msgstr[0] "%v dia"
+msgstr[1] "%v dias"
 
 #: configuredialog/configuresecuritypage.cpp:316
 #, kde-format
@@ -1874,7 +1869,7 @@ msgstr "&Arquivo morto:"
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
-msgstr ""
+msgstr "\"Arquivo compactado (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
 #, fuzzy, kde-format
@@ -2340,8 +2335,7 @@ msgid " Line: %1 "
 msgstr " Linha: %1 "
 
 #: editor/kmcomposerwin.cpp:1703
-#, fuzzy, kde-format
-#| msgid " Column: %1 "
+#, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Coluna: %1 "
@@ -2667,6 +2661,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"A chave PGP selecionada (%1) não existe em seu chaveiro ou não é adequada "
+"para criptografia."
 
 #: editor/kmcomposerwin.cpp:3452
 #, kde-format
@@ -2675,6 +2671,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"A chave de assinatura PGP selecionada (%1) não existe em seu chaveiro ou não "
+"é adequada para assinatura."
 
 #: editor/kmcomposerwin.cpp:3468
 #, kde-format
@@ -2683,6 +2681,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"A chave SMIME selecionada (%1) não existe em seu chaveiro ou não é adequada "
+"para criptografia."
 
 #: editor/kmcomposerwin.cpp:3481
 #, kde-format
@@ -2691,6 +2691,8 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"A chave de assinatura SMIME selecionada (%1) não existe em seu chaveiro ou "
+"não é adequada para assinatura."
 
 #: editor/kmcomposerwin.cpp:3654
 #, kde-format
@@ -2708,7 +2710,7 @@ msgstr "Não criptografar"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Nenhuma chave encontrada para o destinatário."
 
 #: editor/kmcomposerwin.cpp:3818
 #, kde-format
@@ -2748,6 +2750,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"A chave de criptografia não é confiável. Ela não tem validade suficiente. "
+"Você pode assinar a chave, se comunicou a impressão digital por outro canal. "
+"Clique no ícone para detalhes."
 
 #: editor/kmcomposerwin.cpp:3861
 #, kde-format
@@ -2758,6 +2763,10 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"A chave de criptografia não é confiável. Ela não foi usada em nenhum lugar "
+"para garantir que pertence à pessoa declarada. Ao usar a chave, ela será "
+"mais confiável. Ou você pode assinar a chave, se comunicou a impressão "
+"digital por outro canal. Clique no ícone para obter detalhes."
 
 #: editor/kmcomposerwin.cpp:3869
 #, fuzzy, kde-format
@@ -2779,6 +2788,8 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"A chave de criptografia não é confiável. Ela tem validade desconhecida em "
+"dados TOFU.Clique no ícone para detalhes."
 
 #: editor/kmcomposerwin.cpp:3881
 #, fuzzy, kde-format
@@ -2802,6 +2813,11 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"A chave de criptografia é apenas marginalmente confiável e não foi usada por "
+"tempo suficiente para garantir que pertence à pessoa indicada. Ao usar a "
+"chave, ela será mais confiável. Ou você pode assinar a chave, se tiver "
+"comunicado a impressão digital por outro canal. Clique no ícone para obter "
+"detalhes."
 
 #: editor/kmcomposerwin.cpp:3897
 #, kde-format
@@ -2810,6 +2826,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"A chave de criptografia é apenas marginalmente confiável. Você pode assinar "
+"a chave, se comunicou a impressão digital por outro canal. Clique no ícone "
+"para obter detalhes."
 
 #: editor/kmcomposerwin.cpp:3903
 #, kde-format
@@ -2820,6 +2839,11 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"A chave de criptografia é apenas marginalmente confiável, mas foi usada o "
+"suficiente vezes para ser muito provavelmente controlada pela pessoa "
+"indicada. Ao usar a chave será mais confiável. Ou você pode assinar a chave, "
+"se tiver comunicado a impressão digital por outro canal. Clique no ícone "
+"para obter detalhes."
 
 #: editor/kmcomposerwin.cpp:3911
 #, fuzzy, kde-format
@@ -2866,6 +2890,11 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
+"<qt>Não foi encontrado nenhum certificado de criptografia válido e confiável "
+"para “%1”.<br/><br/>Selecione o(s) certificado(s) que deve(m) ser usado(s) "
+"para esse destinatário. Se não houver um certificado adequado na lista, você "
+"também poderá procurar certificados externos clicando no botão: procurar "
+"certificados externos.</qt>"
 
 #: editor/kmcomposerwin.cpp:4266
 #, fuzzy, kde-format
@@ -3132,12 +3161,12 @@ msgstr "Atalho da pasta %1"
 #, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr ""
+msgstr "Leitor fechado"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "Limpar histórico"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
 #, fuzzy, kde-format
@@ -3216,12 +3245,12 @@ msgstr "Identidades &existentes:"
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "Não foi possível iniciar a geração do certificado OpenPGP."
 
 #: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "Não foi possível iniciar a geração do certificado OpenPGP: %1"
 
 #: identity/identitydialog.cpp:246
 #, fuzzy, kde-format
@@ -3236,11 +3265,13 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"O processo de geração de um certificado OpenPGP requer grandes quantidades "
+"de números aleatórios. Isso pode exigir vários minutos..."
 
 #: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "Não foi possível gerar um certificado OpenPGP: %1"
 
 #: identity/identitydialog.cpp:271
 #, fuzzy, kde-format
@@ -3747,7 +3778,7 @@ msgstr "Imagem"
 #: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Activities"
-msgstr ""
+msgstr "Atividades"
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -3936,7 +3967,7 @@ msgstr "&Remover"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "Adicionar…"
 
 #: identity/identityngpage.cpp:243
 #, fuzzy, kde-format
@@ -5075,15 +5106,19 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"A mensagem selecionada é criptografada. No momento, não é possível excluir "
+"anexos de mensagens criptografadas."
 msgstr[1] ""
+"A seleção contém apenas mensagens criptografadas, das quais atualmente não é "
+"possível excluir anexos. não é possível excluir anexos."
 
 #: kmmainwidget.cpp:2419
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Excluir anexos de uma mensagem criptografada"
+msgstr[1] "Excluir anexos de mensagens criptografadas"
 
 #: kmmainwidget.cpp:2424
 #, fuzzy, kde-format
@@ -5112,6 +5147,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Observe que a exclusão de anexos de uma mensagem assinada "
+"criptograficamente invalidará sua assinatura.</p></html>"
 
 #: kmmainwidget.cpp:2436
 #, kde-format
@@ -5119,6 +5156,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>No momento, não é possível excluir anexos de mensagens "
+"criptografadas.<br />As mensagens criptografadas serão ignoradas.</p></html>"
 
 #: kmmainwidget.cpp:2441
 #, kde-format
@@ -5658,8 +5697,7 @@ msgid "Manage &Sieve Scripts…"
 msgstr "Gerenciar os scripts &Sieve..."
 
 #: kmmainwidget.cpp:3460
-#, fuzzy, kde-format
-#| msgid "&Add Account..."
+#, kde-format
 msgid "&Add Account…"
 msgstr "&Adicionar conta..."
 
@@ -7231,7 +7269,7 @@ msgstr "Adicionar nova marca"
 #, kde-format
 msgctxt "@action"
 msgid "More…"
-msgstr ""
+msgstr "Mais..."
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -7311,7 +7349,7 @@ msgstr "Selecionar do livro de endereços"
 #: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "Mostrar apenas identidade na atividade atual"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31
@@ -7323,7 +7361,7 @@ msgstr "Adicionar uma nova identidade"
 #: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "&Adicionar…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identityngpage.ui:44
