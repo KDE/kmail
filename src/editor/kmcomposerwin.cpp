@@ -376,6 +376,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     connect(transport, &MailTransport::TransportComboBox::activated, this, &KMComposerWin::slotTransportChanged);
     connect(transport, &MailTransport::TransportComboBox::transportRemoved, this, &KMComposerWin::slotTransportRemoved);
     mEdtFrom = new MessageComposer::ComposerLineEdit(false, mHeadersArea);
+    // TODO add ldapactivities
     mEdtFrom->installEventFilter(this);
     mEdtFrom->setObjectName("fromLine"_L1);
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
@@ -434,6 +435,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mAttachmentMissing);
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
+    // TODO add ldapactivities
     composerEditorNg->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
     mRichTextEditorWidget = new TextCustomEditor::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
     composerEditorNg->installEventFilter(this);
