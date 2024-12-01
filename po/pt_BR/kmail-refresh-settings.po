@@ -4,30 +4,32 @@
 #
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2019, 2021, 2022, 2023.
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2019, 2020.
+# SPDX-FileCopyrightText: 2024 Geraldo Simiao <geraldosimiao@fedoraproject.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-23 00:41+0000\n"
-"PO-Revision-Date: 2023-02-14 11:02-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
-"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"PO-Revision-Date: 2024-11-29 23:34-0300\n"
+"Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
+"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Luiz Fernando Ranghetti, André Marcelo Alvarenga"
+msgstr "Luiz Fernando Ranghetti, André Marcelo Alvarenga, Geraldo Simião"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "elchevive@opensuse.org, alvarenga@kde.org"
+msgstr ""
+"elchevive@opensuse.org, alvarenga@kde.org, geraldosimiao@fedoraproject.org"
 
 #: main.cpp:28 main.cpp:30
 #, kde-format
@@ -35,14 +37,12 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Assistente do KMail para atualizar configurações"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgstr "(c) 2019-2024 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -74,8 +74,7 @@ msgid "Finish"
 msgstr "Concluir"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Limpar"
@@ -110,8 +109,7 @@ msgstr ""
 "Concluído"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Feche o KMail/Kontact antes de usar."

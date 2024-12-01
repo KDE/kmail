@@ -13,20 +13,21 @@
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2009, 2010, 2012, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
 # Marcus Vinícius de Andrade Gama <marcus.gama@gmail.com>, 2010, 2011, 2012.
 # Frederico Goncalves Guimaraes <frederico@teia.bio.br>, 2019.
+# SPDX-FileCopyrightText: 2024 Geraldo Simiao <geraldosimiao@fedoraproject.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-30 00:41+0000\n"
-"PO-Revision-Date: 2024-03-23 19:06-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
+"PO-Revision-Date: 2024-11-29 23:35-0300\n"
+"Last-Translator: Geraldo Simiao <geraldosimiao@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -407,15 +408,13 @@ msgid "Mailing List"
 msgstr "Lista de discussão"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "A pasta contém uma lista de discussão"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Detectar automaticamente"
@@ -1387,15 +1386,12 @@ msgid "No autosave"
 msgstr "Sem salvamento automático"
 
 #: configuredialog/configurecomposerpage.cpp:411
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " minuto"
-msgstr[1] " minutos"
+msgstr[0] "%v minuto"
+msgstr[1] "%v minutos"
 
 #: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
@@ -1425,7 +1421,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "A&dd…"
-msgstr ""
+msgstr "A&dicionar..."
 
 #: configuredialog/configurecomposerpage.cpp:632
 #: configuredialog/configurecomposerpage.cpp:969
@@ -1753,13 +1749,11 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " dia"
-msgstr[1] " dias"
+msgstr[0] "%v dia"
+msgstr[1] "%v dias"
 
 #: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
@@ -2340,8 +2334,7 @@ msgid " Line: %1 "
 msgstr " Linha: %1 "
 
 #: editor/kmcomposerwin.cpp:1700
-#, fuzzy, kde-format
-#| msgid " Column: %1 "
+#, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Coluna: %1 "
@@ -5681,8 +5674,7 @@ msgid "Manage &Sieve Scripts…"
 msgstr "Gerenciar os scripts &Sieve..."
 
 #: kmmainwidget.cpp:3443
-#, fuzzy, kde-format
-#| msgid "&Add Account..."
+#, kde-format
 msgid "&Add Account…"
 msgstr "&Adicionar conta..."
 

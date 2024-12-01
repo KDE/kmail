@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-30 00:41+0000\n"
-"PO-Revision-Date: 2024-09-21 11:46+0200\n"
+"PO-Revision-Date: 2024-11-30 09:26+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2278,22 +2278,16 @@ msgid "Sending Message Failed"
 msgstr "Nieudane wysyłanie wiadomości"
 
 #: editor/kmcomposerwin.cpp:2239 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr ""
-"Nie można uruchomić \"Eksportera danych ZIO\". Sprawdź swoją instalację."
+msgstr "Nie można uruchomić \"KAddressbook\". Sprawdź swoją instalację."
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Nie można uruchomić \"Eksportera danych ZIO\""
+msgstr "Nie można uruchomić \"KAddressbook\""
 
 #: editor/kmcomposerwin.cpp:2364
 #, kde-format
@@ -4521,22 +4515,16 @@ msgid "KMail Error"
 msgstr "Błąd KMaila"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr ""
-"Nie można uruchomić \"Eksportera danych ZIO\". Sprawdź swoją instalację."
+msgstr "Nie można uruchomić \"ImportWizard\". Sprawdź swoją instalację."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Nie można wywołać pomocnika importowania"
+msgstr "Nie można uruchomić \"ImportWizard\""
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5900,14 +5888,12 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Dodano obsługę zasobów usług sieciowych Microsoft Exchange"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Dodano obsługę katalogu poczty"
+msgstr "Dodano obsługę Windowsa"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "Dodano własną składnię użyteczną w polu wyszukiwania tekstu"
 
 #: kmreaderwin.cpp:311
 #, kde-format
