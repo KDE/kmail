@@ -1,6 +1,6 @@
 # Copyright © 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdepim package.
-# Tommi Nieminen <translator@legisign.org>, 2012, 2013, 2018, 2020, 2023.
+# SPDX-FileCopyrightText: 2012, 2013, 2018, 2020, 2023, 2024 Tommi Nieminen <translator@legisign.org>
 # Lasse Liehu <lasse.liehu@gmail.com>, 2012, 2013, 2014.
 #
 # KDE Finnish translation sprint participants:
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2023-09-26 13:22+0300\n"
+"PO-Revision-Date: 2024-10-16 17:57+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -19,8 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-POT-Import-Date: 2012-12-01 22:24:50+0000\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
@@ -29,15 +28,13 @@ msgid "Filter Log Viewer"
 msgstr "Suodatinlokikatselin"
 
 #: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Jaa…"
 
 #: filterlogdialog.cpp:85
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Kirjaa suodatustapahtumat &lokiin"
@@ -57,15 +54,13 @@ msgid "Logging Details"
 msgstr "Kirjaamisen yksityiskohdat"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Lokihahmon kuvaus"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Kirjaa lokiin &suodinsääntöjen suoritus"
@@ -85,22 +80,19 @@ msgstr ""
 "suotimen kaikkien sääntöjen tulos."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Kirjaa lokiin suodinhahmojen suoritus"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Kirjaa lokii suotimen toiminnot"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Lokikoon rajoitus:"

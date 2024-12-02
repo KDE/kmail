@@ -1,6 +1,6 @@
 # Copyright © 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdepim package.
-# Tommi Nieminen <translator@legisign.org>, 2012, 2016, 2020, 2021.
+# SPDX-FileCopyrightText: 2012, 2016, 2020, 2021, 2024 Tommi Nieminen <translator@legisign.org>
 # Lasse Liehu <lasse.liehu@gmail.com>, 2013, 2015.
 #
 # KDE Finnish translation sprint participants:
@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-10 00:42+0000\n"
-"PO-Revision-Date: 2021-08-18 19:15+0300\n"
+"PO-Revision-Date: 2024-10-16 18:03+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.04.2\n"
-"X-POT-Import-Date: 2012-12-01 22:25:08+0000\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,7 +33,7 @@ msgstr "translator@legisign.org"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr ""
+msgstr "Tallenna…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -87,9 +86,7 @@ msgid "View"
 msgstr "Näytä"
 
 #: ktnefmain.cpp:115
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "View With..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Näytä ohjelmalla…"
@@ -101,17 +98,13 @@ msgid "Extract"
 msgstr "Pura"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
 msgstr "Pura kohteeseen…"
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract All To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Pura kaikki kohteeseen…"
@@ -135,17 +128,13 @@ msgid "Show Message Text"
 msgstr "Näytä viestin teksti"
 
 #: ktnefmain.cpp:147
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Save Message Text As..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
 msgstr "Näytä viestin teksti muodossa…"
 
 #: ktnefmain.cpp:160
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Default Folder..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
 msgstr "Oletuskansio…"
@@ -218,20 +207,16 @@ msgid "&Open With"
 msgstr "Avaa &ohjelmalla"
 
 #: ktnefmain.cpp:570
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Open With"
-#| msgid "&Other..."
+#, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "&Muu…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
-#, fuzzy, kde-format
-#| msgctxt "@title:menu"
-#| msgid "&Open With"
+#, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "Avaa &ohjelmalla"
+msgstr "A&vaa ohjelmalla…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -297,8 +282,7 @@ msgstr ""
 "Tekijänoikeudet © 2012 Allen Winter"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
@@ -309,8 +293,7 @@ msgid "Author"
 msgstr "Tekijä"
 
 #: main.cpp:38
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"

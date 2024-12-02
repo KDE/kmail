@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2013, 2014, 2015, 2016.
-# Tommi Nieminen <translator@legisign.org>, 2017, 2018, 2019, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2017, 2018, 2019, 2020, 2021, 2022, 2024 Tommi Nieminen <translator@legisign.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-19 00:41+0000\n"
-"PO-Revision-Date: 2022-01-28 16:30+0200\n"
+"PO-Revision-Date: 2024-10-16 17:57+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 20.04.2\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -44,21 +44,18 @@ msgid "Message Id"
 msgstr "Viestin tunniste"
 
 #: sendlaterconfigurewidget.cpp:69
-#, fuzzy, kde-format
-#| msgid "No messages waiting..."
+#, kde-format
 msgid "No messages waiting…"
-msgstr "Ei viestejä odottamassa…"
+msgstr "Ei odottavia viestejä…"
 
 #: sendlaterconfigurewidget.cpp:94
-#, fuzzy, kde-format
-#| msgid "Send now"
+#, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Lähetä heti"
 
 #: sendlaterconfigurewidget.cpp:97
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Poista"
@@ -121,8 +118,7 @@ msgid "Copyright (C) 2013-%1 Laurent Montel"
 msgstr "Tekijänoikeudet © 2013–%1 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -190,8 +186,7 @@ msgid "An error was found. Do you want to resend it?"
 msgstr "Löytyi virhe. Haluatko lähettää kohteen uudelleen?"
 
 #: sendlatermanager.cpp:194
-#, fuzzy, kde-format
-#| msgid "Error found"
+#, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Löytyi virhe"
@@ -204,8 +199,7 @@ msgstr "Lähetä uudelleen"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
 msgstr "Muuta…"
 
