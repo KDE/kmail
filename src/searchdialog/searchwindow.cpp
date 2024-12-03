@@ -82,7 +82,7 @@ SearchWindow::SearchWindow(KMMainWidget *widget, const Akonadi::Collection &coll
     auto topWidget = new QWidget;
     auto lay = new QVBoxLayout(topWidget);
     lay->setContentsMargins({});
-    mSearchPatternWidget = new SearchPatternWarning;
+    mSearchPatternWidget = new SearchPatternWarning(this);
     lay->addWidget(mSearchPatternWidget);
     mainLayout->addWidget(topWidget);
 
