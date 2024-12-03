@@ -142,8 +142,9 @@ QVariant KMSearchMessageModel::entityData(const Akonadi::Item &item, int column,
     // The Collection column is first and is added by this model
     if (column == int(KMSearchMessageModel::Column::Collection)) {
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
-            if (item.storageCollectionId() >= 0) {
-                return fullCollectionPath(item.storageCollectionId());
+            const Akonadi::Collection::Id collectionId = item.storageCollectionId();
+            if (collectionId >= 0) {
+                return fullCollectionPath(collectionId);
             }
             return fullCollectionPath(item.parentCollection().id());
         }
