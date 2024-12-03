@@ -27,7 +27,7 @@ bool ValidateSendMailShortcut::validate()
     const int result =
         PIMMessageBox::fourBtnMsgBox(mParent,
                                      QMessageBox::Question,
-                                     i18n("This shortcut allows to send mail directly.\nMail can be send accidentally.\nWhat do you want to do?"),
+                                     i18n("This shortcut allows sending mail directly.\nMail can be sent accidentally.\nWhat do you want to do?"),
                                      i18n("Configure shortcut"),
                                      i18n("Remove Shortcut"),
                                      i18n("Ask Before Sending"),
