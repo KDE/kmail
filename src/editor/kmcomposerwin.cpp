@@ -382,6 +382,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEdtFrom->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     mEdtFrom->setToolTip(i18nc("@info:tooltip", "Set the \"From:\" email address for this message"));
 
+    // TODO add ldapactivities
     auto recipientsEditor = new MessageComposer::RecipientsEditor(mHeadersArea);
     recipientsEditor->setRecentAddressConfig(MessageComposer::MessageComposerSettings::self()->config());
     connect(recipientsEditor, &MessageComposer::RecipientsEditor::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
@@ -435,7 +436,6 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
     mEditorAndCryptoStateIndicatorsLayout->addWidget(mAttachmentMissing);
 
     auto composerEditorNg = new KMComposerEditorNg(this, mCryptoStateIndicatorWidget);
-    // TODO add ldapactivities
     composerEditorNg->setProperty("_breeze_borders_sides", QVariant::fromValue(QFlags{Qt::TopEdge}));
     mRichTextEditorWidget = new TextCustomEditor::RichTextEditorWidget(composerEditorNg, mCryptoStateIndicatorWidget);
     composerEditorNg->installEventFilter(this);
