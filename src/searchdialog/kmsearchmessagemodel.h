@@ -13,7 +13,7 @@ class KMSearchMessageModel : public Akonadi::MessageModel
     Q_OBJECT
 
 public:
-    enum Column {
+    enum class Column : uint8_t {
         Collection,
         Subject,
         Sender,

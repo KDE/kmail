@@ -140,7 +140,7 @@ QVariant KMSearchMessageModel::entityData(const Akonadi::Item &item, int column,
     }
 
     // The Collection column is first and is added by this model
-    if (column == Collection) {
+    if (column == int(KMSearchMessageModel::Column::Collection)) {
         if (role == Qt::DisplayRole || role == Qt::EditRole) {
             if (item.storageCollectionId() >= 0) {
                 return fullCollectionPath(item.storageCollectionId());
@@ -156,7 +156,7 @@ QVariant KMSearchMessageModel::entityData(const Akonadi::Item &item, int column,
 
 QVariant KMSearchMessageModel::entityHeaderData(int section, Qt::Orientation orientation, int role, HeaderGroup headerGroup) const
 {
-    if (orientation == Qt::Horizontal && role == Qt::DisplayRole && section == Collection) {
+    if (orientation == Qt::Horizontal && role == Qt::DisplayRole && section == int(KMSearchMessageModel::Column::Collection)) {
         return i18nc("@title:column, folder (e.g. email)", "Folder");
     }
     return Akonadi::MessageModel::entityHeaderData((section - 1), orientation, role, headerGroup);
