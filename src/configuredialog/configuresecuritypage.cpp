@@ -480,7 +480,7 @@ struct SMIMECryptoConfigEntries {
     QGpgME::CryptoConfigEntry *mCustomHTTPProxy = nullptr;
     QGpgME::CryptoConfigEntry *mCustomLDAPProxy = nullptr;
 
-    QGpgME::CryptoConfig *mConfig = nullptr;
+    QGpgME::CryptoConfig *const mConfig;
 };
 
 void SecurityPageSMimeTab::doLoadOther()
