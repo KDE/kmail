@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-02 00:43+0000\n"
+"POT-Creation-Date: 2024-12-04 00:40+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -1881,37 +1881,37 @@ msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "De"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:412
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identitá"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:413
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "D&ictionarium:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:414
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "&Fólder:"
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:415
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Postage"
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&De:"
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:417
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
@@ -6178,7 +6178,7 @@ msgstr "Date"
 msgid "Preview"
 msgstr "Previder"
 
-#: searchdialog/kmsearchmessagemodel.cpp:160
+#: searchdialog/kmsearchmessagemodel.cpp:161
 #, fuzzy, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
