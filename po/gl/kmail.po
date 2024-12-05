@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-04 00:40+0000\n"
-"PO-Revision-Date: 2024-09-14 16:51+0200\n"
+"PO-Revision-Date: 2024-12-04 10:11+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2286,23 +2286,18 @@ msgid "Sending Message Failed"
 msgstr "Fallou o envío da mensaxe"
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Non foi posíbel iniciar o «Exportador de datos PIM». Comprobe que estea "
+"Non foi posíbel iniciar o programa «KAddressbook». Comprobe que estea "
 "instalado correctamente."
 
 #: editor/kmcomposerwin.cpp:2243 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Non é posíbel iniciar o «Exportador de datos PIM»."
+msgstr "Non é posíbel iniciar o programa «KAddressbook»."
 
 #: editor/kmcomposerwin.cpp:2366
 #, kde-format
@@ -4529,23 +4524,19 @@ msgid "KMail Error"
 msgstr "Erro de KMail"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Non foi posíbel iniciar o «Exportador de datos PIM». Comprobe que estea "
-"instalado correctamente."
+"Non foi posíbel iniciar o programa «ImportWizard» (asistente de "
+"importación). Comprobe que estea instalado correctamente."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Non é posíbel iniciar o asistente de importación."
+msgstr ""
+"Non é posíbel iniciar o programa «ImportWizard» (asistente de importación)"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5905,14 +5896,12 @@ msgstr ""
 "Exchange"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Compatibilidade con «maildir»."
+msgstr "Compatibilidade con Windows."
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "Engadir sintaxe personalizada usábel no campo de texto de busca."
 
 #: kmreaderwin.cpp:311
 #, kde-format
