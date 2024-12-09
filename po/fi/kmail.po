@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-04 00:40+0000\n"
-"PO-Revision-Date: 2024-11-06 20:47+0200\n"
+"PO-Revision-Date: 2024-12-07 15:10+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -2283,21 +2283,16 @@ msgid "Sending Message Failed"
 msgstr "Viestin lähettäminen epäonnistui"
 
 #: editor/kmcomposerwin.cpp:2241 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää. Tarkista asennus."
+msgstr "KAddressbook-ohjelmaa ei voitu käynnistää. Tarkista asennus."
 
 #: editor/kmcomposerwin.cpp:2243 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää"
+msgstr "KAddressBook-ohjelmaa ei voitu käynnistää"
 
 #: editor/kmcomposerwin.cpp:2366
 #, kde-format
@@ -4509,18 +4504,13 @@ msgid "KMail Error"
 msgstr "KMail-virhe"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää. Tarkista asennus."
+msgstr "Opastettua tuontia ei voitu käynnistää. Tarkista asennus."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "Opastettua tuontia ei voi käynnistää"
@@ -5874,14 +5864,12 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Lisätty Microsoft Exchange -verkkopalveluresurssien tuki"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Lisäsi maildir-tuen"
+msgstr "Lisäsi Windows-tuen"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "Lisäsi hakukentässä käytettävän mukautetun syntaksin"
 
 #: kmreaderwin.cpp:311
 #, kde-format
