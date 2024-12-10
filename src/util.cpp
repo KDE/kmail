@@ -52,7 +52,10 @@ Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
     return -1;
 }
 
-bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
+bool KMail::Util::handleClickedURL(const QUrl &url,
+                                   const QSharedPointer<MailCommon::FolderSettings> &folder,
+                                   const Akonadi::Collection &collection,
+                                   QWidget *parentWidget)
 {
     if (url.scheme() == "mailto"_L1) {
         auto job = new HandleClickedUrlJob;
@@ -61,10 +64,22 @@ bool KMail::Util::handleClickedURL(const QUrl &url, const QSharedPointer<MailCom
         job->setCurrentCollection(collection);
         job->start();
         return true;
-    } else {
-        qCWarning(KMAIL_LOG) << "Can't handle URL:" << url;
-        return false;
+    } else if (url.scheme() == "certificate"_L1) {
+        QStringList lst;
+        if (parentWidget) {
+            lst << QStringLiteral("--parent-windowid") << QString::number(static_cast<qlonglong>(parentWidget->winId()));
+        }
+        lst << QStringLiteral("--query") << url.path();
+        QString exec = PimCommon::Util::findExecutable(QStringLiteral("kleopatra"));
+        if (exec.isEmpty()) {
+            qCWarning(KMAIL_LOG) << "Could not find kleopatra executable in PATH";
+            return false;
+        }
+        QProcess::startDetached(exec, lst);
+        return true;
     }
+    qCWarning(KMAIL_LOG) << "Can't handle URL:" << url;
+    return false;
 }
 
 bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
