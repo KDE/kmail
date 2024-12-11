@@ -73,7 +73,7 @@ class Job;
 
 namespace KMail
 {
-class SearchWindow;
+class SearchWindowDialog;
 class VacationScriptIndicatorWidget;
 class TagActionManager;
 class FolderShortcutActionManager;
@@ -602,7 +602,7 @@ private:
     bool mEnableFavoriteFolderView = false;
     bool mEnableFolderQuickSearch = false;
 
-    QPointer<KMail::SearchWindow> mSearchWin;
+    QPointer<KMail::SearchWindowDialog> mSearchWin;
 
     QAction *mExpireFolderAction = nullptr;
     QAction *mFolderMailingListPropertiesAction = nullptr;

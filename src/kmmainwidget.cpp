@@ -16,7 +16,7 @@
 #include "job/composenewmessagejob.h"
 #include "kmcommands.h"
 #include "kmreadermainwin.h"
-#include "searchdialog/searchwindow.h"
+#include "searchdialog/searchwindowdialog.h"
 #include "undostack.h"
 #include "util.h"
 #include "widgets/vacationscriptindicatorwidget.h"
@@ -193,7 +193,7 @@ using namespace std::chrono_literals;
 using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;
-using KMail::SearchWindow;
+using KMail::SearchWindowDialog;
 using KMime::Types::AddrSpecList;
 using KPIM::ProgressManager;
 using PimCommon::BroadcastStatus;
@@ -1300,7 +1300,7 @@ void KMMainWidget::slotFocusQuickSearch()
 bool KMMainWidget::showSearchDialog()
 {
     if (!mSearchWin) {
-        mSearchWin = new SearchWindow(this, mCurrentCollection);
+        mSearchWin = new SearchWindowDialog(this, mCurrentCollection);
         mSearchWin->setModal(false);
         mSearchWin->setObjectName(QLatin1StringView("Search"));
     } else {

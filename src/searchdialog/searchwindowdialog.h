@@ -50,7 +50,7 @@ namespace KMail
  * or moving on them.
  */
 class SearchPatternWarning;
-class SearchWindow : public QDialog, public KXMLGUIClient
+class SearchWindowDialog : public QDialog, public KXMLGUIClient
 {
     Q_OBJECT
 
@@ -62,12 +62,12 @@ public:
      * @param collection The folder which will be pre-selected as the base folder
      *                   of search operations.
      */
-    explicit SearchWindow(KMMainWidget *parent, const Akonadi::Collection &collection = Akonadi::Collection());
+    explicit SearchWindowDialog(KMMainWidget *parent, const Akonadi::Collection &collection = Akonadi::Collection());
 
     /**
      * Destroys the search window.
      */
-    ~SearchWindow() override;
+    ~SearchWindowDialog() override;
 
     /**
      * Changes the base folder for search operations to a different folder.

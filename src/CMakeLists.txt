@@ -81,7 +81,7 @@ target_sources(kmailprivate PRIVATE
     searchdialog/kmsearchmessagemodel.cpp
     searchdialog/searchpatternwarning.cpp
     searchdialog/kmailsearchpatternedit.cpp
-    searchdialog/searchwindow.cpp
+    searchdialog/searchwindowdialog.cpp
     searchdialog/searchdescriptionattribute.cpp
     searchdialog/incompleteindexdialog.cpp
     identity/identitydialog.cpp
@@ -221,7 +221,7 @@ target_sources(kmailprivate PRIVATE
     searchdialog/kmsearchmessagemodel.h
     searchdialog/searchpatternwarning.h
     searchdialog/kmailsearchpatternedit.h
-    searchdialog/searchwindow.h
+    searchdialog/searchwindowdialog.h
     searchdialog/searchdescriptionattribute.h
     searchdialog/incompleteindexdialog.h
     identity/identitydialog.h
