@@ -654,7 +654,9 @@ private:
     QAction *mQuickSearchAction = nullptr;
     DisplayMessageFormatActionMenu *mDisplayMessageFormatMenu = nullptr;
     MessageViewer::Viewer::DisplayFormatMessage mFolderDisplayFormatPreference = MessageViewer::Viewer::UseGlobalSetting;
+#ifndef Q_OS_WIN
     QAction *mSearchMessages = nullptr;
+#endif
     KMLaunchExternalComponent *const mLaunchExternalComponent;
     ManageShowCollectionProperties *const mManageShowCollectionProperties;
     QAction *mShowIntroductionAction = nullptr;

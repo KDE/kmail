@@ -3084,10 +3084,12 @@ void KMMainWidget::setupActions()
     connect(mDeleteThreadAction, &QAction::triggered, this, &KMMainWidget::slotDeleteThread);
     actionCollection()->setDefaultShortcut(mDeleteThreadAction, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Delete));
 
+#ifndef Q_OS_WIN
     mSearchMessages = new QAction(QIcon::fromTheme(QStringLiteral("edit-find-mail")), i18n("&Find Messages…"), this);
     actionCollection()->addAction(QStringLiteral("search_messages"), mSearchMessages);
     connect(mSearchMessages, &QAction::triggered, this, &KMMainWidget::slotRequestFullSearchFromQuickSearch);
     actionCollection()->setDefaultShortcut(mSearchMessages, QKeySequence(Qt::Key_S));
+#endif
 
     mSelectAllMessages = new QAction(i18nc("@action", "Select &All Messages"), this);
     actionCollection()->addAction(QStringLiteral("mark_all_messages"), mSelectAllMessages);
@@ -4138,8 +4140,9 @@ void KMMainWidget::updateFolderMenu()
 
     mTrashThreadAction->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
     mTrashThreadAction->setText(isInTrashFolder ? i18n("Delete T&hread") : i18n("M&ove Thread to Trash"));
-
+#ifndef Q_OS_WIN
     mSearchMessages->setText((mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource")) ? i18n("Edit Search…") : i18n("&Find Messages…"));
+#endif
 
     mExpireConfigAction->setEnabled(mCurrentFolderSettings && !mCurrentFolderSettings->isStructural() && mCurrentFolderSettings->canDeleteMessages()
                                     && folderWithContent && !MailCommon::Util::isVirtualCollection(mCurrentCollection));
