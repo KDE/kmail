@@ -4534,9 +4534,11 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             if (status.hasAttachment()) {
                 pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, searchString));
                 status.setHasAttachment(false);
-            }
-            if (!status.isOfUnknownStatus()) {
+            } else if (!status.isOfUnknownStatus()) {
                 pattern.append(SearchRule::Ptr(new SearchRuleStatus(status)));
+            } else if (status.hasInvitation()) {
+                pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasInvitation, searchString));
+                status.setHasInvitation(false);
             }
         }
     }
