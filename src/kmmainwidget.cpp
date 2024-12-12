@@ -193,7 +193,7 @@ using namespace std::chrono_literals;
 using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;
-using KMail::SearchWindowDialog;
+using namespace KMail;
 using KMime::Types::AddrSpecList;
 using KPIM::ProgressManager;
 using PimCommon::BroadcastStatus;
