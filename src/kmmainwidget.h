@@ -602,7 +602,7 @@ private:
     bool mEnableFavoriteFolderView = false;
     bool mEnableFolderQuickSearch = false;
 
-    QPointer<KMail::SearchWindowDialog> mSearchWin;
+    QPointer<KMail::SearchWindowDialog> mSearchWinDlg;
 
     QAction *mExpireFolderAction = nullptr;
     QAction *mFolderMailingListPropertiesAction = nullptr;

@@ -392,8 +392,8 @@ void KMMainWidget::destruct()
     if (mDestructed) {
         return;
     }
-    if (mSearchWin) {
-        mSearchWin->close();
+    if (mSearchWinDlg) {
+        mSearchWinDlg->close();
     }
     disconnect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
     writeConfig(false); /* don't force kmkernel sync when close BUG: 289287 */
@@ -1299,16 +1299,16 @@ void KMMainWidget::slotFocusQuickSearch()
 //-------------------------------------------------------------------------
 bool KMMainWidget::showSearchDialog()
 {
-    if (!mSearchWin) {
-        mSearchWin = new SearchWindowDialog(this, mCurrentCollection);
-        mSearchWin->setModal(false);
-        mSearchWin->setObjectName(QLatin1StringView("Search"));
+    if (!mSearchWinDlg) {
+        mSearchWinDlg = new SearchWindowDialog(this, mCurrentCollection);
+        mSearchWinDlg->setModal(false);
+        mSearchWinDlg->setObjectName(QLatin1StringView("Search"));
     } else {
-        mSearchWin->activateFolder(mCurrentCollection);
+        mSearchWinDlg->activateFolder(mCurrentCollection);
     }
 
-    mSearchWin->show();
-    KWindowSystem::activateWindow(mSearchWin->windowHandle());
+    mSearchWinDlg->show();
+    KWindowSystem::activateWindow(mSearchWinDlg->windowHandle());
     return true;
 }
 
@@ -4503,7 +4503,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         return;
     }
 
-    assert(mSearchWin);
+    assert(mSearchWinDlg);
 
     // Now we look at the current state of the quick search, and if there's
     // something in there, we add the criteria to the existing search for
@@ -4543,7 +4543,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         }
     }
     if (!pattern.isEmpty()) {
-        mSearchWin->addRulesToSearchPattern(pattern);
+        mSearchWinDlg->addRulesToSearchPattern(pattern);
     }
 }
 
