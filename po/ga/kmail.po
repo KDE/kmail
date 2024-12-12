@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-04 00:40+0000\n"
+"POT-Creation-Date: 2024-12-12 00:41+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -1782,7 +1782,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Comh&ad Cartlainne:"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3656
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3658
 #, fuzzy, kde-format
 #| msgid "Archive"
 msgctxt "@action"
@@ -4264,7 +4264,7 @@ msgid "F&older"
 msgstr "F&illteán"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3505 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3507 kmmainwin.rc:134
 #: kmmainwin.rc:291
 #, fuzzy, kde-format
 #| msgid "A&pply Filter"
@@ -4297,7 +4297,7 @@ msgid "&Forward"
 msgstr "Ar A&ghaidh"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3321 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3323 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Cuir Scagaire i bh&Feidhm"
@@ -4774,7 +4774,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4802
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4807
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5152,25 +5152,25 @@ msgstr "&Cuir Snáithe sa Bhruscar"
 msgid "Move thread to trashcan"
 msgstr "Cuir an snáithe sa Bhruscar"
 
-#: kmmainwidget.cpp:3081 kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:3081 kmmainwidget.cpp:4142
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Scrios Snáit&he"
 
-#: kmmainwidget.cpp:3087 kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:3088 kmmainwidget.cpp:4144
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
 msgstr "Aimsigh Teachtaireachtaí"
 
-#: kmmainwidget.cpp:3092
+#: kmmainwidget.cpp:3094
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Roghnaigh G&ach Teachtaireacht"
 
-#: kmmainwidget.cpp:3099
+#: kmmainwidget.cpp:3101
 #, fuzzy, kde-format
 #| msgctxt "@title:tab Mailing list settings for a folder."
 #| msgid "Mailing List"
@@ -5178,26 +5178,26 @@ msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Liosta Ríomhphoist"
 
-#: kmmainwidget.cpp:3107
+#: kmmainwidget.cpp:3109
 #, fuzzy, kde-format
 #| msgid "Local Account"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Cuntas Logánta"
 
-#: kmmainwidget.cpp:3112
+#: kmmainwidget.cpp:3114
 #, fuzzy, kde-format
 #| msgid "A&pply Filter"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Cuir Scagaire i bh&Feidhm"
 
-#: kmmainwidget.cpp:3117
+#: kmmainwidget.cpp:3119
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr ""
 
-#: kmmainwidget.cpp:3135
+#: kmmainwidget.cpp:3137
 #, fuzzy, kde-format
 #| msgid "&Existing identities:"
 msgctxt "@action"
@@ -5205,558 +5205,558 @@ msgid "&Expiration Settings"
 msgstr "Aith&eantais atá ann:"
 
 # noun not verb
-#: kmmainwidget.cpp:3160
+#: kmmainwidget.cpp:3162
 #, fuzzy, kde-format
 #| msgid "&Archive File:"
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Comh&ad Cartlainne:"
 
-#: kmmainwidget.cpp:3168
+#: kmmainwidget.cpp:3170
 #, fuzzy, kde-format
 #| msgid "Send Later"
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Seol Níos Déanaí"
 
-#: kmmainwidget.cpp:3191
+#: kmmainwidget.cpp:3193
 #, fuzzy, kde-format
 #| msgid "Copy Message"
 #| msgid_plural "Copy %1 Messages"
 msgid "Copy Message To…"
 msgstr "Cóipeáil Teachtaireacht"
 
-#: kmmainwidget.cpp:3193
+#: kmmainwidget.cpp:3195
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Move Message To…"
 msgstr "Teachtaireacht Nua"
 
-#: kmmainwidget.cpp:3198
+#: kmmainwidget.cpp:3200
 #, fuzzy, kde-format
 #| msgctxt "@title Message template"
 #| msgid "New Message"
 msgid "&New Message…"
 msgstr "Teachtaireacht Nua"
 
-#: kmmainwidget.cpp:3200
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Nua"
 
-#: kmmainwidget.cpp:3208
+#: kmmainwidget.cpp:3210
 #, kde-format
 msgid "Message From &Template"
 msgstr ""
 
-#: kmmainwidget.cpp:3214
+#: kmmainwidget.cpp:3216
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "New Message t&o Mailing-List…"
 msgstr "Teachtaireacht Nua Chuig..."
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3222
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Cruthaigh Scagaire"
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3226
 #, fuzzy, kde-format
 #| msgid "Filter Action"
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Gníomh Scagaire"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3233
 #, fuzzy, kde-format
 #| msgid "Filter Action"
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Gníomh Scagaire"
 
-#: kmmainwidget.cpp:3237
+#: kmmainwidget.cpp:3239
 #, fuzzy, kde-format
 #| msgid "Filter Action"
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Gníomh Scagaire"
 
-#: kmmainwidget.cpp:3243
+#: kmmainwidget.cpp:3245
 #, fuzzy, kde-format
 #| msgid "Filter Action"
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Gníomh Scagaire"
 
-#: kmmainwidget.cpp:3257
+#: kmmainwidget.cpp:3259
 #, kde-format
 msgid "Mark &Thread"
 msgstr ""
 
-#: kmmainwidget.cpp:3260
+#: kmmainwidget.cpp:3262
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr ""
 
-#: kmmainwidget.cpp:3263
+#: kmmainwidget.cpp:3265
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr ""
 
-#: kmmainwidget.cpp:3266
+#: kmmainwidget.cpp:3268
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr ""
 
-#: kmmainwidget.cpp:3269
+#: kmmainwidget.cpp:3271
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr ""
 
-#: kmmainwidget.cpp:3275
+#: kmmainwidget.cpp:3277
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr ""
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3280
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr ""
 
-#: kmmainwidget.cpp:3281
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr ""
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr ""
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3290
 #, kde-format
 msgid "&Watch Thread"
 msgstr "Bí ag &Faire ar an Snáithe"
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3294
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "Tabhair Neamha&ird ar an Snáithe"
 
-#: kmmainwidget.cpp:3300 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3302 kmreadermainwin.cpp:488
 #, fuzzy, kde-format
 #| msgid "Save A&ttachments..."
 msgid "Save A&ttachments…"
 msgstr "Sábháil Ia&táin..."
 
-#: kmmainwidget.cpp:3304
+#: kmmainwidget.cpp:3306
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Scrios an tIatán"
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3314
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To…"
 msgstr "Cóipeáil an Mhír Go..."
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3318
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr ""
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3327
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr ""
 
-#: kmmainwidget.cpp:3328
+#: kmmainwidget.cpp:3330
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr ""
 
-#: kmmainwidget.cpp:3332
+#: kmmainwidget.cpp:3334
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr ""
 
-#: kmmainwidget.cpp:3335
+#: kmmainwidget.cpp:3337
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr ""
 
-#: kmmainwidget.cpp:3339
+#: kmmainwidget.cpp:3341
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr ""
 
-#: kmmainwidget.cpp:3342
+#: kmmainwidget.cpp:3344
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr ""
 
-#: kmmainwidget.cpp:3346
+#: kmmainwidget.cpp:3348
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr ""
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3351
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr ""
 
-#: kmmainwidget.cpp:3353
+#: kmmainwidget.cpp:3355
 #, fuzzy, kde-format
 #| msgid "&Display Message"
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&Taispeáin Teachtaireacht"
 
-#: kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3362
 #, fuzzy, kde-format
 #| msgid "&Next Message"
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "A&n Chéad Teachtaireacht Eile"
 
-#: kmmainwidget.cpp:3363
+#: kmmainwidget.cpp:3365
 #, kde-format
 msgid "Go to the next message"
 msgstr "Téigh go dtí an chéad teachtaireacht eile"
 
-#: kmmainwidget.cpp:3367
+#: kmmainwidget.cpp:3369
 #, fuzzy, kde-format
 #| msgid "Next &Unread Message"
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "An Chéad Teachtaireacht &Neamhléite Eile"
 
-#: kmmainwidget.cpp:3375
+#: kmmainwidget.cpp:3377
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Ar Aghaidh"
 
-#: kmmainwidget.cpp:3376
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgid "Go to the next unread message"
 msgstr ""
 
-#: kmmainwidget.cpp:3380
+#: kmmainwidget.cpp:3382
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "Teachtaireacht &Roimhe Seo"
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3384
 #, kde-format
 msgid "Go to the previous message"
 msgstr ""
 
-#: kmmainwidget.cpp:3387
+#: kmmainwidget.cpp:3389
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Teachtaireacht &Roimhe Seo"
 
-#: kmmainwidget.cpp:3395
+#: kmmainwidget.cpp:3397
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Roimhe Seo"
 
-#: kmmainwidget.cpp:3396
+#: kmmainwidget.cpp:3398
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr ""
 
-#: kmmainwidget.cpp:3400
+#: kmmainwidget.cpp:3402
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Scrios Fillteán"
 
-#: kmmainwidget.cpp:3406
+#: kmmainwidget.cpp:3408
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr ""
 
-#: kmmainwidget.cpp:3409
+#: kmmainwidget.cpp:3411
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Scrios Fillteán"
 
-#: kmmainwidget.cpp:3415
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr ""
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3421
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr ""
 
-#: kmmainwidget.cpp:3422
+#: kmmainwidget.cpp:3424
 #, kde-format
 msgid "Go to the next unread text"
 msgstr ""
 
-#: kmmainwidget.cpp:3424
+#: kmmainwidget.cpp:3426
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr ""
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3434
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
 msgid "Configure &Filters…"
 msgstr "Cumraigh &Scagairí..."
 
-#: kmmainwidget.cpp:3438
+#: kmmainwidget.cpp:3440
 #, fuzzy, kde-format
 #| msgid "Manage Sieve Scripts"
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Bainistigh Scripteanna Sieve"
 
-#: kmmainwidget.cpp:3443
+#: kmmainwidget.cpp:3445
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account…"
 msgstr "Cuir Cuntas Leis"
 
-#: kmmainwidget.cpp:3448
+#: kmmainwidget.cpp:3450
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "Tús &Eolais ar KMail"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3452
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Taispeáin Leathanach Fáilte KMail"
 
-#: kmmainwidget.cpp:3457
+#: kmmainwidget.cpp:3459
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "Configure &Notifications…"
 msgstr "C&umraigh Fógairt..."
 
-#: kmmainwidget.cpp:3464
+#: kmmainwidget.cpp:3466
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure KMail…"
 msgstr "&Cumraigh KMail..."
 
-#: kmmainwidget.cpp:3471
+#: kmmainwidget.cpp:3473
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr ""
 
 # noun not verb
-#: kmmainwidget.cpp:3477
+#: kmmainwidget.cpp:3479
 #, fuzzy, kde-format
 #| msgid "&Archive File:"
 msgid "Add Favorite Folder…"
 msgstr "Comh&ad Cartlainne:"
 
-#: kmmainwidget.cpp:3483
+#: kmmainwidget.cpp:3485
 #, kde-format
 msgid "Serverside Subscription…"
 msgstr ""
 
-#: kmmainwidget.cpp:3489 kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3491 kmmainwidget.cpp:3499
 #, fuzzy, kde-format
 #| msgid "A&pply Filter"
 msgid "Apply All Filters"
 msgstr "Cuir Scagaire i bh&Feidhm"
 
-#: kmmainwidget.cpp:3510
+#: kmmainwidget.cpp:3512
 #, fuzzy, kde-format
 #| msgid "A&pply Filter"
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Cuir Scagaire i bh&Feidhm"
 
-#: kmmainwidget.cpp:3515
+#: kmmainwidget.cpp:3517
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
 msgid "Import/Export KMail Data…"
 msgstr "&Iompórtáil Sonraí KMail..."
 
-#: kmmainwidget.cpp:3521
+#: kmmainwidget.cpp:3523
 #, fuzzy, kde-format
 #| msgid "Open Address Book"
 msgid "New AddressBook Contact…"
 msgstr "Oscail an Leabhar Seoltaí"
 
 # no "ag"
-#: kmmainwidget.cpp:3529 kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:3531 kmmainwidget.cpp:4184
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "&Socruithe"
 
-#: kmmainwidget.cpp:3533
+#: kmmainwidget.cpp:3535
 #, fuzzy, kde-format
 #| msgid "Local Account"
 msgid "Restart Account"
 msgstr "Cuntas Logánta"
 
-#: kmmainwidget.cpp:3549
+#: kmmainwidget.cpp:3551
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Bog Teachtaireachtaí go Fillteán"
 
-#: kmmainwidget.cpp:3555
+#: kmmainwidget.cpp:3557
 #, fuzzy, kde-format
 #| msgid "Cut Folder"
 msgid "Jump to Folder…"
 msgstr "Gearr an Fillteán"
 
-#: kmmainwidget.cpp:3561
+#: kmmainwidget.cpp:3563
 #, fuzzy, kde-format
 #| msgid "No Operation"
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Gan Oibríocht"
 
-#: kmmainwidget.cpp:3567
+#: kmmainwidget.cpp:3569
 #, fuzzy, kde-format
 #| msgid "Loop in Current Folder"
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Lúb san Fhillteán Reatha"
 
-#: kmmainwidget.cpp:3573
+#: kmmainwidget.cpp:3575
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Scrios Fillteán"
 
-#: kmmainwidget.cpp:3579
+#: kmmainwidget.cpp:3581
 #, fuzzy, kde-format
 #| msgid "Select Folder"
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Roghnaigh Fillteán"
 
-#: kmmainwidget.cpp:3586
+#: kmmainwidget.cpp:3588
 #, fuzzy, kde-format
 #| msgid "Loop in Current Folder"
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Lúb san Fhillteán Reatha"
 
-#: kmmainwidget.cpp:3592
+#: kmmainwidget.cpp:3594
 #, fuzzy, kde-format
 #| msgid "Move Into Folder"
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Bog go Fillteán"
 
-#: kmmainwidget.cpp:3598
+#: kmmainwidget.cpp:3600
 #, fuzzy, kde-format
 #| msgid "&Next Message"
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "A&n Chéad Teachtaireacht Eile"
 
-#: kmmainwidget.cpp:3604
+#: kmmainwidget.cpp:3606
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Teachtaireacht &Roimhe Seo"
 
-#: kmmainwidget.cpp:3610
+#: kmmainwidget.cpp:3612
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Roghnaigh G&ach Teachtaireacht"
 
-#: kmmainwidget.cpp:3616
+#: kmmainwidget.cpp:3618
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Roghnaigh G&ach Teachtaireacht"
 
-#: kmmainwidget.cpp:3622
+#: kmmainwidget.cpp:3624
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Roghnaigh G&ach Teachtaireacht"
 
-#: kmmainwidget.cpp:3629
+#: kmmainwidget.cpp:3631
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr ""
 
-#: kmmainwidget.cpp:3637
+#: kmmainwidget.cpp:3639
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Teachtaireacht &Roimhe Seo"
 
-#: kmmainwidget.cpp:3643
+#: kmmainwidget.cpp:3645
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr ""
 
-#: kmmainwidget.cpp:3650
+#: kmmainwidget.cpp:3652
 #, fuzzy, kde-format
 #| msgid "Move Message to Folder"
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Bog Teachtaireacht go Fillteán"
 
-#: kmmainwidget.cpp:3660
+#: kmmainwidget.cpp:3662
 #, fuzzy, kde-format
 #| msgid "A&pply Filter"
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Cuir Scagaire i bh&Feidhm"
 
-#: kmmainwidget.cpp:3665
+#: kmmainwidget.cpp:3667
 #, fuzzy, kde-format
 #| msgid "A&pply Filter"
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Cuir Scagaire i bh&Feidhm"
 
-#: kmmainwidget.cpp:3671
+#: kmmainwidget.cpp:3673
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Scrios Fillteán"
 
-#: kmmainwidget.cpp:3678
+#: kmmainwidget.cpp:3680
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
@@ -5764,68 +5764,68 @@ msgid "Next Selected Folder"
 msgstr "Scrios Fillteán"
 
 # noun not verb
-#: kmmainwidget.cpp:3707
+#: kmmainwidget.cpp:3709
 #, fuzzy, kde-format
 #| msgid "&Archive File:"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Comh&ad Cartlainne:"
 
-#: kmmainwidget.cpp:4128
+#: kmmainwidget.cpp:4130
 #, kde-format
 msgid "&Delete Search"
 msgstr "Scrios Cuar&dach"
 
-#: kmmainwidget.cpp:4140
+#: kmmainwidget.cpp:4142
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&Cuir Snáithe sa Bhruscar"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4144
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search…"
 msgstr "Cuir Script in Eagar..."
 
-#: kmmainwidget.cpp:4179
+#: kmmainwidget.cpp:4182
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Cumraigh KMail..."
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4193
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Fol&mhaigh an Bruscar"
 
-#: kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:4193
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Cuir Gach Teachtaireacht sa &Bhruscar"
 
-#: kmmainwidget.cpp:4264
+#: kmmainwidget.cpp:4267
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4269
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4323
+#: kmmainwidget.cpp:4326
 #, kde-format
 msgid "Filter %1"
 msgstr "Scagaire %1"
 
-#: kmmainwidget.cpp:4791
+#: kmmainwidget.cpp:4796
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Á Thosú..."
 
-#: kmmainwidget.cpp:4799
+#: kmmainwidget.cpp:4804
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5833,14 +5833,14 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4803
+#: kmmainwidget.cpp:4808
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Úsáid HTML"
 
-#: kmmainwidget.cpp:4949
+#: kmmainwidget.cpp:4954
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5850,26 +5850,26 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4952
+#: kmmainwidget.cpp:4957
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4953
+#: kmmainwidget.cpp:4958
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Cumraigh KMail..."
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:4959
 #, fuzzy, kde-format
 #| msgid "&Cancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "&Cealaigh"
 
-#: kmmainwidget.cpp:4989
+#: kmmainwidget.cpp:4994
 #, fuzzy, kde-format
 #| msgid ""
 #| "File %1 exists.\n"
@@ -5879,21 +5879,21 @@ msgstr ""
 "Tá comhad %1 ann cheana.\n"
 "An bhfuil fonn ort scríobh air?"
 
-#: kmmainwidget.cpp:4990
+#: kmmainwidget.cpp:4995
 #, fuzzy, kde-format
 #| msgid "Local Account"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Cuntas Logánta"
 
-#: kmmainwidget.cpp:4991
+#: kmmainwidget.cpp:4996
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Atosaigh"
 
-#: kmmainwidget.cpp:4998
+#: kmmainwidget.cpp:5003
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -6361,14 +6361,14 @@ msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Freagair"
 
-#: messageactions.cpp:65 searchdialog/searchwindow.cpp:160
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "&Freagair"
 
-#: messageactions.cpp:66 searchdialog/searchwindow.cpp:164
+#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr ""
@@ -6378,7 +6378,7 @@ msgstr ""
 msgid "Reply to A&uthor…"
 msgstr ""
 
-#: messageactions.cpp:68 searchdialog/searchwindow.cpp:168
+#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr ""
@@ -6422,7 +6422,7 @@ msgstr "Teachtaireacht Nua Chuig..."
 msgid "Mar&k Message"
 msgstr ""
 
-#: messageactions.cpp:75 searchdialog/searchwindow.cpp:172
+#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
@@ -6625,20 +6625,20 @@ msgstr "Fillteán"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:78
+#: searchdialog/searchwindowdialog.cpp:78
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Aimsigh Teachtaireachtaí"
 
-#: searchdialog/searchwindow.cpp:94
+#: searchdialog/searchwindowdialog.cpp:94
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Cuardaigh"
 
-#: searchdialog/searchwindow.cpp:176
+#: searchdialog/searchwindowdialog.cpp:176
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6646,34 +6646,34 @@ msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Inlíne"
 
-#: searchdialog/searchwindow.cpp:180
+#: searchdialog/searchwindowdialog.cpp:180
 #, fuzzy, kde-format
 #| msgid "As Attachment"
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Mar Iatán"
 
-#: searchdialog/searchwindow.cpp:194
+#: searchdialog/searchwindowdialog.cpp:194
 #, fuzzy, kde-format
 #| msgid "Save Attachments..."
 msgid "Save Attachments…"
 msgstr "Sábháil Iatáin..."
 
-#: searchdialog/searchwindow.cpp:200
+#: searchdialog/searchwindowdialog.cpp:200
 #, fuzzy, kde-format
 #| msgid "Clear Selection"
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Glan Roghnúchán"
 
-#: searchdialog/searchwindow.cpp:204
+#: searchdialog/searchwindowdialog.cpp:204
 #, fuzzy, kde-format
 #| msgid "Cut Folder"
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Gearr an Fillteán"
 
-#: searchdialog/searchwindow.cpp:293
+#: searchdialog/searchwindowdialog.cpp:293
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
@@ -6683,74 +6683,75 @@ msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
 
-#: searchdialog/searchwindow.cpp:363 searchdialog/searchwindow.cpp:405
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Cuardach Is Déanaí"
 
-#: searchdialog/searchwindow.cpp:431
+#: searchdialog/searchwindowdialog.cpp:431
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:445
+#: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:463
+#: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:468
+#: searchdialog/searchwindowdialog.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:474
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:478
+#: searchdialog/searchwindowdialog.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:521
+#: searchdialog/searchwindowdialog.cpp:521
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Searching…"
 msgstr "Á Thosú..."
 
-#: searchdialog/searchwindow.cpp:534
+#: searchdialog/searchwindowdialog.cpp:534
 #, fuzzy, kde-format
 #| msgid "Can not get search result. %1"
 msgid "Cannot get search result. %1"
 msgstr "Ní féidir toradh an chuardaigh a fháil. %1"
 
-#: searchdialog/searchwindow.cpp:537
+#: searchdialog/searchwindowdialog.cpp:537
 #, fuzzy, kde-format
 #| msgid "Search canceled"
 msgid "Search failed."
 msgstr "Cealaíodh an cuardach"
 
-#: searchdialog/searchwindow.cpp:578
+#: searchdialog/searchwindowdialog.cpp:578
 #, fuzzy, kde-format
 #| msgctxt "@info:status Number of emails retrieved."
 #| msgid " completed"
 msgid "Search complete."
 msgstr " críochnaithe"
 
-#: searchdialog/searchwindow.cpp:616
+#: searchdialog/searchwindowdialog.cpp:616
 #, fuzzy, kde-format
 #| msgid "Searches"
 msgid "Search stopped."
 msgstr "Cuardaigh"
 
-#: searchdialog/searchwindow.cpp:674
+#: searchdialog/searchwindowdialog.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6758,7 +6759,7 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindow.cpp:778
+#: searchdialog/searchwindowdialog.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
@@ -6768,7 +6769,7 @@ msgstr[2] "Cóipeáil %1 Theachtaireacht"
 msgstr[3] "Cóipeáil %1 dTeachtaireacht"
 msgstr[4] "Cóipeáil %1 Teachtaireacht"
 
-#: searchdialog/searchwindow.cpp:781
+#: searchdialog/searchwindowdialog.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
@@ -6778,7 +6779,7 @@ msgstr[2] "Gearr %1 Theachtaireacht"
 msgstr[3] "Gearr %1 dTeachtaireacht"
 msgstr[4] "Gearr %1 Teachtaireacht"
 
-#: searchdialog/searchwindow.cpp:910
+#: searchdialog/searchwindowdialog.cpp:910
 #, fuzzy, kde-format
 #| msgid "Check mail on startup"
 msgid "Checking index status…"
