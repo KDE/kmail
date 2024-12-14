@@ -1,0 +1,209 @@
+# Sanskrit translations for kmail package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>2);\n"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "To"
+msgstr "इत्यस्मै"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "Subject"
+msgstr "विषयः"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "Send around"
+msgstr "परितः प्रेषयतु"
+
+#: sendlaterconfigurewidget.cpp:56
+#, kde-format
+msgid "Recurrent"
+msgstr "पुनरावर्ती"
+
+#: sendlaterconfigurewidget.cpp:58
+#, kde-format
+msgid "Message Id"
+msgstr "सन्देश Id"
+
+#: sendlaterconfigurewidget.cpp:69
+#, kde-format
+msgid "No messages waiting…"
+msgstr "न सन्देशाः प्रतीक्षन्ते..."
+
+#: sendlaterconfigurewidget.cpp:94
+#, kde-format
+msgctxt "@action"
+msgid "Send now"
+msgstr ""
+
+#: sendlaterconfigurewidget.cpp:97
+#, kde-format
+msgctxt "@action"
+msgid "Delete"
+msgstr "लुप्"
+
+#: sendlaterconfigurewidget.cpp:158
+#, kde-format
+msgid "Yes"
+msgstr "आम्‌"
+
+#: sendlaterconfigurewidget.cpp:158
+#, kde-format
+msgid "No"
+msgstr "नहि"
+
+#: sendlaterconfigurewidget.cpp:209
+#, kde-format
+msgid "Do you want to delete the selected item?"
+msgid_plural "Do you want to delete the selected items?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: sendlaterconfigurewidget.cpp:210
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Items"
+msgstr ""
+
+#: sendlaterconfigurewidget.cpp:218
+#, kde-format
+msgid "Do you want to delete the message as well?"
+msgid_plural "Do you want to delete the messages as well?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: sendlaterconfigurewidget.cpp:219
+#, kde-format
+msgctxt "@title:window"
+msgid "Delete Messages"
+msgstr ""
+
+#: sendlaterconfigurewidget.cpp:221
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Delete"
+msgstr ""
+
+#: sendlaterinfoconfigwidget.cpp:33
+#, kde-format
+msgid "Send Later Agent"
+msgstr "पश्चात् एजेण्ट् प्रेषयन्तु"
+
+#: sendlaterinfoconfigwidget.cpp:35
+#, kde-format
+msgid "Send emails later agent."
+msgstr "पश्चात् ईमेल प्रेषयन्तु एजेण्ट्।"
+
+#: sendlaterinfoconfigwidget.cpp:37
+#, kde-format
+msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "प्रतिलिपि अधिकार (C) 2013-%1 Laurent Montel"
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr ""
+
+#: sendlaterinfoconfigwidget.cpp:39
+#, kde-format
+msgid "Maintainer"
+msgstr "परिपालकः"
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: sendlaterinfoconfigwidget.cpp:41
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#, kde-format
+msgid "Not message found."
+msgstr "न सन्देशः प्राप्तः।"
+
+#: sendlaterjob.cpp:67
+#, kde-format
+msgid "No message found."
+msgstr "न सन्देशः प्राप्तः।"
+
+#: sendlaterjob.cpp:76
+#, kde-format
+msgid "Error during fetching message."
+msgstr "सन्देशं आनयितुं त्रुटिः।"
+
+#: sendlaterjob.cpp:82
+#, kde-format
+msgid "Cannot fetch message. %1"
+msgstr "सन्देशं आनेतुं न शक्नोति। %1"
+
+#: sendlaterjob.cpp:87
+#, kde-format
+msgid "We can't create transport"
+msgstr "वयं परिवहनस्य निर्माणं कर्तुं न शक्नुमः"
+
+#: sendlaterjob.cpp:94
+#, kde-format
+msgid "Message is not a real message"
+msgstr "सन्देशः वास्तविकः सन्देशः नास्ति"
+
+#: sendlaterjob.cpp:101
+#, kde-format
+msgid "Cannot send message."
+msgstr "सन्देशं प्रेषयितुं न शक्यते।"
+
+#: sendlaterjob.cpp:132
+#, kde-format
+msgid "Message sent"
+msgstr "सन्देशः प्रेषितः"
+
+#: sendlatermanager.cpp:193
+#, kde-format
+msgid "An error was found. Do you want to resend it?"
+msgstr "एकः दोषः प्राप्तः। पुनः प्रेषयितुम् इच्छसि वा ?"
+
+#: sendlatermanager.cpp:194
+#, kde-format
+msgctxt "@title:window"
+msgid "Error found"
+msgstr ""
+
+#: sendlatermanager.cpp:195
+#, kde-format
+msgctxt "@action:button"
+msgid "Resend"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QPushButton, modifyItem)
+#: ui/sendlaterconfigurewidget.ui:31
+#, kde-format
+msgid "Modify…"
+msgstr "परिवर्तनं कुर्वन्तु..."
+
+#. i18n: ectx: property (text), widget (QPushButton, deleteItem)
+#: ui/sendlaterconfigurewidget.ui:38
+#, kde-format
+msgid "Delete"
+msgstr "लुप्"

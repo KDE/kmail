@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-12 00:41+0000\n"
-"PO-Revision-Date: 2024-12-08 14:20+0100\n"
+"PO-Revision-Date: 2024-12-13 22:01+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -5214,7 +5214,7 @@ msgstr "&Ignorar este fío"
 #: kmmainwidget.cpp:3302 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments…"
-msgstr "Gardar os arquivos ane&xos…"
+msgstr "Gardar os ane&xos…"
 
 #: kmmainwidget.cpp:3306
 #, kde-format
@@ -6424,7 +6424,7 @@ msgstr "Como &anexo…"
 #: searchdialog/searchwindowdialog.cpp:194
 #, kde-format
 msgid "Save Attachments…"
-msgstr "Gardar os arquivos anexos…"
+msgstr "Gardar os anexos…"
 
 #: searchdialog/searchwindowdialog.cpp:200
 #, kde-format

@@ -1,0 +1,106 @@
+# Sanskrit translations for kmail package.
+# Copyright (C) 2024 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# Kali <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2024-11-23 00:41+0000\n"
+"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"Last-Translator: Kali <EMAIL@ADDRESS>\n"
+"Language-Team: Sanskrit\n"
+"Language: sa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: main.cpp:28 main.cpp:30
+#, kde-format
+msgid "KMail Assistant for refreshing settings"
+msgstr "सेटिंग्स् ताजगीं कर्तुं KMail Assistant"
+
+#: main.cpp:32
+#, kde-format
+msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
+msgstr "(ग) 2019-2024 लॉरेंट मोंटेल् <montel@kde.org>"
+
+#: main.cpp:33
+#, kde-format
+msgctxt "@info:credit"
+msgid "Laurent Montel"
+msgstr ""
+
+#: main.cpp:33
+#, kde-format
+msgid "Author"
+msgstr "लेखकः"
+
+#: refreshsettingsassistant.cpp:22
+#, kde-format
+msgctxt "@title:window"
+msgid "KMail Refresh Settings"
+msgstr ""
+
+#: refreshsettingsassistant.cpp:44
+#, kde-format
+msgid "Warning"
+msgstr "चेतवानी"
+
+#: refreshsettingsassistant.cpp:48
+#, kde-format
+msgid "Clean up Settings"
+msgstr "सेटिंग्स् स्वच्छं कुर्वन्तु"
+
+#: refreshsettingsassistant.cpp:52
+#, kde-format
+msgid "Finish"
+msgstr "समापन"
+
+#: refreshsettingscleanuppage.cpp:22
+#, kde-format
+msgctxt "@action:button"
+msgid "Clean"
+msgstr ""
+
+#: refreshsettingscleanuppage.cpp:52
+#, kde-format
+msgid "Remove obsolete \"TipOfDay\" settings: Done"
+msgstr "अप्रचलितं \"TipOfDay\" सेटिंग्स् निष्कासयन्तु: कृतम्"
+
+#: refreshsettingscleanuppage.cpp:64
+#, kde-format
+msgid "Delete Dialog settings in file `%1`: Done"
+msgstr "`%1` सञ्चिकायां संवादसेटिंग्स् विलोपयन्तु: कृतम्"
+
+#: refreshsettingscleanuppage.cpp:76
+#, kde-format
+msgid "Delete Filters settings in file `%1`: Done"
+msgstr "`%1` सञ्चिकायां Filters सेटिङ्ग्स् विलोपयन्तु: कृतम्"
+
+#: refreshsettingscleanuppage.cpp:92
+#, kde-format
+msgid "Clean Folder Settings in setting file `%1`: Done"
+msgstr "सेटिङ्ग् सञ्चिकायां `%1` मध्ये फोल्डर् सेटिङ्ग्स् स्वच्छं कुर्वन्तु: कृतम्"
+
+#: refreshsettingscleanuppage.cpp:148
+#, kde-format
+msgid "Clean Dialog Size in setting file `%1`: Done"
+msgstr "`%1` सञ्चिकायां सेटिङ्ग् मध्ये Dialog Size स्वच्छं कुर्वन्तु: कृतम्"
+
+#: refreshsettingsfirstpage.cpp:20
+#, kde-format
+msgctxt "@label:textbox"
+msgid "Please close KMail/Kontact before using it."
+msgstr ""
