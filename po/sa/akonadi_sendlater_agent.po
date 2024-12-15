@@ -3,19 +3,21 @@
 # This file is distributed under the same license as the kmail package.
 # Kali <EMAIL@ADDRESS>, 2024.
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-11-19 00:41+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"PO-Revision-Date: 2024-12-14 01:48+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -45,13 +47,13 @@ msgstr "सन्देश Id"
 #: sendlaterconfigurewidget.cpp:69
 #, kde-format
 msgid "No messages waiting…"
-msgstr "न सन्देशाः प्रतीक्षन्ते..."
+msgstr "न सन्देशाः प्रतीक्षन्ते…"
 
 #: sendlaterconfigurewidget.cpp:94
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
-msgstr ""
+msgstr "अधुना प्रेषयतु"
 
 #: sendlaterconfigurewidget.cpp:97
 #, kde-format
@@ -73,33 +75,33 @@ msgstr "नहि"
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "चयनितं द्रव्यं विलोपयितुम् इच्छति वा ?"
+msgstr[1] "चयनितवस्तूनि विलोपयितुम् इच्छति वा ?"
 
 #: sendlaterconfigurewidget.cpp:210
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr ""
+msgstr "द्रव्यं विलोपयन्तु"
 
 #: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "किं भवन्तः सन्देशं अपि विलोपयितुम् इच्छन्ति ?"
+msgstr[1] "किं भवन्तः सन्देशान् अपि विलोपयितुम् इच्छन्ति ?"
 
 #: sendlaterconfigurewidget.cpp:219
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
-msgstr ""
+msgstr "सन्देशान् विलोपयन्तु"
 
 #: sendlaterconfigurewidget.cpp:221
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
-msgstr ""
+msgstr "न विलोपयतु"
 
 #: sendlaterinfoconfigwidget.cpp:33
 #, kde-format
@@ -120,7 +122,7 @@ msgstr "प्रतिलिपि अधिकार (C) 2013-%1 Laurent Monte
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr ""
+msgstr "लॉरेण्ट् मोंटेल्"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format
@@ -131,13 +133,13 @@ msgstr "परिपालकः"
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #: sendlaterinfoconfigwidget.cpp:41
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
@@ -188,19 +190,19 @@ msgstr "एकः दोषः प्राप्तः। पुनः प्�
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
-msgstr ""
+msgstr "त्रुटिः प्राप्ता"
 
 #: sendlatermanager.cpp:195
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"
-msgstr ""
+msgstr "पुनः प्रेषयतु"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/sendlaterconfigurewidget.ui:31
 #, kde-format
 msgid "Modify…"
-msgstr "परिवर्तनं कुर्वन्तु..."
+msgstr "परिवर्तनं कुर्वन्तु…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/sendlaterconfigurewidget.ui:38

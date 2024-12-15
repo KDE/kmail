@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-12 00:41+0000\n"
-"PO-Revision-Date: 2024-12-13 22:01+0100\n"
+"PO-Revision-Date: 2024-12-14 11:37+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -7531,6 +7531,7 @@ msgstr ""
 "futuros. <a href=\"whatsthis1\">Máis sobre as mensaxes HTML…</a> <a href="
 "\"whatsthis2\">Máis sobre as referencias externas…</a>"
 
+# skip-rule: trasno-develop_reverse
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:45
 #, kde-format

@@ -20,7 +20,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
-msgstr ""
+msgstr "विन्यस्तं कुर्वन्तु"
 
 #: mailmergeconfiguredialog.cpp:52
 #, kde-format
@@ -41,7 +41,7 @@ msgstr "प्रतिलिपि अधिकार (C) 2021-%1 Laurent Monte
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr ""
+msgstr "लॉरेण्ट् मोंटेल्"
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format
@@ -52,10 +52,10 @@ msgstr "परिपालकः"
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"

@@ -20,19 +20,19 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
-msgstr ""
+msgstr "फ़िल्टर लॉग दर्शक"
 
 #: filterlogdialog.cpp:79
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr ""
+msgstr "संविभागः…"
 
 #: filterlogdialog.cpp:85
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
-msgstr ""
+msgstr "&लॉग फ़िल्टर क्रियाकलापाः"
 
 #: filterlogdialog.cpp:90
 #, kde-format
@@ -52,13 +52,13 @@ msgstr "लॉगिंग विवरण"
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
-msgstr ""
+msgstr "लॉग पैटर्न वर्णन"
 
 #: filterlogdialog.cpp:106
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
-msgstr ""
+msgstr "लॉग फ़िल्टर &नियम मूल्याङ्कनम्"
 
 #: filterlogdialog.cpp:111
 #, kde-format
@@ -78,19 +78,19 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr ""
+msgstr "लॉग फ़िल्टर पैटर्न मूल्यांकन"
 
 #: filterlogdialog.cpp:123
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
-msgstr ""
+msgstr "लॉग फ़िल्टर क्रियाः"
 
 #: filterlogdialog.cpp:133
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
-msgstr ""
+msgstr "लॉग आकारसीमा : १."
 
 #: filterlogdialog.cpp:141
 #, kde-format
@@ -101,7 +101,7 @@ msgstr " के.बी"
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
-msgstr ""
+msgstr "असीमित"
 
 #: filterlogdialog.cpp:145
 #, kde-format
@@ -128,7 +128,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr ""
+msgstr "KMail त्रुटिः"
 
 #: filtermanager.cpp:100
 #, kde-format
@@ -176,7 +176,7 @@ msgstr "सन्देशान् छानयन्"
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
-msgstr ""
+msgstr "मेल फ़िल्टर लॉग् सक्षमम्"
 
 #: mailfilteragent.cpp:166
 #, kde-format

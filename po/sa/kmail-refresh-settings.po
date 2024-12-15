@@ -19,12 +19,12 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "भवतः नामानि"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "भवतः ईमेलपत्राणि"
 
 #: main.cpp:28 main.cpp:30
 #, kde-format
@@ -40,7 +40,7 @@ msgstr "(ग) 2019-2024 लॉरेंट मोंटेल् <montel@kde.org
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr ""
+msgstr "लॉरेण्ट् मोंटेल्"
 
 #: main.cpp:33
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "लेखकः"
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Refresh Settings"
-msgstr ""
+msgstr "KMail ताजगी सेटिंग्स्"
 
 #: refreshsettingsassistant.cpp:44
 #, kde-format
@@ -72,7 +72,7 @@ msgstr "समापन"
 #, kde-format
 msgctxt "@action:button"
 msgid "Clean"
-msgstr ""
+msgstr "स्वच्छम्‌"
 
 #: refreshsettingscleanuppage.cpp:52
 #, kde-format
@@ -103,4 +103,4 @@ msgstr "`%1` सञ्चिकायां सेटिङ्ग् मध्�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
-msgstr ""
+msgstr "कृपया KMail/Kontact इत्यस्य उपयोगात् पूर्वं बन्दं कुर्वन्तु ।"

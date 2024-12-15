@@ -20,13 +20,13 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "संयोजयति"
 
 #: settingsdialog.cpp:68
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
-msgstr ""
+msgstr "परिवर्तनं कुर्वन्तु"
 
 #: settingsdialog.cpp:90
 #, kde-format
@@ -42,19 +42,19 @@ msgstr "किं भवान् वास्तवमेव एकीकृत
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
-msgstr ""
+msgstr "वास्तवं निष्कासयतु?"
 
 #: settingsdialog.cpp:128
 #, kde-format
 msgctxt "@action"
 msgid "Add"
-msgstr ""
+msgstr "संयोजयति"
 
 #: settingsdialog.cpp:132
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
-msgstr ""
+msgstr "परिवर्तनं कुर्वन्तु"
 
 #: settingsdialog.cpp:134
 #, kde-format
@@ -76,7 +76,7 @@ msgstr "एकीकृत मेलबॉक्स %1 समन्वयनम�
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr ""
+msgstr "एकीकृत मेलबॉक्स विन्यस्तं कुर्वन्तु"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format
@@ -87,7 +87,7 @@ msgstr "नामः:"
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick icon..."
-msgstr ""
+msgstr "चिह्नं चिनुत..."
 
 #: unifiedmailboxeditor.cpp:104
 #, kde-format
