@@ -4667,7 +4667,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     }
 #endif
     if (!patternNew.isEmpty()) {
-        mSearchWinDlg->addRulesToSearchPattern(patternNew);
+        mSearchWin->addRulesToSearchPattern(patternNew);
     }
 }
 
