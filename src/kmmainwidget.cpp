@@ -4540,6 +4540,8 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Cc:
+            searchStringVal = QByteArrayLiteral("cc");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::From:
             searchStringVal = QByteArrayLiteral("from");
@@ -4558,6 +4560,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         case MessageList::Core::SearchLineCommand::SearchLineType::Size:
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasAttachment:
+            searchStringVal = QByteArrayLiteral("<attachment>");
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasInvitation:
@@ -4629,43 +4632,6 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             break;
         }
     }
-#if 0
-    // Now we look at the current state of the quick search, and if there's
-    // something in there, we add the criteria to the existing search for
-    // the search folder, if applicable, or make a new one from it.
-    SearchPattern pattern;
-    const QString searchString = mMessagePane->currentFilterSearchString();
-    if (!searchString.isEmpty()) {
-        MessageList::Core::SearchMessageByButtons::SearchOptions options = mMessagePane->currentOptions();
-        QByteArray searchStringVal;
-        if (options & MessageList::Core::SearchMessageByButtons::SearchEveryWhere) {
-            searchStringVal = QByteArrayLiteral("<message>");
-        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstSubject) {
-            searchStringVal = QByteArrayLiteral("subject");
-        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstBody) {
-            searchStringVal = QByteArrayLiteral("<body>");
-        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstFrom) {
-            searchStringVal = QByteArrayLiteral("from");
-        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstBcc) {
-            searchStringVal = QByteArrayLiteral("bcc");
-        } else if (options & MessageList::Core::SearchMessageByButtons::SearchAgainstTo) {
-            searchStringVal = QByteArrayLiteral("to");
-        } else {
-            searchStringVal = QByteArrayLiteral("<message>");
-        }
-        pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, searchString));
-        const QList<MessageStatus> statusList = mMessagePane->currentFilterStatus();
-        for (MessageStatus status : statusList) {
-            if (status.hasAttachment()) {
-                pattern.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, searchString));
-                status.setHasAttachment(false);
-            }
-            if (!status.isOfUnknownStatus()) {
-                pattern.append(SearchRule::Ptr(new SearchRuleStatus(status)));
-            }
-        }
-    }
-#endif
     if (!patternNew.isEmpty()) {
         mSearchWin->addRulesToSearchPattern(patternNew);
     }
