@@ -4612,7 +4612,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             break;
         }
     }
-
+#if 0
     // Now we look at the current state of the quick search, and if there's
     // something in there, we add the criteria to the existing search for
     // the search folder, if applicable, or make a new one from it.
@@ -4650,8 +4650,9 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             }
         }
     }
-    if (!pattern.isEmpty()) {
-        mSearchWinDlg->addRulesToSearchPattern(pattern);
+#endif
+    if (!patternNew.isEmpty()) {
+        mSearchWinDlg->addRulesToSearchPattern(patternNew);
     }
 }
 
