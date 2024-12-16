@@ -4504,8 +4504,77 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     }
 
     assert(mSearchWinDlg);
+    SearchPattern patternNew;
     const QList<MessageList::Core::SearchLineCommand::SearchLineInfo> searchinfos = mMessagePane->searchLineCommands();
-    // TODO use it
+    for (const MessageList::Core::SearchLineCommand::SearchLineInfo &info : searchinfos) {
+        QByteArray searchStringVal;
+
+        switch (info.type) {
+        case MessageList::Core::SearchLineCommand::SearchLineType::Unknown:
+        case MessageList::Core::SearchLineCommand::SearchLineType::HasStateOrAttachment:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Literal:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::To:
+            searchStringVal = QByteArrayLiteral("to");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Bcc:
+            searchStringVal = QByteArrayLiteral("bcc");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Cc:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::From:
+            searchStringVal = QByteArrayLiteral("from");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Subject:
+            searchStringVal = QByteArrayLiteral("subject");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Body:
+            searchStringVal = QByteArrayLiteral("<body>");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Date:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Size:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::HasAttachment:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::HasInvitation:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsImportant:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsRead:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsUnRead:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsIgnored:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsHam:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsSpam:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsWatched:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsReplied:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsForwarded:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Larger:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Smaller:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::OlderThan:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::NewerThan:
+            break;
+        case MessageList::Core::SearchLineCommand::SearchLineType::Category:
+            break;
+        }
+    }
 
     // Now we look at the current state of the quick search, and if there's
     // something in there, we add the criteria to the existing search for
