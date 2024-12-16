@@ -4561,8 +4561,10 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasInvitation:
+#if 0 // In 24.12 we don't have it
             searchStringVal = QByteArrayLiteral("<invitation>");
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasInvitation, info.argument));
+#endif
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::IsImportant: {
             Akonadi::MessageStatus status;
