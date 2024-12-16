@@ -4514,6 +4514,8 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         case MessageList::Core::SearchLineCommand::SearchLineType::HasStateOrAttachment:
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Literal:
+            searchStringVal = QByteArrayLiteral("<message>");
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::To:
             searchStringVal = QByteArrayLiteral("to");
@@ -4542,36 +4544,71 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         case MessageList::Core::SearchLineCommand::SearchLineType::Size:
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasAttachment:
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasInvitation:
+            patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasInvitation, info.argument));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsImportant:
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsImportant: {
+            Akonadi::MessageStatus status;
+            status.setImportant(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsRead:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsRead: {
+            Akonadi::MessageStatus status;
+            status.setRead(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsUnRead:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsUnRead: {
+            Akonadi::MessageStatus status;
+            status.setRead(false);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsIgnored:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsIgnored: {
+            Akonadi::MessageStatus status;
+            status.setIgnored(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsHam:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsHam: {
+            Akonadi::MessageStatus status;
+            status.setHam(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsSpam:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsSpam: {
+            Akonadi::MessageStatus status;
+            status.setSpam(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsWatched:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsWatched: {
+            Akonadi::MessageStatus status;
+            status.setWatched(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsReplied:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsReplied: {
+            Akonadi::MessageStatus status;
+            status.setReplied(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
-        case MessageList::Core::SearchLineCommand::SearchLineType::IsForwarded:
+        }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsForwarded: {
+            Akonadi::MessageStatus status;
+            status.setForwarded(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
+        }
         case MessageList::Core::SearchLineCommand::SearchLineType::Larger:
-            break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Smaller:
-            break;
         case MessageList::Core::SearchLineCommand::SearchLineType::OlderThan:
-            break;
         case MessageList::Core::SearchLineCommand::SearchLineType::NewerThan:
-            break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Category:
+            // TODO implement in the future
             break;
         }
     }
