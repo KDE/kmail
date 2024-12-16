@@ -4518,6 +4518,8 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
     }
 
     assert(mSearchWin);
+    const QList<MessageList::Core::SearchLineCommand::SearchLineInfo> searchinfos = mMessagePane->searchLineCommands();
+    // TODO use it
 
     // Now we look at the current state of the quick search, and if there's
     // something in there, we add the criteria to the existing search for
