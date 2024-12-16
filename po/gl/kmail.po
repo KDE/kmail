@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-04 02:32+0000\n"
-"PO-Revision-Date: 2024-12-14 11:37+0100\n"
+"PO-Revision-Date: 2024-12-16 01:19+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -69,7 +69,7 @@ msgstr "Cambios importantes desde a última versión:"
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
-msgstr "Entre as características novas desta edición de KMail están:"
+msgstr "Entre as funcionalidades novas desta versión de KMail están:"
 
 #: about/introduction_kmail.html:34
 msgid ""
@@ -1491,7 +1491,7 @@ msgstr "Cabeceira incorrecta"
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "&Activar a detección de ficheiros anexos perdidos."
+msgstr "&Activar a detección de anexos pendentes."
 
 #: configuredialog/configurecomposerpage.cpp:958
 #, kde-format
@@ -4083,7 +4083,7 @@ msgstr "Definir o corpo da mensaxe"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr "Engadir un ficheiro anexo ao correo. Isto pódese repetir"
+msgstr "Engadir un anexo á mensaxe. Isto pódese repetir."
 
 #: kmail_options.h:33
 #, kde-format
@@ -6758,7 +6758,7 @@ msgstr "Unha lista de todas as codificacións empregadas recentemente"
 #: settings/kmail.kcfg.in:276
 #, kde-format
 msgid "Show crypto label indicator"
-msgstr "Amosar o indicador de etiqueta de cifrado"
+msgstr "Amosar o indicador de etiqueta de criptografía"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:280
