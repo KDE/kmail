@@ -1,4 +1,4 @@
-# Sanskrit translations for kmail package.
+# Hindi translations for kmail package.
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 # Kali <EMAIL@ADDRESS>, 2024.
@@ -8,55 +8,54 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-16 00:39+0000\n"
-"PO-Revision-Date: 2024-12-13 19:10+0530\n"
+"PO-Revision-Date: 2024-12-15 15:58+0530\n"
 "Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
-"Language: sa\n"
+"Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
+"Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n>2);\n"
 
 #: mailmergeconfiguredialog.cpp:35
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
-msgstr "विन्यस्तं कुर्वन्तु"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:52
 #, kde-format
 msgid "Mail Merge Agent"
-msgstr "मेल विलय एजेण्ट्"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:54
 #, kde-format
 msgid "Merge email addresses agent."
-msgstr "ईमेल-सङ्केतानां एजेण्टस्य विलयः ।"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "Copyright (C) 2021-%1 Laurent Montel"
-msgstr "प्रतिलिपि अधिकार (C) 2021-%1 Laurent Montel"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr "लॉरेण्ट् मोंटेल्"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgid "Maintainer"
-msgstr "परिपालकः"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "भवतः नामानि"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "भवतः ईमेलपत्राणि"
+msgstr ""
