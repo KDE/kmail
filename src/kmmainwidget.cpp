@@ -4561,6 +4561,7 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasInvitation:
+            searchStringVal = QByteArrayLiteral("<invitation>");
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasInvitation, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::IsImportant: {
