@@ -4607,6 +4607,12 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
         }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsEncrypted: {
+            Akonadi::MessageStatus status;
+            status.setEncrypted(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
+            break;
+        }
         case MessageList::Core::SearchLineCommand::SearchLineType::Larger:
         case MessageList::Core::SearchLineCommand::SearchLineType::Smaller:
         case MessageList::Core::SearchLineCommand::SearchLineType::OlderThan:
