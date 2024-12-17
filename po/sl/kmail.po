@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-12 00:41+0000\n"
+"POT-Creation-Date: 2024-12-17 00:41+0000\n"
 "PO-Revision-Date: 2024-11-19 07:19+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -4683,7 +4683,7 @@ msgstr ""
 "količina neželene pošte. Poveča se lahko tudi verjetnost, da bo vaš sistem "
 "izkoriščen z obstoječimi in prihodnjimi varnostnimi zlorabami."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4807
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4882
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5655,13 +5655,13 @@ msgstr "&Razveljavi: »%1«"
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4796
+#: kmmainwidget.cpp:4871
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Poišči… <%1>"
 
-#: kmmainwidget.cpp:4804
+#: kmmainwidget.cpp:4879
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5672,13 +5672,13 @@ msgstr ""
 "pošte. Poveča se lahko tudi verjetnost, da bo vaš sistem izkoriščen z "
 "obstoječimi in prihodnjimi varnostnimi zlorabami."
 
-#: kmmainwidget.cpp:4808
+#: kmmainwidget.cpp:4883
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Uporabi HTML"
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:5029
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5693,41 +5693,41 @@ msgstr ""
 "Nastavite lahko poenotene nabiralnike, ali jih ustvarite po meri ali\n"
 "to funkcijo v celoti onemogočite v nastavitvah vtičnika KMail."
 
-#: kmmainwidget.cpp:4957
+#: kmmainwidget.cpp:5032
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Ali želite omogočiti poenotene poštne nabiralnike?"
 
-#: kmmainwidget.cpp:4958
+#: kmmainwidget.cpp:5033
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Omogoči poenotene poštne nabiralnike"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:5034
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Prekliči"
 
-#: kmmainwidget.cpp:4994
+#: kmmainwidget.cpp:5069
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Ali želite ponovno zagnati Akonadi?"
 
-#: kmmainwidget.cpp:4995
+#: kmmainwidget.cpp:5070
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Ponovno zaženi Akonadi"
 
-#: kmmainwidget.cpp:4996
+#: kmmainwidget.cpp:5071
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Znova zaženi"
 
-#: kmmainwidget.cpp:5003
+#: kmmainwidget.cpp:5078
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi ponovno zagnan."

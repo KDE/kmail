@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-12 00:41+0000\n"
+"POT-Creation-Date: 2024-12-17 00:41+0000\n"
 "PO-Revision-Date: 2015-02-07 22:15+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -4537,7 +4537,7 @@ msgstr ""
 "søppelpost og kan øke risikoen for at systemet ditt blir overtatt av andre "
 "nåværende og framtidige utnyttelser av sikkerhetshull."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4807
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4882
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5477,13 +5477,13 @@ msgstr "&Angre: «%1»"
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4796
+#: kmmainwidget.cpp:4871
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr ""
 
-#: kmmainwidget.cpp:4804
+#: kmmainwidget.cpp:4879
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5494,13 +5494,13 @@ msgstr ""
 "risikoen for at systemet ditt blir overtatt av andre nåværende og framtidige "
 "utnyttelser av sikkerhetshull."
 
-#: kmmainwidget.cpp:4808
+#: kmmainwidget.cpp:4883
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Bruk HTML"
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:5029
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5510,41 +5510,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:4957
+#: kmmainwidget.cpp:5032
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:4958
+#: kmmainwidget.cpp:5033
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr ""
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:5034
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:4994
+#: kmmainwidget.cpp:5069
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr ""
 
-#: kmmainwidget.cpp:4995
+#: kmmainwidget.cpp:5070
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr ""
 
-#: kmmainwidget.cpp:4996
+#: kmmainwidget.cpp:5071
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr ""
 
-#: kmmainwidget.cpp:5003
+#: kmmainwidget.cpp:5078
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

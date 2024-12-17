@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-12 00:41+0000\n"
+"POT-Creation-Date: 2024-12-17 00:41+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -4996,7 +4996,7 @@ msgstr ""
 "\"spam\" og kan forøge sandsynligheden for, at dit system vil blive "
 "kompromitteret af andre nuværende og fremtidige sikkerhedsudnyttelser."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4807
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4882
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -6037,7 +6037,7 @@ msgstr "Fo&rtryd: \"%1\""
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4796
+#: kmmainwidget.cpp:4871
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search... <%1>"
@@ -6045,7 +6045,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Søg...<%1>"
 
-#: kmmainwidget.cpp:4804
+#: kmmainwidget.cpp:4879
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6056,14 +6056,14 @@ msgstr ""
 "sandsynligheden for, at dit system vil blive kompromitteret af andre "
 "nuværende og fremtidige sikkerhedsudnyttelser."
 
-#: kmmainwidget.cpp:4808
+#: kmmainwidget.cpp:4883
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Brug HTML"
 
-#: kmmainwidget.cpp:4954
+#: kmmainwidget.cpp:5029
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6078,46 +6078,46 @@ msgstr ""
 "Du kan konfigurere forenede postkasser, oprette tilpassede postkasser eller\n"
 "deaktivere funktionen helt i KMails plugin-indstillinger."
 
-#: kmmainwidget.cpp:4957
+#: kmmainwidget.cpp:5032
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Aktivér forenede postkasser?"
 
-#: kmmainwidget.cpp:4958
+#: kmmainwidget.cpp:5033
 #, fuzzy, kde-format
 #| msgid "Enable Unified Mailboxes"
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Aktivér forenede postkasser"
 
-#: kmmainwidget.cpp:4959
+#: kmmainwidget.cpp:5034
 #, fuzzy, kde-format
 #| msgid "Cancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Annullér"
 
-#: kmmainwidget.cpp:4994
+#: kmmainwidget.cpp:5069
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Vil du fjerne mærket \"%1\"?"
 
-#: kmmainwidget.cpp:4995
+#: kmmainwidget.cpp:5070
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Genstart konto"
 
-#: kmmainwidget.cpp:4996
+#: kmmainwidget.cpp:5071
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Genstart"
 
-#: kmmainwidget.cpp:5003
+#: kmmainwidget.cpp:5078
 #, fuzzy, kde-format
 #| msgid "Akonadi Agents"
 msgid "Akonadi restarted."
