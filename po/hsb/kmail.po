@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 00:41+0000\n"
+"POT-Creation-Date: 2024-12-18 00:41+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -4798,7 +4798,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4882
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4888
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5852,7 +5852,7 @@ msgstr "Wróćo: %1"
 msgid "Filter %1"
 msgstr "Filter %1"
 
-#: kmmainwidget.cpp:4871
+#: kmmainwidget.cpp:4877
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search... <%1>"
@@ -5860,7 +5860,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Pytać... <%1>"
 
-#: kmmainwidget.cpp:4879
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5870,14 +5870,14 @@ msgstr ""
 "Wužiwanje HTML w mailkach přićahuje wjace čaporowych mailkow a powjetši "
 "prawdźepodobnosć, zo nastanu wěstotne problemy."
 
-#: kmmainwidget.cpp:4883
+#: kmmainwidget.cpp:4889
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Wužiwaj HTML"
 
-#: kmmainwidget.cpp:5029
+#: kmmainwidget.cpp:5035
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5887,46 +5887,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5032
+#: kmmainwidget.cpp:5038
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5033
+#: kmmainwidget.cpp:5039
 #, fuzzy, kde-format
 #| msgid "Configure Unified Mailbox"
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Unified Mailbox &připrawić..."
 
-#: kmmainwidget.cpp:5034
+#: kmmainwidget.cpp:5040
 #, fuzzy, kde-format
 #| msgid "Cancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Přetorhnyć"
 
-#: kmmainwidget.cpp:5069
+#: kmmainwidget.cpp:5075
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Chceće etiket '%1' wotstronić?"
 
-#: kmmainwidget.cpp:5070
+#: kmmainwidget.cpp:5076
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Konto znowa startować"
 
-#: kmmainwidget.cpp:5071
+#: kmmainwidget.cpp:5077
 #, fuzzy, kde-format
 #| msgid "Restart Account"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Konto znowa startować"
 
-#: kmmainwidget.cpp:5078
+#: kmmainwidget.cpp:5084
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

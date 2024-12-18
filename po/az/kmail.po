@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 00:41+0000\n"
+"POT-Creation-Date: 2024-12-18 00:41+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -4904,7 +4904,7 @@ msgstr ""
 "zəiflədir və sisteminiz mövcud və gələcək təhlükəli müdaxilələrə məruz qala "
 "bilər."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4882
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4888
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5945,7 +5945,7 @@ msgstr "&Geri alın: \"%1\""
 msgid "Filter %1"
 msgstr "Süzgəc %1"
 
-#: kmmainwidget.cpp:4871
+#: kmmainwidget.cpp:4877
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search... <%1>"
@@ -5953,7 +5953,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Axtarış... <%1>"
 
-#: kmmainwidget.cpp:4879
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5963,14 +5963,14 @@ msgstr ""
 "Poçtda HTML məktublarından istifadə etmək sizi \"spam\"a qarşı zəiflədir və "
 "sisteminiz mövcud və gələcək təhlükəli müdaxilələrə məruz qala bilər."
 
-#: kmmainwidget.cpp:4883
+#: kmmainwidget.cpp:4889
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML istifadə edin"
 
-#: kmmainwidget.cpp:5029
+#: kmmainwidget.cpp:5035
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5985,45 +5985,45 @@ msgstr ""
 "Siz birləşmiş poçt qutularını tənzimləyə, xüsusi birini yarada və ya\n"
 "KMail plaqini ayarlarındakı bu funksiyaları söndürə bilərsiniz."
 
-#: kmmainwidget.cpp:5032
+#: kmmainwidget.cpp:5038
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Birləşmiş Poçt qutuları aktiv edilsin?"
 
-#: kmmainwidget.cpp:5033
+#: kmmainwidget.cpp:5039
 #, fuzzy, kde-format
 #| msgid "Enable Unified Mailboxes"
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Birləşmiş Poçt qutularını aktiv edin"
 
-#: kmmainwidget.cpp:5034
+#: kmmainwidget.cpp:5040
 #, fuzzy, kde-format
 #| msgid "Cancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "İmtina"
 
-#: kmmainwidget.cpp:5069
+#: kmmainwidget.cpp:5075
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi-ni yenidən başlatmaq istəyirsiniz?"
 
-#: kmmainwidget.cpp:5070
+#: kmmainwidget.cpp:5076
 #, fuzzy, kde-format
 #| msgid "Restart Akonadi"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi-ni yenidən başladın"
 
-#: kmmainwidget.cpp:5071
+#: kmmainwidget.cpp:5077
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Yenidən başlat"
 
-#: kmmainwidget.cpp:5078
+#: kmmainwidget.cpp:5084
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akondadi yenidən başladıldı."
