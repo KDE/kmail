@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-18 00:41+0000\n"
+"POT-Creation-Date: 2024-12-19 00:41+0000\n"
 "PO-Revision-Date: 2024-11-30 09:26+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -4672,7 +4672,7 @@ msgstr ""
 "\"spam\" i zwiększy prawdopodobieństwo skutecznego zaatakowania systemu "
 "przez wykorzystanie istniejących lub przyszłych dziur w jego bezpieczeństwie."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4888
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4894
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5635,13 +5635,13 @@ msgstr "&Cofnij: \"%1\""
 msgid "Filter %1"
 msgstr "Filtr %1"
 
-#: kmmainwidget.cpp:4877
+#: kmmainwidget.cpp:4883
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Poszukaj… <%1>"
 
-#: kmmainwidget.cpp:4885
+#: kmmainwidget.cpp:4891
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5652,13 +5652,13 @@ msgstr ""
 "i zwiększy prawdopodobieństwo skutecznego zaatakowania systemu przed obecne "
 "lub przyszłe programy wykorzystujące dziury w jego bezpieczeństwie."
 
-#: kmmainwidget.cpp:4889
+#: kmmainwidget.cpp:4895
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Użyj HTML"
 
-#: kmmainwidget.cpp:5035
+#: kmmainwidget.cpp:5041
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5674,41 +5674,41 @@ msgstr ""
 "Możesz ustawić połączone skrzynki pocztowe, tworzyć własne lub wyłączyć tę\n"
 " możliwość całkowicie w ustawieniach wtyczek w KMailu."
 
-#: kmmainwidget.cpp:5038
+#: kmmainwidget.cpp:5044
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Czy włączyć połączone skrzynki pocztowe?"
 
-#: kmmainwidget.cpp:5039
+#: kmmainwidget.cpp:5045
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Włącz połączone skrzynki pocztowe"
 
-#: kmmainwidget.cpp:5040
+#: kmmainwidget.cpp:5046
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: kmmainwidget.cpp:5075
+#: kmmainwidget.cpp:5081
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Czy na pewno uruchomić Akonadi ponownie?"
 
-#: kmmainwidget.cpp:5076
+#: kmmainwidget.cpp:5082
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Uruchom Akonadi ponownie"
 
-#: kmmainwidget.cpp:5077
+#: kmmainwidget.cpp:5083
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Uruchom ponownie"
 
-#: kmmainwidget.cpp:5084
+#: kmmainwidget.cpp:5090
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Uruchomiono ponownie Akonadi."
