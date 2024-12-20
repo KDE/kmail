@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:41+0000\n"
+"POT-Creation-Date: 2024-12-20 00:41+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -5076,7 +5076,7 @@ msgstr ""
 "HTML मेलमा बाह्य सन्दर्भ लोड गर्दा तपाईँलाई \"स्पाम\" गर्न धेरै बेदनिय बनाउछ र तपाईँको "
 "प्रणाली उपस्थित र अनुमानित सुरक्षा शोषणद्वारा जोखिम बनाउने सम्भावना बढ्न सक्छ ।"
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4894
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4901
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -6127,14 +6127,14 @@ msgstr ""
 msgid "Filter %1"
 msgstr "फिल्टर %1"
 
-#: kmmainwidget.cpp:4883
+#: kmmainwidget.cpp:4890
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "सदस्यता..."
 
-#: kmmainwidget.cpp:4891
+#: kmmainwidget.cpp:4898
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6144,14 +6144,14 @@ msgstr ""
 "मेलमा HTMLको प्रयोग गर्नाले तापाईँलाई \"स्पाम\" गर्न धेरै बेदनीय बनाउछ र तपाईँको प्रणाली "
 "उपस्थित र अनुमानित सुरक्षा शोषणद्वारा जोखिम बनाउने सम्भावना बढ्न सक्छ ।"
 
-#: kmmainwidget.cpp:4895
+#: kmmainwidget.cpp:4902
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML प्रयोग गर्नुहोस्"
 
-#: kmmainwidget.cpp:5041
+#: kmmainwidget.cpp:5048
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6161,46 +6161,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5044
+#: kmmainwidget.cpp:5051
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5045
+#: kmmainwidget.cpp:5052
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "केडीई मेल कन्फिगर गर्नुहोस्..."
 
-#: kmmainwidget.cpp:5046
+#: kmmainwidget.cpp:5053
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "रद्द गर्नुहोस्"
 
-#: kmmainwidget.cpp:5081
+#: kmmainwidget.cpp:5088
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: kmmainwidget.cpp:5082
+#: kmmainwidget.cpp:5089
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "परिचय नाम"
 
-#: kmmainwidget.cpp:5083
+#: kmmainwidget.cpp:5090
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "परिचय नाम"
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5097
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

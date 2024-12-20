@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-19 00:41+0000\n"
+"POT-Creation-Date: 2024-12-20 00:41+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -4951,7 +4951,7 @@ msgstr ""
 "vulnerável a \"spam\" e pode aumentar o nível de susceptibilidade do seu "
 "sistema a ataques externos e aproveitamento de falhas de segurança."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4894
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4901
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5990,7 +5990,7 @@ msgstr "&Desfazer: \"%1\""
 msgid "Filter %1"
 msgstr "Filtro %1"
 
-#: kmmainwidget.cpp:4883
+#: kmmainwidget.cpp:4890
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search... <%1>"
@@ -5998,7 +5998,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Procurar...<%1>"
 
-#: kmmainwidget.cpp:4891
+#: kmmainwidget.cpp:4898
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6009,14 +6009,14 @@ msgstr ""
 "aumentar o nível de susceptibilidade do seu sistema a ataques externos e "
 "aproveitamento de falhas de segurança."
 
-#: kmmainwidget.cpp:4895
+#: kmmainwidget.cpp:4902
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Usar o HTML"
 
-#: kmmainwidget.cpp:5041
+#: kmmainwidget.cpp:5048
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6033,45 +6033,45 @@ msgstr ""
 "ou desactivar a funcionalidade por completo na configuração do 'plugin' do "
 "KMail."
 
-#: kmmainwidget.cpp:5044
+#: kmmainwidget.cpp:5051
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Activar as Caixas de Correio Unificadas?"
 
-#: kmmainwidget.cpp:5045
+#: kmmainwidget.cpp:5052
 #, fuzzy, kde-format
 #| msgid "Enable Unified Mailboxes"
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Activar as Caixas de Correio Unificadas"
 
-#: kmmainwidget.cpp:5046
+#: kmmainwidget.cpp:5053
 #, fuzzy, kde-format
 #| msgid "Cancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: kmmainwidget.cpp:5081
+#: kmmainwidget.cpp:5088
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Deseja reiniciar o Akonadi?"
 
-#: kmmainwidget.cpp:5082
+#: kmmainwidget.cpp:5089
 #, fuzzy, kde-format
 #| msgid "Restart Akonadi"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Reiniciar o Akonadi"
 
-#: kmmainwidget.cpp:5083
+#: kmmainwidget.cpp:5090
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5097
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "O Akonadi foi reiniciado."
