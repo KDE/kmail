@@ -1194,24 +1194,9 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     // Readd ? const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
     const uint uoid = fetchJob->property("uoid").toUInt();
     const uint uOldId = fetchJob->property("uOldid").toUInt();
-#if 0 // FIXME template
-    TemplateParser::TemplateParser parser(mMsg, mode);
-    parser.setSelection(mTextSelection);
-    parser.setAllowDecryption(true);
-    parser.setWordWrap(MessageComposer::MessageComposerSettings::self()->wordWrap(), MessageComposer::MessageComposerSettings::self()->lineWrapWidth());
-    parser.setIdentityManager(KMKernel::self()->identityManager());
-    for (const Akonadi::Item &item : items) {
-        if (!mCustomTemplate.isEmpty()) {
-            parser.process(mCustomTemplate, MessageCore::Util::message(item));
-        } else {
-            parser.processWithIdentity(uoid, MessageCore::Util::message(item));
-        }
-    }
-#else
     mComposerBase->updateTemplate(mMsg);
     updateSignature(uoid, uOldId);
     qCWarning(KMAIL_LOG) << " void KMComposerWin::slotDelayedApplyTemplate(KJob *job) is not implemented after removing qtwebkit";
-#endif
 }
 
 void KMComposerWin::updateSignature(uint uoid, uint uOldId)
