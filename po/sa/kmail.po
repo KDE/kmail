@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-20 00:41+0000\n"
-"PO-Revision-Date: 2024-12-14 01:48+0530\n"
+"PO-Revision-Date: 2024-12-20 21:52+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -53,7 +53,7 @@ msgstr ""
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
-msgstr "अन्तिमसंस्करणात् महत्त्वपूर्णपरिवर्तनानि : १."
+msgstr "अन्तिमसंस्करणात् महत्त्वपूर्णपरिवर्तनानि :"
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
@@ -401,7 +401,7 @@ msgstr "स्वचालितरूपेण अन्वेषणं कु�
 #: collectionpage/collectionmailinglistpage.cpp:74
 #, kde-format
 msgid "Mailing list description:"
-msgstr "मेलसूचीविवरणम् : १."
+msgstr "मेलसूचीविवरणम् :"
 
 #: collectionpage/collectionmailinglistpage.cpp:79
 #, kde-format
@@ -411,7 +411,7 @@ msgstr "ब्राउज़र"
 #: collectionpage/collectionmailinglistpage.cpp:82
 #, kde-format
 msgid "Preferred handler:"
-msgstr "प्राधान्यः संचालकः : १."
+msgstr "प्राधान्यः संचालकः :"
 
 #: collectionpage/collectionmailinglistpage.cpp:94
 #, kde-format
@@ -422,7 +422,7 @@ msgstr "Invoke Handler इति आह्वानं कुर्वन्त�
 #: collectionpage/collectionmailinglistpage.cpp:101
 #, kde-format
 msgid "Address type:"
-msgstr "पताप्रकारः : १."
+msgstr "पताप्रकारः :"
 
 #: collectionpage/collectionmailinglistpage.cpp:103
 #, kde-format
@@ -488,7 +488,7 @@ msgstr "कोटा"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
-msgstr "प्रयोगः : १."
+msgstr "प्रयोगः :"
 
 #: collectionpage/collectionquotawidget.cpp:30
 #, kde-format
@@ -551,12 +551,12 @@ msgstr "&सामान्य:"
 #, kde-format
 msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
-msgstr "&अनपठित: १."
+msgstr "&अनपठित:"
 
 #: configuredialog/configagentdelegate.cpp:105
 #, kde-format
 msgid "(%1%)"
-msgstr "(%1%) २."
+msgstr "(%1%)"
 
 #: configuredialog/configagentdelegate.cpp:214
 #, kde-format
@@ -603,7 +603,7 @@ msgstr "&क्रियायाः पुष्टिं कुर्वन्
 #: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgid "Before sending:"
-msgstr "प्रेषणात् पूर्वं : १."
+msgstr "प्रेषणात् पूर्वं :"
 
 #: configuredialog/configureaccountpage.cpp:105
 #, kde-format
@@ -644,7 +644,7 @@ msgstr "पश्चात् प्रेषयतु"
 #: configuredialog/configureaccountpage.cpp:121
 #, kde-format
 msgid "Defa&ult send method:"
-msgstr "पूर्वनिर्धारित&ult प्रेषणविधिः : १."
+msgstr "पूर्वनिर्धारित&ult प्रेषणविधिः :"
 
 #: configuredialog/configureaccountpage.cpp:125
 #, kde-format
@@ -823,7 +823,7 @@ msgstr "&मूल HTML मेलतः वर्णं न परिवर्�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
-msgstr "कोटा-दहलीजस्य समीपे : १."
+msgstr "कोटा-दहलीजस्य समीपे :"
 
 #: configuredialog/configureappearancepage.cpp:352
 #, kde-format
@@ -871,12 +871,12 @@ msgstr "सर्वदा"
 #, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "पुटस्य साधनसूचनानि : १."
+msgstr "पुटस्य साधनसूचनानि :"
 
 #: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Sta&ndard format (%1)"
-msgstr "मानक प्रारूप (%1) २."
+msgstr "मानक प्रारूप (%1)"
 
 #: configuredialog/configureappearancepage.cpp:583
 #, kde-format
@@ -890,17 +890,17 @@ msgstr "स्मार्ट for&mat (%1) 1.1."
 
 #: configuredialog/configureappearancepage.cpp:585
 msgid "C&ustom format:"
-msgstr "इष्टस्वरूपः : १."
+msgstr "इष्टस्वरूपः :"
 
 #: configuredialog/configureappearancepage.cpp:608
 #, kde-format
 msgid "Default aggregation:"
-msgstr "पूर्वनिर्धारितसमुच्चयः : १."
+msgstr "पूर्वनिर्धारितसमुच्चयः :"
 
 #: configuredialog/configureappearancepage.cpp:626
 #, kde-format
 msgid "Default theme:"
-msgstr "पूर्वनिर्धारितः विषयः : १."
+msgstr "पूर्वनिर्धारितः विषयः :"
 
 #: configuredialog/configureappearancepage.cpp:663
 #, kde-format
@@ -956,7 +956,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:706
 #, kde-format
 msgid "Date Display:"
-msgstr "तिथिप्रदर्शनम् : १."
+msgstr "तिथिप्रदर्शनम् :"
 
 #: configuredialog/configureappearancepage.cpp:811
 #, kde-format
@@ -1213,7 +1213,7 @@ msgstr "पूर्वनिर्धारितं अग्रे प्र�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
-msgstr "पूर्वनिर्धारितः अग्रेषणप्रकारः : १."
+msgstr "पूर्वनिर्धारितः अग्रेषणप्रकारः :"
 
 #: configuredialog/configurecomposerpage.cpp:281
 #, kde-format
@@ -1263,7 +1263,7 @@ msgstr "न सेव्"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
-msgstr "अधिकतमं हाले एव स्थापितानि पत्तनानि : १."
+msgstr "अधिकतमं हाले एव स्थापितानि पत्तनानि :"
 
 #: configuredialog/configurecomposerpage.cpp:378
 #, kde-format
@@ -1349,7 +1349,7 @@ msgstr "किं भवन्तः उत्तर-उपसर्गं ह�
 #: configuredialog/configurecomposerpage.cpp:635
 #, kde-format
 msgid "Reply Prefix:"
-msgstr "उत्तरम् उपसर्गः : १."
+msgstr "उत्तरम् उपसर्गः :"
 
 #: configuredialog/configurecomposerpage.cpp:646
 #, kde-format
@@ -1385,7 +1385,7 @@ msgstr "किं भवन्तः अग्रे उपसर्गं ह�
 #: configuredialog/configurecomposerpage.cpp:658
 #, kde-format
 msgid "Forward Prefix:"
-msgstr "अग्रे उपसर्गः : १."
+msgstr "अग्रे उपसर्गः :"
 
 #: configuredialog/configurecomposerpage.cpp:702
 #, kde-format
@@ -1397,7 +1397,7 @@ msgstr "&इष्टसन्देश-id प्रत्ययस्य उप
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
-msgstr "कस्टम सन्देश-&id प्रत्ययः: १."
+msgstr "कस्टम सन्देश-&id प्रत्ययः:"
 
 #: configuredialog/configurecomposerpage.cpp:730
 #, kde-format
@@ -1478,13 +1478,13 @@ msgstr "किं भवन्तः एतत् आसक्तिशब्द
 #: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Attachment Word:"
-msgstr "आसक्ति शब्दः १."
+msgstr "आसक्ति शब्दः"
 
 #: configuredialog/configurecomposerpage.cpp:979
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "अधिकतमः आसक्तिः आकारः : १."
+msgstr "अधिकतमः आसक्तिः आकारः :"
 
 #: configuredialog/configurecomposerpage.cpp:986
 #, kde-format
@@ -1613,7 +1613,7 @@ msgstr "S/MIME प्रमाणीकरणम्"
 #: configuredialog/configuresecuritypage.cpp:90
 #, kde-format
 msgid "Email Address:"
-msgstr "ईमेल-सङ्केतः : १."
+msgstr "ईमेल-सङ्केतः :"
 
 #: configuredialog/configuresecuritypage.cpp:91
 #, kde-format
@@ -1707,13 +1707,13 @@ msgstr "लेखागार"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
-msgstr "&फोल्डर: १."
+msgstr "&फोल्डर:"
 
 #: dialog/archivefolderdialog.cpp:82
 #, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
-msgstr "प्रारूपितम् : १."
+msgstr "प्रारूपितम् :"
 
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
@@ -1739,7 +1739,7 @@ msgstr "GZ-संपीडित तार अभिलेखागार (.tar.
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
-msgstr "&संग्रहसञ्चिका: १."
+msgstr "&संग्रहसञ्चिका:"
 
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
@@ -1779,7 +1779,7 @@ msgstr "अधिसूचना"
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
-msgstr[0] "१ आसक्तिः (%2) २."
+msgstr[0] "१ आसक्तिः (%2)"
 msgstr[1] "%1 संलग्नकानि (%2) ."
 
 #: editor/attachment/attachmentview.cpp:200
@@ -1846,7 +1846,7 @@ msgstr "&Sent-Mail पुटम्:"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
-msgstr "&मेल परिवहनम् : १."
+msgstr "&मेल परिवहनम् :"
 
 #: editor/kmcomposerwin.cpp:416
 #, kde-format
@@ -2278,7 +2278,7 @@ msgstr "केमेल"
 #: editor/kmcomposerwin.cpp:2447 editor/kmcomposerwin.cpp:2552
 #, kde-format
 msgid "Name of the attachment:"
-msgstr "आसक्तस्य नाम : १."
+msgstr "आसक्तस्य नाम :"
 
 #: editor/kmcomposerwin.cpp:2453
 #, kde-format
@@ -2993,7 +2993,7 @@ msgstr "&विद्यमान vCard तः"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&vCard path:"
-msgstr "&vCard मार्गः : १."
+msgstr "&vCard मार्गः :"
 
 #: identity/identityaddvcarddialog.cpp:77
 #, kde-format
@@ -3005,7 +3005,7 @@ msgstr "&विद्यमान vCard डुप्लिकेट् कुर
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
-msgstr "&विद्यमानपरिचयः : १."
+msgstr "&विद्यमानपरिचयः :"
 
 #: identity/identitydialog.cpp:224
 #, kde-format
@@ -3076,7 +3076,7 @@ msgstr "सामान्य"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
-msgstr "&भवतः नाम : १."
+msgstr "&भवतः नाम :"
 
 #: identity/identitydialog.cpp:378
 #, kde-format
@@ -3110,7 +3110,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
-msgstr "&ईमेल-सङ्केतः : १."
+msgstr "&ईमेल-सङ्केतः :"
 
 #: identity/identitydialog.cpp:411
 #, kde-format
@@ -3184,7 +3184,7 @@ msgstr "एन्क्रिप्शनस्य हस्ताक्षर�
 #: identity/identitydialog.cpp:480
 #, kde-format
 msgid "OpenPGP key:"
-msgstr "OpenPGP कुञ्जी : १."
+msgstr "OpenPGP कुञ्जी :"
 
 #: identity/identitydialog.cpp:488
 #, kde-format
@@ -3231,7 +3231,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
-msgstr "S/MIME हस्ताक्षर प्रमाणपत्रम् : १."
+msgstr "S/MIME हस्ताक्षर प्रमाणपत्रम् :"
 
 #: identity/identitydialog.cpp:541
 #, kde-format
@@ -3258,7 +3258,7 @@ msgstr "S/MIME एन्क्रिप्शन प्रमाणपत्र�
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
-msgstr "प्राधान्य प्रारूपः : १."
+msgstr "प्राधान्य प्रारूपः :"
 
 #: identity/identitydialog.cpp:569
 #, kde-format
@@ -3269,7 +3269,7 @@ msgstr "Autocrypt सक्षमं कुर्वन्तु"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "स्वतःगुप्तीकरणम् : १."
+msgstr "स्वतःगुप्तीकरणम् :"
 
 #: identity/identitydialog.cpp:578
 #, kde-format
@@ -3286,7 +3286,7 @@ msgstr "सुरक्षापूर्वनिर्धारिताना
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "पूर्वनिर्धारितं अधिलेखयन्तु : १."
+msgstr "पूर्वनिर्धारितं अधिलेखयन्तु :"
 
 #: identity/identitydialog.cpp:589
 #, kde-format
@@ -3322,7 +3322,7 @@ msgstr "उन्नतं"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
-msgstr "&उत्तर-पतेः कृते : १."
+msgstr "&उत्तर-पतेः कृते :"
 
 #: identity/identitydialog.cpp:620
 #, kde-format
@@ -3345,7 +3345,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
-msgstr "&CC पत्तनम् : १."
+msgstr "&CC पत्तनम् :"
 
 #: identity/identitydialog.cpp:644
 #, kde-format
@@ -3367,7 +3367,7 @@ msgstr ""
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
-msgstr "&बीसीसी पताः : १."
+msgstr "&बीसीसी पताः :"
 
 #: identity/identitydialog.cpp:664
 #, kde-format
@@ -3412,7 +3412,7 @@ msgstr "Draft Folder इति चिनोतु"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
-msgstr "&Drafts पुटम् : १."
+msgstr "&Drafts पुटम् :"
 
 #: identity/identitydialog.cpp:700
 #, kde-format
@@ -3429,7 +3429,7 @@ msgstr "&Templates पुटम्:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
-msgstr "बहिर्गमनलेखः : १."
+msgstr "बहिर्गमनलेखः :"
 
 #: identity/identitydialog.cpp:714
 #, kde-format
@@ -3447,7 +3447,7 @@ msgstr "निर्मियताम्…"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
-msgstr "स्वशुद्धिकरणभाषा : १."
+msgstr "स्वशुद्धिकरणभाषा :"
 
 #: identity/identitydialog.cpp:731
 #, kde-format
@@ -3714,7 +3714,7 @@ msgstr "नवीनपरिचयः"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&New identity:"
-msgstr "&नवीनपरिचयः : १."
+msgstr "&नवीनपरिचयः :"
 
 #: identity/newidentitydialog.cpp:76
 #, kde-format
@@ -4856,7 +4856,7 @@ msgstr "&कतारबद्धसन्देशान् प्रेषय�
 #: kmmainwidget.cpp:2971
 #, kde-format
 msgid "Online status (unknown)"
-msgstr "ऑनलाइन स्थितिः (अज्ञात) २."
+msgstr "ऑनलाइन स्थितिः (अज्ञात)"
 
 #: kmmainwidget.cpp:2976
 #, kde-format
@@ -6219,7 +6219,7 @@ msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
 "email though could be irc/ftp or other url variant"
 msgid "%1 (%2)"
-msgstr "%1 (%2) २."
+msgstr "%1 (%2)"
 
 #: messageactions.cpp:755
 #, kde-format
@@ -6230,7 +6230,7 @@ msgstr "PDF मध्ये निर्यातं कुर्वन्तु
 #: messageactions.cpp:757
 #, kde-format
 msgid "PDF document (*.pdf)"
-msgstr "PDF दस्तावेज (*.pdf) २."
+msgstr "PDF दस्तावेज (*.pdf)"
 
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
@@ -6573,7 +6573,7 @@ msgstr "पूर्वनिर्धारितरूपेण Inline अग�
 #: settings/kmail.kcfg.in:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
-msgstr "यदि प्राप्तकर्तृणां संख्या : १."
+msgstr "यदि प्राप्तकर्तृणां संख्या :"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
@@ -6625,7 +6625,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:246
 #, kde-format
 msgid "Autosave interval:"
-msgstr "स्वतः रक्षणान्तरम् : १."
+msgstr "स्वतः रक्षणान्तरम् :"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:247
@@ -6679,7 +6679,7 @@ msgstr "पूर्वनिर्धारितशॉर्टकट् प�
 #: settings/kmail.kcfg.in:334
 #, kde-format
 msgid "Message preview pane:"
-msgstr "सन्देशपूर्वावलोकनफलकम् : १."
+msgstr "सन्देशपूर्वावलोकनफलकम् :"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:337
@@ -6703,7 +6703,7 @@ msgstr "सन्देशसूचिकायाः पार्श्वे �
 #: settings/kmail.kcfg.in:350
 #, kde-format
 msgid "Folder list:"
-msgstr "पुटसूची : १."
+msgstr "पुटसूची :"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg.in:353
@@ -7129,7 +7129,7 @@ msgstr "&उपपुटं समावेशयन्तु"
 #: ui/searchwindow.ui:53
 #, kde-format
 msgid "Select specific folders:"
-msgstr "विशिष्टपुटं चिनोतु : १."
+msgstr "विशिष्टपुटं चिनोतु :"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
@@ -7305,7 +7305,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:214
 #, kde-format
 msgid "For own certificates:"
-msgstr "स्वस्य प्रमाणपत्राणां कृते : १."
+msgstr "स्वस्य प्रमाणपत्राणां कृते :"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
@@ -7349,7 +7349,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:316
 #, kde-format
 msgid "For intermediate CA certificates:"
-msgstr "मध्यवर्ती CA प्रमाणपत्राणां कृते : १."
+msgstr "मध्यवर्ती CA प्रमाणपत्राणां कृते :"
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:347
@@ -7478,7 +7478,7 @@ msgstr "यदि सन्देशपठनं शङ्कितः ईमे
 #: ui/securitypagegeneraltab.ui:121
 #, kde-format
 msgid "Whitelist:"
-msgstr "श्वेतसूची : १."
+msgstr "श्वेतसूची :"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_5)
 #: ui/securitypagegeneraltab.ui:134
@@ -7526,7 +7526,7 @@ msgstr "स्वयमेव कुञ्जीः प्रमाणपत्�
 #: ui/securitypagemdntab.ui:20
 #, kde-format
 msgid "Send policy:"
-msgstr "प्रेषण नीतिः : १."
+msgstr "प्रेषण नीतिः :"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, radioIgnore)
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, radioAsk)
@@ -7608,7 +7608,7 @@ msgstr "सदा प्रेषयतु"
 #: ui/securitypagemdntab.ui:86
 #, kde-format
 msgid "Quote original message:"
-msgstr "मूल सन्देश उद्धृत करें : १."
+msgstr "मूल सन्देश उद्धृत करें :"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioNothing)
 #: ui/securitypagemdntab.ui:99
@@ -7694,7 +7694,7 @@ msgstr "OCSP प्रतिक्रियाकर्ता URL:"
 #: ui/smimeconfiguration.ui:60
 #, kde-format
 msgid "OCSP responder signature:"
-msgstr "ओसीएसपी प्रतिक्रियादाता हस्ताक्षरः : १."
+msgstr "ओसीएसपी प्रतिक्रियादाता हस्ताक्षरः :"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74

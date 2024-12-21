@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-08-10 00:42+0000\n"
-"PO-Revision-Date: 2024-12-14 01:48+0530\n"
+"PO-Revision-Date: 2024-12-20 21:52+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
@@ -333,7 +333,7 @@ msgstr "वर्णनम्‌:"
 #: ui/attachpropertywidgetbase.ui:68
 #, kde-format
 msgid "Index:"
-msgstr "अनुक्रमणिका : १."
+msgstr "अनुक्रमणिका :"
 
 #. i18n: ectx: property (text), widget (QLabel, mDisplayLabel)
 #: ui/attachpropertywidgetbase.ui:107
@@ -345,10 +345,10 @@ msgstr "टिप्पणी:"
 #: ui/attachpropertywidgetbase.ui:143
 #, kde-format
 msgid "File size:"
-msgstr "सञ्चिकायाः आकारः : १."
+msgstr "सञ्चिकायाः आकारः :"
 
 #. i18n: ectx: property (text), widget (QLabel, mMimeLabel)
 #: ui/attachpropertywidgetbase.ui:199
 #, kde-format
 msgid "MIME type:"
-msgstr "MIME प्रकारः : १."
+msgstr "MIME प्रकारः :"
