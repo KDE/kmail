@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-22 00:41+0000\n"
-"PO-Revision-Date: 2024-08-21 00:34+0200\n"
+"PO-Revision-Date: 2024-12-24 17:05+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -2242,23 +2242,17 @@ msgid "Sending Message Failed"
 msgstr "메시지 전송 실패"
 
 #: editor/kmcomposerwin.cpp:2226 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"\"PIM 데이터 내보내기\" 프로그램을 시작할 수 없습니다. 설치 상태를 확인하십시"
-"오."
+"\"KAddressbook\" 프로그램을 시작할 수 없습니다. 설치 상태를 확인하십시오."
 
 #: editor/kmcomposerwin.cpp:2228 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "\"PIM 데이터 내보내기\" 프로그램을 시작할 수 없음"
+msgstr "\"KAddressbook\" 프로그램을 시작할 수 없음"
 
 #: editor/kmcomposerwin.cpp:2351
 #, kde-format
@@ -3507,10 +3501,9 @@ msgid "Picture"
 msgstr "그림"
 
 #: identity/identitydialog.cpp:797
-#, fuzzy, kde-format
-#| msgid "Activate"
+#, kde-format
 msgid "Activities"
-msgstr "활성화"
+msgstr "활동"
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -4438,23 +4431,17 @@ msgid "KMail Error"
 msgstr "KMail 오류"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"\"PIM 데이터 내보내기\" 프로그램을 시작할 수 없습니다. 설치 상태를 확인하십시"
-"오."
+"\"ImportWizard\" 프로그램을 시작할 수 없습니다. 설치 상태를 확인하십시오."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "가져오기 마법사를 시작할 수 없음"
+msgstr "\"ImportWizard\" 프로그램을 시작할 수 없음"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5793,14 +5780,12 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Microsoft Exchange 웹 서비스 리소스 지원 추가"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "maildir 지원 추가"
+msgstr "Windows 지원 추가"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "검색 문자열 입력란에 사용할 수 있는 사용자 정의 문법 추가"
 
 #: kmreaderwin.cpp:311
 #, kde-format
@@ -6836,7 +6821,7 @@ msgstr "주소록에서 선택"
 #: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "현재 활동에 있는 프로필만 표시"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31
