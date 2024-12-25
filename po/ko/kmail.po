@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-17 02:47+0000\n"
-"PO-Revision-Date: 2024-08-21 00:34+0200\n"
+"PO-Revision-Date: 2024-12-24 17:05+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -3488,10 +3488,9 @@ msgid "Picture"
 msgstr "그림"
 
 #: identity/identitydialog.cpp:797
-#, fuzzy, kde-format
-#| msgid "Activate"
+#, kde-format
 msgid "Activities"
-msgstr "활성화"
+msgstr "활동"
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -6802,7 +6801,7 @@ msgstr "주소록에서 선택"
 #: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "현재 활동에 있는 프로필만 표시"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31
