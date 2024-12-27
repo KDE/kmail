@@ -4583,6 +4583,12 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
         }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsDeleted: {
+            Akonadi::MessageStatus status;
+            status.setDeleted(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
+            break;
+        }
         case MessageList::Core::SearchLineCommand::SearchLineType::IsSpam: {
             Akonadi::MessageStatus status;
             status.setSpam(true);
