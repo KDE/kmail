@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-22 00:41+0000\n"
+"POT-Creation-Date: 2024-12-28 00:42+0000\n"
 "PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -4579,7 +4579,7 @@ msgstr ""
 "在 HTML 信件中下載遠端的連結會使您更容易受到垃圾信的攻擊，並且有可能會增加您"
 "的系統被其他已存在和將來的安全漏洞危害的機會。"
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4907
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5511,13 +5511,13 @@ msgstr "復原(&U)：\"%1\""
 msgid "Filter %1"
 msgstr "過濾 %1"
 
-#: kmmainwidget.cpp:4890
+#: kmmainwidget.cpp:4896
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "搜尋… <%1>"
 
-#: kmmainwidget.cpp:4898
+#: kmmainwidget.cpp:4904
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5527,13 +5527,13 @@ msgstr ""
 "在信件中使用 HTML 將會使您更容易受到垃圾信的攻擊，並且有可能會增加您的系統被"
 "其他已存在和將來的安全漏洞危害的機會。"
 
-#: kmmainwidget.cpp:4902
+#: kmmainwidget.cpp:4908
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "使用 HTML"
 
-#: kmmainwidget.cpp:5048
+#: kmmainwidget.cpp:5054
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5548,41 +5548,41 @@ msgstr ""
 "您可以在 KMail 的外掛程式設定當中設定合併信箱、建立自訂的合併信箱或是完全停用"
 "本功能。"
 
-#: kmmainwidget.cpp:5051
+#: kmmainwidget.cpp:5057
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "啟用整合信箱？"
 
-#: kmmainwidget.cpp:5052
+#: kmmainwidget.cpp:5058
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "啟用整合信箱"
 
-#: kmmainwidget.cpp:5053
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "取消"
 
-#: kmmainwidget.cpp:5088
+#: kmmainwidget.cpp:5094
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "您確定要重新啟動 Akonadi 嗎？"
 
-#: kmmainwidget.cpp:5089
+#: kmmainwidget.cpp:5095
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "重新啟動 Akonadi"
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "重新啟動"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5103
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi 已重新啟動。"

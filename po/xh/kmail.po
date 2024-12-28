@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-22 00:41+0000\n"
+"POT-Creation-Date: 2024-12-28 00:42+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -4726,7 +4726,7 @@ msgstr ""
 "\"spam\" kwaye kungandisa okunokwenzeka ethi umatshini wakho uzakuvumelana "
 "ngenye ekhoyo kunye nezenzo ezilindelekileyo zokhuseleko."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4907
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5719,13 +5719,13 @@ msgstr ""
 msgid "Filter %1"
 msgstr "Iintshukumo Yecebo lokucoca ulwelo"
 
-#: kmmainwidget.cpp:4890
+#: kmmainwidget.cpp:4896
 #, fuzzy, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Inkcazelo"
 
-#: kmmainwidget.cpp:4898
+#: kmmainwidget.cpp:4904
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5736,13 +5736,13 @@ msgstr ""
 "\"spam\" kwaye kungandisa okunokwenzeka ethi umatshini wakho uzakuvumelana "
 "ngenye ekhoyo kunye nezenzo ezilindelekileyo zokhuseleko."
 
-#: kmmainwidget.cpp:4902
+#: kmmainwidget.cpp:4908
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr ""
 
-#: kmmainwidget.cpp:5048
+#: kmmainwidget.cpp:5054
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5752,44 +5752,44 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5051
+#: kmmainwidget.cpp:5057
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5052
+#: kmmainwidget.cpp:5058
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Qwa&lasela..."
 
-#: kmmainwidget.cpp:5053
+#: kmmainwidget.cpp:5059
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Irhoxisiwe."
 
-#: kmmainwidget.cpp:5088
+#: kmmainwidget.cpp:5094
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:5089
+#: kmmainwidget.cpp:5095
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5096
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Igama Lochazo"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5103
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

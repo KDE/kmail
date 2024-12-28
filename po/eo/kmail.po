@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-22 00:41+0000\n"
-"PO-Revision-Date: 2024-09-21 10:41+0200\n"
+"POT-Creation-Date: 2024-12-28 00:42+0000\n"
+"PO-Revision-Date: 2024-12-27 17:40+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -2269,23 +2269,17 @@ msgid "Sending Message Failed"
 msgstr "Sendado de Mesaĝo Malsukcesis"
 
 #: editor/kmcomposerwin.cpp:2226 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Ne eblis lanĉi programon \"PIM Data Exporter\". Bonvolu kontroli vian "
-"instaladon."
+"Ne eblis lanĉi programon \"KAddressbook\". Bonvolu kontroli vian instalon."
 
 #: editor/kmcomposerwin.cpp:2228 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Ne eblas lanĉi programon \"PIM Data Exporter\"."
+msgstr "Ne eblas lanĉi programon \"KAddressbook\"."
 
 #: editor/kmcomposerwin.cpp:2351
 #, kde-format
@@ -4499,23 +4493,17 @@ msgid "KMail Error"
 msgstr "KMail-eraro"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Ne eblis lanĉi programon \"PIM Data Exporter\". Bonvolu kontroli vian "
-"instaladon."
+"Ne eblis lanĉi programon \"ImportWizard\". Bonvolu kontroli vian instalon."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Ne eblas lanĉi ImportWizard"
+msgstr "Ne eblas lanĉi programon \"ImportWizard\""
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -4664,7 +4652,7 @@ msgstr ""
 "kaj povas pliigi la verŝajnecon, ke via sistemo estos kompromitita de aliaj "
 "aktualaj kaj antaŭviditaj sekurecaj ekspluatoj."
 
-#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:1594 kmmainwidget.cpp:4907
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5620,13 +5608,13 @@ msgstr "Malfar&u: \"%1\""
 msgid "Filter %1"
 msgstr "Filtrilo %1"
 
-#: kmmainwidget.cpp:4890
+#: kmmainwidget.cpp:4896
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Serĉi… <%1>"
 
-#: kmmainwidget.cpp:4898
+#: kmmainwidget.cpp:4904
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5636,13 +5624,13 @@ msgstr ""
 "Uzo de HTML en retpoŝto faras vin pli vundebla de varbmesaĝoj kaj povus "
 "altigi la verŝajnecon, ke via sistemo estos damaĝata de malica kodo."
 
-#: kmmainwidget.cpp:4902
+#: kmmainwidget.cpp:4908
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Uzi HTMLon"
 
-#: kmmainwidget.cpp:5048
+#: kmmainwidget.cpp:5054
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5657,41 +5645,41 @@ msgstr ""
 "Vi povas agordi unuigitajn leterkestojn, krei proprajn aŭ\n"
 "malŝalti la funkcion tute en Agordoj de Kromaĵoj de KMail."
 
-#: kmmainwidget.cpp:5051
+#: kmmainwidget.cpp:5057
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Ĉu Ebligi Unuigitajn Poŝtkestojn?"
 
-#: kmmainwidget.cpp:5052
+#: kmmainwidget.cpp:5058
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Ebligi Unuigitajn Poŝtkestojn"
 
-#: kmmainwidget.cpp:5053
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: kmmainwidget.cpp:5088
+#: kmmainwidget.cpp:5094
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Ĉu vi volas rekomenci Akonadi?"
 
-#: kmmainwidget.cpp:5089
+#: kmmainwidget.cpp:5095
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Rekomenci Akonadi"
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Rekomenci"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5103
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi rekomenciĝis."
@@ -5871,14 +5859,12 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Aldonita resursa subteno de Microsoft Exchange Web Services"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Aldonita maildir-subteno"
+msgstr "Aldoni Vindoz-Subtenon"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "Aldoni Propran Sintakson uzeblan en la serĉa tekstokampo"
 
 #: kmreaderwin.cpp:311
 #, kde-format
@@ -8200,29 +8186,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid ""
-#~ "Could not start the import wizard. Please make sure you have ImportWizard "
-#~ "properly installed."
-#~ msgstr ""
-#~ "Ne eblis lanĉi la importadon. Bonvolu certigi, ke vi havas ImportWizard "
-#~ "ĝuste instalita."
-
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "Ne eblas lanĉi importan sorĉiston"
-
-#~ msgid "Form"
-#~ msgstr "Formo"
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (Apriora)"
-
-#~ msgid "Identity Name"
-#~ msgstr "Identeco"
-
-#~ msgid "Email Address"
-#~ msgstr "Retpoŝta adreso"
