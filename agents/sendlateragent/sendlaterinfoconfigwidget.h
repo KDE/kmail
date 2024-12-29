@@ -28,9 +28,6 @@ public:
 public Q_SLOTS:
     void slotNeedToReloadConfig();
 
-Q_SIGNALS:
-    void sendNow(Akonadi::Item::Id);
-
 private:
     SendLaterWidget *const mWidget;
 };
