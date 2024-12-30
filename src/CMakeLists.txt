@@ -443,7 +443,6 @@ endif()
 target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})
 
 
-pim_target_precompile_headers(kmailprivate PUBLIC ../kmail_pch.h)
 if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
     set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
 endif()
@@ -521,7 +520,6 @@ set_target_properties(kmailprivate
 ########### kcm_kmail ###############
 add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
 target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
-pim_target_precompile_headers(kcm_kmail_static PUBLIC ../kmail_pch.h)
 target_link_libraries(kcm_kmail_static  kmailprivate KF6::KCMUtils KF6::Completion KF6::I18n )
 
 kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
@@ -551,7 +549,6 @@ qt_add_dbus_adaptor(kmailpart_PART_SRCS
 )
 qt_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
-pim_target_precompile_headers(kmailpart PUBLIC ../kmail_pch.h)
 
 target_link_libraries(kmailpart
     kmailprivate

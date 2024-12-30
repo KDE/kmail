@@ -34,7 +34,6 @@ ecm_qt_declare_logging_category(archivemailagent HEADER archivemailagent_debug.h
 
 ki18n_wrap_ui(archivemailagent ui/archivemailwidget.ui)
 
-pim_target_precompile_headers(archivemailagent PUBLIC ../../kmail_pch.h)
 #if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(archivemailagent PROPERTIES UNITY_BUILD ON)
 #endif()

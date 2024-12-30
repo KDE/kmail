@@ -15,7 +15,6 @@ set(kontact_kmail_plugins_interface_SRCS)
 qt_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
 add_library(kontact_kmailplugin MODULE)
 target_sources(kontact_kmailplugin PRIVATE kmail_plugin.cpp summarywidget.cpp kmail_plugin.h summarywidget.h ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
-pim_target_precompile_headers(kontact_kmailplugin PUBLIC ../../../kmail_pch.h)
 add_dependencies(kontact_kmailplugin kmail_xml)
 
 target_link_libraries(kontact_kmailplugin KPim6::Mime KF6::I18n KPim6::KontactInterface KF6::CalendarCore KPim6::CalendarUtils KPim6::AkonadiCore KF6::Contacts KPim6::AkonadiWidgets Qt::DBus)
@@ -24,7 +23,6 @@ target_link_libraries(kontact_kmailplugin KPim6::Mime KF6::I18n KPim6::KontactIn
 
 add_library(kcmkmailsummary MODULE)
 target_sources(kcmkmailsummary PRIVATE kcmkmailsummary.cpp kcmkmailsummary.h ${kontact_kmail_plugins_interface_SRCS} ${kontact_kmail_plugins_interface_common_SRCS})
-pim_target_precompile_headers(kcmkmailsummary PUBLIC ../../../kmail_pch.h)
 
 add_dependencies(kcmkmailsummary kmail_xml)
 
