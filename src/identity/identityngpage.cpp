@@ -215,9 +215,9 @@ void IdentityNgPage::slotRemoveIdentity()
             listIdentityNames.append(newModelIndex.data().toString());
         }
         mIPage.mIdentityList->identityTreeModel()->removeIdentities(listIdentityNames);
+        save();
         updateButtons();
     }
-    save();
 }
 
 void IdentityNgPage::slotRenameIdentity()
