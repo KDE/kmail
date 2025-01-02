@@ -3,7 +3,7 @@
  * SPDX-FileCopyrightText: 1996-1998 Stefan Taferner <taferner@kde.org>
  * SPDX-FileCopyrightText: 2001 Aaron J. Seigo <aseigo@kde.org>
  * SPDX-FileCopyrightText: 2010 Till Adam <adam@kde.org>
- * SPDX-FileCopyrightText: 2011-2024 Laurent Montel <montel@kde.org>
+ * SPDX-FileCopyrightText: 2011-2025 Laurent Montel <montel@kde.org>
  *
  * SPDX-License-Identifier: GPL-2.0-or-later
  *

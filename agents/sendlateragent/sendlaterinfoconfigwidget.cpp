@@ -1,5 +1,5 @@
 /*
-   SPDX-FileCopyrightText: 2013-2024 Laurent Montel <montel@kde.org>
+   SPDX-FileCopyrightText: 2013-2025 Laurent Montel <montel@kde.org>
 
    SPDX-License-Identifier: GPL-2.0-or-later
 */
@@ -34,7 +34,7 @@ SendLaterInfoConfigWidget::SendLaterInfoConfigWidget(const KSharedConfigPtr &con
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Send emails later agent."),
                                       KAboutLicense::GPL_V2,
-                                      i18n("Copyright (C) 2013-%1 Laurent Montel", QStringLiteral("2024")));
+                                      i18n("Copyright (C) 2013-%1 Laurent Montel", QStringLiteral("2025")));
 
     aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 

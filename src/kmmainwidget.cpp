@@ -1,7 +1,7 @@
 /*
   This file is part of KMail, the KDE mail client.
   SPDX-FileCopyrightText: 2002 Don Sanders <sanders@kde.org>
-  SPDX-FileCopyrightText: 2009-2024 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2009-2025 Laurent Montel <montel@kde.org>
 
   Based on the work of Stefan Taferner <taferner@kde.org>
 
