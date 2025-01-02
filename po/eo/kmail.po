@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-12-17 02:47+0000\n"
-"PO-Revision-Date: 2024-09-21 10:41+0200\n"
+"PO-Revision-Date: 2024-12-27 17:40+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -536,7 +536,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
-msgstr "Ŝablonoj"
+msgstr "Ŝablonoj:"
 
 #: collectionpage/collectionviewpage.cpp:36
 #, kde-format
@@ -1083,7 +1083,7 @@ msgstr "Ni ne povas krei etikedon. Etikedo kun sama nomo jam ekzistas."
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
-msgstr "Ĝeneralaj"
+msgstr "Ĝenerale"
 
 #: configuredialog/configurecomposerpage.cpp:71
 #, kde-format
@@ -4492,7 +4492,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start import wizard"
-msgstr "Ne eblas lanĉi importan sorĉiston"
+msgstr "Ne eblas komenci importadon"
 
 #: kmlaunchexternalcomponent.cpp:118
 #, kde-format
@@ -4593,7 +4593,7 @@ msgstr "Malplenigi rubujon"
 #, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
-msgstr "Movi al Rubujo"
+msgstr "Movi al rubujo"
 
 #: kmmainwidget.cpp:1488
 #, kde-format
@@ -8166,18 +8166,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid "Form"
-#~ msgstr "Formo"
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (Apriora)"
-
-#~ msgid "Identity Name"
-#~ msgstr "Identeco"
-
-#~ msgid "Email Address"
-#~ msgstr "Retpoŝta adreso"
