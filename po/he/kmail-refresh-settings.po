@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-03 00:42+0000\n"
-"PO-Revision-Date: 2024-06-22 08:08+0300\n"
+"PO-Revision-Date: 2025-01-03 21:23+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -34,10 +34,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "המסייע של KMail לרענון ההגדרות"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2025 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019‏-2024 לורנט מונטל <montel@kde.org>"
+msgstr "(c) 2019‏-2025 לורנט מונטל <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format
