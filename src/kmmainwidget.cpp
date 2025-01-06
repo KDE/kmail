@@ -4631,6 +4631,12 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
             patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
             break;
         }
+        case MessageList::Core::SearchLineCommand::SearchLineType::IsAction: {
+            Akonadi::MessageStatus status;
+            status.setToAct(true);
+            patternNew.append(SearchRule::Ptr(new SearchRuleStatus(status)));
+            break;
+        }
 
         case MessageList::Core::SearchLineCommand::SearchLineType::Larger:
         case MessageList::Core::SearchLineCommand::SearchLineType::Smaller:
