@@ -2239,7 +2239,6 @@ msgstr "Det lyktes ikke å sende meldinga"
 
 #: editor/kmcomposerwin.cpp:2226 kmlaunchexternalcomponent.cpp:165
 #, fuzzy, kde-format
-#| msgid "Could not start the import wizard. Please check your installation."
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "Klarte ikke starte importveiviseren. Kontroller installasjonen."
@@ -4380,7 +4379,6 @@ msgstr "KMail-feil"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
 #, fuzzy, kde-format
-#| msgid "Could not start the import wizard. Please check your installation."
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "Klarte ikke starte importveiviseren. Kontroller installasjonen."
