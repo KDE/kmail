@@ -5,7 +5,6 @@
 */
 
 #include "tagmonitormanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 
@@ -14,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <Akonadi/TagFetchJob>
 #include <Akonadi/TagFetchScope>
 
+using namespace Qt::Literals::StringLiterals;
 TagMonitorManager::TagMonitorManager(QObject *parent)
     : QObject(parent)
     , mMonitor(new Akonadi::Monitor(this))

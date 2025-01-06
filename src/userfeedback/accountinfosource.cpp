@@ -5,7 +5,6 @@
 */
 
 #include "accountinfosource.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <Akonadi/AgentInstance>
 #include <KLocalizedString>
@@ -14,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <MailTransport/TransportManager>
 #include <QVariant>
 
+using namespace Qt::Literals::StringLiterals;
 AccountInfoSource::AccountInfoSource()
     : KUserFeedback::AbstractDataSource(QStringLiteral("accounts"), KUserFeedback::Provider::DetailedSystemInformation)
 {

@@ -5,7 +5,6 @@
 */
 
 #include "tagselectdialog.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 
@@ -27,6 +26,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWindow>
+using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
