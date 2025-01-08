@@ -87,7 +87,6 @@ Q_SIGNALS:
     void tagMoreActionClicked();
 
 private:
-    Q_DISABLE_COPY(TagActionManager)
     KMAIL_NO_EXPORT void newTagActionClicked();
     KMAIL_NO_EXPORT void onSignalMapped(const QString &tag);
 

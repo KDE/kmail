@@ -109,7 +109,6 @@ public Q_SLOTS:
     void editCurrentMessage();
 
 private:
-    Q_DISABLE_COPY(MessageActions)
     void updateActions();
     void replyCommand(MessageComposer::ReplyStrategy strategy);
     void addMailingListAction(const QString &item, const QUrl &url);

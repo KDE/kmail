@@ -32,7 +32,6 @@ public:
     [[nodiscard]] bool execute(const MessageComposer::PluginEditorCheckBeforeSendParams &params) const;
 
 private:
-    Q_DISABLE_COPY(KMailPluginEditorCheckBeforeSendManagerInterface)
     QList<MessageComposer::PluginEditorCheckBeforeSendInterface *> mListPluginInterface;
     QWidget *mParentWidget = nullptr;
 };
