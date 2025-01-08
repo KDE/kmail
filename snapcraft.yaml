@@ -122,7 +122,6 @@ parts:
         - libgpgmepp-dev
         - libx11-dev
         - pkg-config
-        - libphonon4qt5-dev
         - shared-mime-info
         - xsltproc
         - zlib1g-dev
@@ -134,8 +133,6 @@ parts:
         - libgpgmepp6
         - libgrantlee5
         - pkg-config
-        - phonon4qt5
-        - phonon4qt5-backend-gstreamer
         - shared-mime-info
         - xsltproc
         - zlib1g-dev
