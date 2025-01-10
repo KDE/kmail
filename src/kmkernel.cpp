@@ -2,7 +2,6 @@
 
 #include "kmkernel.h"
 using namespace Qt::Literals::StringLiterals;
-#include "config-kmail.h"
 #include "job/fillcomposerjob.h"
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"

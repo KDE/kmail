@@ -10,7 +10,6 @@
 
 // KMail includes
 #include "kmmainwidget.h"
-#include "config-kmail.h"
 #include "editor/composer.h"
 #include "job/clearcachejobinfolderandsubfolderjob.h"
 #include "job/composenewmessagejob.h"
