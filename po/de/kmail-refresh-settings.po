@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the kmail package.
 # Frederik Schwarzer <schwarzer@kde.org>, 2019, 2022, 2023.
 # Burkhard Lück <lueck@hube-lueck.de>, 2019, 2020, 2021.
-# SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
+# SPDX-FileCopyrightText: 2024, 2025 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 #
 msgid ""
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.03.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
