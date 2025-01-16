@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 02:47+0000\n"
+"POT-Creation-Date: 2025-01-16 02:31+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -5129,7 +5129,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "বার্তা &সন্ধান করো"
 
-#: kmmainwidget.cpp:3086 util.cpp:151
+#: kmmainwidget.cpp:3086 util.cpp:166
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5892,7 +5892,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "প্রের&ণ"
 
-#: kmreadermainwin.cpp:491 util.cpp:151
+#: kmreadermainwin.cpp:491 util.cpp:166
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&আবর্জনা ফোল্ডারে পাঠাও"
@@ -8286,25 +8286,25 @@ msgstr "লগ-ইন তথ্য"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:154
+#: util.cpp:169
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "মুছে ফেলা"
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgid "Move to Trash"
 msgstr "আবর্জনা ফোল্ডারে সরাও"
 
-#: util.cpp:167
+#: util.cpp:182
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
 
-#: util.cpp:169
+#: util.cpp:184
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

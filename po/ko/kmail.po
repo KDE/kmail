@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 02:47+0000\n"
+"POT-Creation-Date: 2025-01-16 02:31+0000\n"
 "PO-Revision-Date: 2024-12-24 17:05+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -4900,7 +4900,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "후속 작업 메시지…"
 
-#: kmmainwidget.cpp:3086 util.cpp:151
+#: kmmainwidget.cpp:3086 util.cpp:166
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5600,7 +5600,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "시작 중..."
 
-#: kmreadermainwin.cpp:491 util.cpp:151
+#: kmreadermainwin.cpp:491 util.cpp:166
 #, kde-format
 msgid "&Move to Trash"
 msgstr "휴지통으로 이동(&M)"
@@ -7986,18 +7986,18 @@ msgstr "플러그인 정보"
 msgid "Plugins used in KMail."
 msgstr "KMail에서 사용하는 플러그인입니다."
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "삭제"
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgid "Move to Trash"
 msgstr "휴지통으로 이동"
 
-#: util.cpp:167
+#: util.cpp:182
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8005,7 +8005,7 @@ msgid ""
 msgstr ""
 "계정 마법사를 시작할 수 없습니다. AccountWizard의 설치 상태를 확인하십시오."
 
-#: util.cpp:169
+#: util.cpp:184
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

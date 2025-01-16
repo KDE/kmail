@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 02:47+0000\n"
+"POT-Creation-Date: 2025-01-16 02:31+0000\n"
 "PO-Revision-Date: 2024-09-15 10:43+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -4970,7 +4970,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Followup Reminder Messages…"
 
-#: kmmainwidget.cpp:3086 util.cpp:151
+#: kmmainwidget.cpp:3086 util.cpp:166
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5671,7 +5671,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Starting…"
 
-#: kmreadermainwin.cpp:491 util.cpp:151
+#: kmreadermainwin.cpp:491 util.cpp:166
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Move to Wastebin"
@@ -8103,18 +8103,18 @@ msgstr "Plugins Information"
 msgid "Plugins used in KMail."
 msgstr "Plugins used in KMail."
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Delete"
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgid "Move to Trash"
 msgstr "Move to Wastebin"
 
-#: util.cpp:167
+#: util.cpp:182
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8123,7 +8123,7 @@ msgstr ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 
-#: util.cpp:169
+#: util.cpp:184
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

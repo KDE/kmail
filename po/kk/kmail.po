@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 02:47+0000\n"
+"POT-Creation-Date: 2025-01-16 02:31+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -5353,7 +5353,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Хаттарды іздеу..."
 
-#: kmmainwidget.cpp:3086 util.cpp:151
+#: kmmainwidget.cpp:3086 util.cpp:166
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6122,7 +6122,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Бастау..."
 
-#: kmreadermainwin.cpp:491 util.cpp:151
+#: kmreadermainwin.cpp:491 util.cpp:166
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Өшірілгендерге &тастау"
@@ -8730,19 +8730,19 @@ msgstr "Тіркеу мәліметі"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:154
+#: util.cpp:169
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Өшіру"
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgid "Move to Trash"
 msgstr "Өшірілгендерге жылжыту"
 
-#: util.cpp:167
+#: util.cpp:182
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -8750,7 +8750,7 @@ msgid ""
 "properly installed."
 msgstr "Тіркелгі шебері жегілмеді. Орнатылғанын тексеріңіз."
 
-#: util.cpp:169
+#: util.cpp:184
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"

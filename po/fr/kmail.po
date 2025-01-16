@@ -19,7 +19,7 @@
 # Sébastien Renard <Sebastien.Renard@digitalfox.org>, 2008, 2009.
 # Anne-Marie Mahfouf <annemarie.mahfouf@free.fr>, 2009.
 # Sébastien Renard <renard@kde.org>, 2011, 2012.
-# SPDX-FileCopyrightText: 2012, 2020, 2021, 2022, 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2012, 2020, 2021, 2022, 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 # Sebastien Renard <renard@kde.org>, 2012, 2013, 2014, 2015.
 # Vincent Pinon <vpinon@kde.org>, 2017, 2018.
 # Simon Depiets <sdepiets@gmail.com>, 2018, 2019, 2020.
@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-12-17 02:47+0000\n"
-"PO-Revision-Date: 2024-09-11 10:15+0200\n"
+"POT-Creation-Date: 2025-01-16 02:31+0000\n"
+"PO-Revision-Date: 2025-01-14 15:14+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.1\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -1307,7 +1307,7 @@ msgstr ""
 "d'adresses manuellement ou lors de l'utilisation du sélecteur "
 "« Sélectionner… ». La mise en place de cette limite a pour objectif de vous "
 "empêcher d'envoyer accidentellement un message à trop de personnes. Veuillez "
-"néanmoins noter que  ceci ne prend pas en compte les listes de distribution "
+"néanmoins noter que ceci ne prend pas en compte les listes de distribution "
 "ou de discussions."
 
 #: configuredialog/configurecomposerpage.cpp:359
@@ -2735,9 +2735,9 @@ msgstr ""
 "La clé de chiffrement n'est que partiellement de confiance. Cependant, elle "
 "a été utilisée suffisamment de fois pour être très probablement contrôlée "
 "par la personne déclarée. L'utilisation de cette augmentera d'avantage son "
-"niveau de confiance. Ou vous pouvez signer la clé, si vous avez transmis  "
+"niveau de confiance. Ou vous pouvez signer la clé, si vous avez transmis "
 "l'empreinte numérique par un autre canal. Veuillez cliquer sur l'icône pour "
-"plus de détails. "
+"plus de détails."
 
 #: editor/kmcomposerwin.cpp:3911
 #, kde-format
@@ -4209,7 +4209,7 @@ msgstr "Liste les options disponibles pour le retour des utilisateurs"
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgstr ""
-"Envoyer le courriel à  «adresse » ou joindre le fichier défini par « URL »"
+"Envoyer le courriel à « adresse » ou joindre le fichier défini par « URL »"
 
 #. i18n: ectx: Menu (file)
 #: kmail_part.rc:8 kmmainwin.rc:8 kmreadermainwin.rc:5
@@ -5096,7 +5096,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Rappel des messages suivis…"
 
-#: kmmainwidget.cpp:3086 util.cpp:151
+#: kmmainwidget.cpp:3086 util.cpp:166
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5801,7 +5801,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Démarrage en cours…"
 
-#: kmreadermainwin.cpp:491 util.cpp:151
+#: kmreadermainwin.cpp:491 util.cpp:166
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Déplacer dans la corbeille"
@@ -8284,18 +8284,18 @@ msgstr "Informations de modules externes"
 msgid "Plugins used in KMail."
 msgstr "Modules externes utilisés dans KMail."
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: util.cpp:154
+#: util.cpp:169
 #, kde-format
 msgid "Move to Trash"
 msgstr "Déplacer dans la corbeille"
 
-#: util.cpp:167
+#: util.cpp:182
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8304,7 +8304,7 @@ msgstr ""
 "Impossible de lancer l'assistant de comptes. Veuillez vérifier que le module "
 "« AccountWizard » est correctement installé."
 
-#: util.cpp:169
+#: util.cpp:184
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
