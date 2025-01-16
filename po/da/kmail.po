@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -5351,7 +5351,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Breve med opfølgningspåmindelse..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6130,7 +6130,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Starter..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Flyt til papirkurv"
@@ -8700,18 +8700,18 @@ msgstr "Plugin-information"
 msgid "Plugins used in KMail."
 msgstr "Plugins der bruges i KMail."
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Slet"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "Flyt til papirkurv"
 
-#: util.cpp:164
+#: util.cpp:179
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8720,7 +8720,7 @@ msgstr ""
 "Kunne ikke starte kontoguiden. Sørg for at du har AccountWizard korrekt "
 "installeret."
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"

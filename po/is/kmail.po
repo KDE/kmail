@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -5433,7 +5433,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Leita að bréfi..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6202,7 +6202,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Áskrift..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Setja í ruslið"
@@ -8847,18 +8847,18 @@ msgstr "Auðkenni"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Eytt"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "Setja í ruslið"
 
-#: util.cpp:164
+#: util.cpp:179
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -8866,7 +8866,7 @@ msgid ""
 "properly installed."
 msgstr "Gat ekki ræst skírteinisstjóra.  Vinsamlega athugið uppsetningu."
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

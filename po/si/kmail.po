@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -5088,7 +5088,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "පණිවුඩ සෙවීම... (&F)"
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5854,7 +5854,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "අරඹමින්..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "ඉවතලන බඳුනට ගෙනයන්න (&M)"
@@ -8231,7 +8231,7 @@ msgstr "යැවීම තහවුරු කරමි"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 #| msgctxt "@action:button Delete search"
 #| msgid "&Delete"
@@ -8239,12 +8239,12 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "මකන්න (&D)"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "ඉවතලන බඳුනට ගෙනයන්න"
 
-#: util.cpp:164
+#: util.cpp:179
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -8252,7 +8252,7 @@ msgid ""
 "properly installed."
 msgstr "ගිණුම් මායා සහකරු ආරම්භ කළ නොහැකයි. කරුණාකර ඔබගේ ස්ථාපනය පරීක්ෂා කරන්න. "
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"

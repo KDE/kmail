@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail-1.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2005-01-23 05:51+0100\n"
 "Last-Translator: Jañ-Mai Drapier <jan-mai.drapier@mail.dotcom.fr>\n"
 "Language-Team: Brezhoneg <Suav.Icb@wanadoo.fr>\n"
@@ -5109,7 +5109,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Klask ar c'hemennadoù ..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, fuzzy, kde-format
 #| msgid "&Delete"
 msgctxt "@action Hard delete, bypassing trash"
@@ -5878,7 +5878,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Koumanatadur ..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Fiñval d'ar pod-lastez"
@@ -8247,26 +8247,26 @@ msgstr "Titouroù diwar-benn ereañ"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Dilemel"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "Fiñval d'ar pod-lastez"
 
-#: util.cpp:164
+#: util.cpp:179
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

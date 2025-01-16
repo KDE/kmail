@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -5189,7 +5189,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "ਸੁਨੇਹੇ ਖੋਜ(&F)..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5964,7 +5964,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "ਸ਼ੁਰੂ ਕੀਤਾ ਜਾਂਦਾ ਹੈ..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "ਰੱਦੀ ਵਿੱਚ ਭੇਜੋ(&M)"
@@ -8375,19 +8375,19 @@ msgstr "ਲਾਗਇਨ ਜਾਣਕਾਰੀ"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "ਹਟਾਓ"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "ਰੱਦੀ ਵਿੱਚ ਭੇਜੋ"
 
-#: util.cpp:164
+#: util.cpp:179
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -8395,7 +8395,7 @@ msgid ""
 "properly installed."
 msgstr "ਅਕਾਊਂਟ ਸਹਾਇਕ ਸ਼ੁਰੂ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ ਹੈ। ਆਪਣੀ ਇੰਸਟਾਲੇਸ਼ਨ ਚੈੱਕ ਕਰੋ।"
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"

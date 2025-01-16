@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -5064,7 +5064,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Fumana Imiyalezo..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5800,7 +5800,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Inkcazelo"
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Yisa Emgqomeni"
@@ -8207,18 +8207,18 @@ msgstr "Ulwazi lobuntu bakho"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Ci&ma"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "Yiya Kwinkunkuma"
 
-#: util.cpp:164
+#: util.cpp:179
 #, fuzzy, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8226,7 +8226,7 @@ msgid ""
 msgstr ""
 "Ayikwazanga ukuqala umphathi wesiqinisekiso. Nceda hlola ufakelo lwakho!"
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

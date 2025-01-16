@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -5440,7 +5440,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "सन्देश फेला पार्नुहोस्..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6212,7 +6212,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "सदस्यता..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "रद्दीटोकरीमा सार्नुहोस्"
@@ -8851,18 +8851,18 @@ msgstr "लगइन जानकारी"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "मेटिएको"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "रद्दीटोकरीमा सार्नुहोस्"
 
-#: util.cpp:164
+#: util.cpp:179
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -8870,7 +8870,7 @@ msgid ""
 "properly installed."
 msgstr "प्रमाणपत्र प्रबन्धक सुरु गर्न सकेन । कृपया तपाईँको स्थापना जाँच गर्नुहोस् ।"
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

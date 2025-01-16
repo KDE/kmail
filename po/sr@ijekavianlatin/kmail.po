@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -5500,7 +5500,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Poruke podsetnika na odgovor..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6280,7 +6280,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Počinjem..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Pre&mesti u smeće"
@@ -8876,7 +8876,7 @@ msgstr "Podaci uređivača priključaka"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 #| msgctxt "@action Hard delete, bypassing trash"
 #| msgid "&Delete"
@@ -8884,12 +8884,12 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "O&briši"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "Premesti u smeće"
 
-#: util.cpp:164
+#: util.cpp:179
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8898,7 +8898,7 @@ msgstr ""
 "Ne mogu da pokrenem čarobnjak za naloge. Proverite da li je čarobnjak za "
 "naloge pravilno instaliran."
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"

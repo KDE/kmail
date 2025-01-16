@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-10 09:28+0000\n"
+"POT-Creation-Date: 2025-01-16 00:41+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -5529,7 +5529,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Sy&kje..."
 
-#: kmmainwidget.cpp:3068 util.cpp:152
+#: kmmainwidget.cpp:3068 util.cpp:167
 #, fuzzy, kde-format
 #| msgid "Deleted"
 msgctxt "@action Hard delete, bypassing trash"
@@ -6313,7 +6313,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Ynskriuwing..."
 
-#: kmreadermainwin.cpp:491 util.cpp:152
+#: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Nei it jiskefet"
@@ -8997,19 +8997,19 @@ msgstr "Oanmeldynformaasje"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:155
+#: util.cpp:170
 #, fuzzy, kde-format
 #| msgid "Deleted"
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Wiske"
 
-#: util.cpp:155
+#: util.cpp:170
 #, kde-format
 msgid "Move to Trash"
 msgstr "Nei it Jiskefet"
 
-#: util.cpp:164
+#: util.cpp:179
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -9018,7 +9018,7 @@ msgid ""
 msgstr ""
 "It sertifikaatbehear kin net begûn wurde. Kontrolearje jo ynstallaasje."
 
-#: util.cpp:166
+#: util.cpp:181
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"
