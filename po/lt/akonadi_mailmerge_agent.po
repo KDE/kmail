@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-05-16 00:39+0000\n"
-"PO-Revision-Date: 2022-12-03 00:47+0000\n"
+"PO-Revision-Date: 2025-01-16 13:29+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: lt\n"
@@ -17,47 +17,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Poedit 3.5\n"
 
 #: mailmergeconfiguredialog.cpp:35
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
-msgstr ""
+msgstr "Konfigūruoti"
 
 #: mailmergeconfiguredialog.cpp:52
 #, kde-format
 msgid "Mail Merge Agent"
-msgstr ""
+msgstr "Pašto sujungimo agentas"
 
 #: mailmergeconfiguredialog.cpp:54
 #, kde-format
 msgid "Merge email addresses agent."
-msgstr ""
+msgstr "El. pašto adresų sujungimo agentas."
 
 #: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "Copyright (C) 2021-%1 Laurent Montel"
-msgstr ""
+msgstr "Copyright (C) 2021–%1 Laurent Montel"
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr ""
+msgstr "Laurent Montel"
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgid "Maintainer"
-msgstr ""
+msgstr "Prižiūrėtojas"
 
 #: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Moo"
 
 #: mailmergeconfiguredialog.cpp:61
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "<>"
