@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-03 00:39+0000\n"
-"PO-Revision-Date: 2018-11-09 04:02+0100\n"
+"PO-Revision-Date: 2025-01-16 13:41+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
 "Language: lt\n"
@@ -17,96 +17,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Poedit 3.5\n"
 
 #: settingsdialog.cpp:53
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
-msgstr ""
+msgstr "Pridėti"
 
 #: settingsdialog.cpp:68
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
-msgstr ""
+msgstr "Modifikuoti"
 
 #: settingsdialog.cpp:90
 #, kde-format
 msgid "Remove"
-msgstr ""
+msgstr "Šalinti"
 
 #: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
-msgstr ""
+msgstr "Ar tikrai norite pašalinti bendrą pašto dėžutę <b>%1</b>?"
 
 #: settingsdialog.cpp:101
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
-msgstr ""
+msgstr "Ar tikrai pašalinti?"
 
 #: settingsdialog.cpp:128
 #, kde-format
 msgctxt "@action"
 msgid "Add"
-msgstr ""
+msgstr "Pridėti"
 
 #: settingsdialog.cpp:132
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
-msgstr ""
+msgstr "Modifikuoti"
 
 #: settingsdialog.cpp:134
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
-msgstr ""
+msgstr "Šalinti"
 
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
-msgstr ""
+msgstr "Bendros pašto dėžutės"
 
 #: unifiedmailboxagent.cpp:167
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
-msgstr ""
+msgstr "Sinchronizuojama bendra pašto dėžutė %1"
 
 #: unifiedmailboxeditor.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr ""
+msgstr "Konfigūruoti bendrą pašto dėžutę"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format
 msgid "Name:"
-msgstr ""
+msgstr "Pavadinimas:"
 
 #: unifiedmailboxeditor.cpp:103
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick icon..."
-msgstr ""
+msgstr "Pasirinkti piktogramą..."
 
 #: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgid "Icon:"
-msgstr ""
+msgstr "Piktograma:"
 
 #: unifiedmailboxmanager.cpp:296
 #, kde-format
 msgid "Inbox"
-msgstr ""
+msgstr "Gauta"
 
 #: unifiedmailboxmanager.cpp:303
 #, kde-format
 msgid "Sent"
-msgstr ""
+msgstr "Išsiųsta"
 
 #: unifiedmailboxmanager.cpp:310
 #, kde-format
 msgid "Drafts"
-msgstr ""
+msgstr "Juodraščiai"
