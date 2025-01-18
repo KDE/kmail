@@ -40,7 +40,7 @@ using MessageViewer::CSSHelper;
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
 
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 #include <MessageComposer/InfoPart>
 #include <MessageComposer/MDNWarningWidgetJob>
 #include <MessageComposer/MessageSender>
@@ -773,7 +773,7 @@ bool KMReaderWin::printSelectedText(bool preview)
     if (str.isEmpty()) {
         return false;
     }
-    auto composer = new ::MessageComposer::Composer;
+    auto composer = new ::MessageComposer::ComposerJob;
     composer->textPart()->setCleanPlainText(str);
     composer->textPart()->setWrappedPlainText(str);
     auto messagePtr = messageItem().payload<KMime::Message::Ptr>();
@@ -788,7 +788,7 @@ bool KMReaderWin::printSelectedText(bool preview)
         composer->infoPart()->setSubject(subject->asUnicodeString());
     }
     composer->setProperty("preview", preview);
-    connect(composer, &::MessageComposer::Composer::result, this, &KMReaderWin::slotPrintComposeResult);
+    connect(composer, &::MessageComposer::ComposerJob::result, this, &KMReaderWin::slotPrintComposeResult);
     composer->start();
     return true;
 }
@@ -796,9 +796,9 @@ bool KMReaderWin::printSelectedText(bool preview)
 void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
     const bool preview = job->property("preview").toBool();
-    auto composer = qobject_cast<::MessageComposer::Composer *>(job);
+    auto composer = qobject_cast<::MessageComposer::ComposerJob *>(job);
     Q_ASSERT(composer);
-    if (composer->error() == ::MessageComposer::Composer::NoError) {
+    if (composer->error() == ::MessageComposer::ComposerJob::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
         Akonadi::Item printItem;
         printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().constFirst());

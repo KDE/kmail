@@ -8,7 +8,7 @@
 using namespace Qt::Literals::StringLiterals;
 
 #include "kmkernel.h"
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 #include <MessageViewer/MessageViewerSettings>
 
 #include <MessageComposer/MessageHelper>

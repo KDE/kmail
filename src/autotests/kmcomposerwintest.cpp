@@ -10,7 +10,7 @@ using namespace Qt::Literals::StringLiterals;
 #include "editor/warningwidgets/nearexpirywarning.h"
 #include "kmkernel.h"
 
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 #include <MessageComposer/RecipientsEditor>
 
 #include <gpgme++/key.h>

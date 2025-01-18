@@ -13,7 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <KIdentityManagementCore/IdentityManager>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <QFile>

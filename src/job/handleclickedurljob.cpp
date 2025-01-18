@@ -10,7 +10,7 @@ using namespace Qt::Literals::StringLiterals;
 #include "kmail_debug.h"
 #include "kmkernel.h"
 #include <KMime/Message>
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>

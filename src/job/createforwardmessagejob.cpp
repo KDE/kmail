@@ -9,7 +9,7 @@
 #include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 
 CreateForwardMessageJob::CreateForwardMessageJob(QObject *parent)
     : QObject(parent)
