@@ -7,8 +7,8 @@
 #include "kmcomposercreatenewcomposerjob.h"
 #include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
-#include <MessageComposer/Composer>
 
+#include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 

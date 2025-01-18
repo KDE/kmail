@@ -96,7 +96,7 @@
 #include <MailTransport/TransportManager>
 
 #include <MessageComposer/AttachmentModel>
-#include <MessageComposer/Composer>
+#include <MessageComposer/ComposerJob>
 #include <MessageComposer/ComposerLineEdit>
 #include <MessageComposer/ComposerViewInterface>
 #include <MessageComposer/ConvertSnippetVariablesJob>
@@ -578,7 +578,7 @@ KMComposerWin::KMComposerWin(const KMime::Message::Ptr &aMsg,
 
     mDone = true;
 
-    mDummyComposer = new MessageComposer::Composer(this);
+    mDummyComposer = new MessageComposer::ComposerJob(this);
     mDummyComposer->globalPart()->setParentWidgetForGui(this);
 
     setStateConfigGroup(QStringLiteral("Composer"));
@@ -892,11 +892,11 @@ void KMComposerWin::writeConfig()
     KMKernel::self()->slotSyncConfig();
 }
 
-MessageComposer::Composer *KMComposerWin::createSimpleComposer()
+MessageComposer::ComposerJob *KMComposerWin::createSimpleComposer()
 {
     mComposerBase->setFrom(from());
     mComposerBase->setSubject(subject());
-    auto composer = new MessageComposer::Composer();
+    auto composer = new MessageComposer::ComposerJob();
     mComposerBase->fillComposer(composer);
     return composer;
 }
@@ -2741,11 +2741,11 @@ void KMComposerWin::slotPrintPreview()
 
 void KMComposerWin::printComposer(bool preview)
 {
-    auto composer = new MessageComposer::Composer();
+    auto composer = new MessageComposer::ComposerJob();
     mComposerBase->fillComposer(composer);
     mMiscComposers.append(composer);
     composer->setProperty("preview", preview);
-    connect(composer, &MessageComposer::Composer::result, this, &KMComposerWin::slotPrintComposeResult);
+    connect(composer, &MessageComposer::ComposerJob::result, this, &KMComposerWin::slotPrintComposeResult);
     composer->start();
 }
 
@@ -2757,12 +2757,12 @@ void KMComposerWin::slotPrintComposeResult(KJob *job)
 
 void KMComposerWin::printComposeResult(KJob *job, bool preview)
 {
-    Q_ASSERT(dynamic_cast<MessageComposer::Composer *>(job));
-    auto composer = qobject_cast<MessageComposer::Composer *>(job);
+    Q_ASSERT(dynamic_cast<MessageComposer::ComposerJob *>(job));
+    auto composer = qobject_cast<MessageComposer::ComposerJob *>(job);
     Q_ASSERT(mMiscComposers.contains(composer));
     mMiscComposers.removeAll(composer);
 
-    if (composer->error() == MessageComposer::Composer::NoError) {
+    if (composer->error() == MessageComposer::ComposerJob::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
         Akonadi::Item printItem;
         printItem.setPayload<KMime::Message::Ptr>(composer->resultMessages().constFirst());

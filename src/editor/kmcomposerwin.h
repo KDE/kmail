@@ -92,7 +92,7 @@ class Job;
 namespace MessageComposer
 {
 class ComposerLineEdit;
-class Composer;
+class ComposerJob;
 class StatusBarLabelToggledState;
 class RecipientLineNG;
 }
@@ -545,7 +545,7 @@ private:
      *
      * The caller takes ownership of the composer.
      */
-    [[nodiscard]] MessageComposer::Composer *createSimpleComposer();
+    [[nodiscard]] MessageComposer::ComposerJob *createSimpleComposer();
 
     [[nodiscard]] bool canSignEncryptAttachments() const;
 
@@ -668,9 +668,9 @@ private:
     QSplitter *mSplitter = nullptr;
     QSplitter *mSnippetSplitter = nullptr;
 
-    MessageComposer::Composer *mDummyComposer = nullptr;
+    MessageComposer::ComposerJob *mDummyComposer = nullptr;
     // used for auto saving, printing, etc. Not for sending, which happens in ComposerViewBase
-    QList<MessageComposer::Composer *> mMiscComposers;
+    QList<MessageComposer::ComposerJob *> mMiscComposers;
 
     int mLabelWidth = 0;
 
