@@ -18,6 +18,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/LinkJob>
+#include <Akonadi/ServerManager>
 #include <Akonadi/SpecialCollectionAttribute>
 #include <Akonadi/SpecialMailCollections>
 #include <Akonadi/UnlinkJob>
@@ -63,6 +64,7 @@ bool UnifiedMailboxManager::isUnifiedMailbox(const Akonadi::Collection &col)
 
 UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)
+    , mMonitorSettings(Akonadi::ServerManager::agentConfigFilePath(QStringLiteral("akonadi_unifiedmailbox")), QSettings::IniFormat)
     , mConfig(config)
 {
     mMonitor.setObjectName("UnifiedMailboxChangeRecorder"_L1);
