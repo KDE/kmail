@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "editor/kmcomposerwin.h"
+#include "editor/composer.h"
 #include "kmail_private_export.h"
 #include <KMime/Message>
 #include <QObject>
