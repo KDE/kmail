@@ -46,8 +46,6 @@ public:
     void expunge(Akonadi::Collection::Id id, bool sync) override;
 
 private:
-    Q_DISABLE_COPY(MailKernel)
-
     KSharedConfigPtr mConfig;
     KIdentityManagementCore::IdentityManager *const mIdentityManager;
     MessageComposer::MessageSender *const mMessageSender;

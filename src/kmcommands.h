@@ -129,7 +129,6 @@ protected:
     void setResult(Result result);
 
 private:
-    Q_DISABLE_COPY(KMCommand)
     // execute should be implemented by derived classes
     virtual Result execute() = 0;
 
