@@ -38,8 +38,7 @@ KMAILTESTS_TESTS_EXPORT Akonadi::Item::Id putRepliesInSameFolder(const Akonadi::
 [[nodiscard]] KMAILTESTS_TESTS_EXPORT bool
 handleClickedURL(const QUrl &url,
                  const QSharedPointer<MailCommon::FolderSettings> &folder = QSharedPointer<MailCommon::FolderSettings>(),
-                 const Akonadi::Collection &collection = Akonadi::Collection(),
-                 QWidget *parentWidget = nullptr);
+                 const Akonadi::Collection &collection = Akonadi::Collection());
 
 [[nodiscard]] KMAILTESTS_TESTS_EXPORT bool
 mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection);

@@ -735,7 +735,7 @@ void KMReaderWin::slotUrlClicked(const Akonadi::Item &item, const QUrl &url)
     if (item.isValid() && item.parentCollection().isValid()) {
         const auto col = CommonKernel->collectionFromId(item.parentCollection().id());
         QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(col, false);
-        KMail::Util::handleClickedURL(url, fd, item.parentCollection(), this);
+        KMail::Util::handleClickedURL(url, fd, item.parentCollection());
         return;
     }
     // No folder so we can't have identity and template.
