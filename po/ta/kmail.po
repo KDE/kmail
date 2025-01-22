@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-16 02:31+0000\n"
+"POT-Creation-Date: 2025-01-22 02:31+0000\n"
 "PO-Revision-Date: 2024-11-24 17:20+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -4915,7 +4915,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "பதிலளிக்க நினைவூட்ட வேண்டிய அஞ்சல்கள்…"
 
-#: kmmainwidget.cpp:3086 util.cpp:166
+#: kmmainwidget.cpp:3086 util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5616,7 +5616,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "துவங்குகிறது…"
 
-#: kmreadermainwin.cpp:491 util.cpp:166
+#: kmreadermainwin.cpp:491 util.cpp:151
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&அகற்றிடத்துக்கு நகர்த்து"
@@ -7987,18 +7987,18 @@ msgstr "செருகுநிரல்களின் விவரங்க�
 msgid "Plugins used in KMail."
 msgstr "கேமெயிலில் பயன்படுத்தப்படும் செருகுநிரல்கள்."
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "அழி"
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgid "Move to Trash"
 msgstr "அகற்றிடத்துக்கு நகர்த்து"
 
-#: util.cpp:182
+#: util.cpp:167
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8006,7 +8006,7 @@ msgid ""
 msgstr ""
 "கணக்கு உதவிநிரலை துவக்க முடியவில்லை. அது சரியாக நிறுவப்பட்டுள்ளதா என பாருங்கள்."
 
-#: util.cpp:184
+#: util.cpp:169
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-16 02:31+0000\n"
+"POT-Creation-Date: 2025-01-22 02:31+0000\n"
 "PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -4874,7 +4874,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "回覆提醒信件…"
 
-#: kmmainwidget.cpp:3086 util.cpp:166
+#: kmmainwidget.cpp:3086 util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5572,7 +5572,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "啟動中…"
 
-#: kmreadermainwin.cpp:491 util.cpp:166
+#: kmreadermainwin.cpp:491 util.cpp:151
 #, kde-format
 msgid "&Move to Trash"
 msgstr "移到垃圾桶(&M)"
@@ -7915,25 +7915,25 @@ msgstr "外掛程式資訊"
 msgid "Plugins used in KMail."
 msgstr "KMail 所使用的外掛程式。"
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "刪除"
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgid "Move to Trash"
 msgstr "移到垃圾桶"
 
-#: util.cpp:182
+#: util.cpp:167
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr "無法啟動帳號精靈。請檢查您是否正確安裝 AccountWizard。"
 
-#: util.cpp:184
+#: util.cpp:169
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-16 02:31+0000\n"
+"POT-Creation-Date: 2025-01-22 02:31+0000\n"
 "PO-Revision-Date: 2024-11-06 20:47+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -4983,7 +4983,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Vastaamisen seurannasta muistuttajan viestit…"
 
-#: kmmainwidget.cpp:3086 util.cpp:166
+#: kmmainwidget.cpp:3086 util.cpp:151
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5684,7 +5684,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Aloitetaan…"
 
-#: kmreadermainwin.cpp:491 util.cpp:166
+#: kmreadermainwin.cpp:491 util.cpp:151
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Siirrä roskakoriin"
@@ -8111,18 +8111,18 @@ msgstr "Liitännäisten tiedot"
 msgid "Plugins used in KMail."
 msgstr "KMailissa käytetyt liitännäiset."
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Poista"
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgid "Move to Trash"
 msgstr "Siirrä roskakoriin"
 
-#: util.cpp:182
+#: util.cpp:167
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8131,7 +8131,7 @@ msgstr ""
 "Opastettua tilin luontia ei voi käynnistää. Varmista, että se on asennettu "
 "oikein."
 
-#: util.cpp:184
+#: util.cpp:169
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

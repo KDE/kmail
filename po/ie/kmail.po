@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-16 02:31+0000\n"
+"POT-Creation-Date: 2025-01-22 02:31+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -4813,7 +4813,7 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3086 util.cpp:166
+#: kmmainwidget.cpp:3086 util.cpp:151
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5504,7 +5504,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr ""
 
-#: kmreadermainwin.cpp:491 util.cpp:166
+#: kmreadermainwin.cpp:491 util.cpp:151
 #, fuzzy, kde-format
 msgid "&Move to Trash"
 msgstr "A"
@@ -7755,18 +7755,18 @@ msgstr "Information pri li file"
 msgid "Plugins used in KMail."
 msgstr "KMail"
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Remover"
 
-#: util.cpp:169
+#: util.cpp:154
 #, kde-format
 msgid "Move to Trash"
 msgstr "Mover al Paper-corb"
 
-#: util.cpp:182
+#: util.cpp:167
 #, fuzzy, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -7775,7 +7775,7 @@ msgstr ""
 "Li archive <filename>%1</filename> es protectet per un contrasigne. Ples "
 "provider li contrasigne."
 
-#: util.cpp:184
+#: util.cpp:169
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
