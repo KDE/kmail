@@ -2,29 +2,29 @@
 # SPDX-License-Identifier: CC0-1.0
 
 Dependencies:
-- 'on': ['Linux', 'FreeBSD', 'Windows']
-  'require':
+ - 'on': ['Linux', 'FreeBSD', 'Windows']
+   'require':
     'frameworks/extra-cmake-modules': '@latest-kf6'
-    'frameworks/kcontacts' : '@latest-kf6'
-    'frameworks/kcalendarcore' : '@latest-kf6'
-    'pim/akonadi' : '@same'
-    'pim/akonadi-contacts' : '@same'
-    'pim/akonadi-mime' : '@same'
-    'pim/kcalutils' : '@same'
-    'pim/kidentitymanagement' : '@same'
-    'pim/kldap' : '@same'
-    'pim/kmailtransport' : '@same'
-    'pim/kmime' : '@same'
-    'pim/kontactinterface' : '@same'
-    'pim/kpimtextedit' : '@same'
-    'pim/ktnef' : '@same'
-    'pim/libgravatar' : '@same'
-    'pim/libkdepim' : '@same'
-    'pim/libkleo' : '@same'
-    'pim/libksieve' : '@same'
-    'pim/mailcommon' : '@same'
-    'pim/messagelib' : '@same'
-    'pim/pimcommon' : '@same'
+    'frameworks/kcontacts': '@latest-kf6'
+    'frameworks/kcalendarcore': '@latest-kf6'
+    'pim/akonadi': '@same'
+    'pim/akonadi-contacts': '@same'
+    'pim/akonadi-mime': '@same'
+    'pim/kcalutils': '@same'
+    'pim/kidentitymanagement': '@same'
+    'pim/kldap': '@same'
+    'pim/kmailtransport': '@same'
+    'pim/kmime': '@same'
+    'pim/kontactinterface': '@same'
+    'pim/kpimtextedit': '@same'
+    'pim/ktnef': '@same'
+    'pim/libgravatar': '@same'
+    'pim/libkdepim': '@same'
+    'pim/libkleo': '@same'
+    'pim/libksieve': '@same'
+    'pim/mailcommon': '@same'
+    'pim/messagelib': '@same'
+    'pim/pimcommon': '@same'
     'frameworks/kbookmarks': '@latest-kf6'
     'frameworks/kconfig': '@latest-kf6'
     'frameworks/kconfigwidgets': '@latest-kf6'
@@ -51,13 +51,11 @@ Dependencies:
     'third-party/qtkeychain': '@latest-kf6'
     'libraries/ktextaddons': '@latest-kf6'
 
-- 'on': ['Linux', 'FreeBSD']
-  'require':
+ - 'on': ['Linux', 'FreeBSD']
+   'require':
     'plasma/plasma-activities': '@latest-kf6'
-    'pim/akonadi-search' : '@same'
-
-
+    'pim/akonadi-search': '@same'
 
 Options:
-  cmake-options: "-DAKONADI_RUN_MYSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_PGSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_SQLITE_ISOLATED_TESTS=FALSE"
-  require-passing-tests-on: [ 'Linux', 'FreeBSD' ]      
+ cmake-options: "-DAKONADI_RUN_MYSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_PGSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_SQLITE_ISOLATED_TESTS=FALSE"
+ require-passing-tests-on: ['Linux', 'FreeBSD']
