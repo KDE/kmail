@@ -38,6 +38,7 @@
 #include "kmkernel.h"
 #include "mailcomposeradaptor.h" // TODO port all D-Bus stuff…
 #include "settings/kmailsettings.h"
+#include "subjectlineeditwithautocorrection.h"
 #include "undosend/undosendmanager.h"
 #include "util.h"
 #include "validatesendmailshortcut.h"

@@ -34,7 +34,7 @@ Q_SIGNALS:
 
 private:
     void drawFocus(QPainter *, const QStyleOptionViewItem &, const QRect &) const;
-    QTextDocument *document(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    [[nodiscard]] QTextDocument *document(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
     [[nodiscard]] QStyleOptionButton buttonOption(const QStyleOptionViewItem &option) const;
 };

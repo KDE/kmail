@@ -5,11 +5,11 @@
 */
 
 #include "pimmessagebox.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <QDialog>
 #include <QPushButton>
 
+using namespace Qt::Literals::StringLiterals;
 QDialogButtonBox::StandardButton PIMMessageBox::fourBtnMsgBox(QWidget *parent,
                                                               QMessageBox::Icon type,
                                                               const QString &text,

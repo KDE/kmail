@@ -34,7 +34,7 @@ public:
     explicit AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent = nullptr);
     ~AttachmentView() override;
 
-    QWidget *widget() const;
+    [[nodiscard]] QWidget *widget() const;
     void hideIfEmpty();
 
 protected:
