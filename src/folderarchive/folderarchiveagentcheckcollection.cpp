@@ -38,14 +38,14 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelD
 
     QString folderName;
     switch (mInfo->folderArchiveType()) {
-    case FolderArchiveAccountInfo::UniqueFolder:
+    case FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder:
         // Nothing
         break;
-    case FolderArchiveAccountInfo::FolderByMonths:
+    case FolderArchiveAccountInfo::FolderArchiveType::FolderByMonths:
         // TODO translate ?
         folderName = QStringLiteral("%1-%2").arg(mCurrentDate.month()).arg(mCurrentDate.year());
         break;
-    case FolderArchiveAccountInfo::FolderByYears:
+    case FolderArchiveAccountInfo::FolderArchiveType::FolderByYears:
         folderName = QStringLiteral("%1").arg(mCurrentDate.year());
         break;
     }

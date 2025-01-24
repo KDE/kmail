@@ -17,7 +17,7 @@ public:
     explicit FolderArchiveAccountInfo(const KConfigGroup &config);
     ~FolderArchiveAccountInfo();
 
-    enum FolderArchiveType {
+    enum class FolderArchiveType : uint8_t {
         UniqueFolder,
         FolderByMonths,
         FolderByYears,
@@ -49,7 +49,7 @@ public:
     void setUseDateFromMessage(bool newUseDateFromMessage);
 
 private:
-    FolderArchiveAccountInfo::FolderArchiveType mArchiveType = UniqueFolder;
+    FolderArchiveAccountInfo::FolderArchiveType mArchiveType = FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder;
     Akonadi::Collection::Id mArchiveTopLevelCollectionId = -1;
     QString mInstanceName;
     bool mUseDateFromMessage = false;

@@ -37,10 +37,10 @@ Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInf
     if (mCache.contains(info->instanceName())) {
         // qCDebug(KMAIL_LOG)<<"instance name : "<<info->instanceName();
         switch (info->folderArchiveType()) {
-        case FolderArchiveAccountInfo::UniqueFolder:
+        case FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder:
             qCDebug(KMAIL_LOG) << "FolderArchiveAccountInfo::UniqueFolder has cache " << mCache.value(info->instanceName()).colId;
             return mCache.value(info->instanceName()).colId;
-        case FolderArchiveAccountInfo::FolderByMonths:
+        case FolderArchiveAccountInfo::FolderArchiveType::FolderByMonths:
             // qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByMonths has cache ?";
             if (mCache.value(info->instanceName()).date.month() != QDate::currentDate().month()) {
                 // qCDebug(KMAIL_LOG)<<"need to remove current cache month is not good";
@@ -49,7 +49,7 @@ Akonadi::Collection::Id FolderArchiveCache::collectionId(FolderArchiveAccountInf
             } else {
                 return mCache.value(info->instanceName()).colId;
             }
-        case FolderArchiveAccountInfo::FolderByYears:
+        case FolderArchiveAccountInfo::FolderArchiveType::FolderByYears:
             // qCDebug(KMAIL_LOG)<<"FolderArchiveAccountInfo::ByYears has cache ?";
             if (mCache.value(info->instanceName()).date.year() != QDate::currentDate().year()) {
                 // qCDebug(KMAIL_LOG)<<"need to remove current cache year is not good";

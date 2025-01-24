@@ -37,7 +37,7 @@ void FolderArchiveAgentJob::start()
         return;
     }
 
-    if (mInfo->folderArchiveType() == FolderArchiveAccountInfo::UniqueFolder) {
+    if (mInfo->folderArchiveType() == FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder) {
         auto fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(mInfo->archiveTopLevel()), Akonadi::CollectionFetchJob::Base);
         connect(fetchCollection, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentJob::slotFetchCollection);
     } else {

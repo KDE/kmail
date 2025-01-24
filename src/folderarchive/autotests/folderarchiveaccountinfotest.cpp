@@ -25,7 +25,7 @@ void FolderArchiveAccountInfoTest::shouldHaveDefaultValue()
     FolderArchiveAccountInfo info;
     QVERIFY(info.instanceName().isEmpty());
     QCOMPARE(info.archiveTopLevel(), Akonadi::Collection(-1).id());
-    QCOMPARE(info.folderArchiveType(), FolderArchiveAccountInfo::UniqueFolder);
+    QCOMPARE(info.folderArchiveType(), FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder);
     QVERIFY(!info.enabled());
     QVERIFY(!info.keepExistingStructure());
     QVERIFY(!info.isValid());
@@ -47,7 +47,7 @@ void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
     FolderArchiveAccountInfo info;
     info.setInstanceName(QStringLiteral("FOO1"));
     info.setArchiveTopLevel(Akonadi::Collection(42).id());
-    info.setFolderArchiveType(FolderArchiveAccountInfo::FolderByMonths);
+    info.setFolderArchiveType(FolderArchiveAccountInfo::FolderArchiveType::FolderByMonths);
     info.setEnabled(true);
     info.setKeepExistingStructure(true);
 

@@ -74,7 +74,7 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 {
     mInstanceName = config.readEntry(QStringLiteral("instanceName"));
     mArchiveTopLevelCollectionId = config.readEntry(QStringLiteral("topLevelCollectionId"), -1);
-    mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)UniqueFolder));
+    mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder));
     mEnabled = config.readEntry("enabled", false);
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);
     mUseDateFromMessage = config.readEntry("useDateFromMessage", false);
