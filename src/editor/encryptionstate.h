@@ -55,7 +55,6 @@ public:
      */
     [[nodiscard]] bool encrypt() const;
 
-public Q_SLOTS:
     /**
      * Sets the override.
      *
@@ -111,10 +110,10 @@ private:
     KMAIL_NO_EXPORT void updateEncrypt();
 
 private:
-    bool m_override = false;
-    bool m_hasOverride = false;
-    bool m_acceptedSolution = false;
-    bool m_possibleEncrypt = false;
-    bool m_autoEncrypt = false;
-    bool m_encrypt = false;
+    bool mOverride = false;
+    bool mHasOverride = false;
+    bool mAcceptedSolution = false;
+    bool mPossibleEncrypt = false;
+    bool mAutoEncrypt = false;
+    bool mEncrypt = false;
 };

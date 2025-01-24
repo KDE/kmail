@@ -15,26 +15,26 @@ EncryptionState::EncryptionState()
 
 bool EncryptionState::override() const
 {
-    return m_override;
+    return mOverride;
 }
 
 void EncryptionState::setOverride(bool setByUser)
 {
-    if (!m_hasOverride) {
-        m_hasOverride = true;
+    if (!mHasOverride) {
+        mHasOverride = true;
         Q_EMIT hasOverrideChanged(true);
         // Before the override setting was undefined, we should trigger a signal with correct state
-        m_override = setByUser;
+        mOverride = setByUser;
         Q_EMIT overrideChanged(setByUser);
         return;
     }
 
-    if (m_override == setByUser) {
+    if (mOverride == setByUser) {
         return;
     }
 
-    m_override = setByUser;
-    Q_EMIT overrideChanged(m_override);
+    mOverride = setByUser;
+    Q_EMIT overrideChanged(mOverride);
 }
 
 void EncryptionState::toggleOverride()
@@ -44,96 +44,96 @@ void EncryptionState::toggleOverride()
 
 void EncryptionState::unsetOverride()
 {
-    if (!m_hasOverride) {
+    if (!mHasOverride) {
         return;
     }
-    m_hasOverride = false;
+    mHasOverride = false;
     Q_EMIT hasOverrideChanged(false);
     Q_EMIT overrideChanged(false);
 }
 
 bool EncryptionState::hasOverride() const
 {
-    return m_hasOverride;
+    return mHasOverride;
 }
 
 bool EncryptionState::acceptedSolution() const
 {
-    return m_acceptedSolution;
+    return mAcceptedSolution;
 }
 
 void EncryptionState::setAcceptedSolution(bool acceptedSolution)
 {
-    if (m_acceptedSolution == acceptedSolution) {
+    if (mAcceptedSolution == acceptedSolution) {
         return;
     }
 
-    m_acceptedSolution = acceptedSolution;
-    Q_EMIT acceptedSolutionChanged(m_acceptedSolution);
+    mAcceptedSolution = acceptedSolution;
+    Q_EMIT acceptedSolutionChanged(mAcceptedSolution);
 }
 
 bool EncryptionState::possibleEncrypt() const
 {
-    return m_possibleEncrypt;
+    return mPossibleEncrypt;
 }
 
 void EncryptionState::setPossibleEncrypt(bool possibleEncrypt)
 {
-    if (m_possibleEncrypt == possibleEncrypt) {
+    if (mPossibleEncrypt == possibleEncrypt) {
         return;
     }
 
-    m_possibleEncrypt = possibleEncrypt;
-    Q_EMIT possibleEncryptChanged(m_possibleEncrypt);
+    mPossibleEncrypt = possibleEncrypt;
+    Q_EMIT possibleEncryptChanged(mPossibleEncrypt);
 }
 
 bool EncryptionState::autoEncrypt() const
 {
-    return m_autoEncrypt;
+    return mAutoEncrypt;
 }
 
 void EncryptionState::setAutoEncrypt(bool autoEncrypt)
 {
-    if (m_autoEncrypt == autoEncrypt) {
+    if (mAutoEncrypt == autoEncrypt) {
         return;
     }
 
-    m_autoEncrypt = autoEncrypt;
-    Q_EMIT autoEncryptChanged(m_autoEncrypt);
+    mAutoEncrypt = autoEncrypt;
+    Q_EMIT autoEncryptChanged(mAutoEncrypt);
 }
 
 void EncryptionState::setEncrypt(bool encrypt)
 {
-    if (m_encrypt == encrypt) {
+    if (mEncrypt == encrypt) {
         return;
     }
 
-    m_encrypt = encrypt;
-    Q_EMIT encryptChanged(m_encrypt);
+    mEncrypt = encrypt;
+    Q_EMIT encryptChanged(mEncrypt);
 }
 
 void EncryptionState::updateEncrypt()
 {
-    if (m_hasOverride) {
-        setEncrypt(m_override);
+    if (mHasOverride) {
+        setEncrypt(mOverride);
         return;
     }
-    if (!m_possibleEncrypt) {
+    if (!mPossibleEncrypt) {
         setEncrypt(false);
         return;
     }
 
-    if (!m_autoEncrypt) {
+    if (!mAutoEncrypt) {
         setEncrypt(false);
         return;
     }
 
-    setEncrypt(m_acceptedSolution);
+    setEncrypt(mAcceptedSolution);
 }
 
 bool EncryptionState::encrypt() const
 {
-    return m_encrypt;
+    return mEncrypt;
 }
 
 #include "moc_encryptionstate.cpp"
