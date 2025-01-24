@@ -10,8 +10,6 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "kmcomposerwin.h"
-#include "subjectlineeditwithautocorrection.h"
-// KMail includes
 #include "attachment/attachmentcontroller.h"
 #include "attachment/attachmentview.h"
 #include "config-kmail.h"
