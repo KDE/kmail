@@ -48,12 +48,12 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     auto radio = new QRadioButton(i18nc("@option:radio", "&With empty fields"), this);
     radio->setChecked(true);
     vlay->addWidget(radio);
-    mButtonGroup->addButton(radio, static_cast<int>(Empty));
+    mButtonGroup->addButton(radio, static_cast<int>(DuplicateMode::Empty));
 
     // row 2: radio button
     auto fromExistingVCard = new QRadioButton(i18nc("@option:radio", "&From existing vCard"), this);
     vlay->addWidget(fromExistingVCard);
-    mButtonGroup->addButton(fromExistingVCard, static_cast<int>(FromExistingVCard));
+    mButtonGroup->addButton(fromExistingVCard, static_cast<int>(DuplicateMode::FromExistingVCard));
 
     // row 3: KUrlRequester
     auto hlay = new QHBoxLayout(); // inherits spacing
@@ -76,7 +76,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     // row 4: radio button
     auto duplicateExistingVCard = new QRadioButton(i18nc("@option:radio", "&Duplicate existing vCard"), this);
     vlay->addWidget(duplicateExistingVCard);
-    mButtonGroup->addButton(duplicateExistingVCard, static_cast<int>(ExistingEntry));
+    mButtonGroup->addButton(duplicateExistingVCard, static_cast<int>(DuplicateMode::ExistingEntry));
 
     // row 5: combobox with existing identities and label
     hlay = new QHBoxLayout(); // inherits spacing

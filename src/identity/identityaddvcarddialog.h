@@ -16,7 +16,7 @@ class KMAILTESTS_TESTS_EXPORT IdentityAddVcardDialog : public QDialog
 {
     Q_OBJECT
 public:
-    enum DuplicateMode {
+    enum class DuplicateMode : uint8_t {
         Empty,
         ExistingEntry,
         FromExistingVCard,

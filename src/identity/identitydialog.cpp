@@ -1231,10 +1231,10 @@ void IdentityDialog::slotEditVcard()
         if (dlg->exec()) {
             IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
             switch (mode) {
-            case IdentityAddVcardDialog::Empty:
+            case IdentityAddVcardDialog::DuplicateMode::Empty:
                 editVcard(mVcardFilename);
                 break;
-            case IdentityAddVcardDialog::ExistingEntry: {
+            case IdentityAddVcardDialog::DuplicateMode::ExistingEntry: {
                 KIdentityManagementCore::Identity ident = manager->modifyIdentityForName(dlg->duplicateVcardFromIdentity());
                 const QString filename = ident.vCardFile();
                 if (!filename.isEmpty()) {
@@ -1243,7 +1243,7 @@ void IdentityDialog::slotEditVcard()
                 editVcard(mVcardFilename);
                 break;
             }
-            case IdentityAddVcardDialog::FromExistingVCard: {
+            case IdentityAddVcardDialog::DuplicateMode::FromExistingVCard: {
                 const QString filename = dlg->existingVCard().path();
                 if (!filename.isEmpty()) {
                     mVcardFilename = filename;
