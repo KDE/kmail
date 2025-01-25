@@ -48,7 +48,7 @@ void NewMessageJob::start()
 
 void NewMessageJob::slotOpenComposer()
 {
-    KMail::Composer *win = makeComposer(mMsg, false, false, KMail::Composer::New, mNewMessageJobSettings.mIdentity);
+    KMail::Composer *win = makeComposer(mMsg, false, false, KMail::Composer::TemplateContext::New, mNewMessageJobSettings.mIdentity);
 
     win->setCollectionForNewMessage(mCollection);
     // Add the attachment if we have one

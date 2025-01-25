@@ -67,7 +67,7 @@ void ComposeNewMessageJob::start()
 
 void ComposeNewMessageJob::slotOpenComposer(bool forceCursorPosition)
 {
-    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
+    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::TemplateContext::New, mIdentity);
     win->setCollectionForNewMessage(mCurrentCollection);
 
     if (forceCursorPosition) {

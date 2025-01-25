@@ -57,7 +57,7 @@ void FillComposerJob::start()
 
 void FillComposerJob::slotOpenComposer()
 {
-    KMail::Composer::TemplateContext context = KMail::Composer::New;
+    KMail::Composer::TemplateContext context = KMail::Composer::TemplateContext::New;
     KMime::Content *msgPart = nullptr;
     bool iCalAutoSend = false;
     bool noWordWrap = false;
@@ -105,7 +105,7 @@ void FillComposerJob::slotOpenComposer()
     mMsg->assemble();
 
     if (!mMsg->body().isEmpty()) {
-        context = KMail::Composer::NoTemplate;
+        context = KMail::Composer::TemplateContext::NoTemplate;
     }
 
     KMail::Composer *cWin = KMail::makeComposer(KMime::Message::Ptr(), false, false, context);

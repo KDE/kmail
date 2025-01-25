@@ -51,7 +51,8 @@ void OpenComposerHiddenJob::start()
 void OpenComposerHiddenJob::slotOpenComposer()
 {
     mMsg->assemble();
-    const KMail::Composer::TemplateContext context = mSettings.mBody.isEmpty() ? KMail::Composer::New : KMail::Composer::NoTemplate;
+    const KMail::Composer::TemplateContext context =
+        mSettings.mBody.isEmpty() ? KMail::Composer::TemplateContext::New : KMail::Composer::TemplateContext::NoTemplate;
     KMail::Composer *cWin = KMail::makeComposer(mMsg, false, false, context);
     if (!mSettings.mHidden) {
         cWin->showAndActivateComposer();

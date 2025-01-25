@@ -71,7 +71,7 @@ void HandleClickedUrlJob::start()
 
 void HandleClickedUrlJob::slotOpenComposer()
 {
-    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::New, mIdentity);
+    KMail::Composer *win = KMail::makeComposer(mMsg, false, false, KMail::Composer::TemplateContext::New, mIdentity);
     win->setFocusToSubject();
     win->setCollectionForNewMessage(mCurrentCollection);
     win->show();

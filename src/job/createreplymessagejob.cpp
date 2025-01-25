@@ -31,9 +31,9 @@ void CreateReplyMessageJob::setSettings(const CreateReplyMessageJobSettings &set
 inline KMail::Composer::TemplateContext replyContext(const MessageComposer::MessageFactoryNG::MessageReply &reply)
 {
     if (reply.replyAll) {
-        return KMail::Composer::ReplyToAll;
+        return KMail::Composer::TemplateContext::ReplyToAll;
     } else {
-        return KMail::Composer::Reply;
+        return KMail::Composer::TemplateContext::Reply;
     }
 }
 
@@ -66,13 +66,14 @@ void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFa
     bool lastSign = false;
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.msg);
 
-    KMail::Composer *win = KMail::makeComposer(rmsg,
-                                               lastSign,
-                                               lastEncrypt,
-                                               (mSettings.replyStrategy == MessageComposer::ReplyNone) ? KMail::Composer::Reply : replyContext(reply),
-                                               0,
-                                               mSettings.selection,
-                                               mSettings.templateStr);
+    KMail::Composer *win =
+        KMail::makeComposer(rmsg,
+                            lastSign,
+                            lastEncrypt,
+                            (mSettings.replyStrategy == MessageComposer::ReplyNone) ? KMail::Composer::TemplateContext::Reply : replyContext(reply),
+                            0,
+                            mSettings.selection,
+                            mSettings.templateStr);
     win->setFocusToEditor();
     win->show();
     deleteLater();

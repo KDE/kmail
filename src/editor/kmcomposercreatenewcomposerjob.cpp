@@ -32,7 +32,7 @@ void KMComposerCreateNewComposerJob::start()
 
 void KMComposerCreateNewComposerJob::slotCreateNewComposer(bool forceCursorPosition)
 {
-    KMail::Composer *win = KMComposerWin::create(mMsg, false, false, KMail::Composer::New, mCurrentIdentity);
+    KMail::Composer *win = KMComposerWin::create(mMsg, false, false, KMail::Composer::TemplateContext::New, mCurrentIdentity);
     win->setCollectionForNewMessage(mCollectionForNewMessage);
     if (forceCursorPosition) {
         win->setFocusToEditor();

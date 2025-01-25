@@ -128,7 +128,7 @@ private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     explicit KMComposerWin(const KMime::Message::Ptr &msg,
                            bool lastSignState,
                            bool lastEncryptState,
-                           TemplateContext context = NoTemplate,
+                           TemplateContext context = TemplateContext::NoTemplate,
                            uint identity = 0,
                            const QString &textSelection = QString(),
                            const QString &customTemplate = QString());
@@ -144,7 +144,7 @@ public:
     static Composer *create(const KMime::Message::Ptr &msg,
                             bool lastSignState,
                             bool lastEncryptState,
-                            TemplateContext context = NoTemplate,
+                            TemplateContext context = TemplateContext::NoTemplate,
                             uint identity = 0,
                             const QString &textSelection = QString(),
                             const QString &customTemplate = QString());
@@ -629,7 +629,7 @@ private:
     QFont mBodyFont;
     QFont mFixedFont;
     uint mId = 0;
-    const TemplateContext mContext = NoTemplate;
+    const TemplateContext mContext = TemplateContext::NoTemplate;
 
     KRecentFilesAction *mRecentAction = nullptr;
 

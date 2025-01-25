@@ -412,7 +412,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
     msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
     msg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl));
 
-    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, id);
+    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::TemplateContext::New, id);
     win->setFocusToSubject();
     win->show();
     return OK;
@@ -939,7 +939,7 @@ KMCommand::Result KMForwardCommand::execute()
             factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
             QPair<KMime::Message::Ptr, KMime::Content *> fwdMsg = factory.createForwardDigestMIME(msgList);
-            KMail::Composer *win = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
+            KMail::Composer *win = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::TemplateContext::Forward, mIdentity);
             win->addAttach(fwdMsg.second);
             win->show();
             delete fwdMsg.second;
@@ -996,7 +996,7 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 
     QPair<KMime::Message::Ptr, QList<KMime::Content *>> fwdMsg = factory.createAttachedForward(msgList);
     if (!mWin) {
-        mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::Forward, mIdentity);
+        mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::TemplateContext::Forward, mIdentity);
     }
     for (KMime::Content *attach : std::as_const(fwdMsg.second)) {
         mWin->addAttach(attach);
@@ -1916,7 +1916,7 @@ KMCommand::Result KMShareImageCommand::execute()
     // Already defined in MessageHelper::initHeader
     msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
 
-    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::New, id);
+    KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::TemplateContext::New, id);
     win->setFocusToSubject();
     QList<KMail::Composer::AttachmentInfo> infoList;
     KMail::Composer::AttachmentInfo info;

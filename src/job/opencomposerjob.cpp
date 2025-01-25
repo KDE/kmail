@@ -80,7 +80,7 @@ void OpenComposerJob::start()
             f.close();
         }
         if (!str.isEmpty()) {
-            mContext = KMail::Composer::NoTemplate;
+            mContext = KMail::Composer::TemplateContext::NoTemplate;
             mMsg->setBody(str);
             slotOpenComposer();
         } else {
@@ -90,7 +90,7 @@ void OpenComposerJob::start()
             parser->process(mMsg);
         }
     } else if (!mOpenComposerSettings.mBody.isEmpty()) {
-        mContext = KMail::Composer::NoTemplate;
+        mContext = KMail::Composer::TemplateContext::NoTemplate;
         mMsg->setBody(mOpenComposerSettings.mBody.toUtf8());
         mMsg->assemble();
         mMsg->parse();

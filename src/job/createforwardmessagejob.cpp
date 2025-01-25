@@ -48,7 +48,7 @@ void CreateForwardMessageJob::slotCreateForwardDone(const KMime::Message::Ptr &f
     KMail::Util::lastEncryptAndSignState(lastEncrypt, lastSign, mSettings.msg);
 
     if (mSettings.url.isValid()) {
-        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward);
+        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::TemplateContext::Forward);
         win->show();
     } else {
         uint id = 0;
@@ -58,7 +58,8 @@ void CreateForwardMessageJob::slotCreateForwardDone(const KMime::Message::Ptr &f
         if (id == 0) {
             id = mSettings.identity;
         }
-        KMail::Composer *win = KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::Forward, id, QString(), mSettings.templateStr);
+        KMail::Composer *win =
+            KMail::makeComposer(fmsg, lastSign, lastEncrypt, KMail::Composer::TemplateContext::Forward, id, QString(), mSettings.templateStr);
         win->show();
     }
     deleteLater();

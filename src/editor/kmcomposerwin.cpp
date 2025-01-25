@@ -1131,19 +1131,19 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
 {
     TemplateParser::TemplateParserJob::Mode mode;
     switch (mContext) {
-    case New:
+    case TemplateContext::New:
         mode = TemplateParser::TemplateParserJob::NewMessage;
         break;
-    case Reply:
+    case TemplateContext::Reply:
         mode = TemplateParser::TemplateParserJob::Reply;
         break;
-    case ReplyToAll:
+    case TemplateContext::ReplyToAll:
         mode = TemplateParser::TemplateParserJob::ReplyAll;
         break;
-    case Forward:
+    case TemplateContext::Forward:
         mode = TemplateParser::TemplateParserJob::Forward;
         break;
-    case NoTemplate:
+    case TemplateContext::NoTemplate:
         updateComposerAfterIdentityChanged(ident, uoid, wasModified);
         return;
     }

@@ -71,6 +71,6 @@ private:
     KMAIL_NO_EXPORT void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
     KMime::Message::Ptr mMsg = nullptr;
-    KMail::Composer::TemplateContext mContext = KMail::Composer::New;
+    KMail::Composer::TemplateContext mContext = KMail::Composer::TemplateContext::New;
     uint mIdentityId = 0;
 };
