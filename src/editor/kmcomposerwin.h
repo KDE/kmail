@@ -553,7 +553,7 @@ private:
     [[nodiscard]] int calcColumnWidth(int which, long allShowing, int width) const;
 
 private:
-    enum CryptoKeyState {
+    enum class CryptoKeyState : int8_t {
         NoState = 0,
         InProgress,
         KeyOk,

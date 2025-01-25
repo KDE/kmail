@@ -3790,11 +3790,11 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
         } else {
             line->setIcon(QIcon());
         }
-        line->setProperty("keyStatus", invalidEmail ? InProgress : NoKey);
+        line->setProperty("keyStatus", invalidEmail ? QVariant::fromValue(CryptoKeyState::InProgress) : QVariant::fromValue(CryptoKeyState::NoKey));
         return;
     }
 
-    KMComposerWin::CryptoKeyState keyState = KeyOk;
+    KMComposerWin::CryptoKeyState keyState = CryptoKeyState::KeyOk;
 
     if (recipient->encryptionAction() != Kleo::DoIt) {
         recipient->setEncryptionAction(Kleo::DoIt);
@@ -3846,7 +3846,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
                                 "The encryption key is not trusted. It hasn't enough validity. "
                                 "You can sign the key, if you communicated the fingerprint by another channel. "
                                 "Click the icon for details.");
-                keyState = NoKey;
+                keyState = CryptoKeyState::NoKey;
             } else {
                 switch (uid.tofuInfo().validity()) {
                 case GpgME::TofuInfo::NoHistory:
@@ -3861,19 +3861,19 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
                     tooltip = i18nc("@info:tooltip",
                                     "The encryption key is not trusted. It has conflicting TOFU data. "
                                     "Click the icon for details.");
-                    keyState = NoKey;
+                    keyState = CryptoKeyState::NoKey;
                     break;
                 case GpgME::TofuInfo::ValidityUnknown:
                     tooltip = i18nc("@info:tooltip",
                                     "The encryption key is not trusted. It has unknown validity in TOFU data. "
                                     "Click the icon for details.");
-                    keyState = NoKey;
+                    keyState = CryptoKeyState::NoKey;
                     break;
                 default:
                     tooltip = i18nc("@info:tooltip",
                                     "The encryption key is not trusted. The key is marked as bad. "
                                     "Click the icon for details.");
-                    keyState = NoKey;
+                    keyState = CryptoKeyState::NoKey;
                 }
             }
             break;
@@ -3913,7 +3913,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
             Q_UNREACHABLE();
         }
 
-        if (keyState == NoKey) {
+        if (keyState == CryptoKeyState::NoKey) {
             mEncryptionState.setAcceptedSolution(false);
             if (showAllIcons) {
                 line->setIcon(QIcon::fromTheme(QStringLiteral("emblem-error")), tooltip);
@@ -3931,8 +3931,8 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
         }
     }
 
-    if (line->property("keyStatus") != keyState) {
-        line->setProperty("keyStatus", keyState);
+    if (line->property("keyStatus").value<CryptoKeyState>() != keyState) {
+        line->setProperty("keyStatus", QVariant::fromValue(keyState));
     }
 }
 
