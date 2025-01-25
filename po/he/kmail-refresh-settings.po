@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-03 00:42+0000\n"
-"PO-Revision-Date: 2025-01-03 21:23+0200\n"
+"PO-Revision-Date: 2025-01-24 09:27+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -31,7 +31,7 @@ msgstr "kde-l10n-he@kde.org"
 #: main.cpp:28 main.cpp:30
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
-msgstr "המסייע של KMail לרענון ההגדרות"
+msgstr "המסייע של KMail לריענון ההגדרות"
 
 #: main.cpp:32
 #, kde-format
@@ -53,7 +53,7 @@ msgstr "יוצר"
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Refresh Settings"
-msgstr "הגדרות רענון של KMail"
+msgstr "הגדרות ריענון של KMail"
 
 #: refreshsettingsassistant.cpp:44
 #, kde-format
