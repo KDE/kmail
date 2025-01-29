@@ -6,20 +6,20 @@
 # Viesturs Zarins <viesturs.zarins@mii.lu.lv>, 2007, 2008, 2010.
 # Viesturs Zariņš <viesturs.zarins@algorego.com>, 2008.
 # Viesturs Zariņš <viesturs.zarins@mii.lu.lv>, 2009.
-# SPDX-FileCopyrightText: 2024 Toms Trasuns <toms.trasuns@posteo.net>
+# SPDX-FileCopyrightText: 2024, 2025 Toms Trasuns <toms.trasuns@posteo.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-25 00:41+0000\n"
-"PO-Revision-Date: 2024-12-02 09:37+0200\n"
+"PO-Revision-Date: 2025-01-27 16:23+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.1\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
@@ -211,7 +211,7 @@ msgstr "Uzlaboja izpildes ātrums"
 
 #: aboutdata.cpp:103
 msgid "Optionally compress attachments"
-msgstr "Ieviesa izvēli saspiest pielikumus"
+msgstr "Ieviesa izvēli saspiest piesaistnes"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
@@ -1107,7 +1107,7 @@ msgstr "Galvenes"
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
-msgstr "Pielikumi"
+msgstr "Piesaistnes"
 
 #: configuredialog/configurecomposerpage.cpp:102
 #, kde-format
@@ -1215,7 +1215,7 @@ msgstr "Pamattekstā"
 #: configuredialog/configurecomposerpage.cpp:257
 #, kde-format
 msgid "As Attachment"
-msgstr "Kā pielikumu"
+msgstr "Kā piesaistni"
 
 #: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
@@ -1476,7 +1476,7 @@ msgstr "Nederīga galvene"
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "Ieslēgt trūkstošu &pielikumu noteikšanu"
+msgstr "Ieslēgt trūkstošu &piesaistņu noteikšanu"
 
 #: configuredialog/configurecomposerpage.cpp:958
 #, kde-format
@@ -1492,18 +1492,18 @@ msgstr "Ievadiet jaunu atslēgas vārdu:"
 #: configuredialog/configurecomposerpage.cpp:971
 #, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr "Vai tiešām vēlaties noņemt šo pielikuma atslēgas vārdu?"
+msgstr "Vai tiešām vēlaties noņemt šo piesaistnes atslēgas vārdu?"
 
 #: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Attachment Word:"
-msgstr "Pielikuma atslēgas vārds:"
+msgstr "Piesaistnes atslēgas vārds:"
 
 #: configuredialog/configurecomposerpage.cpp:979
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "Maksimālais pielikuma izmērs:"
+msgstr "Maksimālais piesaistnes izmērs:"
 
 #: configuredialog/configurecomposerpage.cpp:986
 #, kde-format
@@ -1798,21 +1798,21 @@ msgstr "Paziņojumi"
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
-msgstr[0] "%1 pielikums (%2)"
-msgstr[1] "%1 pielikumi (%2)"
-msgstr[2] "%1 pielikumu (%2)"
+msgstr[0] "%1 piesaistne (%2)"
+msgstr[1] "%1 piesaistnes (%2)"
+msgstr[2] "%1 piesaistņu (%2)"
 
 #: editor/attachment/attachmentview.cpp:200
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
-msgstr "Slēpt pielikumu sarakstu"
+msgstr "Slēpt piesaistņu sarakstu"
 
 #: editor/attachment/attachmentview.cpp:202
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
-msgstr "Parādīt pielikumu sarakstu"
+msgstr "Parādīt piesaistņu sarakstu"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:97
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
@@ -1988,7 +1988,7 @@ msgstr "Saglabāt &adresātu sarakstu…"
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
-msgstr "Ielīmēt kā &pielikumu"
+msgstr "Ielīmēt kā &piesaistni"
 
 #: editor/kmcomposerwin.cpp:1370
 #, kde-format
@@ -2292,7 +2292,7 @@ msgstr "Pievienot attēlu vēstures &saturam"
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
-msgstr "Pievienot kā &pielikumu"
+msgstr "Pievienot kā &piesaistni"
 
 #: editor/kmcomposerwin.cpp:2431
 #, kde-format
@@ -2303,18 +2303,18 @@ msgstr "KMail"
 #: editor/kmcomposerwin.cpp:2431 editor/kmcomposerwin.cpp:2536
 #, kde-format
 msgid "Name of the attachment:"
-msgstr "Pielikuma nosaukums:"
+msgstr "Piesaistnes nosaukums:"
 
 #: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgid "Attachment name can't be empty"
-msgstr "Pielikuma nosaukums nevar būt tukšs"
+msgstr "Piesaistnes nosaukums nevar būt tukšs"
 
 #: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
-msgstr "Nederīgs pielikuma nosaukums"
+msgstr "Nederīgs piesaistnes nosaukums"
 
 #: editor/kmcomposerwin.cpp:2488
 #, kde-format
@@ -2328,15 +2328,15 @@ msgstr[2] "Vēstulē pievienot URL"
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
-msgstr[0] "&Pievienot datni kā pielikumu"
-msgstr[1] "&Pievienot datnes kā pielikumu"
-msgstr[2] "&Pievienot datnes kā pielikumu"
+msgstr[0] "&Pievienot datni kā piesaistni"
+msgstr[1] "&Pievienot datnes kā piesaistni"
+msgstr[2] "&Pievienot datnes kā piesaistni"
 
 #: editor/kmcomposerwin.cpp:2535
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
-msgstr "Ielīmēt starpliktuves tekstu kā pielikumu"
+msgstr "Ievietot starpliktuves tekstu kā piesaistni"
 
 #: editor/kmcomposerwin.cpp:2631
 #, kde-format
@@ -2808,7 +2808,7 @@ msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
-"Šis pielikums <ul><li>%1</li></ul> ir pievienots ārēji. Noņemiet to, ja tas "
+"Šī piesaistne <ul><li>%1</li></ul> ir pievienota ārēji. Noņemiet to, ja tas "
 "ir noticis kļūdas dēļ."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
@@ -2817,8 +2817,8 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
-"Šie pielikumi <ul><li>%1</li></ul> ir pievienoti ārēji. Noņemiet tos, ja tas "
-"ir noticis kļūdas dēļ."
+"Šīs piesaistnes <ul><li>%1</li></ul> ir pievienota ārēji. Noņemiet tās, ja "
+"tas ir noticis kļūdas dēļ."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -2826,8 +2826,8 @@ msgid ""
 "The message you have composed seems to refer to an attached file but you "
 "have not attached anything. Do you want to attach a file to your message?"
 msgstr ""
-"Izskatās, ka vēstulē atsaucaties uz pielikumu, bet vēstule pielikumus "
-"nesatur. Vai vēlaties pievienot pielikumu?"
+"Izskatās, ka vēstulē atsaucaties uz piesaistni, bet tai nepievienojāt "
+"piesaistnes. Vai vēlaties pievienot piesaistni?"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:25
 #, kde-format
@@ -4063,7 +4063,7 @@ msgstr "Iestatīt vēstules pamattekstu"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
-msgstr "Pievienot vēstulei pielikumu. Darbību var atkārtot"
+msgstr "Pievienot vēstulei piesaistni. Darbību varat atkārtot"
 
 #: kmail_options.h:33
 #, kde-format
@@ -4260,8 +4260,8 @@ msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
-"Vai vēlaties pārsūtīt izvēlētās vēstules kā pielikumus vienā vēstulei (kā "
-"MIME krājums) vai kā atsevišķas vēstules?"
+"Vai vēlaties pārsūtīt izvēlētās vēstules kā piesaistnes vienā vēstulei (kā "
+"MIME krājumu) vai kā atsevišķas vēstules?"
 
 #: kmcommands.cpp:930
 #, kde-format
@@ -4299,7 +4299,7 @@ msgstr "Dzēš vēstules"
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "Dzēš pielikumu"
+msgstr "Dzēš piesaistnes"
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4819,22 +4819,22 @@ msgid_plural ""
 "not possible to delete attachments."
 msgstr[0] ""
 "Atlasītā vēstule ir šifrēta. Šobrīd nav iespējams dzēst šifrētas vēstules "
-"pielikumus."
+"piesaistnes."
 msgstr[1] ""
 "Atlasītas ir tikai šifrētas vēstules. Šobrīd nav iespējams dzēst šifrētas "
-"vēstules pielikumus."
+"vēstules piesaistnes."
 msgstr[2] ""
 "Atlasītas ir tikai šifrētas vēstules. Šobrīd nav iespējams dzēst šifrētas "
-"vēstules pielikumus."
+"vēstules piesaistnes."
 
 #: kmmainwidget.cpp:2415
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] "Dzēst šifrētas vēstules pielikumu"
-msgstr[1] "Dzēst šifrētu vēstuļu pielikumus"
-msgstr[2] "Dzēst šifrētu vēstuļu pielikumus"
+msgstr[0] "Dzēst šifrētas vēstules piesaistnes"
+msgstr[1] "Dzēst šifrētu vēstuļu piesaistnes"
+msgstr[2] "Dzēst šifrētu vēstuļu piesaistnes"
 
 #: kmmainwidget.cpp:2420
 #, kde-format
@@ -4845,14 +4845,14 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<html><p>Vai tiešām vēlaties dzēst visus %1 izvēlētās vēstules pielikumus?"
+"<html><p>Vai tiešām vēlaties dzēst visa %1 atlasītās vēstules piesaistnes?"
 "<br />Pēc dzēšanas tos vairs nevarēs atjaunot.</p></html>"
 msgstr[1] ""
-"<html><p>Vai tiešām vēlaties dzēst visus %1 izvēlēto vēstuļu pielikumus?<br /"
-">Pēc dzēšanas tos vairs nevarēs atjaunot.</p></html>"
+"<html><p>Vai tiešām vēlaties dzēst visas %1 atlasīto vēstuļu piesaistnes?"
+"<br />Pēc dzēšanas tos vairs nevarēs atjaunot.</p></html>"
 msgstr[2] ""
-"<html><p>Vai tiešām vēlaties dzēst visus %1 izvēlēto vēstuļu pielikumus?<br /"
-">Pēc dzēšanas tos vairs nevarēs atjaunot.</p></html>"
+"<html><p>Vai tiešām vēlaties dzēst visas %1 atlasīto vēstuļu piesaistnes?"
+"<br />Pēc dzēšanas tos vairs nevarēs atjaunot.</p></html>"
 
 #: kmmainwidget.cpp:2427
 #, kde-format
@@ -4860,7 +4860,7 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
-"<html><p>Ievērojiet, ka pielikumu dzēšana no kriptogrāfiski parakstītas "
+"<html><p>Ievērojiet, ka piesaistņu dzēšana no kriptogrāfiski parakstītas "
 "vēstules tās parakstu padarīs nederīgu.</p></html>"
 
 #: kmmainwidget.cpp:2432
@@ -4869,14 +4869,14 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
-"<html><p>Šobrīd nav iespējams dzēst pielikumus un šifrētām vēstulēm.<br /"
+"<html><p>Šobrīd nav iespējams dzēst piesaistnes no šifrētām vēstulēm.<br /"
 ">Šifrētās vēstules tiks ignorētas.</p></html>"
 
 #: kmmainwidget.cpp:2437
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "Dzēst pielikumus"
+msgstr "Dzēst piesaistnes"
 
 #: kmmainwidget.cpp:2466
 #, kde-format
@@ -5187,13 +5187,13 @@ msgstr "&Ignorēt pavedienu"
 #: kmmainwidget.cpp:3301 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments…"
-msgstr "Saglabāt &pielikumus…"
+msgstr "Saglabāt &piesaistnes…"
 
 #: kmmainwidget.cpp:3305
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "Dzēst visus pielikumus"
+msgstr "Dzēst visas piesaistnes"
 
 #: kmmainwidget.cpp:3313
 #, kde-format
@@ -6155,7 +6155,7 @@ msgstr "&Iekļautu…"
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Kā &pielikumu…"
+msgstr "Kā &piesaistni…"
 
 #: messageactions.cpp:72
 #, kde-format
@@ -6385,12 +6385,12 @@ msgstr "&Iekļautu…"
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Kā &pielikumu…"
+msgstr "Kā &piesaistni…"
 
 #: searchdialog/searchwindowdialog.cpp:194
 #, kde-format
 msgid "Save Attachments…"
-msgstr "Saglabā pielikumu…"
+msgstr "Saglabā piesaistni…"
 
 #: searchdialog/searchwindowdialog.cpp:200
 #, kde-format
@@ -7627,7 +7627,7 @@ msgstr "Apskatot, mēģināt automātiski atšifrēt šifrētas vēstules"
 #: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
-msgstr "Sertifikātu un atslēgas saišķu pielikumi"
+msgstr "Sertifikātu un atslēgas saišķu piesaistnes"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
 #: ui/securitypagegeneraltab.ui:191
