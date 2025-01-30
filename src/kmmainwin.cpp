@@ -75,7 +75,7 @@ KMMainWin::KMMainWin(QWidget *)
     auto mainWidgetLayout = new QVBoxLayout(mainWidget);
     mainWidgetLayout->setContentsMargins({});
     if (PimCommon::NeedUpdateVersionUtils::checkVersion()) {
-        const auto status = PimCommon::NeedUpdateVersionUtils::obsoleteVersionStatus(KAboutData::applicationData().version(), QDate::currentDate());
+        const auto status = PimCommon::NeedUpdateVersionUtils::obsoleteVersionStatus(QLatin1String(KMAIL_RELEASE_VERSION_DATE), QDate::currentDate());
         if (status != PimCommon::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
             auto needUpdateVersionWidget = new PimCommon::NeedUpdateVersionWidget(this);
             mainWidgetLayout->addWidget(needUpdateVersionWidget);
