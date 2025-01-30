@@ -40,6 +40,9 @@ include(ECMFeatureSummary)
 set(KDEPIM_DEV_VERSION )
 set(RELEASE_SERVICE_VERSION "24.12.2")
 
+# Update it for each release
+set(KMAIL_RELEASE_VERSION_DATE "25.02.03") # yy.MM.dd
+
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
     set(KDEPIM_DEV_VERSION " ${KDEPIM_DEV_VERSION}")
