@@ -3681,7 +3681,7 @@ void KMComposerWin::runKeyResolver()
             const auto storage = MessageCore::AutocryptStorage::self();
             for (const auto &recipient : result.solution.encryptionKeys.keys()) {
                 const auto key = result.solution.encryptionKeys[recipient];
-                if (key.size() > 0) { // There are already keys found
+                if (!key.empty()) { // There are already keys found
                     continue;
                 }
                 if (recipient == keyResolverCore->normalizedSender()) { // Don't care about own key as we show warnings in another way
