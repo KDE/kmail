@@ -1,6 +1,6 @@
 # translation of kmail.po to Turkish
 # Copyright (C) 2000,2003, 2004, 2005, 2008 Free Software Foundation, Inc.
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Emir SARI <emir_sari@icloud.com>
 # Mehmet TARIMCI <mehmet@gelecek.com.tr>, 2000.
 # Görkem Çetin <gorkem@kde.org>, 2003, 2004.
 # Barış Metin <baris@uludag.org.tr>, 2004.
@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-01-22 02:31+0000\n"
-"PO-Revision-Date: 2024-11-19 21:45+0300\n"
+"PO-Revision-Date: 2025-02-05 11:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -7299,7 +7299,7 @@ msgstr "İmza/Şifreleme göstergelerini göster"
 #: ui/securitypageencryptiontab.ui:93
 #, kde-format
 msgid "Alerts"
-msgstr "Alarmlar"
+msgstr "İkazlar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mShowKeyApprovalDlg)
 #: ui/securitypageencryptiontab.ui:99
