@@ -209,7 +209,3 @@ msgstr "Změnit…"
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
-
-#~ msgctxt "@title:window"
-#~ msgid "Configure"
-#~ msgstr "Nastavit"

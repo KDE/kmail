@@ -2233,23 +2233,16 @@ msgid "Sending Message Failed"
 msgstr "Odesílání zprávy selhalo"
 
 #: editor/kmcomposerwin.cpp:2225 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Nelze spustit program \"Exportér dat PIM\". Prosím zkontrolujte svoji "
-"instalaci."
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Nelze spustit program \"Exportér dat PIM\""
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2350
 #, kde-format
@@ -4385,23 +4378,16 @@ msgid "KMail Error"
 msgstr "Chyba KMailu"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Nelze spustit program \"Exportér dat PIM\". Prosím zkontrolujte svoji "
-"instalaci."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Nelze spustit průvodce importem"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5742,10 +5728,8 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Přidána podpora Microsoft Exchange Web Services"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "Přidána podpora maildir"
+msgstr ""
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
@@ -8019,14 +8003,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgid ""
-#~ "Could not start the import wizard. Please make sure you have ImportWizard "
-#~ "properly installed."
-#~ msgstr ""
-#~ "Nelze spustit průvodce importem. Prosím zkontrolujte zda je správně "
-#~ "nainstalován ImportWizard."
-
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "Nelze spustit průvodce importem"
