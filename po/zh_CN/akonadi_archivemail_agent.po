@@ -39,7 +39,7 @@ msgstr "归档全部子文件夹"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
-msgstr ""
+msgstr "文件夹："
 
 #: addarchivemailwidget.cpp:48
 #, kde-format
@@ -144,13 +144,13 @@ msgstr "kde-china@kde.org"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "添加..."
 
 #: archivemailwidget.cpp:115
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
-msgstr ""
+msgstr "打开所在文件夹..."
 
 #: archivemailwidget.cpp:118
 #, kde-format

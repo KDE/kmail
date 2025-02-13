@@ -27,7 +27,7 @@ msgstr "过滤器日志查看器"
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr ""
+msgstr "分享..."
 
 #: filterlogdialog.cpp:85
 #, kde-format
