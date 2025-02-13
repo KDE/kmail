@@ -35,7 +35,7 @@ msgstr "用于刷新设置的 KMail 辅助程序"
 #: main.cpp:32
 #, kde-format
 msgid "(c) 2019-2025 Laurent Montel <montel@kde.org>"
-msgstr ""
+msgstr "(c) 2019-2025 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format
