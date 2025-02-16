@@ -156,7 +156,7 @@ msgstr "No s'ha trobat el missatge."
 #: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
-msgstr "Error mentre s'obtenia el missatge."
+msgstr "S'ha produït un error mentre s'obtenia el missatge."
 
 #: sendlaterjob.cpp:82
 #, kde-format
@@ -211,7 +211,3 @@ msgstr "Modifica…"
 #, kde-format
 msgid "Delete"
 msgstr "Suprimix"
-
-#~ msgctxt "@title:window"
-#~ msgid "Configure"
-#~ msgstr "Configuració"
