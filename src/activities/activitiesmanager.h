@@ -21,9 +21,6 @@ public:
     explicit ActivitiesManager(QObject *parent = nullptr);
     ~ActivitiesManager() override;
 
-    [[nodiscard]] bool enabled() const override;
-    void setEnabled(bool newEnabled);
-
     [[nodiscard]] TransportActivities *transportActivities() const;
 
     [[nodiscard]] IdentityActivities *identityActivities() const;
@@ -37,5 +34,4 @@ private:
     IdentityActivities *const mIdentityActivities;
     LdapActivities *const mLdapActivities;
     AccountActivities *const mAccountActivities;
-    bool mEnabled = false;
 };

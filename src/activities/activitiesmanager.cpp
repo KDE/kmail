@@ -38,19 +38,6 @@ IdentityActivities *ActivitiesManager::identityActivities() const
     return mIdentityActivities;
 }
 
-bool ActivitiesManager::enabled() const
-{
-    return mEnabled;
-}
-
-void ActivitiesManager::setEnabled(bool newEnabled)
-{
-    if (mEnabled != newEnabled) {
-        mEnabled = newEnabled;
-        Q_EMIT activitiesChanged();
-    }
-}
-
 TransportActivities *ActivitiesManager::transportActivities() const
 {
     return mTransportActivities;
