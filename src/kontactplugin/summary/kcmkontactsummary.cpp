@@ -119,6 +119,7 @@ void KCMKontactSummary::load()
             }
         }
     }
+    setNeedsSave(false);
 }
 
 void KCMKontactSummary::save()
@@ -137,6 +138,7 @@ void KCMKontactSummary::save()
     KConfig config(QStringLiteral("kontact_summaryrc"));
     KConfigGroup grp(&config, QString());
     grp.writeEntry("ActiveSummaries", activeSummaries);
+    setNeedsSave(false);
 }
 #include "kcmkontactsummary.moc"
 
