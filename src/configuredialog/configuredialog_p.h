@@ -14,7 +14,6 @@
 #include "kmail_export.h"
 class QTabWidget;
 class ConfigureDialog;
-class KConfigDialogManager;
 
 // Individual tab of a ConfigModuleWithTabs
 class ConfigModuleTab : public QWidget

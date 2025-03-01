@@ -25,7 +25,6 @@ namespace KMail
 {
 class IdentityDialog;
 class IdentityTreeWidget;
-class IdentityTreeWidgetItem;
 
 class KMAIL_EXPORT IdentityNgPage : public ConfigModuleTab
 {
