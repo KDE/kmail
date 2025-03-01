@@ -3,7 +3,6 @@
 add_executable(sievemanagerdialog sievemanagerdialog.cpp)
 
 target_link_libraries(sievemanagerdialog
-  KPim6::KSieve
   KPim6::KSieveUi
   KPim6::AkonadiCore
   kmailprivate

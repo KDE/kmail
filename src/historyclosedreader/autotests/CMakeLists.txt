@@ -8,7 +8,7 @@ macro(historyclosedreader_kmail _source)
   add_test(NAME ${_name} COMMAND ${_name})
   ecm_mark_as_test(historyclosedreader-${_name})
 
-  target_link_libraries(${_name} Qt::Test Qt::Core  KPim6::AkonadiCore KF6::ConfigCore kmailprivate)
+  target_link_libraries(${_name} Qt::Test KPim6::AkonadiCore KF6::ConfigCore kmailprivate)
 endmacro()
 
 historyclosedreader_kmail(historyclosedreaderinfotest.cpp)
