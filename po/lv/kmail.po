@@ -12,14 +12,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-12 00:42+0000\n"
-"PO-Revision-Date: 2025-01-27 16:23+0200\n"
+"PO-Revision-Date: 2025-02-28 12:30+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.2\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
@@ -57,7 +57,7 @@ msgstr ""
 
 #: about/introduction_kmail.html:16
 msgid "Important changes since last version:"
-msgstr "Importēt izmaiņas kopš iepriekšējās versijas:"
+msgstr "Svarīgas izmaiņas kopš iepriekšējās versijas:"
 
 #: about/introduction_kmail.html:25
 msgid "Some of the new features in this release of KMail include:"
@@ -127,7 +127,7 @@ msgstr "Sistēmas ikonu joslas paziņojumi"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
-msgstr "PGP papildinājums"
+msgstr "PGP ielāps"
 
 #: aboutdata.cpp:49
 msgid "Crypto support"
