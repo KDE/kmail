@@ -47,13 +47,13 @@ msgstr "Betreuer"
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Frederik Schwarzer"
+msgstr "Deutsches KDE-Übersetzungsteam"
 
 #: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "schwarzer@kde.org"
+msgstr "kde-i18n-de@kde.org"
 
 #: followupreminderinfowidget.cpp:63
 #, kde-format
