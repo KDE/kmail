@@ -60,12 +60,8 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
-#if KXMLGUI_VERSION >= QT_VERSION_CHECK(6, 9, 0)
     auto helpMenu = new KHelpMenu(this, aboutData);
     helpMenu->setShowWhatsThis(true);
-#else
-    auto helpMenu = new KHelpMenu(this, aboutData, true);
-#endif
     // Initialize menu
     QMenu *menu = helpMenu->menu();
     helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));

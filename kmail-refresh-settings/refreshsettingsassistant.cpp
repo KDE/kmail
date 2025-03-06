@@ -24,12 +24,8 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     resize(640, 480);
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
     initializePages();
-#if KXMLGUI_VERSION >= QT_VERSION_CHECK(6, 9, 0)
     auto helpMenu = new KHelpMenu(this, KAboutData::applicationData());
     helpMenu->setShowWhatsThis(true);
-#else
-    auto helpMenu = new KHelpMenu(this, KAboutData::applicationData(), true);
-#endif
     // Initialize menu
     QMenu *menu = helpMenu->menu();
     helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));
