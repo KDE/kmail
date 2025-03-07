@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail-refresh-settings\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-01-03 00:42+0000\n"
+"POT-Creation-Date: 2025-03-07 00:43+0000\n"
 "PO-Revision-Date: 2025-01-03 13:34+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -57,17 +57,17 @@ msgctxt "@title:window"
 msgid "KMail Refresh Settings"
 msgstr "Параметри оновлення у KMail"
 
-#: refreshsettingsassistant.cpp:44
+#: refreshsettingsassistant.cpp:40
 #, kde-format
 msgid "Warning"
 msgstr "Попередження"
 
-#: refreshsettingsassistant.cpp:48
+#: refreshsettingsassistant.cpp:44
 #, kde-format
 msgid "Clean up Settings"
 msgstr "Спорожнення параметрів"
 
-#: refreshsettingsassistant.cpp:52
+#: refreshsettingsassistant.cpp:48
 #, kde-format
 msgid "Finish"
 msgstr "Завершити"
