@@ -267,6 +267,3 @@ msgstr "Mesos"
 #, kde-format
 msgid "Years"
 msgstr "Anys"
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Afegeix un arxiu de correu"
