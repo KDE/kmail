@@ -12,8 +12,11 @@
 #include <KContacts/Addressee>
 #include <KContacts/ContactGroup>
 
+#include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentFilterProxyModel>
+#include <Akonadi/AgentInstance>
 #include <Akonadi/AgentInstanceCreateJob>
+#include <Akonadi/AgentManager>
 #include <Akonadi/AgentTypeDialog>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
@@ -71,7 +74,6 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
             if (agentType.isValid()) {
                 auto createAgentJob = new Akonadi::AgentInstanceCreateJob(agentType, this);
                 connect(createAgentJob, &Akonadi::AgentInstanceCreateJob::result, this, &CreateNewContactJob::slotResourceCreationDone);
-                createAgentJob->configure(mParentWidget);
                 createAgentJob->start();
                 return;
             } else { // if agent is not valid => return error and finish job
@@ -92,14 +94,27 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
 
 void CreateNewContactJob::slotResourceCreationDone(KJob *job)
 {
+    auto createAgentJob = qobject_cast<Akonadi::AgentInstanceCreateJob *>(job);
+    Q_ASSERT(createAgentJob);
+
     if (job->error()) {
         setError(job->error());
         setErrorText(job->errorText());
         emitResult();
         return;
     }
-    createContact();
-    emitResult();
+
+    auto configureDialog = new Akonadi::AgentConfigurationDialog(createAgentJob->instance(), mParentWidget);
+    connect(configureDialog, &QDialog::accepted, this, [this] {
+        createContact();
+        emitResult();
+    });
+
+    connect(configureDialog, &QDialog::rejected, this, [this, instance = createAgentJob->instance()] {
+        Akonadi::AgentManager::self()->removeInstance(instance);
+        emitResult();
+    });
+    configureDialog->show();
 }
 
 void CreateNewContactJob::createContact()
