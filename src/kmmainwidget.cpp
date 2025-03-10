@@ -172,7 +172,6 @@
 #include "historyclosedreader/historyclosedreadermenu.h"
 #include "job/removecollectionjob.h"
 #include "job/removeduplicatemailjob.h"
-#include <PimCommonAkonadi/ManageServerSideSubscriptionJob>
 
 #include <MessageViewer/DKIMViewerMenu>
 #include <MessageViewer/DKIMWidgetInfo>
@@ -3481,12 +3480,6 @@ void KMMainWidget::setupActions()
     }
 
     {
-        mServerSideSubscription = new QAction(QIcon::fromTheme(QStringLiteral("folder-bookmarks")), i18n("Serverside Subscription…"), this);
-        actionCollection()->addAction(QStringLiteral("serverside_subscription"), mServerSideSubscription);
-        connect(mServerSideSubscription, &QAction::triggered, this, &KMMainWidget::slotServerSideSubscription);
-    }
-
-    {
         mApplyAllFiltersFolderAction = new QAction(QIcon::fromTheme(QStringLiteral("view-filter")), i18n("Apply All Filters"), this);
         actionCollection()->addAction(QStringLiteral("apply_filters_folder"), mApplyAllFiltersFolderAction);
         connect(mApplyAllFiltersFolderAction, &QAction::triggered, this, [this] {
@@ -4150,12 +4143,6 @@ void KMMainWidget::updateFolderMenu()
 
     mShowFolderShortcutDialogAction->setEnabled(folderWithContent);
     actionlist << akonadiStandardAction(Akonadi::StandardActionManager::ManageLocalSubscriptions);
-    bool imapFolderIsOnline = false;
-    if (mCurrentFolderSettings && PimCommon::MailUtil::isImapFolder(mCurrentCollection, imapFolderIsOnline)) {
-        if (imapFolderIsOnline) {
-            actionlist << mServerSideSubscription;
-        }
-    }
     if (mCurrentCollection.parentCollection() != Akonadi::Collection::root()) {
         mGUIClient->unplugActionList(QStringLiteral("resource_settings"));
         mGUIClient->unplugActionList(QStringLiteral("resource_restart"));
@@ -4803,17 +4790,6 @@ StandardMailActionManager *KMMainWidget::standardMailActionManager() const
 void KMMainWidget::slotRemoveDuplicates()
 {
     auto job = new RemoveDuplicateMailJob(mFolderTreeWidget->folderTreeView()->selectionModel(), this, this);
-    job->start();
-}
-
-void KMMainWidget::slotServerSideSubscription()
-{
-    if (!mCurrentCollection.isValid()) {
-        return;
-    }
-    auto job = new PimCommon::ManageServerSideSubscriptionJob(this);
-    job->setCurrentCollection(mCurrentCollection);
-    job->setParentWidget(this);
     job->start();
 }
 

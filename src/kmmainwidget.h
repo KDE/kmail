@@ -505,7 +505,6 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void itemsReceived(const Akonadi::Item::List &list);
     KMAIL_NO_EXPORT void itemsFetchDone(KJob *job);
 
-    KMAIL_NO_EXPORT void slotServerSideSubscription();
     KMAIL_NO_EXPORT void slotServerStateChanged(Akonadi::ServerManager::State state);
     KMAIL_NO_EXPORT void slotArchiveMails();
     KMAIL_NO_EXPORT void slotChangeDisplayMessageFormat(MessageViewer::Viewer::DisplayFormatMessage format);
@@ -647,7 +646,6 @@ private:
     KSieveCore::SieveImapPasswordProvider *const mSievePasswordProvider;
     QPointer<MailCommon::FolderSelectionDialog> mMoveOrCopyToDialog;
     QPointer<MailCommon::FolderSelectionDialog> mSelectFromAllFoldersDialog;
-    QAction *mServerSideSubscription = nullptr;
     QAction *mAccountSettings = nullptr;
     KRecentFilesMenu *mOpenRecentMenu = nullptr;
     QPointer<KSieveUi::ManageSieveScriptsDialog> mManageSieveDialog;
