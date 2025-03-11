@@ -29,6 +29,7 @@
 #include <KSharedConfig>
 #include <KUrlLabel>
 
+#include <KMessageBox>
 #include <QEvent>
 #include <QGridLayout>
 #include <QIcon>
@@ -62,6 +63,9 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
 
     mModel = new Akonadi::EntityTreeModel(mChangeRecorder, this);
     mModel->setItemPopulationStrategy(Akonadi::EntityTreeModel::NoItemPopulation);
+    connect(mModel, &Akonadi::EntityTreeModel::errorOccurred, this, [this](const QString &message) {
+        KMessageBox::error(this, message);
+    });
 
     mSelectionModel = new QItemSelectionModel(mModel);
     mModelProxy = new KCheckableProxyModel(this);

@@ -72,6 +72,7 @@ using KMail::MailServiceImpl;
 #include <KConfigGroup>
 #include <KCrash>
 #include <KIO/JobUiDelegate>
+#include <KMessageBox>
 
 #include <Akonadi/AgentManager>
 #include <Akonadi/AttributeFactory>
@@ -163,6 +164,9 @@ KMKernel::KMKernel(QObject *parent)
     mEntityTreeModel = new Akonadi::EntityTreeModel(folderCollectionMonitor(), this);
     mEntityTreeModel->setListFilter(Akonadi::CollectionFetchScope::Enabled);
     mEntityTreeModel->setItemPopulationStrategy(Akonadi::EntityTreeModel::LazyPopulation);
+    connect(mEntityTreeModel, &Akonadi::EntityTreeModel::errorOccurred, this, [this](const QString &message) {
+        KMessageBox::error(getKMMainWidget(), message);
+    });
 
     mCollectionModel = new Akonadi::EntityMimeTypeFilterModel(this);
     mCollectionModel->setSourceModel(mEntityTreeModel);
