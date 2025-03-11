@@ -1100,7 +1100,9 @@ void IdentityDialog::unregisterSpecialCollection(qint64 colId)
         if (cols.count() != 1) {
             return;
         }
-        Akonadi::SpecialMailCollections::self()->unregisterCollection(cols.first());
+        if (!Akonadi::SpecialMailCollections::self()->unregisterCollection(cols.first())) {
+            qCWarning(KMAIL_LOG) << "Impossible to unregister collection" << cols.first();
+        }
     });
 }
 
@@ -1154,7 +1156,9 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("mail-folder-sent"));
         // It will also start a CollectionModifyJob
-        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection);
+        if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection)) {
+            qCWarning(KMAIL_LOG) << "Impossible to change special sent mail folder";
+        }
     } else {
         ident.setFcc(QString());
     }
@@ -1168,7 +1172,9 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-properties"));
         // It will also start a CollectionModifyJob
-        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection);
+        if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection)) {
+            qCWarning(KMAIL_LOG) << "Impossible to change special draft mail folder";
+        }
     } else {
         ident.setDrafts(QString());
     }
@@ -1182,7 +1188,9 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         attribute->setIconName(QStringLiteral("document-new"));
         // It will also start a CollectionModifyJob
-        Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection);
+        if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection)) {
+            qCWarning(KMAIL_LOG) << "Impossible to change special template mail folder";
+        }
         new Akonadi::CollectionModifyJob(collection);
     } else {
         ident.setTemplates(QString());
