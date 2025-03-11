@@ -703,6 +703,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     label->setBuddy(mTemplatesFolderRequester);
     formLayout->addRow(label, mTemplatesFolderRequester);
 
+    // "Spam Folder" combo box and label:
+    mSpamFolderRequester = new IdentityFolderRequester(tab);
+    mSpamFolderRequester->setSelectFolderTitleDialog(i18n("Select Spam Folder"));
+    mSpamFolderRequester->setShowOutbox(false);
+    label = new QLabel(i18nc("@label:textbox", "&Spam folder:"), tab);
+    label->setBuddy(mSpamFolderRequester);
+    formLayout->addRow(label, mSpamFolderRequester);
+
     // "Special transport" combobox and label:
     mTransportCheck = new QCheckBox(i18nc("@option:check", "Outgoing Account:"), tab);
     mTransportCombo = new TransportComboBox(tab);
