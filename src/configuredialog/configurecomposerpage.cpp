@@ -223,7 +223,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     auto wordWrapWrapper = new QWidget;
     auto wordWrapWrapperLayout = new QHBoxLayout(wordWrapWrapper);
-    wordWrapWrapperLayout->setContentsMargins(0, 0, 0, 0);
+    wordWrapWrapperLayout->setContentsMargins({});
     wordWrapWrapperLayout->addWidget(mWordWrapCheck);
     wordWrapWrapperLayout->addWidget(mWrapColumnSpin);
     wordWrapWrapperLayout->addStretch();
