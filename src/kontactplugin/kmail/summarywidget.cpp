@@ -33,6 +33,7 @@
 #include <QGridLayout>
 #include <QIcon>
 #include <QItemSelectionModel>
+#include <QMessageBox>
 #include <QVBoxLayout>
 
 #include <ctime>
@@ -62,6 +63,9 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
 
     mModel = new Akonadi::EntityTreeModel(mChangeRecorder, this);
     mModel->setItemPopulationStrategy(Akonadi::EntityTreeModel::NoItemPopulation);
+    connect(mModel, &Akonadi::EntityTreeModel::errorOccurred, this, [this](const QString &message) {
+        QMessageBox::critical(this, i18nc("@window:title", "Error"), message);
+    });
 
     mSelectionModel = new QItemSelectionModel(mModel);
     mModelProxy = new KCheckableProxyModel(this);

@@ -93,6 +93,7 @@ using KMail::MailServiceImpl;
 
 #include <QDir>
 #include <QFileInfo>
+#include <QMessageBox>
 #include <QWidget>
 
 #include <MailCommon/ResourceReadConfigFile>
@@ -163,6 +164,9 @@ KMKernel::KMKernel(QObject *parent)
     mEntityTreeModel = new Akonadi::EntityTreeModel(folderCollectionMonitor(), this);
     mEntityTreeModel->setListFilter(Akonadi::CollectionFetchScope::Enabled);
     mEntityTreeModel->setItemPopulationStrategy(Akonadi::EntityTreeModel::LazyPopulation);
+    connect(mEntityTreeModel, &Akonadi::EntityTreeModel::errorOccurred, this, [this](const QString &message) {
+        QMessageBox::critical(getKMMainWidget(), i18nc("@window:title", "Error"), message);
+    });
 
     mCollectionModel = new Akonadi::EntityMimeTypeFilterModel(this);
     mCollectionModel->setSourceModel(mEntityTreeModel);
