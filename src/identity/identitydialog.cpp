@@ -1054,6 +1054,18 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     } else {
         mTemplatesFolderRequester->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
     }
+
+    if (!ident.disabledSpam()) {
+        if (ident.spam().isEmpty() || !checkFolderExists(ident.spam())) {
+            foundNoExistingFolder = true;
+            mSpamFolderRequester->setIsInvalidFolder(CommonKernel->spamsCollectionFolder());
+        } else {
+            mSpamFolderRequester->setCollection(Akonadi::Collection(ident.spam().toLongLong()));
+        }
+    } else {
+        mSpamFolderRequester->setDisabled(true);
+    }
+
     if (foundNoExistingFolder) {
         mIdentityInvalidFolder->setErrorMessage(i18n("Some custom folder for identity does not exist (anymore); therefore, default folders will be used."));
     }
