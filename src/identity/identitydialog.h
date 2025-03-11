@@ -132,6 +132,7 @@ private:
     QCheckBox *mSentMailFolderCheck = nullptr;
     IdentityFolderRequester *mDraftsFolderRequester = nullptr;
     IdentityFolderRequester *mTemplatesFolderRequester = nullptr;
+    QCheckBox *mSpamFolderCheck = nullptr;
     IdentityFolderRequester *mSpamFolderRequester = nullptr;
     QCheckBox *mTransportCheck = nullptr;
     MailTransport::TransportComboBox *mTransportCombo = nullptr;

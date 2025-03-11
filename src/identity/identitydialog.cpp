@@ -704,12 +704,13 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     formLayout->addRow(label, mTemplatesFolderRequester);
 
     // "Spam Folder" combo box and label:
+
     mSpamFolderRequester = new IdentityFolderRequester(tab);
     mSpamFolderRequester->setSelectFolderTitleDialog(i18n("Select Spam Folder"));
     mSpamFolderRequester->setShowOutbox(false);
-    label = new QLabel(i18nc("@label:textbox", "&Spam folder:"), tab);
-    label->setBuddy(mSpamFolderRequester);
-    formLayout->addRow(label, mSpamFolderRequester);
+    mSpamFolderCheck = new QCheckBox(i18nc("@option:check", "Spam &folder:"), tab);
+    connect(mSpamFolderCheck, &QCheckBox::toggled, mSpamFolderRequester, &MailCommon::FolderRequester::setEnabled);
+    formLayout->addRow(mSpamFolderCheck, mSpamFolderRequester);
 
     // "Special transport" combobox and label:
     mTransportCheck = new QCheckBox(i18nc("@option:check", "Outgoing Account:"), tab);
@@ -1055,15 +1056,13 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
         mTemplatesFolderRequester->setCollection(Akonadi::Collection(ident.templates().toLongLong()));
     }
 
-    if (!ident.disabledSpam()) {
-        if (ident.spam().isEmpty() || !checkFolderExists(ident.spam())) {
-            foundNoExistingFolder = true;
-            mSpamFolderRequester->setIsInvalidFolder(CommonKernel->spamsCollectionFolder());
-        } else {
-            mSpamFolderRequester->setCollection(Akonadi::Collection(ident.spam().toLongLong()));
-        }
+    mSpamFolderCheck->setChecked(!ident.disabledSpam());
+    mSpamFolderRequester->setEnabled(mSpamFolderCheck->isChecked());
+    if (ident.spam().isEmpty() || !checkFolderExists(ident.spam())) {
+        foundNoExistingFolder = true;
+        mSpamFolderRequester->setIsInvalidFolder(CommonKernel->spamsCollectionFolder());
     } else {
-        mSpamFolderRequester->setDisabled(true);
+        mSpamFolderRequester->setCollection(Akonadi::Collection(ident.spam().toLongLong()));
     }
 
     if (foundNoExistingFolder) {
@@ -1167,6 +1166,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     ident.setTransport(mTransportCheck->isChecked() ? QString::number(mTransportCombo->currentTransportId()) : QString());
     ident.setDictionary(mDictionaryCombo->currentDictionaryName());
     ident.setDisabledFcc(!mSentMailFolderCheck->isChecked());
+    ident.setDisabledSpam(!mSpamFolderCheck->isChecked());
     Akonadi::Collection collection = mFccFolderRequester->collection();
     if (!ident.fcc().isEmpty()) {
         unregisterSpecialCollection(ident.fcc().toLongLong());
@@ -1197,6 +1197,23 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
         }
     } else {
         ident.setDrafts(QString());
+    }
+
+    collection = mSpamFolderRequester->collection();
+    if (ident.spam().isEmpty()) {
+        unregisterSpecialCollection(ident.spam().toLongLong());
+    }
+    if (collection.isValid()) {
+        ident.setSpam(QString::number(collection.id()));
+        auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+        attribute->setIconName(QStringLiteral("mail-mark-junk"));
+        // It will also start a CollectionModifyJob
+        if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Spam, collection)) {
+            qCWarning(KMAIL_LOG) << "Impossible to change special spam mail folder";
+        }
+        new Akonadi::CollectionModifyJob(collection);
+    } else {
+        ident.setSpam(QString());
     }
 
     collection = mTemplatesFolderRequester->collection();
