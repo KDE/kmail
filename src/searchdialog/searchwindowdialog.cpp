@@ -113,7 +113,7 @@ SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Coll
     inserting, which looks rather strange - the user cannot read
     the results so far as they are constantly re-sorted --dnaber
 
-    Sorting is now disabled when a search is started and reenabled
+    Sorting is now disabled when a search is started and re-enabled
     when it stops. Items are appended to the list. This not only
     solves the above problem, but speeds searches with many hits
     up considerably. - till

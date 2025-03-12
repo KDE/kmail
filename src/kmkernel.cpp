@@ -1479,7 +1479,7 @@ void KMKernel::transportRenamed(int id, const QString &oldName, const QString &n
         const QString information = i18np("This identity has been changed to use the modified transport:",
                                           "These %1 identities have been changed to use the modified transport:",
                                           changedIdents.count());
-        // Don't set parent otherwise we will swith to current KMail and we configure it. So not good
+        // Don't set parent otherwise we will switch to current KMail and we configure it. So not good
         KMessageBox::informationList(nullptr, information, changedIdents);
         im->commit();
     }

@@ -61,7 +61,7 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     CommonKernel->registerKernelIf(mMailFilterKernel); // register KernelIf early, it is used by the Filter classes
     CommonKernel->registerSettingsIf(mMailFilterKernel); // SettingsIf is used in FolderTreeWidget
 
-    // Initialize it after registring CommonKernel otherwise it crashs!
+    // Initialize it after registering CommonKernel otherwise it crashes!
     mFilterManager = new FilterManager(this);
 
     connect(mFilterManager, &FilterManager::percent, this, &MailFilterAgent::emitProgress);
@@ -175,7 +175,7 @@ void MailFilterAgent::clearMessage()
 
 void MailFilterAgent::itemAdded(const Akonadi::Item &item, const Akonadi::Collection &collection)
 {
-    /* The monitor mimetype filter would override the collection filter, therefor we have to check
+    /* The monitor mimetype filter would override the collection filter, therefore we have to check
      * for the mimetype of the item here.
      */
     if (item.mimeType() != KMime::Message::mimeType()) {

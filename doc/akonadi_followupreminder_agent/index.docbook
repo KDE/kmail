@@ -59,7 +59,7 @@ at a specific date.</para>
   </mediaobject>
 </screenshot>
 
-<para>Press the arrow-down button against the <guilabel>Date</guilabel> field to select the date from the &kde; calendar widget. It is also possible to choose your calender for the reminder using the <guilabel>Store ToDo in</guilabel> drop-down list.</para>
+<para>Press the arrow-down button against the <guilabel>Date</guilabel> field to select the date from the &kde; calendar widget. It is also possible to choose your calendar for the reminder using the <guilabel>Store ToDo in</guilabel> drop-down list.</para>
 <para>To remove reminders you have scheduled, use <menuchoice><guimenu>Settings</guimenu>
 <guimenuitem>Configure &kmail;...</guimenuitem></menuchoice> then select the <guilabel>Plugins</guilabel> page in &kmail; and press
 the configuration button against the <guilabel>Followup Reminder Agent</guilabel> item. Then use the context menu launched with a &RMB; click on a reminder item to select the <guimenuitem>Delete</guimenuitem> action.

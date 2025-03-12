@@ -13,7 +13,7 @@
 /**
  * @brief The CreateNewContactJob class
  * The job will check if there is address book folder to store new contact to akonadi
- * otherise it will allow to create new one.
+ * otherwise it will allow to create new one.
  */
 class CreateNewContactJob : public KJob
 {

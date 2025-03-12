@@ -48,7 +48,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
     mCollectionViewWidget = new MailCommon::CollectionViewWidget(this);
     topLayout->addWidget(mCollectionViewWidget);
 
-    // Musn't be able to edit details for non-resource, system folder.
+    // Mustn't be able to edit details for non-resource, system folder.
     if (!mIsLocalSystemFolder) {
         auto innerLayout = qobject_cast<QFormLayout *>(mCollectionViewWidget->layout());
         Q_ASSERT(innerLayout != nullptr);

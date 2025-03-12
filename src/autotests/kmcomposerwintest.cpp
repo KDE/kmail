@@ -152,7 +152,7 @@ KMComposerWinTest::KMComposerWinTest(QObject *parent)
     }
     qputenv("GNUPGHOME", gnupgDir.path().toUtf8());
 
-    // We need to initalize KMKernel after modifing the envionment variables, otherwise we would read the wrong configs
+    // We need to initialize KMKernel after modifying the environment variables, otherwise we would read the wrong configs
     mKernel = new KMKernel(parent);
 }
 

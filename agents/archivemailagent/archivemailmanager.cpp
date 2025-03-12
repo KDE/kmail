@@ -184,7 +184,7 @@ void ArchiveMailManager::archiveFolder(const QString &path, Akonadi::Collection:
     info->setSaveCollectionId(collectionId);
     info->setUrl(QUrl::fromLocalFile(path));
     mListArchiveInfo.append(info);
-    auto task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), true /*immediat*/);
+    auto task = new ScheduledArchiveTask(this, info, Akonadi::Collection(info->saveCollectionId()), true /*immediate*/);
     mArchiveMailKernel->jobScheduler()->registerTask(task);
 }
 

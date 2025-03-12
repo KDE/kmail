@@ -1391,7 +1391,7 @@ Menu</ulink> of the &kde; Fundamentals, with one additional item.</para>
 <guimenuitem>New AddressBook Contact</guimenuitem>
 </menuchoice></term>
 <listitem><para><action>Brings up the &kontact; New Contact Dialog</action> to add a new contact your addressbook.</para></listitem>
-</varlistentry> Thes options not available in 5.14.2 @dcb2021088. -->
+</varlistentry> These options not available in 5.14.2 @dcb2021088. -->
 
 <varlistentry id="composer-message-send-mail">
   <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;<keycap>Return</keycap></keycombo></shortcut>
@@ -1568,7 +1568,7 @@ url="help:/fundamentals/menus.html#menus-edit">Edit Menu</ulink> section of the
 <guimenuitem>Lowercase</guimenuitem>
 </menuchoice></term>
 <listitem><para>Convert the selected text to lowercase.</para></listitem>
-</varlistentry> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+</varlistentry> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
 
 <varlistentry id="composer-edit-insert-special-character">
   <term><menuchoice><guimenu>Edit</guimenu><guimenuitem>Insert Special Character...</guimenuitem></menuchoice></term>

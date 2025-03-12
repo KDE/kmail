@@ -252,7 +252,7 @@ QString KTNEFMain::extractTemp(KTNEFAttach *att)
     QString dir = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/ktnef/"_L1;
     mParser->extractFileTo(att->name(), dir);
     QString filename = att->fileName();
-    // falling back to internal TNEF attachement name if no filename is given for the attached file
+    // falling back to internal TNEF attachment name if no filename is given for the attached file
     // this follows the logic of KTNEFParser::extractFileTo(...)
     if (filename.isEmpty()) {
         filename = att->name();

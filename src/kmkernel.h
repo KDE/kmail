@@ -519,7 +519,7 @@ public Q_SLOTS:
     void slotRequestConfigSync();
 
     /**
-     * Sync the config immediatley
+     * Sync the config immediately
      */
     void slotSyncConfig();
 
@@ -596,7 +596,7 @@ private:
     bool the_firstStart = false;
     /** are we going down? set from here */
     bool the_shuttingDown = false;
-    /** true unles kmail is closed by session management */
+    /** true unless kmail is closed by session management */
     bool the_firstInstance = false;
 
     KSharedConfig::Ptr mConfig;

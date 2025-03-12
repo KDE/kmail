@@ -28,7 +28,7 @@ void KMailPluginEditorConvertTextManagerInterface::reformatText()
 {
     for (MessageComposer::PluginEditorConvertTextInterface *interface : std::as_const(mListPluginInterface)) {
         if (interface->reformatText()) {
-            // TODO signal that it was reformating.
+            // TODO signal that it was reformatting.
             // Stop it.?
         }
     }

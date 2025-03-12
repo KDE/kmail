@@ -41,7 +41,7 @@ AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *paren
     mFolderRequester->setNotAllowToCreateNewFolder(true);
     mainLayout->addRow(folderLabel, mFolderRequester);
     connect(mFolderRequester, &MailCommon::FolderRequester::folderChanged, this, &AddArchiveMailWidget::slotFolderChanged);
-    if (info) { // Don't autorize to modify folder when we just modify item.
+    if (info) { // Don't authorize to modify folder when we just modify item.
         mFolderRequester->setEnabled(false);
     }
 

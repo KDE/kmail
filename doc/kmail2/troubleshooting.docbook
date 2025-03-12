@@ -33,7 +33,7 @@
   server. &akonadi; is an auxiliary program that functions as an intermediary between &kmail; (plus all the other &PIM;
   applications) and a general purpose database daemon (most commonly "mysqld"). It also facilitates inter-process
   communications among the various pieces of the &PIM; applications. Depending on the way your system is configured,
-  &akonadi; may be started during the bootup / login process. Or it may not start until you invoke a &PIM; 
+  &akonadi; may be started during the boot-up / login process. Or it may not start until you invoke a &PIM; 
   application program (like &kmail;, or &kaddressbook;, or &kontact;).</para>
   
   <para> There are two application programs that permit one to interact with the &akonadi; server directly: <code>akonadictl</code>

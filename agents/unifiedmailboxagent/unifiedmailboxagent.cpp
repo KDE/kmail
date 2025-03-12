@@ -246,7 +246,7 @@ void UnifiedMailboxAgent::fixSpecialCollection(const QString &colId, Akonadi::Sp
 void UnifiedMailboxAgent::fixSpecialCollections()
 {
     // This is a tiny hack to assign proper SpecialCollectionAttribute to special collections
-    // assigned trough Identities. This should happen automatically in KMail when user changes
+    // assigned through Identities. This should happen automatically in KMail when user changes
     // the special collections on the identity page, but until recent master (2018-07-24) this
     // wasn't the case and there's no automatic migration, so we need to fix up manually here.
 

@@ -34,7 +34,7 @@ void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
 VacationLabel::VacationLabel(const QString &text, QWidget *parent)
     : QLabel(text, parent)
 {
-    // changing the palette doesn't work, seems to be overwriten by the
+    // changing the palette doesn't work, seems to be overwritten by the
     // statusbar again, stylesheets seems to work though
     setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(4, 0, 2, 0);

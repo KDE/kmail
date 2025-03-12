@@ -210,7 +210,7 @@ void AppearancePageFontsTab::slotFontSelectorChanged(int index)
     }
     mActiveFontIndex = index;
 
-    // Disonnect so the "Apply" button is not activated by the change
+    // Disconnect so the "Apply" button is not activated by the change
     disconnect(mFontChooser, &KFontChooser::fontSelected, this, &ConfigModuleTab::slotEmitChanged);
 
     // Display the new setting:

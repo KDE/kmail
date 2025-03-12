@@ -413,7 +413,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         clearMailingListActions();
     } else {
         // A mailing list menu with only a title is pretty boring
-        // so make sure theres at least some content
+        // so make sure there's at least some content
         QString listId;
         if (mailList.features() & MessageCore::MailingList::Id) {
             // From a list-id in the form, "Birds of France <bof.yahoo.com>",

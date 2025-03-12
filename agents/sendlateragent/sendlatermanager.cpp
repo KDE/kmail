@@ -249,7 +249,7 @@ QString SendLaterManager::printDebugInfo() const
 
 QString SendLaterManager::infoToStr(MessageComposer::SendLaterInfo *info) const
 {
-    QString infoStr = QLatin1StringView("Recusive ") + (info->isRecurrence() ? QStringLiteral("true") : QStringLiteral("false"));
+    QString infoStr = QLatin1StringView("Recursive ") + (info->isRecurrence() ? QStringLiteral("true") : QStringLiteral("false"));
     infoStr += QLatin1StringView("Item id :") + QString::number(info->itemId());
     infoStr += QLatin1StringView("Send date:") + info->dateTime().toString();
     infoStr += QLatin1StringView("Last saved date: ") + info->lastDateTimeSend().toString();

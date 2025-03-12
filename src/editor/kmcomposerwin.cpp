@@ -1190,7 +1190,7 @@ void KMComposerWin::slotDelayedApplyTemplate(KJob *job)
     const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
     // const Akonadi::Item::List items = fetchJob->items();
 
-    // Readd ? const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
+    // Re-add ? const TemplateParser::TemplateParserJob::Mode mode = static_cast<TemplateParser::TemplateParserJob::Mode>(fetchJob->property("mode").toInt());
     const uint uoid = fetchJob->property("uoid").toUInt();
     const uint uOldId = fetchJob->property("uOldid").toUInt();
     mComposerBase->updateTemplate(mMsg);
@@ -1385,7 +1385,7 @@ void KMComposerWin::setupActions()
 
     mRequestDeliveryConfirmation = new KToggleAction(i18nc("@action", "&Request Delivery Confirmation"), this);
     actionCollection()->addAction(QStringLiteral("options_request_delivery_confirmation"), mRequestDeliveryConfirmation);
-    // TOOD mRequestDeliveryConfirmation->setChecked(KMailSettings::self()->requestMDN());
+    // TODO mRequestDeliveryConfirmation->setChecked(KMailSettings::self()->requestMDN());
 
     //----- Message-Encoding Submenu
     mWordWrapAction = new KToggleAction(i18nc("@action", "&Wordwrap"), this);
@@ -3740,7 +3740,7 @@ void KMComposerWin::runKeyResolver()
         auto resolvedKeys = result.solution.encryptionKeys[addrSpec];
         GpgME::Key key;
         if (resolvedKeys.size() == 0) { // no key found for recipient
-            // Search for any key, also for not accepted ons, to at least give the user more info.
+            // Search for any key, also for not accepted ones, to at least give the user more info.
             key = Kleo::KeyCache::instance()->findBestByMailBox(addrSpec.toUtf8().constData(), GpgME::UnknownProtocol, Kleo::KeyCache::KeyUsage::Encrypt);
             key.update(); // We need tofu information for key.
             recipient->setKey(key);

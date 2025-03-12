@@ -3058,7 +3058,7 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureFollowupReminder);
     }
 
-    // Disable the standard action delete key sortcut.
+    // Disable the standard action delete key shortcut.
     QAction *const standardDelAction = akonadiStandardAction(Akonadi::StandardActionManager::DeleteItems);
     standardDelAction->setShortcut(QKeySequence());
 
