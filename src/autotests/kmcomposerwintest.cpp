@@ -5,7 +5,6 @@
 */
 
 #include "kmcomposerwintest.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "editor/warningwidgets/nearexpirywarning.h"
 #include "kmkernel.h"
@@ -40,6 +39,7 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <chrono>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace std::chrono_literals;
 
 Q_DECLARE_METATYPE(Kleo::TrustLevel)

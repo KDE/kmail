@@ -5,11 +5,12 @@
 */
 
 #include "searchpatternwarning.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
+
 SearchPatternWarning::SearchPatternWarning(QWidget *parent)
     : KMessageWidget(parent)
 {

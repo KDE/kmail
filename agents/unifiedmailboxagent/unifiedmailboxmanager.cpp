@@ -5,7 +5,6 @@
 */
 
 #include "unifiedmailboxmanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "common.h"
 #include "settings.h"
@@ -26,6 +25,7 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <stdexcept> // for std::out_of_range
 
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 /**

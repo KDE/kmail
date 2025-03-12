@@ -6,7 +6,6 @@
 
 #include "messageactions.h"
 #include "config-kmail.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmcommands.h"
 #include "kmkernel.h"
@@ -57,6 +56,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QWidget>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent)

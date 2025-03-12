@@ -5,7 +5,6 @@
 */
 
 #include "opencomposerjob.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 #include "kmkernel.h"
@@ -20,6 +19,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QMimeDatabase>
 #include <TemplateParser/TemplateParserJob>
 
+using namespace Qt::Literals::StringLiterals;
 OpenComposerJob::OpenComposerJob(QObject *parent)
     : QObject(parent)
 {

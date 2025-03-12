@@ -5,7 +5,6 @@
 */
 
 #include "collectionviewpage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <MailCommon/MailKernel>
 
@@ -29,6 +28,7 @@ using namespace Qt::Literals::StringLiterals;
 
 using namespace MailCommon;
 
+using namespace Qt::Literals::StringLiterals;
 CollectionViewPage::CollectionViewPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
 {

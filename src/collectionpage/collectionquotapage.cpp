@@ -7,7 +7,6 @@
  */
 
 #include "collectionquotapage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "collectionquotawidget.h"
 #include <Akonadi/Collection>
@@ -15,6 +14,7 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mQuotaWidget(new CollectionQuotaWidget(this))

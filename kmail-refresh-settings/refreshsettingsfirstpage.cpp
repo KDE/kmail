@@ -5,12 +5,12 @@
 */
 
 #include "refreshsettingsfirstpage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <QHBoxLayout>
 #include <QLabel>
 
+using namespace Qt::Literals::StringLiterals;
 RefreshSettingsFirstPage::RefreshSettingsFirstPage(QWidget *parent)
     : QWidget(parent)
 {

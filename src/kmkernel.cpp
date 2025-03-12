@@ -1,7 +1,6 @@
 /*   */
 
 #include "kmkernel.h"
-using namespace Qt::Literals::StringLiterals;
 #include "job/fillcomposerjob.h"
 #include "job/newmessagejob.h"
 #include "job/opencomposerhiddenjob.h"
@@ -115,7 +114,7 @@ using KMail::MailServiceImpl;
 #include <KUserFeedback/Provider>
 #endif
 #include <chrono>
-
+using namespace Qt::Literals::StringLiterals;
 using namespace std::chrono_literals;
 // #define DEBUG_SCHEDULER 1
 using namespace MailCommon;

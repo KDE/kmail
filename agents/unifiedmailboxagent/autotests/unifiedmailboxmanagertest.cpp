@@ -5,7 +5,6 @@
 */
 
 #include "../unifiedmailboxmanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "../common.h"
 #include "../unifiedmailbox.h"
@@ -30,6 +29,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <chrono>
 #include <memory>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace std::chrono;
 using namespace std::chrono_literals;
 

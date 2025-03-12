@@ -5,7 +5,6 @@
 */
 
 #include "fillcomposerjob.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmkernel.h"
 #include <MessageComposer/ComposerJob>
@@ -14,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
+using namespace Qt::Literals::StringLiterals;
 FillComposerJob::FillComposerJob(QObject *parent)
     : QObject(parent)
 {

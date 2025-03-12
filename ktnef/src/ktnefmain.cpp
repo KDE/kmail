@@ -12,7 +12,6 @@
 */
 
 #include "ktnefmain.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "attachpropertydialog.h"
 #include "ktnefview.h"
@@ -54,6 +53,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QMimeDatabase>
 #include <QStatusBar>
 
+using namespace Qt::Literals::StringLiterals;
 KTNEFMain::KTNEFMain(QWidget *parent)
     : KXmlGuiWindow(parent)
 {

@@ -5,11 +5,11 @@
 */
 
 #include "refreshsettringsfinishpage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <QHBoxLayout>
 #include <QPlainTextEdit>
 
+using namespace Qt::Literals::StringLiterals;
 RefreshSettringsFinishPage::RefreshSettringsFinishPage(QWidget *parent)
     : QWidget(parent)
     , mTextEdit(new QPlainTextEdit(this))

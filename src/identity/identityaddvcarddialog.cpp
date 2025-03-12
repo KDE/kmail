@@ -5,7 +5,6 @@
 */
 
 #include "identityaddvcarddialog.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <KSeparator>
@@ -18,6 +17,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QPushButton>
 #include <QRadioButton>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentities, QWidget *parent)
     : QDialog(parent)

@@ -6,7 +6,6 @@
 
 #include "sendlaterinfoconfigwidget.h"
 #include "sendlaterremovemessagejob.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail-version.h"
 #include "sendlaterconfigurewidget.h"
@@ -19,6 +18,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QApplication>
 #include <QIcon>
 #include <QWindow>
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 static const char myConfigureSendLaterConfigureDialogGroupName[] = "SendLaterConfigureDialog";

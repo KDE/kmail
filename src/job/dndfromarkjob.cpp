@@ -5,7 +5,6 @@
 */
 
 #include "dndfromarkjob.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "editor/kmcomposerwin.h"
 #include "kmail_debug.h"
@@ -18,6 +17,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QUrl>
 
 #include "editor/composer.h"
+using namespace Qt::Literals::StringLiterals;
 
 DndFromArkJob::DndFromArkJob(QObject *parent)
     : QObject(parent)

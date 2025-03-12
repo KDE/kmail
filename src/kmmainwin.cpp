@@ -7,7 +7,6 @@
  */
 
 #include "kmmainwin.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmmainwidget.h"
 #include "tag/tagactionmanager.h"
@@ -45,7 +44,7 @@ using namespace Qt::Literals::StringLiterals;
 #endif
 
 #include <chrono>
-
+using namespace Qt::Literals::StringLiterals;
 using namespace std::chrono_literals;
 
 KMMainWin::KMMainWin(QWidget *)

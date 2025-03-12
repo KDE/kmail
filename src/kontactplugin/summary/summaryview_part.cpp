@@ -10,7 +10,6 @@
 */
 
 #include "summaryview_part.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "dropwidget.h"
 #include <PimCommon/BroadcastStatus>
@@ -40,6 +39,7 @@ using PimCommon::BroadcastStatus;
 #include <QScrollArea>
 #include <QTimer>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
     : KParts::Part(parent)

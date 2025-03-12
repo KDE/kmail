@@ -5,7 +5,6 @@
 */
 
 #include "archivemailwidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "addarchivemaildialog.h"
 #include "archivemailagent_debug.h"
@@ -28,6 +27,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QLocale>
 #include <QMenu>
 
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 inline QString archiveMailCollectionPattern()

@@ -6,7 +6,6 @@
 */
 
 #include "potentialphishingdetaildialog.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "potentialphishingdetailwidget.h"
 #include <KConfigGroup>
@@ -18,6 +17,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QVBoxLayout>
 #include <QWindow>
 
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 static const char myPotentialPhishingDetailDialogGroupName[] = "PotentialPhishingDetailDialog";

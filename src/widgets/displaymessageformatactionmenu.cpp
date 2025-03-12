@@ -5,7 +5,6 @@
 */
 
 #include "displaymessageformatactionmenu.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <KToggleAction>
@@ -13,6 +12,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QActionGroup>
 #include <QMenu>
 
+using namespace Qt::Literals::StringLiterals;
 DisplayMessageFormatActionMenu::DisplayMessageFormatActionMenu(QObject *parent)
     : KActionMenu(parent)
 {

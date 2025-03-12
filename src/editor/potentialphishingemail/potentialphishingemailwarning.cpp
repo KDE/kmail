@@ -6,12 +6,12 @@
 */
 
 #include "potentialphishingemailwarning.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "potentialphishingdetaildialog.h"
 #include <KLocalizedString>
 #include <QAction>
 
+using namespace Qt::Literals::StringLiterals;
 PotentialPhishingEmailWarning::PotentialPhishingEmailWarning(QWidget *parent)
     : KMessageWidget(parent)
 {

@@ -9,7 +9,6 @@
 // define this to copy all html that is written to the readerwindow to
 // filehtmlwriter.out in the current working directory
 #include "kmreaderwin.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "dialog/addemailtoexistingcontactdialog.h"
 #include "job/addemailtoexistingcontactjob.h"
@@ -71,6 +70,7 @@ using namespace MessageViewer;
 #include <MailCommon/MailUtil>
 
 #include <KLazyLocalizedString>
+using namespace Qt::Literals::StringLiterals;
 
 using namespace KMail;
 using namespace MailCommon;

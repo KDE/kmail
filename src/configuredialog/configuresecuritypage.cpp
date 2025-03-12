@@ -5,7 +5,6 @@
 */
 
 #include "configuresecuritypage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
@@ -33,6 +32,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QPointer>
 #include <QWhatsThis>
 #include <QWindow>
+using namespace Qt::Literals::StringLiterals;
 
 QString SecurityPage::helpAnchor() const
 {

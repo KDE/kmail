@@ -11,7 +11,6 @@
 
 #include "searchwindowdialog.h"
 #include "config-kmail.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "incompleteindexdialog.h"
 
@@ -69,6 +68,7 @@ using namespace KPIM;
 using namespace MailCommon;
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Collection &collection)
     : QDialog(nullptr)

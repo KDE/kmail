@@ -5,7 +5,6 @@
 */
 
 #include "configureaccountpage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "config-kmail.h"
 #include "configagentdelegate.h"
@@ -43,6 +42,7 @@ using MailTransport::TransportManagementWidgetNg;
 #endif
 #include <memory>
 
+using namespace Qt::Literals::StringLiterals;
 QString AccountsPage::helpAnchor() const
 {
     return QStringLiteral("configure-accounts");

@@ -5,7 +5,6 @@
 */
 
 #include "sendlaterconfigurewidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "sendlaterutil.h"
 
@@ -18,6 +17,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QMenu>
 #include <QPointer>
 
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 inline QString sendLaterItemPattern()

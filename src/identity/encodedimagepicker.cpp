@@ -9,7 +9,6 @@
 */
 
 #include "encodedimagepicker.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "ui_encodedimagepicker.h"
 
@@ -28,6 +27,7 @@ using namespace Qt::Literals::StringLiterals;
 
 using namespace KMail;
 using KContacts::Addressee;
+using namespace Qt::Literals::StringLiterals;
 
 EncodedImagePicker::EncodedImagePicker(QWidget *parent)
     : QGroupBox(parent)

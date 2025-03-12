@@ -5,7 +5,6 @@
 */
 
 #include "removecollectionjob.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmkernel.h"
 #include "kmmainwidget.h"
@@ -17,6 +16,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
+using namespace Qt::Literals::StringLiterals;
 RemoveCollectionJob::RemoveCollectionJob(QObject *parent)
     : QObject(parent)
 {

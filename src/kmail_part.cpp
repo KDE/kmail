@@ -9,7 +9,6 @@
 */
 
 #include "kmail_part.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmmainwidget.h"
 
@@ -28,6 +27,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <kparts/mainwindow.h>
 #include <kparts/statusbarextension.h>
 
+using namespace Qt::Literals::StringLiterals;
 K_PLUGIN_FACTORY(KMailFactory, registerPlugin<KMailPart>();)
 
 using namespace KMail;

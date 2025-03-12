@@ -5,7 +5,6 @@
 */
 
 #include "addarchivemailwidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "archivemailrangewidget.h"
 #include "widgets/formatcombobox.h"
@@ -20,6 +19,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QLabel>
 #include <QSpinBox>
 
+using namespace Qt::Literals::StringLiterals;
 AddArchiveMailWidget::AddArchiveMailWidget(ArchiveMailInfo *info, QWidget *parent)
     : QWidget{parent}
     , mFolderRequester(new MailCommon::FolderRequester(this))

@@ -5,7 +5,6 @@
 */
 
 #include "configurecomposerpage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
@@ -50,6 +49,8 @@ using PimCommon::RecentAddresses;
 #if KDEPIM_ENTERPRISE_BUILD
 #include <QComboBox>
 #endif
+using namespace Qt::Literals::StringLiterals;
+
 QString ComposerPage::helpAnchor() const
 {
     return QStringLiteral("configure-composer");

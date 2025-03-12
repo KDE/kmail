@@ -5,7 +5,6 @@
 
 */
 #include "potentialphishingdetailwidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KConfigGroup>
 #include <KLocalizedString>
@@ -14,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QListWidget>
 #include <QVBoxLayout>
 
+using namespace Qt::Literals::StringLiterals;
 PotentialPhishingDetailWidget::PotentialPhishingDetailWidget(QWidget *parent)
     : QWidget(parent)
     , mListWidget(new QListWidget(this))

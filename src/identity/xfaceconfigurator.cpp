@@ -7,7 +7,6 @@
 */
 
 #include "xfaceconfigurator.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "encodedimagepicker.h"
 #include "ui_xfaceconfigurator.h"
@@ -21,6 +20,7 @@ using namespace Qt::Literals::StringLiterals;
 
 using namespace KMail;
 using MessageViewer::KXFace;
+using namespace Qt::Literals::StringLiterals;
 
 // The size of the PNG used in the Face header must be at most 725 bytes, as
 // explained here: https://quimby.gnus.org/circus/face/

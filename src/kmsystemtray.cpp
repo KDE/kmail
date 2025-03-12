@@ -6,7 +6,6 @@
 */
 
 #include "kmsystemtray.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmmainwidget.h"
 #include "unityservicemanager.h"
@@ -26,6 +25,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <KWindowInfo>
 #include <KX11Extras>
 #endif
+using namespace Qt::Literals::StringLiterals;
 
 using namespace MailCommon;
 

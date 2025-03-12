@@ -5,12 +5,12 @@
 */
 
 #include "attachmentaddedfromexternalwarning.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <QUrl>
 
 #include <KLocalizedString>
 
+using namespace Qt::Literals::StringLiterals;
 AttachmentAddedFromExternalWarning::AttachmentAddedFromExternalWarning(QWidget *parent)
     : KMessageWidget(parent)
 {

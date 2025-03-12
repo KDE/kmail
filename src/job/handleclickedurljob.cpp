@@ -5,7 +5,6 @@
 */
 
 #include "handleclickedurljob.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 #include "kmkernel.h"
@@ -14,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>
+using namespace Qt::Literals::StringLiterals;
 
 HandleClickedUrlJob::HandleClickedUrlJob(QObject *parent)
     : QObject(parent)

@@ -5,7 +5,6 @@
 */
 
 #include "util.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "job/handleclickedurljob.h"
 #include <MessageComposer/MessageHelper>
@@ -23,6 +22,8 @@ using namespace Qt::Literals::StringLiterals;
 
 using namespace MailCommon;
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
+
 KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::Item &item)
 {
     KMime::Types::Mailbox::List addresses;

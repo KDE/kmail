@@ -31,7 +31,6 @@
 // of messages from an IMAP server.
 
 #include "kmcommands.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail_debug.h"
 #include "kmreadermainwin.h"
@@ -129,6 +128,7 @@ using KPIM::ProgressManager;
 using namespace KMime;
 
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 /// Helper to sanely show an error message for a job
 static void showJobError(KJob *job)

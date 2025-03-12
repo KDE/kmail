@@ -5,7 +5,6 @@
 */
 
 #include "refreshsettingscleanuppage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <KSharedConfig>
@@ -13,6 +12,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QPushButton>
 #include <QRegularExpression>
 
+using namespace Qt::Literals::StringLiterals;
 RefreshSettingsCleanupPage::RefreshSettingsCleanupPage(QWidget *parent)
     : QWidget(parent)
 {

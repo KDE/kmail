@@ -7,7 +7,6 @@
  */
 
 #include "summaryview_plugin.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail-version.h"
 #include "kmailinterface.h"
@@ -22,6 +21,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QIcon>
 
 #include <QMenu>
+using namespace Qt::Literals::StringLiterals;
 
 EXPORT_KONTACT_PLUGIN_WITH_JSON(SummaryView, "summaryplugin.json")
 

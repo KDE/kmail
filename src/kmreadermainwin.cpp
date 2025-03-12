@@ -14,7 +14,6 @@
 // widgets like a toolbar.
 
 #include "kmreadermainwin.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "historyclosedreader/historyclosedreadermanager.h"
 #include "job/composenewmessagejob.h"
@@ -60,6 +59,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/RemoteContentMenu>
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name)
     : KMReaderMainWin(name)

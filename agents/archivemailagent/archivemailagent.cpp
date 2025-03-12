@@ -5,7 +5,6 @@
 */
 
 #include "archivemailagent.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "archivemailagentadaptor.h"
 #include "archivemailagentsettings.h"
@@ -21,6 +20,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QTimer>
 #include <chrono>
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 // #define DEBUG_ARCHIVEMAILAGENT 1
 
 ArchiveMailAgent::ArchiveMailAgent(const QString &id)

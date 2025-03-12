@@ -5,7 +5,6 @@
 */
 
 #include "mailfilteragent.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "dummykernel.h"
 #include "filterlogdialog.h"
@@ -39,6 +38,7 @@ using namespace Qt::Literals::StringLiterals;
 
 #include <chrono>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace std::chrono_literals;
 bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collection) const
 {

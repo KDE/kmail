@@ -6,7 +6,6 @@
 */
 
 #include "archivefolderdialog.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmmainwidget.h"
 #include <MailCommon/BackupJob>
@@ -32,6 +31,7 @@ using namespace Qt::Literals::StringLiterals;
 
 using namespace KMail;
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
 {

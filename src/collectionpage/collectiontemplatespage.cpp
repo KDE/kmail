@@ -5,7 +5,6 @@
 */
 
 #include "collectiontemplatespage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <MailCommon/CollectionTemplatesWidget>
 
@@ -20,6 +19,7 @@ using namespace Qt::Literals::StringLiterals;
 using namespace Akonadi;
 using namespace MailCommon;
 
+using namespace Qt::Literals::StringLiterals;
 CollectionTemplatesPage::CollectionTemplatesPage(QWidget *parent)
     : CollectionPropertiesPage(parent)
     , mCollectionTemplateWidget(new MailCommon::CollectionTemplatesWidget(this))

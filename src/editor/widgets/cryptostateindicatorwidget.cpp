@@ -5,7 +5,6 @@
 */
 
 #include "cryptostateindicatorwidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <MessageCore/ColorUtil>
 
@@ -14,6 +13,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QHBoxLayout>
 #include <QLabel>
 
+using namespace Qt::Literals::StringLiterals;
 CryptoStateIndicatorWidget::CryptoStateIndicatorWidget(QWidget *parent)
     : QWidget(parent)
     , mSignatureStateIndicator(new QLabel(this))

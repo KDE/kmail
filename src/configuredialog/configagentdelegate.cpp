@@ -7,7 +7,6 @@
 */
 
 #include "configagentdelegate.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentInstanceModel>
@@ -24,6 +23,7 @@ using namespace Qt::Literals::StringLiterals;
 
 using Akonadi::AgentInstance;
 using Akonadi::AgentInstanceModel;
+using namespace Qt::Literals::StringLiterals;
 
 static const int s_delegatePaddingSize = 7;
 

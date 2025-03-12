@@ -7,7 +7,6 @@
 */
 
 #include "kmail_plugin.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmailinterface.h"
 #include "summarywidget.h"
@@ -32,6 +31,7 @@ using namespace Qt::Literals::StringLiterals;
 
 using namespace KCalUtils;
 using namespace KCalendarCore;
+using namespace Qt::Literals::StringLiterals;
 
 EXPORT_KONTACT_PLUGIN_WITH_JSON(KMailPlugin, "kmailplugin.json")
 

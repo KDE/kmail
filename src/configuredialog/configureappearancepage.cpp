@@ -5,7 +5,6 @@
 */
 
 #include "configureappearancepage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <PimCommon/ConfigureImmutableWidgetUtils>
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
@@ -68,6 +67,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QVBoxLayout>
 #include <QWhatsThis>
 
+using namespace Qt::Literals::StringLiterals;
 using MessageCore::DateFormatter;
 using namespace MailCommon;
 

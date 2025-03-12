@@ -5,7 +5,6 @@
 */
 
 #include "followupremindernoanswerdialog.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
@@ -25,6 +24,7 @@ using namespace Qt::Literals::StringLiterals;
 #include "dbusproperties.h" // DBUS-generated
 #include "notifications_interface.h" // DBUS-generated
 
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 static constexpr const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";

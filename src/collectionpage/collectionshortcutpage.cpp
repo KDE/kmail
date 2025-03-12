@@ -7,7 +7,6 @@
 */
 
 #include "collectionshortcutpage.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "foldershortcutactionmanager.h"
 #include "kmkernel.h"
@@ -21,6 +20,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <KLocalizedString>
 #include <QHBoxLayout>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace MailCommon;
 
 CollectionShortcutPage::CollectionShortcutPage(QWidget *parent)

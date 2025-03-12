@@ -5,12 +5,12 @@
 */
 
 #include "attachmentmissingwarning.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include <KLocalizedString>
 #include <QAction>
 #include <QIcon>
 
+using namespace Qt::Literals::StringLiterals;
 AttachmentMissingWarning::AttachmentMissingWarning(QWidget *parent)
     : KMessageWidget(parent)
 {

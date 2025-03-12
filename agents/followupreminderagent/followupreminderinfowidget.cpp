@@ -4,7 +4,6 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "followupreminderinfowidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
@@ -22,6 +21,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QMenu>
 #include <QTreeWidget>
 
+using namespace Qt::Literals::StringLiterals;
 // #define DEBUG_MESSAGE_ID
 namespace
 {

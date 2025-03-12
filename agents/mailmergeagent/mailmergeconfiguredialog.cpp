@@ -5,7 +5,6 @@
 */
 
 #include "mailmergeconfiguredialog.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmail-version.h"
 #include "mailmergeconfigurewidget.h"
@@ -23,6 +22,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QVBoxLayout>
 #include <QWindow>
 
+using namespace Qt::Literals::StringLiterals;
 namespace
 {
 static const char myConfigureMailMergeConfigureDialogGroupName[] = "MailMergeConfigureDialog";

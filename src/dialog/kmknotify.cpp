@@ -5,7 +5,6 @@
 */
 
 #include "kmknotify.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "kmkernel.h"
 
@@ -23,6 +22,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <QWindow>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 KMKnotify::KMKnotify(QWidget *parent)
     : QDialog(parent)

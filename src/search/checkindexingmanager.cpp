@@ -5,7 +5,6 @@
 */
 
 #include "checkindexingmanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "checkindexingjob.h"
 #include "kmail_debug.h"
@@ -24,6 +23,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 
 CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *indexer, QObject *parent)
     : QObject(parent)
