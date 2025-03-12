@@ -60,7 +60,7 @@ bool UnityServiceManager::excludeFolder(const Akonadi::Collection &collection) c
     }
     if (CommonKernel->outboxCollectionFolder() == collection || CommonKernel->sentCollectionFolder() == collection
         || CommonKernel->templatesCollectionFolder() == collection || CommonKernel->trashCollectionFolder() == collection
-        || CommonKernel->draftsCollectionFolder() == collection) {
+        || CommonKernel->draftsCollectionFolder() == collection || CommonKernel->spamsCollectionFolder() == collection) {
         return true;
     }
 
@@ -125,7 +125,7 @@ void UnityServiceManager::slotCollectionStatisticsChanged(Akonadi::Collection::I
 
     if (CommonKernel->outboxCollectionFolder().id() == id || CommonKernel->sentCollectionFolder().id() == id
         || CommonKernel->templatesCollectionFolder().id() == id || CommonKernel->trashCollectionFolder().id() == id
-        || CommonKernel->draftsCollectionFolder().id() == id) {
+        || CommonKernel->draftsCollectionFolder().id() == id || CommonKernel->spamsCollectionFolder().id() == id) {
         return;
     }
     initListOfCollection();
