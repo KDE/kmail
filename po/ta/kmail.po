@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2024-11-24 17:20+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3423,43 +3423,57 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&வார்ப்புருகளுக்கான அடைவு:"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+#| msgid "Select Draft Folder"
+msgid "Select Spam Folder"
+msgstr "வரைவுகளுக்கான அடைவை தேர்வு செய்தல்"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Sent-mail &folder:"
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "அ&னுப்பியுள்ள அஞ்சலுக்கான அடைவு:"
+
+#: identity/identitydialog.cpp:716
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "அஞ்சலனுப்பும் கணக்கு:"
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "அஞ்சலுடன் என் vCard-ஐ இணை"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "உருவாக்கு…"
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "தான்திருத்த மொழி:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "இயல்பிருப்பு ஆள்கள பெயரை மீட்டமைக்கும்"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "&இயல்பிருப்பு ஆள்களம்:"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3468,62 +3482,62 @@ msgstr ""
 "<qt><p>பயனர் பெயரை மட்டும் கொண்ட மின்னஞ்சல் முகவிரிகளை நிறைவு செய்ய இந்த ஆள்களம் "
 "பயன்படுத்தப்படும்.</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&இந்த அடையாளத்திற்கு தனிப்பட்ட அஞ்சல் வார்ப்புருகளை பயன்படுத்து"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "பொதுவான வார்ப்புருகளை &நகலெடு"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr "வார்ப்புருகள்"
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "கையொப்பம்"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, kde-format
 msgid "Picture"
 msgstr "படம்"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, kde-format
 msgid "Activities"
 msgstr "செயல்பாடுகள்"
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "செல்லுபடியாகாத மாற்று மின்னஞ்சல் முகவரி \"%1\""
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "இந்த அடையாளத்திற்கான மின்னஞ்சல் முகவரியை உள்ளிட வேண்டும்."
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "காலியான மின்னஞ்சல் முகவரி"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "செல்லுபடியாகாத மின்னஞ்சல் முகவரி"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3532,7 +3546,7 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3541,7 +3555,7 @@ msgstr ""
 "கட்டமைக்கப்பட்ட OpenPGP மறையாக்க விசைகள் பயனர் அடையாளத்தை மின்னஞ்சல் முகவரியோடு இந்த "
 "அடையாளத்திற்காக கட்டமைக்கப்படவில்லை (%1)."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3554,7 +3568,7 @@ msgstr ""
 "இது கட்டமைப்பு உருவாக்கிய கையெழுத்தை பரிசோதிக்கும் போது எச்சரிக்கை செய்தியை பெற "
 "விளைவிக்கும்."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3563,24 +3577,24 @@ msgstr ""
 "ஒரு கட்டமைக்கப்பட்ட S/MIME கையெழுத்து சான்றிதழில் கட்டமைக்கப்பட்ட மின்னஞ்சல் முகவரி "
 "அடையாளத்திற்காக இருக்காது (%1)."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "சாவி/சான்றிதழ்களில் மின்னஞ்சல் முகவரி கண்டுபிடிக்கப்படவில்லை"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "கையொப்ப கோப்பு செல்லுபடியாகாத‍து"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" அடையாளத்தை திருத்து"
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3589,12 +3603,12 @@ msgstr ""
 "இந்த அடையாளத்திற்கான தனிப்பட்ட அடைவுகளில் சில இப்போதில்லை; ஆகவே, இயல்பிருப்பு அடைவுகளே "
 "பயன்படுத்தப்படுவன."
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, kde-format
 msgid "Create…"
 msgstr "உருவாக்கு…"
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Edit…"
 msgstr "திருத்து…"
@@ -3822,23 +3836,23 @@ msgstr "Akonadi-யின் தற்காலிக நினைவிடத�
 msgid "Done"
 msgstr "முடிந்தது "
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "முகவரிப்புத்தகத்தில் சேர்த்தல்"
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
 msgstr "தொடர்பு வெற்றிகரமாக உருவாக்கப்பட்டது"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "தொடர்பை சேமிக்க முடியவில்லை: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"

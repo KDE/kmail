@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2024-11-19 09:45+0200\n"
 "Last-Translator: Fracture dept <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -3531,43 +3531,57 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Тека шаблонів:"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+#| msgid "Select Draft Folder"
+msgid "Select Spam Folder"
+msgstr "Вибір теки чернеток"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Sent-mail &folder:"
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "Тека надіслани&х повідомлень:"
+
+#: identity/identitydialog.cpp:716
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Обліковий запис вихідної пошти:"
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Долучити до повідомлення вашу візитівку"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Створити…"
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Мова автовиправлення:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Відновити типову назву домену"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Тип&овий домен:"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3576,62 +3590,62 @@ msgstr ""
 "<qt><p>Типовий домен використовується, щоб завершити адресу електронної "
 "пошти, якщо вона складається тільки з імені користувача.</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Використовувати власні шаблони повідомлень для цього профілю"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Копіювати глобальні шаблони"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr "Шаблони"
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "Підпис"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, kde-format
 msgid "Picture"
 msgstr "Зображення"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, kde-format
 msgid "Activities"
 msgstr "Простори дій"
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Помилкова альтернативна адреса «%1»"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Вам слід вказати адресу електронної пошти для цього профілю."
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Порожня адреса електронної пошти"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Некоректна адреса електронної пошти"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3645,7 +3659,7 @@ msgstr ""
 "Такі налаштування призведуть до того, що отримувачі повідомлень будуть "
 "бачити попередження при спробі перевірити підписи."
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3655,7 +3669,7 @@ msgstr ""
 "ідентифікатора користувача, який би містив адресу електронної пошти для "
 "цього профілю (%1)."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3668,7 +3682,7 @@ msgstr ""
 "Така конфігурація призведе до того, що отримувачі повідомлень будуть бачити "
 "попередження при спробі перевірити підписи."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3677,24 +3691,24 @@ msgstr ""
 "Один з налаштованих S/MIME-сертифікатів для шифрування не містить адреси "
 "електронної пошти для цього профілю (%1)."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Електронну адресу не знайдено в ключах/сертифікатах"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Некоректний файл підпису"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Редагування профілю «%1»"
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3703,12 +3717,12 @@ msgstr ""
 "Якоїсь із нетипових тек профілю вже не існує. Тому буде використано типові "
 "теки."
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, kde-format
 msgid "Create…"
 msgstr "Створити"
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Edit…"
 msgstr "Змінити…"
@@ -3941,23 +3955,23 @@ msgstr "Спорожнити кеш Akonadi"
 msgid "Done"
 msgstr "Виконано"
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Додавання до адресної книги"
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
 msgstr "Запис контакту успішно створено"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Не вдалося зберегти запис контакту: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"

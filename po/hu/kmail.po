@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2024-10-03 21:54+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -3489,45 +3489,58 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Sablonok mappája:"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+#| msgid "Select Draft Folder"
+msgid "Select Spam Folder"
+msgstr "Piszkozatok mappa kiválasztása"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+#| msgid "Sent-mail &folder:"
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "Az elkül&dött levelek mappája:"
+
+#: identity/identitydialog.cpp:716
 #, fuzzy, kde-format
 #| msgid "Outgoing Account:"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Kimenő fiók:"
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, fuzzy, kde-format
 #| msgid "Attach my vCard to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Saját vCard csatolása az üzenethez"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Létrehozás…"
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Automatikus javítás nyelve:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Alapértelmezett tartománynév visszaállítása"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Ala&pértelmezett tartomány:"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3536,64 +3549,64 @@ msgstr ""
 "<qt><p>Az alapértelmezett tartománynévvel lesznek kiegészítve azok a címek, "
 "melyek csak a felhasználónévből állnak.</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "E&gyedi üzenetsablonok használata ennél az identitásnál"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Globális sablonok más&olása"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr "Sablonok"
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "Aláírás"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, kde-format
 msgid "Picture"
 msgstr "Kép"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, fuzzy, kde-format
 #| msgid "Activate"
 msgid "Activities"
 msgstr "Aktiválás"
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Érvénytelen e-mail álnév: „%1”"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Meg kell adnia egy e-mail címet ehhez az azonosítóhoz."
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Üres e-mail cím"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Érvénytelen e-mail cím"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3606,7 +3619,7 @@ msgstr ""
 "Ebben az esetben az üzenetek címzettei figyelmeztetést kaphatnak, amikor "
 "ellenőrizni próbálják az aláírás érvényességét."
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3615,7 +3628,7 @@ msgstr ""
 "Az egyik beállított OpenPGP-s titkosítási kulcs nem tartalmazza a "
 "felhasználóazonosítót az azonosítóhoz (%1) beállított e-mail címmel."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3628,7 +3641,7 @@ msgstr ""
 "Ebben az esetben az üzenetek címzettei figyelmeztetést kaphatnak, amikor "
 "ellenőrizni próbálják az aláírás érvényességét."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3637,24 +3650,24 @@ msgstr ""
 "Az egyik beállított S/MIME-os titkosítási tanúsítvány nem tartalmazza az "
 "azonosítóhoz (%1) beállított e-mail címet."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "A kulcsban vagy tanúsítványban nem található e-mail cím"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Az aláírásfájl érvénytelen"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "A(z) „%1” azonosító szerkesztése"
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3663,12 +3676,12 @@ msgstr ""
 "Az azonosító néhány saját mappája nem létezik (többé), ezért helyette az "
 "alapértelmezett mappákat használja a program."
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, kde-format
 msgid "Create…"
 msgstr "Létrehozás…"
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Edit…"
 msgstr "Szerkesztés…"
@@ -3897,23 +3910,23 @@ msgstr "Akonadi gyorsítótár törlése"
 msgid "Done"
 msgstr "Kész"
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Felvétel a címjegyzékbe"
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
 msgstr "Partner sikeresen létrehozva"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "A partner nem tárolható: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"

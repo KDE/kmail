@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -3661,49 +3661,62 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Şa&blonlar qovluğu:"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+#| msgid "Select Draft Folder"
+msgid "Select Spam Folder"
+msgstr "Qaralama qovluğunu seçin"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+#| msgid "Sent-mail &folder:"
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "Göndərilən-poçt qo&vluğu:"
+
+#: identity/identitydialog.cpp:716
 #, fuzzy, kde-format
 #| msgid "Outgoing Account:"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Gedənlər hesabı:"
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, fuzzy, kde-format
 #| msgid "Attach my vCard to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "vCard'ım məktuba əlavə edilsin"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Yaratmaq..."
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, fuzzy, kde-format
 #| msgid "Autocorrection language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Avtodüzəltmə üçün dil:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, fuzzy, kde-format
 #| msgid "Restore default domain name"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Standart domen adını bərpa edin:"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Standar&t domen:"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3712,59 +3725,59 @@ msgstr ""
 "<qt><p>Standart domen yalnız istifadəçinin adından ibarət olan e-poçt  "
 "ünvanlarını tamamlamaq üçün istifadə olunur.</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "Bu kimlik üçün xüsusi məktub şablonlarından &istifadə edin"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Ümumi şablonları &kopyalayın"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr "Şablonlar"
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "İmza"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, kde-format
 msgid "Picture"
 msgstr "Şəkil"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, kde-format
 msgid "Activities"
 msgstr ""
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "\"%1\" e-poçt təxəllüsü səhvdir"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "Bu kimlik üçün xüsusi məktub şablonlarından &istifadə edin"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "E-poçt ünvanı"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3772,7 +3785,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "E-poçt ünvanı səhvdir"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3785,7 +3798,7 @@ msgstr ""
 "Bu, istifadəçi imzaları yoxlamağa cəhd etdiyi zaman xəbərdarlıq bildirişinin "
 "göstərilməsinə səbəb ola bilər."
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3794,7 +3807,7 @@ msgstr ""
 "İmzalamaq üçün tənzimləniş OpenPGP açarlarından biri bu kimliyin (%1) e-poçt "
 "ünvanından ibarət istifadəçinin İD-sini tapa bilmir."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3807,7 +3820,7 @@ msgstr ""
 "Bu, alıcı belə tənzimləmə ilə imzaları yoxlamağa cəhd etdiyi zaman "
 "xəbərdarlıq bildirişinin göstərilməsi ilə nəticələnə bilər."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3816,25 +3829,25 @@ msgstr ""
 "İmzalamaq üçün tənzimləniş S/MİME sertifikatlarından  biri bu kimliyin (%1) "
 "e-poçt ünvanından ibarət istifadəçinin İD-sini tapa bilmir."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-poçt ünvanı Açar və ya Sertifikatlarda tapılmadı"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "İmzalama faylı yararsızdır"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" kimliyinə düzəliş edin"
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3843,13 +3856,13 @@ msgstr ""
 "Bəzi xüsusi qovluqlar (artıq) bu kimlik üçün mövcud deyil; buna görə də "
 "standart qovluqlar istifadə oluncaq."
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Yaratmaq..."
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -4086,23 +4099,23 @@ msgstr "Akonadi keşini təmizləyin"
 msgid "Done"
 msgstr "Hazırdır"
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Ünvan kitabı əlavə edin"
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
 msgstr "Əlaqə uğurla yaradıldı"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Əlaqə saxlanıla bilməz: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"

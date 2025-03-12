@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -3685,49 +3685,62 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "नमूने संचयीका (&T):"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+#| msgid "Select Font"
+msgid "Select Spam Folder"
+msgstr "फॉन्ट निवडा"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+#| msgid "Sent-mail &folder:"
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "पाठवलेले मेल संचयीका (&F):"
+
+#: identity/identitydialog.cpp:716
 #, fuzzy, kde-format
 #| msgid "Outgoing Account:"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "बाहेर जाणारे खाते :"
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, fuzzy, kde-format
 #| msgid "Attach my vCard to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "संदेशास माझे व्ही-कार्ड जोडा"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "निर्माण करा..."
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, fuzzy, kde-format
 #| msgid "Autocorrection Language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "स्वयंचलित सुधारणा भाषा :"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "मूलभूत डोमेन (&T):"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "मूलभूत डोमेन (&T):"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3736,59 +3749,59 @@ msgstr ""
 "<qt><p>पूर्वनिर्धारित (Default) अधिक्षेत्र हे फक्त वापरणाराचे नाव असलेले इमेल पत्ते पूर्ण "
 "करण्यासाठी वापरले आहे</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "ह्या ऑनलाइन ओळखीसाठी इच्छिक संदेश नमूने वापरा (&U)"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "जागतीक प्रारुपांची नक्कल करा (&C)"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr "नमूने"
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "हस्ताक्षर"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, kde-format
 msgid "Picture"
 msgstr "प्रतिमा"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, kde-format
 msgid "Activities"
 msgstr ""
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "अवैध इमेल अलायस \"%1\""
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "ह्या ऑनलाइन ओळखीसाठी इच्छिक संदेश नमूने वापरा (&U)"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "इमेल पत्ता"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3796,7 +3809,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "अवैध इमेल पत्ता"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3809,7 +3822,7 @@ msgstr ""
 "याचा परिणाम ग्रहणकर्ता जेंव्हा या मांडणीद्वारे केलेल्या स्वाक्षऱ्या पडताळून पाहण्याचा प्रयत्न "
 "करेल तेंव्हा त्याला इशारेवजा संदेश मिळण्यात होईल."
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3818,7 +3831,7 @@ msgstr ""
 "मांडणी केलेल्या OpenPGP सांकेतीककरणाच्या चाव्यांपैकी एकीमध्ये (%1) ह्या ऑनलाइन ओळखीसाठी "
 "रचना केलेल्या ईमेल पत्त्याबरोबर प्रयोगकर्त्याची कोणतीही ऑनलाईन ओळख समाविष्ट नाही."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3831,7 +3844,7 @@ msgstr ""
 "याचा परिणाम ग्रहणकर्ता जेंव्हा या मांडणीद्वारे केलेल्या स्वाक्षऱ्या पडताळून पाहण्याचा प्रयत्न "
 "करेल तेंव्हा त्याला इशारेवजा संदेश मिळण्यात होईल."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3840,26 +3853,26 @@ msgstr ""
 "मांडणी केलेल्या कोणत्यातरी एका S/MIME सांकेतीकरण प्रमाणपत्रात ह्या ऑनलाईन ओळखीसाठी "
 "तयार केलेला ईमेल पत्ता समाविष्ट नाही(%1)."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "चाव्या वा कळा/ प्रमाणपत्रे यांच्यात ईमेल पत्ता सापडला नाही"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ही स्वाक्षरी फाईल वैध नाही"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "ओळख संपादित करा \"%1\""
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3871,13 +3884,13 @@ msgstr ""
 "ऑनलाईन ओळखीसाठी इच्छिक मसुद्यांची संचयीका \"%1\" अस्तित्वात नाही(आता) म्हणून "
 "पूर्वनिर्धारित मसुद्यांची संचयीका वापरायला लागेल"
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "निर्माण करा..."
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
@@ -4127,24 +4140,24 @@ msgstr "पुन्हा सुरु करा"
 msgid "Done"
 msgstr "झाले"
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "पत्ता पुस्तकात जोडा"
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
 msgstr "यशस्वीरित्या संपर्क तयार केला"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "संपर्क साठवू शकत नाही : %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"

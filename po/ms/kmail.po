@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -3754,48 +3754,60 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Folder &Sampah"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+msgid "Select Spam Folder"
+msgstr "Pilih Folder"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+#| msgid "Sent-mail &folder:"
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "&Folder mel dihantar:"
+
+#: identity/identitydialog.cpp:716
 #, fuzzy, kde-format
 #| msgid "Add..."
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Tambah..."
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Tambahkan 'pengepala' kepada mesej"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Namakan semula..."
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr ""
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Domain pia&wai:"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Domain pia&wai:"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3804,59 +3816,59 @@ msgstr ""
 "<qt><p>Domain piawai digunakan untuk melengkapkan alamat e-mel yang "
 "mengandungi nama pengguna sahaja.</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Gunakan akhiran id mesej kebiasaan"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Gantikan"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr ""
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "Tandatangan"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "&Gambar"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, fuzzy, kde-format
 #| msgid "Remove &Important Message Mark"
 msgid "Activities"
 msgstr "Buang Tanda Mesej &Penting"
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Alamat E-mel Tidak Sah"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 msgid "You must provide an email for this identity."
 msgstr "&Gunakan akhiran id mesej kebiasaan"
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Alamat E-mel"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3864,7 +3876,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Alamat E-mel Tidak Sah"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3878,7 +3890,7 @@ msgstr ""
 "Ini mungkin menyebabkan mesej amaran kepada penerima semasa cuba mengesahkan "
 "tandatangan yang dibuat menggunakan konfigurasi ini."
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3888,7 +3900,7 @@ msgstr ""
 "sebarang ID pengguna dengan alamat e-mel yang dikonfigurasi bagi identiti "
 "ini (%1)."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3901,7 +3913,7 @@ msgstr ""
 "Ini mungkin menyebabkan mesej amaran di pihak penerima semasa cuba "
 "mengesahkan tandatangan yang dibuat menggunakan konfigurasi ini."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3910,26 +3922,26 @@ msgstr ""
 "Salah satu sijil penyulitan S/MIME yang dikonfigurasi tidak mengandungi "
 "alamat e-mel yang dikonfigurasi dengan identiti ini (%1)."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Alamat E-mel Tidak Ditemui Dalam Kekunci/Sijil"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Fail tandatangan  tidak sah"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Edit Identiti \"%1\""
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3941,13 +3953,13 @@ msgstr ""
 "Folder draf langganan untuk identiti \"%1\" tidak wujud (lagi); oleh itu, "
 "folder draf piawai akan digunakan."
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Namakan semula..."
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Keluar"
@@ -4191,25 +4203,25 @@ msgstr "Nama Identiti"
 msgid "Done"
 msgstr "Selesai"
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, fuzzy, kde-format
 #| msgid "Add to Address Book"
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "Tambah ke Buku Alamat"
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, fuzzy, kde-format
 #| msgid "Messages deleted successfully."
 msgid "Contact created successfully"
 msgstr "Berjaya menghapuskan mesej."
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

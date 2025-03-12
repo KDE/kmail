@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-02-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-12 00:42+0000\n"
 "PO-Revision-Date: 2015-02-07 22:15+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -3368,43 +3368,54 @@ msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Malmappe:"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:709
+#, fuzzy, kde-format
+msgid "Select Spam Folder"
+msgstr "Slett mappa"
+
+#: identity/identitydialog.cpp:711
+#, fuzzy, kde-format
+msgctxt "@option:check"
+msgid "Spam &folder:"
+msgstr "&Mappe for sendt e-post:"
+
+#: identity/identitydialog.cpp:716
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Utgående konto:"
 
-#: identity/identitydialog.cpp:714
+#: identity/identitydialog.cpp:723
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Legg til mitt vCard til meldingen"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:724
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Opprett …"
 
-#: identity/identitydialog.cpp:719
+#: identity/identitydialog.cpp:728
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Språk for autorettelse:"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:740
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Tilbakestill til standard domenenavn"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:743
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "S&tandarddomene:"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3413,62 +3424,62 @@ msgstr ""
 "<qt> <p>Standarddomenet settes etter alfakrøllen («@») i ufullstendige "
 "adresser.</p></qt>"
 
-#: identity/identitydialog.cpp:757
+#: identity/identitydialog.cpp:766
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Bruk selvvalgte meldingsmaler for denne identiteten"
 
-#: identity/identitydialog.cpp:771
+#: identity/identitydialog.cpp:780
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Kopier globale maler"
 
-#: identity/identitydialog.cpp:778
+#: identity/identitydialog.cpp:787
 #, kde-format
 msgid "Templates"
 msgstr "Maler"
 
-#: identity/identitydialog.cpp:784
+#: identity/identitydialog.cpp:793
 #, kde-format
 msgid "Signature"
 msgstr "Signaturer"
 
-#: identity/identitydialog.cpp:791
+#: identity/identitydialog.cpp:800
 #, kde-format
 msgid "Picture"
 msgstr "Bilde"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:806
 #, kde-format
 msgid "Activities"
 msgstr ""
 
-#: identity/identitydialog.cpp:848
+#: identity/identitydialog.cpp:857
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ugyldig alias for e-postadresse \"%1\""
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr ""
 
-#: identity/identitydialog.cpp:856
+#: identity/identitydialog.cpp:865
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "E-postadresse"
 
-#: identity/identitydialog.cpp:861 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ugyldig e-postadresse"
 
-#: identity/identitydialog.cpp:919
+#: identity/identitydialog.cpp:928
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3481,7 +3492,7 @@ msgstr ""
 "Dette kan føre til advarsler når mottakeren prøver å bekrefte signaturer som "
 "er laget med dette oppsettet."
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3490,7 +3501,7 @@ msgstr ""
 "En av OpenPGP-krypteringsnøklene som er satt opp inneholder ikke en bruker-"
 "ID med den e-postadressen som er valgt for denne identiteten (%1)."
 
-#: identity/identitydialog.cpp:935
+#: identity/identitydialog.cpp:944
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3503,7 +3514,7 @@ msgstr ""
 "Dette kan føre til advarsler når mottakeren prøver å bekrefte signaturer "
 "laget med dette oppsettet."
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3512,36 +3523,36 @@ msgstr ""
 "En av S/MIME-krypteringssertifikatene som er satt opp inneholder ikke den e-"
 "postadressen som er satt opp for denne identiteten (%1)."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:963
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-postadressen ble ikke funnet i nøkkel/sertifikater"
 
-#: identity/identitydialog.cpp:966
+#: identity/identitydialog.cpp:975
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Signaturfila er ugyldig"
 
-#: identity/identitydialog.cpp:981
+#: identity/identitydialog.cpp:990
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr ""
 
-#: identity/identitydialog.cpp:1050
+#: identity/identitydialog.cpp:1069
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
 
-#: identity/identitydialog.cpp:1279
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 msgid "Create…"
 msgstr "Opprett …"
 
-#: identity/identitydialog.cpp:1281
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "&Rediger"
@@ -3763,23 +3774,23 @@ msgstr ""
 msgid "Done"
 msgstr "Ferdig"
 
-#: job/createnewcontactjob.cpp:63
+#: job/createnewcontactjob.cpp:66
 #, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:117
+#: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
 msgstr "Kontakt vellykket opprettet"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kan ikke lagre kontakten: %1"
 
-#: job/createnewcontactjob.cpp:122 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
