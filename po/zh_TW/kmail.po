@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-13 00:42+0000\n"
 "PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1093,86 +1093,86 @@ msgstr "移除標籤"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "無法建立標籤。因為已經有同名的標籤存在。"
 
-#: configuredialog/configurecomposerpage.cpp:64
+#: configuredialog/configurecomposerpage.cpp:65
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "一般"
 
-#: configuredialog/configurecomposerpage.cpp:71
+#: configuredialog/configurecomposerpage.cpp:72
 #, kde-format
 msgid "Standard Templates"
 msgstr "標準樣本"
 
-#: configuredialog/configurecomposerpage.cpp:77
+#: configuredialog/configurecomposerpage.cpp:78
 #, kde-format
 msgid "Custom Templates"
 msgstr "自訂樣本"
 
-#: configuredialog/configurecomposerpage.cpp:83
+#: configuredialog/configurecomposerpage.cpp:84
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "主題"
 
-#: configuredialog/configurecomposerpage.cpp:90
+#: configuredialog/configurecomposerpage.cpp:91
 #, kde-format
 msgid "Headers"
 msgstr "標頭"
 
-#: configuredialog/configurecomposerpage.cpp:96
+#: configuredialog/configurecomposerpage.cpp:97
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "附加檔"
 
-#: configuredialog/configurecomposerpage.cpp:102
+#: configuredialog/configurecomposerpage.cpp:103
 #, kde-format
 msgid "Autocorrection"
 msgstr "自動修正"
 
-#: configuredialog/configurecomposerpage.cpp:108
+#: configuredialog/configurecomposerpage.cpp:109
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "自動調整影像大小"
 
-#: configuredialog/configurecomposerpage.cpp:129
+#: configuredialog/configurecomposerpage.cpp:130
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "簽名"
 
-#: configuredialog/configurecomposerpage.cpp:134
+#: configuredialog/configurecomposerpage.cpp:135
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr "開始寫信時自動插入設定好的簽名"
 
-#: configuredialog/configurecomposerpage.cpp:144
+#: configuredialog/configurecomposerpage.cpp:145
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "在引言上方插入簽名"
 
-#: configuredialog/configurecomposerpage.cpp:155
+#: configuredialog/configurecomposerpage.cpp:156
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr "在簽名前插入 RFC 定義的簽名分隔器（兩個 - 加上一個空白然後斷行）"
 
-#: configuredialog/configurecomposerpage.cpp:166
+#: configuredialog/configurecomposerpage.cpp:167
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "回覆時，不要引入任何現有的簽名"
 
-#: configuredialog/configurecomposerpage.cpp:178
+#: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "格式"
 
-#: configuredialog/configurecomposerpage.cpp:183
+#: configuredialog/configurecomposerpage.cpp:184
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1180,7 +1180,7 @@ msgid ""
 msgstr ""
 "回覆時，若有選取信件內容中的文字，則只引入選取的文字，而不是完整的信件內容。"
 
-#: configuredialog/configurecomposerpage.cpp:193
+#: configuredialog/configurecomposerpage.cpp:194
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1189,17 +1189,17 @@ msgid ""
 msgstr ""
 "回覆時，在所有引言文字的前面加上引言符耗，即使文字因過長而折到新行時也一樣。"
 
-#: configuredialog/configurecomposerpage.cpp:204
+#: configuredialog/configurecomposerpage.cpp:205
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "啟動在特定寬度後自動折行的功能"
 
-#: configuredialog/configurecomposerpage.cpp:215
+#: configuredialog/configurecomposerpage.cpp:216
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "設定自動折行的文字寬度"
 
-#: configuredialog/configurecomposerpage.cpp:235
+#: configuredialog/configurecomposerpage.cpp:236
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1208,7 +1208,7 @@ msgstr ""
 "在回覆或轉寄信件時，只使用接收到的原始格式做引用。若未勾選，則預設使用純文字"
 "回覆。"
 
-#: configuredialog/configurecomposerpage.cpp:247
+#: configuredialog/configurecomposerpage.cpp:248
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1217,47 +1217,47 @@ msgstr ""
 "將信件中的純文字部份加上 HTML 標籤格式。支援粗體、斜體、底線、列表與外部參"
 "考。"
 
-#: configuredialog/configurecomposerpage.cpp:257
+#: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "內含"
 
-#: configuredialog/configurecomposerpage.cpp:257
+#: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgid "As Attachment"
 msgstr "當成附件"
 
-#: configuredialog/configurecomposerpage.cpp:259
+#: configuredialog/configurecomposerpage.cpp:260
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "設定預設轉寄信件格式"
 
-#: configuredialog/configurecomposerpage.cpp:263
+#: configuredialog/configurecomposerpage.cpp:264
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "預設轉寄型態："
 
-#: configuredialog/configurecomposerpage.cpp:281
+#: configuredialog/configurecomposerpage.cpp:282
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "收件者"
 
-#: configuredialog/configurecomposerpage.cpp:311
+#: configuredialog/configurecomposerpage.cpp:312
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "指定太多收件者時提出警告"
 
-#: configuredialog/configurecomposerpage.cpp:320
+#: configuredialog/configurecomposerpage.cpp:321
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "最多幾個收件者時發出警告"
 
-#: configuredialog/configurecomposerpage.cpp:338
+#: configuredialog/configurecomposerpage.cpp:339
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1270,68 +1270,68 @@ msgstr ""
 "擇…」來選收件者時若超過數量則會提出警告。這樣您可以避免不小心一次送給太多人。"
 "注意，它不會把郵件論壇或是分派清單裡的人數算進去。"
 
-#: configuredialog/configurecomposerpage.cpp:359
+#: configuredialog/configurecomposerpage.cpp:360
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr "記住最近輸入的地址，並讓它們可以用來做收件人補完。"
 
-#: configuredialog/configurecomposerpage.cpp:371
+#: configuredialog/configurecomposerpage.cpp:372
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "不儲存"
 
-#: configuredialog/configurecomposerpage.cpp:374
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "最近常用的位址記住最大數量："
 
-#: configuredialog/configurecomposerpage.cpp:378
+#: configuredialog/configurecomposerpage.cpp:379
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr "要記住以用來做收件人補完的地址的最大數量"
 
-#: configuredialog/configurecomposerpage.cpp:391
+#: configuredialog/configurecomposerpage.cpp:392
 #, fuzzy, kde-format
 #| msgid "Configure Completion…"
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "設定補完…"
 
-#: configuredialog/configurecomposerpage.cpp:400
+#: configuredialog/configurecomposerpage.cpp:401
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "自動儲存"
 
-#: configuredialog/configurecomposerpage.cpp:410
+#: configuredialog/configurecomposerpage.cpp:411
 #, kde-format
 msgid "No autosave"
 msgstr "不自動儲存"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:412
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
 msgstr[0] "%v 分鐘"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "在此指定間隔時間自動儲存信件"
 
-#: configuredialog/configurecomposerpage.cpp:619
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "回覆主題前置文字(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:624
-#: configuredialog/configurecomposerpage.cpp:650
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes (entries are case-"
@@ -1342,152 +1342,152 @@ msgid ""
 "insensitive regular expressions):"
 msgstr "辨認下列的前置文字（不區分大小寫）："
 
-#: configuredialog/configurecomposerpage.cpp:632
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
 msgstr "新增(&D)…"
 
-#: configuredialog/configurecomposerpage.cpp:632
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Re&move"
 msgstr "移除(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:632
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Mod&ify…"
 msgstr "修改(&I)…"
 
-#: configuredialog/configurecomposerpage.cpp:632
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "輸入新的回覆前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:634
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "您確定要移除回覆前置文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:636
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "回覆前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:646
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "轉寄主題前置文字(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:656 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "移除(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr "新增…"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Modify…"
 msgstr "修改…"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "輸入新的轉寄前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:658
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "您確定要移除轉寄前置文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:659
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "轉寄前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:702
+#: configuredialog/configurecomposerpage.cpp:703
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "使用自訂的 Message-Id 項目(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "自訂 Message-Id 項目(&I)："
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "定義電子郵件的 mime 自訂標頭："
 
-#: configuredialog/configurecomposerpage.cpp:738
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "名稱"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "數值"
 
-#: configuredialog/configurecomposerpage.cpp:747
+#: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "新的(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:751
+#: configuredialog/configurecomposerpage.cpp:752
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "移除(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "名稱(&N)："
 
-#: configuredialog/configurecomposerpage.cpp:770
+#: configuredialog/configurecomposerpage.cpp:771
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "數值(&V)："
 
-#: configuredialog/configurecomposerpage.cpp:910
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "'Content-Type' 是不被允許的字串。這個標頭不會被儲存。"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:912
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "無效的標頭"
 
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:953
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "判斷是否忘記附加檔案"
 
-#: configuredialog/configurecomposerpage.cpp:958
+#: configuredialog/configurecomposerpage.cpp:959
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1495,34 +1495,34 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "檢查信件中是否有下列關鍵字，以顯示此封信是否應該有附檔而忘了加上去："
 
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Enter new key word:"
 msgstr "輸入新的關鍵字："
 
-#: configuredialog/configurecomposerpage.cpp:971
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "您確定要移除這個附件文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:973
 #, kde-format
 msgid "Attachment Word:"
 msgstr "附加文字："
 
-#: configuredialog/configurecomposerpage.cpp:979
+#: configuredialog/configurecomposerpage.cpp:980
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "最大附件大小："
 
-#: configuredialog/configurecomposerpage.cpp:986
+#: configuredialog/configurecomposerpage.cpp:987
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:988
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "No limit"
 msgstr "不限制"
@@ -1730,7 +1730,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "封存資料夾"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3657
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3650
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1828,7 +1828,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "顯示附件清單"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:97
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
@@ -1971,7 +1971,7 @@ msgstr "插入文字檔(&I)…"
 msgid "&Insert Recent Text File"
 msgstr "插入最近使用的文字檔(&I)"
 
-#: editor/kmcomposerwin.cpp:1324 kmmainwidget.cpp:2985
+#: editor/kmcomposerwin.cpp:1324 kmmainwidget.cpp:2984
 #, kde-format
 msgid "&Address Book"
 msgstr "通訊錄(&A)"
@@ -2184,14 +2184,14 @@ msgstr "新增回覆提醒…"
 msgid "Configure KMail…"
 msgstr "設定 KMail…"
 
-#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:224 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:223 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr "<qt>這會完全隱藏選單列。您可以按下 %1 重新顯示選單列。</qt>"
 
-#: editor/kmcomposerwin.cpp:1582 kmmainwin.cpp:227
+#: editor/kmcomposerwin.cpp:1582 kmmainwin.cpp:226
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -4112,7 +4112,7 @@ msgid "F&older"
 msgstr "資料夾(&O)"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3506 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3499 kmmainwin.rc:134
 #: kmmainwin.rc:291
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4144,7 +4144,7 @@ msgid "&Forward"
 msgstr "轉寄(&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3322 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3321 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "套用過濾器(&P)"
@@ -4289,67 +4289,67 @@ msgstr "HTML 工具列"
 msgid "Text Direction Toolbar"
 msgstr "文字方向工具列"
 
-#: kmkernel.cpp:634
+#: kmkernel.cpp:637
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail 目前設定為離線工作，所有網路相關的工作都將暫停。"
 
-#: kmkernel.cpp:654 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:657 kmmainwidget.cpp:2479 kmmainwidget.cpp:2494
 #, kde-format
 msgid "Send Email"
 msgstr "傳送電子郵件"
 
-#: kmkernel.cpp:655 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:658 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Impossible to send email"
 msgstr "無法傳送郵件"
 
-#: kmkernel.cpp:686
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail 目前設定為上線中，所有網路相關的工作都將繼續。"
 
-#: kmkernel.cpp:688
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "KMail 目前設定為上線中，所有網路相關的工作都將在偵測到網路連線後繼續"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:764
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail 目前在離線模式。您要怎麼處理？"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "上線/離線"
 
-#: kmkernel.cpp:764
+#: kmkernel.cpp:767
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "回到線上"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:768
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "離線工作"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:792
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "偵測到網路連線，所有網路工作都將回復"
 
-#: kmkernel.cpp:792
+#: kmkernel.cpp:795
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "沒有偵測到網路連線，所有網路工作都將暫停"
 
-#: kmkernel.cpp:887
+#: kmkernel.cpp:890
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4358,37 +4358,37 @@ msgstr ""
 "開啟於 %1 的自動儲存檔失敗。\n"
 "理由：%2"
 
-#: kmkernel.cpp:888
+#: kmkernel.cpp:891
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "開啟自動儲存檔失敗"
 
-#: kmkernel.cpp:1451
+#: kmkernel.cpp:1454
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "以下 %1 個身份已經被設定為使用預設的送信帳號："
 
-#: kmkernel.cpp:1475
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "以下 %1 個身份使用的送信帳號已被變更："
 
-#: kmkernel.cpp:1490
+#: kmkernel.cpp:1493
 #, kde-format
 msgid "Sending messages"
 msgstr "送出信件中"
 
-#: kmkernel.cpp:1491
+#: kmkernel.cpp:1494
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "正在初始化寄件程序…"
 
-#: kmkernel.cpp:1570
+#: kmkernel.cpp:1573
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4397,7 +4397,7 @@ msgstr ""
 "資源 %1 已損毀。\n"
 "%2"
 
-#: kmkernel.cpp:1746 kmkernel.cpp:1752
+#: kmkernel.cpp:1749 kmkernel.cpp:1755
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4479,110 +4479,110 @@ msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "無法啟動匯入精靈"
 
-#: kmmainwidget.cpp:308
+#: kmmainwidget.cpp:307
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr "在系統中找到另一個郵件程式。您要匯入它的資料嗎？"
 
-#: kmmainwidget.cpp:311
+#: kmmainwidget.cpp:310
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "匯入"
 
-#: kmmainwidget.cpp:312
+#: kmmainwidget.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "不要匯入"
 
-#: kmmainwidget.cpp:317
+#: kmmainwidget.cpp:316
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "無法啟動匯入精靈。請檢查安裝是否完全！"
 
-#: kmmainwidget.cpp:319
+#: kmmainwidget.cpp:318
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "無法啟動匯入精靈"
 
-#: kmmainwidget.cpp:1394
+#: kmmainwidget.cpp:1393
 #, kde-format
 msgid "No Subject"
 msgstr "沒有主題"
 
-#: kmmainwidget.cpp:1407
+#: kmmainwidget.cpp:1406
 #, kde-format
 msgid "(no templates)"
 msgstr "（沒有樣本）"
 
-#: kmmainwidget.cpp:1459
+#: kmmainwidget.cpp:1458
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "這個資料夾沒有設定任何的過期選項"
 
-#: kmmainwidget.cpp:1465
+#: kmmainwidget.cpp:1464
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt>您確定要將資料夾 <b>%1</b> 設為過期嗎？</qt>"
 
-#: kmmainwidget.cpp:1466
+#: kmmainwidget.cpp:1465
 #, kde-format
 msgid "Expire Folder"
 msgstr "將資料夾設為過期"
 
-#: kmmainwidget.cpp:1466
+#: kmmainwidget.cpp:1465
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "設為過期(&E)"
 
-#: kmmainwidget.cpp:1483
+#: kmmainwidget.cpp:1482
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "清空垃圾桶"
 
-#: kmmainwidget.cpp:1483
+#: kmmainwidget.cpp:1482
 #, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "移到垃圾桶"
 
-#: kmmainwidget.cpp:1484
+#: kmmainwidget.cpp:1483
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "你確定要清空垃圾桶嗎？"
 
-#: kmmainwidget.cpp:1486
+#: kmmainwidget.cpp:1485
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr "<qt>您確定要將 <b>%1</b> 中的信件都搬到垃圾桶嗎？</qt>"
 
-#: kmmainwidget.cpp:1509
+#: kmmainwidget.cpp:1508
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "將所有信件移入垃圾桶"
 
-#: kmmainwidget.cpp:1563
+#: kmmainwidget.cpp:1562
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "你確定要將所有舊信件設為過期信件？"
 
-#: kmmainwidget.cpp:1564
+#: kmmainwidget.cpp:1563
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "將舊信件設為過期信件？"
 
-#: kmmainwidget.cpp:1565
+#: kmmainwidget.cpp:1564
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "過期"
 
-#: kmmainwidget.cpp:1590
+#: kmmainwidget.cpp:1589
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4592,19 +4592,19 @@ msgstr ""
 "在 HTML 信件中下載遠端的連結會使您更容易受到垃圾信的攻擊，並且有可能會增加您"
 "的系統被其他已存在和將來的安全漏洞危害的機會。"
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4912
+#: kmmainwidget.cpp:1592 kmmainwidget.cpp:4888
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "安全性警告"
 
-#: kmmainwidget.cpp:1594
+#: kmmainwidget.cpp:1593
 #, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "載入遠端參照"
 
-#: kmmainwidget.cpp:1667
+#: kmmainwidget.cpp:1666
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4614,137 +4614,137 @@ msgid_plural ""
 "deleted, they cannot be restored.</qt>"
 msgstr[0] "<qt>您確定要刪除這 %1 封信件嗎？<br /> 刪除後就無法回復了。</qt>"
 
-#: kmmainwidget.cpp:1672
+#: kmmainwidget.cpp:1671
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "刪除信件"
 
-#: kmmainwidget.cpp:1672
+#: kmmainwidget.cpp:1671
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "刪除信件"
 
-#: kmmainwidget.cpp:1687
+#: kmmainwidget.cpp:1686
 #, kde-format
 msgid "Moving messages…"
 msgstr "移動信件中…"
 
-#: kmmainwidget.cpp:1689 kmmainwidget.cpp:1889
+#: kmmainwidget.cpp:1688 kmmainwidget.cpp:1888
 #, kde-format
 msgid "Deleting messages…"
 msgstr "刪除信件中…"
 
-#: kmmainwidget.cpp:1704 kmmainwidget.cpp:1909
+#: kmmainwidget.cpp:1703 kmmainwidget.cpp:1908
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "信件已刪除。"
 
-#: kmmainwidget.cpp:1706
+#: kmmainwidget.cpp:1705
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "信件已搬運完成。"
 
-#: kmmainwidget.cpp:1711 kmmainwidget.cpp:1922
+#: kmmainwidget.cpp:1710 kmmainwidget.cpp:1921
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "刪除信件失敗。"
 
-#: kmmainwidget.cpp:1713 kmmainwidget.cpp:1935
+#: kmmainwidget.cpp:1712 kmmainwidget.cpp:1934
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "取消刪除信件。"
 
-#: kmmainwidget.cpp:1717
+#: kmmainwidget.cpp:1716
 #, kde-format
 msgid "Moving messages failed."
 msgstr "搬移信件失敗。"
 
-#: kmmainwidget.cpp:1719
+#: kmmainwidget.cpp:1718
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "取消搬移信件。"
 
-#: kmmainwidget.cpp:1791
+#: kmmainwidget.cpp:1790
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "移動信件到資料夾"
 
-#: kmmainwidget.cpp:1818
+#: kmmainwidget.cpp:1817
 #, kde-format
 msgid "Copying messages…"
 msgstr "複製信件中…"
 
-#: kmmainwidget.cpp:1826
+#: kmmainwidget.cpp:1825
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "信件已複製完成。"
 
-#: kmmainwidget.cpp:1829
+#: kmmainwidget.cpp:1828
 #, kde-format
 msgid "Copying messages failed."
 msgstr "複製信件失敗。"
 
-#: kmmainwidget.cpp:1831
+#: kmmainwidget.cpp:1830
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "取消複製信件。"
 
-#: kmmainwidget.cpp:1841
+#: kmmainwidget.cpp:1840
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "複製信件到資料夾"
 
-#: kmmainwidget.cpp:1886
+#: kmmainwidget.cpp:1885
 #, kde-format
 msgid "Moving messages to trash…"
 msgstr "正在將信件移入垃圾桶…"
 
-#: kmmainwidget.cpp:1893
+#: kmmainwidget.cpp:1892
 #, kde-format
 msgid "Deleting and moving messages to trash…"
 msgstr "正在刪除信件並將信件移入垃圾桶…"
 
-#: kmmainwidget.cpp:1906
+#: kmmainwidget.cpp:1905
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "信件已移至垃圾桶。"
 
-#: kmmainwidget.cpp:1913
+#: kmmainwidget.cpp:1912
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "信件已成功移動到垃圾桶或刪除"
 
-#: kmmainwidget.cpp:1919
+#: kmmainwidget.cpp:1918
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "將信件移至垃圾桶失敗。"
 
-#: kmmainwidget.cpp:1926
+#: kmmainwidget.cpp:1925
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "將信件刪除或移到垃圾桶時失敗。"
 
-#: kmmainwidget.cpp:1932
+#: kmmainwidget.cpp:1931
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "將信件移至垃圾桶動作取消。"
 
-#: kmmainwidget.cpp:1939
+#: kmmainwidget.cpp:1938
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "將信件刪除或移到垃圾桶動作已取消。"
 
-#: kmmainwidget.cpp:2220
+#: kmmainwidget.cpp:2219
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "跳至資料夾"
 
-#: kmmainwidget.cpp:2412
+#: kmmainwidget.cpp:2411
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4754,14 +4754,14 @@ msgid_plural ""
 "not possible to delete attachments."
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2415
+#: kmmainwidget.cpp:2414
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2420
+#: kmmainwidget.cpp:2419
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4773,764 +4773,759 @@ msgstr[0] ""
 "<html>您確定要從 %1 個已選取信件中刪除所有附件嗎？<br />刪除後將無法復原。</"
 "html>"
 
-#: kmmainwidget.cpp:2427
+#: kmmainwidget.cpp:2426
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2432
+#: kmmainwidget.cpp:2431
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2437
+#: kmmainwidget.cpp:2436
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "刪除附件"
 
-#: kmmainwidget.cpp:2466
+#: kmmainwidget.cpp:2465
 #, kde-format
 msgid "Work Offline"
 msgstr "離線工作"
 
-#: kmmainwidget.cpp:2469
+#: kmmainwidget.cpp:2468
 #, kde-format
 msgid "Work Online"
 msgstr "回到線上"
 
-#: kmmainwidget.cpp:2928
+#: kmmainwidget.cpp:2927
 #, kde-format
 msgid "Save &As…"
 msgstr "另存新檔(&A)…"
 
-#: kmmainwidget.cpp:2939
+#: kmmainwidget.cpp:2938
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "標記所有資料夾為過期(&E)"
 
-#: kmmainwidget.cpp:2944
+#: kmmainwidget.cpp:2943
 #, kde-format
 msgid "Check &Mail"
 msgstr "檢查信件(&M)"
 
-#: kmmainwidget.cpp:2952
+#: kmmainwidget.cpp:2951
 #, kde-format
 msgid "Check Mail In"
 msgstr "檢查信件於"
 
-#: kmmainwidget.cpp:2957
+#: kmmainwidget.cpp:2956
 #, kde-format
 msgid "Check Mail"
 msgstr "檢查信件"
 
-#: kmmainwidget.cpp:2958
+#: kmmainwidget.cpp:2957
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "檢查信件"
 
-#: kmmainwidget.cpp:2962
+#: kmmainwidget.cpp:2961
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "傳送佇列中的信件(&S)"
 
-#: kmmainwidget.cpp:2970
+#: kmmainwidget.cpp:2969
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "線上狀態（未知）"
 
-#: kmmainwidget.cpp:2975
+#: kmmainwidget.cpp:2974
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "傳送佇列中的信件，使用"
 
-#: kmmainwidget.cpp:2995
+#: kmmainwidget.cpp:2994
 #, kde-format
 msgid "Certificate Manager"
 msgstr "憑證管理員"
 
-#: kmmainwidget.cpp:3006
+#: kmmainwidget.cpp:3005
 #, kde-format
 msgid "&Import Messages…"
 msgstr "匯入信件(&I)…"
 
-#: kmmainwidget.cpp:3017
+#: kmmainwidget.cpp:3016
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "除錯過濾器(&D)…"
 
-#: kmmainwidget.cpp:3024
+#: kmmainwidget.cpp:3023
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "過濾紀錄檢視器(&L)…"
 
-#: kmmainwidget.cpp:3029
+#: kmmainwidget.cpp:3028
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "通知歷史…"
 
-#: kmmainwidget.cpp:3034
+#: kmmainwidget.cpp:3033
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "從另一個電子郵件軟體匯入(&I)…"
 
-#: kmmainwidget.cpp:3039
+#: kmmainwidget.cpp:3038
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "編輯「不在辦公室」自動回覆…"
 
-#: kmmainwidget.cpp:3045
+#: kmmainwidget.cpp:3044
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "設定自動封存(&C)…"
 
-#: kmmainwidget.cpp:3051
+#: kmmainwidget.cpp:3050
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "已延遲信件…"
 
-#: kmmainwidget.cpp:3057
+#: kmmainwidget.cpp:3056
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "回覆提醒信件…"
 
-#: kmmainwidget.cpp:3068 util.cpp:167
+#: kmmainwidget.cpp:3067 util.cpp:168
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "刪除(&D)"
 
-#: kmmainwidget.cpp:3073
+#: kmmainwidget.cpp:3072
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "將整個串列移至垃圾桶(&O)"
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3076
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "將整個串列移入垃圾桶"
 
-#: kmmainwidget.cpp:3080 kmmainwidget.cpp:4141
+#: kmmainwidget.cpp:3079 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Delete T&hread"
 msgstr "刪除整個串列(&H)"
 
-#: kmmainwidget.cpp:3087 kmmainwidget.cpp:4143
+#: kmmainwidget.cpp:3086 kmmainwidget.cpp:4136
 #, kde-format
 msgid "&Find Messages…"
 msgstr "尋找信件(&F)…"
 
-#: kmmainwidget.cpp:3093
+#: kmmainwidget.cpp:3092
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "選取所有信件(&A)"
 
-#: kmmainwidget.cpp:3100
+#: kmmainwidget.cpp:3099
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "郵件論壇管理(&M)…"
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3107
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "清除 Akonadi 快取(&C)…"
 
-#: kmmainwidget.cpp:3113
+#: kmmainwidget.cpp:3112
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "為此資料夾和其所有子資料夾清除 Akonadi 快取(&C)"
 
-#: kmmainwidget.cpp:3118
+#: kmmainwidget.cpp:3117
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "設定捷徑(&A)…"
 
-#: kmmainwidget.cpp:3136
+#: kmmainwidget.cpp:3135
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "過期設定(&E)"
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3160
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "封存資料夾(&A)…"
 
-#: kmmainwidget.cpp:3169
+#: kmmainwidget.cpp:3168
 #, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "載入遠端連結(&X)"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3191
 #, kde-format
 msgid "Copy Message To…"
 msgstr "複製信件到…"
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3193
 #, kde-format
 msgid "Move Message To…"
 msgstr "移動信件到…"
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3198
 #, kde-format
 msgid "&New Message…"
 msgstr "新信件(&N)…"
 
-#: kmmainwidget.cpp:3201
+#: kmmainwidget.cpp:3200
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "新增"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3208
 #, kde-format
 msgid "Message From &Template"
 msgstr "從樣板產生信件(&T)"
 
-#: kmmainwidget.cpp:3215
+#: kmmainwidget.cpp:3214
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "張貼到信件論壇(&O)…"
 
-#: kmmainwidget.cpp:3221
+#: kmmainwidget.cpp:3220
 #, kde-format
 msgid "&Create Filter"
 msgstr "建立過濾器(&C)"
 
-#: kmmainwidget.cpp:3225
+#: kmmainwidget.cpp:3224
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "過濾信件主旨(&S)…"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3231
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "過濾信件寄件者(&F)…"
 
-#: kmmainwidget.cpp:3238
+#: kmmainwidget.cpp:3237
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "過濾信件收件者(&T)…"
 
-#: kmmainwidget.cpp:3244
+#: kmmainwidget.cpp:3243
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "過濾信件副本(&C)…"
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3257
 #, kde-format
 msgid "Mark &Thread"
 msgstr "標記討論串(&T)"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "標記目前討論串為已讀(&R)"
 
-#: kmmainwidget.cpp:3264
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "標記選擇的串列內所有信件為已讀"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3266
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "標記目前討論串為未讀取(&U)"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3269
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "標記選擇的討論串內所有信件為未讀"
 
-#: kmmainwidget.cpp:3276
+#: kmmainwidget.cpp:3275
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "標記討論串為重要(&I)"
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3278
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "移除「重要」對話串標記(&I)"
 
-#: kmmainwidget.cpp:3282
+#: kmmainwidget.cpp:3281
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "標記目前討論串為動作項目(&A)"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3284
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "移除「動作項目」對話串標記(&A)"
 
-#: kmmainwidget.cpp:3289
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid "&Watch Thread"
 msgstr "標記討論串為監測中(&W)"
 
-#: kmmainwidget.cpp:3293
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "標記討論串為忽略(&I)"
 
-#: kmmainwidget.cpp:3301 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3300 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "儲存附件(&T)…"
 
-#: kmmainwidget.cpp:3305
+#: kmmainwidget.cpp:3304
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "刪除所有附件"
 
-#: kmmainwidget.cpp:3313
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "複製解密後的到…"
 
-#: kmmainwidget.cpp:3317
+#: kmmainwidget.cpp:3316
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "套用所有的過濾器(&Y)"
 
-#: kmmainwidget.cpp:3326
+#: kmmainwidget.cpp:3325
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "展開討論串/群組(&E)"
 
-#: kmmainwidget.cpp:3329
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "展開目前的討論串或群組"
 
-#: kmmainwidget.cpp:3333
+#: kmmainwidget.cpp:3332
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "收起討論串/群組(&C)"
 
-#: kmmainwidget.cpp:3336
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "收起目前討論串或群組"
 
-#: kmmainwidget.cpp:3340
+#: kmmainwidget.cpp:3339
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "展開所有討論串(&P)"
 
-#: kmmainwidget.cpp:3343
+#: kmmainwidget.cpp:3342
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "展開目前資料夾內的所有討論串"
 
-#: kmmainwidget.cpp:3347
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "收起所有討論串(&O)"
 
-#: kmmainwidget.cpp:3350
+#: kmmainwidget.cpp:3349
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "收起目前資料夾內的所有討論串"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3353
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "顯示信件(&D)"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3360
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "下一封信件(&N)"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3363
 #, kde-format
 msgid "Go to the next message"
 msgstr "到下一封信件"
 
-#: kmmainwidget.cpp:3368
+#: kmmainwidget.cpp:3367
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "下一封未讀信件(&U)"
 
-#: kmmainwidget.cpp:3376
+#: kmmainwidget.cpp:3375
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "下一個"
 
-#: kmmainwidget.cpp:3377
+#: kmmainwidget.cpp:3376
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "到下一封未讀信件"
 
-#: kmmainwidget.cpp:3381
+#: kmmainwidget.cpp:3380
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "上一封信件(&P)"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3382
 #, kde-format
 msgid "Go to the previous message"
 msgstr "到上一封信件"
 
-#: kmmainwidget.cpp:3388
+#: kmmainwidget.cpp:3387
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "上一封未讀信件(&M)"
 
-#: kmmainwidget.cpp:3396
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "上一個"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3396
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "到上一封未讀信件"
 
-#: kmmainwidget.cpp:3401
+#: kmmainwidget.cpp:3400
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "下一個有未讀信件的資料夾(&F)"
 
-#: kmmainwidget.cpp:3407
+#: kmmainwidget.cpp:3406
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "到下一個有未讀信件的資料夾"
 
-#: kmmainwidget.cpp:3410
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "上一個有未讀信件的資料夾(&O)"
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3415
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "到上一個有未讀信件的資料夾"
 
-#: kmmainwidget.cpp:3420
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "下一個未讀文字(&T)"
 
-#: kmmainwidget.cpp:3423
+#: kmmainwidget.cpp:3422
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "到下一個未讀的文字"
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3424
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr "將目前信件往下捲，若到了底部，則跳到下一封未讀信件。"
 
-#: kmmainwidget.cpp:3433
+#: kmmainwidget.cpp:3432
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "設定過濾器(&F)…"
 
-#: kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3438
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "管理過濾器文稿(&S)…"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "&Add Account…"
 msgstr "新增帳號(&A)…"
 
-#: kmmainwidget.cpp:3449
+#: kmmainwidget.cpp:3448
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail 介紹(&I)"
 
-#: kmmainwidget.cpp:3451
+#: kmmainwidget.cpp:3450
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "顯示 KMail 歡迎頁"
 
-#: kmmainwidget.cpp:3458
+#: kmmainwidget.cpp:3457
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "設定通知(&N)…"
 
-#: kmmainwidget.cpp:3465
+#: kmmainwidget.cpp:3464
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "設定 KMail(&C)…"
 
-#: kmmainwidget.cpp:3472
+#: kmmainwidget.cpp:3471
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "過期…"
 
-#: kmmainwidget.cpp:3478
+#: kmmainwidget.cpp:3477
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "新增最愛資料夾…"
 
-#: kmmainwidget.cpp:3484
-#, kde-format
-msgid "Serverside Subscription…"
-msgstr "伺服器端訂閱…"
-
-#: kmmainwidget.cpp:3490 kmmainwidget.cpp:3498
+#: kmmainwidget.cpp:3483 kmmainwidget.cpp:3491
 #, kde-format
 msgid "Apply All Filters"
 msgstr "套用所有的過濾器"
 
-#: kmmainwidget.cpp:3511
+#: kmmainwidget.cpp:3504
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "套用過濾器在資料夾和所有的子資料夾上"
 
-#: kmmainwidget.cpp:3516
+#: kmmainwidget.cpp:3509
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "匯入/匯出 KMail 資料…"
 
-#: kmmainwidget.cpp:3522
+#: kmmainwidget.cpp:3515
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "新增通訊錄聯絡人…"
 
-#: kmmainwidget.cpp:3530 kmmainwidget.cpp:4183
+#: kmmainwidget.cpp:3523 kmmainwidget.cpp:4170
 #, kde-format
 msgid "Account &Settings"
 msgstr "帳號設定(&S)"
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3527
 #, kde-format
 msgid "Restart Account"
 msgstr "重新啟動帳號"
 
-#: kmmainwidget.cpp:3550
+#: kmmainwidget.cpp:3543
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "複製信件到資料夾"
 
-#: kmmainwidget.cpp:3556
+#: kmmainwidget.cpp:3549
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "跳至資料夾…"
 
-#: kmmainwidget.cpp:3562
+#: kmmainwidget.cpp:3555
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "取消目前的動作"
 
-#: kmmainwidget.cpp:3568
+#: kmmainwidget.cpp:3561
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "將輸入焦點設在下一個資料夾"
 
-#: kmmainwidget.cpp:3574
+#: kmmainwidget.cpp:3567
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "將輸入焦點設在上一個資料夾"
 
-#: kmmainwidget.cpp:3580
+#: kmmainwidget.cpp:3573
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "選取聚焦的資料夾"
 
-#: kmmainwidget.cpp:3587
+#: kmmainwidget.cpp:3580
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "將輸入焦點設在第一個資料夾"
 
-#: kmmainwidget.cpp:3593
+#: kmmainwidget.cpp:3586
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "將輸入焦點設在最後一個資料夾"
 
-#: kmmainwidget.cpp:3599
+#: kmmainwidget.cpp:3592
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "將輸入焦點設在下一封信件"
 
-#: kmmainwidget.cpp:3605
+#: kmmainwidget.cpp:3598
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "將輸入焦點設在上一封信件"
 
-#: kmmainwidget.cpp:3611
+#: kmmainwidget.cpp:3604
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "選取第一封信件"
 
-#: kmmainwidget.cpp:3617
+#: kmmainwidget.cpp:3610
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "選取最後一封信件"
 
-#: kmmainwidget.cpp:3623
+#: kmmainwidget.cpp:3616
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "選取聚焦的信件"
 
-#: kmmainwidget.cpp:3630
+#: kmmainwidget.cpp:3623
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "設定焦點到快速搜尋"
 
-#: kmmainwidget.cpp:3638
+#: kmmainwidget.cpp:3631
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "將選取延伸到上一封信件"
 
-#: kmmainwidget.cpp:3644
+#: kmmainwidget.cpp:3637
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "將選取延伸到下一封信件"
 
-#: kmmainwidget.cpp:3651
+#: kmmainwidget.cpp:3644
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "移動信件到資料夾"
 
-#: kmmainwidget.cpp:3661
+#: kmmainwidget.cpp:3654
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "將此資料夾及其子資料夾中所有信件標為已讀"
 
-#: kmmainwidget.cpp:3666
+#: kmmainwidget.cpp:3659
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "從此資料夾及其所有子資料夾移除重複項目"
 
-#: kmmainwidget.cpp:3672
+#: kmmainwidget.cpp:3665
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "上一個選取的資料夾"
 
-#: kmmainwidget.cpp:3679
+#: kmmainwidget.cpp:3672
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "下一個選取的資料夾"
 
-#: kmmainwidget.cpp:3708
+#: kmmainwidget.cpp:3701
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "新增最愛資料夾"
 
-#: kmmainwidget.cpp:4129
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "&Delete Search"
 msgstr "刪除搜尋結果(&D)"
 
-#: kmmainwidget.cpp:4141
+#: kmmainwidget.cpp:4134
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "將整個串列移至垃圾桶(&O)"
 
-#: kmmainwidget.cpp:4143
+#: kmmainwidget.cpp:4136
 #, kde-format
 msgid "Edit Search…"
 msgstr "編輯搜尋字串…"
 
-#: kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:4168
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "設定整合信箱"
 
-#: kmmainwidget.cpp:4192
+#: kmmainwidget.cpp:4179
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "清空垃圾桶(&M)"
 
-#: kmmainwidget.cpp:4192
+#: kmmainwidget.cpp:4179
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "將所有信件移入垃圾桶(&M)"
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4253
 #, kde-format
 msgid "&Undo"
 msgstr "復原(&U)"
 
-#: kmmainwidget.cpp:4268
+#: kmmainwidget.cpp:4255
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "復原(&U)：\"%1\""
 
-#: kmmainwidget.cpp:4325
+#: kmmainwidget.cpp:4312
 #, kde-format
 msgid "Filter %1"
 msgstr "過濾 %1"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4877
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "搜尋… <%1>"
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5540,13 +5535,13 @@ msgstr ""
 "在信件中使用 HTML 將會使您更容易受到垃圾信的攻擊，並且有可能會增加您的系統被"
 "其他已存在和將來的安全漏洞危害的機會。"
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4889
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "使用 HTML"
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5035
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5561,52 +5556,52 @@ msgstr ""
 "您可以在 KMail 的外掛程式設定當中設定合併信箱、建立自訂的合併信箱或是完全停用"
 "本功能。"
 
-#: kmmainwidget.cpp:5062
+#: kmmainwidget.cpp:5038
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "啟用整合信箱？"
 
-#: kmmainwidget.cpp:5063
+#: kmmainwidget.cpp:5039
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "啟用整合信箱"
 
-#: kmmainwidget.cpp:5064
+#: kmmainwidget.cpp:5040
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "取消"
 
-#: kmmainwidget.cpp:5099
+#: kmmainwidget.cpp:5075
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "您確定要重新啟動 Akonadi 嗎？"
 
-#: kmmainwidget.cpp:5100
+#: kmmainwidget.cpp:5076
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "重新啟動 Akonadi"
 
-#: kmmainwidget.cpp:5101
+#: kmmainwidget.cpp:5077
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "重新啟動"
 
-#: kmmainwidget.cpp:5108
+#: kmmainwidget.cpp:5084
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi 已重新啟動。"
 
-#: kmmainwin.cpp:53
+#: kmmainwin.cpp:52
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "啟動中…"
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:491 util.cpp:168
 #, kde-format
 msgid "&Move to Trash"
 msgstr "移到垃圾桶(&M)"
@@ -5891,29 +5886,29 @@ msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
 msgstr "選擇此選項以同步您的群組信件。"
 
-#: kontactplugin/kmail/summarywidget.cpp:49
+#: kontactplugin/kmail/summarywidget.cpp:50
 #, kde-format
 msgid "New Messages"
 msgstr "新信件"
 
-#: kontactplugin/kmail/summarywidget.cpp:141
+#: kontactplugin/kmail/summarywidget.cpp:145
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
 msgstr "<qt><b>%1</b><br/>總計：%2<br/>未讀：%3</qt>"
 
-#: kontactplugin/kmail/summarywidget.cpp:155
+#: kontactplugin/kmail/summarywidget.cpp:159
 #, kde-format
 msgctxt "%1: number of unread messages %2: total number of messages"
 msgid "%1 / %2"
 msgstr "%1 / %2"
 
-#: kontactplugin/kmail/summarywidget.cpp:196
+#: kontactplugin/kmail/summarywidget.cpp:200
 #, kde-format
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "您監看的資料夾中沒有未讀訊息"
 
-#: kontactplugin/kmail/summarywidget.cpp:214
+#: kontactplugin/kmail/summarywidget.cpp:218
 #, kde-format
 msgid "Open Folder: \"%1\""
 msgstr "打開資料夾：%1"
@@ -6264,7 +6259,7 @@ msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
 msgstr "資料夾"
 
-#: searchdialog/searchpatternwarning.cpp:27
+#: searchdialog/searchpatternwarning.cpp:28
 #, kde-format
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "搜尋失敗，發現錯誤：<ul><li>%1</li></ul>"
@@ -7960,25 +7955,25 @@ msgstr "外掛程式資訊"
 msgid "Plugins used in KMail."
 msgstr "KMail 所使用的外掛程式。"
 
-#: util.cpp:170
+#: util.cpp:171
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "刪除"
 
-#: util.cpp:170
+#: util.cpp:171
 #, kde-format
 msgid "Move to Trash"
 msgstr "移到垃圾桶"
 
-#: util.cpp:179
+#: util.cpp:180
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr "無法啟動帳號精靈。請檢查您是否正確安裝 AccountWizard。"
 
-#: util.cpp:181
+#: util.cpp:182
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
@@ -8017,6 +8012,9 @@ msgstr[0] "「不在辦公室」的自動回覆已在伺服器上啟動"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "縮放：%1%"
+
+#~ msgid "Serverside Subscription…"
+#~ msgstr "伺服器端訂閱…"
 
 #~ msgid ""
 #~ "Could not start the import wizard. Please make sure you have ImportWizard "

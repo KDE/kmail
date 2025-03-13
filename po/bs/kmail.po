@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-12 00:42+0000\n"
+"POT-Creation-Date: 2025-03-13 00:42+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -1164,56 +1164,56 @@ msgstr "Ukloni"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Ne možemo kreirati karticu. Kartica s istim imenom već postoji."
 
-#: configuredialog/configurecomposerpage.cpp:64
+#: configuredialog/configurecomposerpage.cpp:65
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "Opšte"
 
-#: configuredialog/configurecomposerpage.cpp:71
+#: configuredialog/configurecomposerpage.cpp:72
 #, kde-format
 msgid "Standard Templates"
 msgstr "Standardni šabloni"
 
-#: configuredialog/configurecomposerpage.cpp:77
+#: configuredialog/configurecomposerpage.cpp:78
 #, kde-format
 msgid "Custom Templates"
 msgstr "Prilagođeni šabloni"
 
-#: configuredialog/configurecomposerpage.cpp:83
+#: configuredialog/configurecomposerpage.cpp:84
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "Tema"
 
-#: configuredialog/configurecomposerpage.cpp:90
+#: configuredialog/configurecomposerpage.cpp:91
 #, kde-format
 msgid "Headers"
 msgstr "Zaglavlja"
 
-#: configuredialog/configurecomposerpage.cpp:96
+#: configuredialog/configurecomposerpage.cpp:97
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "Prilozi"
 
-#: configuredialog/configurecomposerpage.cpp:102
+#: configuredialog/configurecomposerpage.cpp:103
 #, kde-format
 msgid "Autocorrection"
 msgstr "Automatsko ispravljanje"
 
-#: configuredialog/configurecomposerpage.cpp:108
+#: configuredialog/configurecomposerpage.cpp:109
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "Automatski raširi sliku"
 
-#: configuredialog/configurecomposerpage.cpp:129
+#: configuredialog/configurecomposerpage.cpp:130
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Potpis"
 
-#: configuredialog/configurecomposerpage.cpp:134
+#: configuredialog/configurecomposerpage.cpp:135
 #, fuzzy, kde-format
 #| msgid ""
 #| "Automatically insert the configured signature\n"
@@ -1223,12 +1223,12 @@ msgid ""
 "message"
 msgstr "Automatski umetni podešen potpis kada počinješ pisanje poruke"
 
-#: configuredialog/configurecomposerpage.cpp:144
+#: configuredialog/configurecomposerpage.cpp:145
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Ubaci potpis iznad bilo kojeg citiranog teksta"
 
-#: configuredialog/configurecomposerpage.cpp:155
+#: configuredialog/configurecomposerpage.cpp:156
 #, fuzzy, kde-format
 #| msgid ""
 #| "Insert the RFC-compliant signature separator\n"
@@ -1240,18 +1240,18 @@ msgstr ""
 "Umetni RFC-usaglašen  separator potpisa (dvije crtice i razmak u liniji) "
 "prije potpisa"
 
-#: configuredialog/configurecomposerpage.cpp:166
+#: configuredialog/configurecomposerpage.cpp:167
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "Kada odgodovaram, ne citiraj postojeće potpise"
 
-#: configuredialog/configurecomposerpage.cpp:178
+#: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Format"
 
-#: configuredialog/configurecomposerpage.cpp:183
+#: configuredialog/configurecomposerpage.cpp:184
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, only quote the selected text\n"
@@ -1264,7 +1264,7 @@ msgstr ""
 "Kada odgovaram,samo citiraj izabrani tekst (umjesto cijele poruke) teskt je "
 "izabran u prozoru poruke"
 
-#: configuredialog/configurecomposerpage.cpp:193
+#: configuredialog/configurecomposerpage.cpp:194
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, add quote signs in front of all lines of the quoted text,\n"
@@ -1280,17 +1280,17 @@ msgstr ""
 "čak i kada je red kreiran dodavanjem dodadnog kraja reda  \n"
 "prilikom formiranja izraza u tekstu."
 
-#: configuredialog/configurecomposerpage.cpp:204
+#: configuredialog/configurecomposerpage.cpp:205
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Omogući automatsko formiranje izraza određenih sa"
 
-#: configuredialog/configurecomposerpage.cpp:215
+#: configuredialog/configurecomposerpage.cpp:216
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "Podesi širinu teksta za automatsko formiranje izraza"
 
-#: configuredialog/configurecomposerpage.cpp:235
+#: configuredialog/configurecomposerpage.cpp:236
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying or forwarding, quote the message\n"
@@ -1305,7 +1305,7 @@ msgstr ""
 "Iko nije označeno,odgovor će biti kao običan tekst prema zadanim "
 "podešavanjima."
 
-#: configuredialog/configurecomposerpage.cpp:247
+#: configuredialog/configurecomposerpage.cpp:248
 #, fuzzy, kde-format
 #| msgid ""
 #| "Format the plain text part of a message from the HTML markup.\n"
@@ -1318,50 +1318,50 @@ msgstr ""
 "Formatiraj jednostavni dio teksa poruke od HTML oznake.\n"
 "Podebljano,italik, i podvučeni tekst,liste,i eksterne oznake su podržane."
 
-#: configuredialog/configurecomposerpage.cpp:257
+#: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "Utkano"
 
-#: configuredialog/configurecomposerpage.cpp:257
+#: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgid "As Attachment"
 msgstr "Kao prilog"
 
-#: configuredialog/configurecomposerpage.cpp:259
+#: configuredialog/configurecomposerpage.cpp:260
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "Podesi zadani format proslijeđene poruke"
 
-#: configuredialog/configurecomposerpage.cpp:263
+#: configuredialog/configurecomposerpage.cpp:264
 #, fuzzy, kde-format
 #| msgid "Default forwarding type:"
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Tip zadanog proslijeđivanja:"
 
-#: configuredialog/configurecomposerpage.cpp:281
+#: configuredialog/configurecomposerpage.cpp:282
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Primaoci"
 
-#: configuredialog/configurecomposerpage.cpp:311
+#: configuredialog/configurecomposerpage.cpp:312
 #, fuzzy, kde-format
 #| msgid "Warn if too many recipients are specified"
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Upozori ako je previše primaoca određeno"
 
-#: configuredialog/configurecomposerpage.cpp:320
+#: configuredialog/configurecomposerpage.cpp:321
 #, fuzzy, kde-format
 #| msgid "Set the maximum number of recipients for the warning"
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Podesi maksimalni broj primaoca za upozorenje"
 
-#: configuredialog/configurecomposerpage.cpp:338
+#: configuredialog/configurecomposerpage.cpp:339
 #, fuzzy, kde-format
 #| msgid ""
 #| "Only allow this many recipients to be specified for the message.\n"
@@ -1384,7 +1384,7 @@ msgstr ""
 "Primijetite, ipak, da to ne uzima u obzir distribuciju listama\n"
 "ili mailing liste."
 
-#: configuredialog/configurecomposerpage.cpp:359
+#: configuredialog/configurecomposerpage.cpp:360
 #, fuzzy, kde-format
 #| msgid ""
 #| "Remember recent addresses entered,\n"
@@ -1395,20 +1395,20 @@ msgstr ""
 "Zapamti upravo unesene adrese,\n"
 "i ponudi ih za popunjavanje primatelja"
 
-#: configuredialog/configurecomposerpage.cpp:371
+#: configuredialog/configurecomposerpage.cpp:372
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Ne spašavaj"
 
-#: configuredialog/configurecomposerpage.cpp:374
+#: configuredialog/configurecomposerpage.cpp:375
 #, fuzzy, kde-format
 #| msgid "Maximum recent addresses retained:"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Maksimalno nedavnih adresa zadržano:"
 
-#: configuredialog/configurecomposerpage.cpp:378
+#: configuredialog/configurecomposerpage.cpp:379
 #, fuzzy, kde-format
 #| msgid ""
 #| "The maximum number of recently entered addresses that will\n"
@@ -1420,26 +1420,26 @@ msgstr ""
 "Maksimalan broj nedavno unešenih adresa koje će biti zapamćene za "
 "popunjavanje"
 
-#: configuredialog/configurecomposerpage.cpp:391
+#: configuredialog/configurecomposerpage.cpp:392
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Uredi redoslijed dovršavanja..."
 
-#: configuredialog/configurecomposerpage.cpp:400
+#: configuredialog/configurecomposerpage.cpp:401
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Nema auto-snimanja"
 
-#: configuredialog/configurecomposerpage.cpp:410
+#: configuredialog/configurecomposerpage.cpp:411
 #, kde-format
 msgid "No autosave"
 msgstr "Nema auto-snimanja"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:412
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1451,18 +1451,18 @@ msgstr[0] " minuta"
 msgstr[1] " minute"
 msgstr[2] " minuta"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Automatski spasi poruku u određenom intervalu"
 
-#: configuredialog/configurecomposerpage.cpp:619
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Prefiks za temu &odgovora"
 
-#: configuredialog/configurecomposerpage.cpp:624
-#: configuredialog/configurecomposerpage.cpp:650
+#: configuredialog/configurecomposerpage.cpp:625
+#: configuredialog/configurecomposerpage.cpp:651
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1475,161 +1475,161 @@ msgstr ""
 "Prepoznaj bilo koji niz sljedećih prefiksa\n"
 "(unesite regularne izraze bez razlikovanja velikih i malih slova):"
 
-#: configuredialog/configurecomposerpage.cpp:632
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:632
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Re&move"
 msgstr "&Ukloni"
 
-#: configuredialog/configurecomposerpage.cpp:632
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:970
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Izmijeni..."
 
-#: configuredialog/configurecomposerpage.cpp:632
+#: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Unesite novi prefiks odgovora:"
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:634
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: configuredialog/configurecomposerpage.cpp:635
+#: configuredialog/configurecomposerpage.cpp:636
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Prefiks za temu &odgovora"
 
-#: configuredialog/configurecomposerpage.cpp:646
+#: configuredialog/configurecomposerpage.cpp:647
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Prefiksi &teme proslijeđivanja"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:656 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Ukloni"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Izmijeni..."
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Unesite novi prefiks proslijeđivanja:"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:658
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:659
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Prefiksi &teme proslijeđivanja"
 
-#: configuredialog/configurecomposerpage.cpp:702
+#: configuredialog/configurecomposerpage.cpp:703
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Koristi vlastiti message-id sufiks"
 
-#: configuredialog/configurecomposerpage.cpp:718
+#: configuredialog/configurecomposerpage.cpp:719
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Vlastiti message-&id sufiks:"
 
-#: configuredialog/configurecomposerpage.cpp:730
+#: configuredialog/configurecomposerpage.cpp:731
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definišite vlastita polja mime zaglavlja:"
 
-#: configuredialog/configurecomposerpage.cpp:738
+#: configuredialog/configurecomposerpage.cpp:739
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Naziv"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Vrijednost"
 
-#: configuredialog/configurecomposerpage.cpp:747
+#: configuredialog/configurecomposerpage.cpp:748
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "No&vo"
 
-#: configuredialog/configurecomposerpage.cpp:751
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Ukloni"
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Naziv:"
 
-#: configuredialog/configurecomposerpage.cpp:770
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Vrijednost:"
 
-#: configuredialog/configurecomposerpage.cpp:910
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:912
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Pogrešna e-mail adresa"
 
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:953
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&Uključi prepoznavanje nedostajućih priloga"
 
-#: configuredialog/configurecomposerpage.cpp:958
+#: configuredialog/configurecomposerpage.cpp:959
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1639,25 +1639,25 @@ msgstr ""
 "Prepoznaj bilo koju od sljedećih ključnih riječi kao pokušaj dodavanja "
 "priloga:"
 
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Unesite novu ključnu riječ:"
 
-#: configuredialog/configurecomposerpage.cpp:971
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:973
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "Prilozi"
 
-#: configuredialog/configurecomposerpage.cpp:979
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
@@ -1665,13 +1665,13 @@ msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Prilozi"
 
-#: configuredialog/configurecomposerpage.cpp:986
+#: configuredialog/configurecomposerpage.cpp:987
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:988
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "No limit"
 msgstr "Bez ograničenja"
@@ -1896,7 +1896,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Arhiviraj fasciklu"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3657
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3650
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -2003,7 +2003,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Prikaži listu priloga"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:97
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2159,7 +2159,7 @@ msgstr "&Ubaci tekstualnu datoteku..."
 msgid "&Insert Recent Text File"
 msgstr "&Ubaci nedavnu tekstualnu datoteku"
 
-#: editor/kmcomposerwin.cpp:1324 kmmainwidget.cpp:2985
+#: editor/kmcomposerwin.cpp:1324 kmmainwidget.cpp:2984
 #, kde-format
 msgid "&Address Book"
 msgstr "&Adresar"
@@ -2393,7 +2393,7 @@ msgstr "&Pronađi poruke..."
 msgid "Configure KMail…"
 msgstr "Podesi KMail..."
 
-#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:224 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:223 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2401,7 +2401,7 @@ msgid ""
 msgstr ""
 "<qt>Ovo će potpuno sakriti meni. Možete ga ponovo uključiti kucajuči %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1582 kmmainwin.cpp:227
+#: editor/kmcomposerwin.cpp:1582 kmmainwin.cpp:226
 #, fuzzy, kde-format
 #| msgid "Hide menu bar"
 msgctxt "@title:window"
@@ -4498,7 +4498,7 @@ msgid "F&older"
 msgstr "Di&rektorij"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3506 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3499 kmmainwin.rc:134
 #: kmmainwin.rc:291
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
@@ -4531,7 +4531,7 @@ msgid "&Forward"
 msgstr "P&roslijedi:"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3322 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3321 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Primijeni &filter"
@@ -4686,29 +4686,29 @@ msgstr "HTML traka s alatima"
 msgid "Text Direction Toolbar"
 msgstr "Alatna traka pravca teksta"
 
-#: kmkernel.cpp:634
+#: kmkernel.cpp:637
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail je podešen da bude van veze; svi mrežni poslovi su suspendovani"
 
-#: kmkernel.cpp:654 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:657 kmmainwidget.cpp:2479 kmmainwidget.cpp:2494
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&Pošalji poštu"
 
-#: kmkernel.cpp:655 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:658 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Spremam se poslati e-mail..."
 
-#: kmkernel.cpp:686
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail je podešen da bude na vezi; svi mrežni poslovi su nastavljeni"
 
-#: kmkernel.cpp:688
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4717,44 +4717,44 @@ msgstr ""
 "KMail je postavljen da radi na mreži; svi mrežni poslovi će se nastaviti "
 "kada se prepozna mrežna konekcija"
 
-#: kmkernel.cpp:761
+#: kmkernel.cpp:764
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail je trenutno van veze. Kako želite da se nastavi?"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Na vezi/van veze"
 
-#: kmkernel.cpp:764
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Radi na vezi"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:768
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Radi van veze"
 
-#: kmkernel.cpp:789
+#: kmkernel.cpp:792
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Mrežna konekcija prepoznata, mrežni poslovi su oporavljeni"
 
-#: kmkernel.cpp:792
+#: kmkernel.cpp:795
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "Nijedna mrežna konekcija nije prepoznata, mrežni poslovi su suspendovani"
 
-#: kmkernel.cpp:887
+#: kmkernel.cpp:890
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4763,14 +4763,14 @@ msgstr ""
 "Neuspjelo otvaranje datoteke automatskog snimanja %1.\n"
 "Razlog: %2"
 
-#: kmkernel.cpp:888
+#: kmkernel.cpp:891
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Neuspjelo otvaranje datoteke automatskog snimanja"
 
-#: kmkernel.cpp:1451
+#: kmkernel.cpp:1454
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4782,7 +4782,7 @@ msgstr[1] ""
 msgstr[2] ""
 "Ovih %1 identiteta je izmijenjeno da koriste podrazumijevani transport:"
 
-#: kmkernel.cpp:1475
+#: kmkernel.cpp:1478
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4791,18 +4791,18 @@ msgstr[0] "Ovaj %1 identitet je izmijenjen da koristi izmijenjeni transport:"
 msgstr[1] "Ova %1 identiteta su izmijenjena da koriste izmijenjeni transport:"
 msgstr[2] "Ovih %1 identiteta je izmijenjeno da koriste izmijenjeni transport:"
 
-#: kmkernel.cpp:1490
+#: kmkernel.cpp:1493
 #, kde-format
 msgid "Sending messages"
 msgstr "na &dolazne poruke"
 
-#: kmkernel.cpp:1491
+#: kmkernel.cpp:1494
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "Iniciram proces slanja"
 
-#: kmkernel.cpp:1570
+#: kmkernel.cpp:1573
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4810,7 +4810,7 @@ msgid ""
 "%2"
 msgstr "Resurs %1 je oštećen. Taj resurs je sada %2"
 
-#: kmkernel.cpp:1746 kmkernel.cpp:1752
+#: kmkernel.cpp:1749 kmkernel.cpp:1755
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4909,91 +4909,91 @@ msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Nije moguće pokrenuti čarobnjaka za uvoz"
 
-#: kmmainwidget.cpp:308
+#: kmmainwidget.cpp:307
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 "Drugi  poštanski program je pronađen na sistemu. Želite li uvesti podatke iz "
 "njega?"
 
-#: kmmainwidget.cpp:311
+#: kmmainwidget.cpp:310
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr ""
 
-#: kmmainwidget.cpp:312
+#: kmmainwidget.cpp:311
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr ""
 
-#: kmmainwidget.cpp:317
+#: kmmainwidget.cpp:316
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
 "Nije moguće pokretanje uvezenog čarobnjaka. Molimo provjerite vašu "
 "instalaciju."
 
-#: kmmainwidget.cpp:319
+#: kmmainwidget.cpp:318
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Nije moguće pokrenuti čarobnjaka za uvoz"
 
-#: kmmainwidget.cpp:1394
+#: kmmainwidget.cpp:1393
 #, kde-format
 msgid "No Subject"
 msgstr "Nema teme"
 
-#: kmmainwidget.cpp:1407
+#: kmmainwidget.cpp:1406
 #, kde-format
 msgid "(no templates)"
 msgstr "(nema šablona)"
 
-#: kmmainwidget.cpp:1459
+#: kmmainwidget.cpp:1458
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Ovaj fascikl nema podešenu opciju za brisanje starih poruka"
 
-#: kmmainwidget.cpp:1465
+#: kmmainwidget.cpp:1464
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Da li ste sigurni da želite brisati stare poruke u fasciklu <b>%1</b>?</"
 "qt>"
 
-#: kmmainwidget.cpp:1466
+#: kmmainwidget.cpp:1465
 #, kde-format
 msgid "Expire Folder"
 msgstr "Briši stare poruke"
 
-#: kmmainwidget.cpp:1466
+#: kmmainwidget.cpp:1465
 #, fuzzy, kde-format
 #| msgid "&Expire"
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Briši stare"
 
-#: kmmainwidget.cpp:1483
+#: kmmainwidget.cpp:1482
 #, fuzzy, kde-format
 #| msgid "Empty Trash"
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Isprazni smeće"
 
-#: kmmainwidget.cpp:1483
+#: kmmainwidget.cpp:1482
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Premjesti u smeće"
 
-#: kmmainwidget.cpp:1484
+#: kmmainwidget.cpp:1483
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Da li ste sigurni da želite isprazniti fascikl sa smećem?"
 
-#: kmmainwidget.cpp:1486
+#: kmmainwidget.cpp:1485
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -5002,29 +5002,29 @@ msgstr ""
 "<qt>Da li ste sigurni da želite premjestiti sve poruke iz fascikla <b>%1</b> "
 "u smeće?</qt>"
 
-#: kmmainwidget.cpp:1509
+#: kmmainwidget.cpp:1508
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Premjestio sam sve poruke u smeće"
 
-#: kmmainwidget.cpp:1563
+#: kmmainwidget.cpp:1562
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Da li ste sigurni da želite pobrisati sve stare poruke?"
 
-#: kmmainwidget.cpp:1564
+#: kmmainwidget.cpp:1563
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "Briši stare poruke?"
 
-#: kmmainwidget.cpp:1565
+#: kmmainwidget.cpp:1564
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Briši stare"
 
-#: kmmainwidget.cpp:1590
+#: kmmainwidget.cpp:1589
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -5035,21 +5035,21 @@ msgstr ""
 "„spam“ i može povećati verovatnoću da će vaš sistem biti kompromitovan "
 "drugim prisutnim i očekivanim bezbijednosnim zloupotrebama."
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4912
+#: kmmainwidget.cpp:1592 kmmainwidget.cpp:4888
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Sigurnosno upozorenje"
 
-#: kmmainwidget.cpp:1594
+#: kmmainwidget.cpp:1593
 #, fuzzy, kde-format
 #| msgid "Load External References"
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Učitaj spoljne reference"
 
-#: kmmainwidget.cpp:1667
+#: kmmainwidget.cpp:1666
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -5067,150 +5067,150 @@ msgstr[2] ""
 "<qt>Da li stvarno želite da obrišete %1 odabranih poruke?<br />Jednom "
 "obrisane, ne mogu biti vraćene.</qt>"
 
-#: kmmainwidget.cpp:1672
+#: kmmainwidget.cpp:1671
 #, fuzzy, kde-format
 #| msgid "Delete Messages"
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Obriši poruke"
 
-#: kmmainwidget.cpp:1672
+#: kmmainwidget.cpp:1671
 #, fuzzy, kde-format
 #| msgid "Delete Message"
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Obriši poruku"
 
-#: kmmainwidget.cpp:1687
+#: kmmainwidget.cpp:1686
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgid "Moving messages…"
 msgstr "Premještanje poruka nije uspjelo."
 
-#: kmmainwidget.cpp:1689 kmmainwidget.cpp:1889
+#: kmmainwidget.cpp:1688 kmmainwidget.cpp:1888
 #, fuzzy, kde-format
 #| msgid "Deleting messages"
 msgid "Deleting messages…"
 msgstr "Obriši poruke"
 
-#: kmmainwidget.cpp:1704 kmmainwidget.cpp:1909
+#: kmmainwidget.cpp:1703 kmmainwidget.cpp:1908
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "Poruke su uspješno obrisane."
 
-#: kmmainwidget.cpp:1706
+#: kmmainwidget.cpp:1705
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "Poruke premještene uspješno."
 
-#: kmmainwidget.cpp:1711 kmmainwidget.cpp:1922
+#: kmmainwidget.cpp:1710 kmmainwidget.cpp:1921
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "Brisanje poruka nije uspelo."
 
-#: kmmainwidget.cpp:1713 kmmainwidget.cpp:1935
+#: kmmainwidget.cpp:1712 kmmainwidget.cpp:1934
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "Brisanje poruka je otkazano."
 
-#: kmmainwidget.cpp:1717
+#: kmmainwidget.cpp:1716
 #, kde-format
 msgid "Moving messages failed."
 msgstr "Premještanje poruka nije uspjelo."
 
-#: kmmainwidget.cpp:1719
+#: kmmainwidget.cpp:1718
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "Premještanje poruka prekinuto."
 
-#: kmmainwidget.cpp:1791
+#: kmmainwidget.cpp:1790
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "Premjesti poruke u direkorij"
 
-#: kmmainwidget.cpp:1818
+#: kmmainwidget.cpp:1817
 #, fuzzy, kde-format
 #| msgid "Copying messages..."
 msgid "Copying messages…"
 msgstr "Kopiram poruke..."
 
-#: kmmainwidget.cpp:1826
+#: kmmainwidget.cpp:1825
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "Poruke kopirane uspješno."
 
-#: kmmainwidget.cpp:1829
+#: kmmainwidget.cpp:1828
 #, kde-format
 msgid "Copying messages failed."
 msgstr "Kopiranje poruka neuspjelo."
 
-#: kmmainwidget.cpp:1831
+#: kmmainwidget.cpp:1830
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "Kopiranje poruka otkazano."
 
-#: kmmainwidget.cpp:1841
+#: kmmainwidget.cpp:1840
 #, fuzzy, kde-format
 #| msgid "Copy Messages to Folder"
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Kopiraj poruke u fasciklu"
 
-#: kmmainwidget.cpp:1886
+#: kmmainwidget.cpp:1885
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
 msgid "Moving messages to trash…"
 msgstr "Sklanjanje poruka u smeće..."
 
-#: kmmainwidget.cpp:1893
+#: kmmainwidget.cpp:1892
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash..."
 msgid "Deleting and moving messages to trash…"
 msgstr "Sklanjanje poruka u smeće..."
 
-#: kmmainwidget.cpp:1906
+#: kmmainwidget.cpp:1905
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Poruke sklonjene u smeće uspješno."
 
-#: kmmainwidget.cpp:1913
+#: kmmainwidget.cpp:1912
 #, fuzzy, kde-format
 #| msgid "Messages moved to trash successfully."
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Poruke sklonjene u smeće uspješno."
 
-#: kmmainwidget.cpp:1919
+#: kmmainwidget.cpp:1918
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Sklanjanje poruka u smeće nije uspjelo."
 
-#: kmmainwidget.cpp:1926
+#: kmmainwidget.cpp:1925
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash failed."
 msgid "Deleting or moving messages to trash failed."
 msgstr "Sklanjanje poruka u smeće nije uspjelo."
 
-#: kmmainwidget.cpp:1932
+#: kmmainwidget.cpp:1931
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Sklanjanje poruka u smeće otkazano."
 
-#: kmmainwidget.cpp:1939
+#: kmmainwidget.cpp:1938
 #, fuzzy, kde-format
 #| msgid "Moving messages to trash canceled."
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Sklanjanje poruka u smeće otkazano."
 
-#: kmmainwidget.cpp:2220
+#: kmmainwidget.cpp:2219
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Skoči do fascikla"
 
-#: kmmainwidget.cpp:2412
+#: kmmainwidget.cpp:2411
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -5222,7 +5222,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: kmmainwidget.cpp:2415
+#: kmmainwidget.cpp:2414
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -5231,7 +5231,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: kmmainwidget.cpp:2420
+#: kmmainwidget.cpp:2419
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
@@ -5255,535 +5255,535 @@ msgstr[2] ""
 "<qt>Da li stvarno želite da obrišete %1 odabranih poruke?<br />Jednom "
 "obrisane, ne mogu biti vraćene.</qt>"
 
-#: kmmainwidget.cpp:2427
+#: kmmainwidget.cpp:2426
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2432
+#: kmmainwidget.cpp:2431
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2437
+#: kmmainwidget.cpp:2436
 #, fuzzy, kde-format
 #| msgid "Select Contact"
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "Izaberite kontakt"
 
-#: kmmainwidget.cpp:2466
+#: kmmainwidget.cpp:2465
 #, kde-format
 msgid "Work Offline"
 msgstr "Radi van veze"
 
-#: kmmainwidget.cpp:2469
+#: kmmainwidget.cpp:2468
 #, kde-format
 msgid "Work Online"
 msgstr "Radi na vezi"
 
-#: kmmainwidget.cpp:2928
+#: kmmainwidget.cpp:2927
 #, fuzzy, kde-format
 #| msgid "Save &As..."
 msgid "Save &As…"
 msgstr "Snimi &kao..."
 
-#: kmmainwidget.cpp:2939
+#: kmmainwidget.cpp:2938
 #, fuzzy, kde-format
 #| msgid "&Expire All Folders"
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Briši stare poruke u &svim fasciklima"
 
-#: kmmainwidget.cpp:2944
+#: kmmainwidget.cpp:2943
 #, kde-format
 msgid "Check &Mail"
 msgstr "Provjeri &poštu"
 
-#: kmmainwidget.cpp:2952
+#: kmmainwidget.cpp:2951
 #, kde-format
 msgid "Check Mail In"
 msgstr "Provjeri poštu u"
 
-#: kmmainwidget.cpp:2957
+#: kmmainwidget.cpp:2956
 #, kde-format
 msgid "Check Mail"
 msgstr "Provjeri poštu"
 
-#: kmmainwidget.cpp:2958
+#: kmmainwidget.cpp:2957
 #, fuzzy, kde-format
 #| msgid "Check Mail"
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Provjeri poštu"
 
-#: kmmainwidget.cpp:2962
+#: kmmainwidget.cpp:2961
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "Pošalji po&redane poruke"
 
-#: kmmainwidget.cpp:2970
+#: kmmainwidget.cpp:2969
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Stanje na mreži (nepoznato)"
 
-#: kmmainwidget.cpp:2975
+#: kmmainwidget.cpp:2974
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Pošalji spremljene poruke preko"
 
-#: kmmainwidget.cpp:2995
+#: kmmainwidget.cpp:2994
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Upravljač certifikatima"
 
-#: kmmainwidget.cpp:3006
+#: kmmainwidget.cpp:3005
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
 msgid "&Import Messages…"
 msgstr "&Uvezi Poruke..."
 
-#: kmmainwidget.cpp:3017
+#: kmmainwidget.cpp:3016
 #, fuzzy, kde-format
 #| msgid "&Debug Sieve..."
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "&Ispravljanje Sieve-a..."
 
-#: kmmainwidget.cpp:3024
+#: kmmainwidget.cpp:3023
 #, fuzzy, kde-format
 #| msgid "Filter &Log Viewer..."
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Filtriraj &preglednik dnevnika..."
 
-#: kmmainwidget.cpp:3029
+#: kmmainwidget.cpp:3028
 #, fuzzy, kde-format
 #| msgid "Notification"
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Obavijest"
 
-#: kmmainwidget.cpp:3034
+#: kmmainwidget.cpp:3033
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr ""
 
-#: kmmainwidget.cpp:3039
+#: kmmainwidget.cpp:3038
 #, fuzzy, kde-format
 #| msgid "Edit \"Out of Office\" Replies..."
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Izmijeni automatske odgovore..."
 
-#: kmmainwidget.cpp:3045
+#: kmmainwidget.cpp:3044
 #, fuzzy, kde-format
 #| msgid "&Configure Automatic Archiving..."
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "&Konfiguriši automatsko arhiviranje"
 
-#: kmmainwidget.cpp:3051
+#: kmmainwidget.cpp:3050
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Brisanje poruka..."
 
-#: kmmainwidget.cpp:3057
+#: kmmainwidget.cpp:3056
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Pronađi poruke..."
 
-#: kmmainwidget.cpp:3068 util.cpp:167
+#: kmmainwidget.cpp:3067 util.cpp:168
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Obriši"
 
-#: kmmainwidget.cpp:3073
+#: kmmainwidget.cpp:3072
 #, fuzzy, kde-format
 #| msgid "M&ove Thread to Trash"
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Pr&emjesti lanac u smeće"
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3076
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Premjesti lanac u kantu za smeće"
 
-#: kmmainwidget.cpp:3080 kmmainwidget.cpp:4141
+#: kmmainwidget.cpp:3079 kmmainwidget.cpp:4134
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Obriši &lanac"
 
-#: kmmainwidget.cpp:3087 kmmainwidget.cpp:4143
+#: kmmainwidget.cpp:3086 kmmainwidget.cpp:4136
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
 msgstr "Nađi poruke"
 
-#: kmmainwidget.cpp:3093
+#: kmmainwidget.cpp:3092
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Izaberi &sve poruke"
 
-#: kmmainwidget.cpp:3100
+#: kmmainwidget.cpp:3099
 #, fuzzy, kde-format
 #| msgid "&Mailing List Management..."
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "&Upravljanje diskusionom listom..."
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3107
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Pokreni ponovo"
 
-#: kmmainwidget.cpp:3113
+#: kmmainwidget.cpp:3112
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Staviti sve prečišćavače ma direktorij"
 
-#: kmmainwidget.cpp:3118
+#: kmmainwidget.cpp:3117
 #, fuzzy, kde-format
 #| msgid "&Assign Shortcut..."
 msgid "&Assign Shortcut…"
 msgstr "&Dodijeli prečicu..."
 
-#: kmmainwidget.cpp:3136
+#: kmmainwidget.cpp:3135
 #, fuzzy, kde-format
 #| msgid "&Expiration Settings"
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "Postavke ist&eka"
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3160
 #, fuzzy, kde-format
 #| msgid "Archive Folder"
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Arhivni direktorij"
 
-#: kmmainwidget.cpp:3169
+#: kmmainwidget.cpp:3168
 #, fuzzy, kde-format
 #| msgid "Load E&xternal References"
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Učitaj spoljne re&ference"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3191
 #, fuzzy, kde-format
 #| msgid "Copy Message To..."
 msgid "Copy Message To…"
 msgstr "Kopiraj poruku u..."
 
-#: kmmainwidget.cpp:3194
+#: kmmainwidget.cpp:3193
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgid "Move Message To…"
 msgstr "Pomjeri poruku u..."
 
-#: kmmainwidget.cpp:3199
+#: kmmainwidget.cpp:3198
 #, fuzzy, kde-format
 #| msgid "New Messages In"
 msgid "&New Message…"
 msgstr "Nova poruka u..."
 
-#: kmmainwidget.cpp:3201
+#: kmmainwidget.cpp:3200
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Nova"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3208
 #, kde-format
 msgid "Message From &Template"
 msgstr "&Šablon za pošiljaoca poruke"
 
-#: kmmainwidget.cpp:3215
+#: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgid "New Message t&o Mailing-List…"
 msgstr "Nova poruka na &mailing listu..."
 
-#: kmmainwidget.cpp:3221
+#: kmmainwidget.cpp:3220
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Napravi filter"
 
-#: kmmainwidget.cpp:3225
+#: kmmainwidget.cpp:3224
 #, fuzzy, kde-format
 #| msgid "Filter on &Subject..."
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Filter na &temu..."
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3231
 #, fuzzy, kde-format
 #| msgid "Filter on &From..."
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Filter na &pošiljaoca..."
 
-#: kmmainwidget.cpp:3238
+#: kmmainwidget.cpp:3237
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Filter na p&rimaoca..."
 
-#: kmmainwidget.cpp:3244
+#: kmmainwidget.cpp:3243
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Filter na p&rimaoca..."
 
-#: kmmainwidget.cpp:3258
+#: kmmainwidget.cpp:3257
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Označi &thread"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Označi thread kao &pročitan"
 
-#: kmmainwidget.cpp:3264
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Označi sve poruke u izabranom threadu kao pročitane"
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3266
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Označi thread kao n&epročitan"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3269
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Označi sve poruke u izabranom threadu kao nepročitane"
 
-#: kmmainwidget.cpp:3276
+#: kmmainwidget.cpp:3275
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Označi thread kao &važan"
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3278
 #, fuzzy, kde-format
 #| msgid "Remove &Important Thread Mark"
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Ukloni oznaku &Važan thread"
 
-#: kmmainwidget.cpp:3282
+#: kmmainwidget.cpp:3281
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Označi lanac kao &akcionu stavku"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3284
 #, fuzzy, kde-format
 #| msgid "Remove &Action Item Thread Mark"
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Ukloni oznaku &akcionog sa lanca"
 
-#: kmmainwidget.cpp:3289
+#: kmmainwidget.cpp:3288
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&Prati thread"
 
-#: kmmainwidget.cpp:3293
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Ignoriši thread"
 
-#: kmmainwidget.cpp:3301 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3300 kmreadermainwin.cpp:488
 #, fuzzy, kde-format
 #| msgid "Save A&ttachments..."
 msgid "Save A&ttachments…"
 msgstr "Snimi pri&loge..."
 
-#: kmmainwidget.cpp:3305
+#: kmmainwidget.cpp:3304
 #, fuzzy, kde-format
 #| msgid "Select Contact"
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Izaberite kontakt"
 
-#: kmmainwidget.cpp:3313
+#: kmmainwidget.cpp:3312
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To…"
 msgstr "Kopiraj stavku u..."
 
-#: kmmainwidget.cpp:3317
+#: kmmainwidget.cpp:3316
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Primijeni s&ve filtere"
 
-#: kmmainwidget.cpp:3326
+#: kmmainwidget.cpp:3325
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Raširi nit / grupu"
 
-#: kmmainwidget.cpp:3329
+#: kmmainwidget.cpp:3328
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Raširi trenutnu nit ili grupu"
 
-#: kmmainwidget.cpp:3333
+#: kmmainwidget.cpp:3332
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Sažmi nit / grupu"
 
-#: kmmainwidget.cpp:3336
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Sažmi trenutnu nit ili grupu"
 
-#: kmmainwidget.cpp:3340
+#: kmmainwidget.cpp:3339
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "R&aširi sve threadove"
 
-#: kmmainwidget.cpp:3343
+#: kmmainwidget.cpp:3342
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Raširi sve threadove u trenutnom fasciklu"
 
-#: kmmainwidget.cpp:3347
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Saž&mi sve threadove"
 
-#: kmmainwidget.cpp:3350
+#: kmmainwidget.cpp:3349
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Sažmi sve threadove u trenutnom fasciklu"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3353
 #, fuzzy, kde-format
 #| msgid "&Display Message"
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&Prikaži poruku"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3360
 #, fuzzy, kde-format
 #| msgid "&Next Message"
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Sljedeća poruka"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3363
 #, kde-format
 msgid "Go to the next message"
 msgstr "Idi na sljedeću poruku"
 
-#: kmmainwidget.cpp:3368
+#: kmmainwidget.cpp:3367
 #, fuzzy, kde-format
 #| msgid "Next &Unread Message"
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Sljedeća &nepročitana poruka"
 
-#: kmmainwidget.cpp:3376
+#: kmmainwidget.cpp:3375
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Sljedeća"
 
-#: kmmainwidget.cpp:3377
+#: kmmainwidget.cpp:3376
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Idi na sljedeću nepročitanu poruku"
 
-#: kmmainwidget.cpp:3381
+#: kmmainwidget.cpp:3380
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Prethodna poruka"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3382
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Idi na prethodnu poruku"
 
-#: kmmainwidget.cpp:3388
+#: kmmainwidget.cpp:3387
 #, fuzzy, kde-format
 #| msgid "Previous Unread &Message"
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Prethodna n&epročitana poruka"
 
-#: kmmainwidget.cpp:3396
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Prethodna"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3396
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Idi na prethodnu nepročitanu poruku"
 
-#: kmmainwidget.cpp:3401
+#: kmmainwidget.cpp:3400
 #, fuzzy, kde-format
 #| msgid "Next Unread &Folder"
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Sljedeći nepročitan &fascikl"
 
-#: kmmainwidget.cpp:3407
+#: kmmainwidget.cpp:3406
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Idi na sljedeći fascikl sa nepročitanim porukama"
 
-#: kmmainwidget.cpp:3410
+#: kmmainwidget.cpp:3409
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Prethodn&i nepročitani fascikl"
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3415
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Idi na prethodni fascikl sa nepročitanim porukama"
 
-#: kmmainwidget.cpp:3420
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Sljedeći nepročitan &tekst"
 
-#: kmmainwidget.cpp:3423
+#: kmmainwidget.cpp:3422
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Idi na idući nepročitani tekst"
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3424
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5792,310 +5792,304 @@ msgstr ""
 "Skroluje trenutnu poruku. Ako ste na kraju trenutne poruke, ide na sljedeću "
 "nepročitanu poruku."
 
-#: kmmainwidget.cpp:3433
+#: kmmainwidget.cpp:3432
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
 msgid "Configure &Filters…"
 msgstr "Podesi &filtere..."
 
-#: kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3438
 #, fuzzy, kde-format
 #| msgid "Manage &Sieve Scripts..."
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Upravljaj &Sijeve skriptama..."
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3443
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "&Add Account…"
 msgstr "Dodaj bilješku..."
 
-#: kmmainwidget.cpp:3449
+#: kmmainwidget.cpp:3448
 #, kde-format
 msgid "KMail &Introduction"
 msgstr "KMail &Uvod"
 
-#: kmmainwidget.cpp:3451
+#: kmmainwidget.cpp:3450
 #, kde-format
 msgid "Display KMail's Welcome Page"
 msgstr "Prikaži KMail stranicu dobrodošlice"
 
-#: kmmainwidget.cpp:3458
+#: kmmainwidget.cpp:3457
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "Configure &Notifications…"
 msgstr "Podesi &obavještenja..."
 
-#: kmmainwidget.cpp:3465
+#: kmmainwidget.cpp:3464
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure KMail…"
 msgstr "Po&desi KMail..."
 
-#: kmmainwidget.cpp:3472
+#: kmmainwidget.cpp:3471
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Briši stare"
 
-#: kmmainwidget.cpp:3478
+#: kmmainwidget.cpp:3477
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgid "Add Favorite Folder…"
 msgstr "Dodaj omiljeni fascikl"
 
-#: kmmainwidget.cpp:3484
-#, fuzzy, kde-format
-#| msgid "Serverside Subscription..."
-msgid "Serverside Subscription…"
-msgstr "Pretplate na serverskoj strani..."
-
-#: kmmainwidget.cpp:3490 kmmainwidget.cpp:3498
+#: kmmainwidget.cpp:3483 kmmainwidget.cpp:3491
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "Primijeni s&ve filtere"
 
-#: kmmainwidget.cpp:3511
+#: kmmainwidget.cpp:3504
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Staviti sve prečišćavače ma direktorij"
 
-#: kmmainwidget.cpp:3516
+#: kmmainwidget.cpp:3509
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
 msgid "Import/Export KMail Data…"
 msgstr "&Izvezi KMail podatke..."
 
-#: kmmainwidget.cpp:3522
+#: kmmainwidget.cpp:3515
 #, fuzzy, kde-format
 #| msgid "New AddressBook Contact..."
 msgid "New AddressBook Contact…"
 msgstr "Novi kontakt u adresaru..."
 
-#: kmmainwidget.cpp:3530 kmmainwidget.cpp:4183
+#: kmmainwidget.cpp:3523 kmmainwidget.cpp:4170
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "&Postavke"
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3527
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Account"
 msgstr "Pokreni ponovo"
 
-#: kmmainwidget.cpp:3550
+#: kmmainwidget.cpp:3543
 #, fuzzy, kde-format
 #| msgid "Copy Message to Folder"
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Kopiraj poruku u fascikl"
 
-#: kmmainwidget.cpp:3556
+#: kmmainwidget.cpp:3549
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgid "Jump to Folder…"
 msgstr "Skoči do fascikla"
 
-#: kmmainwidget.cpp:3562
+#: kmmainwidget.cpp:3555
 #, fuzzy, kde-format
 #| msgid "Abort Current Operation"
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Prekini trenutnu operaciju"
 
-#: kmmainwidget.cpp:3568
+#: kmmainwidget.cpp:3561
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Fokus na idući fascikl"
 
-#: kmmainwidget.cpp:3574
+#: kmmainwidget.cpp:3567
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Folder"
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Fokus na prethodni fascikl"
 
-#: kmmainwidget.cpp:3580
+#: kmmainwidget.cpp:3573
 #, fuzzy, kde-format
 #| msgid "Select Folder with Focus"
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Izaberi fascikl sa fokusom"
 
-#: kmmainwidget.cpp:3587
+#: kmmainwidget.cpp:3580
 #, fuzzy, kde-format
 #| msgid "Focus on First Folder"
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Fokus na prvu fasciklu"
 
-#: kmmainwidget.cpp:3593
+#: kmmainwidget.cpp:3586
 #, fuzzy, kde-format
 #| msgid "Focus on Last Folder"
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Fokus na zadnju fasciklu"
 
-#: kmmainwidget.cpp:3599
+#: kmmainwidget.cpp:3592
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Fokus na sljedeću poruku"
 
-#: kmmainwidget.cpp:3605
+#: kmmainwidget.cpp:3598
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Fokus na prethodnu poruku"
 
-#: kmmainwidget.cpp:3611
+#: kmmainwidget.cpp:3604
 #, fuzzy, kde-format
 #| msgid "Select First Message"
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Izaberi prvu poruku"
 
-#: kmmainwidget.cpp:3617
+#: kmmainwidget.cpp:3610
 #, fuzzy, kde-format
 #| msgid "Select Last Message"
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Izaberi zadnju poruku"
 
-#: kmmainwidget.cpp:3623
+#: kmmainwidget.cpp:3616
 #, fuzzy, kde-format
 #| msgid "Select Message with Focus"
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Odaberite poruku sa fokusom"
 
-#: kmmainwidget.cpp:3630
+#: kmmainwidget.cpp:3623
 #, fuzzy, kde-format
 #| msgid "Set Focus to Quick Search"
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Usredotočite se na brzo pretraživanje"
 
-#: kmmainwidget.cpp:3638
+#: kmmainwidget.cpp:3631
 #, fuzzy, kde-format
 #| msgid "Extend Selection to Previous Message"
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Proširivanje izbora na prethodnu poruku"
 
-#: kmmainwidget.cpp:3644
+#: kmmainwidget.cpp:3637
 #, fuzzy, kde-format
 #| msgid "Extend Selection to Next Message"
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Proširivanje izbora na sljedeću poruku"
 
-#: kmmainwidget.cpp:3651
+#: kmmainwidget.cpp:3644
 #, fuzzy, kde-format
 #| msgid "Move Message to Folder"
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Premjesti poruku u fascikl"
 
-#: kmmainwidget.cpp:3661
+#: kmmainwidget.cpp:3654
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Staviti sve prečišćavače ma direktorij"
 
-#: kmmainwidget.cpp:3666
+#: kmmainwidget.cpp:3659
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Staviti sve prečišćavače ma direktorij"
 
-#: kmmainwidget.cpp:3672
+#: kmmainwidget.cpp:3665
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Prethodn&i nepročitani fascikl"
 
-#: kmmainwidget.cpp:3679
+#: kmmainwidget.cpp:3672
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Obriši fascikl"
 
-#: kmmainwidget.cpp:3708
+#: kmmainwidget.cpp:3701
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Dodaj omiljeni fascikl"
 
-#: kmmainwidget.cpp:4129
+#: kmmainwidget.cpp:4122
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Obriši pretragu"
 
-#: kmmainwidget.cpp:4141
+#: kmmainwidget.cpp:4134
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Pr&emjesti lanac u smeće"
 
-#: kmmainwidget.cpp:4143
+#: kmmainwidget.cpp:4136
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgid "Edit Search…"
 msgstr "Tražim..."
 
-#: kmmainwidget.cpp:4181
+#: kmmainwidget.cpp:4168
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "Podesi KMail..."
 
-#: kmmainwidget.cpp:4192
+#: kmmainwidget.cpp:4179
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&Isprazni smeće"
 
-#: kmmainwidget.cpp:4192
+#: kmmainwidget.cpp:4179
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Premjesti sve poruke u smeće"
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4253
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4268
+#: kmmainwidget.cpp:4255
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4325
+#: kmmainwidget.cpp:4312
 #, kde-format
 msgid "Filter %1"
 msgstr "Akcija filtriranja %1"
 
-#: kmmainwidget.cpp:4901
+#: kmmainwidget.cpp:4877
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Tražim..."
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4885
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6106,14 +6100,14 @@ msgstr ""
 "vjerovatnoću da vaš sistem bude ugrožen drugim sadašnjim i budućim "
 "sigurnosnim zloupotrebama."
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4889
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Koristi HTML"
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5035
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6123,59 +6117,59 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5062
+#: kmmainwidget.cpp:5038
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5063
+#: kmmainwidget.cpp:5039
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Podesi KMail..."
 
-#: kmmainwidget.cpp:5064
+#: kmmainwidget.cpp:5040
 #, fuzzy, kde-format
 #| msgid "Rich Text Editing"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Bogato uređenje teksta"
 
-#: kmmainwidget.cpp:5099
+#: kmmainwidget.cpp:5075
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: kmmainwidget.cpp:5100
+#: kmmainwidget.cpp:5076
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Pokreni ponovo"
 
-#: kmmainwidget.cpp:5101
+#: kmmainwidget.cpp:5077
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Pokreni ponovo"
 
-#: kmmainwidget.cpp:5108
+#: kmmainwidget.cpp:5084
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."
 msgstr "Akonadi id:"
 
-#: kmmainwin.cpp:53
+#: kmmainwin.cpp:52
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Pokrećem..."
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:491 util.cpp:168
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Pre&mjesti u smeće"
@@ -6497,31 +6491,31 @@ msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
 msgstr ""
 
-#: kontactplugin/kmail/summarywidget.cpp:49
+#: kontactplugin/kmail/summarywidget.cpp:50
 #, fuzzy, kde-format
 #| msgid "New Messages In"
 msgid "New Messages"
 msgstr "Nova poruka u..."
 
-#: kontactplugin/kmail/summarywidget.cpp:141
+#: kontactplugin/kmail/summarywidget.cpp:145
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
 msgstr ""
 
-#: kontactplugin/kmail/summarywidget.cpp:155
+#: kontactplugin/kmail/summarywidget.cpp:159
 #, kde-format
 msgctxt "%1: number of unread messages %2: total number of messages"
 msgid "%1 / %2"
 msgstr ""
 
-#: kontactplugin/kmail/summarywidget.cpp:196
+#: kontactplugin/kmail/summarywidget.cpp:200
 #, fuzzy, kde-format
 #| msgid "Send &messages in outbox folder:"
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Pošalji poruke iz &Outboxa:"
 
-#: kontactplugin/kmail/summarywidget.cpp:214
+#: kontactplugin/kmail/summarywidget.cpp:218
 #, fuzzy, kde-format
 #| msgid "Open &Search Folder"
 msgid "Open Folder: \"%1\""
@@ -6900,7 +6894,7 @@ msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
 msgstr "Direktorij"
 
-#: searchdialog/searchpatternwarning.cpp:27
+#: searchdialog/searchpatternwarning.cpp:28
 #, fuzzy, kde-format
 #| msgid "Nepomuk cannot make search. Errors found: <ul><li>%1</li></ul>"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
@@ -8813,7 +8807,7 @@ msgstr "Potvrda slanja poruke"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:171
 #, fuzzy, kde-format
 #| msgctxt "@action:button Delete search"
 #| msgid "&Delete"
@@ -8821,12 +8815,12 @@ msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "&Obriši"
 
-#: util.cpp:170
+#: util.cpp:171
 #, kde-format
 msgid "Move to Trash"
 msgstr "Premjesti u smeće"
 
-#: util.cpp:179
+#: util.cpp:180
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -8834,7 +8828,7 @@ msgid ""
 "properly installed."
 msgstr "Ne mogu pokrenuti čarobnjak za naloge. Provjerite vašu instalaciju."
 
-#: util.cpp:181
+#: util.cpp:182
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -8881,6 +8875,11 @@ msgstr[2] "Odgovor „van kancelarije“ aktivan na serveruma"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Zumiraj"
+
+#, fuzzy
+#~| msgid "Serverside Subscription..."
+#~ msgid "Serverside Subscription…"
+#~ msgstr "Pretplate na serverskoj strani..."
 
 #, fuzzy
 #~| msgid "Could not start the import wizard. Please check your installation."
