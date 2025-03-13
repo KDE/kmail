@@ -1059,8 +1059,10 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     mSpamFolderCheck->setChecked(!ident.disabledSpam());
     mSpamFolderRequester->setEnabled(mSpamFolderCheck->isChecked());
     if (ident.spam().isEmpty() || !checkFolderExists(ident.spam())) {
-        foundNoExistingFolder = true;
-        mSpamFolderRequester->setIsInvalidFolder(CommonKernel->spamsCollectionFolder());
+        if (!ident.disabledSpam()) {
+            foundNoExistingFolder = true;
+            mSpamFolderRequester->setIsInvalidFolder(CommonKernel->spamsCollectionFolder());
+        }
     } else {
         mSpamFolderRequester->setCollection(Akonadi::Collection(ident.spam().toLongLong()));
     }
