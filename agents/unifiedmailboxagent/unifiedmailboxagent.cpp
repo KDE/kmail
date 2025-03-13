@@ -38,7 +38,7 @@
 #include <unordered_set>
 
 UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
-    : Akonadi::ResourceBase(id)
+    : Akonadi::ResourceWidgetBase(id)
     , mBoxManager(config())
 {
     setAgentName(i18n("Unified Mailboxes"));

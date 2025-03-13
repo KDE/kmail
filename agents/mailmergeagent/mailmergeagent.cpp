@@ -33,7 +33,7 @@ using namespace std::chrono_literals;
 // #define DEBUG_MAILMERGEAGENT 1
 
 MailMergeAgent::MailMergeAgent(const QString &id)
-    : Akonadi::AgentBase(id)
+    : Akonadi::AgentWidgetBase(id)
     , mManager(new MailMergeManager(this))
 {
     connect(mManager, &MailMergeManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);

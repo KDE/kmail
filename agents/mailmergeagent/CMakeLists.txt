@@ -50,7 +50,7 @@ target_link_libraries(mailmergeagent
     KF6::XmlGui
     KF6::I18n
     KF6::Notifications
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
 )
 
 add_executable(akonadi_mailmerge_agent)

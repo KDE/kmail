@@ -26,7 +26,7 @@
 using namespace std::chrono_literals;
 
 FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
-    : Akonadi::AgentBase(id)
+    : Akonadi::AgentWidgetBase(id)
     , mManager(new FollowUpReminderManager(this))
     , mTimer(new QTimer(this))
 {

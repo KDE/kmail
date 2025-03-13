@@ -6,14 +6,14 @@
 
 #pragma once
 
-#include <Akonadi/AgentBase>
+#include <Akonadi/AgentWidgetBase>
 
 #include <Akonadi/Collection>
 class QTimer;
 
 class ArchiveMailManager;
 
-class ArchiveMailAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
+class ArchiveMailAgent : public Akonadi::AgentWidgetBase, public Akonadi::AgentBase::ObserverV3
 {
     Q_OBJECT
 

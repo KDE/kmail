@@ -63,7 +63,7 @@ target_link_libraries(sendlateragent
 add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
 target_link_libraries(akonadi_sendlater_agent
     sendlateragent
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
 )
 
 if(APPLE)

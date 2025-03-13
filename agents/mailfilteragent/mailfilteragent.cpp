@@ -52,7 +52,7 @@ bool MailFilterAgent::isFilterableCollection(const Akonadi::Collection &collecti
 }
 
 MailFilterAgent::MailFilterAgent(const QString &id)
-    : Akonadi::AgentBase(id)
+    : Akonadi::AgentWidgetBase(id)
     , mProgressTimer(new QTimer(this))
 {
     qRegisterMetaType<QList<qint64>>("QList<qint64>");

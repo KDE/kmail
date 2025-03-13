@@ -24,7 +24,7 @@ using namespace Qt::Literals::StringLiterals;
 // #define DEBUG_ARCHIVEMAILAGENT 1
 
 ArchiveMailAgent::ArchiveMailAgent(const QString &id)
-    : Akonadi::AgentBase(id)
+    : Akonadi::AgentWidgetBase(id)
     , mTimer(new QTimer(this))
     , mArchiveManager(new ArchiveMailManager(this))
 {

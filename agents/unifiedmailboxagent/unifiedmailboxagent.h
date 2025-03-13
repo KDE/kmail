@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <Akonadi/ResourceBase>
+#include <Akonadi/ResourceWidgetBase>
 #include <Akonadi/SpecialMailCollections>
 
 #include "unifiedmailboxmanager.h"
@@ -20,7 +20,7 @@
  * the virtual unified collections into which content of other collections is
  * linked.
  */
-class UnifiedMailboxAgent : public Akonadi::ResourceBase
+class UnifiedMailboxAgent : public Akonadi::ResourceWidgetBase
 {
     Q_OBJECT
 

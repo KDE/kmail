@@ -5,11 +5,11 @@
 */
 
 #pragma once
-#include <Akonadi/AgentBase>
+#include <Akonadi/AgentWidgetBase>
 
 class MailMergeManager;
 
-class MailMergeAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
+class MailMergeAgent : public Akonadi::AgentWidgetBase, public Akonadi::AgentBase::ObserverV3
 {
     Q_OBJECT
 public:

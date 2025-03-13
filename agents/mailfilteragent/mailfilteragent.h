@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include <Akonadi/AgentBase>
+#include <Akonadi/AgentWidgetBase>
 
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
@@ -24,7 +24,7 @@ namespace Akonadi
 class Monitor;
 }
 
-class MailFilterAgent : public Akonadi::AgentBase, public Akonadi::AgentBase::ObserverV3
+class MailFilterAgent : public Akonadi::AgentWidgetBase, public Akonadi::AgentBase::ObserverV3
 {
     Q_OBJECT
 

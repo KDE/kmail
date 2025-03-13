@@ -32,7 +32,7 @@ using namespace std::chrono_literals;
 // #define DEBUG_SENDLATERAGENT 1
 
 SendLaterAgent::SendLaterAgent(const QString &id)
-    : Akonadi::AgentBase(id)
+    : Akonadi::AgentWidgetBase(id)
     , mManager(new SendLaterManager(this))
 {
     connect(mManager, &SendLaterManager::needUpdateConfigDialogBox, this, &SendLaterAgent::needUpdateConfigDialogBox);

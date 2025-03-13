@@ -39,7 +39,7 @@ ki18n_wrap_ui(archivemailagent ui/archivemailwidget.ui)
 #endif()
 target_link_libraries(archivemailagent
     KPim6::MailCommon
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
     KF6::I18n
     KF6::Notifications
     KF6::KIOWidgets
@@ -54,7 +54,7 @@ target_link_libraries(akonadi_archivemail_agent
     KPim6::AkonadiCore
     KPim6::IdentityManagementCore
     KPim6::AkonadiMime
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
     KF6::DBusAddons
     KF6::XmlGui
     KF6::KIOWidgets

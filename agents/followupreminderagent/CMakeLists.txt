@@ -52,7 +52,7 @@ target_link_libraries(followupreminderagent
     KPim6::AkonadiCore
     KPim6::IdentityManagementCore
     KPim6::AkonadiMime
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
     KF6::DBusAddons
     KF6::XmlGui
     KF6::KIOWidgets
@@ -70,7 +70,7 @@ target_link_libraries(akonadi_followupreminder_agent
     followupreminderagent
     KPim6::AkonadiCore
     KPim6::AkonadiMime
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
     KPim6::Mime
     KF6::CalendarCore
     KF6::DBusAddons

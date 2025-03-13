@@ -38,7 +38,7 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
 #    set_target_properties(akonadi_unifiedmailbox_agent PROPERTIES UNITY_BUILD ON)
 #endif()
 target_link_libraries(akonadi_unifiedmailbox_agent
-    KPim6::AkonadiAgentBase
+    KPim6::AkonadiAgentWidgetBase
     KPim6::AkonadiMime
     KPim6::AkonadiWidgets
     KPim6::Mime
