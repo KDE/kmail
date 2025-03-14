@@ -97,6 +97,8 @@ target_sources(kmailprivate PRIVATE
     identity/identitytreengwidget.cpp
     identity/identityngpage.cpp
     identity/identityngpage.h
+    identity/identityexpirespamfolderdialog.h
+    identity/identityexpirespamfolderdialog.cpp
 
     editor/kmcomposereditorng.cpp
     editor/encryptionstate.cpp
