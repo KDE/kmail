@@ -1,5 +1,5 @@
 # translation of kmail.po to
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 # Ahmad M. Zawawi <azawawi@emirates.net.ae>, 2004.
 # Ahmad M. Zawawi <zawawi@arabeyes.org>, 2004.
 # Usamah Ali Al-Maqdad <msareehi@kacst.edu.sa>, 2004.
@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
-"PO-Revision-Date: 2024-11-28 12:06+0400\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
+"PO-Revision-Date: 2025-03-13 11:37+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3441,18 +3441,15 @@ msgid "&Templates folder:"
 msgstr "مجلّد ال&قوالب:"
 
 #: identity/identitydialog.cpp:709
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "حدّد مجلَّد المسوَّدة"
+msgstr "حدّد مجلَّد السخام"
 
 #: identity/identitydialog.cpp:711
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "&مجلّد البريد المُرسل:"
+msgstr "&مجلّد السخام:"
 
 #: identity/identitydialog.cpp:716
 #, kde-format
@@ -3615,7 +3612,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "حرّر هوية \"%1\""
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3624,12 +3621,12 @@ msgstr ""
 "مجلّد المسودّات المخصّص للهويّة غير موجود (بعد الآن)، لذلك سيُستخدم مجلّد المسودّات "
 "المبدئيّ."
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Create…"
 msgstr "أنشئ…"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, kde-format
 msgid "Edit…"
 msgstr "حرّر…"

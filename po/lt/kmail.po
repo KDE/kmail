@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -3827,7 +3827,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Redaguoti tapatybę „%1“"
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3839,13 +3839,13 @@ msgstr ""
 "Tapatybės „%1“ parinkto juodraščių aplanko nėra (arba, jau nebėra). Todėl "
 "bus naudojamas numatytasis juodraščių aplankas."
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Sukurti..."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"

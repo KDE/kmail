@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2024-12-27 17:40+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -3654,7 +3654,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Redakti identecon \"%1\""
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3663,12 +3663,12 @@ msgstr ""
 "Iu propra dosierujo por identeco ne ekzistas (plu); tial, defaŭltaj "
 "dosierujoj estos uzataj."
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Create…"
 msgstr "Krei…"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, kde-format
 msgid "Edit…"
 msgstr "Redakti…"

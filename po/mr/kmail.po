@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -3872,7 +3872,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "ओळख संपादित करा \"%1\""
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3884,13 +3884,13 @@ msgstr ""
 "ऑनलाईन ओळखीसाठी इच्छिक मसुद्यांची संचयीका \"%1\" अस्तित्वात नाही(आता) म्हणून "
 "पूर्वनिर्धारित मसुद्यांची संचयीका वापरायला लागेल"
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "निर्माण करा..."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"

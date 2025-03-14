@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -3976,7 +3976,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "ویرایش هویت »%1«"
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3988,13 +3988,13 @@ msgstr ""
 "پوشه سفارشی پیش‌نویسها برای هویت »%1« )دیگر( موجود نیست؛ بنابراین، از پوشه "
 "پیش‌فرض پیش‌نویسها استفاده می‌شود."
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "تغییر نام..."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"

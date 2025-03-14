@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3588,19 +3588,19 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "編輯身份 \"%1\""
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr "身份的某些自訂資料夾不存在或不復存在；因此將會使用預設資料夾。"
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Create…"
 msgstr "建立…"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, kde-format
 msgid "Edit…"
 msgstr "編輯…"

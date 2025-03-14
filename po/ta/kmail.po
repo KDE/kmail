@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2024-11-24 17:20+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -3594,7 +3594,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "\"%1\" அடையாளத்தை திருத்து"
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3603,12 +3603,12 @@ msgstr ""
 "இந்த அடையாளத்திற்கான தனிப்பட்ட அடைவுகளில் சில இப்போதில்லை; ஆகவே, இயல்பிருப்பு அடைவுகளே "
 "பயன்படுத்தப்படுவன."
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Create…"
 msgstr "உருவாக்கு…"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, kde-format
 msgid "Edit…"
 msgstr "திருத்து…"

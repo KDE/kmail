@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -4026,7 +4026,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identiteit \"%1\" bewurkje"
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -4038,13 +4038,13 @@ msgstr ""
 "De oanpaste ûntwerpmap foar identiteit \"%1\" bestiet net (mear). Ynstee "
 "dêrfan sil de standert ûntwerpmap brûkt wurde."
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Omneame..."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, fuzzy, kde-format
 #| msgid "Exit"
 msgid "Edit…"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -3812,7 +3812,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "แก้ไขการแสดงตัว \"%1\""
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3824,13 +3824,13 @@ msgstr ""
 "ยังไม่มีโฟลเดอร์กำหนดเองของฉบับร่างสำหรับการแสดงตัว \"%1\" (ในตอนนี้); "
 "ดังนั้นจะทำการใช้โฟลเดอร์ฉบับร่างตัวปริยายแทน"
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "เปลี่ยนชื่อ..."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"

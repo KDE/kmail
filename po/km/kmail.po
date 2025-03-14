@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-13 00:42+0000\n"
+"POT-Creation-Date: 2025-03-14 00:43+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -3845,7 +3845,7 @@ msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "កែសម្រួល​អត្តសញ្ញាណ \"%1\""
 
-#: identity/identitydialog.cpp:1069
+#: identity/identitydialog.cpp:1071
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3857,13 +3857,13 @@ msgstr ""
 "មិនមាន​ថត​សេចក្ដីព្រាង​ផ្ទាល់ខ្លួន​សម្រាប់​អត្តសញ្ញាណ \"%1\" (តទៅទៀត​ឡើយ) ។ ដូច្នេះ ថត​សេចក្ដីព្រាង​"
 "លំនាំដើម​នឹងត្រូវបានប្រើ ។"
 
-#: identity/identitydialog.cpp:1324
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "បាន​បង្កើត..."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1328
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"
