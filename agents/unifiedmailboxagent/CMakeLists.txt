@@ -40,7 +40,6 @@ target_sources(akonadi_unifiedmailbox_agent PRIVATE
 target_link_libraries(akonadi_unifiedmailbox_agent
     KPim6::AkonadiAgentWidgetBase
     KPim6::AkonadiMime
-    KPim6::AkonadiWidgets
     KPim6::Mime
     KF6::I18n
     KPim6::IdentityManagementCore
