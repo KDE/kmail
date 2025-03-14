@@ -25,6 +25,8 @@ IdentityExpireSpamFolderDialog::IdentityExpireSpamFolderDialog(QWidget *parent)
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     buttonBox->setObjectName("buttonBox"_L1);
     mainLayout->addWidget(buttonBox);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityExpireSpamFolderDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityExpireSpamFolderDialog::reject);
 }
 
 IdentityExpireSpamFolderDialog::~IdentityExpireSpamFolderDialog() = default;

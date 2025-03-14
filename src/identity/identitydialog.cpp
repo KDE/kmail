@@ -12,6 +12,7 @@
 
 #include "identityaddvcarddialog.h"
 #include "identityeditvcarddialog.h"
+#include "identityexpirespamfolderdialog.h"
 #include "identityfolderrequester.h"
 #include "identityinvalidfolder.h"
 
@@ -711,6 +712,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mSpamFolderCheck = new QCheckBox(i18nc("@option:check", "Spam &folder:"), tab);
     connect(mSpamFolderCheck, &QCheckBox::toggled, mSpamFolderRequester, &MailCommon::FolderRequester::setEnabled);
     formLayout->addRow(mSpamFolderCheck, mSpamFolderRequester);
+    auto expirePushButton = new QPushButton(i18n("Configure Expire Folder..."), this);
+    connect(expirePushButton, &QPushButton::clicked, this, [this]() {
+        IdentityExpireSpamFolderDialog d;
+        d.exec();
+    });
+    expirePushButton->setEnabled(false);
+    connect(mSpamFolderCheck, &QCheckBox::toggled, expirePushButton, &QPushButton::setEnabled);
+    formLayout->addWidget(expirePushButton);
 
     // "Special transport" combobox and label:
     mTransportCheck = new QCheckBox(i18nc("@option:check", "Outgoing Account:"), tab);
