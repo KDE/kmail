@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-14 00:43+0000\n"
+"POT-Creation-Date: 2025-03-15 00:43+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3007,24 +3007,24 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&विद्यमानपरिचयः :"
 
-#: identity/identitydialog.cpp:224
+#: identity/identitydialog.cpp:225
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr "OpenPGP प्रमाणपत्रजननं आरभ्यतुं न शक्तवान् ।"
 
-#: identity/identitydialog.cpp:237
+#: identity/identitydialog.cpp:238
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "OpenPGP प्रमाणपत्रजननम् आरभ्यतुं न शक्तम्: %1"
 
-#: identity/identitydialog.cpp:246
+#: identity/identitydialog.cpp:247
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "OpenPGP प्रमाणपत्रं जनयति…"
 
-#: identity/identitydialog.cpp:248
+#: identity/identitydialog.cpp:249
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
@@ -3033,52 +3033,52 @@ msgstr ""
 "OpenPGP प्रमाणपत्रं जनयितुं प्रक्रियायां बहुधा यादृच्छिकसङ्ख्यानां आवश्यकता भवति । अस्य कृते "
 "कतिपयानि निमेषाणि आवश्यकानि भवितुम् अर्हन्ति…"
 
-#: identity/identitydialog.cpp:266
+#: identity/identitydialog.cpp:267
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "OpenPGP प्रमाणपत्रं जनयितुं न शक्तम्: %1"
 
-#: identity/identitydialog.cpp:271
+#: identity/identitydialog.cpp:272
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "कीजजनरेशनं रद्दं कृतम्।"
 
-#: identity/identitydialog.cpp:311
+#: identity/identitydialog.cpp:312
 #, kde-format
 msgid "No key"
 msgstr "न कुञ्जी"
 
-#: identity/identitydialog.cpp:313
+#: identity/identitydialog.cpp:314
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
 msgstr "नूतनं OpenPGP प्रमाणपत्रं जनयन्तु"
 
-#: identity/identitydialog.cpp:328
+#: identity/identitydialog.cpp:329
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "कील जनन त्रुटि"
 
-#: identity/identitydialog.cpp:342
+#: identity/identitydialog.cpp:343
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "परिचयं सम्पादयतु"
 
-#: identity/identitydialog.cpp:366
+#: identity/identitydialog.cpp:367
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "सामान्य"
 
-#: identity/identitydialog.cpp:373
+#: identity/identitydialog.cpp:374
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&भवतः नाम :"
 
-#: identity/identitydialog.cpp:378
+#: identity/identitydialog.cpp:379
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3089,13 +3089,13 @@ msgstr ""
 "ईमेल-शीर्षकस्य मध्ये दृश्यते;</p><p> यदि भवान् एतत् रिक्तं त्यजति तर्हि भवतः वास्तविकं नाम न "
 "दृश्यते, केवलं ईमेल-सङ्केतः एव ।</p></qt>"
 
-#: identity/identitydialog.cpp:389
+#: identity/identitydialog.cpp:390
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "संघठनं:"
 
-#: identity/identitydialog.cpp:394
+#: identity/identitydialog.cpp:395
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3106,13 +3106,13 @@ msgstr ""
 "एतत् बहिः प्रेषितस्य ईमेल-शीर्षकस्य मध्ये दर्शितं भवतु ।</p><p> एतत् रिक्तं त्यक्तुं सुरक्षितम् "
 "(सामान्यतया च) ।</p></qt>"
 
-#: identity/identitydialog.cpp:406
+#: identity/identitydialog.cpp:407
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&ईमेल-सङ्केतः :"
 
-#: identity/identitydialog.cpp:411
+#: identity/identitydialog.cpp:412
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3127,13 +3127,13 @@ msgstr ""
 "p><p> यदि भवान् एतत् रिक्तं त्यजति, अथवा भ्रष्टं प्राप्नोति तर्हि जनाः भवतः उत्तरं दातुं "
 "कष्टं प्राप्नुयुः ।</p></qt>"
 
-#: identity/identitydialog.cpp:430
+#: identity/identitydialog.cpp:431
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "ईमेल a&liases:"
 
-#: identity/identitydialog.cpp:435
+#: identity/identitydialog.cpp:436
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3149,12 +3149,12 @@ msgstr ""
 "tr><tr><th> उपनाम : १.</th><td> प्रथम@उदाहरण.org<br> अन्तिम@उदाहरण.org</td></"
 "tr></table><p> प्रतिपङ्क्तिं एकं उपनाम-सङ्केतं टङ्कयन्तु ।</p></qt>"
 
-#: identity/identitydialog.cpp:452
+#: identity/identitydialog.cpp:453
 #, kde-format
 msgid "Cryptography"
 msgstr "क्रिप्टोग्राफी"
 
-#: identity/identitydialog.cpp:458
+#: identity/identitydialog.cpp:459
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3169,29 +3169,29 @@ msgstr ""
 "सामान्यमेलकार्यं प्रभावितं न भविष्यति।</p><p> कुञ्जीनां विषये अधिकं ज्ञातुं शक्नुवन्ति "
 "<a>https://www.gnupg.org</a> इत्यत्र</p></qt>"
 
-#: identity/identitydialog.cpp:464
+#: identity/identitydialog.cpp:465
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP हस्ताक्षरकुंजी:"
 
-#: identity/identitydialog.cpp:470
+#: identity/identitydialog.cpp:471
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "एन्क्रिप्शनस्य हस्ताक्षरस्य च कृते समानं कुञ्जीम् उपयुज्यताम्"
 
-#: identity/identitydialog.cpp:480
+#: identity/identitydialog.cpp:481
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP कुञ्जी :"
 
-#: identity/identitydialog.cpp:488
+#: identity/identitydialog.cpp:489
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP हस्ताक्षरकुंजी:"
 
-#: identity/identitydialog.cpp:505
+#: identity/identitydialog.cpp:506
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3208,13 +3208,13 @@ msgstr ""
 "सामान्यमेलकार्यं प्रभावितं न भविष्यति।</p><p> कुञ्जीनां विषये अधिकं ज्ञातुं शक्नुवन्ति "
 "<a>https://www.gnupg.org</a> इत्यत्र</p></qt>"
 
-#: identity/identitydialog.cpp:512
+#: identity/identitydialog.cpp:513
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP एन्क्रिप्शन कुञ्जी:"
 
-#: identity/identitydialog.cpp:522
+#: identity/identitydialog.cpp:523
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3227,13 +3227,13 @@ msgstr ""
 "इत्यस्य उपयोगेन ईमेल-पत्रेषु डिजिटलरूपेण हस्ताक्षरं कर्तुं न शक्नोति; सामान्यमेलकार्यं प्रभावितं न "
 "भविष्यति।</p></qt>"
 
-#: identity/identitydialog.cpp:527
+#: identity/identitydialog.cpp:528
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME हस्ताक्षर प्रमाणपत्रम् :"
 
-#: identity/identitydialog.cpp:541
+#: identity/identitydialog.cpp:542
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3248,83 +3248,83 @@ msgstr ""
 "सन्देशानां प्रतिलिपानि गोपनं कर्तुं न शक्नोति; सामान्यमेलकार्यं प्रभावितं न भविष्यति।</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:547
+#: identity/identitydialog.cpp:548
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME एन्क्रिप्शन प्रमाणपत्रम्:"
 
-#: identity/identitydialog.cpp:564
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "प्राधान्य प्रारूपः :"
 
-#: identity/identitydialog.cpp:569
+#: identity/identitydialog.cpp:570
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "Autocrypt सक्षमं कुर्वन्तु"
 
-#: identity/identitydialog.cpp:573
+#: identity/identitydialog.cpp:574
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "स्वतःगुप्तीकरणम् :"
 
-#: identity/identitydialog.cpp:578
+#: identity/identitydialog.cpp:579
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "अन्ये ज्ञापयन्तु यत् भवान् एन्क्रिप्शनं प्राधान्यं ददाति"
 
-#: identity/identitydialog.cpp:581
+#: identity/identitydialog.cpp:582
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "सुरक्षापूर्वनिर्धारितानां कृते वैश्विकसेटिंग्स् अधिलेखयन्तु"
 
-#: identity/identitydialog.cpp:584
+#: identity/identitydialog.cpp:585
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "पूर्वनिर्धारितं अधिलेखयन्तु :"
 
-#: identity/identitydialog.cpp:589
+#: identity/identitydialog.cpp:590
 #, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "सन्देशेषु हस्ताक्षरं कुर्वन्तु"
 
-#: identity/identitydialog.cpp:592
+#: identity/identitydialog.cpp:593
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "यदा सम्भवं तदा सन्देशान् एन्क्रिप्ट् कुर्वन्तु"
 
-#: identity/identitydialog.cpp:595
+#: identity/identitydialog.cpp:596
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "अहस्ताक्षरितसन्देशान् प्रेषयितुं प्रयतमाने चेतावनी"
 
-#: identity/identitydialog.cpp:598
+#: identity/identitydialog.cpp:599
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "अगुप्तसन्देशान् प्रेषयितुं प्रयतमाने चेतावनी"
 
-#: identity/identitydialog.cpp:608
+#: identity/identitydialog.cpp:609
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "उन्नतं"
 
-#: identity/identitydialog.cpp:616
+#: identity/identitydialog.cpp:617
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&उत्तर-पतेः कृते :"
 
-#: identity/identitydialog.cpp:620
+#: identity/identitydialog.cpp:621
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3341,13 +3341,13 @@ msgstr ""
 "यत्किमपि प्रतिक्रियाः समूह-सङ्केतं गच्छन्तु ।</p><p> यदि संशयः अस्ति तर्हि एतत् क्षेत्रं रिक्तं "
 "त्यजन्तु ।</p></qt>"
 
-#: identity/identitydialog.cpp:638
+#: identity/identitydialog.cpp:639
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&CC पत्तनम् :"
 
-#: identity/identitydialog.cpp:644
+#: identity/identitydialog.cpp:645
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3363,13 +3363,13 @@ msgstr ""
 "एकादशाधिकसङ्केतं निर्दिष्टुं, CC प्राप्तकर्तानां सूचीं पृथक् कर्तुं अल्पविरामस्य उपयोगं कुर्वन्तु ।</"
 "p><p> यदि संशयः अस्ति तर्हि एतत् क्षेत्रं रिक्तं त्यजन्तु ।</p></qt>"
 
-#: identity/identitydialog.cpp:660
+#: identity/identitydialog.cpp:661
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&बीसीसी पताः :"
 
-#: identity/identitydialog.cpp:664
+#: identity/identitydialog.cpp:665
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3386,52 +3386,52 @@ msgstr ""
 "सूचीं पृथक् कर्तुं अल्पविरामस्य उपयोगं कुर्वन्तु ।</p><p> यदि संशयः अस्ति तर्हि एतत् क्षेत्रं रिक्तं "
 "त्यजन्तु ।</p></qt>"
 
-#: identity/identitydialog.cpp:678
+#: identity/identitydialog.cpp:679
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "शब्दकोश:"
 
-#: identity/identitydialog.cpp:684
+#: identity/identitydialog.cpp:685
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Send-mail Folder इति चिनोतु"
 
-#: identity/identitydialog.cpp:686
+#: identity/identitydialog.cpp:687
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "प्रेषित-मेल &पुटम्:"
 
-#: identity/identitydialog.cpp:692
+#: identity/identitydialog.cpp:693
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Draft Folder इति चिनोतु"
 
-#: identity/identitydialog.cpp:694
+#: identity/identitydialog.cpp:695
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "&Drafts पुटम् :"
 
-#: identity/identitydialog.cpp:700
+#: identity/identitydialog.cpp:701
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "टेम्पलेट्स् समुच्चय इति चयनं कुर्वन्तु"
 
-#: identity/identitydialog.cpp:702
+#: identity/identitydialog.cpp:703
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Templates पुटम्:"
 
-#: identity/identitydialog.cpp:709
+#: identity/identitydialog.cpp:710
 #, fuzzy, kde-format
 #| msgid "Select Draft Folder"
 msgid "Select Spam Folder"
 msgstr "Draft Folder इति चिनोतु"
 
-#: identity/identitydialog.cpp:711
+#: identity/identitydialog.cpp:712
 #, fuzzy, kde-format
 #| msgctxt "@option:check"
 #| msgid "Sent-mail &folder:"
@@ -3439,43 +3439,49 @@ msgctxt "@option:check"
 msgid "Spam &folder:"
 msgstr "प्रेषित-मेल &पुटम्:"
 
-#: identity/identitydialog.cpp:716
+#: identity/identitydialog.cpp:715
+#, fuzzy, kde-format
+#| msgid "Expire Folder"
+msgid "Configure Expire Folder..."
+msgstr "Expire Folder इति"
+
+#: identity/identitydialog.cpp:725
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "बहिर्गमनलेखः :"
 
-#: identity/identitydialog.cpp:723
+#: identity/identitydialog.cpp:732
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "मम vCard सन्देशे संलग्नं कुर्वन्तु"
 
-#: identity/identitydialog.cpp:724
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "निर्मियताम्…"
 
-#: identity/identitydialog.cpp:728
+#: identity/identitydialog.cpp:737
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "स्वशुद्धिकरणभाषा :"
 
-#: identity/identitydialog.cpp:740
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "पूर्वनिर्धारितं डोमेननाम पुनःस्थापयन्तु"
 
-#: identity/identitydialog.cpp:743
+#: identity/identitydialog.cpp:752
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "पूर्वनिर्धारित&t डोमेन: ."
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:758
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3484,62 +3490,62 @@ msgstr ""
 "<qt><p>पूर्वनिर्धारितं डोमेन् केवलं उपयोक्तुः नाम युक्तानि ईमेल-सङ्केतानि पूर्णं कर्तुं उपयुज्यते ।</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:766
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&अस्याः परिचयस्य कृते इष्टसन्देशसाचानां उपयोगं कुर्वन्तु"
 
-#: identity/identitydialog.cpp:780
+#: identity/identitydialog.cpp:789
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&वैश्विक टेम्पलेट्स प्रतिलिपि"
 
-#: identity/identitydialog.cpp:787
+#: identity/identitydialog.cpp:796
 #, kde-format
 msgid "Templates"
 msgstr "टेम्पलेट्स"
 
-#: identity/identitydialog.cpp:793
+#: identity/identitydialog.cpp:802
 #, kde-format
 msgid "Signature"
 msgstr "हस्ताक्षर"
 
-#: identity/identitydialog.cpp:800
+#: identity/identitydialog.cpp:809
 #, kde-format
 msgid "Picture"
 msgstr "चित्र"
 
-#: identity/identitydialog.cpp:806
+#: identity/identitydialog.cpp:815
 #, kde-format
 msgid "Activities"
 msgstr "गतिविधयः"
 
-#: identity/identitydialog.cpp:857
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "अमान्य ईमेल उपनाम \"%1\" ।"
 
-#: identity/identitydialog.cpp:865
+#: identity/identitydialog.cpp:874
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "अस्याः परिचयस्य कृते भवद्भिः ईमेल-पत्रं दातव्यम् ।"
 
-#: identity/identitydialog.cpp:865
+#: identity/identitydialog.cpp:874
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "रिक्त ईमेल पता"
 
-#: identity/identitydialog.cpp:870 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "अमान्य ईमेल पता"
 
-#: identity/identitydialog.cpp:928
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3552,7 +3558,7 @@ msgstr ""
 "एतेन एतेन विन्यासेन निर्मितहस्ताक्षराणां सत्यापनार्थं प्रयतमाने ग्राहकपक्षे चेतावनीसन्देशाः "
 "भवितुं शक्नुवन्ति ।"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:946
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3561,7 +3567,7 @@ msgstr ""
 "विन्यस्तेषु OpenPGP एन्क्रिप्शन-कुंजीषु एकस्मिन् अस्य परिचयस्य (%1) विन्यस्त-ईमेल-सङ्केतेन सह "
 "कोऽपि उपयोक्तृ-ID नास्ति ।"
 
-#: identity/identitydialog.cpp:944
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3574,7 +3580,7 @@ msgstr ""
 "एतेन एतेन विन्यासेन निर्मितहस्ताक्षराणां सत्यापनार्थं प्रयतमाने ग्राहकपक्षे चेतावनीसन्देशाः "
 "भवितुं शक्नुवन्ति ।"
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:962
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3582,24 +3588,24 @@ msgid ""
 msgstr ""
 "विन्यस्तेषु S/MIME गोपनप्रमाणपत्रेषु एकस्मिन् अस्य परिचयस्य (%1) विन्यस्तं ईमेल-सङ्केतं नास्ति ।"
 
-#: identity/identitydialog.cpp:963
+#: identity/identitydialog.cpp:972
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "कुञ्जी/प्रमाणपत्रेषु ईमेल-सङ्केतः न लभ्यते"
 
-#: identity/identitydialog.cpp:975
+#: identity/identitydialog.cpp:984
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "हस्ताक्षरसञ्चिका वैधः नास्ति"
 
-#: identity/identitydialog.cpp:990
+#: identity/identitydialog.cpp:999
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "परिचयः सम्पादयतु \"%1\" ।"
 
-#: identity/identitydialog.cpp:1071
+#: identity/identitydialog.cpp:1080
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3607,12 +3613,12 @@ msgid ""
 msgstr ""
 "परिचयस्य कृते कश्चन इष्टपुटः नास्ति (अधुना); अतः पूर्वनिर्धारितपुटस्य उपयोगः भविष्यति ।"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1335
 #, kde-format
 msgid "Create…"
 msgstr "निर्मियताम्…"
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1337
 #, kde-format
 msgid "Edit…"
 msgstr "सम्पादन…"
@@ -3668,6 +3674,13 @@ msgstr "सम्पादनं रद्दं कुर्वन्तु"
 msgctxt "@action:button"
 msgid "Do Not Cancel"
 msgstr "रद्दं न कुर्वन्तु"
+
+#: identity/identityexpirespamfolderdialog.cpp:18
+#, fuzzy, kde-format
+#| msgid "Expire Folder"
+msgctxt "@title:window"
+msgid "Expire Spam Folder"
+msgstr "Expire Folder इति"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
