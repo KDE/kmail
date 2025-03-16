@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-12 04:39+0100\n"
+"PO-Revision-Date: 2025-03-15 03:38+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -3483,10 +3483,9 @@ msgid "Spam &folder:"
 msgstr "ს&პამის საქაღალდე:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "საქაღალდის მოძველებულადმონიშვნა"
+msgstr "მოძველებულების საქაღალდის მორგება..."
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3723,11 +3722,10 @@ msgid "Do Not Cancel"
 msgstr "არ გააუქმო"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "საქაღალდის მოძველებულადმონიშვნა"
+msgstr "მოძველებულების საქაღალდის მორგება"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

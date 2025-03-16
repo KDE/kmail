@@ -3361,10 +3361,9 @@ msgid "Spam &folder:"
 msgstr ""
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "将文件夹设为过期删除"
+msgstr ""
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3587,11 +3586,10 @@ msgid "Do Not Cancel"
 msgstr "不要取消"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "将文件夹设为过期删除"
+msgstr ""
 
 #: identity/identityngpage.cpp:202
 #, kde-format

@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-12 07:40+0200\n"
+"PO-Revision-Date: 2025-03-15 12:50+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -3447,10 +3447,9 @@ msgid "Spam &folder:"
 msgstr "תיקיית &ספאם:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "הפגת תוקף תיקייה"
+msgstr "הגדרת תיקיית תפוגה…"
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3685,11 +3684,10 @@ msgid "Do Not Cancel"
 msgstr "לא לבטל"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "הפגת תוקף תיקייה"
+msgstr "הפגת תוקף ספאם"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

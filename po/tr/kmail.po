@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-14 20:23+0300\n"
+"PO-Revision-Date: 2025-03-15 13:27+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -3491,10 +3491,9 @@ msgid "Spam &folder:"
 msgstr "İ&stenmeyen klasörü:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Klasörün Süresini Doldur"
+msgstr "Klasör Süresini Yapılandır…"
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3729,11 +3728,10 @@ msgid "Do Not Cancel"
 msgstr "İptal Etme"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Klasörün Süresini Doldur"
+msgstr "İstenmeyen Klasörünü Süreli Yap"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

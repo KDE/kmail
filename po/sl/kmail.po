@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-12 07:47+0100\n"
+"PO-Revision-Date: 2025-03-15 08:10+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -3491,10 +3491,9 @@ msgid "Spam &folder:"
 msgstr "Mapa nezaželenih:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Označi mapo kot pretečeno"
+msgstr "Konfiguriraj mapo poteka..."
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3730,11 +3729,10 @@ msgid "Do Not Cancel"
 msgstr "Ne prekliči"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Označi mapo kot pretečeno"
+msgstr "Označi mapo vsiljene pošte kot pretečeno"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

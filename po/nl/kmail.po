@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-12 10:15+0100\n"
+"PO-Revision-Date: 2025-03-15 13:38+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -3536,10 +3536,9 @@ msgid "Spam &folder:"
 msgstr "Spam&map:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "&POP-filters instellen..."
+msgstr "Verlopen van map configureren..."
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3774,11 +3773,10 @@ msgid "Do Not Cancel"
 msgstr "Niet annuleren"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Map laten verlopen"
+msgstr "Spammap laten verlopen"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

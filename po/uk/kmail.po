@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-12 11:18+0200\n"
+"PO-Revision-Date: 2025-03-15 08:56+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3543,10 +3543,9 @@ msgid "Spam &folder:"
 msgstr "Тека н&ебажаних повідомлень:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Вилучити застарілі повідомлення з теки"
+msgstr "Налаштувати теку застарілих повідомлень…"
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3783,11 +3782,10 @@ msgid "Do Not Cancel"
 msgstr "Не скасовувати"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Вилучити застарілі повідомлення з теки"
+msgstr "Тека застарілих небажаних повідомлень"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

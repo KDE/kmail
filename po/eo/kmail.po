@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2024-12-27 17:40+0100\n"
+"PO-Revision-Date: 2025-03-15 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -3480,24 +3480,20 @@ msgid "&Templates folder:"
 msgstr "&Ŝablonujo:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "Elekti dosierujon por malnetoj"
+msgstr "Elekti Leterujon por Spamo"
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Send-poŝta &leterujo:"
+msgstr "Spam-poŝta &leterujo:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Malplenigi leterujon"
+msgstr "Agordi Eksvalidiĝan Leterujon..."
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3732,11 +3728,10 @@ msgid "Do Not Cancel"
 msgstr "Ne Nuligi"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Malplenigi leterujon"
+msgstr "Eksvalidigi Spam-Leterujon"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -8208,6 +8203,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Servila Abono…"
