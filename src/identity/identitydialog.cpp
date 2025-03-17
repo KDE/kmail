@@ -714,7 +714,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     formLayout->addRow(mSpamFolderCheck, mSpamFolderRequester);
     auto expirePushButton = new QPushButton(i18n("Configure Expire Folder..."), this);
     connect(expirePushButton, &QPushButton::clicked, this, [this]() {
-        IdentityExpireSpamFolderDialog d;
+        IdentityExpireSpamFolderDialog d(this);
         d.exec();
     });
     expirePushButton->setEnabled(false);
