@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2025-03-13 01:06+0100\n"
+"PO-Revision-Date: 2025-03-16 01:32+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -3515,10 +3515,9 @@ msgid "Spam &folder:"
 msgstr "Carpeta de correo &basura:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Caducar carpeta"
+msgstr "Configurar la carpeta de caducidad…"
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3754,11 +3753,10 @@ msgid "Do Not Cancel"
 msgstr "No cancelar"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Caducar carpeta"
+msgstr "Caducar la carpeta de correo basura"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -4648,7 +4646,7 @@ msgstr "Esta carpeta no tiene configurada ninguna opción de caducidad"
 #: kmmainwidget.cpp:1464
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
-msgstr "<qt>¿Realmente quiere hacer que expire la carpeta <b>%1</b>?</qt>"
+msgstr "<qt>¿Realmente quiere hacer que caduque la carpeta <b>%1</b>?</qt>"
 
 #: kmmainwidget.cpp:1465
 #, kde-format
@@ -8273,6 +8271,3 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1 %"
-
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Suscripción en el servidor…"

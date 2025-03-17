@@ -18,13 +18,13 @@
 # Vasee Vaseeharan <vasee@ieee.org>, 2004.
 # Ambalam <tamilpc@ambalam.com>, 2004.
 # root <root@localhost.localdomain>, 2004.
-# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Kishore G <kishore96@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025 Kishore G <kishore96@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-15 00:43+0000\n"
-"PO-Revision-Date: 2024-11-24 17:20+0530\n"
+"PO-Revision-Date: 2025-03-16 15:08+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3424,24 +3424,20 @@ msgid "&Templates folder:"
 msgstr "&வார்ப்புருகளுக்கான அடைவு:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "வரைவுகளுக்கான அடைவை தேர்வு செய்தல்"
+msgstr "ஸ்பேமுக்கான அடைவை தேர்வு செய்வது"
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "அ&னுப்பியுள்ள அஞ்சலுக்கான அடைவு:"
+msgstr "ஸ்பேம் அடைவு:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "POP வடிகட்டிகள் கட்டமைப்பு"
+msgstr "காலாவதியானவற்றிற்கான அடைவை அமை"
 
 #: identity/identitydialog.cpp:725
 #, kde-format
@@ -3672,11 +3668,10 @@ msgid "Do Not Cancel"
 msgstr "ரத்து செய்யாதே"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "அடைவை காலாவதியாக்குதல்"
+msgstr "ஸ்பேம் அடைவை காலாவதியாக்குவது"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -6692,7 +6687,7 @@ msgstr "மறையாக்க நிலைகாட்டியை காட�
 #: settings/kmail.kcfg.in:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr ""
+msgstr "இயல்பிருப்பு சுருக்குவழி மூலம் அனுப்புவதை உறுதிசெய்"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:334
