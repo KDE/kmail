@@ -1,14 +1,14 @@
-# Translation of kmail to Spanish
+# Spanish translations for kmail.po package.
 # This file is distributed under the same license as the kmail package.
 #
 # SPDX-FileCopyrightText: 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Javier Viñal <fjvinalgmail.com>
-# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-12 00:42+0000\n"
-"PO-Revision-Date: 2024-11-20 19:49+0100\n"
+"PO-Revision-Date: 2025-03-16 01:32+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -663,12 +663,12 @@ msgstr "Activar que se pueda deshacer el envío"
 #: configuredialog/configureaccountpage.cpp:198
 #, kde-format
 msgid "Add Mail Account…"
-msgstr "Añadir cuenta de correo..."
+msgstr "Añadir cuenta de correo…"
 
 #: configuredialog/configureaccountpage.cpp:199
 #, kde-format
 msgid "Custom Account…"
-msgstr "Cuenta personalizada..."
+msgstr "Cuenta personalizada…"
 
 #: configuredialog/configureaccountpage.cpp:263
 #, kde-format
@@ -917,7 +917,7 @@ msgstr "Tema predeterminado:"
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
-"<qt><a href=\"whatsthis1\">Información de formato personalizado...</a></qt>"
+"<qt><a href=\"whatsthis1\">Información de formato personalizado…</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:669
 #, kde-format
@@ -1261,10 +1261,10 @@ msgid ""
 msgstr ""
 "Permitir especificar solo estos destinatarios para el mensaje. Esto se "
 "aplica al «Responder a todos», al introducir los destinatarios manualmente o "
-"al usar el recopilador «Seleccionar...». El establecimiento de este límite "
-"le ayuda a evitar enviar un mensaje accidentalmente a demasiada gente. Tenga "
-"en cuenta, sin embargo, que esto no tiene en cuenta las listas de "
-"distribución ni las listas de correo."
+"al usar el recopilador «Seleccionar…». El establecimiento de este límite le "
+"ayuda a evitar enviar un mensaje accidentalmente a demasiada gente. Tenga en "
+"cuenta, sin embargo, que esto no tiene en cuenta las listas de distribución "
+"ni las listas de correo."
 
 #: configuredialog/configurecomposerpage.cpp:359
 #, kde-format
@@ -1298,7 +1298,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr "Configurar terminación..."
+msgstr "Configurar terminación…"
 
 #: configuredialog/configurecomposerpage.cpp:400
 #, kde-format
@@ -1344,7 +1344,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "A&dd…"
-msgstr "Aña&dir..."
+msgstr "Aña&dir…"
 
 #: configuredialog/configurecomposerpage.cpp:632
 #: configuredialog/configurecomposerpage.cpp:969
@@ -1356,7 +1356,7 @@ msgstr "Eli&minar"
 #: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "Mod&ify…"
-msgstr "Mod&ificar..."
+msgstr "Mod&ificar…"
 
 #: configuredialog/configurecomposerpage.cpp:632
 #, kde-format
@@ -1387,12 +1387,12 @@ msgstr "Eli&minar"
 #: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Add…"
-msgstr "Añadir..."
+msgstr "Añadir…"
 
 #: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Modify…"
-msgstr "Modificar..."
+msgstr "Modificar…"
 
 #: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
@@ -1961,7 +1961,7 @@ msgstr "Guardar correo como texto o archivo html"
 #: editor/kmcomposerwin.cpp:1310
 #, kde-format
 msgid "&Insert Text File…"
-msgstr "&Insertar archivo de texto..."
+msgstr "&Insertar archivo de texto…"
 
 #: editor/kmcomposerwin.cpp:1314
 #, kde-format
@@ -1987,13 +1987,13 @@ msgstr "&Nuevo editor"
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "Seleccionar destinata&rios..."
+msgstr "Seleccionar destinata&rios…"
 
 #: editor/kmcomposerwin.cpp:1342
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
-msgstr "Guardar la lista de &distribución..."
+msgstr "Guardar la lista de &distribución…"
 
 #: editor/kmcomposerwin.cpp:1366
 #, kde-format
@@ -2129,7 +2129,7 @@ msgstr "Insertar firmar en la posición del c&ursor"
 #: editor/kmcomposerwin.cpp:1470
 #, kde-format
 msgid "&Spellchecker…"
-msgstr "Co&rrector ortográfico..."
+msgstr "Co&rrector ortográfico…"
 
 #: editor/kmcomposerwin.cpp:1471
 #, kde-format
@@ -2170,12 +2170,12 @@ msgstr "Seleccione un formato de cifrado para este mensaje"
 #: editor/kmcomposerwin.cpp:1514
 #, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr "Crear recordatorio de seguimiento..."
+msgstr "Crear recordatorio de seguimiento…"
 
 #: editor/kmcomposerwin.cpp:1548
 #, kde-format
 msgid "Configure KMail…"
-msgstr "Configurar KMail..."
+msgstr "Configurar KMail…"
 
 #: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:224 kmreadermainwin.cpp:536
 #, kde-format
@@ -2442,7 +2442,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:3093
 #, kde-format
 msgid "About to send email…"
-msgstr "A punto de enviar correo..."
+msgstr "A punto de enviar correo…"
 
 #: editor/kmcomposerwin.cpp:3094
 #, kde-format
@@ -2773,7 +2773,7 @@ msgid ""
 "\">(details…)</a>"
 msgstr ""
 "Encontrada una dirección de correo potencialmente fraudulenta <a href="
-"\"phishingdetails\">(detalles...)</a>"
+"\"phishingdetails\">(detalles…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
@@ -3089,7 +3089,7 @@ msgstr "No se ha podido iniciar la generación de un certificado OpenPGP: %1"
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "Generando un certificado OpenPGP..."
+msgstr "Generando un certificado OpenPGP…"
 
 #: identity/identitydialog.cpp:248
 #, kde-format
@@ -3098,7 +3098,7 @@ msgid ""
 "random numbers. This may require several minutes…"
 msgstr ""
 "El proceso de generar un certificado OpenPGP necesita una gran cantidad de "
-"números aleatorios. Esto puede necesitar varios minutos..."
+"números aleatorios. Esto puede necesitar varios minutos…"
 
 #: identity/identitydialog.cpp:266
 #, kde-format
@@ -3519,7 +3519,7 @@ msgstr "Añadir mi vCard al mensaje"
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
-msgstr "Crear..."
+msgstr "Crear…"
 
 #: identity/identitydialog.cpp:719
 #, kde-format
@@ -3677,12 +3677,12 @@ msgstr ""
 #: identity/identitydialog.cpp:1279
 #, kde-format
 msgid "Create…"
-msgstr "Crear..."
+msgstr "Crear…"
 
 #: identity/identitydialog.cpp:1281
 #, kde-format
 msgid "Edit…"
-msgstr "Editar..."
+msgstr "Editar…"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, kde-format
@@ -3765,13 +3765,13 @@ msgstr "Elimina&r"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr "Añadir..."
+msgstr "Añadir…"
 
 #: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
-msgstr "Modificar..."
+msgstr "Modificar…"
 
 #: identity/identityngpage.cpp:244
 #, kde-format
@@ -4479,7 +4479,7 @@ msgstr "Enviando mensajes"
 #: kmkernel.cpp:1491
 #, kde-format
 msgid "Initiating sending process…"
-msgstr "Iniciando el proceso de envío..."
+msgstr "Iniciando el proceso de envío…"
 
 #: kmkernel.cpp:1570
 #, kde-format
@@ -4624,7 +4624,7 @@ msgstr "Esta carpeta no tiene configurada ninguna opción de caducidad"
 #: kmmainwidget.cpp:1465
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
-msgstr "<qt>¿Realmente quiere hacer que expire la carpeta <b>%1</b>?</qt>"
+msgstr "<qt>¿Realmente quiere hacer que caduque la carpeta <b>%1</b>?</qt>"
 
 #: kmmainwidget.cpp:1466
 #, kde-format
@@ -4737,12 +4737,12 @@ msgstr "Borrar mensajes"
 #: kmmainwidget.cpp:1687
 #, kde-format
 msgid "Moving messages…"
-msgstr "Moviendo mensajes..."
+msgstr "Moviendo mensajes…"
 
 #: kmmainwidget.cpp:1689 kmmainwidget.cpp:1889
 #, kde-format
 msgid "Deleting messages…"
-msgstr "Borrando mensajes..."
+msgstr "Borrando mensajes…"
 
 #: kmmainwidget.cpp:1704 kmmainwidget.cpp:1909
 #, kde-format
@@ -4783,7 +4783,7 @@ msgstr "Mover los mensajes a la carpeta"
 #: kmmainwidget.cpp:1818
 #, kde-format
 msgid "Copying messages…"
-msgstr "Copiando mensajes..."
+msgstr "Copiando mensajes…"
 
 #: kmmainwidget.cpp:1826
 #, kde-format
@@ -4809,12 +4809,12 @@ msgstr "Copiar mensajes a la carpeta"
 #: kmmainwidget.cpp:1886
 #, kde-format
 msgid "Moving messages to trash…"
-msgstr "Moviendo mensajes a la papelera..."
+msgstr "Moviendo mensajes a la papelera…"
 
 #: kmmainwidget.cpp:1893
 #, kde-format
 msgid "Deleting and moving messages to trash…"
-msgstr "Borrando y moviendo mensajes a la papelera..."
+msgstr "Borrando y moviendo mensajes a la papelera…"
 
 #: kmmainwidget.cpp:1906
 #, kde-format
@@ -4927,7 +4927,7 @@ msgstr "Trabajar conectado"
 #: kmmainwidget.cpp:2928
 #, kde-format
 msgid "Save &As…"
-msgstr "Gu&ardar como..."
+msgstr "Gu&ardar como…"
 
 #: kmmainwidget.cpp:2939
 #, kde-format
@@ -4979,55 +4979,55 @@ msgstr "Gestor de certificados"
 #: kmmainwidget.cpp:3006
 #, kde-format
 msgid "&Import Messages…"
-msgstr "&Importar mensajes..."
+msgstr "&Importar mensajes…"
 
 #: kmmainwidget.cpp:3017
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
-msgstr "&Depurar Sieve..."
+msgstr "&Depurar Sieve…"
 
 #: kmmainwidget.cpp:3024
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
-msgstr "Visor de registros de fi&ltrado..."
+msgstr "Visor de registros de fi&ltrado…"
 
 #: kmmainwidget.cpp:3029
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr "Historial de notificaciones..."
+msgstr "Historial de notificaciones…"
 
 #: kmmainwidget.cpp:3034
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr "&Importar de otro cliente de correo..."
+msgstr "&Importar de otro cliente de correo…"
 
 #: kmmainwidget.cpp:3039
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
-msgstr "Editar las respuestas «Ausente de la oficina»..."
+msgstr "Editar las respuestas «Ausente de la oficina»…"
 
 #: kmmainwidget.cpp:3045
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
-msgstr "&Configurar archivado automático..."
+msgstr "&Configurar archivado automático…"
 
 #: kmmainwidget.cpp:3051
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
-msgstr "Mensajes retrasados..."
+msgstr "Mensajes retrasados…"
 
 #: kmmainwidget.cpp:3057
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "Seguimiento de mensajes de recordatorio..."
+msgstr "Seguimiento de mensajes de recordatorio…"
 
 #: kmmainwidget.cpp:3068 util.cpp:167
 #, kde-format
@@ -5054,7 +5054,7 @@ msgstr "Borrar el &hilo"
 #: kmmainwidget.cpp:3087 kmmainwidget.cpp:4143
 #, kde-format
 msgid "&Find Messages…"
-msgstr "B&uscar mensajes..."
+msgstr "B&uscar mensajes…"
 
 #: kmmainwidget.cpp:3093
 #, kde-format
@@ -5066,13 +5066,13 @@ msgstr "Seleccion&ar todos los mensajes"
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
-msgstr "Gestió&n de listas de correo..."
+msgstr "Gestió&n de listas de correo…"
 
 #: kmmainwidget.cpp:3108
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr "Borrar la &caché de Akonadi..."
+msgstr "Borrar la &caché de Akonadi…"
 
 #: kmmainwidget.cpp:3113
 #, kde-format
@@ -5083,7 +5083,7 @@ msgstr "Borrar &la caché de Akonadi en esta carpeta y todas sus subcarpetas"
 #: kmmainwidget.cpp:3118
 #, kde-format
 msgid "&Assign Shortcut…"
-msgstr "&Asignar atajo de teclado..."
+msgstr "&Asignar atajo de teclado…"
 
 #: kmmainwidget.cpp:3136
 #, kde-format
@@ -5095,7 +5095,7 @@ msgstr "Preferencia&s de caducidad"
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
-msgstr "&Archivar carpeta..."
+msgstr "&Archivar carpeta…"
 
 #: kmmainwidget.cpp:3169
 #, kde-format
@@ -5106,17 +5106,17 @@ msgstr "Cargar referencias e&xternas"
 #: kmmainwidget.cpp:3192
 #, kde-format
 msgid "Copy Message To…"
-msgstr "Copiar mensaje a..."
+msgstr "Copiar mensaje a…"
 
 #: kmmainwidget.cpp:3194
 #, kde-format
 msgid "Move Message To…"
-msgstr "Mover mensaje a..."
+msgstr "Mover mensaje a…"
 
 #: kmmainwidget.cpp:3199
 #, kde-format
 msgid "&New Message…"
-msgstr "&Nuevo mensaje..."
+msgstr "&Nuevo mensaje…"
 
 #: kmmainwidget.cpp:3201
 #, kde-format
@@ -5132,7 +5132,7 @@ msgstr "Mensaje desde plan&tilla"
 #: kmmainwidget.cpp:3215
 #, kde-format
 msgid "New Message t&o Mailing-List…"
-msgstr "Nuev&o mensaje a lista de correo..."
+msgstr "Nuev&o mensaje a lista de correo…"
 
 #: kmmainwidget.cpp:3221
 #, kde-format
@@ -5143,25 +5143,25 @@ msgstr "&Crear filtro"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
-msgstr "Filtrar por a&sunto..."
+msgstr "Filtrar por a&sunto…"
 
 #: kmmainwidget.cpp:3232
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
-msgstr "&Filtrar por «De»..."
+msgstr "&Filtrar por «De»…"
 
 #: kmmainwidget.cpp:3238
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
-msgstr "Fil&trar por «Para»..."
+msgstr "Fil&trar por «Para»…"
 
 #: kmmainwidget.cpp:3244
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
-msgstr "Filtrar por «&Cc»..."
+msgstr "Filtrar por «&Cc»…"
 
 #: kmmainwidget.cpp:3258
 #, kde-format
@@ -5224,7 +5224,7 @@ msgstr "Hilo de discusión &ignorado"
 #: kmmainwidget.cpp:3301 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments…"
-msgstr "Guardar ad&juntos..."
+msgstr "Guardar ad&juntos…"
 
 #: kmmainwidget.cpp:3305
 #, kde-format
@@ -5235,7 +5235,7 @@ msgstr "Borrar todos los adjuntos"
 #: kmmainwidget.cpp:3313
 #, kde-format
 msgid "Copy Decrypted To…"
-msgstr "Copiar descifrado a..."
+msgstr "Copiar descifrado a…"
 
 #: kmmainwidget.cpp:3317
 #, kde-format
@@ -5393,18 +5393,18 @@ msgstr ""
 #: kmmainwidget.cpp:3433
 #, kde-format
 msgid "Configure &Filters…"
-msgstr "Configurar &filtros..."
+msgstr "Configurar &filtros…"
 
 #: kmmainwidget.cpp:3439
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
-msgstr "Gestionar guiones de &Sieve..."
+msgstr "Gestionar guiones de &Sieve…"
 
 #: kmmainwidget.cpp:3444
 #, kde-format
 msgid "&Add Account…"
-msgstr "&Añadir cuenta..."
+msgstr "&Añadir cuenta…"
 
 #: kmmainwidget.cpp:3449
 #, kde-format
@@ -5419,28 +5419,28 @@ msgstr "Mostrar la página de bienvenida de KMail"
 #: kmmainwidget.cpp:3458
 #, kde-format
 msgid "Configure &Notifications…"
-msgstr "Configurar &notificaciones..."
+msgstr "Configurar &notificaciones…"
 
 #: kmmainwidget.cpp:3465
 #, kde-format
 msgid "&Configure KMail…"
-msgstr "Confi&gurar KMail..."
+msgstr "Confi&gurar KMail…"
 
 #: kmmainwidget.cpp:3472
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
-msgstr "Caducar..."
+msgstr "Caducar…"
 
 #: kmmainwidget.cpp:3478
 #, kde-format
 msgid "Add Favorite Folder…"
-msgstr "Añadir carpeta favorita..."
+msgstr "Añadir carpeta favorita…"
 
 #: kmmainwidget.cpp:3484
 #, kde-format
 msgid "Serverside Subscription…"
-msgstr "Suscripción en el servidor..."
+msgstr "Suscripción en el servidor…"
 
 #: kmmainwidget.cpp:3490 kmmainwidget.cpp:3498
 #, kde-format
@@ -5455,12 +5455,12 @@ msgstr "Aplicar filtros en la carpeta y todas sus subcarpetas"
 #: kmmainwidget.cpp:3516
 #, kde-format
 msgid "Import/Export KMail Data…"
-msgstr "Importar/exportar datos de KMail..."
+msgstr "Importar/exportar datos de KMail…"
 
 #: kmmainwidget.cpp:3522
 #, kde-format
 msgid "New AddressBook Contact…"
-msgstr "Nuevo contacto de libreta de direcciones..."
+msgstr "Nuevo contacto de libreta de direcciones…"
 
 #: kmmainwidget.cpp:3530 kmmainwidget.cpp:4183
 #, kde-format
@@ -5481,7 +5481,7 @@ msgstr "Copiar mensaje a la carpeta"
 #: kmmainwidget.cpp:3556
 #, kde-format
 msgid "Jump to Folder…"
-msgstr "Saltar a carpeta..."
+msgstr "Saltar a carpeta…"
 
 #: kmmainwidget.cpp:3562
 #, kde-format
@@ -5617,7 +5617,7 @@ msgstr "M&over el hilo de discusión a la papelera"
 #: kmmainwidget.cpp:4143
 #, kde-format
 msgid "Edit Search…"
-msgstr "Editar búsqueda..."
+msgstr "Editar búsqueda…"
 
 #: kmmainwidget.cpp:4181
 #, kde-format
@@ -5653,7 +5653,7 @@ msgstr "Filtro %1"
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
-msgstr "Buscar... <%1>"
+msgstr "Buscar… <%1>"
 
 #: kmmainwidget.cpp:4909
 #, kde-format
@@ -5732,7 +5732,7 @@ msgstr "Se ha reiniciado Akonadi."
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
-msgstr "Iniciando..."
+msgstr "Iniciando…"
 
 #: kmreadermainwin.cpp:491 util.cpp:167
 #, kde-format
@@ -5763,17 +5763,17 @@ msgstr "No se puede copiar el elemento. %1"
 #: kmreaderwin.cpp:122
 #, kde-format
 msgid "New Message To…"
-msgstr "Mensaje nuevo para..."
+msgstr "Mensaje nuevo para…"
 
 #: kmreaderwin.cpp:128
 #, kde-format
 msgid "Reply To…"
-msgstr "Responder a..."
+msgstr "Responder a…"
 
 #: kmreaderwin.cpp:134
 #, kde-format
 msgid "Forward To…"
-msgstr "Reenviar a..."
+msgstr "Reenviar a…"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5798,30 +5798,30 @@ msgstr "Marcador para este enlace"
 #: kmreaderwin.cpp:161
 #, kde-format
 msgid "Edit contact…"
-msgstr "Editar contacto..."
+msgstr "Editar contacto…"
 
 #: kmreaderwin.cpp:167
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
-msgstr "Guardar enlace como..."
+msgstr "Guardar enlace como…"
 
 #: kmreaderwin.cpp:173
 #, kde-format
 msgid "&Find in Message…"
-msgstr "&Buscar en mensaje..."
+msgstr "&Buscar en mensaje…"
 
 #: kmreaderwin.cpp:179
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
-msgstr "Guardar imagen en disco..."
+msgstr "Guardar imagen en disco…"
 
 #: kmreaderwin.cpp:185
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
-msgstr "Abrir imagen..."
+msgstr "Abrir imagen…"
 
 #: kmreaderwin.cpp:191
 #, kde-format
@@ -5844,7 +5844,7 @@ msgstr "Cargar referencia externa cuando el correo viene de este contacto"
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
-msgstr "Compartir imagen..."
+msgstr "Compartir imagen…"
 
 #: kmreaderwin.cpp:259
 msgid ""
@@ -5926,7 +5926,7 @@ msgstr "Recuperando contenidos de la carpeta"
 #: kmreaderwin.cpp:320
 #, kde-format
 msgid "Please wait . . ."
-msgstr "Espere un momento..."
+msgstr "Espere un momento…"
 
 #: kmreaderwin.cpp:326 kmreaderwin.cpp:335
 #, kde-format
@@ -5940,7 +5940,7 @@ msgid ""
 "a> to go online . . .</p>"
 msgstr ""
 "KMail está actualmente en modo desconectado. Pulse <a href=\"kmail:goOnline"
-"\">aquí</a> para ir en línea...</p>"
+"\">aquí</a> para ir en línea…</p>"
 
 #: kmreaderwin.cpp:337
 #, kde-format
@@ -5949,7 +5949,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 "La cuenta está actualmente en modo desconectado. Pulse <a href=\"kmail:"
-"goResourceOnline\">aquí</a> para ir en línea...</p>"
+"goResourceOnline\">aquí</a> para ir en línea…</p>"
 
 #: kmreaderwin.cpp:916
 #, kde-format
@@ -6001,7 +6001,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
-msgstr "Nuevo mensaje..."
+msgstr "Nuevo mensaje…"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -6069,7 +6069,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, kde-format
 msgid "&Configure Summary View…"
-msgstr "&Configurar la vista de resumen..."
+msgstr "&Configurar la vista de resumen…"
 
 #: kontactplugin/summary/summaryview_part.cpp:50
 #: kontactplugin/summary/summaryview_plugin.cpp:102
@@ -6168,52 +6168,52 @@ msgstr "&Responder"
 #: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:160
 #, kde-format
 msgid "&Reply…"
-msgstr "&Responder..."
+msgstr "&Responder…"
 
 #: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:164
 #, kde-format
 msgid "Reply to &All…"
-msgstr "Responder a &todos..."
+msgstr "Responder a &todos…"
 
 #: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
-msgstr "Responder al a&utor..."
+msgstr "Responder al a&utor…"
 
 #: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
-msgstr "Responder a &lista de correo..."
+msgstr "Responder a &lista de correo…"
 
 #: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
-msgstr "Responder sin cit&ar..."
+msgstr "Responder sin cit&ar…"
 
 #: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
-msgstr "&Intercalado..."
+msgstr "&Intercalado…"
 
 #: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Como &adjunto..."
+msgstr "Como &adjunto…"
 
 #: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
-msgstr "Re&dirigir..."
+msgstr "Re&dirigir…"
 
 #: messageactions.cpp:73
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr "Nuevo mensaje para los destinatarios..."
+msgstr "Nuevo mensaje para los destinatarios…"
 
 #: messageactions.cpp:74
 #, kde-format
@@ -6241,19 +6241,19 @@ msgstr "&Editar como nuevo"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
-msgstr "Filtrar por &lista de correo..."
+msgstr "Filtrar por &lista de correo…"
 
 #: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr "Añadir recordatorio de seguimiento..."
+msgstr "Añadir recordatorio de seguimiento…"
 
 #: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
-msgstr "En&viar de nuevo..."
+msgstr "En&viar de nuevo…"
 
 #: messageactions.cpp:82
 #, kde-format
@@ -6263,7 +6263,7 @@ msgstr "Mensaje nuevo desde plan&tilla"
 #: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
-msgstr "Exportar a PDF..."
+msgstr "Exportar a PDF…"
 
 #: messageactions.cpp:85
 #, kde-format
@@ -6274,7 +6274,7 @@ msgstr "Archivar mensaje"
 #: messageactions.cpp:401
 #, kde-format
 msgid "Filter on Mailing-List…"
-msgstr "Filtrar por lista de correo..."
+msgstr "Filtrar por lista de correo…"
 
 #: messageactions.cpp:437
 #, kde-format
@@ -6320,7 +6320,7 @@ msgstr "Darse de baja de la lista"
 #: messageactions.cpp:467
 #, kde-format
 msgid "Filter on Mailing-List %1…"
-msgstr "Filtrar por lista de correo %1..."
+msgstr "Filtrar por lista de correo %1…"
 
 #: messageactions.cpp:644
 #, kde-format
@@ -6371,7 +6371,7 @@ msgstr "Indexación"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, kde-format
 msgid "Indexing Collections…"
-msgstr "Indexando colecciones..."
+msgstr "Indexando colecciones…"
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
 #: searchdialog/kmsearchmessagemodel.cpp:94
@@ -6427,18 +6427,18 @@ msgstr "&Buscar"
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
-msgstr "&Intercalado..."
+msgstr "&Intercalado…"
 
 #: searchdialog/searchwindowdialog.cpp:180
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Como &adjunto..."
+msgstr "Como &adjunto…"
 
 #: searchdialog/searchwindowdialog.cpp:194
 #, kde-format
 msgid "Save Attachments…"
-msgstr "Guardar adjuntos..."
+msgstr "Guardar adjuntos…"
 
 #: searchdialog/searchwindowdialog.cpp:200
 #, kde-format
@@ -6501,7 +6501,7 @@ msgstr ""
 #: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
-msgstr "Buscando..."
+msgstr "Buscando…"
 
 #: searchdialog/searchwindowdialog.cpp:534
 #, kde-format
@@ -6551,7 +6551,7 @@ msgstr[1] "Cortar %1 mensajes"
 #: searchdialog/searchwindowdialog.cpp:910
 #, kde-format
 msgid "Checking index status…"
-msgstr "Comprobando estado del índice..."
+msgstr "Comprobando estado del índice…"
 
 #: secondarywindow.cpp:78
 #, kde-format
@@ -6894,13 +6894,13 @@ msgstr "Etiqueta del mensaje: %1"
 #: tag/tagactionmanager.cpp:155
 #, kde-format
 msgid "Add new tag…"
-msgstr "Añadir nueva etiqueta..."
+msgstr "Añadir nueva etiqueta…"
 
 #: tag/tagactionmanager.cpp:168
 #, kde-format
 msgctxt "@action"
 msgid "More…"
-msgstr "Más..."
+msgstr "Más…"
 
 #: tag/tagactionmanager.cpp:188
 #, kde-format
@@ -6921,19 +6921,19 @@ msgstr "Seleccionar etiquetas"
 #: tag/tagselectdialog.cpp:53
 #, kde-format
 msgid "Add New Tag…"
-msgstr "Añadir nueva etiqueta..."
+msgstr "Añadir nueva etiqueta…"
 
 #: tag/tagselectdialog.cpp:67
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr "Buscar etiqueta..."
+msgstr "Buscar etiqueta…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order…"
-msgstr "Personalizar el orden de las cuentas..."
+msgstr "Personalizar el orden de las cuentas…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -6957,13 +6957,13 @@ msgstr "Not&ificación detallada de correo nuevo"
 #: ui/accountspagereceivingtab.ui:81
 #, kde-format
 msgid "Other Actio&ns…"
-msgstr "Otras accio&nes..."
+msgstr "Otras accio&nes…"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
 #, kde-format
 msgid "Open Image…"
-msgstr "Abrir imagen..."
+msgstr "Abrir imagen…"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
@@ -6987,7 +6987,7 @@ msgstr "Añadir una nueva identidad"
 #: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
-msgstr "&Añadir..."
+msgstr "&Añadir…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identityngpage.ui:44
@@ -6999,7 +6999,7 @@ msgstr "Modificar la identidad seleccionada"
 #: ui/identityngpage.ui:47
 #, kde-format
 msgid "&Modify…"
-msgstr "&Modificar..."
+msgstr "&Modificar…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
 #: ui/identityngpage.ui:57
@@ -7278,7 +7278,7 @@ msgstr "Seleccionar carpetas específicas:"
 #: ui/searchwindow.ui:60
 #, kde-format
 msgid "Select Folders…"
-msgstr "Seleccionar carpetas..."
+msgstr "Seleccionar carpetas…"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
@@ -7520,7 +7520,7 @@ msgstr "Para certificados intermedios de CA:"
 #: ui/securitypageencryptiontab.ui:347
 #, kde-format
 msgid "GnuPG Settings…"
-msgstr "Preferencias de GnuPG..."
+msgstr "Preferencias de GnuPG…"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:386
@@ -7545,8 +7545,8 @@ msgid ""
 msgstr ""
 "<b>ADVERTENCIA:</b> Permitir HTML en el correo puede incrementar el riesgo "
 "de que su sistema se vea comprometido por fallos de seguridad presentes y "
-"futuros. <a href=\"whatsthis1\">Más sobre correos HTML...</a> <a href="
-"\"whatsthis2\">Más sobre referencias externas...</a>"
+"futuros. <a href=\"whatsthis1\">Más sobre correos HTML…</a> <a href="
+"\"whatsthis2\">Más sobre referencias externas…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:45
@@ -7814,7 +7814,7 @@ msgid ""
 "privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 "<b>Advertencia:</b> Devolver acuses de recibo de forma incondicional viola "
-"su privacidad. <a href=\"whatsthis-mdn\">Más sobre MDN...</a>"
+"su privacidad. <a href=\"whatsthis-mdn\">Más sobre MDN…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:17
@@ -8254,657 +8254,3 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1 %"
-
-#~ msgid ""
-#~ "Could not start the import wizard. Please make sure you have ImportWizard "
-#~ "properly installed."
-#~ msgstr ""
-#~ "No se ha podido iniciar el asistente de importación. Asegúrese de que "
-#~ "ImportWizard está instalado correctamente."
-
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "No se ha podido iniciar el asistente de importación"
-
-#~ msgid "Form"
-#~ msgstr "Formulario"
-
-#~ msgctxt ""
-#~ "%1: identity name. Used in the config dialog, section Identity, to "
-#~ "indicate the default identity"
-#~ msgid "%1 (Default)"
-#~ msgstr "%1 (predeterminada)"
-
-#~ msgid "Identity Name"
-#~ msgstr "Identidad"
-
-#~ msgid "Email Address"
-#~ msgstr "Dirección de correo"
-
-#~ msgid "Invalid Email Address"
-#~ msgstr "Dirección de correo no válida"
-
-#~ msgid "Security Warning"
-#~ msgstr "Advertencia de seguridad"
-
-#~ msgid "Error while generating new key pair: %1"
-#~ msgstr "Error en la generación del nuevo par de claves: %1"
-
-#~ msgid "Remove"
-#~ msgstr "Eliminar"
-
-#~ msgid ""
-#~ "Specifies the number of custom MIME header fields to be inserted in "
-#~ "messages (for internal use only)"
-#~ msgstr ""
-#~ "Especifica el número de campos de cabecera MIME personalizados a insertar "
-#~ "en los mensajes (solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies whether the folders will expire in the background (for internal "
-#~ "use only)"
-#~ msgstr ""
-#~ "Especifica si las carpetas expirarán en el fondo (solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies whether this is the very first time that the application is run "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Especifica si es la primera vez que se ejecuta la aplicación (solo para "
-#~ "uso interno)"
-
-#~ msgid "Show crypto ownertrust icons"
-#~ msgstr "Mostrar iconos de confianza en el propietario criptográfico"
-
-#~ msgid "The size of the identity dialog (for internal use only)"
-#~ msgstr "El tamaño del diálogo de identidad (solo para uso interno)"
-
-#~ msgid "The width of the search window (for internal use only)"
-#~ msgstr "El ancho de la ventana de búsqueda (solo para uso interno)"
-
-#~ msgid "The height of the search window (for internal use only)"
-#~ msgstr "La altura de la ventana de búsqueda (solo para uso interno)"
-
-#~ msgid "The width of the Configure KMail dialog (for internal use only)"
-#~ msgstr ""
-#~ "El ancho del diálogo de configuración de KMail (solo para uso interno)"
-
-#~ msgid "The height of the Configure KMail dialog (for internal use only)"
-#~ msgstr ""
-#~ "La altura del diálogo de configuración de KMail (solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies the width of the collection field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Especifica el ancho del campo colección en la ventana de diálogo de "
-#~ "búsqueda (solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies the width of the subject field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Especifica el ancho del campo asunto en la ventana de diálogo de búsqueda "
-#~ "(solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies the width of the sender field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Especifica el ancho del campo remitente en la ventana de diálogo de "
-#~ "búsqueda (solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies the width of the receiver field in the Search Window dialog "
-#~ "(for internal use only)"
-#~ msgstr ""
-#~ "Especifica el ancho del campo destinatario en la ventana de diálogo de "
-#~ "búsqueda (solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies the width of the date field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Especifica el ancho del campo fecha en la ventana de diálogo de búsqueda "
-#~ "(solo para uso interno)"
-
-#~ msgid ""
-#~ "Specifies the width of the folder field in the Search Window dialog (for "
-#~ "internal use only)"
-#~ msgstr ""
-#~ "Especifica el ancho del campo carpeta en la ventana de diálogo de "
-#~ "búsqueda (solo para uso interno)"
-
-#~ msgid "Show encryption key ownertrust level"
-#~ msgstr ""
-#~ "Mostrar el nivel de confianza en el propietario de la clave de cifrado"
-
-#~ msgid ""
-#~ "By default, request an MDN when starting to compose a message. You can "
-#~ "select this on a per-message basis using \"Options - Request Disposition "
-#~ "Notification\""
-#~ msgstr ""
-#~ "Por omisión, pedir un MDN cuando se empieza a componer un mensaje. Puede "
-#~ "seleccionar esto para cada mensaje usando «Opciones - Pedir notificación "
-#~ "de disposición»"
-
-#~ msgid "Add Note…"
-#~ msgstr "Añadir nota..."
-
-#~ msgid "Edit Note…"
-#~ msgstr "Editar nota..."
-
-#~ msgid "Mod&ify..."
-#~ msgstr "Modif&icar..."
-
-#~ msgid "Modify..."
-#~ msgstr "Modificar..."
-
-#~ msgid "A&dd..."
-#~ msgstr "&Añadir..."
-
-#~ msgid "Add..."
-#~ msgstr "Añadir..."
-
-#~ msgid "&Spellchecker..."
-#~ msgstr "Corrector orto&gráfico..."
-
-#~ msgid "Edit..."
-#~ msgstr "Editar..."
-
-#~ msgid "Moving messages..."
-#~ msgstr "Moviendo mensajes..."
-
-#~ msgid "Deleting messages..."
-#~ msgstr "Eliminando mensajes..."
-
-#~ msgid "&Find Messages..."
-#~ msgstr "&Buscar mensajes..."
-
-#~ msgid "&Clear Akonadi Cache..."
-#~ msgstr "&Borrar la caché de Akonadi..."
-
-#~ msgid "&Archive Folder..."
-#~ msgstr "&Archivar carpeta..."
-
-#~ msgid "&New Message..."
-#~ msgstr "&Nuevo mensaje..."
-
-#~ msgid "Expire..."
-#~ msgstr "Caducar..."
-
-#~ msgid "Add Favorite Folder..."
-#~ msgstr "Añadir carpeta favorita..."
-
-#~ msgid "Jump to Folder..."
-#~ msgstr "Saltar a la carpeta..."
-
-#~ msgid "Reply To..."
-#~ msgstr "Responder a..."
-
-#~ msgctxt "@action:inmenu"
-#~ msgid "New Message..."
-#~ msgstr "Nuevo mensaje..."
-
-#~ msgid "&Reply..."
-#~ msgstr "&Responder..."
-
-#~ msgctxt "@action:inmenu Message->Forward->"
-#~ msgid "&Inline..."
-#~ msgstr "&Intercalado..."
-
-#~ msgctxt "@action:inmenu Message->Forward->"
-#~ msgid "As &Attachment..."
-#~ msgstr "Como &adjunto..."
-
-#~ msgid "Export to PDF..."
-#~ msgstr "Exportar a PDF..."
-
-#~ msgctxt "@action:inmenu Forward message inline."
-#~ msgid "&Inline..."
-#~ msgstr "&Intercalado..."
-
-#~ msgctxt "Message->Forward->"
-#~ msgid "As &Attachment..."
-#~ msgstr "Como &adjunto..."
-
-#~ msgid "Add new tag..."
-#~ msgstr "Añadir nueva etiqueta..."
-
-#~ msgid "More..."
-#~ msgstr "Más..."
-
-#~ msgid "&Add..."
-#~ msgstr "&Añadir..."
-
-#~ msgid "GnuPG Settings..."
-#~ msgstr "Preferencias de GnuPG..."
-
-#~ msgid "Charset"
-#~ msgstr "Juego de caracteres"
-
-#~ msgid ""
-#~ "This list is checked for every outgoing message from the top to the "
-#~ "bottom for a charset that contains all required characters."
-#~ msgstr ""
-#~ "Esta lista se comprueba comenzando por arriba hasta encontrar el juego de "
-#~ "caracteres requerido por cada mensaje saliente."
-
-#~ msgid "Enter charset:"
-#~ msgstr "Introduzca el juego de caracteres:"
-
-#~ msgid "Do you want to remove this selected charset?"
-#~ msgstr "¿Desea eliminar este juego de caracteres?"
-
-#~ msgid "Add Charset:"
-#~ msgstr "Añadir juego de caracteres:"
-
-#~ msgid "&Keep original charset when replying or forwarding (if possible)"
-#~ msgstr ""
-#~ "&Mantener el juego de caracteres original al responder o reenviar (si es "
-#~ "posible)"
-
-#~ msgid "This charset is not supported."
-#~ msgstr "Este juego de caracteres no está permitido."
-
-#~ msgctxt "Encodings menu"
-#~ msgid "us-ascii"
-#~ msgstr "us-ascii"
-
-#~ msgctxt "Menu item"
-#~ msgid "Encoding"
-#~ msgstr "Codificación"
-
-#~ msgid ""
-#~ "<qt><p>You have requested that messages be encrypted to yourself, but the "
-#~ "currently selected identity does not define an (OpenPGP or S/MIME) "
-#~ "encryption key to use for this.</p><p>Please select the key(s) to use in "
-#~ "the identity configuration.</p></qt>"
-#~ msgstr ""
-#~ "<qt><p>Ha solicitado que se cifren los mensajes para sí mismo, pero la "
-#~ "identidad seleccionada actualmente no tiene definida una clave de cifrado "
-#~ "(OpenPGP o S/MIME) para que pueda usarla.</p><p>Elija las claves en la "
-#~ "configuración de la identidad.</p></qt>"
-
-#~ msgctxt "@title:window"
-#~ msgid "Undefined Encryption Key"
-#~ msgstr "Clave de cifrado no definida"
-
-#~ msgid "Outlook-compatible attachment naming"
-#~ msgstr "Nombrado de adjuntos compatible con Outlook"
-
-#~ msgid ""
-#~ "Turn this option on to make Outlook(tm) understand attachment names "
-#~ "containing non-English characters"
-#~ msgstr ""
-#~ "Active esta opción para hacer que Outlook(tm) entienda los nombres de "
-#~ "adjuntos que tengan caracteres no ingleses"
-
-#~ msgid ""
-#~ "You have chosen to encode attachment names containing non-English "
-#~ "characters in a way that is understood by Outlook(tm) and other mail "
-#~ "clients that do not support standard-compliant encoded attachment names.\n"
-#~ "Note that KMail may create non-standard compliant messages, and "
-#~ "consequently it is possible that your messages will not be understood by "
-#~ "standard-compliant mail clients; so, unless you have no other choice, you "
-#~ "should not enable this option."
-#~ msgstr ""
-#~ "Ha elegido codificar los nombres de los adjuntos que tengan caracteres no "
-#~ "ingleses de forma que Outlook(tm) y otros clientes de correo que no "
-#~ "admitan nombres de adjuntos codificados de forma compatible con los "
-#~ "estándares puedan entenderlos.\n"
-#~ "Tenga en cuenta que KMail puede crear mensajes que no sean conformes con "
-#~ "los estándares y, por consiguiente, es posible que sus mensajes no los "
-#~ "entiendan los clientes de correo que cumplen los estándares. Por tanto, a "
-#~ "no ser que no tenga otra opción, no debería activar esta opción."
-
-#~ msgid ""
-#~ "Medium security encryption will be used for this recipient (the "
-#~ "encryption key is marginally trusted). Click the icon for details."
-#~ msgstr ""
-#~ "Se usara cifrado de seguridad media para este destinatario (la clave de "
-#~ "cifrado es marginalmente fiable). Pulse el icono para más detalles."
-
-#~ msgid ""
-#~ "The email to this recipient will be encrypted, but the security of the "
-#~ "encryption is unknown (the encryption key could not be verified). Click "
-#~ "the icon for details."
-#~ msgstr ""
-#~ "Se cifrara el correo a este destinatario, pero la seguridad del cifrado "
-#~ "es desconocida (la clave de cifrado no puede verificarse). Pulse en el "
-#~ "icono para más detalles."
-
-#~ msgid "kcmkmailsummary"
-#~ msgstr "kcmkmailsummary"
-
-#~ msgid "Mail Summary Configuration Dialog"
-#~ msgstr "Diálogo de configuración de resumen de correo"
-
-#~ msgid "Copyright © 2004–2010 Tobias Koenig"
-#~ msgstr "Copyright © 2004–2010 Tobias Koenig"
-
-#~ msgid "kontactsummary"
-#~ msgstr "resumen del contacto"
-
-#~ msgid "KDE Kontact Summary"
-#~ msgstr "Resumen de KDE Kontact"
-
-#~ msgid "(c), 2004 Tobias Koenig"
-#~ msgstr "© 2004 Tobias Koenig"
-
-#~ msgid "Composing"
-#~ msgstr "Edición"
-
-#~ msgid "Miscellaneous"
-#~ msgstr "Varios"
-
-#~ msgid "Automatically sign messages"
-#~ msgstr "Firmar mensajes automáticamente"
-
-#~ msgid ""
-#~ "When this option is enabled, the message/file will not only be encrypted "
-#~ "with the receiver's public key, but also with your key. This will enable "
-#~ "you to decrypt the message/file at a later time. This is generally a good "
-#~ "idea."
-#~ msgstr ""
-#~ "Cuando esta opción está activada, el mensaje/archivo no Solo se cifrará "
-#~ "con la clave pública del destinatario, sino también con su propia clave. "
-#~ "Esto hará posible que pueda descifrar el mensaje/archivo posteriormente. "
-#~ "Suele ser una buena idea."
-
-#~ msgid ""
-#~ "When encrypting emails, always also encr&ypt to the certificate of my own "
-#~ "identity"
-#~ msgstr ""
-#~ "Cuando se cifren correos, siempre ci&frar también el certificado de mi "
-#~ "propia identidad"
-
-#~ msgid "Store sent messages encry&pted"
-#~ msgstr "Almacenar mensajes ci&frados enviados"
-
-#~ msgid ""
-#~ "When this option is enabled, the application will always show you a list "
-#~ "of public keys from which you can choose the one it will use for "
-#~ "encryption. If it is off, the application will only show the dialog if it "
-#~ "cannot find the right key or if there are several which could be used."
-#~ msgstr ""
-#~ "Cuando esta opción está activada, la aplicación le mostrará siempre una "
-#~ "lista de las claves públicas que tiene, de las que tiene que elegir la "
-#~ "que se debe usar para el cifrado. Si no está activada, la aplicación Solo "
-#~ "mostrará el cuadro de diálogo si no puede encontrar la clave adecuada o "
-#~ "si hay varias que se podrían usar."
-
-#~ msgid "When sa&ving as draft, sign/encrypt as indicated"
-#~ msgstr "Al gu&ardar como borrador, firmar/cifrar como se indica"
-
-#~ msgid "Check to be warned when sending unsigned messages."
-#~ msgstr "Marque para que le avise cuando se envíen mensajes sin firmar."
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unsigned Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unsigned.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisar al intentar enviar un mensaje sin firmar</h1>\n"
-#~ "Si esta casilla está marcada, se le avisará cuando intente enviar partes "
-#~ "o un mensaje completo sin firmar.\n"
-#~ "<p>\n"
-#~ "Se recomienda mantener esta opción habilitada para la máxima seguridad de "
-#~ "integridad.\n"
-#~ "</p></qt>"
-
-#~ msgid "Check to be warned when sending unencrypted messages."
-#~ msgstr "Marcar para ser avisado cuando se envíen mensajes sin cifrar."
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn When Trying To Send Unencrypted Messages</h1>\n"
-#~ "If this box is checked, you will be warned when you try to send parts of "
-#~ "or the whole message unencrypted.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum integrity.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisar cuando se intente enviar un mensaje sin cifrar</h1>\n"
-#~ "Si esta casilla está marcada, se le avisará si se intenta enviar un "
-#~ "mensaje o parte de un mensaje sin cifrar.\n"
-#~ "<p>\n"
-#~ "Se recomienda el dejar esta opción habilitada para conseguir máxima "
-#~ "integridad.\n"
-#~ "</p></qt>"
-
-#~ msgid "For Signing"
-#~ msgstr "Para firmar"
-
-#~ msgid "For Encryption"
-#~ msgstr "Para cifrar"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If Signature Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the signature certificate should be "
-#~ "valid without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisar si el certificado de firma caduca</h1>\n"
-#~ "Seleccione el mínimo número de días que el certificado de firma debe ser "
-#~ "válido para que no se le avise.\n"
-#~ "<p>\n"
-#~ "El valor recomendado de SPHINX es de 14 días.\n"
-#~ "</p></qt>"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If CA Certificate Expires</h1>\n"
-#~ "Select the minimum number of days the CA certificate should be valid "
-#~ "without issuing a warning.\n"
-#~ "<p>\n"
-#~ "The recommended SPHINX setting is 14 days.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisar si el certificado de la CA caduca</h1>\n"
-#~ "Seleccione el mínimo número de días que el certificado de la CA debe ser "
-#~ "válido para que no se le avise.\n"
-#~ "<p>\n"
-#~ "El valor recomendado por SPHINX es de 14 días.\n"
-#~ "</p></qt>"
-
-#~| msgctxt "@title:window"
-#~| msgid "Select Contact"
-#~ msgid "Select from Contacts..."
-#~ msgstr "Seleccionar de los contactos..."
-
-#~ msgid ""
-#~ "Check this box if you want KMail to add a so-called X-Face header to "
-#~ "messages written with this identity. An X-Face is a small (48x48 pixels) "
-#~ "black and white image that some mail clients are able to display."
-#~ msgstr ""
-#~ "Marque esta casilla si quiere que KMail añada la cabecera X-Face a los "
-#~ "mensajes que escriba con esta identidad. Un X-Face es una imagen pequeña "
-#~ "(48x48 píxeles) en blanco y negro que algunos clientes de correo pueden "
-#~ "mostrar."
-
-#~ msgid "This is a preview of the picture selected/entered below."
-#~ msgstr "Abajo hay una vista previa de la imagen seleccionada o introducida."
-
-#~ msgid "Click on the widgets below to obtain help on the input methods."
-#~ msgstr ""
-#~ "Pulse en los controles de abajo para obtener ayuda sobre los métodos de "
-#~ "entrada."
-
-#~ msgctxt "continuation of \"obtain picture from\""
-#~ msgid "External Source"
-#~ msgstr "Fuente externa"
-
-#~ msgctxt "continuation of \"obtain picture from\""
-#~ msgid "Input Field Below"
-#~ msgstr "Campo de entrada de abajo"
-
-#~ msgid "Obtain pic&ture from:"
-#~ msgstr "Obtener la ima&gen desde"
-
-#~ msgid "Select File..."
-#~ msgstr "Seleccionar archivo..."
-
-#~ msgid ""
-#~ "Use this to select an image file to create the picture from. The image "
-#~ "should be of high contrast and nearly quadratic shape. A light background "
-#~ "helps improve the result."
-#~ msgstr ""
-#~ "Úselo para seleccionar un archivo de imagen desde el que crear la "
-#~ "fotografía. La imagen debe ser de alto contraste y con una forma casi "
-#~ "cuadrática. Un fondo claro ayuda a mejorar el resultado."
-
-#~ msgid ""
-#~ "You can use a scaled-down version of the picture you have set in your "
-#~ "address book entry."
-#~ msgstr ""
-#~ "Puede usar una versión reducida de la imagen que tiene configurada en la "
-#~ "entrada de su libreta de direcciones."
-
-#~ msgid "Use this field to enter an arbitrary X-Face string."
-#~ msgstr "Use este campo para introducir una cadena arbitraria para X-Face."
-
-#~ msgid "Major conntributor"
-#~ msgstr "Colaborador importante"
-
-#~ msgid "Major contributor, still actiive"
-#~ msgstr "Colaborador importante, aún en activo"
-
-#~ msgid "Common Options"
-#~ msgstr "Opciones comunes"
-
-#~ msgid "Check spelling before sending"
-#~ msgstr "Comprobar ortografía antes de enviar"
-
-#~ msgctxt "General options for the message list."
-#~ msgid "General"
-#~ msgstr "General"
-
-#~ msgid "Send CC: to 'address'"
-#~ msgstr "Enviar CC: a «dirección»"
-
-#~ msgid "Send BCC: to 'address'"
-#~ msgstr "Enviar CCO: a «dirección»"
-
-#~ msgid "Show Sender/Receiver Column in List of Messages"
-#~ msgstr "Mostrar columna de remitente y destinatario en la lista de mensajes"
-
-#~ msgid "Sho&w column:"
-#~ msgstr "Mostrar co&lumna:"
-
-#~ msgctxt "@item:inlistbox Show default value."
-#~ msgid "Default"
-#~ msgstr "Predeterminado"
-
-#~ msgctxt "@item:inlistbox Show sender."
-#~ msgid "Sender"
-#~ msgstr "Remitente"
-
-#~ msgctxt "@item:inlistbox Show receiver."
-#~ msgid "Receiver"
-#~ msgstr "Destinatario"
-
-#~ msgid "Use default aggregation"
-#~ msgstr "Usar agregación predeterminada"
-
-#~ msgid "Aggregation"
-#~ msgstr "Agregación"
-
-#~ msgid "Use default theme"
-#~ msgstr "Usar tema predeterminado"
-
-#~ msgid "Theme"
-#~ msgstr "Tema"
-
-#~ msgid "Prefer HTML to text"
-#~ msgstr "Preferir HTML a texto"
-
-#~ msgid "Prefer text to HTML"
-#~ msgstr "Preferir texto a HTML"
-
-#~ msgid "Use Global Settings"
-#~ msgstr "Usar preferencias globales"
-
-#~ msgid "&Use custom message templates in this folder"
-#~ msgstr "&Usar plantillas personalizadas de mensajes en esta carpeta"
-
-#~ msgctxt "@label"
-#~ msgid ""
-#~ "This model can only handle email folders. The current collection holds "
-#~ "mimetypes: %1"
-#~ msgstr ""
-#~ "Este modelo solo puede manejar carpetas de correo. La colección actual "
-#~ "mantiene tipos mime: %1"
-
-#~ msgctxt "@label No size available"
-#~ msgid "-"
-#~ msgstr "-"
-
-#~ msgctxt "@info"
-#~ msgid "File <filename>%1</filename> exists.<nl/>Do you want to replace it?"
-#~ msgstr "El archivo <filename>%1</filename> existe.<nl/>¿Desea sustituirlo?"
-
-#~ msgid "Save to File"
-#~ msgstr "Guardar en archivo"
-
-#~ msgid "&Replace"
-#~ msgstr "&Sustituir"
-
-#~ msgid "Use Less Bandwidth"
-#~ msgstr "Usar menos ancho de banda"
-
-#~ msgid "Text Snippets"
-#~ msgstr "Recortes de texto"
-
-#~ msgid "Check Mail Url Tracking"
-#~ msgstr "Comprobar seguimiento de Url del correo"
-
-#~ msgid "Folder Name and Size When Close to Quota"
-#~ msgstr "Nombre de la carpeta y tamaño cuando esté cercana a la cuota"
-
-#~ msgid "Set the \"Reply-To:\" email address for this message"
-#~ msgstr "Establezca la dirección de correo «Responder a:» para este mensaje"
-
-#~ msgid "&Reply to:"
-#~ msgstr "&Responder a:"
-
-#~ msgid "Check to be warned if the address is not in the certificate"
-#~ msgstr "Marcar para ser avisado si la dirección no está en el certificado"
-
-#~ msgid ""
-#~ "<qt>\n"
-#~ "<h1>Warn If Receiver's Email Address Is Not In Certificate</h1>\n"
-#~ "If this option is checked, a warning is issued if the email address of "
-#~ "the receiver is not contained in the certificate used for encrypting.\n"
-#~ "<p>\n"
-#~ "It is recommended to leave this option turned on for maximum security.\n"
-#~ "</p></qt>"
-#~ msgstr ""
-#~ "<qt>\n"
-#~ "<h1>Avisar si la dirección del destinatario no esta en el certificado</"
-#~ "h1>\n"
-#~ "Si esta casilla está marcada, se genera un aviso si la dirección del "
-#~ "destinatario no se encuentra en el certificado usado para cifrar.\n"
-#~ "<p>\n"
-#~ "Se recomienda dejar esta opción habilitada para conseguir una máxima "
-#~ "seguridad.\n"
-#~ "</p></qt>"
-
-#~ msgid "Warn if &receiver's email address is not in certificate"
-#~ msgstr ""
-#~ "Avisar si la dirección de correo del destinata&rio no está en el "
-#~ "certificado"
-
-#~ msgid "Zoom"
-#~ msgstr "Acercar"
