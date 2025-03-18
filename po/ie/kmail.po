@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -3401,105 +3401,105 @@ msgstr "Liste de fólderes:"
 msgid "Configure Expire Folder..."
 msgstr "Liste de fólderes:"
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Conto"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "&Atachar"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Crear..."
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Lingue del destination:"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "%1 (predefinit)"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "%1 (predefinit)"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr "%1 (predefinit)"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "Modelles"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Modelles"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "Modelles"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "Signature"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid "Picture"
 msgstr ""
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, fuzzy, kde-format
 msgid "Activities"
 msgstr "KDE Plasma %1"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, fuzzy, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Cliente de postage de KDE"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Cliente de postage de KDE"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Cliente de postage de KDE"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Cliente de postage de KDE"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3508,14 +3508,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr "Ciffrat missages"
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, fuzzy, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr "&Identitá"
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3524,43 +3524,43 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr "Ciffrat missages"
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, fuzzy, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr "&Identitá"
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Cliente de postage de KDE"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, fuzzy, kde-format
 msgid "The signature file is not valid"
 msgstr "Signature"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "&Identitá"
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, fuzzy, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr "Fólderes"
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, fuzzy, kde-format
 msgid "Create…"
 msgstr "Crear..."
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Redacter"

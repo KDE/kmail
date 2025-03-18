@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2025-03-15 03:38+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -3487,43 +3487,43 @@ msgstr "ს&პამის საქაღალდე:"
 msgid "Configure Expire Folder..."
 msgstr "მოძველებულების საქაღალდის მორგება..."
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "გამავალი ანგარიში:"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "შეტყობინებისთვის ჩემი vCard-ის მიმაგრება"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "შექმნა…"
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "ავტოკორექციის ენა:"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "ნაგულისხმევი დომენის სახელის აღდგენა"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "ნაგულისხმები &დომენი:"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3532,62 +3532,62 @@ msgstr ""
 "<qt><p>ნაგულისხმევი დომენი გამოიყენება იმ ელფოსტების დასასრულებლად, "
 "რომლებიც, მხოლოდ, მომხმარებლის სახელისგან შედგებიან.</p></qt>"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&ამ იდენტიფიკატორისთვის მომხმარებლის შეტყობინების ნიმუშების გამოყენება"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&გლობალური ნიმუშების კოპირება"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "ნიმუშები"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "ხელმოწერა"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid "Picture"
 msgstr "სურათი"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid "Activities"
 msgstr "აქტივობები"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "არასწორი ელფოსტის ფსევდონიმი \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "ამ იდენტიფიკატორისთვის ელფოსტის მისამართის მითითება აუცილებელია."
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "ცარიელი ელფოსტის მისამართი"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "ელფოსტის არასწორი მისამართი"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3601,7 +3601,7 @@ msgstr ""
 "ამან შეიძლება გამოიწვიოს გაფრთხილების შეტყობინებები მიმღების მხარეს, როცა ის "
 "ამ კონფიგურაციით შექმნილი ხელმოწერების გადამოწმებას შეეცდება."
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3610,7 +3610,7 @@ msgstr ""
 "მორგებული OpenPGP-ის ხელმოწერის გასაღებებიდან ერთ-ერთი არ შეიცავს "
 "მომხმარებლის ID-ს მითითებული ელფოსტის მისამართით ამ იდენტიფიკატორისთვის (%1)."
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3624,7 +3624,7 @@ msgstr ""
 "ამან შეიძლება გამოიწვიოს გაფრთხილების შეტყობინებები მიმღების მხარეს, როცა ის "
 "ამ კონფიგურაციით შექმნილი ხელმოწერების გადამოწმებას შეეცდება."
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3633,24 +3633,24 @@ msgstr ""
 "მორგებული S/MIME-ის ხელმოწერის გასაღებებიდან ერთ-ერთი არ შეიცავს "
 "მომხმარებლის ID-ს მითითებული ელფოსტის მისამართით ამ იდენტიფიკატორისთვის (%1)."
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "სერტიფიკატებში/გასაღებში ელფოსტის მისამართი აღმოჩენილი არაა"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "ხელმოწერის ფაილი არასწორია"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "იდენტიფიკაციის ჩასწორება \"%1\""
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3659,12 +3659,12 @@ msgstr ""
 "ზოგიერთი მომხმარებლის საქაღალდე იდენტიფიკატორისთვის (უკვე) აღარ არსებობს. "
 "ამიტომ, გამოყენებული იქნება ნაგულისხმევი საქაღალდეები."
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, kde-format
 msgid "Create…"
 msgstr "შექმნა…"
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, kde-format
 msgid "Edit…"
 msgstr "ჩასწორება…"

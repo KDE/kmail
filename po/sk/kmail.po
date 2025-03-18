@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2023-12-12 19:31+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -3727,49 +3727,49 @@ msgstr "Priečinok pre &odoslané:"
 msgid "Configure Expire Folder..."
 msgstr "Zrušiť platnosť priečinku"
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, fuzzy, kde-format
 #| msgid "Outgoing Account:"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Odchádzajúci účet:"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, fuzzy, kde-format
 #| msgid "Attach my vCard to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Pridať moju vizitku do správy"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Vytvoriť..."
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, fuzzy, kde-format
 #| msgid "Autocorrection language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Jazyk automatických opráv:"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Restore default domain name"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Obnoviť predvolený názov domény"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Š&tandardná doména:"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3778,67 +3778,67 @@ msgstr ""
 "<qt><p>Štandardná doména bude použitá pre dopĺňanie e-mailových adries ktoré "
 "pozostávaju len z mena používateľa.</p></qt>"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&Použiť vlastné šablóny pre správy pre túto identitu"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Kopírovať globálne šablóny"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "Šablóny"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "Podpis"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid "Picture"
 msgstr "Obrázok"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, fuzzy, kde-format
 #| msgid "Activate"
 msgid "Activities"
 msgstr "Aktivovať"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Neplatný e-mailový alias \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates for this identity"
 msgid "You must provide an email for this identity."
 msgstr "&Použiť vlastné šablóny pre správy pre túto identitu"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "E-mailová adresa"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Neplatná e-mailová adresa"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3851,7 +3851,7 @@ msgstr ""
 "To môže spôsobiť varovania pre prijímateľov správy pri pokuse o overenie "
 "podpisu."
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3860,7 +3860,7 @@ msgstr ""
 "Jeden z nastavených šifrovacích kľúčov OpenPGP neobsahuje e-mailovú adresu "
 "nastavenú pre túto identitu (%1)."
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3873,7 +3873,7 @@ msgstr ""
 "To môže spôsobiť varovania pre prijímateľov správy pri pokuse o overenie "
 "podpisu."
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3882,24 +3882,24 @@ msgstr ""
 "Jeden z nastavených šifrovacích certifikátov S/MIME neobsahuje e-mailovú "
 "adresu nastavenú pre túto identitu (%1)."
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mailová adresa nenájdená v kľúčoch/certifikátoch"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Podpisový súbor je neplatný"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Upraviť identitu \"%1\""
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3908,13 +3908,13 @@ msgstr ""
 "Niektoré vlastné priečinky pre identity už neexistuje. Preto budú použité "
 "štandardné priečinky."
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Vytvoriť..."
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, fuzzy, kde-format
 #| msgid "&Edit"
 msgid "Edit…"

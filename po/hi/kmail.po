@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2024-12-15 19:32+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -3641,110 +3641,110 @@ msgstr "भेजी-डाक फ़ोल्डरः (&f)"
 msgid "Configure Expire Folder..."
 msgstr "पॉप फ़िल्टर्स कॉन्फ़िगर करें... (&P)"
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "खाता कॉन्फ़िगर करें"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "संदेश में 'हेडर' जोड़ें."
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "नाम बदलें…"
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "भाषा चुनें: (&l)"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "डिफ़ॉल्ट डोमेनः (&t)"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "डिफ़ॉल्ट डोमेनः (&t)"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates"
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "मनपसंद संदेश टैम्प्लेट इस्तेमाल करें (&U)"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "वैश्विक टैम्प्लेट्स नक़ल करें (&C)"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "प्रारूप"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "हस्ताक्षर"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, fuzzy, kde-format
 #| msgid "&Picture"
 msgid "Picture"
 msgstr "चित्र: (&P)"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, fuzzy, kde-format
 msgid "Activities"
 msgstr "मह्त्वपूर्ण संदेश"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "अवैध ई-मेल पता"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates"
 msgid "You must provide an email for this identity."
 msgstr "मनपसंद संदेश टैम्प्लेट इस्तेमाल करें (&U)"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "ई-मेल पता"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3752,7 +3752,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "अवैध ई-मेल पता"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3761,14 +3761,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3777,46 +3777,46 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "ई-मेल पता जो कुंजी/प्रमाणपत्र में नहीं मिला"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "हस्ताक्षर फ़ाइल वैध नहीं है"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "उपयोक्ता का संपादन करें \"%1\""
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "नाम बदलें…"
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"

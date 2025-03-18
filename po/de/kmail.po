@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2024-12-29 11:09+0100\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -3561,43 +3561,43 @@ msgstr "&Ordner für versendete Nachrichten:"
 msgid "Configure Expire Folder..."
 msgstr "&POP-Filter einrichten ..."
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Versand-Postfach:"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Eigene vCard zur Nachricht hinzufügen"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Erstellen …"
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Sprache der Autokorrektur:"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Standard-Domainname wiederherstellen"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "S&tandard-Domain:"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3606,62 +3606,62 @@ msgstr ""
 "<qt><p>Die Standard-Domain wird zur automatischen Vervollständigung einer E-"
 "Mail-Adresse verwendet, falls nur ein Benutzername angegeben wurde.</p></qt>"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "Eigene Nachrichten&vorlagen benutzen"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Globale Vorlagen &kopieren"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "Vorlagen"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "Signatur"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid "Picture"
 msgstr "Bild"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid "Activities"
 msgstr "Aktivitäten"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ungültiger E-Mail-Alias „%1“"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Für diese Identität muss eine E-Mail angegeben werden."
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Leere E-Mail-Adresse"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ungültige E-Mail-Adresse"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3675,7 +3675,7 @@ msgstr ""
 "Dies kann zu Warnmeldungen führen, wenn hierüber erstellte Signaturen beim "
 "Empfänger überprüft werden."
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3685,7 +3685,7 @@ msgstr ""
 "Benutzerkennung, die mit der für diese Identität festgelegten E-Mail-Adresse "
 "übereinstimmt (%1)."
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3698,7 +3698,7 @@ msgstr ""
 "übereinstimmt (%1). Dies kann zu Warnmeldungen führen, wenn hierüber "
 "erstellte Signaturen beim Empfänger überprüft werden."
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3708,24 +3708,24 @@ msgstr ""
 "Benutzerkennung, die mit der für diese Identität festgelegten E-Mail-Adresse "
 "übereinstimmt (%1)."
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Die E-Mail-Adresse wurde nicht im Schlüssel/Zertifikat gefunden"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Die Signaturdatei ist ungültig"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identität „%1“ bearbeiten"
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3734,12 +3734,12 @@ msgstr ""
 "Ein eingestellter Ordner dieser Identität existiert nicht (mehr). Der "
 "Standardordner wird verwendet."
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, kde-format
 msgid "Create…"
 msgstr "Erstellen …"
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, kde-format
 msgid "Edit…"
 msgstr "Bearbeiten …"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2024-11-24 18:05+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -3498,43 +3498,43 @@ msgstr "Ski&ckade brev-korg:"
 msgid "Configure Expire Folder..."
 msgstr "Anpassa &POP-filter..."
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Utgående konto:"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Lägg till mitt visitkort i brevet"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Skapa…"
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Språk för automatisk korrigering:"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Återställ förvalt domännamn"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "F&örvald domän:"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3543,62 +3543,62 @@ msgstr ""
 "<qt><p>Den förvalda domänen används för att komplettera e-postadresser som "
 "endast består av användarens namn.</p></qt>"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "An&vänd egna brevmallar för identiteten"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Kopiera allmänna mallar"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "Mallar"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "Brevfot"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid "Picture"
 msgstr "Bild"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid "Activities"
 msgstr "Aktiviteter"
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ogiltigt e-postalias \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Du måste ange en e-postadress för identiteten."
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Tom e-postadress"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ogiltig e-postadress"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3611,7 +3611,7 @@ msgstr ""
 "Det kan orsaka varningsmeddelanden på mottagarsidan vid försök att verifiera "
 "signaturer som skapats med denna inställning."
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3620,7 +3620,7 @@ msgstr ""
 "En av de inställda OpenPGP-nycklarna innehåller inte någon "
 "användaridentifikation med identitetens inställda e-postadress (%1)."
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3633,7 +3633,7 @@ msgstr ""
 "Det kan orsaka varningsmeddelanden på mottagarsidan vid försök att verifiera "
 "signaturer som skapats med denna inställning."
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3642,24 +3642,24 @@ msgstr ""
 "Ett av de inställda S/MIME-signeringscertifikaten innehåller inte "
 "identitetens inställda e-postadress (%1)."
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-postadress hittades inte i nyckel eller certifikat"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Den här signaturen är inte giltig"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Redigera identitet \"%1\""
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3668,12 +3668,12 @@ msgstr ""
 "Vissa egna korgar för identitet finns inte (längre). Därför används de "
 "förvalda korgarna."
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, kde-format
 msgid "Create…"
 msgstr "Skapa…"
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, kde-format
 msgid "Edit…"
 msgstr "Redigera…"

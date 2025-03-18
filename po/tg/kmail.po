@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -3752,49 +3752,49 @@ msgstr "&Папка барои хатҳои фиристодашуда:"
 msgid "Configure Expire Folder..."
 msgstr "Танзимоти &филтрҳои POP..."
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Танзимоти қуттии хатнависӣ"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Афзудани 'header' ба иттилооти"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Тағйири ном..."
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Интихоби &забон:"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Номи &домени пешфарзӣ:"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Номи &домени пешфарзӣ:"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3803,58 +3803,58 @@ msgstr ""
 "<qt><p>Номи домени пешфарзӣ барои илова намудани адреси e-mail, ки дорои "
 "танҳо номи истифодакунанда мебошад, истифода карда мешавад.</p></qt>"
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "Ишора намудани &суффикси худ дар Message-Id"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Ивваз кардан"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr ""
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, fuzzy, kde-format
 msgid "Signature"
 msgstr "Имзоот"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, fuzzy, kde-format
 msgid "Picture"
 msgstr "&Имзоот"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, fuzzy, kde-format
 #| msgid "Remove &Important Message Mark"
 msgid "Activities"
 msgstr "Гирифтани нишонаи \"&муҳим\""
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "Адреси нодурусти e-mail"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Ишора намудани &суффикси худ дар Message-Id"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Адреси e-mail"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3862,7 +3862,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Адреси нодурусти e-mail"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3876,7 +3876,7 @@ msgstr ""
 "ки шумо кушиш карда истодаед барои қабули имзоҳое,ки бо ин танзим карда "
 "шудаанд."
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3886,7 +3886,7 @@ msgstr ""
 "истифодабарандаро бо адреси номаи электронии танзимкардашударо барои "
 "шахсияти (%1)."
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3900,7 +3900,7 @@ msgstr ""
 "ки шумо кушиш карда истодаед барои қабули имзоҳое,ки бо ин танзим карда "
 "шудаанд."
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3909,26 +3909,26 @@ msgstr ""
 "Яке аз сертификатҳои  навиштаҷоти S/MIME шаклӣ суроғаи эмейли шаклиро барои "
 "ин шабоҳат дар бар намегирад  (%1)."
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Адреси E-mail дар калид/сертификат ёфт нашуд"
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, fuzzy, kde-format
 msgid "The signature file is not valid"
 msgstr "Имзо таъхир карда шудааст."
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Тағйири ихтисос \"%1\""
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3940,13 +3940,13 @@ msgstr ""
 "Мизоҷон нақшаҳои папкаро барои ҳамони \"%1\"вуҷуд надорад(ягон вақт); Барои "
 "ин нақшаҳои зикр нагаштаи папка метавонад истифода бурда шавад."
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Тағйири ном..."
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Баромадан"

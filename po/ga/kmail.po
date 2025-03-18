@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-15 00:43+0000\n"
+"POT-Creation-Date: 2025-03-18 00:43+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -3554,56 +3554,56 @@ msgstr "&Fillteán na dteachtaireachtaí seolta:"
 msgid "Configure Expire Folder..."
 msgstr "Cumraigh Scagairí &POP..."
 
-#: identity/identitydialog.cpp:725
+#: identity/identitydialog.cpp:726
 #, fuzzy, kde-format
 #| msgid "Outgoing Account:"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Cuntas Amach:"
 
-#: identity/identitydialog.cpp:732
+#: identity/identitydialog.cpp:733
 #, fuzzy, kde-format
 #| msgid "Attach my vCard to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Cuir mo v-chárta leis an teachtaireacht"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:734
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Cruthaigh..."
 
-#: identity/identitydialog.cpp:737
+#: identity/identitydialog.cpp:738
 #, fuzzy, kde-format
 #| msgid "Autocorrection"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Uathcheartú"
 
-#: identity/identitydialog.cpp:749
+#: identity/identitydialog.cpp:750
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Fearann réamhshocrai&the:"
 
-#: identity/identitydialog.cpp:752
+#: identity/identitydialog.cpp:753
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Fearann réamhshocrai&the:"
 
-#: identity/identitydialog.cpp:758
+#: identity/identitydialog.cpp:759
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:775
+#: identity/identitydialog.cpp:776
 #, fuzzy, kde-format
 #| msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgctxt "@option:check"
@@ -3612,39 +3612,39 @@ msgstr ""
 "<qt>An bhfuil tú cinnte gur mian leat an chomhadlann fholamh <b>'%1'</b> a "
 "scriosadh?</qt>"
 
-#: identity/identitydialog.cpp:789
+#: identity/identitydialog.cpp:790
 #, fuzzy, kde-format
 #| msgid "Custom Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Teimpléid Shaincheaptha"
 
-#: identity/identitydialog.cpp:796
+#: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Templates"
 msgstr "Teimpléid"
 
-#: identity/identitydialog.cpp:802
+#: identity/identitydialog.cpp:803
 #, kde-format
 msgid "Signature"
 msgstr "Síniú"
 
-#: identity/identitydialog.cpp:809
+#: identity/identitydialog.cpp:810
 #, kde-format
 msgid "Picture"
 msgstr "Pictiúr"
 
-#: identity/identitydialog.cpp:815
+#: identity/identitydialog.cpp:816
 #, kde-format
 msgid "Activities"
 msgstr ""
 
-#: identity/identitydialog.cpp:866
+#: identity/identitydialog.cpp:867
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ailias Neamhbhailí Ríomhphoist \"%1\""
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgid "You must provide an email for this identity."
@@ -3652,14 +3652,14 @@ msgstr ""
 "<qt>An bhfuil tú cinnte gur mian leat an chomhadlann fholamh <b>'%1'</b> a "
 "scriosadh?</qt>"
 
-#: identity/identitydialog.cpp:874
+#: identity/identitydialog.cpp:875
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Seoladh Ríomhphoist"
 
-#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3667,7 +3667,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ríomhsheoladh neamhbhailí"
 
-#: identity/identitydialog.cpp:937
+#: identity/identitydialog.cpp:938
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3676,14 +3676,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:946
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:953
+#: identity/identitydialog.cpp:954
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3692,45 +3692,45 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:962
+#: identity/identitydialog.cpp:963
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:972
+#: identity/identitydialog.cpp:973
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr ""
 
-#: identity/identitydialog.cpp:984
+#: identity/identitydialog.cpp:985
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Is neamhbhailí é an comhad sínithe"
 
-#: identity/identitydialog.cpp:999
+#: identity/identitydialog.cpp:1000
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Cuir Aitheantas \"%1\" in Eagar"
 
-#: identity/identitydialog.cpp:1080
+#: identity/identitydialog.cpp:1081
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
 
-#: identity/identitydialog.cpp:1335
+#: identity/identitydialog.cpp:1336
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Cruthaigh..."
 
-#: identity/identitydialog.cpp:1337
+#: identity/identitydialog.cpp:1338
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"
