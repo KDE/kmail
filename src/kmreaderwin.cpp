@@ -280,6 +280,9 @@ static const KLazyLocalizedString kmailNewFeatures[] = {
     kli18n("Added Microsoft Exchange Web Services resource support"),
     kli18n("Add Windows Support"),
     kli18n("Add Custom Syntax usable in the search text field"),
+    kli18n("Adblock public used new rust adblock lib"),
+    kli18n("Allow to reopen closed viewer"),
+    kli18n("Allow to configure spam folder in identity"),
 };
 static const int numKMailNewFeatures = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 
