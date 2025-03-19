@@ -265,19 +265,6 @@ static const int numKMailChanges = sizeof kmailChanges / sizeof *kmailChanges;
 // the translators). Note that the <li>…</li> tags are added
 // automatically below:
 static const KLazyLocalizedString kmailNewFeatures[] = {
-
-    kli18n("Push email (IMAP IDLE)"),
-    kli18n("Improved searches"),
-    kli18n("Support for adding notes (annotations) to mails"),
-    kli18n("Less GUI freezes, mail checks happen in the background"),
-    kli18n("Plugins support"),
-    kli18n("New HTML renderer (QtWebEngine)"),
-    kli18n("Added Check for Phishing URL"),
-    kli18n("Added Check DKIM"),
-    kli18n("Added Markdown Editing Support"),
-    kli18n("Added Grammar Plugin Support"),
-    kli18n("Added etesync resource support"),
-    kli18n("Added Microsoft Exchange Web Services resource support"),
     kli18n("Add Windows Support"),
     kli18n("Add Custom Syntax usable in the search text field"),
     kli18n("Adblock public used new rust adblock lib"),
