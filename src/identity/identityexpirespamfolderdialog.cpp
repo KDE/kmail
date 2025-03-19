@@ -32,7 +32,12 @@ IdentityExpireSpamFolderDialog::IdentityExpireSpamFolderDialog(QWidget *parent)
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityExpireSpamFolderDialog::reject);
 }
 
-IdentityExpireSpamFolderDialog::~IdentityExpireSpamFolderDialog() = default;
+IdentityExpireSpamFolderDialog::~IdentityExpireSpamFolderDialog()
+{
+    if (mChanged) {
+        saveAndExpire(mCollection, true, false);
+    }
+}
 
 void IdentityExpireSpamFolderDialog::load(const Akonadi::Collection &collection)
 {
