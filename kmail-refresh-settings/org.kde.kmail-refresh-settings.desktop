@@ -131,4 +131,4 @@ Version=1.5
 StartupNotify=true
 Categories=Qt;KDE;Office;Network;Email;
 InitialPreference=10
-Hidden=true
+NoDisplay=true
