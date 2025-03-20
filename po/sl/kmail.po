@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2025-03-15 08:10+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -373,7 +373,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Popravil več napak pri IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3921,12 +3921,12 @@ msgstr "Dodaj v imenik"
 msgid "Contact created successfully"
 msgstr "Stik je bil uspešno ustvarjen"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Stika ni mogoče shraniti: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5875,85 +5875,52 @@ msgstr ""
 "KMail sedaj temelji na ogrodju Akonadi za upravljanje z osebnimi podatki, ki "
 "prinaša veliko sprememb."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Potisna e-pošta (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Izboljšano iskanje"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Podpora za dodajanje opomb (zabeležk) e-sporočilom"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Manj zmrzovanja vmesnika, preverjanje za e-pošto sedaj poteka v ozadju"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Podpora vtičnikom"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Nov izrisovalnik HTML (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Dodano preverjanje naslova URL za ribarjenjem"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Dodano preverjanje DKIM"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Dodana podpora urejanja markdowna"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Dodana podpora vtičnika slovnice"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Dodana podpora vira etesync"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Dodana podpora viru spletnih storitev Microsoft Exchange Web Services"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "Dodaj podporo za Windows"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 "Dodajte sintakso po meri, ki jo je mogoče uporabiti v besedilnem polju za "
 "iskanje"
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "Ponovno odpri zaprti vpogledovalnik"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "Odjemalec e-pošte za KDE"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Pridobivanje vsebine mape"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Prosimo, počakajte . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Nepovezan"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5962,7 +5929,7 @@ msgstr ""
 "KMail trenutno deluje v nepovezanem načinu. Kliknite <a href=\"kmail:goOnline"
 "\">sem</a>, da vzpostavite povezavo …</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5971,7 +5938,7 @@ msgstr ""
 "Račun trenutno ni povezan. Kliknite <a href=\"kmail:goResourceOnline\">sem</"
 "a>, da vzpostavite povezavo …</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Stik je bil uspešno spremenjen"
@@ -8272,6 +8239,44 @@ msgstr[3] "Odgovor »Ni me v pisarni« je dejaven na strežnikih"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Potisna e-pošta (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Izboljšano iskanje"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Podpora za dodajanje opomb (zabeležk) e-sporočilom"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr ""
+#~ "Manj zmrzovanja vmesnika, preverjanje za e-pošto sedaj poteka v ozadju"
+
+#~ msgid "Plugins support"
+#~ msgstr "Podpora vtičnikom"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Nov izrisovalnik HTML (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Dodano preverjanje naslova URL za ribarjenjem"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Dodano preverjanje DKIM"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Dodana podpora urejanja markdowna"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Dodana podpora vtičnika slovnice"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Dodana podpora vira etesync"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr ""
+#~ "Dodana podpora viru spletnih storitev Microsoft Exchange Web Services"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "Naročnina na strani strežnika…"

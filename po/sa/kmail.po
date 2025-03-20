@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -365,7 +365,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "अनेकाः IMAP दोषाः निराकृताः"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "केमेल"
@@ -3863,12 +3863,12 @@ msgstr "पतापुस्तिकायां योजयतु"
 msgid "Contact created successfully"
 msgstr "सम्पर्क सफलतया निर्मित"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "सम्पर्कः संग्रहीतुं न शक्यते: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5764,83 +5764,50 @@ msgstr ""
 "केमेल इदानीं अकोनाडी व्यक्तिगतसूचनाप्रबन्धनरूपरेखायाः आधारेण अस्ति, यत् परितः बहवः "
 "परिवर्तनानि आनयति ।"
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "ईमेल धक्काय (IMAP IDLE) ."
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "अन्वेषणं उन्नतम्"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "मेलमध्ये टिप्पण्यानि (टिप्पणी) योजयितुं समर्थनम्"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "GUI न्यूनं स्थगयति, मेलपरीक्षा पृष्ठभूमितः भवति"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "प्लगिन् समर्थनम्"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "नवीन HTML रेण्डर (QtWebEngine) ."
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Phishing URL इत्यस्य जाँचः योजितः"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Check DKIM योजितम्"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Markdown सम्पादनसमर्थनं योजितम्"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "व्याकरण प्लगिन् समर्थनं योजितम्"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "etesync संसाधनसमर्थनं योजितम्"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Microsoft Exchange Web Services संसाधनसमर्थनं योजितम्"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "विण्डोज समर्थनं योजयन्तु"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr "अन्वेषणपाठक्षेत्रे उपयोगयोग्यं Custom Syntax योजयन्तु"
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "बन्द दर्शकं पुनः उद्घाटयन्तु"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE मेल क्लायन्ट्"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "फोल्डर सामग्रीं पुनः प्राप्तुं"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "कृपया प्रतीक्ष्यताम् . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "अफलाइन"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5849,7 +5816,7 @@ msgstr ""
 "KMail सम्प्रति अफलाइन मोड् अस्ति । <a href=\"kmail:goOnline\">अत्र</a> क्लिक् कृत्वा "
 "ऑनलाइन गन्तुं शक्नुवन्ति . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5858,7 +5825,7 @@ msgstr ""
 "खाता सम्प्रति अफलाइन मोड् मध्ये अस्ति । <a href=\"kmail:goResourceOnline\">अत्र</a> "
 "क्लिक् कृत्वा ऑनलाइन गन्तुं शक्नुवन्ति . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "सम्पर्क सफलतया परिवर्तितः"
@@ -8097,6 +8064,42 @@ msgstr[1] "सर्वरेषु सक्रियः कार्याल�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "जूमः %1% ."
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "ईमेल धक्काय (IMAP IDLE) ."
+
+#~ msgid "Improved searches"
+#~ msgstr "अन्वेषणं उन्नतम्"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "मेलमध्ये टिप्पण्यानि (टिप्पणी) योजयितुं समर्थनम्"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "GUI न्यूनं स्थगयति, मेलपरीक्षा पृष्ठभूमितः भवति"
+
+#~ msgid "Plugins support"
+#~ msgstr "प्लगिन् समर्थनम्"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "नवीन HTML रेण्डर (QtWebEngine) ."
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Phishing URL इत्यस्य जाँचः योजितः"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Check DKIM योजितम्"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Markdown सम्पादनसमर्थनं योजितम्"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "व्याकरण प्लगिन् समर्थनं योजितम्"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "etesync संसाधनसमर्थनं योजितम्"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "Microsoft Exchange Web Services संसाधनसमर्थनं योजितम्"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "सर्वरसाइड सदस्यता…"

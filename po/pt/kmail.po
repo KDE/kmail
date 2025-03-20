@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -379,7 +379,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Correcção de diversos erros de IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4163,12 +4163,12 @@ msgstr "Adicionar ao Livro de Endereços"
 msgid "Contact created successfully"
 msgstr "O contacto foi criado com sucesso"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Não é possível gravar o contacto: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -6235,88 +6235,51 @@ msgstr ""
 "O KMail baseia-se agora na plataforma de gestão de informações pessoais "
 "Akonadi, o que provoca bastantes alterações em redor."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Correio por envio (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Pesquisas melhoradas"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Suporte para adicionar notas (anotações) às mensagens"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
-"Menos bloqueios da interface, devido às verificações do correio em segundo "
-"plano"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Suporte para 'plugins'"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Novo motor de HTML (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Verificação do URL de Burla Adicionada"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Adicionada a Verificação de DKIM"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Adicionado o Suporte para a Edição em Markdown"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Adicionado o Suporte para o 'Plugin' de Gramática"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Foi adicionado o suporte para recursos 'etesync'"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-"Foi adicionado o suporte para os recursos serviços Web do Microsoft Exchange"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Added maildir support"
 msgid "Add Windows Support"
 msgstr "Adicionado o Suporte para o Maildir"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "Publicar uma Nova Mensagem"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "O Cliente de E-mail do KDE"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "A Obter o Conteúdo da Pasta"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Espere por favor . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Desligado"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -6325,7 +6288,7 @@ msgstr ""
 "<p>O KMail está de momento no modo desligado. Carregue <a href=\"kmail:"
 "goOnline\">aqui</a> para se ligar . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6334,7 +6297,7 @@ msgstr ""
 "<p>A conta está de momento no modo desligado. Carregue <a href=\"kmail:"
 "goResourceOnline\">aqui</a> para se ligar . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "O contacto foi modificado com sucesso"
@@ -8700,6 +8663,46 @@ msgstr[1] "Resposta 'fora do escritório' activa nos servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliação: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Correio por envio (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Pesquisas melhoradas"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Suporte para adicionar notas (anotações) às mensagens"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr ""
+#~ "Menos bloqueios da interface, devido às verificações do correio em "
+#~ "segundo plano"
+
+#~ msgid "Plugins support"
+#~ msgstr "Suporte para 'plugins'"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Novo motor de HTML (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Verificação do URL de Burla Adicionada"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Adicionada a Verificação de DKIM"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Adicionado o Suporte para a Edição em Markdown"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Adicionado o Suporte para o 'Plugin' de Gramática"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Foi adicionado o suporte para recursos 'etesync'"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr ""
+#~ "Foi adicionado o suporte para os recursos serviços Web do Microsoft "
+#~ "Exchange"
 
 #, fuzzy
 #~| msgid "Serverside Subscription..."

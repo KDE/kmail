@@ -19,16 +19,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
-"PO-Revision-Date: 2025-01-26 18:49+0100\n"
-"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"PO-Revision-Date: 2025-03-19 13:30+0100\n"
+"Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.1\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -377,7 +377,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Corrixiu moitos fallos de IMAP."
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3502,24 +3502,20 @@ msgid "&Templates folder:"
 msgstr "&Cartafol dos modelos:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "Seleccionar o cartafol de borradores"
+msgstr "Seleccionar o cartafol de correo lixo"
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Carta&fol das mensaxes enviadas:"
+msgstr "Carta&fol de correo lixo:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Caducar o cartafol"
+msgstr "Configurar o cartafol de caducidade…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3756,11 +3752,10 @@ msgid "Do Not Cancel"
 msgstr "Non cancelar"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Caducar o cartafol"
+msgstr "Caducar o cartafol de correo lixo"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -3944,12 +3939,12 @@ msgstr "Engadir á axenda de enderezos"
 msgid "Contact created successfully"
 msgstr "O contacto creouse satisfactoriamente"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Non é posíbel almacenar o contacto: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5863,87 +5858,50 @@ msgstr ""
 "KMail baséase agora na infraestrutura de xestión da información persoal "
 "Akonadi, que supón moitos cambios en todas partes."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Correo electrónico push (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Melloras nas buscas"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Posibilidade de engadir notas (e anotacións) ás mensaxes de correo"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
-"Menos conxelacións da interface gráfica, as comprobacións do correo "
-"prodúcense no fondo."
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Compatibilidade con complementos"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Novo renderizador de HTML (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Engadiuse unha comprobación de URL de timo"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Engadiuse a comprobación de DKIM"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Engadiuse a posibilidade de editar con Markdown"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Engadiuse a compatibilidade co complemento de gramática"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Engadiuse a compatibilidade cos recursos de «etesync»"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-"Engadiuse a compatibilidade cos recursos de servizos web de Microsoft "
-"Exchange"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "Compatibilidade con Windows."
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr "Engadir sintaxe personalizada usábel no campo de texto de busca."
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "Restaurar o visor pechado"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "O cliente de correo de KDE."
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Obtendo o contido do cartafol"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Agarde…"
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Desconectado"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5952,7 +5910,7 @@ msgstr ""
 "KMail está en modo sen conexión. Prema <a href=\"mail:goOnline\">aquí</a> "
 "para poñelo en liña…</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5961,7 +5919,7 @@ msgstr ""
 "A conta está no modo sen conexión. Prema <a href=\"kmail:goResourceOnline"
 "\">aquí</a> para poñela en liña…</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "O contacto modificouse satisfactoriamente"
@@ -8257,6 +8215,46 @@ msgstr[1] "Resposta para fóra da oficina activa nos servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Correo electrónico push (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Melloras nas buscas"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Posibilidade de engadir notas (e anotacións) ás mensaxes de correo"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr ""
+#~ "Menos conxelacións da interface gráfica, as comprobacións do correo "
+#~ "prodúcense no fondo."
+
+#~ msgid "Plugins support"
+#~ msgstr "Compatibilidade con complementos"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Novo renderizador de HTML (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Engadiuse unha comprobación de URL de timo"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Engadiuse a comprobación de DKIM"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Engadiuse a posibilidade de editar con Markdown"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Engadiuse a compatibilidade co complemento de gramática"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Engadiuse a compatibilidade cos recursos de «etesync»"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr ""
+#~ "Engadiuse a compatibilidade cos recursos de servizos web de Microsoft "
+#~ "Exchange"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "Subscrición da parte do servidor…"

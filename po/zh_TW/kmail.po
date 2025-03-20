@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2024-09-17 07:14+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -374,7 +374,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "修正了許多 IMAP 臭蟲"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3852,12 +3852,12 @@ msgstr "加入通訊錄"
 msgid "Contact created successfully"
 msgstr "聯絡人已成功建立"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "聯絡人無法儲存：%1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5732,85 +5732,52 @@ msgid ""
 "which brings many changes all around."
 msgstr "KMail 現在是奠基於 Akonadi 個人資訊管理架構上，因此會有許多改變。"
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Push email (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "改進的搜尋功能"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "支援在信件中新增便條（註記）"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "改善郵件在背景檢查時前端介面被凍結的狀況"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "外掛程式支援"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "新的 HTML 繪製器 (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "新增為釣魚網址的檢查"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "新增 DKIM 檢查"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "新增 Markdown 編輯支援"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "新增文法外掛程式支援"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "新增 etesync 資源支援"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "新增 Microsoft Exchange 網路服務資源支援"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Added maildir support"
 msgid "Add Windows Support"
 msgstr "新增 maildir 支援"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "重新開啟已關閉的檢視器"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE 信件用戶端"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "取得資料夾內容中"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "請稍候 . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "離線"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5819,7 +5786,7 @@ msgstr ""
 "<p>KMail 目前在離線模式中。點選<a href=\"kmail:goOnline\">這裡</a>恢復上線模"
 "式。</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5828,7 +5795,7 @@ msgstr ""
 "此帳號目前在離線模式中。點選<a href=\"kmail:goResourceOnline\">這裡</a>恢復上"
 "線模式。</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "聯絡人已成功變更"
@@ -8025,6 +7992,42 @@ msgstr[0] "「不在辦公室」的自動回覆已在伺服器上啟動"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "縮放：%1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Push email (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "改進的搜尋功能"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "支援在信件中新增便條（註記）"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "改善郵件在背景檢查時前端介面被凍結的狀況"
+
+#~ msgid "Plugins support"
+#~ msgstr "外掛程式支援"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "新的 HTML 繪製器 (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "新增為釣魚網址的檢查"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "新增 DKIM 檢查"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "新增 Markdown 編輯支援"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "新增文法外掛程式支援"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "新增 etesync 資源支援"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "新增 Microsoft Exchange 網路服務資源支援"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "伺服器端訂閱…"

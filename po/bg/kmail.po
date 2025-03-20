@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2024-11-19 18:37+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -374,7 +374,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Коригирани много грешки в IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3954,12 +3954,12 @@ msgstr "Добавяне в адресника"
 msgid "Contact created successfully"
 msgstr "Контактът е създаден успешно"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Контактът не може да бъде съхранен: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5875,84 +5875,50 @@ msgstr ""
 "KMail вече се основава на рамката за управление на личната информация "
 "Akonadi, която носи много промени навсякъде."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Push известие за писмо (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Подобрени търсения"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Поддръжка за добавяне на бележки (пояснения) към пощата"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
-"По-малко блокиране на графичен интерфейс, проверки на пощата във фонов режим"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Поддръжка на приставки"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Нов HTML визуализатор (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Добавена проверка за фишинг URL"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Добавена проверка за DKIM"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Добавена е поддръжка за Markdown редактиране"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Добавена поддръжка на граматически плъгин"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Добавена поддръжка на ресурси за etesync"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Добавена поддръжка на ресурси за уеб услуги на Microsoft Exchange"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "Добавяне на поддръжка на прозорци"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr "Добавяне на потребителски синтаксис в текстовото поле за търсене"
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "Възстановяване на затворено съобщение"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "Пощенският клиент на KDE"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Извличане на съдържанието на папката"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Моля Изчакай . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Извън линия"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5961,7 +5927,7 @@ msgstr ""
 "Понастоящем KMail е в офлайн режим. Кликнете <a href=\"kmail:goOnline\"> тук "
 "</a>, за да влезете онлайн.</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5970,7 +5936,7 @@ msgstr ""
 "Понастоящем акаунтът е в офлайн режим. Кликнете <a href=\"kmail:"
 "goResourceOnline\"> тук </a>, за да влезете онлайн.</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Контактът е променен успешно"
@@ -8269,6 +8235,44 @@ msgstr[1] "Отговор извън офиса активен на сървър
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Push известие за писмо (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Подобрени търсения"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Поддръжка за добавяне на бележки (пояснения) към пощата"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr ""
+#~ "По-малко блокиране на графичен интерфейс, проверки на пощата във фонов "
+#~ "режим"
+
+#~ msgid "Plugins support"
+#~ msgstr "Поддръжка на приставки"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Нов HTML визуализатор (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Добавена проверка за фишинг URL"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Добавена проверка за DKIM"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Добавена е поддръжка за Markdown редактиране"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Добавена поддръжка на граматически плъгин"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Добавена поддръжка на ресурси за etesync"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "Добавена поддръжка на ресурси за уеб услуги на Microsoft Exchange"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "Абонамент за сървъра…"

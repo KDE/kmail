@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2024-12-24 17:05+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -369,7 +369,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "다양한 IMAP 버그 수정"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3863,12 +3863,12 @@ msgstr "주소록에 추가"
 msgid "Contact created successfully"
 msgstr "연락처 생성 완료됨"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "연락처를 저장할 수 없음: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5753,83 +5753,50 @@ msgstr ""
 "KMail은 Akonadi 개인 정보 관리 프레임워크를 사용하며, 여러 변경 사항이 추가되"
 "었습니다."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "푸시 메일(IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "개선된 검색"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "메일에 메모(주석) 추가 지원"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "GUI 반응성 개선, 백그라운드 메일 확인"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "플러그인 지원"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "새로운 HTML 렌더러(QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "피싱 URL 검사"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "DKIM 검사 추가"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Markdown 편집 지원 추가"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "문법 플러그인 지원 추가"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "etesync 리소스 지원 추가"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Microsoft Exchange 웹 서비스 리소스 지원 추가"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "Windows 지원 추가"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr "검색 문자열 입력란에 사용할 수 있는 사용자 정의 문법 추가"
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "닫힌 뷰어 다시 열기"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE 메일 클라이언트"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "폴더 내용 가져오는 중"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "기다려 주십시오..."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "오프라인"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5838,7 +5805,7 @@ msgstr ""
 "KMail이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5847,7 +5814,7 @@ msgstr ""
 "계정이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goResourceOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "연락처를 성공적으로 수정함"
@@ -8086,6 +8053,42 @@ msgstr[0] "서버에서 부재 중 답장 사용 중"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "크기 조정: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "푸시 메일(IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "개선된 검색"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "메일에 메모(주석) 추가 지원"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "GUI 반응성 개선, 백그라운드 메일 확인"
+
+#~ msgid "Plugins support"
+#~ msgstr "플러그인 지원"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "새로운 HTML 렌더러(QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "피싱 URL 검사"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "DKIM 검사 추가"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Markdown 편집 지원 추가"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "문법 플러그인 지원 추가"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "etesync 리소스 지원 추가"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "Microsoft Exchange 웹 서비스 리소스 지원 추가"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "서버 측 구독…"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2025-02-28 12:30+0200\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -370,7 +370,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Salaboja daudzas IMAP kļūdas"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3914,12 +3914,12 @@ msgstr "Pievienot adrešu grāmatai"
 msgid "Contact created successfully"
 msgstr "Kontakts veiksmīgi izveidots"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktu nevar saglabāt: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5836,83 +5836,50 @@ msgstr ""
 "Šobrīd „KMail“ balstās „Akondi“ personīgās informācijas pārvaldnieka "
 "satvarā, kas programmā sniedz daudz dažādu izmaiņu."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "„Push“ e-pasts (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Uzlabota meklēšana"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Piezīmju (anotāciju) pievienošanas atbalsts vēstulēm"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Raitāka grafiskās saskarnes darbība, pasta pārbaude notiek fonā"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Spraudņu atbalsts"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Jauns HTML renderers (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Pievienots pikšķerēšanas URL pārbaudes"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Pievienot DKIM pārbaude"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Pievienots „Markdown“ rediģēšanas atbalsts"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Pievienots pareizrakstības spraudņu atbalsts"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Pievienots „etesyc“ resursu atbalsts"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Pievienots „Microsoft Exchange Web Services“ resursu atbalsts"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "Pievienot „Windows“ atbalstu"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr "Pievienot meklēšanas laukam pielāgotu sintaksi"
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "No jauna atvērt aizvērto vēstuļu lasītāju"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE e-pasta klients"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Ielādē mapju saturu"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Uzgaidiet . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Nesaistē"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5921,7 +5888,7 @@ msgstr ""
 "„KMail“ darbojas nesaistes režīmā. Klikšķiniet <a href=\"kmail:goOnline"
 "\">te</a>, lai atgrieztos tiešsaistē . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5930,7 +5897,7 @@ msgstr ""
 "Šobrīd konts atrodas nesaistes režīmā. Klikšķiniet <a href=\"kmail:"
 "goResourceOnline\">te</a>, lai ieslēgtu tiešsaistes režīmu . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakts ir veiksmīgi modificēts"
@@ -8218,6 +8185,42 @@ msgstr[2] "Serveros ir ieslēgta „Neesmu birojā“ atbilde"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Tālummaiņa: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "„Push“ e-pasts (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Uzlabota meklēšana"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Piezīmju (anotāciju) pievienošanas atbalsts vēstulēm"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "Raitāka grafiskās saskarnes darbība, pasta pārbaude notiek fonā"
+
+#~ msgid "Plugins support"
+#~ msgstr "Spraudņu atbalsts"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Jauns HTML renderers (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Pievienots pikšķerēšanas URL pārbaudes"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Pievienot DKIM pārbaude"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Pievienots „Markdown“ rediģēšanas atbalsts"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Pievienots pareizrakstības spraudņu atbalsts"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Pievienots „etesyc“ resursu atbalsts"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "Pievienots „Microsoft Exchange Web Services“ resursu atbalsts"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "Servera puses pieraksts…"

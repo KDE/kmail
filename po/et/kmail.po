@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -398,7 +398,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4210,12 +4210,12 @@ msgstr "Aadressiraamatusse lisamine"
 msgid "Contact created successfully"
 msgstr "Kontakt loodi edukalt"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontakti ei saa salvestada: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -6272,87 +6272,51 @@ msgstr ""
 "KMaili aluseks on nüüd Akonadi personaalse teabe haldamise raamistik, mis "
 "toob kaasa palju muudatusi."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "E-kirjade aktiivlevi (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Täiustatud otsing"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Märkuste (annotatsioonide) lisamine võimalus kirjadele"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Vähem kasutajaliidese hangumist, uusi kirju kontrollitakse taustal"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Pluginate toetus"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Uus HTML- renderdaja (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "URL-i õngitsemise kontrollimise lisamine"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr ""
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr ""
-
-#: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "Plugins support"
-msgid "Added Grammar Plugin Support"
-msgstr "Pluginate toetus"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Plugins support"
 msgid "Add Windows Support"
 msgstr "Pluginate toetus"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "Saada uus kiri"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE e-posti klient."
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Kaustade sisu tõmbamine"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Palun oota . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Võrguühenduseta"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -6361,7 +6325,7 @@ msgstr ""
 "KMail töötab praegu võrguühenduseta režiimis. Võrguühenduse loomiseks klõpsa "
 "<a href=\"kmail:goOnline\">siia</a> . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6370,7 +6334,7 @@ msgstr ""
 "Konto on praegu võrguühenduseta režiimis. Võrguühenduse loomiseks klõpsa <a "
 "href=\"kmail:goResourceOnline\">siia</a> . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakti muudeti edukalt"
@@ -8766,6 +8730,32 @@ msgstr[1] "Puhkuseteade on serverites aktiveeritud"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Suurendus: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "E-kirjade aktiivlevi (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Täiustatud otsing"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Märkuste (annotatsioonide) lisamine võimalus kirjadele"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "Vähem kasutajaliidese hangumist, uusi kirju kontrollitakse taustal"
+
+#~ msgid "Plugins support"
+#~ msgstr "Pluginate toetus"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Uus HTML- renderdaja (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "URL-i õngitsemise kontrollimise lisamine"
+
+#, fuzzy
+#~| msgid "Plugins support"
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Pluginate toetus"
 
 #, fuzzy
 #~| msgid "Serverside Subscription..."

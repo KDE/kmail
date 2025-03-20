@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -396,7 +396,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4121,12 +4121,12 @@ msgstr "Įdėti į adresų knygą"
 msgid "Contact created successfully"
 msgstr "Kontaktas sėkmingai sukurtas"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktas negali būti išsaugotas: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -6192,95 +6192,55 @@ msgstr ""
 "KMail dabar pastatytas ant Akonadi Asmeninės informacijos tvarkymo sistemos, "
 "kuri duoda daug įvairių pakeitimų."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Tikrinti el. paštą (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Patobulinta paieška"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Palaikoma pastabų (anotacijų) pridėjimas laikams"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Mažiau GNS strigimų, pašto tikrinimas vyksta fone"
-
-#: kmreaderwin.cpp:273
-#, fuzzy
-#| msgid "GnuPG support"
-msgid "Plugins support"
-msgstr "GnuPG palaikymas"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr ""
-
-#: kmreaderwin.cpp:275
-#, fuzzy
-#| msgid "Check spelling before send"
-msgid "Added Check for Phishing URL"
-msgstr "Tikrinti rašybą prieš siunčiant"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr ""
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr ""
-
-#: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "GnuPG support"
-msgid "Added Grammar Plugin Support"
-msgstr "GnuPG palaikymas"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "GnuPG support"
 msgid "Add Windows Support"
 msgstr "GnuPG palaikymas"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "Siųsti naują laišką"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "KDE elektroninio pašto programa"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, fuzzy, kde-format
 #| msgid "Retrieving folder properties"
 msgid "Retrieving Folder Contents"
 msgstr "Gaunamos aplanko savybės"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "Prašome palaukti"
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgid "Offline"
 msgstr "Dirbti neprisijungus"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6294,7 +6254,7 @@ msgstr ""
 "neprisijungęs. Spauskite <a href=\"kmail:goOnline\">čia</a> norėdami "
 "prisijungti . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in "
@@ -6308,7 +6268,7 @@ msgstr ""
 "neprisijungęs. Spauskite <a href=\"kmail:goResourceOnline\">čia</a> norėdami "
 "prisijungti . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontaktas sėkmingai pakeistas"
@@ -8676,6 +8636,33 @@ msgstr[3] "Suaktyvinti „Nesu darbo vietoje“ atsakymai serveriuose"
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "Mastelis"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Tikrinti el. paštą (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Patobulinta paieška"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Palaikoma pastabų (anotacijų) pridėjimas laikams"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "Mažiau GNS strigimų, pašto tikrinimas vyksta fone"
+
+#, fuzzy
+#~| msgid "GnuPG support"
+#~ msgid "Plugins support"
+#~ msgstr "GnuPG palaikymas"
+
+#, fuzzy
+#~| msgid "Check spelling before send"
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Tikrinti rašybą prieš siunčiant"
+
+#, fuzzy
+#~| msgid "GnuPG support"
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "GnuPG palaikymas"
 
 #, fuzzy
 #~| msgid "Serverside Subscription..."

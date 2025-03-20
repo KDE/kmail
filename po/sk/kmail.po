@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2023-12-12 19:31+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -389,7 +389,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4167,12 +4167,12 @@ msgstr "Pridať do adresára"
 msgid "Contact created successfully"
 msgstr "Kontakty vytvorené úspešne"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontakt nie je možné uložiť: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -6230,87 +6230,51 @@ msgstr ""
 "KMail je teraz založený na Akonadi Personal Information Management "
 "framework, čo prinieslo množstvo zmien."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Push email (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Zlepšené hľadania"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Podpora pridávania poznámok (anotácií) k správam"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Menej mrznutia GUI, kontrola pošty prebieha na pozadí"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Podpora pluginov"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Nový HTML renderer (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Pridaná kontrola pre phishingové URL"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr ""
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr ""
-
-#: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "Plugins support"
-msgid "Added Grammar Plugin Support"
-msgstr "Podpora pluginov"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Plugins support"
 msgid "Add Windows Support"
 msgstr "Podpora pluginov"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "Poslať novú správu"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE poštový klient"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Získavam obsah priečinka"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Prosím čakajte..."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Nepripojený"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -6319,7 +6283,7 @@ msgstr ""
 "KMail je momentálne v offline móde. Kliknite <a href=\"kmail:goOnline\">sem</"
 "a> pre prechod na online . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6328,7 +6292,7 @@ msgstr ""
 "Účet je momentálne v offline móde. Kliknite <a href=\"kmail:goResourceOnline"
 "\">sem</a> na prechod na online . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakty zmenené úspešne"
@@ -8721,6 +8685,32 @@ msgstr[2] "Odpoveď mimo kancelárie aktívna na serveroch"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Priblíženie: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Push email (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Zlepšené hľadania"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Podpora pridávania poznámok (anotácií) k správam"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "Menej mrznutia GUI, kontrola pošty prebieha na pozadí"
+
+#~ msgid "Plugins support"
+#~ msgstr "Podpora pluginov"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Nový HTML renderer (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Pridaná kontrola pre phishingové URL"
+
+#, fuzzy
+#~| msgid "Plugins support"
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Podpora pluginov"
 
 #, fuzzy
 #~| msgid "Serverside Subscription..."

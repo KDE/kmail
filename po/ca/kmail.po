@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2025-03-15 10:33+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -379,7 +379,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "S'han esmenat molts errors en l'IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3951,12 +3951,12 @@ msgstr "Afegeix a la llibreta d'adreces"
 msgid "Contact created successfully"
 msgstr "El contacte s'ha creat correctament"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "El contacte no s'ha pogut emmagatzemar: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5884,86 +5884,51 @@ msgstr ""
 "El KMail ara està basat en el marc de treball per a la gestió de la "
 "informació personal Akonadi, el qual incorpora molts canvis per tot arreu."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Correu electrònic d'enviament (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Cerques millorades"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Implementació per a afegir notes (anotacions) als correus"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
-"Menys immobilitzacions de la IGU, la comprovació de correu es fa en segon pla"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Admet connectors"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Representador HTML nou (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "S'ha afegit la comprovació d'URL de pesca"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "S'ha afegit la comprovació del DKIM"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "S'ha afegit la implementació d'edició del Markdown"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "S'ha afegit la implementació del connector de gramàtica"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "S'ha afegit la implementació del recurs EteSync"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-"S'ha afegit la implementació del recurs de serveis web de Microsoft Exchange"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 msgid "Add Windows Support"
 msgstr "Afegeix la implementació del Windows"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 "Afegeix una sintaxi personalitzada utilitzable al camp de text de cerca"
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "Torna a obrir el visualitzador tancat"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "El client de correu del KDE"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "S'està rebent el contingut de la carpeta"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Espereu un moment..."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Desconnectat"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5972,7 +5937,7 @@ msgstr ""
 "El KMail ara està en mode desconnectat. Cliqueu <a href=\"kmail:goOnline"
 "\">aquí</a> per a connectar-vos…</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5981,7 +5946,7 @@ msgstr ""
 "El compte ara està en mode desconnectat. Cliqueu <a href=\"kmail:"
 "goResourceOnline\">aquí</a> per a connectar-vos…</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "El contacte s'ha modificat correctament"
@@ -8290,3 +8255,43 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Correu electrònic d'enviament (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Cerques millorades"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Implementació per a afegir notes (anotacions) als correus"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr ""
+#~ "Menys immobilitzacions de la IGU, la comprovació de correu es fa en segon "
+#~ "pla"
+
+#~ msgid "Plugins support"
+#~ msgstr "Admet connectors"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Representador HTML nou (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "S'ha afegit la comprovació d'URL de pesca"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "S'ha afegit la comprovació del DKIM"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "S'ha afegit la implementació d'edició del Markdown"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "S'ha afegit la implementació del connector de gramàtica"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "S'ha afegit la implementació del recurs EteSync"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr ""
+#~ "S'ha afegit la implementació del recurs de serveis web de Microsoft "
+#~ "Exchange"

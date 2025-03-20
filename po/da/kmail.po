@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -402,7 +402,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4219,12 +4219,12 @@ msgstr "Føj til adressebog"
 msgid "Contact created successfully"
 msgstr "Kontakten blev oprettet"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontakten kan ikke lagres: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -6281,87 +6281,51 @@ msgstr ""
 "KMail er nu baseret på Akonadi - systemet til håndtering af personlig "
 "information. Dette medfører mange ændringer på alle niveauer."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "Push e-mail (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Forbedret søgning"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Understøttelse af at føje noter (annotationer) til e-mails"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Mindre frysning af brugerfladen, tjek af e-mail sker i baggrunden"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Plugin-understøttelse"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Ny HTML-rendering (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Tilføjede tjek af phishing-URL"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr ""
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr ""
-
-#: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "Plugins support"
-msgid "Added Grammar Plugin Support"
-msgstr "Plugin-understøttelse"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Plugins support"
 msgid "Add Windows Support"
 msgstr "Plugin-understøttelse"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "Send nyt brev"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE's e-mail-klient"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Henter mappeindhold"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Vent venligst . . ."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -6370,7 +6334,7 @@ msgstr ""
 "KMail er aktuelt i offline-tilstand. Klik <a href=\"kmail:goOnline\">her</a> "
 "for at gå online . . .</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6379,7 +6343,7 @@ msgstr ""
 "Kontoen er aktuelt i offline-tilstand. Klik <a href=\"kmail:goOnline\">her</"
 "a> for at gå online . . .</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakten blev ændret"
@@ -8784,6 +8748,32 @@ msgstr[1] "\"Ikke på kontoret\"-svar aktiveret på serverne"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "Push e-mail (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Forbedret søgning"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Understøttelse af at føje noter (annotationer) til e-mails"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "Mindre frysning af brugerfladen, tjek af e-mail sker i baggrunden"
+
+#~ msgid "Plugins support"
+#~ msgstr "Plugin-understøttelse"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Ny HTML-rendering (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Tilføjede tjek af phishing-URL"
+
+#, fuzzy
+#~| msgid "Plugins support"
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Plugin-understøttelse"
 
 #, fuzzy
 #~| msgid "Serverside Subscription..."

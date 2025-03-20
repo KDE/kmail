@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -380,7 +380,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3994,12 +3994,12 @@ msgstr "ලිපින පොතට එක් කරන්න "
 msgid "Contact created successfully"
 msgstr "පණිවිඩ මැකීම සාර්කයි"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -6004,109 +6004,69 @@ msgid ""
 "which brings many changes all around."
 msgstr ""
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr ""
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "දියුණුකල සෙවුම්"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr ""
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
-
-#: kmreaderwin.cpp:273
-#, fuzzy
-#| msgid "GnuPG support"
-msgid "Plugins support"
-msgstr "GnuPG සහාය"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr ""
-
-#: kmreaderwin.cpp:275
-#, fuzzy
-#| msgid "Confirm &before send"
-msgid "Added Check for Phishing URL"
-msgstr "තහවුරු කරනවා & යැවීමට පෙර "
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr ""
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr ""
-
-#: kmreaderwin.cpp:278
-#, fuzzy
-#| msgid "GnuPG support"
-msgid "Added Grammar Plugin Support"
-msgstr "GnuPG සහාය"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr ""
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "GnuPG support"
 msgid "Add Windows Support"
 msgstr "GnuPG සහාය"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "නව පණිවුඩයක් යවන්න"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "KDE ඉ-තැපැල් සේවාලාභියා"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, fuzzy, kde-format
 #| msgid "Mailinglist Folder Properties"
 msgid "Retrieving Folder Contents"
 msgstr "ලිපිණ ලැයිස්තුවේ බහලුම් වත්ක"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "කරුණාකර මොහාතක් රැඳී සිටින්න. "
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, fuzzy, kde-format
 #| msgid "offline"
 msgid "Offline"
 msgstr "නොබැඳි"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully."
 msgid "Contact modified successfully"
@@ -8320,6 +8280,24 @@ msgstr[1] "කාර්‍යාලයෙන් බැහැර පිළිත�
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "විශාලන"
+
+#~ msgid "Improved searches"
+#~ msgstr "දියුණුකල සෙවුම්"
+
+#, fuzzy
+#~| msgid "GnuPG support"
+#~ msgid "Plugins support"
+#~ msgstr "GnuPG සහාය"
+
+#, fuzzy
+#~| msgid "Confirm &before send"
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "තහවුරු කරනවා & යැවීමට පෙර "
+
+#, fuzzy
+#~| msgid "GnuPG support"
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "GnuPG සහාය"
 
 #, fuzzy
 #~| msgid "Could not start the account wizard. Please check your installation."

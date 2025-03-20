@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2025-02-16 00:20-0300\n"
 "Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -387,7 +387,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Corrigiu muitos erros no IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4135,12 +4135,12 @@ msgstr "Adicionar ao livro de endereços"
 msgid "Contact created successfully"
 msgstr "Contato criado com sucesso"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Não foi possível armazenar o contato: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -6194,87 +6194,51 @@ msgstr ""
 "O KMail agora tem como base a plataforma de gerenciamento de informações "
 "pessoais do Akonadi, o que provoca muitas mudanças ao seu redor."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "E-mail por envio (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Pesquisas melhoradas"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Suporte para adição de notas (anotações) aos e-mails"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr ""
-"Menos bloqueios da interface, devido às verificações de e-mail em segundo "
-"plano"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Suporte a plugins"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Novo renderizador HTML (QtWebEngine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Adição da checagem por URL de Phishing"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "Adicionado verificação DKIM"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Adicionado suporte à edição em Markdown"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Adicionado suporte ao plugin gramatical"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Adicionado suporte ao recurso etesync"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Adicionado suporte ao recurso do Microsoft Exchange Web Services "
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Added maildir support"
 msgid "Add Windows Support"
 msgstr "Adicionado suporte ao maildir"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgid "Post New Message"
+msgid "Allow to reopen closed viewer"
+msgstr "Publicar nova mensagem"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "Cliente de e-mail do KDE"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Obtendo o conteúdo da pasta"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Aguarde..."
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -6283,7 +6247,7 @@ msgstr ""
 "Atualmente o KMail está no modo offline. Clique <a href=\"kmail:goOnline"
 "\">aqui</a> para ficar online...</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6292,7 +6256,7 @@ msgstr ""
 "Atualmente a conta está no modo offline. Clique <a href=\"kmail:"
 "goResourceOnline\">aqui</a> para ficar online...</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Contato modificado com sucesso"
@@ -8656,6 +8620,44 @@ msgstr[1] "Respostas de ausência do escritório ativadas nos servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "E-mail por envio (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Pesquisas melhoradas"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Suporte para adição de notas (anotações) aos e-mails"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr ""
+#~ "Menos bloqueios da interface, devido às verificações de e-mail em segundo "
+#~ "plano"
+
+#~ msgid "Plugins support"
+#~ msgstr "Suporte a plugins"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Novo renderizador HTML (QtWebEngine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Adição da checagem por URL de Phishing"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "Adicionado verificação DKIM"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Adicionado suporte à edição em Markdown"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Adicionado suporte ao plugin gramatical"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Adicionado suporte ao recurso etesync"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "Adicionado suporte ao recurso do Microsoft Exchange Web Services "
 
 #, fuzzy
 #~| msgid "Serverside Subscription..."

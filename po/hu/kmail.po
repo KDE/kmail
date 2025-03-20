@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-18 00:43+0000\n"
+"POT-Creation-Date: 2025-03-20 00:42+0000\n"
 "PO-Revision-Date: 2024-10-03 21:54+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -368,7 +368,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Számos IMAP hiba javítása"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:308 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3934,12 +3934,12 @@ msgstr "Felvétel a címjegyzékbe"
 msgid "Contact created successfully"
 msgstr "Partner sikeresen létrehozva"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "A partner nem tárolható: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:906
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5868,85 +5868,52 @@ msgstr ""
 "A KMail mostantól az Akonadi személyi információkezelő keretrendszeren "
 "alapul, amely számos változtatást hoz."
 
-#: kmreaderwin.cpp:269
-msgid "Push email (IMAP IDLE)"
-msgstr "E-mail küldése (IMAP IDLE)"
-
-#: kmreaderwin.cpp:270
-msgid "Improved searches"
-msgstr "Továbbfejlesztett keresések"
-
-#: kmreaderwin.cpp:271
-msgid "Support for adding notes (annotations) to mails"
-msgstr "Jegyzetek hozzáadása e-mailekhez"
-
-#: kmreaderwin.cpp:272
-msgid "Less GUI freezes, mail checks happen in the background"
-msgstr "Kevesebb lefagyás, a levelek ellenőrzése a háttérben történik"
-
-#: kmreaderwin.cpp:273
-msgid "Plugins support"
-msgstr "Bővítménytámogatás"
-
-#: kmreaderwin.cpp:274
-msgid "New HTML renderer (QtWebEngine)"
-msgstr "Új HTML-megjelenítő (QtWebengine)"
-
-#: kmreaderwin.cpp:275
-msgid "Added Check for Phishing URL"
-msgstr "Adathalász URL-címek ellenőrzése"
-
-#: kmreaderwin.cpp:276
-msgid "Added Check DKIM"
-msgstr "DKIM ellenőrzése"
-
-#: kmreaderwin.cpp:277
-msgid "Added Markdown Editing Support"
-msgstr "Markdown szerkesztés támogatása"
-
-#: kmreaderwin.cpp:278
-msgid "Added Grammar Plugin Support"
-msgstr "Nyelvtani bővítmény támogatása"
-
-#: kmreaderwin.cpp:279
-msgid "Added etesync resource support"
-msgstr "Etesync erőforrás támogatása"
-
-#: kmreaderwin.cpp:280
-msgid "Added Microsoft Exchange Web Services resource support"
-msgstr "Microsoft Exchange Web Services erőforrás támogatása"
-
-#: kmreaderwin.cpp:281
+#: kmreaderwin.cpp:268
 #, fuzzy
 #| msgid "Added maildir support"
 msgid "Add Windows Support"
 msgstr "Maildir-támogatás"
 
-#: kmreaderwin.cpp:282
+#: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
 
-#: kmreaderwin.cpp:311
+#: kmreaderwin.cpp:270
+msgid "Adblock public used new rust adblock lib"
+msgstr ""
+
+#: kmreaderwin.cpp:271
+#, fuzzy
+#| msgctxt "@action"
+#| msgid "Reopen Closed Viewer"
+msgid "Allow to reopen closed viewer"
+msgstr "Bezárt megjelenító újranyitása"
+
+#: kmreaderwin.cpp:272
+msgid "Allow to configure spam folder in identity"
+msgstr ""
+
+#: kmreaderwin.cpp:301
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "A KDE levelezőkliense"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Mappatartalmak lekérése"
 
-#: kmreaderwin.cpp:320
+#: kmreaderwin.cpp:310
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Kis türelmet…"
 
-#: kmreaderwin.cpp:326 kmreaderwin.cpp:335
+#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:328
+#: kmreaderwin.cpp:318
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5955,7 +5922,7 @@ msgstr ""
 "A KMail jelenleg offline módban van. <a href=\"kmail:goOnline\">Kattintson "
 "ide</a>, ha online módba szeretne váltani…</p>"
 
-#: kmreaderwin.cpp:337
+#: kmreaderwin.cpp:327
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5964,7 +5931,7 @@ msgstr ""
 "A fiók jelenleg offline módban van. Kattintson <a href=\"kmail:"
 "goResourceOnline\">ide</a>, hogy elérhető legyen…</p>"
 
-#: kmreaderwin.cpp:916
+#: kmreaderwin.cpp:906
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "A partner sikeresen módosítva"
@@ -8266,6 +8233,42 @@ msgstr[1] "Távolléti üzenet bekapcsolva a kiszolgálókon"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Nagyítás: %1%"
+
+#~ msgid "Push email (IMAP IDLE)"
+#~ msgstr "E-mail küldése (IMAP IDLE)"
+
+#~ msgid "Improved searches"
+#~ msgstr "Továbbfejlesztett keresések"
+
+#~ msgid "Support for adding notes (annotations) to mails"
+#~ msgstr "Jegyzetek hozzáadása e-mailekhez"
+
+#~ msgid "Less GUI freezes, mail checks happen in the background"
+#~ msgstr "Kevesebb lefagyás, a levelek ellenőrzése a háttérben történik"
+
+#~ msgid "Plugins support"
+#~ msgstr "Bővítménytámogatás"
+
+#~ msgid "New HTML renderer (QtWebEngine)"
+#~ msgstr "Új HTML-megjelenítő (QtWebengine)"
+
+#~ msgid "Added Check for Phishing URL"
+#~ msgstr "Adathalász URL-címek ellenőrzése"
+
+#~ msgid "Added Check DKIM"
+#~ msgstr "DKIM ellenőrzése"
+
+#~ msgid "Added Markdown Editing Support"
+#~ msgstr "Markdown szerkesztés támogatása"
+
+#~ msgid "Added Grammar Plugin Support"
+#~ msgstr "Nyelvtani bővítmény támogatása"
+
+#~ msgid "Added etesync resource support"
+#~ msgstr "Etesync erőforrás támogatása"
+
+#~ msgid "Added Microsoft Exchange Web Services resource support"
+#~ msgstr "Microsoft Exchange Web Services erőforrás támogatása"
 
 #~ msgid "Serverside Subscription…"
 #~ msgstr "Kiszolgálóoldali feliratkozás…"
