@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 10:33+0100\n"
+"PO-Revision-Date: 2025-03-20 09:17+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -5895,18 +5895,15 @@ msgstr ""
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock públic fa servir una biblioteca adblock rust nova"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Torna a obrir el visualitzador tancat"
+msgstr "Permet tornar a obrir el visualitzador tancat"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Permet configurar la carpeta de correu brossa a la identitat"
 
 #: kmreaderwin.cpp:301
 #, kde-format
@@ -8255,43 +8252,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Correu electrònic d'enviament (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Cerques millorades"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Implementació per a afegir notes (anotacions) als correus"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "Menys immobilitzacions de la IGU, la comprovació de correu es fa en segon "
-#~ "pla"
-
-#~ msgid "Plugins support"
-#~ msgstr "Admet connectors"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Representador HTML nou (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "S'ha afegit la comprovació d'URL de pesca"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "S'ha afegit la comprovació del DKIM"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "S'ha afegit la implementació d'edició del Markdown"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "S'ha afegit la implementació del connector de gramàtica"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "S'ha afegit la implementació del recurs EteSync"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr ""
-#~ "S'ha afegit la implementació del recurs de serveis web de Microsoft "
-#~ "Exchange"

@@ -7953,15 +7953,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Skyv e-post (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Forbedret søk"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Støtte for å legge til notater (kommentarer) til e-poster"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr "Mindre frys i brukerflaten, e-postsjekk skjer i bakgrunnen"

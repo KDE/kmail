@@ -7899,14 +7899,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "«Ny e-post»-varsling (Push – IMAP IDLE)"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Støtte for bruk av notat i e-post melding"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "Om ikkje det grafiske brukar grensesnittet frys, vil e-posttenesta halda "
-#~ "fram å køyra (sjekka for e-post)."

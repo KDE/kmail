@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 08:56+0200\n"
+"PO-Revision-Date: 2025-03-20 10:01+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -5938,17 +5938,15 @@ msgstr ""
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
 msgstr ""
+"Реалізовано блокування реклами за допомогою нової бібліотеки мовою Rust"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Повторно відкрити закритий переглядач"
+msgstr "Уможливлено повторне відкриття закритої панелі перегляду"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Уможливлено налаштовування теки небажаної кореспонденції у профілі"
 
 #: kmreaderwin.cpp:301
 #, kde-format

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-12 09:10+0100\n"
+"PO-Revision-Date: 2025-03-20 18:36+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -3517,10 +3517,9 @@ msgid "Spam &folder:"
 msgstr "Dossier de &Spam (indesiderate) :"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Configura filtros &POP..."
+msgstr "Configura Dossier de Expirar ..."
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3755,11 +3754,10 @@ msgid "Do Not Cancel"
 msgstr "Non Cancella"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Expira dossier"
+msgstr "Dossier de Spam de Expirar"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -5880,17 +5878,15 @@ msgstr "Adde Syntaxe Personalisate usabile in le campo de texto de cerca"
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
 msgstr ""
+"Adblock (bloco de reclamos)  public usava nove bibliotheca de adblock de rust"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Reaperi visor claudite"
+msgstr "Permitte reaperir visor claudite"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Permitte configurar dossier de spam in identitate"
 
 #: kmreaderwin.cpp:301
 #, kde-format

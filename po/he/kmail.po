@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 12:50+0200\n"
+"PO-Revision-Date: 2025-03-20 20:30+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -5802,18 +5802,15 @@ msgstr "נוסף תחביר מותאם אישית שאפשר להשתמש בו �
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock ציבורי משמש ספריית adblock חדשה ב־rust"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "פתיחת מציג שנסגר מחדש"
+msgstr "לאפשר לפתוח מציג שנסגר מחדש"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "לאפשר להגדיר תיקיית ספאם בזהות"
 
 #: kmreaderwin.cpp:301
 #, kde-format

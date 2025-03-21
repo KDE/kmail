@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 03:38+0100\n"
+"PO-Revision-Date: 2025-03-20 03:30+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -5846,18 +5846,15 @@ msgstr ""
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "AdBlock public ახალ rust-ის adblock ბიბლიოთეკას იყენებს"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "დახურული დამთვალიერებლის თავიდან გახსნა"
+msgstr "დახურული დამთვალიერებლის თავიდან გახსნის დაშვება"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "იდენტიფიკატორში სპამის საქაღალდის მორგების დაშვება"
 
 #: kmreaderwin.cpp:301
 #, kde-format

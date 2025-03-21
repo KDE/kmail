@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-13 11:37+0400\n"
+"PO-Revision-Date: 2025-03-20 09:50+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3452,10 +3452,9 @@ msgid "Spam &folder:"
 msgstr "&مجلّد السخام:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "اضبط مُرشِّحات &POP..."
+msgstr "اضبط المجلد المنتهي الصلاحية…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3690,11 +3689,10 @@ msgid "Do Not Cancel"
 msgstr "لا تُلغ"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "مجلد منتهي الصلاحية"
+msgstr "مجلد سخام منتهي الصلاحية"
 
 #: identity/identityngpage.cpp:202
 #, kde-format

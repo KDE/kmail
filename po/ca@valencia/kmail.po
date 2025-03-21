@@ -1,20 +1,19 @@
 # Translation of kmail.po to Catalan (Valencian)
 # Copyright (C) 1998-2025 This_file_is_part_of_KDE
 #
-# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
 # Sebastià Pla i Sanz <sps@sastia.com>, 1998, 1999, 2000, 2004, 2005, 2006.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2002, 2003, 2004, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005, 2009.
 # David Gil <al016950@yahoo.es>, 2005.
 # Joan Maspons <joanmaspons@gmail.com>, 2009.
 # Manuel Tortosa Moreno <manutortosa@chakra-project.org>, 2009, 2010, 2011.
-# Josep M. Ferrer <txemaq@gmail.com>, 2025.
+# Josep M. Ferrer <txemaq@gmail.com>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-12 09:45+0100\n"
+"PO-Revision-Date: 2025-03-20 09:17+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -3527,10 +3526,9 @@ msgid "Spam &folder:"
 msgstr "Carpeta del correu &brossa:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Fes que caduque la carpeta"
+msgstr "Configura la caducitat de la carpeta…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3765,11 +3763,10 @@ msgid "Do Not Cancel"
 msgstr "No la cancel·les"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Fes que caduque la carpeta"
+msgstr "Caducitat de la carpeta de correu brossa"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -5901,18 +5898,15 @@ msgstr "Afig una sintaxi personalitzada utilitzable al camp de text de busca"
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock públic utilitza una biblioteca adblock nova escrita en Rust"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Torna a obrir el visor tancat"
+msgstr "Permet tornar a obrir el visor tancat"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Permet configurar la carpeta de correu brossa en la identitat"
 
 #: kmreaderwin.cpp:301
 #, kde-format
@@ -8259,46 +8253,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Correu electrònic d'enviament (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Busques millorades"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Implementació per a afegir notes (anotacions) als correus"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "Menys immobilitzacions de la IGU, la comprovació de correu es fa en segon "
-#~ "pla"
-
-#~ msgid "Plugins support"
-#~ msgstr "Admet connectors"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Representador HTML nou (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "S'ha afegit la comprovació d'URL de pesca"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "S'ha afegit la comprovació de DKIM"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "S'ha afegit la implementació d'edició de Markdown"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "S'ha afegit la implementació del connector de gramàtica"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "S'ha afegit la implementació del recurs EteSync"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr ""
-#~ "S'ha afegit la implementació del recurs de serveis web de Microsoft "
-#~ "Exchange"
-
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Subscripció de la banda del servidor…"

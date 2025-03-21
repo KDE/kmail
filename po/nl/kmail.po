@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 13:38+0100\n"
+"PO-Revision-Date: 2025-03-20 13:01+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -35,7 +35,7 @@ msgstr ""
 "Fabrice Mous - 2003,Wilbert Berendsen - 2003; 2004,Bram Schoenmakers - 2004 "
 "t/m 2007,Tom Albers - 2004,Rinse de Vries - 2000 t/m 2008,Wilbert Berendsen "
 "- 2005, Antoon Tolboom - 2008, Jaap Woldringh - 2009,Freek de Kruijf - 2009 "
-"t/m 2024"
+"t/m 2025"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -5900,18 +5900,15 @@ msgstr "Aangepaste syntaxis toevoegen bruikbaar in het zoektekstveld"
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock-publiek gebruikte nieuwe rust-adblock-lib"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Gesloten viewer opnieuw openen"
+msgstr "Toestaan gesloten viewer opnieuw te openen"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Toestaan spammap in identiteit te configureren"
 
 #: kmreaderwin.cpp:301
 #, kde-format

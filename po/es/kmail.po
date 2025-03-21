@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-16 01:32+0100\n"
+"PO-Revision-Date: 2025-03-21 01:24+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -5882,18 +5882,15 @@ msgstr ""
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock público usa la nueva biblioteca de bloque publicitario en Rust"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Volver a abrir el visor cerrado"
+msgstr "Permitir la reapertura del visor cerrado"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Permitir configurar la carpeta de correo basura en la identidad"
 
 #: kmreaderwin.cpp:301
 #, kde-format
@@ -8236,41 +8233,3 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1 %"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Correo push (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Búsquedas mejoradas"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Posibilidad de añadir notas (anotaciones) a los mensajes"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "Menos fallos de la interfaz gráfica, las comprobaciones de correo se "
-#~ "ejecutan como tareas en segundo plano"
-
-#~ msgid "Plugins support"
-#~ msgstr "Uso de complementos"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Nuevo renderizador de HTML (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "Añadida comprobación de suplantación de URL"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "Añadida comprobación DKIM"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "Añadida compatibilidad de edición en Markdown"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "Añadido uso del complemento de gramática"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "Añadido uso del recurso «etesync»"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr "Añadido uso del recurso de servicios web de Microsoft Exchange"
