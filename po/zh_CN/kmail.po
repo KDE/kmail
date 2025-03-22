@@ -5642,11 +5642,8 @@ msgid "Adblock public used new rust adblock lib"
 msgstr ""
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "重新打开关闭的查看器"
+msgstr ""
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
@@ -7902,39 +7899,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "推送邮件 (IMAP 空闲)"
-
-#~ msgid "Improved searches"
-#~ msgstr "改进搜索"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "支持向邮件添加备注 (批注)"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr "后台检查邮件，较低的图形界面冻结机率"
-
-#~ msgid "Plugins support"
-#~ msgstr "插件支持"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "新的 HTML 渲染引擎（QtWebEngine）"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "添加了钓鱼链接检测"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "添加了 DKIM 检查"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "添加 Markdown 编辑支持"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "添加语法插件支持"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "添加了对 EteSync 资源的支持"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr "添加了对 Microsoft Exchange Web Services 资源的支持"
