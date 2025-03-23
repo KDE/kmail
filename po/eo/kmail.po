@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-15 22:36+0100\n"
+"PO-Revision-Date: 2025-03-22 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
 "Language: eo\n"
@@ -5840,15 +5840,12 @@ msgid "Adblock public used new rust adblock lib"
 msgstr ""
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Remalfermi Fermitan Vidilon"
+msgstr "Permesi remalfermi fermitan vidilon"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Permesi agordi spam-dosierujon en identity"
 
 #: kmreaderwin.cpp:301
 #, kde-format
@@ -8170,39 +8167,3 @@ msgstr[1] "Eksterlaboreja respondo aktiva sur serviloj"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zomo: %1%"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Puŝi retpoŝton (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Plibonigitaj serĉoj"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Subteno por aldoni notojn (kotadojn) al retpoŝtoj"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr "Malpli GUI frostiĝas, poŝtkontroloj okazas en la fono"
-
-#~ msgid "Plugins support"
-#~ msgstr "Subtenas kromaĵojn"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Nova HTML-bildilo (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "Aldonita Kontrolo pri Phishing URL"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "Aldonita Kontrolo DKIM"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "Aldonita Markdown Redaktado Subteno"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "Aldonita Gramatika Kromprogramo Subteno"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "Aldonita etesync-rimeda subteno"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr "Aldonita resursa subteno de Microsoft Exchange Web Services"

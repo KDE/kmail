@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2025-03-16 10:46+0100\n"
+"PO-Revision-Date: 2025-03-21 12:09+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -5969,17 +5969,16 @@ msgstr ""
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
 msgstr ""
+"Adblock en version publique a utilisé la nouvelle bibliothèque « adblock » "
+"en langage Rust."
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Ouvrir à nouveau l'afficheur venant d'être fermé"
+msgstr "Autoriser la ré-ouverture de l'afficheur venant d'être fermé"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Autoriser à configurer le dossier de pourriels dans l'identité"
 
 #: kmreaderwin.cpp:301
 #, kde-format

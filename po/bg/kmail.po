@@ -4,13 +4,13 @@
 # Krasimir Arnaudov <texas_kia@yahoo.com>, 2005.
 # Zlatko Popov <zlatkopopov@fsa-bg.org>, 2005, 2006, 2007, 2008.
 # Yasen Pramatarov <yasen@lindeas.com>, 2010, 2011, 2013.
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Mincho Kondarev <mkondarev@yahoo.de>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-20 00:42+0000\n"
-"PO-Revision-Date: 2024-11-19 18:37+0100\n"
+"PO-Revision-Date: 2025-03-22 16:38+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -3508,24 +3508,20 @@ msgid "&Templates folder:"
 msgstr "Папка за &шаблони:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "Избиране на папка \"Чернови\""
+msgstr "Избиране на папка \"Нежелана поща\""
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Па&пка за изпратени поща:"
+msgstr "Па&пка за нежелана поща:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Маркиране на папка като изтекла"
+msgstr "Конфигуриране на папка изтекла валидност..."
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3761,11 +3757,10 @@ msgid "Do Not Cancel"
 msgstr "Да не се отменя"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Маркиране на папка като изтекла"
+msgstr "Изтичане на срока на папката с нежелана поща"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -5885,18 +5880,16 @@ msgstr "Добавяне на потребителски синтаксис в �
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock публична използвана нова rust adblock библиотека"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Възстановяване на затворено съобщение"
+msgstr "Позволяване на повторно отваряне на затворен браузър"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
 msgstr ""
+"Разрешаване на конфигурирането на папката за нежелана поща в идентичността"
 
 #: kmreaderwin.cpp:301
 #, kde-format
