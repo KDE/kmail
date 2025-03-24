@@ -2138,7 +2138,7 @@ msgstr "配置 KMail..."
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
-msgstr "<qt>这将完全隐藏菜单栏。您可以按下 %1 使其重新显示。</qt>"
+msgstr "<qt>这将完全隐藏菜单栏。按 %1 可以重新显示。</qt>"
 
 #: editor/kmcomposerwin.cpp:1582 kmmainwin.cpp:226
 #, kde-format
