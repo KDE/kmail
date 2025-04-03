@@ -3,13 +3,13 @@
 #
 # SPDX-FileCopyrightText: 2019, 2020, 2022, 2023, 2024 Alexander Yavorsky <kekcuha@gmail.com>
 # Мария Шикунова <translation-team@basealt.ru>, 2021.
-# SPDX-FileCopyrightText: 2024 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2024, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:43+0000\n"
-"PO-Revision-Date: 2024-11-22 15:33+0300\n"
+"PO-Revision-Date: 2025-04-02 12:20+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -36,10 +36,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Помощник удаления неиспользуемых параметров настройки для KMail"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2025 Laurent Montel <montel@kde.org>"
-msgstr "© Laurent Montel <montel@kde.org>, 2019–2024"
+msgstr "© Laurent Montel <montel@kde.org>, 2019–2025"
 
 #: main.cpp:33
 #, kde-format

@@ -12,13 +12,13 @@
 # Alexander Lakhin <exclusion@gmail.com>, 2013.
 # SPDX-FileCopyrightText: 2018, 2019, 2020, 2021, 2022, 2023, 2024 Alexander Yavorsky <kekcuha@gmail.com>
 # Мария Шикунова <translation-team@basealt.ru>, 2021, 2022, 2023.
-# SPDX-FileCopyrightText: 2024 Olesya Gerasimenko <translation-team@basealt.ru>
+# SPDX-FileCopyrightText: 2024, 2025 Olesya Gerasimenko <translation-team@basealt.ru>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-12 00:42+0000\n"
-"PO-Revision-Date: 2024-11-27 14:02+0300\n"
+"PO-Revision-Date: 2025-04-02 12:36+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -492,7 +492,7 @@ msgstr "Отсутствует."
 #: collectionpage/collectionmailinglistpage.cpp:213
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
-msgstr "KMail не смог обнаружить список рассылки в этой папке."
+msgstr "KMail не удалось обнаружить список рассылки в этой папке."
 
 #: collectionpage/collectionmailinglistpage.cpp:216
 #, kde-format
@@ -500,7 +500,7 @@ msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
 "in the addresses by hand."
 msgstr ""
-"KMail не смог обнаружить список рассылки в этой папке. Укажите адреса "
+"KMail не удалось обнаружить список рассылки в этой папке. Укажите адреса "
 "вручную."
 
 #: collectionpage/collectionquotapage.cpp:23
@@ -2318,18 +2318,18 @@ msgid "Sending Message Failed"
 msgstr "Ошибка отправки письма"
 
 #: editor/kmcomposerwin.cpp:2225 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Запустить программу «Экспорт данных PIM» не удалось. Проверьте правильность "
+"Не удалось запустить программу «KAddressbook». Проверьте правильность "
 "установки."
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Ошибка запуска программы «Экспорт данных PIM»"
+msgstr "Ошибка запуска программы «KAddressbook»"
 
 #: editor/kmcomposerwin.cpp:2350
 #, kde-format
@@ -2469,7 +2469,7 @@ msgstr "Не указана тема. Отправить письмо без т�
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
-msgstr "Тема не указана"
+msgstr "Не указана тема"
 
 #: editor/kmcomposerwin.cpp:2862
 #, kde-format
@@ -4587,18 +4587,18 @@ msgid "KMail Error"
 msgstr "Ошибка KMail"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Запустить программу «Экспорт данных PIM» не удалось. Проверьте правильность "
+"Не удалось запустить программу «ImportWizard». Проверьте правильность "
 "установки."
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Не удалось запустить мастер импорта"
+msgstr "Ошибка запуска программы «ImportWizard»"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -4628,7 +4628,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Не удалось запустить мастер импорта"
+msgstr "Ошибка запуска ImportWizard"
 
 #: kmmainwidget.cpp:308
 #, kde-format
@@ -5976,13 +5976,14 @@ msgid "Added Microsoft Exchange Web Services resource support"
 msgstr "Добавлена поддержка ресурса веб-служб Microsoft Exchange"
 
 #: kmreaderwin.cpp:281
-#, fuzzy
 msgid "Add Windows Support"
-msgstr "Добавление поддержки maildir"
+msgstr "Добавление поддержки Windows"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
 msgstr ""
+"Добавление пользовательского синтаксиса для использования в текстовом поле "
+"поиска"
 
 #: kmreaderwin.cpp:311
 #, kde-format
@@ -8280,7 +8281,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
-msgstr "Не удалось запустить мастер учётных записей"
+msgstr "Ошибка запуска мастера учётных записей"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
