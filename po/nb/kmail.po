@@ -3381,7 +3381,6 @@ msgstr "&Mappe for sendt e-post:"
 
 #: identity/identitydialog.cpp:715
 #, fuzzy, kde-format
-#| msgid "Expire Folder"
 msgid "Configure Expire Folder..."
 msgstr "Slett foreldede meldinger i mappa"
 
@@ -3617,7 +3616,6 @@ msgstr ""
 
 #: identity/identityexpirespamfolderdialog.cpp:18
 #, fuzzy, kde-format
-#| msgid "Expire Folder"
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "Slett foreldede meldinger i mappa"

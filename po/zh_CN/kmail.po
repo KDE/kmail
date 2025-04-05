@@ -958,7 +958,7 @@ msgstr "显示日期："
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr ""
+msgstr "显示自己的身份"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -1004,7 +1004,7 @@ msgstr "Plasma活动"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 #: configuredialog/configureappearancepage.cpp:945
 #, kde-format
@@ -1269,7 +1269,7 @@ msgstr "自动补全记忆邮箱地址数量的上限"
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr ""
+msgstr "配置补全…"
 
 #: configuredialog/configurecomposerpage.cpp:401
 #, kde-format
@@ -1287,7 +1287,7 @@ msgstr "不自动保存"
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] ""
+msgstr[0] "%v 分钟"
 
 #: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
@@ -1326,7 +1326,7 @@ msgstr "删除(&M)"
 #: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Mod&ify…"
-msgstr ""
+msgstr "修改...(&I)"
 
 #: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
@@ -1625,7 +1625,7 @@ msgstr "改变全局的 HTML 设置，将会覆盖所有文件夹的特定设置
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] ""
+msgstr[0] "%v 天"
 
 #: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
@@ -2229,13 +2229,13 @@ msgstr "发送消息失败"
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr ""
+msgstr "无法启动“KAddressbook”程序。请检查安装。"
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:167
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr ""
+msgstr "无法启动“KAddressbook”程序"
 
 #: editor/kmcomposerwin.cpp:2350
 #, kde-format
@@ -2950,36 +2950,36 @@ msgstr "已有身份(&E)："
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "无法启动 OpenPGP 证书生成。"
 
 #: identity/identitydialog.cpp:238
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "无法启动 OpenPGP 证书生成: %1"
 
 #: identity/identitydialog.cpp:247
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr ""
+msgstr "正在生成 OpenPGP 证书…"
 
 #: identity/identitydialog.cpp:249
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
-msgstr ""
+msgstr "创建一个 OpenPGP 证书需要大量随机数。这可能需要几分钟…"
 
 #: identity/identitydialog.cpp:267
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "无法生成 OpenPGP 证书: %1"
 
 #: identity/identitydialog.cpp:272
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr ""
+msgstr "密钥生成已取消。"
 
 #: identity/identitydialog.cpp:312
 #, kde-format
@@ -2989,7 +2989,7 @@ msgstr "没有密钥"
 #: identity/identitydialog.cpp:314
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr ""
+msgstr "生成新的 OpenPGP 证书"
 
 #: identity/identitydialog.cpp:329
 #, kde-format
@@ -3352,18 +3352,18 @@ msgstr "模板文件夹(&T)："
 #: identity/identitydialog.cpp:710
 #, kde-format
 msgid "Select Spam Folder"
-msgstr ""
+msgstr "选择垃圾邮件文件夹"
 
 #: identity/identitydialog.cpp:712
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr ""
+msgstr "垃圾邮件文件夹：...(&F)"
 
 #: identity/identitydialog.cpp:715
 #, kde-format
 msgid "Configure Expire Folder..."
-msgstr ""
+msgstr "配置过期文件夹..."
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3381,7 +3381,7 @@ msgstr "将我的 vCard 附加到消息"
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
-msgstr ""
+msgstr "创建…"
 
 #: identity/identitydialog.cpp:738
 #, kde-format
@@ -3438,7 +3438,7 @@ msgstr "图像"
 #: identity/identitydialog.cpp:816
 #, kde-format
 msgid "Activities"
-msgstr ""
+msgstr "活动"
 
 #: identity/identitydialog.cpp:867
 #, kde-format
@@ -3589,7 +3589,7 @@ msgstr "不要取消"
 #, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr ""
+msgstr "定时清空垃圾邮件文件夹"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -3618,13 +3618,13 @@ msgstr "删除(&R)"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "添加…"
 
 #: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
-msgstr ""
+msgstr "编辑…"
 
 #: identity/identityngpage.cpp:244
 #, kde-format
@@ -3977,7 +3977,7 @@ msgstr "查看给定的消息文件"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr ""
+msgstr "设置消息正文为 html"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4304,7 +4304,7 @@ msgstr "发送消息中"
 #: kmkernel.cpp:1494
 #, kde-format
 msgid "Initiating sending process…"
-msgstr ""
+msgstr "正在初始化发送流程…"
 
 #: kmkernel.cpp:1573
 #, kde-format
@@ -4358,13 +4358,13 @@ msgstr "KMail 错误"
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr ""
+msgstr "无法启动“ImportWizard”程序。请检查安装。"
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr ""
+msgstr "无法启动“ImportWizard”程序"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5631,23 +5631,23 @@ msgstr "KMail 现基于 Akonadi 个人信息管理框架，该框架带来了许
 
 #: kmreaderwin.cpp:268
 msgid "Add Windows Support"
-msgstr ""
+msgstr "添加 Windows 支持"
 
 #: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "在搜索栏中新增自定义语法支持"
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Adblock公共模块改用Rust编写的新Adblock库"
 
 #: kmreaderwin.cpp:271
 msgid "Allow to reopen closed viewer"
-msgstr ""
+msgstr "允许重新打开已关闭的查看器窗口"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "在账户身份设置中允许配置垃圾邮件文件夹"
 
 #: kmreaderwin.cpp:301
 #, kde-format
@@ -6630,7 +6630,7 @@ msgstr "添加新标签"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr ""
+msgstr "搜索标签…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -6678,7 +6678,7 @@ msgstr "从地址簿中设置"
 #: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "仅显示当前活动的身份"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31
