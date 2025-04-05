@@ -958,7 +958,7 @@ msgstr "显示日期："
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr ""
+msgstr "显示自己的身份"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -1004,7 +1004,7 @@ msgstr "Plasma活动"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
-msgstr ""
+msgstr "启用"
 
 #: configuredialog/configureappearancepage.cpp:945
 #, kde-format
@@ -1269,7 +1269,7 @@ msgstr "自动补全记忆邮箱地址数量的上限"
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr ""
+msgstr "配置补全…"
 
 #: configuredialog/configurecomposerpage.cpp:400
 #, kde-format
@@ -1287,7 +1287,7 @@ msgstr "不自动保存"
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] ""
+msgstr[0] "%v 分钟"
 
 #: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
@@ -1326,7 +1326,7 @@ msgstr "删除(&M)"
 #: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgid "Mod&ify…"
-msgstr ""
+msgstr "修改...(&I)"
 
 #: configuredialog/configurecomposerpage.cpp:632
 #, kde-format
@@ -1625,7 +1625,7 @@ msgstr "改变全局的 HTML 设置，将会覆盖所有文件夹的特定设置
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] ""
+msgstr[0] "%v 天"
 
 #: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
@@ -2229,13 +2229,13 @@ msgstr "发送消息失败"
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr ""
+msgstr "无法启动“KAddressbook”程序。请检查安装。"
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:167
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr ""
+msgstr "无法启动“KAddressbook”程序"
 
 #: editor/kmcomposerwin.cpp:2350
 #, kde-format
@@ -2950,36 +2950,36 @@ msgstr "已有身份(&E)："
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
-msgstr ""
+msgstr "无法启动 OpenPGP 证书生成。"
 
 #: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
-msgstr ""
+msgstr "无法启动 OpenPGP 证书生成: %1"
 
 #: identity/identitydialog.cpp:246
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr ""
+msgstr "正在生成 OpenPGP 证书…"
 
 #: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
-msgstr ""
+msgstr "创建一个 OpenPGP 证书需要大量随机数。这可能需要几分钟…"
 
 #: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
-msgstr ""
+msgstr "无法生成 OpenPGP 证书: %1"
 
 #: identity/identitydialog.cpp:271
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr ""
+msgstr "密钥生成已取消。"
 
 #: identity/identitydialog.cpp:311
 #, kde-format
@@ -2989,7 +2989,7 @@ msgstr "没有密钥"
 #: identity/identitydialog.cpp:313
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr ""
+msgstr "生成新的 OpenPGP 证书"
 
 #: identity/identitydialog.cpp:328
 #, kde-format
@@ -3365,7 +3365,7 @@ msgstr "将我的 vCard 附加到消息"
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
-msgstr ""
+msgstr "创建…"
 
 #: identity/identitydialog.cpp:719
 #, kde-format
@@ -3422,7 +3422,7 @@ msgstr "图像"
 #: identity/identitydialog.cpp:797
 #, kde-format
 msgid "Activities"
-msgstr ""
+msgstr "活动"
 
 #: identity/identitydialog.cpp:848
 #, kde-format
@@ -3596,13 +3596,13 @@ msgstr "删除(&R)"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "添加…"
 
 #: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
-msgstr ""
+msgstr "编辑…"
 
 #: identity/identityngpage.cpp:244
 #, kde-format
@@ -3955,7 +3955,7 @@ msgstr "查看给定的消息文件"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr ""
+msgstr "设置消息正文为 html"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4282,7 +4282,7 @@ msgstr "发送消息中"
 #: kmkernel.cpp:1491
 #, kde-format
 msgid "Initiating sending process…"
-msgstr ""
+msgstr "正在初始化发送流程…"
 
 #: kmkernel.cpp:1570
 #, kde-format
@@ -4336,13 +4336,13 @@ msgstr "KMail 错误"
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr ""
+msgstr "无法启动“ImportWizard”程序。请检查安装。"
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr ""
+msgstr "无法启动“ImportWizard”程序"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5662,11 +5662,11 @@ msgstr "添加了对 Microsoft Exchange Web Services 资源的支持"
 
 #: kmreaderwin.cpp:281
 msgid "Add Windows Support"
-msgstr ""
+msgstr "添加 Windows 支持"
 
 #: kmreaderwin.cpp:282
 msgid "Add Custom Syntax usable in the search text field"
-msgstr ""
+msgstr "在搜索栏中新增自定义语法支持"
 
 #: kmreaderwin.cpp:311
 #, kde-format
@@ -6649,7 +6649,7 @@ msgstr "添加新标签"
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr ""
+msgstr "搜索标签…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -6697,7 +6697,7 @@ msgstr "从地址簿中设置"
 #: ui/identityngpage.ui:17
 #, kde-format
 msgid "Show only identity on current activity"
-msgstr ""
+msgstr "仅显示当前活动的身份"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mButtonAdd)
 #: ui/identityngpage.ui:31
