@@ -30,7 +30,7 @@ msgstr "kde-china@kde.org"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr ""
+msgstr "保存…"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -85,7 +85,7 @@ msgstr "查看"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr ""
+msgstr "查看方式…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -97,13 +97,13 @@ msgstr "解压"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr ""
+msgstr "解压到…"
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr ""
+msgstr "全部解压到…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -127,13 +127,13 @@ msgstr "显示消息属性"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
-msgstr ""
+msgstr "保存消息文本为…"
 
 #: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
-msgstr ""
+msgstr "默认文件夹…"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -205,13 +205,13 @@ msgstr "打开方式(&O)"
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
-msgstr ""
+msgstr "其他(&O)…"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr ""
+msgstr "打开方式(&O)…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
