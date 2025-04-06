@@ -3335,7 +3335,6 @@ msgstr "Sáddejuvvon e-boastta &máhppa:"
 
 #: identity/identitydialog.cpp:715
 #, fuzzy, kde-format
-#| msgid "Expire Folder"
 msgid "Configure Expire Folder..."
 msgstr "Sihko máhpa boaresmuvvan reivviid"
 
@@ -3559,7 +3558,6 @@ msgstr ""
 
 #: identity/identityexpirespamfolderdialog.cpp:18
 #, fuzzy, kde-format
-#| msgid "Expire Folder"
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "Sihko máhpa boaresmuvvan reivviid"
