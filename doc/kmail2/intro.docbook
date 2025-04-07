@@ -82,7 +82,7 @@ for details.</para>
 <sect2 id="getting-help">
 <title>Getting Help</title>
  
-<para>&kmail;'s homepage can be found at <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail">https://userbase.kde.org/KMail</ulink>. There you will
+<para>&kmail;'s homepage can be found at <ulink url="https://apps.kde.org/kmail2/">https://apps.kde.org/kmail2/</ulink>. There you will
 find useful links (&eg;, to the user and developer mailing lists, and to the community wiki pages.) Please report any bugs in &kmail; using
 <menuchoice><guimenu>Help</guimenu><guimenuitem>Report Bug...</guimenuitem></menuchoice>.</para>
 </sect2>
