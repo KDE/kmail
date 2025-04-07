@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2020, 2021, 2022, 2023, 2024, 2025 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-07 00:43+0000\n"
-"PO-Revision-Date: 2024-08-19 23:25+0200\n"
+"PO-Revision-Date: 2025-04-06 23:16+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -33,10 +33,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "KMail 설정 초기화 도우미"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2024 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "(c) 2019-2025 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2024 Laurent Montel <montel@kde.org>"
+msgstr "(c) 2019-2025 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format
