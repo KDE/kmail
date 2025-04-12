@@ -3298,7 +3298,7 @@
 > to add a new contact your addressbook.</para
 ></listitem>
 </varlistentry
-> Thes options not available in 5.14.2 @dcb2021088. -->
+> These options not available in 5.14.2 @dcb2021088. -->
 
 <varlistentry id="composer-message-send-mail">
   <term
@@ -3748,7 +3748,7 @@
 >Convert the selected text to lowercase.</para
 ></listitem>
 </varlistentry
-> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
 
 <varlistentry id="composer-edit-insert-special-character">
   <term
