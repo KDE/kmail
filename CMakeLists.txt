@@ -216,7 +216,7 @@ if(TARGET KPim6::PimCommonActivities)
     endif()
     if(OPTION_USE_PLASMA_ACTIVITIES)
         if(NOT WIN32 AND NOT APPLE)
-            find_package(PlasmaActivities "6.1.0")
+            find_package(PlasmaActivities "6.3.0")
             set_package_properties(PlasmaActivities PROPERTIES DESCRIPTION
                 "Allow to compile with plasma activities"
                 TYPE OPTIONAL
