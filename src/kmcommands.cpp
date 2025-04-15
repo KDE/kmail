@@ -1560,8 +1560,7 @@ void KMMoveCommand::slotMoveCanceled()
 }
 
 KMTrashMsgCommand::KMTrashMsgCommand(const Akonadi::Collection &srcFolder, const Akonadi::Item::List &msgList, MessageList::Core::MessageItemSetReference ref)
-    : KMCommand()
-    , mRef(ref)
+    : mRef(ref)
 {
     // When trashing items from a virtual collection, they may each have a different
     // trash folder, so we need to handle it here carefully

@@ -11,13 +11,12 @@
 #include <QIODevice>
 
 TaskAttribute::TaskAttribute()
-    : Akonadi::Attribute()
+
 {
 }
 
 TaskAttribute::TaskAttribute(Akonadi::Item::Id id)
-    : Akonadi::Attribute()
-    , mId(id)
+    : mId(id)
 {
 }
 
