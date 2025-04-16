@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"POT-Creation-Date: 2025-04-16 00:42+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -2886,7 +2886,7 @@ msgid "Reopen Closed Viewer"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1923
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4123,17 +4123,17 @@ msgstr "Sillemin reivviid"
 msgid "Filtering message %1 of %2"
 msgstr "Sillemin reive %1 %2 reivves"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1668
+#: kmcommands.cpp:1536 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "Sirdimin reivviid"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1678
+#: kmcommands.cpp:1536 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "Sihkomin reivviid"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1819
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

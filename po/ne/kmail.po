@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"POT-Creation-Date: 2025-04-16 00:42+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -3263,7 +3263,7 @@ msgid "Reopen Closed Viewer"
 msgstr "नयाँ सन्देश"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1923
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4730,17 +4730,17 @@ msgstr "सन्देश फिल्टर गर्दैछ"
 msgid "Filtering message %1 of %2"
 msgstr "%2 मध्ये %1 सन्देश फिल्टर हुँदैछ"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1668
+#: kmcommands.cpp:1536 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "सन्देश सार्दैछ"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1678
+#: kmcommands.cpp:1536 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "सन्देश मेट्दैछ"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

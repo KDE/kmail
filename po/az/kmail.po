@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"POT-Creation-Date: 2025-04-16 00:42+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -3147,7 +3147,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Yeni məktub göndərmək"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1923
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4546,17 +4546,17 @@ msgstr "Məktubların süzgəclənməsi"
 msgid "Filtering message %1 of %2"
 msgstr "%2 məktubdan %1 süzgəclənir"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1668
+#: kmcommands.cpp:1536 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "Məktubların köçürülməsi"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1678
+#: kmcommands.cpp:1536 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "Məktubların silinməsi"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"

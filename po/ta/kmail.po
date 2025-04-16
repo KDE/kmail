@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"POT-Creation-Date: 2025-04-16 00:42+0000\n"
 "PO-Revision-Date: 2025-03-16 15:08+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -2959,7 +2959,7 @@ msgid "Reopen Closed Viewer"
 msgstr "முடிய காட்டியைத் திற"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1923
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4250,17 +4250,17 @@ msgstr "அஞ்சல்கள் வடிகட்டப்படுகி�
 msgid "Filtering message %1 of %2"
 msgstr "%2 அஞ்சல்களில் %1-வது வடிகட்டப்படுகிறது"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1668
+#: kmcommands.cpp:1536 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "அஞ்சல்கள் நகர்த்தப்படுகின்றன"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1678
+#: kmcommands.cpp:1536 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "அஞ்சல்கள் நீக்கப்படுகின்றன"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1819
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

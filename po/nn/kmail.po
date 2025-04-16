@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"POT-Creation-Date: 2025-04-16 00:42+0000\n"
 "PO-Revision-Date: 2024-08-17 17:42+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -2896,7 +2896,7 @@ msgid "Reopen Closed Viewer"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1923
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4179,17 +4179,17 @@ msgstr "Filtrerer meldingar"
 msgid "Filtering message %1 of %2"
 msgstr "Filtrerer melding %1 av %2"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1668
+#: kmcommands.cpp:1536 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "Flyttar meldingar"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1678
+#: kmcommands.cpp:1536 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "Slettar meldingar"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1819
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

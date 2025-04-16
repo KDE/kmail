@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-03-20 00:42+0000\n"
+"POT-Creation-Date: 2025-04-16 00:42+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -3174,7 +3174,7 @@ msgid "Reopen Closed Viewer"
 msgstr "ส่งจดหมายใหม่"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1923
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4534,17 +4534,17 @@ msgstr "กำลังกรองจดหมาย"
 msgid "Filtering message %1 of %2"
 msgstr "กำลังกรองจดหมาย %1 จาก %2"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1668
+#: kmcommands.cpp:1536 kmcommands.cpp:1667
 #, kde-format
 msgid "Moving messages"
 msgstr "กำลังย้ายจดหมาย"
 
-#: kmcommands.cpp:1536 kmcommands.cpp:1678
+#: kmcommands.cpp:1536 kmcommands.cpp:1677
 #, kde-format
 msgid "Deleting messages"
 msgstr "กำลังลบจดหมาย"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1819
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"
