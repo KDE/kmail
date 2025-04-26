@@ -1,7 +1,7 @@
 # Translation for kmail.po to Euskara/Basque (eu).
 # Copyright (C) 2003-2025 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# SPDX-FileCopyrightText: 2023, 2024 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>.
+# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2003, 2004, 2005, 2006.
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-16 00:42+0000\n"
-"PO-Revision-Date: 2024-11-19 19:44+0100\n"
+"PO-Revision-Date: 2025-04-25 21:33+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -3492,24 +3492,20 @@ msgid "&Templates folder:"
 msgstr "&Txantiloien karpeta:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "Hautatu Zirriborro karpeta"
+msgstr "Hautatu Spam karpeta"
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "«Bidalitako posta» kar&peta:"
+msgstr "Spam karpeta:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Konfiguratu &POP iragazkiak"
+msgstr "Konfiguratu Iraungi karpeta..."
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3744,11 +3740,10 @@ msgid "Do Not Cancel"
 msgstr "Ez utzi bertan behera"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Iraungi karpeta"
+msgstr "Iraungi Spam karpeta"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -5856,17 +5851,16 @@ msgstr ""
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
 msgstr ""
+"Iragarki eragozle publikoak iragarkiak eragozteko rust liburutegi berria "
+"erabili du"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Berrireki itxitako erakuslea"
+msgstr "Baimendu itxitako erakuslea berrirekitzea"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Baimendu spam karpeta nortasunean konfiguratzea"
 
 #: kmreaderwin.cpp:301
 #, kde-format
