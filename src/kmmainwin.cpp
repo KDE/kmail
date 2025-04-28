@@ -39,7 +39,7 @@
 // signal handler for SIGINT & SIGTERM
 #ifdef Q_OS_UNIX
 #include <KSignalHandler>
-#include <signal.h>
+#include <csignal>
 #include <unistd.h>
 #endif
 
