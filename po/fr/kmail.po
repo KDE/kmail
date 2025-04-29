@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-16 00:42+0000\n"
-"PO-Revision-Date: 2025-03-21 12:09+0100\n"
+"PO-Revision-Date: 2025-04-23 19:39+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -2325,14 +2325,14 @@ msgstr "Échec de l'envoi du message"
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Impossible de lancer le programme « KAddressbook ». Veuillez vérifier votre "
+"Impossible de lancer l'application KAddressBook. Veuillez vérifier votre "
 "installation."
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:167
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Impossible de lancer le programme « KAddressbook »."
+msgstr "Impossible de lancer l'application KAddressBook."
 
 #: editor/kmcomposerwin.cpp:2350
 #, kde-format
@@ -3492,7 +3492,7 @@ msgid ""
 "separate the list of CC recipients.</p><p>If in doubt, leave this field "
 "blank.</p></qt>"
 msgstr ""
-"<qt> <h3>Adresses d'envoi en copie (Carbon copy - CC) </h3> <p>Les adresses "
+"<qt> <h3>Adresses d'envoi en copie (Carbon Copy - CC) </h3> <p>Les adresses "
 "que vous donnez ici seront ajoutées à chaque courriel sortant envoyé avec "
 "cette identité.</p> <p>Ceci sert habituellement à envoyer une copie de "
 "chaque message envoyé à un autre de vos comptes.</p> <p>Pour spécifier plus "
@@ -5969,7 +5969,7 @@ msgstr ""
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
 msgstr ""
-"Adblock en version publique a utilisé la nouvelle bibliothèque « adblock » "
+"AdBlock en version publique a utilisé la nouvelle bibliothèque « adblock » "
 "en langage Rust."
 
 #: kmreaderwin.cpp:271
