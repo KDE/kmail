@@ -135,7 +135,7 @@ msgstr "Mantemento."
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Marce Villarino, Xosé, Adrián Chaves Fernández (Gallaecio)"
+msgstr "Marce Villarino, Xosé, Adrián Chaves (Gallaecio)"
 
 #: archivemailwidget.cpp:98
 #, kde-format

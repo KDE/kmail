@@ -48,7 +48,7 @@ msgstr "Mantedor."
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Adrián Chaves Fernández"
+msgstr "Adrián Chaves"
 
 #: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
