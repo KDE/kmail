@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-16 00:42+0000\n"
-"PO-Revision-Date: 2025-03-19 13:30+0100\n"
+"PO-Revision-Date: 2025-05-04 13:47+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5868,18 +5868,15 @@ msgstr "Engadir sintaxe personalizada usábel no campo de texto de busca."
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Uso dunha nova biblioteca de bloqueo de publicidade escrita en Rust."
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Restaurar o visor pechado"
+msgstr "Permitir restaurar o visor pechado."
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Permitir configurar o cartafol de correo lixo na identidade."
 
 #: kmreaderwin.cpp:301
 #, kde-format
