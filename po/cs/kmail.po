@@ -3369,24 +3369,20 @@ msgid "&Templates folder:"
 msgstr "S&ložka se šablonami:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "Vyberte složku konceptů"
+msgstr ""
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Složka odeslanýc&h zpráv:"
+msgstr ""
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Nechat vypršet složku"
+msgstr ""
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3619,11 +3615,10 @@ msgid "Do Not Cancel"
 msgstr "Nerušit"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Nechat vypršet složku"
+msgstr ""
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -7989,34 +7984,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Push e-mail (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Vylepšené hledání"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Podpora pro přidávání poznámek (anotací) k e-mailům"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "Méně časté zamrzání rozhraní, kontroly pošty jsou prováděny na pozadí"
-
-#~ msgid "Plugins support"
-#~ msgstr "Podpora modulů"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Nové vykreslování HTML (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "Přidána kontrola URL s Phishingem"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "Přidána podpora modulu pro gramatiku"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr "Přidána podpora Microsoft Exchange Web Services"
-
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Odběr na serveru…"

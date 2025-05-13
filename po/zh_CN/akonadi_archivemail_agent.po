@@ -150,7 +150,7 @@ msgstr "添加..."
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
-msgstr "打开所在文件夹..."
+msgstr "打开所在文件夹…"
 
 #: archivemailwidget.cpp:118
 #, kde-format
