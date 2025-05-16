@@ -3,7 +3,7 @@
 # Author: Artnay
 # Author: Lliehu
 # Author: Niklas Laxström
-# SPDX-FileCopyrightText: 2009, 2010, 2011, 2024 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2009, 2010, 2011, 2024, 2025 Tommi Nieminen <translator@legisign.org>
 # Teemu Rytilahti <teemu.rytilahti@d5k.net>, 2003.
 # Eero Häkkinen <eero.hakkinen@iki.fi>, 2003.
 # Kim Enkovaara <kim.enkovaara@iki.fi>, 2003, 2005, 2006.
@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-16 00:42+0000\n"
-"PO-Revision-Date: 2024-12-07 15:10+0200\n"
+"PO-Revision-Date: 2025-04-20 16:38+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -3487,24 +3487,20 @@ msgid "&Templates folder:"
 msgstr "&Viestipohjien kansio:"
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "Valitse luonnoskansio"
+msgstr "Valitse roskapostikansio"
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "&Lähetettyjen kansio:"
+msgstr "&Roskapostikansio:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Muokkaa POP-&suotimia..."
+msgstr "Kansion vanhentamisen asetukset…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3739,11 +3735,10 @@ msgid "Do Not Cancel"
 msgstr "Älä peru"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Siivoa kansio"
+msgstr "Vanhenna roskapostikansio"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -5849,15 +5844,12 @@ msgid "Adblock public used new rust adblock lib"
 msgstr ""
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Avaa suljettu lukuikkuna uudelleen"
+msgstr "Salli avata suljettu katselin uudelleen"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Salli henkilöydelle roskapostikansion määritys"
 
 #: kmreaderwin.cpp:301
 #, kde-format
