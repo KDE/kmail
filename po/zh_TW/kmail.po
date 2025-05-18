@@ -12,20 +12,20 @@
 # Frank Weng (a.k.a. Franklin) <franklin at goodhorse dot idv dot tw>, 2006, 2007, 2008, 2009, 2010.
 # Franklin Weng <franklin at goodhorse dot idv dot tw>, 2007, 2008.
 # pan93412 <pan93412@gmail.com>, 2019.
-# SPDX-FileCopyrightText: 2023, 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-04-16 00:42+0000\n"
-"PO-Revision-Date: 2024-09-17 07:14+0900\n"
+"PO-Revision-Date: 2025-05-17 10:01+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.04.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -396,15 +396,13 @@ msgid "Mailing List"
 msgstr "郵件論壇"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder holds a mailing list"
 msgstr "資料夾存放郵件論壇的信件"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
-#, fuzzy, kde-format
-#| msgid "Detect Automatically"
+#, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "自動偵測"
@@ -425,11 +423,10 @@ msgid "Preferred handler:"
 msgstr "偏好的標頭："
 
 #: collectionpage/collectionmailinglistpage.cpp:94
-#, fuzzy, kde-format
-#| msgid "Invoke Handler"
+#, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
-msgstr "啟動處理程式"
+msgstr "觸發處理程式"
 
 #: collectionpage/collectionmailinglistpage.cpp:101
 #, kde-format
@@ -546,8 +543,7 @@ msgid "View"
 msgstr "檢視"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "使用自訂圖示(&I)"
@@ -606,8 +602,7 @@ msgid "Outgoing accounts (add at least one):"
 msgstr "發信帳號（至少新增一個帳號）："
 
 #: configuredialog/configureaccountpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "&Confirm action"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "確認動作(&C)"
@@ -618,8 +613,7 @@ msgid "Before sending:"
 msgstr "傳送前："
 
 #: configuredialog/configureaccountpage.cpp:104
-#, fuzzy, kde-format
-#| msgid "Check spelling"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "檢查拼字"
@@ -660,8 +654,7 @@ msgid "Defa&ult send method:"
 msgstr "預設傳送方式(&U)："
 
 #: configuredialog/configureaccountpage.cpp:124
-#, fuzzy, kde-format
-#| msgid "Enable Undo Send"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "啟用傳送復原"
@@ -760,8 +753,7 @@ msgid "Printing Output"
 msgstr "列印輸出"
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "&Use custom fonts"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "使用自訂字型(&U)"
@@ -817,22 +809,19 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "HTML 狀態列前景 - 非 HTML 信件"
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "使用自訂顏色(&U)"
 
 #: configuredialog/configureappearancepage.cpp:320
-#, fuzzy, kde-format
-#| msgid "Recycle colors on deep &quoting"
+#, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
-msgstr "多層引文時，顏色循環(&Q)"
+msgstr "多層引文時重複使用顏色(&Q)"
 
 #: configuredialog/configureappearancepage.cpp:322
-#, fuzzy, kde-format
-#| msgid "&Do not change color from original HTML mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "不要變更來自原 HTML 郵件的顏色(&D)"
@@ -849,16 +838,14 @@ msgid "%"
 msgstr "%"
 
 #: configuredialog/configureappearancepage.cpp:479
-#, fuzzy, kde-format
-#| msgid "Show folder quick search field"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "顯示快速搜尋資料夾欄位"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "永不"
@@ -870,22 +857,19 @@ msgid "Show favorite folders view:"
 msgstr "顯示最愛資料夾檢視："
 
 #: configuredialog/configureappearancepage.cpp:492
-#, fuzzy, kde-format
-#| msgid "As icons"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "為圖示"
 
 #: configuredialog/configureappearancepage.cpp:497
-#, fuzzy, kde-format
-#| msgid "As list"
+#, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "為清單"
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "總是"
@@ -926,8 +910,7 @@ msgid "Default theme:"
 msgstr "預設主題："
 
 #: configuredialog/configureappearancepage.cpp:663
-#, fuzzy, kde-format
-#| msgid "<qt><a href=\"whatsthis1\">Custom format information...</a></qt>"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">自訂字型資訊…</a></qt>"
@@ -977,12 +960,10 @@ msgid "Date Display:"
 msgstr "日期顯示："
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "新身份"
+msgstr "顯示自己的身份"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -990,10 +971,7 @@ msgid "Message Window"
 msgstr "信件視窗"
 
 #: configuredialog/configureappearancepage.cpp:823
-#, fuzzy, kde-format
-#| msgid ""
-#| "Close the standalone message window after replying or forwarding the "
-#| "message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
@@ -1005,22 +983,19 @@ msgid "System Tray"
 msgstr "系統匣"
 
 #: configuredialog/configureappearancepage.cpp:841
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "開啟系統匣圖示"
 
 #: configuredialog/configureappearancepage.cpp:845
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "啟動時最小化至系統匣"
 
 #: configuredialog/configureappearancepage.cpp:863
-#, fuzzy, kde-format
-#| msgid "Show unread email in Taskbar"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "在工作列中顯示唯讀郵件"
@@ -1031,8 +1006,7 @@ msgid "Plasma activities"
 msgstr "Plasma 活動"
 
 #: configuredialog/configureappearancepage.cpp:873
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "啟用"
@@ -1296,8 +1270,7 @@ msgid ""
 msgstr "要記住以用來做收件人補完的地址的最大數量"
 
 #: configuredialog/configurecomposerpage.cpp:392
-#, fuzzy, kde-format
-#| msgid "Configure Completion…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "設定補完…"
@@ -1332,15 +1305,12 @@ msgstr "回覆主題前置文字(&Y)"
 
 #: configuredialog/configurecomposerpage.cpp:625
 #: configuredialog/configurecomposerpage.cpp:651
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any sequence of the following prefixes (entries are case-"
-#| "insensitive regular expressions):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
-msgstr "辨認下列的前置文字（不區分大小寫）："
+msgstr "辨認下列的前置文字（各項目是不區分大小寫的正則表達式）："
 
 #: configuredialog/configurecomposerpage.cpp:633
 #: configuredialog/configurecomposerpage.cpp:970
@@ -1412,22 +1382,19 @@ msgid "Forward Prefix:"
 msgstr "轉寄前置文字："
 
 #: configuredialog/configurecomposerpage.cpp:703
-#, fuzzy, kde-format
-#| msgid "&Use custom message-id suffix"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "使用自訂的 Message-Id 項目(&U)"
 
 #: configuredialog/configurecomposerpage.cpp:719
-#, fuzzy, kde-format
-#| msgid "Custom message-&id suffix:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "自訂 Message-Id 項目(&I)："
 
 #: configuredialog/configurecomposerpage.cpp:731
-#, fuzzy, kde-format
-#| msgid "Define custom mime header fields:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "定義電子郵件的 mime 自訂標頭："
@@ -1481,16 +1448,13 @@ msgid "Invalid header"
 msgstr "無效的標頭"
 
 #: configuredialog/configurecomposerpage.cpp:953
-#, fuzzy, kde-format
-#| msgid "E&nable detection of missing attachments"
+#, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "判斷是否忘記附加檔案"
+msgstr "判斷是否忘記附加檔案(&N)"
 
 #: configuredialog/configurecomposerpage.cpp:959
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any of the following key words as intention to attach a file:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "檢查信件中是否有下列關鍵字，以顯示此封信是否應該有附檔而忘了加上去："
@@ -1528,16 +1492,14 @@ msgid "No limit"
 msgstr "不限制"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "新增"
 
 #: configuredialog/configuredialoglistview.cpp:57
 #: identity/identityngpage.cpp:247
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "移除"
@@ -1662,12 +1624,10 @@ msgstr "改變全域的 HTML 設定，將會覆蓋個別資料夾原先的 HTML 
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " 天"
+msgstr[0] "%v 天"
 
 #: configuredialog/configuresecuritypage.cpp:320
 #, kde-format
@@ -1676,10 +1636,7 @@ msgid "GnuPG Settings"
 msgstr "GnuPG 設定"
 
 #: configuredialog/configuresecuritypage.cpp:327
-#, fuzzy, kde-format
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
@@ -1780,15 +1737,13 @@ msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "封存檔 (*.tar *.zip *.tar.gz *.tar.bz2)"
 
 #: dialog/archivefolderdialog.cpp:109
-#, fuzzy, kde-format
-#| msgid "&Delete folder and subfolders after completion"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "完成後刪除資料夾與子資料夾(&D)"
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "封存所有的子資料夾"
@@ -2005,8 +1960,7 @@ msgid "Paste as Attac&hment"
 msgstr "貼上成附件(&H)"
 
 #: editor/kmcomposerwin.cpp:1370
-#, fuzzy, kde-format
-#| msgid "Cl&ean Spaces"
+#, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "清除空間(&E)"
@@ -2024,15 +1978,13 @@ msgid "&Urgent"
 msgstr "急件(&U)"
 
 #: editor/kmcomposerwin.cpp:1382
-#, fuzzy, kde-format
-#| msgid "&Request Disposition Notification"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "加上信件處理通知(&R)"
 
 #: editor/kmcomposerwin.cpp:1386
-#, fuzzy, kde-format
-#| msgid "&Request Delivery Confirmation"
+#, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "請求收件確認(&R)"
@@ -2064,7 +2016,7 @@ msgstr "豐富格式文字編輯"
 #: editor/kmcomposerwin.cpp:1419
 #, kde-format
 msgid "Rich Text"
-msgstr "Rich Text"
+msgstr "豐富格式文字"
 
 #: editor/kmcomposerwin.cpp:1420
 #, kde-format
@@ -2097,11 +2049,10 @@ msgid "&Sent-Mail Folder"
 msgstr "寄件備份(&S)"
 
 #: editor/kmcomposerwin.cpp:1436
-#, fuzzy, kde-format
-#| msgid "&Mail Transport"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
-msgstr "發送信件帳號(&M)"
+msgstr "郵件傳輸(&M)"
 
 #: editor/kmcomposerwin.cpp:1439
 #, kde-format
@@ -2277,21 +2228,16 @@ msgid "Sending Message Failed"
 msgstr "傳送信件失敗"
 
 #: editor/kmcomposerwin.cpp:2225 kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr "無法啟動 PIM 資料匯出工具。請檢查安裝是否完整。"
+msgstr "無法啟動 \"KAddressBook\" 程式。請檢查安裝是否完整。"
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start \"PIM Data Exporter\" program"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "無法啟動 PIM 資料匯出工具"
+msgstr "無法啟動 \"KAddressBook\" 程式"
 
 #: editor/kmcomposerwin.cpp:2350
 #, kde-format
@@ -2346,11 +2292,10 @@ msgid_plural "Add Files as &Attachment"
 msgstr[0] "附加檔案(&A)"
 
 #: editor/kmcomposerwin.cpp:2535
-#, fuzzy, kde-format
-#| msgid "Insert clipboard text as attachment"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
-msgstr "插入剪貼簿的文字成附件(&H)"
+msgstr "插入剪貼簿的文字成附件"
 
 #: editor/kmcomposerwin.cpp:2631
 #, kde-format
@@ -2688,6 +2633,8 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
+"<qt>找不到 %1 的有效與受信任的加密憑證。<br/> <br/>請選擇要對此收件者使用的憑"
+"證。若沒有適合的憑證，您可以點擊「搜尋外部憑證」按鈕。</qt>"
 
 #: editor/kmcomposerwin.cpp:4255
 #, kde-format
@@ -2973,15 +2920,13 @@ msgid "Create own vCard"
 msgstr "建立自己的 vCard"
 
 #: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
-#, fuzzy, kde-format
-#| msgid "&With empty fields"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "所有欄位空白(&W)"
 
 #: identity/identityaddvcarddialog.cpp:54
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "從現有的 vCard(&F)"
@@ -2993,8 +2938,7 @@ msgid "&vCard path:"
 msgstr "vCard 路徑(&V)："
 
 #: identity/identityaddvcarddialog.cpp:77
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "複製現有的 vCard(&D)"
@@ -3017,11 +2961,10 @@ msgid "Could not start OpenPGP certificate generation: %1"
 msgstr ""
 
 #: identity/identitydialog.cpp:247
-#, fuzzy, kde-format
-#| msgid "Generating new key pair…"
+#, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "產生金鑰對中…"
+msgstr "產生 OpenPGP 憑證中…"
 
 #: identity/identitydialog.cpp:249
 #, kde-format
@@ -3036,11 +2979,10 @@ msgid "Could not generate an OpenPGP certificate: %1"
 msgstr ""
 
 #: identity/identitydialog.cpp:272
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "取消刪除信件。"
+msgstr "取消產生金鑰。"
 
 #: identity/identitydialog.cpp:312
 #, kde-format
@@ -3048,14 +2990,12 @@ msgid "No key"
 msgstr "無金鑰"
 
 #: identity/identitydialog.cpp:314
-#, fuzzy, kde-format
-#| msgid "Generate a new key pair"
+#, kde-format
 msgid "Generate a new OpenPGP certificate"
-msgstr "產生新的金鑰對"
+msgstr "產生新的 OpenPGP 憑證"
 
 #: identity/identitydialog.cpp:329
-#, fuzzy, kde-format
-#| msgid "Key Generation Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "金鑰產生錯誤"
@@ -3170,8 +3110,7 @@ msgid "OpenPGP signing key:"
 msgstr "簽署用的 OpenPGP 金鑰："
 
 #: identity/identitydialog.cpp:471
-#, fuzzy, kde-format
-#| msgid "Use same key for encryption and signing"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "為加密和簽署使用同一個金鑰"
@@ -3260,8 +3199,7 @@ msgid "Autocrypt:"
 msgstr "Autocrypt："
 
 #: identity/identitydialog.cpp:579
-#, fuzzy, kde-format
-#| msgid "Let others know you prefer encryption"
+#, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "讓其他人知道您希望使用加密"
@@ -3278,29 +3216,25 @@ msgid "Overwrite defaults:"
 msgstr "覆寫預設值："
 
 #: identity/identitydialog.cpp:590
-#, fuzzy, kde-format
-#| msgid "Sign messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "簽署信件"
 
 #: identity/identitydialog.cpp:593
-#, fuzzy, kde-format
-#| msgid "Encrypt messages when possible"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "可能的話加密信件"
 
 #: identity/identitydialog.cpp:596
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unsigned messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "送出未簽署信件時提出警告"
 
 #: identity/identitydialog.cpp:599
-#, fuzzy, kde-format
-#| msgid "Warn when trying to send unencrypted messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "送出未加密信件時提出警告"
@@ -3384,8 +3318,7 @@ msgid "Select Send-mail Folder"
 msgstr "選擇寄件備份資料夾"
 
 #: identity/identitydialog.cpp:687
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "寄件備份(&F)："
@@ -3413,41 +3346,35 @@ msgid "&Templates folder:"
 msgstr "樣本資料夾(&T)："
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Select Draft Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "選擇草稿資料夾"
+msgstr "選擇垃圾信資料夾"
 
 #: identity/identitydialog.cpp:712
-#, fuzzy, kde-format
-#| msgid "Sent-mail &folder:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "寄件備份(&F)："
+msgstr "垃圾信資料夾(&F)："
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "將資料夾設為過期"
+msgstr "設定過期資料夾..."
 
 #: identity/identitydialog.cpp:726
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "外送帳號："
 
 #: identity/identitydialog.cpp:733
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "將我的 vCard 加入信件"
 
 #: identity/identitydialog.cpp:734
-#, fuzzy, kde-format
-#| msgid "Create…"
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "建立…"
@@ -3478,15 +3405,13 @@ msgid ""
 msgstr "<qt><p>預設域名是用來補齊所輸入的電子郵件地址。</p></qt>"
 
 #: identity/identitydialog.cpp:776
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
-msgstr "此身份使用自訂的信件樣本(&U)"
+msgstr "為此身份使用自訂的信件樣本(&U)"
 
 #: identity/identitydialog.cpp:790
-#, fuzzy, kde-format
-#| msgid "&Copy Global Templates"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "複製全域樣本(&C)"
@@ -3507,10 +3432,9 @@ msgid "Picture"
 msgstr "圖片"
 
 #: identity/identitydialog.cpp:816
-#, fuzzy, kde-format
-#| msgid "Plasma activities"
+#, kde-format
 msgid "Activities"
-msgstr "Plasma 活動"
+msgstr "活動"
 
 #: identity/identitydialog.cpp:867
 #, kde-format
@@ -3664,11 +3588,10 @@ msgid "Do Not Cancel"
 msgstr "不要取消"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "將資料夾設為過期"
+msgstr "將垃圾信資料夾設為過期"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -3694,29 +3617,25 @@ msgid "&Remove"
 msgstr "移除(&R)"
 
 #: identity/identityngpage.cpp:240
-#, fuzzy, kde-format
-#| msgid "Add…"
+#, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "新增…"
 
 #: identity/identityngpage.cpp:243
-#, fuzzy, kde-format
-#| msgid "Modify…"
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "修改…"
 
 #: identity/identityngpage.cpp:244
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "重新命名"
 
 #: identity/identityngpage.cpp:255
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "設成預設"
@@ -3734,15 +3653,13 @@ msgid "&New identity:"
 msgstr "新身份(&N)："
 
 #: identity/newidentitydialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "&Use System Settings values"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
 msgstr "使用系統設定值(&U)"
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing identity"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "複製現有身份(&D)"
@@ -3887,8 +3804,7 @@ msgid "Do Not Attach"
 msgstr "不要附加"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "刪除搜尋結果"
@@ -3909,8 +3825,7 @@ msgid "&Delete"
 msgstr "刪除(&D)"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "刪除資料夾"
@@ -3986,8 +3901,7 @@ msgid "Save File as"
 msgstr "另存新檔"
 
 #: kmail_options.h:16
-#, fuzzy, kde-format
-#| msgid "Set subject of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "設定信件主題"
@@ -4008,43 +3922,37 @@ msgid "Set replyTo to 'address'"
 msgstr "傳送「回覆位址」至 'address'"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message. This can be repeated"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "信件裡增加 'header'。這可以重複。"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Read message body from 'file'"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "從'file'讀取信件內文。"
 
 #: kmail_options.h:31
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
-msgstr "設定信件內文。"
+msgstr "設定信件內文"
 
 #: kmail_options.h:32
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "增加信件附件，這可以重複。"
 
 #: kmail_options.h:33
-#, fuzzy, kde-format
-#| msgid "Only check for new mail"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "只檢查新信件。"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Start minimized to tray"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "啟動時最小化至系統匣"
@@ -4062,18 +3970,16 @@ msgid "Set identity name"
 msgstr "設定身份名稱"
 
 #: kmail_options.h:37
-#, fuzzy, kde-format
-#| msgid "View the given message file"
+#, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "顯示指定的信件檔案"
 
 #: kmail_options.h:38
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "設定信件內文。"
+msgstr "設定信件內文為 HTML"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4450,21 +4356,16 @@ msgid "KMail Error"
 msgstr "KMail 錯誤"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr "無法啟動 PIM 資料匯出工具。請檢查安裝是否完整。"
+msgstr "無法啟動匯入精靈 \"ImportWizard\" 程式。請檢查安裝是否完整。"
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Unable to start ImportWizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "無法啟動匯入精靈"
+msgstr "無法啟動匯入精靈 \"ImportWizard\" 程式"
 
 #: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
 #, kde-format
@@ -5733,10 +5634,8 @@ msgid ""
 msgstr "KMail 現在是奠基於 Akonadi 個人資訊管理架構上，因此會有許多改變。"
 
 #: kmreaderwin.cpp:268
-#, fuzzy
-#| msgid "Added maildir support"
 msgid "Add Windows Support"
-msgstr "新增 maildir 支援"
+msgstr "新增 Windows 支援"
 
 #: kmreaderwin.cpp:269
 msgid "Add Custom Syntax usable in the search text field"
@@ -5747,11 +5646,8 @@ msgid "Adblock public used new rust adblock lib"
 msgstr ""
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "重新開啟已關閉的檢視器"
+msgstr "允許重新開啟已關閉的檢視器"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
