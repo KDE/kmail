@@ -707,7 +707,7 @@ bool KMKernel::isOffline()
     }
 }
 
-void KMKernel::verifyAccount()
+void KMKernel::verifyAccounts()
 {
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
@@ -730,11 +730,11 @@ void KMKernel::verifyAccount()
     }
 }
 
-void KMKernel::slotCheckAccount(Akonadi::ServerManager::State state)
+void KMKernel::slotCheckAccounts(Akonadi::ServerManager::State state)
 {
     if (state == Akonadi::ServerManager::Running) {
         disconnect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
-        verifyAccount();
+        verifyAccounts();
     }
 }
 
@@ -745,9 +745,9 @@ void KMKernel::checkMailOnStartup()
     }
 
     if (Akonadi::ServerManager::state() != Akonadi::ServerManager::Running) {
-        connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::slotCheckAccount);
+        connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::slotCheckAccounts);
     } else {
-        verifyAccount();
+        verifyAccounts();
     }
 }
 

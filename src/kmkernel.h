@@ -555,7 +555,7 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void slotSystemNetworkStatusChanged(bool isOnline);
     KMAIL_NO_EXPORT void slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set);
 
-    KMAIL_NO_EXPORT void slotCheckAccount(Akonadi::ServerManager::State state);
+    KMAIL_NO_EXPORT void slotCheckAccounts(Akonadi::ServerManager::State state);
 
 private:
     KMAIL_NO_EXPORT void viewMessage(const QUrl &url);
@@ -584,7 +584,7 @@ private:
                                       bool forceShowWindow,
                                       bool htmlBody);
 
-    KMAIL_NO_EXPORT void verifyAccount();
+    KMAIL_NO_EXPORT void verifyAccounts();
     KMAIL_NO_EXPORT void resourceGoOnLine();
     KMAIL_NO_EXPORT void openReader(bool onlyCheck, bool startInTray);
     KMAIL_NO_EXPORT QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
