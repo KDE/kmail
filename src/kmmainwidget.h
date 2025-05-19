@@ -617,7 +617,7 @@ private:
     KActionCollection *mActionCollection = nullptr;
     QAction *const mToolbarActionSeparator;
     QVBoxLayout *mTopLayout = nullptr;
-    bool mDestructed = false;
+    bool mDestructCalled = false;
     QList<QAction *> mFilterMenuActions;
     QList<QAction *> mFilterFolderMenuActions;
     QList<QAction *> mFilterFolderMenuRecursiveActions;

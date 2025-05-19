@@ -387,9 +387,11 @@ KMMainWidget::~KMMainWidget()
 // This method performs all cleanup that requires the kernel to exist.
 void KMMainWidget::destruct()
 {
-    if (mDestructed) {
+    if (mDestructCalled) {
         return;
     }
+    mDestructCalled = true;
+
     if (mSearchWinDlg) {
         mSearchWinDlg->close();
     }
@@ -409,8 +411,6 @@ void KMMainWidget::destruct()
     disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(collectionStatisticsChanged(Akonadi::Collection::Id,Akonadi::CollectionStatistics)), this, nullptr);
     // clang-format on
     disconnect(kmkernel->folderCollectionMonitor(), SIGNAL(itemRemoved(Akonadi::Item)), this, nullptr);
-
-    mDestructed = true;
 }
 
 void KMMainWidget::clearCurrentFolder()
