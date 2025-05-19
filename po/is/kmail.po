@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-19 00:43+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -6605,7 +6605,7 @@ msgstr ""
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, fuzzy, kde-format
 #| msgid "(c) 1997-2005, The KMail developers"
-msgid "(c) 2003-2024 The Kontact developers"
+msgid "© 2003-2025 The Kontact developers"
 msgstr "(c) 1997-2005, KMail teymið"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108

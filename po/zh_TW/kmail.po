@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-19 00:43+0000\n"
 "PO-Revision-Date: 2025-05-17 10:01+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -5852,8 +5852,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact 摘要檢視"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, kde-format
-msgid "(c) 2003-2024 The Kontact developers"
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2024 The Kontact developers"
+msgid "© 2003-2025 The Kontact developers"
 msgstr "(c) 2003-2024 Kontact 開發團隊"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-04-16 00:42+0000\n"
+"POT-Creation-Date: 2025-05-19 00:43+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -5991,8 +5991,9 @@ msgid "Kontact Summary View"
 msgstr "संपर्क सारांश दृश्य"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, kde-format
-msgid "(c) 2003-2024 The Kontact developers"
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2024 The Kontact developers"
+msgid "© 2003-2025 The Kontact developers"
 msgstr "(ग) २००३-२०२४ संपर्कविकासकाः"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
