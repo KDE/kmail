@@ -287,7 +287,6 @@ private:
     */
     [[nodiscard]] KMAIL_NO_EXPORT KSharedConfig::Ptr config();
 
-    KMAIL_NO_EXPORT void checkAkonadiServerManagerState();
     KMAIL_NO_EXPORT void updateHtmlMenuEntry();
 
     KMAIL_NO_EXPORT void updateMoveAction(const Akonadi::CollectionStatistics &statistic);
