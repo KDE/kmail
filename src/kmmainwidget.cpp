@@ -4207,7 +4207,7 @@ void KMMainWidget::slotShowStartupFolder()
     // Plug various action lists. This can't be done in the constructor, as that is called before
     // the main window or Kontact calls createGUI().
     // This function however is called with a single shot timer.
-    checkAkonadiServerManagerState();
+    slotServerStateChanged(Akonadi::ServerManager::self()->state());
     mFolderShortcutActionManager->createActions();
     mTagActionManager->createActions();
     messageActions()->setupForwardingActionsList(mGUIClient);
@@ -4220,21 +4220,13 @@ void KMMainWidget::slotShowStartupFolder()
     }
 }
 
-void KMMainWidget::checkAkonadiServerManagerState()
+void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
 {
-    Akonadi::ServerManager::State state = Akonadi::ServerManager::self()->state();
+    disconnect(Akonadi::ServerManager::self(), &ServerManager::stateChanged, this, &KMMainWidget::slotServerStateChanged);
     if (state == Akonadi::ServerManager::Running) {
         initializeFilterActions(true);
     } else {
         connect(Akonadi::ServerManager::self(), &ServerManager::stateChanged, this, &KMMainWidget::slotServerStateChanged);
-    }
-}
-
-void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
-{
-    if (state == Akonadi::ServerManager::Running) {
-        initializeFilterActions(true);
-        disconnect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
     }
 }
 
