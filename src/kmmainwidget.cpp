@@ -324,8 +324,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
             mLaunchExternalComponent->slotAccountWizard();
         }
     }
-    // must be the last line of the constructor:
-    mStartupDone = true;
 
     mCheckMailTimer.setInterval(3s);
     mCheckMailTimer.setSingleShot(true);
@@ -334,6 +332,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     setupUnifiedMailboxChecker();
     mCollectionSwitcherTreeViewManager->setParentWidget(this);
     connect(mCollectionSwitcherTreeViewManager, &CollectionSwitcherTreeViewManager::switchToFolder, this, &KMMainWidget::slotHistorySwitchFolder);
+
+    // must be the last line of the constructor:
+    mStartupDone = true;
 }
 
 QWidget *KMMainWidget::dkimWidgetInfo() const
