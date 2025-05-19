@@ -19,5 +19,5 @@ public:
     [[nodiscard]] QVariant data() override;
 
 private:
-    KMAIL_NO_EXPORT void updateAccountInfo(const QString &resourceName, int numberOfResource, QVariantList &l);
+    KMAIL_NO_EXPORT void updateAccountInfo(const QString &resourceName, int count, QVariantList &l);
 };

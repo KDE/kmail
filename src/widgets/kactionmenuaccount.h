@@ -35,7 +35,7 @@ public:
     explicit KActionMenuAccount(QObject *parent = nullptr);
     ~KActionMenuAccount() override;
 
-    void setAccountOrder(const QStringList &identifier);
+    void setAccountsOrder(const QStringList &orderedAccountIdentifiers);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     void setAccountActivitiesAbstract(AccountActivities *activities);
 #endif
@@ -45,7 +45,7 @@ private:
     void slotSelectAccount(QAction *act);
     void forceUpdateAccountMenu();
 
-    QStringList mOrderIdentifier;
+    QStringList mOrderedAccountIdentifiers;
     bool mInitialized = false;
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     AccountActivities *mAccountActivities = nullptr;

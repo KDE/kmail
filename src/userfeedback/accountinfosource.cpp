@@ -29,11 +29,11 @@ QString AccountInfoSource::description() const
     return i18n("Number and type of accounts configured in KMail (receiver and sender).");
 }
 
-void AccountInfoSource::updateAccountInfo(const QString &resourceName, int numberOfResource, QVariantList &l)
+void AccountInfoSource::updateAccountInfo(const QString &resourceName, int count, QVariantList &l)
 {
     QVariantMap m;
     m.insert(QStringLiteral("name"), resourceName);
-    m.insert(QStringLiteral("number"), numberOfResource);
+    m.insert(QStringLiteral("number"), count);
     l.push_back(m);
 }
 

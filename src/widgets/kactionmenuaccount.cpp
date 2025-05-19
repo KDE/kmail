@@ -34,10 +34,10 @@ void KActionMenuAccount::setAccountActivitiesAbstract(AccountActivities *activit
 }
 #endif
 
-void KActionMenuAccount::setAccountOrder(const QStringList &identifier)
+void KActionMenuAccount::setAccountsOrder(const QStringList &orderedAccountIdentifiers)
 {
-    if (mOrderIdentifier != identifier) {
-        mOrderIdentifier = identifier;
+    if (mOrderedAccountIdentifiers != orderedAccountIdentifiers) {
+        mOrderedAccountIdentifiers = orderedAccountIdentifiers;
         mInitialized = false;
     }
 }
@@ -106,13 +106,13 @@ void KActionMenuAccount::updateAccountMenu()
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
             const QString identifierName = type.identifier();
-            const int index = mOrderIdentifier.indexOf(identifierName);
+            const int index = mOrderedAccountIdentifiers.indexOf(identifierName);
             const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), index);
             agentIdentifierList << id;
         }
         std::sort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
-        const int numberOfAccount(agentIdentifierList.size());
-        for (int i = 0; i < numberOfAccount; ++i) {
+        const int numberOfAccounts(agentIdentifierList.size());
+        for (int i = 0; i < numberOfAccounts; ++i) {
             const AgentIdentifier id = agentIdentifierList.at(i);
             QAction *action = menu()->addAction(id.mName);
             action->setData(id.mIdentifier);
