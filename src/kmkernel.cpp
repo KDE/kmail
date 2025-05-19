@@ -299,13 +299,13 @@ void KMKernel::checkMail() // might create a new reader but won't show!!
 
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
-    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    for (Akonadi::AgentInstance type : lst) {
-        const QString id = type.identifier();
+    Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    for (Akonadi::AgentInstance &agent : lst) {
+        const QString id = agent.identifier();
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(id));
         if (group.readEntry("IncludeInManualChecks", true)) {
-            if (!type.isOnline()) {
-                type.setIsOnline(true);
+            if (!agent.isOnline()) {
+                agent.setIsOnline(true);
             }
             if (mResourcesBeingChecked.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Starting manual mail check";
@@ -315,7 +315,7 @@ void KMKernel::checkMail() // might create a new reader but won't show!!
             if (!mResourcesBeingChecked.contains(id)) {
                 mResourcesBeingChecked.append(id);
             }
-            type.synchronize();
+            agent.synchronize();
         }
     }
 }
@@ -640,12 +640,12 @@ void KMKernel::stopNetworkJobs()
 
 void KMKernel::setAccountStatus(bool goOnline)
 {
-    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
-    for (Akonadi::AgentInstance type : lst) {
-        const QString identifier(type.identifier());
+    Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
+    for (Akonadi::AgentInstance &agent : lst) {
+        const QString identifier(agent.identifier());
         if (PimCommon::Util::isImapResource(identifier) || identifier.contains(POP3_RESOURCE_IDENTIFIER)
-            || identifier.contains("akonadi_maildispatcher_agent"_L1) || type.type().capabilities().contains("NeedsNetwork"_L1)) {
-            type.setIsOnline(goOnline);
+            || identifier.contains("akonadi_maildispatcher_agent"_L1) || agent.type().capabilities().contains("NeedsNetwork"_L1)) {
+            agent.setIsOnline(goOnline);
         }
     }
     if (goOnline && MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
@@ -711,20 +711,20 @@ void KMKernel::verifyAccount()
 {
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
-    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    for (Akonadi::AgentInstance type : lst) {
-        KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(type.identifier()));
+    Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    for (Akonadi::AgentInstance &agent : lst) {
+        KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(agent.identifier()));
         if (group.readEntry("CheckOnStartup", false)) {
-            if (!type.isOnline()) {
-                type.setIsOnline(true);
+            if (!agent.isOnline()) {
+                agent.setIsOnline(true);
             }
-            type.synchronize();
+            agent.synchronize();
         }
 
         // "false" is also hardcoded in ConfigureDialog, don't forget to change there.
         if (group.readEntry("OfflineOnShutdown", false)) {
-            if (!type.isOnline()) {
-                type.setIsOnline(true);
+            if (!agent.isOnline()) {
+                agent.setIsOnline(true);
             }
         }
     }
@@ -1621,14 +1621,14 @@ void KMKernel::stopAgentInstance()
 {
     const QString resourceGroupPattern(QStringLiteral("Resource %1"));
 
-    const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
-    for (Akonadi::AgentInstance type : lst) {
-        const QString identifier = type.identifier();
+    Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+    for (Akonadi::AgentInstance &agent : lst) {
+        const QString identifier = agent.identifier();
         KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
 
         // Keep sync in ConfigureDialog, don't forget to change there.
         if (group.readEntry("OfflineOnShutdown", identifier.startsWith("akonadi_pop3_resource"_L1) ? true : false)) {
-            type.setIsOnline(false);
+            agent.setIsOnline(false);
         }
     }
 }
