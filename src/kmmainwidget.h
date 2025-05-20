@@ -322,6 +322,9 @@ private:
      */
     KMAIL_NO_EXPORT void setCurrentThreadStatus(Akonadi::MessageStatus status, bool toggle);
 
+    KMAIL_NO_EXPORT void waitForAgentsForFilters();
+    KMAIL_NO_EXPORT void stopWaitingForAgentsForFilters(bool completed);
+
     KMAIL_NO_EXPORT void applyFilters(const Akonadi::Item::List &selectedMessages);
     KMAIL_NO_EXPORT void applyFilters(const Akonadi::Collection::List &selectedCols);
     KMAIL_NO_EXPORT void applyFilter(const Akonadi::Collection::List &selectedCols, const QString &filter);
@@ -622,6 +625,9 @@ private:
     QList<QAction *> mFilterFolderMenuRecursiveActions;
     QList<QAction *> mFilterTBarActions;
     QList<KMMetaFilterActionCommand *> mFilterCommands;
+    QSet<QString> mMissingAgentIdsForFilters;
+    QMetaObject::Connection mWatchAgentIdsForFiltersConnection;
+    QTimer *mWatchAgentIdsForFiltersTimeout = nullptr;
 
     KMail::TagActionManager *mTagActionManager = nullptr;
     KMail::FolderShortcutActionManager *mFolderShortcutActionManager = nullptr;

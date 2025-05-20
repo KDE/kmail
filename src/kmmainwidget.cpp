@@ -4201,9 +4201,6 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
-    connect(MailCommon::FilterManager::instance(), &FilterManager::filtersChanged, this, [this]() {
-        initializeFilterActions(true);
-    });
     // Plug various action lists. This can't be done in the constructor, as that is called before
     // the main window or Kontact calls createGUI().
     // This function however is called with a single shot timer.
@@ -4220,13 +4217,84 @@ void KMMainWidget::slotShowStartupFolder()
     }
 }
 
+void KMMainWidget::waitForAgentsForFilters()
+{
+    // Extremely condensed parsing of filter configs just to get the accounts that they require
+    KSharedConfig::Ptr config =
+        KSharedConfig::openConfig(Akonadi::ServerManager::addNamespace(QStringLiteral("akonadi_mailfilter_agent")) + QStringLiteral("rc"));
+
+    const int numFilters = config->group(QStringLiteral("General")).readEntry("filters", 0);
+    for (int i = 0; i < numFilters; ++i) {
+        const KConfigGroup group = config->group(QStringLiteral("Filter #%1").arg(i));
+        for (const QString &accountId : group.readEntry("accounts-set", QStringList())) {
+            mMissingAgentIdsForFilters.insert(accountId); // agent ID, account ID... they are the same here
+        }
+    }
+
+    // Take into account any agents that are already running - usually all of them, but it's timing dependent.
+    // If not all of them are running, that is where bug #323455 occurred: "filter account is missing" error dialog(s)
+    // that did not offer the correct account(s) for selection and always permanently deleted(!) affected filters anyway.
+    Akonadi::AgentManager *agentManager = Akonadi::AgentManager::self();
+    const AgentInstance::List agentInstances = agentManager->instances();
+    for (const AgentInstance &instance : agentInstances) {
+        mMissingAgentIdsForFilters.remove(instance.identifier());
+    }
+
+    // Seeing them all already? Start doing filter things. If not, watch for more appearing and start doing
+    // filter things as soon as the agents are complete.
+    if (mMissingAgentIdsForFilters.isEmpty()) {
+        stopWaitingForAgentsForFilters(true);
+    } else {
+        // ### Not watching agentRemoved: shouldn't happen during startup, and if it does, it's either a faulty agent
+        // that shouldn't delay startup anwyay, or Akonadi is really shutting down, in which case probably lots of
+        // things will stop working, so don't care.
+        mWatchAgentIdsForFiltersConnection = connect(agentManager, &Akonadi::AgentManager::instanceAdded, this, [this](const Akonadi::AgentInstance &instance) {
+            mMissingAgentIdsForFilters.remove(instance.identifier());
+            if (mMissingAgentIdsForFilters.isEmpty()) {
+                stopWaitingForAgentsForFilters(true);
+            }
+        });
+
+        // Don't prevent normal operation indefinitely because of a faulty resource
+        if (!mWatchAgentIdsForFiltersTimeout) {
+            mWatchAgentIdsForFiltersTimeout = new QTimer(this);
+            connect(mWatchAgentIdsForFiltersTimeout, &QTimer::timeout, this, [this]() {
+                qCWarning(KMAIL_LOG) << "Waiting for agents for filters timed out, loading filters anyway. Missing agents:" << mMissingAgentIdsForFilters;
+                stopWaitingForAgentsForFilters(true); // completed with errors, more waiting probably wouldn't help
+            });
+        }
+        mWatchAgentIdsForFiltersTimeout->start(30000);
+    }
+}
+
+void KMMainWidget::stopWaitingForAgentsForFilters(bool completed)
+{
+    mMissingAgentIdsForFilters.clear();
+
+    disconnect(mWatchAgentIdsForFiltersConnection);
+    if (mWatchAgentIdsForFiltersTimeout) {
+        mWatchAgentIdsForFiltersTimeout->stop();
+    }
+
+    if (completed) {
+        initializeFilterActions(true);
+        // Note that calling FilterManager::instance() already loads the filters and will show an error dialog
+        // in case the corresponding accounts / agents don't exist (yet), so instance() calls must be well considered.
+        disconnect(MailCommon::FilterManager::instance(), &FilterManager::filtersChanged, this, nullptr);
+        connect(MailCommon::FilterManager::instance(), &FilterManager::filtersChanged, this, [this]() {
+            initializeFilterActions(true);
+        });
+    }
+}
+
 void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
 {
     disconnect(Akonadi::ServerManager::self(), &ServerManager::stateChanged, this, &KMMainWidget::slotServerStateChanged);
     if (state == Akonadi::ServerManager::Running) {
-        initializeFilterActions(true);
+        waitForAgentsForFilters();
     } else {
         connect(Akonadi::ServerManager::self(), &ServerManager::stateChanged, this, &KMMainWidget::slotServerStateChanged);
+        stopWaitingForAgentsForFilters(false);
     }
 }
 
