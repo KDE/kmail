@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-20 00:43+0000\n"
-"PO-Revision-Date: 2025-03-22 16:38+0100\n"
+"PO-Revision-Date: 2025-05-20 19:27+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -6100,10 +6100,9 @@ msgid "Kontact Summary View"
 msgstr "Обобщен изглед на Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003-2024 The Kontact developers"
+msgstr "© 2003-2025 Разработчиците на Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format

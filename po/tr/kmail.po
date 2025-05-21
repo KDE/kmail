@@ -18,15 +18,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-20 00:43+0000\n"
-"PO-Revision-Date: 2025-03-20 15:31+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2025-05-20 22:07+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.04.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6059,10 +6059,9 @@ msgid "Kontact Summary View"
 msgstr "Kontak Özet Görünümü"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "© 2003–2024 Kontak geliştiricileri"
+msgstr "© 2003–2025 Kontak geliştiricileri"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
