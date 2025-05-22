@@ -321,8 +321,9 @@ void FilterManager::readConfig()
             auto it = std::max_element(d->mFilters.constBegin(), d->mFilters.constEnd(), [id](MailCommon::MailFilter *lhs, MailCommon::MailFilter *rhs) {
                 return lhs->requiredPart(id) < rhs->requiredPart(id);
             });
-            d->mRequiredParts[id] = (*it)->requiredPart(id);
-            d->mRequiredPartsBasedOnAll = qMax(d->mRequiredPartsBasedOnAll, d->mRequiredParts[id]);
+            const SearchRule::RequiredPart rp = (*it)->requiredPart(id);
+            d->mRequiredParts.insert(id, rp);
+            d->mRequiredPartsBasedOnAll = qMax(d->mRequiredPartsBasedOnAll, rp);
         }
     }
     // check if at least one filter is to be applied on inbound mail
@@ -571,7 +572,8 @@ MailCommon::SearchRule::RequiredPart FilterManager::requiredPart(const QString &
     if (id.isEmpty()) {
         return d->mRequiredPartsBasedOnAll;
     }
-    return d->mRequiredParts.contains(id) ? d->mRequiredParts[id] : SearchRule::Envelope;
+    auto it = d->mRequiredParts.constFind(id);
+    return it != d->mRequiredParts.cend() ? it.value() : SearchRule::Envelope;
 }
 
 void FilterManager::dump() const

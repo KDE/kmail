@@ -292,13 +292,13 @@ void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantH
 {
     QVariantHash data = _data;
     if (!data.contains(QStringLiteral("icon"))) {
-        data[QStringLiteral("icon")] = QStringLiteral("kmail");
+        data.insert(QStringLiteral("icon"), QStringLiteral("kmail"));
     }
     if (!data.contains(QStringLiteral("name"))) {
-        data[QStringLiteral("name")] = i18n("KMail");
+        data.insert(QStringLiteral("name"), i18n("KMail"));
     }
     if (!data.contains(QStringLiteral("subtitle"))) {
-        data[QStringLiteral("subtitle")] = i18n("The KDE Mail Client");
+        data.insert(QStringLiteral("subtitle"), i18n("The KDE Mail Client"));
     }
 
     mViewer->displaySplashPage(templateName, data, QByteArrayLiteral("kmail"));
