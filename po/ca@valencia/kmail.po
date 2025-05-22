@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-20 00:43+0000\n"
-"PO-Revision-Date: 2025-03-20 09:17+0100\n"
+"PO-Revision-Date: 2025-05-19 13:26+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -2378,7 +2378,7 @@ msgid ""
 "in the identity configuration.</p></qt>"
 msgstr ""
 "<qt> <p>Per a poder signar este missatge primer haureu de definir la clau de "
-"signatura que s'utilitzarà (OpenPGP o S/MIME).</p><p>Escolliu la clau que "
+"signatura que s'utilitzarà (OpenPGP o S/MIME).</p><p>Trieu la clau que "
 "s'utilitzarà en la configuració de la identitat.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2664
@@ -2629,7 +2629,7 @@ msgid ""
 msgstr ""
 "La clau d'encriptació no és fiable. No té prou validesa. Podeu signar la "
 "clau, si comuniqueu l'empremta digital per un altre canal. Per a més "
-"detalls, feu clic damunt de la icona."
+"detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3854
 #, kde-format
@@ -2643,7 +2643,7 @@ msgstr ""
 "La clau d'encriptació no és fiable. No s'ha utilitzat enlloc per a garantir "
 "que pertany a la persona establida. Utilitzant la clau serà més fiable. O "
 "podeu signar la clau, si comuniqueu l'empremta digital per un altre canal. "
-"Per a més detalls, feu clic damunt de la icona."
+"Per a més detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3862
 #, kde-format
@@ -2653,7 +2653,7 @@ msgid ""
 "icon for details."
 msgstr ""
 "La clau d'encriptació no és fiable. Té dades TOFU conflictives. Per a més "
-"detalls, feu clic damunt de la icona."
+"detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3868
 #, kde-format
@@ -2663,7 +2663,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 "La clau d'encriptació no és fiable. Té una validesa desconeguda en les dades "
-"TOFU. Per a més detalls, feu clic damunt de la icona."
+"TOFU. Per a més detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3874
 #, kde-format
@@ -2673,7 +2673,7 @@ msgid ""
 "for details."
 msgstr ""
 "La clau d'encriptació no és fiable. La clau està marcada com a roïna. Per a "
-"més detalls, feu clic damunt de la icona."
+"més detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3882
 #, kde-format
@@ -2687,7 +2687,7 @@ msgstr ""
 "La clau d'encriptació només és fiable marginalment i no s'ha utilitzat prou "
 "temps per a garantir que pertany a la persona establida. Utilitzant la clau "
 "serà més fiable. O podeu signar la clau, si comuniqueu l'empremta digital "
-"per un altre canal. Per a més detalls, feu clic damunt de la icona."
+"per un altre canal. Per a més detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3890
 #, kde-format
@@ -2697,8 +2697,8 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 "La clau d'encriptació només és fiable marginalment. Podeu signar la clau, si "
-"comuniqueu l'empremta digital per un altre canal. Per a més detalls, feu "
-"clic damunt de la icona."
+"comuniqueu l'empremta digital per un altre canal. Per a més detalls, cliqueu "
+"damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3896
 #, kde-format
@@ -2712,7 +2712,7 @@ msgstr ""
 "La clau d'encriptació només és fiable marginalment, però s'ha utilitzat prou "
 "vegades per a ser molt possible que la controle la persona establida. "
 "Utilitzant la clau serà més fiable. O podeu signar la clau, si comuniqueu "
-"l'empremta digital per un altre canal. Per a més detalls, feu clic damunt de "
+"l'empremta digital per un altre canal. Per a més detalls, cliqueu damunt de "
 "la icona."
 
 #: editor/kmcomposerwin.cpp:3904
@@ -2723,7 +2723,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 "La clau d'encriptació és completament fiable. Podeu elevar el nivell de "
-"seguretat signant la clau. Per a més detalls, feu clic damunt de la icona."
+"seguretat signant la clau. Per a més detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:3909
 #, kde-format
@@ -2733,7 +2733,7 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 "La clau d'encriptació és totalment fiable o està signada per una altra clau "
-"de fiabilitat total. Per a més detalls, feu clic damunt de la icona."
+"de fiabilitat total. Per a més detalls, cliqueu damunt de la icona."
 
 #: editor/kmcomposerwin.cpp:4026
 #, kde-format
@@ -2755,7 +2755,7 @@ msgstr ""
 "<qt>No s'ha trobat cap certificat d'encriptació vàlid i de confiança per a "
 "«%1».<br/> <br/>Seleccioneu els certificats que s'haurien d'utilitzar per a "
 "este destinatari. Si no hi ha cap certificat adequat en la llista, també "
-"podreu buscar certificats externs clicant en el botó: busca certificats "
+"podreu buscar certificats externs clicant damunt del botó: busca certificats "
 "externs.</qt>"
 
 #: editor/kmcomposerwin.cpp:4255
@@ -3306,7 +3306,7 @@ msgid ""
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
-"<qt><p>El certificat S/MIME (X.509) que escolliu serà l'emprat per a signar "
+"<qt><p>El certificat S/MIME (X.509) que trieu serà l'emprat per a signar "
 "digitalment els missatges.</p><p>Podeu deixar este camp en blanc, però KMail "
 "no serà capaç de signar digitalment correus electrònics utilitzant S/MIME. "
 "Les funcions normals del correu no se'n veuran afectades.</p></qt>"
@@ -6115,10 +6115,9 @@ msgid "Kontact Summary View"
 msgstr "Visualitza el resum de Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(C) 2003-2024, els desenvolupadors de Kontact"
+msgstr "© 2003-2025 The Kontact developers"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
