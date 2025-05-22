@@ -1513,7 +1513,7 @@ KMCommand::Result KMMoveCommand::execute()
             Akonadi::Collection parent;
             int undoId = -1;
             for (const Akonadi::Item &item : std::as_const(retrievedList)) {
-                if (item.storageCollectionId() <= 0) {
+                if (!item.isValid() || item.storageCollectionId() == -1) {
                     continue;
                 }
                 if (parent.id() != item.storageCollectionId()) {
@@ -1639,7 +1639,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
             Akonadi::Collection parent;
             int undoId = -1;
             for (const Akonadi::Item &item : std::as_const(*trashIt)) {
-                if (item.storageCollectionId() <= 0) {
+                if (!item.isValid() || item.storageCollectionId() == -1) {
                     continue;
                 }
                 if (parent.id() != item.storageCollectionId()) {
