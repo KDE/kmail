@@ -75,8 +75,9 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
     }
 
     QList<MailFilter *> listMailFilters;
-    if (q->sender()->property("listFilters").isValid()) {
-        const QStringList listFilters = q->sender()->property("listFilters").toStringList();
+    const QVariant listFiltersProp = q->sender()->property("listFilters");
+    if (listFiltersProp.isValid()) {
+        const QStringList listFilters = listFiltersProp.toStringList();
         for (const QString &filterId : listFilters) {
             for (MailCommon::MailFilter *filter : std::as_const(mFilters)) {
                 if (filter->identifier() == filterId) {
@@ -602,7 +603,9 @@ void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMess
     }
 
     itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    itemFetchJob->setProperty("listFilters", QVariant::fromValue(listFilters));
+    if (!listFilters.isEmpty()) {
+        itemFetchJob->setProperty("listFilters", QVariant::fromValue(listFilters));
+    }
     itemFetchJob->setProperty("filterSet", QVariant::fromValue(static_cast<int>(filterSet)));
     itemFetchJob->setProperty("needsFullPayload", requiredPart != SearchRule::Envelope);
 
@@ -616,30 +619,7 @@ void FilterManager::applySpecificFilters(const Akonadi::Item::List &selectedMess
 
 void FilterManager::applyFilters(const Akonadi::Item::List &selectedMessages, FilterSet filterSet)
 {
-    Q_EMIT progressMessage(i18n("Filtering messages"));
-    d->mTotalProgressCount = selectedMessages.size();
-    d->mCurrentProgressCount = 0;
-
-    auto itemFetchJob = new Akonadi::ItemFetchJob(selectedMessages, this);
-    SearchRule::RequiredPart requiredParts = requiredPart(QString());
-    if (requiredParts == SearchRule::CompleteMessage) {
-        itemFetchJob->fetchScope().fetchFullPayload(true);
-    } else if (requiredParts == SearchRule::Header) {
-        itemFetchJob->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header, true);
-    } else {
-        itemFetchJob->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Envelope, true);
-    }
-
-    itemFetchJob->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    itemFetchJob->setProperty("filterSet", QVariant::fromValue(static_cast<int>(filterSet)));
-    itemFetchJob->setProperty("needsFullPayload", requiredParts != SearchRule::Envelope);
-
-    connect(itemFetchJob, &Akonadi::ItemFetchJob::itemsReceived, this, [this](const Akonadi::Item::List &lst) {
-        d->slotItemsFetchedForFilter(lst);
-    });
-    connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, [this](KJob *job) {
-        d->itemsFetchJobForFilterDone(job);
-    });
+    applySpecificFilters(selectedMessages, requiredPart(QString()), QStringList(), filterSet);
 }
 
 bool FilterManager::hasAllFoldersFilter() const
