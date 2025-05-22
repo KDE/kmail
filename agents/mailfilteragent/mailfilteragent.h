@@ -59,7 +59,7 @@ private:
     void mailCollectionRemoved(const Akonadi::Collection &collection);
     void emitProgress(int percent = 0);
     void emitProgressMessage(const QString &message);
-    void itemsReceiviedForFiltering(const Akonadi::Item::List &items);
+    void itemsReceivedForFiltering(const Akonadi::Item::List &items);
     void clearMessage();
     void slotInstanceRemoved(const Akonadi::AgentInstance &instance);
     void slotItemChanged(const Akonadi::Item &item);

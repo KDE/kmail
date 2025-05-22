@@ -206,7 +206,7 @@ void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Colle
     MailCommon::SearchRule::RequiredPart requiredPart = mFilterManager->requiredPart(collection.resource());
 
     auto job = new Akonadi::ItemFetchJob(item);
-    connect(job, &Akonadi::ItemFetchJob::itemsReceived, this, &MailFilterAgent::itemsReceiviedForFiltering);
+    connect(job, &Akonadi::ItemFetchJob::itemsReceived, this, &MailFilterAgent::itemsReceivedForFiltering);
     if (requiredPart == MailCommon::SearchRule::CompleteMessage) {
         job->fetchScope().fetchFullPayload();
     } else if (requiredPart == MailCommon::SearchRule::Header) {
@@ -221,7 +221,7 @@ void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Colle
     // TODO: Error handling?
 }
 
-void MailFilterAgent::itemsReceiviedForFiltering(const Akonadi::Item::List &items)
+void MailFilterAgent::itemsReceivedForFiltering(const Akonadi::Item::List &items)
 {
     if (items.isEmpty()) {
         qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemsReceiviedForFiltering items is empty!";
