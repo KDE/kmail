@@ -5849,7 +5849,7 @@ msgstr "Kontact 摘要视图"
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr ""
+msgstr "© 2003-2025 The Kontact developers"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
