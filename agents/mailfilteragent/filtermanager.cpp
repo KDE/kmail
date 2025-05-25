@@ -310,7 +310,7 @@ void FilterManager::readConfig()
     clear();
 
     QStringList emptyFilters;
-    d->mFilters = FilterImporterExporter::readFiltersFromConfig(config, emptyFilters);
+    d->mFilters = FilterImporterExporter::readFiltersFromConfig(config, false /*interactive*/, emptyFilters);
     d->mRequiredParts.clear();
 
     d->mRequiredPartsBasedOnAll = SearchRule::Envelope;
