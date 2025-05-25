@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-05-25 00:43+0000\n"
 "PO-Revision-Date: 2024-08-03 00:09+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -135,42 +135,42 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "«KMail»en errorea"
 
-#: filtermanager.cpp:100
+#: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 / %2 mezua iragazten"
 
-#: filtermanager.cpp:187
+#: filtermanager.cpp:188
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Errorea «mugitu» posta iragazkia ezartzean"
 
-#: filtermanager.cpp:195
+#: filtermanager.cpp:196
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Errorea «ezabatu» posta iragazkia ezartzean"
 
-#: filtermanager.cpp:203
+#: filtermanager.cpp:204
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Errorea «aldaketak» posta iragazkia ezartzean"
 
-#: filtermanager.cpp:220
+#: filtermanager.cpp:221
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Iragazki arauak ebaluatzea:</b>"
 
-#: filtermanager.cpp:227
+#: filtermanager.cpp:228
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Iragazki arauak bat etorri dira.</b>"
 
-#: filtermanager.cpp:255
+#: filtermanager.cpp:256
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Hasi «%1» mezuan «%2»(e)tik «%3»(e)an iragazten :</b>"
 
-#: filtermanager.cpp:589 filtermanager.cpp:617
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Mezuak iragazten"

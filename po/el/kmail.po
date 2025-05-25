@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-20 00:43+0000\n"
+"POT-Creation-Date: 2025-05-25 00:43+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4887,7 +4887,7 @@ msgstr ""
 "αυξήσει την πιθανότητα άλωσης του συστήματός σας μέσω των τωρινών και "
 "μελλοντικών προβλημάτων ασφαλείας."
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4889
+#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4881
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5839,22 +5839,22 @@ msgstr "Ά&δειασμα απορριμμάτων"
 msgid "&Move All Messages to Trash"
 msgstr "&Μετακίνηση όλων των μηνυμάτων στα απορρίμματα"
 
-#: kmmainwidget.cpp:4254
+#: kmmainwidget.cpp:4246
 #, kde-format
 msgid "&Undo"
 msgstr "Α&ναίρεση"
 
-#: kmmainwidget.cpp:4256
+#: kmmainwidget.cpp:4248
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Α&ναίρεση: «%1»"
 
-#: kmmainwidget.cpp:4313
+#: kmmainwidget.cpp:4305
 #, kde-format
 msgid "Filter %1"
 msgstr "Φίλτρο %1"
 
-#: kmmainwidget.cpp:4878
+#: kmmainwidget.cpp:4870
 #, fuzzy, kde-format
 #| msgctxt "Show shortcut for focus quick search. Don't change it"
 #| msgid "Search...<%1>"
@@ -5862,7 +5862,7 @@ msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Αναζήτηση...<%1>"
 
-#: kmmainwidget.cpp:4886
+#: kmmainwidget.cpp:4878
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5873,13 +5873,13 @@ msgstr ""
 "\"spam\" (διαφημιστικά κλπ) και ίσως αυξήσει την πιθανότητα άλωσης του "
 "συστήματός σας μέσω των τωρινών και μελλοντικών προβλημάτων ασφαλείας."
 
-#: kmmainwidget.cpp:4890
+#: kmmainwidget.cpp:4882
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Χρήση HTML"
 
-#: kmmainwidget.cpp:5036
+#: kmmainwidget.cpp:5028
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5889,44 +5889,44 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5039
+#: kmmainwidget.cpp:5031
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5040
+#: kmmainwidget.cpp:5032
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Διαμόρφωση του KMail..."
 
-#: kmmainwidget.cpp:5041
+#: kmmainwidget.cpp:5033
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Ακύρωση"
 
-#: kmmainwidget.cpp:5076
+#: kmmainwidget.cpp:5068
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Επιθυμείτε την αφαίρεση της ετικέτας «%1»;"
 
-#: kmmainwidget.cpp:5077
+#: kmmainwidget.cpp:5069
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Όνομα ταυτότητας"
 
-#: kmmainwidget.cpp:5078
+#: kmmainwidget.cpp:5070
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Επανεκκίνηση"
 
-#: kmmainwidget.cpp:5085
+#: kmmainwidget.cpp:5077
 #, fuzzy, kde-format
 #| msgid "Akonadi Id:"
 msgid "Akonadi restarted."

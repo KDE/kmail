@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-05-25 00:43+0000\n"
 "PO-Revision-Date: 2019-12-18 18:36+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -141,43 +141,43 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMaili tõrge"
 
-#: filtermanager.cpp:100
+#: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1. kirja filtreerimine (kokku %2)"
 
-#: filtermanager.cpp:187
+#: filtermanager.cpp:188
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Tõrge kirja liigutava filtri rakendamisel"
 
-#: filtermanager.cpp:195
+#: filtermanager.cpp:196
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Tõrge kirja kustutava filtri rakendamisel"
 
-#: filtermanager.cpp:203
+#: filtermanager.cpp:204
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Tõrge kirja muutva filtri rakendamisel"
 
-#: filtermanager.cpp:220
+#: filtermanager.cpp:221
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Filtri reeglite hindamine:</b>"
 
-#: filtermanager.cpp:227
+#: filtermanager.cpp:228
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Filtri reeglid sobivad.</b>"
 
-#: filtermanager.cpp:255
+#: filtermanager.cpp:256
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
 "<b>Filtreerimist alustatakse kirjast \"%1\" saatjalt \"%2\" \"%3\":</b>"
 
-#: filtermanager.cpp:589 filtermanager.cpp:617
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Kirjade filtreerimine"

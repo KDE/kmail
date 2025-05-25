@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-05-25 00:43+0000\n"
 "PO-Revision-Date: 2024-07-31 22:23+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -136,42 +136,42 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Errore di KMail"
 
-#: filtermanager.cpp:100
+#: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtraggio messaggio %1 di %2"
 
-#: filtermanager.cpp:187
+#: filtermanager.cpp:188
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Errore applicando uno filtro di spostamento"
 
-#: filtermanager.cpp:195
+#: filtermanager.cpp:196
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Errore applicando uno filtro di eliminazione"
 
-#: filtermanager.cpp:203
+#: filtermanager.cpp:204
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Errore applicando un filtro di modifica"
 
-#: filtermanager.cpp:220
+#: filtermanager.cpp:221
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Esecuzione regole di filtro:</b> "
 
-#: filtermanager.cpp:227
+#: filtermanager.cpp:228
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Regole di filtro corrispondenti.</b>"
 
-#: filtermanager.cpp:255
+#: filtermanager.cpp:256
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Inizio del filtraggio del messaggio «%1» da «%2» a «%3»:</b>"
 
-#: filtermanager.cpp:589 filtermanager.cpp:617
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtraggio dei messaggi"

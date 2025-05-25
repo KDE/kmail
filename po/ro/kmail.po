@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-20 00:43+0000\n"
+"POT-Creation-Date: 2025-05-25 00:43+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -5084,7 +5084,7 @@ msgstr ""
 "dumneavoastră să fie compromis de exploatări ale slăbiciunilor de securitate "
 "prezente și anticipate."
 
-#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4889
+#: kmmainwidget.cpp:1593 kmmainwidget.cpp:4881
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -6124,29 +6124,29 @@ msgstr "&Golește gunoiul"
 msgid "&Move All Messages to Trash"
 msgstr "&Mută toate mesajele la gunoi"
 
-#: kmmainwidget.cpp:4254
+#: kmmainwidget.cpp:4246
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4256
+#: kmmainwidget.cpp:4248
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4313
+#: kmmainwidget.cpp:4305
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtrul %1"
 
-#: kmmainwidget.cpp:4878
+#: kmmainwidget.cpp:4870
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Pornire..."
 
-#: kmmainwidget.cpp:4886
+#: kmmainwidget.cpp:4878
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6157,14 +6157,14 @@ msgstr ""
 "poate crește posibilitatea ca sistemul dumneavoastră să fie compromis de "
 "exploatări ale slăbiciunilor de securitate prezente și anticipate."
 
-#: kmmainwidget.cpp:4890
+#: kmmainwidget.cpp:4882
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Folosește HTML"
 
-#: kmmainwidget.cpp:5036
+#: kmmainwidget.cpp:5028
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6174,46 +6174,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5039
+#: kmmainwidget.cpp:5031
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5040
+#: kmmainwidget.cpp:5032
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Configurare KMail..."
 
-#: kmmainwidget.cpp:5041
+#: kmmainwidget.cpp:5033
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "R&enunță"
 
-#: kmmainwidget.cpp:5076
+#: kmmainwidget.cpp:5068
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "Doriți să ștergeți contul „%1”?"
 
-#: kmmainwidget.cpp:5077
+#: kmmainwidget.cpp:5069
 #, fuzzy, kde-format
 #| msgid "Identity account"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Cont de identitate"
 
-#: kmmainwidget.cpp:5078
+#: kmmainwidget.cpp:5070
 #, fuzzy, kde-format
 #| msgid "Identity account"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Cont de identitate"
 
-#: kmmainwidget.cpp:5085
+#: kmmainwidget.cpp:5077
 #, fuzzy, kde-format
 #| msgid "Akonadi porting"
 msgid "Akonadi restarted."
