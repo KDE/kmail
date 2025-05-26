@@ -186,7 +186,7 @@ if(BUILD_TESTING)
     add_definitions(-DBUILD_TESTING)
 endif()
 add_definitions(-DQT_NO_CONTEXTLESS_CONNECT)
-ecm_set_disabled_deprecation_versions(QT 6.9.0
+ecm_set_disabled_deprecation_versions(QT 6.10.0
     KF 6.14.0
 )
 find_package(KF6UserFeedback ${KF_MIN_VERSION} CONFIG)
