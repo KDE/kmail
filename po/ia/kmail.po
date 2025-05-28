@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-25 00:43+0000\n"
-"PO-Revision-Date: 2025-03-20 18:36+0100\n"
+"PO-Revision-Date: 2025-05-27 16:12+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2965,7 +2965,7 @@ msgstr "Lista de collection es vacue. %1"
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr ""
-"Dossier %1 de sol lettura. Pro favor verifica le configuration de conto %2"
+"Dossier %1 de sol lectura. Pro favor verifica le configuration de conto %2"
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -6093,10 +6093,9 @@ msgid "Kontact Summary View"
 msgstr "Vista de Summario de Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003-2024 Le disveloppatores de Kontact"
+msgstr "© 2003-2025 c) 2003-2025 Le disveloppatores de Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
