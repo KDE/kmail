@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2020, 2021, 2022, 2023, 2024 g.sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2020, 2021, 2022, 2023, 2024, 2025 g.sora <g.sora@tiscali.it>
 # giovanni <g.sora@tiscali.it>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-12 00:42+0000\n"
-"PO-Revision-Date: 2024-11-19 10:49+0100\n"
+"PO-Revision-Date: 2025-05-27 15:57+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2965,7 +2965,7 @@ msgstr "Lista de collection es vacue. %1"
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr ""
-"Dossier %1 de sol lettura. Pro favor verifica le configuration de conto %2"
+"Dossier %1 de sol lectura. Pro favor verifica le configuration de conto %2"
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
