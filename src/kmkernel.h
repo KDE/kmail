@@ -384,6 +384,11 @@ public:
      */
     [[nodiscard]] Akonadi::EntityMimeTypeFilterModel *collectionModel() const override;
 
+    /**
+     * Get the config group to be used for an Akonadi resource.
+     */
+    [[nodiscard]] KConfigGroup resourceConfigGroup(const QString &id);
+
     void recoverDeadLetters();
     void closeAllKMailWindows();
     void cleanup();

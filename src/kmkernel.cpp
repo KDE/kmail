@@ -288,6 +288,15 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
     return true;
 }
 
+// It may be able be possible to use this in AccountsPageReceivingTab,
+// but check the use of resourceGroupPattern there - there may not be
+// a KMKernel.
+// Move to KMail::Util instead?
+KConfigGroup KMKernel::resourceConfigGroup(const QString &id)
+{
+    return (KConfigGroup(KMKernel::config(), QStringLiteral("Resource %1").arg(id)));
+}
+
 /********************************************************************/
 /*             D-Bus-callable, and command line actions              */
 /********************************************************************/
@@ -297,12 +306,10 @@ void KMKernel::checkMail() // might create a new reader but won't show!!
         return;
     }
 
-    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
-
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     for (Akonadi::AgentInstance &agent : lst) {
         const QString id = agent.identifier();
-        KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(id));
+        const KConfigGroup group = resourceConfigGroup(id);
         if (group.readEntry("IncludeInManualChecks", true)) {
             if (!agent.isOnline()) {
                 agent.setIsOnline(true);
@@ -709,11 +716,9 @@ bool KMKernel::isOffline()
 
 void KMKernel::verifyAccounts()
 {
-    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
-
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     for (Akonadi::AgentInstance &agent : lst) {
-        KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(agent.identifier()));
+        const KConfigGroup group = resourceConfigGroup(agent.identifier());
         if (group.readEntry("CheckOnStartup", false)) {
             if (!agent.isOnline()) {
                 agent.setIsOnline(true);
@@ -1619,12 +1624,10 @@ void KMKernel::cleanupTemporaryFiles()
 
 void KMKernel::stopAgentInstance()
 {
-    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
-
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     for (Akonadi::AgentInstance &agent : lst) {
         const QString identifier = agent.identifier();
-        KConfigGroup group(KMKernel::config(), resourceGroupPattern.arg(identifier));
+        const KConfigGroup group = resourceConfigGroup(identifier);
 
         // Keep sync in ConfigureDialog, don't forget to change there.
         if (group.readEntry("OfflineOnShutdown", identifier.startsWith("akonadi_pop3_resource"_L1) ? true : false)) {
