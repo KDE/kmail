@@ -7,12 +7,15 @@
 #include "identityinvalidfolder.h"
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 IdentityInvalidFolder::IdentityInvalidFolder(QWidget *parent)
     : KMessageWidget(parent)
 {
     setPosition(KMessageWidget::Header);
     setMessageType(KMessageWidget::Warning);
+    setIcon(QIcon::fromTheme("dialog-warning"_L1));
+    setFocusPolicy(Qt::NoFocus);
     setCloseButtonVisible(false);
     hide();
 }
