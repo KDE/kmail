@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-05-29 00:43+0000\n"
 "PO-Revision-Date: 2025-05-25 22:41+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -4371,27 +4371,27 @@ msgstr "HTML tresna-barra"
 msgid "Text Direction Toolbar"
 msgstr "Testuaren noranzkoaren tresna-barra"
 
-#: kmkernel.cpp:637
+#: kmkernel.cpp:644
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail lineaz kanpoko egoeran dago; sareko lan guztiak gelditu dira"
 
-#: kmkernel.cpp:657 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:664 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Bidali e-posta"
 
-#: kmkernel.cpp:658 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:665 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Ezin da e-postarik bidali"
 
-#: kmkernel.cpp:689
+#: kmkernel.cpp:696
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail lineako egoeran dago. Sareko lan guztiak jarraituko dira"
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:698
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4400,40 +4400,40 @@ msgstr ""
 "KMail lineako egoeran dago; sareko lan guztiak berrekingo ditu sareko "
 "konexio bat antzematen duenean"
 
-#: kmkernel.cpp:764
+#: kmkernel.cpp:769
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Unean KMail lineaz kanpoko moduan dago. Nola jarraitu nahi duzu?"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:771
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Lerroan/Lerroz kanpo"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:772
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Lerroan lan egin"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:773
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Lerroz kanpo lan egin"
 
-#: kmkernel.cpp:792
+#: kmkernel.cpp:797
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Sareko konexioa antzeman du, sareko lan guztiak berrekin ditu"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:800
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Ez da sareko konexiorik antzeman, sareko lan guztiak etenda daude"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:895
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4442,13 +4442,13 @@ msgstr ""
 "Huts egin du %1(e)an automatikoki gordetzeko fitxategia irekitzea.\n"
 "Arrazoia: %2"
 
-#: kmkernel.cpp:891
+#: kmkernel.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Automatikoki gordetako fitxategia irekitzea huts eign du"
 
-#: kmkernel.cpp:1454
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4456,7 +4456,7 @@ msgid_plural ""
 msgstr[0] "Nortasun hau, garraio lehenetsia erabiltzeko, aldatu da:"
 msgstr[1] "%1 nortasun hauek, garraio lehenetsia erabiltzeko, aldatu dira:"
 
-#: kmkernel.cpp:1478
+#: kmkernel.cpp:1483
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4464,17 +4464,17 @@ msgid_plural ""
 msgstr[0] "Nortasun hau, aldatutako garraioa erabiltzeko, aldatu da:"
 msgstr[1] "%1 nortasun hauek, aldatutako garraioa erabiltzeko, aldatu dira:"
 
-#: kmkernel.cpp:1493
+#: kmkernel.cpp:1498
 #, kde-format
 msgid "Sending messages"
 msgstr "Mezuak bidaltzen"
 
-#: kmkernel.cpp:1494
+#: kmkernel.cpp:1499
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Bidaltzeko prozesuaren hasiera..."
 
-#: kmkernel.cpp:1573
+#: kmkernel.cpp:1578
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4483,7 +4483,7 @@ msgstr ""
 "%1 baliabidea hondatuta dago.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1752 kmkernel.cpp:1758
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

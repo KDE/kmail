@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-05-29 00:43+0000\n"
 "PO-Revision-Date: 2024-08-17 17:42+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
@@ -4225,71 +4225,71 @@ msgstr "HTML-verktøylinje"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:637
+#: kmkernel.cpp:644
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail er sett i fråkoplamodus. Alle jobbar som krev nettverk er sette på "
 "vent."
 
-#: kmkernel.cpp:657 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:664 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr ""
 
-#: kmkernel.cpp:658 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:665 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
 
-#: kmkernel.cpp:689
+#: kmkernel.cpp:696
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail er sett i tilkoplamodus. Alle jobbar som krev nettverk er tekne opp "
 "att."
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:698
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:764
+#: kmkernel.cpp:769
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail er i fråkoplamodus. Korleis vil du halda fram?"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:771
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Tilkopla/fråkopla"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:772
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Arbeid tilkopla"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:773
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Arbeid fråkopla"
 
-#: kmkernel.cpp:792
+#: kmkernel.cpp:797
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:800
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:895
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4298,13 +4298,13 @@ msgstr ""
 "Klarte ikkje autolagra fila i «%1».\n"
 "Grunn: %2"
 
-#: kmkernel.cpp:891
+#: kmkernel.cpp:896
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Klarte ikkje opna autolagra fil"
 
-#: kmkernel.cpp:1454
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4313,7 +4313,7 @@ msgstr[0] "Denne identiteten er endra til å bruka standard overføringsmetode:"
 msgstr[1] ""
 "Desse %1 identitetane er endra til å bruka standard overføringsmetode:"
 
-#: kmkernel.cpp:1478
+#: kmkernel.cpp:1483
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4322,24 +4322,24 @@ msgstr[0] "Denne identiteten er endra til å bruka ein annan overføringsmetode:
 msgstr[1] ""
 "Desse %1 identitetane er endra til å bruka ein annan overføringsmetode:"
 
-#: kmkernel.cpp:1493
+#: kmkernel.cpp:1498
 #, kde-format
 msgid "Sending messages"
 msgstr "Sender meldingar"
 
-#: kmkernel.cpp:1494
+#: kmkernel.cpp:1499
 #, fuzzy, kde-format
 msgid "Initiating sending process…"
 msgstr "Startar sendeprosessen …"
 
-#: kmkernel.cpp:1573
+#: kmkernel.cpp:1578
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1752 kmkernel.cpp:1758
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

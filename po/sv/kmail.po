@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-05-29 00:43+0000\n"
 "PO-Revision-Date: 2025-04-05 13:58+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -4360,27 +4360,27 @@ msgstr "HTML-verktygsrad"
 msgid "Text Direction Toolbar"
 msgstr "Textriktningsverktygsrad"
 
-#: kmkernel.cpp:637
+#: kmkernel.cpp:644
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "Kmail är inställt att vara nerkopplad. Alla nätverksjobb är vilande."
 
-#: kmkernel.cpp:657 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:664 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "Skicka e-post"
 
-#: kmkernel.cpp:658 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:665 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Omöjligt att skicka e-post"
 
-#: kmkernel.cpp:689
+#: kmkernel.cpp:696
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "Kmail är inställt att vara uppkopplad. Alla nätverksjobb återupptas."
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:698
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4389,40 +4389,40 @@ msgstr ""
 "Kmail är inställt att vara uppkopplad. Alla nätverksjobb återupptas när en "
 "nätverksanslutning detekteras"
 
-#: kmkernel.cpp:764
+#: kmkernel.cpp:769
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Kmail är för närvarande i nerkopplat läge. Hur vill du fortsätta?"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:771
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Uppkopplad/nerkopplad"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:772
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Arbeta uppkopplad"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:773
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Arbeta nerkopplad"
 
-#: kmkernel.cpp:792
+#: kmkernel.cpp:797
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Nätverksanslutning detekterades, alla nätverksjobb återupptagna"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:800
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Ingen nätverksanslutning detekterades, alla nätverksjobb är vilande"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:895
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4431,13 +4431,13 @@ msgstr ""
 "Misslyckades öppna automatiskt sparad fil på %1.\n"
 "Orsak: %2"
 
-#: kmkernel.cpp:891
+#: kmkernel.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Misslyckades öppna automatiskt sparad fil"
 
-#: kmkernel.cpp:1454
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4445,7 +4445,7 @@ msgid_plural ""
 msgstr[0] "Den här identiteten har ändrats att använda förvald överföring:"
 msgstr[1] "De här %1 identiteterna har ändrats att använda förvald överföring:"
 
-#: kmkernel.cpp:1478
+#: kmkernel.cpp:1483
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4455,17 +4455,17 @@ msgstr[0] ""
 msgstr[1] ""
 "De här %1 identiteterna har ändrats att använda den ändrade överföringen:"
 
-#: kmkernel.cpp:1493
+#: kmkernel.cpp:1498
 #, kde-format
 msgid "Sending messages"
 msgstr "Skickar brev"
 
-#: kmkernel.cpp:1494
+#: kmkernel.cpp:1499
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Initierar sändningsprocess…"
 
-#: kmkernel.cpp:1573
+#: kmkernel.cpp:1578
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4474,7 +4474,7 @@ msgstr ""
 "Resursen %1 är felaktig.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1752 kmkernel.cpp:1758
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

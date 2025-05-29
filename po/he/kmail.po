@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-05-29 00:43+0000\n"
 "PO-Revision-Date: 2025-05-19 09:06+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -4323,27 +4323,27 @@ msgstr "סרגל כלי HTML"
 msgid "Text Direction Toolbar"
 msgstr "סרגל כלי כיוון טקסט"
 
-#: kmkernel.cpp:637
+#: kmkernel.cpp:644
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail מוגדר לניתוק מהאינטרנט, כל משימות התקשורת מושבתות"
 
-#: kmkernel.cpp:657 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
+#: kmkernel.cpp:664 kmmainwidget.cpp:2480 kmmainwidget.cpp:2495
 #, kde-format
 msgid "Send Email"
 msgstr "שליחת דוא״ל"
 
-#: kmkernel.cpp:658 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
+#: kmkernel.cpp:665 kmmainwidget.cpp:2481 kmmainwidget.cpp:2496
 #, kde-format
 msgid "Impossible to send email"
 msgstr "אי אפשר לשלוח דוא״ל"
 
-#: kmkernel.cpp:689
+#: kmkernel.cpp:696
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail מוגדר לחיבור לאינטרנט, כל משימות התקשורת חודשו"
 
-#: kmkernel.cpp:691
+#: kmkernel.cpp:698
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4351,40 +4351,40 @@ msgid ""
 msgstr ""
 "KMail מוגדר לחיבור לאינטרנט, כל משימות התקשורת תמשכנה כשיזוהה חיבור לרשת"
 
-#: kmkernel.cpp:764
+#: kmkernel.cpp:769
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "כרגע, מצב העבודה של KMail הוא לא מקוון. איך להמשיך?"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:771
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "מקוון/בלתי מקוון"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:772
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "עבודה מקוונת"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:773
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "עבודה לא מקוונת"
 
-#: kmkernel.cpp:792
+#: kmkernel.cpp:797
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "זוהה חיבור לאינטרנט, כל הפעולות שדורשות תקשורת מתחדשות"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:800
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "לא זוהה חיבור לאינטרנט, כל הפעולות שדורשות תקשורת מושהות"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:895
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4393,13 +4393,13 @@ msgstr ""
 "פתיחת קובץ שמירה אוטומטית %1 נכשלה.\n"
 "סיבה: %2"
 
-#: kmkernel.cpp:891
+#: kmkernel.cpp:896
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "פתיחת קובץ שמירה אוטומטי נכשלה"
 
-#: kmkernel.cpp:1454
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4409,7 +4409,7 @@ msgstr[1] "שתי הזהויות האלו הוחלפו לשימוש בתעבור
 msgstr[2] "%1 הזהויות האלו הוחלפו לשימוש בתעבורת ברירת המחדל:"
 msgstr[3] "%1 הזהויות האלו הוחלפו לשימוש בתעבורת ברירת המחדל:"
 
-#: kmkernel.cpp:1478
+#: kmkernel.cpp:1483
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4419,17 +4419,17 @@ msgstr[1] "שתי הזהויות האלו הוחלפו לשימוש בתעבור
 msgstr[2] "%1 הזהויות האלו הוחלפו לשימוש בתעבורה שנערכה:"
 msgstr[3] "%1 הזהויות האלו הוחלפו לשימוש בתעבורה שנערכה:"
 
-#: kmkernel.cpp:1493
+#: kmkernel.cpp:1498
 #, kde-format
 msgid "Sending messages"
 msgstr "הודעות נשלחות"
 
-#: kmkernel.cpp:1494
+#: kmkernel.cpp:1499
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "תהליך השליחה מאותחל…"
 
-#: kmkernel.cpp:1573
+#: kmkernel.cpp:1578
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4438,7 +4438,7 @@ msgstr ""
 "המשאב %1 is פגום.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1752 kmkernel.cpp:1758
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
