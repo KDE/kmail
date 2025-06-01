@@ -41,6 +41,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     : QDialog(parent)
     , mUser1Button(new QPushButton(this))
     , mUser2Button(new QPushButton(this))
+    , mShareButton(new QPushButton(i18nc("@action:button", "Share…"), this))
 {
     setWindowTitle(i18nc("@title:window", "Filter Log Viewer"));
     auto mainLayout = new QVBoxLayout(this);
@@ -85,7 +86,6 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareError, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareError);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareSuccess, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareSuccess);
-    auto mShareButton = new QPushButton(i18nc("@action:button", "Share…"), this);
     mShareButton->setMenu(purposeMenu->menu());
     mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
     purposeMenu->setEditorWidget(mTextEdit->editor());
@@ -171,6 +171,7 @@ void FilterLogDialog::slotTextChanged()
     const bool hasText = !mTextEdit->isEmpty();
     mUser2Button->setEnabled(hasText);
     mUser1Button->setEnabled(hasText);
+    mShareButton->setEnabled(hasText);
 }
 
 void FilterLogDialog::readConfig()

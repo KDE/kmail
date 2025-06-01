@@ -26,7 +26,6 @@ namespace TextCustomEditor
 {
 class PlainTextEditorWidget;
 }
-
 class FilterLogTextEdit : public TextCustomEditor::PlainTextEditor
 {
     Q_OBJECT
@@ -72,6 +71,6 @@ private:
     QSpinBox *mLogMemLimitSpin = nullptr;
     QPushButton *const mUser1Button;
     QPushButton *const mUser2Button;
-
+    QPushButton *const mShareButton;
     bool mIsInitialized = false;
 };
