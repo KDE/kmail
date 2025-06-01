@@ -64,6 +64,15 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     auto purposeMenuMessageWidget = new PimCommon::PurposeMenuMessageWidget(this);
     pageVBoxLayout->addWidget(purposeMenuMessageWidget);
 
+    mLogActiveBox = new QCheckBox(i18nc("@option:check", "&Log filter activities"), page);
+    pageVBoxLayout->addWidget(mLogActiveBox);
+    mLogActiveBox->setChecked(FilterLog::instance()->isLogging());
+    connect(mLogActiveBox, &QCheckBox::clicked, this, &FilterLogDialog::slotSwitchLogState);
+    mLogActiveBox->setWhatsThis(
+        i18n("You can turn logging of filter activities on and off here. "
+             "Of course, log data is collected and shown only when logging "
+             "is turned on. "));
+
     mTextEdit = new TextCustomEditor::PlainTextEditorWidget(new FilterLogTextEdit(this), page);
     pageVBoxLayout->addWidget(mTextEdit);
 
@@ -81,15 +90,6 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
     purposeMenu->setEditorWidget(mTextEdit->editor());
     buttonBox->addButton(mShareButton, QDialogButtonBox::ActionRole);
-
-    mLogActiveBox = new QCheckBox(i18nc("@option:check", "&Log filter activities"), page);
-    pageVBoxLayout->addWidget(mLogActiveBox);
-    mLogActiveBox->setChecked(FilterLog::instance()->isLogging());
-    connect(mLogActiveBox, &QCheckBox::clicked, this, &FilterLogDialog::slotSwitchLogState);
-    mLogActiveBox->setWhatsThis(
-        i18n("You can turn logging of filter activities on and off here. "
-             "Of course, log data is collected and shown only when logging "
-             "is turned on. "));
 
     mLogDetailsBox = new QGroupBox(i18n("Logging Details"), page);
     pageVBoxLayout->addWidget(mLogDetailsBox);
