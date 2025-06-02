@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -20,27 +20,27 @@ msgstr ""
 "X-Generator: WordForge 0.8 RC1\n"
 "X-Language: km-KH\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr ""
+
+#: filterlogdialog.cpp:46
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "កម្មវិធី​​មើល​កំណត់ហេតុ​តម្រង"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr ""
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​របស់​តម្រង"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -125,7 +125,7 @@ msgstr ""
 "អាច​កំណត់​ចំនួន​អង្គ​ចងចាំ​ដែល​ត្រូវ​ប្រើ​ជា​អតិបរមាបាន ៖ ប្រសិនបើ ទំហំ​ទិន្នន័យ​កំណត់ហេតុ​ដែល​បាន​ប្រមូល​លើស​ពី​ការ​"
 "កំណត់​នេះ​ ពេល​នោះ​ទិន្នន័យ​ដែល​ចាស់​បំផុត​នឹង​ត្រូវ​បាន​បោះបង់​ រហូត​ទាល់តែ​​​លែង​មាន​ការ​លើស​កំណត់​ទៀត ។"
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -134,7 +134,7 @@ msgstr ""
 "មិន​អាច​សរសេរ​ឯកសារ %1 ៖\n"
 "\"%2\" គឺជា​សេចក្ដី​ពិពណ៌នា​អំពី​កំហុស​ដែល​លម្អិត ។"
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

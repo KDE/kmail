@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2024-08-26 16:03+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -19,25 +19,25 @@ msgstr ""
 "X-Generator: Lokalize 24.04.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "過濾信件紀錄顯示器"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "分享…"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "過濾信件紀錄顯示器"
+
+#: filterlogdialog.cpp:68
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "紀錄過濾的動作(&L)"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -113,7 +113,7 @@ msgstr ""
 "要紀錄過濾資料需要使用記憶體，這裡您可以限制使用記憶體的大小。如果超過的話，"
 "會將最舊的紀錄丟棄。"
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -122,7 +122,7 @@ msgstr ""
 "無法寫入檔案 %1：\n"
 "%2 中有錯誤描述。"
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

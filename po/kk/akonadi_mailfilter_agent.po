@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2013-07-10 02:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr ""
+
+#: filterlogdialog.cpp:46
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Сүзгі журналы"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr ""
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Сүзгі журналы жүргізілсін"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -123,7 +123,7 @@ msgstr ""
 "өлшемі келтірілген шегіне жетсе, онда орынды босату үшін ескі деректер "
 "журналдан жойылады. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -132,7 +132,7 @@ msgstr ""
 "%1 файлы жазылмады.\n"
 "Қатенің сипаттамасы: \"%2\"."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

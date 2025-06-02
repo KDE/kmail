@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2014-11-09 22:31+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:44
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr ""
+
+#: filterlogdialog.cpp:46
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Приказивач дневника филтрирања"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr ""
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Бележи активност филтрирања"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -125,7 +125,7 @@ msgstr ""
 "количина података премаши задату вредност, најстарији подаци биће одбацивани "
 "док се не спадне испод ограничења."
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -134,7 +134,7 @@ msgstr ""
 "Не могу да пишем у фајл %1:\n"
 "Детаљни опис грешке: %2"
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2024-07-30 17:26+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -19,25 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 24.05.2\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "Visor do rexistro de filtrado"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Compartir…"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Visor do rexistro de filtrado"
+
+#: filterlogdialog.cpp:68
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Rexistrar a actividade de filtrado."
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -119,7 +119,7 @@ msgstr ""
 "usar: se o tamaño dos datos rexistrados excede este límite entón os datos "
 "máis antigos descártanse ata que non se exceda máis o límite. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -128,7 +128,7 @@ msgstr ""
 "Non foi posíbel escribir no ficheiro %1:\n"
 "«%2» é a descrición detallada do erro."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2024-07-30 10:14+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,25 +18,25 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 24.05.2\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "מציג קובצי יומנים"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "שיתוף…"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "מציג קובצי יומנים"
+
+#: filterlogdialog.cpp:68
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&פעילויות מסנן יומנים"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -117,7 +117,7 @@ msgstr ""
 "מהמגבלה אז הנתונים הישנים ביותר מושלכים הצידה עד שהגודל הכולל לא עובר את "
 "המגבלה. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -126,7 +126,7 @@ msgstr ""
 "לא ניתן לכתוב לקובץ %1:\n"
 "„%2” הוא תיאור השגיאה המפורט."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

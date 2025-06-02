@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -16,27 +16,27 @@ msgstr ""
 "X-Generator: Lokalize 21.07.80\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "Prehliadač záznamu filtrov"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, fuzzy, kde-format
 #| msgid "Share..."
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Zdieľať..."
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Prehliadač záznamu filtrov"
+
+#: filterlogdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Zaznamenávať aktivity filtra"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -124,7 +124,7 @@ msgstr ""
 "túto hranicu presiahne, najstaršie dáta sa zahodia, kým limit bude "
 "prekročený. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -133,7 +133,7 @@ msgstr ""
 "Nepodarilo sa zapísať súbor %1:\n"
 "\"%2\" je detailný popis chyby."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2024-07-30 10:15+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -22,25 +22,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "Visualitzador del registre de filtratge"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Comparteix…"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Visualitzador del registre de filtratge"
+
+#: filterlogdialog.cpp:68
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Registra les activitats de filtratge"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -124,7 +124,7 @@ msgstr ""
 "dades de registre recollides excedeix aquest límit, llavors es descartaran "
 "les dades més antigues fins que ja no s'excedeixi el límit. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -133,7 +133,7 @@ msgstr ""
 "No s'ha pogut escriure el fitxer %1:\n"
 "«%2» és la descripció detallada de l'error."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

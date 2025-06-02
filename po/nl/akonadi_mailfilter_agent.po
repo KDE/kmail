@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2024-07-30 13:08+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -18,25 +18,25 @@ msgstr ""
 "X-Generator: Lokalize 24.05.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "Viewer voor filterlog"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Delen…"
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Viewer voor filterlog"
+
+#: filterlogdialog.cpp:68
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Filteractiviteiten vastleggen"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -118,7 +118,7 @@ msgstr ""
 "wanneer de hoeveelheid gegevens te groot wordt zullen de oudste gegevens "
 "verwijderd worden zodat die grens niet wordt overschreden. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -127,7 +127,7 @@ msgstr ""
 "Kon bestand %1 niet schrijven:\n"
 "\"%2\" is de gedetailleerde foutbeschrijving."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

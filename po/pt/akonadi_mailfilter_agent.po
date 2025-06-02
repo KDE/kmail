@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2019-12-17 11:44+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -13,27 +13,27 @@ msgstr ""
 "X-POFile-SpellExtra: KMail\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "Visualizador do Registo do Filtro"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, fuzzy, kde-format
 #| msgid "Share..."
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Partilhar..."
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Visualizador do Registo do Filtro"
+
+#: filterlogdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Registar as actividades do fi&ltro"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -122,7 +122,7 @@ msgstr ""
 "se o tamanho dos dados registados ultrapassar este limite, os dados mais "
 "antigos serão apagados até que o limite não seja mais excedido. "
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -131,7 +131,7 @@ msgstr ""
 "Não foi possível gravar o ficheiro %1:\n"
 "A \"%2\" é a descrição detalhada do erro."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

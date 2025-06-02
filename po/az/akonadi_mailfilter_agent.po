@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-25 00:43+0000\n"
+"POT-Creation-Date: 2025-06-02 00:42+0000\n"
 "PO-Revision-Date: 2021-07-13 16:25+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 21.04.1\n"
 
-#: filterlogdialog.cpp:45
-#, kde-format
-msgctxt "@title:window"
-msgid "Filter Log Viewer"
-msgstr "Jurnalın görünüşünü süzgəcləmək"
-
-#: filterlogdialog.cpp:79
+#: filterlogdialog.cpp:44
 #, fuzzy, kde-format
 #| msgid "Share..."
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Paylaşın..."
 
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:46
+#, kde-format
+msgctxt "@title:window"
+msgid "Filter Log Viewer"
+msgstr "Jurnalın görünüşünü süzgəcləmək"
+
+#: filterlogdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Süzgəc əməllərinin jurna&lı"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:73
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -126,7 +126,7 @@ msgstr ""
 "həcmini məhdudlaşdıra bilərsiniz: toplanan jurnal verilənlərinin ölçüsü bu "
 "həddən çox olarsa, yaddaşı boşaltmaq üçün köhnə qeydlər silinəcəkdir."
 
-#: filterlogdialog.cpp:326
+#: filterlogdialog.cpp:327
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -135,7 +135,7 @@ msgstr ""
 "%1 faylı yazıal bilmədi:\n"
 "\"%2\" xətanın ətraflı təsviridir."
 
-#: filterlogdialog.cpp:330
+#: filterlogdialog.cpp:331
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
