@@ -270,6 +270,7 @@ static const KLazyLocalizedString kmailNewFeatures[] = {
     kli18n("Adblock public used new rust adblock lib"),
     kli18n("Allow to reopen closed viewer"),
     kli18n("Allow to configure spam folder in identity"),
+    kli18n("Add AI plugin"),
 };
 static const int numKMailNewFeatures = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 
