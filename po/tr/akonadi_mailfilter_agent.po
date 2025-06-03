@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-07-30 18:46+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -23,19 +23,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Günlük Görüntüleyicisini Süz"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Paylaş…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Süzme eylemlerini gün&lükle"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -43,6 +37,12 @@ msgid ""
 msgstr ""
 "Süzme eylemlerinin günlüklenmesi seçeneğini buradan düzenleyebilirsiniz. "
 "Günlük verisi yalnızca günlük tutma seçeneği etkinse toplanacaktır. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Paylaş…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

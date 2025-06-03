@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -27,20 +27,14 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "កម្មវិធី​​មើល​កំណត់ហេតុ​តម្រង"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr ""
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​របស់​តម្រង"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -48,6 +42,12 @@ msgid ""
 msgstr ""
 "អ្នក​អាច​បើក​/បិទ​​ការ​ចុះ​កំណត់ហេតុ​អំពី​សកម្មភាព​តម្រង​នៅ​ទីនេះ​បាន ។ ពិតមែន​ហើយ ទិន្នន័យ​កំណត់ហេតុ​ត្រូវ​បាន​"
 "ប្រមូល និង​បង្ហាញ​តែ​នៅ​ពេល​ការ​ចុះ​កំណត់ហេតុ​ត្រូវ​បាន​បើក​តែប៉ុណ្ណោះ ។"
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr ""
 
 #: filterlogdialog.cpp:94
 #, kde-format

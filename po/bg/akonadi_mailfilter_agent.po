@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-11-09 20:09+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -23,19 +23,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Преглед на филтърните дневници"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Споделяне…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Регистриране в дневник на филтърни дейности"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -44,6 +38,12 @@ msgstr ""
 "Можете да включите и изключите регистрирането на филтърни дейности тук. "
 "Разбира се, данните в дневника се събират и показват само когато "
 "регистрацията е включена. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Споделяне…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

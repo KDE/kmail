@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-07-30 10:15+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -28,19 +28,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Visualitzador del registre de filtratge"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Comparteix…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Registra les activitats de filtratge"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -49,6 +43,12 @@ msgstr ""
 "Aquí podeu activar i desactivar el registre de les activitats de filtratge. "
 "Naturalment, només es recullen i es mostren les dades de registre quan "
 "s'activa el registre. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Comparteix…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

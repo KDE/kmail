@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-08-14 11:27+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -24,19 +24,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Prohlížeč záznamů filtru"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Sdílet…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Zaznamenávat činnost fi&ltrů"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -44,6 +38,12 @@ msgid ""
 msgstr ""
 "Zde můžete zapnout a vypnout záznam aktivit filtrů. Záznamy jsou pořizovány "
 "jen při zapnutí této funkce. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Sdílet…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

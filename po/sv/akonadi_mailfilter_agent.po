@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-07-30 07:14+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -23,19 +23,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Visning av filterlogg"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Dela…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Logga filteraktivitet"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -43,6 +37,12 @@ msgid ""
 msgstr ""
 "Du kan stänga av eller sätta på loggning av filteraktiviteter här. Loggdata "
 "samlas bara in och visas när loggning är aktiverad. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Dela…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-12-20 21:52+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -25,19 +25,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "फ़िल्टर लॉग दर्शक"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "संविभागः…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&लॉग फ़िल्टर क्रियाकलापाः"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -45,6 +39,12 @@ msgid ""
 msgstr ""
 "अत्र भवान् फ़िल्टर-क्रियाकलापानाम् लॉगिंग् चालू-निष्क्रान्तं कर्तुं शक्नोति । अवश्यं, log data "
 "एकत्रितं भवति, केवलं logging चालू भवति चेत् दर्शितं च भवति । "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "संविभागः…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

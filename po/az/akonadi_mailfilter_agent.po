@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2021-07-13 16:25+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -23,21 +23,14 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Jurnalın görünüşünü süzgəcləmək"
 
-#: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Paylaşın..."
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Süzgəc əməllərinin jurna&lı"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -46,6 +39,13 @@ msgstr ""
 "Siz burada süzgəcləmə əməllərinin jurnala qeyd olunmasını aça və söndürə "
 "bilərsiniz. Əlbəttə ki jurnal məlumatları toplanır və jurnallama aktiv "
 "olduqda göstərilir."
+
+#: filterlogdialog.cpp:88
+#, fuzzy, kde-format
+#| msgid "Share..."
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Paylaşın..."
 
 #: filterlogdialog.cpp:94
 #, kde-format

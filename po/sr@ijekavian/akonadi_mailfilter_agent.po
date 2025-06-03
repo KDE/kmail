@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2014-11-09 22:31+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -25,20 +25,14 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Приказивач дневника филтрирања"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr ""
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Бележи активност филтрирања"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -46,6 +40,12 @@ msgid ""
 msgstr ""
 "Овде можете укључити и искључити бележење активности филтрирања. Наравно, "
 "дневнички подаци се сакупљају и приказују само ако је бележење укључено."
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr ""
 
 #: filterlogdialog.cpp:94
 #, kde-format

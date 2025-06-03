@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2013-10-19 23:24+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -27,20 +27,14 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Kriteriji filtera"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr ""
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Zabilježi aktivnosti filtera"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -49,6 +43,12 @@ msgstr ""
 "Ovdje možete uključivati i isključivati bilježenje aktivnosti filtera u "
 "dnevnik. Naravno, podaci se prikupljaju i prikazuju samo kada je bilježenje "
 "uključeno. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr ""
 
 #: filterlogdialog.cpp:94
 #, kde-format

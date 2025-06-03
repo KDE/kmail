@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-07-31 22:23+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -24,19 +24,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Visualizzatore dei log dei filtri"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Condividi…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Registra attività dei fi&ltri"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -45,6 +39,12 @@ msgstr ""
 "Qui puoi attivare e disattivare la registrazione dei dati relativi "
 "all'attività dei filtri. Naturalmente, questi dati vengono registrati e "
 "visualizzati solo quando la registrazione è attivata. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Condividi…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

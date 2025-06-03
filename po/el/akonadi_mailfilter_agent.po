@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2020-09-20 09:30+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -25,19 +25,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Προβολέας καταγραφών φίλτρου"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Διαμοιρασμός…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Καταγραφές δραστηριοτήτων φίλτρου"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -46,6 +40,12 @@ msgstr ""
 "Μπορείτε εδώ να (απ)ενεργοποιήσετε τις δραστηριότητες φίλτρου. Φυσικά, η "
 "καταγραφή δεδομένων συλλέγεται και εμφανίζεται μόνο όταν η καταγραφή είναι "
 "ενεργή. "
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Διαμοιρασμός…"
 
 #: filterlogdialog.cpp:94
 #, kde-format

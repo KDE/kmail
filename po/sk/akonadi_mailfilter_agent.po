@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -22,21 +22,14 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Prehliadač záznamu filtrov"
 
-#: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Zdieľať..."
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Zaznamenávať aktivity filtra"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -45,6 +38,13 @@ msgstr ""
 "Týmto môžete zapnúť alebo vypnúť zaznamenávanie aktivity filtrov. "
 "Samozrejme, dáta o aktivite sa samozrejme ukladajú a zobrazujú, iba ak je "
 "táto voľba zapnutá. "
+
+#: filterlogdialog.cpp:88
+#, fuzzy, kde-format
+#| msgid "Share..."
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Zdieľať..."
 
 #: filterlogdialog.cpp:94
 #, kde-format

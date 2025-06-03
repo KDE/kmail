@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2023-11-08 16:23-0300\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -26,21 +26,14 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Visualizador de registros do filtro"
 
-#: filterlogdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "Share..."
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Compartilhar..."
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Registrar as atividades do filtro"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -49,6 +42,13 @@ msgstr ""
 "Aqui você pode habilitar ou desabilitar o registro das atividades do filtro. "
 "Obviamente os registros são coletados e mostrados quando isto estiver "
 "habilitado. "
+
+#: filterlogdialog.cpp:88
+#, fuzzy, kde-format
+#| msgid "Share..."
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Compartilhar..."
 
 #: filterlogdialog.cpp:94
 #, kde-format

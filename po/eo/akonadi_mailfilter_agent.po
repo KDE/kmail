@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-06-03 02:40+0000\n"
 "PO-Revision-Date: 2024-07-30 21:06+0200\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -26,19 +26,13 @@ msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Rigardilo por Filtrila Protokolo"
 
-#: filterlogdialog.cpp:79
-#, kde-format
-msgctxt "@action:button"
-msgid "Share…"
-msgstr "Kunhavigi…"
-
-#: filterlogdialog.cpp:85
+#: filterlogdialog.cpp:67
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Protoko&li filtrilajn agadojn"
 
-#: filterlogdialog.cpp:90
+#: filterlogdialog.cpp:72
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -47,6 +41,12 @@ msgstr ""
 "Vi povas ŝalti kaj malŝalti registradon de filtrilaj agadoj ĉi tie. "
 "Kompreneble, protokolaj datumoj estas kolektitaj kaj montrataj nur kiam la "
 "protokolo estas ŝaltita."
+
+#: filterlogdialog.cpp:88
+#, kde-format
+msgctxt "@action:button"
+msgid "Share…"
+msgstr "Kunhavigi…"
 
 #: filterlogdialog.cpp:94
 #, kde-format
