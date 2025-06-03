@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:43+0000\n"
+"POT-Creation-Date: 2025-06-03 00:43+0000\n"
 "PO-Revision-Date: 2025-05-19 09:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -376,7 +376,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Виправлення багатьох вад IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:299 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3974,12 +3974,12 @@ msgstr "Додавання до адресної книги"
 msgid "Contact created successfully"
 msgstr "Запис контакту успішно створено"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Не вдалося зберегти запис контакту: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5948,27 +5948,31 @@ msgstr "Уможливлено повторне відкриття закрит�
 msgid "Allow to configure spam folder in identity"
 msgstr "Уможливлено налаштовування теки небажаної кореспонденції у профілі"
 
-#: kmreaderwin.cpp:301
+#: kmreaderwin.cpp:273
+msgid "Add AI plugin"
+msgstr ""
+
+#: kmreaderwin.cpp:302
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "Клієнт електронної пошти KDE"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Отримуємо вміст тек"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Будь ласка, зачекайте…"
 
-#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
+#: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, kde-format
 msgid "Offline"
 msgstr "Автономний режим"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:319
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5977,7 +5981,7 @@ msgstr ""
 "KMail працює в автономному режимі. Натисніть <a href=\"kmail:goOnline\">тут</"
 "a>, щоб з'єднатись з мережею…</p>"
 
-#: kmreaderwin.cpp:327
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5986,7 +5990,7 @@ msgstr ""
 "Обліковий запис працює в автономному режимі. Натисніть <a href=\"kmail:"
 "goResourceOnline\">тут</a>, </p>щоб з'єднатись з мережею…"
 
-#: kmreaderwin.cpp:906
+#: kmreaderwin.cpp:907
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Запис контакту успішно змінено"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:43+0000\n"
+"POT-Creation-Date: 2025-06-03 00:43+0000\n"
 "PO-Revision-Date: 2025-05-19 03:40+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -365,7 +365,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "გასწორდა ბევრი IMAP-ის შეცდომა"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:299 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3908,12 +3908,12 @@ msgstr "მისამართების წიგნში ჩამატ�
 msgid "Contact created successfully"
 msgstr "კონტაქტი წარმატებით შეიქმნა"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "კონტაქტის შენახვა შეუძლებელია: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5856,27 +5856,31 @@ msgstr "დახურული დამთვალიერებლის �
 msgid "Allow to configure spam folder in identity"
 msgstr "იდენტიფიკატორში სპამის საქაღალდის მორგების დაშვება"
 
-#: kmreaderwin.cpp:301
+#: kmreaderwin.cpp:273
+msgid "Add AI plugin"
+msgstr ""
+
+#: kmreaderwin.cpp:302
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE-ის ელფოსტის კლიენტი"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "საქაღალდის შემცველობის მიღება"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Please wait . . ."
 msgstr "მოითმინეთ . . ."
 
-#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
+#: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, kde-format
 msgid "Offline"
 msgstr "გათიშული"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:319
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5885,7 +5889,7 @@ msgstr ""
 "KMail ამჟამად გათიშულ რეჟიმშია. ჩასართავად <a href=\"kmail:goResourceOnline"
 "\">აქ</a> დააწკაპუნეთ . . .</p>"
 
-#: kmreaderwin.cpp:327
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5894,7 +5898,7 @@ msgstr ""
 "ანგარიში ამჟამად გათიშულია. ჩასართავად <a href=\"kmail:goResourceOnline"
 "\">აქ</a> დააწკაპუნეთ . . .</p>"
 
-#: kmreaderwin.cpp:906
+#: kmreaderwin.cpp:907
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "კონტაქტი წარმატებით შეიცვალა"

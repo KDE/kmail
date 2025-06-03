@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:43+0000\n"
+"POT-Creation-Date: 2025-06-03 00:43+0000\n"
 "PO-Revision-Date: 2024-12-29 11:09+0100\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -380,7 +380,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Viele IMAP-Fehler beseitigt"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:299 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -3990,12 +3990,12 @@ msgstr "Zum Adressbuch hinzufügen"
 msgid "Contact created successfully"
 msgstr "Der Kontakt wurde erfolgreich erstellt"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Der Kontakt kann nicht gespeichert werden: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5964,27 +5964,31 @@ msgstr "Geschlossenen Betrachter wieder öffnen"
 msgid "Allow to configure spam folder in identity"
 msgstr ""
 
-#: kmreaderwin.cpp:301
+#: kmreaderwin.cpp:273
+msgid "Add AI plugin"
+msgstr ""
+
+#: kmreaderwin.cpp:302
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "Das E-Mail-Programm von KDE"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Ordner-Inhalt wird bezogen"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Bitte warten ..."
 
-#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
+#: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:319
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5993,7 +5997,7 @@ msgstr ""
 "KMail ist momentan im Offline-Modus. Klicken Sie <a href=\"kmail:goOnline"
 "\">hier</a>, um online zu gehen ...</p>"
 
-#: kmreaderwin.cpp:327
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6002,7 +6006,7 @@ msgstr ""
 "Das Postfach ist momentan im Offline-Modus. Klicken Sie <a href=\"kmail:"
 "goResourceOnline\">hier</a>, um online zu gehen ...</p>"
 
-#: kmreaderwin.cpp:906
+#: kmreaderwin.cpp:907
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Der Kontakt wurde erfolgreich geändert"

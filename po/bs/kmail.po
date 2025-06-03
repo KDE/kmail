@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:43+0000\n"
+"POT-Creation-Date: 2025-06-03 00:43+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -402,7 +402,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:299 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4221,12 +4221,12 @@ msgstr "Dodaj u adresar"
 msgid "Contact created successfully"
 msgstr "Kontakt uspješno kreiran."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktna adresa se ne može smjestiti: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -6337,31 +6337,35 @@ msgstr "Postavi novu poruku"
 msgid "Allow to configure spam folder in identity"
 msgstr ""
 
-#: kmreaderwin.cpp:301
+#: kmreaderwin.cpp:273
+msgid "Add AI plugin"
+msgstr ""
+
+#: kmreaderwin.cpp:302
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "KDE elektronska pošta"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 #| msgid "Retrieving folder properties"
 msgid "Retrieving Folder Contents"
 msgstr "Preuzimam svojstva fascikle"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "Molim sačekajte"
 
-#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
+#: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, fuzzy, kde-format
 #| msgid "offline"
 msgid "Offline"
 msgstr "van veze"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:319
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6375,7 +6379,7 @@ msgstr ""
 "Kliknite <a href=\"kmail:goOnline\">ovde</a> da bi se povezali . . .</"
 "p>&nbsp;"
 
-#: kmreaderwin.cpp:327
+#: kmreaderwin.cpp:328
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in "
@@ -6389,7 +6393,7 @@ msgstr ""
 "Kliknite <a href=\"kmail:goOnline\">ovde</a> da bi se povezali . . .</"
 "p>&nbsp;"
 
-#: kmreaderwin.cpp:906
+#: kmreaderwin.cpp:907
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakt izmijenjen uspješno."

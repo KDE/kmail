@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:43+0000\n"
+"POT-Creation-Date: 2025-06-03 00:43+0000\n"
 "PO-Revision-Date: 2025-04-20 18:15+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -382,7 +382,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "பல IMAP பிழைகளை சரிசெய்தார்"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:299 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "கேமெயில்"
@@ -3855,12 +3855,12 @@ msgstr "முகவரிப்புத்தகத்தில் சேர�
 msgid "Contact created successfully"
 msgstr "தொடர்பு வெற்றிகரமாக உருவாக்கப்பட்டது"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "தொடர்பை சேமிக்க முடியவில்லை: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5784,27 +5784,31 @@ msgstr "முடிய சாளரத்தை திரும்பப்ப�
 msgid "Allow to configure spam folder in identity"
 msgstr "ஸ்பேம் அடைவை அடையாளத்தில் அமைக்கவிடு"
 
-#: kmreaderwin.cpp:301
+#: kmreaderwin.cpp:273
+msgid "Add AI plugin"
+msgstr ""
+
+#: kmreaderwin.cpp:302
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "கே.டீ.யீ.யின் மின்னஞ்சல் செயலி"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "அடைவுகளின் உள்ளடக்கங்கள் மீட்டெடுக்கப்படுகின்றன"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, kde-format
 msgid "Please wait . . ."
 msgstr "காத்திருக்கவும்..."
 
-#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
+#: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, kde-format
 msgid "Offline"
 msgstr "தொடர்பற்ற நிலை"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:319
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5813,7 +5817,7 @@ msgstr ""
 "கேமெயில் இப்போது தொடர்பற்ற நிலையில் உள்ளது. தொடர்புள்ள நிலைக்கு மாற <a href=\"kmail:"
 "goOnline\">இங்கு</a> கிளிக் செய்யுங்கள் . . .</p>"
 
-#: kmreaderwin.cpp:327
+#: kmreaderwin.cpp:328
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5822,7 +5826,7 @@ msgstr ""
 "இக்கணக்கு இப்போது தொடர்பற்ற நிலையில் உள்ளது. தொடர்புள்ள நிலைக்கு மாற <a href=\"kmail:"
 "goResourceOnline\">இங்கு</a> கிளிக் செய்யுங்கள் . . .</p>"
 
-#: kmreaderwin.cpp:906
+#: kmreaderwin.cpp:907
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "தொடர்பு வெற்றிகரமாக மாற்றப்பட்டது"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-29 00:43+0000\n"
+"POT-Creation-Date: 2025-06-03 00:43+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -429,7 +429,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmreaderwin.cpp:298 kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmreaderwin.cpp:299 kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -4277,12 +4277,12 @@ msgstr "افزودن به کتاب نشانی"
 msgid "Contact created successfully"
 msgstr "پیامها با موفقیت حذف شدند."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:896
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:897
 #, fuzzy, kde-format
 #| msgid "Unable to edit attachment"
 msgctxt "@title:window"
@@ -6381,31 +6381,35 @@ msgstr "پیام جدید"
 msgid "Allow to configure spam folder in identity"
 msgstr ""
 
-#: kmreaderwin.cpp:301
+#: kmreaderwin.cpp:273
+msgid "Add AI plugin"
+msgstr ""
+
+#: kmreaderwin.cpp:302
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "کارخواه رایانامه KDE"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 #| msgid "Retrieving folderlist"
 msgid "Retrieving Folder Contents"
 msgstr "بازیابی فهرست پوشه"
 
-#: kmreaderwin.cpp:310
+#: kmreaderwin.cpp:311
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "لطفاً، صبر کنید"
 
-#: kmreaderwin.cpp:316 kmreaderwin.cpp:325
+#: kmreaderwin.cpp:317 kmreaderwin.cpp:326
 #, fuzzy, kde-format
 #| msgid "offline"
 msgid "Offline"
 msgstr "برون‌خط"
 
-#: kmreaderwin.cpp:318
+#: kmreaderwin.cpp:319
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6418,7 +6422,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>برون‌خط</h2><p>در حال حاضر، KMail در حالت برون‌خط "
 "است. <a href=\"kmail:goOnline\">اینجا</a> را فشار دهید تا برخط شود . . .</p> "
 
-#: kmreaderwin.cpp:327
+#: kmreaderwin.cpp:328
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6431,7 +6435,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>برون‌خط</h2><p>در حال حاضر، KMail در حالت برون‌خط "
 "است. <a href=\"kmail:goOnline\">اینجا</a> را فشار دهید تا برخط شود . . .</p> "
 
-#: kmreaderwin.cpp:906
+#: kmreaderwin.cpp:907
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Contact modified successfully"

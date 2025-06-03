@@ -106,9 +106,9 @@
 >Hulp verkrijgen</title>
  
 <para
->De website van &kmail; kan gevonden worden op <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail"
->https://userbase.kde.org/KMail</ulink
->. Daar vindt u ook nuttige links (&eg; naar de discussielijsten voor gebruikers- en ontwikkelaars en de wiki-pagina's van de gemeenschap). Fouten in het programma kunt u rapporteren door te kiezen voor <menuchoice
+>De website van &kmail; kan gevonden worden op <ulink url="https://apps.kde.org/kmail2/"
+>https://apps.kde.org/kmail2/</ulink
+>. Daar vindt u ook nuttige koppelingen (&eg; naar de discussielijsten voor gebruikers- en ontwikkelaars en de wiki-pagina's van de gemeenschap). Fouten in het programma kunt u rapporteren door te kiezen voor <menuchoice
 ><guimenu
 >Help</guimenu
 ><guimenuitem
