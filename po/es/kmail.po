@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-03 00:43+0000\n"
-"PO-Revision-Date: 2025-05-20 01:37+0100\n"
+"PO-Revision-Date: 2025-06-03 19:16+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -5895,7 +5895,7 @@ msgstr "Permitir configurar la carpeta de correo basura en la identidad"
 
 #: kmreaderwin.cpp:273
 msgid "Add AI plugin"
-msgstr ""
+msgstr "Añadir el complemento de IA"
 
 #: kmreaderwin.cpp:302
 #, kde-format

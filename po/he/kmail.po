@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-03 00:43+0000\n"
-"PO-Revision-Date: 2025-05-19 09:06+0300\n"
+"PO-Revision-Date: 2025-06-03 05:06+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -5814,7 +5814,7 @@ msgstr "לאפשר להגדיר תיקיית ספאם בזהות"
 
 #: kmreaderwin.cpp:273
 msgid "Add AI plugin"
-msgstr ""
+msgstr "הוספת תוסף בינה מלאכותית"
 
 #: kmreaderwin.cpp:302
 #, kde-format
