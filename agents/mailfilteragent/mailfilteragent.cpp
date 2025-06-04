@@ -80,8 +80,6 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     connect(collectionMonitor, &Akonadi::Monitor::collectionRemoved, this, &MailFilterAgent::mailCollectionRemoved);
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MailFilterAgent::slotInstanceRemoved);
 
-    QTimer::singleShot(0, this, &MailFilterAgent::initializeCollections);
-
     qDBusRegisterMetaType<QList<qint64>>();
 
     new MailFilterAgentAdaptor(this);
@@ -89,6 +87,12 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
 
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
+
+    connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, [this](Akonadi::ServerManager::State state) {
+        if (state == Akonadi::ServerManager::Running) {
+            initializeCollections();
+        }
+    });
 
     QDBusConnection::sessionBus().registerService(service);
     // Enabled or not filterlogdialog

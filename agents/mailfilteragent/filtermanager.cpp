@@ -289,7 +289,6 @@ FilterManager::FilterManager(QObject *parent)
     : QObject(parent)
     , d(new Private(this))
 {
-    readConfig();
 }
 
 FilterManager::~FilterManager()
