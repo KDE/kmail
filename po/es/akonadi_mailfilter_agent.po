@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-02 00:42+0000\n"
+"POT-Creation-Date: 2025-06-05 00:43+0000\n"
 "PO-Revision-Date: 2024-07-30 16:42+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -171,23 +171,23 @@ msgstr "<b>Las reglas de filtrado han coincidido.</b>"
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Filtrado iniciado en el mensaje «%1» de «%2» a las «%3»:</b>"
 
-#: filtermanager.cpp:592
+#: filtermanager.cpp:591
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrando mensajes"
 
-#: mailfilteragent.cpp:102
+#: mailfilteragent.cpp:106
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Registro de filtrado de correo activado"
 
-#: mailfilteragent.cpp:166
+#: mailfilteragent.cpp:170
 #, kde-format
 msgid "Ready"
 msgstr "Preparado"
 
-#: mailfilteragent.cpp:252
+#: mailfilteragent.cpp:256
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrando en %1"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-02 00:42+0000\n"
+"POT-Creation-Date: 2025-06-05 00:43+0000\n"
 "PO-Revision-Date: 2021-07-13 16:25+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -178,23 +178,23 @@ msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
 "<b>\"%3\"-dakı \"%2\"-dan \"%1\" məktubun sezgəclənməsinə başlanıldı :</b>"
 
-#: filtermanager.cpp:592
+#: filtermanager.cpp:591
 #, kde-format
 msgid "Filtering messages"
 msgstr "Məktublar süzgəclənir"
 
-#: mailfilteragent.cpp:102
+#: mailfilteragent.cpp:106
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Poçt süzgəci jurnalı işləkdir"
 
-#: mailfilteragent.cpp:166
+#: mailfilteragent.cpp:170
 #, kde-format
 msgid "Ready"
 msgstr "Hazırdır"
 
-#: mailfilteragent.cpp:252
+#: mailfilteragent.cpp:256
 #, kde-format
 msgid "Filtering in %1"
 msgstr "%1-də süzgəclənir"
