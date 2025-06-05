@@ -86,9 +86,13 @@ MailFilterAgent::MailFilterAgent(const QString &id)
 
     QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
+    Akonadi::ServerManager *const serverManager = Akonadi::ServerManager::self();
+    const QString service = serverManager->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
 
-    connect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, [this](Akonadi::ServerManager::State state) {
+    if (serverManager->state() == Akonadi::ServerManager::Running) {
+        initializeCollections();
+    }
+    connect(serverManager, &Akonadi::ServerManager::stateChanged, this, [this](Akonadi::ServerManager::State state) {
         if (state == Akonadi::ServerManager::Running) {
             initializeCollections();
         }
