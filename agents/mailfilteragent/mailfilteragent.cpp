@@ -91,12 +91,16 @@ MailFilterAgent::MailFilterAgent(const QString &id)
 
     if (serverManager->state() == Akonadi::ServerManager::Running) {
         initializeCollections();
+    } else {
+        connect(serverManager, &Akonadi::ServerManager::stateChanged, this, [this](Akonadi::ServerManager::State state) {
+            if (state == Akonadi::ServerManager::Running) {
+                // Only call initializeCollections() once to minimize differences to previous startup logic; it might
+                // make sense to re-initialize with reload() at every Running transition instead.
+                disconnect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, nullptr);
+                initializeCollections();
+            }
+        });
     }
-    connect(serverManager, &Akonadi::ServerManager::stateChanged, this, [this](Akonadi::ServerManager::State state) {
-        if (state == Akonadi::ServerManager::Running) {
-            initializeCollections();
-        }
-    });
 
     QDBusConnection::sessionBus().registerService(service);
     // Enabled or not filterlogdialog
