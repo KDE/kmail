@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-05 00:43+0000\n"
+"POT-Creation-Date: 2025-06-06 00:43+0000\n"
 "PO-Revision-Date: 2024-11-22 15:41+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -180,18 +180,18 @@ msgstr "<b>Начало фильтрации сообщения «%1» от «%2
 msgid "Filtering messages"
 msgstr "Фильтрация писем"
 
-#: mailfilteragent.cpp:106
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Журнал фильтрации почты включён"
 
-#: mailfilteragent.cpp:170
+#: mailfilteragent.cpp:178
 #, kde-format
 msgid "Ready"
 msgstr "Готово"
 
-#: mailfilteragent.cpp:256
+#: mailfilteragent.cpp:264
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Фильтрация коллекции источника данных «%1»"

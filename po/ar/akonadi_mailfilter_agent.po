@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-05 00:43+0000\n"
+"POT-Creation-Date: 2025-06-06 00:43+0000\n"
 "PO-Revision-Date: 2024-08-15 11:48+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -173,18 +173,18 @@ msgstr "<b>بدأ ترشيح الرّسالة ”%1“ من ”%2“ في ”%3�
 msgid "Filtering messages"
 msgstr "يرشّح الرّسائل"
 
-#: mailfilteragent.cpp:106
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "فُعّل تسجيل مرشّح البريد"
 
-#: mailfilteragent.cpp:170
+#: mailfilteragent.cpp:178
 #, kde-format
 msgid "Ready"
 msgstr "جاهز"
 
-#: mailfilteragent.cpp:256
+#: mailfilteragent.cpp:264
 #, kde-format
 msgid "Filtering in %1"
 msgstr "يرشّح في %1"

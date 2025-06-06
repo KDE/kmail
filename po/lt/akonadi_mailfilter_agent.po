@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-05 00:43+0000\n"
+"POT-Creation-Date: 2025-06-06 00:43+0000\n"
 "PO-Revision-Date: 2014-03-17 20:32+0200\n"
 "Last-Translator: Liudas Ališauskas <liudas@aksioma.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -172,18 +172,18 @@ msgstr ""
 msgid "Filtering messages"
 msgstr "Laiškai filtruojami"
 
-#: mailfilteragent.cpp:106
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "El. pašto filtravimo registras įjungtas"
 
-#: mailfilteragent.cpp:170
+#: mailfilteragent.cpp:178
 #, kde-format
 msgid "Ready"
 msgstr "Pasiruošęs"
 
-#: mailfilteragent.cpp:256
+#: mailfilteragent.cpp:264
 #, kde-format
 msgid "Filtering in %1"
 msgstr ""

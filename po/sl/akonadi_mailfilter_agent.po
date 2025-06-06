@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-05 00:43+0000\n"
+"POT-Creation-Date: 2025-06-06 00:43+0000\n"
 "PO-Revision-Date: 2024-07-30 09:42+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -177,18 +177,18 @@ msgstr "<b>Začni filtrirati pri sporočilu »%1« od »%2« z dne »%3«:</b>"
 msgid "Filtering messages"
 msgstr "Filtriranje sporočil"
 
-#: mailfilteragent.cpp:106
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Dnevnik filtriranja pošte je omogočen"
 
-#: mailfilteragent.cpp:170
+#: mailfilteragent.cpp:178
 #, kde-format
 msgid "Ready"
 msgstr "Pripravljen"
 
-#: mailfilteragent.cpp:256
+#: mailfilteragent.cpp:264
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtriranje v %1"
