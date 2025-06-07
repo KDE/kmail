@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-03 00:43+0000\n"
-"PO-Revision-Date: 2025-05-31 11:21+0200\n"
+"PO-Revision-Date: 2025-06-06 11:44+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -5850,7 +5850,7 @@ msgstr "Tillåt anpassning av skräppostkorg i identitet"
 
 #: kmreaderwin.cpp:273
 msgid "Add AI plugin"
-msgstr ""
+msgstr "Lägg till AI-insticksprogram"
 
 #: kmreaderwin.cpp:302
 #, kde-format
