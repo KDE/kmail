@@ -5,7 +5,7 @@ macro(add_kmail_undosend_unittest _source)
     ecm_add_test(${_source} ${_name}.h
         TEST_NAME ${_name}
         LINK_LIBRARIES kmailprivate Qt::Test Qt::Widgets
-)
+    )
 endmacro()
 
 add_kmail_undosend_unittest(undosendcomboboxtest.cpp)

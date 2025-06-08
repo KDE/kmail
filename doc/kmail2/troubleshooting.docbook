@@ -22,25 +22,25 @@
 
 <sect1 id="introduction-to-akonadi">
 <title>Introduction to &akonadi;</title>
-    
+
   <para>&kmail; has been under active development since 1997. A lot of bugs have cropped up over the years.
   Many of these have been resolved. If you are curious about any of those old bugs, please see the <ulink
   url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips">KMail/FAQs Hints and Tips</ulink>
   in the &kde; UserBase Wiki. Or visit <ulink url="https://bugs.kde.org">&kde;'s main bug tracking page</ulink>
   to learn about bugs of a more recent vintage.</para>
-  
+
   <para>At the present time (2021), many of the problems people are experiencing with &kmail; involve the &akonadi;
   server. &akonadi; is an auxiliary program that functions as an intermediary between &kmail; (plus all the other &PIM;
   applications) and a general purpose database daemon (most commonly "mysqld"). It also facilitates inter-process
   communications among the various pieces of the &PIM; applications. Depending on the way your system is configured,
-  &akonadi; may be started during the boot-up / login process. Or it may not start until you invoke a &PIM; 
+  &akonadi; may be started during the boot-up / login process. Or it may not start until you invoke a &PIM;
   application program (like &kmail;, or &kaddressbook;, or &kontact;).</para>
-  
+
   <para> There are two application programs that permit one to interact with the &akonadi; server directly: <code>akonadictl</code>
   (a terminal-oriented control program), and <code>akonadiconsole</code> (a GUI application). Here is a little information about
   those two programs.</para>
   <para>&nbsp;</para><!-- add whitespace -->
-  
+
     <sect2 id="intro-to-akonadictl">
     <title>The Akonadictl Control Program</title>
     <screenshot>
@@ -58,10 +58,10 @@
         </mediaobject>
     </screenshot>
     <para>&nbsp;</para><!-- add whitespace -->
-    
+
     <para>The preceding screenshot illustrates one of the commands one may use with the <code>akonadictl</code> program. Here
       are all the commands <code>akonadictl</code> recognizes.</para>
-    
+
     <para><screen>~$ akonadictl start</screen> Starts the &akonadi; server.</para>
     <para><screen>~$ akonadictl stop</screen> Stops the &akonadi; server.</para>
     <para><screen>~$ akonadictl restart</screen> Stops the &akonadi; server, then launches it anew.</para>
@@ -69,12 +69,12 @@
     <para><screen>~$ akonadictl instances</screen> Lists the &akonadi; server instances (more than one can
       be running at the same time).</para>
     <para><screen>~$ akonadictl vacuum</screen> Cleans up &akonadi;'s storage, or at least tries to do that.</para>
-    <para><screen>~$ akonadictl fsck</screen> Performs a file consistency check. The output from this 
+    <para><screen>~$ akonadictl fsck</screen> Performs a file consistency check. The output from this
       command can be quite voluminous, especially if you have added your own folders to &kmail;. Use this
       version of the command (piping the output through grep) to verify that your &akonadi; database is healthy,
       without producing a lot of extraneous output.</para>
     <para>
-        
+
 <screen>~ $ akonadictl fsck 2>&amp;1 | grep ^Found
 Found 0 external files.
 Found 0 external parts.
@@ -87,13 +87,13 @@ Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  
 
       RID stands for RemoteId, a named field in the mysql database tables. If there are more than 0 items
       without RID, you have a minor problem that should be corrected. If there are more than 0 dirty items
-      you may have a major problem that <emphasis>must</emphasis> be corrected. See <link 
+      you may have a major problem that <emphasis>must</emphasis> be corrected. See <link
       linkend="resource-conflict-error">"Unable to Fetch Item ..."</link> and also <link
       linkend="dealing-with-dirt">Correcting &kmail;'s "Dirty" Items</link>, below.
     </para>
     <para>&nbsp;</para><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="intro-to-akonadiconsole">
     <title>The Akonadiconsole Program</title>
     <screenshot>
@@ -111,82 +111,82 @@ Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  
         </mediaobject>
     </screenshot>
     <para>&nbsp;</para><!-- add whitespace -->
-    
+
     <para>The <code>akonadiconsole</code> program provides twelve different "windows" into the inner
       workings of the &PIM; applications. Here is a brief summary of the available views.</para>
-    
+
     <variablelist>
       <varlistentry id="ak-console-agents">
         <term><guilabel>Agents</guilabel> tab.</term>
         <listitem><para>Here you can see a list of the user agents (processors).</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-browser">
         <term><guilabel>Browse</guilabel> tab.</term>
         <listitem><para>This tab provides an overview of the various collections of data &akonadi;
           is maintaining, organized as a hierarchical tree that shows how many items reside in each
           collection.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-debugger">
         <term><guilabel>Debugger</guilabel> tab.</term>
         <listitem><para>Here you can turn debugging on and off, and view the debug message log.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-logging">
         <term><guilabel>Logging</guilabel> tab.</term>
         <listitem><para>This tab lets you view messages emitted by various &akonadi; components.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-db-browser">
         <term><guilabel>DB Browser</guilabel> tab.</term>
         <listitem><para>Use this tab to peek inside the mysql database. There are many different tables.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-db-console">
         <term><guilabel>DB Console</guilabel> tab.</term>
         <listitem><para>Here you can query the mysql database.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-query">
         <term><guilabel>Query Debugger</guilabel> tab.</term>
         <listitem><para>Use this tab to turn database query debugging on and off. &kmail; queries the mysql
           database many times in just a few seconds; output can be voluminous.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-tracker">
         <term><guilabel>Job Tracker</guilabel> tab.</term>
         <listitem><para>The &PIM; applications perform various functions by initiating "jobs". Use
           this tab to toggle job tracking on and off.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-scheduler">
         <term><guilabel>Resources Schedulers</guilabel> tab.</term>
         <listitem><para>Here you can see which resources are needed when a particular &PIM; function is
           invoked. You can see a list of all the &akonadi; resources in your system in the
           <filename>~/.config/akonadi/</filename> directory.</para></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-notif-monitor">
         <term><guilabel>Notification Monitor</guilabel> tab.</term>
         <listitem><para>Use this tab to monitor notifications sent by various &akonadi; resources.</para></listitem>
       </varlistentry>
-      
+
       <varlistentry id="ak-console-search">
         <term><guilabel>Item Search</guilabel> tab.</term>
         <listitem><para>This tab provides a generic search function. Searches can be restricted to Calendar, Contact,
           Email, or Note.</para></listitem>
       </varlistentry>
-      
+
       <varlistentry id="ak-console-monitors">
         <term><guilabel>Monitors</guilabel> tab.</term>
         <listitem><para>Here you can see a list of all the monitors running under &akonadi;, and also view
           their properties. Agents, resources, and even some application programs are monitored.</para></listitem>
       </varlistentry>
     </variablelist>
-    
+
     </sect2>
-    
+
 </sect1>
 
 <!-- <sect1 id="kmail2-doesnt-send-mail">
@@ -332,7 +332,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 <title>"Unable to Fetch Item from Backend" When Entering &IMAP; Folder</title>
 
   <para>There are at least two possible reasons for this. Here are some workarounds.</para>
-  
+
   <variablelist>
     <varlistentry>
       <term>Workaround 1</term>
@@ -344,7 +344,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
         <para>If this does not work, try workaround 2 (below).</para>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry>
       <term>Workaround 2</term>
       <listitem>
@@ -361,7 +361,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
       </listitem>
     </varlistentry>
   </variablelist>
-  <para>See also <link linkend="your-mails-are-not-being-sent">the next topic</link> to learn how 
+  <para>See also <link linkend="your-mails-are-not-being-sent">the next topic</link> to learn how
     <application>akonadiconsole</application> can be helpful.</para>
 </sect1>
 
@@ -374,23 +374,23 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
   <para>To remedy this, it might help to abort the current action and restart it. First, quit &kmail; by using &krunner;
     (<keycombo>&Alt;<keycap>F2</keycap></keycombo>) or &konsole; and typing: <userinput><command>kquitapp kmail</command></userinput> .
     Note that a normal <keycombo>&Alt;<keycap>F4</keycap></keycombo> or <menuchoice><guimenu>File</guimenu><guimenuitem>Quit</guimenuitem>
-    </menuchoice> does <emphasis>not</emphasis> do the trick! Wait a minute, then start &kmail; again. Now start 
+    </menuchoice> does <emphasis>not</emphasis> do the trick! Wait a minute, then start &kmail; again. Now start
     <application>akonadiconsole</application> using &krunner; (<keycombo>&Alt;<keycap>F2</keycap></keycombo>) or &konsole;. Go to the
     <guilabel>Mail Dispatcher Agent</guilabel> (under the <guilabel>Agents</guilabel> tab), do a right-click, and abort the current action.
     You will most likely get some error messages popping up. Now go back to &kmail; and choose <menuchoice><guimenu>File</guimenu>
     <guimenuitem>Send Queued Messages</guimenuitem></menuchoice>. Now it might work. If not, instead of aborting the current action,
     try toggling the offline/online status of the <guilabel>Mail Dispatcher Agent</guilabel> (same context menu) or restarting things
     as mentioned in workaround 2 of <link linkend="unable-to-fetch-item-from-backend"> the previous topic</link>.</para>
-    
+
   <para><note><para>akonadiconsole can be quite helpful for a number of situations because it shows all the <quote>agents</quote>,
     the separate components of the &kmail; backend. You can stop and start them, put them in offline mode, abort ongoing actions &etc;.
     It can be very helpful when &kmail; is acting cranky.</para></note></para>
-    
+
   <para>Sometimes the <guilabel>Mail Dispatcher Agent</guilabel> fails to function because the dbus daemon (a system-level
     facility for inter-process communications) is not functioning correctly. Your best bet in this circumstance is simply to
     reboot the system. The dbus daemon is one of the first processes started when you log in to the &kde; desktop, so it
     cannot be easily stopped and restarted. The whole &plasma; environment depends on it.</para>
-    
+
 </sect1>
 
 <sect1 id="resource-conflict-error">
@@ -422,10 +422,10 @@ Found 0 dirty items.</screen> <!-- Can't indent here ... messes up the output.  
   <step><para>You need to know how to connect directly to the mysql server. Use the <code>ps</code> and
     <code>grep</code> commands to do this.
 <screen>~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
 --defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/ 
---socket=/run/user/1000/akonadi/mysql.socket 
+--datadir=/home/david/.local/share/akonadi/db_data/
+--socket=/run/user/1000/akonadi/mysql.socket
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen></para>
 <para>&nbsp;</para><!-- add whitespace --></step>
@@ -455,9 +455,9 @@ Bye</screen>
     say "mysql --socket= ..." you will be in a dialog with the mysql server (aka "MariaDB"), which provides a &gt; prompt.
     The entire dialog is presented here, for clarity. User input lines are marked with &lt;== in the preceding
     illustration.</para></step>
-  
+
 </procedure>
-  
+
   <para>When you restart &kmail;, those pesky duplicate messages will be gone. They were merely phantoms caused by the NULL
     pointers in the mysql database tables.</para>
 
@@ -465,9 +465,9 @@ Bye</screen>
 
 <sect1 id="cleaning-aux-storage">
 <title>Keeping &kmail;'s Auxiliary Storage Areas Clean</title>
-    
+
   <para>&kmail; stores data in several different places on your machine. Most of these places are inside the
-    <filename>~/.local/share/</filename> directory somewhere. For instance, on most Linux distros, your 
+    <filename>~/.local/share/</filename> directory somewhere. For instance, on most Linux distros, your
     <guilabel>Local Folders</guilabel> are in <filename>~/.local/share/local-mail/</filename> . &akonadi; stores
     most of its data in <filename>~/.local/share/akonadi/</filename> .
 <screen>~ $ cd .local/share/akonadi
@@ -481,7 +481,7 @@ Akonadi.error.old  db_misc  file_lost+found  search_db
       the mysqld daemon that serves as &akonadi;'s backend. The two directories <filename>db_data</filename>  and
       <filename>search_db</filename>  contain the actual mysql database tables. There are also a couple of mysql
       log files in <filename>db_data</filename>  that might be helpful if and when &akonadi; acts up.</para>
-  
+
   <para>The two directories <filename>file_db_data</filename>  and <filename>file_lost+found</filename>  contain auxiliary
       data associated with asynchronous processing. &akonadi; does not automatically clean out the
       <filename>file_lost+found</filename>  directory, so you may wish to clean those files up manually from time to time
@@ -507,7 +507,7 @@ Found 6 collections without RID.
 Found 0 items without RID.
 Found 750 dirty items.</screen> <!-- Can't indent here ... messes up the output.  -->
   </para>
-  
+
   <para>The "dirty" flag on an item in pimitemtable (one of the tables in the &akonadi; database) is used to control certain
     aspects of asynchronous processing. It is set true when there are operations pending for a particular email message. Most
     of the time, the "dirty" flag is cleared one or two seconds later, when the once pending operation finishes up.</para>
@@ -524,37 +524,37 @@ Found 750 dirty items.</screen> <!-- Can't indent here ... messes up the output.
 
   <procedure>
     <step><para>Exit &kmail; and stop the &akonadi; server with a terminal command: <code>akonadictl stop</code> .</para></step>
-    
+
     <step><para>Make a backup copy of all your email messages. You may be able to use <ulink url="help:/pimdataexporter">PIM
       Data Exporter</ulink> for this purpose. Or you may use &ark; to make an archive, or &dolphin; to make a second copy of
       <filename>~/.local/share/local-mail/</filename> somewhere else on your hard disk. If you're adventurous, you might just
       rename your local folders directory to something like <filename>local-mail-save</filename> . But it's safer to be sure
       you have a backup copy of your messages before you proceed.</para></step>
-      
+
     <step><para>You should also make a backup copy of any filters you have created, and make sure you know how to restore any
       custom <guilabel>Sent mail folder</guilabel>, <guilabel>Drafts folder</guilabel>, or <guilabel>Templates folder</guilabel>
       entries associated with your &kmail; identities. The next step will remove all your personally customized mail folders,
       and you will need to patch some stuff up after &akonadi; rebuilds its database tables.</para></step>
-      
+
     <step><para>Now delete all the folders inside of the directory <filename>local-mail</filename>, or rename that directory
       to something like <filename>local-mail-save</filename> . Then start the &kmail; program. This will force &akonadi; to
       erase all the database table entries associated with email messages. You will see your old folder names, briefly, but these
       will disappear when &akonadi; finishes deleting all the "dirty" items (and all the clean ones, too).</para></step>
-      
+
     <step><para>Exit &kmail; and stop the &akonadi; server as explained in step 1, then restore the backup copy of your messages
       (created in step 2) to the <filename>~/.local/share/local-mail/</filename> directory.</para></step>
-      
+
     <step><para>Start &kmail; up again, and force &akonadi; to re-sync the database. The easiest way to do this is to <menuchoice>
       <shortcut><keycombo action="simul">&Ctrl;<keycap>L</keycap></keycombo></shortcut><guimenu>File</guimenu><guimenuitem>Check
       Mail</guimenuitem></menuchoice>; &akonadi; automatically re-syncs all the folders when it fetches mail. This will take several
       minutes to complete, depending on how many messages you have saved in your &kmail; folders. But when the process is complete
       all the "dirty" items will be gone.</para></step>
-      
+
     <step><para>Finally, you will want to restore your mail filter rules backed up in step 3, and check that all the custom folder
       items (<guilabel>Sent mail folder</guilabel>, &etc;) for your identities are set the way you want them. You will also need
       to reset any custom folder properties you had set up, and you will probably have a bunch of spurious "Unread Message"
       notifications to deal with. But your &akonadi; database tables will be all clean and shiny once again!</para></step>
-    
+
   </procedure>
 
 

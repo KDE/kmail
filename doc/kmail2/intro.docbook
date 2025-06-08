@@ -53,7 +53,7 @@ section first.</para>
 be done with <link linkend="keyboard-shortcuts">Keyboard Shortcuts</link>.</para>
 </listitem>
 <listitem>
-<para>Although &kmail; is very reliable, you should keep 
+<para>Although &kmail; is very reliable, you should keep
 backups of your messages, &ie;, use one of the export/archive options listed in <link
 linkend="backups">Backup Options</link> to back up your settings and email regularly.</para>
 </listitem>
@@ -81,7 +81,7 @@ for details.</para>
 <para>We hope you will enjoy &kmail;!</para>
 <sect2 id="getting-help">
 <title>Getting Help</title>
- 
+
 <para>&kmail;'s homepage can be found at <ulink url="https://apps.kde.org/kmail2/">https://apps.kde.org/kmail2/</ulink>. There you will
 find useful links (&eg;, to the user and developer mailing lists, and to the community wiki pages.) Please report any bugs in &kmail; using
 <menuchoice><guimenu>Help</guimenu><guimenuitem>Report Bug...</guimenuitem></menuchoice>.</para>

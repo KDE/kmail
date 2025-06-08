@@ -3,4 +3,3 @@ File=followupreminderagentsettings.kcfg
 ClassName=FollowUpReminderAgentSettings
 Singleton=true
 Mutators=true
-

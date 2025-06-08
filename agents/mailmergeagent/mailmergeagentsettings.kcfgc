@@ -3,4 +3,3 @@ File=mailmergeagentsettings.kcfg
 ClassName=MailMergeAgentSettings
 Singleton=true
 Mutators=true
-

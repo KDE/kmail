@@ -1,8 +1,6 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: BSD-3-Clause
-set(common_SRCS
-    ${CMAKE_CURRENT_BINARY_DIR}/../unifiedmailboxagent_debug.cpp
-)
+set(common_SRCS ${CMAKE_CURRENT_BINARY_DIR}/../unifiedmailboxagent_debug.cpp)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/..)
 
 add_definitions(-DUNIT_TESTS)

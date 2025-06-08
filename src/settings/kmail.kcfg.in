@@ -82,7 +82,7 @@
 
     <group name="General">
       <entry key="PlasmaActivitySupport" type="Bool">
-         <default>false</default> 
+         <default>false</default>
       </entry>
       <entry name="WarnBeforeExpire" type="Bool" key="warn-before-expire">
         <default>true</default>
@@ -98,7 +98,7 @@
       <entry name="ShowUnreadInTaskbar" type="Bool">
       <label>Show Unread Email in TaskBar</label>
         <default>true</default>
-      </entry>      
+      </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
         <default>kwrite %f</default>

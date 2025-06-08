@@ -3,7 +3,7 @@
 "dtd/kdedbx45.dtd" [
   <!ENTITY i18n-followupreminderagent "<application>Follow Up Reminder Agent</application>">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % English "INCLUDE"> 
+  <!ENTITY % English "INCLUDE">
 ]>
 
 <article id="followupreminder" lang="&language;">
@@ -41,7 +41,7 @@
 <title>Using &i18n-followupreminderagent;</title>
 
 <para>Use <menuchoice><guimenu>Options</guimenu><guimenuitem>Create Follow Up Reminder</guimenuitem></menuchoice>
-in &kmail;'s composer window to open a dialog which allows you to create a reminder to follow up your current email 
+in &kmail;'s composer window to open a dialog which allows you to create a reminder to follow up your current email
 at a specific date.</para>
 
 <screenshot>

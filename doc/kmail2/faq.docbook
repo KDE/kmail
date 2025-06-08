@@ -20,24 +20,24 @@
 <qandaentry>
   <question><para>How can I set Firefox as my default browser?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You want to click on a link in &kmail; and have the link opened in 
+    <para><emphasis>Problem:</emphasis> You want to click on a link in &kmail; and have the link opened in
     <application>Firefox</application>. At the moment, another browser is used. You want to change this.</para>
-    <para><emphasis>Solution:</emphasis> This change will affect all of &kde;, not just &kmail;. Select <menuchoice> 
-    <guimenu>&systemsettings;</guimenu><guisubmenu>Default Applications</guisubmenu><guimenuitem>Web 
+    <para><emphasis>Solution:</emphasis> This change will affect all of &kde;, not just &kmail;. Select <menuchoice>
+    <guimenu>&systemsettings;</guimenu><guisubmenu>Default Applications</guisubmenu><guimenuitem>Web
     Browser</guimenuitem><guimenuitem>Mozilla Firefox</guimenuitem></menuchoice>.</para>
-    
+
     <para>If you are an administrator and want to make this setting automatically for your users, do this.</para>
     <itemizedlist>
       <listitem>
         <para>Run <screen># qtpaths --paths ConfigLocation</screen> in a terminal. This will display the path(s) leading to
         configuration files for KDE programs in your system. Use the path starting in each user's Home directory, and
-        locate the file named <filename>kdeglobals</filename>, then add this line under category 
+        locate the file named <filename>kdeglobals</filename>, then add this line under category
         <guilabel>[General]</guilabel>:</para>
         <para><userinput>BrowserApplication[$e]=firefox.desktop</userinput>
         </para>
       </listitem>
     </itemizedlist>
-    <para>You can also try the script in 
+    <para>You can also try the script in
     <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults">Tutorials/
     Modify_KDE_Software_Defaults</ulink></para>
     <note><para>The actual physical location of configuration variables is distribution dependent. Do not
@@ -51,13 +51,13 @@
   <question><para>How do I control my Roaming profile's connection?</para></question>
   <answer>
     <para><emphasis>Problem:</emphasis> You set up a <emphasis>Roaming profile</emphasis> so you can access your
-    home server while you are on the road, but it keeps trying to connect even when you are at home. 
+    home server while you are on the road, but it keeps trying to connect even when you are at home.
     Auto-connection is disabled in the setup screens.</para>
-    <para><emphasis>Solution:</emphasis> Navigate to <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure 
+    <para><emphasis>Solution:</emphasis> Navigate to <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure
     KMail</guisubmenu><guimenuitem>Accounts</guimenuitem><guimenuitem>Receiving (tab)</guimenuitem>
-    <guimenuitem>(select the account to exclude)</guimenuitem><guimenuitem>Retrieval Options</guimenuitem> 
-    </menuchoice>, then uncheck <guilabel>Include in Manual Mail Check</guilabel>. This will exclude that profile 
-    when you hit the download icon, but the account will still be available from the drop-down list, making it easy 
+    <guimenuitem>(select the account to exclude)</guimenuitem><guimenuitem>Retrieval Options</guimenuitem>
+    </menuchoice>, then uncheck <guilabel>Include in Manual Mail Check</guilabel>. This will exclude that profile
+    when you hit the download icon, but the account will still be available from the drop-down list, making it easy
     to retrieve your mail when away from home.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
@@ -67,13 +67,13 @@
   <answer>
     <para><emphasis>Problem:</emphasis> You want to store the messages you have sent in a special folder. Maybe you
     are using an &IMAP; server and wish to store your sent mail on the server, not in a local folder.</para>
-    <para><emphasis>Solution:</emphasis> In &kmail;, navigate to 
-    <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure 
-    KMail</guisubmenu><guimenuitem>Identities</guimenuitem><guimenuitem>(Choose an 
-    identity)</guimenuitem><guimenuitem>Modify</guimenuitem><guimenuitem>Advanced</guimenuitem><guimenuitem>Sent-mail 
+    <para><emphasis>Solution:</emphasis> In &kmail;, navigate to
+    <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure
+    KMail</guisubmenu><guimenuitem>Identities</guimenuitem><guimenuitem>(Choose an
+    identity)</guimenuitem><guimenuitem>Modify</guimenuitem><guimenuitem>Advanced</guimenuitem><guimenuitem>Sent-mail
     folder</guimenuitem></menuchoice> and select the folder you want to use.</para>
     <para>Alternatively, you can use the <guilabel>Sent-Mail Folder</guilabel> field (accessible via the
-    <guimenu>View</guimenu> menu in the composer window) to override the default sent mail folder for a particular 
+    <guimenu>View</guimenu> menu in the composer window) to override the default sent mail folder for a particular
     message.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
@@ -81,9 +81,9 @@
 <qandaentry>
   <question><para>How do I move trash email messages to a special folder?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You want to store trash in a special folder. Maybe you are using an &IMAP; 
+    <para><emphasis>Problem:</emphasis> You want to store trash in a special folder. Maybe you are using an &IMAP;
     server and want trashed email messages to be stored on the server, not locally.</para>
-    <para><emphasis>Solution:</emphasis> In the settings dialog select an &IMAP; account on the 
+    <para><emphasis>Solution:</emphasis> In the settings dialog select an &IMAP; account on the
     <guilabel>Accounts</guilabel> page. Click on <guibutton>Modify</guibutton> and change the
     trash folder location via the <guilabel>Advanced</guilabel> tab.</para><para>&nbsp;</para>
   </answer>
@@ -93,9 +93,9 @@
 <qandaentry>
   <question><para>How can I store encrypted messages in unencrypted form?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You exchange encrypted mail with a friend, but would like to store your 
+    <para><emphasis>Problem:</emphasis> You exchange encrypted mail with a friend, but would like to store your
     own copy unencrypted, once you have opened the message.</para>
-    <para><emphasis>Solution:</emphasis> To store emails that have been decrypted once in unencrypted format 
+    <para><emphasis>Solution:</emphasis> To store emails that have been decrypted once in unencrypted format
     thereafter, add this item to your <filename>kmail2rc</filename> configuration file, in the [Reader] section:</para>
     <para><userinput>store-displayed-messages-unencrypted=true</userinput>.</para><para>&nbsp;</para>
   </answer>
@@ -105,15 +105,15 @@
   <question><para>How do I filter spam on an &IMAP; server?</para></question>
   <!--FIXME replace this with a link to the sieve section?-->
   <answer>
-    <para><emphasis>Problem:</emphasis> You intend to read your mail from an &IMAP; server, and wonder how 
+    <para><emphasis>Problem:</emphasis> You intend to read your mail from an &IMAP; server, and wonder how
     filtering and spam handling will occur.</para>
-    <para><emphasis>Solution:</emphasis> The machine that already has your mail can become your &IMAP; server. You will 
-    have to configure a server application. <application>Dovecot</application> is one such, and the guidance on the 
-    project web pages make it relatively simple to set up. That still leaves you with the problem of filtering, as 
-    it makes sense to do that on the server (when you point &kmail; at the server you will see the folders that have 
+    <para><emphasis>Solution:</emphasis> The machine that already has your mail can become your &IMAP; server. You will
+    have to configure a server application. <application>Dovecot</application> is one such, and the guidance on the
+    project web pages make it relatively simple to set up. That still leaves you with the problem of filtering, as
+    it makes sense to do that on the server (when you point &kmail; at the server you will see the folders that have
     been created on that system). There are several options. One of the best known is
-    <application>Procmail</application>. Another one is <application>Imapfilter</application>. There is plenty of 
-    information on the internet about setting these up. Further discussion of these OSS packages is beyond the scope 
+    <application>Procmail</application>. Another one is <application>Imapfilter</application>. There is plenty of
+    information on the internet about setting these up. Further discussion of these OSS packages is beyond the scope
     of &kmail;'s documentation.</para>
     <para>&nbsp;</para>
   </answer>
@@ -122,18 +122,18 @@
 <qandaentry>
   <question><para>How can I get more screen space in &kmail;?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You are using &kmail; on a laptop or notebook, and find that the new 
+    <para><emphasis>Problem:</emphasis> You are using &kmail; on a laptop or notebook, and find that the new
     <emphasis>Aggregation</emphasis> display leaves you too little screen space.</para>
 
-    <para><emphasis>Solution:</emphasis>If you want to change the message list so each message uses a single line 
-    instead of two  lines, go to  <menuchoice><guimenu>View</guimenu><guisubmenu>Message List</guisubmenu> 
-    <guimenuitem>Theme</guimenuitem></menuchoice> and change the theme to <guilabel>Classic</guilabel>. If 
-    you want to disable grouping by date, change the aggregation using <menuchoice><guimenu>View</guimenu> 
-    <guisubmenu>Message List</guisubmenu><guimenuitem>Aggregation</guimenuitem></menuchoice> to <guilabel>Standard 
+    <para><emphasis>Solution:</emphasis>If you want to change the message list so each message uses a single line
+    instead of two  lines, go to  <menuchoice><guimenu>View</guimenu><guisubmenu>Message List</guisubmenu>
+    <guimenuitem>Theme</guimenuitem></menuchoice> and change the theme to <guilabel>Classic</guilabel>. If
+    you want to disable grouping by date, change the aggregation using <menuchoice><guimenu>View</guimenu>
+    <guisubmenu>Message List</guisubmenu><guimenuitem>Aggregation</guimenuitem></menuchoice> to <guilabel>Standard
     Mailing List</guilabel>. Now your &kmail; will look exactly like it did in early versions of the program.</para>
 
-    <para>In <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure &kmail;</guisubmenu> 
-    <guimenuitem>Appearance</guimenuitem><guimenuitem>Fonts</guimenuitem></menuchoice> you can select 
+    <para>In <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure &kmail;</guisubmenu>
+    <guimenuitem>Appearance</guimenuitem><guimenuitem>Fonts</guimenuitem></menuchoice> you can select
     <guilabel>Use custom fonts</guilabel> to change the setting for the message list. You can also set
     the font size in the <guilabel>Use custom fonts</guilabel> dialog.</para>
     <para>&nbsp;</para>
@@ -143,7 +143,7 @@
 <qandaentry>
   <question><para>How can I turn &kmail; folder tool tips off?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You are using &kmail; on a laptop or notebook, and find that the 
+    <para><emphasis>Problem:</emphasis> You are using &kmail; on a laptop or notebook, and find that the
     <emphasis>tooltips</emphasis> that pop up hide too many folder names</para>
     <para><emphasis>Solution:</emphasis> Right-click on the "Name" header above the <guilabel>Folder
     List</guilabel> and check <guilabel>Never</guilabel> under <guilabel>Display Tooltips</guilabel>.</para>
@@ -154,7 +154,7 @@
 <qandaentry>
   <question><para>How can I hide the message list tool tips?</para></question>
   <answer>
-    <para>On &kmail;, <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure 
+    <para>On &kmail;, <menuchoice><guimenu>Settings</guimenu><guisubmenu>Configure
     KMail</guisubmenu><guimenuitem>Appearance</guimenuitem><guimenuitem>Message List</guimenuitem>
     </menuchoice> tab, uncheck <menuchoice><guimenu>General</guimenu><guimenuitem>Display tooltips
     for messages and group headers</guimenuitem></menuchoice></para>
@@ -168,13 +168,13 @@
 <!-- <qandaentry>
 <question><para>How can I remove alternate line colorings?</para></question>
 <answer>
-<para>In <menuchoice><guimenu>&systemsettings;</guimenu><guisubmenu>Application 
-Appearance</guisubmenu><guimenuitem>Colors</guimenuitem><guimenuitem>Colors</guimenuitem></menuchoice>, for each color 
-set except <guilabel>Common Colors</guilabel> (which doesn't have it), change the <guilabel>Alternate 
+<para>In <menuchoice><guimenu>&systemsettings;</guimenu><guisubmenu>Application
+Appearance</guisubmenu><guimenuitem>Colors</guimenuitem><guimenuitem>Colors</guimenuitem></menuchoice>, for each color
+set except <guilabel>Common Colors</guilabel> (which doesn't have it), change the <guilabel>Alternate
 Background</guilabel> to be the same as the <guilabel>Normal Background</guilabel>.</para>
-<para><emphasis>Mandriva</emphasis> and <emphasis>Mageia</emphasis> doesn't use the name <guilabel>System 
-Settings</guilabel>.  As in <guilabel>KControl</guilabel>, the KDE 3 control centre, they name it <quote>Configure your 
-Desktop</quote> to distinguish it from <quote>Configure your Computer</quote>, a.k.a. the Mandriva/Mageia Control 
+<para><emphasis>Mandriva</emphasis> and <emphasis>Mageia</emphasis> doesn't use the name <guilabel>System
+Settings</guilabel>.  As in <guilabel>KControl</guilabel>, the KDE 3 control centre, they name it <quote>Configure your
+Desktop</quote> to distinguish it from <quote>Configure your Computer</quote>, a.k.a. the Mandriva/Mageia Control
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
@@ -182,11 +182,11 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 <!-- FAQ #10 -->
 <qandaentry id="transfer-mail-and-settings">
   <question>
-    <para>How do I transfer my mail and settings to another computer (or to another user account on the same 
+    <para>How do I transfer my mail and settings to another computer (or to another user account on the same
     machine)?</para>
   </question>
   <answer>
-    <para>Use <menuchoice><guimenu>Tools</guimenu><guimenuitem>Import/Export &kmail; Data...</guimenuitem></menuchoice> 
+    <para>Use <menuchoice><guimenu>Tools</guimenu><guimenuitem>Import/Export &kmail; Data...</guimenuitem></menuchoice>
     to import and export settings and data. Please see <ulink url="help:/pimsettingexporter">PIM Setting
     Exporter</ulink> for details.</para><para>&nbsp;</para>
   </answer>
@@ -195,12 +195,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 <qandaentry>
   <question><para>Why can't I copy my email folders to a USB stick?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You are setting up a new computer and want to transfer all your mail. You 
+    <para><emphasis>Problem:</emphasis> You are setting up a new computer and want to transfer all your mail. You
     decide to copy everything to a USB stick. The job starts, then you get a failure message:</para>
     <screen>Unable to copy ............ Invalid argument</screen>
-    
-    <para><emphasis>Solution:</emphasis> Your usb stick is <ulink 
-    url="http://wiki.linuxquestions.org/wiki/VFAT">VFAT</ulink> formatted, and therefore it can't handle 
+
+    <para><emphasis>Solution:</emphasis> Your usb stick is <ulink
+    url="http://wiki.linuxquestions.org/wiki/VFAT">VFAT</ulink> formatted, and therefore it can't handle
     <emphasis>maildir</emphasis> folder names (nor can it handle <emphasis>permissions</emphasis>, which can
     cause many other problems). You have two choices. Either format your <acronym>USB</acronym> stick as
     ext2 (or ext3 / 4 -- in which case you should be aware it can't be read by &Windows; without
@@ -242,7 +242,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
         <application>PGP</application>/<application>GnuPG</application>'s error strings,
         which often change between different versions.</para>
       </listitem>
-      
+
       <listitem>
         <para>&kmail; will not encrypt messages with an untrusted (unsigned) public key. If
         you want to encrypt to such a key you should check the identity of the key owner and
@@ -251,11 +251,11 @@ Center (MCC). Other than this name change, the method is as described above.</pa
         sign the key locally with <userinput><command>gpg</command>
         <option>--lsign</option> <replaceable>keyID</replaceable></userinput>.</para>
       </listitem>
-      
+
       <listitem>
         <para>Trusting a foreign public key without checking it is not a good idea.</para>
       </listitem>
-      
+
       <listitem>
         <para>Starting with GnuPG 1.0.7 you have to set your own key to
         ultimate owner trust: it is no longer implicitly done for you.</para>
@@ -275,7 +275,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
       </itemizedlist>
     <para>Note that some of the files are hidden: remember to also copy those if you want to backup or
     archive your mails. To be safe, use <ulink url="help:/pimdataexporter">PIM Data Exporter</ulink>
-    to back up your mail and your settings.</para><para>&nbsp;</para> 
+    to back up your mail and your settings.</para><para>&nbsp;</para>
   </answer>
 </qandaentry>
 
@@ -310,9 +310,9 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 <qandaentry>
   <question><para>Why doesn't &kmail; start up?</para></question>
   <answer>
-    <para><emphasis>Problem:</emphasis> You want to start &kmail; from a minimal desktop environment like <ulink 
+    <para><emphasis>Problem:</emphasis> You want to start &kmail; from a minimal desktop environment like <ulink
     url="https://en.wikipedia.org/wiki/Fvwm2">fvwm2</ulink>. It does not start.</para>
-    <para><emphasis>Solution:</emphasis> This happens because you are missing <emphasis>dbus</emphasis> 
+    <para><emphasis>Solution:</emphasis> This happens because you are missing <emphasis>dbus</emphasis>
     functionality. Start &kmail; from a terminal window using dbus-launch, like this:</para>
     <screen># dbus-launch kmail</screen><para>&nbsp;</para>
   </answer>
@@ -345,7 +345,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
   <question><para>How can I remove attachments from a message without removing
   the message itself?</para></question>
   <answer>
-    <para>Open the context menu with a &RMB; click on an attachment and 
+    <para>Open the context menu with a &RMB; click on an attachment and
     select <guimenuitem>Delete Attachment</guimenuitem>.</para>
     <para>&nbsp;</para>
   </answer>
@@ -437,7 +437,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
   <answer>
     <para>You should only run one instance of &kmail; at a time. We also recommend
     that you stick to a certain version and not switch back and forth between different versions.
-    Downgrading to an older version may work, but will probably cause problems because, for instance, 
+    Downgrading to an older version may work, but will probably cause problems because, for instance,
     the index file formats have been changed. Upgrading should never be a problem.</para>
     <para>&nbsp;</para>
   </answer>
@@ -457,7 +457,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
     <para>&kmail; tries to save your mail to
     <filename class="directory">~/.local/share/kmail2/autosave/</filename>
     in case of a crash. The next time you start &kmail; the mail composer should appear with your
-    message again; If it does not, try to open the files in <filename 
+    message again; If it does not, try to open the files in <filename
     class="directory">~/.local/share/kmail2/autosave/</filename> with an editor. If there are no files in
     that folder then the crash was so bad that &kmail; could not save your message.</para><para>&nbsp;</para>
   </answer>
@@ -490,7 +490,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
   <answer>
     <para>Yes, but it is important to do it the right way or you might lose
     mail. To use <application>procmail</application> and &kmail; you must
-    set up &kmail; to fetch new mail from the spoolfiles in which 
+    set up &kmail; to fetch new mail from the spoolfiles in which
     <application>procmail</application> drops your mail. Do <emphasis>not</emphasis>
     set up procmail to deliver mail to a &kmail; folder. This cannot work.</para>
 
@@ -536,7 +536,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
     <para><userinput><command>ssh</command> <option>-L 11000:127.0.0.1:110
     user@host</option></userinput></para>
 
-    <para>Modify your &kmail; configuration to fetch the mail via POP3 from 
+    <para>Modify your &kmail; configuration to fetch the mail via POP3 from
         <userinput>localhost</userinput> and ssh will tunnel the connection for you.
     </para>
 
@@ -716,7 +716,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
                       outgoing mail address</para></footnote></para>
 	                </listitem>
 	                <listitem>
-	                  <para><menuchoice><guimenu>List-Id</guimenu><guimenuitem>Contains</guimenuitem></menuchoice> 
+	                  <para><menuchoice><guimenu>List-Id</guimenu><guimenuitem>Contains</guimenuitem></menuchoice>
                       <replaceable>listID</replaceable><footnote><para>replace <replaceable>listID</replaceable> with
                       a specific mailing list id (&eg;, &lt;kdepim-users.kde.org&gt;) or just a <quote>.</quote> to include
                       outgoing mail to all mailing lists with <quote>.</quote> in their id (basically all of them).</para></footnote></para>
@@ -776,9 +776,9 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 <qandaentry>
   <question><para>How can I use E-Mail Translation?</para></question>
   <answer>
-    <para>To translate text in the composer window read the section 
+    <para>To translate text in the composer window read the section
     <link linkend="using-the-translator">Using the Built-in Translator</link></para>
-    <para>In the message preview pane highlight the text you would like to translate and select 
+    <para>In the message preview pane highlight the text you would like to translate and select
     <guimenuitem>Translate</guimenuitem> (<keycombo action="simul">&Ctrl;&Alt;<keycap>T</keycap></keycombo>)
     from the &RMB; context menu.</para><para>&nbsp;</para>
   </answer>

@@ -52,9 +52,9 @@ start working with it right away. For more in-depth information see the
   <step id="Provide-personal-data">
     <para>The first screen of the wizard is <guilabel>Provide personal data</guilabel>. It will prompt you for your basic account information: <guilabel>Full name:</guilabel>, <guilabel>E-mail address</guilabel>, and <guilabel>Password</guilabel>.
     By default, the <guilabel>Find provider settings on the Internet</guilabel> option is checked, so the wizard will attempt to retrieve the necessary
-    information from the email server. Uncheck this option if you are an expert user and you want to set up an advanced configuration. Click the 
+    information from the email server. Uncheck this option if you are an expert user and you want to set up an advanced configuration. Click the
     <guibutton>Next</guibutton> button when finished.</para>
-    
+
     <screenshot>
     <screeninfo>Account Wizard</screeninfo>
       <mediaobject>
@@ -69,17 +69,17 @@ start working with it right away. For more in-depth information see the
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <note><para>GMail accounts must use &IMAP;. If you have enabled 2-step verification for your GMail account, you will have to get a
     verification code from Google as part of the initial account setup process. You will not have to perform 2-factor verification
     after the &kmail; account has been created, because Google marks your &IMAP; link as fully trusted.</para></note>
-    
+
     <para>&nbsp;</para> <!-- whitespace -->
   </step>
   <step id="GPG-security">
-    
+
     <para>The next screen helps you set up encryption keys for your mail.</para>
-    
+
     <screenshot>
     <screeninfo>Account Wizard 2</screeninfo>
       <mediaobject>
@@ -94,7 +94,7 @@ start working with it right away. For more in-depth information see the
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para>If you want to secure your communications with GnuPG you can generate a new key and publish the key on a public key server,
     or you can import an existing key. If you decide to generate a new key pair, do not forget the password used to generate it. You will
     need that password every time you want to use the key.
@@ -104,13 +104,13 @@ start working with it right away. For more in-depth information see the
     </para>
     <para>&nbsp;</para> <!-- whitespace -->
   </step>
-  
+
   <step id="Select-account-type">
     <para>A <guilabel>Setup complete</guilabel> screen will appear if the wizard determined the account type successfully.
-      Click <guibutton>Details...</guibutton> to view the settings &kmail; has established. Click the <guibutton>Finish</guibutton> 
+      Click <guibutton>Details...</guibutton> to view the settings &kmail; has established. Click the <guibutton>Finish</guibutton>
       button to set up the account, complete the wizard, and close the window.
     </para>
-    
+
     <screenshot>
     <screeninfo>Account Wizard 3</screeninfo>
       <mediaobject>
@@ -125,19 +125,19 @@ start working with it right away. For more in-depth information see the
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para>If the wizard cannot determine your account type, the <guilabel>Select Account Type</guilabel> screen will appear. Select your account type from the
       list (if you do not know, you will need to contact your email provider). If your account type is not listed, click the <guibutton>Check for more on Internet</guibutton> button.
       Once your account type has been selected, click the <guibutton>Next</guibutton> button, and you will be presented with the <guilabel>Personal Settings</guilabel> screen.
     </para>
     <para>&nbsp;</para> <!-- whitespace -->
   </step>
-  
+
   <step id="Personal-settings">
-      
+
     <para>If the wizard could not locate your email server by searching the internet, the <guibutton>Personal Settings</guibutton>
-      screen will appear.</para>  
-        
+      screen will appear.</para>
+
     <screenshot>
     <screeninfo>Account Wizard 4</screeninfo>
       <mediaobject>
@@ -152,17 +152,17 @@ start working with it right away. For more in-depth information see the
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para>Be certain to enter all this information correctly. Select <guilabel>Download all messages for offline use</guilabel>
       if you want your messages to be accessible when you do not have an Internet connection (&IMAP; only).
       Click the <guibutton>Next</guibutton> button when finished. The <guilabel>Setup complete</guilabel> screen will appear.</para>
-    
+
     <para>Your account has now been set up, and you can click the <guibutton>Finish</guibutton> button to complete the wizard and close the window,
       or click the <guibutton>Details...</guibutton> button to review the account settings.</para>
     <para>&nbsp;</para> <!-- whitespace -->
   </step>
 </procedure>
-  
+
   <para>If you wish to create an account manually, please continue reading this chapter. Otherwise, you may safely skip ahead
     to <link linkend="testing-your-setup">Testing your Setup</link>.</para>
 
@@ -185,14 +185,14 @@ start working with it right away. For more in-depth information see the
       </mediaobject>
   </screenshot>
   <para>&nbsp;</para> <!-- whitespace -->
-  
-  <para>The <menuchoice><guimenu>Settings</guimenu><guisubmenu><inlinemediaobject><imageobject><imagedata fileref="configurebutton.png" 
+
+  <para>The <menuchoice><guimenu>Settings</guimenu><guisubmenu><inlinemediaobject><imageobject><imagedata fileref="configurebutton.png"
     format="PNG"/></imageobject></inlinemediaobject>Configure &kmail;...</guisubmenu></menuchoice> window consists of six sections:
     <guilabel>Accounts</guilabel>, <guilabel>Appearance</guilabel>, <guilabel>Composer</guilabel>,
     <guilabel>Security</guilabel>, <guilabel>Misc</guilabel>, and <guilabel>Plugins</guilabel>. </para>
 
   <para>To begin sending and receiving messages you will only have to
-    change some settings on the <guilabel>Accounts</guilabel> page.  
+    change some settings on the <guilabel>Accounts</guilabel> page.
     Here is a brief synopsis of the steps you must take to set up a new mail account.
     For a more detailed description, please read the <link linkend="configure-generalinfo">
     Configure &kmail;</link> chapter.</para>
@@ -206,7 +206,7 @@ start working with it right away. For more in-depth information see the
     <para> To create a new identity, click the <guilabel>Add...</guilabel> button on the
       <guilabel>Identities</guilabel> tab associated with the <guilabel>Accounts</guilabel> page.
       A small pop-up window will appear.</para>
-  
+
     <screenshot>
     <screeninfo>The new identity dialog</screeninfo>
       <mediaobject>
@@ -221,12 +221,12 @@ start working with it right away. For more in-depth information see the
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para>You have some options here. Give the new identity a name, and select one of the
       available choices ("With empty fields" or "Use System Settings values"). Then click
       <guilabel>OK</guilabel>. The identity configuration screen will appear.</para>
     <para>&nbsp;</para> <!-- whitespace -->
-    
+
     <screenshot>
     <screeninfo>The new identity dialog continues</screeninfo>
       <mediaobject>
@@ -242,7 +242,7 @@ start working with it right away. For more in-depth information see the
       </mediaobject>
     </screenshot>
     <para>&nbsp;</para> <!-- whitespace -->
-    
+
     <para>
       The settings in the <guilabel>General</guilabel> tab are
       fairly straightforward. Fill in the <guilabel>Your
@@ -269,7 +269,7 @@ start working with it right away. For more in-depth information see the
       enter your signature. This is a short bit of verbiage that will be
       automatically appended to all your messages. It has nothing to
       do with <emphasis>digital signatures</emphasis>. You may also wish
-      to insert a small personal avatar in outgoing message headers via the 
+      to insert a small personal avatar in outgoing message headers via the
       <guilabel>Picture</guilabel> tab.
     </para>
     <para>&nbsp;</para> <!-- whitespace -->
@@ -290,7 +290,7 @@ start working with it right away. For more in-depth information see the
 <sect2 id="sending-mail">
   <title>Sending Messages</title>
   <para>Here's one way to create an outgoing mail account.</para>
-  
+
   <screenshot>
     <screeninfo>Outgoing account choices</screeninfo>
       <mediaobject>
@@ -320,7 +320,7 @@ start working with it right away. For more in-depth information see the
     change this later if you have more than one email account.)</para>
 
   <para>When you select the <guilabel>&SMTP;</guilabel> option and click the
-    <guibutton>✓ Create and Configure</guibutton> button, the following 
+    <guibutton>✓ Create and Configure</guibutton> button, the following
     configuration screen will appear.</para>
   <para>&nbsp;</para> <!-- whitespace -->
 
@@ -374,7 +374,7 @@ start working with it right away. For more in-depth information see the
     select <guilabel>POP3 E-Mail Server</guilabel> or <guilabel>IMAP E-Mail Server</guilabel>. If you want
     to use a local mailbox file (<guilabel>Mbox</guilabel>), please see the <link linkend="faq-file-locking">FAQ
     about file locking</link>.</para>
-    
+
   <screenshot>
     <screeninfo>The receiving configuration dialog</screeninfo>
       <mediaobject>
@@ -389,7 +389,7 @@ start working with it right away. For more in-depth information see the
         </caption>
       </mediaobject>
     </screenshot>
-    <para>&nbsp;</para> <!-- whitespace -->  
+    <para>&nbsp;</para> <!-- whitespace -->
 
   <para>If you chose &POP3; or &IMAP;, the account settings window will appear. First, fill in the
     <guilabel>Account Name</guilabel> field to name your account. You can choose any name
@@ -411,13 +411,13 @@ start working with it right away. For more in-depth information see the
       you deleted from the server as soon as you leave that folder. Otherwise,
       the messages are only marked as deleted and it is up to you to compact
       the folders manually.</para>
-    
+
   </sect3>
 
 
   <sect3 id="receiving-mail-pop3">
     <title>Options only relevant to POP3</title>
-      
+
     <para>Select <guilabel>Leave fetched messages on the server</guilabel>
       on the <guilabel>Advanced</guilabel> configuration tab if you want to
       leave your messages on the server after you have downloaded them. There are
@@ -425,8 +425,8 @@ start working with it right away. For more in-depth information see the
       indefinitely (leave all options unselected), or number of days / number
       of messages / maximum size of server side inbox (choose one, two, or all three). If
       this box is not checked, all messages will be immediately deleted from the remote
-      server after downloading is complete.</para>  
-  
+      server after downloading is complete.</para>
+
     <para>On the <guilabel>Advanced</guilabel> tab you can also select <guilabel>Use
       pipelining for faster mail download</guilabel> if this is supported by your
       server. Test this to make sure it works safely.</para>
@@ -445,13 +445,13 @@ start working with it right away. For more in-depth information see the
 
   <sect3 id="receiving-mail-imap-pop3">
     <title>Options for both IMAP and POP3</title>
-    
-    <para>On the <guilabel>Receiving</guilabel> tab, under <guilabel>Retrieval Options</guilabel>, 
+
+    <para>On the <guilabel>Receiving</guilabel> tab, under <guilabel>Retrieval Options</guilabel>,
       select <guilabel>Include in Manual Mail Check</guilabel> if you
       want to check this account whenever you invoke <menuchoice><guimenu>File</guimenu><guimenuitem>Check
       Mail</guimenuitem></menuchoice>.  If you do not select this option you can still check for new messages on this account
       with <menuchoice><guimenu>File</guimenu><guimenuitem>Check Mail In  &gt; </guimenuitem></menuchoice>.</para>
-    
+
     <para>&kmail; supports encryption via <guilabel>SSL/TLS</guilabel> and
       <guilabel>STARTTLS</guilabel> (<guilabel>SSL/TLS</guilabel> should be preferred
       if it is available).</para>
@@ -479,7 +479,7 @@ start working with it right away. For more in-depth information see the
       authentication methods. <guilabel>Anonymous</guilabel> is supported on
       &IMAP;, but <guilabel>APOP</guilabel> is not. <guilabel>Gmail</guilabel>
       authentication is only available for &IMAP; accounts using Google's GMail service.</para>
-  
+
     <para>Use the <guibutton>Auto Detect</guibutton> button on the <guilabel>Advanced</guilabel> tab
       to automatically select the most secure settings supported by your server.</para>
 
@@ -499,7 +499,7 @@ start working with it right away. For more in-depth information see the
   <para>First, you should send yourself a message to test your
     configuration. To send a message, either hit <keycombo
     action="simul">&Ctrl;<keycap>N</keycap></keycombo>, select the
-    <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-message-new.png" 
+    <guiicon><inlinemediaobject><imageobject><imagedata fileref="mail-message-new.png"
     format="PNG"/></imageobject></inlinemediaobject>&nbsp;New</guiicon> button, or select
     the <menuchoice><guimenu>Message</guimenu><guimenuitem>New
     Message...</guimenuitem></menuchoice> menu item. The

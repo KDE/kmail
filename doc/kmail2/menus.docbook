@@ -249,7 +249,7 @@ performs a menu item function, the default shortcut is listed with the menu item
   The items listed here are &kmail; specific.</para>
 
 <variablelist>
-    
+
 <varlistentry id="reader-edit-copy-folder">
   <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>C</keycap></keycombo></shortcut>
   <guimenu>Edit</guimenu><guimenuitem>Copy Folder</guimenuitem></menuchoice></term>
@@ -355,7 +355,7 @@ performs a menu item function, the default shortcut is listed with the menu item
 <varlistentry id="reader-view-message-list">
   <term><menuchoice><guimenu>View</guimenu><guisubmenu>Message List &gt;</guisubmenu></menuchoice></term>
   <listitem><para>This submenu has the following options to change the appearance of the message list.</para>
-    
+
     <variablelist>
     <varlistentry id="reader-view-messagelist-sorting">
       <term><menuchoice><guisubmenu>Sorting &gt;</guisubmenu></menuchoice></term>
@@ -366,13 +366,13 @@ performs a menu item function, the default shortcut is listed with the menu item
           <itemizedlist>
             <listitem><para><guilabel>By Smart Sender/Receiver</guilabel> will display the receiver when you are
             viewing the sent-mail folder, and will display the sender when you are viewing the inbox.</para></listitem>
-    
+
             <listitem><para><guilabel>By Action Item Status</guilabel> and <guilabel>By Important Status</guilabel>.
             These flags need to be set before they can be sorted. Please see <link linkend="reader-mark-messages">Mark
             Messages</link> for more information on marking your messages.</para></listitem>
           </itemizedlist>
         </listitem>
-        
+
         <listitem><para><guilabel>Message Sort Direction</guilabel> and <guilabel>Group Sort Direction</guilabel>
         allow you to change the direction in which your messages/groups will be sorted, respectively. Note
         that the "Group" options are only available when messages are aggregated into groups.</para></listitem>
@@ -381,7 +381,7 @@ performs a menu item function, the default shortcut is listed with the menu item
         </itemizedlist>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-aggregation">
       <term><menuchoice><guisubmenu>Aggregation &gt;</guisubmenu></menuchoice></term>
       <listitem><para>Lets you select an aggregation option. Please see the <link
@@ -389,7 +389,7 @@ performs a menu item function, the default shortcut is listed with the menu item
       <guimenu>Settings</guimenu><guisubmenu>Configure &kmail;...</guisubmenu></menuchoice>) for more
       information on aggregation.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-theme">
       <term><menuchoice><guisubmenu>Theme &gt;</guisubmenu></menuchoice></term>
       <listitem><para>Lets you select a theme. Please see the <link
@@ -397,7 +397,7 @@ performs a menu item function, the default shortcut is listed with the menu item
       <guimenu>Settings</guimenu><guisubmenu>Configure &kmail;...</guisubmenu></menuchoice>) for more
       information on themes.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-create-new-tab">
       <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>O</keycap></keycombo></shortcut>
       <guisubmenu>Create New Tab</guisubmenu></menuchoice></term>
@@ -406,31 +406,31 @@ performs a menu item function, the default shortcut is listed with the menu item
       option will create it. The tabbing toolbar can be handy if you have many folders, but only a few of
       them are regularly accessed.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-next-tab">
       <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&PgDn;</keycombo></shortcut>
       <guisubmenu>Activate Next Tab</guisubmenu></menuchoice></term>
       <listitem><para>Opens the folder associated with the next tab on the tabbing toolbar.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-previous-tab">
       <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&PgUp;</keycombo></shortcut>
       <guisubmenu>Activate Previous Tab</guisubmenu></menuchoice></term>
       <listitem><para>Opens the folder associated with the previous tab on the tabbing toolbar.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-left">
       <term><menuchoice><guisubmenu>Move Tab Left</guisubmenu></menuchoice></term>
       <listitem><para>Reorders the tabs on the tabbing toolbar by shifting the active tab to the left.
       If that tab is already at the extreme left end, it will be moved to the right hand end position.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-right">
       <term><menuchoice><guisubmenu>Move Tab Right</guisubmenu></menuchoice></term>
       <listitem><para>Reorders the tabs on the tabbing toolbar by shifting the active tab to the right.
       If that tab is already at the extreme right end, it will be moved to the left hand end position.</para></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-close-tab">
       <term><menuchoice><shortcut><keycombo action="simul">&Ctrl;&Shift;<keycap>W</keycap></keycombo></shortcut>
       <guisubmenu>Close Tab</guisubmenu></menuchoice></term>
@@ -734,7 +734,7 @@ performs a menu item function, the default shortcut is listed with the menu item
 <varlistentry id="reader-folder-mailing-list-management">
   <term><menuchoice><guimenu>Folder</guimenu><guimenuitem>Mailing List Management...</guimenuitem></menuchoice></term>
   <listitem><para>This opens the mailing list management dialog. This option is only available if
-  the current folder contains messages from a mailing list. Please see the <link 
+  the current folder contains messages from a mailing list. Please see the <link
   linkend="folders-properties-mailinglist">Mailing List dialog</link> for more
   information on mailing lists.</para></listitem>
 </varlistentry>
@@ -903,14 +903,14 @@ performs a menu item function, the default shortcut is listed with the menu item
 
 <varlistentry id="reader-message-mailing-list">
   <term><menuchoice><guimenu>Message</guimenu><guimenuitem>Mailing List Name: &gt;</guimenuitem></menuchoice></term>
-  
+
   <listitem><para>Offers several options for mailing list messages.</para>
   <note><para>The current working folder must be configured as a mailing list for this
   option to be available. Please see <link linkend="folders-properties-mailinglist">Folder
   Properties Mailing List</link> to learn about setting up mailing lists.</para></note>
   <para>&nbsp;</para><!-- add whitespace -->
   <para>The following options are available in mailing list folders:</para>
-  
+
   <itemizedlist>
     <listitem><para><guimenuitem>Post New Message(email)</guimenuitem> will set the
     <guilabel>To:</guilabel> address to the address configured as "Post to List".</para></listitem>
@@ -928,7 +928,7 @@ performs a menu item function, the default shortcut is listed with the menu item
     <guilabel>To:</guilabel> address to the mailing list subscription address, and place the
     word <literal>unsubscribe</literal> in the <guilabel>Subject:</guilabel> field.</para></listitem>
   </itemizedlist>
-  
+
   <para>&nbsp;</para><!-- add whitespace --></listitem>
 </varlistentry>
 
@@ -972,7 +972,7 @@ performs a menu item function, the default shortcut is listed with the menu item
     </inlinemediaobject></entry>
     <entry>This status will not automatically be set by &kmail;.
     You can use it freely to mark messages that are in some way important to you.</entry></row>
- 
+
     <row>
     <entry><guimenuitem>Remove Important Mark</guimenuitem></entry>
     <entry><inlinemediaobject><imageobject><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
@@ -1001,7 +1001,7 @@ performs a menu item function, the default shortcut is listed with the menu item
   <listitem><para>Lets you change the status of all messages in a thread as follows:</para>
   <informaltable><tgroup cols="3">
     <thead><row><entry>Status</entry><entry>Symbol</entry><entry>Meaning</entry></row></thead>
-    
+
     <tbody>
     <row>
     <entry><guimenuitem>Mark Thread as Read</guimenuitem></entry>
@@ -1021,7 +1021,7 @@ performs a menu item function, the default shortcut is listed with the menu item
     </inlinemediaobject></entry>
     <entry>This status will not automatically be set by &kmail;. You can use it freely to mark threads
     that are in some way important to you.</entry></row>
-    
+
     <row>
     <entry><guimenuitem>Remove Important Thread Mark</guimenuitem></entry>
     <entry><inlinemediaobject><imageobject><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
@@ -1034,7 +1034,7 @@ performs a menu item function, the default shortcut is listed with the menu item
     </inlinemediaobject></entry>
     <entry>This status will not automatically be set by &kmail;. Use this to mark threads that are
     action items (&eg;, a to-do list).</entry></row>
-    
+
     <row>
     <entry><guimenuitem>Remove Action Item Thread Mark</guimenuitem></entry>
     <entry><inlinemediaobject><imageobject><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
@@ -1049,14 +1049,14 @@ performs a menu item function, the default shortcut is listed with the menu item
     selecting the <guimenu>Watched</guimenu> status in the drop down box found in the Quick Search Bar.
     (Click on the <inlinemediaobject><imageobject><imagedata fileref="view-filter.png" format="PNG"/>
     </imageobject></inlinemediaobject> icon to display the filterable categories.)</entry></row>
-    
+
     <row>
     <entry><guimenuitem>Ignore Thread</guimenuitem></entry>
     <entry><inlinemediaobject><imageobject><imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
     </inlinemediaobject></entry>
     <entry>Allows you to ignore entire threads.</entry></row>
     </tbody>
-    
+
   </tgroup></informaltable>
   <para>&nbsp;</para><!-- add whitespace --></listitem>
 </varlistentry>
@@ -1115,7 +1115,7 @@ performs a menu item function, the default shortcut is listed with the menu item
   linkend="configure-plugins-tools">Expert Plugin</link> has been activated.</para>
   <para>&nbsp;</para></listitem>
 </varlistentry>
-</variablelist> 
+</variablelist>
 
 </sect2>
 
@@ -1249,7 +1249,7 @@ performs a menu item function, the default shortcut is listed with the menu item
 </screenshot>
 <para>&nbsp;</para><!-- add whitespace -->
 
-<para>If the menu item you are looking for is missing, please see <ulink 
+<para>If the menu item you are looking for is missing, please see <ulink
 url="help:/fundamentals/menus.html#menus-settings">Settings Menu</ulink> in &kde;
 Fundamentals. The items listed here are &kmail; specific.</para>
 <variablelist>
@@ -1575,7 +1575,7 @@ url="help:/fundamentals/menus.html#menus-edit">Edit Menu</ulink> section of the
   <listitem><para>Lets you insert a special character at the cursor position. A large number of Unicode
   characters are made available. This option is only provided if the <guimenuitem>Insert Special
   Character</guimenuitem> plugin has been activated.</para>
-  
+
   <para>This menu item was moved to the <guimenu>Insert</guimenu> menu in release 5.17. If you have activated
   the plugin, and this entry does not appear when &kmail; is restarted, check the <guimenu>Insert</guimenu>
   menu.</para></listitem>
@@ -1672,7 +1672,7 @@ composer window. Selected items will be marked (check box colored in) in the men
   it to select <guilabel>CC</guilabel>, <guilabel>BCC</guilabel>, and <guilabel>Reply-To</guilabel>
   addresses, as needed. Please see <link linkend="composer-headers">Composer Headers</link> for
   further details on message headers.</para>
-  
+
 <para>&nbsp;</para>
 
 <variablelist>
@@ -1689,7 +1689,7 @@ composer window. Selected items will be marked (check box colored in) in the men
   snippets. Please see <link linkend="setup-text-snippets">Snippets</link> for more information.</para>
   <para>&nbsp;</para></listitem>
   </varlistentry>
-  
+
 </variablelist>
 
 </sect2>
@@ -1767,7 +1767,7 @@ items will be marked (check box colored in) in the menu.</para>
 <varlistentry id="composer-options-select-crypto-message-format">
   <term><menuchoice><guimenu>Options</guimenu><guisubmenu>Cryptographic Message Format &gt;</guisubmenu></menuchoice></term>
   <listitem><para>Lets you choose the cryptographic message format to use when
-  digitally signing and/or encrypting this message. Please see <link 
+  digitally signing and/or encrypting this message. Please see <link
   linkend="cryptographic-message-formats">Cryptographic Message
   Formats</link> for more information.</para></listitem>
 </varlistentry>
@@ -1944,11 +1944,11 @@ items will be marked (check box colored in) in the menu.</para>
 
 <para>If the menu item you are looking for is missing, please see <ulink url="help:/fundamentals/menus.html#menus-tools">Tools Menu</ulink> of the &kde; Fundamentals.
   The items listed here are &kmail; specific.</para>
-  
+
 <variablelist>
   <varlistentry id="composer-tools-select-recipients">
   <term><menuchoice><guimenu>Tools</guimenu><guimenuitem>Select Recipients...</guimenuitem></menuchoice></term>
-  <listitem><para>Opens a <guilabel>Select Recipient</guilabel> dialog, with 
+  <listitem><para>Opens a <guilabel>Select Recipient</guilabel> dialog, with
   the contents of all your address books to select from.</para></listitem>
 </varlistentry>
 
@@ -2012,7 +2012,7 @@ items will be marked (check box colored in) in the menu.</para>
 
 <para>If the menu item you seek is missing, please see <ulink url="help:/fundamentals/menus.html#menus-settings">Settings
   Menu</ulink> of the &kde; Fundamentals. The items listed here are &kmail; specific.</para>
-  
+
 <variablelist>
 <varlistentry id="composer-settings-toolbars">
   <term><menuchoice><guimenu>Settings</guimenu><guimenuitem>Toolbars Shown &gt;</guimenuitem></menuchoice></term>

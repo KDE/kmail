@@ -159,4 +159,3 @@ Name[x-test]=xxSend mail failedxx
 Name[zh_CN]=邮件发送失败
 Name[zh_TW]=傳送郵件失敗
 Action=Popup
-

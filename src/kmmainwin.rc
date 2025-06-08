@@ -83,7 +83,7 @@
    <Action name="save_message_display_format"/>
    <Action name="reset_message_display_format"/>
    <Separator/>
-   <Action name="disable_emoticon"/> 
+   <Action name="disable_emoticon"/>
    <Separator/>
    <Action name="toggle_fixedfont"/>
    <Separator/>
@@ -256,7 +256,7 @@
   <Action name="search_messages" />
   <Action name="akonadi_move_to_trash" />
   <Separator/>
-  <Action name="akonadi_collection_remove_from_favorites"/> 
+  <Action name="akonadi_collection_remove_from_favorites"/>
   <Action name="akonadi_collection_rename_favorite"/>
   <Separator/>
   <Action name="expire_settings"/>
@@ -359,7 +359,7 @@
   <ActionList name="toolbar_messagetag_actions" />
   <Action name="create_todo"/>
   <Separator/>
-  <ActionList name="kmail_toolbar_actions"/> 
+  <ActionList name="kmail_toolbar_actions"/>
   <Spacer/>
   <Action name="hamburger_menu"/>
  </ToolBar>

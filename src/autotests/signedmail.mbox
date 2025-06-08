@@ -43,9 +43,9 @@ X-UID: 68768
 X-Length: 3235
 Status: RO
 X-Status: RPT
-X-KMail-EncryptionState:  
-X-KMail-SignatureState:  
-X-KMail-MDN-Sent:  
+X-KMail-EncryptionState:
+X-KMail-SignatureState:
+X-KMail-MDN-Sent:
 
 --==-=-=
 Content-Type: multipart/mixed; boundary="=-=-="
@@ -108,4 +108,3 @@ HYelJfvqQQJkoW99SKRUVec=
 =AmlK
 -----END PGP SIGNATURE-----
 --==-=-=--
-

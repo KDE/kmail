@@ -14,7 +14,6 @@ ecm_qt_declare_logging_category(sendlater_common_SRCS HEADER sendlateragent_debu
         EXPORT KMAIL
 )
 
-
 set(libsendlateragent_SRCS
     sendlaterconfigurewidget.cpp
     sendlatermanager.cpp
@@ -27,13 +26,9 @@ set(libsendlateragent_SRCS
     ${sendlater_common_SRCS}
 )
 
-set(sendlateragent_SRCS
-    sendlateragent.cpp
-    sendlateragent.h
-)
+set(sendlateragent_SRCS sendlateragent.cpp sendlateragent.h)
 
 qt_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
-
 
 ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
 kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
@@ -44,7 +39,8 @@ set_property(TARGET sendlateragent PROPERTY POSITION_INDEPENDENT_CODE ON)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
 #endif()
 
-target_link_libraries(sendlateragent
+target_link_libraries(
+    sendlateragent
     KPim6::AkonadiCore
     KPim6::AkonadiMime
     KPim6::MailTransport
@@ -59,23 +55,36 @@ target_link_libraries(sendlateragent
     KF6::I18n
 )
 
-
 add_executable(akonadi_sendlater_agent ${sendlateragent_SRCS})
-target_link_libraries(akonadi_sendlater_agent
+target_link_libraries(
+    akonadi_sendlater_agent
     sendlateragent
     KPim6::AkonadiAgentWidgetBase
 )
 
 if(APPLE)
-    set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${kmail_SOURCE_DIR}/agents/Info.plist.template)
-    set_target_properties(akonadi_sendlater_agent PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Send Later")
+    set_target_properties(
+        akonadi_sendlater_agent
+        PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST
+                ${kmail_SOURCE_DIR}/agents/Info.plist.template
+    )
+    set_target_properties(
+        akonadi_sendlater_agent
+        PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Send Later"
+    )
 endif()
 
 install(TARGETS akonadi_sendlater_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
-install(FILES sendlateragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
-install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
-
+install(
+    FILES sendlateragent.desktop
+    DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents"
+)
+install(
+    FILES akonadi_sendlater_agent.notifyrc
+    DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
+)
 
 ########## Configuration ##############
 
@@ -90,10 +99,10 @@ kcoreaddons_add_plugin(sendlateragentconfig
     SOURCES ${sendlateragentconfig_SRCS}
     INSTALL_NAMESPACE pim6/akonadi/config
 )
-target_link_libraries(sendlateragentconfig
+target_link_libraries(
+    sendlateragentconfig
     sendlateragent
     KPim6::AkonadiCore
     KF6::XmlGui
     KF6::I18n
 )
-

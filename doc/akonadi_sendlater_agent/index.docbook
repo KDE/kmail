@@ -3,7 +3,7 @@
 "dtd/kdedbx45.dtd" [
   <!ENTITY i18n-sendlateragent "<application>Send Later Agent</application>">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % English "INCLUDE"> 
+  <!ENTITY % English "INCLUDE">
 ]>
 
 <article id="sendlateragent" lang="&language;">
@@ -48,7 +48,7 @@
 <title>Using &i18n-sendlateragent;</title>
 
 <para>Use <menuchoice><guimenu>Message</guimenu><guimenuitem>Send Later</guimenuitem></menuchoice>
-in &kmail;'s composer window to open a dialog which allows you to schedule your emails to send 
+in &kmail;'s composer window to open a dialog which allows you to schedule your emails to send
 at a specific date and time.</para>
 
 <screenshot>
@@ -78,7 +78,7 @@ checkbox and selecting the desired intervals.</para>
 in online mode to send scheduled emails.</para>
 <para>If you have no network connection when a scheduled message should be sent, the agent will report an error
 and ask if you want to resend it later.</para>
-<para>At login to a &kde; session the agent checks the scheduled messages and sends all 
+<para>At login to a &kde; session the agent checks the scheduled messages and sends all
 messages overdue since the last logout if necessary.
 </para>
 <para>To change the options for emails you have scheduled to send later, use <menuchoice><guimenu>Settings</guimenu>
@@ -101,7 +101,7 @@ the configuration button against the <guilabel>Send Later Agent</guilabel> item.
   </mediaobject>
 </screenshot>
 
-<para><action>This brings up a dialog that allows you to modify the schedule and remove emails 
+<para><action>This brings up a dialog that allows you to modify the schedule and remove emails
 that have been sent using the send later feature.</action>
 </para>
 <para>It is not possible to change the content (body, headers &etc;) of a scheduled message.

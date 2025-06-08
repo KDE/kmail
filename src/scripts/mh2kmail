@@ -8,8 +8,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
 if [ "X$*" = "X" ]; then
-  echo "usage: mh2kmail <dirname>"
-  exit 0
+	echo "usage: mh2kmail <dirname>"
+	exit 0
 fi
 
 MH_DIR=$1
@@ -18,10 +18,9 @@ FOLDER=${MH_DIR}.mbx
 # remove old kmail folder if any
 rm -f $FOLDER
 
-for f in `/bin/ls $MH_DIR|sed -e :a -e 's/^.\{1,5\}$/ &/;ta'|sort`; do
-  echo "From ???@??? 00:00:00 1997 +0000" >> $FOLDER
-  cat $MH_DIR/$f >> $FOLDER
+for f in $(/bin/ls $MH_DIR | sed -e :a -e 's/^.\{1,5\}$/ &/;ta' | sort); do
+	echo "From ???@??? 00:00:00 1997 +0000" >>$FOLDER
+	cat $MH_DIR/$f >>$FOLDER
 done
 
 echo "Done. Messages stored in file $FOLDER."
-

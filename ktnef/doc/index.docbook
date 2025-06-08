@@ -52,7 +52,7 @@
 	<para>The TNEF File Viewer allows to handle easily mail attachments using the TNEF format. Those attachments
 		are usually found in mails coming from <trademark class="registered">Microsoft</trademark>
 		mail servers and embed the mail properties as well as the actual attachments.</para>
-		<para>An attachment in TNEF format is most often named <filename>winmail.dat</filename> 
+		<para>An attachment in TNEF format is most often named <filename>winmail.dat</filename>
 		or <filename>win.dat</filename>.</para>
 <screenshot>
 <screeninfo>TNEF Main Window</screeninfo>

@@ -18,7 +18,7 @@
    <Action name="file_print_preview"/>
    <Action name="file_print" />
    <Separator/>
-   <ActionList name="kmaileditor_plugins_file"/>   
+   <ActionList name="kmaileditor_plugins_file"/>
    <Separator/>
    <Action name="file_close" />
   </Menu>
@@ -32,7 +32,7 @@
    <Action name="tools_quote"/>
    <Action name="tools_unquote"/>
    <Separator/>
-   <ActionList name="kmaileditor_plugins_edit"/> 
+   <ActionList name="kmaileditor_plugins_edit"/>
   </Menu>
   <Menu name="insert" >
    <text>Insert</text>
@@ -115,7 +115,7 @@
   <Action name="html" />
   <Separator/>
   <Action name="spellcheck" />
-  <Separator/> 
+  <Separator/>
   <Action name="attach_menu" />
   <Separator/>
   <Action name="sign_message" />

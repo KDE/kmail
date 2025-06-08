@@ -185,7 +185,7 @@
 &David.Bryant; &David.Bryant.mail;.</para>
 
 <para>Update for &kmail; 4.11 by
-&Laurent.Montel; &Laurent.Montel.mail; and 
+&Laurent.Montel; &Laurent.Montel.mail; and
 &Scarlett.Clark; &Scarlett.Clark.mail;.</para>
 
 <para>Update for &kmail; 1.7 by
@@ -211,7 +211,7 @@ Original documentation by &Bernd.Johannes.Wuebben;
 <email>rwilliams@kde.org</email> (Editor).</para>
 
 <para>Thanks to Michael Elkins <email>me@cs.hmc.edu</email> for his excellent
-description of the different &UNIX; mail formats in the <application>Mutt</application> 
+description of the different &UNIX; mail formats in the <application>Mutt</application>
 documentation.</para>
 
 <para>Thanks to the following people for providing directions on using other
@@ -220,7 +220,7 @@ email client mailboxes with &kmail;:</para>
 <itemizedlist>
 <listitem><para>Nik Gaffney <email>nik@f0.am</email>
 (<application>Mailsmith</application>)</para></listitem>
-<listitem><para>David McMillen <email>mcmillen@math.bu.edu</email> and 
+<listitem><para>David McMillen <email>mcmillen@math.bu.edu</email> and
 Mendel Mobach <email>mendel@mobach.nl</email> (&Netscape; mail)</para></listitem>
 <listitem><para>Ed Shapard <email>shapard@bigfoot.com</email>
 (<application>Pegasus</application> Mail)</para></listitem>

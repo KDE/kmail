@@ -8,5 +8,5 @@ macro(mailmerge_agent _source)
         TEST_NAME ${_name}
         NAME_PREFIX "mailmerge-"
         LINK_LIBRARIES mailmergeagent Qt::Test KPim6::AkonadiCore Qt::Widgets KF6::I18n KF6::XmlGui KF6::Service
-)
+    )
 endmacro()
