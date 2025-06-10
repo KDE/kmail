@@ -5,8 +5,7 @@
 >Agent voor later verzenden</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Dutch "INCLUDE"
-> 
+  <!ENTITY % Dutch "INCLUDE">
 ]>
 
 <article id="sendlateragent" lang="&language;">

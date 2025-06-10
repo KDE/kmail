@@ -52,7 +52,7 @@
 >Mozilla Firefox</guimenuitem
 ></menuchoice
 >.</para>
-    
+
     <para
 >Als u een systeembeheerder bent en u wilt deze instelling automatisch voor al uw gebruikersmaken, doe dan dit.</para>
     <itemizedlist>
@@ -373,18 +373,18 @@
 ><guimenu
 >&systemsettings;</guimenu
 ><guisubmenu
->Application 
+>Application
 Appearance</guisubmenu
 ><guimenuitem
 >Colors</guimenuitem
 ><guimenuitem
 >Colors</guimenuitem
 ></menuchoice
->, for each color 
+>, for each color
 set except <guilabel
 >Common Colors</guilabel
 > (which doesn't have it), change the <guilabel
->Alternate 
+>Alternate
 Background</guilabel
 > to be the same as the <guilabel
 >Normal Background</guilabel
@@ -395,16 +395,16 @@ Background</guilabel
 > and <emphasis
 >Mageia</emphasis
 > doesn't use the name <guilabel
->System 
+>System
 Settings</guilabel
 >.  As in <guilabel
 >KControl</guilabel
 >, the KDE 3 control centre, they name it <quote
->Configure your 
+>Configure your
 Desktop</quote
 > to distinguish it from <quote
 >Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control 
+>, a.k.a. the Mandriva/Mageia Control
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry
@@ -444,7 +444,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 > U bent een nieuwe computer aan het instellen en wilt al uw e-mail overbrengen. U besluit om alles naar een USB-stick te kopiëren. De job begint en dan krijgt u een foutmelding,</para>
     <screen
 >Kopiëren lukt niet ............ ongeldig argument</screen>
-    
+
     <para
 ><emphasis
 >Oplossing:</emphasis
@@ -518,7 +518,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >GnuPG</application
 >'s foutmeldingen, maar deze willen nog wel eens veranderen in de verschillende versies van deze programma's.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >&kmail; zal geen berichten versleutelen met een niet-vertrouwde publieke sleutel. Indien u met zo'n sleutel zou willen versleutelen, dan moet u de identiteit van de eigenaar controleren en vervolgens de niet-vertrouwde sleutel ondertekenen met uw eigen geheime sleutel, zodat het een vertrouwde sleutel wordt. Indien de identiteit van de eigenaar niet te controleren is, maar u wilt de sleutel alsnog gebruiken, dan kunt u de sleutel lokaal ondertekenen met behulp van het commando <userinput
@@ -531,12 +531,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></userinput
 >.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Een publieke sleutel vertrouwen zonder de identiteit te controleren is een zeer slecht idee.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Vanaf GnuPG 1.0.7 moet u uw eigen sleutel instellen op "Ultiem" vertrouwen: dit wordt niet meer automatisch gedaan.</para>
@@ -578,8 +578,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >PIM-exportprogramma van gegevens</ulink
 > om een reservekopie van uw e-mail en uw instellingen te maken.</para
 ><para
->&nbsp;</para
-> 
+>&nbsp;</para>
   </answer>
 </qandaentry>
 

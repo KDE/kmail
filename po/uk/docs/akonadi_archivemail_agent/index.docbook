@@ -5,8 +5,7 @@
 >Агент архівування пошти</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Ukrainian "INCLUDE"
-> 
+  <!ENTITY % Ukrainian "INCLUDE">
 ]>
 
 <article id="archivemailagent" lang="&language;">

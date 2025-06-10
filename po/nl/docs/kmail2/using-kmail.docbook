@@ -582,8 +582,7 @@
 >Instellingen</guilabel
 >).</entry>
 </row>
-<row
->    
+<row>
 <entry
 ><keycombo action="simul"
 >&Shift;<keycap
@@ -1021,8 +1020,7 @@
 </listitem>
 <listitem>
 <para
->Sleep het bestand van het bureaublad, of vanuit een andere map, naar het venster waar het bericht wordt opgesteld;</para
-> 
+>Sleep het bestand van het bureaublad, of vanuit een andere map, naar het venster waar het bericht wordt opgesteld;</para>
 </listitem>
 <listitem>
 <para
@@ -2787,8 +2785,7 @@ folders as a target.</para
 <para
 >Stelt de transportmethode in (&eg; &SMTP;) wanneer u het bericht gaat beantwoorden. U kunt kiezen uit een lijst met al uw uitgaande e-mailaccounts.</para>
 </listitem>
-</varlistentry
-> 
+</varlistentry>
 <varlistentry>
 <term
 ><guilabel
@@ -2840,8 +2837,7 @@ folders as a target.</para
 ></term>
 <listitem
 ><para
->Zal een bevestiging naar de afzender sturen dat het bericht met succes is aangekomen, als de afzender daarom heeft gevraagd.</para
-> 
+>Zal een bevestiging naar de afzender sturen dat het bericht met succes is aangekomen, als de afzender daarom heeft gevraagd.</para>
 <para
 >Dit filter maakt het mogelijk om selectief ontvangstbevestigingen te versturen. Indien er naar iedereen een ontvangstbevestiging verstuurd mag worden, kan dat worden ingesteld bij <guilabel
 >&kmail; instellen...</guilabel
@@ -3312,8 +3308,7 @@ folders as a target.</para
 >Doorsluizen via</guilabel
 > en <guilabel
 >Commando uitvoeren</guilabel
->. Deze roepen namelijk externe programma's aan. Plaats deze filters als het even kan dus achter de filters die het aantal berichten verminderen of pas de criteria aan zodat de handeling alleen wordt uitgevoerd op de berichten waarvoor dit echt nodig is.</para
-> 
+>. Deze roepen namelijk externe programma's aan. Plaats deze filters als het even kan dus achter de filters die het aantal berichten verminderen of pas de criteria aan zodat de handeling alleen wordt uitgevoerd op de berichten waarvoor dit echt nodig is.</para>
 <para
 >Een voorbeeld is het filteren van berichten van discussiegroepen en het detecteren van spamberichten. Voor spamdetectie hebt u waarschijnlijk een filter <guilabel
 >Doorsluizen via</guilabel
@@ -3494,8 +3489,7 @@ into your configured archive folder for easy viewing later on.
 </listitem>
 </varlistentry
 > --><!-- This feature is no longer available. @dcb2020295 -->
-</variablelist
-> 
+</variablelist>
 </sect2>
 <sect2 id="exporting">
 <title
@@ -3655,7 +3649,7 @@ into your configured archive folder for easy viewing later on.
 <!--
 <note
 ><para
->There have been major changes in the way &kmail; handles 
+>There have been major changes in the way &kmail; handles
 signing/encryption. The following introduction applies to the previous
 version of &kmail;. You can still read the introduction to get an overview
 about how to sign/encrypt messages, but the details, especially those of
@@ -3690,14 +3684,14 @@ the configuration, will differ.</para
 >&kmail; has to rely on <application
 >GnuPG</application
 >'s
-output; this output is often different between different versions of 
+output; this output is often different between different versions of
 <application
 >GnuPG</application
 >, so it is important that you test if encryption
 really works with your setup before you start using it seriously. &kmail; might
 <emphasis
 >not</emphasis
-> warn you if something fails - enable 
+> warn you if something fails - enable
 <guilabel
 >Show signed/encrypted text
 after composing</guilabel
@@ -3800,8 +3794,7 @@ version.)</para>
 ></term>
 <listitem>
 <para
->Wanneer dit vakje is geactiveerd worden verzonden berichten versleuteld opgeslagen zoals ze zijn verzonden. Dit is niet aanbevolen, omdat u de berichten niet meer kunt lezen als een noodzakelijk certificaat is verlopen. (Merk op dat GPG sleutels, in het algemeen niet verlopen; deze waarschuwing is primair relevant voor gebruikers van x.509 certificaten.)</para
-> 
+>Wanneer dit vakje is geactiveerd worden verzonden berichten versleuteld opgeslagen zoals ze zijn verzonden. Dit is niet aanbevolen, omdat u de berichten niet meer kunt lezen als een noodzakelijk certificaat is verlopen. (Merk op dat GPG sleutels, in het algemeen niet verlopen; deze waarschuwing is primair relevant voor gebruikers van x.509 certificaten.)</para>
 </listitem>
 </varlistentry>
 
@@ -3812,8 +3805,7 @@ version.)</para>
 ></term>
 <listitem>
 <para
->Als deze optie geselecteerd is, wordt er altijd een dialoogvenster geopend waarin u kunt kiezen welke sleutel er van iedere ontvanger gebruikt moet worden voor het versleutelen van het e-mailbericht. Indien u deze optie niet selecteert zal &kmail; het dialoogvenster alleen tonen als er geen sleutel van een bepaalde ontvanger gevonden kan worden of als er meerdere sleutels beschikbaar zijn.</para
-> 
+>Als deze optie geselecteerd is, wordt er altijd een dialoogvenster geopend waarin u kunt kiezen welke sleutel er van iedere ontvanger gebruikt moet worden voor het versleutelen van het e-mailbericht. Indien u deze optie niet selecteert zal &kmail; het dialoogvenster alleen tonen als er geen sleutel van een bepaalde ontvanger gevonden kan worden of als er meerdere sleutels beschikbaar zijn.</para>
 </listitem>
 </varlistentry>
 

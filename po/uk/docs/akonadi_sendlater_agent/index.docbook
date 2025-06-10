@@ -5,8 +5,7 @@
 >Агент відкладеного надсилання</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Ukrainian "INCLUDE"
-> 
+  <!ENTITY % Ukrainian "INCLUDE">
 ]>
 
 <article id="sendlateragent" lang="&language;">

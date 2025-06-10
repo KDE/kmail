@@ -199,8 +199,7 @@ format="PNG"/></imageobject
 
 <sect2 id="configure-identities-tab">
 <title
->Tabblad Identiteiten</title
->    
+>Tabblad Identiteiten</title>
 
 <para
 >Een korte handleiding voor het tabblad <guilabel
@@ -661,7 +660,7 @@ format="PNG"/></imageobject
 > voor meer informatie over sjablonen.</para>
 </listitem>
 </varlistentry>
- 
+
 <varlistentry>
 <term
 ><guilabel
@@ -717,8 +716,7 @@ format="PNG"/></imageobject
 ><para
 >Deze optie opent een dialoog om te bladeren in mappen waarmee u een .vcf-bestand kunt selecteren. (Tip: gebruiken &kaddressbook; om een vCard-bestand te exporteren die hier gebruikt kan worden.)</para
 ></listitem>
-        </varlistentry
->        
+        </varlistentry>
         <varlistentry>
         <term
 ><guilabel
@@ -827,7 +825,7 @@ format="PNG"/></imageobject
 >Deze opdrachten halen informatie uit het bericht waarnaar u antwoord of doorstuurt en voegt die informatie in in het opstelvenster.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -838,7 +836,7 @@ format="PNG"/></imageobject
 >Deze opdrachten zullen het bericht waarop u antwoord doorzenden (pipe) naar een extern programma en daarna de uitvoer invoegen in het opstelvenster van &kmail;.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -1036,8 +1034,7 @@ format="PNG"/></imageobject
 >U kunt deze knop gebruiken om een verkleinde versie te maken van de afbeelding in uw eigen adresboekitem.</para>
 </listitem>
 </varlistentry>
-</variablelist
->  
+</variablelist>
 </listitem>
 </varlistentry>
 
@@ -1058,7 +1055,7 @@ format="PNG"/></imageobject
 >&nbsp;</para
 ><!-- add whitespace -->
 </sect2>
- 
+
 </sect1>
 
 <sect1 id="configure-accounts">
@@ -1399,14 +1396,14 @@ pane that tells you if a message is &HTML; or not. This is important because
 &HTML; messages might imitate the look of a signed and encrypted message, so
 you should be aware of the fact that you are reading an &HTML; message. The &HTML;
 status bar itself cannot be influenced by the &HTML; code of the message.</para>
- 
+
 <para
 >Enable <guilabel
 >Replace smileys by emoticons</guilabel
-> if you want smileys 
+> if you want smileys
 like <userinput
 >:-)</userinput
-> appearing in the message text to be 
+> appearing in the message text to be
 replaced by emoticons (small pictures) such as
 <inlinemediaobject
 ><imageobject>
@@ -1425,11 +1422,11 @@ replaced by emoticons (small pictures) such as
 <!-- <para
 ><guilabel
 >Fallback character encoding</guilabel
->: 
-Some emails, especially those generated automatically, do not specify the 
-character encoding which needs to be used to properly display them. In such 
-cases a fallback character encoding will be used, which you can configure 
-here. Set it to the character encoding most commonly used in your part of 
+>:
+Some emails, especially those generated automatically, do not specify the
+character encoding which needs to be used to properly display them. In such
+cases a fallback character encoding will be used, which you can configure
+here. Set it to the character encoding most commonly used in your part of
 the world. As a default the encoding configured for the whole system is used.</para
 > -->
 
@@ -1777,7 +1774,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-   
+
 <para
 >Om een aangepast thema voor samenvoeging te maken klik op de knop <guibutton
 >Configureren...</guibutton
@@ -1897,7 +1894,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-  
+
 <para
 >Om een eigen trema voor de berichtenlijst te maken klikt u op de knop <guibutton
 >Configureren...</guibutton
@@ -1931,8 +1928,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Geavanceerd</guilabel
 > laat u de kopregels tonen. U kunt ook de afmeting van pictogrammen voor status wijzigen.</para>
 </listitem
-></varlistentry
-> 
+></varlistentry>
 </variablelist>
 </listitem
 ></varlistentry>
@@ -1964,7 +1960,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect2 id="configure-message-tags">
     <title
 >Berichttags</title>
-    
+
 <screenshot>
 <screeninfo
 >Tags voor uiterlijk</screeninfo>
@@ -2019,7 +2015,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Deze optie selecteren om berichtenlijstitems met tags in een andere kleur te tonen. Een kleurpalet zal gepresenteerd worden wanneer u deze optie kiest. Selecteer een vooraf ingestelde kleur of kies "Aangepast..." voor meer flexibiliteit.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2030,7 +2026,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Kies deze optie om de achtergrond kleur van items met tags in de berichtenlijst te wijzigen.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2043,7 +2039,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > lettertype selecteren.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2054,7 +2050,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Klik op deze knop om een  selectiedialoog voor een pictogram te openen. Het pictogram zal getoond worden op items met tags in de berichtenlijst.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2065,7 +2061,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Gebruik deze knop om een sneltoets aan te maken om deze tag te koppelen met geselecteerde berichten.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2087,13 +2083,13 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></menuchoice
 > verschijnen.</para>
 </sect2>
- 
+
 </sect1>
 
 <sect1 id="configure-composer">
     <title
 >Opsteller </title>
-    
+
     <para
 >Voor een beschrijving van hoe de <guilabel
 >Opsteller</guilabel
@@ -2106,7 +2102,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <sect2 id="configure-composer-general">
       <title
 >Algemeen </title>
-    
+
     <screenshot>
     <screeninfo
 >Opsteller algemeen</screeninfo>
@@ -2127,10 +2123,10 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Deze dialoog laat u de manier aanpassen waarop &kmail; ondertekenen behandeld. Het biedt u ook besturing van enige formatteringsfuncties, om enige opties voor automatische aanvulling en functies voor automatisch opslaan van &kmail; te verfijnen. </para>
-    
+
     <variablelist>
 	<varlistentry id="configure-composer-general-append-signature">
 	  <term>
@@ -2361,12 +2357,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >+</guiicon
 >. U kunt een sneltoets aan het sjabloon hangen om sneller te werken. </para>
     <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
-    
+
     <para
 >Berichtensjablonen ondersteunen substitutiecommando's door ze eenvoudig in te typen of te selecteren uit het menu <guimenu
 >Commando invoegen</guimenu
 >. </para>
-    
+
     <para
 >Er zijn vier typen eigen sjablonen: te gebruiken voor <guilabel
 >Antwoord</guilabel
@@ -2379,7 +2375,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > die gebruikt kan worden voor alle soorten van verwerken. U kunt geen snelkoppeling aan <guilabel
 >Universeel</guilabel
 >-sjablonen koppelen. </para>
-    
+
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2548,12 +2544,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Als de optie <guilabel
 >Detectie van ontbrekende bijlagen activeren</guilabel
 > ingeschakeld is, geeft &kmail; een waarschuwing als u een bericht wilt versturen waar geen bijlagen bij zitten, hoewel er wel woorden in de tekst voorkomen die daarop duiden. De lijst met sleutelwoorden kan uitgebreid worden. </para>
-    
+
     <para
 >Gebruik de draaischakelaar <guilabel
 >Maximum grootte bijlage:</guilabel
 > om de grootte van een bijlage die u verzendt beperkt. Als u een grotere dan de gespecificeerde limiet wilt bijvoegen zal &kmail; een foutmelding uitgeven en weigeren het bestand bij te voegen. Merk op dat dit een individuele limiet is en niet een geaggregeerde limiet. De bestandsgrootte wordt gecontroleerd voordat het bestand geconverteerd wordt tot base-64 codering, als dat nodig is. </para>
-    
+
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2582,7 +2578,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-   
+
     <para
 >Om automatische correctie van algemene typefouten in te schakelen, activeert u de optie <guilabel
 >Automatische correctie inschakelen</guilabel
@@ -2597,7 +2593,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Als u uw instellingen voor een andere installatie of toepassing wilt opslaan, gebruik de knop <guibutton
 >Exporteren...</guibutton
 >. </para>
-    
+
     <para>
       <variablelist
 ><title
@@ -2656,7 +2652,7 @@ the world. As a default the encoding configured for the whole system is used.</p
            </varlistentry>
         </variablelist>
     </para>
-      
+
     <para
 >Nadat u al uw selecties voor autocorrectie hebt gemaakt, klik op <guibutton
 >Toepassen</guibutton
@@ -2665,7 +2661,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. </para>
     <para
 >&nbsp;</para
-><!-- add whitespace --> 
+><!-- add whitespace -->
     </sect2>
 
     <sect2 id="configure-resize-image">
@@ -2691,12 +2687,12 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-   
+
     <para
 >In sommige omstandigheden wilt u misschien dat &kmail; automatisch een bijlage als afbeelding in uitgaande e-mails in grootte aanpast (&eg; vanwege limieten op de e-mailserver). Om dat te doen, selecteer <guilabel
 >Afbeeldingen automatisch van grootte wijzigen</guilabel
 >. Er zijn verschillende opties die met deze functie samengaan. </para>
-      
+
     <variablelist>
      <varlistentry
 ><term
@@ -2738,14 +2734,14 @@ the world. As a default the encoding configured for the whole system is used.</p
 > te selecteren. De laatste optie biedt u om afbeeldingen met een bepaalde bestandsgrootte, kleiner dan de gespecificeerde bestandsgrootte, over te slaan. </para>
        </listitem>
      </varlistentry>
-     
+
      <varlistentry
 ><term
 ><guilabel
 >Bestandsnaam</guilabel
 ></term>
        <listitem>
-         
+
            <variablelist>
            <varlistentry
 ><term
@@ -2808,10 +2804,10 @@ the world. As a default the encoding configured for the whole system is used.</p
              </listitem>
            </varlistentry>
          </variablelist>
-         
+
          </listitem>
        </varlistentry>
-     
+
        <varlistentry
 ><term
 ><guilabel
@@ -2835,18 +2831,18 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect1 id="configure-security">
   <title
 >Beveiliging instellen</title>
-  
+
   <para
 >De configuratiedialoog Beveiliging laat u bepaalde opties voor opgemaakte tekst (&HTML;) fijn afstemmen. Het biedt u ook functies voor versleutelen en ontsleutelen, sommige ingebouwde anti-phishing logica aanpassen en hoe verzoeken voor meldingen over ontvangen / gelezen worden behandeld. Merk op dat deze dialoog <emphasis
 >niets</emphasis
 > te maken heeft met beveiligingsinstellingen voor anti-virus. Zie het hoofdstuk <link linkend="the-anti-virus-wizard"
 >&kmail; gebruiken: de anti-virus assistent</link
 > als u beveiliging tegen anti-virus wilt. </para>
-  
+
   <sect2 id="configure-security-reading">
     <title
 >Lezen</title>
-    
+
     <screenshot>
     <screeninfo
 >Beveiliging bij lezen</screeninfo>
@@ -2866,8 +2862,8 @@ the world. As a default the encoding configured for the whole system is used.</p
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->    
-    
+><!-- add whitespace -->
+
     <para
 >Op dit tabblad kunt u beveiligingsopties configureren die effect hebben op de manier waarop u berichten leest.</para>
 
@@ -2897,7 +2893,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Door externe verwijzingen aan hun berichten toe te voegen, kunnen mensen die spam verzenden detecteren wanneer u naar hun bericht hebt gekeken, wat uw locatie is en heel wat andere informatie die gelogd wordt op webservers. Merk op dat deze optie geen effect heeft op &Java; of JavaScript, omdat deze in &kmail; helemaal niet worden ondersteund. </para>
 	  </listitem>
 	</varlistentry>
-    
+
 	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
     <varlistentry id="configure-security-email-scams">
       <term
@@ -2917,7 +2913,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > en het e-mailadres dat in de dialoog verschijnt invoeren. Merk op, dat op dit moment, alleen volledige e-mailadressen in deze lijst geplaatst kunnen worden. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2928,7 +2924,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Selecteer deze optie om af te dwingen dat &kmail; de database van Google voor verdachte phishing-websites raadpleegt wanneer URL's ingebed zijn in een bericht en u te waarschuwen wanneer een overeenkomst wordt gevonden. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2939,7 +2935,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >&kmail; zal standaard automatisch URL's ingebed in &HTML;-berichten controleren en u waarschuwen als er een verschijnt om te proberen u misleiden. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2950,7 +2946,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Standaard zal &kmail; automatisch proberen versleutelde berichten te decoderen wanneer u ze bekijkt. Als u er de voorkeur aan geeft om dat handmatig te doen, deactiveer dan deze optie. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
 	      <term
 ><guilabel
@@ -2972,7 +2968,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-message-disposition-notifications">
         <title
 >Bevestigingen voor ontvangst en gelezen</title>
@@ -2996,7 +2992,7 @@ the world. As a default the encoding configured for the whole system is used.</p
           <para
 >&nbsp;</para
 ><!-- add whitespace -->
-        
+
         <variablelist>
           <varlistentry id="configure-security-reading-mdns">
 	      <term>
@@ -3031,7 +3027,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Negeert elk verzoek om ontvangst- en leesbevestiging. Er zal nooit automatisch een &mdn; verzonden worden. </para>
 		    </listitem>
           </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3042,7 +3038,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Verstuurt &mdn;s na daarvoor toestemming te hebben gevraagd. Op deze manier kunt u zelf bepalen aan wie u een bevestiging verstuurt. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3057,7 +3053,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > veiliger dan altijd een &mdn; verzenden; de verzender kan nog steeds zien dat het bericht ontvangen is, hij weet alleen niet of het bericht verwijderd of gelezen is. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3069,7 +3065,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 		    </listitem>
 	      </varlistentry>
 	    </variablelist>
-        
+
 	    <para
 >Als u het niet zeker weet, kies dan <guilabel
 >Vragen</guilabel
@@ -3079,12 +3075,12 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-        
+
 	    <para
 >Met de opties onder <guilabel
 >Originele bericht aanhalen</guilabel
 > kunt u bepalen hoeveel van een bericht wordt teruggestuurd met &mdn;'s. </para>
-        
+
 	    <variablelist>
 	      <varlistentry>
 		    <term>
@@ -3096,7 +3092,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >In de &mdn; wordt niets anders dan de message-id en de oorspronkelijke geadresseerde bijgevoegd. Dit geeft de verzender genoeg unieke informatie om het bericht terug te vinden waarin deze &mdn; is gegenereerd. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
             <term>
               <guilabel
@@ -3107,7 +3103,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Het hele bericht wordt bijgevoegd. Dit is overbodig, omdat de berichtkoppen vaak alle benodigde informatie bevatten, maar het is natuurlijk gemakkelijker voor de ontvanger. </para>
             </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
             <term>
               <guilabel
@@ -3119,7 +3115,7 @@ the world. As a default the encoding configured for the whole system is used.</p
               </listitem>
 	      </varlistentry>
 	    </variablelist>
-        
+
 	    <para
 >Als u het niet zeker weet, kunt u deze optie op de standaardinstelling (niets) laten staan. </para>
 	  </listitem>
@@ -3168,7 +3164,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-      
+
       <para
 >Op dit tabblad kunt u opties die betrekking hebben op de veiligheid bij het opstellen van berichten instellen. </para>
 
@@ -3305,7 +3301,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-      
+
 
       <para
 >Op dit tabblad kunt u waarschuwingen met betrekking tot beveiliging in- en uitschakelen. </para>
@@ -3377,7 +3373,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >-certificaten en de hoofdcertificaten (ook wel root-certificaten genoemd). </para>
 	  </listitem>
 	</varlistentry>
-	
+
     <varlistentry>
 	  <term>
 	    <guibutton
@@ -3390,7 +3386,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Tenzij u een expert in encryptie bent, zou u waarschijnlijk de standaard instellingen hier moeten accepteren. </para>
 	  </listitem>
 	</varlistentry>
-    
+
 	<varlistentry id="configure-security-warnings-reenable-all-warnings">
 	  <term>
 	    <guilabel
@@ -3879,7 +3875,7 @@ that is used when you create a new folder.</para>
 >Als deze optie geselecteerd is, wordt bij het afsluiten van &kmail; de prullenbak geleegd. </para>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry>
       <term
 ><guilabel
@@ -3929,7 +3925,7 @@ that is used when you create a new folder.</para>
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->    
+><!-- add whitespace -->
 
     <variablelist>
 
@@ -3945,7 +3941,7 @@ that is used when you create a new folder.</para>
 > de antwoorden op uitnodigingen begrijpt. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -3958,7 +3954,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -3973,7 +3969,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
 <!--varlistentry>
 <term
 ><guilabel
@@ -4012,13 +4008,13 @@ This is the default. The user can turn this option off if they want to see the i
 <listitem>
 <para
 >When this is checked, you will not see the mail composer window. Instead,
-all invitation mails are sent automatically. If you want to see the mail 
-before sending it, you can uncheck this option. However, be aware that the 
-text in the composer window is in iCalendar syntax, and you should not try 
+all invitation mails are sent automatically. If you want to see the mail
+before sending it, you can uncheck this option. However, be aware that the
+text in the composer window is in iCalendar syntax, and you should not try
 modifying it by hand.</para>
 </listitem>
 </varlistentry--><!-- These options are no longer available. @dcb2020342-->
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4058,7 +4054,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Deze dialoog helpt u om fijn af te stemmen de manier waarop de functie <menuchoice
 > <guimenu
@@ -4066,9 +4062,8 @@ modifying it by hand.</para>
 ><guimenuitem
 >Afdrukken</guimenuitem
 > </menuchoice
-> werkt. </para
-> 
-    
+> werkt. </para>
+
     <variablelist>
 
       <varlistentry>
@@ -4081,7 +4076,7 @@ modifying it by hand.</para>
 >Deze optie inschakelen om afdrukken van slechts de geselecteerde portie van een bericht. De standaard waarde schakelt deze functie uit, zodat het gehele bericht standaard wordt afgedrukt. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4096,7 +4091,7 @@ modifying it by hand.</para>
 >, maar het werkt nu niet correct. In andere woorden, er is een bug. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4107,7 +4102,7 @@ modifying it by hand.</para>
 >Zoals de voorgaande optie is er hier een bug, dus &kmail; drukt altijd afbeeldingen af, ongeacht hoe deze optievlag is gezet. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4118,7 +4113,7 @@ modifying it by hand.</para>
 >Deze optie inschakelen om &kmail; te laten zorgen dat versleutelingsdetails voor versleutelde en/of digitaal ondertekende berichten worden afgedrukt. </para>
         </listitem>
       </varlistentry>
-      
+
   </variablelist>
   </sect2>
 
@@ -4127,22 +4122,22 @@ modifying it by hand.</para>
 <sect1 id="configure-plugins">
     <title
 >Pagina plug-ins</title>
-    
+
     <para
 >&kmail; bevat een groot aantal speciale functies die al dan niet nuttig zijn voor bepaalde gebruikers. U kunt een of meer van deze speciale functies selecteren door (de)ze te kiezen in de configuratiepagina "plug-ins". Of, als u geen speciale functie nodig hebt, kunt u tijd en opslagruimte besparen door de selectie van de bijbehorende plug-inmodule ongedaan te maken. </para>
-    
+
     <para
 >Op vele Linux distributies worden de meeste van deze plug-ins niet ingevoegd in het basis pakket &kmail;. Om volledige functionaliteit met plug-ins te hebben, ga dan na of het pakket genaamd "kdepim-addons" (of zoiets) is geïnstalleerd. </para>
-    
+
     <para
 >U kunt een ruw idee krijgen over wat een specifieke plug-in doet door eenvoudig de naam van de plug-in te accentueren in de configuratiepagina van &kmail;. Een korte beschrijving van de functie van de plug-in zal dan appear aan de rechterkant van de dialoog verschijnen. </para>
-    
+
     <para
 >De verschillende plug-ins die nu in &kmail; (2021) beschikbaar zijn staan in de onderstaande lijst. Merk op dat de set van "standaard" plug-ins gebaseerd is op de openSUSE versie van &kmail; (5.14.2) die gebruikt wordt als een referentie voor deze editie van de documentatie. De actuele standaards op uw systeem kunnen verschillen; ze zijn afhankelijk van de distributie. </para>
-    
+
     <para
 >Omdat er van tijd tot tijd nieuwe functionaliteit wordt toegevoegd, kan deze lijst groeien als de tijd vordert. Er zijn twee algemene regels waar u op kunt bouwen die de structuur van plug-ins bepalen zelfs als de specifieke plug-in waarmee u te maken krijgt niet in de onderstaande lijst staat. </para>
-    
+
     <para
 >1. Als de te configureren variabelen heeft, kunt u de configuratiedialoog voor die plug-in openen door op de knop <guibutton
 >&nbsp;<inlinemediaobject
@@ -4151,13 +4146,13 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 > te klikken die verschijnt naast de naam van de plug-in. </para>
-    
+
     <para
 >2. Wanneer een plug-in is geselecteerd of selectie ongedaan gemaakt, moet &kmail; opnieuw gestart worden voordat de gewenste wijzig(en) effect hebben. </para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <sect2 id="configure-plugins-akonadi">
     <title
 >Akonadi en controle vóór verzenden</title>
@@ -4181,9 +4176,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4198,7 +4193,7 @@ modifying it by hand.</para>
 > van dit handboek kunnen lezen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4211,7 +4206,7 @@ modifying it by hand.</para>
 > voor extra informatie. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4222,7 +4217,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om meldingen over nieuwe e-mail in te schakelen. U kunt de te tonen velden aanpassen in het "standaard" meldingsbericht. U kunt ook geluidssignalen (gesproken tekst, eerder opgenomen spraak), items in een logbestand, &etc; selecteren. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4235,7 +4230,7 @@ modifying it by hand.</para>
 > voor extra informatie. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4246,7 +4241,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om een set "geünificeerde" e-mailvakken aan te maken. &kmail; zal er automatisch drie van aanmaken, gelabeld Postvak in, Concepten en Verzonden. Als u zowel een postvak in in Lokale mappen als in een of meer &IMAP; postvak in bestemmingen hebt gedefinieerd, zal &kmail; al de verschillende postvak-in-bestanden als één geconsolideerde virtuele map Postvak in tonen. U kunt de configuratiedialoog gebruiken om extra virtuele postvakken aan te maken, elk aangepast zoals u wilt. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4257,7 +4252,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om nieuwe adressen toe te voegen aan een van uw adresboeken wanneer u e-mail verzendt naar een nieuwe contactpersoon. De configuratiedialoog gebruiken om adresboeken te verbinden met identiteiten. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4268,7 +4263,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om een paar regels toe te passen alvorens een bericht te verzenden. Deze plug-in is standaard ingeschakeld en zal automatisch aan u melden wanneer u meer dan één kopie van het bericht naar dezelfde persoon probeert te verzenden. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4279,13 +4274,13 @@ modifying it by hand.</para>
 >Deze optie selecteren om adresscreening in te schakelen bij uitgaande berichten. De configuratiedialoog gebruiken om een witte en/of zwarte lijst te gebruiken voor elk van de gedefinieerde identiteiten. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-composer">
     <title
 >Opsteller / bewerker</title>
@@ -4309,9 +4304,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4322,7 +4317,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om de opsteller te dwingen een externe tekstbewerker te openen wanneer deze opstart. De configuratiedialoog voor deze plug-in gebruiken om de tekstbewerker te specificeren die zal worden opgeroepen. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4339,7 +4334,7 @@ modifying it by hand.</para>
 > toe te voegen aan de opsteller. Deze plug-in is standaard uitgeschakeld en is kennelijk nog steeds in bewerking. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4356,7 +4351,7 @@ modifying it by hand.</para>
 > aan de opsteller toe te voegen. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4373,7 +4368,7 @@ modifying it by hand.</para>
 > in de opsteller toe te voegen. Deze laat u een geselecteerd e-mailadres uit een adresboek in de inhoud van uw bericht met een eenvoudige aanwijzen en klik van de &LMB; invoegen. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4390,7 +4385,7 @@ modifying it by hand.</para>
 > aan de opsteller toe te voegen. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4401,7 +4396,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om om een klein beetje van niet erg functionele code toe te voegen. Deze plug-in is nog in de maak en is ook standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4418,7 +4413,7 @@ modifying it by hand.</para>
 > aan de opsteller toe te voegen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4435,7 +4430,7 @@ modifying it by hand.</para>
 > aan de opsteller toe te voegen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4452,7 +4447,7 @@ modifying it by hand.</para>
 > aan de opsteller toe te voegen. Er worden vier opties geboden: Nextcloud, Pastebin, Bluetooth en E-mail (opent een tweede opstelvenster). Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4469,14 +4464,13 @@ modifying it by hand.</para>
 > aan de opsteller toe te voegen. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-        
+
     <sect2 id="configure-plugins-grammar">
     <title
 >Grammatica controles / kopstijlen</title>
@@ -4500,9 +4494,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4519,7 +4513,7 @@ modifying it by hand.</para>
 > aan het opstelvenster toe te voegen. Deze optie is speciaal, alleen voor de Franse taal. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4539,17 +4533,17 @@ modifying it by hand.</para>
     </variablelist>
     <para
 >&nbsp;</para
-><!-- add whitespace -->  
-    
+><!-- add whitespace -->
+
     <para
 >De volgende zes plug-ins bieden u te beslissen welke kopstijlen geselecteerd kunnen worden uit het menu <guimenu
 >Beeld</guimenu
 >. Zie <link linkend="the-preview-pane-headers"
 >de beschrijving van verschillende kopweergaven</link
 > in het hoofdstuk "&kmail; gebruiken" voor meer informatie. </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4560,7 +4554,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het tonen van "Beknopte" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4571,7 +4565,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het tonen van "KMail 5.2" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4582,7 +4576,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het tonen van "Elegante" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4593,7 +4587,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het tonen van "Grappige" koppen in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4604,7 +4598,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het tonen van "Lange" koppen in te schakelen. Deze plugin is standaard uitgeschakeld. (Lange koppen zijn gelijk aan standaard koppen, maar zullen enige minder algemene informatie in koppen tonen, zoals "Beantwoorden-aan", wanneer zoiets in de koppen aanwezig is.) </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4615,14 +4609,13 @@ modifying it by hand.</para>
 >Deze optie selecteren om het tonen van "Standaard" koppen in te schakelen. Deze plug-in is standaard uitgeschakeld. (Standaard koppen zijn hetzelfde als Elegante koppen, maar zonder de beschaduwde achtergrond.) </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-misc">
     <title
 >Berichtviewer / diversen</title>
@@ -4646,7 +4639,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >De volgende zes plug-ins bieden allemaal speciale functies die alleen gebruikt kunnen worden met een werkbalkknop. De dialoog <menuchoice
 ><guimenu
@@ -4659,9 +4652,9 @@ modifying it by hand.</para>
 > Werkbalken configureren... </guimenuitem
 > </menuchoice
 > gebruiken om de werkbalkknoppen behorende bij deze functies toe te voegen of te verwijderen nadat u select een van deze plug-ins in of uitschakelt. </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4672,7 +4665,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het maken van een agenda-item toe te staan bij het bekijken van een bericht in &kmail;. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4683,7 +4676,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het maken van een notitie in &kontact; toe te staan bij het bekijken van een bericht in &kmail;. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4694,7 +4687,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het maken van een te-doen-item in &korganizer; toe te staan bij het bekijken van een bericht in &kmail;. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4705,7 +4698,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om de functie "URL uitvouwen" in te schakelen. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4716,7 +4709,7 @@ modifying it by hand.</para>
 >Deze optie selecteren om het aanroepen van een uit te voeren commando vanaf de werkbalk toe te staan. De bijbehorende configuratiedialoog gebruiken om het uitvoerbare bestand te selecteren en het een naam te geven. De gekozen naam kan later toegevoegd worden aan de werkbalk als een knop, zodat u het wanneer u wilt kan aanroepen. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4729,13 +4722,12 @@ modifying it by hand.</para>
 > is standaard beschikbaar in de opsteller. Deze plug-in (via de werkbalk) gebruiken om de vertaler beschikbaar te maken in het venster voor een voorbeeldbericht. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >De volgende vier items zijn niet echt plug-ins; het zijn ingebouwde functies van &kmail;. Elk hiervan kan afzonderlijk geconfigureerd worden, door de knop <guibutton
 >&nbsp;<inlinemediaobject
@@ -4744,9 +4736,9 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 > die naast de naam van de functie verschijnt. Er is geen herstart nodig om deze configuratievariabelen effectief te maken. </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4764,7 +4756,7 @@ modifying it by hand.</para>
 ><!-- add whitespace -->
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4777,7 +4769,7 @@ modifying it by hand.</para>
 > voor meer informatie. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4790,7 +4782,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4801,13 +4793,13 @@ modifying it by hand.</para>
 >Deze configuratiedialoog gebruiken om ondersteuning van Gravatar (Globaal herkende avatar) in / uit te schakelen. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-tools">
         <title
 >Hulpmiddelen</title>
@@ -4832,9 +4824,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4849,7 +4841,7 @@ modifying it by hand.</para>
 >. Deze plug-in is standaard uitgeschakeld. Merk op dat wanneer u anti-spam software hebt geïnstalleerd, deze plug-in veilig uitgeschakeld kan worden; de plug-in is alleen nodig voor het installeren van anti-spam software, niet voor het uitvoeren. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4864,7 +4856,7 @@ modifying it by hand.</para>
 >. Deze plug-in is standaard uitgeschakeld. Merk op dat wanneer u anti-virus software hebt geïnstalleerd, deze plug-in veilig uitgeschakeld kan worden; de plug-in is alleen nodig voor het installeren van anti-virus software, niet voor het uitvoeren. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4881,7 +4873,7 @@ modifying it by hand.</para>
 > in het venster met berichtenvoorbeeld. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4896,7 +4888,7 @@ modifying it by hand.</para>
 >. Primair voor gebruikt door ontwikkelaars van programma's -- de standaard logfunctie levert niet genoeg informatie (alleen een tijdstip en "Gereed", voor de meeste "gebeurtenissen"). </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4909,7 +4901,7 @@ modifying it by hand.</para>
 > aan &kmail; toe te voegen. Als u er voor kiest deze plug-in te activeren, wees er op voorbereid om veel tijd te besteden aan het aanpassen van het configuratiebestand om de filters te krijgen die u werkelijk wilt. Deze plug-in is standaard uitgeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4924,10 +4916,10 @@ modifying it by hand.</para>
 >Verzenden van een "Niet volgen" verzoek kan uw privacy een beetje verhogen. Maar de enige zekere manier bij het vermijden van volgpixels is nooit afbeeldingen op afstand in &HTML; berichten te downloaden. Deze plug-in is standaard ingeschakeld. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     </sect2>
-    
+
 </sect1>
 
 <sect1 id="configure-non-gui-options">

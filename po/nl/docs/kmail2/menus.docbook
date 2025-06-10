@@ -532,7 +532,7 @@
 > van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
 
 <variablelist>
-    
+
 <varlistentry id="reader-edit-copy-folder">
   <term
 ><menuchoice
@@ -785,7 +785,7 @@
   <listitem
 ><para
 >Dit submenu heeft de volgende opties om het uiterlijk van de berichtenlijst te wijzigen.</para>
-    
+
     <variablelist>
     <varlistentry id="reader-view-messagelist-sorting">
       <term
@@ -810,7 +810,7 @@
 >Door slimme verzender/ontvanger</guilabel
 > zal de ontvanger tonen wanneer u de map postvak-uit bekijkt en zal de verzender tonen wanneer u de folder postvak-in bekijkt.</para
 ></listitem>
-    
+
             <listitem
 ><para
 ><guilabel
@@ -823,7 +823,7 @@
 ></listitem>
           </itemizedlist>
         </listitem>
-        
+
         <listitem
 ><para
 ><guilabel
@@ -841,7 +841,7 @@
         </itemizedlist>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-aggregation">
       <term
 ><menuchoice
@@ -862,7 +862,7 @@
 >) voor meer informatie over aggregatie.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-theme">
       <term
 ><menuchoice
@@ -883,7 +883,7 @@
 >) voor meer informatie over thema's.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-create-new-tab">
       <term
 ><menuchoice
@@ -902,7 +902,7 @@
 >Maakt een nieuw tabblad aan op de werkbalk tabbladen. Dit tabblad zal naar de map wijzen die u bekijkt wanneer de optie is geselecteerd. Als de werkbalk tabbladen nog niet zichtbaar is, zal het selecteren van deze optie deze aanmaken. De werkbalk tabbladen kan handig zijn als u veel mappen hebt, maar slechts een paar ervan regelmatig gebruikt.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-next-tab">
       <term
 ><menuchoice
@@ -919,7 +919,7 @@
 >Opent de map behorende bij het volgende tabblad op de werkblak tabbladen.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-previous-tab">
       <term
 ><menuchoice
@@ -936,7 +936,7 @@
 >Opent de map behorende bij het vorige tabblad op de werkblak tabbladen.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-left">
       <term
 ><menuchoice
@@ -949,7 +949,7 @@
 >Ordent de tabbladen op de werkbalk tabbladen door het actieve tabblad naar links te verschuiven. Als dat tabblad al helemaal links zit, zal het verplaatst worden naar de eindpositie rechts.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-right">
       <term
 ><menuchoice
@@ -962,7 +962,7 @@
 >Ordent de tabbladen op de werkbalk tabbladen door het actieve tabblad naar rechts te verschuiven. Als dat tabblad al helemaal rechts zit, zal het verplaatst worden naar de eindpositie links.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-close-tab">
       <term
 ><menuchoice
@@ -2142,7 +2142,7 @@
 >E-maillijstnaam: &gt;</guimenuitem
 ></menuchoice
 ></term>
-  
+
   <listitem
 ><para
 >Biedt verschillende opties voor berichten naar e-maillijsten.</para>
@@ -2157,7 +2157,7 @@
 ><!-- add whitespace -->
   <para
 >De volgende opties zijn beschikbaar in mappen voor e-maillijsten:</para>
-  
+
   <itemizedlist>
     <listitem
 ><para
@@ -2216,7 +2216,7 @@
 >.</para
 ></listitem>
   </itemizedlist>
-  
+
   <para
 >&nbsp;</para
 ><!-- add whitespace --></listitem>
@@ -2340,7 +2340,7 @@
     <entry
 >Deze markering wordt nooit automatisch door &kmail; aan een bericht toegekend. U kunt deze markering vrij gebruiken voor berichten die voor u belangrijk zijn.</entry
 ></row>
- 
+
     <row>
     <entry
 ><guimenuitem
@@ -2418,7 +2418,7 @@
 >Betekenis</entry
 ></row
 ></thead>
-    
+
     <tbody>
     <row>
     <entry
@@ -2464,7 +2464,7 @@
     <entry
 >Deze markering wordt nooit automatisch door &kmail; aan een bericht toegekend. U kunt deze markering vrij gebruiken voor discussies die voor u belangrijk zijn.</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2494,7 +2494,7 @@
     <entry
 >Deze markering wordt nooit automatisch door &kmail; aan een discussie toegekend. U kunt deze markering gebruiken voor berichten die actie-items zijn &eg;, een takenlijst.</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2530,7 +2530,7 @@
 ></inlinemediaobject
 > pictogram om de te filteren categorieën te tonen.)</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2546,7 +2546,7 @@
 >Stelt u in staat om een gehele discussie te negeren.</entry
 ></row>
     </tbody>
-    
+
   </tgroup
 ></informaltable>
   <para
@@ -2692,8 +2692,7 @@
 >&nbsp;</para
 ></listitem>
 </varlistentry>
-</variablelist
-> 
+</variablelist>
 
 </sect2>
 
@@ -3740,7 +3739,7 @@
 >Laat u een speciaal teken invoegen op de cursorpositie. Een groot aantal Unicode tekens worden beschikbaar gemaakt. Deze optie wordt alleen geleverd als de plug-in <guimenuitem
 >Speciaal teken invoegen</guimenuitem
 > plugin is geactiveerd.</para>
-  
+
   <para
 >Dit menu-item is verplaatst naar het menu <guimenu
 >Invoegen</guimenu
@@ -3928,7 +3927,7 @@
 > adressen naar behoefte te selecteren. Kijk op <link linkend="composer-headers"
 >Opstelkoppen</link
 > voor verdere details over berichtkoppen.</para>
-  
+
 <para
 >&nbsp;</para>
 
@@ -3968,7 +3967,7 @@
 >&nbsp;</para
 ></listitem>
   </varlistentry>
-  
+
 </variablelist>
 
 </sect2>
@@ -4484,7 +4483,7 @@
 >Als het menu-item dat u zoekt ontbreekt, kijk dan in <ulink url="help:/fundamentals/menus.html#menus-tools"
 >Menu Hulpmiddelen</ulink
 > van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
-  
+
 <variablelist>
   <varlistentry id="composer-tools-select-recipients">
   <term
@@ -4628,7 +4627,7 @@
 >Als het menu-item dat u zoekt ontbreekt, kijk dan in <ulink url="help:/fundamentals/menus.html#menus-settings"
 >Menu Instellingen</ulink
 > van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
-  
+
 <variablelist>
 <varlistentry id="composer-settings-toolbars">
   <term

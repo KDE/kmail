@@ -75,7 +75,7 @@
 > geactiveerd, de assistent zal dus proberen om de noodzakelijke informatie van de e-mailserver op te halen. Schakel deze optie uit als u een gebruiker met ervaring bent en een geavanceerde configuratie in wilt stellen. Klik op de knop <guibutton
 >Volgende</guibutton
 > indien gereed.</para>
-    
+
     <screenshot>
     <screeninfo
 >Accountassistent</screeninfo>
@@ -93,21 +93,21 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <note
 ><para
 >GMail-accounts moeten &IMAP; gebruiken. Als u tweestapsverificatie hebt ingeschakeld voor uw GMail-account zult u een verificatiecode van Google moeten krijgen als onderdeel van het initiële proces van het opzetten van een account. U hoeft geen tweefactorverificatie hoeven te doen nadat het &kmail;-account is aangemaakt, omdat Google uw &IMAP;-koppeling als volledig vertrouwd zal markeren.</para
 ></note>
-    
+
     <para
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
   <step id="GPG-security">
-    
+
     <para
 >Het volgende paneel helpt u bij het instellen van sleutels voor versleuteling van uw e-mail.</para>
-    
+
     <screenshot>
     <screeninfo
 >Accountassistent 2</screeninfo>
@@ -125,7 +125,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Als u uw communicatie wilt beveiligen met GnuPG dan kunt u een nieuwe sleutel genereren en de sleutel publiceren op een publieke sleutelserver of u kunt een bestaande sleutel importeren. Als u beslist om een nieuw sleutelpaar te genereren, vergeet dan niet het wachtwoord gebruikt om het te genereren. U zult dat wachtwoord elke keer nodig hebben als u de sleutel wilt gebruiken. </para>
     <para
@@ -134,7 +134,7 @@
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
-  
+
   <step id="Select-account-type">
     <para
 >Een paneel <guilabel
@@ -144,7 +144,7 @@
 > om te zien welke instellingen &kmail; heeft bepaald. Klik op de knop <guibutton
 >Beëindigen</guibutton
 > om het account in te stellen, de assistent te beëindigen en het venster te sluiten. </para>
-    
+
     <screenshot>
     <screeninfo
 >Accountassistent 3</screeninfo>
@@ -162,7 +162,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Als de assistent uw accounttype niet kan bepalen zal het paneel <guilabel
 >Accounttype selecteren</guilabel
@@ -177,15 +177,14 @@
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
-  
+
   <step id="Personal-settings">
-      
+
     <para
 >Als de assistent uw e-mailserver niet kon vinden door te zoeken op het internet zal het paneel <guibutton
 >Persoonlijke instellingen</guibutton
-> verschijnen.</para
->  
-        
+> verschijnen.</para>
+
     <screenshot>
     <screeninfo
 >Accountassistent 4</screeninfo>
@@ -203,7 +202,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Controleer of uw ingevoerde informatie juist is. Selecteer <guilabel
 >Download alle berichten voor offline gebruik</guilabel
@@ -212,7 +211,7 @@
 > nadat u klaar bent. Het paneel <guilabel
 >Setup voltooid</guilabel
 > zal verschijnen.</para>
-    
+
     <para
 >Uw account is nu ingesteld en u kunt op de knop <guibutton
 >Beëindigen</guibutton
@@ -224,7 +223,7 @@
 > <!-- whitespace -->
   </step>
 </procedure>
-  
+
   <para
 >Als u een account handmatig wilt aanmaken, lees dan verder in dit hoofdstuk. Anders kunt u veilig verder gaan naar <link linkend="testing-your-setup"
 >Uw setup testen</link
@@ -255,7 +254,7 @@
   <para
 >&nbsp;</para
 > <!-- whitespace -->
-  
+
   <para
 >Het venster <menuchoice
 ><guimenu
@@ -303,7 +302,7 @@
 > geassocieerd met de pagina <guilabel
 >Accounts</guilabel
 >. Een klein pop-up-venster zal verschijnen.</para>
-  
+
     <screenshot>
     <screeninfo
 >De dialoog Nieuwe identiteit</screeninfo>
@@ -321,7 +320,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >U hebt hier enige opties. Geef de nieuwe identiteit een naam en selecteer een van de beschikbare keuzes ("Met lege velden" of "Waarden van systeeminstellingen gebruiken"). Klik daarna op <guilabel
 >OK</guilabel
@@ -329,7 +328,7 @@
     <para
 >&nbsp;</para
 > <!-- whitespace -->
-    
+
     <screenshot>
     <screeninfo
 >Vervolg van de dialoog voor Nieuwe identiteit</screeninfo>
@@ -350,7 +349,7 @@
     <para
 >&nbsp;</para
 > <!-- whitespace -->
-    
+
     <para
 >De instellingen in het tabblad <guilabel
 >Algemeen</guilabel
@@ -414,7 +413,7 @@
 >Berichten verzenden</title>
   <para
 >Hier is een manier om een uitgaand e-mailaccount aan te maken.</para>
-  
+
   <screenshot>
     <screeninfo
 >Keuzes uitgaand account</screeninfo>
@@ -521,7 +520,7 @@
 >) wilt gebruiken, kijk dan op <link linkend="faq-file-locking"
 >Veel gestelde vragen (FAQ) over bestandsvergrendeling</link
 >.</para>
-    
+
   <screenshot>
     <screeninfo
 >Het configuratiepaneel voor ontvangen</screeninfo>
@@ -541,7 +540,7 @@
     </screenshot>
     <para
 >&nbsp;</para
-> <!-- whitespace -->  
+> <!-- whitespace -->
 
   <para
 >Als u &POP3; of &IMAP; kiest zal het instellingenpaneel voor accounts verschijnen. Allereerst moet voor het account een <guilabel
@@ -575,7 +574,7 @@
 > selecteert op het configuratietabblad <guilabel
 >Geavanceerd</guilabel
 >, zal &kmail; de berichten, die u hebt verwijderd, definitief verwijderen zodra de map verlaten wordt. Anders worden de berichten allen gemarkeerd als verwijderd en is het aan u om de mappen handmatig te comprimeren.</para>
-    
+
   </sect3>
 
 
@@ -584,15 +583,14 @@
 >Instellingen die alleen bij <acronym
 >POP3</acronym
 > aanwezig zijn</title>
-      
+
     <para
 >Selecteer <guilabel
 >Opgehaalde berichten op de server laten</guilabel
 > in het configuratietabblad <guilabel
 >Geavanceerd</guilabel
-> als u uw berichten op de server wilt laten nadat u ze hebt gedownload. Er zijn zeven manieren om te specificeren hoe lang oude berichten bewaard zullen worden na het downloaden: altijd (laat alle opties niet-geactiveerd) of aantal dagen / aantal berichten / maximum grootte van postvak-in aan de serverkant (kies één, twee of alle drie). Als dit keuzevakje niet geactiveerd is, zullen alle berichten onmiddellijk verwijderd worden van de server op afstand nadat het downloaden is voltooid.</para
->  
-  
+> als u uw berichten op de server wilt laten nadat u ze hebt gedownload. Er zijn zeven manieren om te specificeren hoe lang oude berichten bewaard zullen worden na het downloaden: altijd (laat alle opties niet-geactiveerd) of aantal dagen / aantal berichten / maximum grootte van postvak-in aan de serverkant (kies één, twee of alle drie). Als dit keuzevakje niet geactiveerd is, zullen alle berichten onmiddellijk verwijderd worden van de server op afstand nadat het downloaden is voltooid.</para>
+
     <para
 >In het tabblad <guilabel
 >Geavanceerd</guilabel
@@ -621,7 +619,7 @@
   <sect3 id="receiving-mail-imap-pop3">
     <title
 >Opties voor zowel POP3 als IMAP</title>
-    
+
     <para
 >Op het tabblad <guilabel
 >Ontvangen</guilabel
@@ -642,7 +640,7 @@
 >Controleren op nieuwe berichten in &gt;</guimenuitem
 ></menuchoice
 > te kiezen.</para>
-    
+
     <para
 >&kmail; ondersteunt versleuteling via <guilabel
 >SSL/TSL</guilabel
@@ -734,7 +732,7 @@
 > niet. <guilabel
 >Gmail</guilabel
 >-authenticatie is alleen beschikbaar voor &IMAP; accounts die gebruik maken van Google's GMail service.</para>
-  
+
     <para
 >Gebruik de knop <guibutton
 >Automatisch detecteren</guibutton

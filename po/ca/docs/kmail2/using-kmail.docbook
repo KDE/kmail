@@ -574,8 +574,7 @@
 >Configuració</guilabel
 >).</entry>
 </row>
-<row
->    
+<row>
 <entry
 ><keycombo action="simul"
 >&Maj;&Left;</keycombo
@@ -1009,8 +1008,7 @@
 </listitem>
 <listitem>
 <para
->Arrossegant un fitxer des de l'escriptori o una altra carpeta cap a la finestra de l'editor;</para
-> 
+>Arrossegant un fitxer des de l'escriptori o una altra carpeta cap a la finestra de l'editor;</para>
 </listitem>
 <listitem>
 <para
@@ -2763,8 +2761,7 @@ folders as a target.</para
 <para
 >Establirà el mètode de transport (&pex;, &SMTP;) que s'utilitzarà quan responeu a aquest missatge. Podeu triar des d'una llista de tots els comptes de correu electrònic sortint.</para>
 </listitem>
-</varlistentry
-> 
+</varlistentry>
 <varlistentry>
 <term
 ><guilabel
@@ -2812,8 +2809,7 @@ folders as a target.</para
 ></term>
 <listitem
 ><para
->Retornarà un missatge al remitent verificant-li que el missatge ha estat entregat amb èxit, si ell ha requerit això.</para
-> 
+>Retornarà un missatge al remitent verificant-li que el missatge ha estat entregat amb èxit, si ell ha requerit això.</para>
 <para
 >Aquesta acció permet seleccionar qui rebrà el rebut d'entrega que envieu. Encara es podran habilitar globalment les confirmacions de rebuda en el diàleg <guilabel
 >Configuració del &kmail;...</guilabel
@@ -3274,8 +3270,7 @@ folders as a target.</para
 >Passa a través de</guilabel
 > i <guilabel
 >Executa una ordre</guilabel
->, perquè ambdues requereixen programes externs per a executar-se. Posant els filtres que tinguin aquestes accions al darrere dels altres filtres, reduireu el nombre de vegades que aquestes accions complexes són requerides, si la lògica del filtre ho permet.</para
-> 
+>, perquè ambdues requereixen programes externs per a executar-se. Posant els filtres que tinguin aquestes accions al darrere dels altres filtres, reduireu el nombre de vegades que aquestes accions complexes són requerides, si la lògica del filtre ho permet.</para>
 <para
 >Un exemple seria filtrar els missatges d'una llista de correu i detectar el correu brossa. Per a la detecció del correu brossa normalment emprareu una eina externa mitjançant una acció <guilabel
 >Passa a través de</guilabel
@@ -3454,8 +3449,7 @@ into your configured archive folder for easy viewing later on.
 </listitem>
 </varlistentry
 > --><!-- This feature is no longer available. @dcb2020295 -->
-</variablelist
-> 
+</variablelist>
 </sect2>
 <sect2 id="exporting">
 <title
@@ -3617,7 +3611,7 @@ into your configured archive folder for easy viewing later on.
 <!--
 <note
 ><para
->There have been major changes in the way &kmail; handles 
+>There have been major changes in the way &kmail; handles
 signing/encryption. The following introduction applies to the previous
 version of &kmail;. You can still read the introduction to get an overview
 about how to sign/encrypt messages, but the details, especially those of
@@ -3652,14 +3646,14 @@ the configuration, will differ.</para
 >&kmail; has to rely on <application
 >GnuPG</application
 >'s
-output; this output is often different between different versions of 
+output; this output is often different between different versions of
 <application
 >GnuPG</application
 >, so it is important that you test if encryption
 really works with your setup before you start using it seriously. &kmail; might
 <emphasis
 >not</emphasis
-> warn you if something fails - enable 
+> warn you if something fails - enable
 <guilabel
 >Show signed/encrypted text
 after composing</guilabel
@@ -3762,8 +3756,7 @@ version.)</para>
 ></term>
 <listitem>
 <para
->Quan es marca aquesta casella, els missatges enviats seran emmagatzemats encriptats quan s'enviïn. Això no és recomanable, ja que no els podreu llegir més en el cas que caduqui un dels certificats. (Recordeu que les claus GPG no caduquen, com a regla general. Aquesta precaució és principalment rellevant per als usuaris dels certificats x.509).</para
-> 
+>Quan es marca aquesta casella, els missatges enviats seran emmagatzemats encriptats quan s'enviïn. Això no és recomanable, ja que no els podreu llegir més en el cas que caduqui un dels certificats. (Recordeu que les claus GPG no caduquen, com a regla general. Aquesta precaució és principalment rellevant per als usuaris dels certificats x.509).</para>
 </listitem>
 </varlistentry>
 
@@ -3774,8 +3767,7 @@ version.)</para>
 ></term>
 <listitem>
 <para
->Obrirà un diàleg que us permetrà escollir les claus emprades per a cada destinatari al qual envieu un missatge encriptat. Si aquesta opció està desmarcada, el &kmail; tan sols mostrarà el diàleg si no troba una clau per a un destinatari o si hi ha conflictes o preferències d'encriptatge sense establir.</para
-> 
+>Obrirà un diàleg que us permetrà escollir les claus emprades per a cada destinatari al qual envieu un missatge encriptat. Si aquesta opció està desmarcada, el &kmail; tan sols mostrarà el diàleg si no troba una clau per a un destinatari o si hi ha conflictes o preferències d'encriptatge sense establir.</para>
 </listitem>
 </varlistentry>
 

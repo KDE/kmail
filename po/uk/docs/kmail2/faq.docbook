@@ -64,7 +64,7 @@
 >Mozilla Firefox</guimenuitem
 ></menuchoice
 >.</para>
-    
+
     <para
 >Якщо ви є адміністратором системи і бажаєте виконати відповідні налаштування для всіх ваших користувачів, слід виконати такі дії:</para>
     <itemizedlist>
@@ -383,18 +383,18 @@
 ><guimenu
 >&systemsettings;</guimenu
 ><guisubmenu
->Application 
+>Application
 Appearance</guisubmenu
 ><guimenuitem
 >Colors</guimenuitem
 ><guimenuitem
 >Colors</guimenuitem
 ></menuchoice
->, for each color 
+>, for each color
 set except <guilabel
 >Common Colors</guilabel
 > (which doesn't have it), change the <guilabel
->Alternate 
+>Alternate
 Background</guilabel
 > to be the same as the <guilabel
 >Normal Background</guilabel
@@ -405,16 +405,16 @@ Background</guilabel
 > and <emphasis
 >Mageia</emphasis
 > doesn't use the name <guilabel
->System 
+>System
 Settings</guilabel
 >.  As in <guilabel
 >KControl</guilabel
 >, the KDE 3 control centre, they name it <quote
->Configure your 
+>Configure your
 Desktop</quote
 > to distinguish it from <quote
 >Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control 
+>, a.k.a. the Mandriva/Mageia Control
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry
@@ -454,7 +454,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >: ви встановлюєте систему на новому комп’ютері і бажаєте перенести туди всю вашу пошту. Ви вирішили скопіювати всі дані на картку пам’яті USB. Копіювання розпочинається, а потім ви отримуєте повідомлення про помилку:</para>
     <screen
 >Не вдалося скопіювати ............Некоректний аргумент</screen>
-    
+
     <para
 ><emphasis
 >Вирішення</emphasis
@@ -526,7 +526,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >GnuPG</application
 > частково засновано на повідомленнях про помилки, які буде отримано від цих програм, а ці повідомлення можуть змінюватися зі зміною версій програм.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >&kmail; не буде шифрувати повідомлення ненадійним (непідписаним) відкритим ключем: якщо ви бажаєте зашифрувати повідомлення таким ключем, спочатку перевірте профіль власника ключа, і лише потім підписуйте цей ключ вашим закритим ключем. Якщо ви не бажаєте або не можете перевірити особу власника ключа, але все ж бажаєте зашифрувати повідомлення, будь ласка, підпишіть ключ локально за допомогою команди <userinput
@@ -539,12 +539,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></userinput
 >.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Навряд чи буде гарною думкою довіряти сторонньому відкритому ключеві без перевірки.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Починаючи з версії GnuPG 1.0.7 вам слід самому створити ваш власний ключ для необмеженої довіри власнику: програма більше не робить цього автоматично.</para>
@@ -586,8 +586,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >Засобом експортування даних PIM</ulink
 >.</para
 ><para
->&nbsp;</para
-> 
+>&nbsp;</para>
   </answer>
 </qandaentry>
 

@@ -5,8 +5,7 @@
 >Agent voor herinneren aan vervolgactie</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Dutch "INCLUDE"
-> 
+  <!ENTITY % Dutch "INCLUDE">
 ]>
 
 <article id="followupreminder" lang="&language;">
