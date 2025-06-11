@@ -5651,7 +5651,7 @@ msgstr "在账户身份设置中允许配置垃圾邮件文件夹"
 
 #: kmreaderwin.cpp:273
 msgid "Add AI plugin"
-msgstr ""
+msgstr "添加 AI 插件"
 
 #: kmreaderwin.cpp:302
 #, kde-format
