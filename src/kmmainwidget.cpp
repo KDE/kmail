@@ -1369,6 +1369,10 @@ void KMMainWidget::slotShowNewFromTemplate()
     }
 
     mTemplateMenu->menu()->clear();
+    // Since Qt 6.9 it's necessary to have a non-empty menu to show at the end of this slot
+    // otherwise nothing gets displayed and the menu isn't updated in slotDelayedShowNewFromTemplate
+    QAction *noAction = mTemplateMenu->menu()->addAction(i18n("(loading templates…)"));
+    noAction->setEnabled(false);
 
     auto job = new Akonadi::ItemFetchJob(mTemplateFolder);
     job->fetchScope().setAncestorRetrieval(ItemFetchScope::Parent);
@@ -1378,6 +1382,7 @@ void KMMainWidget::slotShowNewFromTemplate()
 
 void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
 {
+    mTemplateMenu->menu()->clear();
     auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
 
     const Akonadi::Item::List items = fetchJob->items();
