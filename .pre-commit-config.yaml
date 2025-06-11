@@ -9,6 +9,7 @@ repos:
    rev: v5.0.0
    hooks:
     - id: trailing-whitespace
+      exclude: (agents/mailfilteragent/akonadi_mailfilter_agent.notifyrc)
     - id: end-of-file-fixer
     - id: check-added-large-files
     - id: check-case-conflict
