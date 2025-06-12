@@ -4802,9 +4802,8 @@ void KMMainWidget::slotAccountSettings()
         return;
     }
 
-    QPointer<AgentConfigurationDialog> dlg = new AgentConfigurationDialog(instance, this);
-    dlg->exec();
-    delete dlg;
+    AgentConfigurationDialog dlg(instance, this);
+    dlg.exec();
 }
 
 void KMMainWidget::slotRestartAccount()
