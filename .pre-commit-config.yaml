@@ -14,9 +14,9 @@ repos:
     - id: check-added-large-files
     - id: check-case-conflict
     - id: check-xml
-    #- id: check-yaml
-    #  args: [--allow-multiple-documents]
-    #  exclude: ^(.clang-tidy)
+    - id: check-yaml
+      args: [--allow-multiple-documents]
+      exclude: ^(.clang-tidy)
     - id: check-json
     - id: check-symlinks
     - id: destroyed-symlinks
@@ -27,7 +27,7 @@ repos:
     - id: clang-format
     # force using this project's configuration rather
     # than the one provided by CI
-      args: [--style=file:.clang-format-pre-commit]
+      args: ["--style=file:.clang-format-pre-commit"]
  - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
    rev: v0.11.9
