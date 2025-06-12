@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-03 00:43+0000\n"
-"PO-Revision-Date: 2025-05-20 16:48+0200\n"
+"PO-Revision-Date: 2025-06-10 07:51+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -5982,7 +5982,7 @@ msgstr "Autoriser à configurer le dossier de pourriels dans l'identité"
 
 #: kmreaderwin.cpp:273
 msgid "Add AI plugin"
-msgstr ""
+msgstr "Ajouter un module externe d'intelligence artificielle"
 
 #: kmreaderwin.cpp:302
 #, kde-format
