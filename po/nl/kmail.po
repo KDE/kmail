@@ -18,14 +18,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-13 00:43+0000\n"
-"PO-Revision-Date: 2025-06-03 14:33+0200\n"
+"PO-Revision-Date: 2025-06-13 11:24+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -4647,11 +4647,10 @@ msgid "Unable to start import wizard"
 msgstr "De assistent voor importeren kon niet worden gestart"
 
 #: kmmainwidget.cpp:1374
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(geen sjablonen)"
+msgstr "(Bezig sjablonen te laden…)"
 
 #: kmmainwidget.cpp:1399
 #, kde-format

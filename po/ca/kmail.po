@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-13 00:43+0000\n"
-"PO-Revision-Date: 2025-06-03 11:01+0200\n"
+"PO-Revision-Date: 2025-06-13 09:59+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -4638,11 +4638,10 @@ msgid "Unable to start import wizard"
 msgstr "No s'ha pogut iniciar l'assistent d'importació"
 
 #: kmmainwidget.cpp:1374
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(sense plantilles)"
+msgstr "(s'estan carregant les plantilles…)"
 
 #: kmmainwidget.cpp:1399
 #, kde-format
