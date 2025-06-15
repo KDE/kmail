@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-13 00:43+0000\n"
-"PO-Revision-Date: 2025-03-15 10:51+0100\n"
+"PO-Revision-Date: 2025-06-14 14:18+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -22,6 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 24.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3502,10 +3503,9 @@ msgid "Spam &folder:"
 msgstr "&Katalog spamu:"
 
 #: identity/identitydialog.cpp:715
-#, fuzzy, kde-format
-#| msgid "Configure &POP Filters..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Konfiguracja &filtrów POP3..."
+msgstr "Ustawienia katalogu przedawnionych…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3740,11 +3740,10 @@ msgid "Do Not Cancel"
 msgstr "Nie anuluj"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Expire Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Przedawnij katalog"
+msgstr "Przedawnij katalog spamu"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -4607,11 +4606,10 @@ msgid "Unable to start import wizard"
 msgstr "Nie można wywołać pomocnika importowania"
 
 #: kmmainwidget.cpp:1374
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(brak wzorca użytkownika)"
+msgstr "(wczytywanie wzorców…)"
 
 #: kmmainwidget.cpp:1399
 #, kde-format
@@ -5874,22 +5872,19 @@ msgstr "Dodano własną składnię użyteczną w polu wyszukiwania tekstu"
 
 #: kmreaderwin.cpp:270
 msgid "Adblock public used new rust adblock lib"
-msgstr ""
+msgstr "Publiczny Adblock użył nowej biblioteki adblocka w ruscie"
 
 #: kmreaderwin.cpp:271
-#, fuzzy
-#| msgctxt "@action"
-#| msgid "Reopen Closed Viewer"
 msgid "Allow to reopen closed viewer"
-msgstr "Przywróć zamkniętą przeglądarkę"
+msgstr "Zezwól na ponowne otwarcie zamkniętej przeglądarki"
 
 #: kmreaderwin.cpp:272
 msgid "Allow to configure spam folder in identity"
-msgstr ""
+msgstr "Zezwól na ustawienie katalogu spamu dla tożsamości"
 
 #: kmreaderwin.cpp:273
 msgid "Add AI plugin"
-msgstr ""
+msgstr "Dodaj wtyczkę AI"
 
 #: kmreaderwin.cpp:302
 #, kde-format
@@ -6097,10 +6092,9 @@ msgid "Kontact Summary View"
 msgstr "Widok podsumowania Kontactu"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003-2024 Programiści Kontact"
+msgstr "© 2003-2025 Programiści Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format

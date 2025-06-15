@@ -4420,11 +4420,10 @@ msgid "Unable to start import wizard"
 msgstr "无法启动导入向导"
 
 #: kmmainwidget.cpp:1374
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(无模板)"
+msgstr ""
 
 #: kmmainwidget.cpp:1399
 #, kde-format

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-13 00:43+0000\n"
-"PO-Revision-Date: 2025-06-06 11:44+0200\n"
+"PO-Revision-Date: 2025-06-14 07:05+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -4590,11 +4590,10 @@ msgid "Unable to start import wizard"
 msgstr "Kan inte starta importguiden"
 
 #: kmmainwidget.cpp:1374
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(inga mallar)"
+msgstr "(läser in mallar…)"
 
 #: kmmainwidget.cpp:1399
 #, kde-format
