@@ -219,7 +219,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (!newFeaturesMD5.isEmpty()) {
         const bool hasNewFeature = (KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5);
         if (hasNewFeature) {
-            auto whatsNewMessageWidget = new PimCommon::WhatsNewMessageWidget(this);
+            auto whatsNewMessageWidget = new PimCommon::WhatsNewMessageWidget(this, i18n("KMail"));
             whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
             whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
             mTopLayout->addWidget(whatsNewMessageWidget);
@@ -4200,7 +4200,7 @@ void KMMainWidget::updateMoveAllToTrash()
 void KMMainWidget::slotShowWhatsNews()
 {
     const WhatsNewTranslations translations;
-    PimCommon::WhatsNewDialog dlg(translations.createWhatsNewInfo(), this);
+    PimCommon::WhatsNewDialog dlg(translations.createWhatsNewInfo(), this, i18n("KMail"));
     dlg.updateInformations();
     dlg.exec();
 }
