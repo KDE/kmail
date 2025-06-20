@@ -330,9 +330,8 @@ target_sources(
         historyclosedreader/historyclosedreadermanager.cpp
         historyclosedreader/historyclosedreadermenu.h
         historyclosedreader/historyclosedreadermenu.cpp
-
-	whatsnew/whatsnewtranslations.h
-	whatsnew/whatsnewtranslations.cpp
+        whatsnew/whatsnewtranslations.h
+        whatsnew/whatsnewtranslations.cpp
 )
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
