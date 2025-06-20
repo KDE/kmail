@@ -18,6 +18,7 @@
 #include "searchdialog/searchwindowdialog.h"
 #include "undostack.h"
 #include "util.h"
+#include "whatsnew/whatsnewtranslations.h"
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
 #include <MailCommon/FolderSelectionDialog>
@@ -177,6 +178,8 @@
 #include <MessageViewer/DKIMWidgetInfo>
 #include <MessageViewer/RemoteContentMenu>
 
+#include <PimCommon/WhatsNewMessageWidget>
+
 #include "historyswitchfolder/collectionswitchertreeviewmanager.h"
 #include "plugininterface/kmailplugincheckbeforedeletingmanagerinterface.h"
 
@@ -210,6 +213,20 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mActionCollection = actionCollection;
     mTopLayout = new QVBoxLayout(this);
     mTopLayout->setContentsMargins({});
+    const WhatsNewTranslations translations;
+    const QString newFeaturesMD5 = translations.newFeaturesMD5();
+    if (!newFeaturesMD5.isEmpty()) {
+        const bool hasNewFeature = (KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5);
+        if (hasNewFeature) {
+            auto whatsNewMessageWidget = new PimCommon::WhatsNewMessageWidget(this);
+            whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
+            whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
+            mTopLayout->addWidget(whatsNewMessageWidget);
+            KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+            whatsNewMessageWidget->animatedShow();
+        }
+    }
+
     mConfig = config;
     mGUIClient = aGUIClient;
     Akonadi::ControlGui::widgetNeedsAkonadi(this);
