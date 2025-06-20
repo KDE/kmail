@@ -1,7 +1,4 @@
 <RCC>
-    <qresource prefix="/">
-        <file>about/introduction_kmail.html</file>
-    </qresource>
     <qresource prefix="/kxmlgui5/kmail2">
         <file>kmail_part.rc</file>
         <file>kmcomposerui.rc</file>

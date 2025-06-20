@@ -406,7 +406,7 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void slotSelectAllMessages();
     KMAIL_NO_EXPORT void slotFocusQuickSearch();
 
-    KMAIL_NO_EXPORT void slotIntro();
+    KMAIL_NO_EXPORT void slotShowWhatsNews();
     KMAIL_NO_EXPORT void slotShowStartupFolder();
     KMAIL_NO_EXPORT void slotCopyDecryptedTo(QAction *action);
 
@@ -656,7 +656,7 @@ private:
 #endif
     KMLaunchExternalComponent *const mLaunchExternalComponent;
     ManageShowCollectionProperties *const mManageShowCollectionProperties;
-    QAction *mShowIntroductionAction = nullptr;
+    QAction *mShowWhatsNews = nullptr;
     QAction *mMarkAllMessageAsReadAndInAllSubFolder = nullptr;
     KActionMenuAccount *mAccountActionMenu = nullptr;
     QAction *mRemoveDuplicateRecursiveAction = nullptr;

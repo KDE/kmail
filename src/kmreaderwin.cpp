@@ -254,41 +254,6 @@ void KMReaderWin::hasMultiMessages(bool multi)
     mViewer->hasMultiMessages(multi);
 }
 
-// enter items for the "Important changes" list here:
-static const KLazyLocalizedString kmailChanges[] = {
-    kli18n("KMail is now based on the Akonadi Personal Information Management framework, which brings many "
-           "changes all around.")};
-static const int numKMailChanges = sizeof kmailChanges / sizeof *kmailChanges;
-
-// enter items for the "new features" list here, so the main body of
-// the welcome page can be left untouched (probably much easier for
-// the translators). Note that the <li>…</li> tags are added
-// automatically below:
-static const KLazyLocalizedString kmailNewFeatures[] = {
-    kli18n("Add Windows Support"),
-    kli18n("Add Custom Syntax usable in the search text field"),
-    kli18n("Adblock public used new rust adblock lib"),
-    kli18n("Allow to reopen closed viewer"),
-    kli18n("Allow to configure spam folder in identity"),
-    kli18n("Add AI plugin"),
-};
-static const int numKMailNewFeatures = sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
-
-// static
-QString KMReaderWin::newFeaturesMD5()
-{
-    QByteArray str;
-    for (int i = 0; i < numKMailChanges; ++i) {
-        str += kmailChanges[i].untranslatedText();
-    }
-    for (int i = 0; i < numKMailNewFeatures; ++i) {
-        str += kmailNewFeatures[i].untranslatedText();
-    }
-    QCryptographicHash md5(QCryptographicHash::Md5);
-    md5.addData(str);
-    return QLatin1StringView(md5.result().toBase64());
-}
-
 void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantHash &_data)
 {
     QVariantHash data = _data;
@@ -327,29 +292,6 @@ void KMReaderWin::displayResourceOfflinePage()
                        {QStringLiteral("subtext"),
                         i18n("Account is currently in offline mode. "
                              "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>")}});
-}
-
-void KMReaderWin::displayAboutPage()
-{
-    QVariantHash data;
-    data[QStringLiteral("version")] = QStringLiteral(KDEPIM_VERSION);
-    data[QStringLiteral("firstStart")] = kmkernel->firstStart();
-
-    QVariantList features;
-    features.reserve(numKMailNewFeatures);
-    for (int i = 0; i < numKMailNewFeatures; ++i) {
-        features.push_back(kmailNewFeatures[i].toString());
-    }
-    data[QStringLiteral("newFeatures")] = features;
-
-    QVariantList changes;
-    changes.reserve(numKMailChanges);
-    for (int i = 0; i < numKMailChanges; ++i) {
-        features.push_back(kmailChanges[i].toString());
-    }
-    data[QStringLiteral("importantChanges")] = changes;
-
-    displaySplashPage(QStringLiteral(":/about/introduction_kmail.html"), data);
 }
 
 void KMReaderWin::slotFind()

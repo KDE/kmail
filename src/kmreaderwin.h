@@ -94,14 +94,8 @@ public:
     /** Is loading ext. references to be supported? Takes into account override */
     [[nodiscard]] bool htmlLoadExternal();
 
-    /** Returns the MD5 hash for the list of new features */
-    [[nodiscard]] static QString newFeaturesMD5();
-
     /** Display a generic HTML splash page instead of a message */
     void displaySplashPage(const QString &templateName, const QVariantHash &data);
-
-    /** Display the about page instead of a message */
-    void displayAboutPage();
 
     /** Display the 'please wait' page instead of a message */
     void displayBusyPage();

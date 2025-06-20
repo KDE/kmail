@@ -64,6 +64,7 @@
 #include <MailCommon/FilterManager>
 #include <MailCommon/MailFilter>
 #include <PimCommon/PimUtil>
+#include <PimCommon/WhatsNewDialog>
 #include <PimCommonAkonadi/CollectionAclPage>
 #include <mailcommon/mailcommonsettings_base.h>
 
@@ -562,13 +563,7 @@ void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection
         assignLoadExternalReference();
     }
 
-    if (!mCurrentFolderSettings->isValid() && (mMessagePane->count() < 2)) {
-        slotIntro();
-    } else {
-        if (mMessagePane->isHidden()) {
-            mMessagePane->show();
-        }
-    }
+    mMessagePane->show();
 
     // The message pane uses the selection model of the folder view to load the correct aggregation model and theme
     //  settings. At this point the selection model hasn't been updated yet to the user's new choice, so it would load
@@ -1084,15 +1079,15 @@ void KMMainWidget::createWidgets()
         connect(mMsgView->viewer(), &MessageViewer::Viewer::replyMessageTo, this, &KMMainWidget::slotReplyMessageTo);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::showStatusBarMessage, this, &KMMainWidget::setShowStatusBarMessage);
         connect(mMsgView->viewer(), &MessageViewer::Viewer::zoomChanged, this, &KMMainWidget::setZoomChanged);
-        if (mShowIntroductionAction) {
-            mShowIntroductionAction->setEnabled(true);
+        if (mShowWhatsNews) {
+            mShowWhatsNews->setEnabled(true);
         }
     } else {
         if (mMsgActions) {
             mMsgActions->setMessageView(nullptr);
         }
-        if (mShowIntroductionAction) {
-            mShowIntroductionAction->setEnabled(false);
+        if (mShowWhatsNews) {
+            mShowWhatsNews->setEnabled(false);
         }
     }
     if (!KMailSettings::self()->enableFolderQuickSearch()) {
@@ -3468,11 +3463,9 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotAccountWizard);
     }
     {
-        mShowIntroductionAction = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18n("KMail &Introduction"), this);
-        actionCollection()->addAction(QStringLiteral("help_kmail_welcomepage"), mShowIntroductionAction);
-        KMail::Util::addQActionHelpText(mShowIntroductionAction, i18n("Display KMail's Welcome Page"));
-        connect(mShowIntroductionAction, &QAction::triggered, this, &KMMainWidget::slotIntro);
-        mShowIntroductionAction->setEnabled(mMsgView != nullptr);
+        mShowWhatsNews = new QAction(QIcon::fromTheme(QStringLiteral("kmail")), i18nc("@action:inmenu", "What's new"), this);
+        actionCollection()->addAction(QStringLiteral("whatsnew"), mShowWhatsNews);
+        connect(mShowWhatsNews, &QAction::triggered, this, &KMMainWidget::slotShowWhatsNews);
     }
 
     // ----- Standard Actions
@@ -4204,21 +4197,12 @@ void KMMainWidget::updateMoveAllToTrash()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotIntro()
+void KMMainWidget::slotShowWhatsNews()
 {
-    if (!mMsgView) {
-        return;
-    }
-
-    mMsgView->clear(true);
-
-    // hide widgets that are in the way:
-    if (mMessagePane && mLongFolderList) {
-        mMessagePane->hide();
-    }
-    mMsgView->displayAboutPage();
-
-    clearCurrentFolder();
+    const WhatsNewTranslations translations;
+    PimCommon::WhatsNewDialog dlg(translations.createWhatsNewInfo(), this);
+    dlg.updateInformations();
+    dlg.exec();
 }
 
 void KMMainWidget::slotShowStartupFolder()
@@ -4234,12 +4218,6 @@ void KMMainWidget::slotShowStartupFolder()
     mTagActionManager->createActions();
     messageActions()->setupForwardingActionsList(mGUIClient);
     initializePluginActions();
-
-    const QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
-    if (kmkernel->firstStart() || KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5) {
-        KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
-        slotIntro();
-    }
 }
 
 void KMMainWidget::slotServerStateChanged(Akonadi::ServerManager::State state)
