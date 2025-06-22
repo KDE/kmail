@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -364,7 +364,7 @@ msgstr "Beantwoord aan Pos-Lys..."
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Filter op Pos-lys..."
 
 #: collectionpage/collectionmailinglistpage.cpp:68

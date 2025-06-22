@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-05-20 06:22+0200\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 12:54+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 25.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -348,9 +348,11 @@ msgid "Mailing List"
 msgstr "Lista de correo"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "O cartafol leva asociada unha lista de correo."
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -4568,11 +4570,10 @@ msgid "Unable to start import wizard"
 msgstr "Non é posíbel iniciar o asistente de importación"
 
 #: kmmainwidget.cpp:1386
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(sen modelos)"
+msgstr "(cargando os modelos…)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5374,11 +5375,10 @@ msgid "&Add Account…"
 msgstr "Eng&adir unha conta…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Que toca agora?"
+msgstr "Novidades"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8104,10 +8104,8 @@ msgid "Unable to start account wizard"
 msgstr "Non é posíbel iniciar o asistente de contas"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Engadir unha identidade nova"
+msgstr "Engadir un novo trebello de novidades."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

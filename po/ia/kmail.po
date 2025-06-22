@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
 "PO-Revision-Date: 2025-05-27 16:12+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -336,9 +336,11 @@ msgid "Mailing List"
 msgstr "Lista de E-Posta"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Dossier contine un lista de e-posta"
 
 #: collectionpage/collectionmailinglistpage.cpp:68

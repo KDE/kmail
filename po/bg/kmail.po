@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-06-17 00:09+0200\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 10:30+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -345,9 +345,11 @@ msgid "Mailing List"
 msgstr "Пощенски списък"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Папката съдържа пощенски списък"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -5384,11 +5386,10 @@ msgid "&Add Account…"
 msgstr "&Добавяне на акаунт…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Какво следва?"
+msgstr "Какво ново"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8118,10 +8119,8 @@ msgid "Unable to start account wizard"
 msgstr "Съветникът за акаунт не може да стартира"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Добавяне на нова самоличност"
+msgstr "Добавяне на нов уиджет \"Какво ново\"."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -8157,129 +8156,3 @@ msgstr[1] "Отговор извън офиса активен на сървър
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
-
-#~ msgctxt "%1 is version"
-#~ msgid "Welcome to KMail %1"
-#~ msgstr "Добре дошли в KMail %1"
-
-#~ msgid ""
-#~ "KMail is the email client by KDE. It is designed to be fully compatible "
-#~ "with Internet mailing standards including IMAP, POP3 and SMTP."
-#~ msgstr ""
-#~ "KMail е имейл клиентът от KDE. Той е проектиран да бъде напълно съвместим "
-#~ "с пощенските стандарти за интернет, включително IMAP, POP3 и SMTP."
-
-#~ msgid ""
-#~ "KMail has many powerful features that are described in the <a href='help:/"
-#~ "kmail2/index.html'>documentation</a>."
-#~ msgstr ""
-#~ "KMail има много мощни функции, които са описани в <a href='help:/kmail2/"
-#~ "index.html'> документацията </a>."
-
-#~ msgid "Important changes since last version:"
-#~ msgstr "Важни промени от последната версия:"
-
-#~ msgid "Some of the new features in this release of KMail include:"
-#~ msgstr "Някои от новите функции в тази версия на KMail включват:"
-
-#~ msgid ""
-#~ "Please take a moment to fill in the KMail configuration panel at Settings-"
-#~ ">Configure KMail. You need to create at least a default identity and "
-#~ "incoming as well as outgoing mail account."
-#~ msgstr ""
-#~ "Моля, отделете малко време, за да попълните панела за конфигурация на "
-#~ "KMail в Настройки-> Конфигуриране на KMail. Трябва да създадете поне "
-#~ "самоличност по подразбиране и акаунт за входяща и изходяща поща."
-
-#~ msgid "We hope that you will enjoy KMail."
-#~ msgstr "Надяваме се, че ще се радвате на KMail."
-
-#~ msgid "Thank you,"
-#~ msgstr "Благодаря Ви,"
-
-#~ msgid "The KMail Team"
-#~ msgstr "Екипът на KMail"
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "В&ъведение в KMail"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "Показване стартовата страница на KMail"
-
-#~ msgid ""
-#~ "KMail is now based on the Akonadi Personal Information Management "
-#~ "framework, which brings many changes all around."
-#~ msgstr ""
-#~ "KMail вече се основава на рамката за управление на личната информация "
-#~ "Akonadi, която носи много промени навсякъде."
-
-#~ msgid "Add Windows Support"
-#~ msgstr "Добавяне на поддръжка на прозорци"
-
-#~ msgid "Add Custom Syntax usable in the search text field"
-#~ msgstr "Добавяне на потребителски синтаксис в текстовото поле за търсене"
-
-#~ msgid "Adblock public used new rust adblock lib"
-#~ msgstr "Adblock публична използвана нова rust adblock библиотека"
-
-#~ msgid "Allow to reopen closed viewer"
-#~ msgstr "Позволяване на повторно отваряне на затворен браузър"
-
-#~ msgid "Allow to configure spam folder in identity"
-#~ msgstr ""
-#~ "Разрешаване на конфигурирането на папката за нежелана поща в идентичността"
-
-#~ msgid "Add AI plugin"
-#~ msgstr "Добавяне на приставка за ИИ"
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Push известие за писмо (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Подобрени търсения"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Поддръжка за добавяне на бележки (пояснения) към пощата"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "По-малко блокиране на графичен интерфейс, проверки на пощата във фонов "
-#~ "режим"
-
-#~ msgid "Plugins support"
-#~ msgstr "Поддръжка на приставки"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Нов HTML визуализатор (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "Добавена проверка за фишинг URL"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "Добавена проверка за DKIM"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "Добавена е поддръжка за Markdown редактиране"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "Добавена поддръжка на граматически плъгин"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "Добавена поддръжка на ресурси за etesync"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr "Добавена поддръжка на ресурси за уеб услуги на Microsoft Exchange"
-
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Абонамент за сървъра…"
-
-#~ msgid ""
-#~ "Could not start the import wizard. Please make sure you have ImportWizard "
-#~ "properly installed."
-#~ msgstr ""
-#~ "Не можа да стартира съветника за импортиране. Моля, уверете се, че имате "
-#~ "правилно инсталиран ImportWizard."
-
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "Не може да стартира съветника за импортиране"

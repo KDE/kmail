@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-06-13 13:23+0300\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 08:03+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -353,9 +353,11 @@ msgid "Mailing List"
 msgstr "E-posta Listesi"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Klasör bir e-posta listesi tutar"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -5350,11 +5352,10 @@ msgid "&Add Account…"
 msgstr "&Hesap Ekle…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Sırada ne var?"
+msgstr "Neler Yeni"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8069,10 +8070,8 @@ msgid "Unable to start account wizard"
 msgstr "Hesap Sihirbazı Başlatılamadı"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Yeni bir kimlik ekle"
+msgstr "“Neler Yeni” araç takımını ekle"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

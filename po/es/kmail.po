@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-06-13 12:14+0100\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 14:04+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -341,9 +341,11 @@ msgid "Mailing List"
 msgstr "Lista de correo"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "La carpeta contiene una lista de correo"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -5384,11 +5386,10 @@ msgid "&Add Account…"
 msgstr "&Añadir cuenta…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "¿Qué es lo siguiente?"
+msgstr "Novedades"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8123,10 +8124,8 @@ msgid "Unable to start account wizard"
 msgstr "No se puede iniciar el asistente de cuentas"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Añadir una nueva identidad"
+msgstr "Añadir nuevo widget de novedades."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -8162,79 +8161,3 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1 %"
-
-#~ msgctxt "%1 is version"
-#~ msgid "Welcome to KMail %1"
-#~ msgstr "Bienvenido a KMail %1"
-
-#~ msgid ""
-#~ "KMail is the email client by KDE. It is designed to be fully compatible "
-#~ "with Internet mailing standards including IMAP, POP3 and SMTP."
-#~ msgstr ""
-#~ "KMail es el cliente de correo de KDE. Está diseñado para ser "
-#~ "completamente compatible con los estándares de correo de Internet, "
-#~ "incluyendo a IMAP, POP3 y SMTP."
-
-#~ msgid ""
-#~ "KMail has many powerful features that are described in the <a href='help:/"
-#~ "kmail2/index.html'>documentation</a>."
-#~ msgstr ""
-#~ "KMail dispone de varias poderosas características que se describen en la "
-#~ "<a href='help:/kmail2/index.html'>documentación</a>."
-
-#~ msgid "Important changes since last version:"
-#~ msgstr "Cambios importantes desde la última versión:"
-
-#~ msgid "Some of the new features in this release of KMail include:"
-#~ msgstr "Algunas nuevas características en esta versión de KMail incluyen:"
-
-#~ msgid ""
-#~ "Please take a moment to fill in the KMail configuration panel at Settings-"
-#~ ">Configure KMail. You need to create at least a default identity and "
-#~ "incoming as well as outgoing mail account."
-#~ msgstr ""
-#~ "Tómese un momento para rellenar el panel de configuración de KMail en "
-#~ "Preferencias->Configurar KMail. Debe crear al menos una identidad "
-#~ "predeterminada, una cuenta de correo entrante y otra saliente."
-
-#~ msgid "We hope that you will enjoy KMail."
-#~ msgstr "Esperamos que disfrute de KMail."
-
-#~ msgid "Thank you,"
-#~ msgstr "Gracias,"
-
-#~ msgid "The KMail Team"
-#~ msgstr "El equipo de KMail"
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "&Introducción a KMail"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "Mostrar la página de bienvenida de KMail"
-
-#~ msgid ""
-#~ "KMail is now based on the Akonadi Personal Information Management "
-#~ "framework, which brings many changes all around."
-#~ msgstr ""
-#~ "KMail se basa ahora en la infraestructura Akonadi de gestión de "
-#~ "información personal, que trae muchos cambios por todas partes."
-
-#~ msgid "Add Windows Support"
-#~ msgstr "Añadida compatibilidad con Windows"
-
-#~ msgid "Add Custom Syntax usable in the search text field"
-#~ msgstr ""
-#~ "Añadida sintaxis personalizada para usar en el campo de búsqueda de texto"
-
-#~ msgid "Adblock public used new rust adblock lib"
-#~ msgstr ""
-#~ "Adblock público usa la nueva biblioteca de bloque publicitario en Rust"
-
-#~ msgid "Allow to reopen closed viewer"
-#~ msgstr "Permitir la reapertura del visor cerrado"
-
-#~ msgid "Allow to configure spam folder in identity"
-#~ msgstr "Permitir configurar la carpeta de correo basura en la identidad"
-
-#~ msgid "Add AI plugin"
-#~ msgstr "Añadir el complemento de IA"

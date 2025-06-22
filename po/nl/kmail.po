@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-06-13 11:24+0200\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 18:16+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -356,9 +356,11 @@ msgid "Mailing List"
 msgstr "E-maillijst"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Map bevat een discussiegroep"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -5405,11 +5407,10 @@ msgid "&Add Account…"
 msgstr "&Account toevoegen…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Wat komt er nu?"
+msgstr "Wat is nieuw"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8153,10 +8154,8 @@ msgid "Unable to start account wizard"
 msgstr "Account-assistent kon niet worden gestart"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Een nieuwe identiteit toevoegen"
+msgstr "Nieuw widget Wat-is-nieuw toevoegen."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

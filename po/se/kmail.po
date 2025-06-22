@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -339,7 +339,7 @@ msgstr ""
 #: collectionpage/collectionmailinglistpage.cpp:63
 #, fuzzy, kde-format
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "E-boastalisttu filttar …"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -7671,12 +7671,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "Thank you,"
-#~ msgstr "Ollu giitu,"
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "KMa&il oahpástuvvan"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "Čájet KMail:a bures boahttin siiddu."

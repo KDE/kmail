@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-06-13 09:08+0300\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 19:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -345,9 +345,11 @@ msgid "Mailing List"
 msgstr "Список листування"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Тека містить список листування"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -5437,11 +5439,10 @@ msgid "&Add Account…"
 msgstr "&Додати запис…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Що наступне?"
+msgstr "Що нового"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8195,10 +8196,8 @@ msgid "Unable to start account wizard"
 msgstr "Не вдалося запустити майстер створення облікових записів"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Додати новий профіль"
+msgstr "Додано новий віджет зі списком можливостей нової версії."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

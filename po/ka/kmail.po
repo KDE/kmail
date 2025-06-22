@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
-"PO-Revision-Date: 2025-06-13 04:02+0200\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"PO-Revision-Date: 2025-06-21 06:17+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -336,9 +336,11 @@ msgid "Mailing List"
 msgstr "ელ-ფოსტის სიები"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "საქაღალდე დაგზავნის სიას შეიცავს"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -5349,11 +5351,10 @@ msgid "&Add Account…"
 msgstr "&ანგარიშის დამატება…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "კიდევ რამე?"
+msgstr "რა არის ახალი"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8075,10 +8076,8 @@ msgid "Unable to start account wizard"
 msgstr "ანგარიშის ოსტატის გაშვების შეცდომა"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "ახალი იდენტიფიკატორის დამატება"
+msgstr "ახალი სიახლეების ვიჯეტის დამატება."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

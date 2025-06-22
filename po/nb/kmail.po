@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-21 00:43+0000\n"
+"POT-Creation-Date: 2025-06-22 00:44+0000\n"
 "PO-Revision-Date: 2015-02-07 22:15+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -353,7 +353,7 @@ msgstr "E-postliste"
 #: collectionpage/collectionmailinglistpage.cpp:63
 #, fuzzy, kde-format
 msgctxt "@option:check"
-msgid "Folder holds a mailing list"
+msgid "Folder contains a single mailing list"
 msgstr "Mappa inneholder en e-postliste"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
@@ -7889,16 +7889,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "KMail-&velkomst"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "Vis velkomstsiden til KMail"
-
-#~ msgid ""
-#~ "KMail is now based on the Akonadi Personal Information Management "
-#~ "framework, which brings many changes all around."
-#~ msgstr ""
-#~ "KMail er nå basert på rammeverket Akonadi styring med personlig "
-#~ "informasjon, noe som fører til mange endringer."
