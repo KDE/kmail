@@ -207,7 +207,3 @@ msgstr "Промяна…"
 #, kde-format
 msgid "Delete"
 msgstr "Изтриване"
-
-#~ msgctxt "@title:window"
-#~ msgid "Configure"
-#~ msgstr "Конфигуриране"

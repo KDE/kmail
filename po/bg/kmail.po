@@ -8247,14 +8247,3 @@ msgstr[1] "Отговор извън офиса активен на сървър
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
-
-#~ msgid ""
-#~ "Could not start the import wizard. Please make sure you have ImportWizard "
-#~ "properly installed."
-#~ msgstr ""
-#~ "Не можа да стартира съветника за импортиране. Моля, уверете се, че имате "
-#~ "правилно инсталиран ImportWizard."
-
-#~ msgctxt "@title:window"
-#~ msgid "Unable to start import wizard"
-#~ msgstr "Не може да стартира съветника за импортиране"
