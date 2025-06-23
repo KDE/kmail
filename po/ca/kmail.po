@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:44+0000\n"
-"PO-Revision-Date: 2025-06-21 10:32+0200\n"
+"PO-Revision-Date: 2025-06-22 16:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -348,12 +348,10 @@ msgid "Mailing List"
 msgstr "Llista de correu"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "La carpeta manté una llista de correu"
+msgstr "La carpeta conté una única llista de correu"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format

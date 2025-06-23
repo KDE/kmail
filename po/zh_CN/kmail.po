@@ -337,12 +337,10 @@ msgid "Mailing List"
 msgstr "邮件列表"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "文件夹用于存放邮件列表"
+msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -5152,11 +5150,10 @@ msgid "&Add Account…"
 msgstr "添加账户(&A)..."
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "接下来..."
+msgstr ""
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -7796,10 +7793,8 @@ msgid "Unable to start account wizard"
 msgstr "无法启动账户向导"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "添加新身份"
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -7834,73 +7829,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgctxt "%1 is version"
-#~ msgid "Welcome to KMail %1"
-#~ msgstr "欢迎使用 KMail %1"
-
-#~ msgid ""
-#~ "KMail is the email client by KDE. It is designed to be fully compatible "
-#~ "with Internet mailing standards including IMAP, POP3 and SMTP."
-#~ msgstr ""
-#~ "KMail 是 KDE 的电子邮件客户端。它被设计为完全兼容互联网电子邮件标准，包括 "
-#~ "IMAP、POP3 和 SMTP。"
-
-#~ msgid ""
-#~ "KMail has many powerful features that are described in the <a href='help:/"
-#~ "kmail2/index.html'>documentation</a>."
-#~ msgstr ""
-#~ "KMail 有许多强大的功能，在 <a href='help:/kmail/index.html'>文档</a> 中有"
-#~ "详细描述。"
-
-#~ msgid "Important changes since last version:"
-#~ msgstr "上个版本以来的重要变化："
-
-#~ msgid "Some of the new features in this release of KMail include:"
-#~ msgstr "此版本 KMail 所包含的的部分新特性包括："
-
-#~ msgid ""
-#~ "Please take a moment to fill in the KMail configuration panel at Settings-"
-#~ ">Configure KMail. You need to create at least a default identity and "
-#~ "incoming as well as outgoing mail account."
-#~ msgstr ""
-#~ "请您花一点时间填写 KMail 配置面板，它在设置-&gt;配置 KMail 菜单里。您需要"
-#~ "至少创建一个默认的身份，以及接收和发送邮件的账户。"
-
-#~ msgid "We hope that you will enjoy KMail."
-#~ msgstr "我们希望您能享受使用 KMail。"
-
-#~ msgid "Thank you,"
-#~ msgstr "谢谢您，"
-
-#~ msgid "The KMail Team"
-#~ msgstr "KMail 团队"
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "KMail 介绍(&I)"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "显示 KMail 欢迎页"
-
-#~ msgid ""
-#~ "KMail is now based on the Akonadi Personal Information Management "
-#~ "framework, which brings many changes all around."
-#~ msgstr "KMail 现基于 Akonadi 个人信息管理框架，该框架带来了许多变化。"
-
-#~ msgid "Add Windows Support"
-#~ msgstr "添加 Windows 支持"
-
-#~ msgid "Add Custom Syntax usable in the search text field"
-#~ msgstr "在搜索栏中新增自定义语法支持"
-
-#~ msgid "Adblock public used new rust adblock lib"
-#~ msgstr "Adblock公共模块改用Rust编写的新Adblock库"
-
-#~ msgid "Allow to reopen closed viewer"
-#~ msgstr "允许重新打开已关闭的查看器窗口"
-
-#~ msgid "Allow to configure spam folder in identity"
-#~ msgstr "在账户身份设置中允许配置垃圾邮件文件夹"
-
-#~ msgid "Add AI plugin"
-#~ msgstr "添加 AI 插件"
