@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:44+0000\n"
-"PO-Revision-Date: 2025-06-16 10:24+0200\n"
+"PO-Revision-Date: 2025-06-22 10:17+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -5462,11 +5462,10 @@ msgid "&Add Account…"
 msgstr "&Ajouter un compte…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Et ensuite ?"
+msgstr "Quoi de neuf"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8234,10 +8233,8 @@ msgid "Unable to start account wizard"
 msgstr "Impossible de démarrer l'assistant de comptes"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Ajouter une nouvelle identité"
+msgstr "Ajouter un nouveau composant graphique « Quoi de neuf »."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
