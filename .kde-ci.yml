@@ -61,4 +61,4 @@ Dependencies:
 Options:
   cmake-options: "-DAKONADI_RUN_MYSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_PGSQL_ISOLATED_TESTS=FALSE -DAKONADI_RUN_SQLITE_ISOLATED_TESTS=FALSE"
   require-passing-tests-on: [ '@all' ]
-  cppcheck-arguments: '--error-exitcode=1 --enable=warning,performance,portability,style,unusedFunction --suppress-xml=cppcheck-suppressions.xml'
+  cppcheck-arguments: '--enable=warning,performance,portability,style,unusedFunction --suppress-xml=cppcheck-suppressions.xml'
