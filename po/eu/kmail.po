@@ -1,7 +1,7 @@
 # Translation for kmail.po to Euskara/Basque (eu).
 # Copyright (C) 2003-2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# SPDX-FileCopyrightText: 2023, 2024 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>
 #
 # Translators:
 # Marcos  <marcos@euskalgnu.org>, 2003, 2004, 2005, 2006.
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-02-12 00:42+0000\n"
-"PO-Revision-Date: 2024-11-19 19:44+0100\n"
+"PO-Revision-Date: 2025-06-24 21:16+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.08.3\n"
+"X-Generator: Lokalize 25.04.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -1004,7 +1004,7 @@ msgstr "Sistemaren erretilua"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "Gaitu sistemako erretiluaren ikonoa"
+msgstr "Gaitu sistemaren erretiluko ikonoa"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
@@ -6566,7 +6566,7 @@ msgstr "Hautatutako azken karpeta (karpetak hautatzeko elkarrizketa-koadroan)."
 #: settings/kmail.kcfg.in:91
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "Gaitu sistema-erretiluaren ikonoa"
+msgstr "Gaitu sistemaren erretiluko ikonoa"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: settings/kmail.kcfg.in:95
