@@ -183,15 +183,18 @@ void TagActionManager::updateActionStates(int numberOfSelectedMessages, const Ak
     QMap<qint64, KToggleAction *>::const_iterator end = mTagActions.constEnd();
     if (numberOfSelectedMessages >= 1) {
         Q_ASSERT(selectedItem.isValid());
+        QString label;
+        const auto tags = TagMonitorManager::self()->tags();
         for (; it != end; ++it) {
-            // FIXME Not very performant tag label retrieval
-            QString label(i18n("Tag not Found"));
-            const auto tags = TagMonitorManager::self()->tags();
+            label.clear();
             for (const MailCommon::Tag::Ptr &tag : tags) {
                 if (tag->id() == it.key()) {
                     label = tag->name();
                     break;
                 }
+            }
+            if (label.isEmpty()) {
+                label = i18n("Tag not Found");
             }
 
             it.value()->setEnabled(true);
