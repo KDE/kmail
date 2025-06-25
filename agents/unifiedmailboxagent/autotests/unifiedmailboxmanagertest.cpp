@@ -665,6 +665,6 @@ private Q_SLOTS:
     }
 };
 
-QTEST_AKONADIMAIN(UnifiedMailboxManagerTest)
+QTEST_AKONADI_CORE_MAIN(UnifiedMailboxManagerTest)
 
 #include "unifiedmailboxmanagertest.moc"
