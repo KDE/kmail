@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:44+0000\n"
-"PO-Revision-Date: 2025-06-22 10:17+0200\n"
+"PO-Revision-Date: 2025-06-23 08:57+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -374,12 +374,10 @@ msgid "Mailing List"
 msgstr "Liste de diffusion"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Le dossier gère une liste de diffusion."
+msgstr "Le dossier contient une unique liste de diffusion."
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format

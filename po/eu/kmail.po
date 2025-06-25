@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-22 00:44+0000\n"
-"PO-Revision-Date: 2025-06-18 22:28+0200\n"
+"PO-Revision-Date: 2025-06-24 21:16+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -345,12 +345,10 @@ msgid "Mailing List"
 msgstr "Posta-zerrenda"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Karpetak posta-zerrenda bat du"
+msgstr "Karpetak posta-zerrenda bakarra du"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -954,7 +952,7 @@ msgstr "Sistemaren erretilua"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "Gaitu sistemako erretiluaren ikonoa"
+msgstr "Gaitu sistemaren erretiluko ikonoa"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
@@ -5355,11 +5353,10 @@ msgid "&Add Account…"
 msgstr "&Gehitu kontua..."
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Ondoren zer?"
+msgstr "Zer berri"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -6470,7 +6467,7 @@ msgstr "Hautatutako azken karpeta (karpetak hautatzeko elkarrizketa-koadroan)."
 #: settings/kmail.kcfg.in:91
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "Gaitu sistema-erretiluaren ikonoa"
+msgstr "Gaitu sistemaren erretiluko ikonoa"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: settings/kmail.kcfg.in:95
@@ -8079,10 +8076,8 @@ msgid "Unable to start account wizard"
 msgstr "Ez da kontuen morroia abiarazteko gai"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Gehitu nortasun berri bat"
+msgstr "Zerberri trepeta berria gehitzea."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
