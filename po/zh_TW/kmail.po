@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
 "PO-Revision-Date: 2025-05-17 10:01+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -6522,7 +6522,7 @@ msgstr "加入引言符號"
 msgid "Specifies the policy used when displaying policy"
 msgstr "指定顯示政策時使用的政策"
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "信件標籤：%1"
@@ -6538,12 +6538,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr "更多…"
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, kde-format
 msgid "Tag not Found"
 msgstr "找不到標籤"
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "切換信件標籤：%1"

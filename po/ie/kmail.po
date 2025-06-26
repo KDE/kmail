@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -6525,7 +6525,7 @@ msgid "Specifies the policy used when displaying policy"
 msgstr ""
 "Esque monstrar un avise quande on crea archives zip con ciffration AES."
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, fuzzy, kde-format
 msgid "Message Tag: %1"
 msgstr "Proprietás de missage"
@@ -6541,12 +6541,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr "Plu…"
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, fuzzy, kde-format
 msgid "Tag not Found"
 msgstr "Ne ciffrar"
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, fuzzy, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "Proprietás de missage"

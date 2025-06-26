@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -6848,7 +6848,7 @@ msgstr "&Susa Inkonzo"
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, fuzzy, kde-format
 msgid "Message Tag: %1"
 msgstr "Uluhlu Lomyalezo"
@@ -6864,12 +6864,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, kde-format
 msgid "Tag not Found"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, fuzzy, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "&Hlela Umyalezo"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -7190,7 +7190,7 @@ msgstr "Caracteres de citação"
 msgid "Specifies the policy used when displaying policy"
 msgstr "Indica a política usada na sua visualização"
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "Marca da Mensagem: %1"
@@ -7207,12 +7207,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, kde-format
 msgid "Tag not Found"
 msgstr "Marca Não Encontrada"
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "Comutar a Marca da Mensagem: %1"

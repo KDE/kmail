@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
 "PO-Revision-Date: 2025-06-14 14:16+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -6820,7 +6820,7 @@ msgstr "Caratteri di citazione"
 msgid "Specifies the policy used when displaying policy"
 msgstr "Specifica la politica usata quando viene mostrata la politica"
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "Etichetta del messaggio: %1"
@@ -6836,12 +6836,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr "Altro…"
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, kde-format
 msgid "Tag not Found"
 msgstr "Etichetta non trovata"
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "Mostra/Nasconde etichetta messaggio: %1"

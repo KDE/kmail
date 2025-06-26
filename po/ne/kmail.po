@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -7335,7 +7335,7 @@ msgstr "क्यारेक्टर उद्धरण"
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message Tag: %1"
@@ -7353,12 +7353,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, kde-format
 msgid "Tag not Found"
 msgstr ""
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, fuzzy, kde-format
 #| msgid "Todo Message"
 msgid "Toggle Message Tag: %1"

@@ -11,15 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-22 00:44+0000\n"
-"PO-Revision-Date: 2025-03-26 16:13+0200\n"
+"POT-Creation-Date: 2025-06-26 00:43+0000\n"
+"PO-Revision-Date: 2025-06-21 13:13+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.04.2\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
 
@@ -4530,11 +4530,10 @@ msgid "Unable to start import wizard"
 msgstr "Neizdevās palaist importēšanas vedni"
 
 #: kmmainwidget.cpp:1386
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(nav veidņu)"
+msgstr "(ielādē veidnes…)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5350,11 +5349,10 @@ msgid "&Add Account…"
 msgstr "&Pievienot kontu…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Kas tālāk?"
+msgstr "Kas jauns"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -5983,10 +5981,9 @@ msgid "Kontact Summary View"
 msgstr "„Kontact“ kopsavilkuma skats"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003—2024 „Kontact“ izstrādātāji"
+msgstr "© 2003—2025 „Kontact“ izstrādātāji"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -6741,7 +6738,7 @@ msgstr "Citēšanas rakstzīmes"
 msgid "Specifies the policy used when displaying policy"
 msgstr "Norādīt politikas parādīšanai izmantoto politiku"
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:201
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "Vēstules birka: %1"
@@ -6757,12 +6754,12 @@ msgctxt "@action"
 msgid "More…"
 msgstr "Vairāk…"
 
-#: tag/tagactionmanager.cpp:188
+#: tag/tagactionmanager.cpp:197
 #, kde-format
 msgid "Tag not Found"
 msgstr "Birka nav atrasta"
 
-#: tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:207
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "Pārslēgt vēstules birku %1"
@@ -8071,10 +8068,8 @@ msgid "Unable to start account wizard"
 msgstr "Neizdevās palaist kontu vedni"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Pievienot jaunu identitāti"
+msgstr "Pievienot jaunu „kas jauns“ logdaļu."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
