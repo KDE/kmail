@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-26 00:43+0000\n"
-"PO-Revision-Date: 2025-06-14 17:16+0400\n"
+"PO-Revision-Date: 2025-06-26 10:20+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -344,12 +344,10 @@ msgid "Mailing List"
 msgstr "القائمة البريديّة"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "يحمل المجلّدُ قائمة بريديّة"
+msgstr "المجلد يحتوي على قائمة بريدية واحدة"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -5341,11 +5339,10 @@ msgid "&Add Account…"
 msgstr "أ&ضف حسابًا…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "ما الآتي؟"
+msgstr "ما الجديد"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8050,10 +8047,8 @@ msgid "Unable to start account wizard"
 msgstr "تعذّر بدء مرشّد الحسابات"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "أضف هويّة جديدة"
+msgstr "أضف منبثقة ما الجديد جديدة"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
