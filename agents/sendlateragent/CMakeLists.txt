@@ -26,14 +26,23 @@ set(libsendlateragent_SRCS
     ${sendlater_common_SRCS}
 )
 
-set(sendlateragent_SRCS sendlateragent.cpp sendlateragent.h)
+set(sendlateragent_SRCS
+    sendlateragent.cpp
+    sendlateragent.h
+)
 
 qt_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.xml sendlateragent.h SendLaterAgent)
 
 ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
 kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
 add_library(sendlateragent STATIC ${libsendlateragent_SRCS})
-set_property(TARGET sendlateragent PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(
+    TARGET
+        sendlateragent
+    PROPERTY
+        POSITION_INDEPENDENT_CODE
+            ON
+)
 
 #if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
@@ -71,20 +80,20 @@ if(APPLE)
     )
     set_target_properties(
         akonadi_sendlater_agent
-        PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Send Later"
+        PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME
+                "KDE Akonadi Send Later"
     )
 endif()
 
-install(TARGETS akonadi_sendlater_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(
+    TARGETS
+        akonadi_sendlater_agent
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+)
 
-install(
-    FILES sendlateragent.desktop
-    DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents"
-)
-install(
-    FILES akonadi_sendlater_agent.notifyrc
-    DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
-)
+install(FILES sendlateragent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
+install(FILES akonadi_sendlater_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 ########## Configuration ##############
 

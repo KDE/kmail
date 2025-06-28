@@ -63,12 +63,6 @@ target_link_libraries(
 
 ########### install files ###############
 
-install(
-    TARGETS kontact_kmailplugin
-    DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kontact
-)
+install(TARGETS kontact_kmailplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kontact)
 
-install(
-    TARGETS kcmkmailsummary
-    DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kcms/summary/
-)
+install(TARGETS kcmkmailsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kcms/summary/)

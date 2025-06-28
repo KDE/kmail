@@ -1,11 +1,7 @@
 # SPDX-FileCopyrightText: none
 # SPDX-License-Identifier: BSD-3-Clause
 
-configure_file(
-    ktnef-version.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/ktnef-version.h
-    @ONLY
-)
+configure_file(ktnef-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/ktnef-version.h @ONLY)
 
 add_subdirectory(pics)
 add_executable(ktnef)
@@ -32,16 +28,18 @@ ecm_qt_declare_logging_category(ktnef HEADER ktnef_debug.h IDENTIFIER KTNEFAPPS_
         EXPORT KMAIL
 )
 
-file(
-    GLOB ICONS_SRCS
-    "${CMAKE_CURRENT_SOURCE_DIR}/pics/hicolor/*-apps-ktnef.png"
-)
+file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/pics/hicolor/*-apps-ktnef.png")
 ecm_add_app_icon(ktnef ICONS ${ICONS_SRCS})
 
 ki18n_wrap_ui(ktnef ui/attachpropertywidgetbase.ui)
 
 if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
-    set_target_properties(ktnef PROPERTIES UNITY_BUILD ON)
+    set_target_properties(
+        ktnef
+        PROPERTIES
+            UNITY_BUILD
+                ON
+    )
 endif()
 
 target_link_libraries(
@@ -57,6 +55,10 @@ target_link_libraries(
     KF6::KIOWidgets
 )
 
-install(TARGETS ktnef ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(
+    TARGETS
+        ktnef
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+)
 
 install(PROGRAMS org.kde.ktnef.desktop DESTINATION ${KDE_INSTALL_APPDIR})

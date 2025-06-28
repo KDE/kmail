@@ -29,7 +29,12 @@ target_link_libraries(
 
 ########### next target ###############
 
-add_library(kcmkontactsummary MODULE kcmkontactsummary.cpp kcmkontactsummary.h)
+add_library(
+    kcmkontactsummary
+    MODULE
+    kcmkontactsummary.cpp
+    kcmkontactsummary.h
+)
 
 target_link_libraries(
     kcmkontactsummary
@@ -42,11 +47,5 @@ target_link_libraries(
 
 ########### install files ###############
 
-install(
-    TARGETS kontact_summaryplugin
-    DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kontact
-)
-install(
-    TARGETS kcmkontactsummary
-    DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kcms/summary
-)
+install(TARGETS kontact_summaryplugin DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kontact)
+install(TARGETS kcmkontactsummary DESTINATION ${KDE_INSTALL_PLUGINDIR}/pim6/kcms/summary)

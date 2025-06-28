@@ -7,7 +7,13 @@ if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 add_library(mailmergeagent STATIC)
-set_property(TARGET mailmergeagent PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(
+    TARGET
+        mailmergeagent
+    PROPERTY
+        POSITION_INDEPENDENT_CODE
+            ON
+)
 
 ecm_qt_declare_logging_category(mailmergeagent HEADER mailmergeagent_debug.h IDENTIFIER MAILMERGEAGENT_LOG CATEGORY_NAME org.kde.pim.mailmergeagent
         DESCRIPTION "kmail (mailmergeagent)"
@@ -71,20 +77,20 @@ if(APPLE)
     )
     set_target_properties(
         akonadi_mailmerge_agent
-        PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Mail Merge"
+        PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME
+                "KDE Akonadi Mail Merge"
     )
 endif()
 
-install(TARGETS akonadi_mailmerge_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(
+    TARGETS
+        akonadi_mailmerge_agent
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+)
 
-install(
-    FILES mailmergeagent.desktop
-    DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents"
-)
-install(
-    FILES akonadi_mailmerge_agent.notifyrc
-    DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
-)
+install(FILES mailmergeagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
+install(FILES akonadi_mailmerge_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 #kcoreaddons_add_plugin(mailmergeagentconfig
 #    SOURCES ${mailmergeagentconfig_SRCS}

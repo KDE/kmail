@@ -14,7 +14,12 @@ add_executable(
     ${serverdbuswidget_SRCS}
 )
 
-target_link_libraries(serverdbus_gui Qt::Gui Qt::Widgets Qt::DBus)
+target_link_libraries(
+    serverdbus_gui
+    Qt::Gui
+    Qt::Widgets
+    Qt::DBus
+)
 
 #client
 set(dbusclientmanager_xml org.freedesktop.test.dbus.xml)
@@ -28,4 +33,9 @@ add_executable(
     ${clientdbus_gui_SRCS}
 )
 
-target_link_libraries(clientdbus_gui Qt::Gui Qt::Widgets Qt::DBus)
+target_link_libraries(
+    clientdbus_gui
+    Qt::Gui
+    Qt::Widgets
+    Qt::DBus
+)

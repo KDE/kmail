@@ -2,7 +2,11 @@
 # SPDX-License-Identifier: BSD-3-Clause
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR})
 add_definitions(-DTEST_DATA_DIR="${CMAKE_CURRENT_SOURCE_DIR}/data")
-include_directories(BEFORE ${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
+include_directories(
+    BEFORE
+    ${kmail_SOURCE_DIR}
+    ${kmail_BINARY_DIR}
+)
 
 ########### dbus test ###############
 add_executable(
@@ -10,10 +14,7 @@ add_executable(
     displaymessageformatactionmenutest.cpp
     displaymessageformatactionmenutest.h
 )
-add_test(
-    NAME displaymessageformatactionmenutest
-    COMMAND displaymessageformatactionmenutest
-)
+add_test(NAME displaymessageformatactionmenutest COMMAND displaymessageformatactionmenutest)
 ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
 target_link_libraries(
     displaymessageformatactionmenutest
@@ -64,10 +65,7 @@ add_executable(
     cryptostateindicatorwidgettest.cpp
     cryptostateindicatorwidgettest.h
 )
-add_test(
-    NAME cryptostateindicatorwidgettest
-    COMMAND cryptostateindicatorwidgettest
-)
+add_test(NAME cryptostateindicatorwidgettest COMMAND cryptostateindicatorwidgettest)
 ecm_mark_as_test(cryptostateindicatorwidgettest)
 target_link_libraries(
     cryptostateindicatorwidgettest
@@ -86,7 +84,11 @@ add_executable(
 )
 add_test(NAME encryptionstatetest COMMAND encryptionstatetest)
 ecm_mark_as_test(encryptionstatetest)
-target_link_libraries(encryptionstatetest Qt::Test kmailprivate)
+target_link_libraries(
+    encryptionstatetest
+    Qt::Test
+    kmailprivate
+)
 
 add_executable(
     kactionmenutransporttest

@@ -3,7 +3,13 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
 add_library(followupreminderagent STATIC)
-set_property(TARGET followupreminderagent PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(
+    TARGET
+        followupreminderagent
+    PROPERTY
+        POSITION_INDEPENDENT_CODE
+            ON
+)
 
 kconfig_add_kcfg_files(followupreminderagent
         followupreminderagentsettings.kcfgc
@@ -94,32 +100,30 @@ if(APPLE)
     set_target_properties(
         akonadi_followupreminder_agent
         PROPERTIES
-            MACOSX_BUNDLE_GUI_IDENTIFIER "org.akonadi_followupreminder_agent"
+            MACOSX_BUNDLE_GUI_IDENTIFIER
+                "org.akonadi_followupreminder_agent"
     )
     set_target_properties(
         akonadi_followupreminder_agent
         PROPERTIES
-            MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Followup Reminder Agent"
+            MACOSX_BUNDLE_BUNDLE_NAME
+                "KDE Akonadi Followup Reminder Agent"
     )
 endif()
 
 install(
-    TARGETS akonadi_followupreminder_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+    TARGETS
+        akonadi_followupreminder_agent
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 )
 
-install(
-    FILES followupreminder.desktop
-    DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents"
-)
+install(FILES followupreminder.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 
 if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 
-install(
-    FILES akonadi_followupreminder_agent.notifyrc
-    DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
-)
+install(FILES akonadi_followupreminder_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 ########## Configuration ##############
 

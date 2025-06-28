@@ -20,7 +20,12 @@ include(ECMAddTests)
 include(GenerateExportHeader)
 include(ECMGenerateHeaders)
 
-file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES *.cpp *.h *.c)
+file(
+    GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES
+    *.cpp
+    *.h
+    *.c
+)
 set(PRE_COMMIT_INSTALLED FALSE)
 if(${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
     if(EXISTS "${PROJECT_SOURCE_DIR}/.git/hooks/pre-commit")
@@ -59,9 +64,7 @@ if(DEFINED KDEPIM_DEV_VERSION)
     set(KDEPIM_DEV_VERSION " ${KDEPIM_DEV_VERSION}")
 endif()
 
-set(KDEPIM_VERSION
-    "${PIM_VERSION}${KDEPIM_DEV_VERSION} (${RELEASE_SERVICE_VERSION})"
-)
+set(KDEPIM_VERSION "${PIM_VERSION}${KDEPIM_DEV_VERSION} (${RELEASE_SERVICE_VERSION})")
 
 set(AKONADI_MIMELIB_VERSION "6.4.40")
 set(AKONADI_CONTACT_VERSION "6.4.40")
@@ -90,7 +93,12 @@ find_package(
     Qt6
     ${QT_REQUIRED_VERSION}
     CONFIG
-    REQUIRED DBus Network Test Widgets WebEngineWidgets
+    REQUIRED
+        DBus
+        Network
+        Test
+        Widgets
+        WebEngineWidgets
 )
 set(LIBGRAVATAR_VERSION "6.4.40")
 set(MAILCOMMON_LIB_VERSION "6.4.42")
@@ -111,19 +119,18 @@ option(
 )
 if(UNIX)
     if(NOT FORCE_DISABLE_AKONADI_SEARCH)
-        find_package(
-            KPim6AkonadiSearch
-            ${AKONADI_SEARCH_VERSION}
-            CONFIG
-            REQUIRED
-        )
+        find_package(KPim6AkonadiSearch ${AKONADI_SEARCH_VERSION} CONFIG REQUIRED)
         set_package_properties(
             KPim6AkonadiSearch
             PROPERTIES
-                DESCRIPTION "The Akonadi Search libraries"
-                URL "https://invent.kde.org/pim/akonadi-search"
-                TYPE REQUIRED
-                PURPOSE "Provides search capabilities in KMail and Akonadi"
+                DESCRIPTION
+                    "The Akonadi Search libraries"
+                URL
+                    "https://invent.kde.org/pim/akonadi-search"
+                TYPE
+                    REQUIRED
+                PURPOSE
+                    "Provides search capabilities in KMail and Akonadi"
         )
     endif()
 else()
@@ -132,10 +139,14 @@ else()
         set_package_properties(
             KPim6AkonadiSearch
             PROPERTIES
-                DESCRIPTION "The Akonadi Search libraries"
-                URL "https://invent.kde.org/pim/akonadi-search"
-                TYPE OPTIONAL
-                PURPOSE "Provides search capabilities in KMail and Akonadi"
+                DESCRIPTION
+                    "The Akonadi Search libraries"
+                URL
+                    "https://invent.kde.org/pim/akonadi-search"
+                TYPE
+                    OPTIONAL
+                PURPOSE
+                    "Provides search capabilities in KMail and Akonadi"
         )
     endif()
 endif()
@@ -155,7 +166,11 @@ find_package(KF6DBusAddons ${KF_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6DocTools ${KF_MIN_VERSION})
 set_package_properties(
     KF6DocTools
-    PROPERTIES DESCRIPTION "Tools to generate documentation" TYPE OPTIONAL
+    PROPERTIES
+        DESCRIPTION
+            "Tools to generate documentation"
+        TYPE
+            OPTIONAL
 )
 find_package(KF6GuiAddons ${KF_MIN_VERSION} REQUIRED)
 find_package(KF6I18n ${KF_MIN_VERSION} CONFIG REQUIRED)
@@ -177,30 +192,15 @@ find_package(KF6CalendarCore ${KF_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6StatusNotifierItem ${KF_MIN_VERSION} CONFIG REQUIRED)
 
 find_package(KPim6Akonadi ${AKONADI_VERSION} CONFIG REQUIRED)
-find_package(
-    KPim6AkonadiContactWidgets
-    ${AKONADI_CONTACT_VERSION}
-    CONFIG
-    REQUIRED
-)
+find_package(KPim6AkonadiContactWidgets ${AKONADI_CONTACT_VERSION} CONFIG REQUIRED)
 find_package(KPim6AkonadiMime ${AKONADI_MIMELIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6CalendarUtils ${CALENDARUTILS_LIB_VERSION} CONFIG REQUIRED)
-find_package(
-    KPim6IdentityManagementCore
-    ${IDENTITYMANAGEMENT_LIB_VERSION}
-    CONFIG
-    REQUIRED
-)
+find_package(KPim6IdentityManagementCore ${IDENTITYMANAGEMENT_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6LdapWidgets ${KLDAP_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6MailTransport ${KMAILTRANSPORT_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6TextEdit ${KPIMTEXTEDIT_LIB_VERSION} CONFIG REQUIRED)
 
-find_package(
-    KPim6KontactInterface
-    ${KONTACTINTERFACE_LIB_VERSION}
-    CONFIG
-    REQUIRED
-)
+find_package(KPim6KontactInterface ${KONTACTINTERFACE_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6Mime ${KMIME_LIB_VERSION} CONFIG REQUIRED)
 
 find_package(KPim6Gravatar ${LIBGRAVATAR_VERSION} CONFIG REQUIRED)
@@ -218,45 +218,46 @@ find_package(KPim6Tnef ${KTNEF_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6MailTransportDBusService CONFIG REQUIRED)
 find_package(KPim6PimCommonActivities ${PIMCOMMON_LIB_VERSION} CONFIG)
 
-set(CMAKE_MODULE_PATH ${LIBKLEO_MODULE_PATH} ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH
+    ${LIBKLEO_MODULE_PATH}
+    ${CMAKE_MODULE_PATH}
+)
 find_package(LibGpgError ${GPG_ERROR_REQUIRED_VERSION} REQUIRED)
 
 find_package(KF6TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
 set_package_properties(
     KF6TextEditTextToSpeech
-    PROPERTIES DESCRIPTION "Add support for text to speech" TYPE OPTIONAL
+    PROPERTIES
+        DESCRIPTION
+            "Add support for text to speech"
+        TYPE
+            OPTIONAL
 )
 if(TARGET KF6::TextEditTextToSpeech)
     add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
 endif()
-find_package(
-    KF6TextAutoCorrectionWidgets
-    ${KTEXTADDONS_MIN_VERSION}
-    CONFIG
-    REQUIRED
-)
+find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextUtils ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextCustomEditor ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(Qt6Keychain ${QT6KEYCHAIN_LIB_VERSION} CONFIG)
 set_package_properties(
     Qt6Keychain
     PROPERTIES
-        DESCRIPTION "Provides support for secure credentials storage"
-        URL "https://github.com/frankosterfeld/qtkeychain"
-        TYPE REQUIRED
+        DESCRIPTION
+            "Provides support for secure credentials storage"
+        URL
+            "https://github.com/frankosterfeld/qtkeychain"
+        TYPE
+            REQUIRED
 )
 
-configure_file(
-    config-enterprise.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h
-)
+configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h)
 
-include_directories(${kmail_SOURCE_DIR} ${kmail_BINARY_DIR})
-configure_file(
-    kmail-version.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h
-    @ONLY
+include_directories(
+    ${kmail_SOURCE_DIR}
+    ${kmail_BINARY_DIR}
 )
+configure_file(kmail-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/kmail-version.h @ONLY)
 if(BUILD_TESTING)
     add_definitions(-DBUILD_TESTING)
 endif()
@@ -268,20 +269,19 @@ find_package(KF6UserFeedback ${KF_MIN_VERSION} CONFIG)
 set_package_properties(
     KF6UserFeedback
     PROPERTIES
-        DESCRIPTION "User Feedback lib"
-        TYPE OPTIONAL
-        PURPOSE "Allow to send Telemetry Information (optional)."
+        DESCRIPTION
+            "User Feedback lib"
+        TYPE
+            OPTIONAL
+        PURPOSE
+            "Allow to send Telemetry Information (optional)."
 )
 
 if(TARGET KF6::UserFeedbackWidgets)
     set(KMAIL_WITH_KUSERFEEDBACK true)
 endif()
 
-option(
-    USE_UNITY_CMAKE_SUPPORT
-    "Use UNITY cmake support (speedup compile time)"
-    OFF
-)
+option(USE_UNITY_CMAKE_SUPPORT "Use UNITY cmake support (speedup compile time)" OFF)
 
 set(COMPILE_WITH_UNITY_CMAKE_SUPPORT OFF)
 if(USE_UNITY_CMAKE_SUPPORT)
@@ -289,11 +289,7 @@ if(USE_UNITY_CMAKE_SUPPORT)
 endif()
 
 if(TARGET KPim6::PimCommonActivities)
-    option(
-        OPTION_USE_PLASMA_ACTIVITIES
-        "Activate plasma activities (experimental)"
-        ON
-    )
+    option(OPTION_USE_PLASMA_ACTIVITIES "Activate plasma activities (experimental)" ON)
     if(OPTION_USE_PLASMA_ACTIVITIES)
         if(NOT WIN32 AND NOT APPLE)
             set(OPTION_USE_PLASMA_ACTIVITIES true)
@@ -307,8 +303,10 @@ if(TARGET KPim6::PimCommonActivities)
             set_package_properties(
                 PlasmaActivities
                 PROPERTIES
-                    DESCRIPTION "Allow to compile with plasma activities"
-                    TYPE OPTIONAL
+                    DESCRIPTION
+                        "Allow to compile with plasma activities"
+                    TYPE
+                        OPTIONAL
             )
         endif()
 

@@ -21,7 +21,11 @@ macro(archivemail_agent _source)
     )
     ki18n_wrap_ui(_test ../ui/archivemailwidget.ui)
     get_filename_component(_name ${_source} NAME_WE)
-    add_executable(${_name} ${_test} ${_name}.h)
+    add_executable(
+        ${_name}
+        ${_test}
+        ${_name}.h
+    )
     add_test(NAME ${_name} COMMAND ${_name})
     ecm_mark_as_test(archivemailagent-${_name})
     target_link_libraries(

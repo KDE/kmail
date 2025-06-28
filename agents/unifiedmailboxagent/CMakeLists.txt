@@ -63,19 +63,21 @@ if(APPLE)
     set_target_properties(
         akonadi_unifiedmailbox_agent
         PROPERTIES
-            MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.KF6::UnifiedMailbox"
+            MACOSX_BUNDLE_GUI_IDENTIFIER
+                "org.kde.Akonadi.KF6::UnifiedMailbox"
     )
     set_target_properties(
         akonadi_unifiedmailbox_agent
-        PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE PIM Unified Mailbox"
+        PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME
+                "KDE PIM Unified Mailbox"
     )
 endif()
 
 install(
-    TARGETS akonadi_unifiedmailbox_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+    TARGETS
+        akonadi_unifiedmailbox_agent
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 )
 
-install(
-    FILES unifiedmailboxagent.desktop
-    DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents"
-)
+install(FILES unifiedmailboxagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")

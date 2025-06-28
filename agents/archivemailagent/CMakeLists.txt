@@ -3,7 +3,13 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_archivemail_agent\")
 
 add_library(archivemailagent STATIC)
-set_property(TARGET archivemailagent PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(
+    TARGET
+        archivemailagent
+    PROPERTY
+        POSITION_INDEPENDENT_CODE
+            ON
+)
 target_sources(
     archivemailagent
     PRIVATE
@@ -78,24 +84,26 @@ if(APPLE)
     )
     set_target_properties(
         akonadi_archivemail_agent
-        PROPERTIES MACOSX_BUNDLE_GUI_IDENTIFIER "org.kde.Akonadi.archivemail"
+        PROPERTIES
+            MACOSX_BUNDLE_GUI_IDENTIFIER
+                "org.kde.Akonadi.archivemail"
     )
     set_target_properties(
         akonadi_archivemail_agent
-        PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "KDE Akonadi Email Archiver"
+        PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME
+                "KDE Akonadi Email Archiver"
     )
 endif()
 
-install(TARGETS akonadi_archivemail_agent ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(
+    TARGETS
+        akonadi_archivemail_agent
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+)
 
-install(
-    FILES archivemailagent.desktop
-    DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents"
-)
-install(
-    FILES akonadi_archivemail_agent.notifyrc
-    DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR}
-)
+install(FILES archivemailagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
+install(FILES akonadi_archivemail_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 
 if(BUILD_TESTING)
     add_subdirectory(autotests)
@@ -135,7 +143,4 @@ target_link_libraries(
 #    set_target_properties(archivemailagentconfig PROPERTIES UNITY_BUILD ON)
 #endif()
 
-install(
-    FILES settings/archivemailagentsettings.kcfg
-    DESTINATION ${KDE_INSTALL_KCFGDIR}
-)
+install(FILES settings/archivemailagentsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})

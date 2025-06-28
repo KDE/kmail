@@ -8,10 +8,11 @@ qt_generate_dbus_interface(editor/kmcomposerwin.h org.kde.kmail.mailcomposer.xml
 add_custom_target(
     kmail_xml
     ALL
-    DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
-    DEPENDS ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml
-    COMMENT
-        "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
+    DEPENDS
+        ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml
+    DEPENDS
+        ${kmail_BINARY_DIR}/src/org.kde.kmail.mailcomposer.xml
+    COMMENT "Helper target for XML stuff. The Kontact plugin, KOrganizer and others depend on it."
 )
 
 add_subdirectory(pics)
@@ -441,7 +442,12 @@ endif()
 target_sources(kmailprivate PRIVATE ${kmailprivate_LIB_SRCS})
 
 if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
-    set_target_properties(kmailprivate PROPERTIES UNITY_BUILD ON)
+    set_target_properties(
+        kmailprivate
+        PROPERTIES
+            UNITY_BUILD
+                ON
+    )
 endif()
 
 generate_export_header(kmailprivate BASE_NAME kmail)
@@ -502,28 +508,25 @@ endif()
 if(KPim6AkonadiSearch_FOUND)
     target_link_libraries(
         kmailprivate
-        PRIVATE KPim6::AkonadiSearchDebug KPim6::AkonadiSearchPIM
+        PRIVATE
+            KPim6::AkonadiSearchDebug
+            KPim6::AkonadiSearchPIM
     )
 endif()
 
 target_link_libraries(kmailprivate PRIVATE qt6keychain)
 
-target_include_directories(
-    kmailprivate
-    PUBLIC $<TARGET_PROPERTY:KPim6::MessageList,INTERFACE_INCLUDE_DIRECTORIES>
-)
-target_include_directories(
-    kmailprivate
-    PUBLIC $<TARGET_PROPERTY:KPim6::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>
-)
-target_include_directories(
-    kmailprivate
-    PUBLIC $<TARGET_PROPERTY:KPim6::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>
-)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MessageList,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MessageViewer,INTERFACE_INCLUDE_DIRECTORIES>)
+target_include_directories(kmailprivate PUBLIC $<TARGET_PROPERTY:KPim6::MailCommon,INTERFACE_INCLUDE_DIRECTORIES>)
 
 set_target_properties(
     kmailprivate
-    PROPERTIES VERSION ${KDEPIM_LIB_VERSION} SOVERSION ${KDEPIM_LIB_SOVERSION}
+    PROPERTIES
+        VERSION
+            ${KDEPIM_LIB_VERSION}
+        SOVERSION
+            ${KDEPIM_LIB_SOVERSION}
 )
 
 ########### kcm_kmail ###############
@@ -539,25 +542,53 @@ target_link_libraries(
 
 kcoreaddons_add_plugin(kcm_kmail_accounts SOURCES configuredialog/kcm_kmail_accounts.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
 
-target_link_libraries(kcm_kmail_accounts kcm_kmail_static KPim6::AkonadiCore)
+target_link_libraries(
+    kcm_kmail_accounts
+    kcm_kmail_static
+    KPim6::AkonadiCore
+)
 
 kcoreaddons_add_plugin(kcm_kmail_appearance SOURCES configuredialog/kcm_kmail_appearance.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-target_link_libraries(kcm_kmail_appearance kcm_kmail_static KPim6::AkonadiCore)
+target_link_libraries(
+    kcm_kmail_appearance
+    kcm_kmail_static
+    KPim6::AkonadiCore
+)
 
 kcoreaddons_add_plugin(kcm_kmail_composer SOURCES configuredialog/kcm_kmail_composer.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-target_link_libraries(kcm_kmail_composer kcm_kmail_static KPim6::AkonadiCore)
+target_link_libraries(
+    kcm_kmail_composer
+    kcm_kmail_static
+    KPim6::AkonadiCore
+)
 
 kcoreaddons_add_plugin(kcm_kmail_misc SOURCES configuredialog/kcm_kmail_misc.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-target_link_libraries(kcm_kmail_misc kcm_kmail_static KPim6::AkonadiCore)
+target_link_libraries(
+    kcm_kmail_misc
+    kcm_kmail_static
+    KPim6::AkonadiCore
+)
 
 kcoreaddons_add_plugin(kcm_kmail_plugins SOURCES configuredialog/kcm_kmail_plugins.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-target_link_libraries(kcm_kmail_plugins kcm_kmail_static KPim6::AkonadiCore)
+target_link_libraries(
+    kcm_kmail_plugins
+    kcm_kmail_static
+    KPim6::AkonadiCore
+)
 
 kcoreaddons_add_plugin(kcm_kmail_security SOURCES configuredialog/kcm_kmail_security.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-target_link_libraries(kcm_kmail_security kcm_kmail_static KPim6::AkonadiCore)
+target_link_libraries(
+    kcm_kmail_security
+    kcm_kmail_static
+    KPim6::AkonadiCore
+)
 ########### kmailpart ###############
 
-set(kmailpart_PART_SRCS kmail_part.cpp kmail_part.h ${kmail_debugcategory_SRCS})
+set(kmailpart_PART_SRCS
+    kmail_part.cpp
+    kmail_part.h
+    ${kmail_debugcategory_SRCS}
+)
 qt_generate_dbus_interface(kmail_part.h org.kde.kmail.kmailpart.xml OPTIONS -a)
 qt_add_dbus_adaptor(kmailpart_PART_SRCS
     ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml kmail_part.h KMailPart
@@ -579,7 +610,10 @@ target_link_libraries(
 
 ########### KMail executable ###############
 
-set(kmail_SRCS main.cpp ${kmail_debugcategory_SRCS})
+set(kmail_SRCS
+    main.cpp
+    ${kmail_debugcategory_SRCS}
+)
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-apps-kmail.png")
 ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
 add_executable(kmail ${kmail_SRCS})
@@ -613,24 +647,27 @@ if(BUILD_TESTING)
 endif()
 ########### install files ###############
 install(
-    TARGETS kmailprivate ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
-    LIBRARY NAMELINK_SKIP
+    TARGETS
+        kmailprivate
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+    LIBRARY
+        NAMELINK_SKIP
 )
 
-install(TARGETS kmail ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+install(
+    TARGETS
+        kmail
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
+)
 
 install(
-    PROGRAMS data/org.kde.kmail2.desktop data/kmail_view.desktop
+    PROGRAMS
+        data/org.kde.kmail2.desktop
+        data/kmail_view.desktop
     DESTINATION ${KDE_INSTALL_APPDIR}
 )
-install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg
-    DESTINATION ${KDE_INSTALL_KCFGDIR}
-)
-install(
-    FILES data/org.kde.kmail2.appdata.xml
-    DESTINATION ${KDE_INSTALL_METAINFODIR}
-)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 install(FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
 install(TARGETS kmailpart DESTINATION ${KDE_INSTALL_PLUGINDIR})
@@ -642,7 +679,4 @@ install(
 )
 
 configure_file(data/org.kde.kmail.service.in org.kde.kmail.service)
-install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.service
-    DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR}
-)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kmail.service DESTINATION ${KDE_INSTALL_DBUSSERVICEDIR})

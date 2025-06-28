@@ -7,10 +7,7 @@ add_executable(
     potentialphishingemailjobtest.cpp
     potentialphishingemailjobtest.h
 )
-add_test(
-    NAME kmail_potentialphishingemailjobtest
-    COMMAND kmail_potentialphishingemailjobtest
-)
+add_test(NAME kmail_potentialphishingemailjobtest COMMAND kmail_potentialphishingemailjobtest)
 ecm_mark_as_test(kmail_potentialphishingemailjobtest)
 target_link_libraries(
     kmail_potentialphishingemailjobtest
@@ -24,10 +21,7 @@ add_executable(
     potentialphishingdetaildialogtest.cpp
     potentialphishingdetaildialogtest.h
 )
-add_test(
-    NAME kmail_potentialphishingdetaildialogtest
-    COMMAND kmail_potentialphishingdetaildialogtest
-)
+add_test(NAME kmail_potentialphishingdetaildialogtest COMMAND kmail_potentialphishingdetaildialogtest)
 ecm_mark_as_test(kmail_potentialphishingdetaildialogtest)
 target_link_libraries(
     kmail_potentialphishingdetaildialogtest
@@ -44,10 +38,7 @@ add_executable(
     potentialphishingdetailwidgettest.cpp
     potentialphishingdetailwidgettest.h
 )
-add_test(
-    NAME kmail_potentialphishingdetailwidgettest
-    COMMAND kmail_potentialphishingdetailwidgettest
-)
+add_test(NAME kmail_potentialphishingdetailwidgettest COMMAND kmail_potentialphishingdetailwidgettest)
 ecm_mark_as_test(kmail_potentialphishingdetailwidgettest)
 target_link_libraries(
     kmail_potentialphishingdetailwidgettest
@@ -65,10 +56,7 @@ add_executable(
     potentialphishingemailwarningtest.cpp
     potentialphishingemailwarningtest.h
 )
-add_test(
-    NAME kmail_potentialphishingemailwarningtest
-    COMMAND kmail_potentialphishingemailwarningtest
-)
+add_test(NAME kmail_potentialphishingemailwarningtest COMMAND kmail_potentialphishingemailwarningtest)
 ecm_mark_as_test(kmail_potentialphishingemailwarningtest)
 target_link_libraries(
     kmail_potentialphishingemailwarningtest

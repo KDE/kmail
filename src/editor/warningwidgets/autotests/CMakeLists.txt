@@ -7,10 +7,7 @@ add_executable(
     incorrectidentityfolderwarningtest.cpp
     incorrectidentityfolderwarningtest.h
 )
-add_test(
-    NAME kmail_incorrectidentityfolderwarningtest
-    COMMAND kmail_incorrectidentityfolderwarningtest
-)
+add_test(NAME kmail_incorrectidentityfolderwarningtest COMMAND kmail_incorrectidentityfolderwarningtest)
 ecm_mark_as_test(kmail_incorrectidentityfolderwarningtest)
 target_link_libraries(
     kmail_incorrectidentityfolderwarningtest
@@ -25,10 +22,7 @@ add_executable(
     externaleditorwarningtest.cpp
     externaleditorwarningtest.h
 )
-add_test(
-    NAME kmail_externaleditorwarningtest
-    COMMAND kmail_externaleditorwarningtest
-)
+add_test(NAME kmail_externaleditorwarningtest COMMAND kmail_externaleditorwarningtest)
 ecm_mark_as_test(kmail_externaleditorwarningtest)
 target_link_libraries(
     kmail_externaleditorwarningtest

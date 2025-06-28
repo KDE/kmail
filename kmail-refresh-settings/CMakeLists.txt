@@ -21,7 +21,12 @@ ecm_qt_declare_logging_category(kmail-refresh-settings HEADER kmail-refresh-sett
 )
 
 if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
-    set_target_properties(kmail-refresh-settings PROPERTIES UNITY_BUILD ON)
+    set_target_properties(
+        kmail-refresh-settings
+        PROPERTIES
+            UNITY_BUILD
+                ON
+    )
 endif()
 target_link_libraries(
     kmail-refresh-settings
@@ -32,8 +37,9 @@ target_link_libraries(
     KF6::XmlGui
 )
 
-install(TARGETS kmail-refresh-settings ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(
-    PROGRAMS org.kde.kmail-refresh-settings.desktop
-    DESTINATION ${KDE_INSTALL_APPDIR}
+    TARGETS
+        kmail-refresh-settings
+        ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 )
+install(PROGRAMS org.kde.kmail-refresh-settings.desktop DESTINATION ${KDE_INSTALL_APPDIR})

@@ -4,7 +4,9 @@
 set(dbusobjectmanager_xml ../../org.freedesktop.Akonadi.MailFilterAgent.xml)
 set_source_files_properties(
     ${dbusobjectmanager_xml}
-    PROPERTIES INCLUDE "../../dbusoperators.h"
+    PROPERTIES
+        INCLUDE
+            "../../dbusoperators.h"
 )
 qt_add_dbus_interfaces(mailagentdbus_gui_SRCS ${dbusobjectmanager_xml})
 
