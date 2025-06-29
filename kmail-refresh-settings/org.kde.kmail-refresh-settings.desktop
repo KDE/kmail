@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=KMail Refresh Settings
-Name[ar]=إعدادات إنعاش بريدك
+Name[ar]=إعدادات تحديث بريدك
 Name[az]=KMail-in təzələnməsi ayarları
 Name[be]=Налады абнаўлення KMail
 Name[bg]=Настройки за опресняване на KMail
@@ -45,7 +45,7 @@ Exec=kmail-refresh-settings -qwindowtitle %c %u
 Icon=kmail
 X-DocPath=kmail2/index.html
 GenericName=KMail refresh settings
-GenericName[ar]=إعدادات إنعاش بريدك
+GenericName[ar]=إعدادات تحديث بريدك
 GenericName[az]=KMail-in təzələnməsi ayarları
 GenericName[be]=Налады абнаўлення KMail
 GenericName[bg]=Настройки за опресняване на KMail
@@ -86,7 +86,7 @@ GenericName[x-test]=xxKMail refresh settingsxx
 GenericName[zh_CN]=KMail 刷新设置
 GenericName[zh_TW]=KMail 重新整理 設定
 Comment=Refresh KMail settings
-Comment[ar]=أنعش إعدادات بريدك
+Comment[ar]=حدّث إعدادات بريدك
 Comment[az]=KMail ayarlarını təzələyin
 Comment[be]=Абнавіць налады KMail
 Comment[bg]=Настройки за опресняване на KMail
