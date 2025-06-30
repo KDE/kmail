@@ -13,7 +13,7 @@ WhatsNewTranslations::~WhatsNewTranslations() = default;
 // Use by newFeaturesMD5
 QList<KLazyLocalizedString> WhatsNewTranslations::lastNewFeatures() const
 {
-    const QList<KLazyLocalizedString> info{kli18n("Add new whatsnew widget.")};
+    const QList<KLazyLocalizedString> info{kli18n("Add new whatsnew widget."), kli18n("New plugin: show collection size.")};
     return info;
 }
 
