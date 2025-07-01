@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:43+0000\n"
+"POT-Creation-Date: 2025-07-01 00:42+0000\n"
 "PO-Revision-Date: 2025-06-22 04:04+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -8124,6 +8124,10 @@ msgstr "No se puede iniciar el asistente de cuentas"
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Add new whatsnew widget."
 msgstr "Añadir nuevo widget de novedades."
+
+#: whatsnew/whatsnewtranslations.cpp:16
+msgid "New plugin: show collection size."
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

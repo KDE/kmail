@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:43+0000\n"
+"POT-Creation-Date: 2025-07-01 00:42+0000\n"
 "PO-Revision-Date: 2024-10-03 21:54+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -8126,6 +8126,10 @@ msgstr "Nem lehet elindítani az azonosítóbeállító varázslót"
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "Új identitás"
+
+#: whatsnew/whatsnewtranslations.cpp:16
+msgid "New plugin: show collection size."
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

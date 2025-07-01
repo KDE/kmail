@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:43+0000\n"
+"POT-Creation-Date: 2025-07-01 00:42+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -8448,6 +8448,10 @@ msgstr "Αδυναμία εκκίνησης οδηγού λογαριασμού"
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "Προσθήκη νέας ταυτότητας"
+
+#: whatsnew/whatsnewtranslations.cpp:16
+msgid "New plugin: show collection size."
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

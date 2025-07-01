@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:43+0000\n"
+"POT-Creation-Date: 2025-07-01 00:42+0000\n"
 "PO-Revision-Date: 2024-10-01 19:54+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -7757,6 +7757,10 @@ msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Add new whatsnew widget."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:16
+msgid "New plugin: show collection size."
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19

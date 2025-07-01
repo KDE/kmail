@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:43+0000\n"
-"PO-Revision-Date: 2025-06-21 13:13+0300\n"
+"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"PO-Revision-Date: 2025-06-27 15:52+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -341,9 +341,7 @@ msgid "Mailing List"
 msgstr "&Vēstkopa"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
 msgstr "Mape satur vēstkopu"
@@ -3826,7 +3824,7 @@ msgstr "„pngquant“ izgāja ar kodu %1: %2"
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
 msgid "Email added successfully."
-msgstr "E-pasts ir veiksmīgi pievienots."
+msgstr "E-pasts ir pievienots."
 
 #: job/addressvalidationjob.cpp:77
 #, kde-format
@@ -3858,7 +3856,7 @@ msgstr "Pievienot adrešu grāmatai"
 #: job/createnewcontactjob.cpp:132
 #, kde-format
 msgid "Contact created successfully"
-msgstr "Kontakts veiksmīgi izveidots"
+msgstr "Kontakts ir izveidots"
 
 #: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
 #, kde-format
@@ -4683,12 +4681,12 @@ msgstr "Dzēš vēstules…"
 #: kmmainwidget.cpp:1721 kmmainwidget.cpp:1926
 #, kde-format
 msgid "Messages deleted successfully."
-msgstr "Vēstules veiksmīgi izdzēstas."
+msgstr "Vēstules ir izdzēstas."
 
 #: kmmainwidget.cpp:1723
 #, kde-format
 msgid "Messages moved successfully."
-msgstr "Vēstules veiksmīgi pārvietotas."
+msgstr "Vēstules ir pārvietotas."
 
 #: kmmainwidget.cpp:1728 kmmainwidget.cpp:1939
 #, kde-format
@@ -4724,7 +4722,7 @@ msgstr "Kopē vēstules…"
 #: kmmainwidget.cpp:1843
 #, kde-format
 msgid "Messages copied successfully."
-msgstr "Vēstules ir veiksmīgi nokopētas."
+msgstr "Vēstules ir nokopētas."
 
 #: kmmainwidget.cpp:1846
 #, kde-format
@@ -4755,12 +4753,12 @@ msgstr "Dzēš un pārvieto vēstules uz atkritni…"
 #: kmmainwidget.cpp:1923
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr "Vēstules veiksmīgi pārvietotas uz atkritni."
+msgstr "Vēstules ir pārvietotas uz atkritni."
 
 #: kmmainwidget.cpp:1930
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
-msgstr "Vēstules veiksmīgi pārvietotas uz atkritni vai dzēstas"
+msgstr "Vēstules ir pārvietotas uz atkritni vai dzēstas"
 
 #: kmmainwidget.cpp:1936
 #, kde-format
@@ -5817,7 +5815,7 @@ msgstr ""
 #: kmreaderwin.cpp:849
 #, kde-format
 msgid "Contact modified successfully"
-msgstr "Kontakts ir veiksmīgi modificēts"
+msgstr "Kontakts ir izmainīts"
 
 #: kmsystemtray.cpp:93
 #, kde-format
@@ -8070,6 +8068,10 @@ msgstr "Neizdevās palaist kontu vedni"
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Add new whatsnew widget."
 msgstr "Pievienot jaunu „kas jauns“ logdaļu."
+
+#: whatsnew/whatsnewtranslations.cpp:16
+msgid "New plugin: show collection size."
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-26 00:43+0000\n"
+"POT-Creation-Date: 2025-07-01 00:42+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -8307,6 +8307,10 @@ msgstr "ਅਕਾਊਂਟ ਸਹਾਇਕ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਅ�
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "ਨਵੀਂ ਪਛਾਣ ਸ਼ਾਮਲ"
+
+#: whatsnew/whatsnewtranslations.cpp:16
+msgid "New plugin: show collection size."
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format
