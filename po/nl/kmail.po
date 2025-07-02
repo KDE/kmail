@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-06-22 15:48+0200\n"
+"PO-Revision-Date: 2025-07-01 12:04+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -8157,7 +8157,7 @@ msgstr "Nieuw widget Wat-is-nieuw toevoegen."
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "Nieuwe plug-in: grootte van verzameling tonen."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

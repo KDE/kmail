@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-06-22 10:29+0300\n"
+"PO-Revision-Date: 2025-07-01 16:07+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -8199,7 +8199,7 @@ msgstr "Додано новий віджет зі списком можливо�
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "Новий додаток: показ розміру збірки."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
