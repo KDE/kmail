@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-06-27 15:52+0300\n"
+"PO-Revision-Date: 2025-07-02 17:25+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
 "Language: lv\n"
@@ -8071,7 +8071,7 @@ msgstr "Pievienot jaunu „kas jauns“ logdaļu."
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "Jauns spraudnis: rādīt kolekcijas izmēru."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
