@@ -340,7 +340,7 @@ msgstr "邮件列表"
 #, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr ""
+msgstr "文件夹包含单个邮件列表"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -4373,7 +4373,7 @@ msgstr "无法启动导入向导"
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr ""
+msgstr "(正在加载模板…)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5153,7 +5153,7 @@ msgstr "添加账户(&A)..."
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr ""
+msgstr "新增功能"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -7794,11 +7794,11 @@ msgstr "无法启动账户向导"
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Add new whatsnew widget."
-msgstr ""
+msgstr "添加新的“新增功能”小部件。"
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "新插件：显示集合大小。"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
