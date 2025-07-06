@@ -1,0 +1,1492 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<author
+>&David.Bryant; &David.Bryant.mail;</author>
+<othercredit role="translator"
+><firstname
+>Марина</firstname
+><surname
+>Соболева</surname
+><affiliation
+><address
+><email
+>marina_soboleva@inbox.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>9 апреля 2021</date>
+<releaseinfo
+>5.14.2 (Приложения KDE 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Вопросы и ответы</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry>
+  <question
+><para
+>Как сделать Firefox браузером по умолчанию?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Требуется открывать ссылки из писем в &kmail; в браузере <application
+>Firefox</application
+>. В данный момент используется другой браузер, и эту настройку необходимо изменить.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> Это изменение повлияет на всю систему, не только на &kmail;. Выберите <menuchoice
+> <guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Приложения по умолчанию</guisubmenu
+><guimenuitem
+>Веб-браузер</guimenuitem
+><guimenuitem
+>Mozilla Firefox</guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>Администраторы, желающие автоматически настроить этот параметр для своих пользователей, могут сделать следующее:</para>
+    <itemizedlist>
+      <listitem>
+        <para
+>Введите команду <screen
+># qtpaths --paths ConfigLocation</screen
+> в терминале. Это отобразит путь (или пути) расположения конфигурационных файлов приложений KDE в системе. Перейдите по пути, начинающемся в домашнем каталоге каждого пользователя, и найдите файл под названием <filename
+>kdeglobals</filename
+>, затем в разделе <guilabel
+>[General]</guilabel
+> добавьте эту строку:</para>
+        <para
+><userinput
+>BrowserApplication[$e]=firefox.desktop</userinput>
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>Попробуйте также сценарий <ulink url="https://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>Tutorials/ Modify_KDE_Software_Defaults</ulink
+></para>
+    <note
+><para
+>Фактическое физическое расположение переменных конфигурации зависит от распределения. Не удивляйтесь, если некоторые инструкции по изменению конфигурационных переменных, описанных в руководствах &kde; в используемой системе работать не будут. Лучшее место для получения помощи — это онлайн-форум, посвящённый используемому дистрибутиву.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как управлять соединением перемещаемого профиля?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Настраивается <emphasis
+>Перемещаемый профиль</emphasis
+> так, чтобы можно было получить доступ к своему внешнему серверу в любом месте вне дома, но он продолжает пытаться подключиться, даже из дома. Автоматическое подключение отключено в параметрах.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> Перейдите к <menuchoice
+><guimenu
+>Настройка</guimenu
+><guisubmenu
+>Настроить KMail</guisubmenu
+><guimenuitem
+>Учётные записи</guimenuitem
+><guimenuitem
+>Получение (вкладка)</guimenuitem
+> <guimenuitem
+>(выберите нужную учётную запись)</guimenuitem
+><guimenuitem
+>Параметры синхронизации</guimenuitem
+> </menuchoice
+>, затем снимите флажок <guilabel
+>Включить в проверку почты</guilabel
+>. Это исключит этот профиль при нажатии на значок загрузки, но учётная запись по-прежнему будет доступна в раскрывающемся списке, позволяя пользователю легко получать доступ к почте даже будучи далеко от дома.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как сохранять отправленные письма в отдельной папке?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Необходимо сохранять отправленные письма в отдельной папке. Например, если используется &IMAP;, и требуется хранить отправленные письма на сервере, а не в локальной папке.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> В &kmail; перейдите в <menuchoice
+><guimenu
+>Настройка</guimenu
+><guisubmenu
+>Настроить KMail...</guisubmenu
+><guimenuitem
+>Профили</guimenuitem
+><guimenuitem
+>(Выберите профиль)</guimenuitem
+><guimenuitem
+>Изменить</guimenuitem
+><guimenuitem
+>Дополнительно</guimenuitem
+><guimenuitem
+>Папка для отправленных</guimenuitem
+></menuchoice
+> и выберите необходимую папку.</para>
+    <para
+>Кроме того, возможно использовать поле <guilabel
+>Папка отправленной почты</guilabel
+> (в меню <guimenu
+>Вид</guimenu
+> окна редактора писем), чтобы заменить папку отправленной почты по умолчанию для определённого письма.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как переместить письма из корзины в отдельную папку?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Для корзины требуется назначить специальную папку. Возможно, пользователь использует сервер &IMAP; и хочет, чтобы удалённые письма хранились на сервере, а не локально.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> В диалоге настройки выберите учётную запись &IMAP; на странице <guilabel
+>Учётные записи</guilabel
+>. Нажмите кнопку <guibutton
+>Изменить</guibutton
+> и измените расположение корзины на вкладке <guilabel
+>Дополнительно</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #5 -->
+<qandaentry>
+  <question
+><para
+>Как хранить зашифрованные письма в незашифрованном виде?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Производится обмен зашифрованными письмами с другим пользователем, и требуется сохранить собственную копию незашифрованной после открытия письма.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> Чтобы хранить электронные письма, которые были расшифрованы, откройте конфигурационный файл <filename
+>kmail2rc</filename
+> и в раздел [Reader] добавьте следующее:</para>
+    <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как фильтровать спам на сервере &IMAP;?</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Пользователь планирует читать письма с сервера &IMAP; и задаётся вопросом, как будет происходить фильтрация и обработка спама.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> Машина, на которой уже есть почта, может стать сервером &IMAP;. Необходимо будет настроить серверное приложение. <application
+>Dovecot</application
+> является одним из таких приложений, и руководство на веб-странице проекта делает его относительно простым в настройке. После этого всё ещё остаётся проблема с фильтрацией, так как это имеет смысл делать на сервере (при указании &kmail; на сервере отобразятся папки, которые были созданы в этой системе). Здесь представлено несколько вариантов. Наиболее распространённый — <application
+>Procmail</application
+>. Второй — <application
+>Imapfilter</application
+>. В Интернете есть много информации о том, как их настроить. Дальнейшее обсуждение этих пакетов OSS выходит за рамки документации &kmail;.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как получить больше экранного &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> &kmail; используется на компьютере с небольшим экраном, и новый дисплей <emphasis
+>Группировка</emphasis
+> оставляет мало места на экране.</para>
+
+    <para
+><emphasis
+>Решение:</emphasis
+> Чтобы изменить список писем, чтобы каждое письмо помещалось на одну строку вместо двух, перейдите в меню <menuchoice
+><guimenu
+>Вид</guimenu
+><guisubmenu
+>Список писем</guisubmenu
+> <guimenuitem
+>Тема</guimenuitem
+></menuchoice
+> и измените тему на <guilabel
+>Классический вид</guilabel
+>. Чтобы отключить группировку по дате, измените способ группировки через меню <menuchoice
+><guimenu
+>Вид</guimenu
+> <guisubmenu
+>Список писем</guisubmenu
+><guimenuitem
+>Группировка</guimenuitem
+></menuchoice
+> на <guilabel
+>Стандартный список рассылки</guilabel
+>. Теперь &kmail; будет выглядеть точно так же, как выглядел в более ранних версиях приложения.</para>
+
+    <para
+>В меню <menuchoice
+><guimenu
+>Настройка</guimenu
+><guisubmenu
+>Настроить &kmail;</guisubmenu
+> <guimenuitem
+>Внешний вид</guimenuitem
+><guimenuitem
+>Шрифт</guimenuitem
+></menuchoice
+> возможно выбрать <guilabel
+>Шрифты, заданные пользователем</guilabel
+>, чтобы изменить параметр для списка писем. В диалоге также возможно выбрать размер шрифта <guilabel
+>Шрифты, заданные пользователем</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как выключить всплывающие подсказки для &kmail;?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> &kmail; используется на компьютере с маленьким экраном, и <emphasis
+>всплывающие подсказки</emphasis
+> при появлении перекрывают множество имён папок.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> Щёлкните правой кнопкой мыши по строке «Название» над <guilabel
+>Списком папок</guilabel
+> и в разделе <guilabel
+>Всплывающие подсказки</guilabel
+> отметьте вариант <guilabel
+>Никогда</guilabel
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как скрыть подсказки списка писем?</para
+></question>
+  <answer>
+    <para
+>В &kmail;: <menuchoice
+><guimenu
+>Настройка</guimenu
+><guisubmenu
+>Настроить KMail</guisubmenu
+><guimenuitem
+>Внешний вид</guimenuitem
+><guimenuitem
+>Список писем</guimenuitem
+> </menuchoice
+>, снимите флажок <menuchoice
+><guimenu
+>Главное</guimenu
+><guimenuitem
+>Всплывающие подсказки у писем и заголовков групп</guimenuitem
+></menuchoice
+></para>
+    <para
+>Либо щёлкните правой кнопкой мыши по одному из заголовку над списком писем и установите флажок <guilabel
+>Всплывающие подсказки</guilabel
+>.</para>
+    <note
+><para
+>Заголовки над списком писем не появляются при использовании «Умной» темы.</para
+></note>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- <qandaentry>
+<question
+><para
+>How can I remove alternate line colorings?</para
+></question>
+<answer>
+<para
+>In <menuchoice
+><guimenu
+>&systemsettings;</guimenu
+><guisubmenu
+>Application 
+Appearance</guisubmenu
+><guimenuitem
+>Colors</guimenuitem
+><guimenuitem
+>Colors</guimenuitem
+></menuchoice
+>, for each color 
+set except <guilabel
+>Common Colors</guilabel
+> (which doesn't have it), change the <guilabel
+>Alternate 
+Background</guilabel
+> to be the same as the <guilabel
+>Normal Background</guilabel
+>.</para>
+<para
+><emphasis
+>Mandriva</emphasis
+> and <emphasis
+>Mageia</emphasis
+> doesn't use the name <guilabel
+>System 
+Settings</guilabel
+>.  As in <guilabel
+>KControl</guilabel
+>, the KDE 3 control centre, they name it <quote
+>Configure your 
+Desktop</quote
+> to distinguish it from <quote
+>Configure your Computer</quote
+>, a.k.a. the Mandriva/Mageia Control 
+Center (MCC). Other than this name change, the method is as described above.</para>
+</answer>
+</qandaentry
+> --><!-- This trick hasn't worked in a long time. @dcb2021101. -->
+
+<!-- FAQ #10 -->
+<qandaentry id="transfer-mail-and-settings">
+  <question>
+    <para
+>Как перенести свою почту и параметры на другой компьютер или в другую учётную запись на том же компьютере?</para>
+  </question>
+  <answer>
+    <para
+>Воспользуйтесь меню <menuchoice
+><guimenu
+>Сервис</guimenu
+><guimenuitem
+>Импорт или экспорт данных &kmail;...</guimenuitem
+></menuchoice
+>, чтобы импортировать или экспортировать параметры и данные. Более подробная информация содержится в руководстве <ulink url="help:/pimsettingexporter"
+>«Экспорт данных PIM»</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Почему не получается скопировать папки электронной почты на USB-накопитель?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Производится настройка нового компьютера, и на него требуется перенести всю электронную почту. Принимается решение скопировать всё на USB-накопитель. Процесс копирования завершается с ошибкой:</para>
+    <screen
+>Не удалось скопировать ............ Недопустимый параметр</screen>
+    
+    <para
+><emphasis
+>Решение:</emphasis
+> Используемый USB-накопитель отформатирован в формате <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>VFAT</ulink
+>, поэтому он не может обрабатывать имена папок <emphasis
+>maildir</emphasis
+> и управлять <emphasis
+>разрешениями</emphasis
+>, что может вызвать множество других проблем. Здесь есть два варианта. Либо отформатировать <acronym
+>USB</acronym
+>-накопитель как ext2 (или ext3 / 4 — обратите внимание, что в таком случае накопитель не будет прочитан &Windows; без установки дополнительного программного обеспечения), либо создать файл .tar или .zip, содержащий данные почты, а затем скопировать этот файл на накопитель и извлечь архив там, куда предполагалось перенести данные.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Почему фильтры не применяются к входящим письмам учётных записей, использующих &IMAP;?</para
+></question>
+  <answer>
+    <para
+>Обычный режим &IMAP; не поддерживает фильтрацию, но новая отключённая учётная запись &IMAP; — поддерживает. Рекомендуется использовать фильтрацию на сервере (узнайте у своего администратора, как и в каком формате установить фильтры на сервере), так как&IMAP; в первую очередь используется для управления письмами <emphasis
+>непосредственно на сервере</emphasis
+>. Перейдите в меню <menuchoice
+><guimenu
+>Настройка</guimenu
+><guisubmenu
+>Настроить &kmail;...</guisubmenu
+><guimenuitem
+>Получение</guimenuitem
+><guimenuitem
+>(учётная запись &IMAP;)</guimenuitem
+></menuchoice
+>, затем нажмите <guilabel
+>Изменить...</guilabel
+> и перейдите на вкладку <guilabel
+>Фильтрация</guilabel
+>, где возможно настроить фильтрацию на сервере с помощью языка программирования <ulink url="http://sieve.info/"
+>Sieve</ulink
+> (если его поддерживает используемый сервер &IMAP;).</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>Что нужно знать для использования <application
+>PGP</application
+>/<application
+>GnuPG</application
+> совместно с &kmail;?</para
+></question>
+
+  <answer>
+    <para
+>&kmail; предоставляет простой и лёгкий в использовании интерфейс для работы с базовыми функциями этих приложений. Тем не менее, нужно понять принцип работы этих программ и причины, по которым может снизиться безопасность. Несколько важных моментов:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para
+>Убедитесь, что шифрование действительно работает, прежде чем его использовать. &kmail; частично опирается на сообщения об ошибках <application
+>PGP</application
+>/<application
+>GnuPG</application
+>, которые меняются в различных версиях.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>&kmail; не будет шифровать письма с неподписанным открытым ключом. Если требуется зашифровать таким ключом письмо, рекомендуется проверить владельца ключа и только тогда подписывать его своим закрытым ключом. Если идентифицировать владельца ключа не удаётся, а письмо зашифровать необходимо, подпишите ключ локально командой <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>keyID</replaceable
+></userinput
+>.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Мы бы не рекомендовали доверять чужому открытому ключу, не проверив его.</para>
+      </listitem>
+      
+      <listitem>
+        <para
+>Начиная с GnuPG версии 1.0.7 требуется вручную указать, что собственный ключ является окончательно проверенным. Это больше не делается автоматически.</para>
+      </listitem>
+    </itemizedlist>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Где &kmail; сохраняет параметры и почту?</para
+></question>
+  <answer>
+    <para
+>Большинство параметров &kmail; расположено в <filename
+>~/.config/kmail2rc</filename
+>&nbsp;.</para>
+    <para
+>Записи, управляемые <emphasis
+>Akonadi</emphasis
+>, хранятся в следующих папках:</para>
+      <itemizedlist>
+        <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename
+>.</para
+></listitem>
+        <listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>.</para
+></listitem>
+      </itemizedlist>
+    <para
+>Обратите внимание, что некоторые файлы скрыты: не забудьте их также скопировать, если собираетесь делать резервную копию или архивировать письма. Для безопасности резервного копирования данных почты и её параметров используйте <ulink url="help:/pimdataexporter"
+>экспорт данных PIM</ulink
+>.</para
+><para
+>&nbsp;</para
+> 
+  </answer>
+</qandaentry>
+
+<!-- FAQ #15 -->
+<qandaentry id="faq-index-regeneration">
+  <question
+><para
+>Почему &kmail; заново создаёт индекс папки?</para
+></question>
+  <answer>
+    <para
+>&kmail; создаёт заново индекс папки, если он устаревает, то есть когда содержимое папки новее индекса. &kmail;  делает это для того чтобы избежать потерю или повреждение писем.</para>
+    <para
+>Устаревание индекса может происходить по разным причинам. Ниже представлены наиболее распространённые причины: <itemizedlist>
+        <listitem
+><para
+>Содержимое папки было изменено другим приложением. Если требуется использовать &kmail; совместно с procmail, прочтите <link linkend="faq-procmail"
+>этот документ</link
+>.</para
+></listitem>
+        <listitem
+><para
+>Если каталог почты находится на разделе NFS, и часы на сервере NFS отстают от часов на компьютере, то сервер NFS иногда сообщает ошибочную дату файла индекса. В этом случае &kmail; считает, что индекс устарел, хотя на самом деле это не так. Чтобы устранить эту проблему, следует убедиться, что часы на компьютере и сервере всегда синхронизированы. Один из способов добиться этого — это использовать демон ntp.</para
+></listitem>
+      </itemizedlist>
+    </para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Почему &kmail; не запускается?</para
+></question>
+  <answer>
+    <para
+><emphasis
+>Проблема:</emphasis
+> Не удаётся запустить &kmail; в минимальной среде рабочего стола, например, <ulink url="https://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>.</para>
+    <para
+><emphasis
+>Решение:</emphasis
+> Это происходит из-за отсутствия функционала <emphasis
+>dbus</emphasis
+>. Запустите &kmail; через терминал с помощью dbus-launch:</para>
+    <screen
+># dbus-launch kmail</screen
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+  <question
+><para
+>Возможно ли использовать &kmail; совместно с другой почтовой программой, например, вместе с <application
+>mutt</application
+>?</para
+></question>
+  <answer>
+    <para
+>Если для папок используется формат mbox, использовать другую почтовую программу, пока запущен &kmail;, невозможно. С программой <application
+>mutt</application
+> также могут быть проблемы, даже если не используются одновременно оба приложения. В этом случае рекомендуется использовать формат maildir, это решает все проблемы.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+  <question
+><para
+>Каким образом можно конвертировать мои почтовые папки из формата mbox в maildir?</para
+></question>
+  <answer>
+    <para
+>Это невозможно сделать автоматически. Следует создать новую папку в формате maildir и скопировать туда письма из папок в формате mbox. Не забудьте сначала скопировать фильтры, связанные со старой папкой, прежде чем удалять её.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как удалить вложения, не удаляя само письмо?</para
+></question>
+  <answer>
+    <para
+>Щёлкните правой кнопкой мыши для открытия контекстного меню и выберите пункт <guimenuitem
+>Удалить вложение</guimenuitem
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #20 -->
+<qandaentry>
+  <question
+><para
+>Как заставить &kmail; проверять почту при запуске?</para
+></question>
+  <answer>
+    <para
+>Чтобы &kmail; всегда проверял почту при запуске, включите функцию <guilabel
+>Проверять почту при запуске</guilabel
+> на <link linkend="configure-accounts-receiving"
+>странице настройки профилей</link
+>. Либо запускайте &kmail; командой <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Где находится список отличий между версиями &kmail;?</para
+></question>
+  <answer>
+    <para
+>Все важнейшие изменения в вашей версии &kmail; показываются в окне приветствия. Оно отображается при выборе пункта меню <menuchoice
+><guimenu
+>Справка</guimenu
+><guimenuitem
+>Введение в &kmail;</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Я &mdash; один из тех, чьи письма состоят из ста строк цитирования и одной строки, написанной мной. По какой-то причине это раздражает других людей. Может ли &kmail; помочь мне облегчить всем жизнь?</para
+></question>
+  <answer>
+    <para
+>Конечно. Перед тем как отвечать на письмо, выделите мышью часть исходного текста. В ответе будет процитирована только эта часть.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Почему некоторые письма отображают значение «неизвестно» в поле <guilabel
+>Дата</guilabel
+>? Почему дата иногда отображается неправильно?</para
+></question>
+  <answer>
+    <para
+>Похоже, что заголовок «Date:» этих писем повреждён и &kmail; не может интерпретировать его. Это ошибка не &kmail;, а программы, которая использовалась для отправки письма.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Перед моей подписью появляется два дефиса. В чём дело?</para
+></question>
+  <answer>
+    <para
+>Отделение подписи от письма двумя дефисами и пробелом — это общепринятый стандарт. Еслит подпись не содержит этого разделителя, &kmail; автоматически его добавляет.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #25 -->
+<qandaentry>
+  <question
+><para
+>Известны ли какие-либо ошибки в &kmail;?</para
+></question>
+  <answer>
+    <para
+>Список известных ошибок доступен на <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>странице ошибок &kmail;</ulink
+>. На текущий момент (апрель, 2021) около 70% сообщений об ошибках неподтверждены, или их невозможно воспроизвести. В целом &kmail; можно назвать надёжной частью программного обеспечения.</para>
+    <warning
+><para
+>Не рекомендуется запускать &kmail;, когда другая почтовая программа уже осуществляет доступ к файлам в папке писем. При попытке это сделать письма могут быть утеряны. Рекомендуется периодически делать резервное копирование своих писем и важных данных.</para
+></warning
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Почему &kmail; не отображает должным образом &HTML;-письма?</para
+></question>
+  <answer>
+    <para
+>Ссылки на внешние объекты по умолчанию отключены, так как они могут использоваться для отслеживания того, что письмо было прочитано. Чтобы включить загрузку внешних ссылок, воспользуйтесь вкладкой <guilabel
+>Безопасность</guilabel
+> в диалоге настройки &kmail;. Модули (такие как <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>), &Java; и JavaScript не работают по соображением безопасности, и включить их нельзя.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Могу ли я одновременно использовать две разные версии &kmail;? Можно ли установить более старую версию &kmail; вместо новой?</para
+></question>
+  <answer>
+    <para
+>За раз может быть запущена только одна копия &kmail;. Также рекомендуется придерживаться какой-либо одной версии и не переключаться между несколькими версиями приложения. Возвращение к более старой версии может вызвать проблемы, например, из-за изменения формата файлов индекса. Обновление до более новой версии обычно не вызывает подобные проблемы.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Поддерживает ли &kmail; закодированные в uue файлы?</para
+></question>
+  <answer>
+    <para
+>Файлы, закодированные в uue, не поддерживаются. Чтобы расшифровать такие вложения, сохраните письмо с не закодированными uue вложениями, а затем воспользуйтесь командой <command
+>uudecode</command
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>&kmail; аварийно завершился во время написания письма. Оно теперь утеряно?</para
+></question>
+  <answer>
+    <para
+>В случае критической ошибки &kmail; пытается сохранить письмо в папке <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+>. При следующем запуске &kmail; должно появиться окно редактора с этим сообщением. Если оно не появилось, откройте файлы из папки <filename class="directory"
+>~/.local/share/kmail2/autosave/</filename
+> в любом текстовом редакторе. Если же в этой папке нет файлов, сбой был настолько серьёзным, что письмо не сохранилось.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #30 -->
+<qandaentry>
+  <question
+><para
+>Была настроена папка для списка рассылки, но письма из списка не сохраняются в этой папке. Почему?</para
+></question>
+  <answer>
+    <para
+>Связывание папки со списком рассылки не имеет ничего общего с установкой правил фильтрации сообщений. Потребуется вручную добавить правило фильтрации. Тем не менее, при связывании папки со списком рассылки возможно использовать пункты меню <menuchoice
+> <guimenu
+>Письмо</guimenu
+><guimenuitem
+>Ответить в список рассылки...</guimenuitem
+></menuchoice
+> и <menuchoice
+><guimenu
+>Письмо</guimenu
+><guimenuitem
+>Отправить в список рассылки...</guimenuitem
+></menuchoice
+>, и в поле <guilabel
+>Получатель:</guilabel
+> будет указан адрес списка рассылки.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Мой сервер SMTP требует авторизации. Поддерживает ли &kmail; эту функцию?</para
+></question>
+  <answer>
+    <para
+><guilabel
+>Авторизация</guilabel
+> может быть задана на вкладке <guilabel
+>Дополнительно</guilabel
+> диалога <link linkend="configure-accounts-sending"
+>«Настройка SMTP»</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+  <question
+><para
+>Могу ли я использовать &kmail; и <application
+>procmail</application
+>?</para
+></question>
+  <answer>
+    <para
+>Да, но важно делать это правильно во избежание потери сообщений. Для использования <application
+>procmail</application
+> с &kmail; нужно так настроить &kmail;, чтобы он получал сообщения из файла спулинга, в котором <application
+>procmail</application
+> их сохраняет. <emphasis
+>Не</emphasis
+> настраивайте procmail так, чтобы он сохранял сообщения в папке &kmail;, это не сработает.</para>
+
+    <para
+>Для каждого файла спулинга procmail нужно создать учётную запись в &kmail;. Следует убедиться, что было указано правильное имя файла блокировки для этой учётной записи. При создании учётной записи &kmail; обрабатывает некоторые данные файла <filename
+>.procmail</filename
+> и пытается создать список всех найденных файлов спулинга, а также отобразить список файлов блокировки после пункта <guilabel
+> файл блокировки procmail </guilabel
+>. procmail позволяет пользователям три способа указания файла блокировки, поэтому невозможно соотнести файлы спулинга и файлы блокировки. Именно поэтому вам нужно правильно указать нужный файл блокировки для каждого файла спулинга.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Почему проверка орфографии не распознаёт никакие буквы кроме английских?</para
+></question>
+  <answer>
+    <para
+>Перед использованием проверки орфографии её следует настроить. Чтобы это сделать, воспользуйтесь меню редактора сообщений, выбрав пункт <menuchoice
+><guimenu
+>Настройка</guimenu
+><guimenuitem
+>Проверка орфографии...</guimenuitem
+> </menuchoice
+>. В появившемся диалоге возможно настроить словарь и кодировку.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Каким образом возможно использовать почтовые папки программ <application
+>Eudora</application
+>/&Netscape;/<application
+>Outlook</application
+> и др. в &kmail;?</para
+></question>
+  <answer>
+    <para
+>Более подробная информация содержится в разделе <link linkend="importing-options"
+>«Восстановление и импорт в &kmail;»</link
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #35 -->
+<qandaentry>
+  <question
+><para
+>Можно ли использовать шифрование в обычной (не использующей <acronym
+>SSL</acronym
+>) учётной записи POP3?</para
+></question>
+  <answer>
+    <para
+>Если на сервере POP3 запущен демон <application
+>ssh</application
+>, возможно использовать ssh для создания защищённого канала для POP3-соединения, используя следующую команду:</para>
+
+    <para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 user@host</option
+></userinput
+></para>
+
+    <para
+>Измените параметры &kmail; так, чтобы почта доставлялась с помощью POP3 из <userinput
+>localhost</userinput
+>, и ssh создаст защищённый канал. </para>
+
+    <note
+><para
+>Если незашифрованные письма уже были отправлены по Интернету, единственное преимущество использования <application
+>ssh</application
+> заключается в том, что пароль будет передан POP3-серверу в зашифрованном виде.</para
+></note>
+
+    <para
+>Более подробная информация об установке ssh содержится <ulink url="http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html"
+>на этой странице</ulink
+>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+  <question
+><para
+>Блокирует ли &kmail; используемые им папки?</para
+></question>
+  <answer>
+    <para
+>&kmail; не блокирует файлы в каталоге <filename class="directory"
+>~.local/share</filename
+>.</para>
+    <para
+>Чтобы избежать риска потери писем <emphasis
+>при использовании локальной учётной записи</emphasis
+>, необходимо убедиться в том, что &kmail; использует тот же тип блокировки, что и используемая программа доставки почты.</para>
+
+    <para
+>Существует пять различных способов блокировки:</para>
+
+      <itemizedlist>
+        <listitem
+><para
+><guilabel
+>Файл блокировки procmail</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Блокировка mutt</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Блокировка mutt с привилегиями</guilabel
+></para
+></listitem>
+        <listitem
+><para
+><guilabel
+>FCNTL</guilabel
+> (по умолчанию)</para
+></listitem>
+        <listitem
+><para
+><guilabel
+>блокировка отсутствует (используйте с осторожностью)</guilabel
+></para
+></listitem>
+      </itemizedlist>
+
+    <para
+><guilabel
+>Файл блокировки procmail</guilabel
+> использует небольшую программу <command
+>lockfile</command
+>, поставляемую вместе с <application
+>procmail</application
+>. Её возможно использовать при наличии прав записи в каталог почты. В большинстве случаев это не работает с файлом <filename class="directory"
+>/var/spool/mail/user</filename
+>. Программа создаёт файл <filename
+>.lock</filename
+> для учётной записи, когда &kmail; проверяет почту. Учтите, что этот способ работает только тогда, когда в системе установлен <application
+>procmail</application
+>.</para>
+
+    <para
+>Способы <guilabel
+>Блокировка mutt</guilabel
+> и <guilabel
+>Блокировка mutt с привилегиями</guilabel
+> используют небольшую программу <command
+>mutt_dotlock</command
+>, поставляемую вместе с <application
+>mutt</application
+>. <guilabel
+>Блокировка mutt</guilabel
+> может быть использована точно так же, как и <guilabel
+>Файл блокировки Procmail</guilabel
+>, с теми же ограничениями касательно папок <filename class="directory"
+>/var/spool/mail/</filename
+>. Однако, при использовании способа <guilabel
+>Блокировка mutt с привилегиями</guilabel
+> возможно создавать файлы блокировки в каталоге <filename class="directory"
+>/var/spool/mail</filename
+>. <command
+>mutt_dotlock</command
+> является программой, использующей функцию setgid, и запускается в режиме установки группы процесса. Учтите, что эти опции будут работать лишь в том случае, если в системе установлена программа <application
+>mutt</application
+>.</para>
+
+    <para
+><guilabel
+>FCNTL</guilabel
+> использует системный вызов <function
+>fcntl()</function
+>.</para>
+
+    <warning
+><para
+>Использование блокировки FCNTL может вызвать зависания системы, если файл спулинга расположен на разделе NFS.</para
+></warning>
+
+    <para
+>Чтобы не использовать блокировку, установите опцию <guilabel
+>блокировка отсутствует</guilabel
+>. Однако, если блокировка не используется, существует риск потери писем.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как оставлять письма на сервере POP3?</para
+></question>
+  <answer>
+    <para
+>Если требуется оставлять все письма на сервере, откройте окно <menuchoice
+><guimenu
+>Настройка</guimenu
+><guimenuitem
+>Настроить &kmail;...</guimenuitem
+> </menuchoice
+>, перейдите на страницу <guilabel
+>Учётные записи</guilabel
+>, выберите нужную учётную запись в списке и нажмите кнопку <guibutton
+>Изменить...</guibutton
+>. В открывшемся диалоге отключите или включите функцию <guilabel
+>Оставить полученные письма на сервере</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как автоматически добавлять некоторый текст в конец писем?</para
+></question>
+  <answer>
+    <para
+>Этот текст называется файлом подписи (не следует путать с криптографической подписью). Откройте меню <menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Настроить &kmail;...</guimenuitem
+></menuchoice
+>. Откройте профиль на странице <guilabel
+>Учётная запись</guilabel
+>, перейдите на вкладку <guilabel
+>Подпись</guilabel
+> и добавьте сюда свою подпись. Затем перейдите на вкладку <guilabel
+>Главное</guilabel
+> на странице<guilabel
+>Редактор писем</guilabel
+> и включите <xref linkend="configure-composer-general-append-signature"/>.</para>
+    <para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Я использую модемное соединение. Как настроить &Sendmail; для совместной работы с &kmail;?</para
+></question>
+  <answer>
+    <para
+>Прежде всего нужно проверить, может ли дистрибутив сделать это сам. Возможно, нужные параметры уже были указаны во время установки.</para>
+
+    <para
+>В противном случае обратитесь к <ulink url="https://www.tldp.org/HOWTO/Mail-Queue.html"
+>the Mail Queue HOWTO</ulink
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #40 -->
+<qandaentry>
+  <question
+><para
+>Я видел демонстрацию удалённого управления &kmail;. Существует ли какая-либо документация по доступным интерфейсам?</para
+></question>
+  <answer>
+    <para
+>Чтобы получить список функций, воспользуйтесь командой: <userinput
+><command
+>qdbus</command
+><option
+>org.kde.kmail /KMail</option
+></userinput
+>. Появится возможность управлять &kmail; таким образом: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. Также возможно использовать <application
+>qdbusviewer</application
+> для просмотра доступных методов в графическом интерфейсе.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>При ответе на письмо цитируется только его часть. Как это устранить?</para
+></question>
+  <answer>
+    <para
+>Это может случиться если в письме содержится последовательность из двух дефисов и пробела, так как это считается обозначением начала подписи, которая не включается в ответы. Также, если в письме выделен какой-либо текст, то цитируется только он.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Я использую только &IMAP;, как избавиться от элемента Локальные папки в списке папок, или хотя бы сделать его постоянно свёрнутым?</para
+></question>
+  <answer>
+    <para
+>От них нельзя избавиться. Локальные папки используются в случае ошибки связи с сервером &IMAP;. Хотя используется только &IMAP;, &kmail; использует исходящие папки для отправки писем. Если скрыть все локальные папки, письма из папки «Исходящие», которые по какой-либо причине не могут быть отправлены, исправить не получится. Для сворачивания этого элемента вызовите пункт меню <menuchoice
+><guimenu
+>Настройка</guimenu
+><guimenuitem
+>Настроить &kmail;...</guimenuitem
+></menuchoice
+>, перейдите в раздел «Прочее» и укажите папку &IMAP; в качестве открываемой при запуске &kmail;.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как начать наблюдать за определённой дискуссией?</para
+></question>
+  <answer>
+    <para
+>Чтобы начать наблюдать за дискуссией, щёлкните по письму правой кнопкой мыши и в открывшемся контекстном меню выберите пункт <menuchoice
+><guimenu
+>Отметить дискуссию</guimenu
+> <guimenuitem
+>Наблюдать дискуссию</guimenuitem
+></menuchoice
+>.</para>
+    <para
+>С этого момента все письма в дискуссии, которые начинаются с этого письма, будут отмечены как <guilabel
+>Наблюдаемые</guilabel
+>.</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Как наблюдать за собственной веткой писем?</para
+></question>
+  <answer>
+    <para
+>Эта функция полезна, если пользователь подписан на список рассылки, например, kdepim-users@kde.org, и хочет фильтровать ветки, в которых участвует.</para>
+      <itemizedlist>
+        <listitem>
+          <para
+>Создайте фильтр, чтобы отметить все получаемые письма из списка рассылки как «Отслеживаемые».</para>
+          <para
+>Чтобы создать фильтр, сделайте следующее:</para>
+          <para
+><menuchoice
+><guimenu
+>Настройка</guimenu
+><guimenuitem
+>Настроить фильтры</guimenuitem
+></menuchoice
+></para>
+            <itemizedlist>
+              <listitem>
+	            <para
+>выберите <guilabel
+>Соответствует всем условиям</guilabel
+></para>
+              </listitem>
+              <listitem>
+	            <para
+>Добавьте условия: <itemizedlist>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>Отправитель</guimenu
+><guisubmenu
+>Содержит</guisubmenu
+><guimenuitem
+> </guimenuitem
+></menuchoice
+> <replaceable
+>yourmail@maildomain</replaceable
+> <footnote
+><para
+>Замените <replaceable
+>yourmail@maildomain</replaceable
+> своим адресом электронной почты.</para
+></footnote
+></para>
+	                </listitem>
+	                <listitem>
+	                  <para
+><menuchoice
+><guimenu
+>List-Id</guimenu
+><guimenuitem
+>Содержит</guimenuitem
+></menuchoice
+> <replaceable
+>listID</replaceable
+><footnote
+><para
+>Замените <replaceable
+>listID</replaceable
+> идентификатором списка рассылки (например, «kdepim-users.kde.org») или просто <quote
+>.</quote
+>, чтобы включить исходящие письма во все списки рассылки с <quote
+>.</quote
+> в идентификаторе (то есть, вообще во все).</para
+></footnote
+></para>
+	                </listitem>
+	              </itemizedlist>
+	            </para>
+              </listitem>
+              <listitem>
+	            <para
+>В настройке <guilabel
+>Действия фильтра</guilabel
+> выберите <menuchoice
+><guimenu
+>Отметить как</guimenu
+> <guimenuitem
+>Наблюдаемое</guimenuitem
+></menuchoice
+>.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+          <listitem>
+            <para
+>На вкладке <guilabel
+>Дополнительно</guilabel
+>.</para>
+              <itemizedlist>
+                <listitem>
+	              <para
+>Снимите флажок <guilabel
+>При совпадении этого фильтра остановить выполнение здесь</guilabel
+>, таким образом, будут выполняться другие фильтры, такие как сортировка входящих писем из списка рассылки по вложенным папкам.</para>
+                </listitem>
+                <listitem>
+	              <para
+>Поместите этот фильтр перед другими фильтрами, которые могут остановить професс фильтрации, либо просто поместите его первым в списке (чтобы изменить порядок фильтров, воспользуйтесь кнопками «Вверх» и «Вниз» под списком <guilabel
+>Доступные фильтры</guilabel
+>).</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+            <listitem>
+              <para
+>Создайте поисковой запрос для писем из списка рассылки</para>
+              <para
+>Перейдите в папку, в которой хранится список писем (например, Локальные папки/KDE-PIM-USERS) и нажмите клавишу <keycap
+>S</keycap
+> или воспользуйтесь пунктом меню <menuchoice
+><guimenu
+>Правка</guimenu
+><guimenuitem
+>Найти письма</guimenuitem
+></menuchoice
+>:</para>
+                <itemizedlist>
+                  <listitem>
+	                <para
+>Выберите <guilabel
+>Соответствует всем условиям</guilabel
+><footnote
+><para
+>Обратите внимание на функцию <guilabel
+>Включая вложенные папки</guilabel
+>.</para
+></footnote
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Добавьте условие: <menuchoice
+><guimenu
+>Статус письма</guimenu
+><guisubmenu
+>—</guisubmenu
+> <guimenuitem
+>Наблюдаемое</guimenuitem
+></menuchoice
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Задайте поиску информативное имя (<guilabel
+>Имя папки для поиска</guilabel
+>), например, <replaceable
+>KDE-PIM-USERS-Наблюдаемые</replaceable
+></para>
+                  </listitem>
+                  <listitem>
+	                <para
+>Произведите поиск. После его выполнения возможно закрыть окно.</para>
+                  </listitem>
+                </itemizedlist>
+              <para
+>Теперь после участия в ветке писем оно будет отображаться как <guilabel
+>Наблюдаемое</guilabel
+>.</para>
+        </listitem>
+      </itemizedlist>
+  </answer>
+</qandaentry>
+
+<!-- FAQ #45 -->
+<qandaentry>
+  <question
+><para
+>Как воспользоваться переводом писем?</para
+></question>
+  <answer>
+    <para
+>Чтобы узнать, как переводить текст в окне создания письма, перейдите в раздел <link linkend="using-the-translator"
+>«Использование встроенного переводчика»</link
+></para>
+    <para
+>В панели предварительного просмотра письма выделите текст для перевода, щёлкните по нему правой кнопкой мыши и в открывшемся контекстом меню выберите пункт <guimenuitem
+>Перевести...</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>).</para
+><para
+>&nbsp;</para>
+  </answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

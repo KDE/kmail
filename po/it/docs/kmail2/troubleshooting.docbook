@@ -40,17 +40,17 @@
 <sect1 id="introduction-to-akonadi">
 <title
 >Introduzione ad &akonadi;</title>
-
+    
   <para
 >&kmail; viene sviluppato attivamente dal 1997. Negli anni si sono presentati svariati problemi. Molti di questi sono stati risolti. Se ti interessano questi vecchi problemi, consulta la pagina su <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips"
 >domande frequenti, suggerimenti e consigli di KMail</ulink
 > sul wiki UserBase di &kde;. O visita la <ulink url="https://bugs.kde.org"
 >pagina del gestore dei bug di &kde;</ulink
 > per informarti sui problemi di un periodo vintage più recente.</para>
-
+  
   <para
 >Attualmente (2021), molti dei problemi che le persone incontrano con &kmail; riguardano il server &akonadi;. &akonadi; è un programma ausiliario che funziona da intermediario tra &kmail; (e tutte le altre applicazioni &PIM;) ed un demone di banche dati per uso generale (quasi sempre "mysqld"). Inoltre, semplifica la comunicazione inter-processo tra i vari componenti delle applicazioni di &PIM;. In base alla configurazione del tuo sistema, &akonadi; può essere avviato durante la fase di avvio o di accesso al sistema. O potrebbe non essere avviato finché non avvii un'applicazione di &PIM; (come &kmail;, &kaddressbook; o &kontact;).</para>
-
+  
   <para
 >Ci sono due programmi che permettono di interagire con il server &akonadi; direttamente: <code
 >akonadictl</code
@@ -60,7 +60,7 @@
   <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+  
     <sect2 id="intro-to-akonadictl">
     <title
 >Il programma di controllo Akonadictl</title>
@@ -84,14 +84,14 @@
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >La schermata precedente mostra uno dei comandi che si può usare con il programma <code
 >akonadictl</code
 >. Qui ci sono tutti i comandi riconosciuti da <code
 >akonadictl</code
 >.</para>
-
+    
     <para
 ><screen
 >~$ akonadictl start</screen
@@ -121,7 +121,7 @@
 >~$ akonadictl fsck</screen
 >Effettua una verifica di consistenza dei file. L'output di questo comando può essere molto prolisso, specialmente se hai aggiunto le tue cartelle a &kmail;. Usa questa versione del comando (mandando l'output a grep via pipe) per verificare che la banca dati di &akonadi; è in buona salute, senza generare tanto output non rilevante.</para>
     <para>
-
+        
 <screen
 >~ $ akonadictl fsck 2
 >&amp;1 | grep ^Found
@@ -144,7 +144,7 @@ Found 0 dirty items.</screen
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+    
     <sect2 id="intro-to-akonadiconsole">
     <title
 >Il programma Akonadiconsole</title>
@@ -168,12 +168,12 @@ Found 0 dirty items.</screen
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >Il programma <code
 >akonadiconsole</code
 > fornisce dodici diverse «finestre» nel funzionamento interno delle applicazioni di &PIM;. Di seguito un breve riepilogo delle viste disponibili.</para>
-
+    
     <variablelist>
       <varlistentry id="ak-console-agents">
         <term
@@ -185,7 +185,7 @@ Found 0 dirty items.</screen
 >Qui puoi vedere un elenco degli agenti utente (processori).</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-browser">
         <term
 >La scheda <guilabel
@@ -196,7 +196,7 @@ Found 0 dirty items.</screen
 >Questa scheda fornisce una panoramica delle varie collezioni di dati mantenute da &akonadi;, organizzate in forma di albero gerarchico che mostra quanti elementi sono presenti in ogni collezione.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-debugger">
         <term
 >La scheda <guilabel
@@ -207,7 +207,7 @@ Found 0 dirty items.</screen
 >Da qui è possibile abilitare e disabilitare il debug, e visualizzare il registro dei messaggi di debug.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-logging">
         <term
 >Scheda <guilabel
@@ -218,7 +218,7 @@ Found 0 dirty items.</screen
 >Questa scheda permette di vedere i messaggi generati da vari componenti di &akonadi;.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-db-browser">
         <term
 >La scheda <guilabel
@@ -229,7 +229,7 @@ Found 0 dirty items.</screen
 >Usa questa scheda per dare un'occhiata nella banca dati MySQL. Ci sono varie tabelle.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-db-console">
         <term
 >La scheda <guilabel
@@ -240,7 +240,7 @@ Found 0 dirty items.</screen
 >Da qui puoi interrogare la banca dati MySQL.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-query">
         <term
 >La scheda <guilabel
@@ -251,7 +251,7 @@ Found 0 dirty items.</screen
 >Usa questa scheda per attivare o disattivare il debug sulle query sulla banca dati. &kmail; interroga varie volte la banca dati MySQL in pochi secondi; i dati prodotti possono essere molto prolissi.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-tracker">
         <term
 >La scheda <guilabel
@@ -262,7 +262,7 @@ Found 0 dirty items.</screen
 >Le applicazioni &PIM; effettuano varie funzioni avviando delle «operazioni». Usa questa scheda per abilitare e disabilitare il tracciamento delle operazioni.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-scheduler">
         <term
 >La scheda <guilabel
@@ -275,7 +275,7 @@ Found 0 dirty items.</screen
 >.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-notif-monitor">
         <term
 >La scheda <guilabel
@@ -286,7 +286,7 @@ Found 0 dirty items.</screen
 >Usa questa scheda per controllare le notifiche inviate da varie risorse &akonadi;.</para
 ></listitem>
       </varlistentry>
-
+      
       <varlistentry id="ak-console-search">
         <term
 >La scheda <guilabel
@@ -297,7 +297,7 @@ Found 0 dirty items.</screen
 >Questa scheda fornisce una funzione di ricerca generica. Le ricerche possono essere limitate a Calendario, Contatto, Posta elettronica o Nota.</para
 ></listitem>
       </varlistentry>
-
+      
       <varlistentry id="ak-console-monitors">
         <term
 >La scheda <guilabel
@@ -309,9 +309,9 @@ Found 0 dirty items.</screen
 ></listitem>
       </varlistentry>
     </variablelist>
-
+    
     </sect2>
-
+    
 </sect1>
 
 <!-- <sect1 id="kmail2-doesnt-send-mail">
@@ -749,7 +749,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 
   <para
 >Ci sono almeno due possibili ragioni per questo. Ecco alcune soluzioni alternative.</para>
-
+  
   <variablelist>
     <varlistentry>
       <term
@@ -775,7 +775,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 >Se non funziona, prova l'espediente 2 (di seguito)</para>
       </listitem>
     </varlistentry>
-
+    
     <varlistentry>
       <term
 >Espediente 2</term>
@@ -870,7 +870,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 > o riavviare i vari oggetti come descritto nell'espediente 2 per <link linkend="unable-to-fetch-item-from-backend"
 >l'argomento precedente</link
 >.</para>
-
+    
   <para
 ><note
 ><para
@@ -879,12 +879,12 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 >, i vari componenti separati del motore di &kmail;. Puoi fermarli ed avviarli, metterli in modalità fuori linea, interrompere le azioni in corso &etc;. Può essere molto utile quando c'è una situazione di stallo.</para
 ></note
 ></para>
-
+    
   <para
 >Talvolta l'<guilabel
 >Agente di consegna della posta</guilabel
 > non funziona perché il demone dbus (un servizio di sistema per la comunicazione inter-processo) non funziona correttamente. La cosa migliore da fare in questo caso è semplicemente riavviare il sistema. Il demone dbus è uno dei primi processi avviati quando accetti al desktop &kde;, quindi non può essere facilmente fermato e riavviato. L'intero ambiente &plasma; dipende da questo.</para>
-
+    
 </sect1>
 
 <sect1 id="resource-conflict-error">
@@ -932,10 +932,10 @@ Found 0 dirty items.</screen
 >grep</code
 > per farlo. <screen
 >~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
 --defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/
---socket=/run/user/1000/akonadi/mysql.socket
+--datadir=/home/david/.local/share/akonadi/db_data/ 
+--socket=/run/user/1000/akonadi/mysql.socket 
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen
 ></para>
@@ -967,9 +967,9 @@ MariaDB [akonadi]> \q                                                  &lt;==
 Bye</screen
 > I tre comandi di mysql sono «use akonadi;», «delete from pimitemtable where remoteid is NULL;», and «\q». Dopo aver usato il comando «mysql --socket= ...» ti troverai in contatto con il server mysql (ovvero «MariaDB»), che fornisce un prompt &gt;. L'intera finestra di dialogo viene mostrata qui, per chiarezza. Le righe che contengono l'input degli utenti sono segnalate con &lt;== nella figura precedente.</para
 ></step>
-
+  
 </procedure>
-
+  
   <para
 >Quando riavvierai &kmail;, questi fastidiosi messaggi duplicati saranno spariti. Non sono altro che "spettri" causati dai puntatori NULL nelle tabelle della banca dati MySQL.</para>
 
@@ -978,7 +978,7 @@ Bye</screen
 <sect1 id="cleaning-aux-storage">
 <title
 >Mantenere pulite le aree di archiviazione ausiliarie di &kmail;</title>
-
+    
   <para
 >&kmail; memorizza i dati in vari posti nel sistema. La maggior parte di questi luoghi sono da qualche parte dentro la cartella <filename
 >~/.local/share/</filename
@@ -1010,7 +1010,7 @@ Akonadi.error.old  db_misc  file_lost+found  search_db
 > contengono le tabelle della banca dati mysql. Ci sono anche alcuni file di registro di mysql in  <filename
 >db_data</filename
 > che possono essere utile quando e se &akonadi; fa i capricci.</para>
-
+  
   <para
 >Le due cartelle <filename
 >file_db_data</filename
@@ -1050,7 +1050,7 @@ Found 0 items without RID.
 Found 750 dirty items.</screen
 > <!-- Can't indent here ... messes up the output.  -->
   </para>
-
+  
   <para
 >Il contrassegno «dirty» di un elemento nella tabella pimitemtable (una delle tabelle nella banca dati di &akonadi;) è usato per controllare alcuni aspetti dell'elaborazione asincrona. È impostato a vero quando ci sono operazioni in sospeso per un particolare messaggio di posta. La maggior parte delle volte il contrassegno «dirty» viene ripulito uno o due secondi dopo, quando l'operazione in sospeso termina.</para>
 
@@ -1067,7 +1067,7 @@ Found 750 dirty items.</screen
 >akonadictl stop</code
 > .</para
 ></step>
-
+    
     <step
 ><para
 >Effettua una copia di sicurezza di tutti i tuoi messaggi di posta. Potresti essere in grado di usare l'<ulink url="help:/pimdataexporter"
@@ -1078,7 +1078,7 @@ Found 750 dirty items.</screen
 >local-mail-save</filename
 >. Ma è più sicuro essere certi di avere una copia di sicurezza dei tuoi messaggi prima di procedere.</para
 ></step>
-
+      
     <step
 ><para
 >Dovresti anche effettuare una copia di sicurezza di ogni filtro che hai creato, e assicurarti di sapere come ripristinare ogni voce di <guilabel
@@ -1089,7 +1089,7 @@ Found 750 dirty items.</screen
 >cartella modello</guilabel
 > associata con le tue identità di &kmail;. Il prossimo passo sarà di rimuovere tutte le cartelle di posta personalizzate manualmente, e dovrai riparare alcune cose dopo che &akonadi; ricostruisce le tabelle della banca dati.</para
 ></step>
-
+      
     <step
 ><para
 >Adesso elimina tutte le cartelle all'interno della cartella <filename
@@ -1098,14 +1098,14 @@ Found 750 dirty items.</screen
 >local-mail-save</filename
 >. Quindi avvia il programma &kmail;. Questo forzerà &akonadi; ad eliminare tutte le voci delle tabelle della banca dati associate con i messaggi di posta elettronica. Vedrai brevemente i nomi delle vecchie cartelle, ma questa spariranno quando &akonadi; completerà l'eliminazione di tutti gli elementi «sporchi» (e anche di tutti quelli «puliti»).</para
 ></step>
-
+      
     <step
 ><para
 >Esci da &kmail; e interrompi il server &akonadi; come spiegato nel passo 1, quindi ripristina la copia di sicurezza dei tuoi messaggi (creata nel passo 2) nella cartella <filename
 >~/.local/share/local-mail/</filename
 >.</para
 ></step>
-
+      
     <step
 ><para
 >Avvia &kmail; di nuovo, e forza &akonadi; a ri-sincronizzare la banca dati. Il modo più veloce di gestire questo è usare <menuchoice
@@ -1122,14 +1122,14 @@ Found 750 dirty items.</screen
 ></menuchoice
 >; &akonadi; ri-sincronizzerà automaticamente tutte le cartelle quando recupera la posta. Ci vorranno vari minuti per completare questo processo, in base a quanti messaggi hai salvato nelle tue cartelle di &kmail;. Ma quando il processo è completo tutti gli elementi «dirty» saranno spariti.</para
 ></step>
-
+      
     <step
 ><para
 >Infine vorrai ripristinare le tue regole di filtraggio della posta salvate nel passo 3, e verificare che tutte le cartelle personalizzate (<guilabel
 >cartella di posta inviata</guilabel
 >, &etc;) per le tue identità sono impostate nel modo in cui vuoi. Dovrai also ripristinare ogni proprietà delle cartelle personalizzate che hai impostato, e avrai probabilmente un sacco di notifiche "Messaggio non letto" da gestire. Ma le tue tabelle della banca dati &akonadi; da vedere saranno nuovamente tutte pulite e splendenti!</para
 ></step>
-
+    
   </procedure>
 
 

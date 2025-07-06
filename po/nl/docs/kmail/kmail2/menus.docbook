@@ -1,0 +1,4712 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Michel.Boyer; <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+&Tom.Albers;&Rijk.van.Wel;&Sander.Koning;&Natalie.Koning;&Freek.de.Kruijf; 
+</authorgroup>
+
+<date
+>2021-03-31</date>
+<releaseinfo
+>5.14.2 (Applications 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Overzicht van de opdrachten en menu's</title>
+<para
+>Alle items in het menu, specifiek voor &kmail;, worden hieronder beschreven. Wanneer voor een bepaalde functie een sneltoets beschikbaar is, zal de standaard sneltoets vermeld worden.</para>
+
+<sect1 id="reader-menu-items">
+<title
+>Het venster de &kmail; voor lezen</title>
+
+<sect2 id="reader-file-menu">
+<title
+>Menu Bestand</title>
+<screenshot>
+<screeninfo
+>Het menu Bestand</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfile.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Bestand</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Bestand</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="file-new">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guisubmenu
+>Nieuw &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Hier kunt u kiezen om één van vier nieuwe items, als volgt, aan te maken:</para>
+
+    <variablelist>
+    <varlistentry id="reader-file-new-newmessage">
+      <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+><guisubmenu
+>Nieuw</guisubmenu
+> <guimenuitem
+>Nieuw bericht...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Een nieuw bericht opstellen. Dit zal een opstelvenster openen, waarin u een nieuw bericht kunt schrijven.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-file-new-message-from-template">
+      <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guisubmenu
+>Nieuw</guisubmenu
+> <guisubmenu
+>Bericht uit sjabloon &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Maakt een nieuw bericht aan uit een geselecteerd sjabloon. Bekijk <link linkend="new-compose-from-templates"
+>Uit sjablonen opstellen</link
+> voor extra informatie over aanmaken van sjablonen. Als u geen sjablonen hebt opgeslagen, zult u zien <menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Bericht uit sjabloon &gt;</guisubmenu
+><guimenuitem
+>(geen sjablonen)</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-add-folder">
+      <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guisubmenu
+>Nieuw</guisubmenu
+> <guimenuitem
+>Map toevoegen...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Maakt een nieuwe map aan. De opkomende dialoog zal u vragen om de nieuwe mapnaam te geven. De nieuwe map zal aangemaakt worden als een submap van de nu geselecteerde map.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-new-addressbook-contact">
+      <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guisubmenu
+>Nieuw</guisubmenu
+> <guimenuitem
+>Nieuwe contactpersoon  in adresboek...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Start de dialoog <ulink url="help:/kaddressbook/how-to-add-a-new-contact.html"
+>Nieuw contactpersoon</ulink
+>, waarmee u een nieuw item in het &kaddressbook; toevoegt.</para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-open">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bestand</guimenu
+><guimenuitem
+>Openen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent opgeslagen e-mailberichten (.mbox bestanden).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-open-recent">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Recent geopend</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont een lijst met recent geopende berichten. Alleen berichten die als .mbox bestanden zijn opgeslagen en vervolgens zijn geopend zullen in deze lijst verschijnen. Als zulke bestanden niet bestaan zal dit menu-item grijs zijn.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-save-as">
+  <term
+><menuchoice
+><shortcut
+> <keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Opslaan als...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Slaat het nu getoonde bericht op naar een <filename role="extension"
+>.mbox</filename
+>-bestand. Dit bestand bevat alle kopregels en bijlagen, in &MIME;-formaat. Als u het in een ander formaat wilt opslaan (&eg;, als een <filename role="extension"
+>.txt</filename
+>-bestand), deactiveer dan het vakje <guilabel
+>Automatisch bestandsnaamextensie (.mbox) selecteren</guilabel
+> en voeg de bestandsnaamextensie toe alvorens het bestand op te slaan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-export-pdf">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Naar PDF exporteren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Exporteert het nu getoonde bericht als een .pdf-bestand.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-import-messages">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten importeren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het programma <application
+>Hulpmiddel PIM importeren</application
+> (de assistent voor e-mail importeren). Met behulp van deze toepassing kunt u e-mail in &kmail; importeren vanuit diverse e-mailclients.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print-preview">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Afdrukvoorbeeld...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+><action
+>Toont hoe uw e-mailbericht er uitziet bij afgedrukken.</action
+></para>
+  <note
+><para
+>Dit zal alleen ingeschakeld zijn als er een printer is geconfigureerd, online is, en beschikbaar voor gebruik.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bestand</guimenu
+><guimenuitem
+>Afdrukken...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont het dialoogvenster waarin u opties kunt instellen om het huidige bericht af te drukken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-expire-all-folders">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Verlopen berichten verwijderen in alle mappen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verwijdert de oude berichten uit alle mappen. Verwijderen wordt gedaan volgens de regels in elke <link linkend="folders-properties-window"
+>Eigenschappendialoog</link
+> van de mappen (standaard zullen er nooit oude berichten verwijderd worden).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="reader-empty-all-trash-folders">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Alle prullenbakken legen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Dit item gebruiken om alle prullenbakken te legen, &ie;, de lokale prullenbak en alle prullenbakken die u op &IMAP;-servers hebt. Berichten in prullenbakken zullen permanent verwijderd worden en kunnen niet hersteld worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-work-offline">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Offline werken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Zet &kmail; in modus offline. Dit schakelt alle netwerktaken uit. Dit is nuttig bij werken met berichten zonder een netwerkverbinding. Indien geselecteerd wordt dit item <menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Online werken</guimenuitem
+></menuchoice
+>, die geselecteerd moet worden om terug te gaan naar online (vereist om e-mail te verzenden en te ontvangen).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-check-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bestand</guimenu
+><guimenuitem
+>Controleren op nieuwe berichten</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Controleert op nieuwe berichten in alle accounts.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-check-mail-in">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guisubmenu
+>Berichten ophalen &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Controleert op nieuwe berichten van een specifiek account; uw accounts staan in een lijst in een submenu.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten verzenden</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verzendt de berichten in uw postvak-uit. Berichten kunnen in uw postvak-uit terechtkomen door transmissiefouten of omdat u een bericht hebt opgesteld en geprobeerd te verzenden terwijl u offline was. Als er geen berichten in uw postvak-uit staan, zal dit menu-item grijs zijn.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages-via">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Berichten in de wachtrij verzenden via &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verstuurt de berichten in uw postvak-uit via een specifiek uitgaand account. Dit stelt u in staat te kiezen via welke server uw in de wachtrij staande berichten verstuurd moeten worden. Servers moeten geconfigureerd worden in het dialoogvenster &kmail; configureren, onder het tabblad <menuchoice
+><guiicon
+>Accounts</guiicon
+><guilabel
+>Verzenden</guilabel
+></menuchoice
+> om hier te verschijnen. Als er geen berichten in de map postvak-uit staan zal dit menu-item grijs zijn.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-delayed">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Vertraagde berichten...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start de dialoog <ulink url="help:/akonadi_sendlater_agent"
+>Agent van Akonadi later verzenden</ulink
+>. Alle berichten in de rij voor later verzenden door de optie van de opsteller <menuchoice
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Later verzenden</guimenuitem
+></menuchoice
+> zal in dit dialoogvenster verschijnen. U kunt ze wijzigen en / of verwijderen. Merk op dat vertraagde berichten opgeslagen worden in de map Concepten, niet in de map postvak-uit.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-followup">
+  <term
+><menuchoice
+><guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Berichten van herinneren aan vervolgactie...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start de dialoog <ulink url="help:/akonadi_followupreminder_agent"
+>Agent voor Akonadi herinneren aan vervolgactie...</ulink
+>. Elk bericht herinneren aan vervolgactie ("te-doens") aangemaakt via de functie van de opsteller <menuchoice
+> <guimenu
+>Opties</guimenu
+><guimenuitem
+>Herinnering vervolgactie aanmaken...</guimenuitem
+></menuchoice
+> zal in dit dialoogvenster verschijnen. U kunt deze berichten met het &RMB; contextmenu verwijderen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-quit">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bestand</guimenu
+> <guimenuitem
+>Afsluiten</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>&kmail; wordt verlaten.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title
+>Menu Bewerken</title>
+<screenshot>
+<screeninfo
+>Het menu Bewerken</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Bewerken</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Bewerken</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Als het menu-item dat u zoekt ontbreekt, kijk dan in <ulink url="help:/fundamentals/menus.html#menus-edit"
+>Menu Bewerken</ulink
+> van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
+
+<variablelist>
+
+<varlistentry id="reader-edit-copy-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Map kopiëren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Maakt een "Akonadi" aanwijzer aan naar de gehele inhoud van de nu geselecteerde map en kopieert die aanwijzer naar het klembord. Een volgende plakbewerking in een tekstverwerker zal eenvoudig de tekst waar de aanwijzer naar wijst plakken. Een volgende plakbewerking in een map van &kmail; (of in de bestandsbeheerder &dolphin;) zal een tweede kopie van de map en zijn inhoud aanmaken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Map knippen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Maakt een "Akonadi" aanwijzer aan naar de nu geselecteerde map en kopieert die aanwijzer naar het klembord. Een volgende plakbewerking in een tekstverwerker of in &dolphin; zal net zo werken als de vorige bewerking <guimenuitem
+>Map kopiëren</guimenuitem
+>. Een volgende plakbewerking in &kmail; zal de map en zijn inhoud verplaatsen naar een andere locatie (indien geplakt in een map anders dan de oorspronkelijke map).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-copy-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Bericht kopiëren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Maakt een "Akonadi" aanwijzer aan naar het/de nu geselecteerde bericht(en) en kopieert die aanwijzer naar het klembord. Een volgende plakbewerking in een tekstverwerker zal eenvoudig de tekst waar de aanwijzer naar wijst plakken. Een volgende plakbewerking in een map van &kmail; (of in de bestandsbeheerder &dolphin;) zal een kopie van het/de bericht(en), met koppen en alles, aanmaken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Bericht knippen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Maakt een "Akonadi" aanwijzer aan naar het/de nu geselecteerde bericht(en) en kopieert die aanwijzer naar het klembord. Een volgende plakbewerking in een tekstverwerker of in &dolphin; zal net zo werken als de voorgaande bewerking <guimenuitem
+>Bericht kopiëren</guimenuitem
+>. Een volgende plakbewerking in een map van &kmail; zal ofwel een tweede kopie van het/de bericht(en) (indien geplakt in oorspronkelijke map) of het/de bericht(en) naar een andere map verplaatsen (indien geplakt in een map anders dan de oorspronkelijke map).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-paste">
+  <term
+><menuchoice
+><shortcut
+>&Ctrl;<keycap
+>V</keycap
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Plakken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Plakt ofwel de gehele inhoud van een map of de inhoud van geselecteerde berichten, afhankelijk van de bewerking die vooraf ging aan het "plakken". Deze bewerking kan niet gebruikt worden om geselecteerde tekst in het leesvenster te plakken. Als er geen kopieer- / knipbewerking wacht zal deze optie grijs zijn.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-to-trash">
+  <term
+><menuchoice
+><shortcut
+>&Del;</shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Naar prullenbak verplaatsen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verplaatst de geselecteerde berichten naar de prullenbak. Als de geselecteerde berichten zich al in de prullenbak bevinden, zullen ze permanent verwijderd worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-thread-to-trash">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Del;</keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Discussie naar prullenbak verplaatsen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verplaatst de geselecteerde discussie naar de map prullenbak, &eg; een discussie op een e-maillijst.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-find-in-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Zoeken in bericht...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Zoekt in de huidige berichttekst naar een tekenreeks ingevoerd in het tekstvak <guilabel
+>Zoek:</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Alle berichten selecteren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert alle berichten in de huidige map.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-text">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Alle tekst selecteren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert de tekst van het huidige bericht.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title
+>Menu Beeld</title>
+<screenshot>
+<screeninfo
+>Het menu Beeld</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Beeld</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Beeld</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+>Berichtenlijst &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Dit submenu heeft de volgende opties om het uiterlijk van de berichtenlijst te wijzigen.</para>
+
+    <variablelist>
+    <varlistentry id="reader-view-messagelist-sorting">
+      <term
+><menuchoice
+><guisubmenu
+>Bezig met sorteren &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Bevat opties om uw sorteervolgorde als volgt aan te passen:</para>
+        <itemizedlist>
+        <listitem
+><para
+><guilabel
+>Sorteervolgorde van berichten</guilabel
+> heeft verschillende opties, waarvan de meesten zichzelf verklaren. De volgende opties zijn misschien niet onmiddellijk duidelijk en verdienen daarom een uitleg.</para>
+          <itemizedlist>
+            <listitem
+><para
+><guilabel
+>Door slimme verzender/ontvanger</guilabel
+> zal de ontvanger tonen wanneer u de map postvak-uit bekijkt en zal de verzender tonen wanneer u de folder postvak-in bekijkt.</para
+></listitem>
+
+            <listitem
+><para
+><guilabel
+>Op status actie-item</guilabel
+> en <guilabel
+>Op status belangrijk</guilabel
+>. De vlaggen moeten ingesteld zijn voordat ze gesorteerd kunnen worden. Kijk op <link linkend="reader-mark-messages"
+>Berichten markeren</link
+> voor meer informatie over markeren van uw berichten.</para
+></listitem>
+          </itemizedlist>
+        </listitem>
+
+        <listitem
+><para
+><guilabel
+>Richting van sortering van berichten</guilabel
+> en <guilabel
+>Richting van sortering van groepen</guilabel
+> biedt u respectievelijk de richting waarin uw berichten/groepen gesorteerd zullen worden, te wijzigen. Merk op dat de opties "Groep" alleen beschikbaar zijn wanneer berichten geaggregeerd zijn in groepen.</para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Map gebruikt deze sorteervolgorde altijd</guilabel
+> biedt u om verschillende instellingen voor sorteren per map te specificeren.</para
+></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-aggregation">
+      <term
+><menuchoice
+><guisubmenu
+>Aggregatie &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Laat u een aggregatie-optie selecteren. Kijk op het tabblad <link linkend="configure-appearance-message-list"
+>Uiterlijk van berichtenlijst</link
+> (onder <menuchoice
+> <guimenu
+>Instellingen</guimenu
+><guisubmenu
+>&kmail; configureren...</guisubmenu
+></menuchoice
+>) voor meer informatie over aggregatie.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-theme">
+      <term
+><menuchoice
+><guisubmenu
+>Thema &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Laat u een thema selecteren. Kijk op het tabblad <link linkend="configure-appearance-message-list"
+>Uiterlijk van berichtenlijst</link
+> (onder <menuchoice
+> <guimenu
+>Instellingen</guimenu
+><guisubmenu
+>&kmail; configureren...</guisubmenu
+></menuchoice
+>) voor meer informatie over thema's.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-create-new-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Nieuw tabblad aanmaken</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Maakt een nieuw tabblad aan op de werkbalk tabbladen. Dit tabblad zal naar de map wijzen die u bekijkt wanneer de optie is geselecteerd. Als de werkbalk tabbladen nog niet zichtbaar is, zal het selecteren van deze optie deze aanmaken. De werkbalk tabbladen kan handig zijn als u veel mappen hebt, maar slechts een paar ervan regelmatig gebruikt.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-activate-next-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&PgDn;</keycombo
+></shortcut
+> <guisubmenu
+>Volgende tabblad activeren</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Opent de map behorende bij het volgende tabblad op de werkblak tabbladen.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-activate-previous-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&PgUp;</keycombo
+></shortcut
+> <guisubmenu
+>Vorig tabblad activeren</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Opent de map behorende bij het vorige tabblad op de werkblak tabbladen.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-move-tab-left">
+      <term
+><menuchoice
+><guisubmenu
+>Tabblad naar links verplaatsen</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Ordent de tabbladen op de werkbalk tabbladen door het actieve tabblad naar links te verschuiven. Als dat tabblad al helemaal links zit, zal het verplaatst worden naar de eindpositie rechts.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-move-tab-right">
+      <term
+><menuchoice
+><guisubmenu
+>Tabblad naar rechts verplaatsen</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Ordent de tabbladen op de werkbalk tabbladen door het actieve tabblad naar rechts te verschuiven. Als dat tabblad al helemaal rechts zit, zal het verplaatst worden naar de eindpositie links.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-view-messagelist-close-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Tabblad sluiten</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+><action
+>Sluit het nu geselecteerde tabblad af.</action
+></para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-headers">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+>Berichtkoppen &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert de weergave van uw berichtkoppen. Kijk op <link linkend="using-header-options"
+>Opties voor berichtkoppen</link
+> voor details over de beschikbare weergaven van berichtkoppen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-attachments">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guimenuitem
+>Bijlagen &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verandert de manier waarop bijlagen getoond worden in het <guilabel
+>Berichtvoorbeeldvak</guilabel
+> (onafhankelijk van de boomstructuur van &MIME;). Kijk op <link linkend="using-attachment-view-options"
+>Opties voor bijlagen</link
+> voor details over weergave van bijlagen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>.</keycap
+></shortcut
+> <guimenu
+>Beeld</guimenu
+><guimenuitem
+>Discussie / groep uitvouwen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Vouwt de discussie van het huidige bericht uit, &ie; alle reacties op het huidige bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>,</keycap
+></shortcut
+> <guimenu
+>Beeld</guimenu
+><guimenuitem
+>Discussie / groep invouwen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Vouwt de discussie van het huidige bericht in, &ie;, de reacties op het huidige bericht zijn niet meer zichtbaar.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Beeld</guimenu
+><guimenuitem
+>Alle discussies uitvouwen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Vouwt alle discussies in de huidige map uit.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Beeld</guimenu
+><guimenuitem
+>Alle discussies invouwen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Vouwt alle discussies in de huidige map in.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-save-display-format">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Weergaveformaat opslaan</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Deze optie is kennelijk bedoeld om ergens iets op te slaan, maar het werkt nog niet op de juiste manier.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-restore-display-format">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Weergaveformaat herstellen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Deze optie is kennelijk bedoeld om te herstellen wat de eerdere optie "Opslaan" verondersteld wordt op te slaan, maar ook dat werkt nog niet op de juiste manier.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-disable-emoticon">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+> <guimenuitem
+>Emoticon uitschakelen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Deze optie selecteren om &kmail; te laten stoppen met transformeren van <literal
+>:-)</literal
+> in <inlinemediaobject
+><imageobject
+><imagedata fileref="smile.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-use-fixed-font">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>X</keycap
+></shortcut
+> <guimenu
+>Beeld</guimenu
+><guimenuitem
+>Vast lettertype gebruiken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Gebruikt een vaste breedte (Monospace) lettertype om het bericht in de huidige map te tonen. Het lettertype dat hiervoor gebruikt wordt, kan worden ingesteld in het tabblad <link linkend="configure-appearance-fonts"
+>Lettertypen</link
+> op de pagina <guilabel
+>Uiterlijk</guilabel
+> van de configuratiedialoog van &kmail;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-set-encoding">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+>Codering instellen &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Stelt de codering in die gebruikt moet worden in het berichtvoorbeeldvak. De standaardinstelling, <guilabel
+>Auto</guilabel
+>, zou in bijna alle gevallen moeten werken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-zoom">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+>Zoomen &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Deze optie laat u in- of uitzoomen op elk bericht getoond in het voorbeeldpaneel.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title
+>Menu Ga naar</title>
+<screenshot>
+<screeninfo
+>Het menu Ga naar</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readergo.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Ga naar</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Ga naar</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>J</keycap
+> </shortcut
+> <guimenu
+>Ga naar</guimenu
+><guimenuitem
+>Ga naar map...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont een dialoogvenster met een lijst van al uw mappen. Klik op de map die u wilt bekijken en die map zal geopend worden voor tonen in het voorbeeldpaneel.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>N</keycap
+> </shortcut
+> <guimenu
+>Ga naar</guimenu
+><guimenuitem
+>Volgend bericht</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert het volgende bericht uit de lijst met berichten. De sneltoets &Right; is hiervoor ook te gebruiken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>&plus;</keycap
+></shortcut
+> <guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Volgend ongelezen bericht</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert het volgende ongelezen bericht in de berichtenlijst. Indien er geen ongelezen berichten zijn na het huidige geselecteerde bericht, hangt het gedrag af van de waarde van de optie <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>P</keycap
+></shortcut
+> <guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Vorig bericht</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert het vorige bericht in het berichtenvenster.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>-</keycap
+></shortcut
+> <guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Vorig ongelezen bericht</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Selecteert het vorige ongelezen bericht in de berichtenlijst. Indien er geen ongelezen berichten zijn voor het huidige bericht, hangt het gedrag af van de waarde van de optie <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&plus;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Volgende ongelezen map</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Springt naar de eerstvolgende map in de lijst die ongelezen berichten bevat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&minus;</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Ga naar</guimenu
+> <guimenuitem
+>Vorige ongelezen map</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Springt naar de vorige map in de lijst die ongelezen berichten bevat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-text">
+  <term
+><menuchoice
+><shortcut
+>&Space;</shortcut
+> <guimenu
+>Ga naar</guimenu
+><guimenuitem
+>Volgende ongelezen tekst</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verschuift het bericht zodat het volgende ongelezen deel zichtbaar is. Indien er geen ongelezen deel is, wordt het volgende ongelezen bericht getoond.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title
+>Menu Map</title>
+<screenshot>
+<screeninfo
+>Het menu Map</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfolder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Map</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Map</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-folder-properties">
+  <term
+><guimenu
+>Mapeigenschappen</guimenu
+></term>
+  <listitem
+><para
+>Opent het dialoogvenster <link linkend="folders-properties-window"
+>Mapeigenschappen</link
+> waarmee de eigenschappen van de huidige map kunt wijzigen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-add-folder">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Map toevoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Vraagt u om een naam, maakt daarna een nieuwe map aan als een submap van de huidige map. Dit is exact gelijk aan <xref linkend="reader-add-folder"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Alle berichten als gelezen markeren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Markeert alle ongelezen berichten in de huidige map als gelezen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read-subfolder">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Alle berichten in deze map en alle submappen als gelezen markeren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Markeert alle ongelezen berichten in de huidige map (en alle submappen) als gelezen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+> </shortcut
+> <guimenu
+>Map</guimenu
+> <guimenuitem
+>Map bijwerken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Controleert of er nieuwe mail gearriveerd is in de huidige map.</para>
+  <note
+><para
+>Deze optie werkt alleen in &IMAP;-mappen.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Map</guimenu
+> <guimenuitem
+>Deze map en al zijn submappen bijwerken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Controleert of er nieuwe mail gearriveerd is in de nu geselecteerde map of in elk van zijn submappen.</para>
+  <note
+><para
+>Deze optie werkt alleen in &IMAP;-mappen.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Alle berichten naar de prullenbak</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verplaatst alle berichten in de geselecteerde map naar de prullenbak.</para>
+  <note
+><para
+>Deze optie is alleen beschikbaar als de huidige map geen prullenbak is. Als de nu geselecteerde map een prullenbakmap is, dan zult u in plaats daarvan <guilabel
+>Prullenbak legen</guilabel
+> zien. Deze optie selecteren zal de prullenbak legen door permanent de berichten in de map prullenbak te verwijderen.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-delete-folder">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Map verwijderen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verwijdert de geselecteerde map en alle inhoud. Er zal een waarschuwingsbericht worden getoond. Als de huidige map er een is van voorgedefinieerde  mappen van &kmail; (postvak-in, &etc;), zal dit menu-item grijs zijn.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-archive-folder">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Map archiveren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont een dialoogvenster voor het aanmaken van een archief van de nu geselecteerde map. Kijk in de sectie <xref linkend="folder-archive"/> van "&kmail; gebruiken" voor details.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>*</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Map</guimenu
+> <guimenuitem
+>Dubbele berichten verwijderen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Bekijkt of er berichten identiek aan elkaar zijn en verwijdert de duplicaten.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages-subfolder">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Verwijder dubbelen in deze map en al zijn submappen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Doorzoekt de map en zijn submappen, op dubbele berichten, en verwijdert de duplicaten.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-folder">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+> <guimenuitem
+>Filters op map toepassen &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Past geselecteerde filters (Alle, Spam of Geen spam) toe op de nu geselecteerde map. Bekijk <link linkend="filter-dialog-id"
+>Filterdialoog</link
+> voor meer informatie over filters.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-subfolders">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+> <guimenuitem
+>Filters op map en al zijn submappen toepassen &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Past geselecteerde filters (Alle, Spam of Geen spam) toe op de nu geselecteerde map en op zijn submappen. Bekijk <link linkend="filter-dialog-id"
+>Filterdialoog</link
+> voor meer informatie over filters.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-message-default-format">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Standaard formaat van bericht &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Hier kunt u één van drie opties selecteren: <guilabel
+>Voorkeur voor &HTML; boven Platte tekst</guilabel
+>, <guilabel
+>Voorkeur voor Platte tekst boven &HTML;</guilabel
+> of <guilabel
+>Globale instelling gebruiken</guilabel
+>.</para>
+  <warning
+><para
+>Voor de veiligheid bevelen wij aan om alleen <guilabel
+>&HTML; boven Platte tekst kiezen</guilabel
+> te selecteren voor mappen die berichten bevatten die nooit niet-vertrouwde berichten bevatten.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-load-external-references">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Externe verwijzingen laden</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Als u &HTML;-berichten hebt ingeschakeld (zie boven), dan hebt u ook de optie om afbeeldingen en andere hulpbronnen gekoppeld via het web automatisch te laden.</para>
+  <warning
+><para
+>Deze optie is alleen beschikbaar als <guilabel
+>Voorkeur voor &HTML; boven Platte tekst</guilabel
+> is geselecteerd. Als u deze optie aan zet en later beslist het te wijzigen <guimenuitem
+>Standaard berichtformaat</guimenuitem
+>, zorg er dan voor dat dit keuzevakje gewist is alvorens om te schakelen. Er is een bug in &kmail; -- als het keuzevakje van dit item niet gewist is en deze optie grijs is, zijn resultaten onvoorspelbaar.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mailing-list-management">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Beheer van e-maillijsten...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Dit opent de dialoog voor het beheer van e-maillijsten. Deze optie is alleen beschikbaar als de huidige map berichten bevat uit een e-maillijst. Kijk op <link linkend="folders-properties-mailinglist"
+>Dialoog voor e-maillijsten</link
+> voor meer informatie over e-maillijsten.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-assign-shortcut">
+  <term
+><menuchoice
+><guimenu
+>Map</guimenu
+><guimenuitem
+>Sneltoets toekennen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Dit laat u een sneltoets toekennen aan de nu geselecteerde map.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title
+>Menu Bericht</title>
+<screenshot>
+<screeninfo
+>Het menu Bericht</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Bericht</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Bericht</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Nieuw bericht...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het <link linkend="the-composer-window"
+>Opstelvenster</link
+>, zodat u een nieuw bericht kunt schrijven.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-new-message-to-mailing-list">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>N</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Nieuw bericht naar e-maillijst...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het opstelvenster zodat u een nieuw bericht kunt schrijven. Als de huidige map een e-maillijst bevat en het verzendadres is gedefinieerd, zal dat adres in het veld <guilabel
+>Aan:</guilabel
+> ingevoerd worden wanneer het opstelvenster wordt geopend. Als de huidige map geen e-maillijst bevat zal dit item grijs verschijnen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>R</keycap
+></shortcut
+> <guimenu
+>Bericht</guimenu
+> <guimenuitem
+>Beantwoorden...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het opstelvenster en voegt de geselecteerde tekst van het nu geselecteerde bericht in en zet in het veld <guilabel
+>Aan:</guilabel
+> het adres van de e-maillijst (indien u reageert op een bericht van een e-maillijst) of het adres van de afzender. Indien u een ander adres in het veld <guilabel
+>Aan:</guilabel
+> wilt gebruiken, dan moet u <link linkend="reader-message-reply-special"
+>Speciaal beantwoorden</link
+> gebruiken. Uw identiteit zal automatisch ingesteld worden op de identiteit waarnaar dit bericht was verzonden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-all">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>A</keycap
+> </shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Allen beantwoorden...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het opstelvenster met de inhoud van het nu geselecteerde bericht aangehaald en zet in het veld <guilabel
+>Aan:</guilabel
+> het adres van de e-maillijst (indien u antwoord op een bericht van een e-maillijst) of met het voorkeursadres van de afzender. Het veld <guilabel
+>Kopie naar (CC):</guilabel
+> wordt gevuld met alle andere ontvangers van het nu geselecteerde bericht, behalve uw eigen adres. Standaard wordt de identiteit gebruikt waarnaar het bericht verzonden is.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Speciaal antwoorden &gt;</guisubmenu
+><guimenuitem
+>Afzender beantwoorden...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Opent het opstelvenster met de inhoud van het geselecteerde bericht aangehaald en zet in het veld <guilabel
+>Aan:</guilabel
+> het voorkeursadres van de afzender. Standaard wordt de identiteit gebruikt waarnaar het bericht verzonden is.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>L</keycap
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Speciaal antwoorden &gt;</guisubmenu
+><guimenuitem
+>Beantwoorden aan e-maillijst...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Opent het opstelvenster met de inhoud van het geselecteerde bericht aangehaald en zet in het veld <guilabel
+>Aan:</guilabel
+> het adres van de e-maillijst. Indien u geen e-maillijstadres hebt ingegeven bij de eigenschappen van de huidige map en &kmail; kan het adres ook niet achterhalen aan de hand van het huidige bericht, dan zal het veld <guilabel
+>Aan:</guilabel
+> leeg gelaten worden. Standaard wordt de identiteit gebruikt waarnaar het bericht verzonden is.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Speciaal antwoorden &gt;</guisubmenu
+> <guimenuitem
+>Beantwoorden zonder aanhalingen...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Werkt identiek aan <guimenuitem
+>Beantwoorden...</guimenuitem
+>, behalve dat de tekst van het huidige bericht niet aangehaald zal worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Speciaal antwoorden &gt;</guisubmenu
+> <guimenuitem
+>Antwoorden met eigen sjabloon</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Werkt hetzelfde als <guimenuitem
+>Antwoorden...</guimenuitem
+> met een toegevoegde optie: u kunt een eigen sjabloon selecteren dat is geconfigureerd via <link linkend="configure-composer-custom-templates"
+>Eigen sjablonen</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Speciaal antwoorden &gt;</guisubmenu
+> <guimenuitem
+>Antwoorden aan allen met eigen sjabloon</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Werkt hetzelfde als <guimenuitem
+>Antwoorden aan allen...</guimenuitem
+> met een toegevoegde optie: u kunt een eigen sjabloon selecteren dat is geconfigureerd via <link linkend="configure-composer-custom-templates"
+>Eigen sjablonen</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-as-attachment">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Doorsturen &gt;</guisubmenu
+><guimenuitem
+>Als bijlage</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Stuur het bericht door naar een nieuwe ontvanger. Het bericht en zijn bijlagen worden een bijlage van het nieuwe bericht. De originele berichtkoppen zullen ingevoegd worden in het doorgestuurde bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-inline">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F</keycap
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Doorsturen &gt;</guisubmenu
+><guimenuitem
+>Inline</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>De berichttekst en enige belangrijke velden in de kop zullen gekopieerd worden naar het berichtveld van het nieuwe bericht met markering waar het doorgestuurde deel begint. Bijlagen zullen bijlagen worden van het nieuwe bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-redirect">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>E</keycap
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guisubmenu
+>Doorsturen &gt;</guisubmenu
+><guimenuitem
+>Omleiden</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Dit werkt zoals doorsturen, behalve dat het bericht hetzelfde blijft (zelfs het veld <guilabel
+>Van:</guilabel
+>). De gebruiker die het bericht heeft omgeleid wordt toegevoegd in speciale velden in de kop (<literal
+>Redirect-From</literal
+>, <literal
+>Redirect-Date</literal
+>, <literal
+>Redirect-To</literal
+>, &etc;).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Doorsturen &gt;</guisubmenu
+> <guimenuitem
+>Met eigen sjabloon</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Werkt hetzelfde als doorsturen met de optie om een eigen sjabloon te selecteren dat is geconfigureerd in <link linkend="configure-composer-custom-templates"
+>Eigen sjablonen</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-send-again">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Opnieuw verzenden...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een opstellervenster met het nu geselecteerde bericht zodat het opnieuw verzonden kan worden.</para>
+  <note
+><para
+>Dit menu-item is alleen beschikbaar voor berichten die u hebt verzonden of, preciezer, voor berichten die de status <guilabel
+>verzonden</guilabel
+> hebben. Als u een ander bericht opnieuw wilt verzenden, dubbelklik op het item in de berichtenlijst. Of bekijk het bericht en gebruik de sneltoets <keycap
+>T</keycap
+>. U kunt dit ook doen door een knop <guibutton
+>Als nieuw bewerken</guibutton
+> aan de werkbalk toe te voegen.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-edit-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>T</keycap
+></shortcut>
+<guimenu
+>Message</guimenu
+><guimenuitem
+>Edit Message</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Opens the selected message in a composer window.</para
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-message-mailing-list">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>E-maillijstnaam: &gt;</guimenuitem
+></menuchoice
+></term>
+
+  <listitem
+><para
+>Biedt verschillende opties voor berichten naar e-maillijsten.</para>
+  <note
+><para
+>De huidige werkmap moet geconfigureerd zijn als een e-maillijst om deze optie beschikbaar te maken. Bekijk <link linkend="folders-properties-mailinglist"
+>Mapeigenschappen voor e-maillijsten</link
+> voor informatie over het configureren van e-maillijsten.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  <para
+>De volgende opties zijn beschikbaar in mappen voor e-maillijsten:</para>
+
+  <itemizedlist>
+    <listitem
+><para
+><guimenuitem
+>Zendt nieuw bericht (e-mail)</guimenuitem
+> zal het veld <guilabel
+>Aan:</guilabel
+> al invullen met het adres geconfigureerd als "Naar lijst zenden".</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Hulp vragen (e-mail)</guimenuitem
+> vult het veld <guilabel
+>Aan:</guilabel
+> met het adres geconfigureerd in "Naar lijst zenden" en <literal
+>help</literal
+> in het veld <guilabel
+>Onderwerp:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Op lijst inschrijven(web)</guimenuitem
+> zal uw standaard webbrowser openen op de website voor inschrijven op de geconfigureerde e-maillijst.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Op lijst inschrijven (e-mail)</guimenuitem
+> vult het veld <guilabel
+>Aan:</guilabel
+> met het adres voor inschrijven en het woord <literal
+>subscribe</literal
+> in het veld <guilabel
+>Onderwerp:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Op lijst uitschrijven (web)</guimenuitem
+> zal uw standaard webbrowser openen op de website voor uitschrijven van de geconfigureerde e-maillijst.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Op lijst uitschrijven (e-mail)</guimenuitem
+> vult het veld <guilabel
+>Aan:</guilabel
+> met het adres voor inschrijven op de e-maillijst en het woord <literal
+>unsubscribe</literal
+> in het veld <guilabel
+>Onderwerp:</guilabel
+>.</para
+></listitem>
+  </itemizedlist>
+
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-copy-message-to">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Bericht kopiëren naar &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Kopieert de geselecteerde berichten naar een gespecificeerde map. U kunt kiezen uit recente mappen, lokale mappen of een specifieke map van een &IMAP;-account.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-move-message-to">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Bericht verplaatsen naar &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Hetzelfde als bericht kopiëren naar, behalve dat u de/het geselecteerde bericht(en) permanent naar de gekozen map verplaatst.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-messages">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Bericht markeren &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u de status van het geselecteerde bericht wijzigen naar een van de volgende waarden:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>Markering</entry
+><entry
+>Pictogram</entry
+><entry
+>Betekenis</entry
+></row
+></thead>
+
+    <tbody>
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenuitem
+>Markeer bericht als gelezen</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Het bericht is gelezen.</entry
+></row>
+
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+></shortcut
+> <guimenuitem
+>Markeer bericht als ongelezen</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Het bericht is nog niet gelezen.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Bericht markeren als belangrijk</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Deze markering wordt nooit automatisch door &kmail; aan een bericht toegekend. U kunt deze markering vrij gebruiken voor berichten die voor u belangrijk zijn.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markering als belangrijk verwijderen</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Verwijdert een eerder ingestelde markering voor belangrijk van het bericht.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Bericht markeren als actie-item</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Deze markering wordt nooit automatisch door &kmail; aan een bericht toegekend. U kunt deze markering gebruiken voor berichten die actie-items zijn &eg;, een takenlijst.</entry
+></row>
+
+    <row
+><entry
+><guimenuitem
+>Markering van actie-item verwijderen</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Verwijdert een eerder ingestelde markering voor actie-item van het bericht.</entry
+></row>
+    </tbody>
+
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-thread">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Discussie markeren</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u de status van alle berichten in een discussie als volgt te wijzigen:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>Markering</entry
+><entry
+>Pictogram</entry
+><entry
+>Betekenis</entry
+></row
+></thead>
+
+    <tbody>
+    <row>
+    <entry
+><guimenuitem
+>Discussie als gelezen markeren</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>De gehele discussie is gelezen.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Discussie als ongelezen markeren</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Deze discussie is nog niet gelezen.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Discussie markeren als belangrijk</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Deze markering wordt nooit automatisch door &kmail; aan een bericht toegekend. U kunt deze markering vrij gebruiken voor discussies die voor u belangrijk zijn.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markering voor belangrijke discussie verwijderen</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Verwijdert een eerder ingestelde markering voor belangrijk van de discussie.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Discussie markeren als taak</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Deze markering wordt nooit automatisch door &kmail; aan een discussie toegekend. U kunt deze markering gebruiken voor berichten die actie-items zijn &eg;, een takenlijst.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markering voor taak van discussie verwijderen</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Verwijdert een eerder ingestelde markering voor actie-item van de discussie.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Discussie bewaken</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Stelt de status bewaakte discussie in, die u gemakkelijk discussies laat volgen waarin u bent geïnteresseerd door status <guimenu
+>Bewaakt</guimenu
+> in het afrolvak in de balk Snelzoeken te selecteren. (Klik op het <inlinemediaobject
+><imageobject
+><imagedata fileref="view-filter.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> pictogram om de te filteren categorieën te tonen.)</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Discussie negeren</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Stelt u in staat om een gehele discussie te negeren.</entry
+></row>
+    </tbody>
+
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="message-create-filter">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guisubmenu
+>Filter aanmaken</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent de <link linkend="filter-dialog-id"
+>Filterdialoog</link
+> met een nieuw toegevoegd filter. Dit nieuwe filter is gebaseerd op velden uit het huidige bericht, afhankelijk van welk submenu-item u hebt geselecteerd.</para>
+  <simplelist>
+    <member
+>Filteren op onderwerp...</member>
+    <member
+>Filteren op Van...</member>
+    <member
+>Filteren op Aan...</member>
+    <member
+>Filteren op e-maillijst...(nu geselecteerd bericht moet behoren bij een e-maillijst om beschikbaar te zijn)</member>
+  </simplelist
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-apply-filter">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Filters toepassen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u <guimenuitem
+>Alle filters toepassen</guimenuitem
+>. Als u filtering van spam hebt ingesteld via <link linkend="the-anti-spam-wizard"
+>Anti-Spam assistent</link
+> dan zullen de opties <guimenuitem
+>Als spam classificeren</guimenuitem
+> en <guimenuitem
+>Als NIET-spam classificeren</guimenuitem
+> hier ook beschikbaar zijn.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-create-to-do-reminder">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Create To-do/Reminder</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; To-do/Reminder dialog</action
+> with options to add the selected email as a link, inline, or inline without attachments.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-add-note">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Add Note...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; Note dialog to add a note to the selected email.</action
+></para
+></listitem>
+</varlistentry
+>  These items have been moved to "Plugins", and can now only be invoked via the Toolbar. @dcb2021086 -->
+
+<varlistentry id="reader-message-viewsource">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>V</keycap
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Bron tonen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont het bericht, inclusief alle berichtkoppen in een nieuw venster als platte tekst. Dit kan handig zijn om de oorsprong van het bericht te achterhalen. </para>
+  <note
+><para
+>Bedenk dat het eenvoudig is om de berichtkop <literal
+>Van:</literal
+> te vervalsen. Via de berichtkoppen <literal
+>Received:</literal
+> is het echter wel mogelijk om te bekijken welke mailservers gebruikt zijn voor het versturen van het bericht.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-show-message-structure">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Berichtstructuur tonen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont de structuurweergave, een gebied onder het voorbeeldpaneel dat u elk &MIME;-component van een bericht apart laat zien. Dit item zal alleen aanwezig zijn als de <link linkend="configure-plugins-tools"
+>Expertplug-in</link
+> geactiveerd is.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-tools-menu">
+<title
+>Menu Hulpmiddelen</title>
+<screenshot>
+<screeninfo
+>Het menu Hulpmiddelen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Hulpmiddelen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Hulpmiddelen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+
+<varlistentry id="reader-tools-find-messages">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Berichten zoeken...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een zoekvenster waardoor u e-mailberichten aan de hand van bepaalde criteria kunt terugvinden, &eg; een bepaald onderwerp. Kijk op <link linkend="filter-criteria"
+>Filtercriteria</link
+> voor details over opties bij zoeken.</para>
+  <para
+>Uw zoekresultaten zullen getoond worden in het tekstgebied; u kunt ofwel <guibutton
+>Zoekmap openen</guibutton
+> gebruiken om een map te zien met de berichten die zijn gelokaliseerd of het gewenste bericht accentueren en <guibutton
+>Bericht openen</guibutton
+> gebruiken. Extra acties zijn beschikbaar door op de &RMB; te klikken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Adresboek</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het <ulink url="help:kaddressbook"
+>&kaddressbook;</ulink
+> op, het informatiebeheerprogramma voor e-mailadressen / persoonlijke contacten.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-certificate-manager">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Certificaatbeheer</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het certificatenbeheerprogramma van &kde; <ulink url="help:kleopatra"
+>&kleopatra;</ulink
+> op.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guisubmenu
+>Antwoorden "Afwezig" bewerken...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het dialoogvenster <guilabel
+>Antwoorden "Afwezig" configureren</guilabel
+>, zodat u een Afwezigheidsmelding kunt instellen.</para>
+  <note
+><para
+><guilabel
+>Antwoorden "Afwezig"</guilabel
+> moet ondersteund worden door de server. Dit gebeurt op basis van filtering die op de server zelf plaatsvindt. U dient deze functionaliteit te activeren via het tabblad <link linkend="receiving-mail"
+>Filter</link
+> (zie opties relevant voor een &kolab;-server) of configuratie van uw &IMAP;-account.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-tools-debug-sieve">
+<term
+><menuchoice>
+<guimenu
+>Tools</guimenu>
+<guisubmenu
+>Debug Sieve...</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Launch the <guilabel
+>Sieve Diagnostics</guilabel
+> dialog.</action
+> This is useful to debug sieve if you are having problems with it.</para>
+<note
+><para
+>You must have sieve support on your email server.</para
+></note
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-tools-filter-log-viewer">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guisubmenu
+>Filter Log Viewer...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het venster waarin u het filterlogbestand kunt bekijken. U vindt er enkele instellingen voor het loggen van het filterproces. In het logbestand vindt u informatie over de regels die gebruikt zijn tijdens het filteren, waarom bepaalde filterregels wel of niet gebruikt zijn en welke filterhandelingen uiteindelijk toegepast zijn op een specifiek bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-import-messages">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddellen</guimenu
+><guimenuitem
+>Importeren uit een andere e-mailclient...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Start het dialoogvenster van de Importassistent van Akonadi, die u assisteert bij het importeren van instellingen en e-mail van een brede variëteit van e-mailclients. Kijk op <ulink url="help:/importwizard"
+>Importassistent</ulink
+> voor details.</para>
+  <note
+><para
+>Sluit &kmail; alvorens gegevens te importeren. De assistent kan het configuratiebestand van &kmail; wijzigen en kan onvoorspelbare resultaten veroorzaken als u gegevens probeert te importeren terwijl &kmail; actief is.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-export-data">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Gegevens van &kmail; importeren/exporteren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het dialoogvenster van het exportprogramma voor instellingen van PIM zien, die u assisteert bij het exporteren van uw instellingen en e-mail of het herstellen ervan uit een reservekopie. Kijk op <ulink url="help://pimsettingsexporter"
+>Pim gegevensexporteur</ulink
+> voor details.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-activity-log">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Activiteiten loggen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start de Activiteitenlogger, die bepaalde activiteiten logt. Deze optie is alleen beschikbaar wanneer de plug-in <guilabel
+>Activiteiten loggen</guilabel
+> is geladen. Primair voor ontwikkelaars.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-spam-wizard">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Antispamassistent...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start de Anti-spamassistent, die u helpt bij het instellen van spamfiltering. Kijk op <link linkend="the-anti-spam-wizard"
+>Anti-spamassistent</link
+> voor details. Deze optie is alleen beschikbaar wanneer de plug-in <guilabel
+>Antispam</guilabel
+> is geladen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-virus-wizard">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Antivirus-assistent...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start de Anti-virusassistent, die u helpt bij de instellingen voor het scannen op virussen. Kijk op <link linkend="the-anti-virus-wizard"
+>Anti-virusassistent</link
+> voor details. Deze optie is alleen beschikbaar wanneer de plug-in <guilabel
+>Antivirus</guilabel
+> is geladen.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title
+>Menu Instellingen</title>
+<screenshot>
+<screeninfo
+>Het menu Instellingen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Instellingen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Instellingen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Als het menu-item dat u zoekt ontbreekt, kijk dan in <ulink url="help:/fundamentals/menus.html#menus-settings"
+>Menu Instellingen</ulink
+> van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
+<variablelist>
+
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Snelzoekbalk tonen</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Schakelt de Snelzoekbalk in, waarmee u snel naar bepaalde berichten kunt zoeken, die overeenkomen met een zoektekst.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-filters">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Filters instellen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het dialoogvenster <link linkend="filters"
+>Berichtenfilters</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-manage-sieve-scripts">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Sieve-scripts beheren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Als uw e-mailserver sieves (filtering aan de kant van de server) ondersteunt, dan kunt u hier deze scripts instellen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-add-account">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guisubmenu
+>Account toevoegen...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het dialoogvenster van de Accountassistent, die u assisteert bij het instellen van nieuwe of extra accounts. Kijk op <link linkend="account-wizard"
+>Accountassistent</link
+> voor details.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-automatic-archiving">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Automatische archivering instellen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start een dialoogvenster voor automatisch archiveren. Kijk op <ulink url="help:/akonadi_archivemail_agent"
+>Automatisch archiveren</ulink
+> voor details.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-settings-configure-send-later-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Send Later Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to modify and remove emails that have been sent using the send later feature.</action>
+ Please see <ulink url="help:/akonadi_sendlater_agent"
+>Send Later Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Folder Archive Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to configure accounts to use the folder archive agent feature with.</action>
+ Please see <ulink url="help:/akonadi_folderarchive_agent"
+>Folder Archive Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Notifications...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Opens a dialog that lets you configure what happens when new mail arrives,</action
+> &eg; play a sound, display a popup, &etc;</para
+></listitem>
+</varlistentry
+> These three options have been moved to the Plugins Configuration tab. @dcb2021086.  -->
+
+<varlistentry id="reader-settings-configure-kmail">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>&kmail; configureren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het dialoogvenster <link linkend="configure"
+>&kmail; configureren</link
+>. Er zijn honderden variabelen om mee te spelen. Veel plezier!</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="reader-help-menu">
+<title
+>Menu Help</title>
+<screenshot>
+<screeninfo
+>Het menu Help</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Help</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Help</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Dit is het <ulink url="help:/fundamentals/menus.html#menus-help"
+>Menu Help</ulink
+> van de &kde; basisbeginselen, met één extra item.</para>
+
+<variablelist>
+<varlistentry id="reader-help-intro">
+  <term
+><menuchoice
+><guimenu
+>Help</guimenu
+><guimenuitem
+>Inleiding in &kmail;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het welkomstscherm <link linkend="intro"
+>Introductie</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title
+>Het venster "Bericht opstellen" van &kmail;</title>
+
+<sect2 id="composer-file-menu">
+<title
+>Menu Bericht</title>
+<screenshot>
+<screeninfo
+>Het menu Bericht</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Bericht</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Bericht</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+> <guimenuitem
+>Nieuw bericht</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een nieuw opstelvenster zodat u een nieuw bericht kunt schrijven.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-message-new-main-window">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New Main Window</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Creates a new main window.</action
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-new-addressbook-contact">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New AddressBook Contact</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; New Contact Dialog</action
+> to add a new contact your addressbook.</para
+></listitem>
+</varlistentry
+> These options not available in 5.14.2 @dcb2021088. -->
+
+<varlistentry id="composer-message-send-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Return</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>E-mail verzenden</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verstuurt het bericht direct. Als u &SMTP; gebruikt voor het versturen van berichten en de &SMTP;-server is onbereikbaar, zal het bericht in postvak-uit blijven en krijgt u een foutmelding. Nadat de problemen met de verbinding zijn opgelost, kunt u de berichten in postvak-uit versturen met <link linkend="reader-send-queued-messages"
+><menuchoice
+><guimenu
+>Bestand</guimenu
+><guimenuitem
+>Berichten in de wachtrij verzenden</guimenuitem
+></menuchoice
+></link
+> (in het leesvenster).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-mail-via">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>E-mail verzenden via &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Stelt u in staat om te specificeren welke uitgaande e-mailserver gebruikt zal worden om het bericht te verzenden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Later verzenden...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont een dialoogvenster voor Later verzenden. Bekijk de documentatie op <ulink url="help:/akonadi_sendlater_agent"
+>Later verzenden</ulink
+> voor details.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later-via">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Later verzenden via &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Biedt u het specificeren welke uitgaande e-mailserver te gebruiken om het vertraagde bericht te verzenden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-file">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Opslaan als bestand</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Slaat het bericht op als een bestand. Er worden drie formaten ondersteund: Opgemaakte text (.html), platte tekst (.txt) en Open Document formaat (.odt).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-draft">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+> <guimenuitem
+>opslaan als concept</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Slaat het bericht op in de map <guilabel
+>concepten</guilabel
+> zodat u het later kunt afmaken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-template">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Opslaan als sjabloon</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u uw bericht als sjabloon opslaan. Kijk op <link linkend="new-compose-from-templates"
+>Opstellen vanuit sjablonen</link
+> voor meer informatie.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-text-file">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Tekstbestand invoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt een tekstbestand in in de tekst van het bericht, op de plek waar de cursor zich op dat moment bevindt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-recent-text-file">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Recent tekstbestand invoegen &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u uit een lijst met recent ingevoegde tekstbestanden kiezen en voegt dat bestand in in uw bericht. Selecteer <guimenuitem
+>Lijst wissen</guimenuitem
+> om de lijst te wissen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print-preview">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>Afdrukvoorbeeld</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een venster met een afdrukvoorbeeld en toont uw bericht, geformatteerd voor afdrukken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Afdrukken...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Formatteert en drukt het bericht dat u opgesteld hebt af.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-share">
+  <term
+><menuchoice
+><guimenu
+>Bericht</guimenu
+><guimenuitem
+>E-mailtekst delen... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u een tweede kopie van uw bericht ergens elders maken. Er worden vier opties geleverd: Nextcloud (een OSS toepassing voor delen van bestanden), Pastebin <ulink url="https://pastebin.com"
+>(een vrij beschikbare website)</ulink
+>, Bluetooth, en E-mail (opent een ander opstelvenster en voegt het huidige bericht toe aan dat nieuwe bericht als een bijlage). Deze optie is niet beschikbaar tenzij de plug-in <guilabel
+>Tekst delen</guilabel
+> actief is.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-close">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bericht</guimenu
+><guimenuitem
+>Sluiten</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Sluit het venster "Bericht opstellen".</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title
+>Menu Bewerken</title>
+<screenshot>
+<screeninfo
+>Het menu Bewerken</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Bewerken</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Bewerken</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Als het menu-item dat u zoekt ontbreekt, kijk dan in de sectie <ulink url="help:/fundamentals/menus.html#menus-edit"
+>Menu bewerken</ulink
+> van het handboek &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
+
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Als aanhaling plakken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Plakt de tekst uit het klembord en markeert het als een aanhaling (&ie;, elke regel wordt voorafgegaan door "&gt;" en een spatie).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-attachment">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Plakken als bijlage</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Plakt een bestand dat gekopieerd is naar het klembord (&eg;, door de bestandsbeheerder &dolphin; te gebruiken) als een bijlage.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-without-formatting">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>V</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Plakken zonder opmaak</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Plakt de tekst van het klembord zonder &HTML;-opmaak.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-clean-spaces">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Spaties comprimeren</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Deze optie veronderstelt het vervangen van naast elkaar liggende regelafbrekingen of spaties door enkele regelafbrekingen / spaties, maar in testen doet het kennelijk niets.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-add-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Tekens voor aanhaling toevoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt voor elke regel van de geselecteerde tekst het teken voor aanhaling in (standaard, &gt; en een space). Als er geen selectie is, wordt deze aan elke regel in het bericht toegevoegd.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-remove-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Aanhalingstekens verwijderen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verwijdert de meest linkse tekens voor aanhaling uit de geselecteerde tekst.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-email">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>E-mailadres invoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont een lijst met alle namen in uw adresboek, voegt daarna het gekozen e-mailadres toe op de cursorpositie (nadat u een selectie hebt gemaakt en op de knop <guibutton
+>OK</guibutton
+> hebt gedrukt). Deze optie is alleenbeschikbaar wanneer de plug-in <guimenuitem
+>E-mailadres invoegen</guimenuitem
+> is geladen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-nbsp">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+></shortcut
+> <guimenu
+>Bewerken</guimenu
+> <guimenuitem
+>Niet af te breken spatie invoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt een niet af te breken spatie in op de cursorpositie. Deze optie is alleen beschikbaar wanneer de plug-in <guimenuitem
+>Niet af te breken spatie invoegen</guimenuitem
+> is geladen.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-edit-uppercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Uppercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to uppercase.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-lowercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Lowercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to lowercase.</para
+></listitem>
+</varlistentry
+> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+
+<varlistentry id="composer-edit-insert-special-character">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Speciale tekens invoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u een speciaal teken invoegen op de cursorpositie. Een groot aantal Unicode tekens worden beschikbaar gemaakt. Deze optie wordt alleen geleverd als de plug-in <guimenuitem
+>Speciaal teken invoegen</guimenuitem
+> plugin is geactiveerd.</para>
+
+  <para
+>Dit menu-item is verplaatst naar het menu <guimenu
+>Invoegen</guimenu
+> in uitgave 5.17. Als u de plug-in hebt geactiveerd en dit item verschijnt niet wanneer &kmail; is herstart, controleer dan het menu <guimenu
+>Invoegen</guimenu
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-change-case">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+> Hoofd-/kleine letters wijzigen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Helpt u hoofd/kleine letters van de geselecteerde tekst wijzigen. Er zijn vier opties: <guilabel
+>Hoofdletters</guilabel
+> (maakt hoofdletters van de geselecteerde tekens), <guilabel
+>kleine letters</guilabel
+> (maakt de geselecteerde tekst allemaal kleine letters), <guilabel
+>Zin maken</guilabel
+> (maakt de eerste letter van de selectie een hoofdletter en van de rest kleine letters) en <guilabel
+>Hoofd/kleine letters omdraaien</guilabel
+> (converteert hoofdletters naar kleine letters en vice versa). Deze optie wordt alleen geleverd als de plug-in <guimenuitem
+>Hoofd/kleine letters</guimenuitem
+> is geactiveerd. Dit menu-item blijft grijs totdat een tekstfragment geselecteerd is voor wijziging.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-zoom">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Zoomen... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u in of uitzoomen op het bericht dat u opstelt. Dit is dezelfde functie die verschijnt als <menuchoice
+><guimenu
+>Beeld</guimenu
+><guisubmenu
+> Zoomen &gt;</guisubmenu
+></menuchoice
+> in het voorbeeldpaneel van een bericht. Deze optie is niet beschikbaar tenzij de plug-in <guimenuitem
+>Tekst zoomen</guimenuitem
+> is geladen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-variables">
+  <term
+><menuchoice
+><guimenu
+>Bewerken</guimenu
+><guimenuitem
+>Variabelen &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u de inhoud van een genaamd veld op de cursorpositie invoegen. U kunt kiezen uit <guilabel
+>Aan &gt;</guilabel
+>, <guilabel
+>Van &gt;</guilabel
+>, <guilabel
+>CC &gt;</guilabel
+>, <guilabel
+>Bijlage &gt;</guilabel
+>, <guilabel
+>Datum/tijd &gt;</guilabel
+> en <guilabel
+>Overig &gt;</guilabel
+> (die slechts één bijbehorend submenu-item heeft, "Onderwerp"). Er is een opmerkelijk probleempje: de datum/tijd getoond in de selecties van het submemu is gefixeerd op de tijd dat het opstelvenster was geopend, maar de waarde echt ingevoegd in een bericht is genomen uit de systeemklok.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title
+>Menu Beeld</title>
+<screenshot>
+<screeninfo
+>Het menu Beeld</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Beeld</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Beeld</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>In dit menu kunt u bepaalde berichtkoppen en een paar andere items in het opstelvenster omschakelen. Geselecteerde items zullen gemarkeerd worden (keuzevak ingekleurd) in het menu.</para>
+
+<para
+>Er zijn verschillende opties beschikbaar:</para>
+
+<itemizedlist>
+  <listitem>
+    <para
+><guimenuitem
+>Alle velden</guimenuitem
+>. Toont alle zes van de volgende velden.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Identiteit</guimenuitem
+>. Als u meer dan een identiteit hebt gedefinieerd, dit zal een afrolvak zijn.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Woordenboek</guimenuitem
+> gebruikt voor spellingcontrole. Als er meerdere woordenboeken zijn geïnstalleerd, zal dit een afrolvak zijn.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Map Verzonden</guimenuitem
+>. De knop <guilabel
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;</guilabel
+> die rechts verschijnt wanneer deze optie is geactiveerd opent een dialoog voor selectie van een map.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>E-mailtransportaccount</guimenuitem
+>. Als u meer dan één uitgaand account hebt aangemaakt, zal dit een afrolvak zijn.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Van</guimenuitem
+>. De inhoud van dit veld kan wisselen, afhankelijk van de identiteit die u gebruikt.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Onderwerp</guimenuitem
+>. Dit veld gebruiken om uw bericht beknopt te beschrijven.</para>
+  </listitem>
+</itemizedlist>
+
+<para
+>Het afrolvak <guilabel
+>Aan <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+> </inlinemediaobject
+></guilabel
+> is altijd aanwezig bovenaan het opstelvenster. Gebruik het om <guilabel
+>CC</guilabel
+>, <guilabel
+>BCC</guilabel
+> en <guilabel
+>Reply-To</guilabel
+> adressen naar behoefte te selecteren. Kijk op <link linkend="composer-headers"
+>Opstelkoppen</link
+> voor verdere details over berichtkoppen.</para>
+
+<para
+>&nbsp;</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guimenuitem
+>Vast lettertype gebruiken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Gebruikt een vast (proportioneel) lettertype om het huidige bericht te bewerken. Het specifieke lettertype dat hiervoor gebruikt wordt, kan worden ingesteld in het gedeelte <guilabel
+>Uiterlijk</guilabel
+> in het dialoogvenster "&kmail; configureren".</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-view-snippets">
+  <term
+><menuchoice
+><guimenu
+>Beeld</guimenu
+><guimenuitem
+>Tekstfragmenten</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont een kolom aan de rechterzijde van het opstelvenster dat u in staat stelt om tekstfragmenten te gebruiken en te maken. Kijk op <link linkend="setup-text-snippets"
+>Tekstfragmenten</link
+> voor meer informatie.</para>
+  <para
+>&nbsp;</para
+></listitem>
+  </varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title
+>Menu Opties</title>
+<screenshot>
+<screeninfo
+>Het menu Opties</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeroptions.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Opties</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Opties</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Dit menu stelt u in staat verschillende opties van het huidige bericht om te schakelen. Geselecteerde items zullen gemarkeerd (keuzevakje ingekleurd) worden in het menu.</para>
+
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guimenuitem
+>Urgent</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Stelt de prioriteit van het huidige bericht in op Urgent door twee kopregels in te voegen: "X-PRIORITY: 2 (High)" en "Priority: urgent". De e-mailclient van de ontvanger moet ondersteuning voor deze kopregels leveren; anders zullen ze geen effect hebben. &kmail; zelf heeft geen ondersteuning voor prioriteiten bij inkomende berichten (hoewel u <link linkend="reader-mark-messages"
+>berichten kunt markeren</link
+> als Belangrijk).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-mdn">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guimenuitem
+>Ontvangst- en gelezenbevestiging verzoeken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Als u deze optie selecteert zal &kmail; een kopregel Disposition-Notification-To: invoegen in het bericht, die vraagt om een e-mailmelding te sturen wanneer uw bericht is ontvangen en gelezen door de ontvanger. Deze functie moet ondersteund worden en ingeschakeld zijn door de e-mailclient van de ontvanger; anders zal het niet werken.</para>
+  <para
+>Zie <xref linkend="configure-security-reading-mdns"/> voor meer achter grondinformatie over de verschillende manieren om leesbevestigingen die &kmail; zelf verstuurt als antwoord op een ontvangen verzoek in een kopregel Disposition-Notification-To: aan te passen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-confirm">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guimenuitem
+>Afleverbevestiging verzoeken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Als u deze optie kiest zal &kmail; een kopregel Return-Receipt-To: in het bericht invoegen, die vraagt om een e-mailmelding te sturen wanneer uw bericht in ontvangen door uw e-mailserver en afgeleverd bij de ontvanger. Deze functie moet ondersteund worden door uw uitgaande e-mailserver; anders zal het niet werken.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-sign-message">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guisubmenu
+>Bericht ondertekenen</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Het bericht digitaal ondertekenen met <application
+>OpenPGP</application
+> of een X.509 certificaat. U kunt meer over deze optie lezen in het <link linkend="pgp"
+>hoofdstuk over OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encrypt-message">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guisubmenu
+>Bericht versleutelen</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Versleutelt het bericht met <application
+>OpenPGP</application
+> of een X.509 certificaat. U kunt meer over versleutelen lezen in het <link linkend="pgp"
+>hoofdstuk over OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-select-crypto-message-format">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guisubmenu
+>Cryptografisch berichtformaat &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u het cryptografische berichtformaat instellen om te gebruiken bij het digitaal ondertekenen en/of versleutelen van dit bericht. Kijk op <link linkend="cryptographic-message-formats"
+>Cryptografische berichtformaten</link
+> voor meer informatie.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-rich-text-editing">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guisubmenu
+>Bewerken van opgemaakte tekst</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Schakelt het schrijven van opgemaakte tekst (&ie;, &HTML;) in.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encoding">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guisubmenu
+>Codering &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Stelt de tekensetcodering van het bericht in. De gekozen codering wordt geïdentificeerd in een berichtkop van het uitgaande bericht. U kunt <guilabel
+>Automatisch</guilabel
+> in bijna alle gevallen gebruiken. &kmail; zal u melden wanneer een andere codering handmatig geselecteerd moet worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-wordwrap">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guimenuitem
+>Regelafbreking</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Zet de automatische regelafbreking aan of uit. Het kan nuttig zijn om dit uit te zetten als u een lange regel (&eg;, &URL;'s) wilt plakken die niet afgebroken dient te worden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-automatic-spellchecking">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Automatische spellingcontrole</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Schakelt automatische spellingcontrole aan of uit.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-followup">
+  <term
+><menuchoice
+><guimenu
+>Opties</guimenu
+><guimenuitem
+>Herinnering aan vervolgactie aanmaken...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Initieert een dialoog om een item "Te-doen" aan uw agenda toe te voegen. Dit item is grijs als de plug-in <ulink url="help:/akonadi_followupreminder_agent"
+>Agent voor herinnering aan vervolgactie</ulink
+> niet is geactiveerd.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title
+>Menu Bijlage</title>
+<screenshot>
+<screeninfo
+>Het menu Bijlage</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerattachmenu.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Bijlage</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Bijlage</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>In dit menu kunt u opties voor bijlagen instellen.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Ondertekening invoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt uw ondertekening (<quote
+>footer</quote
+>) toe aan het eind van het bericht. Kijk op <link linkend="configure-identity-signature"
+>Ondertekening met identiteit instellen</link
+> voor details over het instellen van uw ondertekening.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-prepend-signature">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Ondertekening voorvoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt uw ondertekening toe (<quote
+>kopregel</quote
+>) aan het begin van het bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-cursor-signature">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Ondertekening invoegen op de plaats van de cursor</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt uw ondertekening toe op de huidige cursorlocatie.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-public-key">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Publieke sleutel bijvoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het dialoogvenster <guilabel
+>Publieke OpenPGP-sleutel bijvoegen</guilabel
+>. Kijk op <link linkend="configure-identity-cryptography-openpgp-sign"
+>Cryptografische OpenPGP-ondertekening van identiteit instellen</link
+> voor details.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attach-my-public-key">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Mijn publieke sleutel bijvoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt uw publieke <application
+>GnuPG</application
+>-sleutel of uw X.509 certificaat, (&ie;, de publieke sleutel behorende bij uw huidige identiteit) toe aan uw bericht.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-file">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+> <guisubmenu
+>Bijlage &gt;</guisubmenu
+> <guimenuitem
+>Bestand bijvoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt een of meer bestanden bij het huidige bericht. Bijlagen worden standaard versleuteld (als het bericht versleuteld is). Kijk op <link linkend="cryptographic-message-formats"
+>Cryptografische berichtformaten</link
+> voor informatie over versleutelen en bijlagen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-directory">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guisubmenu
+>Bijlage &gt;</guisubmenu
+> <guimenuitem
+>Map bijvoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Maakt een ZIP-archief aan die de geselecteerd map bevat en voegt het archief toe aan dit bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-ownvcard">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guisubmenu
+>Bijlage &gt;</guisubmenu
+> <guimenuitem
+>Eigen vCard bijvoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Voegt uw vCard bij het huidige bericht.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-vcard">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guisubmenu
+>Bijlage &gt;</guisubmenu
+> <guimenuitem
+>vCard's bijvoegen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een dialoog met &kaddressbook; die u een of meer personen (&Ctrl; en klik-links) lat selecteren and dan vCard's voor deze geselecteerden bijvoegt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-clipboard">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guisubmenu
+>Bijlage &gt;</guisubmenu
+> <guimenuitem
+>Tekst uit klembord bijvoegen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Als het bovenste item, opgeslagen in het klembord, minstens twee bytes bevat, zal een dialoog voor een bestandsnaam geopend worden. &kmail; zal een bijlage aanmaken met de tekst uit het klembord en de bijlage de door u gekozen naam geven.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-remove-attachment">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Bijlage verwijderen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Verwijdert de geselecteerde bijlage (geselecteerd in het bijlagengedeelte onder het hoofd opstelvenster).</para>
+  <note
+><para
+>Dit menu-item en de volgende twee zullen grijs zijn totdat een bijlage is geselecteerd.</para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-save-attachment">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Bijlage opslaan als...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Slaat de geselecteerde bijlage in het bijlagengedeelte op in een bestand.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attachment-properties">
+  <term
+><menuchoice
+><guimenu
+>Bijlage</guimenu
+><guimenuitem
+>Bijlage-eigenschappen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Toont de <link linkend="attachments"
+>eigenschappen van de bijlage</link
+> die is geselecteerd in het bijlagenvenster. Het laat u ook de bijlage ondertekenen/versleutelen en enige andere eigenschappen (naam, beschrijving, &MIME;-type, &etc;) wijzigen.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title
+>Menu Hulpmiddelen</title>
+<screenshot>
+<screeninfo
+>Het menu Hulpmiddelen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Hulpmiddelen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Hulpmiddelen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Als het menu-item dat u zoekt ontbreekt, kijk dan in <ulink url="help:/fundamentals/menus.html#menus-tools"
+>Menu Hulpmiddelen</ulink
+> van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
+
+<variablelist>
+  <varlistentry id="composer-tools-select-recipients">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Ontvangers selecteren...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een dialoog <guilabel
+>Ontvanger selecteren</guilabel
+> met de inhoud van al uw adresboeken om uit te selecteren.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Adresboek...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Start het programma <ulink url="help:/kaddressbook/"
+>&kaddressbook;</ulink
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-save-distribution-list">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Distributielijst opslaan...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent een dialoog die u groepen met contactpersonen als een enkel genaamd item laat opslaan. Erg handig als u frequent hetzelfde bericht naar alle leden van, bijvoorbeeld, een club verzendt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-autocorrect">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Tekst automatisch corrigeren &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Corrigeert automatisch. U hebt twee opties: geselecteerde tekst scannen en automatisch corrigeren of <link linkend="configure-composer-autocorrection"
+>automatische correctie</link
+> op het gehele bericht toepassen. Dit menu-item zal niet aanwezig zijn tenzij de plug-in <guilabel
+>Automatische correctie</guilabel
+> is geladen en zal niet werken tenzij de functie automatisch corrigeren is ingeschakeld in de configuratiepagina van de opsteller.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-translator">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Vertaler</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het <link linkend="using-the-translator"
+>vertaalvenster</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-grammarcheck">
+  <term
+><menuchoice
+><guimenu
+>Hulpmiddelen</guimenu
+><guimenuitem
+>Grammatica controleren (taalhulpmiddel)</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Opent het venster grammatica controleren en doorzoekt uw bericht, met accentuering van gevonden fouten. Deze functie werkt niet continu de gescande tekst bij tijdens het typen; u moet uw bericht eerst opstellen en daarna grammatica controle aanroepen. Dit hulpmiddel is niet beschikbaar tenzij de plug-in <guilabel
+>Grammatica controle</guilabel
+> is geactiveerd. Net als de functie Vertaler, geeft Grammatica controle uw bericht door aan een server (standaard server: https://languagetool.org/api/v2) op het internet.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title
+>Menu Instellingen</title>
+<screenshot>
+<screeninfo
+>Het menu Instellingen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Instellingen</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Instellingen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Als het menu-item dat u zoekt ontbreekt, kijk dan in <ulink url="help:/fundamentals/menus.html#menus-settings"
+>Menu Instellingen</ulink
+> van &kde; basisbeginselen. De hier getoonde items zijn &kmail; specifiek.</para>
+
+<variablelist>
+<varlistentry id="composer-settings-toolbars">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Getoonde werkbalken &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Laat u bepalen welke werkbalken getoond worden. U kunt elke combinatie kiezen van drie opties: Hoofdwerkbalk (<guilabel
+>Verzenden</guilabel
+>, <guilabel
+>In wachtrij</guilabel
+>, <guilabel
+>Opgemaakte tekst</guilabel
+>, &etc;), HTML-werkbalk (<guilabel
+>Stijl</guilabel
+>, <guilabel
+>Lettertype / grootte</guilabel
+>, &etc;) en Tekstrichting (in geval u een rechts-naar-links script gebruikt). Merk op dat de HTML-werkbalk gemakkelijk aan en uit gezet kan worden via de knop <guibutton
+>Opgemaakte tekst</guibutton
+> op de hoofdwerkbalk.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-settings-spellcheck">
+  <term
+><menuchoice
+><guimenu
+>Instellingen</guimenu
+><guimenuitem
+>Spellingcontrole...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Biedt u het configureren van <ulink url="help:/sonnet/"
+>&sonnet;</ulink
+> de spellingcontrole van &kde;.</para
+><para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="composer-help-menu">
+<title
+>Menu Help</title>
+<screenshot>
+<screeninfo
+>Het menu Help</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Het menu Help</phrase>
+    </textobject>
+    <caption>
+      <para
+>Het menu Help</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Dit is exact gelijk aan het <ulink url="help:/fundamentals/menus.html#menus-help"
+>Menu Help</ulink
+> van het &kde; basisbeginselen. </para>
+</sect2>
+</sect1>
+
+</chapter>

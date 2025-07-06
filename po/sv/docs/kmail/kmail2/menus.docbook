@@ -1,0 +1,4733 @@
+<chapter id="menus">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Michel.Boyer; <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2021-03-31</date>
+<releaseinfo
+>5.14.2 (Program 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Kommando- och menyreferens</title>
+<para
+>Varje specifikt menyalternativ i &kmail; beskrivs nedan. Om det finns en snabbtangent som utför en menyfunktion, så listas den tillsammans med menyalternativet.</para>
+
+<sect1 id="reader-menu-items">
+<title
+>Läsfönstret i &kmail;</title>
+
+<sect2 id="reader-file-menu">
+<title
+>Menyn Arkiv</title>
+<screenshot>
+<screeninfo
+>Menyn Arkiv</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfile.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Arkiv</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Arkiv</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="file-new">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Här kan du välja att skapa ett av fyra nya objekt, enligt följande:</para>
+
+    <variablelist>
+    <varlistentry id="reader-file-new-newmessage">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt</guisubmenu
+> <guimenuitem
+>Nytt brev...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Skriv ett nytt brev. Det öppnar ett brevfönster, där du kan skriva det nya brevet.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-file-new-message-from-template">
+      <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt</guisubmenu
+><guisubmenu
+>Brev från mall &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Skapar ett nytt brev från en vald mall. Se <link linkend="new-compose-from-templates"
+>Skapa brev från mallar</link
+> för ytterligare information om att skapa mallar. Om du inte har sparat några mallar, ser du <menuchoice
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Brev från mall &gt;</guisubmenu
+> <guimenuitem
+>(inga mallar)</guimenuitem
+></menuchoice
+>.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-add-folder">
+      <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt</guisubmenu
+><guimenuitem
+>Lägg till korg...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Skapar en ny korg. Den påföljande dialogrutan ber dig ge den nya korgen ett namn. Den nya korgen skapas som en underkorg till korgen som för närvarande är markerad.</para
+></listitem>
+    </varlistentry>
+
+    <varlistentry id="reader-new-addressbook-contact">
+      <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt</guisubmenu
+><guimenuitem
+>Ny adressbokskontakt...</guimenuitem
+></menuchoice
+></term>
+      <listitem
+><para
+>Startar dialogrutan <ulink url="help:/kaddressbook/how-to-add-a-new-contact.html"
+>Ny kontakt</ulink
+>, vilket låter dig lägga till en ny post i Adressboken.</para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-open">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Öppna...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar sparade brev (.mbox-filer).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-open-recent">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Öppna senaste</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar en lista över senaste öppnade brev. Bara breven som har sparats som .mbox-filer och senare öppnats visas i listan. Om inga sådana filer finns, är menyalternativet inaktiverat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-save-as">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+> </shortcut
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Spara som...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Sparar brevet som för närvarande visas i en <filename role="extension"
+>.mbox</filename
+>-fil. Filen inkluderar alla huvuden och bilagor, på &MIME;-format. Om du vill spara med ett annat format (t.ex. som en <filename role="extension"
+>.txt</filename
+>-fil), avmarkera rutan <guilabel
+>Välj automatiskt filnamnsändelse (.mbox)</guilabel
+>, och lägg till filnamnsändelsen innan filen sparas.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-export-pdf">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Exportera till PDF...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Exporterar brevet som för närvarande visas som en .pdf-fil.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-import-messages">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Importera brev...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar programmet <application
+>Importverktyg för personlig information</application
+>. Programmet låter dig importera brev från flera andra e-postklienter till &kmail;.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print-preview">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Förhandsgranska utskrift...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+><action
+>Visar hur brevet kommer att se ut när det skrivs ut.</action
+></para>
+  <note
+><para
+>Det är bara aktiverat om en skrivare har ställts in, är uppkopplad, och tillgänglig för användning.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Skriv ut...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar en dialogruta, som låter dig skriva ut brevet som för närvarande visas.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-expire-all-folders">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Alla brev i alla korgar utgår</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Tar bort gamla brev från alla korgar. Borttagning sker enligt reglerna från varje korgs dialogruta med <link linkend="folders-properties-window"
+>egenskaper</link
+> (det normala är att inte alls ta bort gamla brev).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="reader-empty-all-trash-folders">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Töm alla papperskorgar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Använd det här för att tömma alla papperskorgar, dvs. den lokala papperskorgen och alla papperskorgar som du kan ha på &IMAP;-servrar. Brev i papperskorgar tas bort permanent, och kan inte återställas.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-work-offline">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Arbeta nerkopplad</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Ställer in &kmail; till nerkopplat läge. Det stänger av alla nätverksjobb. Det är användbart vid arbete med brev utan en nätverksanslutning. Alternativet ändras till <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Arbeta uppkopplad</guimenuitem
+></menuchoice
+>, vilket måste väljas för att gå tillbaka till uppkopplat läge (krävs för att skicka och ta emot).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-check-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Kontrollera post</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Tittar efter nya brev i alla dina konton.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-check-mail-in">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Titta efter nya brev i &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Titta efter nya brev för ett visst konto, där dina konton listas i en undermeny.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Skicka köade brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skickar breven som finns i utkorgen. Brev kan hamna i utkorgen på grund av överföringsfel, eller på grund av att du skrev och försökte skicka ett brev medan du är nerkopplad. Om det inte finns några brev i din utkorg, är menyalternativet inaktivt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-send-queued-messages-via">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Skicka köade brev via &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skickar breven som finns i utkorgen via ett specifikt utgående konto. Det gör det möjligt att välja vilken server som köade brev ska skickas från. Servrar måste vara inställda i dialogrutan Anpassa &kmail; under fliken <menuchoice
+><guiicon
+>Konton</guiicon
+><guilabel
+>Skickar</guilabel
+></menuchoice
+> för att visas här. Om det inte finns några brev i din utkorg, är menyalternativet inaktivt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-delayed">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Försenade brev...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar dialogrutan <ulink url="help:/akonadi_sendlater_agent"
+>Akonadi Skicka senare-modul</ulink
+>. Alla brev köade för senare leverans av brevskrivarens alternativ <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka senare</guimenuitem
+></menuchoice
+> visas i dialogrutan. Du kan ändra och/eller ta bort dem. Observerade att fördröjda brev lagras i korgen utkast, inte i utkorgen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-followup">
+  <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Brev med påminnelse om uppföljning...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar dialogrutan <ulink url="help:/akonadi_followupreminder_agent"
+>Akonadi Påminnelsemodul för uppföljning</ulink
+>. Alla påminnelsemeddelanden för uppföljning ("att göra") skapade via brevfönstrets funktion <menuchoice
+><guimenu
+>Alternativ</guimenu
+><guimenuitem
+>Skapa uppföljningspåminnelse...</guimenuitem
+></menuchoice
+> visas i dialogrutan. Du kan ta bort meddelandena med den sammanhangsberoende menyn som visas med ett högerklick.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-file-quit">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Q</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Avsluta</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Avslutar &kmail;.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-edit-menu">
+<title
+>Menyn Redigera</title>
+<screenshot>
+<screeninfo
+>Menyn Redigera</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Redigera</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Redigera</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Om menyalternativet du söker efter saknas, se <ulink url="help:/fundamentals/menus.html#menus-edit"
+>Menyn Redigera</ulink
+> i &kde;:s grunder. Alternativen som listas här är specifika för &kmail;.</para>
+
+<variablelist>
+    
+<varlistentry id="reader-edit-copy-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Kopiera korg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skapar en "Akonadi"-pekare till hela innehållet i korgen som för närvarande är markerad, och kopierar pekaren till klippbordet. En efterföljande inklistring i en texteditor klistrar helt enkelt in pekartexten. En efterföljande inklistring i en &kmail;-korg (eller i filhanteraren &dolphin;) skapar en andra kopia av korgen och dess innehåll.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Klipp ut korg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skapar en "Akonadi"-pekare till hela innehållet i korgen som för närvarande är markerad, och kopierar pekaren till klippbordet. En efterföljande "inklistring" i en texteditor eller i &dolphin; beter sig exakt som den föregående åtgärden <guimenuitem
+>Kopiera korg</guimenuitem
+>. En efterföljande inklistring i &kmail; flyttar korgen och dess innehåll till en annan plats (om den klistras in i en annan korg än originalkorgen).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-copy-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>C</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Kopiera brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skapar en "Akonadi"-pekare till breven som för närvarande är markerade, och kopierar pekaren till klippbordet. En efterföljande inklistring i en texteditor klistrar helt enkelt in pekartexten. En efterföljande inklistring i en &kmail;-korg (eller i filhanteraren &dolphin;) skapar en kopia av breven, huvuden och allt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-cut-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>X</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Klipp ut brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skapar en "Akonadi"-pekare till breven som för närvarande är markerade, och kopierar pekaren till klippbordet. En efterföljande "inklistring" i en texteditor eller i &dolphin; beter sig exakt som den föregående åtgärden <guimenuitem
+>Kopiera brev</guimenuitem
+>. En efterföljande inklistring i &kmail; skapar antingen en andra kopia av breven (om de klistras in i originalkorgen) eller flyttar breven till en annan korg (om de klistras in i någon annan korg än originalkorgen).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-paste">
+  <term
+><menuchoice
+><shortcut
+>&Ctrl;<keycap
+>V</keycap
+> </shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Klistra in</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Klistrar antingen in hela korgens innehåll, eller innehållet av markerade brev, beroende på åtgärden som föregick "inklistringen". Åtgärden kan inte användas för att klistra in markerad text inne i brevläsningsfönstret. Om ingen kopiering eller inklistring pågår, är alternativet inaktiverat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-to-trash">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>Delete</keycap
+></shortcut
+> <guimenu
+>Redigera</guimenu
+> <guimenuitem
+>Flytta till papperskorg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Flyttar de markerade breven till papperskorgen. Om de markerade breven redan finns i papperskorgen, tas de bort permanent.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-move-thread-to-trash">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Delete</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Flytta tråd till papperskorg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Flyttar den markerade tråden till papperskorgen, t.ex. en konversation i en sändlista.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-find-in-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Hitta i brevet...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Söker i den nuvarande brevtexten efter en sträng som skrivs in i textrutan <guilabel
+>Sök:</guilabel
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Markera alla brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Väljer alla brev i den nuvarande korgen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-edit-select-all-text">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Markera all text</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Väljer texten i brevet som visas för närvarande.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+</sect2>
+
+
+<sect2 id="reader-view-menu">
+<title
+>Menyn Visa</title>
+<screenshot>
+<screeninfo
+>Menyn Visa</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Visa</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Visa</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-view-message-list">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Brevlista &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Undermenyn har följande alternativ för att ändra brevlistans utseende.</para>
+    
+    <variablelist>
+    <varlistentry id="reader-view-messagelist-sorting">
+      <term
+><menuchoice
+><guisubmenu
+>Sortering &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Innehåller alternativ för att anpassa sorteringsordning enligt följande:</para>
+        <itemizedlist>
+        <listitem
+><para
+><guilabel
+>Sorteringsordning för brev</guilabel
+> har flera alternativ, där de flesta är självförklarliga. Följande alternativ är kanske inte omedelbart uppenbara, och förtjänar en förklaring.</para>
+          <itemizedlist>
+            <listitem
+><para
+><guilabel
+>Enligt smart avsändare/mottagare</guilabel
+> visar mottagaren när du tittar i korgen skickat, och visar avsändaren när du tittar i inkorgen.</para
+></listitem>
+    
+            <listitem
+><para
+><guilabel
+>Enligt åtgärdsstatus</guilabel
+> och <guilabel
+>Enligt viktighetsstatus</guilabel
+>. Flaggorna måste anges innan de kan sorteras. Se <link linkend="reader-mark-messages"
+>Markera brev</link
+> för mer information om hur man markerar brev.</para
+></listitem>
+          </itemizedlist>
+        </listitem>
+        
+        <listitem
+><para
+><guilabel
+>Sorteringsriktning för brev</guilabel
+> och <guilabel
+>Sorteringsriktning för grupp</guilabel
+> låter dig ändra riktningen som brev och grupper sorteras. Observera att "gruppalternativ" bara är tillgängliga när brev sammanställs i grupper.</para
+></listitem>
+        <listitem
+><para
+><guilabel
+>Korgen använder alltid sorteringsordningen</guilabel
+> låter dig ange olika sorteringsinställningarna för varje korg.</para
+></listitem>
+        </itemizedlist>
+      </listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-aggregation">
+      <term
+><menuchoice
+><guisubmenu
+>Sammanställning &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Låter dig välja ett sammanställningsalternativ. Se fliken <link linkend="configure-appearance-message-list"
+>Brevlistans utseende</link
+> (under <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;...</guisubmenu
+></menuchoice
+>) för mer information om sammanställning.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-theme">
+      <term
+><menuchoice
+><guisubmenu
+>Tema &gt;</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Låter dig välja ett tema. Se fliken <link linkend="configure-appearance-message-list"
+>Brevlistans utseende</link
+> (under <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;...</guisubmenu
+></menuchoice
+>) för mer information om teman.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-create-new-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Skapa ny flik</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Skapar en ny flik på flikverktygsraden. Fliken pekar på korgen som du visar när alternativet väljes. Om flikverktygsraden inte ännu är synlig, skapas den när alternativet väljes. Flikverktygsraden är praktisk om du har många korgar, men bara några få av dem används regelbundet.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-activate-next-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Page Down</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Aktivera ny flik</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Öppnar korgen associerad med nästa flik på flikverktygsraden.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-activate-previous-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Page Up</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Aktivera föregående flik</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Öppnar korgen associerad med föregående flik på flikverktygsraden.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-move-tab-left">
+      <term
+><menuchoice
+><guisubmenu
+>Flytta flik åt vänster</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Ordnar om flikarna på flikverktygsraden genom att flytta den aktiva fliken åt vänster. Om fliken redan är längst åt vänster, flyttas den till slutpositionen på höger sida.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-move-tab-right">
+      <term
+><menuchoice
+><guisubmenu
+>Flytta flik åt höger</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+>Ordnar om flikarna på flikverktygsraden genom att flytta den aktiva fliken åt höger. Om fliken redan är längst åt höger, flyttas den till slutpositionen på vänster sida.</para
+></listitem>
+    </varlistentry>
+    
+    <varlistentry id="reader-view-messagelist-close-tab">
+      <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guisubmenu
+>Stäng flik</guisubmenu
+></menuchoice
+></term>
+      <listitem
+><para
+><action
+>Stänger fliken som för närvarande är vald.</action
+></para
+></listitem>
+    </varlistentry>
+    </variablelist>
+    <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-headers">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Huvuden &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Välj visning av huvuden. Se <link linkend="using-header-options"
+>Alternativ för huvuden</link
+> för detaljerad information om tillgänglig visning av huvuden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-attachments">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Bilagor &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Ändrar sättet som bilagor visas i <guilabel
+>Brevgranskningsrutan</guilabel
+> (oberoende av &MIME;-trädet). Se <link linkend="using-attachment-view-options"
+>Alternativ för bilagor</link
+> för detaljerad information om visning av bilagor.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>.</keycap
+></shortcut
+> <guimenu
+>Visa</guimenu
+><guimenuitem
+>Expandera tråd / grupp</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar tråden för det nuvarande brevet, dvs. alla brev som är svar på det nuvarande brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-thread-or-group">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>,</keycap
+></shortcut
+> <guimenu
+>Visa</guimenu
+><guimenuitem
+>Komprimera tråd / grupp</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Döljer tråden för det nuvarande brevet, dvs. döljer alla brev som är svar på det nuvarande brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-expand-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>.</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visa</guimenu
+><guimenuitem
+>Expandera alla trådar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Expanderar alla trådar i den nuvarande korgen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-collapse-all-threads">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>,</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Visa</guimenu
+><guimenuitem
+>Komprimera alla trådar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Komprimerar alla trådar i den nuvarande korgen.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-save-display-format">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Spara visningsformat</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Alternativet är uppenbarligen avsedd att spara någonting någonstans, men det fungerar inte korrekt ännu.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-restore-display-format">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Återställ visningsformat</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Alternativet är uppenbarligen avsedd att återställa det som det föregående "Spara" alternativet var avsett att spara, men det fungerar inte korrekt ännu heller.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-disable-emoticon">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Inaktivera smilis</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Välj alternativet för att stoppa &kmail; från att omvandla <literal
+>:-)</literal
+> till <inlinemediaobject
+><imageobject
+><imagedata fileref="smile.png" format="PNG"/></imageobject
+> </inlinemediaobject
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-use-fixed-font">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>X</keycap
+></shortcut
+> <guimenu
+>Visa</guimenu
+><guimenuitem
+>Använd teckensnitt med fast breddsteg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Använder ett teckensnitt med fast breddsteg för att visa brev i den aktuella korgen. Teckensnittet som ska användas kan ställas in under fliken <link linkend="configure-appearance-fonts"
+>Teckensnitt</link
+> på sidan <guilabel
+>Utseende</guilabel
+> i &kmail;s inställningsdialogruta.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-set-encoding">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Ange kodning &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig välja teckenkodningen som ska användas i brevrutan. Normalvärdet <guilabel
+>Auto</guilabel
+>, bör fungera i nästan alla fall.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-view-zoom">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Zooma &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Alternativet låter dig zooma in eller ut för varje brev som visas i förhandsgranskningsrutan.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="reader-go-menu">
+<title
+>Menyn Gå</title>
+<screenshot>
+<screeninfo
+>Menyn Gå</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readergo.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Gå</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Gå</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-go-jump-to-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>J</keycap
+></shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Gå till korg...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar en dialogruta med en lista över alla korgar. Klicka på korgen som du vill se, så visas den i brevrutan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>N</keycap
+></shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Nästa brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Väljer nästa brev i brevlistan. Snabbtangenten <keycap
+>Högerpil</keycap
+> utför också åtgärden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-message">
+  <term
+><menuchoice
+><shortcut
+> <keycap
+>&plus;</keycap
+></shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Nästa olästa brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Väljer nästa olästa brev i brevlistan. Om det inte finns några olästa brev under brevet som för närvarande är valt, beror beteendet på värdet hos alternativet <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-message">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>P</keycap
+></shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Föregående brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Väljer föregående brev i brevlistan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>&minus;</keycap
+></shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Föregående olästa brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Väljer föregående olästa brev i brevlistan. Om det inte finns något oläst brev ovanför brevet som för närvarande är valt, beror beteendet på värdet hos alternativet <xref linkend="configure-misc-folders-go-unread"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&plus;</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Nästa olästa korg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Går till nästa korg med olästa brev.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-previous-unread-folder">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Alt;<keycap
+>&minus;</keycap
+></keycombo
+> </shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Föregående olästa korg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Går till föregående korg med olästa brev.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-go-next-unread-text">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>Mellanslag</keycap
+></shortcut
+> <guimenu
+>Gå</guimenu
+><guimenuitem
+>Nästa olästa text</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Rullar neråt om du inte ännu nått brevets botten, hoppar annars till nästa olästa brev.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-folder-menu">
+<title
+>Menyn Korg</title>
+<screenshot>
+<screeninfo
+>Menyn Korg</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerfolder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Korg</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Korg</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-folder-properties">
+  <term
+><guimenu
+>Korgegenskaper</guimenu
+></term>
+  <listitem
+><para
+>Öppnar dialogrutan <link linkend="folders-properties-window"
+>Korgegenskaper</link
+>, som låter dig ändra den aktuella korgens egenskaper.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-add-folder">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Lägg till korg...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Frågar dig om ett namn, och skapar sedan en ny korg som en underkorg till den nuvarande korgen. Det är exakt samma sak som <xref linkend="reader-add-folder"/>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Markera alla brev som lästa</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Ändrar status på alla nya och olästa brev i den nuvarande korgen till lästa.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mark-all-messages-as-read-subfolder">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Markera alla brev som lästa i korgen och dess underkorgar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Ändrar status på alla olästa brev i den nuvarande korgen (och dess underkorgar) till "lästa".</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F5</keycap
+></shortcut
+> <guimenu
+>Korg</guimenu
+><guimenuitem
+>Uppdatera korg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Kontrollerar om nya brev har inkommit till korgen som för närvarande är vald.</para>
+  <note
+><para
+>Alternativet fungerar bara i &IMAP;-korgar.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-update-folder-and-all-its-subfolders">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>F5</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Uppdatera korgen och alla dess underkorgar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Kontrollerar om nya brev har inkommit till korgen som för närvarande är vald, eller i någon av dess underkorgar.</para>
+  <note
+><para
+>Alternativet fungerar bara i &IMAP;-korgar.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-move-all-messages-to-trash">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Flytta alla brev till papperskorgen</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Flyttar alla breven i den markerade korgen till papperskorgen.</para>
+  <note
+><para
+>Det är bara tillgängligt om korgen som för närvarande är markerad inte är en papperskorg. Om korgen som för närvarande är markerad är en papperskorg, visas <guilabel
+>Töm papperskorgen</guilabel
+> istället. Väljes det alternativet töms papperskorgen genom att permanent ta bort breven i papperskorgen.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-delete-folder">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Ta bort korg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Tar bort den markerade korgen och dess hela innehåll. Ett varningsmeddelande visas. Om det aktuella korgen är en av &kmail;s fördefinierade korgar (inkorg, etc.), är menyalternativet inaktiverat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-archive-folder">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Arkivera korg...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar en dialogruta som låter dig skapa ett arkiv av korgen som för närvarande är markerat. Se avsnittet <xref linkend="folder-archive"/> i "Använda &kmail;" för detaljerad information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>*</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Korg</guimenu
+><guimenuitem
+>Ta bort duplicerade brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Söker efter duplicerade brev i korgen och tar bort dem.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-remove-duplicate-messages-subfolder">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+> <guimenuitem
+>Ta bort dubbletter i korgen och alla dess underkorgar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Söker efter duplicerade brev i korgen, och dess underkorgar, och tar sedan bort dubbletterna.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-folder">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Filtrera korg &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Använder alla inställda filter på korgen som för närvarande är markerad. Se <link linkend="filter-dialog-id"
+>Filterdialogrutan</link
+> för mer information om filter.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-apply-filters-on-subfolders">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Filtrera korg och alla dess underkorgar &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Använder inställda filter (alla, skräppost, eller inte skräppost) på korgen som för närvarande är markerad, och dess underkorgar. Se <link linkend="filter-dialog-id"
+>Filterdialogrutan</link
+> för mer information om filter.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-message-default-format">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Standardbrevformat</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Här kan du välja ett av tre alternativ: <guilabel
+>Föredra &HTML; före vanlig text</guilabel
+>, <guilabel
+>Föredra vanlig text före &HTML;</guilabel
+>, eller <guilabel
+>Använda globala inställningar</guilabel
+>.</para>
+  <warning
+><para
+>Av säkerhetsskäl rekommenderar vi att bara välja <guilabel
+>Föredra &HTML; före text</guilabel
+> i korgar som aldrig innehåller opålitliga brev.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-load-external-references">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Ladda externa referenser</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Om du har aktiverat &HTML;-brev (se ovan), har du också möjlighet att aktivera det för att få bilder och andra resurser länkade från webben att laddas ner automatiskt.</para>
+  <warning
+><para
+>Alternativet är bara tillgängligt om <guilabel
+>Föredra &HTML; före vanlig text</guilabel
+> har valts. Om du sätter på alternativet, och senare bestämmer dig för att ändra <guimenuitem
+>Brevens standardformat</guimenuitem
+>, säkerställ att kryssrutan avmarkeras innan bytet görs. Det finns ett fel i &kmail;: om det här alternativets kryssruta inte har avmarkerats, och alternativet har inaktiverats, är resultaten oförutsägbara.</para
+></warning>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-mailing-list-management">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Hantering av sändlistor...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar dialogrutan för hantering av sändlistor. Alternativet är bara tillgängligt om den aktuella korgen innehåller brev från en sändlista. Se <link linkend="folders-properties-mailinglist"
+>Dialogrutan Sändlista</link
+> för mer information om sändlistor.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-folder-assign-shortcut">
+  <term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Tilldela genväg...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig tilldela en snabbtangent till korgen som för närvarande är markerad.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+<sect2 id="reader-message-menu">
+<title
+>Menyn Brev</title>
+<screenshot>
+<screeninfo
+>Menyn Brev</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Brev</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Brev</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="reader-message-new-message">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Nytt brev...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar <link linkend="the-composer-window"
+>brevfönstret</link
+> så att du kan skriva ett nytt brev.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-new-message-to-mailing-list">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Nytt brev till sändlista...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar brevfönstret så att du kan skriva ett nytt brev. Om den nuvarande korgen innehåller en sändlista och har definierat en e-postadress, kommer den adressen att vara förvald som adress för <guilabel
+>Till:</guilabel
+> när brevfönstret öppnas. Om den aktuella korgen inte innehåller en sändlista, är alternativet inaktiverat.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>R</keycap
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Svara...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar brevfönstret, infogar citerad text i brevet som för närvarande är markerat och ställer antingen in fältet <guilabel
+>Till:</guilabel
+> till sändlistans adress (om du svarar på ett brev i en sändlista) eller med avsändarens önskade svarsadress. Om du vill bestämma vilken adress som fältet <guilabel
+>Till:</guilabel
+> ställs in till, ska du använda <link linkend="reader-message-reply-special"
+>Svara speciellt</link
+>. Avsändarens identitet anges automatiskt som identiteten det här brevet adresserades till.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-all">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>A</keycap
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Svara till alla...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar brevfönstret, infogar citerad text i brevet som för närvarande är markerat och ställer antingen in fältet <guilabel
+>Till:</guilabel
+> till sändlistans adress (om du svarar på ett brev i en sändlista) eller med avsändarens önskade svarsadress. Fältet <guilabel
+>Kopiera till:</guilabel
+> fylls med adresser till alla övriga mottagare av brevet som för närvarande är markerat, förutom din egen adress. Avsändarens identitet anges automatiskt som identiteten det här brevet adresserades till.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>A</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Svara speciellt &gt;</guisubmenu
+><guimenuitem
+>Svara till brevskrivaren...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Öppnar brevfönstret, infogar citerad text i brevet som för närvarande är markerat och ställer in fältet <guilabel
+>Till:</guilabel
+> till avsändarens önskade svarsadress. Avsändarens identitet anges automatiskt som identiteten det här brevet adresserades till.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-mailinglist">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>L</keycap
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Svara speciellt &gt;</guisubmenu
+> <guimenuitem
+>Svara till sändlista...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Öppnar brevfönstret, infogar citerad text i brevet som för närvarande är markerat och ställer in fältet <guilabel
+>Till:</guilabel
+> till sändlistans adress. Om du inte angav en adress till sändlistan i korgen som för närvarande är markerad, och &kmail; inte kan avgöra e-postadressen från brevet som för närvarande är markerat, är fältet <guilabel
+>Till:</guilabel
+> tomt. Avsändarens identitet anges automatiskt som identiteten det här brevet adresserades till.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-without-quote">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Svara speciellt &gt;</guisubmenu
+><guimenuitem
+>Svara utan citering...</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Fungerar precis som alternativet <guimenuitem
+>Svara...</guimenuitem
+>, utom att texten i brevet som för närvarande är markerat inte citeras.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Svara speciellt &gt;</guisubmenu
+><guimenuitem
+>Svara med egen mall</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Fungerar precis som <guimenuitem
+>Svara</guimenuitem
+> med ett tillagt alternativ: du kan välja en egen mall som har ställts in via <link linkend="configure-composer-custom-templates"
+>Egna mallar</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-reply-special-reply-to-all-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Svara speciellt &gt;</guisubmenu
+><guimenuitem
+>Svara till alla med egen mall</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Fungerar precis som <guimenuitem
+>Svara till alla...</guimenuitem
+> med ett tillagt alternativ: Du kan välja en egen mall som har ställts in via <link linkend="configure-composer-custom-templates"
+>Egna mallar</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-as-attachment">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Shift;<keycap
+>F</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Vidarebefordra &gt;</guisubmenu
+><guimenuitem
+>Som bilaga</guimenuitem
+> </menuchoice
+></term>
+  <listitem
+><para
+>Vidarebefordrar brevet till en ny mottagare. Brevet och dess bilagor biläggs till det nya brevet. Originalbrevets huvuden inkluderas också i det vidarebefordrade brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-inline">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>F</keycap
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Vidarebefordra &gt;</guisubmenu
+><guimenuitem
+>På plats</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Brevets text och vissa viktiga huvudfält kopieras till texten i det nya brevet, med text som markerar den vidarebefordrade delen börjar. Bilagor biläggs till det nya brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-redirect">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>E</keycap
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guisubmenu
+>Vidarebefordra &gt;</guisubmenu
+> <guimenuitem
+>Skicka vidare</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Det här fungerar som "Vidarebefordra", förutom att brevet förblir oförändrat (även fältet <guilabel
+>Från:</guilabel
+>). Användaren som skickar vidare brevet identifieras av särskilda huvudfält (<literal
+>Redirect-From</literal
+>, <literal
+>Redirect-Date</literal
+>, <literal
+>Redirect-To</literal
+> etc.).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-forward-with-custom-template">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+> <guisubmenu
+>Vidarebefordra &gt;</guisubmenu
+> <guimenuitem
+>Med egen mall</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Fungerar precis som "Vidarebefordra", men ger dig alternativ för att välja en egen mall som har ställts in via fliken egna mallar i brevfönstret med <link linkend="configure-composer-custom-templates"
+>Egna mallar</link
+>.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-send-again">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka igen...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar ett brevfönster med brevet som för närvarande är markerat, så att det kan skickas igen.</para>
+  <note
+><para
+>Menyalternativet är bara tillgängligt för brev som du har skickat eller, mer precist, brev som har status <guilabel
+>skickat</guilabel
+>. Om du vill skicka om något annat brev, dubbelklicka på posten i brevlistan. Eller granska brevet och använda genvägen <keycap
+>T</keycap
+>. Du kan också göra det genom att lägga till knappen <guibutton
+>Redigera som nytt</guibutton
+> i verktygsraden.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-edit-message">
+<term
+><menuchoice
+><shortcut
+><keycap
+>T</keycap
+></shortcut>
+<guimenu
+>Message</guimenu
+><guimenuitem
+>Edit Message</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Opens the selected message in a composer window.</para
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-message-mailing-list">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Sändlistans namn: &gt;</guimenuitem
+></menuchoice
+></term>
+  
+  <listitem
+><para
+>Erbjuder flera alternativ för brev till sändlistor.</para>
+  <note
+><para
+>Den aktuella korgen som används måste vara inställd som en sändlista för att alternativet ska vara tillgängligt. Se <link linkend="folders-properties-mailinglist"
+>Sändlista</link
+> för att ta reda på hur man ställer in sändlistor.</para
+></note>
+  <para
+>&nbsp;</para
+><!-- add whitespace -->
+  <para
+>Följande alternativ är tillgängliga i korgar med sändlistor:</para>
+  
+  <itemizedlist>
+    <listitem
+><para
+><guimenuitem
+>Skicka nytt brev (e-post)</guimenuitem
+> ställer in adressen <guilabel
+>Till:</guilabel
+> med adressen inställd i "Skicka till lista".</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Begär hjälp (e-post)</guimenuitem
+> ställer in adressen <guilabel
+>Till:</guilabel
+> till adressen inställd i "Skicka till lista" och ordet <literal
+>help</literal
+> i fältet <guilabel
+>Rubrik:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Prenumerera på lista (webb)</guimenuitem
+> pekar standardwebbläsaren på den inställda sändlistans webbplats "prenumeration".</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Prenumerera på lista (e-post)</guimenuitem
+> ställer in adressen <guilabel
+>Till:</guilabel
+> till sändlistans prenumerationsadress och placerar ordet <literal
+>subscribe</literal
+> i fältet <guilabel
+>Rubrik:</guilabel
+>.</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Sluta prenumerera på lista (webb)</guimenuitem
+> pekar standardwebbläsaren på den inställda sändlistans webbplats "avsluta prenumeration".</para
+></listitem>
+    <listitem
+><para
+><guimenuitem
+>Sluta prenumerera på lista (e-post)</guimenuitem
+> ställer in adressen <guilabel
+>Till:</guilabel
+> till sändlistans prenumerationsadress. och placerar ordet <literal
+>unsubscribe</literal
+> i fältet <guilabel
+>Rubrik:</guilabel
+>.</para
+></listitem>
+  </itemizedlist>
+  
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-copy-message-to">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Kopiera brev till &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Kopierar de markerade breven till en viss korg. Det går att välja mellan senaste korgar, lokala korgar, eller en korg för ett specifikt &IMAP;-konto.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-move-message-to">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Flytta brev till &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Samma sak som att kopiera brev till ovan, utom att alternativet flyttar de markerade breven permanent till en viss korg.</para>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-messages">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Markera brev</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig ändra status på det markerade brevet till ett av följande värden:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>Status</entry
+><entry
+>Symbol</entry
+><entry
+>Betydelse</entry
+></row
+></thead>
+
+    <tbody>
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>R</keycap
+></keycombo
+></shortcut
+><guimenuitem
+>Markera brev som läst</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Brevet har lästs.</entry
+></row>
+
+    <row>
+    <entry
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>U</keycap
+></keycombo
+></shortcut
+><guimenuitem
+>Markera brev som oläst</guimenuitem
+></menuchoice
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Brevet har inte lästs ännu.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markera brev som viktigt</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Denna status sätts inte automatiskt av &kmail;. Du kan använda den fritt för att markera brev som är viktiga för dig på något sätt.</entry
+></row>
+ 
+    <row>
+    <entry
+><guimenuitem
+>Ta bort markering som viktig</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Tar bort en tidigare markering som viktig från brevet.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markera brev som åtgärdas</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Denna status sätts inte automatiskt av &kmail;. Använd den för att markera brev som ska åtgärdas (t.ex. en uppgiftslista).</entry
+></row>
+
+    <row
+><entry
+><guimenuitem
+>Ta bort markering som åtgärdas</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Tar bort en tidigare markering som åtgärdas från brevet.</entry
+></row>
+    </tbody>
+
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="reader-mark-thread">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Markera tråd</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig ändra status på alla brev i en tråd på följande sätt:</para>
+  <informaltable
+><tgroup cols="3">
+    <thead
+><row
+><entry
+>Status</entry
+><entry
+>Symbol</entry
+><entry
+>Betydelse</entry
+></row
+></thead>
+    
+    <tbody>
+    <row>
+    <entry
+><guimenuitem
+>Markera tråd som läst</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-read.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Hela tråden har lästs.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markera tråd som oläst</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-unread.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Tråden har inte lästs ännu.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markera tråd som viktig</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Denna status sätts inte automatiskt av &kmail;. Du kan använda den fritt för att markera trådar som är viktiga för dig på något sätt.</entry
+></row>
+    
+    <row>
+    <entry
+><guimenuitem
+>Ta bort markering som viktig tråd</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-important.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Tar bort en tidigare markering som viktig från tråden.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Markera tråd som åtgärdas</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Denna status sätts inte automatiskt av &kmail;. Använd den för att markera trådar som ska åtgärdas (t.ex. en uppgiftslista).</entry
+></row>
+    
+    <row>
+    <entry
+><guimenuitem
+>Ta bort markering som åtgärdas från tråd</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-mark-task.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Tar bort en tidigare markering som åtgärdas från tråden.</entry
+></row>
+
+    <row>
+    <entry
+><guimenuitem
+>Bevaka tråd</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-watch.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Sätt status till bevakad tråd, vilket gör det möjligt att enkelt visa trådar som du är intresserad av genom att välja status <guimenu
+>Bevakad</guimenu
+> i kombinationsrutan som finns på snabbsökraden (klicka på ikonen <inlinemediaobject
+><imageobject
+><imagedata fileref="view-filter.png" format="PNG"/></imageobject
+></inlinemediaobject
+> för att visa filtreringsbara kategorier).</entry
+></row>
+    
+    <row>
+    <entry
+><guimenuitem
+>Ignorera tråd</guimenuitem
+></entry>
+    <entry
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-thread-ignored.png" format="PNG"/></imageobject>
+    </inlinemediaobject
+></entry>
+    <entry
+>Låter dig ignorera hela trådar.</entry
+></row>
+    </tbody>
+    
+  </tgroup
+></informaltable>
+  <para
+>&nbsp;</para
+><!-- add whitespace --></listitem>
+</varlistentry>
+
+<varlistentry id="message-create-filter">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Skapa filter</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar <link linkend="filter-dialog-id"
+>filterdialogrutan</link
+> med ett nytt filter tillagt. Det nya filtret är baserat på fälten i det nuvarande brevet, beroende på från vilket undermenyalternativ du väljer:</para>
+  <simplelist>
+    <member
+>Filtrera på Rubrik...</member>
+    <member
+>Filtrera på Från...</member>
+    <member
+>Filtrera på Till...</member>
+    <member
+>Filtrera på sändlista... (för närvarande måste markerat brev vara en sändlista för att det ska vara tillgängligt)</member>
+  </simplelist
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-apply-filter">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Välj filter</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig <guimenuitem
+>Filtrera med alla filter</guimenuitem
+>. Om du har filtrering av skräppost inställd via <link linkend="the-anti-spam-wizard"
+>Guiden för eliminering av skräppost</link
+> är alternativen <guimenuitem
+>Klassificera som skräppost</guimenuitem
+> och <guimenuitem
+>Klassificera INTE som skräppost</guimenuitem
+> också tillgängliga här.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-message-create-to-do-reminder">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Create To-do/Reminder</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; To-do/Reminder dialog</action
+> with options to add the selected email as a link, inline, or inline without attachments.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-message-add-note">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>Add Note...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; Note dialog to add a note to the selected email.</action
+></para
+></listitem>
+</varlistentry
+>  These items have been moved to "Plugins", and can now only be invoked via the Toolbar. @dcb2021086 -->
+
+<varlistentry id="reader-message-viewsource">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>V</keycap
+></shortcut
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Visa brevkälla</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar brevet och dess fullständiga huvuden i vanligt textformat i ett nytt fönster. Det kan vara användbart för att ta reda på ursprunget till ett brev. </para>
+  <note
+><para
+>Du bör känna till att det är lätt att förfalska fältet <literal
+>Från:</literal
+> i ett brev, men man kan fortfarande ta reda på vilka e-postservrar som har används för att skicka brevet genom att titta på raderna <literal
+>Mottaget:</literal
+> i brevhuvudet.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-show-message-structure">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Visa brevstruktur</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar strukturvisaren, ett område under förhandsgranskningsrutan som låter dig visa varje &MIME;-komponent i ett brev separat. Alternativet är bara tillgängligt om <link linkend="configure-plugins-tools"
+>Expertinsticksprogram</link
+> har aktiverats.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist
+> 
+
+</sect2>
+
+<sect2 id="reader-tools-menu">
+<title
+>Menyn Verktyg</title>
+<screenshot>
+<screeninfo
+>Menyn Verktyg</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Verktyg</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Verktyg</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+
+<varlistentry id="reader-tools-find-messages">
+  <term
+><menuchoice
+><shortcut
+><keycap
+>S</keycap
+></shortcut
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Sök efter brev...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar ett sökfönster som låter dig söka efter brev med vissa egenskaper, t.ex. en viss rubrik. Se <link linkend="filter-criteria"
+>Filterkriterier</link
+> för detaljinformation om sökalternativ.</para>
+  <para
+>Sökresultatet visas i textområdet, och vid detta tillfälle kan du <guibutton
+>Öppna sökkorg</guibutton
+> för att se en korg som innehåller breven som hittades, eller markera önskat brev och välja <guibutton
+>Öppna brev</guibutton
+>. Ytterligare åtgärder är tillgängliga via den sammanhangsberoende menyn, som kan aktiveras genom att klicka med höger musknapp.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Adressbok</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar <ulink url="help:kaddressbook"
+>Adressboken</ulink
+>, &kde;:s hanteringsprogram för e-postadresser och personlig kontaktinformation.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-certificate-manager">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Certifikathantering</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar <ulink url="help:kleopatra"
+>&kleopatra;</ulink
+>, &kde;:s certifikathanterare.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-edit-out-of-office-replies">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guisubmenu
+>Redigera frånvarosvar...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Starta dialogrutan <guilabel
+>Anpassa frånvarosvar</guilabel
+>, som låter dig ställa in underrättelser om ledighet.</para>
+  <note
+><para
+>Funktionen <guilabel
+>Frånvarosvar</guilabel
+> förlitar sig på filtrering på serversidan. För att använda den, måste du anpassa <link linkend="receiving-mail"
+>Filtreringsfliken</link
+> (se alternativ relevanta för &kolab;-servern) vid inställning av &IMAP;-kontot.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-tools-debug-sieve">
+<term
+><menuchoice>
+<guimenu
+>Tools</guimenu>
+<guisubmenu
+>Debug Sieve...</guisubmenu>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Launch the <guilabel
+>Sieve Diagnostics</guilabel
+> dialog.</action
+> This is useful to debug sieve if you are having problems with it.</para>
+<note
+><para
+>You must have sieve support on your email server.</para
+></note
+></listitem>
+</varlistentry
+> -->
+
+<varlistentry id="reader-tools-filter-log-viewer">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guisubmenu
+>Visning av filterlogg...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar visningsfönstret för filterloggen. Där hittar du några alternativ för att styra loggningen av filtreringsprocessen. I loggen hittar du värdefull information om vilka filterregler som användes, vad resultatet av utvärderingen av reglerna blev och vilka filteråtgärder som tillämpades på ett visst brev.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-import-messages">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guisubmenu
+>Importera från en annan e-postklient...</guisubmenu
+> </menuchoice
+></term>
+  <listitem
+><para
+>Visar dialogrutan för Akonadi importguide som hjälper till att importera inställningar och e-post från ett stort antal e-postprogram. Se dokumentationen av <ulink url="help:/importwizard"
+>Importguide</ulink
+> för detaljerad information.</para>
+  <note
+><para
+>Stäng &kmail; innan data importeras. Guiden kan ändra &kmail;s inställningsfil, och kan orsaka oförutsägbara resultat om du försöker importera data medan &kmail; kör.</para
+></note>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-export-data">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guisubmenu
+>Importera och exportera &kmail;-data....</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar dialogrutan för export av inställningar för personlig informationshantering som hjälper till att enkelt exportera dina inställningar och din e-post. Se <ulink url="help:/pimsettingexporter"
+>Export av inställningar för personlig informationshantering</ulink
+> för detaljerad information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-activity-log">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Logga aktiviteter...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar aktivitetsloggning, som loggar vissa aktiviteter. Alternativet är bara tillgängligt när insticksprogrammet <guilabel
+>Logga aktiviteter</guilabel
+> har laddats. I huvudsak för utvecklare.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-spam-wizard">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Guide för eliminering av skräppost...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar guiden för eliminering av skräppost som kan hjälpa dig att ställa in filtrering av skräppost. Se <link linkend="the-anti-spam-wizard"
+>Guiden för eliminering av skräppost</link
+> för detaljerad information. Alternativet är bara tillgängligt när insticksprogrammet <guilabel
+>Antiskräppost</guilabel
+> har laddats.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-tools-anti-virus-wizard">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Guide för eliminering av virus...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar guiden för eliminering av virus som kan hjälpa dig att ställa in sökning efter virus i brev. Se <link linkend="the-anti-virus-wizard"
+>Guiden för eliminering av virus</link
+> för detaljerad information. Alternativet är bara tillgängligt när insticksprogrammet <guilabel
+>Antivirus</guilabel
+> har laddats.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+
+<sect2 id="reader-settings-menu">
+<title
+>Menyn Inställningar</title>
+<screenshot>
+<screeninfo
+>Menyn Inställningar</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Inställningar</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Inställningar</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Om menyalternativet du söker efter saknas, se <ulink url="help:/fundamentals/menus.html#menus-settings"
+>Menyn Inställningar</ulink
+> i &kde;:s grunder. Alternativen som listas här är specifika för &kmail;.</para>
+<variablelist>
+
+<varlistentry id="reader-settings-show-quick-search-bar">
+<term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>H</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Visa snabbsökrad</guimenuitem
+></menuchoice
+></term>
+<listitem
+><para
+>Låter dig aktivera snabbsökraden, som gör det möjligt att snabbt söka efter brev som matchar en söktext.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-filters">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa filter...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar dialogrutan <link linkend="filters"
+>Brevfilter</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-manage-sieve-scripts">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Hantera Sieve-skript...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Om e-postservern stöder Sieve (filtrering på serversidan), kan du anpassa dessa skript här.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="settings-add-account">
+  <term
+><menuchoice
+><guimenu
+>Inställning</guimenu
+><guisubmenu
+>Lägg till konto...</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar dialogrutan med kontoguiden som hjälper till att ställa in nya eller ytterligare konton. Se <link linkend="account-wizard"
+>Kontoguiden</link
+> för detaljerad information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="reader-settings-configure-automatic-archiving">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa automatisk arkivering...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Initierar en dialogruta för att ställa in automatisk arkivering. Se <ulink url="help:/akonadi_archivemail_agent"
+>Automatisk arkivering</ulink
+> för detaljerad information.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="reader-settings-configure-send-later-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Send Later Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to modify and remove emails that have been sent using the send later feature.</action>
+ Please see <ulink url="help:/akonadi_sendlater_agent"
+>Send Later Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-folder-archive-agent">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Folder Archive Agent...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up a dialog that allows you to configure accounts to use the folder archive agent feature with.</action>
+ Please see <ulink url="help:/akonadi_folderarchive_agent"
+>Folder Archive Agent</ulink
+> for details.</para
+></listitem>
+</varlistentry>
+<varlistentry id="reader-settings-configure-notifications">
+<term
+><menuchoice>
+<guimenu
+>Settings</guimenu>
+<guimenuitem
+>Configure Notifications...</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Opens a dialog that lets you configure what happens when new mail arrives,</action
+> &eg; play a sound, display a popup, &etc;</para
+></listitem>
+</varlistentry
+> These three options have been moved to the Plugins Configuration tab. @dcb2021086.  -->
+
+<varlistentry id="reader-settings-configure-kmail">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar dialogrutan <link linkend="configure"
+>Anpassa &kmail;</link
+>. Det finns hundratals variabler att leka med. Ha det så kul!</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="reader-help-menu">
+<title
+>Menyn Hjälp</title>
+<screenshot>
+<screeninfo
+>Menyn Hjälp</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="readerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Hjälp</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Hjälp</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Det här är menyn <ulink url="help:/fundamentals/menus.html#menus-help"
+>Hjälp</ulink
+> i &kde;:s grunder, med ett ytterligare alternativ.</para>
+
+<variablelist>
+<varlistentry id="reader-help-intro">
+  <term
+><menuchoice
+><guimenu
+>Hjälp</guimenu
+><guimenuitem
+>Introduktion till &kmail;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar välkomstskärmen <link linkend="intro"
+>Introduktion</link
+>.</para
+></listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+
+<sect1 id="composer-window-menus">
+<title
+>Brevfönstret i &kmail;</title>
+
+<sect2 id="composer-file-menu">
+<title
+>Menyn Brev</title>
+<screenshot>
+<screeninfo
+>Menyn Brev</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composermessage.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Brev</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Brev</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<variablelist>
+<varlistentry id="composer-message-new-composer">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Nytt brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar ett nytt brevfönster så att du kan skriva ett brev.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-message-new-main-window">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New Main Window</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Creates a new main window.</action
+></para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-new-addressbook-contact">
+<term
+><menuchoice>
+<guimenu
+>Message</guimenu>
+<guimenuitem
+>New AddressBook Contact</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+><action
+>Brings up the &kontact; New Contact Dialog</action
+> to add a new contact your addressbook.</para
+></listitem>
+</varlistentry
+> Thes options not available in 5.14.2 @dcb2021088. -->
+
+<varlistentry id="composer-message-send-mail">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Retur</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka brev</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skickar brevet omedelbart. Om du använder &SMTP; för att skicka dina brev och &SMTP;-servern inte kan nås, så läggs brevet i utkorgen, och du får ett felmeddelande. När anslutningsproblemen har lösts, kan du skicka brevet i utkorgen med <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Skicka köade brev</guimenuitem
+></menuchoice
+> (i läsfönstret).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-mail-via">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka brev via &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig ange vilken utgående e-postserver som ska användas för att skicka brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka senare</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar dialogruta för att skicka senare. Se dokumentationen av <ulink url="help:/akonadi_sendlater_agent"
+>Skicka senare</ulink
+> för detaljerad information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-send-later-via">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka senare via &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig ange vilken utgående e-postserver som ska användas för att skicka det fördröjda brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-file">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Spara som fil</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Sparar brevet som en fil. Tre format stöds: Rich text (.html), vanlig text (.txt) och öppet dokumentformat (.odt).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-draft">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>S</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Spara som utkast</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Spara brevet i korgen <guilabel
+>utkast</guilabel
+> så att du kan avsluta det senare.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-save-as-template">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Spara som mall</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig spara brevet som en mall. Se <link linkend="new-compose-from-templates"
+>Skapa brev från mallar</link
+> för mer information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-text-file">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Infoga textfil...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Infogar en textfilen i brevtexten, med början vid markörens position.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-insert-recent-text-file">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Infoga senaste textfil &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig välja i en lista med senaste infogade textfiler, och infogar den filen i ditt brev. Välj <guimenuitem
+>Rensa lista</guimenuitem
+> för att rensa listan.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print-preview">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Förhandsgranskning av utskrift</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar ett förhandsgranskningsfönster för utskrift och visar brevet, formaterat för utskrift.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-print">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>P</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Skriv ut...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Formaterar och skriver ut brevet du har skrivit.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-share">
+  <term
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Dela brevtext... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig göra en andra kopia av brevet någon annanstans. Fyra alternativ tillhandahålls: Nextcloud (ett fildelningsprogram med öppen källkod), Pastebin <ulink url="https://pastebin.com"
+>(en fritt tillgänglig webbplats)</ulink
+>, Blåtand och E-post (öppnar ett annat brevfönster, och lägger till det nuvarande brevet i det nya brevet, som en bilaga). Alternativet är inte tillgängligt om inte insticksprogrammet <guilabel
+>Dela text</guilabel
+> är aktivt.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-message-close">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>W</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Brev</guimenu
+><guimenuitem
+>Stäng</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Stänger det här brevfönstret.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-edit-menu">
+<title
+>Menyn Redigera</title>
+<screenshot>
+<screeninfo
+>Menyn Redigera</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeredit.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Redigera</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Redigera</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Om menyalternativet du söker efter saknas, se avsnittet <ulink url="help:/fundamentals/menus.html#menus-edit"
+>Menyn Redigera</ulink
+> i handboken &kde;:s grunder. Alternativen som listas här är specifika för &kmail;.</para>
+
+<variablelist>
+<varlistentry id="composer-edit-paste-quotation">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Klistra in som citat</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Klistrar in texten från klippbordet och markerar den som ett citat (dvs. varje rad inleds med "&gt;" och ett mellanslag).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-attachment">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Klistra in som bilaga</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Klistrar in en fil som har kopierats till klippbordet (t.ex. genom att använda filhanteraren &dolphin;) som en bilaga.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-paste-without-formatting">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>V</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Klistra in utan formatering</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Klistrar in texten från klippbordet som vanlig text, utan någon &HTML;-formatering.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-clean-spaces">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Rensa mellanslag</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Alternativet är avsett att ersätta flera intilliggande nyrader eller mellanslag med en enda nyrad eller ett enda mellanslag, men när det provades verkar det inte göra något alls.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-add-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Lägg till citattecken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Inleder varje rad av den markerade texten med en citatindikering (normalt &gt; och ett mellanslag). Om ingen markering har gjorts, läggs indikeringen till på varje rad i brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-remove-quote-characters">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Ta bort citattecken</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Tar bort citattecknen längst till vänster från markerad text.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-email">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Infoga brev...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar en lista med alla namn i din adressbok, och infogar sedan den valda e-postadressen på markörens position (efter du gjort en markering och klickat på knappen <guibutton
+>Ok</guibutton
+>). Alternativet är bara tillgängligt när insticksprogrammet <guimenuitem
+>Infoga e-post</guimenuitem
+> har laddats.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-insert-nbsp">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;<keycap
+>Delete</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Redigera</guimenu
+><guimenuitem
+>Infoga icke-radbrytande mellanslag</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Infogar ett icke-radbrytande mellanslag på markörens position. Alternativet är bara tillgängligt när insticksprogrammet <guimenuitem
+>Infoga icke-radbrytande mellanslag</guimenuitem
+> har laddats.</para
+></listitem>
+</varlistentry>
+
+<!-- <varlistentry id="composer-edit-uppercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Uppercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to uppercase.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-lowercase">
+<term
+><menuchoice>
+<guimenu
+>Edit</guimenu>
+<guimenuitem
+>Lowercase</guimenuitem>
+</menuchoice
+></term>
+<listitem
+><para
+>Convert the selected text to lowercase.</para
+></listitem>
+</varlistentry
+> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+
+<varlistentry id="composer-edit-insert-special-character">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Infoga specialtecken...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig infoga ett specialtecken på markörens position. Ett stort antal Unicode-tecken är tillgängliga. Alternativet tillhandahålls bara om insticksprogrammet <guimenuitem
+>Infoga specialtecken</guimenuitem
+> har aktiverats.</para>
+  
+  <para
+>Menyalternativet har flyttats till menyn <guimenu
+>Infoga</guimenu
+> i utgåva 5.17. Om du har aktiverat insticksprogrammet och alternativet inte dyker upp när &kmail; startas om, titta i menyn <guimenu
+>Infoga</guimenu
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-change-case">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Ändra skiftläge &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Hjälper dig ändra skiftläge för den markerad texten. Det finns fyra alternativ: <guilabel
+>Stora bokstäver</guilabel
+> (ändrar markerade tecken till stora bokstäver), <guilabel
+>Meningar</guilabel
+> (ändrar första tecknet i markeringen till stor bokstav och gör resten till små bokstäver), och <guilabel
+>Omvända bokstäver</guilabel
+> (konvertera stora bokstäver till små, och vice versa). Alternativet är bara tillgängligt om insticksprogrammet <guilabel
+>Ändra skiftläge</guilabel
+> har aktiverats. Menyalternativet förblir grått tills någon textsnutt har markerats för ändring.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-zoom">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Zooma... &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig zooma in eller zooma ut i brevet du håller på att skriva. Det är samma funktion som visas som <menuchoice
+><guimenu
+>Visa</guimenu
+><guisubmenu
+>Zooma &gt;</guisubmenu
+></menuchoice
+> i brevfönstret. Alternativet är inte tillgänglig om inte insticksprogrammet <guimenuitem
+>Zooma text</guimenuitem
+> har laddats.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-edit-variables">
+  <term
+><menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Variabler &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig infoga innehållet i ett namngivet fält vid markörens position. Du kan välja bland <guilabel
+>Till &gt;</guilabel
+>, <guilabel
+>Från &gt;</guilabel
+>, <guilabel
+>Kopia &gt;</guilabel
+>, <guilabel
+>Datum/tid &gt;</guilabel
+> och <guilabel
+>Diverse &gt;</guilabel
+> (som bara har ett tillhörande undermenyalternativ, "Rubrik"). Det finns en egendomlighet värd att nämna: datum och tid som visas in undermenyalternativen är låsta vid tiden då brevfönstret öppnades, men värdet som verkligen infogas i ett brev tas från systemets klocka.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-view-menu">
+<title
+>Menyn Visa</title>
+<screenshot>
+<screeninfo
+>Menyn Visa</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Visa</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Visa</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Den här menyn låter dig ändra visningen av huvudfälten och några få andra alternativ i brevfönstret. Valda alternativ markeras i menyn (kryssrutan ifylld).</para>
+
+<para
+>Flera alternativ är tillgängliga:</para>
+
+<itemizedlist>
+  <listitem>
+    <para
+><guimenuitem
+>Alla fält</guimenuitem
+>. Visar alla sex av de följande fälten.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Identitet</guimenuitem
+>. Om du har definierat mer än en identitet, är det en kombinationsruta.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Ordlista</guimenuitem
+> använd för stavningskontroll. Om flera ordlistor är installerade, är det en kombinationsruta.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Skickade-brev korg</guimenuitem
+>. Knappen <guilabel
+>&nbsp;<inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+>&nbsp;</guilabel
+> som visas till höger när alternativet är markerat, öppnar en dialogruta för katalogval.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Brevöverföring</guimenuitem
+>. Om du har skapat mer än ett utgående konto, är det en kombinationsruta.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Från</guimenuitem
+>. Fältets innehåll kan variera, beroende på identiteten som du använder.</para>
+  </listitem>
+  <listitem>
+    <para
+><guimenuitem
+>Rubrik</guimenuitem
+>. Använd fältet för att kortfattat beskriva brevet.</para>
+  </listitem>
+</itemizedlist>
+
+<para
+>Kombinationsrutan <guilabel
+>Till <inlinemediaobject
+><imageobject
+><imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> finns alltid längst upp i brevfönstret. Använd den för att välja adresserna <guilabel
+>Kopia</guilabel
+>, <guilabel
+>Dold kopia</guilabel
+> och <guilabel
+>Svara till</guilabel
+> efter behov. Se <link linkend="composer-headers"
+>Brevfönster Sidhuvuden</link
+> för ytterligare detaljinformation om brevhuvuden.</para>
+  
+<para
+>&nbsp;</para>
+
+<variablelist>
+<varlistentry id="composer-view-use-fixed-font">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Använd teckensnitt med fast breddsteg</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Använder ett teckensnitt med fast breddsteg för att visa brevet som för närvarande redigeras. Det specifika teckensnittet som ska användas kan ställas in på sidan <guilabel
+>Utseende</guilabel
+> i &kmail;s inställningsdialogruta.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-view-snippets">
+  <term
+><menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Textsnuttar</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar en kolumn på höger sida om brevfönstret som låter dig använda och skapa textsnuttar. Se <link linkend="setup-text-snippets"
+>Testsnuttar</link
+> för mer information.</para>
+  <para
+>&nbsp;</para
+></listitem>
+  </varlistentry>
+  
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-options-menu">
+<title
+>Menyn Alternativ</title>
+<screenshot>
+<screeninfo
+>Menyn Alternativ</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composeroptions.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Alternativ</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Alternativ</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Den här menyn låter dig ändra diverse alternativ för det nuvarande brevet. Valda alternativ markeras i menyn (kryssrutan ifylld).</para>
+
+<variablelist>
+
+<varlistentry id="composer-options-urgent">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guimenuitem
+>Brådskande</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Ställer in brevets prioritet till Brådskande genom att infoga två huvudrader: "X-PRIORITY: 2 (High)" och "Priority: urgent". Mottagarens e-postklient måste stöda dessa huvudrader, annars får de ingen effekt. &kmail; själv stöder inte prioritet för inkommande brev (även om du kan <link linkend="reader-mark-messages"
+>markera brev</link
+> som viktiga).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-mdn">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Begär hanteringsbekräftelse</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Om du väljer det här alternativet, infogar &kmail; huvudraden Disposition-Notification-To: i brevet, vilket är en begäran om att få e-post med en bekräftelse när ditt brev väl har laddats ner och lästs av mottagaren. Funktionen måste stödjas och vara aktiverat av mottagarens e-postprogram, annars fungerar den inte.</para>
+  <para
+>Se <xref linkend="configure-security-reading-mdns"/> för bakgrundsinformation och flera sätt att anpassa läsbekräftelser som &kmail; själv skickar som svar på en mottagen Disposition-Notification-To: huvudrad.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-request-confirm">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Begär hanteringsbekräftelse</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Om alternativet används, infogar &kmail; en Return-Receipt-To: huvudrad i brevet, vilket är en begäran för att ta emot en brevunderrättelse när ditt brev väl har laddats upp e-postserver och levererats till mottagaren. Funktionen måste stödjas av din utgående e-postserver, annars fungerar den inte.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-sign-message">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guisubmenu
+>Signera brevet</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Signera brevet digitalt med <application
+>OpenPGP</application
+> eller ett X.509 certifikat. Du kan ta reda på mer om alternativet i <link linkend="pgp"
+>kapitlet om OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encrypt-message">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guisubmenu
+>Kryptera brevet</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Krypterar brevet med <application
+>OpenPGP</application
+> eller ett X.509 certifikat. Du kan ta reda på mer om kryptering i <link linkend="pgp"
+>kapitlet om OpenPGP</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-select-crypto-message-format">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guisubmenu
+>Krypterat brevformat &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig välja krypterat brevformat som ska användas för digital signatur och/eller kryptering av brevet. Se <link linkend="cryptographic-message-formats"
+>Krypterade brevformat</link
+> för mer information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-rich-text-editing">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guisubmenu
+>Rich text-redigering</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Aktiverar Rich text-redigering (dvs &HTML;).</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-encoding">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guisubmenu
+>Kodning &gt;</guisubmenu
+></menuchoice
+></term>
+  <listitem
+><para
+>Anger teckenkodningen för det här brevet. Den valda kodningen identifieras av en huvudrad i det skickade brevet. Du kan nästan alltid använda <guilabel
+>Automatisk</guilabel
+>. &kmail; talar om för dig om du måste välja en annan kodning för hand.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-wordwrap">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guimenuitem
+>Bryt rader</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Växlar funktionen för automatisk radbrytning. Du kan vilja stänga av den om du vill klistra in långa rader (t.ex. webbadresser) som inte ska radbrytas.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-automatic-spellchecking">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guimenuitem
+>Automatisk rättstavning</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Sätter på eller stänger av automatisk stavningskontroll.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-options-followup">
+  <term
+><menuchoice
+><guimenu
+>Alternativ</guimenu
+><guimenuitem
+>Skapa påminnelse om uppföljning...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Initierar en dialogruta som låter dig lägga till en "Uppgift" i kalendern. Alternativet är grått om insticksprogrammet <ulink url="help:/akonadi_followupreminder_agent"
+>Modulen för påminnelse om uppföljning</ulink
+> inte har aktiverats.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+
+<sect2 id="composer-attach-menu">
+<title
+>Menyn Bifoga</title>
+<screenshot>
+<screeninfo
+>Menyn Bifoga</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerattachmenu.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Bifoga</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Bifoga</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Den här menyn låter dig välja alternativ för att bifoga bilagor.</para>
+
+<variablelist>
+
+<varlistentry id="composer-attach-append-signature">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Lägg till brevfot</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Lägger till din brevfot (som <quote
+>sidfot</quote
+>) i slutet av brevet. Se <link linkend="configure-identity-signature"
+>Anpassa identitetens brevfot</link
+> för detaljerad information om hur en brevfot ställs in.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-prepend-signature">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Lägg till brevfot först</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Lägger till din signatur (<quote
+>sidhuvud</quote
+>) i början av brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-cursor-signature">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Infoga brevfot vid markörposition</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Infogar din brevfot på markörens nuvarande position.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-public-key">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Lägg till öppen nyckel...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar dialogrutan <guilabel
+>Bifoga öppen OpenPGP-nyckel</guilabel
+>. Se <link linkend="configure-identity-cryptography-openpgp-sign"
+>Anpassa identitet, Kryptografi, OpenPGP-signeringsnyckel</link
+> för detaljerad information.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attach-my-public-key">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Bifoga min öppna nyckel</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Lägger till din <application
+>GnuPG</application
+> öppna nyckel, eller ditt X.509 certifikat, (dvs den öppna nyckeln som hör ihop med din nuvarande identitet) till brevet.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-file">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+> <guisubmenu
+>Bifoga &gt;</guisubmenu
+> <guimenuitem
+>Bifoga fil...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Lägger till en eller flera filer i det nuvarande brevet. Bilagor är normalt krypterade (om brevet är krypterade). Se <link linkend="cryptographic-message-formats"
+>Krypterade brevformat</link
+> för mer information om kryptering och bilagor.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-directory">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+> <guisubmenu
+>Bifoga &gt;</guisubmenu
+> <guimenuitem
+>Bifoga katalog...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Skapar ett ZIP-arkiv som innehåller den valda katalogen, och lägger till arkivet som en bilaga i brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-ownvcard">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+> <guisubmenu
+>Bifoga &gt;</guisubmenu
+> <guimenuitem
+>Bifoga eget visitkort</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Bilägger ditt visitkort i det nuvarande brevet.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-vcard">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+> <guisubmenu
+>Bifoga &gt;</guisubmenu
+> <guimenuitem
+>Bifoga eget visitkort...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar en dialogruta med adressboken som låter dig välja en eller flera personer (&Ctrl; och vänsterklick), och bifogar sedan visitkort för alla markerade.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-clipboard">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+> <guisubmenu
+>Bifoga &gt;</guisubmenu
+> <guimenuitem
+>Bifoga text från klippbordet...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Om det översta objektet sparat på klippbordet innehåller minst två byte, visas en filnamnsdialogruta. &kmail; skapar en bilaga som innehåller texten från klippbordet, och ger bilagan namnet som du har valt.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-remove-attachment">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Ta bort bilaga</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Tar bort den markerade bilagan (markerad via bilageområdet under huvudbrevfönstret).</para>
+  <note
+><para
+>Menyalternativet, och de två följande, är gråa tills en bilaga markeras.</para
+></note
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-save-attachment">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Spara bilaga som...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Sparar bilagan markerad i bilagefönstret som en fil.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-attach-attachment-properties">
+  <term
+><menuchoice
+><guimenu
+>Bifoga</guimenu
+><guimenuitem
+>Egenskaper hos bilaga</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Visar <link linkend="attachments"
+>egenskaperna för bilagan</link
+> som har markerats via bilagefönstret. Det låter dig också signera och/eller kryptera bilagan, och ändra några av dess andra egenskaper (namn, beskrivning, &MIME;-typ, etc.).</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-tools-menu">
+<title
+>Menyn Verktyg</title>
+<screenshot>
+<screeninfo
+>Menyn Verktyg</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composertools.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Verktyg</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Verktyg</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Om menyalternativet du söker efter saknas, se <ulink url="help:/fundamentals/menus.html#menus-tools"
+>Menyn Verktyg</ulink
+> i &kde;:s grunder. Alternativen som listas här är specifika för &kmail;.</para>
+  
+<variablelist>
+  <varlistentry id="composer-tools-select-recipients">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Välj mottagare...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar dialogrutan <guilabel
+>Välj mottagare</guilabel
+>, med innehållet i alla dina adressböcker att välja bland.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-addressbook">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Adressbok...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Startar programmet <ulink url="help:/kaddressbook"
+>Adressbok</ulink
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-save-distribution-list">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Spara distributionslista...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar en dialogruta som låter dig spara grupper av kontakter som ett enda namngivet objekt. Mycket praktiskt om du ofta skickar samma brev, exempelvis till alla medlemmar i en klubb.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-autocorrect">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Korrigera text automatiskt &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Utför automatisk korrektion. Du har två alternativ: sök igenom och utför  automatisk korrigering av den markerade texten, eller utför <link linkend="configure-composer-autocorrection"
+>automatisk korrigering</link
+> av hela brevet. Menyalternativet finns inte, och fungerar inte om inte funktionen Automatisk korrigering har aktiverats på brevfönstrets inställningssida.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-translator">
+  <term
+><menuchoice
+><shortcut
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+></shortcut
+> <guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Översättare</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar <link linkend="using-the-translator"
+>översättningsfönstret</link
+>.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-tools-grammarcheck">
+  <term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Grammatikkontroll (LanguageTool)</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Öppnar fönstret för grammatikkontroll, granskar ditt brev, och markerar eventuella fel som hittas. Funktionen uppdaterar inte kontinuerligt den genomsökta texten medan du skriver. Du bör först skriva brevet, och sedan utföra grammatikkontrollen. Verktyget är inte tillgängligt om inte insticksprogrammet <guilabel
+>Grammatikkontroll</guilabel
+> har aktiverats. Liksom översättningsfunktionen, skickar grammatikkontroll ditt brev till en server (standardserver: https://languagetool.org/api/v2) på Internet.</para>
+  <para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+</sect2>
+
+<sect2 id="composer-settings-menu">
+<title
+>Menyn Inställningar</title>
+<screenshot>
+<screeninfo
+>Menyn Inställningar</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composersettings.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Inställningar</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Inställningar</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Om menyalternativet du söker efter saknas, se <ulink url="help:/fundamentals/menus.html#menus-settings"
+>Menyn Inställningar</ulink
+> i &kde;:s grunder. Alternativen som listas här är specifika för &kmail;.</para>
+  
+<variablelist>
+<varlistentry id="composer-settings-toolbars">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Visade verktygsrader &gt;</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig bestämma vilka verktygsrader som visas. Du kan välja vilken kombination av tre alternativ som helst: Huvudverktygsrad (<guilabel
+>Skicka</guilabel
+>, <guilabel
+>Köa</guilabel
+>, <guilabel
+>Rich text</guilabel
+>, etc.), HTML-verktygsrad (<guilabel
+>Stil</guilabel
+>, <guilabel
+>Teckenstorlek</guilabel
+>, etc.), och Textriktning (ifall du skriver med höger-till-vänster skrivtecken). Observera att HTML-verktygsraden enkelt visas eller döljs via knappen <guibutton
+>Rich text</guibutton
+> på huvudverktygsraden.</para
+></listitem>
+</varlistentry>
+
+<varlistentry id="composer-settings-spellcheck">
+  <term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Stavningskontroll...</guimenuitem
+></menuchoice
+></term>
+  <listitem
+><para
+>Låter dig anpassa <ulink url="help:/sonnet/"
+>&sonnet;</ulink
+>, &kde;:s stavningskontroll.</para
+><para
+>&nbsp;</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+</sect2>
+
+<sect2 id="composer-help-menu">
+<title
+>Menyn Hjälp</title>
+<screenshot>
+<screeninfo
+>Menyn Hjälp</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composerhelp.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Menyn Hjälp</phrase>
+    </textobject>
+    <caption>
+      <para
+>Menyn Hjälp</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+><!-- add whitespace -->
+
+<para
+>Den är exakt likadan som <ulink url="help:/fundamentals/menus.html#menus-help"
+>menyn Hjälp</ulink
+> i &kde;:s grunder. </para>
+</sect2>
+</sect1>
+
+</chapter>

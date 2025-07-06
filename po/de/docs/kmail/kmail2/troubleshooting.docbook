@@ -1,0 +1,558 @@
+<chapter id="troubleshooting">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<personname
+><firstname
+>Dieses Kapitel wurde aus der Webseite <ulink url=" https://userbase.kde.org/KMail/FAQs Hints and Tips"
+>KMail / FAQs Tipps und Tricks</ulink
+> der &kde;-Userbase erstellt.</firstname
+> <surname
+></surname
+> </personname>
+      </author>
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+      </authorgroup>
+<date
+>2012-07-28</date>
+      <releaseinfo
+>&kde; SC 4.9</releaseinfo>
+</chapterinfo>
+
+<title
+>Fehlersuche und -behebung in &kmail;</title>
+
+<sect1 id="kmail2-doesnt-send-mail"
+><title
+>KMail versendet keine E-Mails</title>
+<para
+>In einigen Fällen wird keine E-Mail versandt, anscheinend fehlt &SMTP;, obwohl es im Einstellungsdialog als aktiviert angezeigt wird. Manchmal hilft es, das Konsolenprogramm <application
+>akonadiconsole</application
+> zu starten und den <guilabel
+>Agent zur Nachrichten-Auslieferung</guilabel
+> hinzuzufügen. </para>
+<para
+>Wenn der Rechner im Ruhezustand &eg; durch einen Stromausfall plötzlich abgeschaltet wurde, bleiben E-Mails manchmal im Postausgang. ohne versendet zu werden. Es wird aber auch keine Fehlermeldung angezeigt. Dies kann dadurch verursacht werden, dass die Nachrichten-Auslieferung in der Einstellungsdatei im Ruhezustand <quote
+>abschaltet</quote
+> ist und wegen des Stromausfalls nicht wieder aktiviert wurde. Um diesen Fehler zu beheben, bearbeiten Sie folgende Datei: </para>
+<para
+><filename
+>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename>
+</para>
+<para
+>und ändern Sie </para>
+<para
+><screen
+>[Agent]
+Online=false</screen>
+</para>
+<para
+>in </para>
+<para
+><screen
+>[Agent]
+Online=true</screen>
+</para>
+</sect1>
+<sect1 id="clean-start-after-a-failed-migration"
+><title
+>Neue Einrichtung für &kmail; nach einer fehlgeschlagenen Aktualisierung</title>
+<para
+>Ist die Aktualisierung von &kmail; 1 auf &kmail; 2 fehlgeschlagen oder haben Sie danach Probleme mit dem Programm, sollten Sie versuchen, &kmail; neu einzurichten und Ihre E-Mails zu importieren. Das erfordert mehr Arbeit zu Wiederherstellung der Funktionsfähigkeit. Daher sollten Sie sich mit der Einstellung der Zugänge zum Empfangen und Versenden von E-Mails auskennen. Bei &IMAP;-Postfächern kann viel Netzwerkverkehr entstehen. </para>
+<orderedlist>
+<listitem
+><para
+>Stoppen Sie Akonadi und alle zugehörigen Programme</para>
+<para
+>Beenden Sie &kmail;/&kontact;/&korganizer; und führen diesen Befehl aus: </para>
+<para
+><userinput
+><command
+>akonadictl stop</command
+></userinput>
+</para>
+<para
+>Überprüfen Sie, dass kein <application
+>Akonadi</application
+>- oder <application
+>MySQL</application
+>-Prozess mehr ausgeführt wird:  </para>
+<para
+><userinput
+><command
+>ps ux | grep mysql</command
+></userinput>
+</para>
+<para
+><userinput
+><command
+>ps ux | grep akonadi</command
+></userinput>
+</para>
+<para
+>In der Ausgabe dieser beiden Befehle darf nur der <application
+>grep</application
+>-Prozess selbst angezeigt werden. </para>
+</listitem>
+<listitem
+><para
+>Entfernen Sie die alte Akonadi-Datenbank und die zugehörigen Einstellungen</para>
+<para
+>Löschen Sie die folgenden Ordner: </para>
+<itemizedlist>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.local/share/akonadi</filename>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.config/akonadi</filename>
+    </para>
+  </listitem>
+</itemizedlist>
+<para
+>Löschen Sie ebenso alle Dateien, deren Namen mit <emphasis
+>akonadi</emphasis
+> beginnen, aus dem Ordner <filename role="directory"
+>~/.kde4/share/config</filename
+> </para>
+</listitem>
+<listitem>
+<para
+>Starten Sie den Akonadi-Server erneut. </para>
+<para
+><userinput
+><command
+>akonadictl start</command
+></userinput>
+</para>
+</listitem>
+<listitem>
+<para
+>Versand- und Empfangszugänge wieder hinzufügen </para>
+<para
+>Nun müssen Sie Ihre Versand- und Empfangszugänge wieder herstellen. Dazu können Sie &kmail; oder &kontact; oder das Konsolenprogramm <application
+>akonadiconsole</application
+> verwenden. </para>
+<para
+>In &kmail; öffnen Sie mit <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog und klicken auf der Seite <guilabel
+>Zugänge</guilabel
+> auf den Knopf <guibutton
+>Hinzufügen</guibutton
+>. </para>
+<para
+>Möchten Sie &IMAP;, benutzen, fügen Sie einen neuen <guimenuitem
+>&IMAP;-E-Mail-Server</guimenuitem
+> hinzu. Möchten Sie Ihre E-Mails auch Offline lesen und bearbeiten (Disconnected &IMAP;), aktivieren Sie dies auf der Karteikarte <guilabel
+>Erweitert</guilabel
+>. Überprüfen Sie, ob Sie auch alle wichtigen Ordner abonniert haben. </para>
+<para
+>Wahrscheinlich haben Sie bereits eine Ressource <guilabel
+>Lokale Ordner</guilabel
+>. Diese Ressource zeigt auf einen lokalen Maildir-Ordner. Entweder Sie ändern diese Zuordnung zu einem vorhandenen Maildir-Ordner oder fügen eine neue Ressource für lokale E-Mails hinzu. </para>
+<para
+>Wenn Sie eine Maildir-Ressource hinzufügen, können Sie zwischen <guilabel
+>&kmail;-Mailordner</guilabel
+> oder <guilabel
+>Maildir</guilabel
+> wählen. Wenn Sie keine gemischten Ordner <emphasis
+>sowohl</emphasis
+> mit Maildir-Ordnern und MBox-Dateien haben, sollten Sie  <guilabel
+>Maildir</guilabel
+> wählen. Für eigene MBox-Dateien wie in <filename role="directory"
+>/var/spool/mail</filename
+> sollten Sie neue <emphasis
+>MBox</emphasis
+>-Ordner einstellen. </para>
+<para
+>Fügen Sie ebenso alle POP3-Zugänge hinzu, Haben Sie mehrere lokale Ordner eingestellt, wählen Sie auf der Karteikarte <guilabel
+>Erweitert</guilabel
+> den Zielordner zur Speicherung der E-Mails. </para>
+<para
+>Stellen Sie für alle Zugänge das Abrufintervall ein. Deaktivieren Sie für lokale Ordner das Abrufintervall und schalten Sie auch <guilabel
+>Bei manueller Prüfung einbeziehen</guilabel
+> in den <guilabel
+>Abrufeinstellungen</guilabel
+> ab. </para>
+<para
+>Fügen Sie die Versand-Zugänge (SMTP) hinzu. </para>
+</listitem>
+<listitem>
+<para
+>Stellen Sie Ihre Filter, Identitäten und bevorzugten Order wieder ein. </para>
+<para
+>Filtern Sie die E-Mails auf Ihrem Rechner wie typischerweise mit POP3-Zugängen, wählen Sie <menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Filter einrichten ...</guimenuitem
+></menuchoice
+> und korrigieren die Zielordner der Filter, die vielfach falsch sind. Ansonsten werden die gefilterten E-Mails in unerwarteten Ordnern abgelegt. </para>
+<para
+>Spam-Filter (bis zu Version 4.7.3 und vorher) funktionieren nicht wie erwartet, das die durch den Assistenten erstellten Regeln die Spam-E-Mails nicht in den angegebenen Ordner verschieben. </para>
+<para
+>Als Übergangslösung für diese Problem können Sie abstellen, das die Filter <quote
+>Spam</quote
+> und <quote
+>Möglicherweise Spam</quote
+>, wenn das durch den von Ihnen verwendeten Spamfilter unterstützt wird, in dem Statusfeld <literal
+>X-Spam-Status</literal
+> im Vorspann <guimenuitem
+>Irgendwo im Vorspann</guimenuitem
+> nach Klassifizierungen <quote
+>SPAM or unsure</quote
+> suchen. Sehen Sie sich die durch den Assistenten erstellten Filter an und kopieren Sie den Teil <quote
+>enthält</quote
+>. Ein Beispiel für <application
+>Spambayes</application
+>: <quote
+>X-Spambayes-Classification: spam</quote
+> und <quote
+>X-Spambayes-Classification: unsure</quote
+>. </para>
+<para
+>Überprüfen Sie auch die Einstellungen Ihrer Identität und stellen Sie Versendete Nachrichten, Entwürfe und Vorlagen auf die richtigen Ordner ein. Dazu öffnen Sie mit  <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog, gehen zur Seite <guilabel
+>Identitäten</guilabel
+>, passen die Einstellungen an und ändern die oben genannten Ordner auf der Karteikarte <guilabel
+>Erweitert</guilabel
+>. </para>
+<para
+>Überprüfen Sie, das Ihre <guilabel
+>Bevorzugten Ordner</guilabel
+> mit den Einstellungen vorher übereinstimmen. </para>
+</listitem>
+<listitem>
+<para
+>Starten Sie das Abholen von E-Mails </para>
+<para
+>Sehen Sie nach E-Mails in allen Ihren Zugängen, am besten nacheinander für jeden einzelnen Zugang. </para>
+<para
+>Als erstes sehen Sie nach E-Mails in Ihren &IMAP;-Zugängen, falls vorhanden. </para>
+<para
+>Als nächstes sehen Sie nach bzw. importieren Sie Ihre lokalen E-Mails. Eine Möglichkeit ist im Menü <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Nach E-Mail sehen in</guimenuitem
+></menuchoice
+> zu benutzen und die lokalen Ordner zu wählen. Alternativ klicken Sie nacheinander auf alle Ordner, damit wird in diesen Ordner nach E-Mail gesehen oder Sie klicken mit der &RMBn; auf den Ordnernamen und wählen <guilabel
+>Ordner aktualisieren</guilabel
+>. </para>
+<para
+>Das erste Abholen bzw. Importieren von E-Mails dauert möglicherweise lange und benötigt viel Arbeitsspeicher, besonders für Ordner mit einer großen Zahl von E-Mails. In diesem Fall sollten Sie die Ordner einzeln nacheinander importieren. Ist der Import für alle E-Mails oder für einen Ordner beendet und es wird immer noch viel Arbeitsspeicher belegt, können Sie den Akonadi-Server &mdash; wie oben beschrieben &mdash; neu starten oder nur den Maildir-Agenten mit <command
+>akonadiconsole</command
+>. <emphasis
+>Nur</emphasis
+> beim ersten Abholen von E-Mails wird viel Arbeitsspeicher benötigt. </para>
+<para
+>Starten Sie den E-Mail-Import für POP3-Ressourcen. </para>
+</listitem>
+</orderedlist>
+<para
+>Nachdem Sie mit diesem Verfahren &kmail; neu eingerichtet und die E-Mails importiert haben, wird &kmail; viel besser funktionieren. </para>
+</sect1>
+
+<sect1 id="local-folders-is-added-over-and-over"
+><title
+>Lokale Ordner werden immer wieder hinzugefügt</title>
+<para
+>Manchmal haben Sie einen Maildir-Zugang für einen bestimmten Ort wie zum Beispiel <filename
+>$HOME/Mail</filename
+>, aber immer noch einen Ordner <guilabel
+>Lokale Ordner</guilabel
+> in der Ordnerliste mit Posteingang/Postausgang/Papierkorb/Entwürfe/&etc; und &kmail; speichert immer noch die E-Mails, insbesondere Versendete Nachrichten in diesen Ordnern. </para>
+<para
+>Das Problem besteht darin, dass bestimmte Ordner als besondere „System“-Ordner gekennzeichnet sind. Ohne diese System-Ordner funktioniert &kmail; nicht korrekt. Daher werden diese Ordner immer wieder neu erstellt. </para>
+<para
+>Zurzeit gibt es keine Möglichkeit, dies mit einer grafischen Benutzeroberfläche für alle Arten von besonderen Ordnern zu ändern. Es gibt nur folgende Vorgehensweise: </para>
+<orderedlist>
+<listitem
+><para
+>Die Ordner <guilabel
+>Versendete Nachrichten</guilabel
+>, <guilabel
+>Entwürfe</guilabel
+> und <guilabel
+>Vorlagen</guilabel
+> können für jede Identität getrennt eingestellt werden. Dazu öffnen Sie mit  <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog, gehen zur Seite <guilabel
+>Identitäten</guilabel
+>, wählen die Identität und klicken auf <guibutton
+>Ändern ...</guibutton
+>. Gehen Sie dann zur Karteikarte <guilabel
+>Erweitert</guilabel
+> und stellen den richtigen Ort für die Ordner ein.</para
+></listitem>
+<listitem
+><para
+>Die Voreinstellung für den Zielordner <guilabel
+>Posteingang</guilabel
+> kann für jedes POP3-Postfach eingestellt werden. Dazu öffnen Sie mit  <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guisubmenu
+>&kmail; einrichten ...</guisubmenu
+></menuchoice
+> den Einrichtungsdialog, wählen Ihr  POP3-Postfach und klicken auf <guibutton
+>Ändern ...</guibutton
+>. Gehen Sie zur Karteikarte <guilabel
+>Erweiterte Einstellungen</guilabel
+> und geben Sie den richtigen <guilabel
+>Zielordner</guilabel
+> an.</para
+></listitem>
+<listitem
+><para
+>Für IMAP-Konten können Sie den Ordner <guilabel
+>Papierkorb</guilabel
+> wie oben beschrieben einstellen. Die Einstellung ist mit <guilabel
+>Papierkorb-Ordner</guilabel
+> bezeichnet.</para
+></listitem>
+<listitem
+><para
+>Der schwierigste Teil ist die Einstellung für den Ordner <guilabel
+>Postausgang</guilabel
+>. Suchen Sie zuerst die Datei <filename
+>specialmailcollectionsrc</filename
+> in Ihrem &kde;-Einrichtungsordner <filename
+>$HOME/.kde4/share/config</filename
+>. Die Datei enthält unter anderem folgende Einträge:</para
+></listitem>
+</orderedlist>
+<para
+><userinput
+>[SpecialCollections] DefaultResourceId=akonadi_maildir_resource_0</userinput>
+</para>
+<para
+>Starten Sie jetzt das Programm <application
+>akonadiconsole</application
+>. Suchen Sie auf der Karteikarte <guilabel
+>Agents</guilabel
+> das lokale Konto mit Ihrem Ordner <guilabel
+>Postausgang</guilabel
+>, klicken Sie darauf und notieren Sie den Namen des <guilabel
+>Identifier</guilabel
+> unten im Dialog wie zum Beispiel <replaceable
+>akonadi_maildir_resource_XXX</replaceable
+>. Tragen Sie diesen Wert in der vorher erwähnten Datei <filename
+>specialmailcollectionsrc</filename
+> als Ersatz des vorhandenen Wertes ein. </para>
+<para
+>Danach starten Sie das Programm <application
+>akonadi</application
+> wieder neu, indem Sie in <application
+>akonadiconsole</application
+>  <menuchoice
+><guimenu
+>Server</guimenu
+><guimenuitem
+>Restart Server</guimenuitem
+></menuchoice
+> wählen oder folgendes in einer Konsole auf der Befehlszeile eingeben: </para>
+<para
+><userinput
+>akonadictl restart</userinput>
+</para>
+<para
+>Entfernen Sie nun die <guilabel
+>Lokalen Ordner</guilabel
+>, die Sie nicht mehr benutzen möchten. </para>
+<para
+>Wenn die <guilabel
+>Lokalen Ordner</guilabel
+> trotzdem immer noch erstellt werden und der <guilabel
+>Agent zur Nachrichten-Auslieferung</guilabel
+> immer noch abstürzt, müssen Sie noch weitere Einstellungen in <application
+>akonadiconsole</application
+> vornehmen. Gehen Sie zur Karteikarte <guilabel
+>Browser</guilabel
+>, suchen Sie den Postausgang, den Sie verwenden möchten, und klicken Sie mit der &RMBn; darauf. Wählen Sie <guilabel
+>Folder Properties</guilabel
+> und gehen zur Karteikarte <guilabel
+>Attributes</guilabel
+>. Geben Sie hier <userinput
+>SpecialCollectionAttribute</userinput
+> ein und klicken dann auf <guibutton
+>Add</guibutton
+>. Doppelklicken Sie auf <guilabel
+>Value</guilabel
+> neben <guilabel
+>SpecialCollectionAttribute</guilabel
+> und geben <userinput
+>outbox</userinput
+> ein. Fügen Sie auch noch ein weiteres Attribut mit dem Namen <guilabel
+>ENTITYDISPLAY</guilabel
+> und dem Wert <userinput
+>("outbox" "mail-folder-outbox" "" ())</userinput
+> hinzu. Starten Sie das Programm <application
+>akonadi</application
+> erneut. Jetzt sollten Sie alle nicht mehr benötigten lokalen Ordner löschen können. </para>
+</sect1>
+
+<sect1 id="you-get-the-error-unable-to-fetch-item-from-backend-when-entering-imap-folder"
+><title
+>Sie erhalten die Fehlermeldung „Unable to fetch item from backend“ beim Öffnen eines IMAP-Ordners</title>
+<para
+>Es gibt mehrere mögliche Ursachen für diesen Fehler und das &kmail;-Teams arbeitet daran. In der Zwischenzeit müssen Sie einige Übergangslösung verwenden. </para>
+<variablelist>
+  <varlistentry>
+    <term
+>Übergangslösung 1</term>
+    <listitem>
+      <itemizedlist>
+        <listitem
+><para
+>Bearbeiten Sie die Datei <filename
+>~/.local/share/akonadi/mysql.conf</filename
+> </para
+></listitem>
+        <listitem
+><para
+>Fügen Sie im Abschnitt <guilabel
+>[mysql]</guilabel
+> den Eintrag <userinput
+>binlog_format=row</userinput
+> hinzu</para
+></listitem>
+      </itemizedlist>
+      <para
+>Wenn das nicht funktioniert, versuchen Sie die folgende Übergangslösung 2 </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+>Übergangslösung 2</term>
+    <listitem>
+      <para
+>Dies wird meistens durch einen Neustart erreicht, so dass &kmail; diese Einträge abholen kann. Führen Sie dazu folgende Schritte aus:</para>
+      <para
+>Benutzen Sie <keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+> oder &konsole;, um folgendes einzugeben: <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>, dann warten Sie eine Minute. Als nächstes geben Sie <userinput
+><command
+>akonadictl stop</command
+></userinput
+> ein, warten wieder eine Minute, geben <userinput
+><command
+>akonadictl start</command
+></userinput
+>ein, warten wieder eine Minute und starten dann &kmail; mit <userinput
+><command
+>kmail</command
+></userinput
+>. Mit diesen Befehlen wird &kmail; einschließlich <emphasis
+>aller</emphasis
+> Fenster zusammen mit den &kmail;-Backends angehalten und wieder neu gestartet. Mit einer funktionierenden Internetverbindung erhöht die Chance des Erfolgs. Manchmal reicht auch nur <userinput
+><command
+>kquitapp kmail</command
+></userinput
+> und der Neustart von &kmail; nach einer Minute. Häufig sind mehrere neue Starts erforderlich. Die Ursache für diese Verhalten ist noch unklar, aber mit ungenügenden Netzwerkverbindungen passiert es häufiger. </para>
+    </listitem>
+  </varlistentry>
+</variablelist>
+<para
+>Lesen Sie auch in einem der nächsten Absätze, wie <application
+>akonadiconsole</application
+> bei solchen Problemen hilfreich sein kann. </para>
+</sect1>
+
+<sect1 id="your-mails-are-not-being-sent-without-error-messages"
+><title
+>Ihre E-Mails werden nicht gesendet und Sie erhalten keine Fehlermeldungen</title>
+<para
+>Wenn &kmail; keine E-Mails versendet und es keine Fehlermeldung gibt, kann der für das Versenden zuständige <quote
+>Agent</quote
+> gestoppt sein. Natürlich benötigen Sie eine funktionierende Netzwerkverbindung, um E-Mails zu versenden. </para>
+<para
+>Um dies zu beheben, ist es oft nützlich, die aktuell ausgeführte Aktion abzubrechen und wieder neu zu starten. Als erstes beenden Sie &kmail;, indem Sie in &krunner; (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) oder in einer &konsole; den Befehl <userinput
+><command
+>kquitapp kmail</command
+></userinput
+> eingeben. Beachten Sie, dass das normale Beenden von &kmail; mit <keycombo
+>&Alt;<keycap
+>F4</keycap
+></keycombo
+> or <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Beenden</guimenuitem
+></menuchoice
+> <emphasis
+>nicht</emphasis
+> ausreichend ist. Warten Sie eine Minute und starten Sie dann &kmail; erneut. Starten Sie jetzt das Programm <application
+>akonadiconsole</application
+> mit &krunner; (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) oder in einer &konsole;. Gehen Sie zum <guilabel
+>Mail Dispatcher Agent</guilabel
+> und brechen Sie die die aktuelle Version mit dem Kontextmenü der &RMBn; ab. Wahrscheinlich wird eine Fehlermeldung angezeigt. Wechseln Sie zu &kmail; zurück und wählen Sie <menuchoice
+><guimenu
+>Datei</guimenu
+><guimenuitem
+>Postausgang versenden</guimenuitem
+></menuchoice
+>. Nun sollte es funktionieren. Falls nicht, versuchen Sie den Status des <guilabel
+>Mail Dispatcher Agent</guilabel
+> Offline/Online zu schalten oder wie in der oben genannten Übergangslösung 2 alles wieder neu zu starten. </para>
+<para
+><note
+><para
+>Das Programm <application
+>akonadiconsole</application
+> kann in vielen Situationen sehr hilfreich sein, da es alle <quote
+>Agenten</quote
+>, d . h. die einzelnen Komponenten des &kmail;-Backends anzeigt.</para
+></note>
+</para>
+</sect1>
+
+</chapter>

@@ -1,0 +1,228 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Agent zur E-Mail-Archivierung</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % German "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Das Handbuch zu &i18n-archivemailagent;</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Anwendungen 19.12)</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Einführung</title>
+
+<para
+>&i18n-archivemailagent; ist ein Akonadi-Agent, um Ordner mit E-Mails automatisch zu archivieren. </para>
+
+<sect2 id="using-kapp">
+<title
+>&i18n-archivemailagent; verwenden</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Mit <menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>Automatische Archivierung einrichten ...</guimenuitem
+></menuchoice
+> in &kmail; öffnen Sie einen Dialog, in dem Sie den Agenten zur Archivierung von Ordnern einrichten können. </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>Dies ist ein wichtiges Hilfsprogramm, das Sie bei der Sicherung Ihrer E-Mails unterstützen kann. Klicken Sie auf den Knopf <guibutton
+>Hinzufügen</guibutton
+>, dann wird der Dialog <guilabel
+>E-Mail-Archivierung hinzufügen</guilabel
+> angezeigt.</para>
+
+<screenshot>
+<screeninfo
+>E-Mail-Archivierung hinzufügen</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>E-Mail-Archivierung hinzufügen</phrase>
+    </textobject>
+    <caption>
+      <para
+>E-Mail-Archivierung hinzufügen</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Wählen Sie zuerst den Ordner, den Sie archivieren möchten.</para
+></listitem>
+<listitem
+><para
+>Wählen Sie ein Format zur Speicherung wie &eg; <literal role="extension"
+>.tar.bz2</literal
+> im Auswahlfeld. Der Name des Archivs wird aus dem Präfix <userinput
+>Archive_</userinput
+>, dem Pfad des ausgewählten Ordners in &kmail;s Ordnerliste, dem Datum im Format <userinput
+>Jahr-Monat-Tag</userinput
+> und der gewählten Dateierweiterung zusammengesetzt wie &eg; <filename
+>Archive_Lokale Ordner_Posteingang_2019-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>In der Voreinstellung ist <guilabel
+>Alle Unterordner archivieren</guilabel
+> aktiviert. Soll nur der oberste Ordner archiviert werden, wählen Sie diese Einstellung ab.</para
+></listitem>
+<listitem
+><para
+>Sie können den Speicherort für das Archiv direkt eingeben oder auf das Symbol <guibutton
+>Dateiauswahl</guibutton
+> klicken, um einen Ordner auszuwählen.</para
+></listitem>
+<listitem
+><para
+>Stellen Sie in den Eingabefeldern neben <guilabel
+>Sichern alle</guilabel
+> ein, wie oft Sie eine Sicherung durchführen möchten.</para
+></listitem>
+<listitem
+><para
+>Haben Sie nur begrenzten Speicherplatz auf der Festplatte, geben Sie eine <guilabel
+>Maximale Anzahl von Archiven</guilabel
+> an.</para
+></listitem>
+</itemizedlist>
+<para
+>Haben Sie eine Archivierung erstellt oder geändert, dann wird der Auftrag automatisch nach dem Schließen des Dialogs ausgeführt. </para>
+
+<para
+>Haben Sie bereits Aufträge zur automatischen Archivierung eingegeben, dann werden alle Aufträge im Dialog <guilabel
+>Automatische Archivierung einrichten ...</guilabel
+> angezeigt und Sie können bearbeitet werden. </para>
+<screenshot>
+<screeninfo
+>E-Mail-Archivierung-Agent einrichten</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>E-Mail-Archivierung-Agent einrichten</phrase>
+    </textobject>
+    <caption>
+      <para
+>E-Mail-Archivierung-Agent einrichten</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Mit dem Ankreuzfeld links neben jedem Eintrag in der Liste aktivieren oder deaktivieren Sie diesen Archivierungsauftrag. </para>
+<para
+>Sie können den Einrichtungsdialog jederzeit später aufrufen, indem Sie <menuchoice
+> <guimenu
+>Einstellungen</guimenu
+><guimenuitem
+>&kmail;  einrichten</guimenuitem
+></menuchoice
+> im Hauptfenster von &kmail; auswählen und dann auf der Seite <guilabel
+>Module</guilabel
+> die Einstellungen für <guilabel
+>Agent zur E-Mail-Archivierung</guilabel
+> bearbeiten. </para>
+<para
+>Im Kontextmenu, das Sie durch Klicken mit der &RMBn; auf einen Eintrag öffnen, finden Sie Aktionen zum Öffnen des Ordners, der die Archive enthält. Außerdem können Sie einen Archivierungsauftrag sofort manuell starten. Dann wird ein bereits vorher am gleichen Tag erstelltes Archiv ohne Benachrichtigung überschrieben. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Danksagungen und Lizenz</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Programm Copyright 2013-2019 Laurent Montel montel@kde.org </para>
+<para
+>Dokumentation Copyright &copy; 2013-2019 Laurent Montel montel@kde.org </para>
+
+<para
+>Übersetzung Burkhard Lück<email
+>lueck@hube-lueck.de</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

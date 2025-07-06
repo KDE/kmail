@@ -1,0 +1,824 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <email
+>michel@klaralvdalens-datakonsult.se</email
+> </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Bryant</surname
+> </author>
+
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2020-08-18</date>
+<releaseinfo
+>5.14.2 (Program 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Att komma igång</title>
+
+<para
+>Det här är en kort introduktion till &kmail; och dess användning så att du kan börja arbeta med det meddetsamma. För mer djupgående information se avsnittet <link linkend="using-kmail"
+>Att använda &kmail;</link
+>.</para>
+
+<sect1 id="account-wizard">
+<title
+>Kontoguide</title>
+
+<para
+>Första gången du startar &kmail; hälsas du välkommen av kontoguiden.</para>
+<note
+><para
+>Om du behöver köra kontoguiden igen vid något tillfälle, hittar du den under <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Lägg till konto</guimenuitem
+></menuchoice
+>.</para
+></note>
+<para
+>Guiden leder dig igenom processen att skapa ett e-postkonto. Sidorna som visas varierar beroende på hur mycket guiden kan ta reda på själv. Här är en översikt av sidorna du stöter på när guiden används.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<procedure id="procedure-add-an-email-account">
+  <step id="Provide-personal-data">
+    <para
+>Första sidan i guiden är <guilabel
+>Tillhandahåll personlig information</guilabel
+>. Den frågar dig efter grundinformation: <guilabel
+>Fullständig namn:</guilabel
+>, <guilabel
+>E-postadress:</guilabel
+> och <guilabel
+>Lösenord:</guilabel
+>. Normalt är alternativet <guilabel
+>Sök efter leverantörsinställningar på Internet</guilabel
+> markerad, så att guiden försöker hämta nödvändig information från e-postservern. Avmarkera det om du är expertanvändare och vill använda en avancerad inställning. Klicka på knappen <guibutton
+>Nästa</guibutton
+> när du är klar.</para>
+    
+    <screenshot>
+    <screeninfo
+>Kontoguide</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Kontoguide</phrase>
+        </textobject>
+        <caption>
+        <para
+>Dialogrutan "Tillhandahåll personlig information"</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <note
+><para
+>GMail-konton måste använda &IMAP;. Om du har aktiverat tvåstegsverifiering för ditt GMail-konto, måste du hämta en verifieringskod från Google som en del av den inledande inställningsprocessen av kontot. Du behöver inte utföra tvåstegsverifiering efter att &kmail;-kontot har skapats, eftersom Google markerar din &IMAP;-länk som fullständigt pålitlig.</para
+></note>
+    
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  <step id="GPG-security">
+    
+    <para
+>Nästa sida hjälper dig att ställa in krypteringsnycklar för dina brev.</para>
+    
+    <screenshot>
+    <screeninfo
+>Kontoguide 2</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Kontoguide 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Dialogrutan för krypteringsalternativ</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Om du vill säkra kommunikation med GnuPG kan du skapa en ny nyckel och publicera den på en öppen nyckelserver eller importera en befintlig nyckel. Om du bestämmer dig för att skapa ett nytt nyckelpar, glöm inte bort lösenordet som användes för att skapa det. Du kommer att behöva lösenordet varje gång du vill använda nyckeln. </para>
+    <para
+>När brev skickas letar &kmail; valfritt efter mottagarnas krypteringsnycklar och krypterar brevet om en nyckel hittas. &kmail; kan också signera dina brev kryptografiskt, så att varje mottagare kan verifiera att brevet inte har manipulerats. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Select-account-type">
+    <para
+>Sidan <guilabel
+>Inställning färdig</guilabel
+> dyker upp om guiden lyckades avgöra kontotypen. Klicka på <guibutton
+>Detaljinformation...</guibutton
+> för att visa inställningarna som &kmail; har upprättat. Klicka på knappen <guibutton
+>Slutför</guibutton
+> för att ställa in kontot, slutföra guiden och stänga fönstret. </para>
+    
+    <screenshot>
+    <screeninfo
+>Kontoguide 3</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard3.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Kontoguide 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Dialogrutan för val av kontotyp</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Om guiden inte kan avgöra din kontotyp visas sidan <guilabel
+>Välj kontotyp</guilabel
+>. Välj kontotypen i listan (om du inte känner till den, måste du kontakta din e-postleverantör). Om din kontotyp inte listas, klicka på knappen <guibutton
+>Leta efter mer information på Internet</guibutton
+>. När kontotypen väl har valts, klicka på knappen <guibutton
+>Nästa</guibutton
+>, så visas sidan <guilabel
+>Personliga inställningar</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+  
+  <step id="Personal-settings">
+      
+    <para
+>Om guiden inte kunde hitta e-postservern genom att söka på internet, visas sidan <guibutton
+>Personliga inställningar</guibutton
+>.</para
+>  
+        
+    <screenshot>
+    <screeninfo
+>Kontoguide 4</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="accountwizard4.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Kontoguide 2</phrase>
+        </textobject>
+        <caption>
+        <para
+>Dialogrutan "Personliga inställningar"</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Se till att mata in all information riktigt. Markera <guilabel
+>Ladda ner alla brev för nerkopplad användning</guilabel
+> om du vill att brev ska vara tillgängliga när du inte har en Internet-anslutning (bara för &IMAP;). Klicka på knappen <guibutton
+>Nästa</guibutton
+> när du väl är färdig. Sidan <guilabel
+>Inställning färdig</guilabel
+> visas.</para>
+    
+    <para
+>Kontot har nu ställts in, och du kan klicka på knappen <guibutton
+>Slutför</guibutton
+> för att avsluta guiden och stänga fönstret, eller klicka på <guibutton
+>Detaljinformation...</guibutton
+> för att granska kontoinställningarna.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </step>
+</procedure>
+  
+  <para
+>Om du vill skapa ett konto manuellt, fortsätt läsa det här kapitlet. Annars kan du lugnt gå vidare till <link linkend="testing-your-setup"
+>Prova din inställning</link
+>.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>Snabbstart av manuell anpassning</title>
+  <screenshot>
+    <screeninfo
+>Inställningssidan</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="configure.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Inställningssidan</phrase>
+        </textobject>
+        <caption>
+        <para
+>Huvudinställningssidan i &kmail;</para>
+        </caption>
+      </mediaobject>
+  </screenshot>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  
+  <para
+>Fönstret <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/></imageobject
+></inlinemediaobject
+>Anpassa &kmail;...</guisubmenu
+></menuchoice
+> består av sex sidor: <guilabel
+>Konton</guilabel
+>, <guilabel
+>Utseende</guilabel
+>, <guilabel
+>Brev</guilabel
+>, <guilabel
+>Säkerhet</guilabel
+>, <guilabel
+>Diverse</guilabel
+> och <guilabel
+>Insticksprogram</guilabel
+>. </para>
+
+  <para
+>För att börja skicka och ta emot brev behöver du bara ändra några inställningar på sidan <guilabel
+>Konton</guilabel
+>. Här är en kortfattad sammanfattning av stegen som du måste utföra för att ställa in ett nytt e-postkonto. För en mer detaljerad beskrivning, se kapitlet <link linkend="configure-generalinfo"
+>Anpassa &kmail;</link
+>.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <sect2 id="setting-your-identity">
+    <title
+>Ange din identitet </title>
+
+    <para
+>För att skapa en ny identitet, klicka på knappen <guilabel
+>Lägg till...</guilabel
+> under fliken <guilabel
+>Identiteter</guilabel
+> som hör ihop med sidan <guilabel
+>Konton</guilabel
+>. Ett litet fönster dyker upp.</para>
+  
+    <screenshot>
+    <screeninfo
+>Dialogrutan Ny identitet</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Dialogrutan Ny identitet</phrase>
+        </textobject>
+        <caption>
+        <para
+>Lägg till en ny identitet</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    
+    <para
+>Du har några alternativ här. Ange det nya identitetsnamnet, och välj ett av de tillgängliga valen ("Med tomma fält" eller "Använd värden från systeminställningarna"). Klicka därefter på <guilabel
+>Ok</guilabel
+>. Sidan med identitetsinställningar visas.</para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <screenshot>
+    <screeninfo
+>Dialogrutan Ny identitet fortsätter</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="newidentity2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Dialogrutan Ny identitet fortsätter</phrase>
+        </textobject>
+        <caption>
+        <para
+>Anpassa den nya identiteten</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+    
+    <para
+>Inställningarna på fliken <guilabel
+>Allmänt</guilabel
+> är ganska enkla. Fyll i fältet <guilabel
+>Ditt namn</guilabel
+> med ditt fullständiga namn (t.ex. <userinput
+>Anna Johansson</userinput
+>) och fältet <guilabel
+>Organisation</guilabel
+> (valfritt) med lämplig information. Fyll därefter i fältet <userinput
+>E-postadress</userinput
+> med din e-postadress (t.ex. <userinput
+>anna@exempel.se</userinput
+>). </para>
+    <para
+>Om du använder <application
+>PGP</application
+> eller <application
+>GnuPG</application
+> kan du ställa in dina OpenPGP-nycklar och/eller SMIME-certifikat under fliken <link linkend="configure-identity-cryptography"
+><guilabel
+>Kryptografi</guilabel
+></link
+>. </para>
+    <para
+>Flikarna <guilabel
+>Avancerat</guilabel
+> och <guilabel
+>Mallar</guilabel
+> kan användas för att skräddarsy sättet som utgående brev från identiteten ska formateras och behandlas. Se <link linkend="configure-generalinfo"
+>Anpassa &kmail;</link
+> för mer detaljerade instruktioner. </para>
+    <para
+>Gå också eventuellt till fliken <guilabel
+>Brevfot</guilabel
+> och skriv in din brevfot, också kallad signatur. Det är en kort text som automatiskt läggs till i alla dina brev. Den har ingenting att göra med <emphasis
+>digitala signaturer</emphasis
+>. Du kanske också vill infoga en liten personlig avatar i utgående brevhuvuden via fliken <guilabel
+>Bild</guilabel
+>. </para>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+  <title
+>Ställa in ditt konto</title>
+
+  <para
+>Sidan <guilabel
+>Konton</guilabel
+> innehåller också inställningarna som talar om för &kmail; hur din e-post ska skickas och hämtas. Många av de här inställningarna kan variera mycket beroende på systemets inställningar och typen av nätverk där e-postservern finns. Om du inte vet vilka inställningar som du ska välja eller vad som ska skrivas i ett fält, kontakta din Internetleverantör eller systemadministratör.</para>
+</sect2>
+
+<sect2 id="sending-mail">
+  <title
+>Skicka brev</title>
+  <para
+>Här är ett sätt att skapa ett utgående e-postkonto</para>
+  
+  <screenshot>
+    <screeninfo
+>Val av utgående konto</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Val av utgående konto</phrase>
+        </textobject>
+        <caption>
+        <para
+>Välja typ av utgående e-postkonto</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+
+  <para
+>När du klickar på knappen <guibutton
+>Lägg till...</guibutton
+> under fliken <guilabel
+>Skicka</guilabel
+>, visas den här sidan. Om datorn är direktansluten till Internet är det troligast att du ska välja &SMTP;. Om du behöver använda &Sendmail; eller &Microsoft; <acronym
+>EWS</acronym
+>, konsultera kapitlet <link linkend="configure-accounts-sending"
+>Inställning</link
+>. Vilket utgående konto som du än väljer, markera rutan "Gör det här till utgående standardkonto". (Du kan enkelt ändra det senare om du har mer än ett e-postkonto.)</para>
+
+  <para
+>När du väljer alternativet <guilabel
+>&SMTP;</guilabel
+> och klickar på knappen <guibutton
+>Skapa och anpassa</guibutton
+>, visas följande inställningssida.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <screenshot>
+    <screeninfo
+>Dialogrutan för sändningsinställning</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="sending2.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Dialogrutan för sändningsinställning</phrase>
+        </textobject>
+        <caption>
+        <para
+>Anpassa ett &SMTP;-konto</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+  <para
+>Allra minst måste du ange webbadress för en e-postserver. Om e-posttjänsten kräver behörighetskontroll innan brev skickas, markera rutan "Servern kräver behörighetskontroll" och ange din e-postadress och lösenord. Om du vill att &kmail; ska komma ihåg lösenordet, markera rutan "Lagra SMTP-lösenord". Om du inte redan har skapat en plånbok, blir du tillfrågad om att tillhandahålla ett lösenord.</para>
+
+  <para
+>Verifiera att anslutningen till SMTP-servern fungerar genom att använda fliken <guilabel
+>Avancerat</guilabel
+> och klicka på knappen <guibutton
+>Detektera automatiskt</guibutton
+>. &kmail; frågar &SMTP;-servern om riktiga inställningar (kryptering, portnummer och metod för behörighetskontroll). Efter att riktiga inställningar har detekterats är det utgående kontot klart att användas. (Se <link linkend="configure-accounts-sending"
+>Inställning</link
+> om &SMTP;-anslutningen kräver ytterligare finjustering.)</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+
+</sect2>
+
+<sect2 id="receiving-mail">
+  <title
+>Hämta brev</title>
+
+  <para
+>Normalt är <guilabel
+>Lokala korgar</guilabel
+> (inkorg, utkorg, skickat, papperskorg, utkast och mallar) från &kmail;s huvudkorg fördefinierade under den här fliken. Genom att använda kombinationsrutan kan <guilabel
+>Hämtningsalternativ</guilabel
+> väljas för korgarna. (Observera att &kmail; använder Maildir-format för att lagra brev på hårddisken: varje brev lagras som en separat fil. Den exakta platsen för &kmail;s huvudkatalog beror på &Linux;-distributionen som är installerad, men den är troligen någonstans under ~/.local/share/.)</para>
+
+  <para
+>För att ställa in ett konto så att du kan ta emot e-post, tryck på knappen <guibutton
+>Lägg till...</guibutton
+> under fliken <guilabel
+>Ta emot</guilabel
+>. Välj "Eget konto..." i kombinationslistan. Du blir då tillfrågad om typ av e-postkonto. De flesta användare bör välja <guilabel
+>POP3 E-postserver</guilabel
+> eller <guilabel
+>IMAP E-postserver</guilabel
+>. Om du vill använda en lokal brevfil (<guilabel
+>Mbox</guilabel
+>), se <link linkend="faq-file-locking"
+>vanliga frågor om fillåsning</link
+>.</para>
+    
+  <screenshot>
+    <screeninfo
+>Dialogrutan för hämtningsinställning</screeninfo>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="receiving.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <phrase
+>Dialogrutan för hämtningsinställning</phrase>
+        </textobject>
+        <caption>
+        <para
+>Anpassa ett &IMAP;-konto</para>
+        </caption>
+      </mediaobject>
+    </screenshot>
+    <para
+>&nbsp;</para
+> <!-- whitespace -->  
+
+  <para
+>Om du väljer &POP3; eller &IMAP; visas kontoinställningsfönstret. Fyll först i fältet <guilabel
+>Kontonamn</guilabel
+> för att ge kontot ett namn. Du kan välja vilket namn som helst. <guilabel
+>Användarnamn</guilabel
+>, <guilabel
+>Lösenord</guilabel
+>, och <guilabel
+>Inkommande e-postserver</guilabel
+> (eller <guilabel
+>IMAP-server</guilabel
+>) ska fyllas i med lämplig information från din Internetleverantör eller systemadministratör. Om du vill att &kmail; ska titta efter nya brev automatiskt, markera rutan <guilabel
+>Aktivera periodisk kontroll av brev</guilabel
+> och ställ in tidsintervallet du önskar.</para>
+
+  <para
+>Klicka därefter på fliken <guilabel
+>Avancerat</guilabel
+> och sedan på knappen <guibutton
+>Detektera automatiskt</guibutton
+>. &kmail; frågar server för inkommande brev om riktiga inställningar för kontot (kryptering, portnummer och metod för behörighetskontroll).</para>
+
+  <sect3 id="receiving-mail-imap">
+    <title
+>Alternativ som bara gäller IMAP</title>
+
+    <para
+>Om du markerar <guilabel
+>Rensa automatiskt borttagna brev</guilabel
+> under inställningsfliken <guilabel
+>Avancerat</guilabel
+> rensar &kmail; breven som du tagit bort från servern så fort du lämnar den korgen. Annars markeras breven bara som borttagna och det är din sak att komprimera korgarna för hand.</para>
+    
+  </sect3>
+
+
+  <sect3 id="receiving-mail-pop3">
+    <title
+>Alternativ som bara gäller POP3</title>
+      
+    <para
+>Välj <guilabel
+>Lämna hämtade brev på servern</guilabel
+> under inställningsfliken <guilabel
+>Avancerat</guilabel
+> om du vill lämna breven på servern efter du har laddat ner dem. Det finns sju sätt att ange hur länge gamla brev behålls efter att de har laddats ner: för alltid (lämna alla alternativ avmarkerade), eller antal dagar, antal brev, maximal storlek på serversidans inkorg (välj en, två, eller alla tre). Om rutan inte är markerad, tas alla brev omedelbart bort från fjärrservern efter nerladdning är färdig.</para
+>  
+  
+    <para
+>Under fliken <guilabel
+>Avancerat</guilabel
+> kan du också välja <guilabel
+>Använd slussning för snabbare brevnedladdning</guilabel
+> om detta stöds av servern. Prova det för att avgöra att det fungerar på ett säkert sätt.</para>
+
+    <para
+>Den förvalda korgen för inkommande brev är <guilabel
+>inbox</guilabel
+>. Om du vill ändra det av någon anledning, kan du göra det med  <guilabel
+>Destinationskorg</guilabel
+>. Men vad du troligen vill ha är ett <link linkend="filters"
+>filter</link
+>.</para>
+
+    <para
+>Med <guilabel
+>Förkommando</guilabel
+> kan du ange ett program som &kmail; ska köra innan brev hämtas. Ange hela sökvägen (använd inte <quote
+>~</quote
+>), och observera att &kmail; inte fortsätter förrän programmet avslutats.</para>
+
+  </sect3>
+
+  <sect3 id="receiving-mail-imap-pop3">
+    <title
+>Alternativ både för IMAP och POP3</title>
+    
+    <para
+>Under fliken <guilabel
+>Ta emot</guilabel
+>, <guilabel
+>Hämtningsalternativ</guilabel
+>, välj <guilabel
+>Inkludera i manuell brevkontroll</guilabel
+> om du vill kontrollera det här kontot när du använder <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Kontrollera post</guimenuitem
+></menuchoice
+>. Om du avmarkerar alternativet, kan du fortfarande titta efter nya brev för det här kontot med <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Titta efter nya brev i &gt; </guimenuitem
+></menuchoice
+>.</para>
+    
+    <para
+>&kmail; stöder kryptering via <guilabel
+>SSL/TLS</guilabel
+> och <guilabel
+>STARTTLS</guilabel
+> (<guilabel
+>SSL/TLS</guilabel
+> är att föredra om det är tillgängligt).</para>
+
+    <para
+>&kmail; stöder nio metoder för behörighetskontroll:</para>
+
+    <itemizedlist>
+      <listitem
+><para
+><guilabel
+>Klartext</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>PLAIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>LOGIN</guilabel
+>, </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (rekommenderas om inte <guilabel
+>DIGEST-MD5</guilabel
+> är tillgänglig),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (rekommenderas),</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>NTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>GSSAPINTLM</guilabel
+>,</para
+></listitem>
+      <listitem
+><para
+><guilabel
+>APOP (också kallat Anonym)</guilabel
+>, och </para
+></listitem>
+      <listitem
+><para
+><guilabel
+>Gmail</guilabel
+>.</para
+></listitem>
+    </itemizedlist>
+
+    <para
+><guilabel
+>DIGEST-MD5</guilabel
+>, <guilabel
+>CRAM-MD5</guilabel
+> och <guilabel
+>APOP</guilabel
+> är säkra på egen hand. De övriga alternativen är bara säkra när de används tillsammans med <guilabel
+>SSL</guilabel
+> eller <guilabel
+>TLS</guilabel
+>. Du ska bara använda <guilabel
+>Klartext</guilabel
+> om servern inte stöder någon av de andra metoderna för behörighetskontroll. <guilabel
+>Anonym</guilabel
+> stöds för &IMAP; men inte <guilabel
+>APOP</guilabel
+>. Behörighetskontroll med <guilabel
+>Gmail</guilabel
+> är bara tillgänglig för &IMAP;-konton som använder Googles GMail-tjänst.</para>
+  
+    <para
+>Använd knappen <guibutton
+>Detektera automatiskt</guibutton
+> under fliken <guilabel
+>Avancerat</guilabel
+> för att automatiskt välja den mest säkra inställningen som stöds av servern.</para>
+
+    <para
+>Nu är du redo att ta emot brev. För &IMAP;, öppna bara korgarna i katalogträdet i &kmail;s huvudfönster. &kmail; ansluter då till din server och visar breven som den hittar. För POP3, använd <menuchoice
+><guimenu
+>Arkiv</guimenu
+> <guimenuitem
+>Kontrollera posten</guimenuitem
+></menuchoice
+>.</para>
+
+  </sect3>
+</sect2>
+
+<sect2 id="testing-your-setup">
+  <title
+>Prova din inställning</title>
+
+  <para
+>Först av allt, bör du skicka ett brev till dig själv för att prova din inställning. För att skicka ett brev, tryck antingen på <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>, välj knappen <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+>Nytt</guiicon
+> eller välj menyalternativet <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Nytt brev...</guimenuitem
+></menuchoice
+>. <link linkend="the-composer-window"
+>Brevfönstret</link
+> dyker upp. Fyll i fältet <guilabel
+>Till:</guilabel
+> med din e-postadress och skriv något i fältet <guilabel
+>Rubrik</guilabel
+>. Skicka brevet genom att välja <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Skicka brev</guimenuitem
+></menuchoice
+>.</para>
+
+  <para
+>För att kontrollera din e-post, välj <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+>Kontrollera posten</guimenuitem
+></menuchoice
+>. I nedre högra hörnet av huvudfönstret, visas en stapel som indikerar hur många brev som har laddats ner. Om du tar emot brevet du just skickade, gratulerar! Om du istället får ett felmeddelande medan du provar inställningarna, försäkra dig om att din nätverksanslutning fungerar och kontrollera dina inställningar igen med <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+></para>
+
+</sect2>
+</sect1>
+
+</chapter>

@@ -1,0 +1,621 @@
+<chapter id="credits-and-licenses">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+<othercredit role="translator"
+><firstname
+>Юрій</firstname
+><surname
+>Чорноіван</surname
+><affiliation
+><address
+><email
+>yurchor@ukr.net</email
+></address
+></affiliation
+><contrib
+>Переклад українською</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>10 вересня 2021 року</date>
+<releaseinfo
+>5.14.2 (Програми 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Подяки і ліцензування</title>
+
+<para
+>Авторські права на програму &kmail; належать розробникам &kmail;, 1997–2021</para
+>&underGPL; &underFDL; <sect1 id="team">
+<title
+>Команда розробників програми</title>
+<!-- please keep in sync with the authors list in the "Help ==
+> About KMail" widget. -->
+<!-- Refer to program module aboutdata.cpp and git log history when revising this section. -->
+
+<para
+>Нижче наведено перелік людей, які заслуговують на найбільшу подяку за створення &kmail; і розвиток програми з її народження у 1997 році до завершення раннього етапу її розвитку у <emphasis
+>приблизно</emphasis
+> 2005 році. Їх можна вважати батьками &kmail;. Багато з них усе ще беруть участь у розвитку коду і виправленні вад у проєкті.</para>
+
+<itemizedlist>
+<listitem
+><para
+>Laurent Montel (montel at kde org): супровідник</para
+></listitem>
+<listitem
+><para
+>Ingo Kl&ouml;cker (kloecker at kde org): колишній супровідник, усе ще активний</para
+></listitem>
+<listitem
+><para
+>Michael H&auml;ckel (haeckel at kde org): колишній супровідник</para
+></listitem>
+<listitem
+><para
+>Don Sanders (sanders at kde org): колишній співсупровідник</para
+></listitem>
+<listitem
+><para
+>Stefan Taferner (taferner at kde org): початковий автор</para
+></listitem>
+<listitem
+><para
+>Michael H&auml;ckel (haeckel at kde org): колишній супровідник</para
+></listitem>
+<listitem
+><para
+>Till Adam (till at adam-lilienthal de): колишній основний розробник</para
+></listitem>
+<listitem
+><para
+>Volker Krause (vkrause at adam-lilienthal de): основний розробник</para
+></listitem>
+<listitem
+><para
+>Carsten Burghardt (burghardt at kde org): колишній основний розробник</para
+></listitem>
+<listitem
+><para
+>Marc Mutz (mutz at kde org): колишній основний розробник</para
+></listitem>
+<listitem
+><para
+>Daniel Naber (daniel naber at t-online de): документація</para
+></listitem>
+<listitem
+><para
+>Zack Rusin (zack at kde org): колишній основний розробник</para
+></listitem>
+<listitem
+><para
+>Тойохіро Аскай (toyohiro at ksmplus com): підтримка японської мови</para
+></listitem>
+<listitem
+><para
+>Waldo Bastian (bastian at kde org): числення технічні виправлення</para
+></listitem>
+<listitem
+><para
+>Ryan Breen (ryan at ryanbreen com): сповіщення у системному лотку</para
+></listitem>
+<listitem
+><para
+>Steven Brown (swbrown at ucsd edu): латка для PGP</para
+></listitem>
+<listitem
+><para
+>Matthias Kalle Dalheimer (kalle at kde org): підтримка шифрування</para
+></listitem>
+<listitem
+><para
+>Matt Douhan (matt at fruitsalad org): удосконалив внутрішньопрограмну документацію</para
+></listitem>
+<listitem
+><para
+>Cristi Dumitrescu (cristid at chip ro)</para
+></listitem>
+<listitem
+><para
+>David Faure (faure at kde org): основний учасник розробки, усе ще активний</para
+></listitem>
+<listitem
+><para
+>Philippe Fremy (pfremy at chez com)</para
+></listitem>
+<listitem
+><para
+>Kurt Granroth (granroth at kde org): додавання підтримки maildir</para
+></listitem>
+<listitem
+><para
+>Andreas Gungl (a gungl at gmx de): підтримка PGP 6 і подальше покращення підтримки шифрування</para
+></listitem>
+<listitem
+><para
+>Steffen Hansen (hansen at kde org)</para
+></listitem>
+<listitem
+><para
+>Igor Janssen (rm at linux ru net)</para
+></listitem>
+<listitem
+><para
+>Matt Johnston (matt at caifex org)</para
+></listitem>
+<listitem
+><para
+>Christer Kaivo-oja (whizkid at telia com)</para
+></listitem>
+<listitem
+><para
+>Lars Knoll (knoll at kde org): початкова підтримка шифрування, підтримка PGP 2 і PGP 5</para
+></listitem>
+<listitem
+><para
+>J. Nick Koston (bdraco at darkorb net): підтримка GnuPG</para
+></listitem>
+<listitem
+><para
+>Stephan Kulow (coolo at kde org): основний учасник розробки</para
+></listitem>
+<listitem
+><para
+>Guillaume Laurent (glaurent at telegraph-road org)</para
+></listitem>
+<listitem
+><para
+>Sam Magnuson (sam at trolltech com)</para
+></listitem>
+<listitem
+><para
+>Matt Newell (newellm at proaxis com)</para
+></listitem>
+<listitem
+><para
+>Denis Perchine (dyp at perchine com)</para
+></listitem>
+<listitem
+><para
+>Samuel Penn (sam at bifrost demon co uk)</para
+></listitem>
+<listitem
+><para
+>Carsten Pfeiffer (pfeiffer at kde org): різноманітні і усякі виправлення вад</para
+></listitem>
+<listitem
+><para
+>Sven Radej (radej at kde org): удосконалення асинхронних процесів</para
+></listitem>
+<listitem
+><para
+>Mark Roberts (mark at taurine demon co uk)</para
+></listitem>
+<listitem
+><para
+>Wolfgang Rohdewald (wrohdewald at dplanet ch)</para
+></listitem>
+<listitem
+><para
+>Espen Sand (espen at kde org): удосконалив вікна налаштувань</para
+></listitem>
+<listitem
+><para
+>Aaron J. Seigo (aseigo at olympusproject org): технічні виправлення; інтеграція нотаток і календаря</para
+></listitem>
+<listitem
+><para
+>George Staikos (staikos at kde org): удосконалення ефективності та сумісності коду</para
+></listitem>
+<listitem
+><para
+>Szymon Stefanek (pragma at kvirc net): реалізував новий список повідомлень і нове дерево тек</para
+></listitem>
+<listitem
+><para
+>Jason Stephenson (panda at mis net)</para
+></listitem>
+<listitem
+><para
+>Jacek Stolarczyk (jacek at mer chemia polsl gliwice pl)</para
+></listitem>
+<listitem
+><para
+>Roberto S. Teixeira (maragato at kde org)</para
+></listitem>
+<listitem
+><para
+>Bo Thorsen (bo at sonofthor dk): багато цінних внесків</para
+></listitem>
+<listitem
+><para
+>Ronen Tzur (rtzur at shani net)</para
+></listitem>
+<listitem
+><para
+>Mario Weilguni (mweilguni at sime com)</para
+></listitem>
+<listitem
+><para
+>Wynn Wilkes (wynnw at calderasystems com)</para
+></listitem>
+<listitem
+><para
+>Robert D. Williams (rwilliams at kde org)</para
+></listitem>
+<listitem
+><para
+>Markus W&uuml;bben (markus wuebben at kde org): виправлення багатьох вад</para
+></listitem>
+<listitem
+><para
+>Karl-Heinz Zimmer (khz at kde org): основний учасник розробки</para
+></listitem>
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="credits">
+<title
+>Подяки — ранні роки</title>
+
+<para
+>Нижче наведено список людей, які допомагали у розвитку програми, коли вона усе ще була досить молодою. Їх можна вважати дружніми сусідами, які дали &kmail; уроки життя і піклувалися про цю дитину, коли вона торувала шляхи з батьківського будинку.</para>
+
+<itemizedlist>
+<listitem
+><para
+>Sam Abed (earlgreykde at pop netspace net au): обробка емоційок</para
+></listitem>
+<listitem
+><para
+>Joern Ahrens (joern ahrens at kdemail net): удосконалення контекстного меню «Позначити повідомлення як»</para
+></listitem>
+<listitem
+><para
+>Tom Albers (toma at kde org): супровід на Bugzilla</para
+></listitem>
+<listitem
+><para
+>Jaime Torres Amate (jtamate at gmail com): удосконалення швидкодії</para
+></listitem>
+<listitem
+><para
+>Albert Cervera Areny (albertca at hotpop com): додаткове стискання долучень</para
+></listitem>
+<listitem
+><para
+>Jonathan Armond (jon armond at gmail com)</para
+></listitem>
+<listitem
+><para
+>Patrick Audley (невідома): додавання стану спаму до форматованих заголовків</para
+></listitem>
+<listitem
+><para
+>Benjamin Azan (b azan at free fr): реалізація обробки станів завдання</para
+></listitem>
+<listitem
+><para
+>Davide Bettio (davide bettio at kdemail net): виправлення вад, чищення коду</para
+></listitem>
+<listitem
+><para
+>Pradeepto Bhattacharya (pradeepto at kde org): підтримка LDAP, супровід</para
+></listitem>
+<listitem
+><para
+>Bruno Bigras (bigras bruno at gmail com)</para
+></listitem>
+<listitem
+><para
+>Bertjan Broeksema (broeksema at kde org): основний учасник розробки Akonadi</para
+></listitem>
+<listitem
+><para
+>David Bryant (davidbryant at gvtc com): документація, лишається активним</para
+></listitem>
+<listitem
+><para
+>Albert Astals Cid (aacid at kde org): суттєвий учасник розробки, досі активний</para
+></listitem>
+<listitem
+><para
+>Frederick Emmott (fred87 at users sf net): підтримка антивіруса</para
+></listitem>
+<listitem
+><para
+>Christophe Giboudeaux (christophe at krop fr): основний учасник розробки, усе ще активний</para
+></listitem>
+<listitem
+><para
+>Sandro Giessl (sgiessl at gmail com): виправлення стилів віджетів</para
+></listitem>
+<listitem
+><para
+>Olivier Goffart (ogoffart at kde org): виправлення вад</para
+></listitem>
+<listitem
+><para
+>Severin Greimel (greimel-kde at fs-pw uni-muenchen de): декілька латок</para
+></listitem>
+<listitem
+><para
+>Shaheed Haque (shaheedhaque at gmail com): виправлення вад</para
+></listitem>
+<listitem
+><para
+>Ingo Heeskens (ingo at fivemile org): уможливлення завантаження зовнішніх даних для цілої теки</para
+></listitem>
+<listitem
+><para
+>Kurt Hindenburg (kurt hindenburg at gmail com): вилучення цілих гілок повідомлень</para
+></listitem>
+<listitem
+><para
+>Heiko Hund (heiko at ist eigentlich net): фільтри POP</para
+></listitem>
+<listitem
+><para
+>Torsten Kasch (tk at genetik uni-bielefeld de): латка для усування аварійного завершення роботи у Solaris</para
+></listitem>
+<listitem
+><para
+>Jason 'vanRijn' Kasper (vr at movingparts net): вибір шрифтів для нових, непрочитаних, важливих повідомлень</para
+></listitem>
+<listitem
+><para
+>Martijn Klingens (klingens at kde org): виправлення клавіатурної навігації на панелі швидкого пошуку</para
+></listitem>
+<listitem
+><para
+>Christoph Klünter (chris at inferno nadir org): виправлення перетягування зі скиданням з адресної книги до редактора повідомлень</para
+></listitem>
+<listitem
+><para
+>Martin Koller (kollix at aon at): суттєвий учасник розробки</para
+></listitem>
+<listitem
+><para
+>Tobias König (tokoe at kde org): основний учасник розробки</para
+></listitem>
+<listitem
+><para
+>Nikolai Kosjar (nikolai kosjar at qt io)</para
+></listitem>
+<listitem
+><para
+>Francois Kritzinger (невідома): удосконалення вікна налаштувань</para
+></listitem>
+<listitem
+><para
+>Danny Kukawka (danny kukawka at bisect de): удосконалення імпортування повідомлень</para
+></listitem>
+<listitem
+><para
+>Roger Larsson (roger larsson at norran net): додавання подробиць до повідомлення смужки стану</para
+></listitem>
+<listitem
+><para
+>Michael Leupold (lemma at confuego org)</para
+></listitem>
+<listitem
+><para
+>Thiago Macieira (thiago at kde org)</para
+></listitem>
+<listitem
+><para
+>Andras Mantia (amantia at kde org)</para
+></listitem>
+<listitem
+><para
+>Jonathan Marten (jjm at keelhaul me uk)</para
+></listitem>
+<listitem
+><para
+>Sergio Luis Martins (iamsergio at gmail com)</para
+></listitem>
+<listitem
+><para
+>Jeffrey McGee (jeffreym at cs tamu edu): латка для усування проблеми зі зміною розмірів вікна</para
+></listitem>
+<listitem
+><para
+>Thomas Moenicke (tm at php-qt org)</para
+></listitem>
+<listitem
+><para
+>Dirk Müller (mueller at kde org): оптимізація qt-cast; виправлення QUrl()</para
+></listitem>
+<listitem
+><para
+>Torgny Nyblom (nyblom at kde org): суттєвий учасник розробки</para
+></listitem>
+<listitem
+><para
+>OpenUsability (contact at openusability org): випробовування і вдосконалення зручності користування</para
+></listitem>
+<listitem
+><para
+>Mario Teijeiro Otero (emeteo at escomposlinux org)</para
+></listitem>
+<listitem
+><para
+>Kevin Ottens (ervin at kde org)</para
+></listitem>
+<listitem
+><para
+>Simon Perreault (nomis80 at nomis80 org): латка до налаштувань редактора повідомлень</para
+></listitem>
+<listitem
+><para
+>Jakob Petsovits (jpetso at gmx at)</para
+></listitem>
+<listitem
+><para
+>Romain Pokrzywka (romain at kdab net)</para
+></listitem>
+<listitem
+><para
+>Bernhard Reiter (bernhard at intevation de): керування проєктами &Auml;gypten і Kroupware</para
+></listitem>
+<listitem
+><para
+>Darío Andrés Rodríguez (andresbajotierra at gmail com)</para
+></listitem>
+<listitem
+><para
+>Edwin Schepers (yez at familieschepers nl): удосконалення підтримки &HTML;</para
+></listitem>
+<listitem
+><para
+>Jakob Schröter (cvsci at camaya net): підтримка X-Face</para
+></listitem>
+<listitem
+><para
+>Cornelius Schumacher (schumacher at kde org): основний учасник розробки</para
+></listitem>
+<listitem
+><para
+>Jan Simonson (jan at simonson pp se): тестування випробувальних версій підтримки PGP 6</para
+></listitem>
+<listitem
+><para
+>Paul Sprakes (kdecvs at sprakes co uk): виправлення вад, чищення контекстних меню</para
+></listitem>
+<listitem
+><para
+>Jarosław Staniek (staniek at kde org): портування на MS Windows®</para
+></listitem>
+<listitem
+><para
+>Will Stephenson (wstephenson at kde org): індикатор стану у системі обміну повідомленнями</para
+></listitem>
+<listitem
+><para
+>Hasso Tepper (hasso at kde org): удосконалення компонування редактора отримувачів</para
+></listitem>
+<listitem
+><para
+>Frank Thieme (frank at fthieme net): виправлення вад</para
+></listitem>
+<listitem
+><para
+>Patrick S. Vogt (patrick vogt at unibas ch): часовий штамп для повідомлень стану «передавання завершено»</para
+></listitem>
+<listitem
+><para
+>Jan-Oliver Wagner (jan at intevation de): керування проєктами &Auml;gypten і Kroupware</para
+></listitem>
+<listitem
+><para
+>Wolfgang Westphal (wolfgang westphal at gmx de): декілька ключів шифрування для однієї адреси</para
+></listitem>
+<listitem
+><para
+>Allen Winter (winter at kde org): основний учасник розробки, усе ще активний</para
+></listitem>
+<listitem
+><para
+>Urs Wolfer (uwolfer at kde org): удосконалення обробки піктограм і зображень</para
+></listitem>
+<listitem
+><para
+>Thorsten Zachmann (t zachmann at zagge de): фільтри POP</para
+></listitem>
+<listitem
+><para
+>Thomas Zander (zander at kde org): виправлення багатьох вад у &IMAP;</para
+></listitem>
+
+</itemizedlist>
+
+</sect1>
+
+<sect1 id="documentation">
+<title
+>Документація</title>
+
+<para
+>Оновлення до версії &kmail; 5.14.2 виконане &David.Bryant; &David.Bryant.mail;.</para>
+
+<para
+>Авторами оновлення до версії &kmail; 4.11 є &Laurent.Montel; &Laurent.Montel.mail; та &Scarlett.Clark; &Scarlett.Clark.mail;.</para>
+
+<para
+>Автори оновлення для &kmail; 1.7 — I&Ingo.Kloecker; &Ingo.Kloecker.mail; і &Marc.Mutz; &Marc.Mutz.mail;. Глава щодо майстра боротьби зі спамом — &Andreas.Gungl; &Andreas.Gungl.mail;. Розділ щодо журналу фільтрування — &Andreas.Gungl; &Andreas.Gungl.mail; and &Brad.Hards; &Brad.Hards.mail;. Додаткові зміни — &Daniel.Naber; &Daniel.Naber.mail;.</para>
+
+<para
+>Оновлення для &kmail; від 1.2 до 1.5 — &Daniel.Naber; &Daniel.Naber.mail;, глава про <application
+>OpenPGP</application
+> — &Andreas.Gungl; &Andreas.Gungl.mail; і &Ingo.Kloecker; &Ingo.Kloecker.mail;, глава щодо фільтрів повідомлень — &Marc.Mutz; &Marc.Mutz.mail;, глава щодо фільтрів отримання — &Thorsten.Zachmann; &Thorsten.Zachmann.mail;. Інші частини підручника було написано іншими розробниками &kmail;.</para>
+
+<para
+>Автор документації для &kmail; 1.0 — &David.Rugge; &David.Rugge.mail;. Початкова документація — &Bernd.Johannes.Wuebben; &Bernd.Johannes.Wuebben.mail;, Robert Williams <email
+>rwilliams@kde.org</email
+> (редактор).</para>
+
+<para
+>Дякуємо Michael Elkins <email
+>me@cs.hmc.edu</email
+> за його чудовий опис різноманітних форматів поштових повідомлень &UNIX; у документації до програми <application
+>Mutt</application
+>.</para>
+
+<para
+>Дякуємо наведеним нижче людям за надану інформацію щодо використання поштових скриньок інших клієнтів електронної пошти у &kmail;:</para>
+
+<itemizedlist>
+<listitem
+><para
+>Nik Gaffney <email
+>nik@f0.am</email
+> (<application
+>Mailsmith</application
+>)</para
+></listitem>
+<listitem
+><para
+>David McMillen <email
+>mcmillen@math.bu.edu</email
+> і Mendel Mobach <email
+>mendel@mobach.nl</email
+> (пошта &Netscape;)</para
+></listitem>
+<listitem
+><para
+>Ed Shapard <email
+>shapard@bigfoot.com</email
+> (пошта <application
+>Pegasus</application
+>)</para
+></listitem>
+<listitem
+><para
+>Ray Muir <email
+>rjmuir@ibm.net</email
+> (Forte <application
+>Agent</application
+>)</para
+></listitem>
+</itemizedlist>
+
+<para
+>Переклад українською: Юрій Чорноіван <email
+>yurchor@ukr.net</email
+></para
+> 
+
+</sect1>
+</chapter>

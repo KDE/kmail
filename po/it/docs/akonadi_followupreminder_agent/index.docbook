@@ -5,7 +5,8 @@
 >Agente per gli avvisi delle azioni da seguire</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Italian "INCLUDE">
+  <!ENTITY % Italian "INCLUDE"
+> 
 ]>
 
 <article id="followupreminder" lang="&language;">

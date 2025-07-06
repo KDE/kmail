@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Slovenian "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Priročnik za pregledovalnik datotek TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><contrib
+>Prevod</contrib
+><firstname
+>Mojca</firstname
+><surname
+>Rob</surname
+><affiliation
+><address
+><email
+>mojca.rob@gmail.com</email
+></address
+></affiliation
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>27. 7. 2016</date>
+<releaseinfo
+>5.3.40 (Aplikacije 16.08)</releaseinfo>
+
+<abstract
+><para
+>Pregledovalnik datotek TNEF je aplikacija za <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+> poštne priponke.</para
+></abstract>
+
+<keywordset>
+<keyword
+>pošta</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Uvod</title>
+
+	<para
+>Pregledovalnik datotek TNEF omogoča enostavno obdelavo priponk pošte v formatu TNEF. Te priponke so običajno v pošti, ki prihaja iz <trademark class="registered"
+>Microsoftovih</trademark
+> poštnih strežnikov in vsebuje lastnosti pošte ter dejanske priponke.</para>
+		<para
+>Priponka v formatu TNEF se najpogosteje imenuje <filename
+>winmail.dat</filename
+> ali <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Glavno okno TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Glavno okno TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Ta uporabniški program omogoča izvajanje različnih operacij na teh priponkah:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Ogled/odpiranje priponk s povezanimi aplikacijami.</para
+></listitem>
+		<listitem
+><para
+>Izvleci dejanske priponke</para
+></listitem>
+		<listitem
+><para
+>Prikaz lastnosti sporočila (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Ogled/izvleček oblikovanega besedila sporočila (v formatu RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; samodejno prikaže vsebino priponke TNEF. Priponke lahko odprete ali shranite z dejanji v kontekstnem meniju.</para>
+<screenshot>
+<screeninfo
+>TNEF priponka v &kmail;-u</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>TNEF priponka v &kmail;-u</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Zasluge in licenca</title>
+
+	<para
+>Pregledovalnik datotek TNEF (KTnef)</para>
+
+	<para
+>Avtorske pravice programa 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Avtorske pravice programa 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Prevod: Mojca Rob<email
+>mojca.rob@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

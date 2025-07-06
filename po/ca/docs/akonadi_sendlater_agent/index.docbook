@@ -5,7 +5,8 @@
 >Agent d'enviament més tard</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Catalan  "INCLUDE">
+  <!ENTITY % Catalan  "INCLUDE"
+> 
 ]>
 
 <article id="sendlateragent" lang="&language;">

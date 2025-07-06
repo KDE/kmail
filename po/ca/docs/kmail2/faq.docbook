@@ -50,7 +50,7 @@
 >Mozilla Firefox</guimenuitem
 ></menuchoice
 >.</para>
-
+    
     <para
 >Si sou un administrador i voleu establir aquesta opció de manera automàtica per als usuaris, feu-ho així.</para>
     <itemizedlist>
@@ -371,18 +371,18 @@
 ><guimenu
 >&systemsettings;</guimenu
 ><guisubmenu
->Application
+>Application 
 Appearance</guisubmenu
 ><guimenuitem
 >Colors</guimenuitem
 ><guimenuitem
 >Colors</guimenuitem
 ></menuchoice
->, for each color
+>, for each color 
 set except <guilabel
 >Common Colors</guilabel
 > (which doesn't have it), change the <guilabel
->Alternate
+>Alternate 
 Background</guilabel
 > to be the same as the <guilabel
 >Normal Background</guilabel
@@ -393,16 +393,16 @@ Background</guilabel
 > and <emphasis
 >Mageia</emphasis
 > doesn't use the name <guilabel
->System
+>System 
 Settings</guilabel
 >.  As in <guilabel
 >KControl</guilabel
 >, the KDE 3 control centre, they name it <quote
->Configure your
+>Configure your 
 Desktop</quote
 > to distinguish it from <quote
 >Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control
+>, a.k.a. the Mandriva/Mageia Control 
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry
@@ -442,7 +442,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 > Esteu configurant un ordinador nou i voleu transferir-hi tot el correu. I decidiu copiar-ho tot a un dispositiu USB. La tasca comença, després obteniu un missatge d'error:</para>
     <screen
 >No s'ha pogut copiar ............ Argument no vàlid</screen>
-
+    
     <para
 ><emphasis
 >Solució:</emphasis
@@ -520,7 +520,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >GnuPG</application
 >, sobretot en els casos del canvi entre diferents versions.</para>
       </listitem>
-
+      
       <listitem>
         <para
 >El &kmail; no encriptarà els missatges amb una clau pública que no sigui de confiança (sense signar). Si voleu encriptar amb una clau, haureu de comprovar la identitat del seu propietari i tan sols signar-la amb la vostra clau secreta si aquesta és bona. Si no voleu o no podeu comprovar la identitat del propietari de la clau, però així i tot voleu encriptar el missatge, si us plau, signeu la clau local amb <userinput
@@ -533,12 +533,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></userinput
 >.</para>
       </listitem>
-
+      
       <listitem>
         <para
 >El fet de confiar en una clau pública no de confiança sense comprovar-la no és una bona idea.</para>
       </listitem>
-
+      
       <listitem>
         <para
 >A partir del GnuPG 1.0.7, haureu d'establir la vostra pròpia clau com de màxima confiança del propietari («ownertrust»): això només afectarà on ho feu.</para>
@@ -580,7 +580,8 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >Exportador de les dades PIM</ulink
 > per a fer una còpia de seguretat del correu i de la configuració.</para
 ><para
->&nbsp;</para>
+>&nbsp;</para
+> 
   </answer>
 </qandaentry>
 

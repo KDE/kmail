@@ -26,17 +26,17 @@
 <sect1 id="introduction-to-akonadi">
 <title
 >Introducció a l'&akonadi;</title>
-
+    
   <para
 >El &kmail; ha estat sota desenvolupament actiu des de 1997. Al llarg dels anys han sorgit un munt d'errors. Molts d'aquests s'han resolt. Si teniu curiositat per algun d'aquests errors antics, consulteu <ulink url="https://userbase.kde.org/KMail/FAQs_Hints_and_Tips/ca"
 >KMail/Preguntes més freqüents (PMF) consells i trucs</ulink
 > en el wiki de &kde; UserBase. O visiteu la <ulink url="https://bugs.kde.org"
 >pàgina principal de seguiment d'errors del &kde;</ulink
 > per a aprendre sobre els errors d'una collita més recent.</para>
-
+  
   <para
 >En l'actualitat (2021), molts dels problemes que s'estan experimentant amb el &kmail; involucren el servidor &akonadi;. L'&akonadi; és un programa auxiliar que funciona com a intermediari entre el &kmail; (més totes les altres aplicacions &PIM;) i un dimoni de propòsit general per a la base de dades (el més habitual és «mysqld»). També facilita les comunicacions entre processos entre les diverses peces de les aplicacions &PIM;. Depenent de la manera com configureu el sistema, l'&akonadi; es pot iniciar durant el procés d'inici/inici de la sessió. O podria no iniciar-se fins que invoqueu un programa d'aplicació &PIM; (com el &kmail;, &kaddressbook; o &kontact;).</para>
-
+  
   <para
 >Hi ha dos programes d'aplicació que permeten que un interactuï directament amb el servidor &akonadi;: <code
 >akonadictl</code
@@ -46,7 +46,7 @@
   <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+  
     <sect2 id="intro-to-akonadictl">
     <title
 >El programa de control «akonadictl»</title>
@@ -70,14 +70,14 @@
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >La captura de pantalla anterior il·lustra una de les ordres que podeu emprar amb el programa <code
 >akonadictl</code
 >. Aquí hi ha totes les opcions que reconeix <code
 >akonadictl</code
 >.</para>
-
+    
     <para
 ><screen
 >~$ akonadictl start</screen
@@ -107,7 +107,7 @@
 >~$ akonadictl fsck</screen
 >Realitza una comprovació de coherència dels fitxers. La sortida d'aquesta ordre pot ser força voluminosa, especialment si heu afegit les vostres pròpies carpetes al &kmail;. Utilitza aquesta versió de l'ordre (fent una canonada de la sortida a través de grep) per a verificar que la vostra base de dades d'&akonadi; està saludable, sense produir una gran quantitat de sortida estranya.</para>
     <para>
-
+        
 <screen
 >~ $ akonadictl fsck 2
 >&amp;1 | grep ^Found
@@ -130,7 +130,7 @@ Found 0 dirty items.</screen
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+    
     <sect2 id="intro-to-akonadiconsole">
     <title
 >El programa «akonadiconsole»</title>
@@ -154,12 +154,12 @@ Found 0 dirty items.</screen
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >El programa <code
 >akonadiconsole</code
 > proporciona dotze «finestres» diferents amb el funcionament intern de les aplicacions &PIM;. Aquí hi ha un breu resum de les vistes disponibles.</para>
-
+    
     <variablelist>
       <varlistentry id="ak-console-agents">
         <term
@@ -171,7 +171,7 @@ Found 0 dirty items.</screen
 >Aquí podeu veure una llista dels agents d'usuari (processadors).</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-browser">
         <term
 >La pestanya <guilabel
@@ -182,7 +182,7 @@ Found 0 dirty items.</screen
 >Aquesta pestanya ofereix un resum de les diverses col·leccions de dades que manté l'&akonadi;, organitzada com un arbre jeràrquic que mostra quants elements resideixen a cada col·lecció.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-debugger">
         <term
 >La pestanya <guilabel
@@ -193,7 +193,7 @@ Found 0 dirty items.</screen
 >Aquí podeu activar i desactivar la depuració, així com veure el registre dels missatges de depuració.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-logging">
         <term
 >La pestanya <guilabel
@@ -204,7 +204,7 @@ Found 0 dirty items.</screen
 >Aquesta pestanya permet veure els missatges emesos pels diversos components de l'&akonadi;.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-db-browser">
         <term
 >La pestanya <guilabel
@@ -215,7 +215,7 @@ Found 0 dirty items.</screen
 >Utilitzeu aquesta pestanya per a donar una ullada dins de la base de dades MySQL. Hi ha moltes taules diferents.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-db-console">
         <term
 >La pestanya <guilabel
@@ -226,7 +226,7 @@ Found 0 dirty items.</screen
 >Aquí podreu consultar la base de dades MySQL.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-query">
         <term
 >La pestanya <guilabel
@@ -237,7 +237,7 @@ Found 0 dirty items.</screen
 >Utilitzeu aquesta pestanya per a activar i desactivar la depuració de la consulta amb la base de dades. El &kmail; consulta la base de dades MySQL moltes vegades en uns pocs segons -la sortida pot ser voluminosa-.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-tracker">
         <term
 >La pestanya <guilabel
@@ -248,7 +248,7 @@ Found 0 dirty items.</screen
 >Les aplicacions &PIM; realitzen diverses funcions en iniciar «treballs». Utilitzeu aquesta pestanya per a activar i desactivar el seguiment dels treballs.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-scheduler">
         <term
 >La pestanya <guilabel
@@ -261,7 +261,7 @@ Found 0 dirty items.</screen
 >.</para
 ></listitem>
       </varlistentry>
-
+  
       <varlistentry id="ak-console-notif-monitor">
         <term
 >La pestanya <guilabel
@@ -272,7 +272,7 @@ Found 0 dirty items.</screen
 >Utilitzeu aquesta pestanya per a vigilar les notificacions enviades per diversos recursos d'&akonadi;.</para
 ></listitem>
       </varlistentry>
-
+      
       <varlistentry id="ak-console-search">
         <term
 >La pestanya <guilabel
@@ -283,7 +283,7 @@ Found 0 dirty items.</screen
 >Aquesta pestanya proporciona una funció de cerca genèrica. Les cerques es poden restringir a Calendari, Contacte, Correu electrònic o Nota.</para
 ></listitem>
       </varlistentry>
-
+      
       <varlistentry id="ak-console-monitors">
         <term
 >La pestanya <guilabel
@@ -295,9 +295,9 @@ Found 0 dirty items.</screen
 ></listitem>
       </varlistentry>
     </variablelist>
-
+    
     </sect2>
-
+    
 </sect1>
 
 <!-- <sect1 id="kmail2-doesnt-send-mail">
@@ -735,7 +735,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 
   <para
 >Hi ha almenys dues raons possibles per a això. Aquí hi ha algunes solucions.</para>
-
+  
   <variablelist>
     <varlistentry>
       <term
@@ -761,7 +761,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 >Si això no funciona, intenteu la solució 2 (a continuació).</para>
       </listitem>
     </varlistentry>
-
+    
     <varlistentry>
       <term
 >Solució 2</term>
@@ -856,7 +856,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 >(el mateix menú contextual) o torneu a iniciar les coses com s'esmenta en la solució alternativa 2 en <link linkend="unable-to-fetch-item-from-backend"
 >el tema anterior</link
 > a aquest.</para>
-
+    
   <para
 ><note
 ><para
@@ -865,12 +865,12 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 > pot ser molt útil per a un nombre de situacions, perquè mostra tots els «agents», els components separats de dorsal del &kmail;. Els podeu aturar i iniciar, posar-los en mode fora de línia, avortar les accions en curs, &etc; Pot ser molt útil quan el &kmail; es comporta de forma horrible o estranya.</para
 ></note
 ></para>
-
+    
   <para
 >De vegades, l'<guilabel
 >Agent distribuïdor de correu</guilabel
 > no funciona perquè el dimoni de &DBus; (una instal·lació en l'àmbit del sistema per a les comunicacions entre processos) no funciona correctament. La vostra millor aposta en aquesta circumstància és senzillament reiniciar el sistema. El dimoni de &DBus; és un dels primers processos iniciats quan inicieu una sessió a l'escriptori &kde;, de manera que no es pot aturar i reiniciar amb facilitat. Tot l'entorn &plasma; depèn d'això.</para>
-
+    
 </sect1>
 
 <sect1 id="resource-conflict-error">
@@ -918,10 +918,10 @@ Found 0 dirty items.</screen
 >grep</code
 > per a fer això. <screen
 >~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
---defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/
---socket=/run/user/1000/akonadi/mysql.socket
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
+--defaults-file=/home/usuari/.local/share/akonadi/mysql.conf
+--datadir=/home/usuari/.local/share/akonadi/db_data/ 
+--socket=/run/user/1000/akonadi/mysql.socket 
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen
 ></para>
@@ -953,9 +953,9 @@ MariaDB [akonadi]> \q                                                  &lt;==
 Bye</screen
 > Les tres ordres de MySQL són «use akonadi;», «delete from pimitemtable where remoteid is NULL;» i «\q». Després de dir «mysql --socket= ...» estareu en un diàleg amb el servidor MySQL (també conegut com a «MariaDB»), el qual proporciona un missatge. Per a més claredat, aquí es presenta tot el diàleg. En la il·lustració anterior, les línies d'entrada de l'usuari estan marcades amb «&lt;==».</para
 ></step>
-
+  
 </procedure>
-
+  
   <para
 >Quan reinicieu el &kmail;, aquests molestos missatges duplicats hauran marxat. Senzillament eren fantasmes causats pels punters nuls en les taules de la base de dades MySQL.</para>
 
@@ -964,7 +964,7 @@ Bye</screen
 <sect1 id="cleaning-aux-storage">
 <title
 >Mantenir netes les àrees d'emmagatzematge auxiliar del &kmail;</title>
-
+    
   <para
 >El &kmail; emmagatzema dades en diversos llocs diferents del sistema. La majoria d'aquests llocs estan en algun lloc dins de la carpeta <filename
 >~/.local/share/</filename
@@ -996,7 +996,7 @@ Akonadi.error.old  db_misc  file_lost+found  search_db
 > contenen les taules de base de dades MySQL reals. A <filename
 >db_data</filename
 > també hi ha un parell de fitxers de registre MySQL que poden ser útils quan actuï l'&akonadi;.</para>
-
+  
   <para
 >Les dues carpetes <filename
 >file_db_data</filename
@@ -1036,7 +1036,7 @@ Found 0 items without RID.
 Found 750 dirty items.</screen
 > <!-- Can't indent here ... messes up the output.  -->
   </para>
-
+  
   <para
 >L'etiqueta «brut» en un element a «pimitemtable» (una de les taules a la base de dades d'&akonadi;) s'utilitza per a controlar certs aspectes del processament asíncron. S'estableix a cert quan hi ha operacions pendents per a un missatge de correu electrònic en particular. La majoria de les vegades, l'etiqueta «brut» s'esborra un o dos segons més tard, quan finalitza l'operació pendent.</para>
 
@@ -1053,7 +1053,7 @@ Found 750 dirty items.</screen
 >akonadictl stop</code
 >.</para
 ></step>
-
+    
     <step
 ><para
 >Feu una còpia de seguretat de tots els vostres missatges de correu electrònic. Possiblement podreu utilitzar l'<ulink url="help:/pimdataexporter"
@@ -1064,7 +1064,7 @@ Found 750 dirty items.</screen
 >local-mail-save</filename
 >. Però és més segur tenir una còpia de seguretat dels missatges abans de continuar.</para
 ></step>
-
+      
     <step
 ><para
 >També hauríeu de fer una còpia de seguretat dels filtres que heu creat i assegurar-vos que coneixeu com restaurar qualsevol entrada de carpeta de correu <guilabel
@@ -1075,7 +1075,7 @@ Found 750 dirty items.</screen
 >Plantilles</guilabel
 > personalitzada associada amb les vostres identitats en el &kmail;. El pas següent eliminarà totes les carpetes de correu personalitzades i haureu d'apedaçar algunes coses després que l'&akonadi; reconstrueixi les taules de la base de dades.</para
 ></step>
-
+      
     <step
 ><para
 >Ara suprimiu totes les carpetes dins de la carpeta <filename
@@ -1084,14 +1084,14 @@ Found 750 dirty items.</screen
 >local-mail-save</filename
 >. Després inicieu el programa &kmail;. Això obligarà a l'&akonadi; a netejar totes les entrades de la taula de la base de dades associades amb els missatges de correu electrònic. Veureu breument els seus noms de carpeta antics, però aquests desapareixeran quan l'&akonadi; acabi de suprimir tots els elements «bruts» (així com tots els nets).</para
 ></step>
-
+      
     <step
 ><para
 >Sortiu del &kmail; i atureu el servidor &akonadi; com s'explica en el pas 1, després restaureu la còpia de seguretat dels vostres missatges (creada en el pas 2) a la carpeta <filename
 >~/.local/share/local-mail/</filename
 >.</para
 ></step>
-
+      
     <step
 ><para
 >Inicieu el &kmail; una altra vegada i forceu a l'&akonadi; perquè torni a sincronitzar la base de dades. La forma més fàcil de fer això és amb l'element de menú o drecera <menuchoice
@@ -1108,14 +1108,14 @@ Found 750 dirty items.</screen
 ></menuchoice
 >. l'&akonadi; tornarà a sincronitzar automàticament totes les carpetes quan recuperi el correu. Això trigarà diversos minuts a completar-se, depenent de quants missatges hàgiu desat en les carpetes del &kmail;. Però quan es completi el procés, tots els elements «bruts» hauran marxat.</para
 ></step>
-
+      
     <step
 ><para
 >Finalment, voldreu restaurar les regles de filtre de correu en el pas 3 i comproveu que estiguin configurats tots els elements de carpeta personalitzada (carpeta de correu <guilabel
 >Enviats</guilabel
 >, &etc;) per a les vostres identitats. També haureu de restablir les propietats de la carpeta personalitzada que hàgiu configurat, i probablement obtindreu un munt de notificacions de «Missatge sense llegir» que haureu d'atendre. Però les taules en la base de dades d'&akonadi; estaran netes i brillants una altra vegada!</para
 ></step>
-
+    
   </procedure>
 
 

@@ -5,7 +5,8 @@
 >Agent d'arxivat de correus</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Catalan  "INCLUDE">
+  <!ENTITY % Catalan  "INCLUDE"
+> 
 ]>
 
 <article id="archivemailagent" lang="&language;">

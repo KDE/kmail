@@ -574,7 +574,7 @@
 > nei «Fondamentali di &kde;». Le voci qui descritte sono specifiche di &kmail;.</para>
 
 <variablelist>
-
+    
 <varlistentry id="reader-edit-copy-folder">
   <term
 ><menuchoice
@@ -827,7 +827,7 @@
   <listitem
 ><para
 >Questo sotto-menu ha le opzioni seguenti per modificare l'aspetto dell'elenco dei messaggi.</para>
-
+    
     <variablelist>
     <varlistentry id="reader-view-messagelist-sorting">
       <term
@@ -852,7 +852,7 @@
 >Per mittente/destinatario in modo intelligente</guilabel
 > mostrerà il destinatario quando consulti la tua cartella di posta in uscita, e mostrerà il mittente quando consulti la posta in arrivo.</para
 ></listitem>
-
+    
             <listitem
 ><para
 ><guilabel
@@ -865,7 +865,7 @@
 ></listitem>
           </itemizedlist>
         </listitem>
-
+        
         <listitem
 ><para
 ><guilabel
@@ -883,7 +883,7 @@
         </itemizedlist>
       </listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-aggregation">
       <term
 ><menuchoice
@@ -904,7 +904,7 @@
 >) per maggiori informazioni sull'aggregazione.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-theme">
       <term
 ><menuchoice
@@ -925,7 +925,7 @@
 >) per maggiori informazioni sui temi.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-create-new-tab">
       <term
 ><menuchoice
@@ -944,7 +944,7 @@
 >Crea una nuova scheda nella barra degli strumenti delle schede. Questa scheda punterà alla cartella che stai visualizzando quando l'opzione è selezionata. Se la barra degli strumenti delle schede non è visibile, questa opzione la creerà. La barra degli strumenti delle schede può essere utile se hai molte cartelle, ma accedi regolarmente solo ad alcune.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-activate-next-tab">
       <term
 ><menuchoice
@@ -961,7 +961,7 @@
 >Apre la cartella associata con la scheda successiva nella barra degli strumenti delle schede.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-activate-previous-tab">
       <term
 ><menuchoice
@@ -978,7 +978,7 @@
 >Apre la cartella associata con la scheda precedente nella barra degli strumenti delle schede.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-move-tab-left">
       <term
 ><menuchoice
@@ -991,7 +991,7 @@
 >Riordina le schede nella barra degli strumenti delle schede spostando la scheda attiva a sinistra. Se questa scheda è già all'estremità sinistra, sarà spostata all'estremità destra.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-move-tab-right">
       <term
 ><menuchoice
@@ -1004,7 +1004,7 @@
 >Riordina le schede nella barra degli strumenti delle schede spostando la scheda attiva a destra. Se questa scheda è già all'estremità destra, sarà spostata all'estremità sinistra.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-close-tab">
       <term
 ><menuchoice
@@ -2184,7 +2184,7 @@
 >Nome della mailing list: &gt;</guimenuitem
 ></menuchoice
 ></term>
-
+  
   <listitem
 ><para
 >Offre diverse opzioni per i messaggi di mailing list.</para>
@@ -2199,7 +2199,7 @@
 ><!-- add whitespace -->
   <para
 >Le opzioni seguenti sono disponibili nelle cartelle di mailing list:</para>
-
+  
   <itemizedlist>
     <listitem
 ><para
@@ -2258,7 +2258,7 @@
 >.</para
 ></listitem>
   </itemizedlist>
-
+  
   <para
 >&nbsp;</para
 ><!-- add whitespace --></listitem>
@@ -2382,7 +2382,7 @@
     <entry
 >Questo stato non può essere automaticamente impostato da &kmail;. Si può usare liberamente per marcare i messaggi che sono in qualche modo importanti.</entry
 ></row>
-
+ 
     <row>
     <entry
 ><guimenuitem
@@ -2460,7 +2460,7 @@
 >Significato</entry
 ></row
 ></thead>
-
+    
     <tbody>
     <row>
     <entry
@@ -2506,7 +2506,7 @@
     <entry
 >Questo stato non può essere automaticamente impostato da &kmail;. Si può usare liberamente per marcare le conversazioni che sono in qualche modo importanti.</entry
 ></row>
-
+    
     <row>
     <entry
 ><guimenuitem
@@ -2536,7 +2536,7 @@
     <entry
 >Questo stato non può essere impostato automaticamente da &kmail;. Si può usare per marcare le conversazioni che sono compiti (&eg; una lista di cose da fare).</entry
 ></row>
-
+    
     <row>
     <entry
 ><guimenuitem
@@ -2572,7 +2572,7 @@
 ></inlinemediaobject
 > per mostrare le categorie filtrabili).</entry
 ></row>
-
+    
     <row>
     <entry
 ><guimenuitem
@@ -2588,7 +2588,7 @@
 >Permette di ignorare intere conversazioni.</entry
 ></row>
     </tbody>
-
+    
   </tgroup
 ></informaltable>
   <para
@@ -2734,7 +2734,8 @@
 >&nbsp;</para
 ></listitem>
 </varlistentry>
-</variablelist>
+</variablelist
+> 
 
 </sect2>
 
@@ -3317,7 +3318,7 @@
 > to add a new contact your addressbook.</para
 ></listitem>
 </varlistentry
-> These options not available in 5.14.2 @dcb2021088. -->
+> Thes options not available in 5.14.2 @dcb2021088. -->
 
 <varlistentry id="composer-message-send-mail">
   <term
@@ -3765,7 +3766,7 @@
 >Convert the selected text to lowercase.</para
 ></listitem>
 </varlistentry
-> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
 
 <varlistentry id="composer-edit-insert-special-character">
   <term
@@ -3781,7 +3782,7 @@
 >Ti permette di inserire un carattere speciale nella posizione del cursore. Un gran numero di caratteri Unicode sono resi disponibili. Questa opzione è fornita solo se l'estensione <guimenuitem
 >Inserisci carattere speciale</guimenuitem
 > è stata attivata.</para>
-
+  
   <para
 >Questa voce di menu è stata spostata nel menu <guimenu
 >Inserisci</guimenu
@@ -3969,7 +3970,7 @@
 >, se necessario. Consulta <link linkend="composer-headers"
 >Intestazioni di composizione</link
 > per ulteriori dettagli sulle intestazioni dei messaggi.</para>
-
+  
 <para
 >&nbsp;</para>
 
@@ -4009,7 +4010,7 @@
 >&nbsp;</para
 ></listitem>
   </varlistentry>
-
+  
 </variablelist>
 
 </sect2>
@@ -4525,7 +4526,7 @@
 >Se la voce di menu che stai cercando non è presente qui, consulta il <ulink url="help:/fundamentals/menus.html#menus-tools"
 >menu Strumenti</ulink
 > dei «Fondamentali di &kde;». Le voci qui descritte sono specifiche di &kmail;.</para>
-
+  
 <variablelist>
   <varlistentry id="composer-tools-select-recipients">
   <term
@@ -4669,7 +4670,7 @@
 >Se la voce di menu che cerchi non è presente, consulta il <ulink url="help:/fundamentals/menus.html#menus-settings"
 >menu Impostazioni</ulink
 > dei «Fondamentali di &kde;». Le voci qui descritte sono specifiche di &kmail;.</para>
-
+  
 <variablelist>
 <varlistentry id="composer-settings-toolbars">
   <term

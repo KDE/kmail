@@ -1,0 +1,178 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Agent d'enviament més tard</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Catalan  "INCLUDE">
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>El manual de l'&i18n-sendlateragent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21 de setembre de 2019</date>
+<releaseinfo
+>5.13 (Aplicacions 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introducció</title>
+
+<para
+>L'&i18n-sendlateragent; és un agent de l'Akonadi que permet enviar correus electrònics que heu programat una vegada o repetidament. </para>
+
+<sect2 id="using-kapp">
+<title
+>Usar l'&i18n-sendlateragent;</title>
+
+<para
+>Utilitzeu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Envia més tard</guimenuitem
+></menuchoice
+> a la finestra de l'editor del &kmail; per a obrir un diàleg que permet programar els vostres missatges de correu electrònic per a enviar-los en una data i hora específiques.</para>
+
+<screenshot>
+<screeninfo
+>El diàleg de l'&i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>El diàleg de l'&i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>El diàleg de l'&i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Diguem que heu escrit un correu electrònic brillant esbossant les tasques que voleu que completin els vostres empleats mentre sou en un congrés, però quan voleu que s'enviï aquest correu electrònic us trobareu en un avió. Utilitzeu aquesta característica per a enviar-lo en una data i hora precisa. Per a programar el correu electrònic per a enviar-lo més tard, marqueu primer la casella <guilabel
+>Retard</guilabel
+> i seleccioneu la data i l'hora en el menú <guilabel
+>Envia el:</guilabel
+>.</para>
+<para
+>Si necessiteu enviar un recordatori per correu electrònic setmanalment als vostres empleats, podeu configurar-ho perquè es repeteixi marcant la casella de selecció <guilabel
+>Repeteix cada</guilabel
+> i seleccionant els intervals desitjats.</para>
+<para
+>Per a programar el missatge immediatament podeu posar-lo a la cua seleccionant el botó <guibutton
+>Envia més tard</guibutton
+>. </para>
+<para
+>Aquest agent funciona de forma independent del &kmail; i no necessita una instància d'aquest funcionant o el &kmail; pot estar en el mode connectat i enviar els correus electrònics programats.</para>
+<para
+>Si no teniu una connexió de xarxa quan s'hagi d'enviar un missatge programat, l'agent informarà d'un error i demanarà si voleu enviar-lo més tard.</para>
+<para
+>En accedir a una sessió del &kde;, l'agent comprovarà els missatges programats i, si cal, enviarà tots els missatges endarrerits des de l'últim tancament de la sessió. </para>
+<para
+>Per a canviar les opcions dels missatges de correu electrònic que heu programat per a enviar més tard, utilitzeu <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura el &kmail;...</guimenuitem
+></menuchoice
+>, després seleccioneu la pàgina <guilabel
+>Connectors</guilabel
+> i premeu el botó de configuració amb l'element <guilabel
+>Agent per a enviar més tard</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configurant l'&i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurant l'&i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurant l'&i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Obre un diàleg que permet modificar la programació i eliminar els correus electrònics que s'envien amb la característica envia després.</action>
+</para>
+<para
+>No és possible canviar el contingut (cos, capçaleres, &etc;) d'un missatge programat. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Crèdits i llicència</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Copyright del programa 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Copyright de la documentació &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traductor/Revisor de la documentació: &credits.Antoni.Bella;</para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

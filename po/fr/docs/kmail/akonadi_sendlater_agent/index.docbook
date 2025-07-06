@@ -1,0 +1,178 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Agent d'envoi différé</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % French "INCLUDE">
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Manuel de &i18n-sendlateragent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+&traducteurAlviseCavallari;&relecteurLudovicGrossard; 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21-09-2019</date>
+<releaseinfo
+>5.13 (Applications 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introduction</title>
+
+<para
+>&i18n-sendlateragent; est un agent de Akonadi qui vous permet d'envoyer une ou plusieurs fois des courriels programmés pour expédition. </para>
+
+<sect2 id="using-kapp">
+<title
+>Utilisation de &i18n-sendlateragent;</title>
+
+<para
+>Dans la fenêtre d'édition de &kmail;, utilisez <menuchoice
+><guimenu
+>Message</guimenu
+><guimenuitem
+>Envoyer plus tard</guimenuitem
+></menuchoice
+>. Cela ouvre une boîte de dialogue qui vous permet de programmer l'envoi de vos courriers électroniques à une date et une heure spécifiées.</para>
+
+<screenshot>
+<screeninfo
+>Boîte de dialogue &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Boîte de dialogue &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Boîte de dialogue &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Supposons que vous avez rédigé un très beau courriel, indiquant les tâches que vos employés doivent compléter pendant que vous assistez à une conférence, mais vous serez dans un avion au moment où vous souhaitez que le message soit envoyé. Utilisez cette fonctionnalité pour envoyer le message à une date et une heure précise. Pour programmer le message afin qu'il soit envoyé plus tard, cochez d'abord la case <guilabel
+>Retard</guilabel
+>, et ensuite sélectionnez la date et l'heure dans le menu <guilabel
+>Envoyer à :</guilabel
+></para>
+<para
+>Si vous avez besoin d'envoyer un courrier électronique hebdomadaire de rappel à vos employés, vous pouvez le configurer pour répéter l'envoi du message en cochant <guilabel
+>Répéter chaque</guilabel
+> et en sélectionnant les intervalles souhaités.</para>
+<para
+>Vous pouvez mettre votre message dans la queue d'envoi en sélectionnant le bouton <guibutton
+>Envoyer ultérieurement</guibutton
+> pour le planifier tout de suite. </para>
+<para
+>Cet agent fonctionne indépendamment de &kmail;. &kmail; ne nécessite pas d'être allumé ou en ligne pour que les courriels programmés puissent être envoyés.</para>
+<para
+>Si vous n'avez pas de connexion réseau au moment où un message programmé devrait être envoyé, l'agent rapportera une erreur et vous demandera si vous souhaitez le renvoyer plus tard.</para>
+<para
+>Au démarrage d'une session &kde;, l'agent contrôle les messages programmés, et expédie tous les messages qui sont en retard depuis la dernière connexion. </para>
+<para
+>Pour modifier les options d'envoi de messages programmés pour un envoi différé, utilisez <menuchoice
+><guimenu
+>Configuration</guimenu
+> <guimenuitem
+>Configurer &kmail;...</guimenuitem
+></menuchoice
+> puis sélectionnez la page <guilabel
+>Modules externes</guilabel
+> de &kmail;. Enfin, appuyez sur le bouton de configuration en face de l'élément <guilabel
+>Agent d'envoi différé</guilabel
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configurer &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurer &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurer &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Une boîte de dialogue s'ouvre ; elle vous permet de modifier le programme et de supprimer les courriers électroniques qui ont été envoyés avec la fonctionnalité d'envoi différé.</action>
+</para>
+<para
+>Il n'est pas possible de modifier le contenu (corps, en-têtes, &etc;) d'un message programmé pour expédition. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Remerciements et licence</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Copyright 2013 - 2019 du programme : &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Copyright de la documentation : &copy; 2013 - 2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traduction française par &AlviseCavallari;. Relecture par &LudovicGrossard;</para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

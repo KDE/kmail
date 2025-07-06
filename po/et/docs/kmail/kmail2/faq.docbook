@@ -1,0 +1,1436 @@
+<chapter id="faq">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail;</author>
+<author
+>&David.Rugge; &David.Rugge.mail;</author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>2013-12-20</date>
+<releaseinfo
+>&kde; 4.12</releaseinfo>
+</chapterinfo>
+
+<title
+>Korduma kippuvad küsimused (KKK)</title>
+<!-- TODO: split into categories? unfortunately this will produce several files, eg. with <section
+> -->
+
+<qandaset id="faq-set">
+
+<qandaentry
+><question
+><para
+>Kuidas määrata Firefox oma vaikimisi brauseriks?</para
+></question>
+<answer>
+  <para
+>Oletame, et soovid klõpsata &kmail;is lingile, nii et see avataks <application
+>Firefoxiga</application
+>. Praegu avatakse see aga teises brauseris. Seda saab muuta nii:</para>
+  <para
+>See lahendus mõjutab kogu &kde;d, mitte ainult &kmail;i. Vali <menuchoice
+><guimenu
+>Süsteemi seadistused</guimenu
+><guisubmenu
+>Vaikimisi rakendused</guisubmenu
+><guimenuitem
+>Veebibrauser</guimenuitem
+><guimenuitem
+>Http ja https &URL;-id avatakse</guimenuitem
+><guimenuitem
+>firefox</guimenuitem
+></menuchoice
+>.</para>
+  <para
+>Kui oled administraatori õigustes ja soovid selle määrata automaatselt kõigile kasutajatele, käib see nii</para>
+  <itemizedlist>
+    <listitem>
+      <para
+>lisa oma kodukataloogis faili <filename
+>$(kde4-config --localprefix)/share/config/kdeglobals</filename
+> kategooria <guilabel
+>[General]</guilabel
+> alla rida <userinput
+>BrowserApplication[$e]=!firefox</userinput
+> </para>
+    </listitem>
+  </itemizedlist>
+<para
+>Samuti võib kasutada skripti, mida pakub <ulink url="http://userbase.kde.org/Special:myLanguage/Tutorials/Modify_KDE_Software_Defaults"
+>Tutorials/Modify_KDE_Software_Defaults</ulink
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas juhtida oma ühendust mobiilirändluse puhul?</para
+></question>
+<answer>
+  <para
+>Oled loonud <emphasis
+>rändlusprofiili</emphasis
+>, et pääseda oma koduserverisse ka teel olles, aga see püüab ühendust luua ka siis, kui oled kodus. Automaatne ühendamine on keelatud.</para>
+  <para
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Kontod</guimenuitem
+><guimenuitem
+>Vastuvõtmine (kaart)</guimenuitem
+><guimenuitem
+>(vali konto, mis välja jätta)</guimenuitem
+><guimenuitem
+>Tõmbamise valikud</guimenuitem
+></menuchoice
+>, eemalda märge kastist <guilabel
+>Kaasatakse uute kirjade kontrollimisel käsitsi</guilabel
+>. See välistab profiili, kui vajutad allalaadimise ikooni, kuid profiil on siiski olemas rippmenüüs, mistõttu on lihtne oma kirjad kätte saada, kui oled kodunt eemal.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas salvestada saadetud kirjad konkreetsesse kausta?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Sümptomid</emphasis
+>: soovid salvestada kirjad spetsiaalsesse kausta. Võib-olla kasutad &imap; serverit ning tahad salvestada oma kirjad serveris, mitte kliendis.</para>
+  <para
+><emphasis
+>Lahendus:</emphasis
+> vali &kmail;is <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Identiteedid</guimenuitem
+><guimenuitem
+>(vali identiteet)</guimenuitem
+><guimenuitem
+>Muuda</guimenuitem
+><guimenuitem
+>Muu</guimenuitem
+><guimenuitem
+>Saadetud kirjade kaust</guimenuitem
+></menuchoice
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas salvestada prügikasti visatud kirjad konkreetsesse kausta?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Sümptomid</emphasis
+>: soovid salvestada kirjad spetsiaalsesse kausta. Võib-olla kasutad &imap; serverit ja tahad, et prügikasti visatud kirjad salvestataks serveris, mitte kliendis.</para>
+  <para
+>Vali seadistusdialoogis kaardil <guilabel
+>Kontod</guilabel
+> &imap; konto. Klõpsa nupule <guibutton
+>Muuda</guibutton
+> ja muuda prügikastikausta asukohta kaardil <guilabel
+>Muu</guilabel
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas salvestada krüptitud kirjad krüptimata kujul?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Sümptomid</emphasis
+>: vahetasid sõbraga krüptitud kirja, kuid soovid pärast selle avamist nüüd kirja salvestada krüptimata kujul.</para>
+  <para
+><emphasis
+>Lahendus</emphasis
+>: lahtikrüptitud kirjade salvestamiseks edaspidi krüptimata kujul lisa seadistusfaili <filename
+>kmail2rc</filename
+> sektsiooni [Reader]:</para>
+  <para
+><userinput
+>store-displayed-messages-unencrypted=true</userinput
+></para>
+  <para
+>See võib toimida ainult <emphasis
+>SMIME</emphasis
+> korral, kuid juba töötatakse välja lahendust ka <emphasis
+>OpenPGP</emphasis
+> tarvis.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas filtreerida rämpsposti &imap; serveris?</para
+></question>
+  <!--FIXME replace this with a link to the sieve section?-->
+<answer>
+  <para
+><emphasis
+>Sümptomid</emphasis
+>: kavatsed hakata oma kirju lugema &imap; serveris ning mõtled, kuidas käib seal filtreerimine ja rämpsposti kohtlemine?</para>
+  <para
+><emphasis
+>Lahendus</emphasis
+>: masin, milles juba on sinu kirjad, võib saada sinu &imap; serveriks. Sul tuleb seadistada serverrakendus. Üks selline on <guilabel
+>Dovecot</guilabel
+>, mille veebileheküljel olevad juhised muudavad selle seadistamise väga lihtsaks. Jääb siiski filtreerimise probleem, sest mõttekas on seda teha serveris (kui seod &kmail;i serveriga, näed kaustu, mille oled serveris loonud). Taas on mitu valikut, kuid ilmselt tuntuim on <guilabel
+>procmail</guilabel
+>. Ka selle seadistamise kohta leiab rohkelt materjali internetist. Sellele tuleb anda teatud valik <quote
+>retsepte</quote
+>, millest üks näide:</para>
+  <para
+><screen
+><markup
+>    :0
+    * (^To|^CC|^List-ID): .*kde-linux
+    ${MAILDIR}.INBOX.KDE-Lists.kde-users/
+  </markup
+></screen>
+  </para>
+  <para
+>Kui sul on <emphasis
+>maildir</emphasis
+>-kaustad, peab iga retsept lõppema märgiga <quote
+>/</quote
+>. Kui sul on <emphasis
+>mbox</emphasis
+>-kaustad, ei ole märki <quote
+>/</quote
+> vaja.</para>
+  <para
+>Kui kasutad &kmail;i juures programmi <guilabel
+>bogofilter</guilabel
+>, on sul juba olemas <emphasis
+>sõnaloend</emphasis
+>. Seda saab tarvitada ka serveritasandil, nii et ei pea kõike otsast peale alustama. Oluline on see aga sätestada enne <guilabel
+>procmail</guilabel
+>i retsepte:</para>
+  <para
+><screen
+><markup
+>:0fw
+ | bogofilter -e -p
+
+0e
+ { EXITCODE=75 HOST }
+
+0:
+ * ^X-Bogosity: Spam, tests=bogofilter
+ ${MAILDIR}.INBOX.a-Spam/
+
+0e
+ { EXITCODE=75 HOST }
+
+0:
+ * ^X-Bogosity: Unsure, tests=bogofilter
+ ${MAILDIR}.INBOX.a-Unsure/
+
+0e
+ { EXITCODE=75 HOST }
+ </markup
+></screen>
+</para>
+<para
+>Pane tähele, et see kasutab üht postkasti rämpsposti ja teist kahtlaste kirjade jaoks - ma lisasin nimele 'a-', et neid oleks lihtne näha kohe nimekirja alguses.</para>
+<para
+>Lõpuks käivita jõudluse parandamiseks aegajalt salvestatud rämpsposti ja kahtlaste kirjade jaoks järgmine käsk:</para>
+<para
+><userinput
+>/usr/share/bogofilter/contrib/trainbogo.sh -c -H /home/<replaceable
+>kasutaja</replaceable
+>/<replaceable
+>Maildir</replaceable
+> /.INBOX.bogotrain_ham/cur/ -S /home/<replaceable
+>kasutaja</replaceable
+>/<replaceable
+>Maildir</replaceable
+>/.INBOX.bogotrain_spam/cur/</userinput
+></para>
+<para
+>(ära unusta üle vaatamast asukohta).</para>
+<para
+>See ei ole täielik serveri häälestamise juhend, vaid ainult mõned märkmed, kuidas panna server tööle nii, nagu seda &kmail;is võiks oodata.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas saada &kmail;is ekraaniruumi juurde?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Sümptomid</emphasis
+>: kasutad &kmail;i väikesülearvutis ja leiad, et uued <emphasis
+>koondamisviisid</emphasis
+> jätavad ekraaniruumist õige vähe alles.</para>
+  <para
+><emphasis
+>Lahendus</emphasis
+>: kui soovid muuta välimust, et üks kiri kasutaks näiteks kahe rea asemel üht, vali <menuchoice
+><guimenu
+>Vaade</guimenu
+><guisubmenu
+>Kirjade nimekiri</guisubmenu
+><guimenuitem
+>Teema</guimenuitem
+></menuchoice
+> ja seal <guilabel
+>Klassikaline</guilabel
+>. Kui soovid välja lülitada rühmitamise kuupäevade järgi, muuda koondamisviisi, valides <menuchoice
+><guimenu
+>Vaade</guimenu
+><guisubmenu
+>Kirjade nimekiri</guisubmenu
+><guimenuitem
+>Koondamisviis</guimenuitem
+></menuchoice
+> ja seal <guilabel
+>Tavaline postiloend</guilabel
+>. Nüüd näeb &kmail; välja täpselt nagu varasemates versioonides.</para>
+
+<para
+>Kaardil <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Välimus</guimenuitem
+><guimenuitem
+>Fondid</guimenuitem
+></menuchoice
+> võib valida <guilabel
+>Kohandatud font</guilabel
+> ja siis paika panna iga nimekirja elemendi seadistused. See on abiks siis, kui leiad, et kaustade nimekiri ja kirjad ise kasutavad soovitud fonte, aga kirjade nimekiri ikka veel suurt fonti.</para>
+
+<para
+>Fonte saab muuta ka vahetumalt, tehes paremklõpsu kirjade nimekirja päistel ja valides <menuchoice
+><guimenu
+>Teema</guimenu
+><guisubmenu
+>Seadista</guisubmenu
+><guimenuitem
+>Välimus</guimenuitem
+></menuchoice
+>. Klõpsata tuleb kõigile veerupäistele ning määrata kohandatud font. Lõpuks peaks kirjade nimekiri siis välja nägema just selline, nagu sa soovid.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas mitte näha &kmail;i kaustade kohtspikreid?</para
+></question>
+<answer>
+  <para
+><emphasis
+>Sümptomid</emphasis
+>: kasutad &kmail;i väikesülearvutis ja leiad, et kaustade kohal näidatavad <emphasis
+>kohtspikrid</emphasis
+> varjavad liiga palju kaustade nimesid.</para>
+  <para
+><emphasis
+>Lahendus:</emphasis
+> tee hiire parema nupuga klõpsa <guilabel
+>kaustade nimekirja</guilabel
+> päisel ja eemalda märge valiku <guilabel
+>Kohtspikrite näitamine</guilabel
+> eest.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas mitte näha &kmail;i kirjade nimekirja kohtspikreid?</para
+></question>
+<answer>
+  <para
+>Vali &kmail;is <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guisubmenu
+>KMaili seadistamine</guisubmenu
+><guimenuitem
+>Välimus</guimenuitem
+><guimenuitem
+>Kirjade nimekiri</guimenuitem
+></menuchoice
+> ja eemalda märge kastist <menuchoice
+><guimenu
+>Üldine</guimenu
+><guimenuitem
+>Kirjade ja rühma päiste kohtspikrite näitamine</guimenuitem
+></menuchoice
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Kuidas muuta read erivärviliseks?</para
+></question>
+<answer>
+  <para
+>Muuda <menuchoice
+><guimenu
+>Süsteemi seadistused</guimenu
+> <guisubmenu
+>Rakenduste välimus</guisubmenu
+><guimenuitem
+>Värvid</guimenuitem
+><guimenuitem
+>Värvid</guimenuitem
+></menuchoice
+> kõigi värvikomplektide puhul, välja arvatud <guilabel
+>Üldised värvid</guilabel
+> (millel seda pole) <guilabel
+>Alternatiivne taust</guilabel
+> samaks nagu <guilabel
+>Tavaline taust</guilabel
+>.</para>
+  <para
+><emphasis
+>Mandriva</emphasis
+> ja <emphasis
+>Mageia</emphasis
+> ei kasuta nimetust <guilabel
+>Süsteemi seadistused</guilabel
+>. Nagu KDE 3 juhtimiskeskust <guilabel
+>KControl</guilabel
+>, nimetavad nad ka seda väljendiga <quote
+>Oma töölaua seadistamine</quote
+>, et eristada seda väljendist <quote
+>Oma arvuti seadistamine</quote
+>, mille all peitub Mandriva/Mageia juhtimiskeskus (MCC). Kui nimeerinevus kõrvale jätta, tuleb toimida täpselt samamoodi.</para>
+</answer>
+</qandaentry>
+
+<qandaentry id="transfer-mail-and-settings"
+><question>
+<para
+>Kuidas kanda kirjad ja seadistused üle teise arvutisse (või ka samas arvutis teise kasutajakonto peale)?</para>
+</question>
+<answer>
+<para
+>Vali seadistuste ja andmete eksportimiseks ja importimiseks menüükäsk <menuchoice
+><guimenu
+>Tööriistad</guimenu
+><guimenuitem
+>Ekspordi &kmail;i andmed...</guimenuitem
+></menuchoice
+> Täpsemalt kõneleb sellest osa <ulink url="help:/pimsettingexporter"
+>PIM-i seadistuste eksportija</ulink
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><question
+><para
+>Miks ei saa kirju kopeerida USB-pulgale?</para
+></question>
+<answer
+><para
+><emphasis
+>Sümptomid</emphasis
+>: sead üles uut arvutit ja tahad üle kanda kõik oma e-kirjad. Otsustad kopeerida kõik USB-pulgale. Protsess algab, aga siis ilmub veateade:</para>
+<screen
+>Kopeerimine nurjus ............Vigane argument</screen>
+<para
+><emphasis
+>Lahendus</emphasis
+>: sinu USB-pulk on <ulink url="http://wiki.linuxquestions.org/wiki/VFAT"
+>(V)FAT</ulink
+>-vormingus ega suuda seepärast midagi ette võtta <emphasis
+>maildir</emphasis
+>-kaustade nimedega (ega ka <emphasis
+>õigustega</emphasis
+>, mis võib samuti hulganisti probleeme põhjustada). Sul on kaks võimalust. Üks on vormidada oma <acronym
+>USB</acronym
+>-pulk ext2 failisüsteemi (millisel juhul peaks teadmiseks võtma, et seda pole võimalik lugeda &Windows; operatsioonisüsteemides ilma spetsiaalse tarkvarata) või siis luua kõigist kirjadest tar-fail, kopeerida see pulgale ja pakkida uues masinas taas lahti.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Miks minu filtrid ei rakendu &imap; kontode sisenevatele kirjadele?</para
+></question>
+<answer>
+<para
+>Tavaline &imap; režiim ei toeta filtreerimist, küll aga teeb seda uus lahutatud &imap; konto tüüp. Peaksid kasutama serveripoolset filtreerimist (küsi administraatorilt, kuidas paigaldada filtrid serveris ja millises vormingus need peavad olema), sest &imap; ju tähendabki kirjade haldamist <emphasis
+>serveris</emphasis
+>. Kuigi on olemas meilifiltri keel (Sieve, mida määratleb RFC3028), ei ole paraku olemas standardiseeritud ligipääsuprotokolli serveripoolsete Sieve skriptide paigaldamiseks või redigeerimiseks. Kui selline protokoll kunagi tekib, on äärmiselt tõenäoline, et selle võtab kasutusele ka &kmail;.</para>
+</answer>
+</qandaentry>
+
+<qandaentry id="pgp-faq">
+<question
+><para
+>Mida ma peaksin teada, kui soovin kasutada &kmail;iga <application
+>PGP</application
+>/<application
+>GnuPG</application
+>-d?</para
+></question>
+
+<answer
+><para
+>&kmail; pakub nende rakenduste põhifunktsioonide kasutamiseks lihtsa ning hõlpsasti pruugitava liidese. Kuid sellele vaatamata oleks kasulik mõista, kuidas nad töötavad ja mis võib nende turvalisust ohustada. Mõned olulisemad asjad:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Tuleks <emphasis
+>tõeliselt</emphasis
+> testida, kas krüptimine toimib, enne kui seda kasutama hakata. &kmail; tugineb osaliselt <application
+>PGP</application
+>/<application
+>GnuPG</application
+> veastringidele, mis on erinevates versioonides pahatihti erinevad.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; ei krüpti kirju ebausaldusväärse (allkirjastamata) avaliku võtmega. Kui sa soovid sellise võtme jaoks krüptida, peaksid kontrollima võtme omaniku identiteeti ja alles siis allkirjastama võtme oma salajase võtmega. Kui sa ei soovi või ei saa võtme omaniku identiteeti kontrollida, kuid soovid ikkagi kirja krüptida, signeeri palun võti lokaalselt käsuga <userinput
+><command
+>gpg</command
+> <option
+>--lsign</option
+> <replaceable
+>võtme_ID</replaceable
+></userinput
+>.</para>
+</listitem>
+<listitem>
+<para
+>Võõra avaliku võtme usaldamine ilma seda kontrollimata ei ole üldse hea mõte.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; ei saa kaasatud faile krüptida ja allkirjastada, kui kasutad sisseehitatud OpenPGP tuge. Krüptitud ja allkirjastatud manuste jaoks peavad olema paigaldatud ja seadistatud krüptopluginad.</para>
+</listitem>
+<listitem>
+<para
+>Alates GnuPG versioonist 1.0.7 tuleb sul määrata oma võti äärmiselt usaldusväärseks. Seda ei tehta enam vaikimisi.</para>
+</listitem>
+</itemizedlist>
+</answer>
+</qandaentry>
+
+<qandaentry
+> <question
+><para
+>Kuhu &kmail; minu seadistused ja kirjad salvestab?</para
+></question
+> <answer
+> <para
+>Enamik &kmail;i seadistusi leiab failist <filename
+>$(kde4-config --localprefix)/share/config/kmail2rc</filename
+> ning kirjed, mida kontrollib <emphasis
+>Akonadi</emphasis
+>, paiknevad järgmistes kataloogides ja failides:</para>
+<itemizedlist>
+  <listitem
+><para
+><filename class="directory"
+>~/.local/share/</filename>
+</para
+></listitem>
+<listitem
+><para
+><filename class="directory"
+>~/.config/akonadi/</filename
+>. </para
+></listitem>
+<listitem
+><para
+><filename
+>$(kde4-config --localprefix)/share/config/nepomukserverrc</filename>
+</para
+></listitem>
+<listitem
+><para
+><filename class="directory"
+>$(kde4-config --localprefix)/share/apps/nepomuk/</filename
+> (&kaddressbook; salvestab kontaktirühmad <emphasis
+>Nepomukis</emphasis
+>) </para
+></listitem>
+</itemizedlist>
+<para
+>Pane tähele, et osa faile on peidetud, nii et kopeeri kindlasti ka need, kui soovid oma kirju varundada või arhiveerida.</para
+> </answer
+> </qandaentry>
+
+<qandaentry id="faq-index-regeneration">
+<question
+><para
+>Miks &kmail; regenereerib kausta indeksi?</para
+></question>
+<answer>
+<para
+>&kmail; regenereerib kausta indeksi alati, kui see paistab olevat aegunud, &ie; kui kausta sisu on uuem kui indeks. &kmail; regenereerib sellisel juhul indeksi, et vältida kirjade kadu või riknemist. Paraku võivad seetõttu taasilmuda äsjakustutatud kirjad ning lipukesed (nt. 'tähtis' jne.) kaduma minna, kui indeks regenereeritakse.</para>
+<para
+>Iganenud indeksil võib olla mitu põhjust, millest kaks olulisemat on järgmised: <itemizedlist>
+<listitem
+><para
+>Mõni rakendus on muutnud kausta sisu. Kui soovid kasutada &kmail;i koos procmail'iga, loe palun <link linkend="faq-procmail"
+>seda &FAQ; sektsiooni</link
+>. Kui soovid kasutada &kmail;i koos mõne muu e-posti kliendiga, loe palun <link linkend="faq-other-muas"
+>seda &FAQ; sektsiooni</link
+>.</para
+></listitem>
+<listitem
+><para
+>Kui sinu kirjade kataloog asub üle NFS-i ühendatud kettal ning NFS-serveri kell on sinu arvuti kellast ees, võib NFS-server mõnikord anda indeksifailile vale failiaja. Sellisel juhul &kmail; oletab, et indeks on aegunud, kuigi see tegelikult nii ei ole. Selle probleemi lahendamiseks tuleb sul (või süsteemiadministraatoril) kontrollida, et NFS-serveri ja sinu arvuti kell oleksid alati sünkroonsed. Üks võimalus seda teha on ntp deemoni kasutamine.</para
+></listitem>
+</itemizedlist>
+</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+  <question
+><para
+>Miks &kmail; käima ei lähe?</para
+></question>
+<answer>
+<para
+><emphasis
+>Sümptomid</emphasis
+>: soovid käivitada &kmail;i mõnes minimaalses töökeskkonnas, nagu näiteks <ulink url="http://en.wikipedia.org/wiki/Fvwm2"
+>fvwm2</ulink
+>, aga see ei lähe käima.</para>
+<para
+><emphasis
+>Põhjus</emphasis
+>: puudub <emphasis
+>DBusi</emphasis
+> funktsionaalsus.</para>
+<para
+><emphasis
+>Lahendus</emphasis
+>: &kmail; tuleb käivatada dbus-launchi abil:</para>
+<para
+><userinput
+>dbus-launch kmail</userinput
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry id="faq-other-muas">
+<question
+><para
+>Kas &kmail;i on võimalik kasutada koos mõne muu e-posti kliendiga, &eg; <application
+>mutt</application
+>?</para
+></question>
+<answer>
+<para
+>Kui kasutad kaustadel mbox-vormingut, ei ole võimalik &kmail;i töötamise ajal kasutada mõnda muud e-posti klienti. <application
+>Mutt</application
+>i korral võib tekkida probleeme ka siis, kui kaks rakendust ei tööta ühel ajal. Me soovitame sellisel juhul kasutada vormingut maildir, mis peaks probleemid lahendama.</para>
+</answer>
+</qandaentry>
+
+<qandaentry
+><!-- Valid for 4.12-->
+<question
+><para
+>Kuidas teisendada oma postkastid mbox-vormingust vormingusse maildir?</para
+></question>
+<answer>
+<para
+>Automaatselt seda teha ei saa. Sul tuleb luua uus kaust vormingus maildir ning kopeerida kirjad mbox-kaustast uude kausta. Arvesta, et ka filtrireeglid tuleb sel juhul ümber suunata.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas eemaldada kirjadelt manused ilma kirju eemaldamata?</para
+></question>
+<answer>
+<para
+>Ava &HPNga; manusel klõpsates kontekstimenüü ja vali sealt <guimenuitem
+>Kustuta kaasatud fail</guimenuitem
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas panna &kmail; uusi kirju kontrollima igal käivitamisel?</para
+></question>
+<answer>
+<para
+>Kui soovid, et &kmail; kontrolliks kohe käivitumisel posti, märgi ära valik <guilabel
+>Uusi kirju kontrollitakse käivitumisel</guilabel
+>, mille leiab <link linkend="configure-accounts-receiving"
+>kontode seadistamise kaardil</link
+>. Kui eelistad kasutada käsurida, käivita &kmail; vastava võtmega: <command
+>kmail <option
+>--check</option
+></command
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kust ma leian &kmail;i erinevate versioonide vahel toimunud muutuste nimekirja?</para
+></question>
+<answer>
+<para
+>Tervitusekraan loetleb üles kõik olulisemad kahe versiooni vahelised erinevused. Seda näeb, kui valida <menuchoice
+><guimenu
+>Abi</guimenu
+><guimenuitem
+>&kmail;i sissejuhatus</guimenuitem
+></menuchoice
+>.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Olen üks neist,  kelle kirjad koosnevad sageli sajast tsiteeritud reast ja ühestainsast minu enda reast. Miskipärast kipub see teisi inimesi ärritama. Kas &kmail; suudab mind aidata, et ka kõik teised saaks end õnnelikuna tunda?</para
+></question>
+<answer
+><para
+>Kindlasti. Vali enne vastamist originaalkirjas hiirega välja see osa, millele soovid vastata, ja vastuses tsiteeritaksegi ainult seda osa.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Mõnes kirjas seisab väljal <guilabel
+>Kuupäev</guilabel
+> märge <guilabel
+>tundmatu</guilabel
+> või on see kindlasti vale.</para
+></question>
+<answer
+><para
+>Võimalik, et sellise kirja päis <quote
+>Kuupäev:</quote
+> on lihtsalt vigane ja &kmail; ei suuda seda kuidagi tõlgendada. Sellisel juhul ei ole see mitte &kmail;i, vaid kirja saatnud isiku pruugitud tarkvara viga.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Minu allkirja kohal on kaks kriipsukest. Mis hea pärast?</para
+></question>
+<answer>
+<para
+>Allkirja eraldamine kirja sisust kahe kriipsu ja tühikuga on tavaline ja üldlevinud komme. See lubab e-posti rakendustel, mis sellist tava tunnustavad, allkirja ära tunda ja kirja põhitekstist eraldada. Kui sinu määratud allkirjal sellist eraldajat ei ole, lisab &kmail; selle automaatselt.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kas &kmail;is on teadaolevalt vigu?</para
+></question>
+<answer>
+<para
+>Teadaolevate vigade nimekirja leiab <ulink url="https://bugs.kde.org/buglist.cgi?quicksearch=kmail2"
+>Bugzillast</ulink
+>. Arvesta, et osa neist võivad olla parandatud. Üldiselt me arvame, et &kmail; on väga töökindel rakendus.</para>
+<para
+><warning
+><para
+>Siiski ei peaks &kmail;i käivitama, kui mõni muu e-posti klient juba kasutab kirjade kataloogi. Kui sa seda siiski peaksid tegema, arvesta, et nii võid kirjadest ilma jääda. Arvesta ka seda, et igal juhul peaksid kirjadest varukoopia tegema.</para
+></warning
+></para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>&kmail; ei näita &HTML;-kirju korrektselt.</para
+></question>
+<answer
+><para
+>Viited välisele sisule, näiteks piltidele, on vaikimisi keelatud, sest nende abil saab tuvastada, kas oled kirja lugenud ja millal sa seda tegid. Väliste viidete laadimise saab sisse lülitada &kmail;i seadistustedialoogi kaardil <guilabel
+>Turvalisus</guilabel
+>. Arvesta, et pluginad (näiteks <trademark class="registered"
+>Adobe</trademark
+> <application
+>Flash</application
+>), &Java; ja JavaScript jäävad &kmail;is nagunii turvakaalutlustel näitamata ja neid ei saa ka kuidagi aktiveerida.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kas on võimalik kasutada kaht &kmail;i versiooni korraga? Kas on võimalik minna &kmail;i praeguselt versioonilt tagasi vanemale?</para
+></question>
+<answer
+><para
+>Korraga saab töötada vaid üks &kmail;. Me soovitame ka püsida mingi kindla versiooni juures ning mitte versioone pidevalt vahetada. Üleminek vanemale versioonile võib üsna tõenäoliselt kaasa tuua probleeme, &eg; juba sellepärast, et indeksifaili vormingud võivad olla muutunud. Uuendamine ei tohiks üldjuhul probleeme põhjustada.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kas &kmail; toetab uuencode-faile?</para
+></question>
+<answer
+><para
+>Uuencode-manused ei ole toetatud. Salvesta oma uuencode-manusega kiri ning kasuta manuse dekodeerimiseks programmi <command
+>uuencode</command
+>.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>&kmail;i tabas krahh, kui ma kirja kirjutasin. See on siis nüüd kadunud?</para
+></question>
+<answer
+><para
+>&kmail; püüab krahhi korral salvestada sinu kirja failina kataloogi <filename class="directory"
+>$(kde4-config --localprefix)/share/apps/kmail/autosave</filename
+>. Kui &kmail;i uuesti käivitad, peaks ilmuma taas redaktori aken poolelijäänud kirjaga. Kui seda ei juhtu, proovi faile kataloogis <filename class="directory"
+>$(kde4-config --localprefix)/share/apps/kmail/autosave</filename
+> avada mõne redaktoriga. Kui kataloogis faile ei ole ole, oli krahh nii ränk, et &kmail; ei suutnud kirja salvestada.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kui ma püüan siduda kausta postiloendiga, ei juhtu ometi midagi kirja saamisel postiloendist.</para
+></question>
+<answer
+><para
+>Kausta seostamine postiloendiga ei tähenda sugugi postiloendi kirjade filtreerimist &mdash; uus filtrireegel tuleb käsitsi lisada. Kui aga oled sidunud kausta postiloendiga, võid kasutada menüükäsku <menuchoice
+><guimenu
+>Kirjad</guimenu
+><guimenuitem
+>Vasta postiloendisse...</guimenuitem
+></menuchoice
+> või <menuchoice
+><guimenu
+>Kirjad</guimenu
+><guimenuitem
+>Uus kiri postiloendisse...</guimenuitem
+></menuchoice
+> ning väli <guilabel
+>Saaja:</guilabel
+> täidetakse automaatselt postiloendi aadressiga. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Minu SMTP server nõuab autentimist. Kas &kmail; toetab seda?</para
+></question>
+<answer
+><para
+><guilabel
+>Autentimise</guilabel
+> saab kindlaks määrata SMTP seadistamise dialoogi kaardil <guilabel
+>Muu</guilabel
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry id="faq-procmail">
+<question
+><para
+>Kas &kmail;i ja <application
+>procmail</application
+>i saab koos kasutada?</para
+></question>
+<answer
+><para
+>Jah, aga väga oluline on teha seda õigesti või muidu võid kaotada oma kirju. <application
+>Procmail</application
+>i ja &kmail;i kasutamiseks tuleb &kmail; seadistada nii, et see tõmbaks uusi kirju spuulifailidest, kuhu <application
+>procmail</application
+> sinu kirjad suunab. <emphasis
+>Ära proovi</emphasis
+> määrata procmaili kirju suunama &kmail;i kaustadesse - see lihtsalt ei toimi.</para>
+
+<para
+>Iga procmaili spuulifaili jaoks tuleb luua konto, millelt &kmail; uusi kirju tõmbab. Sul tuleb ka tagada õige lukustusfaili määramine antud kontole. Konto loomisel analüüsib &kmail; mingil määral faili <filename
+>.procmail</filename
+> ning püüab näidata kõiki leitud spuulifaile ja lukustusfaile vastava kirje <guilabel
+>procmail lockfile</guilabel
+> juures. Procmail võimaldab kasutajal määrata lukustusfaile kolmel viisil, mistõttu ei ole ühest meetodit seada vastavusse spuulifailid ja lukustusfailid. Seepärast sõltub vaid sinust endast, et igale spuulifailile vastaks õige lukustusfail.</para>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Õigekirja kontroll ei tunnista tähti, mida ei leidu inglise keeles.</para
+></question>
+<answer
+><para
+>Enne kui hakkad õigekirja kontrollima, tuleb see seadistada. Seda saad teha redaktori aknas menüükäsuga <menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>Õigekirja kontroll...</guimenuitem
+></menuchoice
+>. Seal saad määrata sõnaraamatu.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas kasutada <application
+>Eudora</application
+>/&Netscape;/<application
+>Outlook</application
+>i/... kaustu &kmail;is?</para
+></question>
+<answer
+><para
+>Vaata osa <link linkend="importing-options"
+>Importimine &kmail;is</link
+>. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kas saab kasutada krüptimist tavalise (mitte <acronym
+>SSL</acronym
+>) POP3 konto korral?</para
+></question>
+<answer
+><para
+>Kui POP3 serveris töötab <application
+>ssh</application
+> deemon, võid kasutada ssh-d oma POP3 ühenduse tunneldamiseks järgmise käsuga:</para>
+
+<para
+><userinput
+><command
+>ssh</command
+> <option
+>-L 11000:127.0.0.1:110 kasutaja@server</option
+></userinput
+></para>
+
+<para
+>Muuda oma &kmail;i seadistusi tõmbamaks kirju üle POP3 <userinput
+>localhost</userinput
+>-ist ning ssh tunneldab ühenduse. <note
+><para
+>Kui krüptimata kirjad on juba saadetud üle interneti, on <application
+>ssh</application
+> kasutamise ainus eelis see, et sinu <emphasis
+>parool</emphasis
+> saadetakse POP3 serverisse krüptitult.</para
+></note>
+
+<!-- fixme: add link to http://www.faqs.org/docs/Linux-mini/Secure-POP+SSH.html -->
+
+</para>
+</answer>
+</qandaentry>
+
+<qandaentry id="faq-file-locking">
+<question
+><para
+>Kas &kmail; lukustab kasutatavad kaustad?</para
+></question>
+<answer
+><para
+>&kmail; ei lukusta faile kataloogis <filename class="directory"
+>~/local/share</filename
+>.</para>
+<para
+>Vältimaks kirjade kaotamise ohtu <emphasis
+>kohaliku konto kasutamisel</emphasis
+>, tuleb tagada, et &kmail; kasutaks samasugust lukustamist nagu sinu meiliedastusagent.</para>
+
+<para
+>Kasutada saab viit erinevat lukustusvõimalust:</para>
+
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Procmaili lukustusfail</guilabel
+></para
+></listitem>
+<listitem
+><para
+><guilabel
+>Mutti dotlock</guilabel
+></para
+></listitem>
+<listitem
+><para
+><guilabel
+>Privilegeeritud Mutti dotlock</guilabel
+></para
+></listitem>
+<listitem
+><para
+><guilabel
+>FCNTL</guilabel
+> (vaikimisi)</para
+></listitem>
+<listitem
+><para
+><guilabel
+>puudub (kasuta ettevaatlikult)</guilabel
+></para
+></listitem>
+</itemizedlist>
+
+<para
+><guilabel
+>Procmaili lukustusfail</guilabel
+> kasutab väikest utiliiti, mis on kaasas rakendusega <application
+>procmail</application
+> ning kannabki nime <command
+>lockfile</command
+>. Seda saab kasutada juhul, kui kirjade kataloog kujutab endast kataloogi, kus sul on kirjutamisõigus. Üldiselt ei toimi see faili <filename class="directory"
+>/var/spool/mail/user</filename
+> korral. See loob sinu kontol faile <filename
+>.lock</filename
+>, kui &kmail; kontrollib uusi kirju. Arvesta, et see toimib ainult siis, kui <application
+>procmail</application
+> on paigaldatud.</para>
+
+<para
+><guilabel
+>Mutti dotlock</guilabel
+> ja <guilabel
+>Privilegeeritud Mutti dotlock</guilabel
+> kasutavad mõlemad väikest utiliiti, mis on kaasas rakendusega <application
+>mutt</application
+> ning kannabki nime <command
+>mutt_dotlock</command
+>. <guilabel
+>Mutti dotlocki</guilabel
+> saab kasutada sarnaselt <guilabel
+>procmaili lukustusfailiga</guilabel
+> ning ka selle puhul on piirangud kataloogi <filename class="directory"
+>/var/spool/mail</filename
+> osas. Kuid <guilabel
+>privilegeeritud Mutti dotlock</guilabel
+> suudab luua lukustusfaile ka <filename class="directory"
+>/var/spool/mail</filename
+> kataloogis. <command
+>mutt_dotlock</command
+> on setgid rakendus, mistõttu seda tuleb kasutada setgid-režiimis. Arvesta, et need võimalused on kasutatavad ainult siis, kui <application
+>mutt</application
+> on paigaldatud.</para>
+
+<para
+><guilabel
+>FCNTL</guilabel
+> kasutab süsteemset väljakutset <function
+>fcntl()</function
+>.</para>
+
+<warning
+><para
+>FCNTL lukustamise kasutamine võib põhjustada süsteemi hangumist, kui kirjade spuulifail asub üle NFS-i ühendatud seadmel.</para
+></warning>
+
+<para
+>Kui sa ei soovi lukustamist kasutada, on mõttekas valida võimalus <guilabel
+>puudub</guilabel
+>. Kuid lukustamise kasutamatajätmise korral valitseb siiski oht kirju kaotada.</para>
+
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas jätta kirjad POP3 serverisse?</para
+></question>
+<answer
+><!--<para
+>See the <link linkend="popfilters"
+>Download filters</link
+> chapter.-->
+<para
+>Kui soovid jätta kõik kirjad serverisse, vali menüükäsk <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guimenuitem
+>&kmail;i seadistamine...</guimenuitem
+></menuchoice
+>. Klõpsa kaardile <guilabel
+>Kontod</guilabel
+>. Vali kontode nimekirjas vajalik konto ning klõpsa nupul <guilabel
+>Muuda...</guilabel
+>. Selles dialoogis on võimalus <guilabel
+>Tõmmatud kirjad jäetakse serverisse alles</guilabel
+>, mis tuleb sisse lülitada.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas sisestada automaatselt kirjadesse tekstijalus?</para
+></question>
+<answer
+><para
+>Seda tekstijalust nimetatakse allkirjaks (ära aja seda segi krüptograafilise allkirjaga). Vali <menuchoice
+><guimenu
+>Seadistused</guimenu
+> <guimenuitem
+>&kmail;i seadistamine...</guimenuitem
+></menuchoice
+>. Vali kaardilt <guilabel
+>Koostaja</guilabel
+> alamkaart <guilabel
+>Üldine</guilabel
+>ning lülita sisse <xref linkend="configure-composer-general-append-signature"/></para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas panna &Sendmail; ja &kmail; koos töötama, kui ma kasutan sissehelistamisteenust?</para
+></question>
+
+<answer
+><para
+>Esmalt tuleks kontrollida, mida suudab teha sinu distributsioon. On üsna tõenäoline, et kõik on seadistatud juba paigalduse ajal.</para>
+
+<para
+>Kui see nii ei ole, tuleks uurida <ulink url="http://tldp.org/HOWTO/Mail-Queue.html"
+>kirjade järjekorra HOWTO-d</ulink
+>.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Olen näinud, et &kmail;i saab kasutada ka võrgust. Kas selle kohta on olemas mingeid õpetusi või käsiraamatuid?</para
+></question>
+<answer
+><para
+>Nende funktsioonide nimekirja võib saada järgmise käsureakorraldusega: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail</option
+></userinput
+>. Seejärel saab &kmail;i juhtida nii: <userinput
+><command
+>qdbus</command
+> <option
+>org.kde.kmail /KMail org.kde.kmail.kmail.folderList</option
+></userinput
+>. Saadaolevate meetodite sirvimiseks graafiliselt võib kasutada rakendust <application
+>qdbusviewer</application
+>.</para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kui vastan kirjale, tsiteeritakse ainult osa kirjast. Mis lahti?</para
+></question>
+<answer
+><para
+>See võib juhtuda siis, kui kirjas esineb ühel real kaks kriipsu ja tühik. Seda peetakse allkirja alguseks ning ülejäänud osa kirjast vastamisel ei tsiteerita, sest &kmail; viskab vastamisel allkirja minema.</para
+></answer>
+</qandaentry>
+
+
+<qandaentry>
+<question
+><para
+>Ma kasutan ainult &imap;-it, aga kuidas saaks lahti neist kohalikest kaustadest kaustade nimekirjas või kuidas nad vähemalt alatiseks kokku kerida?</para
+></question>
+<answer
+><para
+>Lahti sa neist ei saa. Kohalikud kaustad on tagavaravariant, kui näiteks &imap; server ei peaks olema kättesaadav. Kuigi sa kasutad ainult &imap;-it, pruugib &kmail; kirjade saatmiseks väljuvate kirjade kausta. Kui me kõik kohalikud kaustad ära peidaks, ei saaks sa parandada väljuvate kirjade kaustas kirju, mida mingil põhjusel ei õnnestunud ära saata. Küll on aga võimalik lasta kohalikud kaustad kokku kerida. Selleks tuleb valida menüükäsk <menuchoice
+><guimenu
+>Seadistused</guimenu
+><guimenuitem
+>&kmail;i seadistamine...</guimenuitem
+></menuchoice
+> ning seejärel sektsioon 'Muud', kus saab määrata, millisesse kausta käivitudes liigutakse. Kui määrad siin &imap; kausta, ongi kohalikud kaustad &kmail;i käivitumisel kokku keritud. </para
+></answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas jälgida lõimi?</para
+></question>
+<answer
+><para
+>Kui soovid lõime jälgida, tee paremklõps ja vali <menuchoice
+><guimenu
+>Märgi lõim</guimenu
+><guimenuitem
+>Jälgi lõime</guimenuitem
+></menuchoice
+>.</para>
+<para
+>Sellest hetkest peale märgitakse kõik kirjad lõimes kui <guilabel
+>jälgitavad</guilabel
+>. </para
+></answer>
+</qandaentry>
+<qandaentry>
+<question
+><para
+>Kuidas jälgida omaenda lõimi?</para
+></question>
+<answer
+><para
+>See on kasulik juhul, kui oled tellinud mõne postiloendi, näiteks kdepim-users@kde.org, ja soovid filtreerida lõimed, milles ise osaled.</para>
+<itemizedlist>
+  <listitem>
+    <para
+>Loo filter, mis märgib kõik sinu saabuvad kirjad postiloendisse jälgitavaks</para>
+    <para
+>Filtri loomiseks vali:</para>
+    <para
+><menuchoice
+><guimenu
+>Seadistused</guimenu
+><guimenuitem
+>Filtrite seadistamine</guimenuitem
+></menuchoice
+></para>
+    <itemizedlist>
+      <listitem>
+	<para
+>vali <guilabel
+>Kõik järgnevad sobivad</guilabel
+></para>
+      </listitem>
+      <listitem>
+	<para
+>Lisa tingimused: <itemizedlist>
+	    <listitem>
+	      <para
+><menuchoice
+><guimenu
+>Saatja</guimenu
+><guisubmenu
+>sisaldab</guisubmenu
+><guimenuitem
+></guimenuitem
+></menuchoice
+> <replaceable
+>sinuepostiaadress@epostidomeen</replaceable
+><footnote
+><para
+>asenda <replaceable
+>sinuepostiaadress@epostidomeen</replaceable
+> oma väljuvate kirjade aadressiga</para
+></footnote>
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para
+><menuchoice
+><guimenu
+>List-Id</guimenu
+><guimenuitem
+>sisaldab</guimenuitem
+></menuchoice
+> <replaceable
+>postiloendiID</replaceable
+><footnote
+><para
+>asenda <replaceable
+>postiloendiID</replaceable
+> konkreetse postiloendi ID-gam &eg; (&lt;kdepim-users.kde.org&gt;) või lihtsalt <quote
+>.</quote
+>, et hõlmata väljuvad kirjad kõigisse postiloenditesse, mille ID-s seisab <quote
+>.</quote
+> (sisuliselt tähendab see kõiki).</para
+></footnote>
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</para>
+      </listitem>
+      <listitem>
+	<para
+><guilabel
+>Filtritoimingute</guilabel
+> all vali <menuchoice
+><guimenu
+>Märgi kui</guimenu
+><guimenuitem
+>Jälgitav</guimenuitem
+></menuchoice
+>. </para>
+      </listitem>
+    </itemizedlist>
+  </listitem>
+  <listitem>
+    <para
+>Kaardil <guilabel
+>Muu</guilabel
+></para>
+    <itemizedlist>
+      <listitem>
+	<para
+>Jäta märkimata <guilabel
+>Kui filter sobib, peatatakse filtrite läbimine</guilabel
+>, et töötada saaksid ka teised filtrid, näiteks postiloendist saabuvate kirjade sortimine alamkaustadesse.</para>
+      </listitem>
+      <listitem>
+	<para
+>Sea see filter teiste filtrite ette, mis võivad peatada filtreerimise, või ka lihtsalt kõige esimeseks (filtrite järjekorda saab muuta <guilabel
+>saadaolevate filtrite</guilabel
+> nimekirja all olevate nooltega üles ja alla). </para>
+      </listitem>
+    </itemizedlist>
+  </listitem>
+  <listitem>
+    <para
+>Loo postiloendite kirja otsing</para>
+    <para
+>Mine kausta, kus on sinu postiloendi kirjad, &eg; Kohalikud kaustad/KDE-PIM-USERS, ja vajuta <keycap
+>S</keycap
+> või vali menüüst <menuchoice
+><guimenu
+>Redigeerimine</guimenu
+><guimenuitem
+>Otsi kirjadest</guimenuitem
+></menuchoice
+>.</para>
+    <itemizedlist>
+      <listitem>
+	<para
+>Vali <guilabel
+>Kõik järgnevad sobivad</guilabel
+>.<footnote
+><para
+>Pane tähele valikut <guilabel
+>Kaasa arvatud alamkaustad</guilabel
+>.</para
+></footnote>
+	</para>
+      </listitem>
+      <listitem>
+	<para
+>Lisa tingimus: <menuchoice
+><guimenu
+>Kirja olek</guimenu
+><guisubmenu
+>on</guisubmenu
+><guimenuitem
+>Jälgitav</guimenuitem
+></menuchoice
+>. </para>
+      </listitem>
+      <listitem>
+	<para
+>Anna otsingule mõistlik nimi (<guilabel
+>otsingukausta nimi</guilabel
+>), näiteks <replaceable
+>KDE-PIM-USERS-Jälgitavad</replaceable
+>. </para>
+      </listitem>
+      <listitem>
+	<para
+>Soorita otsing. Kui see on tehtud, võid otsinguakna sulgeda. </para>
+      </listitem>
+    </itemizedlist>
+    <para
+>Kui nüüd käivitad lõime või osaled mõnes, on see <guilabel
+>jälgitav</guilabel
+>.</para>
+    </listitem>
+</itemizedlist>
+</answer>
+</qandaentry>
+
+<qandaentry>
+<question
+><para
+>Kuidas kasutada e-kirjade tõlkimist?</para
+></question>
+<answer>
+<para
+>Teksti tõlkimiseks redaktori aknas loe osa <link linkend="using-the-translator"
+>Sisseehitatud tõlkija kasutamine</link
+>. </para>
+<para
+>Tõsta kirja eelvaatluse paneelil esile tekst, mida soovid tõlkida, ning vali &HPNga; klõpsates avanevast kontekstimenüüst <guimenuitem
+>Tõlgi</guimenuitem
+> (<keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>T</keycap
+></keycombo
+>). </para>
+</answer>
+</qandaentry>
+
+</qandaset>
+
+</chapter>

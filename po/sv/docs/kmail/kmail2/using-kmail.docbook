@@ -1,0 +1,4313 @@
+<chapter id="using-kmail">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Bryant</surname
+> </author>
+<othercredit role="translator"
+> <firstname
+>Stefan</firstname
+> <surname
+>Asserhäll</surname
+> <affiliation
+><address
+><email
+>stefan.asserhall@bredband.net</email
+></address
+></affiliation
+> <contrib
+>Översättare</contrib
+></othercredit
+> 
+</authorgroup>
+
+<date
+>2020-09-12</date>
+<releaseinfo
+>5.14.2 (Program 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Att använda &kmail;</title>
+
+<sect1 id="the-mail-reader-window">
+<title
+>Huvudfönstret</title>
+
+<para
+>Huvudfönstret är det fönster som visas när &kmail; startas. Det är normalt delat i tre rutor:</para>
+
+<variablelist>
+<varlistentry>
+<term
+>Korglista (till vänster)</term>
+<listitem>
+  <screenshot>
+<screeninfo
+>Korgruta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Korgruta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Korglistan</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>Den här rutan innehåller listan på dina brevkorgar (andra e-postprogram kanske kallar dem brevlådor). För att välja en korg, klicka helt enkelt på den. Breven som finns i korgen visas nu i rubrikrutan. Korglistan kan både visas med en kort vy, som bara upptar en liten del av vänster sida på skärmen, och en lång vy, som upptar hela vänstra sidan på skärmen men som kan visa fler brevkorgar. Du kan växla mellan dessa två vyer med <guilabel
+>Utseende</guilabel
+>/<guilabel
+>Layout</guilabel
+> i dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+>. Den övre delen av korgrutan innehåller snabblänkar till favoritkorgar. Lägg till korgar här via den sammanhangsberoende menyn <guimenuitem
+>Lägg till i favoritkorgar</guimenuitem
+>. Se avsnittet <link linkend="folders"
+>Korgar</link
+> för detaljerad information om hur korgar används.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Brevlista (normalt längst upp till höger)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>Brevlistan</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="message.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Brevlistan</phrase>
+    </textobject>
+    <caption>
+      <para
+>Brevlistan (smart tema)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>Den här rutan listar rubrikinformation (brevets statusflaggor, avsändare, rubrik, datum, och andra valfria kolumner som storlek, flagga för bilaga, flagga för viktigt brev, etc.) för breven i den korgen som är markerad för närvarande. Genom att klicka på en rubrik markeras brevet och visas i brevrutan. Du kan också välja mer än ett brev genom att hålla nere &Ctrl;-tangenten när du klickar på brev.</para>
+
+<para
+> Ändra visning av brevlistan genom att välja <menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Brevlista</guimenuitem
+> <guimenuitem
+>Tema</guimenuitem
+></menuchoice
+>. Här finns flera alternativ. </para>
+<itemizedlist>
+  <listitem
+><para
+><guilabel
+>Klassiskt</guilabel
+> En enkel, bakåtkompatibel ensam rad med klickbara sorteringskolumner.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Smart</guilabel
+> En smart lista med flera rader, flera objekt med statusikoner, och inga sorteringskolumner.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Smart med klickbar status</guilabel
+> En smart lista med flera rader, flera objekt och klickbara statusikoner.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Anpassa...</guilabel
+> Låter dig anpassa egna teman för brevlistan (t.ex. lägga till eller ta bort kolumner från den klickbara sorteringsraden).</para
+></listitem>
+</itemizedlist>
+<para
+>Om du har valt ett tema med klickbar status, kan du sortera breven genom att klicka på kolumnen som du vill sortera. Om du klickar på samma kolumn mer än en gång, så byts sorteringsordning mellan stigande/fallande och några alternativa sorteringskriterier blir tillgängliga (som att sortera enligt status när du klickar på rubrikkolumnen). Genom att klicka med höger musknapp på kolumnrubriken visas en sammanhangsberoende meny, som låter dig visa eller dölja flera kolumner i listan. Du kan anpassa synliga kolumner med sorteringsraden, se <link linkend="customize-messagelist-theme"
+>Anpassa brevlistans utseende</link
+> för detaljerad information. </para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+<varlistentry id="using-message-preview-pane">
+<term
+>Förhandsgranskningsruta (normalt nere till höger)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>Brevförhandsgranskningsrutan</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="preview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Brevförhandsgranskningsrutan</phrase>
+    </textobject>
+    <caption>
+      <para
+>Förhandsgranskningsrutan</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<anchor id="the-preview-pane-headers"/>
+<para
+>Rutan visar brevet som för närvarande är markerat. Här är några sätt att ställa in förhandsgranskningsrutan.</para>
+<para
+>Den övre delen av läsfönstret innehåller diverse alternativ för huvuden. Gå till <menuchoice
+><guimenu
+>Visa</guimenu
+> <guisubmenu
+>Huvuden</guisubmenu
+></menuchoice
+> och prova dem till du hittar ett som du tycker om.</para>
+<itemizedlist id="using-header-options">
+  <listitem
+><para
+><guilabel
+>Snygga huvuden</guilabel
+>: färgrikt huvud med skräppoststatus och underrättelser om bilagor.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Korta huvuden</guilabel
+>: Rubrik, och inom parentes: Från, Kopia (om någon) och datumet.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>&kmail; 5.2</guilabel
+> En avatar (om tillgänglig) med Rubrik, Från, Till, Kopia (om någon), samt skräppoststatus och bilagor på separata rader.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Ladda ner nya teman...</guilabel
+>: Låter dig ladda ner egna teman skapade av andra användare av &kmail;.</para
+></listitem>
+</itemizedlist>
+<para
+>Klicka på raden placerad till vänster om rutan för att byta mellan vanlig text och &HTML; (om och endast om brevet är kodat på båda sätt). När raden är synlig, informerar den inbäddade texten om vilken visning som används. Dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa &kmail;...</guimenuitem
+><guisubmenu
+>Säkerhet</guisubmenu
+></menuchoice
+> låter dig välja HTML som standardvisningsalternativ för brev, om du föredrar &HTML; över vanlig text.</para>
+<para
+>Om du vill ändra sättet som bilagor visas i breven, gå till <menuchoice
+><guimenu
+>Visa</guimenu
+> <guisubmenu
+>Bilagor</guisubmenu
+></menuchoice
+>. Detta är dina alternativ:</para>
+<itemizedlist id="using-attachment-view-options">
+  <listitem
+><para
+><guimenuitem
+>Som ikoner</guimenuitem
+>, alla bilagor visas om ikoner längst ner i brevet.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Smart</guimenuitem
+> visar bilagor som ikoner, om inte brevet föreslår att de ska visas på plats. Du kan föreslå att vissa bilagor ska visas på plats i brev du skriver genom att välja <guilabel
+>Föreslå automatisk visning</guilabel
+> i <link linkend="the-composer-window"
+>brevfönstret</link
+> via bilagans egenskapsdialogruta.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>På plats</guimenuitem
+> visar innehållet i bilagorna längst ner i brevet. Bilagor som inte kan visas, t.ex. komprimerade filer, visas ändå som ikoner.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Dölj</guimenuitem
+> visar inte bilagor.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Bara i rubriken</guimenuitem
+> förhindrar visning på plats, men listar bilagorna tillsammans med brevhuvuden.</para
+></listitem>
+</itemizedlist>
+<para
+>Interaktionerna mellan rubrikteman, visning av bilagor och vanlig text mot &HTML; preferenser är ganska komplex. Om du exempelvis lägger till en HTML-fil som bilaga till ett brev med vanligt text, tolkar &kmail; troligen brevet som om det var kodat med två olika format, även om det egentligen inte är fallet. På liknande sätt kan &HTML;-brev visa inbäddade bilder även om du har valt alternativet "Dölj" för bilagor.</para>
+
+<para
+>Strukturen hos varje brev kan visas genom att trycka på <keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+>. Det visar en brevstruktur under förhandsgranskningsrutan. Stäng av brevstrukturvisningen genom att trycka på samma tre tangenter.</para>
+
+<para
+>Du kan rulla genom brevet sida för sida med tangenterna <keycap
+>Page Up</keycap
+> och <keycap
+>Page Down</keycap
+>, eller rad för rad med tangenterna <keycap
+>Upåtpil</keycap
+> och <keycap
+>Neråtpil</keycap
+>. Du kan också använda <link linkend="keyboard-shortcuts"
+>snabbtangenter</link
+> för att gå igenom dina brev utan att behöva använda musen.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect1>
+
+<sect1 id="keyboard-shortcuts">
+<title
+>Snabbtangenter</title>
+
+<para
+>Följande snabbtangenter stöds normal i huvudfönstret. Observera att många "generella" genvägar (t.ex. <keycombo action="simul"
+>&Ctrl;<keycap
+>C</keycap
+></keycombo
+> för att kopiera markerad text till klippbordet, eller <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> för att visa en sökdialogruta) känns igen av &kmail;, men är inte dokumenterade här.</para>
+
+<informaltable>
+<tgroup cols="2">
+<thead>
+<row>
+<entry
+>Snabbtangenter</entry>
+<entry
+>Åtgärd</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+><keycap
+>Mellanslag</keycap
+></entry>
+<entry
+>Rulla neråt i det nuvarande brevet.</entry>
+</row>
+<row>
+<entry
+><keycap
+>→</keycap
+> eller <keycap
+>N</keycap
+></entry>
+<entry
+>Gå till nästa brev i den nuvarande korgen och visa det i brevläsningsrutan.</entry>
+</row>
+<row>
+<entry
+><keycap
+>←</keycap
+> eller <keycap
+>P</keycap
+></entry>
+<entry
+>Gå till föregående brev i den nuvarande korgen och visa det i brevläsningsrutan.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Home</keycap
+></keycombo
+></entry>
+<entry
+>Gå till det allra första brevet i den nuvarande korgen och visa brevförhandsgranskningsrutan.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl; <keycap
+>End</keycap
+></keycombo
+></entry>
+<entry
+>Gå till det allra sista brev i den nuvarande korgen och visa brevförhandsgranskningsrutan.</entry>
+</row>
+<row>
+<entry
+><keycap
+>+</keycap
+></entry>
+<entry
+>Gå till nästa olästa brev i den nuvarande korgen.</entry>
+</row>
+<row>
+<entry
+><keycap
+>-</keycap
+></entry>
+<entry
+>Gå till föregående olästa brev i den nuvarande korgen.</entry>
+</row>
+<row>
+<entry
+><keycap
+>C</keycap
+></entry>
+<entry
+>Kopiera brevet till en annan korg.</entry>
+</row>
+<row>
+<entry
+><keycap
+>M</keycap
+></entry>
+<entry
+>Flytta brevet till en annan korg.</entry>
+</row>
+<row>
+<entry
+><keycap
+>A</keycap
+></entry>
+<entry
+>Svara till alla mottagare av brevet (med citat).</entry>
+</row>
+<row>
+<entry
+><keycap
+>R</keycap
+></entry>
+<entry
+>Svara till avsändare med citat.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>R</keycap
+></keycombo
+></entry>
+<entry
+>Svara till avsändare utan något citat.</entry>
+</row>
+<row>
+<entry
+><keycap
+>S</keycap
+></entry>
+<entry
+>Starta brevsökdialogrutan.</entry>
+</row>
+<row>
+<entry
+><keycap
+>T</keycap
+></entry>
+<entry
+>Öppna brevet i nytt fönster.</entry>
+</row>
+<row>
+<entry
+><keycap
+>Enter</keycap
+></entry>
+<entry
+>Visa markerat brev i brevvisningen med fullskärm.</entry>
+</row>
+<row>
+<entry
+><keycap
+>V</keycap
+></entry>
+<entry
+>Visa det obehandlade brevet, huvuden och allt, som en textfil.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></entry>
+<entry
+>Titta efter nya brev på servern eller servrarna.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></entry>
+<entry
+>Öppnar brevfönstret i skrivläge för att skriva ett nytt brev.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></entry>
+<entry
+>Zooma in det aktuella brevet, med 20 % intervall.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></entry>
+<entry
+>Zooma ut det aktuella brevet, med 20 % intervall.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>0</keycap
+></keycombo
+></entry>
+<entry
+>Nollställ brevets zoomfaktor till 100 % (fullstort).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></entry>
+<entry
+>Visa eller dölj brevstruktur (under brevförhandsgranskningsrutan).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>O</keycap
+></keycombo
+></entry>
+<entry
+>Skapa flikverktygsraden (visas ovanför brevlistan).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Shift;<keycap
+>W</keycap
+></keycombo
+></entry>
+<entry
+>Ta bort fliken som för närvarande är aktiv från flikverktygsraden.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>↑</keycap
+></keycombo
+></entry>
+<entry
+>Gå till föregående korg i korglistan (om korglistan har fokus).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;<keycap
+>↓</keycap
+></keycombo
+></entry>
+<entry
+>Gå till nästa korg i korglistan (om korglistan har fokus).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Home</keycap
+></keycombo
+></entry>
+<entry
+>Fokusera på den allra första korgen. Använd <keycombo action="simul"
+>&Ctrl; <keycap
+>Mellanslag</keycap
+></keycombo
+> för att verkligen visa korgen.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl; <keycap
+>End</keycap
+></keycombo
+></entry>
+<entry
+>Fokusera på den allra sista korgen. Använd <keycombo action="simul"
+>&Ctrl; <keycap
+>Mellanslag</keycap
+></keycombo
+> för att verkligen visa korgen.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl; <keycap
+>Mellanslag</keycap
+></keycombo
+></entry>
+<entry
+>Öppna korgen som har fokus, dvs. den korg som du gick till med <keycombo action="simul"
+>&Ctrl;<keycap
+>Home</keycap
+></keycombo
+> eller <keycombo action="simul"
+>&Ctrl;<keycap
+>End</keycap
+></keycombo
+>.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>H</keycap
+></keycombo
+></entry>
+<entry
+>Byt mellan vanlig text och &HTML; (om inte &HTML; föredras via dialogrutan <guilabel
+>Inställningar</guilabel
+>).</entry>
+</row>
+<row
+>    
+<entry
+><keycombo action="simul"
+>&Shift;<keycap
+>←</keycap
+></keycombo
+> och <keycombo action="simul"
+>&Shift;<keycap
+>→</keycap
+></keycombo
+></entry>
+<entry
+>Markera brev i tur och ordning i brevlistan, med början på det nuvarande brevet.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>För fler snabbtangenter ta en titt på dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa genvägar...</guimenuitem
+></menuchoice
+>. Om du inte är nöjd med standardvärdena kan du ändra dem.</para>
+
+<para
+>Två musåtgärder förtjänar att nämnas här. För det första kan du markera flera ej intilliggande brev att behandla på en gång (t.ex. kopieras, tas bort eller flyttas) genom att hålla ner &Ctrl; och marker dem med vänster musknapp. För det andra kan du visa ett brev i ett externt fönster genom att dubbelklicka på ett objekt i brevlistan. Om brevet finns i utkorgen, utkast eller mallkorgen, visas det i ett brevfönster. Annars visas det i den externa brevvisningen, en förenklad version av &kmail;s huvudfönster utan korg- och brevlistorna, och med kortare menyer.</para>
+
+</sect1>
+
+<sect1 id="the-composer-window">
+<title
+>Brevfönstret</title>
+<screenshot>
+<screeninfo
+>Brevfönstret</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composer-window.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Brevfönstret</phrase>
+    </textobject>
+    <caption>
+      <para
+>Brevfönstret med &HTML; skrivläge.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>Brevfönstret används för att skriva nya brev, skriva svara på brev och vidarebefordra brev. Det kan startas på flera olika sätt. Här finns de olika alternativen för att skriva brev.</para>
+<sect2 id="composing-a-message">
+<title
+>Skriva ett brev</title>
+<variablelist>
+  <varlistentry id="compose-new-message"
+><term
+>Nytt brev...</term>
+  <listitem>
+  <para
+>Brevfönstret Nytt brev kan startas på fyra olika sätt:</para>
+      <itemizedlist>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt</guisubmenu
+><guimenuitem
+>Nytt brev...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Nytt brev...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+>Via ikonen <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Ny</guiicon
+> i huvudverktygsraden.</para>
+        </listitem>
+        <listitem>
+          <para
+>Via snabbtangenten <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>.</para>
+        </listitem>
+      </itemizedlist>
+      <para
+>För att skriva ett brev, fyll i lämpliga fält i brevfönstret. Använd menyn <guimenu
+>Visa</guimenu
+> för att välja vilka rubrikfält som visas. Alla val som du gör förblir valda när ett nytt brevfönster öppnas. De här fälten är tillgängliga.</para>
+      <itemizedlist id="composer-headers">
+        <listitem>
+          <para
+>Kombinationsrutan <guimenuitem
+>Identitet</guimenuitem
+> låter dig välja en identitet att använda.</para>
+        </listitem>
+        <listitem>
+          <para
+>Kombinationsrutan <guimenuitem
+>Ordlista</guimenuitem
+> låter dig välja enordlista för stavningskontroll.</para>
+        </listitem>
+        <listitem>
+          <para
+><guimenuitem
+>Skickade brev-korg</guimenuitem
+> låter dig ange var en lokal kopia av brevet ska sparas när du skickar det.</para>
+        </listitem>
+        <listitem>
+          <para
+><guimenuitem
+>Brevöverföring</guimenuitem
+> låter dig välja en utgående e-postserver.</para>
+        </listitem>
+        <listitem>
+          <para
+>De traditionella fälten Från:, Till:, och Rubrik: (Fältet Svara till: visas bara om du har angivit en alternativ <guilabel
+>Svara till</guilabel
+> adress under fliken <guilabel
+>Avancerat</guilabel
+> i dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;</guisubmenu
+> <guisubmenu
+>Konton</guisubmenu
+><guimenuitem
+>Identiteter</guimenuitem
+></menuchoice
+>).</para>
+        </listitem>
+        <listitem>
+          <para
+><guimenuitem
+>Använd teckensnitt med fast breddsteg</guimenuitem
+> stänger av eller sätter på teckensnitt med fast breddsteg.</para>
+        </listitem>
+        <listitem>
+          <para
+><guimenuitem
+>Textsnuttar</guimenuitem
+> visar fönstret med testsnuttar där du kan spara ofta använda deluttryck.</para>
+        </listitem>
+      </itemizedlist>
+
+<para
+>Det finns en mängd genvägar som hjälper dig att välja mottagare. Knappen <guibutton
+>Välj...</guibutton
+> intill fälten <guilabel
+>Till:</guilabel
+>, <guilabel
+>Kopia:</guilabel
+>, och <guilabel
+>Dold kopia:</guilabel
+> visar en lista från adressboken så att du kan välja en eller flera personer som ska ta emot brevet.</para>
+
+<para
+>Som ett alternativ, när du börjar skriva en adress i fälten <guilabel
+>Till:</guilabel
+>/<guilabel
+>Kopia:</guilabel
+>/<guilabel
+>Dold kopia:</guilabel
+>, visas en meddelanderuta som erbjuder liknande nyligen använda adresser och nära matchande adresser från adressboken. Om du inte tycker om den automatiska rutan kan du stänga av den genom att högerklicka på fältet där du skriver och välja en annan <guilabel
+>Textkomplettering &gt;</guilabel
+>. Du kan också använda den sammanhangsberoende menyn för att finjustera ordningen som föreslagna kompletteringar visas (via <guilabel
+>Anpassa komplettering...</guilabel
+>).</para>
+
+<para
+>Närhelst du vill lägga till mer än en mottagare i ett av fälten, använd ett kommatecken för att skilja en adress från den nästa. Du kan behöva ange fullständiga adresser (dvs. <userinput
+>användare@exempel.com</userinput
+>) också för lokala användare, beroende på systemkonfigurationen.</para>
+
+<para
+>När du är klar med brevet, klicka på ikonen <guiicon
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="mail-send.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Skicka</guiicon
+> för att skicka brevet nu, eller klicka på ikonen <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-queue.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> Köa</guiicon
+> för att lägga brevet i utkorgen. Om brevet inte är färdigt än, välj <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Spara som utkast</guimenuitem
+></menuchoice
+> för att spara det för senare redigering. Om du vill skriva ut brevet, välj <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Förhandsgranska utskrift</guimenuitem
+></menuchoice
+> för att förhandsgranska brevet, och <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Skriv ut</guimenuitem
+></menuchoice
+> för att skriva ut det.</para>
+  <para id="send-later"
+><menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skicka senare</guimenuitem
+></menuchoice
+> låter dig schemalägga brev att skicka vid ett specifikt datum och tid. Se <ulink url="help:/akonadi_sendlater_agent"
+>Modul för att skicka senare</ulink
+> för detaljerad information.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+<varlistentry id="new-compose-from-templates">
+    <term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guisubmenu
+>Nytt</guisubmenu
+><guisubmenu
+>Brev från mall</guisubmenu
+> <guimenuitem
+><replaceable
+>Min supermall</replaceable
+></guimenuitem
+></menuchoice
+></term>
+  <listitem>
+    <para
+>Att skriva ett nytt brev från en mall är användbart om du har skapat ett mästerverk som du vill spara som en mall för användning i framtida nya brev. Välj <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Spara som mall</guimenuitem
+></menuchoice
+> så placeras den nya mallen i korgen <guilabel
+>mallar:</guilabel
+>. En mall kan revideras när som helst genom att välja den i den här korgen. Dubbelklicka på mallens namn (eller tryck på snabbtangenten, <keycap
+>T</keycap
+>) för att visa den i ett brevfönster. Du kan också välja mallen via menyn <guimenu
+>Arkiv</guimenu
+>, som visas ovan.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="encrypt-sign">
+<title
+>Signera och kryptera brev</title>
+
+<para
+>Om du vill skicka ett <link linkend="pgp-encrypt-your-messages"
+>krypterat</link
+> eller <link linkend="pgp-sign-your-messages"
+>digitalt signerat</link
+> brev, välj ikonerna <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Signera brev</guiicon
+> och/eller <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-decrypt.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Kryptera brev</guiicon
+> i verktygsraden. Använd kombinationslistan <menuchoice
+><guimenuitem
+>Alternativ</guimenuitem
+><guisubmenu
+>Krypterat brevformat &gt;</guisubmenu
+></menuchoice
+> för att välja formatet använt för att kryptera brevet. (Menyn <guilabel
+>Alternativ</guilabel
+> låter dig också signera och kryptera brevet.) Du kan välja ett av fem formateringsalternativ. </para>
+
+<variablelist id="cryptographic-message-formats">
+<varlistentry>
+<term
+><guilabel
+>Vilket som helst</guilabel
+></term>
+<listitem>
+<para
+>&kmail; använder ett format som kan förstås av alla mottagare av brevet. Önskat format för varje mottagare kan anges via <ulink url="help:/kaddressbook"
+>adressboken</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP på plats (avråds från)</guilabel
+></term>
+<listitem>
+<para
+>Användning av formatet avråds från, men det stöds av bakåtkompatibilitetsskäl. Om du använder formatet signeras och/eller krypteras bara brevtexten. <emphasis
+>Bilagor varken signeras eller krypteras.</emphasis
+> &HTML;-brev kan inte signeras med formatet. Du bör bara använda formatet när det är nödvändigt, dvs. om du skickar brev till personer som använder e-postklienter som inte kan hantera de mer avancerade formaten.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>Det här formatet är efterföljaren till OpenPGP på plats. Om du använder formatet signeras och/eller krypteras brevtexten och alla bilagor (åtminstone normalt). Det är rekommenderat format om du använder OpenPGP-kryptering.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>Det här formatet är ett alternativ till OpenPGP/&MIME;. Om du använder formatet signeras och/eller krypteras brevtexten och alla bilagor (åtminstone normalt). Det här formatet används i huvudsak av företag. Formatet används i huvudsak av företag. Det förlitar sig på ett x.509-certifikat, inte en PGP/GPG-nyckel.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME; ogenomskinlig</guilabel
+></term>
+<listitem>
+<para
+>Formatet är en variant av S/&MIME;-formatet. Eftersom det förenar brevet, eventuella bilagor, och den digitala signaturen i ett enda &MIME;-objekt, är det processorintensivt och ska bara användas om nödvändigt.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="html-mails">
+<title
+>Skapa &HTML;-brev</title>
+
+<para
+>Observera att ett &HTML;-brev ofta betraktas som ett otyg. Därför bör du använda &HTML;-brev på ett klokt sätt. I synnerhet bör du aldrig skicka &HTML;-brev till mottagare i en sändlista, om inte &HTML;-brev uttryckligen tillåts.</para>
+
+<para
+>För att skapa &HTML;-brev måste du först aktivera formateringsverktygen. För att göra det, aktivera <guimenuitem
+>Rich text-redigering</guimenuitem
+> i menyn <menuchoice
+><guimenu
+>Alternativ</guimenu
+></menuchoice
+> eller klicka på ikonen <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="preferences-desktop-font.png" format="PNG"/></imageobject
+></inlinemediaobject
+> RIch text</guiicon
+> i &kmail;s verktygsrad. En ytterligare verktygsrad med flera formateringsverktyg visas. Via &HTML;-verktygsraden kan du välja mellan vanlig text, punktlistor eller nummerlistor. (Använd kombinationslistan <guilabel
+>Ingen <inlinemediaobject
+><imageobject
+> <imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> vid verktygsradens vänstra kant för att bestämma punktlistans eller nummerlistans stil.) Dessutom kan du bestämma teckenfamiljen, teckenstorleken, teckenstilen (fetstil, kursiv, understruken, eller överstruken), samt text- och bakgrundsfärgen. Du kan också ange textens justering (vänsterjusterad, centrerad, högerjusterad eller anpassad) och infoga förankringstaggar (också kallade länkar), horisontella linjer, bilder, tabeller och godtycklig &HTML;-kod (även om stöd för mer avancerade &HTML;-taggar fortfarande är ofullständigt).</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="attachments">
+<title
+>Lägga till bilagor</title>
+
+<para
+>Du kan bifoga filer till dina brev genom att använda någon av de här metoderna:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Använd kombinationslistan <menuchoice
+><guimenu
+>Bifoga</guimenu
+><guisubmenu
+>Bifoga &gt;</guisubmenu
+></menuchoice
+> och påföljande dialogruta för att välja en fil,</para>
+</listitem>
+<listitem>
+<para
+>Klicka på ikonen <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-attachment.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Bifoga </guiicon
+> och välj filen som du vill bilägga,</para>
+</listitem>
+<listitem>
+<para
+>Dra en fil från skrivbordet eller en annan katalog till brevfönstret.</para
+> 
+</listitem>
+<listitem>
+<para
+>Dra ett brev från &kmail;s brevlista till brevfönstret: det brevet blir då blir bilagt,</para>
+</listitem>
+<listitem>
+<para
+>Välj ett av ytterligare alternativen i menyn <menuchoice
+><guimenu
+>Bifoga</guimenu
+></menuchoice
+>, eller</para>
+</listitem>
+<listitem>
+<para
+>Välj <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Infoga textfil...</guimenuitem
+></menuchoice
+> eller <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-open.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Infoga senaste textfil &gt;</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</itemizedlist>
+
+<para
+>När en fil väl är bifogad till brevet, visas den i bilagerutan längst ner i brevfönstret. Du kan använda höger musknapp för varje bilaga för att <guimenuitem
+>Visa</guimenuitem
+>,  <guimenuitem
+>Öppna</guimenuitem
+>, <guimenuitem
+>Redigera</guimenuitem
+>, <guimenuitem
+>Uppdatera</guimenuitem
+>, <guimenuitem
+>Spara som...</guimenuitem
+> eller <guimenuitem
+>Ta bort</guimenuitem
+> bilagan. (Den sammanhangsberoende menyn varierar lite beroende på bilagans filtyp.) Flera alternativ (Komprimera, Kryptera, Signera, Föreslå automatisk visning) kan sättas på eller stängas av för varje fil som biläggs till ett brev.</para>
+
+<para
+>Använd alternativet <guimenuitem
+>Egenskaper</guimenuitem
+> i den sammanhangsberoende menyn för att visa dialogrutan <guilabel
+>Egenskaper för bilagor</guilabel
+>. Det första fältet innehåller bilagans &MIME;-typ. Precis som fältet <guilabel
+>Namn</guilabel
+>, fylls det automatiskt i med ett lämpligt värde. Ibland kan &MIME;-typen vara felaktig. Då kan du skriva in vilken &MIME;-typ för innehållet som helst eller välja från listan på vanliga &MIME;-typer. Du kan också välja en kodningsmetod för filen från listan med kodningsalternativ (normalt fungerar det förvalda värdet utmärkt). Markera alternativet <guilabel
+>Föreslå automatisk visning</guilabel
+> om du vill föreslå för mottagaren att den här bilagan automatiskt ska visas som del av meddelandet. Om det fungerar eller inte beror på mottagarens e-postklient och dess inställningar.</para>
+
+<para
+>Du kan också bifoga öppna kryptografiska nycklar i brevet genom att välja lämpliga alternativ i menyn <menuchoice
+><guimenu
+>Bifoga</guimenu
+></menuchoice
+>. Bifogade <acronym
+>GnuPG</acronym
+>-nycklar och x.509- certifikat hanteras (oftast) som filbilagor.</para>
+
+</sect2>
+
+<sect2 id="checking-the-spelling-of-your-message">
+<title
+>Kontrollera stavningen av ditt brev</title>
+
+<para
+>&kmail; kan automatiskt kontrollera brevets stavning och stryka under okända ord med rött. Om det finns för många okända ord, inaktiverar &kmail; kontrollen. För att välja språk som används för kontrollen, välj <menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Ordlista</guimenuitem
+></menuchoice
+>. Du kan stänga av automatisk stavningskontroll i menyn <menuchoice
+><guimenu
+>Alternativ</guimenu
+></menuchoice
+>.</para>
+<para
+>Om du behöver skriva brev på olika språk, aktivera kombinationsrutan <guilabel
+>Ordlista</guilabel
+> med <menuchoice
+><guimenu
+>Visa</guimenu
+><guimenuitem
+>Ordlista</guimenuitem
+></menuchoice
+> i menyn. Genom att använda kombinationsrutan kan du ändra stavningskontrollens språk med ett musklick. </para>
+<para
+>För att kontrollera stavningen av brevet genom att använda en dialogruta, välj <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Stavning...</guimenuitem
+></menuchoice
+>. &kmail; använder &sonnet; för att kontrollera stavningen. &sonnet; är &kde;s gränssnitt till stavningskontrollprogrammen <application
+>Aspell</application
+>, <application
+>Hspell</application
+>, <application
+>Enchant</application
+> och <application
+>HUNSPELL</application
+>. Observera att du kan behöva ställa in stavningskontrollen med <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Stavningskontroll...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+
+<sect2 id="setup-text-snippets">
+<title
+>Inställning av textsnuttverktyget</title>
+<para
+>När du redigerar i brevfönstret kan du infoga ofta använda textdelar som textsnuttar. För att ställa in brevsnuttar, välj <menuchoice
+><guimenu
+>Visa</guimenu
+> <guimenuitem
+>Textsnuttar</guimenuitem
+></menuchoice
+> i menyraden. En ny panel visas på höger sida i brevfönstret. </para>
+<para
+>För att lägga till en ny textsnutt i textsnuttpanelen, högerklicka på den, och klicka på <menuchoice
+><guimenu
+>Lägg till textsnutt</guimenu
+></menuchoice
+> i den sammanhangsberoende menyn. En redigeringsdialogruta för textsnuttar visas, där ny text kan läggas till och textsnutten kan ges ett namn. Dessutom kan en <guilabel
+>genväg</guilabel
+> kopplas till textsnutten. Textsnuttar kan grupperas genom att skapa grupper och lägga till textsnuttar i en viss grupp. Använd den sammanhangsberoende menyn som visas med höger musknapp för att lägga till, redigera eller ta bort textsnuttar från den sparade samlingen. </para>
+<para
+>Verktyget <guilabel
+>Textsnuttar</guilabel
+> gör det möjligt att infoga variabel text på fördefinierade platser närhelst du infogar en textsnutt i en fil. För att göra det tillhandahåller <guilabel
+>Textsnuttar</guilabel
+> sin egen variabelmekanism. Du kan infoga variabler i själva textsnutten genom att använda skiljetecken ($) för att omge variabelnamnet. Till exempel: $variabelnamn$, $fakturanummer$, $veckonummer$. </para>
+<para
+>Variabelskiljetecknet kan ändras till något annat tecken genom att ändra <varname
+>snippetDelimiter</varname
+> i sektionen [SnippetPart] i inställningsfilen för textsnuttar, som finns i ~./config/kmailsnippetrc. <programlisting
+>snippetDelimiter=$
+</programlisting>
+
+</para>
+
+</sect2>
+<sect2 id="using-the-translator">
+  <title
+>Använda den inbyggda översättningen</title>
+  <para
+>Brevfönstret i &kmail; 2 tillhandahåller en inbyggd översättning som kan kommas åt genom att välja <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Översättning</guimenuitem
+></menuchoice
+> i menyraden. En ny panel visas på längst ner i brevfönstret.</para>
+    <para
+>För att översätta ett textstycke, mata först in texten du vill få översatt i rutan betecknad <guilabel
+>Dra text som du vill översätta</guilabel
+>. Välj språk du vill översätta till med kombinationsrutan <guilabel
+>Till:</guilabel
+>, och klicka därefter på knappen <guibutton
+>Översätt</guibutton
+>. Efter att ha blivit översatt av Google Översätt, en fri nättjänst, dyker den översatta texten upp i nästa ruta. Om du behöver översätta i motsatt riktning kan du bara klicka på knappen <guibutton
+>Invertera</guibutton
+>. För att rensa all text, klicka på knappen <guibutton
+>Rensa</guibutton
+>. </para>
+</sect2>
+</sect1>
+
+<sect1 id="folders">
+<title
+>Brevkorgar</title>
+<screenshot>
+<screeninfo
+>Exempel på inställning av korg</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Exempel på inställning av korg</phrase>
+    </textobject>
+    <caption>
+      <para
+>&kmail;'s standardkorgar.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>Brevkorgar används för att organisera din e-post. När du först startar &kmail; skapas <quote
+>Lokala korgar</quote
+> som innehåller korgarna <guilabel
+>inkorg</guilabel
+>, <guilabel
+>utkorg</guilabel
+>, <guilabel
+>skickade brev</guilabel
+>, <guilabel
+>papperskorg</guilabel
+>, <guilabel
+>utkast</guilabel
+> och <guilabel
+>mallar</guilabel
+>. Var och en av de här korgarna har en speciell funktion:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>inkorg:</guilabel
+></term>
+<listitem>
+<para
+>Där &kmail; normalt lägger nya brev när du talar om för den att titta efter nya brev. </para
+><note
+><para
+>&IMAP;-konton använder inte denna inkorg. &IMAP;-inkorgen är placerad på &IMAP;-servern.</para
+></note>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>utkorg:</guilabel
+></term>
+<listitem>
+<para
+>Platsen där brev placeras medan de väntar på att levereras. Du ska inte bara dra och släppa brev här för att skicka dem. Använd ikonen <guiicon
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-send.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Skicka</guiicon
+> i brevfönstret istället.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>skickade brev:</guilabel
+></term>
+<listitem>
+<para
+>Normalt sparas en kopia av varje brev som du skickar i den här korgen.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>papperskorg:</guilabel
+></term>
+<listitem>
+<para
+>Normalt flyttas alla brev som du har angett som skräp till den här korgen.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>utkast:</guilabel
+></term>
+<listitem>
+<para
+>Innehåller brev som du börjat skriva men sedan sparade i korgen med <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Spara som utkast</guimenuitem
+></menuchoice
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>mallar:</guilabel
+></term>
+<listitem>
+<para
+>Korgen innehåller mallar skapade via <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Spara som mall</guimenuitem
+></menuchoice
+> från brevfönstret. Se <link linkend="new-compose-from-templates"
+>Nya mallar i brevfönstret</link
+> för detaljerad information.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<sect2 id="folder-details">
+<title
+>Skapa och använda korgar</title>
+
+<para
+>Organisera dina brev (t.ex. sändlistor, räkningar och kvitton, etc.) genom att skapa nya korgar. För att skapa en ny korg, välj <menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Lägg till korg...</guimenuitem
+></menuchoice
+> eller <guimenuitem
+>Lägg till korg...</guimenuitem
+> i den sammanhangsberoende menyn som visas med höger musknapp. En dialogruta dyker upp. Mata in namnet på den nya korgen i textrutan. Du kan anpassa varje korg fullständigt (dvs. vyer, svar, etc.) genom att markera korgen du vill ändra i korgrutan och sedan välja <guimenuitem
+>Korgegenskaper</guimenuitem
+> i den sammanhangsberoende menyn som visas med höger musknapp. Se <link linkend="folders-properties-window"
+>Egenskaper för korg</link
+> för detaljerad information.</para>
+
+<para
+>För att flytta brev från en korg till en annan, markera brevet eller breven du vill flytta och tryck på tangenten <keycap
+>M</keycap
+> eller välj <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Flytta brev till...&gt;</guimenuitem
+></menuchoice
+>. En lista med korgar visas. Välj korgen som du vill flytta brevet till i listan. Brev kan också flyttas genom att dra dem från brevlistan till en korg i korglistan, eller genom att använda en sammanhangsberoende meny som visas med höger musknapp.</para>
+
+<para
+>Om du har korgar som du ofta använder, kan du lägga till dem i rutan med dina favoritkorgar (ovanför korglistan). Lägg till dem med alternativet <guimenuitem
+>Lägg till i favoritkorgar</guimenuitem
+> i den sammanhangsberoende menyn som visas med höger musknapp.</para>
+
+<para
+>Du kan skapa en virtuell korg med sökparametrar genom att gå till <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guimenuitem
+>Sök brev...</guimenuitem
+></menuchoice
+> eller använda snabbtangenten <keycap
+>S</keycap
+>. Skriv in sökparametrarna i dialogrutan. Namnge sökningen med <guilabel
+>Sökkorgnamn:</guilabel
+>, t.ex. <replaceable
+>brev med ordet blogg</replaceable
+>. Klicka på knappen <guibutton
+>Sök</guibutton
+>. Välj nu knappen <guibutton
+>Öppna sökkorg</guibutton
+>. En resultatkorg visas, placerad längst ner i korgrutan. (Normalt är varje ny sökning benämnd "Senaste sökning". Du kan spara särskilda sökparametrar genom att tilldela ett speciellt namn som beskrivs ovan.)</para>
+
+<para
+>Skapa filter för att automatiskt flytta brev till angivna korgar är ett utmärkt sätt att organisera brev enligt sändlista, avsändare, ämne, etc. Se <link linkend="filters"
+>Filter</link
+> för detaljerad information.</para>
+
+<para
+>I fallet då du tar emot brev från en pålitlig källa (t.ex. en blogg som du anmält dig till), som är formaterade med &HTML;, och du skulle vilja aktivera &HTML;-visning för bara de breven, kan du skapa en ny korg, ställa in ett <link linkend="filters"
+>filter</link
+> för att placera breven från bloggen i den nya korgen, markera korgen och sedan välja <menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Standardbrevformat &gt;</guimenuitem
+><guimenuitem
+>Föredra &HTML; före vanlig text</guimenuitem
+></menuchoice
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>Några vanliga korgåtgärder är</para>
+<variablelist>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Flytta alla brev till papperskorg</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Flytta</action
+> alla brev i den markerade korgen till papperskorgen.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Arkivera korg</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Skapa ett arkiv</action
+> av korgen. Se <link linkend="folder-archive"
+>Arkivera korg</link
+> för detaljerad information.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Ta bort korg</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Ta bort en korg</action
+> med alla dess brev och underkorgar.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Ta bort duplicerade brev</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Sök igenom</action
+> korgen som för närvarande är markerad efter dubbletter och <action
+>ta bort</action
+> dem.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="folders-properties-window">
+<title
+>Korgegenskaper</title>
+<screenshot>
+<screeninfo
+>Exempel på korgegenskaper</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-properties.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Exempel på korgegenskaper</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialogrutan Korgegenskaper</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>Dialogrutan <guilabel
+>Korgegenskaper</guilabel
+> låter dig ange dess egenskaper. Observera att de flesta egenskaper bara är tillgängliga för korgarna som du skapar och inte för standardkorgar som <guilabel
+>inkorg</guilabel
+>, etc. De sex standardkorgarnas namn kan inte ändras.</para>
+
+<sect3 id="folders-properties-general">
+<title
+>Fliken Allmänt</title>
+<para
+>Om du vill byta namn på en korg, ändra värdet i fältet <guilabel
+>Namn:</guilabel
+>.</para>
+
+<para
+><guilabel
+>Agera vid nya olästa brev i korgen</guilabel
+> är normalt aktiverad för nya korgar. Det aktiverar underrättelser om nya brev som anländer till korgen. Avmarkera alternativet för korgar som skräppost och papperskorg för vilka du inte önskar underrättelser.</para>
+<para
+>Markera <guilabel
+>Behåll svar i den här korgen</guilabel
+> om du vill att svaren på breven ska lagras i den här korg istället för den vanliga korgen inställd för skickade brev.</para>
+
+<para
+>Markera <guilabel
+>Dölj korgen i dialogrutan för korgval</guilabel
+> om du inte vill att korgen ska visas i dialogrutor för korgval, såsom dialogrutorna <guimenuitem
+>Gå till korg</guimenuitem
+> och <guimenuitem
+>Flytta brev till</guimenuitem
+>.</para>
+
+<para
+>Nya korgar använder standardidentiteten. Om du vill koppla korgen till en annan identitet, avmarkera <guilabel
+>Använd normalt vald identitet</guilabel
+> och välj en annan i kombinationsmenyn <guilabel
+>Avsändaridentitet</guilabel
+>. Se <link linkend="configure-identity"
+>Identitetsinställningar</link
+> för information om identiteter. Svar på brev som skickas direkt till dig, kommer fortfarande att använda brevets adress <quote
+>Till</quote
+> om motsvarande identitet hittas.</para>
+
+<!-- <para
+>If you have groupware, you can change the contents &eg; calendar, notes, &etc; of the folder in the
+<guilabel
+>Folder contents:</guilabel
+> drop down box.</para>
+
+<para
+>If you share the folder with other users, you can <guilabel
+>Share unread state with all users</guilabel
+> which will show the same unread state for all users.</para>
+<informalexample
+><para
+>For example, a ticket system that all emails must be read and multiple users are responsible for reading unread tickets.</para
+></informalexample
+> -->  <!-- I cannot find any "groupware" functionality in kmail. @dcb2020291 -->
+</sect3>
+
+<sect3 id="folders-properties-view">
+<title
+>Fliken Visa</title>
+<para
+>Alternativet <guilabel
+>Använd egna ikoner</guilabel
+> låter dig välja ikoner som skiljer sig från förvalen i korglistan.</para>
+<para
+>Med kombinationslistan <guilabel
+>Visa kolumn</guilabel
+> kan du ställa in de synliga kolumnerna i rubrikraden till Förval, Avsändare eller Mottagare. Det kan vara användbart om du använder en egen korg för att spara några av dina egna skickade brev.</para>
+<para
+>I gruppen <guilabel
+>Brevlista</guilabel
+> kan du välja och ställa in en <guilabel
+>Sammanställning</guilabel
+> och ett <guilabel
+>Tema</guilabel
+> för korgen som skiljer sig från standardvärden valda i &kmail;s inställningar. För mer information se fliken <link linkend="configure-appearance-message-list"
+>Brevlista</link
+> på sidan <guilabel
+>Utseende</guilabel
+>.</para>
+<para
+>Gruppen <guilabel
+>Standardbrevformat</guilabel
+> låter dig välja mellan vanlig text och &HTML;-visning för brev i korgen.</para>
+</sect3>
+
+<sect3 id="folders-properties-retrieval">
+<title
+>Fliken Hämtning</title>
+<para
+>Om du har ett konto som inte tar emot många brev och du inte vill att &kmail; ska kontakta server för ofta, kan du avmarkera <guilabel
+>Använd alternativ från överliggande korg eller konto</guilabel
+> för att ställa in ett längre intervall i nummerrutan <guilabel
+>Synkronisera automatiskt efter:</guilabel
+>.</para>
+<para
+>Under <guilabel
+>Hämtningsalternativ</guilabel
+> kan du ändra alternativet <guilabel
+>Hämta alltid hela brev</guilabel
+> till <guilabel
+>Hämta brevtexter på begäran</guilabel
+> om du har en långsam anslutning. Du kan också ställa in hur långt brevet hålls kvar lokalt via nummerrutan. </para>
+</sect3>
+
+<sect3 id="folders-properties-templates">
+<title
+>Fliken Mallar</title>
+<para
+>Under den här fliken kan du definiera korgspecifika mallar för egna korgar. För mer information se fliken <link linkend="configure-composer-standard-templates"
+>Standardmallar</link
+> på sidan <guilabel
+>Brevfönster</guilabel
+>. </para>
+</sect3>
+
+<sect3 id="folders-properties-expiry">
+<title
+>Fliken Utgångstid</title>
+<para
+>Du kan ställa in automatisk rensning eller borttagning av brev. Markera rutan om du skulle vilja att lästa eller olästa brev automatiskt ska utgå. Välj antal dagar i nummerrutan. Om du inte vill ta bort breven permanent kan du tilldela en korg att behålla dem i med textrutan <guilabel
+>Flytta utgångna brev till:</guilabel
+> eller korgvalsdialogrutan. När du väl har granskat breven och vill ta bort dem permanent kan du gå till korgutgångsalternativen för korgen du valde att flytta dem till och ställa  in alternativet <guilabel
+>Ta bort utgångna brev permanent</guilabel
+> och därefter klicka på knappen <guibutton
+>Spara inställningar och låt brev utgå nu</guibutton
+>. </para>
+<warning
+><para
+>Brev som tas bort kan inte återställas, så var försiktig med den här inställningen.</para
+></warning>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect3>
+
+<sect3 id="folders-properties-mailinglist">
+<title
+>Fliken Sändlista</title>
+
+<para
+>Om du ska använda korgen för en sändlista, öppna då dialogrutan <guilabel
+>Egenskaper för korg</guilabel
+> med <menuchoice
+><guimenu
+>Korg</guimenu
+> <guimenuitem
+> Hantering av sändlistor</guimenuitem
+></menuchoice
+> i menyn. Därefter ska du markera <guilabel
+>Korgen innehåller en sändlista</guilabel
+>. &kmail; försöker då gissa viss information om sändlistan från brevet som för närvarande är markerat. Om &kmail; inte kan avgöra vissa adresser, kan du lägga till saknad information för hand. För att göra det, välj först <guilabel
+>Adresstyp</guilabel
+> som du vill använda för att lägga till en adress. Du kan välja bland fem alternativ:</para>
+<variablelist>
+<varlistentry id="folders-properties-mailinglist-post">
+<term
+><guilabel
+>Skicka till lista</guilabel
+></term>
+<listitem>
+<para
+>Den här adressen används för att skicka brev till sändlistan. Det är oftast en e-postadress.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-subscribe">
+<term
+><guilabel
+>Prenumerera på lista</guilabel
+></term>
+<listitem>
+<para
+>Den här adressen används för att prenumerera på sändlistan. Det kan vara en e-postadress eller adressen till en webbsida.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-unsubscribe">
+<term
+><guilabel
+>Sluta prenumerera på lista</guilabel
+></term>
+<listitem
+><para
+>Den här adressen används för att sluta prenumerera på sändlistan. Det kan vara en e-postadress eller adressen till en webbsida.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-archive">
+<term
+><guilabel
+>Listarkiv</guilabel
+></term>
+<listitem
+><para
+>Det här är adressen till sändlistas arkiv. Det är oftast adressen till en webbsida.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-help">
+<term
+><guilabel
+>Listhjälp</guilabel
+></term>
+<listitem>
+<para
+>Den här adressen används för att begära hjälp om sändlistan. Det är oftast en e-postadress.</para>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>Efter att ha vald lämplig <guilabel
+>Adresstyp</guilabel
+>, skriver in e-postadressen eller adressen till webbsidan och klicka därefter på <guilabel
+>Lägg till</guilabel
+>. Med <guilabel
+>Ta bort</guilabel
+> kan du ta bort adresser.</para>
+
+<para
+>När alla adresser har lagts till kan du utföra en åtgärd, t.ex. gå till listarkivet, genom att välja lämplig <guilabel
+>Adresstyp</guilabel
+> och därefter klicka på <guilabel
+>Starta hantering</guilabel
+>. Om det finns en e-postadress och en adress till en webbsida för önskad åtgärd, måste du välja <guilabel
+>Önskad hantering</guilabel
+> innan du klickar på <guilabel
+>Starta hantering</guilabel
+>. Välj <guilabel
+>Kmail</guilabel
+> om du vill skicka ett brev till e-postadressen, och välj <guilabel
+>Webbläsare</guilabel
+> om du vill gå till webbsidan.</para>
+
+<para
+>Du kan också skicka ett nytt brev till sändlistan via <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Nytt brev till sändlista...</guimenuitem
+></menuchoice
+> (istället för <guilabel
+>Starta hantering</guilabel
+>).</para>
+</sect3>
+
+<sect3 id="folders-properties-shortcut">
+<title
+>Fliken Genväg</title>
+<para
+>Du kan definiera en snabbtangent för att komma åt korgen.</para>
+</sect3>
+
+<sect3 id="folders-properties-maintainance">
+<title
+>Fliken Underhåll</title>
+<para
+>Den här fliken visar en översikt av korgens typ och dess storlek, och antal lästa och olästa brev i korgen, samt låter dig aktivera textindexering.</para>
+</sect3>
+
+<sect3 id="folders-properties-quota">
+<title
+>Tilldelningsflik (bara &IMAP;)</title>
+<para
+>Fliken visar hur mycket utrymma som har tilldelats till ditt &IMAP;-konto av servern, och även hur mycket av det tilldelade utrymmet som du för närvarande använder. </para>
+</sect3>
+
+<sect3 id="folders-properties-acl">
+<title
+>Åtkomstkontrollflik (bara &IMAP;)</title>
+<para
+>Här kan du hantera åtkomstkontrollistor för &IMAP;-korgar.</para>
+<note
+><para
+>&IMAP;-servern måste ha åtkomstkontrollista på användarnivå inställd och aktiverad för att fliken ska vara synlig.</para
+></note>
+<para
+>Nuvarande aktiva åtkomstkontrollista visas i listan. Den består av par med <guilabel
+>Användaridentifiering</guilabel
+> och <guilabel
+>Rättigheter</guilabel
+> som tilldelas användare som identifieras av <guilabel
+>Användaridentifiering</guilabel
+>. <footnote
+><para
+>Observera att en enda <guilabel
+>Användaridentifiering</guilabel
+> kan gälla mer än en användare. Beroende på &IMAP;-servern och dess inställning, kan det finnas användaridentifieringar som motsvarar grupper av användare, anonyma användare eller alla användare. För mer information se handboken för din specifika &IMAP;-serverimplementering.</para
+></footnote
+> Åtkomstkontrollistor kan anges per korg.</para>
+ <note
+><para
+>Som med allt annat när <emphasis
+>nerkopplad &IMAP;</emphasis
+> används, måste du synkronisera med servern för att ändringarna ska överföras till servern.</para
+></note>
+<para
+>Åtkomstkontrollistor för &IMAP; anger många finkorniga rättigheter som du kan ge eller neka andra användare. För att klargöra detta, visar &kmail; dem som följande fem kategorier du kan välja bland (se <xref linkend="table-acl-summary"/> för detaljer om du redan känner till åtkomstkontrollistor för &IMAP;).</para>
+<variablelist>
+<varlistentry id="folders-properties-acl-none">
+<term
+><guilabel
+>Ingen</guilabel
+></term>
+<listitem>
+<para
+>Ger inte användarna som identifieras av <guilabel
+>Användaridentifiering</guilabel
+> några rättigheter alls. Det är förvalt värde för användare som inte explicit (eller implicit som en grupp) listas i en åtkomstkontrollista. Dessa användare ser inte korgen i listan med &IMAP;-korgar som visas för dem av deras e-postprogram.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-read">
+<term
+><guilabel
+>Läs</guilabel
+></term>
+<listitem>
+<para
+>Ger användarna som identifieras av <guilabel
+>Användaridentifiering</guilabel
+> läsrättigheter för korgen. Det omfattar också möjligheten för deras e-postprogram att markera brev som lästa och lagra den informationen på servern. <footnote
+> <para
+>Varje användare har sin egen lista med lästa brev, så inget av dina olästa brev blir plötsligt markerat som läst på grund av att någon annan redan har läst dem.</para>
+</footnote>
+</para>
+<para
+>Dessa användare ser korgen i listan med &IMAP;-korgar som visas för dem av deras e-postprogram.</para>
+<para
+>Använd det här för att skapa en delad korg som andra kan läsa, men inte ändra.</para>
+<informalexample>
+<para
+>Om du vore redaktör för ett nyhetsbrev i ett företag, skulle du kunna skapa en korg med syfte att distribuera nyhetsbrevet, ge alla läsrättigheter och spara breven i korgen istället för att skicka ut det med e-post till en adress som omfattar alla.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-append">
+<term
+><guilabel
+>Lägg till</guilabel
+></term>
+<listitem>
+<para
+>(också känt som <guilabel
+>Skicka</guilabel
+>)</para>
+<para
+>Ger användarna som identifieras av <guilabel
+>Användaridentifiering</guilabel
+> läsrättigheter och tilläggsrättigheter för korgen.</para>
+<para
+>Använd det här för att skapa en delad korg som andra kan läsa och skicka brev till, men inte kan ändra på något annat sätt.</para>
+<informalexample>
+<para
+>Om du ville skapa ett diskussionsforum för hela företaget, istället för att använda ett webbaserat formulär eller en separat företagsprivat Usenet-server, skulle du kunna skapa en mängd korgar (en per ämne) och ge alla rättighet att läsa och skicka. Istället för att skicka till en NNTP-server eller skriva sina meddelanden i ett webbformulär, skulle alla bara skriva e-post och lagra dem i korgen som motsvarar meddelandets ämne.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-write">
+<term
+><guilabel
+>Skriv</guilabel
+></term>
+<listitem>
+<para
+>Ger användarna som identifieras av <guilabel
+>Användaridentifiering</guilabel
+> läsrättigheter, tilläggsrättigheter (se ovan) och skrivrättigheter för korgen.</para>
+<para
+>Rättigheten att skriva till en korg omfattar att ta bort brev, skapa underkorgar och lagra andra egenskaper än läst/oläst på servern (t.ex. besvarat).</para>
+<para
+>Använd det här för att skapa en delad korg där (nästan, se <xref linkend="folders-properties-acl-all"/>) alla har samma rättigheter.</para>
+<informalexample>
+<para
+>I exemplet <xref linkend="folders-properties-acl-append"/> skulle du kunna tilldela skrivrättigheter till en grupp personer som fungerar som övervakare, och de skulle då kunna ta bort inlägg utanför ämnet, och skapa underkorgar för ämnesgrupper för korgar med mycket trafik.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-all">
+<term
+><guilabel
+>Alla</guilabel
+></term>
+<listitem>
+<para
+>Ger användarna som identifieras av <guilabel
+>Användaridentifiering</guilabel
+> läsrättigheter, tilläggsrättigheter, skrivrättigheter (se ovan) samt administratörsrättigheter, dvs. rättighet att ändra korgens åtkomstkontrollista.</para>
+<para
+>Det här är förvald uppsättning rättigheter för korgens ägare.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+><xref linkend="table-acl-summary"/> Sammanfattar &IMAP;-rättigheter i åtkomstkontrollistor som hör ihop med varje rättighetsnivå.</para>
+<table id="table-acl-summary">
+<title
+>Summering av rättigheter i åtkomstkontrollistor</title>
+          <tgroup cols="6">
+            <thead>
+              <row>
+                <entry
+>Rättighet i åtkomstkontrollista</entry>
+                <entry
+><xref linkend="folders-properties-acl-none"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-read"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-append"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-write"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-all"/></entry>
+              </row>
+            </thead>
+            <!--tfoot/-->
+            <tbody>
+              <row>
+                <entry
+>Slå upp</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Läs</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Lagra sedda</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Infoga</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Skicka</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Skrivflaggor</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Skapa</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Ta bort</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Administrera</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+</sect3>
+
+</sect2>
+</sect1>
+
+<sect1 id="filters">
+<title
+>Brevfilter</title>
+<anchor id="filters-id"/>
+<screenshot>
+<screeninfo
+>Filterdialogrutan</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="filter-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Filterdialogrutan</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialogrutan för att skapa filter</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>Efter du har använd &kmail; ett tag, kan du råka ut för att du har besvär med att sortera alla nya brev i din inkorg när de anländer. Filter låter dig automatiskt utföra vissa åtgärder på inkommande brev och manuellt utföra åtgärder på markerade brev i en korg.</para>
+
+<para
+>Filter består av filterkriterier, vars regler används för att avgöra om det här filtret ska tillämpas på ett visst brev, och en lista med filteråtgärder som beskriver vad som ska göras med, eller i, brevet om sökmönstret matchar.</para>
+
+<note
+><para
+>Filter tillämpas ett i taget, med början på det första filtret i listan. Det första vars mönster matchar det givna brevet utförs. Du kan begära att de följande filtren också ska behandlas, men förvalt värde är att sluta behandlingen vid det första filtret som matchar. </para
+></note>
+
+<para
+>Oftast används filter på inkommande brev, men de kan också användas på skickade brev eller ett godtyckligt brev eller en godtycklig samling brev. För att filtrera utvalda brev, markera breven som du vill filtrera i brevlistan och skriv  <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+></keycombo
+> eller välj <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Använd filter</guimenuitem
+></menuchoice
+>. Det applicerar filtren (de som är markerade för manuell filtrering i den <link linkend="filter-dialog"
+>avancerade filterdialogrutan</link
+>) för de  breven.</para>
+
+<sect2 id="filter-quick">
+<title
+>Skapa filter snabbt</title>
+
+<para
+>Det finns två sätt att skapa ett filter: Det snabba sättet är att använda <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Skapa filter...</guimenuitem
+></menuchoice
+>, och välja ett kriterium i undermenyn. Det visar filterdialogrutan och visar ett nytt filter som har den första regeln i sökmönstret och den första åtgärden (som <quote
+>Flytta till korg</quote
+>) förinställda. I de flesta fall, är allt du vill göra att välja korgen som brevet ska flyttas till, men du kan förstås redigera filtret som du vill.</para>
+
+<para
+>När ett filter för e-postlistor skapas, försöker den här metoden hitta ett villkor som ger en unik identifikation av brev från listan. Om det lyckas, visas det föreslagna namnet på listan i menyvalet <menuchoice
+><guimenu
+>Brev</guimenu
+> <guisubmenu
+>Skapa filter</guisubmenu
+> <guimenuitem
+>Filtrera på sändlista...</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>Den andra metoden är att skapa ett filter för hand från början genom att starta filterdialogrutan med <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa filter...</guimenuitem
+></menuchoice
+>. Filterdialogrutan beskrivs i detalj i det följande avsnittet.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-dialog">
+<title
+>Filterdialogrutan</title>
+<anchor id="filter-dialog-id"/>
+
+<para
+>Den här dialogrutan låter dig hantera och redigera din lista med filter.</para>
+
+<para
+>Du kan antingen nå den med <menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Skapa filter</guisubmenu
+></menuchoice
+> eller <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa filter...</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>Dialogrutan är uppdelad i tre huvuddelar under flikarna <guilabel
+>Allmänt</guilabel
+> och <guilabel
+>Avancerat</guilabel
+>:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Tillgängliga filter</guilabel
+></term>
+<listitem
+><para
+>Den här gruppen innehåller listan på filter och åtgärdsknappar för att ändra filtren, nämligen att skapa nya filter, flytta dem upp och ner i listan, kopiera ett av dem, ta bort dem eller byta namn på dem. Om du markerar ett filter i listan, visas dess egenskaper i den högra delen av dialogrutan.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Filterkriterier</guilabel
+></term
+> <listitem
+><para
+>I den här gruppen kan du redigera mönstret som brev måste matcha innan filtret appliceras på dem. Du kan välja om alla angivna regler måste matcha eller om det räcker att en enda matchar. Se <link linkend="filter-criteria"
+>Sökmönster</link
+> nedan för en detaljerad beskrivning av varje typ av sökregel.</para>
+
+<para
+>Du kan klicka på <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> för att få ytterligare (ursprungligen tomma) regler om du vill ange mer komplexa mönster och på <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> för att ta bort den markerade regeln. <guibutton
+>Rensa</guibutton
+> tömmer mönstret, dvs. tar bort alla utom en regel från skärmen och nollställer den.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Filteråtgärder</guilabel
+></term
+> <listitem
+><para
+>I den här gruppen kan du redigera listan på åtgärder som tillämpas för alla brev som matchar det definierade filterkriteriet. Se <link linkend="filter-action"
+>Filteråtgärder</link
+> nedanför för en detaljerad beskrivning av varje åtgärdstyp.</para>
+
+<para
+>Du kan klicka på <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> för att få en ny, tom åtgärd om du vill definiera fler än en åtgärd och på <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> för att ta bort den markerade åtgärden. <guibutton
+>Rensa</guibutton
+> tömmer listan, dvs. tar bort alla utom en åtgärd och nollställer den.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Avancerade inställningar</guilabel
+></term>
+
+<listitem>
+
+<para
+>I den här gruppen kan du definiera några avancerade alternativ, som låter dig finjustera filtreringen.</para>
+
+<para
+>Med hjälp av den första raden med kryssrutor kan du välja när filtret används: Alternativet <guilabel
+>Använd filtret på inkommande brev</guilabel
+> anger att filtret används på brev när de tas emot (dvs. vid <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Kontrollera posten</guiicon
+>). Filtret kan användas för alla brev, för alla utom uppkopplade IMAP-konton eller för specifika inkommande e-postkonton.</para>
+<para
+>Alternativet <guilabel
+>Använd filtret på skickade brev</guilabel
+> betyder att filtret används för brev när du skickar dem, och alternativet <guilabel
+>Använd filtret vid manuell filtrering</guilabel
+> styr att filtret ska användas när filtrering uttryckligen väljes (dvs. via <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Använd filter</guimenuitem
+></menuchoice
+>).</para>
+<para
+>Om <guilabel
+>Använd filtret på skickade brev</guilabel
+> är markerat kommer filtret att användas <emphasis
+>efter</emphasis
+> brevet skickas, och påverkar bara den lokala kopian av brevet. Om mottagarens kopia också behöver ändras, använd istället <guilabel
+>Använd filtret innan brev skickas</guilabel
+>. </para>
+<para
+>Kryssrutan <guilabel
+>Om detta filter matchar, avbryt behandlingen här</guilabel
+> bestämmer om filtret efter aktuellt filter behandlas när det aktuella filtret matchar.</para>
+
+<para
+>Om kryssrutan <guilabel
+>Lägg till detta filter i menyn Välj filter</guilabel
+> är markerad, läggs filtret till i undermenyn <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Välj filter</guimenuitem
+></menuchoice
+>. Därefter kan du använda det filtret för ett brev eller en uppsättning brev. Om det här alternativet används, kan valfritt en snabbtangent väljas och en särskild ikon infogas för att välja filtret i verktygsraden.</para>
+
+<para
+>Ett annat sätt att filtrera är att använda menyalternativet <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Filtrera</guimenuitem
+></menuchoice
+>, som använder <emphasis
+>alla</emphasis
+> filter, ett i taget, tills alla har används eller ett av filtren som matchar anger alternativet <guilabel
+>Om detta filter matchar, avbryt behandlingen här</guilabel
+>.</para>
+
+</listitem>
+</varlistentry>
+</variablelist>
+
+<note
+><para
+>Filter namnges automatiskt, om du inte explicit döper om dem med knappen <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Byt namn...</guibutton
+>. Dialogrutan antar att den ska fortsätta att namnge filtren automatiskt medan filternamnet börjar med <quote
+>&lt;</quote
+>. </para>
+
+<para
+>Om du verkställer filterändringar, med <guibutton
+>Ok</guibutton
+> eller <guibutton
+>Verkställ</guibutton
+>, kopieras bara de giltiga filtren verkligen till den interna filterhanteraren.</para>
+
+<para
+>På samma sätt tas tomma regler och åtgärdslistor bort från mönstret och åtgärdslistan, innan filtret sparas.</para>
+</note>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-criteria">
+<title
+>Sökmönster</title>
+
+<para
+>Den vanligaste användningen av filter är att filtrera på brevets avsändare. Det kan göras genom att välja <guilabel
+>Från</guilabel
+>. Ett bra tips för en sändlista skulle vara <guilabel
+>Alla mottagare</guilabel
+>. Men det finns andra kriterier som ett filter kan leta efter. Observera att alla mönster tolkas utan att bry sig om stora och små bokstäver:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Hela brevet</guilabel
+></term>
+<listitem>
+<para
+>Söker igenom hela brevet (dvs. rubrik, text och bilagor, om de finns).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Brevets text</guilabel
+></term>
+<listitem>
+<para
+>Söker igenom brevets text (dvs. hela brevet utom huvuden).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Var som helst i huvudet</guilabel
+></term>
+<listitem>
+<para
+>Söker igenom alla brevets huvudfält.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Alla mottagare</guilabel
+></term>
+<listitem>
+<para
+>Söker igenom brevets rubrikfält <quote
+>Till</quote
+> och <quote
+>Kopia</quote
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Storlek i byte</guilabel
+></term>
+<listitem>
+<para
+>Ställer in övre eller undre gräns för brevets storlek.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ålder i dagar</guilabel
+></term>
+<listitem>
+<para
+>Ställer in övre eller undre gräns för brevets ålder.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Brevstatus</guilabel
+></term>
+<listitem>
+<para
+>Anger begränsningar för brevets status (viktigt, läst, oläst, etc., se <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Markera brev &gt;</guimenuitem
+></menuchoice
+>).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Brevetikett</guilabel
+></term>
+<listitem>
+<para
+>Tittar efter brev med etiketter. Se <menuchoice
+><guimenu
+>Brev</guimenu
+><guimenuitem
+>Markera brev &gt;</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Krypterad</guilabel
+></term>
+<listitem>
+<para
+>Tittar efter krypterade brev.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+    <term
+>Vilket annat värde som helst (<guilabel
+>Från</guilabel
+>, <guilabel
+>Till</guilabel
+>, <guilabel
+>Datum</guilabel
+>, etc.)</term>
+<listitem>
+<para
+>Söker i rubrikfältet med det namnet.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Listan över möjliga regler beror på vad du valde i den första kombinationsrutan. Tillgängliga regler är:</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry
+>Regel</entry>
+<entry
+>Tillgänglig för</entry>
+<entry
+>Beskrivning</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+><guilabel
+>innehåller</guilabel
+>/<guilabel
+>innehåller inte</guilabel
+></entry>
+<entry
+>alla sökobjekt med text</entry>
+<entry
+>Matchar om sökobjektet innehåller (eller inte innehåller) given text.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är lika med</guilabel
+>/<guilabel
+>är inte lika med</guilabel
+></entry>
+<entry
+>de flesta sökobjekt med text</entry>
+<entry
+>Matchar om sökobjektet är lika med (eller inte lika med) given text.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>börjar med</guilabel
+>/<guilabel
+>börjar inte med</guilabel
+></entry>
+<entry
+>de flesta sökobjekt med text</entry>
+<entry
+>Matchar om sökobjektet börjar med (eller inte börjar med) given text.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>slutar med</guilabel
+>/<guilabel
+>slutar inte med</guilabel
+></entry>
+<entry
+>de flesta sökobjekt med text</entry>
+<entry
+>Matchar om sökobjektet slutar med (eller inte slutar med) given text.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>uppfyller reguljärt uttryck</guilabel
+>/<guilabel
+>uppfyller inte reguljärt uttryck</guilabel
+></entry>
+<entry
+>alla sökobjekt med text</entry>
+<entry
+>Matchar om en del av sökobjektet uppfyller det givna reguljära uttrycket (eller inte uppfyller det). Om editorn för reguljära uttryck är installerad, kan du redigera det reguljära uttrycket genom att klicka på knappen <guilabel
+>Redigera...</guilabel
+>.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>har en bilaga</guilabel
+>/<guilabel
+>har inte en bilaga</guilabel
+></entry>
+<entry
+><guilabel
+>Hela brevet</guilabel
+></entry>
+<entry
+>Matchar om brevet har en bilaga (eller inte har en bilaga).</entry>
+</row>
+<!-- <row>
+<entry
+><guilabel
+>is in address book</guilabel
+>/<guilabel
+>is not in address book</guilabel
+></entry>
+<entry
+>most textual search items</entry>
+<entry
+>Matches if the searched item contains an address that is in your address
+book (or if the searched items contains only unknown addresses). Of course,
+this rule only makes sense for address fields like From or
+<guilabel
+>&lt;recipients&gt;</guilabel
+></entry>
+</row
+> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<!-- <row>
+<entry
+><guilabel
+>is in category</guilabel
+>/<guilabel
+>is not in category</guilabel
+></entry>
+<entry
+>most textual search items</entry>
+<entry
+>Matches if the searched item contains an address that is in the
+specified category in your address book (or if the searched item contains
+no address that is in the specified category). Again, this rule only makes
+sense for address fields.</entry>
+</row
+> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<row>
+<entry
+><guilabel
+>är lika med</guilabel
+>/<guilabel
+>är inte lika med</guilabel
+></entry>
+<entry
+>numeriska sökobjekt</entry>
+<entry
+>Matchar om sökobjektets värde är lika med (eller inte lika med) angivet värde.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är mindre än</guilabel
+></entry>
+<entry
+>numeriska sökobjekt</entry>
+<entry
+>Matchar om sökobjektets värde är mindre än angivet värde.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är större än</guilabel
+></entry>
+<entry
+>numeriska sökobjekt</entry>
+<entry
+>Matchar om sökobjektets värde är större än angivet värde.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är mindre än eller lika med</guilabel
+></entry>
+<entry
+>numeriska sökobjekt</entry>
+<entry
+>Matchar om sökobjektets värde är mindre än eller lika med angivet värde.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är större än eller lika med</guilabel
+></entry>
+<entry
+>numeriska sökobjekt</entry>
+<entry
+>Matchar om sökobjektets värde är större än eller lika med angivet värde.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är</guilabel
+>/<guilabel
+>är inte</guilabel
+></entry>
+<entry
+><guilabel
+>Brevstatus</guilabel
+></entry>
+<entry
+>Matchar om brevet har (eller inte har) angiven status.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är efter</guilabel
+>/<guilabel
+>är före eller lika med</guilabel
+></entry>
+<entry
+><guilabel
+>Datum</guilabel
+></entry>
+<entry
+>Matchar om brevet skickades efter (eller inte efter) angivet datum.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>är före</guilabel
+>/<guilabel
+>är efter eller lika med</guilabel
+></entry>
+<entry
+><guilabel
+>Datum</guilabel
+></entry>
+<entry
+>Matchar om brevet skickades före (eller inte före) angivet datum.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-action">
+<title
+>Filteråtgärd</title>
+
+<para
+>Den vanligaste användningen av filter är att omdirigera några inkommande brev till särskilda korgar. Det kan göras genom att välja <guilabel
+>Flytta till korg</guilabel
+>. Här är en lista på alla möjliga åtgärder:</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Flytta till korg</guilabel
+></term>
+<listitem>
+<para
+>Flyttar brevet till en annan korg, och tar bort det från den nuvarande korgen.</para>
+<!-- fixme: still correct? --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kopiera till korg</guilabel
+></term>
+<listitem>
+<para
+>Kopierar brevet till en annan korg, och lämnar brevet i den nuvarande korgen.</para>
+<!-- <note
+><para
+>You currently cannot use &IMAP;
+folders as a target.</para
+></note
+> --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ange identitet till</guilabel
+></term>
+<listitem>
+<para
+>Anger identiteten som används när du svarar på det här brevet.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Markera som</guilabel
+></term>
+<listitem>
+<para
+>Det här låter dig markera brevet som läst eller viktigt (flaggat), men också som vidarebefordrat, besvarat, etc.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Lägg till etikett</guilabel
+></term>
+<listitem>
+<para
+>Det här lägger till en etikett i brevet. Du kan välja från en lista med alla etiketter som har definierats.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Skicka förfalskad bekräftelse</guilabel
+></term>
+<listitem>
+<para
+>Det här skickar en förfalskad brevhanteringsbekräftelse (dvs. en läsbekräftelse) till brevets avsändare.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ange överföring till</guilabel
+></term>
+<listitem>
+<para
+>Anger överföringsmetoden (t.ex. &SMTP;) som används när du svarar på brevet. Du kan välja den i en lista över alla dina utgående e-postkonton.</para>
+</listitem>
+</varlistentry
+> 
+<varlistentry>
+<term
+><guilabel
+>Ange svarsmottagare till</guilabel
+></term>
+<listitem
+><para
+>Ändrar fältet <guilabel
+>Svara till</guilabel
+> för det här brevet. Det kan vara användbart för e-postlistor som automatiskt anger en svara till adress som du inte vill använda.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Vidarebefordra till</guilabel
+></term>
+<listitem
+><para
+>Vidarebefordrar brevet direkt (dvs. som om du valde <menuchoice
+><guimenu
+>Brev</guimenu
+> <guimenuitem
+>Vidarebefordra</guimenuitem
+> <guimenuitem
+>Direkt...</guimenuitem
+></menuchoice
+>) till en annan e-postadress. Du kan välja en egen vidarebefordringsmall om en sådan mall har definierats. Om adressboken är installerad, kan du välja adress för <quote
+>Vidarebefordra till</quote
+> i ett meddelandefönster.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Omdirigera till</guilabel
+></term>
+<listitem
+><para
+>Det här dirigerar om brevet som det är till en annan e-postadress. Om adressboken är installerad kan du välja adressen <quote
+>Omdirigera till</quote
+> i ett meddelandefönster.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Bekräfta utdelning</guilabel
+></term>
+<listitem
+><para
+>Skickar tillbaka ett brev till avsändaren som verifierar att brevet har levererats korrekt, om avsändaren begärt det.</para
+> 
+<para
+>Åtgärden låter dig välja vem som ska få utdelningsbesked av dig. Även om du generellt kan aktivera utdelningsbesked i dialogrutan <guilabel
+>Anpassa &kmail;...</guilabel
+> (på sidan <link linkend="configure-security"
+><guilabel
+>Säkerhet</guilabel
+></link
+>) rekommenderar vi inte att du skickar dem till alla, eftersom det gör det mycket lätt för skräppostavsändare att spåra skräppost.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kör kommando</guilabel
+> (bara för avancerade användare)</term>
+<listitem>
+<para
+>Kör ett program, men ändrar inte brevet. Ange hela sökvägen till programmet som du vill köra. &kmail; väntar tills programmet avslutas. Om du inte vill att &kmail; ska vänta, lägg då till '&amp;' sist i kommandot. Du kan skicka in delar av brevet till programmet, en i taget: <symbol
+>&percnt;0</symbol
+>, <symbol
+>&percnt;1</symbol
+> etc. står för filer som representerar brevets delar. För vanliga brev är <symbol
+>&percnt;0</symbol
+> texten, <symbol
+>&percnt;1</symbol
+> den första bilagan, och så vidare. Dessutom skickas hela brevet in till programmets <acronym
+>stdin</acronym
+>, och varje förekomst av <symbol
+>&percnt;{namn}</symbol
+> ersätts av innehållet i huvudet som anges av namn. Om brevet behöver identifieras enligt dess lagringsplats i Akonadi databasen, kan platsmarkörerna %{itemid} eller %{itemurl} användas för att åstadkomma det.</para>
+
+<!-- fixme: still correct? --><!-- I think so. But not yet tested. @dcb2020293 -->
+<warning
+><para
+>Det fungerar för närvarande bara om brevet har <emphasis
+>åtminstone en</emphasis
+> bilaga. Nej, inte ens <symbol
+>&percnt;0</symbol
+> fungerar i det allmänna fallet!</para
+></warning>
+
+<tip
+><para
+>Du kan ange godtyckligt komplexa skalkommandon här, eftersom &kmail; använder ett skal för att köra kommandoraden. Därför fungerar till och med det här kommandot (inom sina gränser): <userinput
+><command
+>uudecode</command
+> <option
+>-o</option
+> <parameter
+>$(mktemp kmail-uudecoded.XXXXXX)</parameter
+> &amp;&amp; <command
+>echo</command
+> <parameter
+>$'\a'</parameter
+></userinput
+></para
+></tip>
+<!-- fixme: is this uudecode tip useless now?? -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Skicka igenom</guilabel
+></term>
+<listitem>
+<para
+>Skickar brevet till ett program. Om programmet returnerar utmatning, ersätts hela brevet (inklusive huvuden) med utmatningen. Om programmet inte returnerar utmatning eller avslutas med en annan kod än 0 (som anger att ett fel uppstått), ändras inte brevet. Ange hela sökvägen till programmet. Samma ersättningar (<symbol
+>&percnt;n</symbol
+>, <symbol
+>&percnt;{huvud}</symbol
+>) som för <guilabel
+>Kör kommando</guilabel
+> utförs på kommandoraden.</para>
+<para
+>Både guiden för eliminering av skräppost och virus använder åtgärden <quote
+>Skicka igenom</quote
+> för att söka efter skräp eller skadliga program. De vanligt tillgängliga skräppost- och antivirusprogrammen returnerar brevet, och infogar en extra post i huvudet, om skräppost (eller ett virus) detekteras.</para>
+<warning
+><para
+>Var försiktig med åtgärden, eftersom den kan skada dina brev om filterprogrammet returnerar skräp eller extra rader.</para
+></warning>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ta bort huvud</guilabel
+></term>
+<listitem>
+<para
+>Tar bort alla rubrikfält med de angivna namnet från brevet. Det är i huvudsak användbart för att ta bort fingerade <quote
+>Svara till:</quote
+> rubriker.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Lägg till huvud</guilabel
+></term>
+<listitem>
+<para
+>Om det inte redan finns ett sådant fält, så läggs ett nytt huvudfält till i brevet med det givna namnet och värdet. Om det redan finns ett huvudfält med det namnet, skrivs det över med det givna värdet. Om det redan finns flera huvuden med det givna namnet (t.ex. <quote
+>Mottaget:</quote
+> huvuden), skrivs ett godtyckligt över och de övriga lämnas oförändrade - det är en känd begränsning. Du skulle kunna kombinera det här filtret med filtret <guilabel
+>Ta bort huvud</guilabel
+> ovan för att försäkra dig om att det inte finns några andra huvuden med samma namn i brevet.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Skriv om huvud</guilabel
+></term>
+<listitem>
+<para
+>Söker igenom det givna huvudfältet, ändrar innehållet och skriver tillbaka det. Söksträngen tolkas alltid som ett reguljärt uttryck som beror på små och stora bokstäver. Ersättningssträngen infogas som den ser ut, utom förekomster av <userinput
+>\n</userinput
+>, <userinput
+>$n</userinput
+> och <userinput
+>${nn}</userinput
+>, där <userinput
+>n</userinput
+> är ett positivt tal (en siffra, utom för den tredje formen) eller <userinput
+>0</userinput
+>. De här sammansättningarna tolkas som bakåtreferenser till delsträngar som innefattas i parenteser i söksträngen.</para
+><para
+>Motsvarande begränsningar som för åtgärden <guilabel
+>Lägg till huvud</guilabel
+> gäller också här.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Spela ett ljud</guilabel
+></term>
+<listitem>
+<para
+>Spelar det angivna ljudet. En bläddringsknapp låter dig välja ett förinspelad ljudfil (t.ex. .wav).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Lägg till i adressboken</guilabel
+></term>
+<listitem>
+<para
+>Om adressboken är installerad låter åtgärden dig ange vilken rad som ska sökas igenom (Från, Till, Kopia, eller Dold kopia), vilken etikett som ska tilldelas, om någon, och vilken namngiven adressbok som adresserna ska lagras i.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ta bort brev</guilabel
+></term>
+<listitem>
+<para
+>Tar bort de markerade brevet eller breven. Använd alternativet med försiktighet. Borttagna brev kan inte återställas.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Ta bort status</guilabel
+></term>
+<listitem>
+<para
+>Det här är inversen av <guilabel
+>Markera som</guilabel
+> ovan. Istället för att ange det markerade brevet som viktigt, läst, etc., tar åtgärden bort den angivna flaggan.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Kryptera</guilabel
+></term>
+<listitem>
+<para
+>Krypterar det valda brevet eller de valda breven med angiven öppen nyckel. Du kan välja från vilken öppen eller privat nyckel som helst sparad i din nyckelring.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Avkoda</guilabel
+></term>
+<listitem>
+<para
+>Avkodar det markerade brevet eller de markerade breven. Använd åtgärden med försiktighet. &kmail; avkodar automatiskt brev när du öppnar dem för visning, så du behöver troligtvis egentligen inte använda åtgärden.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-examples">
+<title
+>Exempel på filter</title>
+
+<para
+>För närvarande markerar eller färglägger inte &kmail; brev som har extrahuvudet <replaceable
+>Priority:</replaceable
+> (Prioritet). Om du vill markera alla brev betecknade med <quote
+>urgent</quote
+> (brådskande) som <emphasis
+>viktiga</emphasis
+>, kan du använda ett filter:</para>
+
+<procedure>
+<title
+>Markera brådskande brev som <emphasis
+>viktiga</emphasis
+></title>
+<step>
+<para
+>Öppna dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa filter...</guimenuitem
+></menuchoice
+> och klicka på ikonen <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-new.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Nytt</guiicon
+> under listan <guilabel
+>Tillgängliga filter</guilabel
+>.</para>
+</step>
+<step>
+<para
+>I gruppen <guilabel
+>Filterkriterier</guilabel
+>, välj <guilabel
+>Var som helst i huvudet</guilabel
+> och <guilabel
+>innehåller</guilabel
+> i kombinationsrutorna, och skriv in <userinput
+>Priority</userinput
+> i textfältet. Välj samma kriterium på nästa rad och skriv in <userinput
+>urgent</userinput
+> i den andra kombinationsrutans textfält.</para>
+<para
+>Filtret kommer alltså att matcha alla brev som innehåller huvudfältet <quote
+>Priority: urgent</quote
+> (Prioritet: brådskande).</para>
+</step>
+<step>
+<para
+>Hoppa ner till gruppen <guilabel
+>Filteråtgärder</guilabel
+>. Välj <guilabel
+>Markera som</guilabel
+> i den första kombinationsrutan. En ny kombinationsruta som innehåller en lista med markeringsbeteckningar visas. Välj <guilabel
+>Viktigt</guilabel
+> i kombinationsrutan.</para>
+</step>
+<step>
+<para
+>Eftersom du <emphasis
+>inte</emphasis
+> vill att filtret ska förhindra att övriga brevfilterregler används, <emphasis
+>avmarkera</emphasis
+> noga alternativet <guilabel
+>Om detta filter matchar, avbryt behandlingen här</guilabel
+> under fliken <quote
+>Avancerat</quote
+>.</para>
+</step>
+<step>
+<para
+>Klicka på <guibutton
+>Ok</guibutton
+> så är du klar.</para>
+<para
+>Kom bara ihåg att flytta filterposten <quote
+>Priority: urgent</quote
+> överst i listan <guilabel
+>Tillgängliga filter</guilabel
+> varje gång du lägger till ett nytt filter, så att filtret som skickar igenom alltid utförs först.</para>
+</step>
+</procedure>
+
+<para
+>Om du prenumererar på den (allmänna) &kde;-listan, skulle du kunna skapa en korg för listan (låt oss kalla den <replaceable
+>KDE-allmänt</replaceable
+>) och använda ett filter för att automatiskt överföra nya brev från inkorgen till korgen <replaceable
+>KDE-allmänt</replaceable
+> om de kommer från &kde;-listan. Här visas hur man skapar filtret:</para>
+
+<procedure>
+<title
+>Filtrering av en sändlista</title>
+<step>
+<para
+>Kontrollera om <menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Skapa filter</guisubmenu
+> <guimenuitem
+>Filtrera på sändlista...</guimenuitem
+></menuchoice
+> kan identifiera sändlistan (namnet på listan ska då visas i menyvalet). I det här fallet, fungerar det och ett filter visas som har <quote
+>List-Id <guilabel
+>innehåller</guilabel
+> &lt;kde.kde.org&gt;</quote
+> ifyllt. Välj därefter den önskade målkorgen i menyn med korgar i gruppen <guilabel
+>Filteråtgärder</guilabel
+> så är allt klart.</para>
+
+<para
+>Om det inte fungerar, fundera ut ett unikt sätt att identifiera breven som du vill filtrera. Den (nästan) unika egenskapen hos brev från &kde;-listan är att de alltid innehåller <quote
+>kde@mail.kde.org</quote
+> i fälten <guilabel
+>Till:</guilabel
+> eller <guilabel
+>Kopia:</guilabel
+>. Det är inte helt perfekt, eftersom det inte fungerar för överskickade brev.</para>
+</step>
+<step>
+<para
+>Välj <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa filter...</guimenuitem
+></menuchoice
+>.</para>
+</step>
+<step>
+<para
+>Klicka på knappen <guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guibutton
+> för att skapa ett tomt filter. Det visas som <guilabel
+>&lt;okänt&gt;</guilabel
+>.</para>
+</step>
+<step>
+<para
+>I gruppen <guilabel
+> Filterkriterier</guilabel
+>, välj <guilabel
+>Alla mottagare</guilabel
+> i den första kombinationsrutan, <guilabel
+>innehåller</guilabel
+> från den andra kombinationsrutan, och skriv in <userinput
+>kde@kde.org</userinput
+> i textrutan.</para>
+</step>
+<step>
+<para
+>Hoppa ner till gruppen <guilabel
+>Filteråtgärder</guilabel
+>. Välj <guilabel
+>Flytta till korg</guilabel
+> i den första kombinationsrutan. Klicka på korgikonen så visas ett fönster som innehåller en lista med korgar. Välj korgen som du vill att de filtrerade breven ska överföras till. I det här exemplet skulle du välja <guilabel
+>KDE-allmänt</guilabel
+>.</para>
+</step>
+</procedure>
+
+<para
+>Du kan märka att du behöver använda mer kraftfulla kriterier för att filtrera dina brev på ett riktigt sätt. Du kanske till exempel bara vill filtrera brev från &kde;-listan som är skrivna av din vän <replaceable
+>Anna Johansson &lt;aj@någonstans.com&gt;</replaceable
+>. Det är nu som resten av gruppen filterkriteria kommer till användning:</para>
+
+<procedure>
+<title
+>Att utöka filtret</title>
+<step>
+<para
+>Öppna fönstret <guilabel
+>Anpassa filter...</guilabel
+> och välj filtret som du just skapade.</para>
+</step>
+<step>
+<para
+>Eftersom du vill filtrera alla brev som har <replaceable
+>kde@kde.org</replaceable
+> i fälten <guilabel
+>Till:</guilabel
+> eller <guilabel
+>Kopia:</guilabel
+> <emphasis
+>och</emphasis
+> är från Anna, markera knappen <guibutton
+>Matchar alla följande</guibutton
+>.</para>
+</step>
+<step>
+<para
+>Gå nu till den andra sökregeln och välj följande från menyerna: <guilabel
+>Från</guilabel
+>, <guilabel
+>innehåller</guilabel
+>. Skriv nu in <userinput
+>aj@någonstans.com</userinput
+> i textfältet.</para>
+</step>
+</procedure>
+
+<para
+>Nu har du ett filter som identifierar alla brev från &kde;-listan som är från <userinput
+>aj@någonstans.com</userinput
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<!-- fixme: trigger with ctrl-j or whenever new mail arrives (unless
+<guilabel
+>Advanced Options</guilabel
+> are changed. -->
+</sect2>
+
+<sect2 id="filter-optimization">
+<title
+>Filteroptimering</title>
+
+<para
+>Det är viktigt att inse att filterordningen har betydelse för hastigheten hos filterbehandlingen. Här är några idéer som kan hjälpa dig att förbättra filtreringsprestanda: </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Stoppa filterbehandling så snart som möjligt:</term>
+<listitem>
+<para
+>Om du vet att ett filter slutbehandlar en viss klass av brev, försäkra dig om att du markerar alternativet <guilabel
+>Om detta filter matchar, avbryt behandlingen här</guilabel
+> för filtret. Det undviker utvärdering av filterreglerna för alla efterföljande filter. (Se avancerade alternativ i <link linkend="filter-dialog-id"
+>filterdialogrutan</link
+>).</para>
+<para
+>Ett exempel är filtrering av brev från e-postlistor via huvudet List-id till skilda korgar. När du har fått reda på att ett brev kom från lista A, betyder det att du kan undvika att kontrollera med nästa filter om brevet kom från lista B. </para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Tänk på kostnaden för utvärdering av filterregler:</term>
+<listitem>
+<para
+>Tiden som krävs för att utvärdera en filterregel beror på sättet som regeln är konstruerad. I synnerhet är sökning efter en delsträng med åtgärden <guilabel
+>innehåller</guilabel
+> snabbare än en mönstermatchning med åtgärden <guilabel
+>uppfyller reguljärt uttryck</guilabel
+>. </para>
+<para
+>Ett annat beroende gäller mängden data som används för utvärdering av en filterregel. Om regeln är baserad på brevhuvudet, bör dess utvärdering normalt vara mycket snabbare än utvärderingen av en regel som är baserad på hela brevet. </para>
+<para
+>Försök hålla filterreglerna så enkla som möjligt. </para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>Kontrollera ordningen av dina filter:</term>
+<listitem>
+<para
+>De olika filteråtgärderna har olika komplexitetsgrader. De dyraste filteråtgärderna är <guilabel
+>Skicka igenom</guilabel
+> och <guilabel
+>Kör kommando</guilabel
+>, eftersom båda kräver att externa program körs. Att lägga filter som innehåller dessa filteråtgärder efter andra filter som kan reducera antalet gånger dessa komplexa åtgärder krävs är nyttigt, om filterlogiken tillåter det.</para
+> 
+<para
+>Ett exempel är filtrering av brev från en sändlista och detektering av skräppost. För skräpposten används oftast ett externt verktyg via åtgärden <guilabel
+>Skicka igenom</guilabel
+>. Filtrering av brevet för sändlistan görs via huvudet List-Id. Om du inte också vill kontrollera att brev från sändlistan är skräppost, är det bättre att lägga filtret för sändlistan före filtret för detektering av skräppost. På så sätt undviker du den dyra och långsamma kontrollen av skräppost för alla brev som identifieras som brev från sändlistan. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="filter-logging">
+<title
+>Filterlogg</title>
+<para
+>Om du vill kontrollera att dina filter fungerar som avsett, kan du visa filterloggen via <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guisubmenu
+>Visning av filterlogg...</guisubmenu
+></menuchoice
+>. </para>
+<para
+>I visningsfönstret kan du anpassa loggning av filterbehandlingen. Du kan styra loggens detaljnivå, rensa loggen, begränsa loggens storlek och spara den som en fil. Loggen kan ge värdefull information om du vill förbättra dina filtreringsregler. </para>
+</sect2>
+</sect1>
+
+<sect1 id="backups">
+<title
+>Säkerhetskopiera i &kmail;</title>
+<para
+>Det här avsnittet beskriver diverse säkerhetskopieringslösningar inne i &kmail;.</para>
+<sect2 id="archiving">
+<title
+>Arkivering</title>
+<variablelist>
+<varlistentry id="folder-archive">
+<term
+><menuchoice
+><guimenu
+>Korg</guimenu
+><guimenuitem
+>Arkivera korg...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Funktionen är också tillgänglig via den sammanhangsberoende menyn som visas med ett högerklick, genom att välja <guimenuitem
+>Arkivera korg...</guimenuitem
+>. Det <action
+>visar en dialogruta</action
+> som låter dig skapa ett enda arkiv av korgen som för närvarande är markerad.</para>
+<para
+><guilabel
+>Korg:</guilabel
+> visar korgen som för närvarande är markerad. Om du vill ändra korg att arkivera, klicka på katalogikonen. Kombinationsmenyn <guilabel
+>Format:</guilabel
+> låter dig välja ett format (valen är: zip, tar, tar.bz2 och tar.gz). Om du vill ändra förvalt namn eller plats, klicka på katalogknappen till höger om <guilabel
+>Arkivera fil</guilabel
+>.</para>
+ <para
+>Markera knappen <guilabel
+>Ta bort korgar och underkorgar när färdig</guilabel
+> om du vill att allting du har arkiverat ska tas bort från &kmail;s databas efter det externa arkivet har sparats. Normalt arkiveras alla underkorgar, avmarkera <guilabel
+>Arkivera alla underkorgar</guilabel
+> om du bara vill arkivera den överliggande korgen.</para>
+</listitem
+></varlistentry>
+<varlistentry id="auto-archive">
+<term
+><menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+>Anpassa automatisk arkivering...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Detta är ett kraftfullt verktyg som kan användas för att hjälpa till med säkerhetskopiering av e-post. Se <ulink url="help:/akonadi_archivemail_agent"
+>Automatisk arkivering</ulink
+> för detaljerad information.</para>
+</listitem>
+</varlistentry>
+<!-- <varlistentry id="archive-folder">
+<term
+><menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Folder Archive Agent...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>This feature allows you to archive single emails to a specified folder.</para>
+<para
+>Folder Archive can be enabled on a per account basis to allow you to archive individual emails through the right click menu.</para>
+<screenshot>
+<screeninfo
+>Screenshot of Folder Archive</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folderarchiveagent.png" format="PNG"/>
+    </imageobject>
+  </mediaobject>
+</screenshot>
+<para
+>Folder Archive is used to archive single emails to a specified folder. For instance, you need to archive all of
+those pesky bill receipts in one place. Folder Archive can easily accommodate those needs. <action
+>Start by
+using <menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Folder Archive Agent...</guimenuitem
+></menuchoice>
+in &kmail;'s reader window to open a dialog to set up the folder archive agent.</action>
+</para>
+
+<para
+>This dialog will have a tab for each of your configured accounts including Local Folders and you will need to configure all accounts that you wish to
+use this feature with. The first option allows you to enable/disable the folder archive agent. It is disabled by default, to enable check the <guilabel
+>Enable</guilabel>
+checkbox. You can set the location of your Archive folder by clicking the folder icon next to
+<guilabel
+>Folder:</guilabel
+> and selecting the folder you wish to use. For example, you could create
+a folder called <quote
+>bill receipts</quote
+> by clicking the <guibutton
+>New Subfolder...</guibutton
+> and typing <userinput
+>bill receipts</userinput
+> in
+the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote
+>Local Folders</quote
+> or on your &IMAP; server.</para>
+<para>
+You have several choices on how the emails will be archived:
+</para>
+<variablelist id="archivefolder-options">
+  <varlistentry>
+  <term
+><guilabel
+>Unique folder</guilabel
+></term>
+  <listitem
+><para
+>Uses the selected folder sorted by date.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Folder by months</guilabel
+></term>
+  <listitem
+><para
+>Creates new folders inside the selected folder by months.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Folder by years</guilabel
+></term>
+  <listitem
+><para
+>Creates new folders inside the selected folder by years.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+<para>
+Now when you receive a bill receipt, &RMB; the email and select <guimenuitem
+>Archive</guimenuitem
+> from the menu. The email will be archived
+into your configured archive folder for easy viewing later on.
+</para>
+</listitem>
+</varlistentry
+> --><!-- This feature is no longer available. @dcb2020295 -->
+</variablelist
+> 
+</sect2>
+<sect2 id="exporting">
+<title
+>Exportera</title>
+<variablelist>
+<varlistentry id="settingsexport">
+<term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Importera/Exportera data från &kmail;...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Funktionen exporterar inställningar och lokal e-post till en komprimerad fil. Se <ulink url="help:/pimdataexporter"
+>Export av data för personlig informationshantering</ulink
+> för detaljerad information.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+<sect1 id="import-restore">
+<title
+>Återställning och import i &kmail;</title>
+<para
+>Det här avsnittet beskriver återställning av säkerhetskopior och dataimport i &kmail;.</para>
+
+<sect2 id="restore">
+<title
+>Återställning av säkerhetskopierad e-post och inställningar</title>
+<variablelist>
+<varlistentry id="settingsimport">
+<term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Exportera data från &kmail;...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Om du använde Export av data för personlig informationshantering för att säkerhetskopiera lokal e-post och/eller inställningar, använd det då igen för att återställa data i &kmail;. Se <ulink url="help:/pimdataexporter"
+>Export av data för personlig informationshantering</ulink
+> för detaljerad information.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="importing-options">
+<title
+>Importalternativ i &kmail;</title>
+
+<para
+>&kmail; har en importguide för att göra övergången från ett annat brevprogram enklare. </para>
+
+<variablelist>
+<varlistentry id="importing-import-wizard">
+<term
+><menuchoice
+><guimenu
+>Verktyg</guimenu
+><guimenuitem
+>Importera från en annan e-postklient...</guimenuitem
+> </menuchoice
+></term>
+<listitem>
+<para
+>Det startar importguiden och försöker automatiskt detektera data från ett annat e-postprogram. Om e-postdata som du vill importera inte hittas, använd alternativet <guilabel
+>Manuellt val</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="importing-import-manual">
+<term
+><menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="document-import.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Importera brev...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Startar importguiden och låter dig välja önskad data manuellt.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Läs dokumentationen om <ulink url="help:/importwizard"
+>Importguide</ulink
+> för detaljerad information. </para>
+
+</sect2>
+
+</sect1>
+<sect1 id="multiple-accounts">
+<title
+>Använda flera konton</title>
+
+<para
+>Flera konton används för att titta efter brev från mer än en e-postadress och/eller e-postserver. Välj <menuchoice
+><guimenu
+>Inställningar</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+>Anpassa &kmail;...</guimenuitem
+></menuchoice
+> och klicka på sidan <guilabel
+>Konton</guilabel
+> för att lägga till eller ändra dina kontoinställningar. Se avsnittet <link linkend="getting-started"
+>Att komma igång</link
+> för mer information om inställningarna på sidan <guilabel
+>Konton</guilabel
+>.</para>
+
+<para
+>För att titta efter brev från ett särskilt konto, använd undermenyn <menuchoice
+><guimenu
+>Arkiv</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Titta efter nya brev i</guimenuitem
+></menuchoice
+> för att välja kontot som ska kontrolleras. Du kan också hålla nere musknappen på ikonen <guiicon
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Titta efter nya brev</guiicon
+> (i verktygsraden) några sekunder för att få en kontolista.</para>
+
+</sect1>
+
+<sect1 id="pgp">
+<!-- This section is from Andreas Gungl, 2000-05-21, updated 2002-10-06 by Ingo Kloecker -->
+<!-- Edited and modified by D. Bryant 2020-10-22. -->
+<title
+>Signera och kryptera brev med <application
+>GnuPG</application
+></title>
+
+<!--
+<note
+><para
+>There have been major changes in the way &kmail; handles 
+signing/encryption. The following introduction applies to the previous
+version of &kmail;. You can still read the introduction to get an overview
+about how to sign/encrypt messages, but the details, especially those of
+the configuration, will differ.</para
+></note>
+-->
+<para
+>Det här är en kort introduktion till hur man ställer in &kmail;s <application
+>GnuPG</application
+>-stöd (<application
+>&GNU; Privacy Guard</application
+>). Den ger också en del tips om hur man använder <application
+>GnuPG</application
+>. Den är skriven för personer som är nybörjare på det här området. Om du känner till hur man använder <acronym
+>GnuPG</acronym
+>, kan du hoppa över de flesta stegen.</para>
+
+<para
+>Titta också gärna på frågan om <application
+>GnuPG</application
+> i <link linkend="pgp-faq"
+>Vanliga frågor</link
+>.</para>
+
+<warning
+><para
+>Bilagor signeras eller krypteras inte om du använder det inbyggda OpenPGP-stödet. För att signera eller kryptera bilagor, måste du installera GnuPG och några nödvändiga bibliotek. Därefter kan du bestämma för varje bilaga, om den ska signeras och krypteras eller inte. </para
+></warning>
+
+<!-- <warning
+><para
+>&kmail; has to rely on <application
+>GnuPG</application
+>'s
+output; this output is often different between different versions of 
+<application
+>GnuPG</application
+>, so it is important that you test if encryption
+really works with your setup before you start using it seriously. &kmail; might
+<emphasis
+>not</emphasis
+> warn you if something fails - enable 
+<guilabel
+>Show signed/encrypted text
+after composing</guilabel
+>.  </para
+></warning
+> --><!-- Removing this warning ... GnuPG is stable now. @dcb2020295 -->
+
+<para
+>För att ställa in och använda <application
+>GnuPG</application
+>-stöd i &kmail; är det nödvändigt att ha <application
+>GnuPG</application
+> installerad och riktigt inställd. Vi kan naturligtvis inte ge dig en fullständig introduktion till <application
+>GnuPG</application
+> här. Vi nämner bara de steg som du måste göra för att få igång <application
+>GnuPG</application
+>. För detaljerad information ska du titta i <ulink url="https://www.gnupg.org/docs.html#guides"
+>The &GNU; Privacy Handbook</ulink
+>.</para>
+
+<para
+>Det är definitivt en bra idé att studera GnuPG-dokumentationen samt en introduktion till kryptering med öppna nycklar. På så sätt kan du lära dig en hel del om de grundläggande begreppen, som hjälper dig att förstå vad som sker. Dessutom beskrivs där många säkerhetsrelaterade frågor som du bör känna till.</para>
+
+<sect2 id="pgp-preconditions">
+<title
+>Förutsättningar</title>
+
+<para
+>&kmail; förväntar sig att din <application
+>GnuPG</application
+>-binärfil heter <command
+>gpg</command
+>. Om det inte är fallet för dig, gör bara en symbolisk länk.</para>
+
+<para
+>Om du inte redan har gjort det, måste du skapa ett nyckelpar (hemlig och öppen nyckel) för din identitet. Du kan göra det med &kgpg; eller &kleopatra;, eller på kommandoraden: <userinput
+><command
+>gpg</command
+> <option
+>--gen-key</option
+></userinput
+>. Eller kan du be &kmail; att skapa ett nytt nyckelpar när du skapar ett nytt e-postkonto. Identiteten (normalt ditt namn följt av din e-postadress inom hakparenteser, som <userinput
+>Anna Johansson &lt;aj@exempel.com&gt;</userinput
+>) och din lösenordsfras är viktiga för samarbetet mellan &kmail; och <application
+>GnuPG</application
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-settings">
+<title
+><application
+>GnuPG</application
+>-relaterade inställningar i &kmail;</title>
+
+<para
+>Välj fliken <guilabel
+>Brevskrivning</guilabel
+> på inställningssidan <guilabel
+>Säkerhet</guilabel
+>. Där hittar du följande alternativ:</para>
+
+<variablelist>
+<!-- not in 2.0.96?
+<varlistentry>
+<term
+><guilabel
+>Encryption tool</guilabel
+></term>
+<listitem>
+<para
+>Here you can choose if you want to use <application
+>PGP</application
+>,
+<application
+>GnuPG</application
+> or no encryption
+software at all; of course, the program you select has to be
+installed on your system (it is also important to select the correct
+version.)</para>
+</listitem>
+</varlistentry>
+    --><!-- Gpg is used by default. @dcb2020296. -->
+
+<varlistentry>
+<term
+><guilabel
+>När brev krypteras, kryptera också till certifikatet för min egen identitet</guilabel
+></term>
+<listitem>
+<para
+>Om det här alternativet är av och du vill skicka ett krypterat brev till någon, kan du inte längre läsa det här brevet efter du har skrivit och krypterat det. Aktivera det här alternativet för att behålla de krypterade breven som du skickar läsbara för dig själv också.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Spara skickade brev krypterade</guilabel
+></term>
+<listitem>
+<para
+>När rutan är markerad, lagras skickade brev krypterade som de skickades. Det rekommenderas inte, eftersom du inte kan läsa breven längre om ett nödvändigt certifikat går ut. (Observera att GPG-nycklar i allmänhet inte går ut, varningen är i första hand relevant för användare av x.509-certifikat.)</para
+> 
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Visa alltid krypteringsnycklarna för godkännande</guilabel
+></term>
+<listitem>
+<para
+>Det här visar alltid en dialogruta som låter dig välja nycklar som används för varje mottagare när du skickar krypterade brev. Om alternativet är avstängt, kommer &kmail; bara visa dialogrutan om en nyckel inte kan hittas för en mottagare, om det finns konflikter eller om alla krypteringsinställningar inte är gjorda.</para
+> 
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>När ett utkast sparas, signera eller kryptera enligt indikation</guilabel
+></term>
+<listitem
+><para
+>Om alternativet är på, krypterar (och/eller signerar) &kmail; automatiskt brev som du sparar i korgen <guilabel
+>utkast</guilabel
+> (när du anger signera eller kryptera).</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Visa indikering av signerad eller krypterad i editorn</guilabel
+></term>
+<listitem
+><para
+>Om alternativet är på, visar &kmail; en indikering i brevfönstret för att informera dig om att brevet kommer att signeras/krypteras när det är fallet.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Nu när du har ställt in krypteringsverktyget, måste du tala om för &kmail; vilken OpenPGP-nyckel du vill använda för signering och kryptering av brev. För att göra det, gå till <link linkend="configure-identity"
+>inställning av identiteter</link
+>, och ange nyckeln som ska användas under fliken <guilabel
+>Kryptografi</guilabel
+> i inställningsdialogrutan för identiteter.</para>
+
+<para
+>Nu kan du signera utgående brev. För att låta andra skicka krypterade brev till dig och låta dem verifiera din signatur måste du skicka dem din öppna nyckel eller ladda upp din öppna nyckel till en allmän <application
+>GnuPG</application
+>-nyckelserver (så att de kan hämta din nyckel från servern). För att skicka krypterade brev till andra eller för att verifiera deras signerade brev måste du har deras öppna nycklar. Du kan söka efter öppna nycklar på en allmän <application
+>GnuPG</application
+>-nyckelserver. Eller kan du be dina vänner skicka dig en eller flera av sina öppna nycklar.</para>
+
+</sect2>
+
+<sect2 id="pgp-sign-your-messages">
+<title
+>Signera dina brev</title>
+
+<para
+>Du kan skriva ditt brev som vanligt i brevfönstret. Innan du skickar brevet, markera ikonen <guibutton
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Signera</guibutton
+> på brevfönstrets verktygsrad, eller välj <menuchoice
+> <guimenu
+>Alternativ</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-edit.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> Signera brev</guimenuitem
+></menuchoice
+>. Därefter kan du skicka brevet. Identiteten som du använder för att skriva det aktuella brevet måste vara ansluten till en <guilabel
+>OpenPGP-nyckel</guilabel
+> på sidan <guilabel
+>Identitet</guilabel
+> i dialogrutan <guilabel
+>Inställningar</guilabel
+>. För att signera brevet måste &kmail; känna till din <application
+>GnuPG</application
+> lösenordsfras. Du kan bli ombedd att ange den, eller om du redan har angett lösenordsfrasen i &kmail;, signeras brevet automatiskt.</para>
+
+</sect2>
+
+<sect2 id="pgp-encrypt-your-messages">
+<title
+>Kryptera dina brev</title>
+
+<para
+>För att skicka ett krypterat brev till någon vars öppna nyckel finns i din GPG-nyckelring, skapa helt enkelt brevet i brevfönstret. Innan du skickar brevet, markera knappen <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Kryptera</guibutton
+> på brevfönstrets verktygsrad (eller välj <menuchoice
+> <guimenu
+>Alternativ</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Kryptera brev</guimenuitem
+></menuchoice
+>). Skicka sedan brevet.</para>
+
+<para
+>Om du markerade knappen <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Kryptera</guibutton
+>, och &kmail; inte kan hitta en passande nyckel för en mottagare, låter den dig ändra din nyckelring innan du försöker igen. Om &kmail; hittar mer än en pålitlig nyckel för en mottagare, visas en lista med alla passande nycklar för den mottagaren. I båda fallen kan du välja nyckeln eller nycklarna som ska användas för att kryptera brevet till mottagaren i fråga.</para>
+
+<para
+>Om du använder en nyckel för första gången, om det finns krypteringsinställningar som har konflikter, eller om <guilabel
+>Visa alltid krypteringsnycklarna för godkännande</guilabel
+> är markerat under <guilabel
+>Säkerhet</guilabel
+> i &kmail;s inställningsdialogruta, visas dialogrutan <guilabel
+>Godkänn krypteringsnyckel</guilabel
+>. Du kan välja olika nycklar för mottagarna, och du kan också ange <guilabel
+>Krypteringsinställningar</guilabel
+> för varje mottagare. Alternativet <guilabel
+>Kryptera så snart kryptering är möjlig</guilabel
+> (under fliken <guilabel
+>Kryptografi</guilabel
+> i dialogrutan <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+>Anpassa &kmail;...</guimenuitem
+> </menuchoice
+>), krypterar automatiskt brevet om det finns en pålitlig nyckel för varje mottagare.</para>
+
+<para
+>Som nämnts ovan, kan du inte läsa dina egna krypterade och skickade brev om du inte markerar <guilabel
+>När brev krypteras, kryptera också till certifikatet för min egen identitet</guilabel
+> på inställningssidan <guilabel
+>Säkerhet</guilabel
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-send-your-public-key">
+<title
+>Skicka din öppna nyckel</title>
+
+<para
+>Förbered ett brev till personen som du vill skicka din öppna nyckel till. Välj sedan <menuchoice
+><guimenu
+>Bifoga</guimenu
+> <guimenuitem
+>Bifoga öppen nyckel</guimenuitem
+></menuchoice
+> i brevfönstrets meny. Det bifogar din öppna nyckel, som du för närvarande använder, i brevet.</para>
+
+<para
+>Kom ihåg att det är inte helt säkert att bara signera brevet för att försäkra sig om att mottagaren får rätt nyckel. Det kan (möjligtvis) ske en "man i mitten" attack, eftersom någon kan fånga upp brevet, ändra den bifogade nyckeln genom, och signera brevet med den andra nyckeln. Mottagaren måste verifiera den bifogade nyckeln genom att kontrollera nyckelns fingeravtryck med en som han har tagit emot från dig på ett säkert sätt. Som alternativ, be mottagaren att använda den mottagna nyckeln för att skriva och skicka ett krypterat brev tillbaka till dig. Om din hemliga nyckel avkodar brevet, har han en kopia av din öppna nyckel. Se <application
+>GnuPG</application
+>-dokumentationen för ytterligare detaljer.</para>
+
+</sect2>
+
+<sect2 id="pgp-you-received-an-encrypted-message">
+<title
+>Du har tagit emot ett krypterat brev.</title>
+
+<para
+>Allt du behöver göra är att markera brevet i &kmail;. Du kan bli tillfrågad om din lösenordsfras. Därefter avkodar &kmail; brevet och visar dig den vanliga texten om brevet har krypterats med din öppna nyckel. Om inte, kan du inte läsa det. &kmail; lagrar brev krypterade, så ingen kan läsa breven utan att känna till din lösenordsfras, eller allra minst, ditt inloggningslösenord.</para>
+
+</sect2>
+
+<sect2 id="pgp-receiving-a-public-key">
+<title
+>Att ta emot en öppen nyckel</title>
+
+<para
+>Du kan ta emot en öppen nyckel som en bilaga eller via http, ftp eller en diskett. Innan du använder den här nyckeln för att kryptera brev till nyckelns ägare, bör du verifiera nyckeln (kontrollera dess fingeravtryck eller titta efter pålitliga signaturer). Därefter kan du lägga till nyckeln i din öppna nyckelring genom att skriva <userinput
+><command
+>gpg</command
+> <option
+>--import</option
+> <replaceable
+>filnamn</replaceable
+></userinput
+> på kommandoraden. Om nyckeln inte är certifierad med en annan signatur som du redan ansett vara pålitlig kan du inte använda den för att kryptera brev om du inte signerar (certifierar) nyckeln med din egen nyckel. </para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-spam-wizard">
+<title
+>Guiden för eliminering av skräppost</title>
+
+<sect2 id="spam-wizard-basics">
+<title
+>Grunderna</title>
+
+<para
+>&kmail; har inte en inbyggd lösning för detektering av skräppost. Utvecklarna anser att en bättre metod är att använda externa men specialiserade verktyg. &kmail; använder verktygen tillsammans med sin flexibla filterarkitektur. Guiden för eliminering av skräppost hjälper till med den inledande filterinställningen. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Vad kan guiden göra för att hjälpa dig?</term>
+<listitem>
+<para
+>Den ger dig möjlighet att välja hur du vill att filtrering av skräppost ska ställas in. Därefter skapar den automatiskt lämpliga filterregler. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Vad är guidens begränsningar?</term>
+<listitem>
+<para
+>Allt den kan göra är att ställa in filtren åt dig: den tillhandahåller en standardinställning. Manuella ändringar som har gjorts av befintliga skräppostfilter känns inte igen. Istället skrivs sådana filter över av guiden. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Du kan aktivera guiden via <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guisubmenu
+>Guide för eliminering av skräppost...</guisubmenu
+></menuchoice
+>. Om valet inte är tillgängligt, klicka på <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;...</guisubmenu
+> <guimenuitem
+>Insticksprogram</guimenuitem
+></menuchoice
+> och markera rutan intill <guilabel
+>Antiskräppost</guilabel
+>. Du blir ombedd att starta om &kmail;, och när du gjort det dyker guiden upp i menyn <guilabel
+>Verktyg</guilabel
+>.</para>
+
+<para
+>Guiden söker efter kända verktyg för borttagning av skräppost på datorn. Det är dessutom möjligt att använda resultat från kontroll av skräppost som görs av tjänstleverantören, genom att utvärdera viss information som har lagts till i brevhuvudet. Du kan låta guiden förbereda &kmail; för att använda ett verktyg eller flera i parallell. Observera dock att användning av verktyg för borttagning av skräppost ofta är tidsödande. &kmail; kan verka vara fryst under tiden breven söks igenom efter skräppost, och du kan stöta på problem med &kmail;s svarstider. Överväg att ta bort filterreglerna som guiden skapar om filtreringen blir för långsam för dig. (Det har varit ett problem med äldre maskinvara. Det påverkar troligen inte modernare datorer.)</para>
+<para
+>Här är några observationer om ett antal skräppostverktyg.</para>
+
+<variablelist>
+<varlistentry>
+  <term
+>Bogofilter</term>
+<listitem>
+<para
+>Bogofilter är ett bayesiskt filter. Dess detektering av skräppost förlitar sig på en inledande upplärningsfas. Å andra sidan är det ett rätt snabbt verktyg. Därför rekommenderas det för personer som i huvudsak vill ha en snabb detektering av skräppost, och som inte bekymrar sig om att lägga lite tid på den inledande upplärningen, innan detekteringsfrekvensen ökar signifikant. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>SpamAssassin</term>
+<listitem>
+<para
+>SpamAssassin är ett ganska komplicerat verktyg för att bekämpa skräppost. Även om beteendet i stor utsträckning beror på dess inställning, kan verktyget upptäcka skräppost riktigt bra utan någon upplärning. Dock tar det litet längre tid att söka igenom ett brev, jämfört med ett rent Bayesiskt filter. Låt oss säga att det inte är det bästa verktygsvalet för personer utan en viss bakgrundsinformation om SpamAssassins möjligheter. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>Annoyance Filter</term>
+<listitem>
+<para
+>Kanske inte så ofta använd innan fler distributionerna inför det. Det är helt klart ett  verktyg för specialister. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>GMX-skräppostfilter</term>
+<listitem>
+<para
+>Under förutsättning att du får dina brev via leverantören av GMX-gratispost, har dina brev redan sökts igenom efter skräppost. Resultatet av processen dokumenteras i ett särskilt fält i varje brevhuvud. Det är möjligt att använda innehållet i detta fält i brevhuvudet för att sortera bort skräppost. Det uppstår mycket liten fördröjning i filtreringen när verktyget används, eftersom breven redan har behandlats av den externa e-postservern. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+
+</sect2>
+
+<sect2 id="spam-wizard-advanced">
+<title
+>Avancerat</title>
+
+<para
+>&kmail; kan använda flera externa verktyg för att detektera skräppost. Det försöker automatiskt ta reda på vilka verktyg som är installerade på datorn, och visar alla i en lista. Listan är ordnad enligt filtreringsprocessens medelhastigheten för verktygen. Du kan markera verktygen som du vill att &kmail; ska använda för att detektera skräppost. Om du vill ha flera val, kan du helt enkelt stänga guiden, installera ett nytt verktyg, och sedan starta om guiden. </para>
+
+<para
+>Om du har markerat minst ett verktyg, kan &kmail; tillhandahålla filter som möjliggör klassificering av breven som skräppost eller inte. Det tillhandahåller också åtgärder för att låta dig klassificera brev manuellt. Åtgärderna är tillgängliga via menyalternativet <menuchoice
+><guimenu
+>Brev</guimenu
+><guisubmenu
+>Använd filter &gt;</guisubmenu
+></menuchoice
+> och via ett par ikoner i verktygsraden. Om något av verktygen du valt stöder bayesisk filtrering (dvs. en metod att detektera skräppost baserad på statistisk analys av breven) blir breven inte bara markerade, utan också skickade till verktygen för att hjälpa dem lära upp sig, och därigenom förbättra sin detekteringsfrekvens. </para>
+
+<para
+>På den andra sidan, kan du välja vissa ytterligare åtgärder som ska utföras av &kmail; med avseende på skräppost. Om du vill att breven som detekteras som skräppost ska flyttas till en viss korg, välj lämplig korg och markera alternativet <guilabel
+>Flytta känd skräppost till</guilabel
+>. Om brev som har upptäckts vara skräppost dessutom ska betraktas som lästa, markera alternativet <guilabel
+>Markera detekterad skräppost som läst</guilabel
+>. </para>
+
+<para
+>Genom att markera minst ett av de tillgängliga verktygen, blir det möjligt för guiden att slutföra inställningen av filtren. Guiden tar inte hänsyn till några ändringar av befintliga filter tidigare skapade av guiden, utan lägger till nya filter sist eller ersätter befintliga filter. Hur som helst, kanske du vill inspektera resultatet av processen i <link linkend="filter-dialog"
+>filterdialogrutan</link
+>. Guiden skapar också knappar i verktygsraden för att markera brev som skräppost eller önskade brev. Kom ihåg att om du klassificerar brev som skräppost, flyttas också breven till korgen du har angivit för skräppost, när du väljer alternativet <quote
+>skräppost</quote
+>. </para>
+
+</sect2>
+
+<sect2 id="spam-wizard-details">
+<title
+>Några fler detaljer för experter</title>
+
+<para
+>Guiden använder information som lagras i en särskild inställningsfil som heter <filename
+>kmail.antispamrc</filename
+> (lagrad i &kde;:s globala eller lokala inställningskatalog). Den tittar först i den globala inställningsfilen och därefter i den lokala. Om den lokala inställningsfilen innehåller en post med ett högre (nyare) versionsnummer för ett verktyg, används inställningsinformationen från den lokala filen (för det verktyget), så att guidens inställningar uppdateras både av administratörer och användare. </para>
+
+<para
+>Lokal detektering av skräppost åstadkoms genom att skapa åtgärder för att <guilabel
+>skicka genom</guilabel
+> brev inne i ett särskilt filter för varje verktyg. Ett annat filter innehåller regler för att kontrollera detekterad skräppost och åtgärder för att markera dem och (valfritt, beroende på valet i guiden) flytta dem till en korg. Båda filtren är inställda för att verkställas för inkommande brev och vid manuell filtrering. </para>
+
+<para
+>Två filter behövs för att klassificera önskade brev och skräppost. De innehåller åtgärder för att markera breven på lämpligt sätt. Som nämnts ovan, har filtret för skräppost ytterligare en åtgärd för att flytta brevet till en fördefinierad korg. Under förutsättning att de valda verktygen stöder Bayesisk filtrering, skapar guiden flera filter för att skicka brev till verktygen (via åtgärden <guilabel
+>Kör kommando</guilabel
+>) med lämpligt inlärningsläge. </para>
+
+<para
+>Om du vill finjustera filtreringsprocessen, kanske du är intresserad av kapitlet om <link linkend="filter-optimization"
+>Filteroptimering</link
+>.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-virus-wizard">
+<title
+>Guiden för eliminering av virus</title>
+
+<sect2 id="virus-wizard-basics">
+<title
+>Grunderna</title>
+
+<para
+>&kmail; har inte en inbyggd lösning för detektering av virus. Utvecklarna anser att en bättre metod är att använda externa men specialiserade verktyg. &kmail; använder verktygen tillsammans med sin flexibla filterarkitektur. Guiden för eliminering av virus hjälper till med den inledande filterinställningen. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Vad kan guiden göra för att hjälpa dig?</term>
+<listitem>
+<para
+>Den ger dig möjlighet att välja hur du vill att filtrering av virus ska ställas in. Därefter skapar den automatiskt lämpliga filterregler. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Vad är guidens begränsningar?</term>
+<listitem>
+<para
+>Allt den kan göra är att ställa in filtren åt dig: den tillhandahåller en standardinställning. Manuella ändringar som har gjorts av befintliga filter för borttagning av virus känns inte igen. Istället skrivs sådana filter över av guiden. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Du kan aktivera guiden via <menuchoice
+><guimenu
+>Verktyg</guimenu
+> <guisubmenu
+>Guide för eliminering av virus...</guisubmenu
+></menuchoice
+>. Om valet inte är tillgängligt, klicka på <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guisubmenu
+>Anpassa &kmail;...</guisubmenu
+> <guimenuitem
+>Insticksprogram</guimenuitem
+></menuchoice
+> och markera rutan intill <guilabel
+>Antivirus</guilabel
+>. Du blir ombedd att starta om &kmail;, och när du gjort det dyker guiden upp i menyn <guilabel
+>Verktyg</guilabel
+>.</para>
+
+</sect2>
+
+<sect2 id="virus-wizard-advanced">
+<title
+>Avancerat</title>
+
+<para
+>Guiden för eliminering av virus fungerar på liknade sätt som <link linkend="the-anti-spam-wizard"
+>Guiden för eliminering av skräppost</link
+>. &kmail; kan använda flera externa verktyg för att detektera brev som innehåller virus. Det försöker automatiskt ta reda på vilka av verktygen som är installerade på din dator, och visar resultatet av sökningen. Du kan markera verktygen som du vill att &kmail; ska använda för virusdetektering. Om du vill ha flera val, kan du helt enkelt stänga guiden, installera ett nytt verktyg, och sedan starta om guiden. </para>
+
+<para
+>Om du har markerat minst ett verktyg, kan du välja vissa åtgärder som ska utföras av &kmail; för brev som innehåller virus. För att låta &kmail; detektera brev som innehåller virus ska du markera alternativet <guilabel
+>Kontrollera brev med verktyg för borttagning av virus</guilabel
+>. Om du vill att breven som är infekterade av ett virus ska flyttas till en viss korg, välj lämplig korg och markera alternativet <guilabel
+>Flytta upptäckta brev med virus till vald korg</guilabel
+>. Om sådana brev också ska betraktas som lästa, markera alternativet <guilabel
+>Markera dessutom upptäckta brev med virus som lästa</guilabel
+>. </para>
+
+<para
+>Genom att markera minst ett av de senaste alternativen, blir det möjligt för guiden att slutföra inställningen av filtren. Guiden tar inte hänsyn till några befintliga filterregler, utan lägger alltid till nya regler. Du kanske vill inspektera resultatet av processen i <link linkend="filter-dialog"
+>filterdialogrutan</link
+>. </para>
+
+</sect2>
+
+<sect2 id="virus-wizard-details">
+<title
+>Detaljer</title>
+
+<para
+>Guiden använder information som lagras i en särskild inställningsfil som heter <filename
+>kmail.antivirusrc</filename
+> (lagrad i &kde;:s globala eller lokala inställningskatalog). Om den lokala inställningsfilen innehåller poster med högre (nyare) versionsnummer för ett verktyg, används inställningsinformationen från den lokala filen för det verktyget. På så sätt kan inställningarna för guiden uppdateras både av administratörer och användare. </para>
+
+<para
+>Detektering av brev som innehåller virus åstadkoms genom att skapa åtgärder för att <guilabel
+>skicka genom</guilabel
+> brev inne i ett särskilt filter. Ett annat filter innehåller regler för att detektera infekterade brev och åtgärder för att markera dem och (valfritt, beroende på valet i guiden) flytta dem till en korg. Båda filtren är inställda för att användas för inkommande brev och för manuell filtrering. </para>
+
+</sect2>
+
+</sect1>
+
+</chapter>

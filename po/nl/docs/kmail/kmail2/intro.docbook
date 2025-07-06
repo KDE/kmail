@@ -1,0 +1,121 @@
+<chapter id="intro">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+&Tom.Albers;&Rinse.Devries;&Natalie.Koning; 
+</authorgroup>
+<date
+>2020-08-16</date>
+<releaseinfo
+>5.14.2 (Applications 20.04.2)</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Inleiding</title>
+
+<screenshot>
+<screeninfo
+>Welkomstscherm van &kmail;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="kmailwelcome.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Welkomstscherm van &kmail;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Welkomstscherm van &kmail;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Het team van &kmail; heet u welkom bij &kmail;, een gebruikersvriendelijk e-mailprogramma door &kde;. Ons doel is om zowel een intuïtief als mooi programma te maken zonder kracht te verliezen. </para>
+
+<para
+>Indien u nog nooit een e-mailprogramma hebt ingesteld op een &UNIX;-systeem, dan adviseren wij om het hoofdstuk <link linkend="getting-started"
+>Hoe te beginnen</link
+> door te lezen.</para>
+<sect1 id="features">
+<title
+>Enkele mogelijkheden van &kmail;</title>
+<para
+>Hier is een beknopte gids naar enige van de geweldige mogelijkheden beschikbaar in &kmail;</para>
+<itemizedlist>
+<listitem>
+<para
+>&kmail; is geheel zonder muis te bedienen. &kmail; is namelijk volledig te bedienen met <link linkend="keyboard-shortcuts"
+>sneltoetsen</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Hoewel &kmail; erg betrouwbaar is, is het verstandig om altijd reservekopieën te maken. Dit kan eenvoudig gedaan worden met de opties voor exporteren/archiveren genoemd in <link linkend="backups"
+>Opties voor reservekopieën</link
+> voor een reservekopie van uw instellingen en e-mail.</para>
+</listitem>
+<listitem>
+<para
+>&kmail; maakt het gemakkelijk om e-mail uit verschillende e-mailprogramma's te importeren. Deze opties zijn beschreven in <link linkend="import-restore"
+>Herstellen en importeren in &kmail;</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>U kunt uw berichten in verschillende categorieën scheiden met de uitgebreide opties voor <link linkend="folders"
+>Mappen</link
+> van &kmail;. Mogelijkheden omvatten speciale behandeling voor gespecificeerde mappen: e-maillijsten, acl (alleen &IMAP;) en archivering.</para
+> <!-- todo: start a glossary -->
+</listitem>
+<listitem>
+<para
+>U kunt uw instellingen vervolmaken voor een map met zeer goed in te stellen <link linkend="filters"
+>filters</link
+>.</para>
+</listitem>
+<listitem>
+<para
+>Standaard zal &kmail; algemene e-mail<link linkend="configure-security-email-scams"
+>scams</link
+> detecteren. U kunt ook SPAM en virussen bevechten door filters aan te maken die werken met externe programma's om e-mail te scannen zodra deze binnenkomt. Zie <link linkend="the-anti-spam-wizard"
+>Antispam</link
+> en <link linkend="the-anti-virus-wizard"
+>Antivirus</link
+> voor details.</para>
+</listitem>
+<listitem>
+<para
+>Het is gemakkelijk verschillende e-mailaccount te beheren door verschillende <link linkend="configure-identity"
+>identiteiten</link
+> te gebruiken.</para>
+</listitem>
+</itemizedlist>
+<para
+>Veel plezier met &kmail;!</para>
+<sect2 id="getting-help">
+<title
+>Hulp verkrijgen</title>
+
+<para
+>De website van &kmail; kan gevonden worden op <ulink url="https://apps.kde.org/kmail2/"
+>https://apps.kde.org/kmail2/</ulink
+>. Daar vindt u ook nuttige koppelingen (&eg; naar de discussielijsten voor gebruikers- en ontwikkelaars en de wiki-pagina's van de gemeenschap). Fouten in het programma kunt u rapporteren door te kiezen voor <menuchoice
+><guimenu
+>Help</guimenu
+><guimenuitem
+>Bugs rapporteren...</guimenuitem
+></menuchoice
+>.</para>
+</sect2>
+
+</sect1>
+</chapter>

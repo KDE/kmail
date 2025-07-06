@@ -14,8 +14,9 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_sendlater_agent.pot\n"
-"X-Crowdin-File-ID: 45599\n"
+"X-Crowdin-File: /kf6-stable/messages/kmail/kmail/akonadi_sendlater_agent."
+"pot\n"
+"X-Crowdin-File-ID: 58252\n"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format

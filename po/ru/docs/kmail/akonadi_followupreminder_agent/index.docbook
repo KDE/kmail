@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Агент напоминания о продолжении</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Russian "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>Руководство пользователя &i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>Мария</firstname
+><surname
+>Шикунова</surname
+><affiliation
+><address
+><email
+>translation-team@basealt.ru</email
+></address
+></affiliation
+><contrib
+>Перевод на русский язык</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>21 сентября 2019 г.</date>
+<releaseinfo
+>5.13 (Приложения KDE 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Введение</title>
+
+<para
+>&i18n-followupreminderagent; — это агент akonadi, который напоминает о письмах, оставшихся без ответа </para>
+
+<sect2 id="using-kapp">
+<title
+>Использование агента напоминания о продолжении</title>
+
+<para
+>Чтобы открыть диалог, позволяющий создать напоминание для текущего электронного адреса на указанную дату, воспользуйтесь меню <menuchoice
+><guimenu
+>Параметры</guimenu
+><guimenuitem
+>Добавить напоминание для поддержания разговора</guimenuitem
+></menuchoice
+> в окне создания письма &kmail;.</para>
+
+<screenshot>
+<screeninfo
+>Диалог агента напоминания о продолжении</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Диалог агента напоминания о продолжении</phrase>
+    </textobject>
+    <caption>
+      <para
+>Диалог агента напоминания о продолжении</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Чтобы выбрать дату в виджете календаря, нажмите кнопку со стрелкой вниз напротив поля <guilabel
+>Дата</guilabel
+>. Также возможно выбрать календарь для напоминания с помощью раскрывающегося списка <guilabel
+>Сохранить задачу в:</guilabel
+>.</para>
+<para
+>Чтобы удалить запланированные напоминания, воспользуйтесь пунктом меню <menuchoice
+><guimenu
+>Настройка</guimenu
+> <guimenuitem
+>Настроить &kmail;...</guimenuitem
+></menuchoice
+>, перейдите на страницу <guilabel
+>Модули</guilabel
+> и нажмите кнопку настройки напротив элемента <guilabel
+>Агент напоминания о продолжении</guilabel
+>. Затем щёлкните правой кнопкой мыши по напоминанию и в открывшемся контекстном меню выберите действие <guimenuitem
+>Удалить</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>Настройка агента напоминаний поддержания разговора</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Настройка агента напоминаний поддержания разговора</phrase>
+    </textobject>
+    <caption>
+      <para
+>Настройка агента напоминаний поддержания разговора</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Авторские права и лицензия</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Авторские права на программу принадлежат &Laurent.Montel; &Laurent.Montel.mail;, 2014-2019 </para>
+<para
+>Авторское право на документацию &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Перевод на русский язык — Мария Шикунова<email
+>translation-team@basealt.ru</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

@@ -546,7 +546,7 @@
 > у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
 
 <variablelist>
-
+    
 <varlistentry id="reader-edit-copy-folder">
   <term
 ><menuchoice
@@ -799,7 +799,7 @@
   <listitem
 ><para
 >У цьому підменю ви побачите вказані нижче пункти, за допомогою яких можна змінити вигляд вашого списку повідомлень.</para>
-
+    
     <variablelist>
     <varlistentry id="reader-view-messagelist-sorting">
       <term
@@ -824,7 +824,7 @@
 >За визначеним відправником/отримувачем</guilabel
 > — показувати отримувача, коли ви переглядаєте теку надісланих повідомлень, і показуватиме відправника, якщо ви читаєте вміст вашої теки вхідних повідомлень.</para
 ></listitem>
-
+    
             <listitem
 ><para
 >Прапорці <guilabel
@@ -837,7 +837,7 @@
 ></listitem>
           </itemizedlist>
         </listitem>
-
+        
         <listitem
 ><para
 >За допомогою пунктів <guilabel
@@ -855,7 +855,7 @@
         </itemizedlist>
       </listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-aggregation">
       <term
 ><menuchoice
@@ -876,7 +876,7 @@
 >), щоб дізнатися більше про складання.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-theme">
       <term
 ><menuchoice
@@ -897,7 +897,7 @@
 >), щоб дізнатися більше про теми.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-create-new-tab">
       <term
 ><menuchoice
@@ -916,7 +916,7 @@
 >Створити вкладку на панелі вкладок. Створена вкладка вказуватиме на теку, яку ви переглядали, коли було вибрано пункт меню. Якщо панель вкладок ще не показано, вибір цього пункту призведе до її показу. Панель вкладок може бути корисною, якщо у вас багато тек, але ви регулярно користуєтеся лише декількома з них.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-activate-next-tab">
       <term
 ><menuchoice
@@ -933,7 +933,7 @@
 >Відкриває теку, яку пов'язано із наступною вкладкою на панелі інструментів вкладок.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-activate-previous-tab">
       <term
 ><menuchoice
@@ -950,7 +950,7 @@
 >Відкриває теку, яку пов'язано із попередньою вкладкою на панелі інструментів вкладок.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-move-tab-left">
       <term
 ><menuchoice
@@ -963,7 +963,7 @@
 >Перевпорядковує вкладки на панелі вкладок, пересуваючи активну вкладку ліворуч. Якщо ця вкладка вже перебуває на першому місці ліворуч, її буде пересунуто на кінцеву позицію праворуч.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-move-tab-right">
       <term
 ><menuchoice
@@ -976,7 +976,7 @@
 >Перевпорядковує вкладки на панелі вкладок, пересуваючи активну вкладку праворуч. Якщо ця вкладка вже перебуває на першому місці праворуч, її буде пересунуто на кінцеву позицію ліворуч.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry id="reader-view-messagelist-close-tab">
       <term
 ><menuchoice
@@ -2162,7 +2162,7 @@
 >Назва списку листування &gt;</guimenuitem
 ></menuchoice
 ></term>
-
+  
   <listitem
 ><para
 >У цьому підменю розташовано пункти дій, пов'язаних з повідомленнями зі списків листування.</para>
@@ -2177,7 +2177,7 @@
 ><!-- add whitespace -->
   <para
 >Вказаними нижче пунктами можна скористатися для керування теками списків листування:</para>
-
+  
   <itemizedlist>
     <listitem
 ><para
@@ -2236,7 +2236,7 @@
 >.</para
 ></listitem>
   </itemizedlist>
-
+  
   <para
 >&nbsp;</para
 ><!-- add whitespace --></listitem>
@@ -2360,7 +2360,7 @@
     <entry
 >Цей стан не встановлюється &kmail; у автоматичному режимі. Ви можете встановлювати його самі, щоб позначити повідомлення, які є для вас важливими.</entry
 ></row>
-
+ 
     <row>
     <entry
 ><guimenuitem
@@ -2438,7 +2438,7 @@
 >Значення</entry
 ></row
 ></thead>
-
+    
     <tbody>
     <row>
     <entry
@@ -2484,7 +2484,7 @@
     <entry
 >Цей стан не встановлюється &kmail; у автоматичному режимі. Ви можете встановлювати його самі, щоб позначити гілки, які є для вас важливими.</entry
 ></row>
-
+    
     <row>
     <entry
 ><guimenuitem
@@ -2514,7 +2514,7 @@
     <entry
 >Цей стан не встановлюється &kmail; у автоматичному режимі. Скористайтеся цим пунктом меню для позначення гілок, пов'язаних з певними діями, наприклад діями зі списку завдань.</entry
 ></row>
-
+    
     <row>
     <entry
 ><guimenuitem
@@ -2550,7 +2550,7 @@
 ></inlinemediaobject
 >, щоб переглянути категорії фільтрування.)</entry
 ></row>
-
+    
     <row>
     <entry
 ><guimenuitem
@@ -2566,7 +2566,7 @@
 >Надає вам змогу проігнорувати цілу гілку.</entry
 ></row>
     </tbody>
-
+    
   </tgroup
 ></informaltable>
   <para
@@ -2714,7 +2714,8 @@
 >&nbsp;</para
 ></listitem>
 </varlistentry>
-</variablelist>
+</variablelist
+> 
 
 </sect2>
 
@@ -3297,7 +3298,7 @@
 > to add a new contact your addressbook.</para
 ></listitem>
 </varlistentry
-> These options not available in 5.14.2 @dcb2021088. -->
+> Thes options not available in 5.14.2 @dcb2021088. -->
 
 <varlistentry id="composer-message-send-mail">
   <term
@@ -3747,7 +3748,7 @@
 >Convert the selected text to lowercase.</para
 ></listitem>
 </varlistentry
-> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
 
 <varlistentry id="composer-edit-insert-special-character">
   <term
@@ -3763,7 +3764,7 @@
 >Надає вам змогу вставити спеціальний символу у поточну позицію курсора. Доступними є символи Unicode. Цим пунктом можна буде скористатися, лише якщо завантажено додаток <guimenuitem
 >Вставлення спеціального символу</guimenuitem
 >.</para>
-
+  
   <para
 >Цей пункт меню було пересунуто до меню <guimenu
 >Вставлення</guimenu
@@ -3951,7 +3952,7 @@
 >, якщо потрібно. Будь ласка, ознайомтеся із розділом щодо <link linkend="composer-headers"
 >заголовків редактора</link
 >, щоб дізнатися більше про заголовки повідомлення.</para>
-
+  
 <para
 >&nbsp;</para>
 
@@ -3991,7 +3992,7 @@
 >&nbsp;</para
 ></listitem>
   </varlistentry>
-
+  
 </variablelist>
 
 </sect2>
@@ -4505,7 +4506,7 @@
 >Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-tools"
 >загального опису меню інструментів</ulink
 > у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
-
+  
 <variablelist>
   <varlistentry id="composer-tools-select-recipients">
   <term
@@ -4649,7 +4650,7 @@
 >Якщо у наведеному нижче списку немає потрібного вам пункту, зверніться до <ulink url="help:/fundamentals/menus.html#menus-settings"
 >загального опису меню параметрів</ulink
 > у підручнику з основ роботи у &kde;. Перелічені тут пункт є специфічними для &kmail;.</para>
-
+  
 <variablelist>
 <varlistentry id="composer-settings-toolbars">
   <term

@@ -1,0 +1,219 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-archivemailagent "<application
+>Kirjade arhiveerimise agent</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Estonian  "INCLUDE"
+> 
+]>
+
+<article id="archivemailagent" lang="&language;">
+
+<articleinfo id="archivemailagentinfo">
+
+<title
+>Kirjade arhiveerimise agendi käsiraamat</title>
+
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> <email
+>montel@kde.org</email
+> </author>
+<othercredit role="translator"
+><firstname
+>Marek</firstname
+><surname
+>Laane</surname
+><affiliation
+><address
+><email
+>bald@smail.ee</email
+></address
+></affiliation
+><contrib
+>Tõlge eesti keelde</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>Laurent Montel</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2013-08-30</date>
+<releaseinfo
+>&kde; 4.11</releaseinfo>
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Sissejuhatus</title>
+
+<para
+>&i18n-archivemailagent; on Akonadi agent, mis võimaldab automaatselt arhiveerida kirjakaustu. </para>
+
+<sect2 id="using-kapp">
+<title
+>Kirjade arhiveerimise agendi kasutamine</title>
+
+<!-- keep in sync with kmail/menus.docbook reader-tools-configure-automatic-archiving"-->
+<para
+>Menüükäsuga <menuchoice
+><guimenu
+>Tööriistad</guimenu
+><guimenuitem
+>Automaatse arhiveerimise seadistamine...</guimenuitem
+></menuchoice
+><action
+> &kmail;i aknas saab avada dialoogi, mis võimaldab seadistada kirjakaustade automaatse arhiveerimise.</action
+> </para>
+
+<!-- keep in sync with kmail/using.docbook auto-archive -->
+<para
+>See on võimas tööriist, millega saab edukalt oma kirjadest varukoopiaid teha. Kasutamiseks klõpsa nupule <guibutton
+>Lisa...</guibutton
+>, mille peale ilmub dialoog <guilabel
+>Kirjaarhiivi lisamine</guilabel
+>.</para>
+
+<screenshot>
+<screeninfo
+>Kirjaarhiivi lisamise dialoog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-archive-mail.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Kirjaarhiivi lisamise dialoog</phrase>
+    </textobject>
+    <caption>
+      <para
+>Kirjaarhiivi lisamise dialoog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<itemizedlist>
+<listitem
+><para
+>Kõigepealt vali kaust, mida soovid arhiveerida.</para
+></listitem>
+<listitem
+><para
+>Vali rippmenüüst vorming, milles soovid arhiivi salvestada, &eg; <literal role="extension"
+>.tar.bz2</literal
+>. Arhiivi failinimi koosneb prefiksist <userinput
+>Arhiiv_</userinput
+>, &kmail;i kaustaloendis valitud kausta asukohast, kuupäevast kujul <userinput
+>aasta-kuu-päev</userinput
+> ja valitud faililaiendist, &eg; <filename
+>Arhiiv_Kohalikud kaustad_inbox_2013-09-03.tar.bz2</filename
+>. </para
+></listitem>
+<listitem
+><para
+>Vaikimisi on lubatud <guilabel
+>kõigi alamkaustade arhiveerimine</guilabel
+>. Eemalda valiku eest märge, kui soovid arhiveerida ainult ülemkausta.</para
+></listitem>
+<listitem
+><para
+>Asukoha, kuhu arhiiv tuleb salvestada, võib käsitsi kirja panna, aga võib ka klõpsata nupule <guibutton
+>Ava failidialoog</guibutton
+> ja kataloogi valida.</para
+></listitem>
+<listitem
+><para
+>Rippmenüüga <guilabel
+>Varundamise intervall:</guilabel
+> saab määrata, kui sageli kausta arhiveerida.</para
+></listitem>
+<listitem
+><para
+>Kui sul peaks kettaruumi nappima, võib määrata piirangu valikuga <guilabel
+>Arhiivide maksimumarv:</guilabel
+>.</para
+></listitem>
+</itemizedlist>
+<para
+>Kui oled lisanud või muutnud arhiveerimistööd, sooritatakse see automaatselt pärast dialoogi sulgemist. </para>
+
+<para
+>Kui oled juba varem lisanud arhiveerimistöid, näitab dialoog <guilabel
+>Kirjade arhiveerimise seadistamine</guilabel
+> neid ja lubab neid ka muuta. </para>
+<screenshot>
+<screeninfo
+>Kirjade arhiveerimise seadistamine</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="configure-archive-mail-agent.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Kirjade arhiveerimise seadistamine</phrase>
+    </textobject>
+    <caption>
+      <para
+>Kirjade arhiveerimise seadistamine</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>Iga kirje ees vasakul asuva märkekastiga saab vastava töö arhiveerimise lubada või keelata. </para>
+<para
+>Kontekstimenüüga, mille avamiseks klõpsa &HPNga; arhiveerimistööl, saab avada arhiive sisaldava kataloogi või käivitada otsekohe arhiveerimise. See kirjutab ilma kinnitust küsimata üle olemasoleva samal päeval loodud arhiivi. </para>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Autorid ja litsents</title>
+
+<para
+>&i18n-archivemailagent;</para>
+<para
+>Rakenduse autoriõigus 2013: Laurent Montel montel@kde.org </para>
+<para
+>Dokumentatsiooni autoriõigus &copy; 2013: Laurent Montel montel@kde.org </para>
+
+<para
+>Tõlge eesti keelde: Marek Laane <email
+>bald@smail.ee</email
+></para
+> 
+&underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

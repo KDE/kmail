@@ -1,0 +1,193 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-sendlateragent "<application
+>Agent zum späteren Senden</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % German "INCLUDE"
+> 
+]>
+
+<article id="sendlateragent" lang="&language;">
+<articleinfo>
+<title
+>Das Handbuch zu &i18n-sendlateragent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2013</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Anwendungen 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Einführung</title>
+
+<para
+>&i18n-sendlateragent; ist ein Akonadi-Agent, um E-Mails später oder wiederholt zu versenden. </para>
+
+<sect2 id="using-kapp">
+<title
+>&i18n-sendlateragent; verwenden</title>
+
+<para
+>Mit <menuchoice
+><guimenu
+>Nachricht</guimenu
+><guimenuitem
+>Später senden</guimenuitem
+></menuchoice
+> in &kmail;s Editorfenster können Sie einen Dialog öffnen, um das Versenden von E-Mails  zu einem bestimmten Datum und Uhrzeit planen.</para>
+
+<screenshot>
+<screeninfo
+>Dialog &i18n-sendlateragent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Dialog &i18n-sendlateragent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Dialog &i18n-sendlateragent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Haben Sie eine E-Mail geschrieben, die Sie zur Zeit nicht versenden können, weil Sie keinen Internetzugang haben, dann benutzen Sie diese Funktion, um sie zum einer bestimmten Zeit später zu senden. Kreuzen Sie zuerst <guilabel
+>Verspätung</guilabel
+> an und stellen Sie dann Datum und Zeit des Sendens ein.</para>
+<para
+>Möchten Sie zum Beispiel wöchentlich eine E-Mail versenden, können Sie einstellen, dass das Senden der Nachricht in regelmäßigen Abständen wiederholt wird, indem Sie das Ankreuzfeld <guilabel
+>Wiederholen alle</guilabel
+> aktivieren und das gewünschte Intervall eingeben.</para>
+<para
+>Die Nachricht verschieben Sie in die Warteschlange zum Versand, indem Sie den Knopf <guibutton
+>Später senden</guibutton
+> auswählen, um die Nachricht in den geplanten Zeitablauf einzufügen. </para>
+<para
+>Dieser Agent funktioniert unabhängig von &kmail; und benötigt keine laufende Instanz von &kmail; oder &kmail; im Online-Modus, um geplante E-Mails zu versenden.</para>
+<para
+>Haben Sie keine Netzwerkverbindung, wenn eine Nachricht planmäßig versendet werden soll, erhalten Sie eine Fehlermeldung, in der gefragt wird, ob die Nachricht später versendet werden soll.</para>
+<para
+>Bei der Anmeldung in einer &kde;-Sitzung wird überprüft, ob geplante Nachrichten in der Warteschlange anstehen. Es werden dann alle seit der letzten Abmeldung überfälligen Nachrichten versendet, falls erforderlich. </para>
+<para
+>Benutzen Sie in &kmail; <menuchoice
+><guimenu
+>Einstellungen</guimenu
+> <guimenuitem
+>&kmail; einrichten ...</guimenuitem
+></menuchoice
+> und wählen Sie dann auf der Seite <guilabel
+>Module</guilabel
+> die Einrichtung für <guilabel
+>Agent zum späteren Senden</guilabel
+>, um das Versenden von geplanten E-Mails zu bearbeiten. </para>
+
+<screenshot>
+<screeninfo
+>&i18n-sendlateragent; einrichten</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="sendlateragent-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-sendlateragent; einrichten</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-sendlateragent; einrichten</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+><action
+>Öffnet einen Dialog, um das Versenden von geplanten E-Mails zu bearbeiten oder sie zu entfernen.</action>
+</para>
+<para
+>Der Inhalt (Text, Vorspann &etc;) einer zum späteren Versand geplanten Nachricht kann nicht geändert werden. </para>
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Danksagungen und Lizenz</title>
+
+<para
+>&i18n-sendlateragent;</para>
+<para
+>Programm Copyright 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Dokumentation Copyright &copy; 2013-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Übersetzung Burkhard Lück<email
+>lueck@hube-lueck.de</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

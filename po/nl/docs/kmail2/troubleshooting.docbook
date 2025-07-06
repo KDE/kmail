@@ -35,7 +35,7 @@
 > om meer te weten te komen over bugs met een recentere datum.</para>
 
   <para
->Op dit moment (2021) hebben veel problemen die mensen tegenkomen met &kmail; te maken met de &akonadi;-server. &akonadi; is een extra programma dat als een intermediair tussen &kmail; (plus alle andere &PIM; toepassingen) en een database-daemon voor algemene doelen functioneert (gewoonlijk "mysqld"). Het faciliteert communicatie tussen processen onder de verschillende stukjes van de &PIM; toepassingen. Afhankelijk van de manier waarop uw systeem is geconfigureerd, kan &akonadi; gestart worden tijdens de opstart van het systeem / het aanmeldproces. Of het kan niet gestart worden totdat u een &PIM; toepassingsprogramma (zoals &kmail;, of &kaddressbook; of &kontact;) opstart.</para>
+>At the present time (2021), many of the problems people are experiencing with &kmail; involve the &akonadi; server. &akonadi; is an auxiliary program that functions as an intermediary between &kmail; (plus all the other &PIM; applications) and a general purpose database daemon (most commonly "mysqld"). It also facilitates inter-process communications among the various pieces of the &PIM; applications. Depending on the way your system is configured, &akonadi; may be started during the boot-up / login process. Or it may not start until you invoke a &PIM; application program (like &kmail;, or &kaddressbook;, or &kontact;).</para>
 
   <para
 >Er zijn twee toepassingsprogramma's die u directe interactie met de &akonadi;-server biedt: <code
@@ -920,9 +920,9 @@ Found 0 dirty items.</screen
 >grep</code
 > om dat te doen. <screen
 >~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
 --defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/ 
+--datadir=/home/david/.local/share/akonadi/db_data/
 --socket=/run/user/1000/akonadi/mysql.socket
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen

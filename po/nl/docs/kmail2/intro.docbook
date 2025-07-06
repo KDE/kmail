@@ -106,13 +106,13 @@
 >Hulp verkrijgen</title>
 
 <para
->De website van &kmail; kan gevonden worden op <ulink url="https://apps.kde.org/kmail2/"
+>&kmail;'s homepage can be found at <ulink url="https://apps.kde.org/kmail2/"
 >https://apps.kde.org/kmail2/</ulink
->. Daar vindt u ook nuttige koppelingen (&eg; naar de discussielijsten voor gebruikers- en ontwikkelaars en de wiki-pagina's van de gemeenschap). Fouten in het programma kunt u rapporteren door te kiezen voor <menuchoice
+>. There you will find useful links (&eg;, to the user and developer mailing lists, and to the community wiki pages.) Please report any bugs in &kmail; using <menuchoice
 ><guimenu
 >Help</guimenu
 ><guimenuitem
->Bugs rapporteren...</guimenuitem
+>Report Bug...</guimenuitem
 ></menuchoice
 >.</para>
 </sect2>

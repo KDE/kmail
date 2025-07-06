@@ -1,0 +1,4207 @@
+<chapter id="using-kmail">
+
+<chapterinfo>
+<authorgroup>
+<author
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
+&traductor.Antoni.Bella; 
+</authorgroup>
+
+<date
+>12 de setembre de 2020</date>
+<releaseinfo
+>5.14.2 (Aplicacions 20.04.2)</releaseinfo>
+</chapterinfo>
+
+<title
+>Usar el &kmail;</title>
+
+<sect1 id="the-mail-reader-window">
+<title
+>La finestra principal</title>
+
+<para
+>La finestra principal és la que apareix quan s'engega el &kmail;. De manera predeterminada es divideix en tres subfinestres:</para>
+
+<variablelist>
+<varlistentry>
+<term
+>Llistat de carpetes (a l'esquerra)</term>
+<listitem>
+  <screenshot>
+<screeninfo
+>La subfinestra Carpeta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>La subfinestra Carpeta</phrase>
+    </textobject>
+    <caption>
+      <para
+>La llista de carpetes</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>Aquesta subfinestra conté una llista de les carpetes de missatges (d'altres programes de correu les anomenen bústies). Per a seleccionar una carpeta, feu clic a sobre seu. La informació de la capçalera del missatge continguda en la carpeta apareixerà a la subfinestra Llista de missatges. La llista de carpetes pot mostrar-se tant en el mode de vista curta, ocupant només una petita part al costat esquerre de la pantalla, i com una vista llarga, ocupant tota la part esquerra de la pantalla (mostrant més bústies). Podeu canviar entre aquests modes de vista utilitzant les pestanyes <guilabel
+>Aparença</guilabel
+>/<guilabel
+>Disposició</guilabel
+> en el diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura el &kmail;...</guimenuitem
+></menuchoice
+>. La secció superior de la subfinestra de carpetes proporciona enllaços ràpids a les vostres carpetes preferides. Arrossegueu i deixeu anar aquí les carpetes o mitjançant el menú contextual del &BDR;, opció <guimenuitem
+>Afegeix a les carpetes preferides</guimenuitem
+>. Per a més detalls sobre les carpetes, vegeu la <link linkend="folders"
+>secció Carpetes</link
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Llista de missatges (a dalt a la dreta)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>La llista de missatges</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="message.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>La llista de missatges</phrase>
+    </textobject>
+    <caption>
+      <para
+>La llista de missatges (tema intel·ligent)</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>Aquesta subfinestra llista la informació de les capçaleres (Assumpte, Remitent i Data) per als missatges a la carpeta seleccionada. Fent clic sobre un element a la Llista de missatges se seleccionarà aquest missatge i es mostrarà a la subfinestra Vista prèvia. També podreu seleccionar més d'un missatge mantenint premuda la tecla &Ctrl; (o la tecla &Maj;) quan feu clic a sobre dels missatges.</para>
+
+<para
+>Canvieu la vista de la llista de missatges seleccionant <menuchoice
+><guimenu
+>Visualitza</guimenu
+><guimenuitem
+>Llista de missatges</guimenuitem
+> <guimenuitem
+>Tema</guimenuitem
+></menuchoice
+>. Disposeu de diverses opcions. </para>
+<itemizedlist>
+  <listitem
+><para
+><guilabel
+>Clàssic</guilabel
+> Un tema senzill, compatible amb els anteriors, de fila única amb columnes ordenables fent-hi clic.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Intel·ligent</guilabel
+> Un tema sofisticat multilínia, multielement amb icones d'estat i columnes no ordenables.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Intel·ligent amb estat clicable</guilabel
+> Un tema sofisticat multilínia, multielement i amb icones d'estat ordenables fent-hi clic.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Configura...</guilabel
+> Permet personalitzar el vostre propi tema per a la Llista de missatges (&pex;, afegir o treure columnes de la barra d'ordenació clicable).</para
+></listitem>
+</itemizedlist>
+<para
+>Si heu triat el tema Clàssic, podreu ordenar els missatges fent clic a sobre de la columna que voleu ordenar. Si feu clic a sobre de la mateixa columna una altra vegada, l'ordenació canviarà entre ascendent i descendent. En fer clic amb el &BDR; a sobre de la capçalera de la llista es mostrarà un menú emergent, el qual permet mostrar o ocultar les columnes a la llista. Podeu personalitzar les columnes visibles a la barra d'ordenació. Per a més detalls, vegeu <link linkend="customize-messagelist-theme"
+>Configurar l'aparença de la llista de missatges</link
+>. </para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+<varlistentry id="using-message-preview-pane">
+<term
+>Subfinestra de vista prèvia (predeterminada, a sota a la dreta)</term>
+<listitem>
+<screenshot>
+<screeninfo
+>La subfinestra de vista prèvia del missatge</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="preview.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>La subfinestra de vista prèvia del missatge</phrase>
+    </textobject>
+    <caption>
+      <para
+>La subfinestra de vista prèvia</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<anchor id="the-preview-pane-headers"/>
+<para
+>Aquesta subfinestra mostra el missatge seleccionat. Aquí hi ha algunes maneres per a ajustar-la.</para>
+<para
+>La part superior de la subfinestra Vista prèvia mostra les capçaleres del missatge. Aneu a <menuchoice
+><guimenu
+>Visualitza</guimenu
+><guisubmenu
+>Capçaleres</guisubmenu
+></menuchoice
+> i proveu fins a trobar una que us agradi!</para>
+<itemizedlist id="using-header-options">
+  <listitem
+><para
+><guilabel
+>Capçaleres sofisticades</guilabel
+> Una capçalera amb color i una notificació sobre l'estat de correu brossa i els adjunts.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Capçaleres breus</guilabel
+> El títol, i entre parèntesis trobareu el De, el CC (si n'hi ha cap) i la data.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>&kmail; 5.2</guilabel
+> Un avatar (si està disponible) amb el Títol, el De, el Per a, el CC (si n'hi ha cap) i l'estat de correu brossa i els adjunts en línies separades.</para
+></listitem>
+  <listitem
+><para
+><guilabel
+>Baixa temes nous...</guilabel
+> Permet descarregar temes personalitzats creats per altres usuaris del &kmail;.</para
+></listitem>
+</itemizedlist>
+<para
+>Feu clic sobre la barra situada a la part esquerra de la subfinestra per a canviar entre text net i &HTML; (si i només si el missatge es codifica de les dues maneres). El text de la barra us informarà en quina vista us trobeu. El diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura el &kmail;...</guimenuitem
+> <guisubmenu
+>Seguretat</guisubmenu
+></menuchoice
+> permet seleccionar &HTML; com a opció predeterminada per a mostrar els missatges, si preferiu &HTML; a text net.</para>
+<para
+>Si voleu canviar la forma com apareixen els adjunts als vostres missatges, aneu a <menuchoice
+><guimenu
+>Visualitza</guimenu
+><guisubmenu
+>Adjunts</guisubmenu
+></menuchoice
+>. Aquestes són les vostres opcions:</para>
+<itemizedlist id="using-attachment-view-options">
+  <listitem
+><para
+><guimenuitem
+>Com a icones</guimenuitem
+>, tots els adjunts apareixeran com a icones a la part inferior del missatge.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Intel·ligents</guimenuitem
+> mostrarà els adjunts com a icones, llevat que el missatge suggereixi que s'han de mostrar inclosos. Podeu suggerir que certs adjunts s'hagin de presentar inclosos en els missatges que editeu seleccionant <guilabel
+>Suggereix mostrar automàticament</guilabel
+> a <link linkend="the-composer-window"
+>la finestra de l'editor</link
+> mitjançant el diàleg propietats de l'adjunt.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Inclosos</guimenuitem
+> mostra el contingut dels adjunts a la part inferior del missatge. Hi ha adjunts que no es poden mostrar, &pex;, els fitxers comprimits, encara es mostraran com una icona.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Oculta</guimenuitem
+> no mostrarà els adjunts.</para
+></listitem>
+  <listitem
+><para
+><guimenuitem
+>Només en la capçalera</guimenuitem
+> suprimirà la visualització inclosa, però llistarà els adjunts juntament amb les capçaleres del missatge.</para
+></listitem>
+</itemizedlist>
+<para
+>Les interaccions entre els temes de capçalera, les vistes amb adjunts i les preferències de text pla versus &HTML; són força complexes. Per exemple, si adjunteu un fitxer &HTML; a un missatge de text pla, probablement el &kmail; interpretarà que el missatge està codificat en dos formats diferents, encara que aquest no sigui realment el cas. De manera similar, els missatges &HTML; poden mostrar imatges incrustades fins i tot quan hàgiu seleccionat l'opció «Oculta» per als adjunts.</para>
+
+<para
+>L'estructura de cada missatge es pot mostrar prement <keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+>. Això obrirà un visualitzador de l'estructura del missatge a sota de la subfinestra de vista prèvia. Desactiveu el visualitzador de l'estructura del missatge prement les mateixes tres tecles.</para>
+
+<para
+>Podeu desplaçar-vos a través de la pàgina del missatge emprant les tecles &PgUp; i &PgDn; o línia a línia emprant les tecles &Up; i &Down;. També podeu utilitzar les <link linkend="keyboard-shortcuts"
+>dreceres de teclat</link
+> per a saltar entre els vostres missatges sense que calgui utilitzar el ratolí.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+</sect1>
+
+<sect1 id="keyboard-shortcuts">
+<title
+>Dreceres de teclat</title>
+
+<para
+>Les següents dreceres de teclat estan admeses de manera predeterminada a la finestra principal. Observeu que moltes dreceres «universals» (&pex;, <keycombo action="simul"
+><keycap
+>C</keycap
+></keycombo
+> per a copiar el text seleccionat al porta-retalls, o <keycombo action="simul"
+>&Ctrl;<keycap
+>F</keycap
+></keycombo
+> per a obrir un diàleg de «Cerca») són reconegudes pel &kmail;, però no estan documentades aquí.</para>
+
+<informaltable>
+<tgroup cols="2">
+<thead>
+<row>
+<entry
+>Drecera de teclat</entry>
+<entry
+>Acció</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+>&Space;</entry>
+<entry
+>Desplaça cap avall en el missatge actual.</entry>
+</row>
+<row>
+<entry
+>&Right; o <keycap
+>N</keycap
+></entry>
+<entry
+>Passa al següent missatge a la carpeta actual i mostra la vista prèvia.</entry>
+</row>
+<row>
+<entry
+>&Left; o <keycap
+>P</keycap
+></entry>
+<entry
+>Passa al missatge anterior a la carpeta actual i mostra la vista prèvia.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></entry>
+<entry
+>Passa al següent missatge a la carpeta actual i mostra la vista prèvia.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></entry>
+<entry
+>Passa a l'últim missatge a la carpeta actual i mostra la vista prèvia.</entry>
+</row>
+<row>
+<entry
+><keycap
+>+</keycap
+></entry>
+<entry
+>Passa al següent missatge sense llegir a la carpeta actual.</entry>
+</row>
+<row>
+<entry
+><keycap
+>-</keycap
+></entry>
+<entry
+>Passa al missatge anterior sense llegir a la carpeta actual.</entry>
+</row>
+<row>
+<entry
+><keycap
+>C</keycap
+></entry>
+<entry
+>Copia el missatge a una altra carpeta.</entry>
+</row>
+<row>
+<entry
+><keycap
+>M</keycap
+></entry>
+<entry
+>Mou aquest missatge a una altra carpeta.</entry>
+</row>
+<row>
+<entry
+><keycap
+>A</keycap
+></entry>
+<entry
+>Respon a tots els destinataris d'aquest missatge (amb els caràcters de citació).</entry>
+</row>
+<row>
+<entry
+><keycap
+>R</keycap
+></entry>
+<entry
+>Respon al remitent amb els caràcters de citació.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Maj;<keycap
+>R</keycap
+></keycombo
+></entry>
+<entry
+>Respon al remitent sense citar res.</entry>
+</row>
+<row>
+<entry
+><keycap
+>S</keycap
+></entry>
+<entry
+>Llança el diàleg de cerca de missatges.</entry>
+</row>
+<row>
+<entry
+><keycap
+>T</keycap
+></entry>
+<entry
+>Obre aquest missatge a la finestra d'edició.</entry>
+</row>
+<row>
+<entry
+>&Intro;</entry>
+<entry
+>Visualitza el missatge seleccionat al visualitzador de missatges a pantalla completa.</entry>
+</row>
+<row>
+<entry
+><keycap
+>V</keycap
+></entry>
+<entry
+>Visualitza el missatge sense processar, les capçaleres i tot, com a un fitxer de text.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>L</keycap
+></keycombo
+></entry>
+<entry
+>Comprova si hi ha cap missatge nou en el/s servidor/s.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+></entry>
+<entry
+>Obre la finestra d'edició per a escriure un missatge nou.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>+</keycap
+></keycombo
+></entry>
+<entry
+>Amplia el zoom en el missatge actual, amb increments del 20%.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>-</keycap
+></keycombo
+></entry>
+<entry
+>Redueix el zoom en el missatge actual, amb increments del 20%.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;<keycap
+>0</keycap
+></keycombo
+></entry>
+<entry
+>Restableix el factor de zoom del missatge al 100% (mida completa).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Alt;<keycap
+>D</keycap
+></keycombo
+></entry>
+<entry
+>Canvia la visualització de l'estructura del missatge (sota la subfinestra de vista prèvia del missatge).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>O</keycap
+></keycombo
+></entry>
+<entry
+>Crea la barra d'eines amb pestanyes (apareix a sobre de la llista de missatges).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Maj;<keycap
+>W</keycap
+></keycombo
+></entry>
+<entry
+>Elimina la pestanya actualment activa de la barra d'eines amb pestanyes.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;&Up;</keycombo
+></entry>
+<entry
+>Passa a la carpeta anterior a la llista de carpetes (si la llista té el focus).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Alt;&Down;</keycombo
+></entry>
+<entry
+>Passa a la carpeta següent a la llista de carpetes (si la llista té el focus).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+></entry>
+<entry
+>Posa el focus sobre la carpeta anterior. Utilitzeu la drecera <keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+> per a entrar de facto a la carpeta.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&End;</keycombo
+></entry>
+<entry
+>Posa el focus sobre la carpeta següent. Utilitzeu la drecera <keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+> per a entrar de facto a la carpeta.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Ctrl;&Space;</keycombo
+></entry>
+<entry
+>Entra a la carpeta que té el focus, &ead;, la carpeta en la qual navegueu utilitzant <keycombo action="simul"
+>&Ctrl;&Home;</keycombo
+> o <keycombo action="simul"
+>&Ctrl;&End;</keycombo
+>.</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Maj;<keycap
+>H</keycap
+></keycombo
+></entry>
+<entry
+>Alterna entre text pla i &HTML; (llevat que es prefereixi &HTML; mitjançant el diàleg <guilabel
+>Configuració</guilabel
+>).</entry>
+</row>
+<row>
+<entry
+><keycombo action="simul"
+>&Maj;&Left;</keycombo
+> i <keycombo action="simul"
+>&Maj;&Right;</keycombo
+></entry>
+<entry
+>Selecciona de manera seqüencial els missatges que hi ha a la llista de missatges, començant pel missatge actual.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+
+<para
+>Per a més dreceres de teclat, podeu mirar al diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura les dreceres...</guimenuitem
+></menuchoice
+>. Si no esteu satisfet amb les predeterminades, podeu canviar-les!</para>
+
+<para
+>Hi ha dues accions del ratolí que s'han de mencionar aquí. Primera, podeu seleccionar múltiples missatges no contigus per a processar-los tots alhora (&pex;, copiar, suprimir o moure) prement &Ctrl; i seleccionant-los amb el &BER;. Segona, podeu obrir un missatge en una finestra externa fent doble clic sobre un element en la llista de missatges. Si el missatge es troba a la carpeta bústia de sortida, esborranys o plantilles, s'obrirà en una finestra d'edició. En cas contrari, s'obrirà amb el visualitzador extern de missatges, una versió abreujada de la finestra principal del &kmail; sense les llistes de carpetes i de missatges, i amb menús més curts.</para>
+
+</sect1>
+
+<sect1 id="the-composer-window">
+<title
+>La finestra de l'editor</title>
+<screenshot>
+<screeninfo
+>La finestra de l'editor</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="composer-window.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>La finestra de l'editor</phrase>
+    </textobject>
+    <caption>
+      <para
+>La finestra de l'editor en el mode d'edició &HTML;.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>La finestra de l'editor s'utilitza per a escriure missatges nous, per a editar respostes i reenviar missatges. Es pot obrir de diverses formes. Aquí hi ha les diverses opcions per a l'edició de missatges.</para>
+<sect2 id="composing-a-message">
+<title
+>Editar un missatge</title>
+<variablelist>
+  <varlistentry id="compose-new-message"
+><term
+>Missatge nou...</term>
+  <listitem>
+  <para
+>La finestra de l'editor Missatge nou es pot invocar en quatre de les següents maneres:</para>
+      <itemizedlist>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>Fitxer</guimenu
+><guisubmenu
+>Nou</guisubmenu
+><guimenuitem
+>Missatge nou...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+><menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Missatge nou...</guimenuitem
+></menuchoice
+></para>
+        </listitem>
+        <listitem>
+          <para
+>Mitjançant la icona <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-message-new.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Nou</guiicon
+> que hi ha a la barra d'eines principal.</para>
+        </listitem>
+        <listitem>
+          <para
+>Mitjançant la drecera de teclat <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>.</para>
+        </listitem>
+      </itemizedlist>
+      <para
+>Per a escriure el vostre missatge, ompliu els camps apropiats a la finestra de l'editor. Utilitzeu el menú <guimenu
+>Visualitza</guimenu
+> per a seleccionar els camps de la capçalera que es mostraran. Qualsevol selecció que feu romandrà com a predeterminada quan obriu una nova finestra d'edició. Hi ha disponibles aquests elements.</para>
+      <itemizedlist id="composer-headers">
+        <listitem>
+          <para
+>La llista desplegable <guimenuitem
+>Identitat</guimenuitem
+> permet seleccionar la identitat a utilitzar.</para>
+        </listitem>
+        <listitem>
+          <para
+>La llista desplegable <guimenuitem
+>Diccionari</guimenuitem
+> permet triar el diccionari a utilitzar per a la correcció ortogràfica.</para>
+        </listitem>
+        <listitem>
+          <para
+>La <guimenuitem
+>Carpeta de correu enviat</guimenuitem
+> permet especificar a on es desarà una còpia local d'aquest missatge quan l'envieu.</para>
+        </listitem>
+        <listitem>
+          <para
+>El <guimenuitem
+>Transport de correu</guimenuitem
+> permet seleccionar un servidor de correu sortint.</para>
+        </listitem>
+        <listitem>
+          <para
+>Els camps tradicionals De:, A: i Assumpte:. (El camp Respon a: només apareixerà si heu especificat una adreça alternativa <guilabel
+>Respon a:</guilabel
+> a la pestanya <guilabel
+>Avançat</guilabel
+> en el diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guisubmenu
+>Configura el &kmail;...</guisubmenu
+> <guisubmenu
+>Comptes</guisubmenu
+><guimenuitem
+>Identitats</guimenuitem
+></menuchoice
+>).</para>
+        </listitem>
+        <listitem>
+          <para
+>L'opció <guimenuitem
+>Usa una lletra d'amplada fixa</guimenuitem
+> alterna l'ús de la lletra d'amplada fixa.</para>
+        </listitem>
+        <listitem>
+          <para
+><guimenuitem
+>Retalls</guimenuitem
+> mostra la finestra de retalls, on podreu desar els retalls utilitzant parts del text emprades amb freqüència.</para>
+        </listitem>
+      </itemizedlist>
+
+<para
+>Hi ha una varietat de dreceres de teclat per a ajudar-vos a seleccionar els destinataris. El botó <guibutton
+>Selecciona...</guibutton
+> que hi ha al costat dels camps <guilabel
+>A:</guilabel
+>, <guilabel
+>CC:</guilabel
+> i <guilabel
+>BCC:</guilabel
+> obriran una llista des del &kaddressbook; perquè pugueu seleccionar un o més destinataris que haurien de rebre aquest missatge.</para>
+
+<para
+>De manera alternativa, en començar a escriure una adreça en un dels camps <guilabel
+>A:</guilabel
+>/<guilabel
+>CC:</guilabel
+>/<guilabel
+>BCC:</guilabel
+>, apareixerà un menú emergent que ofereix completar les adreces que heu utilitzat recentment o que coincideixen al &kaddressbook;. Si no us agrada aquest menú emergent automàtic, el podeu inhabilitar fent clic amb el &BDR; a sobre del camp i escolliu un mode <guilabel
+>Compleció del text &gt;</guilabel
+> diferent. També podeu utilitzar aquest menú contextual per a ajustar l'ordre en què apareixeran les complecions suggerides (mitjançant <guilabel
+>Configura la compleció...</guilabel
+>).</para>
+
+<para
+>Sempre que vulgueu afegir-hi més d'un destinatari en un dels camps, utilitzeu una coma per a separar una adreça de la següent. Podríeu necessitar especificar adreces completes (&pex;, <userinput
+>usuari@example.com</userinput
+>) fins i tot per a usuaris locals, depenent de la configuració en el vostre sistema.</para>
+
+<para
+>Quan hàgiu finalitzat, feu clic a la icona <guiicon
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="mail-send.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Envia</guiicon
+> per a enviar-lo immediatament o feu clic a la icona <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-queue.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> A la cua</guiicon
+> per a deixar el missatge a la safata de sortida. Si encara no heu finalitzat el vostre missatge, seleccioneu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Desa com a esborrany</guimenuitem
+></menuchoice
+> per a desar-lo i editar-lo més tard. Si voleu imprimir el missatge, seleccioneu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Vista prèvia d'impressió...</guimenuitem
+></menuchoice
+> per a obtenir una vista prèvia del missatge, i <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Imprimeix...</guimenuitem
+></menuchoice
+> per a imprimir-lo.</para>
+  <para id="send-later"
+><menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Envia més tard</guimenuitem
+></menuchoice
+> permet programar els missatges de correu electrònic per a enviar-los en una data i hora específiques. Per a més detalls, vegeu <ulink url="help:/akonadi_sendlater_agent"
+>Agent per a enviar més tard</ulink
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</listitem>
+</varlistentry>
+<varlistentry id="new-compose-from-templates">
+    <term
+><menuchoice
+><guimenu
+>Fitxer</guimenu
+><guisubmenu
+>Nou</guisubmenu
+><guisubmenu
+>Missatge des d'una plantilla</guisubmenu
+> <guimenuitem
+><replaceable
+>La meva superplantilla</replaceable
+></guimenuitem
+></menuchoice
+></term>
+  <listitem>
+    <para
+>Editar un missatge nou des d'una plantilla és útil si heu creat una obra mestra que voleu desar com a plantilla per al seu ús en futurs missatges nous. Seleccioneu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Desa com a plantilla</guimenuitem
+></menuchoice
+> i això posarà la vostra nova plantilla a la carpeta <guilabel
+>plantilles</guilabel
+>. Podreu revisar la plantilla en qualsevol moment seleccionant-la des d'aquesta carpeta. Feu doble clic sobre el nom de la plantilla (o premeu la drecera <keycap
+>T</keycap
+>) per a obrir-la en una finestra d'edició. També podeu seleccionar la plantilla mitjançant el menú <guimenu
+>Fitxer</guimenu
+>, com es mostra a dalt.</para>
+  <para
+>&nbsp;</para
+> <!-- whitespace -->
+  </listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="encrypt-sign">
+<title
+>Signar i encriptar els missatges</title>
+
+<para
+>Si voleu enviar un missatge <link linkend="pgp-encrypt-your-messages"
+>encriptat</link
+> o <link linkend="pgp-sign-your-messages"
+>signat digitalment</link
+>, seleccioneu la icona <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Signa</guiicon
+> i/o <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-decrypt.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Encripta</guiicon
+> des de la barra d'eines. Utilitzeu la llista desplegable <menuchoice
+><guimenuitem
+>Opcions</guimenuitem
+><guisubmenu
+>Format criptogràfic dels missatges &gt;</guisubmenu
+></menuchoice
+> per a seleccionar el format utilitzat per a encriptar el missatge. (El menú <guilabel
+>Opcions</guilabel
+> també permet signar/encriptar el missatge). Podeu triar una de les cinc opcions de format. </para>
+
+<variablelist id="cryptographic-message-formats">
+<varlistentry>
+<term
+><guilabel
+>Qualsevol</guilabel
+></term>
+<listitem>
+<para
+>El &kmail; emprarà un format que puguin comprendre tots els destinataris del missatge. El format preferit es pot especificar per a cada destinatari mitjançant el <ulink url="help:/kaddressbook"
+>&kaddressbook;</ulink
+>.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP inclòs (desaprovat)</guilabel
+></term>
+<listitem>
+<para
+>Aquest format està en desús, però s'admet per compatibilitat amb versions anteriors. Si l'utilitzeu, només se signarà i/o encriptarà el text del missatge. <emphasis
+>Els adjunts ni se signaran ni s'encriptaran.</emphasis
+> Els missatges &HTML; no es poden signar amb aquest format. Tan sols l'hauríeu d'emprar quan sigui necessari, &ead;, si envieu missatges a algú que utilitza algun client de correu que no pot treballar amb els formats més avançats.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>OpenPGP/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>Aquest format és el successor al format OpenPGP inclòs. Si l'useu, el text del missatge i tots els adjunts se signaran i/o encriptaran (almenys de manera predeterminada). Aquest format és el recomanat si empreu encriptatge OpenPGP.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME;</guilabel
+></term>
+<listitem>
+<para
+>Aquest és un format alternatiu a OpenPGP/&MIME;. Si l'useu, el text del missatge i tots els adjunts se signaran i/o encriptaran (almenys de manera predeterminada). És el format més emprat a les empreses. Es basa en un certificat x.509, no en una clau PGP / GPG.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>S/&MIME; opac</guilabel
+></term>
+<listitem>
+<para
+>Aquest format és una variant del format S/&MIME;. A causa que converteix el missatge, els adjunts i la signatura digital en un únic objecte &MIME;, consumeix molta CPU i només s'haurà d'utilitzar si cal.</para
+></listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="html-mails">
+<title
+>Crear missatges &HTML;</title>
+
+<para
+>Cal tenir en compte que els missatges &HTML; sovint es consideren una molèstia. Per tant, els hauríeu d'utilitzar amb prudència. En particular, no els hauríeu d'enviar mai a una llista de correu tret que es permetin de forma explícita.</para>
+
+<para
+>Per a crear missatges &HTML;, primer haureu d'habilitar les eines de marcatge. Per a fer això, habiliteu <guimenuitem
+>Edició de text enriquit</guimenuitem
+> en el menú <menuchoice
+><guimenu
+>Opcions</guimenu
+></menuchoice
+>, o feu clic sobre la icona <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="preferences-desktop-font.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Text enriquit</guiicon
+> que hi ha a la barra d'eines del &kmail;. Apareixerà una barra d'eines addicional amb diverses eines de format. A través de la barra d'eines &HTML; podreu triar text estàndard o llistes numerades o amb pics. (Utilitzeu la llista desplegable <guilabel
+>Cap <inlinemediaobject
+><imageobject
+> <imagedata fileref="go-down.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guilabel
+> en la vora esquerra de la barra d'eines per a controlar l'estil de les llistes numerades / amb pics). També podreu controlar la família, la mida, l'estil (negreta, cursiva, subratllat o ratllat) i el color del text/fons de la lletra. I podreu especificar l'alineació del text (alineat a l'esquerra, centrat, a la dreta o justificat) i inserir etiquetes d'ancoratge (també conegudes com a enllaços), línies horitzontals, imatges, taules i codi &HTML; arbitrari (tot i que és compatible amb algunes de les etiquetes &HTML; més avançades, encara estan incompletes).</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="attachments">
+<title
+>Afegir adjunts</title>
+
+<para
+>Podeu adjuntar fitxers al missatge emprant qualsevol d'aquests mètodes:</para>
+
+<itemizedlist>
+<listitem>
+<para
+>Utilitzant la llista desplegable <menuchoice
+><guimenu
+>Adjunt</guimenu
+><guisubmenu
+>Adjunta &gt;</guisubmenu
+></menuchoice
+> i el següent diàleg per a triar un fitxer;</para>
+</listitem>
+<listitem>
+<para
+>Fent clic sobre la icona <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="mail-attachment.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Adjunta</guiicon
+> i seleccionant el fitxer que voleu adjuntar;</para>
+</listitem>
+<listitem>
+<para
+>Arrossegant un fitxer des de l'escriptori o una altra carpeta cap a la finestra de l'editor;</para>
+</listitem>
+<listitem>
+<para
+>Arrossegant un missatge des del llistat de missatges del &kmail; cap a la finestra de l'editor, aquest missatge s'adjuntarà;</para>
+</listitem>
+<listitem>
+<para
+>Seleccionant una de les opcions addicionals que hi ha en el menú <menuchoice
+><guimenu
+>Adjunta</guimenu
+></menuchoice
+>; o</para>
+</listitem>
+<listitem>
+<para
+>Seleccionant <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-open.png" format="PNG"/></imageobject
+></inlinemediaobject
+> Insereix un fitxer de text...</guimenuitem
+></menuchoice
+> o <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-open.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Insereix un fitxer de text recent &gt;</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</itemizedlist>
+
+<para
+>Una vegada adjuntat un fitxer al missatge, aquest apareixerà a la subfinestra d'adjunts a la part inferior de la finestra de l'editor. Podeu usar el &BDR; a sobre de cada adjunt per a <guimenuitem
+>Visualitza</guimenuitem
+>, <guimenuitem
+>Obre</guimenuitem
+>, <guimenuitem
+>Edita</guimenuitem
+>, <guimenuitem
+>Recarrega</guimenuitem
+>, <guimenuitem
+>Desa com a...</guimenuitem
+> o <guimenuitem
+>Elimina</guimenuitem
+> l'adjunt. (Aquest menú contextual varia una mica, depenent del tipus de fitxer de l'adjunt). Es poden alternar diverses opcions (Comprimeix / Encripta / Signa / Suggereix mostrar automàticament) per a cada fitxer adjuntat a un missatge.</para>
+
+<para
+>Utilitzeu l'element <guimenuitem
+>Propietats</guimenuitem
+> en el menú contextual per a obrir el diàleg <guilabel
+>Propietats de l'adjunt</guilabel
+>. El primer camp conté el tipus &MIME; de l'adjunt. Just després el camp <guilabel
+>Nom</guilabel
+>, el qual hauria d'estar emplenat automàticament amb el valor apropiat. Algunes vegades el tipus &MIME; està mal indicat. En aquest cas podreu indicar qualsevol valor o escollir-ne un des de la llista de tipus &MIME; més comuns. També podreu seleccionar un mètode de codificació per al fitxer des de la llista d'opcions de codificació (normalment, el valor predeterminat funciona afinadament). Marqueu l'opció <guilabel
+>Suggereix mostrar automàticament</guilabel
+> si voleu suggerir al destinatari que mostri (inclosa) aquesta part a la vista del missatge. Que funcioni o no dependrà del client de correu del destinatari i de la seva configuració.</para>
+
+<para
+>També es poden adjuntar claus de criptografia públiques triant les opcions apropiades en el menú <menuchoice
+><guimenu
+>Adjunta</guimenu
+></menuchoice
+>. Les claus <application
+>GnuPG</application
+> i els certificats x.509 són tractats (normalment) com a fitxers adjunts.</para>
+
+</sect2>
+
+<sect2 id="checking-the-spelling-of-your-message">
+<title
+>Revisar l'ortografia del missatge</title>
+
+<para
+>El &kmail; pot verificar automàticament l'ortografia del missatge i mostrarà les paraules desconegudes emprant un subratllat en color vermell. Si n'hi ha massa, el &kmail; inhabilitarà la seva comprovació. Per a triar l'idioma que s'utilitzarà, seleccioneu <menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Diccionari</guimenuitem
+></menuchoice
+>. Podeu inhabilitar la comprovació automàtica de l'ortografia en el menú <menuchoice
+><guimenu
+>Opcions</guimenu
+></menuchoice
+>.</para>
+<para
+>Si necessiteu escriure correus en diferents idiomes, habiliteu el menú desplegable <guilabel
+>Diccionari</guilabel
+> amb l'element de menú <menuchoice
+><guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Diccionari</guimenuitem
+></menuchoice
+>. L'ús d'aquesta llista desplegable us permetrà canviar l'idioma del corrector ortogràfic amb un clic del ratolí. </para>
+<para
+>Per a revisar l'ortografia del missatge emprant un diàleg, seleccioneu <menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Ortografia...</guimenuitem
+></menuchoice
+>. El &kmail; utilitza el &sonnet; per a fer-ne la revisió, el qual és el frontal del &kde; per als revisors ortogràfics <application
+>Aspell</application
+>, <application
+>Hspell</application
+>, <application
+>Enchant</application
+> i <application
+>HUNSPELL</application
+>. Cal tenir present que podríeu necessitar configurar-lo utilitzant <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Corrector ortogràfic...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect2>
+
+<sect2 id="setup-text-snippets">
+<title
+>Configurar l'eina per als retalls de text</title>
+<para
+>Quan s'està editant a la finestra de l'editor podreu inserir freqüentment parts del text com a retalls. Per a configurar els retalls del correu, seleccioneu <menuchoice
+> <guimenu
+>Visualitza</guimenu
+> <guimenuitem
+>Retalls</guimenuitem
+> </menuchoice
+> des de la barra de menús. Apareixerà una subfinestra nova al costat dret de la finestra de l'editor. </para>
+<para
+>Per a afegir un retall nou a la subfinestra de retalls, feu clic a la subfinestra, després feu clic a <guimenuitem
+>Afegeix un retall</guimenuitem
+> en el menú contextual. Apareixerà un diàleg d'edició de retalls en el qual podreu afegir text nou i se li podrà donar un nom al retall. També es podrà associar una <guilabel
+>Drecera</guilabel
+> amb el retall. Els retalls es poden agrupar creant grups i afegint retalls a un grup concret. Utilitzeu el menú contextual del &BDR; per a afegir, editar o eliminar retalls de text des de la col·lecció desada. </para>
+<para
+>L'eina <guilabel
+>Retalls</guilabel
+> permet la inserció de text variable en llocs predefinits cada vegada que inseriu un retall en un fitxer. Per a aconseguir això, <guilabel
+>Retalls</guilabel
+> proporciona el seu propi mecanisme de variables. Podeu inserir variables en el mateix text del retall utilitzant separadors ( $ ) que envoltin els noms de les variables. Per exemple: $nomdevariable$, $numerofactura$, $numsetmana$. </para>
+<para
+>El separador de variables es pot canviar a un altre caràcter canviant el <varname
+>snippetDelimiter</varname
+> a la secció [SnippetPart] del fitxer de configuració per als retalls de text, el qual es troba a ~./config/kmailsnippetrc. <programlisting
+>snippetDelimiter=$
+</programlisting>
+
+</para>
+
+</sect2>
+<sect2 id="using-the-translator">
+  <title
+>Usar el traductor integrat</title>
+  <para
+>L'editor del &kmail; 2 proporciona un traductor integrat al qual es pot accedir seleccionant <menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Traductor</guimenuitem
+></menuchoice
+> des de la barra de menús. Apareixerà una nova subfinestra a la part inferior de la finestra de l'editor.</para>
+    <para
+>Per a traduir una secció de text, introduïu primer el text que voleu traduir al quadre amb <guilabel
+>Deixeu anar el text que voleu traduir</guilabel
+>. Seleccioneu l'idioma en el qual està escrit a la llista desplegable <guilabel
+>Des de:</guilabel
+>. Seleccioneu l'idioma al qual voleu traduir a la llista desplegable <guilabel
+>A:</guilabel
+> i feu clic al botó <guibutton
+>Tradueix</guibutton
+>. Una vegada traduït per Google Translate -un servei en línia gratuït- el text es mostrarà al quadre del costat. Si necessiteu traduir en l'altra direcció, podeu fer clic al botó <guibutton
+>Inverteix</guibutton
+>. Per a netejar tot el text, feu clic al botó <guibutton
+>Neteja</guibutton
+>. </para>
+</sect2>
+</sect1>
+
+<sect1 id="folders">
+<title
+>Carpetes de missatges</title>
+<screenshot>
+<screeninfo
+>Exemple de configuració de la carpeta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-example.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Exemple de configuració de la carpeta</phrase>
+    </textobject>
+    <caption>
+      <para
+>Carpetes predeterminades del &kmail;.</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>Les carpetes de missatges s'empren per a organitzar els missatges de correu. Quan engegueu el &kmail; per primera vegada es crearà la carpeta «Carpetes locals» contenint les carpetes <guilabel
+>entrada</guilabel
+>, <guilabel
+>sortida</guilabel
+>, <guilabel
+>enviats</guilabel
+>, <guilabel
+>paperera</guilabel
+>, <guilabel
+>esborranys</guilabel
+> i <guilabel
+>plantilles</guilabel
+>. Cadascuna d'aquestes carpetes té una funció especial:</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>entrada:</guilabel
+></term>
+<listitem>
+<para
+>A on, el &kmail; deixarà de manera predeterminada els missatges nous en comprovar si hi ha correu nou. </para
+><note
+><para
+>Els comptes &IMAP; no utilitzaran aquesta safata d'entrada. La safata d'entrada es troba al servidor &IMAP;.</para
+></note>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>sortida:</guilabel
+></term>
+<listitem>
+<para
+>A on es deixaran els missatges en espera de ser entregats. Aquí no es pot arrossegar i deixar anar per a enviar els missatges. En comptes d'això utilitzeu la icona <guiicon
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-send.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Envia</guiicon
+> que hi ha a la finestra de l'editor.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>enviats:</guilabel
+></term>
+<listitem>
+<para
+>De manera predeterminada, en aquesta carpeta es desa una còpia de tots els missatges que envieu.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>paperera:</guilabel
+></term>
+<listitem>
+<para
+>De manera predeterminada, tots els missatges que heu designat a la paperera es mouen a la paperera.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>esborranys:</guilabel
+></term>
+<listitem>
+<para
+>Conté els missatges que heu començat a escriure, però que després s'han desat en aquesta carpeta mitjançant <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Desa com a esborrany</guimenuitem
+></menuchoice
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><guilabel
+>plantilles:</guilabel
+></term>
+<listitem>
+<para
+>Aquesta carpeta conté les plantilles creades a través de <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Desa com a plantilla</guimenuitem
+></menuchoice
+> des de la finestra de l'editor. Per a obtenir més informació, vegeu <link linkend="new-compose-from-templates"
+>Editar plantilles noves</link
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<sect2 id="folder-details">
+<title
+>Crear i usar les carpetes</title>
+
+<para
+>Organitzeu els vostres correus electrònics (&pex;, per llistes de correu, rebuts i factures, &etc;) creant carpetes noves. Per a crear una carpeta nova, seleccioneu <menuchoice
+><guimenu
+>Carpeta</guimenu
+><guimenuitem
+>Afegeix una carpeta...</guimenuitem
+></menuchoice
+> o <guimenuitem
+>Afegeix una carpeta...</guimenuitem
+> des del menú contextual del &BDR;. Apareixerà un diàleg. Introduïu el nom de la carpeta nova en el quadre de text. Podreu personalitzar completament cada carpeta (&pex;, les vistes, les respostes, &etc;) seleccionant la que voleu modificar a la subfinestra de carpetes i seleccionant <guimenuitem
+>Propietats de la carpeta</guimenuitem
+> des del menú contextual del &BDR;. Per a més detalls, vegeu <link linkend="folders-properties-window"
+>Propietats de la carpeta</link
+>.</para>
+
+<para
+>Per a moure missatges des d'una carpeta a una altra, seleccioneu el/s missatge/s que voleu moure i premeu la tecla <keycap
+>M</keycap
+> o seleccioneu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Mou el missatge a... &gt;</guimenuitem
+></menuchoice
+>. Apareixerà una llista de carpetes, seleccioneu la carpeta cap a la qual voleu moure el missatge. Els missatges també es poden moure arrossegant-los des de la llista de missatges cap a una carpeta a la llista de carpetes. o utilitzant un menú contextual invocat amb el &BDR;.</para>
+
+<para
+>Si teniu carpetes a les quals accediu sovint, podeu afegir-les a la subfinestra de les vostres carpetes preferides (a sobre de la llista de carpetes). Afegiu-les mitjançant el menú contextual del &BDR; amb l'opció <guimenuitem
+>Afegeix a les carpetes preferides</guimenuitem
+>.</para>
+
+<para
+>Podeu crear una carpeta virtual amb els paràmetres de cerca per a anar a qualsevol de les dues <menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Cerca als missatges...</guimenuitem
+></menuchoice
+> o utilitzant la drecera de teclat <keycap
+>S</keycap
+>. Introduïu els vostres paràmetres de cerca en el diàleg. El nom per a la cerca al quadre de text <guilabel
+>Nom de la carpeta de cerca:</guilabel
+>, &pex;, <replaceable
+>correus electrònics amb la paraula Blog</replaceable
+>. Feu clic al botó <guibutton
+>Cerca</guibutton
+>. Ara seleccioneu el botó <guibutton
+>Obre la carpeta de cerca</guibutton
+>. S'obrirà la carpeta de resultats, restarà a la part inferior de la subfinestra de carpetes. (De manera predeterminada, cada cerca nova s'anomenarà «Última cerca». Podeu desar paràmetres de cerca particulars assignant un nom especial com es descriu a dalt).</para>
+
+<para
+>La creació de filtres per a moure automàticament els missatges a les carpetes especificades és una gran manera d'organitzar els missatges per llista de correu, remitent, assumpte, &etc; Per a més detalls, vegeu <link linkend="filters"
+>Filtres</link
+>.</para>
+
+<para
+>Si rebeu missatges de correu electrònic des d'una font fiable (&pex;, un blog al qual esteu subscrit) que estan en el format &HTML; i voleu habilitar la vista &HTML; només per a aquests correus electrònics, podeu crear una carpeta nova, establir un <link linkend="filters"
+>filtre</link
+> per a posar aquests correus electrònics a la carpeta nova, seleccioneu la carpeta i seleccioneu <menuchoice
+><guimenu
+>Carpeta</guimenu
+><guimenuitem
+>Format predeterminat del missatge</guimenuitem
+><guimenuitem
+>Prefereix &HTML; a text net</guimenuitem
+></menuchoice
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>Algunes accions comunes amb les carpetes són:</para>
+<variablelist>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Carpeta</guimenu
+> <guimenuitem
+>Mou tots els missatges a la paperera</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Mou</action
+> tots els missatges a la carpeta seleccionada cap a la carpeta de paperera.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Carpeta</guimenu
+> <guimenuitem
+>Arxiva la carpeta</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Crea un arxiu</action
+> de la carpeta. Per a més detalls, vegeu <link linkend="folder-archive"
+>Arxivar una carpeta</link
+>.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Carpeta</guimenu
+><guimenuitem
+>Suprimeix la carpeta</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Suprimeix una carpeta</action
+> amb tots els seus missatges i subcarpetes.</para>
+</listitem
+></varlistentry>
+<varlistentry>
+<term
+><menuchoice
+><guimenu
+>Carpeta</guimenu
+> <guimenuitem
+>Elimina els missatges duplicats</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+><action
+>Cerca</action
+> a la carpeta seleccionada per als duplicats i després els <action
+>suprimirà</action
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="folders-properties-window">
+<title
+>Propietats de la carpeta</title>
+<screenshot>
+<screeninfo
+>Exemple de Propietats de la carpeta</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folder-properties.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Exemple de Propietats de la carpeta</phrase>
+    </textobject>
+    <caption>
+      <para
+>El diàleg Propietats de la carpeta</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<para
+>El diàleg <guilabel
+>Propietats de la carpeta</guilabel
+> permet especificar totes les seves propietats. Cal tenir present que la majoria de les propietats tan sols estan disponibles per a les carpetes que creeu i no per a una carpeta predeterminada com la safata d'<guilabel
+>entrada</guilabel
+>, &etc; No es pot reanomenar cap de les sis carpetes predeterminades.</para>
+
+<sect3 id="folders-properties-general">
+<title
+>La pestanya General</title>
+<para
+>Si voleu reanomenar una carpeta, canvieu l'entrada en el camp <guilabel
+>Nom:</guilabel
+>.</para>
+
+<para
+><guilabel
+>Acció en tenir correu nou/sense llegir en aquesta carpeta</guilabel
+> està habilitada de manera predeterminada per a les carpetes noves. Permet que es rebin notificacions sobre missatges nous a la carpeta. Desmarqueu aquesta opció en les carpetes com correu brossa o paperera, en les quals no voleu cap notificació.</para>
+<para
+>Marqueu <guilabel
+>Mantén les respostes en aquesta carpeta</guilabel
+> si voleu que les respostes a aquests missatges s'emmagatzemin en aquesta carpeta i no a la carpeta «enviats» configurada com a predeterminada.</para>
+
+<para
+>Marqueu <guilabel
+>Oculta aquesta carpeta al diàleg de selecció de carpeta</guilabel
+> si no voleu que es mostri aquesta carpeta als diàlegs de selecció de carpeta, com ara els diàlegs <guimenuitem
+>Salta a la carpeta</guimenuitem
+> i <guimenuitem
+>Mou el missatge a...</guimenuitem
+>.</para>
+
+<para
+>Les carpetes noves utilitzen la identitat predeterminada. Si voleu associar una carpeta amb una identitat diferent, desmarqueu l'opció <guilabel
+>Usa la identitat predeterminada</guilabel
+> i seleccioneu-ne una de diferent des de la llista desplegable <guilabel
+>Identitat del remitent</guilabel
+>. Per a obtenir informació sobre les identitats, vegeu <link linkend="configure-identity"
+>Configurar les identitats</link
+>. Els missatges de resposta enviats directament seguiran emprant de manera predeterminada l'adreça «A:» del missatge si es troba una identitat coincident.</para>
+
+<!-- <para
+>If you have groupware, you can change the contents &eg; calendar, notes, &etc; of the folder in the
+<guilabel
+>Folder contents:</guilabel
+> drop down box.</para>
+
+<para
+>If you share the folder with other users, you can <guilabel
+>Share unread state with all users</guilabel
+> which will show the same unread state for all users.</para>
+<informalexample
+><para
+>For example, a ticket system that all emails must be read and multiple users are responsible for reading unread tickets.</para
+></informalexample
+> -->  <!-- I cannot find any "groupware" functionality in kmail. @dcb2020291 -->
+</sect3>
+
+<sect3 id="folders-properties-view">
+<title
+>La pestanya Visualitza</title>
+<para
+>La secció <guilabel
+>Empra icones personalitzades</guilabel
+> permet escollir icones diferents de les predeterminades per a cada carpeta en la llista de carpetes.</para>
+<para
+>Amb la llista desplegable <guilabel
+>Mostra la columna</guilabel
+> podreu establir la visualització de les columnes a la subfinestra de les capçaleres a Omissió, Remitent o Destinatari. Això és d'utilitat si utilitzeu una carpeta personalitzada per a desar els missatges que envieu.</para>
+<para
+>A la secció <guilabel
+>Llista de missatges</guilabel
+> podeu seleccionar i configurar una <guilabel
+>Agregació</guilabel
+> i el <guilabel
+>Tema</guilabel
+> per a aquesta carpeta difereix del predeterminat configurat a les opcions del &kmail;. Per a més detalls, vegeu la pestanya <link linkend="configure-appearance-message-list"
+>Llista de missatges</link
+> a la pàgina <guilabel
+>Aparença</guilabel
+>.</para>
+<para
+>La secció <guilabel
+>Format predeterminat del missatge</guilabel
+> permet que escolliu entre mostrar text pla i &HTML; per als missatges en aquesta carpeta.</para>
+</sect3>
+
+<sect3 id="folders-properties-retrieval">
+<title
+>La pestanya Recuperació</title>
+<para
+>Si teniu un compte que no rep gaire correu i no voleu que el &kmail; consulti al servidor amb molta freqüència, podeu desmarcar <guilabel
+>Usa les opcions de la carpeta pare o del compte</guilabel
+> per a establir un interval més gran al botó de selecció de valors <guilabel
+>Sincronitza automàticament després de:</guilabel
+>.</para>
+<para
+>A <guilabel
+>Opcions de recuperació</guilabel
+> podeu canviar l'opció <guilabel
+>Recupera sempre els missatges complets</guilabel
+> a <guilabel
+>Recupera els cossos dels missatges a petició</guilabel
+> si teniu una connexió lenta. També podreu establir el temps que es retindrà el missatge localment mitjançant el botó de selecció de valors. </para>
+</sect3>
+
+<sect3 id="folders-properties-templates">
+<title
+>La pestanya Plantilles</title>
+<para
+>En aquesta pestanya podeu definir les plantilles específiques de la carpeta per a les carpetes personalitzades. Per a més detalls, vegeu la pestanya <link linkend="configure-composer-standard-templates"
+>Plantilles estàndard</link
+> a la pàgina <guilabel
+>Editor</guilabel
+>. </para>
+</sect3>
+
+<sect3 id="folders-properties-expiry">
+<title
+>La pestanya Caducitat</title>
+<para
+>Podeu configurar la neteja automàtica o supressió dels missatges de correu electrònic. Marqueu la casella si voleu fer caducar automàticament els missatges llegits o sense llegir respectivament. Indiqueu la quantitat de dies en el botó de selecció de valors. Si no voleu suprimir els missatges de forma permanent, podeu assignar una carpeta per a mantenir-los al quadre de text <guilabel
+>Mou els missatges caducats a:</guilabel
+> o al diàleg per a la selecció de carpetes. Una vegada hàgiu revisat els missatges i els vulgueu suprimir de forma permanent, podeu anar a les opcions de caducitat de la carpeta que escolliu per a moure'ls i establiu l'opció <guilabel
+>Suprimeix permanentment els missatges caducats</guilabel
+>, després feu clic al botó <guibutton
+>Desa la configuració i fes caducar ara</guibutton
+>. </para>
+<warning
+><para
+>Els missatges suprimits no es podran restaurar, cal tenir cura amb aquesta opció.</para
+></warning>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect3>
+
+<sect3 id="folders-properties-mailinglist">
+<title
+>La pestanya Llista de correu</title>
+
+<para
+>Si utilitzeu la carpeta per a una llista de correu, obriu el diàleg <guilabel
+>Propietats de la carpeta de llista de correu</guilabel
+> amb <menuchoice
+><guimenu
+>Carpeta</guimenu
+> <guimenuitem
+>Gestiona la llista de correu...</guimenuitem
+> </menuchoice
+> des del menú. Després haureu de marcar <guilabel
+>La carpeta manté una llista de correu</guilabel
+> per a associar aquesta carpeta amb la llista de correu. El següent seria fer clic a sobre de <guilabel
+>Detecta automàticament</guilabel
+>. El &kmail; intentarà esbrinar la informació sobre la llista de correu a partir del missatge que estigui seleccionat. Si el &kmail; no pogués determinar alguna de les adreces, hauríeu d'afegir manualment la informació que falti. Per a fer-ho, primer seleccioneu el <guilabel
+>Tipus d'adreça</guilabel
+> per a la qual voleu afegir una adreça. Podeu triar entre cinc opcions:</para>
+<variablelist>
+<varlistentry id="folders-properties-mailinglist-post">
+<term
+><guilabel
+>Envia a la llista</guilabel
+></term>
+<listitem>
+<para
+>Aquesta adreça s'utilitza per a enviar els missatges a la llista de correu. Normalment es tracta d'una adreça de correu electrònic.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-subscribe">
+<term
+><guilabel
+>Subscriu a la llista</guilabel
+></term>
+<listitem>
+<para
+>Aquesta adreça s'utilitza per a la subscripció a la llista de correu. Pot tractar-se d'una adreça de correu electrònic o l'adreça d'una pàgina web.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-unsubscribe">
+<term
+><guilabel
+>Cancel·la la subscripció de la llista</guilabel
+></term>
+<listitem
+><para
+>Aquesta adreça s'utilitza per a cancel·lar la subscripció a la llista de correu. Pot tractar-se d'una adreça de correu electrònic o l'adreça d'una pàgina web.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-archive">
+<term
+><guilabel
+>Arxius de la llista</guilabel
+></term>
+<listitem
+><para
+>És l'adreça de l'arxiu de la llista de correu. Normalment es tracta de l'adreça d'una pàgina web.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-mailinglist-help">
+<term
+><guilabel
+>Ajuda de la llista</guilabel
+></term>
+<listitem>
+<para
+>L'adreça que s'utilitza per a demanar ajuda per a aquesta llista de correu. Normalment es tracta d'una adreça de correu electrònic.</para>
+</listitem
+></varlistentry>
+</variablelist>
+
+<para
+>Després de seleccionar el <guilabel
+>Tipus d'adreça</guilabel
+> apropiat, introduïu l'adreça de correu electrònic o de la pàgina web i després feu clic a sobre d'<guilabel
+>Afegeix</guilabel
+>. Amb <guilabel
+>Elimina</guilabel
+> podreu eliminar les adreces.</para>
+
+<para
+>Quan hàgiu afegit totes les adreces, podreu executar una acció, &pex;, anar als arxius de la llista, seleccionant el <guilabel
+>Tipus d'adreça</guilabel
+> adequat i després fent clic a sobre d'<guilabel
+>Invoca el gestor</guilabel
+>. Si hi ha una adreça de correu electrònic i una adreça de la pàgina web per a l'acció desitjada, abans de fer clic a sobre d'<guilabel
+>Invoca el gestor</guilabel
+> haureu de seleccionar el <guilabel
+>Gestor preferit</guilabel
+>. Seleccioneu el <guilabel
+>KMail</guilabel
+> si voleu enviar un missatge a l'adreça de correu electrònic i seleccioneu <guilabel
+>Navegador</guilabel
+> si voleu anar a la pàgina web.</para>
+
+<para
+>També podeu enviar un missatge nou a la llista de correu mitjançant <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Missatge nou a una llista de correu...</guimenuitem
+></menuchoice
+> (en comptes d'<guilabel
+>Invoca el gestor</guilabel
+>).</para>
+</sect3>
+
+<sect3 id="folders-properties-shortcut">
+<title
+>La pestanya Dreceres</title>
+<para
+>Podeu definir una drecera de teclat per a accedir a la carpeta.</para>
+</sect3>
+
+<sect3 id="folders-properties-maintainance">
+<title
+>La pestanya Manteniment</title>
+<para
+>Aquesta pestanya mostra una visió general sobre el tipus de carpeta i la seva mida, el nombre de missatges llegits i sense llegir, i permet habilitar la indexació del text.</para>
+</sect3>
+
+<sect3 id="folders-properties-quota">
+<title
+>La pestanya Control d'accés (tan sols &IMAP;)</title>
+<para
+>Aquesta pestanya us mostrarà quant espai ha assignat el servidor al compte &IMAP;, així com quant espai assignat esteu utilitzant. </para>
+</sect3>
+
+<sect3 id="folders-properties-acl">
+<title
+>Pestanya Control d'accés (tan sols &IMAP;)</title>
+<para
+>Aquí podeu gestionar les llistes de control d'accés (les &acl;) de les carpetes &IMAP;.</para>
+<note
+><para
+>El servidor &IMAP; haurà de tenir configurat i habilitat l'&acl; a nivell d'usuari perquè aquesta pestanya sigui visible.</para
+></note>
+<para
+>L'&acl; actualment activa es mostra a la llista. Aquesta consisteix en parells d'<guilabel
+>ID de l'usuari</guilabel
+> i els <guilabel
+>Permisos</guilabel
+> concedits als usuaris que s'identifiquen amb aquest <guilabel
+>ID de l'usuari</guilabel
+>. <footnote
+> <para
+>Cal tenir present que un únic <guilabel
+>ID de l'usuari</guilabel
+> pot fer referència a més d'un usuari. Segons el servidor &IMAP; i la seva configuració, poden haver-hi ID d'usuari que corresponguin a grups d'usuaris, usuaris anònims o a qualsevol usuari. Per a més informació consulteu el manual de la implementació específica del servidor &IMAP;.</para
+> </footnote
+>Les &acl; es poden establir per carpeta.</para>
+ <note
+><para
+>Com tota la resta que succeeix quan s'està emprant <emphasis
+>&IMAP; desconnectat</emphasis
+>, us caldrà sincronitzar amb el servidor perquè els canvis es transfereixin cap al servidor.</para
+></note>
+<para
+>Les &acl; d'&IMAP; defineixen molts permisos de gra fi que podeu atorgar o denegar als usuaris. En honor de la claredat, el &kmail; els presentarà en les cinc categories següents, entre les que podreu triar (si ja coneixeu les &acl; de l'&IMAP;, vegeu <xref linkend="table-acl-summary"/> per als detalls).</para>
+<variablelist>
+<varlistentry id="folders-properties-acl-none">
+<term
+><guilabel
+>Cap</guilabel
+></term>
+<listitem>
+<para
+>Garanteix que els usuaris identificats per <guilabel
+>ID de l'usuari</guilabel
+> no disposin de cap permís. També és l'opció predeterminada per als usuaris que no estiguin explícitament llistats (o implícitament, com a grup) a l'&acl;. Aquests usuaris no veuran aquesta carpeta a la llista de carpetes &IMAP; que els mostraran els seus clients de correu electrònic.</para>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-read">
+<term
+><guilabel
+>Lectura</guilabel
+></term>
+<listitem>
+<para
+>Garanteix que els usuaris identificats per <guilabel
+>ID de l'usuari</guilabel
+> disposin de permisos de lectura sobre aquesta carpeta. També inclou la capacitat perquè el client de correu marqui els missatges com a llegits i emmagatzemi aquesta informació en el servidor. <footnote
+> <para
+>Cada usuari disposa de la seva pròpia llista de correu llegit, d'aquesta manera els correus sense llegir seran marcats com a llegits després que algú altre els llegeixi.</para>
+</footnote>
+</para>
+<para
+>Aquests usuaris veuran aquesta carpeta a la llista de carpetes &IMAP; que els mostraran els seus clients de correu.</para>
+<para
+>Utilitzeu-ho per a crear una carpeta compartida perquè d'altra gent hi pugui llegir, però no modificar.</para>
+<informalexample>
+<para
+>Si fóssiu l'editor d'un bolletí de notícies, podríeu crear una carpeta per a distribuir-les, atorgar a tots permisos de lectura i desar el bolletí en aquesta carpeta en comptes d'enviar-la per correu electrònic a totes les adreces que heu aplegat.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-append">
+<term
+><guilabel
+>Addició</guilabel
+></term>
+<listitem>
+<para
+>(també conegut com a <guilabel
+>Envia</guilabel
+>)</para>
+<para
+>Garanteix que els usuaris identificats per <guilabel
+>ID de l'usuari</guilabel
+> disposin de permisos per a llegir (vegeu a dalt) i enviar sobre aquesta carpeta.</para>
+<para
+>Utilitzeu-ho per a crear una carpeta compartida perquè d'altra gent hi pugui llegir i enviar missatges, però no modificar.</para>
+<informalexample>
+<para
+>Si voleu crear un fòrum de debat per a l'empresa, en comptes d'emprar un formulari web o un servidor usenet d'una empresa privada, podríeu crear una sèrie de carpetes (una per tema) i atorgar a tothom permisos per a llegir i enviar. En comptes d'enviar a un servidor &nntp; o escriure els missatges en un formulari web, la gent simplement escriuria els correus electrònics i els emmagatzemaria en la carpeta corresponent al tema del missatge.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-write">
+<term
+><guilabel
+>Escriptura</guilabel
+></term>
+<listitem>
+<para
+>Garanteix que els usuaris identificats per <guilabel
+>ID de l'usuari</guilabel
+> disposin de permisos per a llegir, enviar (vegeu a dalt) i escriure els permisos sobre aquesta carpeta.</para>
+<para
+>Els permisos per a escriure en la carpeta inclou l'eliminació de missatges, la creació de subcarpetes i el desament d'altres atributs diferents dels llegits/sense llegir en el servidor (&pex;, sense resposta).</para>
+<para
+>Utilitzeu-ho per a crear una carpeta compartida perquè tothom hi disposi (gairebé, vegeu <xref linkend="folders-properties-acl-all"/>) dels mateixos permisos.</para>
+<informalexample>
+<para
+>En l'exemple <xref linkend="folders-properties-acl-append"/>, podríeu assignar permisos d'escriptura a un grup de persones que actuïn com a moderadors, els quals podrien eliminar enviaments que no es refereixin al tema i crear carpetes per a altres subtemes més específics per a carpetes amb gran trànsit.</para>
+</informalexample>
+</listitem
+></varlistentry>
+<varlistentry id="folders-properties-acl-all">
+<term
+><guilabel
+>Tots</guilabel
+></term>
+<listitem>
+<para
+>Garanteix que els usuaris identificats per <guilabel
+>ID de l'usuari</guilabel
+> disposin de permisos per a llegir, enviar i escriure (vegeu a dalt), així com administrar els permisos, &ead;, el permís per a modificar l'&acl; d'aquesta carpeta.</para>
+<para
+>Aquest és el joc de permisos predeterminat per al propietari d'una carpeta.</para>
+</listitem
+></varlistentry>
+</variablelist>
+<para
+><xref linkend="table-acl-summary"/> resumeix els permisos &acl; d'&IMAP; associats amb cada nivell de permisos.</para>
+<table id="table-acl-summary">
+<title
+>Resum de permisos &acl;</title>
+          <tgroup cols="6">
+            <thead>
+              <row>
+                <entry
+>Permisos &acl;</entry>
+                <entry
+><xref linkend="folders-properties-acl-none"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-read"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-append"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-write"/></entry>
+                <entry
+><xref linkend="folders-properties-acl-all"/></entry>
+              </row>
+            </thead>
+            <!--tfoot/-->
+            <tbody>
+              <row>
+                <entry
+>Cerca</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Lectura</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Desat vist</entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Insereix</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Enviament</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Escriptura d'etiquetes</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Crea</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Suprimeix</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+                <entry
+>x</entry>
+              </row>
+              <row>
+                <entry
+>Administració</entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+></entry>
+                <entry
+>x</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+</sect3>
+
+</sect2>
+</sect1>
+
+<sect1 id="filters">
+<title
+>Filtres de missatge</title>
+<anchor id="filters-id"/>
+<screenshot>
+<screeninfo
+>El diàleg de filtratge</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="filter-dialog.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>El diàleg de filtratge</phrase>
+    </textobject>
+    <caption>
+      <para
+>El diàleg Creació del filtre</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+
+<para
+>Després d'emprar el &kmail; durant un temps, podríeu trobar-vos que teniu problemes amb ordenar els missatges nous a la bústia d'entrada. Els filtres permeten realitzar certes accions sobre els missatges entrants i dur a terme accions manualment sobre els missatges seleccionats en una carpeta.</para>
+
+<para
+>Els filtres consisteixen en un patró de cerca, les regles del qual s'utilitzen per a determinar si un filtre s'haurà d'aplicar a un cert missatge, i una llista d'accions de filtratge, la qual descriu què és el que s'haurà de fer amb el missatge si el patró de cerca coincideix.</para>
+
+<note
+><para
+>Els filtres es consideren un després de l'altre, començant pel primer de la llista. S'aplicarà el primer en el qual coincideixi el patró de cerca. També podreu configurar que es processin la resta de filtres, però el comportament predeterminat és aturar el processament després de la primera coincidència. </para
+></note>
+
+<para
+>Usualment, els filtres s'empren en els missatges entrants, però també són aplicables als missatges a enviar, arbitràriament a un missatge o grup de missatges qualsevol. Per a filtrar els missatges selectivament, seleccioneu a la llista de missatges aquells que voleu filtrar i premeu <keycombo action="simul"
+>&Ctrl;<keycap
+>J</keycap
+> </keycombo
+> o seleccioneu <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guimenuitem
+>Aplica el filtratge</guimenuitem
+></menuchoice
+>. Això aplicarà els filtres (els que s'han marcat per al filtratge manual en el <link linkend="filter-dialog"
+>diàleg de filtratge avançat</link
+>) a aquests missatges.</para>
+
+<sect2 id="filter-quick">
+<title
+>Creació ràpida de filtres</title>
+
+<para
+>Hi ha dos mètodes per a crear un filtre: el mètode ràpid és utilitzant <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Crea un filtre...</guimenuitem
+></menuchoice
+> i seleccioneu un criteri des del submenú. Això obrirà el diàleg de filtratge que es presentarà amb un filtre nou que contindrà la primera regla del patró de cerca i la primera acció (com <guilabel
+>Mou a la carpeta</guilabel
+>) preestablerta. En la majoria de casos, l'únic que haureu de fer és seleccionar la carpeta a la qual s'haurà de moure el missatge. Però també podeu, per descomptat, editar el filtre com més us agradi.</para>
+
+<para
+>El més interessant d'aquest mètode és que en crear un filtre sobre una llista de correu, es trobarà un criteri que identifiqui de forma única els missatges d'aquesta llista. Si ho aconseguiu, el suposat nom de la llista apareixerà com a una entrada del menú a <menuchoice
+><guimenu
+>Missatge</guimenu
+><guisubmenu
+>Crea un filtre</guisubmenu
+><guimenuitem
+>Filtra per la Llista de correu...</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>El segon mètode és construir un filtre manualment cridant el diàleg de filtratge amb <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura els filtres...</guimenuitem
+></menuchoice
+>. El diàleg de filtratge està descrit amb detall en la següent subsecció.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-dialog">
+<title
+>El diàleg de filtratge</title>
+<anchor id="filter-dialog-id"/>
+
+<para
+>Aquest diàleg permet gestionar i editar la vostra llista de filtres.</para>
+
+<para
+>Podreu fer això mitjançant <menuchoice
+><guimenu
+>Missatge</guimenu
+><guisubmenu
+>Crea un filtre...</guisubmenu
+></menuchoice
+> o <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura els filtres...</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>El diàleg està dividit en tres seccions principals sobre les pestanyes <guilabel
+>General</guilabel
+> i <guilabel
+>Avançat</guilabel
+>.</para>
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Filtres disponibles</guilabel
+></term>
+<listitem
+><para
+>Aquest grup conté la llista de filtres i alguns botons d'acció per a modificar-los, &ead;, per a crear filtres nous, moure'ls cap amunt i cap avall per la llista, copiar-ne un, suprimir-los o reanomenar-los. Si seleccioneu un filtre de la llista, les seves propietats es mostraran a la meitat dreta del diàleg.</para
+></listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Criteri de filtratge</guilabel
+></term
+> <listitem
+><para
+>En aquest grup podreu editar el patró amb què els missatges hauran de coincidir perquè se'ls apliqui el filtre. Podeu seleccionar aquí si han de coincidir totes les regles definides o si n'hi ha prou amb una sola. Vegeu la secció <link linkend="filter-criteria"
+>Patrons de cerca</link
+> a continuació, per a obtenir una descripció més detallada de cada un dels tipus de regla de cerca.</para>
+
+<para
+>Podeu fer clic a sobre de <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> per a aconseguir una regla (inicialment buida) addicional que us ajudi a definir patrons més complexos, i a sobre de <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> per a eliminar l'última regla. <guibutton
+>Neteja</guibutton
+> netejarà el patró, &pex;, eliminarà totes les regles menys una i les deixarà a zero (buides).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Accions de filtratge</guilabel
+></term
+> <listitem
+><para
+>En aquest grup podeu editar la llista d'accions que s'aplicaran a tots els missatges que coincideixin amb el patró de cerca definit. Vegeu tot seguit a <link linkend="filter-action"
+>Accions de filtratge</link
+> per a una descripció més detallada de cada un dels tipus d'acció.</para>
+
+<para
+>Si voleu definir-ne més d'una, podeu fer clic a sobre de <guibutton
+>&nbsp;&plus;&nbsp;</guibutton
+> per a obtenir una acció nova i a sobre de <guibutton
+>&nbsp;&minus;&nbsp;</guibutton
+> per a eliminar l'última acció. <guibutton
+>Neteja</guibutton
+> netejarà la llista, &pex;, eliminarà totes les accions menys una i la deixarà a zero (buida).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Opcions avançades</guilabel
+></term>
+
+<listitem>
+
+<para
+>En aquest grup es poden definir algunes opcions avançades que us permetran afinar millor el filtratge.</para>
+
+<para
+>Utilitzant la primera fila de caselles de selecció, podreu marcar l'aplicació del filtre corresponent: L'opció <guilabel
+>Aplica aquest filtre als missatges rebuts</guilabel
+> indica que el filtre serà aplicat als missatges entrants quan els rebeu (&ead;, en fer <guimenuitem
+>Comprova el correu</guimenuitem
+>). El filtre es pot aplicar a tots els missatges, a tots menys els comptes &IMAP; en línia o a determinats comptes de correu electrònic entrant.</para>
+<para
+>L'opció <guilabel
+>Aplica aquest filtre als missatges enviats</guilabel
+> vol dir que el filtre s'aplicarà als missatges quan s'envien, i l'opció <guilabel
+>Aplica aquest filtre en el filtratge manual</guilabel
+> controla si aplicar aquest filtre quan se selecciona específicament el filtratge (&ead;, en utilitzar <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guimenuitem
+>Aplica el filtratge</guimenuitem
+></menuchoice
+>).</para>
+<para
+>Si <guilabel
+>Aplica aquest filtre als missatges enviats</guilabel
+> està marcada, el filtre s'activarà <emphasis
+>una vegada</emphasis
+> s'enviï el missatge i només afectarà la còpia local del missatge. Si la còpia del destinatari també s'ha de modificar, si us plau, feu servir <guilabel
+>Aplica aquest filtre abans d'enviar els missatges</guilabel
+>. </para>
+<para
+>La casella de selecció <guilabel
+>Si aquest filtre coincideix, atura aquí el procés</guilabel
+> controla si els filtres següents a l'actual seran o no processats quan coincideixi el filtre actual.</para>
+
+<para
+>Si la casella de selecció <guilabel
+>Afegeix aquest filtre al menú «Aplica el filtratge»</guilabel
+> està marcada, aquest filtre serà inserit en el submenú <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Aplica el filtratge</guimenuitem
+></menuchoice
+>. Després podreu aplicar aquest filtre a un missatge o a un conjunt de missatges. Si seleccioneu aquesta opció, podreu seleccionar de manera opcional una drecera de teclat i inserir una icona especial per a invocar aquest filtre des de la barra d'eines.</para>
+
+<para
+>Una altra manera d'aplicar els filtres és utilitzar l'opció <menuchoice
+><guimenu
+>Missatge</guimenu
+> <guimenuitem
+>Aplica el filtratge</guimenuitem
+></menuchoice
+> del menú, la qual aplicarà <emphasis
+>tots</emphasis
+> els filtres -un rere l'altre- fins que tots els que heu emprat o un dels filtres que coincideixi tingui establerta l'opció <guilabel
+>Si aquest filtre coincideix, atura aquí el procés</guilabel
+>.</para>
+
+</listitem>
+</varlistentry>
+</variablelist>
+
+<note
+><para
+>Els filtres seran anomenats automàticament a menys que els reanomeneu específicament utilitzant el botó <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Reanomena...</guibutton
+>. El diàleg assumirà que haurà de continuar anomenant-los automàticament mentre el nom del filtre comenci per «&lt;». </para>
+
+<para
+>Si apliqueu canvis als filtres mitjançant <guibutton
+>D'acord</guibutton
+> o <guibutton
+>Aplica</guibutton
+>, tan sols es copiaran els filtres vàlids al gestor intern de filtratge.</para>
+
+<para
+>De manera semblant, les regles i accions buides seran eliminades del patró i de la llista d'accions respectivament, abans que el filtre sigui desat.</para>
+</note>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-criteria">
+<title
+>Patrons de cerca</title>
+
+<para
+>L'ús més comú dels filtres és el filtratge del remitent dels missatges. Això es pot fer escollint el <guilabel
+>De</guilabel
+>. Una bona capçalera per a identificar les llistes de correu podria ser <guilabel
+>Tots els destinataris</guilabel
+>. Però un filtre pot emprar altres criteris de cerca. Cal tenir present que tots els patrons són interpretats sense distingir majúscules i minúscules.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Missatge sencer</guilabel
+></term>
+<listitem>
+<para
+>Cerca en tot el missatge (&pex;, capçaleres, cos i adjunts, si n'hi ha cap).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Cos del missatge</guilabel
+></term>
+<listitem>
+<para
+>Cerca en el cos del missatge (&pex;, en tot el missatge excepte les capçaleres).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>A qualsevol lloc de les capçaleres</guilabel
+></term>
+<listitem>
+<para
+>Cerca en les capçaleres del missatge.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Tots els destinataris</guilabel
+></term>
+<listitem>
+<para
+>Cerca en els camps «A» i «CC» de la capçalera del missatge.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Mida en bytes</guilabel
+></term>
+<listitem>
+<para
+>Estableix el límit màxim o mínim per a la mida dels missatges.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Antiguitat en dies</guilabel
+></term>
+<listitem>
+<para
+>Estableix el límit màxim o mínim per a l'antiguitat dels missatges.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Estat del missatge</guilabel
+></term>
+<listitem>
+<para
+>Estableix les restriccions sobre l'estat del missatge (Important / Llegit / Sense llegir / &etc;, vegeu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Marca el missatge &gt;</guimenuitem
+></menuchoice
+>).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Etiqueta del missatge</guilabel
+></term>
+<listitem>
+<para
+>Comprova els missatges etiquetats. Vegeu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Marca el missatge &gt;</guimenuitem
+></menuchoice
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Encriptat</guilabel
+></term>
+<listitem>
+<para
+>Comprova els missatges encriptats.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+    <term
+>Qualsevol altre valor (<guilabel
+>De</guilabel
+>, <guilabel
+>A</guilabel
+>, <guilabel
+>Data</guilabel
+>, &etc;)</term>
+<listitem>
+<para
+>Cerca en el camp de la capçalera amb aquest nom.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>La llista de possibles regles dependrà del que heu seleccionat en la primera llista desplegable. Les regles disponibles són:</para>
+
+<informaltable>
+<tgroup cols="3">
+<thead>
+<row>
+<entry
+>Regla</entry>
+<entry
+>Disponibles per a</entry>
+<entry
+>Descripció</entry>
+</row>
+</thead>
+<tbody>
+<row>
+<entry
+><guilabel
+>conté</guilabel
+>/<guilabel
+>no conté</guilabel
+></entry>
+<entry
+>tots els elements de cerca textual</entry>
+<entry
+>Coincideix si els elements de la cerca contenen (o no contenen) el text indicat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>igual</guilabel
+>/<guilabel
+>no és igual</guilabel
+></entry>
+<entry
+>més elements de cerca textual</entry>
+<entry
+>Coincideix si l'element cercat és igual (o no igual que) al text indicat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>comença per</guilabel
+>/<guilabel
+>no comença per</guilabel
+></entry>
+<entry
+>més elements de cerca textual</entry>
+<entry
+>Coincideix si els elements de la cerca comencen amb (o no comencen amb) el text indicat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>acaba amb</guilabel
+>/<guilabel
+>no acaba amb</guilabel
+></entry>
+<entry
+>més elements de cerca textual</entry>
+<entry
+>Coincideix si els elements de la cerca acaben amb (o no acaben amb) el text indicat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>coincideix amb l'expr. regular</guilabel
+>/<guilabel
+>no coincideix amb l'expr. regular</guilabel
+></entry>
+<entry
+>tots els elements de cerca textual</entry>
+<entry
+>Coincideix si una part de l'element cercat coincideix (o no coincideix) amb l'expressió regular indicada. Si teniu instal·lat l'editor d'expressions regulars, podreu editar-la fent clic a sobre del botó <guilabel
+>Edita...</guilabel
+>.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>té un adjunt</guilabel
+>/<guilabel
+>no té un adjunt</guilabel
+></entry>
+<entry
+><guilabel
+>Missatge sencer</guilabel
+></entry>
+<entry
+>Coincideix si el missatge conté un adjunt (o si no en té cap).</entry>
+</row>
+<!-- <row>
+<entry
+><guilabel
+>is in address book</guilabel
+>/<guilabel
+>is not in address book</guilabel
+></entry>
+<entry
+>most textual search items</entry>
+<entry
+>Matches if the searched item contains an address that is in your address
+book (or if the searched items contains only unknown addresses). Of course,
+this rule only makes sense for address fields like From or
+<guilabel
+>&lt;recipients&gt;</guilabel
+></entry>
+</row
+> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<!-- <row>
+<entry
+><guilabel
+>is in category</guilabel
+>/<guilabel
+>is not in category</guilabel
+></entry>
+<entry
+>most textual search items</entry>
+<entry
+>Matches if the searched item contains an address that is in the
+specified category in your address book (or if the searched item contains
+no address that is in the specified category). Again, this rule only makes
+sense for address fields.</entry>
+</row
+> --> <!-- Can't find this anywhere. @dcb2020292. -->
+<row>
+<entry
+><guilabel
+>és igual que</guilabel
+>/<guilabel
+>no és igual que</guilabel
+></entry>
+<entry
+>elements de cerca numèrica</entry>
+<entry
+>Coincideix si el valor de l'element cercat és igual que (o no és igual que) al valor especificat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>és més petit que</guilabel
+></entry>
+<entry
+>elements de cerca numèrica</entry>
+<entry
+>Coincideix si el valor de l'element cercat és més petit que el valor especificat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>és més gran que</guilabel
+></entry>
+<entry
+>elements de cerca numèrica</entry>
+<entry
+>Coincideix si el valor de l'element cercat és més gran que el valor especificat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>és més petit o igual que</guilabel
+></entry>
+<entry
+>elements de cerca numèrica</entry>
+<entry
+>Coincideix si el valor de l'element cercat és més petit o igual que el valor especificat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>és més gran o igual que</guilabel
+></entry>
+<entry
+>elements de cerca numèrica</entry>
+<entry
+>Coincideix si el valor de l'element cercat és més gran o igual que el valor especificat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>és</guilabel
+>/<guilabel
+>no és</guilabel
+></entry>
+<entry
+><guilabel
+>Estat del missatge</guilabel
+></entry>
+<entry
+>Coincideix si el missatge té (o no té) l'estat especificat.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>va després</guilabel
+>/<guilabel
+>va abans o és igual que</guilabel
+></entry>
+<entry
+>Capçalera <guilabel
+>Data</guilabel
+></entry>
+<entry
+>Coincideix si el missatge es va enviar després (o abans) de la data especificada.</entry>
+</row>
+<row>
+<entry
+><guilabel
+>va abans</guilabel
+>/<guilabel
+>va després o és igual que</guilabel
+></entry>
+<entry
+>Capçalera <guilabel
+>Data</guilabel
+></entry>
+<entry
+>Coincideix si el missatge es va enviar abans (o després) de la data especificada.</entry>
+</row>
+</tbody>
+</tgroup>
+</informaltable>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-action">
+<title
+>Acció de filtratge</title>
+
+<para
+>L'ús més habitual dels filtres és desviar els missatges entrants a certes carpetes. Això es pot fer amb l'opció <guilabel
+>Mou a la carpeta</guilabel
+>. Aquí hi ha una llista de les accions possibles.</para>
+
+<variablelist>
+<varlistentry>
+<term
+><guilabel
+>Mou a la carpeta</guilabel
+></term>
+<listitem>
+<para
+>Mourà el missatge a una altra carpeta, eliminant-lo de la carpeta actual.</para>
+<!-- fixme: still correct? --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Copia a la carpeta</guilabel
+></term>
+<listitem>
+<para
+>Copiarà el missatge a una altra carpeta, deixant el missatge a la carpeta actual.</para>
+<!-- <note
+><para
+>You currently cannot use &IMAP;
+folders as a target.</para
+></note
+> --><!-- This works in version 5.14.2. Tested @dcb2020293. -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Estableix la identitat a</guilabel
+></term>
+<listitem>
+<para
+>Establirà la identitat que s'emprarà quan responeu a aquest missatge.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Marca com a</guilabel
+></term>
+<listitem>
+<para
+>Permetrà marcar els missatges com a llegits o importants (etiquetes), però també com a reenviats, resposts, &etc;</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Afegeix una etiqueta</guilabel
+></term>
+<listitem>
+<para
+>Això afegirà una etiqueta al missatge. Podreu triar des d'una llista amb totes les etiquetes que s'han definit.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Envia una MDN falsa</guilabel
+></term>
+<listitem>
+<para
+>Enviarà una notificació falsa de processament del missatge (&ead;, un rebut de lectura) al remitent del missatge.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Estableix el transport a</guilabel
+></term>
+<listitem>
+<para
+>Establirà el mètode de transport (&pex;, &SMTP;) que s'utilitzarà quan responeu a aquest missatge. Podeu triar des d'una llista de tots els comptes de correu electrònic sortint.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Estableix Respon-a a</guilabel
+></term>
+<listitem
+><para
+>Modificarà el camp <guilabel
+>Respon a</guilabel
+> d'aquest missatge. Això pot ser d'utilitat per a llistes de correu que estableixen automàticament una adreça de resposta que no voleu utilitzar.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Reenvia a</guilabel
+></term>
+<listitem
+><para
+>Reenviarà el missatge com a inclòs (&ead;, com si haguéssiu seleccionat <menuchoice
+><guimenu
+>Missatge</guimenu
+><guimenuitem
+>Reenvia</guimenuitem
+><guimenuitem
+>Inclòs...</guimenuitem
+></menuchoice
+>) a altres adreces de correu electrònic. Podeu seleccionar una plantilla de reenviament personalitzada si s'ha definit aquesta plantilla. Si està instal·lat el &kaddressbook;, podreu triar l'adreça «Reenvia a» en una finestra emergent.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Redirigeix a</guilabel
+></term>
+<listitem
+><para
+>Redirigirà el missatge tal qual a una altra adreça de correu electrònic. Si està instal·lat el &kaddressbook;, podreu triar l'adreça «Redirigeix a» des d'una finestra emergent.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Confirma el lliurament</guilabel
+></term>
+<listitem
+><para
+>Retornarà un missatge al remitent verificant-li que el missatge ha estat entregat amb èxit, si ell ha requerit això.</para>
+<para
+>Aquesta acció permet seleccionar qui rebrà el rebut d'entrega que envieu. Encara es podran habilitar globalment les confirmacions de rebuda en el diàleg <guilabel
+>Configuració del &kmail;...</guilabel
+> (<link linkend="configure-security"
+> pàgina <guilabel
+>Seguretat</guilabel
+></link
+>), recomanem que no els envieu a tothom, atès que facilita el rastreig a qui envia correu brossa.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Executa una ordre</guilabel
+> (només per a usuaris avançats)</term>
+<listitem>
+<para
+>Executarà un programa, però no modificarà el missatge. Especifiqueu el camí complet cap al programa que voleu executar. El &kmail; esperarà fins que aquest programa respongui. Si no voleu que el &kmail; esperi, afegiu el caràcter «&amp;» a l'ordre (i s'executarà en segon pla). També és possible passar-li al programa parts del correu: <symbol
+>&percnt;0</symbol
+>, <symbol
+>&percnt;1</symbol
+>, &etc; indicant els fitxers que representen les diferents parts del missatge. Per als missatges normals <symbol
+>&percnt;0</symbol
+> és el text, <symbol
+>&percnt;1</symbol
+> és el primer adjunt i així successivament. De manera addicional, s'envia tot el missatge al programa a través de l'entrada estàndard (<acronym
+>stdin</acronym
+>), i cada ocurrència de <symbol
+>&percnt;{foo}</symbol
+> se substituirà pel contingut de la capçalera «foo». Si necessiteu identificar el missatge a través de la seva ubicació d'emmagatzematge a la base de dades de l'Akonadi, podeu utilitzar les variables de substitució %{itemid} o %{itemurl} per a aconseguir-ho.</para>
+
+<!-- fixme: still correct? --><!-- I think so. But not yet tested. @dcb2020293 -->
+<warning
+><para
+>Actualment això tan sols funciona si el missatge <emphasis
+>almenys</emphasis
+> conté un adjunt. No, <symbol
+>&percnt;0</symbol
+> tampoc funcionarà si no es produeix aquesta situació!</para
+></warning>
+
+<tip
+><para
+>Aquí podeu introduir arbitràriament ordres complexes de l'intèrpret d'ordres, atès que el &kmail; utilitza un subintèrpret d'ordres per a executar la línia d'ordres, d'aquesta manera, funcionarà fins i tot quan ho faci aquesta ordre (dintre dels seus límits): <userinput
+><command
+>uudecode</command
+><option
+>-o</option
+> <parameter
+>$(mktemp kmail-uudecoded.XXXXXX)</parameter
+> &amp;&amp; <command
+>echo</command
+> <parameter
+>$'\a'</parameter
+></userinput
+></para
+></tip>
+<!-- fixme: is this uudecode tip useless now?? -->
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Passa a través de</guilabel
+></term>
+<listitem>
+<para
+>Enviarà el missatge a un programa: si aquest programa retorna l'eixida, el missatge sencer (incloses les capçaleres) seran substituïdes per aquesta eixida. Si el programa no retorna cap eixida o finalitza sense retornar un codi que no sigui 0 (indicant l'error ocorregut), el missatge no canviarà. Especifiqueu el camí complet cap al programa. Es poden fer les mateixes substitucions (<symbol
+>&percnt;n</symbol
+>, <symbol
+>&percnt;{foo}</symbol
+>) amb <guilabel
+>Executa una ordre</guilabel
+> i seran executades sobre la línia d'ordres.</para>
+<para
+>Tant l'Assistent contra correu brossa com l'Auxiliar contra virus utilitzen l'acció «Canalitza» per a comprovar si hi ha correu brossa/programari maliciós. Els programes anti correu brossa i antivirus habitualment disponibles tornen el missatge i insereixen un registre addicional a la capçalera, si es detecta correu brossa (o un virus).</para>
+<warning
+><para
+>Cal tenir cura amb aquesta acció, ja que pot malmetre els missatges si el programa de filtratge retorna dades malmeses o línies addicionals.</para
+></warning>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Elimina la capçalera</guilabel
+></term>
+<listitem>
+<para
+>Eliminarà tots els camps de capçalera del missatge que continguin un cert nom. Això és d'utilitat per a eliminar les capçaleres «Reply-To:» incorrectes.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Afegeix una capçalera</guilabel
+></term>
+<listitem>
+<para
+>Si aquest camp no està present, s'afegirà un camp nou a la capçalera amb el nom i el valor indicats. Si aquest camp ja existeix, el sobreescriurà amb el nom indicat. Si ja hi ha múltiples capçaleres amb el nom indicat (&pex;, capçaleres «Received:»), una d'elles serà sobreescrita i la resta restaran intactes -aquesta és una limitació de la qual som conscients-. Pot ser útil combinar aquest filtre amb el filtre <guilabel
+>Elimina la capçalera</guilabel
+>, col·locat prèviament per a assegurar-se que en el missatge no hi ha altres capçaleres amb el mateix nom.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Reescriu la capçalera</guilabel
+></term>
+<listitem>
+<para
+>Cercarà el camp de la capçalera aportada, modificarà el seu contingut i la tornarà a escriure. La cadena cercada sempre s'interpretarà com a una expressió regular distingint majúscules i minúscules. La cadena de substitució s'inserirà literalment excepte que hi hagi conjunts de caràcters del tipus <userinput
+>\n</userinput
+>, <userinput
+>$n</userinput
+> i <userinput
+>${nn}</userinput
+>, a on <userinput
+>n</userinput
+> és un nombre positiu (d'un sol dígit, excepte en la tercera forma) o <userinput
+>0</userinput
+>. Aquestes construccions seran interpretades com a referències a subcadenes entre parèntesis a la cadena de cerca.</para
+><para
+>Aquí també s'apliquen restriccions anàlogues com en l'acció <guilabel
+>Afegeix una capçalera</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Reprodueix un so</guilabel
+></term>
+<listitem>
+<para
+>Reproduirà el so especificat. Un botó d'exploració us permetrà triar un fitxer de so preenregistrat (&pex;, .wav).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Afegeix a la llibreta d'adreces</guilabel
+></term>
+<listitem>
+<para
+>Si està instal·lat el &kaddressbook;, aquesta acció us permetrà especificar quina capçalera escanejar (Des de, A, CC o BCC), quina etiqueta assignar, si s'escau, i en quina llibreta d'adreces amb nom emmagatzemar les adreces.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Suprimeix el missatge</guilabel
+></term>
+<listitem>
+<para
+>Suprimirà el/s missatge/s seleccionat/s. Utilitzeu aquesta opció amb cura. Els missatges suprimits no es poden recuperar.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Neteja l'estat</guilabel
+></term>
+<listitem>
+<para
+>Aquesta és la inversa de <guilabel
+>Marca com a</guilabel
+>, a dalt. En lloc de marcar el missatge seleccionat com a important, llegit, &etc;, aquesta acció esborrarà l'etiqueta especificada.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Encripta</guilabel
+></term>
+<listitem>
+<para
+>Encriptarà el/s missatge/s seleccionat/s amb la clau pública especificada. Podreu triar entre qualsevol parell de claus pública/privada desades en el clauer de claus.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+><guilabel
+>Desencripta</guilabel
+></term>
+<listitem>
+<para
+>Desencriptarà el/s missatge/s seleccionat/s. Utilitzeu aquesta acció amb cura. El &kmail; desencriptarà els missatges automàticament quan els obriu per a veure'ls, de manera que probablement no cal utilitzar aquesta acció.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+</sect2>
+
+<sect2 id="filter-examples">
+<title
+>Exemples de filtratge</title>
+
+<para
+>El &kmail; encara no admet el ressaltat o el marcat de correus que tinguin una capçalera <replaceable
+>Priority:</replaceable
+> addicional. Si voleu que tots els missatges que continguin «urgent» es marquin amb l'etiqueta <emphasis
+>important</emphasis
+>, podeu emprar un filtre:</para>
+
+<procedure>
+<title
+>Etiquetar els missatges urgents com a <emphasis
+>importants</emphasis
+></title>
+<step>
+<para
+>Obriu el diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura els filtres...</guimenuitem
+></menuchoice
+> i feu clic sobre la icona <guiicon
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-new.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Nou</guiicon
+> sota la llista <guilabel
+>Filtres disponibles</guilabel
+>.</para>
+</step>
+<step>
+<para
+>En l'àrea <guilabel
+>Criteri de filtratge</guilabel
+>, seleccioneu <guilabel
+>A qualsevol lloc de les capçaleres</guilabel
+> i <guilabel
+>conté</guilabel
+> des de les llistes desplegables i escriviu <userinput
+>Priority</userinput
+> en el camp de text. Seleccioneu el mateix criteri en la línia següent i escriviu <userinput
+>urgent</userinput
+> en el camp de text de la segona llista desplegable.</para>
+<para
+>De manera que el vostre filtre coincidirà amb tots els missatges que continguin un camp de capçalera «Priority: urgent».</para>
+</step>
+<step>
+<para
+>Baixeu fins a l'àrea <guilabel
+>Accions de filtratge</guilabel
+>. Seleccioneu <guilabel
+>Marca com a</guilabel
+> des de la primera llista desplegable. Es mostrarà una nova llista desplegable que conté les etiquetes a marcar. Seleccioneu <guilabel
+>Important</guilabel
+> des de la llista desplegable.</para>
+</step>
+<step>
+<para
+>Potser voldreu que aquest filtre <emphasis
+>no</emphasis
+> eviti que s'apliquin les altres regles de filtratge de missatges, <emphasis
+>desmarcant</emphasis
+> amb cura, l'opció <guilabel
+>Si aquest filtre coincideix, atura aquí el procés</guilabel
+> a la pestanya «Avançat».</para>
+</step>
+<step>
+<para
+>Feu clic sobre <guibutton
+>D'acord</guibutton
+>, i ja estarà fet.</para>
+<para
+>Només recordeu moure l'entrada del filtre «Priority: urgent» al capdamunt de llista de <guilabel
+>Filtres disponibles</guilabel
+> sempre que hi afegiu un filtre, de manera que no s'aturi el procés de filtratge en el primer filtre aplicat.</para>
+</step>
+</procedure>
+
+<para
+>Si esteu subscrit a la llista (general) del &kde;, podeu crear una carpeta per a aquesta llista (anomeneu-la <replaceable
+>KDE-General</replaceable
+>) i empreu un filtre per a transferir automàticament els missatges nous (provinents de la llista) des de la bústia d'entrada a la carpeta <replaceable
+>KDE-General</replaceable
+>. El filtre es crearà de la següent manera:</para>
+
+<procedure>
+<title
+>Filtrar una llista de correu</title>
+<step>
+<para
+>Escolliu <menuchoice
+><guimenu
+>Missatge</guimenu
+><guisubmenu
+>Crea un filtre</guisubmenu
+><guimenuitem
+>Filtra per la llista de correu</guimenuitem
+></menuchoice
+> pot identificar la llista de correu (el nom de la llista haurà d'aparèixer a l'element de menú). En aquest cas, haurà funcionat i presentarà un filtre amb la condició «List-Id <guilabel
+>conté</guilabel
+> &lt;kde.kde.org&gt;» preestablerta. Després seleccioneu la carpeta de destinació des de la llista desplegable que apareix a les <guilabel
+>Accions de filtratge</guilabel
+> i ja està.</para>
+
+<para
+>Si això no funciona, penseu en alguna manera única d'identificar els missatges que voleu filtrar. La (gairebé) única manera per als missatges de la llista de correu del &kde; és que sempre contenen «kde@kde.org» en el camp <guilabel
+>A:</guilabel
+> o <guilabel
+>CC:</guilabel
+>. No és del tot perfecte, ja que falla en els missatges creuats.</para>
+</step>
+<step>
+<para
+>Seleccionar <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura els filtres...</guimenuitem
+></menuchoice
+>.</para>
+</step>
+<step>
+<para
+>Premeu el botó <guibutton
+><inlinemediaobject
+><imageobject
+><imagedata fileref="document-new.png" format="PNG"/></imageobject
+></inlinemediaobject
+></guibutton
+> per a crear un filtre buit. Aquest apareixerà com a <guilabel
+>&lt;desconegut&gt;</guilabel
+>.</para>
+</step>
+<step>
+<para
+>En l'àrea <guilabel
+>Criteri de filtratge</guilabel
+>, seleccioneu <guilabel
+>Tots els destinataris</guilabel
+> des de la primera llista desplegable, <guilabel
+>conté</guilabel
+> en la segona i escriviu <userinput
+>kde@kde.org</userinput
+> en el camp de text.</para>
+</step>
+<step>
+<para
+>Passeu a la secció <guilabel
+>Accions de filtratge</guilabel
+>. En la primera llista desplegable seleccioneu <guilabel
+>Mou a la carpeta</guilabel
+>. Feu clic sobre la icona de la carpeta i apareixerà una llista de carpetes que contindrà una llista de les carpetes disponibles. Seleccioneu a la que voleu transferir els missatges filtrats. Per a aquest exemple, haureu de seleccionar <guilabel
+>KDE-General</guilabel
+>.</para>
+</step>
+</procedure>
+
+<para
+>Podria ser que us calgui utilitzar un criteri de filtratge més agressiu per als vostres missatges. Per exemple, podria ser que tan sols vulgueu filtrar els missatges de la llista &kde; que ha escrit un amic vostre <replaceable
+>Jordi Exemple &lt;je@qualsevol.cat&gt;</replaceable
+>. Aquí és a on la resta de la secció criteri entrarà en acció:</para>
+
+<procedure>
+<title
+>Estendre el filtre</title>
+<step>
+<para
+>Obriu la finestra <guilabel
+>Configura els filtres...</guilabel
+> i seleccioneu el filtre que acabeu de crear.</para>
+</step>
+<step>
+<para
+>De moment voldreu filtrar tots els missatges que tenen <replaceable
+>kde@kde.org</replaceable
+> en el camp <guilabel
+>A:</guilabel
+> o <guilabel
+>CC:</guilabel
+> <emphasis
+>i</emphasis
+> que són d'en Jordi, marqueu el botó d'opció <guibutton
+>Coincideix amb tots els següents</guibutton
+>.</para>
+</step>
+<step>
+<para
+>Ara, aneu a la segona regla de cerca i seleccioneu des dels menús llistats: <guilabel
+>Des de</guilabel
+>, <guilabel
+>conté</guilabel
+> i inseriu <userinput
+>je@qualsevol.cat</userinput
+> en el camp de text.</para>
+</step>
+</procedure>
+
+<para
+>Ja disposeu d'un filtre que identificarà tots els missatges de la llista &kde; que vinguin des de <userinput
+>je@qualsevol.cat</userinput
+>.</para>
+<para
+>&nbsp;</para
+> <!-- whitespace -->
+<!-- fixme: trigger with ctrl-j or whenever new mail arrives (unless
+<guilabel
+>Advanced Options</guilabel
+> are changed. -->
+</sect2>
+
+<sect2 id="filter-optimization">
+<title
+>Optimitzar el filtratge</title>
+
+<para
+>És important adonar-se que l'ordre dels filtres té un impacte sobre la celeritat del procés de filtratge. Aquí teniu algunes idees que us poden ajudar a millorar el rendiment del filtratge. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Atureu el processament dels filtres tan aviat com sigui possible:</term>
+<listitem>
+<para
+>Si teniu coneixement que un filtre finalment processa un cert tipus de missatges, assegureu-vos de marcar l'opció <guilabel
+>Si aquest filtre coincideix, atura aquí el procés</guilabel
+> per a aquest filtre. Això evitarà l'avaluació de la resta de regles de filtratge de tots els filtres subsegüents. (Vegeu les opcions avançades en el <link linkend="filter-dialog-id"
+>Diàleg de filtratge</link
+>).</para>
+<para
+>Un exemple seria filtrar els missatges de les llistes de correu mitjançant la capçalera List-Id a carpetes diferents. Esbrinar que un missatge prové de la llista A implica que podeu evitar comprovar el filtre següent per als missatges de la llista B. </para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+>Considereu el cost de l'avaluació de les regles de filtratge:</term>
+<listitem>
+<para
+>El temps necessari per a avaluar una regla de filtratge dependrà de la forma en què estigui construïda la regla. En particular, la cerca d'una subcadena que utilitza l'operació <guilabel
+>conté</guilabel
+> és més ràpida que una coincidència de patrons que utilitzi l'operació <guilabel
+>coincideix amb l'expr. regular</guilabel
+>. </para>
+<para
+>Una altra dependència és la quantitat de dades que s'empren per a l'avaluació d'una regla de filtratge. Si la regla està basada en una capçalera de missatge, la seva avaluació normalment hauria de ser molt més ràpida que l'avaluació d'una regla basada en tot el missatge. </para>
+<para
+>Intenteu mantenir les regles de filtratge tan senzilles com sigui possible. </para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term
+>Comproveu l'ordre dels vostres filtres:</term>
+<listitem>
+<para
+>Les diferents accions de filtratge tenen diferents graus de complexitat. Les accions de filtratge més cares són <guilabel
+>Passa a través de</guilabel
+> i <guilabel
+>Executa una ordre</guilabel
+>, perquè ambdues requereixen programes externs per a executar-se. Posant els filtres que tinguin aquestes accions al darrere dels altres filtres, reduireu el nombre de vegades que aquestes accions complexes són requerides, si la lògica del filtre ho permet.</para>
+<para
+>Un exemple seria filtrar els missatges d'una llista de correu i detectar el correu brossa. Per a la detecció del correu brossa normalment emprareu una eina externa mitjançant una acció <guilabel
+>Passa a través de</guilabel
+>. El filtratge dels missatges per a la llista de correu es fa mitjançant la capçalera List-Id. Si no voleu comprovar els missatges de la llista de correu per a veure si hi ha correu brossa, és millor emprar els filtres de missatges de les llistes de correu abans que el filtre per a la detecció del correu brossa. D'aquesta manera evitareu costoses i lentes comprovacions de correu brossa per a tots els missatges que s'hagin identificat com a missatges de llistes de correu. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="filter-logging">
+<title
+>Registre del filtratge</title>
+<para
+>Si voleu verificar si els vostres filtres funcionen, podeu obrir un visualitzador per al registre del filtre mitjançant <menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Visualitzador del registre de filtratge...</guimenuitem
+></menuchoice
+>. </para>
+<para
+>En el visualitzador podreu configurar el registre del procés de filtratge. Podreu controlar el nivell de detall del registre, netejar-lo, limitar-ne la mida i desar-lo en un fitxer. El registre pot proporcionar una valuosa informació si us cal millorar les regles de filtratge. </para>
+</sect2>
+</sect1>
+
+<sect1 id="backups">
+<title
+>Còpia de seguretat amb el &kmail;</title>
+<para
+>En aquesta secció es descriuen les diferents solucions de còpia de seguretat dins del &kmail;.</para>
+<sect2 id="archiving">
+<title
+>Arxivament</title>
+<variablelist>
+<varlistentry id="folder-archive">
+<term
+><menuchoice
+><guimenu
+>Carpeta</guimenu
+> <guimenuitem
+>Arxiva la carpeta...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Aquesta característica també està disponible a través del menú contextual llançat amb un clic del &BDR;, després seleccioneu <guimenuitem
+>Arxiva la carpeta...</guimenuitem
+>. S'obrirà un diàleg que permet crear un sol arxiu de la carpeta seleccionada.</para>
+<para
+>La <guilabel
+>Carpeta:</guilabel
+> mostra la carpeta seleccionada, si voleu canviar la carpeta a arxivar, feu clic sobre la icona de la carpeta. La llista desplegable <guilabel
+>Format:</guilabel
+> permet escollir un format (les opcions són: zip, tar, tar.bz2 i tar.gz). Si voleu canviar el nom predeterminat o la ubicació, feu clic al botó de carpeta que hi ha a la dreta de <guilabel
+>Fitxer d'arxiu:</guilabel
+>.</para>
+ <para
+>Marqueu el botó <guilabel
+>Suprimeix les carpetes i subcarpetes després de finalitzar</guilabel
+> si voleu que tot el que s'ha arxivat sigui suprimit de la base de dades del &kmail; una vegada s'hagi desat l'arxiu extern. De manera predeterminada, s'arxivaran totes les subcarpetes. Desmarqueu <guilabel
+>Arxiva totes les subcarpetes</guilabel
+> si només voleu arxivar la carpeta pare.</para>
+</listitem
+></varlistentry>
+<varlistentry id="auto-archive">
+<term
+><menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+>Configura l'arxivat automàtic...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Aquesta és una poderosa eina que es pot utilitzar per a ajudar a fer còpies de seguretat del vostre correu electrònic. Per a més detalls, vegeu <ulink url="help:/akonadi_archivemail_agent"
+>Arxivat automàtic</ulink
+>.</para>
+</listitem>
+</varlistentry>
+<!-- <varlistentry id="archive-folder">
+<term
+><menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Folder Archive Agent...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>This feature allows you to archive single emails to a specified folder.</para>
+<para
+>Folder Archive can be enabled on a per account basis to allow you to archive individual emails through the right click menu.</para>
+<screenshot>
+<screeninfo
+>Screenshot of Folder Archive</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="folderarchiveagent.png" format="PNG"/>
+    </imageobject>
+  </mediaobject>
+</screenshot>
+<para
+>Folder Archive is used to archive single emails to a specified folder. For instance, you need to archive all of
+those pesky bill receipts in one place. Folder Archive can easily accommodate those needs. <action
+>Start by
+using <menuchoice
+><guimenu
+>Settings</guimenu
+><guimenuitem
+>Configure Folder Archive Agent...</guimenuitem
+></menuchoice>
+in &kmail;'s reader window to open a dialog to set up the folder archive agent.</action>
+</para>
+
+<para
+>This dialog will have a tab for each of your configured accounts including Local Folders and you will need to configure all accounts that you wish to
+use this feature with. The first option allows you to enable/disable the folder archive agent. It is disabled by default, to enable check the <guilabel
+>Enable</guilabel>
+checkbox. You can set the location of your Archive folder by clicking the folder icon next to
+<guilabel
+>Folder:</guilabel
+> and selecting the folder you wish to use. For example, you could create
+a folder called <quote
+>bill receipts</quote
+> by clicking the <guibutton
+>New Subfolder...</guibutton
+> and typing <userinput
+>bill receipts</userinput
+> in
+the dialog. You may choose a folder location anywhere, &eg;.. a folder in your <quote
+>Local Folders</quote
+> or on your &IMAP; server.</para>
+<para>
+You have several choices on how the emails will be archived:
+</para>
+<variablelist id="archivefolder-options">
+  <varlistentry>
+  <term
+><guilabel
+>Unique folder</guilabel
+></term>
+  <listitem
+><para
+>Uses the selected folder sorted by date.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Folder by months</guilabel
+></term>
+  <listitem
+><para
+>Creates new folders inside the selected folder by months.</para
+></listitem>
+  </varlistentry>
+  <varlistentry>
+  <term
+><guilabel
+>Folder by years</guilabel
+></term>
+  <listitem
+><para
+>Creates new folders inside the selected folder by years.</para
+></listitem>
+  </varlistentry>
+</variablelist>
+<para>
+Now when you receive a bill receipt, &RMB; the email and select <guimenuitem
+>Archive</guimenuitem
+> from the menu. The email will be archived
+into your configured archive folder for easy viewing later on.
+</para>
+</listitem>
+</varlistentry
+> --><!-- This feature is no longer available. @dcb2020295 -->
+</variablelist>
+</sect2>
+<sect2 id="exporting">
+<title
+>Exportació</title>
+<variablelist>
+<varlistentry id="settingsexport">
+<term
+><menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Importa/Exporta les dades del &kmail;...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Aquesta característica exporta la configuració i el correu local a un fitxer comprimit. Per a més detalls, vegeu <ulink url="help:/pimsettingexporter"
+>Exportador de les dades PIM</ulink
+>.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+<sect1 id="import-restore">
+<title
+>Restaurar i importar al &kmail;</title>
+<para
+>Aquesta secció descriu la restauració de les còpies de seguretat i importació de dades al &kmail;.</para>
+
+<sect2 id="restore">
+<title
+>Restaurar una còpia de seguretat del correu electrònic i de la configuració</title>
+<variablelist>
+<varlistentry id="settingsimport">
+<term
+><menuchoice
+><guimenu
+>Eines</guimenu
+><guimenuitem
+>Exporta les dades del &kmail;...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Si heu utilitzat l'Exportador de les dades PIM per a crear còpies de seguretat del correu electrònic i o de la configuració local, si us plau, utilitzeu-lo de nou per a restaurar les dades al &kmail;. Per a més detalls, vegeu <ulink url="help:/pimsettingexporter"
+>Exportador de les dades PIM</ulink
+>.</para>
+</listitem
+></varlistentry>
+</variablelist>
+</sect2>
+
+<sect2 id="importing-options">
+<title
+>Opcions d'importació en el &kmail;</title>
+
+<para
+>El &kmail; disposa d'un assistent d'importació per a realitzar amb facilitat la transició des d'una altra aplicació de correu electrònic. </para>
+
+<variablelist>
+<varlistentry id="importing-import-wizard">
+<term
+><menuchoice
+><guimenu
+>Eines</guimenu
+> <guimenuitem
+>Importa des d'un altre client de correu...</guimenuitem
+> </menuchoice
+></term>
+<listitem>
+<para
+>Això inicia l'assistent d'importació i intenta detectar automàticament les dades d'una altra aplicació de correu electrònic. En el cas que no es trobin les dades de correu que voleu importar, utilitzeu l'opció <guilabel
+>Selecció manual</guilabel
+>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="importing-import-manual">
+<term
+><menuchoice
+><guimenu
+>Fitxer</guimenu
+> <guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="document-import.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Importa els missatges...</guimenuitem
+></menuchoice
+></term>
+<listitem>
+<para
+>Inicia l'assistent d'importació i permet l'elecció manual de les dades desitjades.</para
+></listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Si us plau, per als detalls llegiu la documentació <ulink url="help:/importwizard"
+>Assistent d'importació</ulink
+>. </para>
+
+</sect2>
+
+</sect1>
+<sect1 id="multiple-accounts">
+<title
+>Usar múltiples comptes</title>
+
+<para
+>Els múltiples comptes s'utilitzen per a comprovar els missatges de més d'una adreça de correu electrònic i/o servidor de correu. Seleccioneu <menuchoice
+><guimenu
+>Arranjament</guimenu
+> <guimenuitem
+><inlinemediaobject
+><imageobject
+><imagedata fileref="configurebutton.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Configura el &kmail;...</guimenuitem
+></menuchoice
+> i feu clic a la pàgina <guilabel
+>Comptes</guilabel
+> per a afegir o canviar les opcions al vostre compte. Per a més informació a sobre de la pàgina <guilabel
+>Comptes</guilabel
+> vegeu la secció <link linkend="getting-started"
+>Com començar</link
+>.</para>
+
+<para
+>Per a comprovar els missatges d'un compte en particular, empreu el submenú <menuchoice
+><guimenu
+>Fitxer</guimenu
+><guimenuitem
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Comprova el correu a</guimenuitem
+></menuchoice
+> i seleccioneu el compte de correu que voleu. També podeu prémer el &BER; durant uns quants segons a sobre de la icona <guiicon
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="mail-receive.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Comprova el correu a</guiicon
+> (a la barra d'eines) per a obtenir una llista dels comptes.</para>
+
+</sect1>
+
+<sect1 id="pgp">
+<!-- This section is from Andreas Gungl, 2000-05-21, updated 2002-10-06 by Ingo Kloecker -->
+<!-- Edited and modified by D. Bryant 2020-10-22. -->
+<title
+>Signar i encriptar missatges amb <application
+>GnuPG</application
+></title>
+
+<!--
+<note
+><para
+>There have been major changes in the way &kmail; handles
+signing/encryption. The following introduction applies to the previous
+version of &kmail;. You can still read the introduction to get an overview
+about how to sign/encrypt messages, but the details, especially those of
+the configuration, will differ.</para
+></note>
+-->
+<para
+>Aquesta és una breu introducció a sobre de com configurar la implementació de <application
+>GnuPG</application
+> (<application
+>&GNU; Privacy Guard</application
+>) del &kmail;. Donant-vos alguns consells d'ús de <application
+>GnuPG</application
+>. Aquesta secció ha estat escrita per a gent que és novella en aquesta àrea. Si esteu familiaritzat amb l'ús de <acronym
+>GnuPG</acronym
+>, podreu saltar-vos alguns dels següents passos.</para>
+
+<para
+>Si us plau, consulteu també la <link linkend="pgp-faq"
+>&PMF; a sobre de <application
+>GnuPG</application
+></link
+>.</para>
+
+<warning
+><para
+>Els adjunts no se signaran/encriptaran si utilitzeu la implementació OpenPGP inclòs. Per a signar/encriptar haureu d'instal·lar el GnuPG i algunes biblioteques necessàries. Llavors, podreu decidir per a cada adjunt si s'haurà o no de signar/encriptar. </para
+></warning>
+
+<!-- <warning
+><para
+>&kmail; has to rely on <application
+>GnuPG</application
+>'s
+output; this output is often different between different versions of
+<application
+>GnuPG</application
+>, so it is important that you test if encryption
+really works with your setup before you start using it seriously. &kmail; might
+<emphasis
+>not</emphasis
+> warn you if something fails - enable
+<guilabel
+>Show signed/encrypted text
+after composing</guilabel
+>.  </para
+></warning
+> --><!-- Removing this warning ... GnuPG is stable now. @dcb2020295 -->
+
+<para
+>Per a configurar i utilitzar la implementació de <application
+>GnuPG</application
+> en el &kmail; és necessari tenir instal·lat i configurat adequadament el <application
+>GnuPG</application
+>. Naturalment aquí no aconseguireu una completa introducció al <application
+>GnuPG</application
+>. Ja que tan sols es mencionaran els passos per a fer-lo anar. Per a més detalls, hauríeu d'anar a l'excel·lent documentació de <application
+>GnuPG</application
+> o al <ulink url="https://www.gnupg.org/docs.html#guides"
+>The &GNU; Privacy Handbook</ulink
+>.</para>
+
+<para
+>Certament, és una bona idea estudiar la documentació de GnuPG com a una introducció a la criptografia amb claus públiques. D'aquesta manera aprendreu un munt sobre els conceptes bàsics, els quals poden ajudar-vos a entendre el que està passant. Així com moltes qüestions relacionades amb la seguretat.</para>
+
+<sect2 id="pgp-preconditions">
+<title
+>Condicions prèvies</title>
+
+<para
+>El &kmail; espera que el vostre binari <application
+>GnuPG</application
+> s'anomeni <command
+>gpg</command
+>. Si aquest no fos el cas, haureu de crear un enllaç simbòlic.</para>
+
+<para
+>Si no ho heu fet així, haureu de generar un parell de claus (la clau secreta i la pública) per a la vostra identitat. Haureu de fer-ho emprant el &kgpg;, el &kleopatra; o la línia d'ordres <userinput
+><command
+>gpg</command
+> <option
+>--gen-key</option
+></userinput
+>. O podeu demanar-li al &kmail; que creï un parell de claus nou en crear un compte nou de correu electrònic. La identitat (normalment el vostre nom seguit per la vostra adreça de correu electrònic entre abraçadors, com ara <userinput
+>Jordi Exemple &lt;jordi@example.com&gt;</userinput
+>) i la vostra frase de pas són importants per a la cooperació entre el &kmail; i <application
+>GnuPG</application
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-settings">
+<title
+><application
+>GnuPG</application
+>: Configuració relacionada amb el &kmail;</title>
+
+<para
+>Seleccionar la pestanya <guilabel
+>Editor</guilabel
+> a la pàgina <guilabel
+>Seguretat</guilabel
+> de configuració. Allí trobareu les següents opcions:</para>
+
+<variablelist>
+<!-- not in 2.0.96?
+<varlistentry>
+<term
+><guilabel
+>Encryption tool</guilabel
+></term>
+<listitem>
+<para
+>Here you can choose if you want to use <application
+>PGP</application
+>,
+<application
+>GnuPG</application
+> or no encryption
+software at all; of course, the program you select has to be
+installed on your system (it is also important to select the correct
+version.)</para>
+</listitem>
+</varlistentry>
+    --><!-- Gpg is used by default. @dcb2020296. -->
+
+<varlistentry>
+<term
+><guilabel
+>En encriptar els correus, també encripta sempre amb el certificat de la meva pròpia identitat</guilabel
+></term>
+<listitem>
+<para
+>Si aquesta opció està desmarcada i voleu enviar un missatge encriptat a algú, després d'haver-lo editat i encriptat ja no podreu llegir-lo una altra vegada. Habiliteu aquesta opció per a mantenir els missatges encriptats llegibles per a vosaltres.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Emmagatzema els missatges que s'enviïn encriptats</guilabel
+></term>
+<listitem>
+<para
+>Quan es marca aquesta casella, els missatges enviats seran emmagatzemats encriptats quan s'enviïn. Això no és recomanable, ja que no els podreu llegir més en el cas que caduqui un dels certificats. (Recordeu que les claus GPG no caduquen, com a regla general. Aquesta precaució és principalment rellevant per als usuaris dels certificats x.509).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Mostra sempre les claus d'encriptatge per a aprovar-les</guilabel
+></term>
+<listitem>
+<para
+>Obrirà un diàleg que us permetrà escollir les claus emprades per a cada destinatari al qual envieu un missatge encriptat. Si aquesta opció està desmarcada, el &kmail; tan sols mostrarà el diàleg si no troba una clau per a un destinatari o si hi ha conflictes o preferències d'encriptatge sense establir.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>En desar com a esborrany, signa/encripta com s'indica</guilabel
+></term>
+<listitem
+><para
+>Si aquesta opció està activada, el &kmail; encriptarà (i/o signarà) automàticament els missatges que deseu a la carpeta <guilabel
+>esborranys</guilabel
+> (quan especifiqueu signar/encriptar).</para
+></listitem>
+</varlistentry>
+
+<varlistentry>
+<term
+><guilabel
+>Mostra l'indicador de signat/encriptat a l'editor</guilabel
+></term>
+<listitem
+><para
+>Si aquesta opció està activada, el &kmail; mostrarà un indicador a la finestra d'edició per a informar-vos que aquest missatge serà signat/encriptat sempre que aquest sigui el cas.</para
+></listitem>
+</varlistentry>
+
+</variablelist>
+
+<para
+>Ara que heu configurat l'eina d'encriptatge haureu de dir-li al &kmail; la clau OpenPGP que voleu emprar per a signar i encriptar els missatges. Per a fer-ho, aneu a la <link linkend="configure-identity"
+>configuració de les Identitats</link
+> i establiu la clau que s'haurà d'emprar mitjançant la pestanya <guilabel
+>Criptografia</guilabel
+> al diàleg de configuració de la identitat.</para>
+
+<para
+>Ara ja tindreu capacitat per a signar els missatges sortints. Per a permetre que la gent a qui envieu els vostres missatges encriptats verifiquin la vostra signatura, els haureu d'enviar la vostra clau pública o carregar-la a un servidor públic de claus <application
+>GnuPG</application
+> (de manera que després la puguin obtenir des d'allí). Per a enviar missatges encriptats a altra gent o per a verificar els seus missatges signats us caldran les seves claus públiques. Podeu cercar clau/s pública/ques a un servidor públic de claus <application
+>GnuPG</application
+>. O podeu demanar-los als amics que us enviïn una o més de les seves claus públiques.</para>
+
+</sect2>
+
+<sect2 id="pgp-sign-your-messages">
+<title
+>Signar els vostres missatges</title>
+
+<para
+>Normalment editareu el missatge a la finestra de l'editor del &kmail;. Abans d'enviar-lo, marqueu la icona <guibutton
+><inlinemediaobject
+> <imageobject
+><imagedata fileref="document-edit.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Signa</guibutton
+> que hi ha a la barra d'eines de la finestra de l'editor o seleccioneu <menuchoice
+> <guimenu
+>Opcions</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-edit.png" format="PNG"/></imageobject
+> </inlinemediaobject
+> Signa el missatge</guimenuitem
+></menuchoice
+>. Després, podreu enviar el missatge. La identitat que esteu emprant per a editar el missatge necessitarà estar connectada amb una <guilabel
+>Clau OpenPGP</guilabel
+> a la secció <guilabel
+>Identitats</guilabel
+> del diàleg <guilabel
+>Configura</guilabel
+>. Per a signar el missatge, al &kmail; li caldrà conèixer la vostra frase de pas de <application
+>GnuPG</application
+>. És possible que se us demani que la proporcioneu o, si prèviament li heu donat la frase de pas al &kmail;, el missatge se signarà automàticament.</para>
+
+</sect2>
+
+<sect2 id="pgp-encrypt-your-messages">
+<title
+>Encriptar els vostres missatges</title>
+
+<para
+>Per a enviar un missatge encriptat a algú de qui teniu la seva clau pública, creeu el missatge a la finestra de l'editor. Després, quan l'envieu, marqueu el botó <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Encripta</guibutton
+> que hi ha a la barra d'eines de la finestra de l'editor (o seleccioneu <menuchoice
+> <guimenu
+>Opcions</guimenu
+><guimenuitem
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Encripta el missatge</guimenuitem
+></menuchoice
+>). Després envieu el missatge.</para>
+
+<para
+>Si marqueu el botó <guibutton
+><inlinemediaobject
+><imageobject
+> <imagedata fileref="document-decrypt.png" format="PNG"/> </imageobject
+></inlinemediaobject
+> Encripta</guibutton
+> i el &kmail; no troba una clau que coincideixi amb el destinatari, us permetrà modificar l'anell de claus abans de tornar-ho a intentar. Si el &kmail; troba més d'una clau de confiança per a un destinatari, aquest us mostrarà una llista amb totes les claus per a aquest destinatari. En qualsevol cas, podreu seleccionar la/es clau/s que s'haurà/an d'emprar per a encriptar aquest missatge per al destinatari en qüestió.</para>
+
+<para
+>Si esteu emprant una clau per primera vegada, si hi ha un conflicte en les Preferències de l'encriptatge o si heu seleccionat <guilabel
+>Mostra sempre les claus d'encriptatge per a aprovar-les</guilabel
+> a la secció <guilabel
+>Seguretat</guilabel
+> de la finestra de configuració del &kmail;, apareixerà el diàleg <guilabel
+>Aprovació de la clau d'encriptatge</guilabel
+>. Podreu seleccionar diferents claus per als destinataris i podreu establir les <guilabel
+>Preferències de l'encriptatge</guilabel
+> per a cada destinatari. L'opció, <guilabel
+>Encripta sempre que l'encriptatge sigui possible</guilabel
+> (a la pestanya <guilabel
+>Criptografia</guilabel
+> del diàleg <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guimenuitem
+>Configura el &kmail;...</guimenuitem
+> </menuchoice
+>), els encriptarà automàticament sempre que hi hagi una clau de confiança per a cada destinatari.</para>
+
+<para
+>Tal com s'havia dit anteriorment, no podreu llegir els vostres propis missatges enviats si no marqueu <guilabel
+>En encriptar els correus, també encripta sempre amb el certificat de la meva pròpia identitat</guilabel
+> en la pàgina <guilabel
+>Seguretat</guilabel
+> de l'arranjament.</para>
+
+</sect2>
+
+<sect2 id="pgp-send-your-public-key">
+<title
+>Enviar la vostra clau pública</title>
+
+<para
+>Prepareu un missatge per a la persona a la qual voleu enviar la vostra clau pública. Llavors escolliu <menuchoice
+><guimenu
+>Adjunta</guimenu
+><guimenuitem
+>Adjunta la clau pública</guimenuitem
+></menuchoice
+> en el menú de la finestra de l'editor. Això adjuntarà la vostra clau pública -la que esteu emprant- en el missatge.</para>
+
+<para
+>Recordeu que de cap manera no és segur signar el missatge per a assegurar-se que el destinatari rebi la clau correcta. Hi pot haver un atac (possiblement) del tipus «algú-en-el-mig»: algú podria interceptar el missatge, canviar l'adjuntada i després signar el missatge amb aquesta altra clau. Aquest és el motiu pel qual el destinatari haurà de verificar la clau adjuntada amb l'empremta digital que li hagi arribat per un transport segur. De manera alternativa, senzillament demaneu-li que faci servir la clau que va rebre per a editar i enviar-vos un missatge encriptat. Si la vostra clau secreta desencripta aquest missatge, és que ell té una còpia de la vostra clau pública. Per a més detalls, vegeu la documentació de <application
+>GnuPG</application
+>.</para>
+
+</sect2>
+
+<sect2 id="pgp-you-received-an-encrypted-message">
+<title
+>Rebre un missatge encriptat</title>
+
+<para
+>Tot el que cal fer és seleccionar el missatge en el &kmail;. Llavors se us preguntarà per la vostra frase de pas. Després, si es va encriptar amb la vostra clau pública, el &kmail; el desencriptarà i us el mostrarà en text net. (Si no fos així no podreu llegir-lo). En cas contrari, no el podreu llegir. De manera predeterminada, el &kmail; emmagatzemarà els missatges de manera encriptada, de manera que ningú els pugui llegir sense conèixer la vostra frase de pas o, com a mínim, la contrasenya d'inici de la sessió.</para>
+
+</sect2>
+
+<sect2 id="pgp-receiving-a-public-key">
+<title
+>Rebre una clau pública</title>
+
+<para
+>Per a poder rebre una clau pública com a adjunt, o via https, ftp o disquet. Abans d'emprar aquesta clau per a xifrar un missatge destinat al propietari d'aquesta clau, haureu de verificar la clau (comprovar la seva empremta digital o cercar signatures de confiança). En acabat podreu afegir aquesta clau pública al vostre anell públic escrivint <userinput
+><command
+>gpg</command
+> <option
+>--import</option
+> <replaceable
+>nomfitxer</replaceable
+></userinput
+> a la línia d'ordres. Si la clau no està certificada amb una altra signatura de confiança, no la podreu emprar per a encriptar missatges a menys que la signeu (certifiqueu) amb la vostra pròpia clau. </para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-spam-wizard">
+<title
+>L'assistent contra el correu brossa</title>
+
+<sect2 id="spam-wizard-basics">
+<title
+>Bàsics</title>
+
+<para
+>El &kmail; no disposa d'una solució integrada per a detectar el correu brossa: els desenvolupadors creuen que emprar eines externes, però especialitzades, és la millor aproximació. El &kmail; utilitza aquestes eines amb la seva flexible arquitectura de filtratge. L'assistent contra el correu brossa us ajudarà amb la configuració inicial del filtratge. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Què pot fer l'assistent per a ajudar?</term>
+<listitem>
+<para
+>Us donarà algunes opcions per a escollir com voleu que es configuri el filtratge del correu brossa. A més d'això, crearà automàticament les regles de filtratge apropiades. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Quines són les limitacions de l'assistent?</term>
+<listitem>
+<para
+>Tot el que podeu fer és configurar els filtres. Això proveirà una configuració estàndard. No es reconeixeran les modificacions manuals aplicades als filtres anti correu brossa. En comptes d'això, aquests filtres seran sobreescrits per l'assistent. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Podeu activar l'assistent mitjançant <menuchoice
+><guimenu
+>Eines</guimenu
+> <guisubmenu
+>Assistent contra el correu brossa...</guisubmenu
+></menuchoice
+>. Si no està disponible aquesta opció, feu clic a <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guisubmenu
+>Configura el &kmail;...</guisubmenu
+><guimenuitem
+>Connectors</guimenuitem
+></menuchoice
+> i marqueu la casella que hi ha al costat de <guilabel
+>Contra el correu brossa</guilabel
+>. Se us demanarà que reinicieu el &kmail;. Quan ho feu, l'assistent apareixerà en el menú <guilabel
+>Eines</guilabel
+>.</para>
+
+<para
+>L'assistent explorarà el vostre ordinador a la cerca d'eines conegudes contra el correu brossa. També és possible emprar els resultats de les comprovacions de correu brossa que faci el vostre proveïdor de serveis, avaluant alguna capçalera d'informació que s'hagi afegit als missatges. Podeu permetre que l'assistent prepari al &kmail; perquè n'usi un o més en paral·lel. De tota manera, cal tenir en compte que les operacions de les eines contra el correu brossa consumeixen força temps. El &kmail; pot arribar a aturar-se mentre cerca missatges de correu brossa, de manera que podríeu tenir la sensació que el &kmail; no respon. Si s'alenteix massa el filtratge, si us plau, considereu l'eliminació de les regles de filtratge que ha creat l'assistent. (Això ha estat un problema amb el maquinari antic. Probablement no afectarà les màquines més modernes).</para>
+<para
+>Aquí hi ha algunes observacions sobre algunes eines contra el correu brossa.</para>
+
+<variablelist>
+<varlistentry>
+  <term
+>Bogofilter</term>
+<listitem>
+<para
+>El Bogofilter és un filtre baiesià. La seva capacitat per a la detecció del correu brossa parteix d'una fase d'entrenament inicial. Per altra banda, és una eina força ràpida. D'aquí que sigui l'opció recomanable per a la gent que vol tenir una detecció ràpida del correu brossa, i no us preocupeu pel període d'entrenament necessari inicial abans que la taxa de detecció s'incrementi significativament. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>SpamAssassin</term>
+<listitem>
+<para
+>L'SpamAssassin és una eina força complexa per a lluitar contra el correu brossa. Tot i que el seu comportament en gran manera depèn de la seva configuració, aquesta eina pot detectar força bé el correu brossa, fins i tot sense entrenament. De tota manera, la comprovació d'un missatge du una mica més de temps en comparació amb els filtres Baiesians purs. Diguem, que no es tracta de l'eina adequada per a qui no disposa dels coneixements quant a les capacitats de l'SpamAssassin. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>Annoyance Filter</term>
+<listitem>
+<para
+>Potser no es tracta de l'opció més escollida per les distribucions. Certament, és una eina per a especialistes. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+  <term
+>Filtre de correu brossa de GMX</term>
+<listitem>
+<para
+>Si rebeu el correu mitjançant el proveïdor de correu gratuït GMX, els vostres missatges ja passen per un filtre de correu brossa. El resultat d'aquest procés està documentat en un camp especial de la capçalera en cada missatge. És possible emprar el contingut d'aquest camp de capçalera per a filtrar quin missatge és correu brossa. Aquest filtratge no alentirà el sistema, perquè els missatges ja arriben processats pel servidor de correu electrònic extern. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+
+</sect2>
+
+<sect2 id="spam-wizard-advanced">
+<title
+>Avançat</title>
+
+<para
+>El &kmail; pot utilitzar diverses eines externes per a detectar missatges amb correu brossa. Intentarà esbrinar automàticament quines d'aquestes estan instal·lades al sistema i us les mostrarà en una llista. La llista està ordenada per la velocitat mitjana del procés de filtratge de les eines. Podeu marcar les eines que voleu utilitzar al &kmail; per a detectar el correu brossa. Per a més opcions, senzillament tanqueu l'assistent, instal·leu una eina nova i torneu a iniciar una altra vegada l'assistent. </para>
+
+<para
+>Si almenys heu marcat una eina, el &kmail; pot proporcionar filtres que permetin la classificació dels missatges com a correu brossa o no correu brossa. També proporciona accions per a permetre la classificació manual dels missatges. Aquestes accions estaran disponibles mitjançant l'element de menú <menuchoice
+><guimenu
+>Missatge</guimenu
+><guisubmenu
+>Aplica el filtratge &gt;</guisubmenu
+></menuchoice
+> i també amb les icones a la barra d'eines. Si qualsevol de les eines que heu seleccionat admet el filtratge baiesià (&ead;, un mètode per a detectar el correu brossa d'acord amb l'anàlisi estadística dels missatges), aquests missatges no tan sols seran marcats sinó que a més es podran transferir en canonada a les eines per a ajudar que aprenguin i, d'aquesta manera, millorar la seva taxa de detecció. </para>
+
+<para
+>A la segona pàgina, podreu triar algunes accions addicionals realitzar en el &kmail; respecte als missatges de correu brossa: Si voleu que els missatges detectats com a correu brossa es deixin en una carpeta en concret, seleccioneu la carpeta apropiada i marqueu l'opció <guilabel
+>Mou el correu brossa conegut a:</guilabel
+>. Si els missatges detectats com a correu brossa s'haurien de marcar com a llegits, llavors marqueu l'opció <guilabel
+>Marca els missatges de correu brossa detectats com a llegits</guilabel
+>. </para>
+
+<para
+>Seleccionant almenys una de les eines disponibles permetreu que l'auxiliar finalitzi la configuració del filtre. L'assistent no tindrà en consideració cap regla de filtre existent, però n'afegirà de noves o les substituirà. En qualsevol cas, és possible que vulgueu inspeccionar el resultat d'aquest procés en el <link linkend="filter-dialog"
+>Diàleg de filtratge</link
+>. L'assistent també crearà botons de barra d'eines per a marcar els missatges com a correu brossa o com a correu legítim. Cal tenir en compte que la classificació de missatges com a correu brossa també els pot moure a la carpeta especificada, si heu seleccionat l'opció de «correu brossa» adequada. </para>
+
+</sect2>
+
+<sect2 id="spam-wizard-details">
+<title
+>Alguns detalls més per a experts</title>
+
+<para
+>L'assistent utilitza la informació emmagatzemada en un fitxer de configuració especial anomenat <filename
+>kmail.antispamrc</filename
+> (emmagatzemat en el directori de configuració global o local del &kde;). En primer terme comprovarà la configuració global i després la local: si el fitxer de configuració local conté una entrada amb un número de versió major (nous), llavors s'utilitzaran les dades de configuració del fitxer local (per a aquesta eina). D'aquesta manera, ambdós, administradors i usuaris podran actualitzar la configuració de l'assistent. </para>
+
+<para
+>La detecció de missatges de correu brossa és arxivada creant accions <guilabel
+>passa a través de</guilabel
+>, una eina prèvia dins d'un filtre especial. Un altre filtre contindrà les regles per a avaluar els missatges de correu brossa detectats i les accions per a marcar-los, i (de manera opcional, segons l'elecció de l'assistent), moure'ls a una carpeta. Ambdós filtres estan configurats perquè es puguin aplicar als missatges entrants i al filtratge manual. </para>
+
+<para
+>Calen dos filtres per a classificar el correu legítim i el correu brossa. Han de contenir accions per a marcar apropiadament els missatges. Tal com s'ha mencionat anteriorment, el filtre per a classificar com a correu brossa té una altra acció suplementària per a moure el missatge a una carpeta predefinida. Si les eines seleccionades admeten el filtratge baiesià, l'assistent crearà accions de filtratge addicionals per a passar el missatge a les eines (accions del tipus <guilabel
+>Executa una ordre</guilabel
+>) en el mode d'aprenentatge apropiat. </para>
+
+<para
+>Si voleu afinar el procés de filtratge, podríeu estar interessats en el capítol sobre l'<link linkend="filter-optimization"
+>Optimització del filtratge</link
+>.</para>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="the-anti-virus-wizard">
+<title
+>L'assistent contra els virus</title>
+
+<sect2 id="virus-wizard-basics">
+<title
+>Bàsics</title>
+
+<para
+>El &kmail; no disposa d'una solució integrada per a detectar virus: els desenvolupadors creuen que emprar eines externes, però especialitzades, és la millor aproximació. El &kmail; utilitza aquestes eines amb la seva flexible arquitectura de filtratge. L'assistent contra els virus us ajudarà amb la configuració inicial del filtratge. </para>
+
+<variablelist>
+<varlistentry>
+<term
+>Què pot fer l'assistent per a ajudar?</term>
+<listitem>
+<para
+>Us donarà algunes opcions per a escollir com voleu que es configuri el filtratge de virus. A més d'això, crearà automàticament les regles de filtratge apropiades. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term
+>Quines són les limitacions de l'assistent?</term>
+<listitem>
+<para
+>Tot el que podeu fer és realitzar la configuració dels filtres; es proveirà una configuració estàndard. No es reconeixeran les modificacions manuals aplicades als filtres antivirus. En comptes d'això, aquests filtres seran sobreescrits per l'assistent. </para>
+</listitem>
+</varlistentry>
+</variablelist>
+
+<para
+>Podeu activar l'assistent mitjançant <menuchoice
+><guimenu
+>Eines</guimenu
+> <guisubmenu
+>Assistent contra els virus..</guisubmenu
+></menuchoice
+>. Si no està disponible aquesta opció, feu clic a <menuchoice
+><guimenu
+>Arranjament</guimenu
+><guisubmenu
+>Configura el &kmail;...</guisubmenu
+><guimenuitem
+>Connectors</guimenuitem
+></menuchoice
+> i marqueu la casella que hi ha al costat de <guilabel
+>Contra els virus</guilabel
+>. Se us demanarà que reinicieu el &kmail;. Quan ho feu, l'assistent apareixerà en el menú <guilabel
+>Eines</guilabel
+>.</para>
+
+</sect2>
+
+<sect2 id="virus-wizard-advanced">
+<title
+>Avançat</title>
+
+<para
+>L'assistent contra els virus bàsicament funciona de la mateixa manera que l'<link linkend="the-anti-spam-wizard"
+>assistent contra el correu brossa</link
+>. El &kmail; pot emprar diverses eines externes per a detectar missatges amb virus. Determinarà quines d'aquestes eines estan instal·lades al vostre sistema i us mostrarà el resultat de la cerca. Podeu marcar les eines que voleu que usi el &kmail; per a detectar els virus. Per a més opcions, senzillament tanqueu l'assistent, instal·leu una eina nova i torneu-lo a iniciar una altra vegada. </para>
+
+<para
+>Si almenys heu escollit una eina, podreu seleccionar accions perquè les realitzi el &kmail; respecte als missatges que continguin virus. Per a permetre que el &kmail; detecti els missatges que continguin virus, haureu de marcar l'opció <guilabel
+>Comprova els missatges usant les eines contra els virus</guilabel
+>. Si voleu que els missatges infectats per virus es deixin en una carpeta en concret, escolliu dita carpeta i marqueu l'opció <guilabel
+>Mou els missatges amb virus detectats a la carpeta seleccionada</guilabel
+>. Si aquests missatges haurien de ser addicionalment marcats com a llegits, llavors marqueu l'opció <guilabel
+>A més a més, marca els missatges amb virus detectats com a llegits</guilabel
+>. </para>
+
+<para
+>Seleccionant almenys una d'aquestes opcions permetreu que l'auxiliar finalitzi la configuració del filtre. L'assistent no tindrà en compte cap regla de filtre existent, però n'afegirà de noves. En qualsevol cas, és possible que vulgueu inspeccionar el resultat d'aquest procés en el <link linkend="filter-dialog"
+>Diàleg de filtratge</link
+>. </para>
+
+</sect2>
+
+<sect2 id="virus-wizard-details">
+<title
+>Detalls</title>
+
+<para
+>L'assistent empra la informació emmagatzemada en un fitxer de configuració especial anomenat <filename
+>kmail.antivirusrc</filename
+> (emmagatzemat a la carpeta de configuració global o local del &kde;). Si el fitxer de configuració local conté una entrada amb un número de versió major (nou), llavors s'utilitzaran les dades de configuració del fitxer local (per a aquesta eina). D'aquesta manera, ambdós, administradors i usuaris podran actualitzar la configuració de l'assistent. </para>
+
+<para
+>La detecció de missatges que contenen virus és arxivada creant accions <guilabel
+>passa a través de</guilabel
+> l'eina mitjançant un filtre especial. Un altre filtre contindrà les regles per a avaluar els missatges infectats i les accions per a marcar-los, i (de manera opcional, segons l'elecció de l'assistent), moure'ls a una carpeta. Ambdós filtres estan configurats perquè es puguin aplicar als missatges entrants i en el filtratge manual. </para>
+
+</sect2>
+
+</sect1>
+
+</chapter>

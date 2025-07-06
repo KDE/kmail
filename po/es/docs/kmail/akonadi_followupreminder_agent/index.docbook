@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Agente de recordatorio de seguimiento</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Spanish "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>El manual de &i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>Javier</firstname
+><surname
+>Viñal</surname
+><affiliation
+><address
+> <email
+>fjvinal@gmail.com</email
+></address
+></affiliation
+> <contrib
+>Traductor</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Aplicaciones 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Introducción</title>
+
+<para
+>&i18n-followupreminderagent; es un agente de akonadi que sigue el recordatorio de correo </para>
+
+<sect2 id="using-kapp">
+<title
+>Uso del &i18n-followupreminderagent;</title>
+
+<para
+>Use <menuchoice
+><guimenu
+>Opciones</guimenu
+><guimenuitem
+>Crear recordatorio de seguimiento</guimenuitem
+></menuchoice
+> en la ventana del compositor de &kmail; para abrir un diálogo que le permite crear un recordatorio para hacer un seguimiento del mensaje actual en una fecha específica.</para>
+
+<screenshot>
+<screeninfo
+>Diálogo del &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Diálogo del &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Diálogo del &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Pulse el botón de flecha abajo del campo <guilabel
+>Fecha</guilabel
+> para escoger la fecha del selector de fechas del calendario de &kde;. También es posible escoger un calendario para el recordatorio usando la lista desplegable <guilabel
+>Guardar pendiente en</guilabel
+>.</para>
+<para
+>Para eliminar recordatorios planificados, use <menuchoice
+><guimenu
+>Preferencias</guimenu
+> <guimenuitem
+>Configurar &kmail;...</guimenuitem
+></menuchoice
+> y seleccione la página <guilabel
+>Complementos</guilabel
+> en &kmail; y pulse el botón de configuración del elemento <guilabel
+>Agente de recordatorios de seguimiento</guilabel
+>. Use a continuación el menú de contexto que se muestra al pulsar el &RMB; sobre el recordatorio para seleccionar la acción <guimenuitem
+>Borrar</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configurar el &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurar el &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurar el &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Créditos y licencia</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Copyright del programa 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Copyright de la documentación &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Traducido por Javier Viñal <email
+>fjvinal@gmail.com</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

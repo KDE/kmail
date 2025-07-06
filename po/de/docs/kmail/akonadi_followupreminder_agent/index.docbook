@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
+"dtd/kdedbx45.dtd" [
+  <!ENTITY i18n-followupreminderagent "<application
+>Agent zur Erinnerung an Folgenachrichten</application
+>">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % German "INCLUDE"
+> 
+]>
+
+<article id="followupreminder" lang="&language;">
+<articleinfo>
+<title
+>Das Handbuch zu &i18n-followupreminderagent;</title>
+<authorgroup>
+<author
+><personname
+> <firstname
+>Laurent</firstname
+> <surname
+>Montel</surname
+> </personname
+> &Laurent.Montel.mail; </author>
+<othercredit role="translator"
+><firstname
+>Burkhard</firstname
+><surname
+>Lück</surname
+><affiliation
+><address
+><email
+>lueck@hube-lueck.de</email
+></address
+></affiliation
+><contrib
+>Übersetzung</contrib
+></othercredit
+> 
+</authorgroup>
+
+<copyright>
+<year
+>2014</year>
+<holder
+>&Laurent.Montel;</holder>
+</copyright>
+
+<date
+>2019-09-21</date>
+<releaseinfo
+>5.13 (Anwendungen 19.12)</releaseinfo>
+
+</articleinfo>
+
+<sect1 id="introduction">
+<title
+>Einführung</title>
+
+<para
+>Dies Programm ist ein Akonadi-Agent zur Erinnerung an Folgenachrichten </para>
+
+<sect2 id="using-kapp">
+<title
+>&i18n-followupreminderagent; benutzen</title>
+
+<para
+>Benutzen Sie <menuchoice
+><guimenu
+>Optionen</guimenu
+><guimenuitem
+>Erinnerung an Folgenachricht erstellen</guimenuitem
+></menuchoice
+> im Editorfenster von &kmail;, um einen Dialog zu öffnen, in dem Sie eine Erinnerung an eine Folgenachricht zur aktuellen E-Mail zu einer bestimmten Zeit erstellen können.</para>
+
+<screenshot>
+<screeninfo
+>&i18n-followupreminderagent;-Dialog</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-followupreminderagent;-Dialog</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-followupreminderagent;-Dialog</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Drücken Sie den Pfeil abwärts neben dem Feld <guilabel
+>Datum</guilabel
+> und wählen ein Datum aus dem &kde;-Kalenderdialog. Im Auswahlfeld <guilabel
+>Aufgabe speichern in</guilabel
+> können Sie auch einen Kalender zur Speicherung der Erinnerung auswählen.</para>
+<para
+>Möchten Sie geplante Erinnerungen löschen, öffnen Sie <menuchoice
+><guimenu
+>Einstellungen</guimenu
+><guimenuitem
+>&kmail; einrichten ...</guimenuitem
+></menuchoice
+> und gehen dann zur Seite <guilabel
+>Module</guilabel
+>. Klicken Sie dort auf den Einrichtungsknopf der Eintrags <guilabel
+>Agent zur Erinnerung an Folgenachrichten</guilabel
+>. Öffnen Sie dann mit der &RMBn; das Kontextmenü für eine Erinnerung und wählen <guimenuitem
+>Löschen</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>&i18n-followupreminderagent; einrichten</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>&i18n-followupreminderagent; einrichten</phrase>
+    </textobject>
+    <caption>
+      <para
+>&i18n-followupreminderagent; einrichten</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
+<sect2 id="credits">
+
+<title
+>Danksagungen und Lizenz</title>
+
+<para
+>&i18n-followupreminderagent;</para>
+<para
+>Programm Copyright 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+<para
+>Dokumentation Copyright &copy; 2014-2019 &Laurent.Montel; &Laurent.Montel.mail; </para>
+
+<para
+>Übersetzung Burkhard Lück<email
+>lueck@hube-lueck.de</email
+></para
+> &underFDL; &underGPL; </sect2>
+
+</sect1>
+
+</article>
+<!--
+Local Variables:
+mode: xml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+
+vim:tabstop=2:shiftwidth=2:expandtab
+kate: space-indent on; indent-width 2; tab-width 2; indent-mode none;
+-->

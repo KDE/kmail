@@ -199,7 +199,8 @@ format="PNG"/></imageobject
 
 <sect2 id="configure-identities-tab">
 <title
->La pestanya Identitats</title>
+>La pestanya Identitats</title
+>    
 
 <para
 >Trobareu una ràpida introducció a la pestanya <guilabel
@@ -662,7 +663,7 @@ format="PNG"/></imageobject
 >.</para>
 </listitem>
 </varlistentry>
-
+ 
 <varlistentry>
 <term
 ><guilabel
@@ -718,7 +719,8 @@ format="PNG"/></imageobject
 ><para
 >Aquesta opció obrirà un diàleg per a navegar pels directoris, el qual permetrà seleccionar un fitxer .vcf. (Consell: utilitzeu el &kaddressbook; per a exportar un fitxer vCard que es podrà emprar aquí).</para
 ></listitem>
-        </varlistentry>
+        </varlistentry
+>        
         <varlistentry>
         <term
 ><guilabel
@@ -827,7 +829,7 @@ format="PNG"/></imageobject
 >Aquestes ordres extreuen informació des del missatge al qual esteu responent o reenviant i la insereixen a la finestra d'edició.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -838,7 +840,7 @@ format="PNG"/></imageobject
 >Aquestes ordres canalitzaran el missatge al qual esteu responent a través d'un programa extern, després inseriran la sortida a la finestra d'edició del &kmail;.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -1032,7 +1034,8 @@ format="PNG"/></imageobject
 >Podeu utilitzar aquest botó per a crear una versió reduïda de la imatge que heu establert en la vostra pròpia entrada de la llibreta d'adreces.</para>
 </listitem>
 </varlistentry>
-</variablelist>
+</variablelist
+>  
 </listitem>
 </varlistentry>
 
@@ -1053,7 +1056,7 @@ format="PNG"/></imageobject
 >&nbsp;</para
 ><!-- add whitespace -->
 </sect2>
-
+ 
 </sect1>
 
 <sect1 id="configure-accounts">
@@ -1398,14 +1401,14 @@ pane that tells you if a message is &HTML; or not. This is important because
 &HTML; messages might imitate the look of a signed and encrypted message, so
 you should be aware of the fact that you are reading an &HTML; message. The &HTML;
 status bar itself cannot be influenced by the &HTML; code of the message.</para>
-
+ 
 <para
 >Enable <guilabel
 >Replace smileys by emoticons</guilabel
-> if you want smileys
+> if you want smileys 
 like <userinput
 >:-)</userinput
-> appearing in the message text to be
+> appearing in the message text to be 
 replaced by emoticons (small pictures) such as
 <inlinemediaobject
 ><imageobject>
@@ -1424,11 +1427,11 @@ replaced by emoticons (small pictures) such as
 <!-- <para
 ><guilabel
 >Fallback character encoding</guilabel
->:
-Some emails, especially those generated automatically, do not specify the
-character encoding which needs to be used to properly display them. In such
-cases a fallback character encoding will be used, which you can configure
-here. Set it to the character encoding most commonly used in your part of
+>: 
+Some emails, especially those generated automatically, do not specify the 
+character encoding which needs to be used to properly display them. In such 
+cases a fallback character encoding will be used, which you can configure 
+here. Set it to the character encoding most commonly used in your part of 
 the world. As a default the encoding configured for the whole system is used.</para
 > -->
 
@@ -1778,7 +1781,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-
+   
 <para
 >Per a crear un tema d'agregació personalitzat, feu clic al botó <guibutton
 >Configura...</guibutton
@@ -1904,7 +1907,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-
+  
 <para
 >Per a crear un tema personalitzat per a la llista de missatges, feu clic al botó <guibutton
 >Configura...</guibutton
@@ -1938,7 +1941,8 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Avançat</guilabel
 > permet mostrar les capçaleres. També podreu canviar la mida de les icones d'estat.</para>
 </listitem
-></varlistentry>
+></varlistentry
+> 
 </variablelist>
 </listitem
 ></varlistentry>
@@ -1970,7 +1974,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect2 id="configure-message-tags">
     <title
 >Etiquetes del missatge</title>
-
+    
 <screenshot>
 <screeninfo
 >Etiquetes d'aparença</screeninfo>
@@ -2027,7 +2031,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > per a més flexibilitat.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -2038,7 +2042,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Seleccioneu aquesta opció per a modificar el color de fons de les entrades a la llista de missatges etiquetada.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -2051,7 +2055,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -2062,7 +2066,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Feu clic en aquest botó per a obrir un diàleg per a la selecció d'icones. La icona es mostrarà a les entrades en la llista de missatges etiquetada.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -2073,7 +2077,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Utilitzeu aquest botó per a crear una drecera de teclat per a associar aquesta etiqueta amb els missatges seleccionats.</para
 ></listitem>
     </varlistentry>
-
+    
     <varlistentry>
         <term
 ><guilabel
@@ -2095,13 +2099,13 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></menuchoice
 >.</para>
 </sect2>
-
+ 
 </sect1>
 
 <sect1 id="configure-composer">
     <title
 >La pàgina Editor </title>
-
+    
     <para
 >Llegiu <link linkend="the-composer-window"
 >aquesta pàgina</link
@@ -2114,7 +2118,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <sect2 id="configure-composer-general">
       <title
 >General </title>
-
+    
     <screenshot>
     <screeninfo
 >Editor - General</screeninfo>
@@ -2135,10 +2139,10 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >Aquest diàleg permet ajustar la forma en què el &kmail; maneja les signatures. També permet controlar algunes característiques de format, ajustar algunes opcions de la compleció automàtica i modificar la característica de desament automàtic del &kmail;. </para>
-
+    
     <variablelist>
 	<varlistentry id="configure-composer-general-append-signature">
 	  <term>
@@ -2367,12 +2371,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >+</guiicon
 >. Podeu associar una combinació de tecles a la plantilla per a fer operacions més ràpides. </para>
     <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
-
+    
     <para
 >Les plantilles de missatges permeten ordres de substitució, escrivint-les o seleccionant-les des del menú <guimenu
 >Insereix una ordre</guimenu
 >. </para>
-
+    
     <para
 >Hi ha quatre tipus de plantilla personalitzada: L'emprada per a <guilabel
 >Respondre</guilabel
@@ -2385,7 +2389,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > que es pot utilitzar per a qualsevol classe d'operació. No es pot assignar una drecera de teclat a les plantilles de tipus <guilabel
 >Universal</guilabel
 >. </para>
-
+    
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2548,12 +2552,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Marqueu la casella de selecció <guilabel
 >Habilita la detecció de la falta d'adjunts</guilabel
 > si voleu que el &kmail; us avisi si procediu a enviar un missatge sense adjunts tot i que el text del missatge conté certes paraules que indiquen que n'hi volíeu incloure un. La llista de paraules clau es pot modificar. </para>
-
+    
     <para
 >Utilitzeu el botó de selecció de valors <guilabel
 >Mida màxima de l'adjunt:</guilabel
 > per a limitar la mida de qualsevol adjunt que envieu. Si intenteu adjuntar un fitxer més gran que el límit especificat, el &kmail; emetrà un missatge d'error i refusarà adjuntar-lo. Cal tenir en compte que aquest és un límit individual i no un límit agregat. A més, la mida del fitxer es verifica abans que el fitxer es converteixi a la codificació base 64, si això és necessari. </para>
-
+    
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2582,7 +2586,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+   
     <para
 >Per a habilitar la correcció automàtica dels errors tipogràfics comuns, seleccioneu l'opció <guilabel
 ></guilabel
@@ -2597,7 +2601,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Si necessiteu desar la vostra configuració per a una altra instal·lació o aplicació, utilitzeu el botó <guibutton
 >Exporta...</guibutton
 >. </para>
-
+    
     <para>
       <variablelist
 ><title
@@ -2656,7 +2660,7 @@ the world. As a default the encoding configured for the whole system is used.</p
            </varlistentry>
         </variablelist>
     </para>
-
+      
     <para
 >Una vegada hàgiu fet totes les vostres seleccions, feu clic al botó <guibutton
 >Aplica</guibutton
@@ -2665,7 +2669,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. </para>
     <para
 >&nbsp;</para
-><!-- add whitespace -->
+><!-- add whitespace --> 
     </sect2>
 
     <sect2 id="configure-resize-image">
@@ -2691,12 +2695,12 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+   
     <para
 >En algunes circumstàncies, potser us caldrà que el &kmail; redimensioni automàticament la mida de les imatges adjuntes en els correus electrònics sortints (&pex;, límits del servidor de correu). Per a això, seleccioneu <guilabel
 >Redimensiona automàticament les imatges</guilabel
 >. Hi ha diverses opcions que venen amb aquesta característica. </para>
-
+      
     <variablelist>
      <varlistentry
 ><term
@@ -2738,14 +2742,14 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. L'última opció permet ometre el canvi de mida de les imatges que són més petites que la mida de fitxer especificada. </para>
        </listitem>
      </varlistentry>
-
+     
      <varlistentry
 ><term
 ><guilabel
 >Nom de fitxer</guilabel
 ></term>
        <listitem>
-
+         
            <variablelist>
            <varlistentry
 ><term
@@ -2808,10 +2812,10 @@ the world. As a default the encoding configured for the whole system is used.</p
              </listitem>
            </varlistentry>
          </variablelist>
-
+         
          </listitem>
        </varlistentry>
-
+     
        <varlistentry
 ><term
 ><guilabel
@@ -2833,18 +2837,18 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect1 id="configure-security">
   <title
 >La pàgina Seguretat</title>
-
+  
   <para
 >El diàleg de configuració Seguretat permet ajustar certes opcions per al text enriquit (&HTML;). També permet controlar les característiques de l'encriptatge i desencriptatge, ajustar part de la lògica integrada contra la suplantació de la identitat i especificar com es gestionaran les sol·licituds de notificació de disposició del missatge (també conegudes com a rebuts de devolució). Recordeu que aquest diàleg <emphasis
 >no</emphasis
 > té res a veure amb les mesures de seguretat antivirus. Si voleu seguretat antivirus, vegeu el capítol <link linkend="the-anti-virus-wizard"
 >Usar el &kmail;: L'assistent contra els virus</link
 >. </para>
-
+  
   <sect2 id="configure-security-reading">
     <title
 >Lectura</title>
-
+    
     <screenshot>
     <screeninfo
 >Lectura - Seguretat</screeninfo>
@@ -2864,8 +2868,8 @@ the world. As a default the encoding configured for the whole system is used.</p
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->
-
+><!-- add whitespace -->    
+    
     <para
 >En aquesta pestanya podreu configurar les opcions de seguretat que afecten la lectura dels missatges.</para>
 
@@ -2895,7 +2899,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Afegint referències externes als seus missatges, la gent pot enviar correu brossa que podria detectar que esteu mirant el seu missatge. Cal tenir present que aquesta opció no afectarà el &Java;, JavaScript, ja que no estan admesos pel &kmail;. </para>
 	  </listitem>
 	</varlistentry>
-
+    
 	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
     <varlistentry id="configure-security-email-scams">
       <term
@@ -2915,7 +2919,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > i introduir el correu electrònic en el diàleg que aparegui. Cal tenir en compte que en aquest moment, només es poden incloure a la llista blanca les adreces de correu electrònic completes. </para>
           </listitem>
         </varlistentry>
-
+        
         <varlistentry>
           <term
 ><guilabel
@@ -2926,7 +2930,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Seleccioneu aquesta opció per a forçar al &kmail; a consultar la base de dades de Google de llocs web sospitosos de suplantació d'identitat quan hi hagi algun &URL; incrustat en un missatge i perquè us avisi sempre que es trobi alguna coincidència. </para>
           </listitem>
         </varlistentry>
-
+        
         <varlistentry>
           <term
 ><guilabel
@@ -2937,7 +2941,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >De manera predeterminada, el &kmail; verificarà automàticament els &URL; incrustats en els missatges &HTML; i us avisarà si algun d'ells sembla estar intentant rastrejar-vos. </para>
           </listitem>
         </varlistentry>
-
+        
         <varlistentry>
           <term
 ><guilabel
@@ -2948,7 +2952,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >De manera predeterminada, el &kmail; intentarà desencriptar automàticament els missatges encriptats en veure'ls. Si preferiu fer-ho manualment, desseleccioneu aquesta opció. </para>
           </listitem>
         </varlistentry>
-
+        
         <varlistentry>
 	      <term
 ><guilabel
@@ -2970,7 +2974,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+    
     <sect2 id="configure-message-disposition-notifications">
         <title
 >Notificacions de processament del missatge (MDN)</title>
@@ -2994,7 +2998,7 @@ the world. As a default the encoding configured for the whole system is used.</p
           <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+        
         <variablelist>
           <varlistentry id="configure-security-reading-mdns">
 	      <term>
@@ -3021,7 +3025,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Ignora qualsevol petició de notificació de disposició. No s'enviarà cap &mdn; automàticament. </para>
 		    </listitem>
           </varlistentry>
-
+          
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3032,7 +3036,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Tan sols respon a les peticions després de demanar permís a l'usuari. D'aquesta manera, podreu enviar les &mdn; per als missatges que seleccioneu i denegar o ignorar les altres. </para>
 		    </listitem>
 	      </varlistentry>
-
+          
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3045,7 +3049,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > millor que enviar les &mdn; sempre. L'autor encara reconeix que ha actuat amb el missatge, tot i que no es pot dir si l'ha suprimit o si l'ha llegit, &etc; </para>
 		    </listitem>
 	      </varlistentry>
-
+          
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3057,7 +3061,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 		    </listitem>
 	      </varlistentry>
 	    </variablelist>
-
+        
 	    <para
 >Si no esteu segur, experimenteu una mica amb <guilabel
 >Pregunta</guilabel
@@ -3067,14 +3071,14 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+        
 	    <para
 >Hi ha disponibles les següents opcions (llistades com <guilabel
 >Citació del missatge original</guilabel
 >) per a controlar <emphasis
 >quant</emphasis
 > del missatge original haurà d'enviar el &kmail; amb les &mdn;. </para>
-
+        
 	    <variablelist>
 	      <varlistentry>
 		    <term>
@@ -3086,7 +3090,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >No s'enviarà cap part del missatge que els obligatoris ID del missatge i el destinatari original que s'inclouen en la resposta &mdn;. Es mantindrà prou informació perquè el remitent identifiqui de forma única el missatge per al qual es va generar aquesta &mdn;. </para>
 		    </listitem>
 	      </varlistentry>
-
+          
 	      <varlistentry>
             <term>
               <guilabel
@@ -3097,7 +3101,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Adjunta tot el missatge a la notificació de disposició. Normalment, és un excés. No afegeix cap informació valuosa que es pugui deduir de les capçaleres del missatge, però la gent insisteix a vegades en aquesta forma, perquè per als humans és molt més fàcil correlacionar el contingut del missatge (en comptes de només les capçaleres) amb el que han enviat anteriorment. </para>
             </listitem>
 	      </varlistentry>
-
+          
 	      <varlistentry>
             <term>
               <guilabel
@@ -3109,7 +3113,7 @@ the world. As a default the encoding configured for the whole system is used.</p
               </listitem>
 	      </varlistentry>
 	    </variablelist>
-
+        
 	    <para
 >Si no esteu segur, deixeu aquesta opció establerta al valor predeterminat (res). </para>
 	  </listitem>
@@ -3160,7 +3164,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+      
       <para
 >Sobre aquesta pestanya podreu configurar les opcions apropiades de seguretat per a editar els missatges. </para>
 
@@ -3299,7 +3303,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+      
 
       <para
 >En aquesta pestanya podreu activar i desactivar els avisos relacionats amb la seguretat. </para>
@@ -3373,7 +3377,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > intermedis i els certificats arrel. </para>
 	  </listitem>
 	</varlistentry>
-
+	
     <varlistentry>
 	  <term>
 	    <guibutton
@@ -3386,7 +3390,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Si no sou un expert en encriptatge, probablement hauríeu d'acceptar aquí les opcions de configuració predeterminades. </para>
 	  </listitem>
 	</varlistentry>
-
+    
 	<varlistentry id="configure-security-warnings-reenable-all-warnings">
 	  <term>
 	    <guilabel
@@ -3867,7 +3871,7 @@ that is used when you create a new folder.</para>
 >Si aquesta opció està seleccionada quan sortiu del &kmail; es buidarà de missatges la carpeta paperera. </para>
       </listitem>
     </varlistentry>
-
+    
     <varlistentry>
       <term
 ><guilabel
@@ -3917,7 +3921,7 @@ that is used when you create a new folder.</para>
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->
+><!-- add whitespace -->    
 
     <variablelist>
 
@@ -3933,7 +3937,7 @@ that is used when you create a new folder.</para>
 > comprengui la vostra resposta a una invitació. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -3946,7 +3950,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -3961,7 +3965,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-
+      
 <!--varlistentry>
 <term
 ><guilabel
@@ -4000,13 +4004,13 @@ This is the default. The user can turn this option off if they want to see the i
 <listitem>
 <para
 >When this is checked, you will not see the mail composer window. Instead,
-all invitation mails are sent automatically. If you want to see the mail
-before sending it, you can uncheck this option. However, be aware that the
-text in the composer window is in iCalendar syntax, and you should not try
+all invitation mails are sent automatically. If you want to see the mail 
+before sending it, you can uncheck this option. However, be aware that the 
+text in the composer window is in iCalendar syntax, and you should not try 
 modifying it by hand.</para>
 </listitem>
 </varlistentry--><!-- These options are no longer available. @dcb2020342-->
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4046,7 +4050,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >Aquest diàleg us ajudarà a afinar la forma en què opera la funció <menuchoice
 ><guimenu
@@ -4054,8 +4058,9 @@ modifying it by hand.</para>
 > <guimenuitem
 >Imprimeix</guimenuitem
 ></menuchoice
->. </para>
-
+>. </para
+> 
+    
     <variablelist>
 
       <varlistentry>
@@ -4068,7 +4073,7 @@ modifying it by hand.</para>
 >Habiliteu aquesta opció per a permetre la impressió de només la part seleccionada d'un missatge. El valor predeterminat inhabilita aquesta característica, de manera predeterminada s'imprimirà tot el missatge. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4085,7 +4090,7 @@ modifying it by hand.</para>
 >, però actualment no funciona correctament. En altres paraules, hi ha un error. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4096,7 +4101,7 @@ modifying it by hand.</para>
 >Com l'opció anterior, aquí hi ha un error, de manera que el &kmail; sempre imprimirà les imatges, sense importar com estigui establerta aquesta opció. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4107,7 +4112,7 @@ modifying it by hand.</para>
 >Habiliteu aquesta opció per a fer que el &kmail; imprimeixi els detalls de l'encriptatge per als missatges encriptats i/o signats digitalment. </para>
         </listitem>
       </varlistentry>
-
+      
   </variablelist>
   </sect2>
 
@@ -4116,22 +4121,22 @@ modifying it by hand.</para>
 <sect1 id="configure-plugins">
     <title
 >La pàgina Connectors</title>
-
+    
     <para
 >El &kmail; conté una gran quantitat de funcions especials que poden ser útils o no per a usuaris particulars. Podeu seleccionar una o més d'aquestes funcions especials triant-les a la pàgina de configuració «Connectors». O, si no desitgeu o necessiteu una funció en particular, podreu estalviar temps i espai d'emmagatzematge desseleccionant el mòdul de connector associat. </para>
-
+    
     <para
 >En moltes distribucions de Linux, la majoria d'aquests connectors no estan inclosos en el paquet bàsic del &kmail;. Per a obtenir la completa funcionalitat del connector, assegureu-vos d'instal·lar el paquet anomenat «kdepim-addons» (o alguna cosa semblant). </para>
-
+    
     <para
 >Obtindreu una idea aproximada del que fa un connector en particular senzillament ressaltant el nom del connector a la pàgina de configuració del &kmail;. A continuació, apareixerà una breu descripció de la funció d'aquest connector al costat dret del diàleg. </para>
-
+    
     <para
 >Els diversos connectors disponibles actualment en el &kmail; (2021) es llisten a continuació. Recordeu que el conjunt de connectors «predeterminats» es basa en la versió openSUSE del &kmail; (5.14.2) que s'utilitza com a referència per a aquesta edició de la documentació. Els valors predeterminats reals al vostre sistema poden ser diferents; depenent de la distribució. </para>
-
+    
     <para
 >A causa que s'afegeixen funcions noves de tant en tant, aquesta llista pot augmentar amb el pas el temps. Hi ha dues regles generals que regeixen l'estructura dels connectors amb què podeu comptar, encara que el connector en particular amb què us encareu no es llisti a continuació. </para>
-
+    
     <para
 >1.- Si el connector té variables configurables, podreu obrir el diàleg de configuració per a aquest connector fent clic al botó <guibutton
 >&nbsp;<inlinemediaobject
@@ -4140,13 +4145,13 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 > que apareix al costat del nom del connector. </para>
-
+    
     <para
 >2.- Sempre que se seleccioni o desseleccioni un connector, s'haurà de reiniciar el &kmail; abans que el/s canvi/s desitjat/s tingui/n efecte. </para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <sect2 id="configure-plugins-akonadi">
     <title
 >Akonadi i comprovar abans d'enviar</title>
@@ -4170,9 +4175,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <variablelist>
-
+        
       <varlistentry>
         <term
 ><guilabel
@@ -4187,7 +4192,7 @@ modifying it by hand.</para>
 > d'aquest manual. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4200,7 +4205,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4211,7 +4216,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar les notificacions noves per correu electrònic. Podreu adaptar els camps perquè es mostrin en el missatge de notificació «estàndard». També podreu seleccionar senyals d'àudio (text parlat, sons preenregistars), crear entrades a fitxers de registre, &etc; De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4224,7 +4229,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4235,7 +4240,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a crear un conjunt de bústies de correu «unificades». El &kmail; crearà automàticament tres d'aquestes, etiquetades com a Safata d'entrada, Esborranys i Enviats. Si heu definit tant una safata d'entrada de Carpetes locals com una o més destinacions de safata d'entrada &IMAP;, el &kmail; mostrarà tots els fitxers de la safata d'entrada com a una carpeta consolidada de Safata d'entrada virtual. Podeu utilitzar el diàleg de configuració per a crear bústies de correu virtuals addicionals, adaptant cadascuna com millor us sembli. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+        
       <varlistentry>
         <term
 ><guilabel
@@ -4246,7 +4251,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a afegir adreces noves a una de les vostres llibretes d'adreces cada vegada que envieu un correu electrònic a un contacte nou. Utilitzeu el diàleg de configuració per a associar les llibretes d'adreces amb les identitats. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4257,7 +4262,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a aplicar algunes regles abans d'enviar un missatge. De manera predeterminada, aquest connector està habilitat i us notificarà automàticament si s'intenta enviar més d'una còpia del missatge a la mateixa persona. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4268,13 +4273,13 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar el filtratge de les adreces en els missatges de sortida. Utilitzeu el diàleg de configuració per a definir una llista blanca i/o una llista negra per a cada identitat definida. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+    
     <sect2 id="configure-plugins-composer">
     <title
 >Editor</title>
@@ -4298,9 +4303,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <variablelist>
-
+        
       <varlistentry>
         <term
 ><guilabel
@@ -4311,7 +4316,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a forçar que l'editor obri un editor de text extern quan s'iniciï. Utilitzeu el diàleg de configuració d'aquest connector per a especificar l'editor al qual es cridarà. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4328,7 +4333,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està inhabilitat i aparentment encara està en construcció. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4345,7 +4350,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4362,7 +4367,7 @@ modifying it by hand.</para>
 >. Permet inserir una adreça de correu electrònic seleccionada des d'una llibreta d'adreces en el cos del missatge amb un senzill apuntar i fer clic amb el &BER;. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4379,7 +4384,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4390,7 +4395,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a afegir una mica de codi que no sigui del tot funcional. Aquest connector encara està en construcció i de manera predeterminada també està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4407,7 +4412,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4424,7 +4429,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4441,7 +4446,7 @@ modifying it by hand.</para>
 >. Ofereix quatre opcions: Nextcloud, Pastebin, Bluetooth i Correu electrònic (s'obrirà una segona finestra de l'editor). De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4458,13 +4463,14 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
-    </variablelist>
+      
+    </variablelist
+> 
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+        
     <sect2 id="configure-plugins-grammar">
     <title
 >Comprovadors de la gramàtica / Estils de capçalera</title>
@@ -4488,9 +4494,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <variablelist>
-
+        
       <varlistentry>
         <term
 ><guilabel
@@ -4507,7 +4513,7 @@ modifying it by hand.</para>
 >. Aquesta opció és especial, només per a l'idioma francès. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4527,17 +4533,17 @@ modifying it by hand.</para>
     </variablelist>
     <para
 >&nbsp;</para
-><!-- add whitespace -->
-
+><!-- add whitespace -->  
+    
     <para
 >Els següents 6 connectors permeten decidir quins estils de capçalera es poden seleccionar al menú <guimenu
 >Visualitza</guimenu
 >. Per a més informació, vegeu <link linkend="the-preview-pane-headers"
 >la descripció de diverses vistes de capçalera</link
 > en el capítol «Usar el &kmail;». </para>
-
+    
     <variablelist>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4548,7 +4554,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Breus». De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4559,7 +4565,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «KMail 5.2». De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4570,7 +4576,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Sofisticades». De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4581,7 +4587,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Bufones». De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4592,7 +4598,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Llargues». De manera predeterminada, aquest connector està inhabilitat. (Les capçaleres llargues són similars a les capçaleres estàndard, però mostren informació de capçalera menys habitual, com «Respon-a», quan aquestes capçaleres estiguin presents). </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4603,13 +4609,14 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar la visualització de les capçaleres «Estàndard». De manera predeterminada, aquest connector està inhabilitat. (Les capçaleres estàndard són les mateixes que les capçaleres Bufones, però sense el fons ombrejat). </para>
         </listitem>
       </varlistentry>
-
-    </variablelist>
+      
+    </variablelist
+> 
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+    
     <sect2 id="configure-plugins-misc">
     <title
 >Visualitzador del missatge / Miscel·lània</title>
@@ -4633,7 +4640,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >Els 6 connectors següents proporcionen funcions especials que només es poden invocar amb un botó de la barra d'eines. Utilitzeu el diàleg <menuchoice
 ><guimenu
@@ -4646,9 +4653,9 @@ modifying it by hand.</para>
 > Configura les barres d'eines... </guimenuitem
 ></menuchoice
 > per a afegir o eliminar els botons de la barra d'eines associats amb aquestes funcions després de seleccionar o inhabilitar un d'aquests connectors. </para>
-
+    
     <variablelist>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4659,7 +4666,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a permetre la creació d'un esdeveniment de calendari mentre visualitzeu un missatge en el &kmail;. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4670,7 +4677,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a permetre la creació d'una nota del &kontact; mentre visualitzeu un missatge en el &kmail;. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4681,7 +4688,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a permetre la creació d'un element de tasca pendent en el &korganizer; mentre visualitzeu un missatge en el &kmail;. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4692,7 +4699,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a habilitar l'opció «Expandeix l'URL». De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4703,7 +4710,7 @@ modifying it by hand.</para>
 >Seleccioneu aquesta opció per a permetre la invocació d'una ordre executable des de la barra d'eines. Utilitzeu el diàleg de configuració associat per a seleccionar l'executable i donar-li un nom. El nom que trieu es podrà afegir més tard a la barra d'eines com a un botó, de manera que podreu invocar l'script a voluntat. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4716,12 +4723,13 @@ modifying it by hand.</para>
 > està disponible a l'editor. Utilitzeu aquest connector (a través de la barra d'eines) perquè el traductor estigui disponible a la finestra de vista prèvia del missatge. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
-    </variablelist>
+      
+    </variablelist
+> 
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <para
 >Els quatre elements següents no són realment connectors; són funcions integrades del &kmail;. Cadascun d'aquests es pot configurar per separat, utilitzant el botó <guibutton
 >&nbsp;<inlinemediaobject
@@ -4730,9 +4738,9 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 > que apareix al costat del nom de la funció. No caldrà reiniciar perquè aquestes variables de configuració tinguin efecte. </para>
-
+    
     <variablelist>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4750,7 +4758,7 @@ modifying it by hand.</para>
 ><!-- add whitespace -->
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4763,7 +4771,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4776,7 +4784,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4787,13 +4795,13 @@ modifying it by hand.</para>
 >Utilitzeu aquest diàleg de configuració per a habilitar / inhabilitar la compatibilitat amb Gravatar (avatar reconegut mundialment). </para>
         </listitem>
       </varlistentry>
-
+      
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-
+    
     <sect2 id="configure-plugins-tools">
         <title
 >Eines</title>
@@ -4818,9 +4826,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-
+    
     <variablelist>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4835,7 +4843,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està inhabilitat. Recordeu que un cop instal·lat el programari contra el correu brossa, aquest connector es pot inhabilitar de forma segura; el connector només és necessari per a instal·lar el programari contra el correu brossa, no per a executar-lo. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4850,7 +4858,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està inhabilitat. Recordeu que un cop instal·lat el programari antivirus, aquest connector es pot inhabilitar de forma segura; el connector només és necessari per a instal·lar el programari antivirus, no per a executar-lo. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4867,7 +4875,7 @@ modifying it by hand.</para>
 >. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4882,7 +4890,7 @@ modifying it by hand.</para>
 >. Principalment per a ús dels desenvolupadors de programes: la funció de registre predeterminada no proporciona molta informació (només una marca de temps i «A punt», per a la majoria dels «esdeveniments»). </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4895,7 +4903,7 @@ modifying it by hand.</para>
 > al &kmail;. Si trieu activar aquest connector, prepareu-vos per a dedicar molt de temps a ajustar el fitxer de configuració per a obtenir els filtres que realment voleu. De manera predeterminada, aquest connector està inhabilitat. </para>
         </listitem>
       </varlistentry>
-
+      
       <varlistentry>
         <term
 ><guilabel
@@ -4910,10 +4918,10 @@ modifying it by hand.</para>
 >Enviar una sol·licitud de «No deixis rastre» pot millorar lleugerament la vostra privacitat. Però l'única manera segura d'evitar els píxels de seguiment és no descarregar mai les imatges remotes codificades en els missatges &HTML;. De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
-
+      
     </variablelist>
     </sect2>
-
+    
 </sect1>
 
 <sect1 id="configure-non-gui-options">

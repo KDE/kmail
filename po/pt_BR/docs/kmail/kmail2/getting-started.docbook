@@ -1,0 +1,749 @@
+<chapter id="getting-started">
+
+<chapterinfo>
+<authorgroup>
+<author
+><firstname
+>Daniel</firstname
+> <surname
+>Naber</surname
+> <affiliation
+><address
+> <email
+>daniel.naber@t-online.de</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>David</firstname
+> <surname
+>Rugge</surname
+> <affiliation
+><address
+> <email
+>davidrugge@mediaone.net</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Michel</firstname
+> <surname
+>Boyer de la Giroday</surname
+> <affiliation
+><address
+> <email
+>michel@klaralvdalens-datakonsult.se</email>
+</address
+></affiliation>
+</author>
+<author
+><firstname
+>Scarlett</firstname
+> <surname
+>Clark</surname
+> <affiliation
+><address
+>&Scarlett.Clark.mail; </address
+></affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Marcus</firstname
+><surname
+>Gama</surname
+><affiliation
+><address
+><email
+>marcus.gama@gmail.com</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+><othercredit role="translator"
+><firstname
+>André Marcelo</firstname
+><surname
+>Alvarenga</surname
+><affiliation
+><address
+><email
+>alvarenga@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+</authorgroup>
+<date
+>11/12/2013</date>
+<releaseinfo
+>&kde; 4.12</releaseinfo>
+</chapterinfo>
+
+
+<title
+>Primeiros passos</title>
+
+<para
+>Esta é uma breve introdução ao &kmail; e sua utilização, para que você possa logo começar a trabalhar com ele. Para informações mais detalhadas, veja a seção <link linkend="using-kmail"
+>Usando o &kmail;</link
+>. Lembre-se de que a instalação do &kmail; é descrita <link linkend="installation"
+>no apêndice</link
+>.</para>
+
+<sect1 id="account-wizard">
+<title
+>Assistente de Contas</title>
+
+<screenshot>
+<screeninfo
+>Assistente de Contas</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="accountwizard.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Assistente de Contas</phrase>
+    </textobject>
+    <caption>
+      <para
+>Assistente de Contas</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Na primeira execução do &kmail; aparecerá o Assistente de Contas.</para>
+<note
+><para
+>Se a qualquer momento precisar executar o assistente de novo, você pode encontrá-lo em <menuchoice
+><guimenu
+>Ferramentas</guimenu
+><guimenuitem
+>Assistente de Contas</guimenuitem
+></menuchoice
+>.</para
+></note>
+<para
+>O assistente irá conduzi-lo pelo processo de criação das suas contas de e-mail. Suas telas poderão variar de acordo com o que o assistente conseguir determinar automaticamente. Logo abaixo encontra-se um destaque das telas que você poderá encontrar ao usar esse assistente.</para>
+<itemizedlist>
+  <listitem>
+    <para
+>A primeira tela do assistente é a <guilabel
+>Forneça os dados pessoais</guilabel
+>. Ele irá solicitar as informações básicas da sua conta: <guilabel
+>Nome completo:</guilabel
+>, <guilabel
+>Endereço de e-mail</guilabel
+> e <guilabel
+>Senha:</guilabel
+>. Por padrão, a opção <guilabel
+>Localizar os provedores de serviço na Internet</guilabel
+> está assinalada, para que o assistente tente obter as informações necessárias a partir do servidor. Desmarque esta opção se você for um usuário experiente e precisa definir algumas opções avançadas. Clique no botão <guibutton
+>Próximo</guibutton
+> quando terminar. <note
+><para
+>Se você usa a verificação em 2 passos do GMail, terá que gerar uma senha específica do aplicativo, dentro das configurações de segurança do GMail e indicar essa senha no campo de texto abaixo.</para
+></note>
+    </para>
+  </listitem>
+  <listitem>
+    <para
+>A próxima tela será a <guilabel
+>Selecione o tipo de conta</guilabel
+>, caso o assistente não conseguir determinar o tipo de conta. Selecione o tipo da sua conta na lista (se não souber, terá que contactar o provedor do seu serviço de e-mail). Se o tipo da sua conta não estiver na lista, clique no botão <guibutton
+>Procurar mais na Internet</guibutton
+>. Assim que o tipo da sua conta for selecionado, clique no botão <guibutton
+>Próximo</guibutton
+> para ser apresentada a tela de <guilabel
+>Configurações pessoais</guilabel
+>. </para>
+    <para
+>A tela <guilabel
+>Forneça os dados pessoais</guilabel
+> irá mostrar novamente os detalhes do servidor e se conseguiu determinar o tipo de conta. Clique no botão <guibutton
+>Criar conta</guibutton
+>, para que ele possa configurar a conta. Clique em <guibutton
+>Concluir</guibutton
+> para finalizar o assistente e fechar a janela. </para>
+  </listitem>
+  <listitem>
+    <para
+>A tela <guilabel
+>Configurações pessoais</guilabel
+> irá aparecer se você tiver que indicar o seu tipo de conta. Verifique se as suas informações estão correta nesta página. Selecione a opção <guilabel
+>Baixar todas as mensagens para uso offline</guilabel
+> se quiser que as suas mensagens fiquem disponíveis quando não estiver conectado à Internet (somente &imap;). Clique no botão <guibutton
+>Próximo</guibutton
+> quando terminar.</para>
+    </listitem>
+    <listitem>
+      <para
+>Sua conta será então configurada e você poderá clicar no botão <guibutton
+>Concluir</guibutton
+> para finalizar o assistente e fechar a janela.</para>
+    </listitem>
+  </itemizedlist>
+  <para
+>Para criar as contas manualmente, continue a ler o resto do documento.</para>
+
+</sect1>
+
+<sect1 id="manual-configuration-quickstart">
+  <title
+>Introdução à Configuração Manual</title>
+<para
+>A janela de configuração consiste de seis seções: <guilabel
+>Identidades</guilabel
+>, <guilabel
+>Contas</guilabel
+>, <guilabel
+>Aparência</guilabel
+>, <guilabel
+>Compositor</guilabel
+>, <guilabel
+>Segurança</guilabel
+> e <guilabel
+>Diversos</guilabel
+>.</para>
+
+<para
+>Para iniciar o envio e recebimento de mensagens, você só precisa alterar algumas configurações nas páginas <guilabel
+>Identidades</guilabel
+> e <guilabel
+>Contas</guilabel
+>.</para>
+
+  <sect2 id="setting-your-identity">
+    <title
+>Configurando sua identidade </title>
+
+    <para
+>A configuração da página <guilabel
+>Identidades</guilabel
+> é relativamente simples. Selecione a sua identidade padrão e clique em <guibutton
+>Modificar</guibutton
+>. Preencha o campo <guilabel
+>Seu nome</guilabel
+> com o seu nome completo (&eg;, <userinput
+>José da Silva</userinput
+>) e o campo <guilabel
+>Organização</guilabel
+> (opcional) com a informação apropriada. </para>
+    <para
+>Depois, preencha o campo do <guilabel
+>Endereço de e-mail</guilabel
+> com o seu endereço de e-mail (&eg;, <userinput
+>joao@exemplo.net</userinput
+>). </para>
+    <para
+>Se estiver usando o <application
+>PGP</application
+> ou o <application
+>GnuPG</application
+>, você poderá configurar as suas chaves &openpgp; e/ou certificados &smime; na aba <link linkend="configure-identity-cryptography"
+><guilabel
+>Criptografia</guilabel
+></link
+>. </para>
+    <para
+>Opcionalmente, vá para a aba <guilabel
+>Assinatura</guilabel
+> e indique a sua assinatura. Ela é um texto curto que será adicionado automaticamente em todas as suas mensagens. Não tem nada a ver com <emphasis
+>assinaturas digitais</emphasis
+>. </para>
+
+  </sect2>
+
+<sect2 id="setting-up-your-account">
+<title
+>Configurando sua conta</title>
+
+<para
+>A página <guilabel
+>Contas</guilabel
+> contém as opções que dizem ao &kmail; como enviar e receber as suas mensagens de e-mail. Muitas destas opções poderão depender bastante da configuração do seu sistema e do tipo de rede que o seu servidor de e-mail se localiza. Se você não souber qual a opção a usar ou o que colocar em algum campo, consulte o seu Provedor de Acesso à Internet (<acronym
+>ISP</acronym
+>) ou administrador de sistemas.</para>
+
+<sect3 id="sending-mail">
+<title
+>Enviando Mensagens</title>
+
+<para
+>A página de <guilabel
+>Enviando</guilabel
+> oferece uma lista de formas para enviar mensagens. O primeiro item da lista é a forma padrão para enviar mensagens. Se usar o botão <guibutton
+>Adicionar...</guibutton
+>, você poderá optar entre duas formas diferentes de enviar mensagens: por <guilabel
+>SMTP</guilabel
+> e <guilabel
+>Sendmail</guilabel
+>. O &Sendmail; aqui significa uma instalação local do software -- isto tem uma reputação de ser difícil de configurar, por isso, se você não tiver já uma configuração de &Sendmail; funcional, escolha o <guilabel
+>SMTP</guilabel
+> e preencha o campo <guilabel
+>Nome</guilabel
+> com um nome descritivo (&eg; <userinput
+>Minha Conta de E-mail</userinput
+>). Clique em <guibutton
+>Criar e Configurar</guibutton
+> e preencha o <guilabel
+>Servidor de saída de e-mail</guilabel
+> com o nome e o domínio do seu servidor de e-mail (&eg;, <userinput
+>smtp.provedor.com</userinput
+>). Você provavelmente não precisará alterar a configuração da <guilabel
+>Porta</guilabel
+> (o valor padrão é <userinput
+>25</userinput
+>).</para>
+
+<!-- TODO: more specific link -->
+<para
+>Se você quiser usar o &Sendmail; e estiver usando uma conexão discada, siga as instruções para configurar o sendmail para este tipo de conexão na seção de <link linkend="faq"
+>&FAQ;</link
+>.</para>
+
+<para
+>O método de envio de mensagens configurado aqui será usado para a sua identidade padrão e para todas as outras identidades que não têm forma própria para envio de mensagens. Você poderá usar formas diferentes de envio de mensagens para as diferentes identidades, se selecionar a opção <guilabel
+>Conta de envio</guilabel
+> na aba <guilabel
+>Avançado</guilabel
+> da página <guilabel
+>Identidades</guilabel
+>.</para>
+
+<para
+>Uma descrição da outras opções poderá ser encontrada no capítulo sobre a <link linkend="configure-accounts-sending"
+>Configuração</link
+>.</para>
+</sect3>
+
+<sect3 id="sending-mail-kolab">
+<title
+>Opções relevantes para o servidor <acronym
+>Kolab</acronym
+></title>
+
+<para
+>Ao configurar uma conta <guilabel
+>SMTP</guilabel
+> com uma máquina de servidor <guilabel
+>Kolab</guilabel
+>, você precisa habilitar a opção <guilabel
+>Servidor necessita de autenticação</guilabel
+> e preencher o seu endereço de e-mail do <guilabel
+>Kolab</guilabel
+> e senha nos campos <guilabel
+>Login</guilabel
+> e <guilabel
+>Senha</guilabel
+>. Selecione então a aba <guilabel
+>Segurança</guilabel
+> e clique em <guibutton
+>Verificar o que o servidor suporta</guibutton
+> para configurar automaticamente sua configuração de <guilabel
+>Segurança</guilabel
+>. O padrão deve ser <guilabel
+>TLS/PLAIN</guilabel
+>. O servidor <guilabel
+>Kolab</guilabel
+> suporta <guilabel
+>SSL/PLAIN</guilabel
+> também. Estas configurações podem ser configuradas manualmente.</para>
+</sect3>
+</sect2>
+
+<sect2 id="receiving-mail">
+<title
+>Recebendo Mensagens</title>
+<!-- review - changed to akonadi ressources? lueck 31.05.2011-->
+<para
+>Para configurar uma conta para receber mensagens, clique no botão <guibutton
+>Adicionar...</guibutton
+> na aba <guilabel
+>Recepção</guilabel
+>. Será solicitado o tipo de conta de e-mail. A maioria dos usuários deverão escolher o <guilabel
+>POP3</guilabel
+> ou o <guilabel
+>Servidor de e-mails IMAP</guilabel
+>. Se quiser usar uma caixa de e-mail local, veja as <link linkend="faq-file-locking"
+>Perguntas frequentes sobre o bloqueio de arquivos</link
+>.</para>
+
+<para
+>Será então apresentada a janela <guilabel
+>Recurso do Akonadi</guilabel
+>. Primeiro, preencha o campo <guilabel
+>Nome da conta</guilabel
+> para identificar a sua conta. Você poderá escolher o nome que desejar. O <guilabel
+>Usuário</guilabel
+>, a <guilabel
+>Senha</guilabel
+> e o <guilabel
+>Servidor de recepção de e-mail</guilabel
+> deverão ser preenchidos com a informação apropriada do seu <acronym
+>ISP</acronym
+> ou do seu administrador de sistemas. Você não precisa alterar a <guilabel
+>Porta</guilabel
+> (o valor padrão para o POP3 é <userinput
+>110</userinput
+> e para o <acronym
+>IMAP</acronym
+> é <userinput
+>143</userinput
+>).</para>
+
+<sect3 id="receiving-mail-kolab"
+><!-- review - still relevant? remove? lueck 31.05.2011-->
+<title
+>Opções relevantes para o servidor <acronym
+>Kolab</acronym
+></title>
+<para
+>Selecione <guilabel
+>IMAP desconectado</guilabel
+> ao escolher seu <guilabel
+>Tipo de conta</guilabel
+>. Preencha os campos <guilabel
+>Login</guilabel
+> e <guilabel
+>Senha</guilabel
+> com o seu endereço de e-mail e a senha do usuário no servidor <guilabel
+>Kolab</guilabel
+>, respectivamente. Na seção <guilabel
+>Segurança</guilabel
+> clique no botão <guilabel
+>Verificar o que o servidor suporta</guilabel
+> para configuração automática da <guilabel
+>Segurança</guilabel
+>. O padrão deve ser <guilabel
+>TLS/PLAIN</guilabel
+>, mas o servidor <guilabel
+>Kolab</guilabel
+> também suporta o <guilabel
+>SSL/PLAIN</guilabel
+>. Estas configurações também podem ser feitas manualmente.</para>
+<para
+>Se você deseja usar a funcionalidade de <guilabel
+>Respostas de "Ausência do escritório"</guilabel
+> do servidor <guilabel
+>Kolab</guilabel
+>, configure a seção de <guilabel
+>Filtragem</guilabel
+> de sua conta <guilabel
+>DIMAP</guilabel
+> assinalando a opção <guilabel
+>O servidor suporta Sieve</guilabel
+>, assim como <guilabel
+>Reutilizar configuração do login e da máquina</guilabel
+>, e <guilabel
+>Porta do ManageSieve</guilabel
+> deve estar configurada para 2000 como padrão. </para>
+</sect3>
+
+<sect3 id="receiving-mail-dimap-misc"
+><!-- review - still relevant? remove? lueck 31.05.2011-->
+<title
+>Opções relevantes apenas para o DIMAP (servidor <acronym
+>Kolab</acronym
+>)</title>
+<para
+>Após ter configurado sua conta de <guilabel
+>IMAP Desconectado</guilabel
+>, você precisa ativar as funcionalidades de <guilabel
+>Groupware</guilabel
+> e configurar a página <guilabel
+>Diversos</guilabel
+> do <guilabel
+>KMail</guilabel
+>. </para>
+<para
+>Na página <guilabel
+>Diversos</guilabel
+> do diálogo <guilabel
+>Configurar</guilabel
+>, escolha a aba <guilabel
+>Groupware</guilabel
+>. Habilite a opção <guilabel
+>Habilitar funcionalidade de recurso IMAP</guilabel
+> e selecione <guilabel
+>Kolab (XML)</guilabel
+> como <guilabel
+>Formato usado para as pastas do groupware</guilabel
+>. A caixa combinada <guilabel
+>Pastas de recurso estão na conta</guilabel
+> deve ser configurada na conta <guilabel
+>Receber</guilabel
+> (usuário kolab) de sua escolha (se você tiver diversas contas). Você pode se desejar ocultar a pasta de grupo de trabalho habilitando esta opção. Isto é recomendado para <guilabel
+>Opções Legadas e de Compatibilidade de Groupware</guilabel
+> para compatibilidade com um eventual cliente Microsoft Outlook do <guilabel
+>Kolab</guilabel
+> e também para enviar convites e respostas a partir de um cliente KDE do <guilabel
+>Kolab</guilabel
+>. </para>
+</sect3>
+
+<sect3 id="receiving-mail-imap">
+<title
+>Opções relevantes apenas para o <acronym
+>IMAP</acronym
+></title>
+<para
+>Se estiver usando o <acronym
+>IMAP</acronym
+>, você poderá indicar adicionalmente uma localização no campo <guilabel
+>Prefixo das pastas</guilabel
+>. Isto indica ao &kmail; onde ele poderá encontrar as suas pastas no servidor. Se você também possuir uma conta de usuário no servidor e se as mensagens são gravadas na sua pasta pessoal, poderá ser útil armazenar as mensagens em uma subpasta <filename class="directory"
+>Mail</filename
+>. Use isto como um valor no campo <guilabel
+>Prefixo das pastas</guilabel
+>, para que o &kmail; não confunda os arquivos da caixa do e-mail com os outros arquivos. Se você não está interessado nesta funcionalidade, basta deixar o campo em branco.</para>
+
+<para
+>Se você assinalar a opção <guilabel
+>Compactar as pastas automaticamente</guilabel
+>, o &kmail; remove as mensagens que você excluiu do servidor, logo que deixe uma determinada pasta. Caso contrário, as mensagens são apenas marcadas como removidas e você deve compactar manualmente as pastas com o item <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Compactar todas as pastas</guimenuitem
+></menuchoice
+>.</para>
+<para
+>Se assinalar a opção <guilabel
+>Mostrar pastas ocultas</guilabel
+>, as pastas que comecem por um ponto também serão apresentadas.</para>
+</sect3>
+
+
+<sect3 id="receiving-mail-pop3">
+<title
+>Opções relevantes apenas para o POP3</title>
+
+<para
+>Selecione a opção <guilabel
+>Deixar as mensagens transferidas no servidor</guilabel
+> se quiser deixar as suas mensagens no servidor depois de tê-las transferido para o seu computador.</para>
+
+<para
+>Selecione <guilabel
+>Incluir na verificação manual de mensagens</guilabel
+> se quiser verificar esta conta sempre que usar a opção <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Verificar o E-mail</guimenuitem
+></menuchoice
+>. Se você desmarcar esta opção, você ainda poderá verificar novas mensagens nesta conta com a opção <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Verificar o e-mail em</guimenuitem
+></menuchoice
+>.</para>
+
+<para
+>Selecione a opção <guilabel
+>Ativar a verificação periódica do e-mail</guilabel
+> se quiser que o &kmail; procure mensagens novas automaticamente. O intervalo poderá ser indicado em <guilabel
+>Intervalo de verificação de e-mails</guilabel
+>.</para>
+
+<para
+>A pasta <guilabel
+>caixa de entrada</guilabel
+> é a pasta padrão para as mensagens recebidas. Se quiser mudar isto por alguma razão, você poderá fazê-lo com a <guilabel
+>Pasta de destino</guilabel
+>. Mas o que irá querer provavelmente é um <link linkend="filters"
+>filtro</link
+>, que não tem nada a ver com esta opção.</para>
+
+<para
+>Com o <guilabel
+>Pré-comando</guilabel
+> você poderá indicar qualquer programa que o &kmail; irá executar antes de transferir o e-mail. Por favor, indique a localização completa (não use o <quote
+>~</quote
+>) e lembre-se de que o &kmail; não irá continuar até que o programa termine.</para>
+
+<para
+>No grupo <guilabel
+>Configurações do POP</guilabel
+>, você poderá selecionar a opção <guilabel
+>Usar pipelining para baixar e-mails mais rápido</guilabel
+> se este for suportado pelo seu servidor. Você deverá testar isto com cuidado para ter certeza de que funciona com segurança.</para>
+</sect3>
+
+<sect3 id="receiving-mail-imap-pop3">
+<title
+>Opções comuns ao <acronym
+>IMAP</acronym
+> e ao POP3</title>
+<!-- removed in 4.8
+<para
+>If you select <guilabel
+>Store POP password</guilabel
+> or 
+<guilabel
+>Store IMAP Password</guilabel
+> &kmail; will remember 
+your password so you will not have to
+type it every time you start &kmail; and fetch new mail.</para>
+
+<warning
+><para
+>Be warned that &kmail; cannot really encrypt your password, so
+people who can access your configuration files (&eg; system
+administrators) can easily get your password if you select this
+option.</para
+></warning>
+-->
+<para
+>O &kmail; suporta a criptografia por <guilabel
+>SSL/TLS</guilabel
+> e por <guilabel
+>STARTTLS</guilabel
+> (prefira o <guilabel
+>SSL/TLS</guilabel
+> se estiver disponível).</para>
+
+<para
+>Para o POP3, o &kmail; suporta:</para>
+
+<itemizedlist>
+<listitem
+><para
+><guilabel
+>Texto simples</guilabel
+>, </para
+></listitem>
+<listitem
+><para
+><guilabel
+>PLAIN</guilabel
+>, </para
+></listitem>
+<listitem
+><para
+><guilabel
+>LOGIN</guilabel
+>, </para
+></listitem>
+<listitem
+><para
+><guilabel
+>CRAM-MD5</guilabel
+> (recomendado se o <guilabel
+>DIGEST-MD5</guilabel
+> não estiver disponível),</para
+></listitem>
+<listitem
+><para
+><guilabel
+>DIGEST-MD5</guilabel
+> (recomendado) e</para
+></listitem>
+<listitem
+><para
+>Autenticação <guilabel
+>APOP</guilabel
+>.</para
+></listitem>
+</itemizedlist>
+
+<para
+>O <guilabel
+>DIGEST-MD5</guilabel
+>, o <guilabel
+>CRAM-MD5</guilabel
+> e o <guilabel
+>APOP</guilabel
+> são seguros por si próprios, enquanto as outras opções só são seguras quando usadas em conjunto com o <guilabel
+>SSL</guilabel
+> ou com o <guilabel
+>TLS</guilabel
+>. Você só deve usar o <guilabel
+>Texto simples</guilabel
+> se o seu servidor não suportar nenhum dos outros métodos de autenticação. Adicionalmente, o <guilabel
+>Anonymous</guilabel
+> é suportado para o <acronym
+>IMAP</acronym
+>, mas não para o <guilabel
+>APOP</guilabel
+>. Use o botão <guibutton
+>Verificar o que o servidor suporta</guibutton
+> na aba <guilabel
+>Segurança</guilabel
+> para selecionar automaticamente a configuração mais segura que é suportada pelo seu servidor.</para>
+
+<para
+>Você está agora pronto para enviar e receber e-mails. Para o <acronym
+>IMAP</acronym
+>, basta abrir as suas pastas na árvore de pastas da janela principal do &kmail;. O &kmail; irá conectar-se então ao seu servidor e mostrará as mensagens que encontrar. Para o POP3, use o <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Verificar e-mails</guimenuitem
+></menuchoice
+>.</para>
+
+</sect3>
+
+</sect2>
+
+</sect1>
+
+<sect1 id="testing-your-setup">
+<title
+>Testando a sua configuração</title>
+
+<para
+>Primeiro, você deverá enviar a si próprio uma mensagem para testar a sua configuração. Para enviar uma mensagem, você pode pressionar <keycombo action="simul"
+>&Ctrl;<keycap
+>N</keycap
+></keycombo
+>, selecionar o ícone <guiicon
+>Nova mensagem</guiicon
+> ou selecionar a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+><guimenuitem
+>Nova mensagem...</guimenuitem
+></menuchoice
+> do menu. A <link linkend="the-composer-window"
+>janela do compositor</link
+> irá então aparecer. Preencha o campo <guilabel
+>Para:</guilabel
+> com o seu endereço de e-mail e escreva algo no campo do <guilabel
+>Assunto</guilabel
+>. Envie a mensagem, selecionando a opção <menuchoice
+><guimenu
+>Mensagem</guimenu
+> <guimenuitem
+>Enviar mensagem</guimenuitem
+> </menuchoice
+>.</para>
+
+<para
+>Para verificar o seu e-mail, selecione <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Verificar e-mails</guimenuitem
+></menuchoice
+>. Na parte inferior direita, uma barra de progresso irá indicar quantas mensagens estão sendo transferidas. Se você recebeu a mensagem que enviou, então parabéns! Se, contudo, você obtiver alguma mensagem de erro ao testar a sua configuração, certifique-se de que a sua conexão à rede está funcionando e verifique novamente a sua configuração em <menuchoice
+><guimenu
+>Configuração</guimenu
+> <guimenuitem
+>Configurar o &kmail;...</guimenuitem
+></menuchoice
+>.</para>
+
+</sect1>
+
+</chapter>

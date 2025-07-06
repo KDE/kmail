@@ -5,7 +5,8 @@
 >Agent d'envoi différé</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % French "INCLUDE">
+  <!ENTITY % French "INCLUDE"
+> 
 ]>
 
 <article id="sendlateragent" lang="&language;">

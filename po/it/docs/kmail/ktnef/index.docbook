@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % Italian "INCLUDE"
+> <!-- change language only here -->
+]>
+
+<article id="ktnef" lang="&language;">
+
+<articleinfo id="ktnefinfo">
+<title
+>Manuale del visualizzatore di file TNEF</title>
+
+<authorgroup>
+<author
+><firstname
+>Michael</firstname
+> <surname
+>Goffioul</surname
+> <affiliation
+> <address
+><email
+>kde-print@kde.org</email
+></address>
+</affiliation>
+</author>
+
+<othercredit role="translator"
+><firstname
+>Luigi</firstname
+><surname
+>Toscano</surname
+><affiliation
+><address
+><email
+>luigi.toscano@tiscali.it</email
+></address
+></affiliation
+><contrib
+>Traduzione</contrib
+></othercredit
+> 
+
+</authorgroup>
+
+<copyright>
+<year
+>2000</year>
+<holder
+>&Michael.Goffioul;</holder>
+</copyright>
+<copyright>
+<year
+>2012</year>
+<holder
+>Allen Winter</holder>
+</copyright>
+
+<legalnotice
+>&FDLNotice;</legalnotice>
+
+<date
+>2016-07-27</date>
+<releaseinfo
+>5.3.40 (Applications 16.08)</releaseinfo>
+
+<abstract
+><para
+>Il visualizzatore di file TNEF è un'applicazione per gli allegati di posta in formato <ulink url="https://en.wikipedia.org/wiki/TNEF"
+>TNEF</ulink
+>.</para
+></abstract>
+
+<keywordset>
+<keyword
+>posta</keyword>
+<keyword
+>TNEF</keyword>
+
+</keywordset>
+
+</articleinfo>
+
+<sect1 id="introduction">
+	<title
+>Introduzione</title>
+
+	<para
+>Il visualizzatore di file TNEF consente di gestire facilmente allegati di posta elettronica in formato TNEF. Questi allegati si trovano di solito in messaggi di posta provenienti da server di posta <trademark class="registered"
+>Microsoft</trademark
+> e incorporano le proprietà del messaggio oltre agli allegati veri e propri.</para>
+		<para
+>Un allegato in formato TNEF molto spesso si chiama <filename
+>winmail.dat</filename
+> o <filename
+>win.dat</filename
+>.</para>
+<screenshot>
+<screeninfo
+>Finestra principale di TNEF</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="mainwindow.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Finestra principale di TNEF</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+	<para
+>Questo programma di utilità consente di effettuare varie operazioni su questo tipo di allegati:</para>
+	<itemizedlist>
+		<listitem
+><para
+>Visualizzare/aprire gli allegati con le applicazioni associate.</para
+></listitem>
+		<listitem
+><para
+>Estrarre il contenuto degli allegati</para
+></listitem>
+		<listitem
+><para
+>Visualizzare le proprietà dei messaggi (TNEF/MAPI)</para
+></listitem>
+		<listitem
+><para
+>Visualizzare/estrarre il testo ricco dei messaggi (in formato RTF)</para
+></listitem>
+	</itemizedlist>
+
+<para
+>&kmail; mostra automaticamente il contenuto degli allegati TNEF. Puoi aprire o salvare gli allegati usando le azioni del menu contestuale.</para>
+<screenshot>
+<screeninfo
+>Allegato TNEF in &kmail;</screeninfo>
+<mediaobject>
+<imageobject>
+<imagedata fileref="winmail_dat.png" format="PNG"/>
+</imageobject>
+<textobject>
+<phrase
+>Allegato TNEF in &kmail;</phrase>
+</textobject>
+</mediaobject>
+</screenshot>
+
+</sect1>
+
+<sect1 id="credits">
+	<title
+>Riconoscimenti e licenza</title>
+
+	<para
+>Visualizzatore di file TNEF (KTnef)</para>
+
+	<para
+>Copyright del programma 2000 &Michael.Goffioul; <email
+>kde-print@kde.org</email
+>.</para>
+	<para
+>Copyright del programma 2012 Allen Winter <email
+>winter@kde.org</email
+>.</para>
+
+<para
+>Traduzione di Luigi Toscano <email
+>luigi.toscano@tiscali.it</email
+></para
+> &underFDL; &underGPL; </sect1>
+
+</article>

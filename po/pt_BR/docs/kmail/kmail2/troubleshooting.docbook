@@ -1,0 +1,550 @@
+<chapter id="troubleshooting">
+
+<chapterinfo>
+<authorgroup>
+<author>
+<personname
+><firstname
+>Este capítulo foi convertido a partir da página <ulink url=" http://userbase.kde.org/KMail/FAQs Hints and Tips"
+>KMail/FAQs Hints and Tips</ulink
+> do UserBase do KDE.</firstname
+> <surname
+></surname
+> </personname>
+      </author>
+<othercredit role="translator"
+><firstname
+>André Marcelo</firstname
+> <surname
+>Alvarenga</surname
+><affiliation
+><address
+><email
+>alvarenga@kde.org</email
+></address
+></affiliation
+><contrib
+>Tradução</contrib
+></othercredit
+> 
+      </authorgroup>
+<date
+>28/07/2012</date>
+      <releaseinfo
+>&kde; SC 4.9</releaseinfo>
+</chapterinfo>
+
+<title
+>Solução de problemas do &kmail;</title>
+
+<sect1 id="kmail2-doesnt-send-mail"
+><title
+>O KMail não envia mensagens</title>
+<para
+>Alguns usuários notaram que a mensagem não sai e parece que o &SMTP; está ausente, ainda que na página de <guilabel
+>Configurações</guilabel
+> pareça tudo correto. Foi reportado que a solução para isto é abrir o <application
+>akonadiconsole</application
+> e adicionar o Agente de encaminhamento de mensagens. </para>
+<para
+>Se o computador foi desligado de forma repentina no modo de suspensão (&eg; por um corte de energia), algumas vezes os e-mails simplesmente ficam na caixa de saída sem serem enviados, mas também sem gerar qualquer mensagem de erro. Isto pode ser devido ao fato de que o Agente de despacho do e-mails esteja marcado como <quote
+>desligado</quote
+> no arquivo de configuração durante a suspensão, e não tenha sido alterado de volta devido à falha. Edite o seguinte arquivo: </para>
+<para
+><filename
+>~/.config/akonadi/agent_config_akonadi_maildispatcher_agent</filename>
+</para>
+<para
+>e altere </para>
+<para
+><screen
+>[Agent]
+Online=false</screen>
+</para>
+<para
+>para </para>
+<para
+><screen
+>[Agent]
+Online=true</screen>
+</para>
+</sect1>
+<sect1 id="clean-start-after-a-failed-migration"
+><title
+>Início limpo após uma migração sem sucesso</title>
+<para
+>No caso de uma migração do &kmail; 1 para o &kmail; 2 falhar, ou se você tiver problemas esquisitos logo após, é possível tentar fazer uma importação limpa dos seus dados, em vez de migrar a configuração existente. Lembre-se de que isso necessita de mais configurações manuais, então, somente faça isso se realmente estiver confiante com a configuração das suas contas do &kmail;, porque isto pode gerar uma enorme quantidade de tráfego de rede para os recursos &imap;. </para>
+<orderedlist>
+<listitem
+><para
+>Pare o Akonadi e os aplicativos relacionados</para>
+<para
+>saia do &kmail;/&kontact;/&korganizer;, e execute este comando: </para>
+<para
+><userinput
+><command
+>akonadictl stop</command
+></userinput>
+</para>
+<para
+>Certifique-se de que nenhum processo do <application
+>Akonadi</application
+> ou do <application
+>MySQL</application
+> esteja em execução: </para>
+<para
+><userinput
+><command
+>ps ux | grep mysql</command
+></userinput>
+</para>
+<para
+><userinput
+><command
+>ps ux | grep akonadi</command
+></userinput>
+</para>
+<para
+>Os comandos não deverão mostrar nada além do processo <application
+>grep</application
+> em si. </para>
+</listitem>
+<listitem
+><para
+>Remova o banco de dados antigo e a configuração do Akonadi</para>
+<para
+>Exclua as seguintes pastas </para>
+<itemizedlist>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.local/share/akonadi</filename>
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      <filename role="directory"
+>~/.config/akonadi</filename>
+    </para>
+  </listitem>
+</itemizedlist>
+<para
+>Exclua também os arquivos que começam por <emphasis
+>akonadi</emphasis
+> da pasta <filename role="directory"
+>~/.kde4/share/config</filename
+> </para>
+</listitem>
+<listitem>
+<para
+>Reinicie o servidor do Akonadi </para>
+<para
+><userinput
+><command
+>akonadictl start</command
+></userinput>
+</para>
+</listitem>
+<listitem>
+<para
+>Adicione as contas novamente </para>
+<para
+>Agora é momento de adicionar novamente a sua conta. Você pode usar o &kmail; (&kontact;) para isto, ou então pode usar a ferramenta <application
+>akonadiconsole</application
+>. </para>
+<para
+>No &kmail;: <menuchoice
+><guimenu
+>Configurações</guimenu
+><guisubmenu
+>Configurar o KMail</guisubmenu
+><guimenuitem
+>Contas</guimenuitem
+></menuchoice
+> e use o <guilabel
+>Adicionar</guilabel
+>. </para>
+<para
+>Se usar o &imap;, adicione um novo <guimenuitem
+>Servidor de e-mail &imap;</guimenuitem
+>. Se quiser o modo desconectado (para que possa ler os e-mails sem estar conectado), ative-o na aba <guilabel
+>Avançado</guilabel
+>. Certifique-se de verificar se você está inscrito em todas as suas pastas importantes. </para>
+<para
+>Você já pode ver um recurso de <guilabel
+>Pasta local</guilabel
+>. Este aponta para uma pasta maildir local. É possível modificar isto para apontar para as suas pastas existentes ou poderá adicionar um novo recurso para os e-mails locais. </para>
+<para
+>Ao adicionar um recurso de maildir, você pode selecionar entre <guilabel
+>Pasta de correio do &kmail;</guilabel
+> ou <guilabel
+>Maildir</guilabel
+>. A menos que tenha uma pasta contendo <emphasis
+>ambos</emphasis
+> tipos de pasta (maildir e mbox), você deve selecionar <guilabel
+>Maildir</guilabel
+>. Para arquivos mbox independentes, como os existentes em <filename role="directory"
+>/var/spool/mail</filename
+>, você pode configurar uma nova pasta <emphasis
+>MBox</emphasis
+>. </para>
+<para
+>Adicione também as contas POP3. Se possuir várias pastas locais configuradas, selecione na aba <guilabel
+>Avançado</guilabel
+> a pasta de destino para onde as novas mensagens serão colocadas. </para>
+<para
+>Para todas as contas, configurar o intervalo de verificação de mensagens. Para as pastas locais, desative o intervalo de verificação e também desative a opção <guilabel
+>Incluir nas verificações manuais de e-mails</guilabel
+> nas <guilabel
+>Opções de recuperação</guilabel
+>. </para>
+<para
+>Adicionar as contas de envio (SMTP). </para>
+</listitem>
+<listitem>
+<para
+>Corrigir seus filtros, identidades e pastas favoritas </para>
+<para
+>Se você tiver filtragem no lado cliente (comum com mensagens POP3), vá para <menuchoice
+><guimenu
+>Configurações</guimenu
+><guimenuitem
+>Configurar filtros</guimenuitem
+></menuchoice
+> e corrija a pasta de destino para os filtros. Elas provavelmente estarão erradas. Caso contrário, as mensagens irão para pastas que você não espera. </para>
+<para
+>O filtro de spam (pelo menos na versão 4.7.3 e anteriores) não funciona como esperado e a regra criada pelo assistente não envia o spam para a pasta que você definiu. </para>
+<para
+>A correção para isto é alterar os filtros <quote
+>spam</quote
+> e o <quote
+>spam unsure</quote
+> (se o seu filtro de spam tiver suporte) para que ao invés de procurarem nos campos de status do cabeçalho por <literal
+>X-Spam-Status</literal
+> procurem <guimenuitem
+>Em algum lugar no cabeçalho</guimenuitem
+> por X-<replaceable
+>seu filtro de spam</replaceable
+>-Classification: <quote
+>SPAM or unsure</quote
+>. Procure nos filtros que o assistente cria e copie a parte <quote
+>contém</quote
+>. Exemplo para o <application
+>Spambayes</application
+>: <quote
+>X-Spambayes-Classification: spam</quote
+> and <quote
+>X-Spambayes-Classification: unsure</quote
+>. </para>
+<para
+>Você também precisa verificar as configurações de identidade para definir as pastas para mensagens enviadas, rascunhos e modelos corretamente. Para fazer isto, vá para <menuchoice
+><guimenu
+>Configurações</guimenu
+><guisubmenu
+>Configurar o KMail</guisubmenu
+><guimenuitem
+>Identidades</guimenuitem
+></menuchoice
+>, modifique a identidade, vá para a aba <guilabel
+>Avançado</guilabel
+> e modifique as configurações de pasta mencionadas acima. </para>
+<para
+>Verifique também se suas <guilabel
+>Pastas favoritas</guilabel
+> são as que você escolheu anteriormente. </para>
+</listitem>
+<listitem>
+<para
+>Inicie uma verificação de correio </para>
+<para
+>Inicie uma verificação em suas contas. Sugere-se fazer isto conta à conta. </para>
+<para
+>Primeiro tente com o &imap;, se você tiver. </para>
+<para
+>A seguir, verifique (importe) suas mensagens locais. Uma solução é realizar uma verificação completa em <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Verificar e-mails em</guimenuitem
+></menuchoice
+> e selecione a conta local. Outra solução é clicar as pastas uma a uma, o que deve iniciar a verificação para aquela pasta (alternativamente, clique com o botão direito na pasta e selecione <guilabel
+>Atualizar a pasta</guilabel
+>). </para>
+<para
+>A importação inicial pode ser lenta e pode usar muita memória, especialmente se você possuir pastas com uma grande quantidade de mensagens. Neste caso, a verificação por pasta é preferível. Se a verificação (completa ou pasta a pasta) tenha terminado e o uso de memória permanece alto, você pode iniciar o servidor Akonadi &mdash; como mostrado acima &mdash; ou apenas o agente de correio, se você usar o <varname
+>akonadiconsole</varname
+>. Não se preocupe, este uso grande de memória é <emphasis
+>somente</emphasis
+> para a importação inicial. </para>
+<para
+>Inicie a verificação de correio nos recursos POP3. </para>
+</listitem>
+</orderedlist>
+<para
+>Esperamos que após estes passos você tenha uma experiência muito melhor com o &kmail;. </para>
+</sect1>
+
+<sect1 id="local-folders-is-added-over-and-over"
+><title
+>As pastas locais são adicionadas várias vezes</title>
+<para
+>Em alguns casos, você poderá acabar com uma conta 'maildir' que aponta para um determinado local (do tipo <filename
+>$HOME/Mail</filename
+>), mas poderá ver ainda uma pasta <guilabel
+>Pastas Locais</guilabel
+> na lista de pastas com as subpastas Caixa de entrada/Caixa de saída/Lixo/Rascunhos/&etc;, continuando o &kmail; a adicionar mensagens aí, especialmente as mensagens enviadas. </para>
+<para
+>O problema é que certas pastas estão marcadas como pastas especiais (do sistema) e, caso não as tenha, o &kmail; não poderá funcionar corretamente. Essa é a razão pela qual ele tenta criar de novo essa pasta. </para>
+<para
+>Atualmente, não existe uma forma simples de alterar isto na interface para todos os tipos de pastas especiais. Aqui está o que você poderá fazer: </para>
+<orderedlist>
+<listitem
+><para
+>A pasta de correio <emphasis
+>enviado, rascunhos e modelos</emphasis
+> pode ser configurada para cada identidade. Para fazer isso, vá em <menuchoice
+><guimenu
+>Configurações</guimenu
+><guisubmenu
+>Configurar o KMail</guisubmenu
+><guimenuitem
+>Identidades</guimenuitem
+></menuchoice
+>, modifique a identidade, vá para a página <guilabel
+>Avançado</guilabel
+> e modifique as definições de pastas mencionadas acima.</para
+></listitem>
+<listitem
+><para
+>A pasta de correio <emphasis
+>caixa de entrada</emphasis
+> padrão pode ser configurada para cada conta POP3. Para fazer isso, vá para <menuchoice
+><guimenu
+>Configurações</guimenu
+><guisubmenu
+>Configurar o KMail</guisubmenu
+><guimenuitem
+>Identidades</guimenuitem
+></menuchoice
+>, modifique a identidade, vá para a página <guilabel
+>Avançado</guilabel
+> e mude a <guilabel
+>Pasta de destino</guilabel
+>.</para
+></listitem>
+<listitem
+><para
+>Para as contas de IMAP, você poderá configurar a pasta do <emphasis
+>Lixo</emphasis
+>. Faça como indicado acima. O nome da opção é a <emphasis
+>Pasta do lixo</emphasis
+>.</para
+></listitem>
+<listitem
+><para
+>A parte mais problemática é a pasta <emphasis
+>caixa de saída</emphasis
+>. Primeiro, localize o <filename
+>specialmailcollectionsrc</filename
+> na sua pasta de configuração do &kde; <filename
+>$HOME/.kde4/share/config</filename
+> ou algo semelhante). Contém algo do tipo:</para
+></listitem>
+</orderedlist>
+<para
+><userinput
+>[SpecialCollections] DefaultResourceId=akonadi_maildir_resource_0</userinput>
+</para>
+<para
+>Agora inicie o <application
+>akonadiconsole</application
+>; na aba <guilabel
+>Agentes</guilabel
+>, localize a sua conta local para a pasta <emphasis
+>caixa de saída</emphasis
+>, clique nela e aponte o identificador que aparece na parte inferior (<replaceable
+>akonadi_maildir_resource_XXX</replaceable
+> ou algo do gênero). Coloque esse identificador no arquivo <filename
+>specialmailcollectionsrc</filename
+> apresentado acima, substituindo o existente. </para>
+<para
+>Depois disso, reinicie o <application
+>akonadi</application
+> (você pode fazer isso no <application
+>akonadiconsole</application
+>, <menuchoice
+><guimenu
+>Servidor</guimenu
+><guimenuitem
+>Reiniciar o servidor</guimenuitem
+></menuchoice
+> ou a partir da linha de comando com: </para>
+<para
+><userinput
+>akonadictl restart</userinput>
+</para>
+<para
+>Agora remova as <guilabel
+>Pastas locais</guilabel
+> que não deseja usar mais. </para>
+<para
+>Se continuar a aparecer de novo e o <guilabel
+>Agente de despacho de correio</guilabel
+> continuar a estourar, é necessário fazer mais uma coisa no <application
+>akonadiconsole</application
+>. Vá para a página <guilabel
+>Navegador</guilabel
+>, procure a caixa de saída que <emphasis
+>deseja</emphasis
+> usar, clique com o botão direito nela, selecione <guilabel
+>Propriedades da pasta</guilabel
+>, <guilabel
+>Atributos</guilabel
+>, insira <userinput
+>SpecialCollectionAttribute</userinput
+> e depois clique em <guilabel
+>Adicionar</guilabel
+>, faça duplo-clique sobre o <guilabel
+>Valor</guilabel
+>, perto de <guilabel
+>SpecialCollectionAttribute</guilabel
+> e escreva <userinput
+>outbox</userinput
+>. Adicione também outro atributo, cujo nome terá que ser <guilabel
+>ENTITYDISPLAY</guilabel
+> e o valor igual a <userinput
+>("outbox" "mail-folder-outbox" "" ())</userinput
+> (pode simplesmente colar a partir daqui). Reinicie o <application
+>akonadi</application
+> e deverá então ser capaz de remover a conta de pastas locais indesejada. </para>
+</sect1>
+
+<sect1 id="you-get-the-error-unable-to-fetch-item-from-backend-when-entering-imap-folder"
+><title
+>Você obtém o erro 'Incapaz de obter o item da infra-estrutura ao entrar na pasta de IMAP'</title>
+<para
+>Existe um conjunto de razões possíveis para isto e é algo que a equipe do &kmail; espera resolver tão logo possível. Entretanto, existem algumas soluções alternativas: </para>
+<variablelist>
+  <varlistentry>
+    <term
+>Alternativa 1</term>
+    <listitem>
+      <itemizedlist>
+        <listitem
+><para
+>edite <filename
+>~/.local/share/akonadi/mysql.conf</filename
+></para
+></listitem>
+        <listitem
+><para
+>Na seção <guilabel
+>[mysql]</guilabel
+>, adicione: <userinput
+>binlog_format=row</userinput
+></para
+></listitem>
+      </itemizedlist>
+      <para
+>Se isto não funcionar, tente a solução 2 (abaixo). </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term
+>Alternativa 2</term>
+    <listitem>
+      <para
+>Esta é mais uma questão de reiniciar, para que o &kmail; possa obter estes itens específicos... Alguns passos possíveis:</para>
+      <para
+>Use <keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+> ou o &konsole; para digitar: <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>, então espere um minuto, então <userinput
+><command
+>akonadictl stop</command
+></userinput
+>, espere um minuto, digite <userinput
+><command
+>akonadictl start</command
+></userinput
+>, espere um minuto, digite <userinput
+><command
+>kmail</command
+></userinput
+>. Isto interrompe o &kmail; (fechando <emphasis
+>todas</emphasis
+> as janelas), para as infraestruturas do &kmail;, inicia as infraestruturas do &kmail;, inicia o &kmail;. Ter uma conexão com a Internet ativa aumenta a chance de sucesso. Algumas vezes, você pode também apenas fazer um <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>, esperar um minuto, e iniciar o &kmail; novamente. Frequentemente, algumas reinicializações podem ser necessárias. Não está claro qual a razão disto, mas em conexões ruins de rede, isto é mais provável de ocorrer. </para>
+    </listitem>
+  </varlistentry>
+</variablelist>
+<para
+>Veja também o item abaixo sobre como o <application
+>akonadiconsole</application
+> pode ser útil. </para>
+</sect1>
+
+<sect1 id="your-mails-are-not-being-sent-without-error-messages"
+><title
+>As suas mensagens não estão sendo enviadas, mas também não aparecem mensagens de erro</title>
+<para
+>Se o &kmail; não enviar nada mas também não indicar nenhum erro, o <quote
+>agente</quote
+> responsável por despachar as mensagens poderá estar bloqueado. Obviamente, você terá que certificar-se de que possui uma conexão adequada à rede para enviar o correio! </para>
+<para
+>Para remediar isto, pode ser útil cancelar a ação atual e reiniciá-la. Primeiramente, saia do &kmail; usando o &krunner; (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) ou o &konsole; e digitando: <userinput
+><command
+>kquitapp kmail</command
+></userinput
+>. Note que um <keycombo
+>&Alt;<keycap
+>F4</keycap
+></keycombo
+> ou <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Sair</guimenuitem
+></menuchoice
+> normais <emphasis
+>não</emphasis
+> resolvem o problema! Espere um minuto, e então inicie o &kmail; novamente. Agora inicie o <application
+>akonadiconsole</application
+> usando o &krunner; (<keycombo
+>&Alt;<keycap
+>F2</keycap
+></keycombo
+>) ou o &konsole;. Vá para o <guilabel
+>Agente de despacho de correio</guilabel
+>, dê um clique-direito e cancele a ação atual. Você provavelmente obterá algumas mensagens de erro. Retorne para o &kmail; e selecione <menuchoice
+><guimenu
+>Arquivo</guimenu
+><guimenuitem
+>Enviar mensagens em espera</guimenuitem
+></menuchoice
+>. Agora deve funcionar. Caso contrário, ao invés de cancelar a ação atual, tente alternar o status do <guilabel
+>Agente de despacho de correio</guilabel
+> entre off-line e on-line ou reinicie coisas como as mencionadas na alternativa 2 do problema acima deste. </para>
+<para
+><note
+><para
+>O akonadiconsole pode ser bem útil em diversas situações uma vez que ele exibe todos os <quote
+>agentes</quote
+>, os componentes individuais da infraestrutura do &kmail;. Você pode pará-los e iniciá-los, colocá-los no modo desconectado, cancelar ações em curso &etc; Ele pode ser muito útil quando as coisas ficam travadas.</para
+></note>
+</para>
+</sect1>
+
+</chapter>

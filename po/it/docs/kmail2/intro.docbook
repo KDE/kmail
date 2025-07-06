@@ -118,10 +118,10 @@
 <sect2 id="getting-help">
 <title
 >Ricevere aiuto</title>
-
+ 
 <para
->La pagina home di &kmail; si trova a <ulink url="https://apps.kde.org/kmail2/"
->https://apps.kde.org/kmail2/</ulink
+>La pagina home di &kmail; si trova a <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail"
+>https://userbase.kde.org/KMail</ulink
 >. Contiene molti collegamenti utili (&eg; le mailing-list degli utenti e degli sviluppatori, e le pagine wiki dalla comunità). Segnala ogni problema di funzionamento di &kmail; usando <menuchoice
 ><guimenu
 >Aiuto</guimenu
