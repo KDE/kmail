@@ -12,20 +12,20 @@
 # Kristof Bal <kristof.bal@gmail.com>, 2009.
 # Jaap Woldringh <jjh.woldringh@planet.nl>, 2009, 2011.
 # Hannie Dumoleyn <hannie@kde.nl>, 2011.
-# SPDX-FileCopyrightText: 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Freek de Kruijf <freekdekruijf@kde.nl>
+# SPDX-FileCopyrightText: 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-07-01 12:04+0200\n"
+"PO-Revision-Date: 2024-11-19 11:36+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 24.08.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -35,7 +35,7 @@ msgstr ""
 "Fabrice Mous - 2003,Wilbert Berendsen - 2003; 2004,Bram Schoenmakers - 2004 "
 "t/m 2007,Tom Albers - 2004,Rinse de Vries - 2000 t/m 2008,Wilbert Berendsen "
 "- 2005, Antoon Tolboom - 2008, Jaap Woldringh - 2009,Freek de Kruijf - 2009 "
-"t/m 2025"
+"t/m 2024"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -356,10 +356,12 @@ msgid "Mailing List"
 msgstr "E-maillijst"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Folder holds a mailing list"
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Map bevat een enkele e-maillijst"
+msgstr "Map bevat een discussiegroep"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -3474,20 +3476,24 @@ msgid "&Templates folder:"
 msgstr "Sja&bloonmap:"
 
 #: identity/identitydialog.cpp:710
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Select Draft Folder"
 msgid "Select Spam Folder"
-msgstr "Spammap selecteren"
+msgstr "Map voor concepten selecteren"
 
 #: identity/identitydialog.cpp:712
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@option:check"
+#| msgid "Sent-mail &folder:"
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Spam&map:"
+msgstr "Map voor verzonden berich&ten:"
 
 #: identity/identitydialog.cpp:715
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Configure &POP Filters..."
 msgid "Configure Expire Folder..."
-msgstr "Verlopen van map configureren..."
+msgstr "&POP-filters instellen..."
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3722,10 +3728,11 @@ msgid "Do Not Cancel"
 msgstr "Niet annuleren"
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Expire Folder"
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Spammap laten verlopen"
+msgstr "Map laten verlopen"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -4596,10 +4603,11 @@ msgid "Unable to start import wizard"
 msgstr "De assistent voor importeren kon niet worden gestart"
 
 #: kmmainwidget.cpp:1386
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "(no templates)"
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(Bezig sjablonen te laden…)"
+msgstr "(geen sjablonen)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5405,10 +5413,11 @@ msgid "&Add Account…"
 msgstr "&Account toevoegen…"
 
 #: kmmainwidget.cpp:3466
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "What's next?"
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Wat is nieuw"
+msgstr "Wat komt er nu?"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -6040,9 +6049,10 @@ msgid "Kontact Summary View"
 msgstr "Kontactoverzichtsweergave"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "(c) 2003-2024 The Kontact developers"
 msgid "© 2003-2025 The Kontact developers"
-msgstr "© 2003-2025, de ontwikkelaars van Kontact"
+msgstr "(c) 2003-2024, de ontwikkelaars van Kontact"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -8152,12 +8162,14 @@ msgid "Unable to start account wizard"
 msgstr "Account-assistent kon niet worden gestart"
 
 #: whatsnew/whatsnewtranslations.cpp:16
+#, fuzzy
+#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Nieuw widget Wat-is-nieuw toevoegen."
+msgstr "Een nieuwe identiteit toevoegen"
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr "Nieuwe plug-in: grootte van verzameling tonen."
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -8243,30 +8255,15 @@ msgstr "Zoomen: %1%"
 #~ msgid "Display KMail's Welcome Page"
 #~ msgstr "Welkomstpagina van KMail tonen"
 
+#~ msgid "Serverside Subscription…"
+#~ msgstr "Inschrijving aan de kant van de server…"
+
 #~ msgid ""
 #~ "KMail is now based on the Akonadi Personal Information Management "
 #~ "framework, which brings many changes all around."
 #~ msgstr ""
 #~ "Kmail is nu gebaseerd op het raamwerk Akonadi Persoonlijk "
 #~ "informatiebeheer, hetgeen veel veranderingen met zich meebrengt."
-
-#~ msgid "Add Windows Support"
-#~ msgstr "Ondersteuning voor Windows toevoegen"
-
-#~ msgid "Add Custom Syntax usable in the search text field"
-#~ msgstr "Aangepaste syntaxis toevoegen bruikbaar in het zoektekstveld"
-
-#~ msgid "Adblock public used new rust adblock lib"
-#~ msgstr "Adblock-publiek gebruikte nieuwe rust-adblock-lib"
-
-#~ msgid "Allow to reopen closed viewer"
-#~ msgstr "Toestaan gesloten viewer opnieuw te openen"
-
-#~ msgid "Allow to configure spam folder in identity"
-#~ msgstr "Toestaan spammap in identiteit te configureren"
-
-#~ msgid "Add AI plugin"
-#~ msgstr "AI-plug-in toevoegen"
 
 #~ msgid "Push email (IMAP IDLE)"
 #~ msgstr "Push e-mail (IMAP IDLE)"
@@ -8308,8 +8305,11 @@ msgstr "Zoomen: %1%"
 #~ msgstr ""
 #~ "Ondersteuning voor Microsoft Exchange Web Services hulpbron toegevoegd"
 
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Inschrijving aan de kant van de server…"
+#~ msgid "Add Windows Support"
+#~ msgstr "Ondersteuning voor Windows toevoegen"
+
+#~ msgid "Add Custom Syntax usable in the search text field"
+#~ msgstr "Aangepaste syntaxis toevoegen bruikbaar in het zoektekstveld"
 
 #~ msgid ""
 #~ "Could not start the import wizard. Please make sure you have ImportWizard "

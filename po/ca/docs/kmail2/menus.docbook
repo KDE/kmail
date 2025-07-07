@@ -534,7 +534,7 @@
 > en els Fonaments del &kde;. Els elements llistats aquí són específics del &kmail;.</para>
 
 <variablelist>
-    
+
 <varlistentry id="reader-edit-copy-folder">
   <term
 ><menuchoice
@@ -787,7 +787,7 @@
   <listitem
 ><para
 >Aquest submenú disposa de les opcions següents per a canviar l'aparença de la llista de missatges.</para>
-    
+
     <variablelist>
     <varlistentry id="reader-view-messagelist-sorting">
       <term
@@ -812,7 +812,7 @@
 >Per remitent/destinatari intel·ligents</guilabel
 > mostrarà el destinatari quan esteu visualitzant el correu enviat, i mostrarà el remitent quan esteu visualitzant a la safata d'entrada.</para
 ></listitem>
-    
+
             <listitem
 ><para
 ><guilabel
@@ -825,7 +825,7 @@
 ></listitem>
           </itemizedlist>
         </listitem>
-        
+
         <listitem
 ><para
 ><guilabel
@@ -843,7 +843,7 @@
         </itemizedlist>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-aggregation">
       <term
 ><menuchoice
@@ -864,7 +864,7 @@
 >).</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-theme">
       <term
 ><menuchoice
@@ -885,7 +885,7 @@
 >).</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-create-new-tab">
       <term
 ><menuchoice
@@ -904,7 +904,7 @@
 >Crea una pestanya nova a la barra d'eines de pestanyes. Aquesta pestanya apuntarà a la carpeta que veieu quan se selecciona l'opció. Si la barra d'eines de pestanyes encara no és visible, es crearà en seleccionar aquesta opció. La barra d'eines de pestanyes pot ser útil si teniu moltes carpetes, però només si hi accediu amb regularitat.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-next-tab">
       <term
 ><menuchoice
@@ -921,7 +921,7 @@
 >Obre la carpeta associada amb la pestanya següent a la barra d'eines de pestanyes.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-previous-tab">
       <term
 ><menuchoice
@@ -938,7 +938,7 @@
 >Obre la carpeta associada amb la pestanya anterior a la barra d'eines de pestanyes.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-left">
       <term
 ><menuchoice
@@ -951,7 +951,7 @@
 >Reordena les pestanyes a la barra d'eines de pestanyes desplaçant la pestanya activa cap a l'esquerra. Si aquesta pestanya ja hi està, es mourà a la posició de l'extrem dret.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-right">
       <term
 ><menuchoice
@@ -964,7 +964,7 @@
 >Reordena les pestanyes a la barra d'eines de pestanyes desplaçant la pestanya activa cap a la dreta. Si aquesta pestanya ja hi està, es mourà a la posició de l'extrem esquerre.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-close-tab">
       <term
 ><menuchoice
@@ -2144,7 +2144,7 @@
 >Nom de la llista de correu: &gt;</guimenuitem
 ></menuchoice
 ></term>
-  
+
   <listitem
 ><para
 >Ofereix diverses opcions per als missatges de llistes de correu.</para>
@@ -2159,7 +2159,7 @@
 ><!-- add whitespace -->
   <para
 >En les carpetes de llista de correu hi ha disponibles les opcions següents:</para>
-  
+
   <itemizedlist>
     <listitem
 ><para
@@ -2218,7 +2218,7 @@
 >.</para
 ></listitem>
   </itemizedlist>
-  
+
   <para
 >&nbsp;</para
 ><!-- add whitespace --></listitem>
@@ -2342,7 +2342,7 @@
     <entry
 >Aquest estat no l'estableix automàticament el &kmail;. Podeu emprar-lo lliurement per a marcar missatges que són importants per algun motiu.</entry
 ></row>
- 
+
     <row>
     <entry
 ><guimenuitem
@@ -2420,7 +2420,7 @@
 >Significat</entry
 ></row
 ></thead>
-    
+
     <tbody>
     <row>
     <entry
@@ -2466,7 +2466,7 @@
     <entry
 >Aquest estat no l'estableix automàticament el &kmail;. Podeu emprar-lo lliurement per a marcar els fils de conversa que són importants per algun motiu.</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2496,7 +2496,7 @@
     <entry
 >Aquest estat no l'estableix automàticament el &kmail;. El podeu utilitzar amb llibertat per a marcar els fils de conversa que són elements d'acció (&pex;, una llista de tasques pendents).</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2532,7 +2532,7 @@
 ></inlinemediaobject
 >).</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2548,7 +2548,7 @@
 >Permet ignorar tot el fil de conversa.</entry
 ></row>
     </tbody>
-    
+
   </tgroup
 ></informaltable>
   <para
@@ -2694,8 +2694,7 @@
 >&nbsp;</para
 ></listitem>
 </varlistentry>
-</variablelist
-> 
+</variablelist>
 
 </sect2>
 
@@ -3278,7 +3277,7 @@
 > to add a new contact your addressbook.</para
 ></listitem>
 </varlistentry
-> Thes options not available in 5.14.2 @dcb2021088. -->
+> These options not available in 5.14.2 @dcb2021088. -->
 
 <varlistentry id="composer-message-send-mail">
   <term
@@ -3722,7 +3721,7 @@
 >Convert the selected text to lowercase.</para
 ></listitem>
 </varlistentry
-> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
 
 <varlistentry id="composer-edit-insert-special-character">
   <term
@@ -3738,7 +3737,7 @@
 >Permet inserir un caràcter especial a la posició del cursor. Hi ha disponible una gran quantitat de caràcters Unicode. Aquesta opció només es proporcionarà si s'ha activat el connector <guimenuitem
 >Insereix un caràcter especial</guimenuitem
 >.</para>
-  
+
   <para
 >Aquest element de menú s'ha traslladat en la versió 5.17 al menú <guimenu
 >Insereix</guimenu
@@ -3926,7 +3925,7 @@
 >, segons sigui necessari. Per a obtenir més detalls sobre les capçaleres dels missatges, vegeu <link linkend="composer-headers"
 >Capçaleres de l'editor</link
 >.</para>
-  
+
 <para
 >&nbsp;</para>
 
@@ -3966,7 +3965,7 @@
 >&nbsp;</para
 ></listitem>
   </varlistentry>
-  
+
 </variablelist>
 
 </sect2>
@@ -4478,7 +4477,7 @@
 >Si no trobeu l'element de menú que cerqueu, vegeu <ulink url="help:/fundamentals/menus.html#menus-tools"
 >El menú Eines</ulink
 > en els Fonaments del &kde;. Els elements llistats aquí són específics del &kmail;.</para>
-  
+
 <variablelist>
   <varlistentry id="composer-tools-select-recipients">
   <term
@@ -4620,7 +4619,7 @@
 >Si no trobeu l'element de menú que cerqueu, vegeu <ulink url="help:/fundamentals/menus.html#menus-settings"
 >El menú Arranjament</ulink
 > en els Fonaments del &kde;. Els elements llistats aquí són específics del &kmail;.</para>
-  
+
 <variablelist>
 <varlistentry id="composer-settings-toolbars">
   <term

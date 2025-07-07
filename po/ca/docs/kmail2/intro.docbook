@@ -104,10 +104,10 @@
 <sect2 id="getting-help">
 <title
 >Obtenir ajuda</title>
- 
+
 <para
->La pàgina web del &kmail; es troba a <ulink url="https://userbase.kde.org/KMail/ca"
->https://userbase.kde.org/KMail/ca</ulink
+>La pàgina web del &kmail; es troba a <ulink url="https://apps.kde.org/ca/kmail2/"
+>https://apps.kde.org/ca/kmail2/</ulink
 >. Allí trobareu enllaços d'utilitat (&pex;, llistes de correu per a usuaris i desenvolupadors, i a les pàgines wiki de la comunitat). Si us plau, informeu dels errors al &kmail; emprant <menuchoice
 ><guimenu
 >Ajuda</guimenu

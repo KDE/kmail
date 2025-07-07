@@ -75,7 +75,7 @@
 >, de manera que l'assistent intentarà recuperar la informació necessària des del servidor. Desmarqueu-la si sou un usuari expert i necessiteu establir una configuració avançada. Feu clic al botó <guibutton
 >Següent</guibutton
 > una vegada hàgiu finalitzat.</para>
-    
+
     <screenshot>
     <screeninfo
 >Assistent de comptes</screeninfo>
@@ -93,21 +93,21 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <note
 ><para
 >Els comptes de GMail han d'utilitzar &IMAP;. Si heu habilitat la verificació en dos passos per al vostre compte de GMail, haureu d'obtenir un codi de verificació de Google com a part del procés de configuració inicial del compte. No haureu de realitzar la verificació de dos factors una vegada s'hagi creat el compte al &kmail;, perquè Google marca l'enllaç &IMAP; com de total confiança.</para
 ></note>
-    
+
     <para
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
   <step id="GPG-security">
-    
+
     <para
 >La següent pantalla us ajudarà a configurar les claus d'encriptatge per al vostre correu.</para>
-    
+
     <screenshot>
     <screeninfo
 >Assistent de comptes 2</screeninfo>
@@ -125,7 +125,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Si voleu assegurar la vostra comunicació amb GnuPG, podeu generar una clau nova i publicar-la en un servidor de claus públic o importar-ne una d'existent. Si decidiu generar un parell nou de claus, no oblideu la contrasenya que s'utilitza per a generar-la. La necessitareu cada vegada que vulgueu fer servir la clau. </para>
     <para
@@ -134,7 +134,7 @@
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
-  
+
   <step id="Select-account-type">
     <para
 >Apareixerà una pantalla <guilabel
@@ -144,7 +144,7 @@
 > per a veure la configuració que ha establert el &kmail;. Feu clic al botó <guibutton
 >Finalitza</guibutton
 > per a configurar el compte, completar l'assistent i tancar la finestra. </para>
-    
+
     <screenshot>
     <screeninfo
 >Assistent de comptes 3</screeninfo>
@@ -162,7 +162,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Si l'assistent no pot determinar el tipus de compte, apareixerà la pantalla <guilabel
 >Seleccioneu el tipus de compte</guilabel
@@ -177,15 +177,14 @@
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
-  
+
   <step id="Personal-settings">
-      
+
     <para
 >Si l'assistent no ha pogut localitzar el servidor de correu electrònic cercant a Internet, apareixerà la pantalla <guibutton
 >Configuració personal</guibutton
->.</para
->  
-        
+>.</para>
+
     <screenshot>
     <screeninfo
 >Assistent de comptes 4</screeninfo>
@@ -203,7 +202,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Assegureu-vos d'introduir tota aquesta informació correctament. Seleccioneu <guilabel
 >Descarrega tots els missatges per a ús fora de línia</guilabel
@@ -212,7 +211,7 @@
 > una vegada hàgiu finalitzat. Apareixerà la pantalla <guilabel
 >S'ha completat l'arranjament</guilabel
 >.</para>
-    
+
     <para
 >El vostre compte estarà configurat, i podeu fer clic al botó <guibutton
 >Finalitza</guibutton
@@ -224,7 +223,7 @@
 > <!-- whitespace -->
   </step>
 </procedure>
-  
+
   <para
 >Si voleu crear manualment un compte, continueu llegint aquest capítol. En cas contrari, el podeu ometre de forma segura anant a <link linkend="testing-your-setup"
 >Comprovar la configuració</link
@@ -255,7 +254,7 @@
   <para
 >&nbsp;</para
 > <!-- whitespace -->
-  
+
   <para
 >La finestra de configuració <menuchoice
 ><guimenu
@@ -303,7 +302,7 @@
 > associada amb la pàgina <guilabel
 >Comptes</guilabel
 >. Apareixerà una petita finestra emergent.</para>
-  
+
     <screenshot>
     <screeninfo
 >El diàleg Identitat nova</screeninfo>
@@ -321,7 +320,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-    
+
     <para
 >Aquí teniu algunes opcions. Doneu un nom a la nova identitat i seleccioneu una de les opcions disponibles (<guilabel
 >Amb els camps buits</guilabel
@@ -333,7 +332,7 @@
     <para
 >&nbsp;</para
 > <!-- whitespace -->
-    
+
     <screenshot>
     <screeninfo
 >El diàleg Identitat nova continua</screeninfo>
@@ -354,7 +353,7 @@
     <para
 >&nbsp;</para
 > <!-- whitespace -->
-    
+
     <para
 >Les opcions de la pestanya <guilabel
 >General</guilabel
@@ -418,7 +417,7 @@
 >Enviar missatges</title>
   <para
 >Aquí teniu una manera de crear un compte de correu sortint.</para>
-  
+
   <screenshot>
     <screeninfo
 >Seleccions del Compte sortint</screeninfo>
@@ -533,7 +532,7 @@
 >), si us plau, vegeu la <link linkend="faq-file-locking"
 >&PMF; sobre el blocatge d'un fitxer</link
 >.</para>
-    
+
   <screenshot>
     <screeninfo
 >El diàleg de configuració de la recepció</screeninfo>
@@ -553,7 +552,7 @@
     </screenshot>
     <para
 >&nbsp;</para
-> <!-- whitespace -->  
+> <!-- whitespace -->
 
   <para
 >Si trieu &POP3; o &IMAP;, apareixerà una finestra de configuració per al compte. Primer, ompliu el camp <guilabel
@@ -589,7 +588,7 @@
 > a la pestanya de configuració <guilabel
 >Avançat</guilabel
 >, el &kmail; eliminarà del servidor els missatges suprimits tan aviat com abandoneu la carpeta a on es troben. D'altra manera els missatges tan sols es marcaran com a suprimits i haureu de compactar manualment les carpetes.</para>
-    
+
   </sect3>
 
 
@@ -598,15 +597,14 @@
 >Opcions tan sols de rellevància per a <acronym
 >POP3</acronym
 ></title>
-      
+
     <para
 >Seleccioneu <guilabel
 >Deixa els missatges recuperats al servidor</guilabel
 > a la pestanya de configuració <guilabel
 >Avançat</guilabel
-> si voleu deixar els missatges al servidor després d'haver-los descarregat. Hi ha set maneres d'especificar quant de temps es conservaran els missatges antics després de descarregar-los: indefinidament (deixeu totes les opcions sense seleccionar), o nombre de dies / nombre de missatges / mida màxima de la safata d'entrada a la banda del servidor (trieu-ne una, dues o les tres). Si aquest quadre no està marcat, tots els missatges s'esborraran immediatament del servidor remot una vegada es completi la descàrrega.</para
->  
-  
+> si voleu deixar els missatges al servidor després d'haver-los descarregat. Hi ha set maneres d'especificar quant de temps es conservaran els missatges antics després de descarregar-los: indefinidament (deixeu totes les opcions sense seleccionar), o nombre de dies / nombre de missatges / mida màxima de la safata d'entrada a la banda del servidor (trieu-ne una, dues o les tres). Si aquest quadre no està marcat, tots els missatges s'esborraran immediatament del servidor remot una vegada es completi la descàrrega.</para>
+
     <para
 >A la pestanya <guilabel
 >Avançat</guilabel
@@ -635,7 +633,7 @@
 >Opcions tant per a &IMAP; com <acronym
 >POP3</acronym
 ></title>
-    
+
     <para
 >A la pestanya <guilabel
 >Recepció</guilabel
@@ -656,7 +654,7 @@
 >Comprova el correu a &gt;</guimenuitem
 ></menuchoice
 >.</para>
-    
+
     <para
 >El &kmail; accepta l'encriptatge mitjançant <guilabel
 >SSL/TLS</guilabel
@@ -748,7 +746,7 @@
 >. L'autenticació <guilabel
 >Gmail</guilabel
 > només està disponible per als comptes &IMAP; que utilitzen el servei GMail de Google.</para>
-  
+
     <para
 >Utilitzeu el botó <guibutton
 >Detecció automàtica</guibutton
