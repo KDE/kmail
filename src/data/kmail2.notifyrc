@@ -2,37 +2,63 @@
 IconName=kmail
 DesktopEntry=org.kde.kmail
 Comment=KMail
+Comment[ca]=KMail
+Comment[nl]=KMail
 
 [Event/akonadi-instance-warning]
 Name=Akonadi server sent a warning
+Name[ca]=El servidor Akonadi ha enviat un avís
+Name[nl]=Akonadi-server verzendt een waarschuwing
 Comment=Akonadi server sent a warning
+Comment[ca]=El servidor Akonadi ha enviat un avís
+Comment[nl]=Akonadi-server verzendt een waarschuwing
 Action=None
 
 [Event/akonadi-instance-error]
 Name=Akonadi server sent an error
+Name[ca]=El servidor Akonadi ha enviat un error
+Name[nl]=Akonadi-server verzendt een fout
 Comment=Akonadi server sent an error
+Comment[ca]=El servidor Akonadi ha enviat un error
+Comment[nl]=Akonadi-server verzendt een fout
 Action=None
 
 [Event/akonadi-resource-broken]
 Name=A resource is broken
+Name[ca]=Hi ha un recurs trencat
+Name[nl]=Er is een gebroken hulpbron
 Comment=A resource change its state to broken
+Comment[ca]=Un recurs canvia el seu estat a trencat
+Comment[nl]=Een hulpbron heeft zijn status gewijzigd in gebroken
 Action=Popup
 
 [Event/sent-mail-error]
 Name=Impossible to send email
+Name[ca]=És impossible enviar el correu
+Name[nl]=Verzenden van een e-mail is onmogelijk
 Comment=Problem during send mail
+Comment[ca]=Problema durant l'enviament del correu
+Comment[nl]=probleem bij verzenden van e-mail
 Action=Popup
 
 [Event/folderarchivedone]
 Name=Archive Mails in Folder done
+Name[ca]=S'ha realitzat l'arxivat del correu a la carpeta
+Name[nl]=E-mail in map archiveren is gereed
 Action=None
 
 [Event/folderarchiveerror]
 Name=Folder Archive Error
+Name[ca]=Error en arxivar la carpeta
+Name[nl]=fout in archiveren van map
 Action=Popup
 
 [Event/undosend]
 Name=Email added to the send later queue
+Name[ca]=Correu afegit a la cua per a enviar més tard
+Name[nl]=E-mail toegevoegd aan de rij Later verzenden
 Comment=A delayed email delivery is configured and can be canceled
+Comment[ca]=S'ha configurat un lliurament de correu retardat i es pot cancel·lar
+Comment[nl]=Er is een vertraagde e-mail aflevering geconfigureerd en deze kan geannuleerd worden
 Action=Popup
 Urgency=Normal

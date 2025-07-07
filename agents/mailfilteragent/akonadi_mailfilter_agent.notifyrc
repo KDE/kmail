@@ -1,12 +1,20 @@
 [Global]
 IconName=view-filter
 Comment=Mail Filter Agent
+Comment[ca]=Agent de filtre de correu
+Comment[nl]=E-mail filteragent
 Name=Mail Filter Agent
+Name[ca]=Agent de filtre de correu
+Name[nl]=E-mail filteragent
 
 [Event/mailfilterlogenabled]
 Name=Mail filter log enabled
+Name[ca]=Activat el registre de filtratge de correu
+Name[nl]=E-mail filterlog ingeschakeld
 Action=Popup
 
 [Event/mailfilterjoberror]
 Name=An error occurred during filtering
+Name[ca]=S'ha detectat un error durant el filtratge
+Name[nl]=Er is een fout opgetreden bij het filteren
 Action=None

@@ -1,7 +1,11 @@
 [Global]
 IconName=kmail
 Comment=Followup reminder agent
+Comment[ca]=Agent per als recordatoris de seguiment
+Comment[nl]=Agent voor herinneren aan vervolgactie
 
 [Event/mailreceived]
 Name=Mail Follow Up Received
+Name[ca]=S'ha rebut correu de seguiment
+Name[nl]=Ontvangen e-mailbericht van vervolgactie
 Action=Popup

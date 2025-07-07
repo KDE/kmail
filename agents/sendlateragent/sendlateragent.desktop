@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Send Later Agent
+Name[ca]=Agent d'enviament més tard
+Name[nl]=Agent voor later verzenden
 Comment=Send Later Agent
+Comment[ca]=Agent d'enviament més tard
+Comment[nl]=Agent voor later verzenden
 Type=AkonadiAgent
 Exec=akonadi_sendlater_agent
 Icon=kmail

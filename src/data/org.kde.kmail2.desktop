@@ -1,11 +1,17 @@
 [Desktop Entry]
 Name=KMail
+Name[ca]=KMail
+Name[nl]=KMail
 Type=Application
 Exec=kmail -qwindowtitle %c %u
 Icon=kmail
 X-DocPath=kmail2/index.html
 GenericName=Mail Client
+GenericName[ca]=Client de correu
+GenericName[nl]=E-mailclient
 Comment=Send, receive and manage your mail with KMail
+Comment[ca]=Envia, rep i gestiona el correu amb el KMail
+Comment[nl]=Verzend, ontvang en beheer uw e-mail met KMail
 StartupNotify=true
 Categories=Qt;KDE;Office;Network;Email;
 MimeType=x-scheme-handler/mailto;
@@ -16,10 +22,14 @@ Version=1.5
 
 [Desktop Action Composer]
 Name=New Message...
+Name[ca]=Missatge nou...
+Name[nl]=Nieuw bericht...
 Icon=mail-message-new
 Exec=kmail --composer
 
 [Desktop Action CheckMail]
 Name=Check Mail
+Name[ca]=Comprova el correu
+Name[nl]=E-mail controleren
 Icon=mail-receive
 Exec=kmail --check

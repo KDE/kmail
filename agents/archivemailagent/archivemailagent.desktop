@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Archive Mail Agent
+Name[ca]=Agent d'arxivat de correu
+Name[nl]=E-mailagent voor archiveren
 Comment=Archive Mail Agent
+Comment[ca]=Agent d'arxivat de correu
+Comment[nl]=E-mailagent voor archiveren
 Type=AkonadiAgent
 Exec=akonadi_archivemail_agent
 Icon=kmail

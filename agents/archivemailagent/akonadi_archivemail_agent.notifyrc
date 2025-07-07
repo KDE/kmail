@@ -1,20 +1,32 @@
 [Global]
 IconName=kmail
 Comment=Archive Mail Agent
+Comment[ca]=Agent d'arxivat de correu
+Comment[nl]=E-mailagent voor archiveren
 Name=Archive Mail Agent
+Name[ca]=Agent d'arxivat de correu
+Name[nl]=E-mailagent voor archiveren
 
 [Event/archivemailfinished]
 Name=Archive Mail finished
+Name[ca]=Ha finalitzat l'arxivat del correu
+Name[nl]=E-mail archiveren is gereed
 Action=Popup
 
 [Event/archivemailstarted]
 Name=Archive Mail started
+Name[ca]=S'ha iniciat l'arxivat del correu
+Name[nl]=E-mail archiveren is gestart
 Action=Popup
 
 [Event/archivemailfolderdoesntexist]
 Name=Directory does not exist
+Name[ca]=El directori no existeix
+Name[nl]=Map bestaat niet
 Action=Popup
 
 [Event/archivemailerror]
 Name=Archive Mail Error
+Name[ca]=Error en arxivar el correu
+Name[nl]=Fout in e-mail archiveren
 Action=Popup

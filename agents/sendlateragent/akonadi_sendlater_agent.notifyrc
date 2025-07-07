@@ -1,11 +1,17 @@
 [Global]
 IconName=kmail
 Comment=Send Later Agent
+Comment[ca]=Agent d'enviament més tard
+Comment[nl]=Agent voor later verzenden
 
 [Event/mailsend]
 Name=Mail is sent
+Name[ca]=S'ha enviat el correu
+Name[nl]=E-mail is verzonden
 Action=Popup
 
 [Event/mailsendfailed]
 Name=Send mail failed
+Name[ca]=Ha fallat en enviar el correu
+Name[nl]=Verzenden van e-mail is mislukt
 Action=Popup

@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Mail Merge Agent
+Name[ca]=Agent de fusió del correu
+Name[nl]=Agent voor samenvoegen in e-mail
 Comment=Mail Merge Agent
+Comment[ca]=Agent de fusió del correu
+Comment[nl]=Agent voor samenvoegen in e-mail
 Type=AkonadiAgent
 Exec=akonadi_mailmerge_agent
 Icon=kmail

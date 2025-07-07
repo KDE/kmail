@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=KMail view
+Name[ca]=Vista del KMail
+Name[nl]=KMail-weergave
 Type=Application
 Exec=kmail --view %u
 Icon=kmail

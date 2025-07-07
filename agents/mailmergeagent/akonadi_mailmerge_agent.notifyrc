@@ -1,3 +1,5 @@
 [Global]
 IconName=kmail
 Comment=Mail Merge Agent
+Comment[ca]=Agent de fusió del correu
+Comment[nl]=Agent voor samenvoegen in e-mail

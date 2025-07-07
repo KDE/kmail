@@ -1,11 +1,17 @@
 [Desktop Entry]
 Name=KMail Refresh Settings
+Name[ca]=Actualitza la configuració del KMail
+Name[nl]=Vernieuwen van instellingen van KMail
 Type=Application
 Exec=kmail-refresh-settings -qwindowtitle %c %u
 Icon=kmail
 X-DocPath=kmail2/index.html
 GenericName=KMail refresh settings
+GenericName[ca]=Actualitza la configuració del KMail
+GenericName[nl]=Instellingen van vernieuwen KMail
 Comment=Refresh KMail settings
+Comment[ca]=Actualitza la configuració del KMail
+Comment[nl]=KMail-instellingen vernieuwen
 SingleMainWindow=true
 Version=1.5
 StartupNotify=true

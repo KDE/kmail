@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Mail Filter Agent
+Name[ca]=Agent de filtre de correu
+Name[nl]=E-mail filteragent
 Comment=Extension to filter emails
+Comment[ca]=Extensió per a filtrar correus
+Comment[nl]=Uitbreiding om e-mails te filteren
 Type=AkonadiAgent
 Exec=akonadi_mailfilter_agent
 Icon=view-filter

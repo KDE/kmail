@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Followup Reminder Agent
+Name[ca]=Agent de recordatoris de seguiment
+Name[nl]=Agent voor herinneren aan vervolgactie
 Comment=Followup Reminder Agent allows to remind you when an email was not answered.
+Comment[ca]=L'agent de recordatoris de seguiment permet recordar quan un correu electrònic no ha estat respost.
+Comment[nl]=Agent voor herinneren aan vervolgactie stelt u in staat om u te herinneren aan een nog niet beantwoord e-mailbericht.
 Type=AkonadiAgent
 Exec=akonadi_followupreminder_agent
 Icon=kmail

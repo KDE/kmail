@@ -1,6 +1,10 @@
 [Desktop Entry]
 Name=Unified Mailbox Agent
+Name[ca]=Agent de la bústia unificada
+Name[nl]=Geünificeerde e-mailboxagent
 Comment=Unified Mailbox Agent
+Comment[ca]=Agent de la bústia unificada
+Comment[nl]=Geünificeerde e-mailboxagent
 Type=AkonadiAgent
 Exec=akonadi_unifiedmailbox_agent
 Icon=folder-mail
