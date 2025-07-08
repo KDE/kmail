@@ -77,11 +77,11 @@
 </screenshot>
 
 <para
->Press the arrow-down button against the <guilabel
->Date</guilabel
-> field to select the date from the &kde; calendar widget. It is also possible to choose your calendar for the reminder using the <guilabel
->Store ToDo in</guilabel
-> drop-down list.</para>
+>Druk op de toets pijltje omlaag tegen het <guilabel
+>Datum</guilabel
+>veld om de datum uit het &kde; agendawidget te selecteren. Het is ook mogelijk uw agenda te kiezen voor de herinnering met de afrollijst <guilabel
+>Taak opslaan in</guilabel
+>.</para>
 <para
 >Om herinneringen die u hebt gepland te verwijderen, gebruik <menuchoice
 ><guimenu

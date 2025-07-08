@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-06-24 21:16+0200\n"
+"PO-Revision-Date: 2025-07-07 21:51+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -8081,7 +8081,7 @@ msgstr "Zerberri trepeta berria gehitzea."
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "Hurrengo plugina: erakutsi bildumaren neurria."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

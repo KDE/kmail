@@ -7,13 +7,13 @@
 # David Gil <al016950@yahoo.es>, 2005.
 # Joan Maspons <joanmaspons@gmail.com>, 2009.
 # Manuel Tortosa Moreno <manutortosa@chakra-project.org>, 2009, 2010, 2011.
-# Josep M. Ferrer <txemaq@gmail.com>, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-07-06 12:28+0200\n"
+"PO-Revision-Date: 2025-07-01 12:04+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -8180,110 +8180,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgctxt "%1 is version"
-#~ msgid "Welcome to KMail %1"
-#~ msgstr "Us donem la benvinguda al KMail %1"
-
-#~ msgid ""
-#~ "KMail is the email client by KDE. It is designed to be fully compatible "
-#~ "with Internet mailing standards including IMAP, POP3 and SMTP."
-#~ msgstr ""
-#~ "El KMail és el client de correu, creat per la comunitat KDE. Està "
-#~ "dissenyat per a ser completament compatible amb els estàndards de correu "
-#~ "d'Internet incloent-hi IMAP, POP3 i SMTP."
-
-#~ msgid ""
-#~ "KMail has many powerful features that are described in the <a href='help:/"
-#~ "kmail2/index.html'>documentation</a>."
-#~ msgstr ""
-#~ "El KMail té moltes funcionalitats potents que es descriuen a la <a "
-#~ "href='help:/kmail2/index.html'>documentació</a>."
-
-#~ msgid "Important changes since last version:"
-#~ msgstr "Canvis importants des de la darrera versió:"
-
-#~ msgid "Some of the new features in this release of KMail include:"
-#~ msgstr ""
-#~ "Algunes de les característiques noves d'aquesta versió del KMail inclouen:"
-
-#~ msgid ""
-#~ "Please take a moment to fill in the KMail configuration panel at Settings-"
-#~ ">Configure KMail. You need to create at least a default identity and "
-#~ "incoming as well as outgoing mail account."
-#~ msgstr ""
-#~ "Preneu-vos un moment per a omplir el plafó de configuració a «Arranjament "
-#~ "-> Configura el KMail». Almenys cal crear una identitat predeterminada i "
-#~ "un compte de correu amb entrada i sortida."
-
-#~ msgid "We hope that you will enjoy KMail."
-#~ msgstr "Esperem que gaudiu del KMail."
-
-#~ msgid "Thank you,"
-#~ msgstr "Moltes gràcies,"
-
-#~ msgid "The KMail Team"
-#~ msgstr "L'equip del KMail"
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "I&ntroducció al KMail"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "Mostra la pàgina de benvinguda del KMail"
-
-#~ msgid "Serverside Subscription…"
-#~ msgstr "Subscripció de la banda del servidor…"
-
-#~ msgid ""
-#~ "KMail is now based on the Akonadi Personal Information Management "
-#~ "framework, which brings many changes all around."
-#~ msgstr ""
-#~ "El KMail ara està basat en el marc de treball per a la gestió de la "
-#~ "informació personal Akonadi, el qual incorpora molts canvis per tot arreu."
-
-#~ msgid "Push email (IMAP IDLE)"
-#~ msgstr "Correu electrònic d'enviament (IMAP IDLE)"
-
-#~ msgid "Improved searches"
-#~ msgstr "Cerques millorades"
-
-#~ msgid "Support for adding notes (annotations) to mails"
-#~ msgstr "Implementació per a afegir notes (anotacions) als correus"
-
-#~ msgid "Less GUI freezes, mail checks happen in the background"
-#~ msgstr ""
-#~ "Menys immobilitzacions de la IGU, la comprovació de correu es fa en segon "
-#~ "pla"
-
-#~ msgid "Plugins support"
-#~ msgstr "Admet connectors"
-
-#~ msgid "New HTML renderer (QtWebEngine)"
-#~ msgstr "Representador HTML nou (QtWebEngine)"
-
-#~ msgid "Added Check for Phishing URL"
-#~ msgstr "S'ha afegit la comprovació d'URL de pesca"
-
-#~ msgid "Added Check DKIM"
-#~ msgstr "S'ha afegit la comprovació del DKIM"
-
-#~ msgid "Added Markdown Editing Support"
-#~ msgstr "S'ha afegit la implementació d'edició del Markdown"
-
-#~ msgid "Added Grammar Plugin Support"
-#~ msgstr "S'ha afegit la implementació del connector de gramàtica"
-
-#~ msgid "Added etesync resource support"
-#~ msgstr "S'ha afegit la implementació del recurs EteSync"
-
-#~ msgid "Added Microsoft Exchange Web Services resource support"
-#~ msgstr ""
-#~ "S'ha afegit la implementació del recurs de serveis web de Microsoft "
-#~ "Exchange"
-
-#~ msgid "Add Windows Support"
-#~ msgstr "Afegeix la implementació del Windows"
-
-#~ msgid "Add Custom Syntax usable in the search text field"
-#~ msgstr ""
-#~ "Afegeix una sintaxi personalitzada utilitzable al camp de text de cerca"

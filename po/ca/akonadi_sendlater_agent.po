@@ -211,3 +211,13 @@ msgstr "Modifica…"
 #, kde-format
 msgid "Delete"
 msgstr "Suprimeix"
+
+#~ msgctxt "@title:window"
+#~ msgid "Configure"
+#~ msgstr "Configuració"
+
+#~ msgid "Remove items"
+#~ msgstr "Elimina els elements"
+
+#~ msgid "Remove"
+#~ msgstr "Elimina"

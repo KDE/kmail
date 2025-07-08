@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-19 00:43+0000\n"
-"PO-Revision-Date: 2025-04-06 23:16+0200\n"
+"PO-Revision-Date: 2025-06-10 23:19+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -33,10 +33,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "KMail 설정 초기화 도우미"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2025 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "© 2019-2025 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2025 Laurent Montel <montel@kde.org>"
+msgstr "© 2019-2025 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format
