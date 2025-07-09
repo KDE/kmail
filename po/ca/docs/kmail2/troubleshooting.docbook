@@ -35,7 +35,7 @@
 > per a aprendre sobre els errors d'una collita més recent.</para>
 
   <para
->En l'actualitat (2021), molts dels problemes que s'estan experimentant amb el &kmail; involucren el servidor &akonadi;. L'&akonadi; és un programa auxiliar que funciona com a intermediari entre el &kmail; (més totes les altres aplicacions &PIM;) i un dimoni de propòsit general per a la base de dades (el més habitual és «mysqld»). També facilita les comunicacions entre processos entre les diverses peces de les aplicacions &PIM;. Depenent de la manera com configureu el sistema, l'&akonadi; es pot iniciar durant el procés d'arrencada/inici de la sessió. O podria no iniciar-se fins que invoqueu un programa d'aplicació &PIM; (com el &kmail;, &kaddressbook; o &kontact;).</para>
+>En l'actualitat (2021), molts dels problemes que s'estan experimentant amb el &kmail; involucren el servidor &akonadi;. L'&akonadi; és un programa auxiliar que funciona com a intermediari entre el &kmail; (més totes les altres aplicacions &PIM;) i un dimoni de propòsit general per a la base de dades (el més habitual és «mysqld»). També facilita les comunicacions entre processos entre les diverses peces de les aplicacions &PIM;. Depenent de la manera com configureu el sistema, l'&akonadi; es pot iniciar durant el procés d'inici/inici de la sessió. O podria no iniciar-se fins que invoqueu un programa d'aplicació &PIM; (com el &kmail;, &kaddressbook; o &kontact;).</para>
 
   <para
 >Hi ha dos programes d'aplicació que permeten que un interactuï directament amb el servidor &akonadi;: <code
@@ -918,10 +918,10 @@ Found 0 dirty items.</screen
 >grep</code
 > per a fer això. <screen
 >~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
---defaults-file=/home/usuari/.local/share/akonadi/mysql.conf
---datadir=/home/usuari/.local/share/akonadi/db_data/ 
---socket=/run/user/1000/akonadi/mysql.socket 
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
+--defaults-file=/home/david/.local/share/akonadi/mysql.conf
+--datadir=/home/david/.local/share/akonadi/db_data/
+--socket=/run/user/1000/akonadi/mysql.socket
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen
 ></para>

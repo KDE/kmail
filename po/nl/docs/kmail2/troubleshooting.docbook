@@ -920,9 +920,9 @@ Found 0 dirty items.</screen
 >grep</code
 > om dat te doen. <screen
 >~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
 --defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/
+--datadir=/home/david/.local/share/akonadi/db_data/ 
 --socket=/run/user/1000/akonadi/mysql.socket
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen
