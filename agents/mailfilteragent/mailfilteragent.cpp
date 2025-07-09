@@ -236,7 +236,7 @@ void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Colle
 void MailFilterAgent::itemsReceivedForFiltering(const Akonadi::Item::List &items)
 {
     if (items.isEmpty()) {
-        qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemsReceiviedForFiltering items is empty!";
+        qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemsReceivedForFiltering items is empty!";
         return;
     }
 
@@ -245,7 +245,7 @@ void MailFilterAgent::itemsReceivedForFiltering(const Akonadi::Item::List &items
      * happens when item no longer exists etc, and queue compression didn't happen yet
      */
     if (!item.hasPayload()) {
-        qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemsReceiviedForFiltering item has no payload!";
+        qCDebug(MAILFILTERAGENT_LOG) << "MailFilterAgent::itemsReceivedForFiltering item has no payload!";
         return;
     }
 
