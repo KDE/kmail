@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-04-20 16:38+0300\n"
+"PO-Revision-Date: 2025-07-10 22:39+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -361,12 +361,10 @@ msgid "Mailing List"
 msgstr "Postituslista"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Kansiossa on postituslista"
+msgstr "Kansio sisältää yksittäisen postilistan"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -4543,11 +4541,10 @@ msgid "Unable to start import wizard"
 msgstr "Opastettua tuontia ei voi käynnistää."
 
 #: kmmainwidget.cpp:1386
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(ei viestipohjia)"
+msgstr "(ladataan mallipohjia…)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5349,11 +5346,10 @@ msgid "&Add Account…"
 msgstr "Lisää &tili…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Mitä seuraavaksi?"
+msgstr "Mitä uutta?"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -5982,10 +5978,9 @@ msgid "Kontact Summary View"
 msgstr "Kontactin yhteenvetonäkymä"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "© 2003–2024 Kontactin kehittäjät"
+msgstr "© 2003–2025 Kontactin kehittäjät"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -8064,10 +8059,8 @@ msgid "Unable to start account wizard"
 msgstr "Opastettua tilin luontia ei voi käynnistää"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "Lisää uusi henkilöys"
+msgstr "Lisää uusi mitäuutta-sovelma."
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
