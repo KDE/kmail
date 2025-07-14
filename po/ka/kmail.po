@@ -596,7 +596,7 @@ msgstr "მოგვიანებით გაგზავნა"
 #: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Defa&ult send method:"
-msgstr "გაგზავნის &ნაგულისხმები მეთოდი:"
+msgstr "გაგზავნის &ნაგულისხმევი მეთოდი:"
 
 #: configuredialog/configureaccountpage.cpp:124
 #, kde-format
@@ -849,12 +849,12 @@ msgstr "ფორმატის &ხეით მითითება:"
 #: configuredialog/configureappearancepage.cpp:608
 #, kde-format
 msgid "Default aggregation:"
-msgstr "ნაგულისხმები აგრეგაცია:"
+msgstr "ნაგულისხმევი აგრეგაცია:"
 
 #: configuredialog/configureappearancepage.cpp:626
 #, kde-format
 msgid "Default theme:"
-msgstr "ნაგულისხმები თემა:"
+msgstr "ნაგულისხმევი თემა:"
 
 #: configuredialog/configureappearancepage.cpp:663
 #, kde-format
@@ -1168,7 +1168,7 @@ msgstr "დააყენეთ ნაგულისხმევი გად�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
-msgstr "გადაგზავნის ნაგულისხმები ტიპი:"
+msgstr "გადაგზავნის ნაგულისხმევი ტიპი:"
 
 #: configuredialog/configurecomposerpage.cpp:282
 #, kde-format
@@ -3470,7 +3470,7 @@ msgstr "ნაგულისხმევი დომენის სახე�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "ნაგულისხმები &დომენი:"
+msgstr "ნაგულისხმევი &დომენი:"
 
 #: identity/identitydialog.cpp:759
 #, kde-format
@@ -3723,7 +3723,7 @@ msgstr "სახელის გადარქმევა"
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
-msgstr "ნაგულისხმებად დაყენება"
+msgstr "ნაგულისხმევად დაყენება"
 
 #: identity/newidentitydialog.cpp:38
 #, kde-format
@@ -6883,7 +6883,7 @@ msgstr "მონიშნული იდენტიფიკატორი�
 #: ui/identityngpage.ui:89
 #, kde-format
 msgid "Set as &Default"
-msgstr "ნაგულისხმებად &დაყენება"
+msgstr "ნაგულისხმევად &დაყენება"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/incompleteindexdialog.ui:29
@@ -7155,7 +7155,7 @@ msgstr "შეტყობინების &გახსნა"
 #: ui/securitypageencryptiontab.ui:17
 #, kde-format
 msgid "Security defaults"
-msgstr "უსაფრთხოები ნაგულისხმები მნიშვნელობები"
+msgstr "უსაფრთხოები ნაგულისხმევი მნიშვნელობები"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AlwaysEncryptDrafts)
 #: ui/securitypageencryptiontab.ui:23
@@ -8248,7 +8248,7 @@ msgstr "გადიდება: %1%"
 #~ "%1: identity name. Used in the config dialog, section Identity, to "
 #~ "indicate the default identity"
 #~ msgid "%1 (Default)"
-#~ msgstr "%1 (ნაგულისხმები)"
+#~ msgstr "%1 (ნაგულისხმევი)"
 
 #~ msgid "Identity Name"
 #~ msgstr "იდენტიფიკატორის სახელი"
