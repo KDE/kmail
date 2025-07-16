@@ -632,7 +632,6 @@ void KMReaderWin::clear(bool force)
 
 void KMReaderWin::setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMode updateMode)
 {
-    qCDebug(KMAIL_LOG) << Q_FUNC_INFO << parentWidget();
     mViewer->setFolderIdentity(MailCommon::Util::folderIdentity(item));
     mViewer->setMessageItem(item, updateMode);
     if (!item.hasAttribute<Akonadi::MDNStateAttribute>()
