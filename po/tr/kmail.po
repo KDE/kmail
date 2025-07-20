@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 00:43+0000\n"
 "PO-Revision-Date: 2025-07-02 17:01+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -3864,12 +3864,12 @@ msgstr "Adres Defterine Ekle"
 msgid "Contact created successfully"
 msgstr "Başarılı bir şekilde oluşturuldu"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kişi kaydedilemedi: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5815,7 +5815,7 @@ msgstr ""
 "Hesap şu anda çevrimdışı kipte çalışıyor. Çevrimiçi kipe geçmek için <a href="
 "\"kmail:goResourceOnline\">buraya</a> tıklayın…</p>"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kişi başarılıyla düzenlendi"

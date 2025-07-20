@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 00:43+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -3815,12 +3815,12 @@ msgstr "पतापुस्तिकायां योजयतु"
 msgid "Contact created successfully"
 msgstr "सम्पर्क सफलतया निर्मित"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "सम्पर्कः संग्रहीतुं न शक्यते: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5750,7 +5750,7 @@ msgstr ""
 "खाता सम्प्रति अफलाइन मोड् मध्ये अस्ति । <a href=\"kmail:goResourceOnline\">अत्र</a> "
 "क्लिक् कृत्वा ऑनलाइन गन्तुं शक्नुवन्ति . . .</p>"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "सम्पर्क सफलतया परिवर्तितः"
