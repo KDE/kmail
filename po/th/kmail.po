@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -4051,12 +4051,12 @@ msgstr "เพิ่มไว้ในสมุดที่อยู่"
 msgid "Contact created successfully"
 msgstr "ลบจดหมายเรียบร้อยแล้ว"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 #| msgid "Failed to compress attachment"
 msgctxt "@title:window"
@@ -6138,7 +6138,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>ออฟไลน์</h2><p>KMail กำลังทำงานอยู่ในโหมดออฟไลน์ <a "
 "href=\"kmail:goOnline\">คลิกที่นี่</a> เพื่อเปลี่ยนเป็นโหมดออนไลน์ . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully."
 msgid "Contact modified successfully"

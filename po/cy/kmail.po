@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -4069,12 +4069,12 @@ msgstr "Ychwanegu i'r Llyfr Cyfeiriadau"
 msgid "Contact created successfully"
 msgstr "Symudwyd y negeseuon yn llwyddiannus."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -6087,7 +6087,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, fuzzy, kde-format
 msgid "Contact modified successfully"
 msgstr "Symudwyd y negeseuon yn llwyddiannus."

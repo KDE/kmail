@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2025-07-01 18:36+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -3905,12 +3905,12 @@ msgstr "Aggiungi alla rubrica"
 msgid "Contact created successfully"
 msgstr "Contatto creato con successo"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Il contatto non può essere memorizzato:  %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5874,7 +5874,7 @@ msgstr ""
 "L'account attualmente è in modalità non in linea. Fai clic <a href=\"kmail:"
 "goResourceOnline\">qui</a> per andare in linea . . .</p>"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Contatto modificato con successo"

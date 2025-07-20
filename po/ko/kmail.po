@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
-"PO-Revision-Date: 2025-06-10 23:19+0200\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
+"PO-Revision-Date: 2025-07-20 01:48+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -341,12 +341,10 @@ msgid "Mailing List"
 msgstr "메일링 리스트"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "폴더에 메일링 리스트가 있음"
+msgstr "폴더에 단일 메일링 리스트가 있음"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -3810,12 +3808,12 @@ msgstr "주소록에 추가"
 msgid "Contact created successfully"
 msgstr "연락처 생성 완료됨"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "연락처를 저장할 수 없음: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4476,11 +4474,10 @@ msgid "Unable to start import wizard"
 msgstr "가져오기 마법사를 시작할 수 없음"
 
 #: kmmainwidget.cpp:1386
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(템플릿 없음)"
+msgstr "(템플릿 불러오는 중…)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5269,11 +5266,10 @@ msgid "&Add Account…"
 msgstr "계정 추가(&A)…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "다음으로 무엇이 있습니까?"
+msgstr "새로운 기능"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -5734,7 +5730,7 @@ msgstr ""
 "계정이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goResourceOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "연락처를 성공적으로 수정함"
@@ -7941,14 +7937,12 @@ msgid "Unable to start account wizard"
 msgstr "계정 마법사를 시작할 수 없음"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
-#| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
-msgstr "새 프로필 추가"
+msgstr "새 새로운 항목 위젯을 추가합니다."
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "새 플러그인: 모음집 크기 표시."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

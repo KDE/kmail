@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -3933,12 +3933,12 @@ msgstr "Manzillar daftariga qoʻshish"
 msgid "Contact created successfully"
 msgstr "Xabarlar muvaffaqiyatli oʻchirildi."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 #| msgid "Name of the attachment:"
 msgctxt "@title:window"
@@ -5982,7 +5982,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Contact modified successfully"

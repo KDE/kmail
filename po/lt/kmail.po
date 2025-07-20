@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2017-06-25 15:02+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -4064,12 +4064,12 @@ msgstr "Įdėti į adresų knygą"
 msgid "Contact created successfully"
 msgstr "Kontaktas sėkmingai sukurtas"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktas negali būti išsaugotas: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -6182,7 +6182,7 @@ msgstr ""
 "neprisijungęs. Spauskite <a href=\"kmail:goResourceOnline\">čia</a> norėdami "
 "prisijungti . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontaktas sėkmingai pakeistas"

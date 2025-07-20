@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAIL\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2015-02-07 22:15+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -3752,12 +3752,12 @@ msgstr ""
 msgid "Contact created successfully"
 msgstr "Kontakt vellykket opprettet"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kan ikke lagre kontakten: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5676,7 +5676,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakt vellykket endret"

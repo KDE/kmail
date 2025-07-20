@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4017,12 +4017,12 @@ msgstr "Προσθήκη στο βιβλίο διευθύνσεων"
 msgid "Contact created successfully"
 msgstr "Η επαφή δημιουργήθηκε επιτυχώς"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Αδυναμία αποθήκευσης της επαφής: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -6045,7 +6045,7 @@ msgstr ""
 "τώρα σε λειτουργία χωρίς σύνδεση. Κάντε κλικ <a href=\"kmail:goResourceOnline"
 "\">εδώ</a> για να συνδεθείτε . . .</p>&nbsp;"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Η επαφή τροποποιήθηκε επιτυχώς"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2020-04-07 21:01-0700\n"
 "Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -4098,12 +4098,12 @@ msgstr "アドレス帳に追加"
 msgid "Contact created successfully"
 msgstr "メッセージを削除しました。"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -6227,7 +6227,7 @@ msgstr ""
 "す。オンラインにするには、<a href=\"kmail:goOnline\">ここ</a> をクリックして"
 "ください。</p>&nbsp;"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully."
 msgid "Contact modified successfully"

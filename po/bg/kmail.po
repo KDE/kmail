@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2025-07-11 23:29+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -3898,12 +3898,12 @@ msgstr "Добавяне в адресника"
 msgid "Contact created successfully"
 msgstr "Контактът е създаден успешно"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Контактът не може да бъде съхранен: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -5851,7 +5851,7 @@ msgstr ""
 "Понастоящем акаунтът е в офлайн режим. Кликнете <a href=\"kmail:"
 "goResourceOnline\"> тук </a>, за да влезете онлайн.</p>"
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Контактът е променен успешно"

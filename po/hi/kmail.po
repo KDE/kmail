@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-01 00:42+0000\n"
+"POT-Creation-Date: 2025-07-20 02:39+0000\n"
 "PO-Revision-Date: 2024-12-15 19:32+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -4046,12 +4046,12 @@ msgstr "पता पुस्तिका में जोड़ें"
 msgid "Contact created successfully"
 msgstr "संदेशों को सफलतापूर्वक मिटाया."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:839
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
 #, fuzzy, kde-format
 #| msgid "Unable to edit attachment"
 msgctxt "@title:window"
@@ -6139,7 +6139,7 @@ msgid ""
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:849
+#: kmreaderwin.cpp:848
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Contact modified successfully"
