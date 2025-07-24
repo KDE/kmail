@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 00:43+0000\n"
-"PO-Revision-Date: 2025-07-07 21:51+0200\n"
+"PO-Revision-Date: 2025-07-23 14:04+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.2\n"
+"X-Generator: Lokalize 25.04.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -616,12 +616,12 @@ msgstr "Gaitu «Desegin bidaltzea»"
 #: configuredialog/configureaccountpage.cpp:198
 #, kde-format
 msgid "Add Mail Account…"
-msgstr "Gehitu posta-kontua..."
+msgstr "Gehitu posta-kontua…"
 
 #: configuredialog/configureaccountpage.cpp:199
 #, kde-format
 msgid "Custom Account…"
-msgstr "Neurrira ipinitako kontua..."
+msgstr "Neurrira ipinitako kontua…"
 
 #: configuredialog/configureaccountpage.cpp:263
 #, kde-format
@@ -870,8 +870,8 @@ msgstr "Gai lehenetsia:"
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
-"<qt><a href=\"whatsthis1\">Neurrira ipinitako formatuei buruzko "
-"informazioa...</a></qt>"
+"<qt><a href=\"whatsthis1\">Neurrira ipinitako formatuei buruzko informazioa…"
+"</a></qt>"
 
 #: configuredialog/configureappearancepage.cpp:669
 #, kde-format
@@ -1215,7 +1215,7 @@ msgid ""
 msgstr ""
 "Mezuaren hartzaile gisa gehienez hartzaile kopurua hori zehaztea baimendu. "
 "Horrek \"Erantzun guztiei\" egiteari, hartzaileak eskuz sartzeari edo "
-"\"Hautatu...\" hautatzailea erabiltzeari eragiten dio. Muga hori ezartzeak "
+"\"Hautatu…\" hautatzailea erabiltzeari eragiten dio. Muga hori ezartzeak "
 "mezua nahi gabe hartzaile gehiegitara bidaltzeko arriskua saihesten "
 "laguntzen du. Hala ere, kontuan izan honek ez dituela banaketa zerrendak ez "
 "eta posta zerrendak ere aintzakotzat hartzen."
@@ -1253,7 +1253,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr "Konfiguratu osatzea..."
+msgstr "Konfiguratu osatzea…"
 
 #: configuredialog/configurecomposerpage.cpp:401
 #, kde-format
@@ -1299,7 +1299,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "A&dd…"
-msgstr "Ge&hitu..."
+msgstr "Ge&hitu…"
 
 #: configuredialog/configurecomposerpage.cpp:633
 #: configuredialog/configurecomposerpage.cpp:970
@@ -1311,7 +1311,7 @@ msgstr "&Kendu"
 #: configuredialog/configurecomposerpage.cpp:970
 #, kde-format
 msgid "Mod&ify…"
-msgstr "Al&datu..."
+msgstr "Al&datu…"
 
 #: configuredialog/configurecomposerpage.cpp:633
 #, kde-format
@@ -1342,12 +1342,12 @@ msgstr "&Kendu"
 #: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Add…"
-msgstr "Gehitu..."
+msgstr "Gehitu…"
 
 #: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Modify…"
-msgstr "Aldatu..."
+msgstr "Aldatu…"
 
 #: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
@@ -1909,7 +1909,7 @@ msgstr "Gorde e-posta testu edo html fitxategi gisa"
 #: editor/kmcomposerwin.cpp:1310
 #, kde-format
 msgid "&Insert Text File…"
-msgstr "&Txertatu testu-fitxategia..."
+msgstr "&Txertatu testu-fitxategia…"
 
 #: editor/kmcomposerwin.cpp:1314
 #, kde-format
@@ -1935,13 +1935,13 @@ msgstr "&Mezu-prestatzaile berria"
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "Hautatu ha&rtzaileak..."
+msgstr "Hautatu ha&rtzaileak…"
 
 #: editor/kmcomposerwin.cpp:1342
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
-msgstr "Gorde &banaketa-zerrenda..."
+msgstr "Gorde &banaketa-zerrenda…"
 
 #: editor/kmcomposerwin.cpp:1366
 #, kde-format
@@ -2077,7 +2077,7 @@ msgstr "Sartu sinadura k&urtsorea dagoen tokian"
 #: editor/kmcomposerwin.cpp:1470
 #, kde-format
 msgid "&Spellchecker…"
-msgstr "&Ortografia zuzentzailea..."
+msgstr "&Ortografia zuzentzailea…"
 
 #: editor/kmcomposerwin.cpp:1471
 #, kde-format
@@ -2118,12 +2118,12 @@ msgstr "Aukeratu mezu hau zifratzeko formatu bat"
 #: editor/kmcomposerwin.cpp:1514
 #, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr "Sortu jarraipena egiteko oroigarria..."
+msgstr "Sortu jarraipena egiteko oroigarria…"
 
 #: editor/kmcomposerwin.cpp:1548
 #, kde-format
 msgid "Configure KMail…"
-msgstr "Konfiguratu KMail..."
+msgstr "Konfiguratu KMail…"
 
 #: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:223 kmreadermainwin.cpp:536
 #, kde-format
@@ -2388,7 +2388,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:3093
 #, kde-format
 msgid "About to send email…"
-msgstr "Posta bidaltzear..."
+msgstr "Posta bidaltzear…"
 
 #: editor/kmcomposerwin.cpp:3094
 #, kde-format
@@ -2718,7 +2718,7 @@ msgid ""
 "\">(details…)</a>"
 msgstr ""
 "«Phishing» egiteko izan litezkeen e-posta helbideak aurkitu ditu <a href="
-"\"phishingdetails\">(xehetasunak...)</a>"
+"\"phishingdetails\">(xehetasunak…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
@@ -3033,7 +3033,7 @@ msgstr "Ezin izan du OpenPGP ziurtagiri-sorrera abiatu: %1"
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
-msgstr "OpenPGP ziurtagiri bat sortzen..."
+msgstr "OpenPGP ziurtagiri bat sortzen…"
 
 #: identity/identitydialog.cpp:249
 #, kde-format
@@ -3453,7 +3453,7 @@ msgstr "Spam karpeta:"
 #: identity/identitydialog.cpp:715
 #, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Konfiguratu Iraungi karpeta..."
+msgstr "Konfiguratu Iraungi karpeta…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3471,7 +3471,7 @@ msgstr "Erantsi nire vCard mezuari"
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
-msgstr "Sortu..."
+msgstr "Sortu…"
 
 #: identity/identitydialog.cpp:738
 #, kde-format
@@ -3628,7 +3628,7 @@ msgstr ""
 #: identity/identitydialog.cpp:1336
 #, kde-format
 msgid "Create…"
-msgstr "Sortu..."
+msgstr "Sortu…"
 
 #: identity/identitydialog.cpp:1338
 #, kde-format
@@ -3722,13 +3722,13 @@ msgstr "&Kendu"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr "Gehitu..."
+msgstr "Gehitu…"
 
 #: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
-msgstr "Aldatu..."
+msgstr "Aldatu…"
 
 #: identity/identityngpage.cpp:244
 #, kde-format
@@ -4420,7 +4420,7 @@ msgstr "Mezuak bidaltzen"
 #: kmkernel.cpp:1499
 #, kde-format
 msgid "Initiating sending process…"
-msgstr "Bidaltzeko prozesuaren hasiera..."
+msgstr "Bidaltzeko prozesuaren hasiera…"
 
 #: kmkernel.cpp:1578
 #, kde-format
@@ -4551,7 +4551,7 @@ msgstr "Ezin du inportatzeko morroia abiarazi"
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(txantiloiak zamatzen...)"
+msgstr "(txantiloiak zamatzen…)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -4683,12 +4683,12 @@ msgstr "Ezabatu mezua"
 #: kmmainwidget.cpp:1704
 #, kde-format
 msgid "Moving messages…"
-msgstr "Mezuak lekuz aldatzen..."
+msgstr "Mezuak lekuz aldatzen…"
 
 #: kmmainwidget.cpp:1706 kmmainwidget.cpp:1906
 #, kde-format
 msgid "Deleting messages…"
-msgstr "Mezuak ezabatzen..."
+msgstr "Mezuak ezabatzen…"
 
 #: kmmainwidget.cpp:1721 kmmainwidget.cpp:1926
 #, kde-format
@@ -4729,7 +4729,7 @@ msgstr "Eraman mezuak karpetara"
 #: kmmainwidget.cpp:1835
 #, kde-format
 msgid "Copying messages…"
-msgstr "Mezuak kopiatzen..."
+msgstr "Mezuak kopiatzen…"
 
 #: kmmainwidget.cpp:1843
 #, kde-format
@@ -4755,12 +4755,12 @@ msgstr "Kopiatu mezuak karpetara"
 #: kmmainwidget.cpp:1903
 #, kde-format
 msgid "Moving messages to trash…"
-msgstr "Mezuak zakarrontzira eramaten..."
+msgstr "Mezuak zakarrontzira eramaten…"
 
 #: kmmainwidget.cpp:1910
 #, kde-format
 msgid "Deleting and moving messages to trash…"
-msgstr "Mezuak ezabatzen eta zakarrontzira eramaten..."
+msgstr "Mezuak ezabatzen eta zakarrontzira eramaten…"
 
 #: kmmainwidget.cpp:1923
 #, kde-format
@@ -4873,7 +4873,7 @@ msgstr "Linean lan egin"
 #: kmmainwidget.cpp:2945
 #, kde-format
 msgid "Save &As…"
-msgstr "Gorde &honela..."
+msgstr "Gorde &honela…"
 
 #: kmmainwidget.cpp:2956
 #, kde-format
@@ -4925,55 +4925,55 @@ msgstr "Ziurtagiri kudeatzailea"
 #: kmmainwidget.cpp:3023
 #, kde-format
 msgid "&Import Messages…"
-msgstr "&Inportatu mezuak..."
+msgstr "&Inportatu mezuak…"
 
 #: kmmainwidget.cpp:3034
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
-msgstr "&Araztu «Sieve»..."
+msgstr "&Araztu «Sieve»…"
 
 #: kmmainwidget.cpp:3041
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
-msgstr "Iragazi egun&kari-erakuslea..."
+msgstr "Iragazi egun&kari-erakuslea…"
 
 #: kmmainwidget.cpp:3046
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr "Jakinarazpen historia..."
+msgstr "Jakinarazpen historia…"
 
 #: kmmainwidget.cpp:3051
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr "&Inportatu beste e-posta bezero batetik..."
+msgstr "&Inportatu beste e-posta bezero batetik…"
 
 #: kmmainwidget.cpp:3056
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
-msgstr "Editatu \"Bulegotik kanpo\" erantzunak..."
+msgstr "Editatu \"Bulegotik kanpo\" erantzunak…"
 
 #: kmmainwidget.cpp:3062
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
-msgstr "&Konfiguratu artxibatze automatikoa..."
+msgstr "&Konfiguratu artxibatze automatikoa…"
 
 #: kmmainwidget.cpp:3068
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
-msgstr "Atzeratutako mezuak..."
+msgstr "Atzeratutako mezuak…"
 
 #: kmmainwidget.cpp:3074
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "Jarraipen oroigarri mezuak..."
+msgstr "Jarraipen oroigarri mezuak…"
 
 #: kmmainwidget.cpp:3085 util.cpp:168
 #, kde-format
@@ -5000,7 +5000,7 @@ msgstr "Ezabatu &haria"
 #: kmmainwidget.cpp:3104 kmmainwidget.cpp:4152
 #, kde-format
 msgid "&Find Messages…"
-msgstr "&Aurkitu mezuak..."
+msgstr "&Aurkitu mezuak…"
 
 #: kmmainwidget.cpp:3110
 #, kde-format
@@ -5012,13 +5012,13 @@ msgstr "Hautatu mezu &guztiak"
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
-msgstr "&Posta-zerrenden kudeaketa..."
+msgstr "&Posta-zerrenden kudeaketa…"
 
 #: kmmainwidget.cpp:3125
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr "&Garbitu «Akonadi»ren cachea..."
+msgstr "&Garbitu «Akonadi»ren cachea…"
 
 #: kmmainwidget.cpp:3130
 #, kde-format
@@ -5030,7 +5030,7 @@ msgstr ""
 #: kmmainwidget.cpp:3135
 #, kde-format
 msgid "&Assign Shortcut…"
-msgstr "&Esleitu lasterbidea..."
+msgstr "&Esleitu lasterbidea…"
 
 #: kmmainwidget.cpp:3153
 #, kde-format
@@ -5042,7 +5042,7 @@ msgstr "&Iraungitze-ezarpenak"
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
-msgstr "&Artxibatu karpeta..."
+msgstr "&Artxibatu karpeta…"
 
 #: kmmainwidget.cpp:3186
 #, kde-format
@@ -5053,17 +5053,17 @@ msgstr "Zamatu &kanpoko erreferentziak"
 #: kmmainwidget.cpp:3209
 #, kde-format
 msgid "Copy Message To…"
-msgstr "Kopiatu mezua hona..."
+msgstr "Kopiatu mezua hona…"
 
 #: kmmainwidget.cpp:3211
 #, kde-format
 msgid "Move Message To…"
-msgstr "Eraman mezua hona..."
+msgstr "Eraman mezua hona…"
 
 #: kmmainwidget.cpp:3216
 #, kde-format
 msgid "&New Message…"
-msgstr "Mezu &berria..."
+msgstr "Mezu &berria…"
 
 #: kmmainwidget.cpp:3218
 #, kde-format
@@ -5079,7 +5079,7 @@ msgstr "Mezua &txantiloitik"
 #: kmmainwidget.cpp:3232
 #, kde-format
 msgid "New Message t&o Mailing-List…"
-msgstr "Mezu berria p&osta-zerrendara..."
+msgstr "Mezu berria p&osta-zerrendara…"
 
 #: kmmainwidget.cpp:3238
 #, kde-format
@@ -5090,25 +5090,25 @@ msgstr "&Sortu iragazkia"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
-msgstr "Iragazi &gaia..."
+msgstr "Iragazi &gaia…"
 
 #: kmmainwidget.cpp:3249
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
-msgstr "Iragazi &Nork..."
+msgstr "Iragazi &Nork…"
 
 #: kmmainwidget.cpp:3255
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
-msgstr "Iragazi &Nori..."
+msgstr "Iragazi &Nori…"
 
 #: kmmainwidget.cpp:3261
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
-msgstr "Iragazi &Cc..."
+msgstr "Iragazi &Cc…"
 
 #: kmmainwidget.cpp:3275
 #, kde-format
@@ -5170,7 +5170,7 @@ msgstr "&Ez ikusi egin hariari"
 #: kmmainwidget.cpp:3318 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments…"
-msgstr "Gorde e&ranskinak..."
+msgstr "Gorde e&ranskinak…"
 
 #: kmmainwidget.cpp:3322
 #, kde-format
@@ -5181,7 +5181,7 @@ msgstr "Ezabatu eranskin guztiak"
 #: kmmainwidget.cpp:3330
 #, kde-format
 msgid "Copy Decrypted To…"
-msgstr "Kopiatu deszifratuta hona..."
+msgstr "Kopiatu deszifratuta hona…"
 
 #: kmmainwidget.cpp:3334
 #, kde-format
@@ -5339,18 +5339,18 @@ msgstr ""
 #: kmmainwidget.cpp:3450
 #, kde-format
 msgid "Configure &Filters…"
-msgstr "Konfiguratu ira&gazkiak..."
+msgstr "Konfiguratu ira&gazkiak…"
 
 #: kmmainwidget.cpp:3456
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
-msgstr "Kudeatu «&Sieve» gidoiak..."
+msgstr "Kudeatu «&Sieve» gidoiak…"
 
 #: kmmainwidget.cpp:3461
 #, kde-format
 msgid "&Add Account…"
-msgstr "&Gehitu kontua..."
+msgstr "&Gehitu kontua…"
 
 #: kmmainwidget.cpp:3466
 #, kde-format
@@ -5361,23 +5361,23 @@ msgstr "Zer berri"
 #: kmmainwidget.cpp:3473
 #, kde-format
 msgid "Configure &Notifications…"
-msgstr "Konfiguratu &jakianazpenak..."
+msgstr "Konfiguratu &jakianazpenak…"
 
 #: kmmainwidget.cpp:3480
 #, kde-format
 msgid "&Configure KMail…"
-msgstr "&Konfiguratu KMail..."
+msgstr "&Konfiguratu KMail…"
 
 #: kmmainwidget.cpp:3487
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
-msgstr "Iraungi..."
+msgstr "Iraungi…"
 
 #: kmmainwidget.cpp:3493
 #, kde-format
 msgid "Add Favorite Folder…"
-msgstr "Gehitu gogoko karpeta..."
+msgstr "Gehitu gogoko karpeta…"
 
 #: kmmainwidget.cpp:3499 kmmainwidget.cpp:3507
 #, kde-format
@@ -5392,12 +5392,12 @@ msgstr "Erabili iragazkiak karpetan eta haren azpikarpeta guztietan"
 #: kmmainwidget.cpp:3525
 #, kde-format
 msgid "Import/Export KMail Data…"
-msgstr "Inportatu/Esportatu «KMail»eko datuak..."
+msgstr "Inportatu/Esportatu «KMail»eko datuak…"
 
 #: kmmainwidget.cpp:3531
 #, kde-format
 msgid "New AddressBook Contact…"
-msgstr "Helbide-liburuko kontaktu berria..."
+msgstr "Helbide-liburuko kontaktu berria…"
 
 #: kmmainwidget.cpp:3539 kmmainwidget.cpp:4186
 #, kde-format
@@ -5418,7 +5418,7 @@ msgstr "Kopiatu mezua karpetan"
 #: kmmainwidget.cpp:3565
 #, kde-format
 msgid "Jump to Folder…"
-msgstr "Jauzi karpetara..."
+msgstr "Jauzi karpetara…"
 
 #: kmmainwidget.cpp:3571
 #, kde-format
@@ -5555,7 +5555,7 @@ msgstr "B&ota haria zakarrontzira"
 #: kmmainwidget.cpp:4152
 #, kde-format
 msgid "Edit Search…"
-msgstr "Editatu bilaketa..."
+msgstr "Editatu bilaketa…"
 
 #: kmmainwidget.cpp:4184
 #, kde-format
@@ -5591,7 +5591,7 @@ msgstr "%1 iragazkia"
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
-msgstr "Bilatu... <%1>"
+msgstr "Bilatu… <%1>"
 
 #: kmmainwidget.cpp:4877
 #, kde-format
@@ -5667,7 +5667,7 @@ msgstr "Akonadi berrabiatu da."
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
-msgstr "Abiatzen..."
+msgstr "Abiatzen…"
 
 #: kmreadermainwin.cpp:491 util.cpp:168
 #, kde-format
@@ -5698,17 +5698,17 @@ msgstr "Ezin du elementua kopiatu. %1"
 #: kmreaderwin.cpp:122
 #, kde-format
 msgid "New Message To…"
-msgstr "Mezu berria honi..."
+msgstr "Mezu berria honi…"
 
 #: kmreaderwin.cpp:128
 #, kde-format
 msgid "Reply To…"
-msgstr "Erantzun honi..."
+msgstr "Erantzun honi…"
 
 #: kmreaderwin.cpp:134
 #, kde-format
 msgid "Forward To…"
-msgstr "Birbidali honi..."
+msgstr "Birbidali honi…"
 
 #: kmreaderwin.cpp:140
 #, kde-format
@@ -5733,30 +5733,30 @@ msgstr "Sortu estekaren laster-marka"
 #: kmreaderwin.cpp:161
 #, kde-format
 msgid "Edit contact…"
-msgstr "Editatu kontaktua..."
+msgstr "Editatu kontaktua…"
 
 #: kmreaderwin.cpp:167
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
-msgstr "Gorde esteka honela..."
+msgstr "Gorde esteka honela…"
 
 #: kmreaderwin.cpp:173
 #, kde-format
 msgid "&Find in Message…"
-msgstr "&Aurkitu mezuan..."
+msgstr "&Aurkitu mezuan…"
 
 #: kmreaderwin.cpp:179
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
-msgstr "Gorde irudia diskoan..."
+msgstr "Gorde irudia diskoan…"
 
 #: kmreaderwin.cpp:185
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
-msgstr "Ireki irudia..."
+msgstr "Ireki irudia…"
 
 #: kmreaderwin.cpp:191
 #, kde-format
@@ -5779,7 +5779,7 @@ msgstr "Zamatu kanpoko erreferentzia posta kontaktu honek bidali duenean"
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
-msgstr "Partekatu irudia..."
+msgstr "Partekatu irudia…"
 
 #: kmreaderwin.cpp:267
 #, kde-format
@@ -5808,7 +5808,7 @@ msgid ""
 "a> to go online . . .</p>"
 msgstr ""
 "KMail une honetan lerroz kanpoko moduan dago. Egin klik <a href=\"kmail:"
-"goOnline\">hemen</a> lerroan jartzeko...</p>"
+"goOnline\">hemen</a> lerroan jartzeko…</p>"
 
 #: kmreaderwin.cpp:293
 #, kde-format
@@ -5869,7 +5869,7 @@ msgstr ""
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
-msgstr "Mezu berriak..."
+msgstr "Mezu berriak…"
 
 #: kontactplugin/kmail/kmail_plugin.cpp:49
 #, kde-format
@@ -5936,7 +5936,7 @@ msgstr "Aukeratu laburpen orrian erakusteko laburpen pluginak."
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, kde-format
 msgid "&Configure Summary View…"
-msgstr "&Konfiguratu laburpen ikuspegia..."
+msgstr "&Konfiguratu laburpen ikuspegia…"
 
 #: kontactplugin/summary/summaryview_part.cpp:50
 #: kontactplugin/summary/summaryview_plugin.cpp:102
@@ -6033,52 +6033,52 @@ msgstr "&Erantzun"
 #: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:160
 #, kde-format
 msgid "&Reply…"
-msgstr "&Erantzun..."
+msgstr "&Erantzun…"
 
 #: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:164
 #, kde-format
 msgid "Reply to &All…"
-msgstr "Erantzun &guztiei..."
+msgstr "Erantzun &guztiei…"
 
 #: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
-msgstr "Erantzun e&gileari..."
+msgstr "Erantzun e&gileari…"
 
 #: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
-msgstr "Erantzun posta-&zerrendara..."
+msgstr "Erantzun posta-&zerrendara…"
 
 #: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
-msgstr "Erantzun &aipurik gabe..."
+msgstr "Erantzun &aipurik gabe…"
 
 #: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
-msgstr "&Barnean..."
+msgstr "&Barnean…"
 
 #: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Er&anskin gisa..."
+msgstr "Er&anskin gisa…"
 
 #: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
-msgstr "Be&rbideratu..."
+msgstr "Be&rbideratu…"
 
 #: messageactions.cpp:73
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr "Mezu berria hartzaileentzat..."
+msgstr "Mezu berria hartzaileentzat…"
 
 #: messageactions.cpp:74
 #, kde-format
@@ -6106,19 +6106,19 @@ msgstr "E&ditatu berri gisa"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
-msgstr "Iragazi posta-&zerrenda..."
+msgstr "Iragazi posta-&zerrenda…"
 
 #: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr "Gehitu jarraipen oroigarria..."
+msgstr "Gehitu jarraipen oroigarria…"
 
 #: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
-msgstr "Bidali &berriz..."
+msgstr "Bidali &berriz…"
 
 #: messageactions.cpp:82
 #, kde-format
@@ -6128,7 +6128,7 @@ msgstr "Mezu berria &txantiloitik"
 #: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
-msgstr "Esportatu PDF gisa..."
+msgstr "Esportatu PDF gisa…"
 
 #: messageactions.cpp:85
 #, kde-format
@@ -6139,7 +6139,7 @@ msgstr "Artxibatu mezua"
 #: messageactions.cpp:401
 #, kde-format
 msgid "Filter on Mailing-List…"
-msgstr "Iragazi posta-zerrenda..."
+msgstr "Iragazi posta-zerrenda…"
 
 #: messageactions.cpp:437
 #, kde-format
@@ -6185,7 +6185,7 @@ msgstr "Kendu zerrendako harpidetza"
 #: messageactions.cpp:467
 #, kde-format
 msgid "Filter on Mailing-List %1…"
-msgstr "Iragazi %1 posta-zerrenda..."
+msgstr "Iragazi %1 posta-zerrenda…"
 
 #: messageactions.cpp:644
 #, kde-format
@@ -6236,7 +6236,7 @@ msgstr "Indexatzea"
 #: searchdialog/incompleteindexdialog.cpp:221
 #, kde-format
 msgid "Indexing Collections…"
-msgstr "Bildumak indexatzen..."
+msgstr "Bildumak indexatzen…"
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
 #: searchdialog/kmsearchmessagemodel.cpp:94
@@ -6291,18 +6291,18 @@ msgstr "&Bilatu"
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
-msgstr "&Barnean..."
+msgstr "&Barnean…"
 
 #: searchdialog/searchwindowdialog.cpp:180
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
-msgstr "Er&anskin gisa..."
+msgstr "Er&anskin gisa…"
 
 #: searchdialog/searchwindowdialog.cpp:194
 #, kde-format
 msgid "Save Attachments…"
-msgstr "Gorde eranskinak..."
+msgstr "Gorde eranskinak…"
 
 #: searchdialog/searchwindowdialog.cpp:200
 #, kde-format
@@ -6363,7 +6363,7 @@ msgstr "Du baldintza ezin da erabili 4 karaktere baino gutxiagorekin."
 #: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
-msgstr "Bilatzen..."
+msgstr "Bilatzen…"
 
 #: searchdialog/searchwindowdialog.cpp:534
 #, kde-format
@@ -6413,7 +6413,7 @@ msgstr[1] "Ebaki %1 mezu"
 #: searchdialog/searchwindowdialog.cpp:910
 #, kde-format
 msgid "Checking index status…"
-msgstr "Indize egoera egiaztatzen..."
+msgstr "Indize egoera egiaztatzen…"
 
 #: secondarywindow.cpp:78
 #, kde-format
@@ -6749,7 +6749,7 @@ msgstr "Mezuaren etiketa: %1"
 #: tag/tagactionmanager.cpp:155
 #, kde-format
 msgid "Add new tag…"
-msgstr "Gehitu etiketa berria..."
+msgstr "Gehitu etiketa berria…"
 
 #: tag/tagactionmanager.cpp:168
 #, kde-format
@@ -6776,19 +6776,19 @@ msgstr "Hautatu etiketak"
 #: tag/tagselectdialog.cpp:53
 #, kde-format
 msgid "Add New Tag…"
-msgstr "Gehitu etiketa berria..."
+msgstr "Gehitu etiketa berria…"
 
 #: tag/tagselectdialog.cpp:67
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr "Bilatu etiketa..."
+msgstr "Bilatu etiketa…"
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
 #, kde-format
 msgid "Customize accounts order…"
-msgstr "Kontuen ordena neurrira ipini..."
+msgstr "Kontuen ordena neurrira ipini…"
 
 #. i18n: ectx: property (title), widget (QGroupBox, group)
 #: ui/accountspagereceivingtab.ui:41
@@ -6812,13 +6812,13 @@ msgstr "Posta berriaren jakinarazpen xehatua"
 #: ui/accountspagereceivingtab.ui:81
 #, kde-format
 msgid "Other Actio&ns…"
-msgstr "Beste eki&ntza batzuk..."
+msgstr "Beste eki&ntza batzuk…"
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
 #, kde-format
 msgid "Open Image…"
-msgstr "Ireki irudia..."
+msgstr "Ireki irudia…"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
@@ -6842,7 +6842,7 @@ msgstr "Gehitu nortasun berri bat"
 #: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
-msgstr "&Gehitu..."
+msgstr "&Gehitu…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identityngpage.ui:44
@@ -6854,7 +6854,7 @@ msgstr "Aldatu hautatutako nortasuna"
 #: ui/identityngpage.ui:47
 #, kde-format
 msgid "&Modify…"
-msgstr "Al&datu..."
+msgstr "Al&datu…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
 #: ui/identityngpage.ui:57
@@ -7132,7 +7132,7 @@ msgstr "Hautatu berariazko karpetak:"
 #: ui/searchwindow.ui:60
 #, kde-format
 msgid "Select Folders…"
-msgstr "Hautatu karpetak..."
+msgstr "Hautatu karpetak…"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
@@ -7374,7 +7374,7 @@ msgstr "Bitarteko ZE ziurtagiriak:"
 #: ui/securitypageencryptiontab.ui:347
 #, kde-format
 msgid "GnuPG Settings…"
-msgstr "«GnuPG»ren ezarpenak..."
+msgstr "«GnuPG»ren ezarpenak…"
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:386
@@ -7399,8 +7399,8 @@ msgid ""
 msgstr ""
 "<b>KONTUZ:</b> E-postan HTML baimentzea zure sistema egungo edo etorkizuneko "
 "segurtasun ustiaketen menpe egoteko arriskua areagotzen du. <a href="
-"\"whatsthis1\">HTML postari buruz gehiago...</a> <a href="
-"\"whatsthis2\">Kanpoko erreferentziei buruz gehiago...</a>"
+"\"whatsthis1\">HTML postari buruz gehiago…</a> <a href="
+"\"whatsthis2\">Kanpoko erreferentziei buruz gehiago…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:45
@@ -7670,7 +7670,7 @@ msgid ""
 "privacy. <a href=\"whatsthis-mdn\">More about MDNs…</a>"
 msgstr ""
 "<b>ABISUA:</b> Baieztapenak baldintzarik gabe bidaltzea zure pribatutasuna "
-"ahultzen du. <a href=\"whatsthis-mdn\">MDNei buruz gehiago...</a>"
+"ahultzen du. <a href=\"whatsthis-mdn\">MDNei buruz gehiago…</a>"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:17
