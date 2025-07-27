@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 02:39+0000\n"
-"PO-Revision-Date: 2025-07-23 17:30-0300\n"
+"PO-Revision-Date: 2025-07-26 14:37-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -398,7 +398,7 @@ msgstr "Tipo de endereço:"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
-msgstr "URL para enviar na lista de discussão:"
+msgstr "URL para enviar para a lista de discussão:"
 
 #: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
 #, kde-format
@@ -508,7 +508,7 @@ msgstr "Modelos"
 #, kde-format
 msgctxt "@title:tab View settings for a folder."
 msgid "View"
-msgstr "Exibir"
+msgstr "Aparência"
 
 #: collectionpage/collectionviewpage.cpp:57
 #, kde-format
@@ -3886,7 +3886,7 @@ msgstr[1] ""
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
 #, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "Limpar cache do Akonadi"
+msgstr "Limpar o cache do Akonadi"
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:58
@@ -4499,7 +4499,7 @@ msgstr "O agente de mesclagem de e-mails não foi registrado."
 #: kmlaunchexternalcomponent.cpp:74
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
-msgstr "O Agente de Lembretes de Acompanhamento não foi registrado."
+msgstr "O Agente de lembretes de acompanhamento não foi registrado."
 
 #: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
 #, kde-format
@@ -5018,7 +5018,7 @@ msgstr "Mensagens adiadas..."
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "Mensagens com Lembretes de Acompanhamento..."
+msgstr "Mensagens com lembretes de acompanhamento..."
 
 #: kmmainwidget.cpp:3085 util.cpp:168
 #, kde-format
@@ -5063,7 +5063,7 @@ msgstr "&Gerenciamento de listas de discussão..."
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr "Limpar cache do Akonadi..."
+msgstr "Limpar o cache do Akonadi..."
 
 #: kmmainwidget.cpp:3130
 #, kde-format
@@ -6012,7 +6012,7 @@ msgstr "Resumo para %1"
 #: kontactplugin/summary/summaryview_part.cpp:365
 #, kde-format
 msgid "What's next?"
-msgstr "O que segue?"
+msgstr "O que vem a seguir?"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:30
 #, kde-format
@@ -6158,7 +6158,7 @@ msgstr "Filtro de &lista de discussão..."
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr "Adicionar lembrete para acompanhamento..."
+msgstr "Adicionar lembrete de acompanhamento..."
 
 #: messageactions.cpp:81
 #, kde-format
@@ -7396,7 +7396,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:254
 #, kde-format
 msgid "For &root certificates:"
-msgstr "Para certificados &raiz:"
+msgstr "Para certificados raiz:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:300
