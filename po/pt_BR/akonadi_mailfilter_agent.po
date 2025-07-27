@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-06-06 00:43+0000\n"
-"PO-Revision-Date: 2025-07-23 16:24-0300\n"
+"PO-Revision-Date: 2025-07-26 14:18-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -36,7 +36,7 @@ msgstr "Visualizador de registros do filtro"
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
-msgstr "&Registrar as atividades do filtro"
+msgstr "&Registro das atividades do filtro"
 
 #: filterlogdialog.cpp:73
 #, kde-format
@@ -57,13 +57,13 @@ msgstr "Detalhes do registro"
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
-msgstr "Descrição do padrão de registro"
+msgstr "Registro da descrição do padrão"
 
 #: filterlogdialog.cpp:106
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
-msgstr "Registrar avaliação da &regra de filtragem"
+msgstr "Registro da avaliação da &regra de filtragem"
 
 #: filterlogdialog.cpp:111
 #, kde-format
@@ -84,13 +84,13 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr "Registrar avaliação da regra do filtro"
+msgstr "Registro da avaliação do padrão do filtro"
 
 #: filterlogdialog.cpp:123
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
-msgstr "Registrar atividades do filtro"
+msgstr "Registro das ações do filtro"
 
 #: filterlogdialog.cpp:133
 #, kde-format
