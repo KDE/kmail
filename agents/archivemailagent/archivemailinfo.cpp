@@ -50,7 +50,7 @@ ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
     return *this;
 }
 
-QString normalizeFolderName(const QString &folderName)
+static QString normalizeFolderName(const QString &folderName)
 {
     QString adaptFolderName(folderName);
     adaptFolderName.replace(QLatin1Char('/'), QLatin1Char('_'));

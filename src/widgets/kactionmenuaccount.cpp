@@ -72,7 +72,7 @@ void KActionMenuAccount::slotCheckTransportMenu()
     }
 }
 
-bool orderAgentIdentifier(const AgentIdentifier &lhs, const AgentIdentifier &rhs)
+static bool orderAgentIdentifier(const AgentIdentifier &lhs, const AgentIdentifier &rhs)
 {
     if ((lhs.mIndex == -1) && (rhs.mIndex == -1)) {
         return lhs.mName < rhs.mName;
