@@ -30,7 +30,7 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
-static const char myTagSelectDialogGroupName[] = "TagSelectDialog";
+const char myTagSelectDialogGroupName[] = "TagSelectDialog";
 }
 
 TagSelectDialog::TagSelectDialog(QWidget *parent, int numberOfSelectedMessages, const Akonadi::Item &selectedItem)

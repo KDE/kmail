@@ -25,7 +25,7 @@
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
-static const char myConfigureMailMergeConfigureDialogGroupName[] = "MailMergeConfigureDialog";
+const char myConfigureMailMergeConfigureDialogGroupName[] = "MailMergeConfigureDialog";
 }
 
 MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)

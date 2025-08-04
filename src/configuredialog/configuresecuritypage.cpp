@@ -662,7 +662,7 @@ QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &
 
 namespace
 {
-static const char myGpgSettingsDialogGroupName[] = "GpgSettingsDialog";
+const char myGpgSettingsDialogGroupName[] = "GpgSettingsDialog";
 }
 
 GpgSettingsDialog::GpgSettingsDialog(QWidget *parent)

@@ -20,7 +20,7 @@
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
-static const char myPotentialPhishingDetailDialogGroupName[] = "PotentialPhishingDetailDialog";
+const char myPotentialPhishingDetailDialogGroupName[] = "PotentialPhishingDetailDialog";
 }
 PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     : QDialog(parent)

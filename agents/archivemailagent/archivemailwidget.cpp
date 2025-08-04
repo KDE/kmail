@@ -35,7 +35,7 @@ inline QString archiveMailCollectionPattern()
     return QStringLiteral("ArchiveMailCollection \\d+");
 }
 
-static const char myConfigGroupName[] = "ArchiveMailDialog";
+const char myConfigGroupName[] = "ArchiveMailDialog";
 }
 
 ArchiveMailItem::ArchiveMailItem(QTreeWidget *parent)

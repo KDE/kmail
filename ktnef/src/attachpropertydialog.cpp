@@ -39,7 +39,7 @@
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
-static const char myAttachPropertyDialogGroupName[] = "AttachPropertyDialog";
+const char myAttachPropertyDialogGroupName[] = "AttachPropertyDialog";
 }
 
 AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)

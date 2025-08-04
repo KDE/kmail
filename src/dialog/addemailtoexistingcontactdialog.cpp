@@ -27,7 +27,7 @@
 #include <QWindow>
 namespace
 {
-static const char myAddEmailToExistingContactDialogGroupName[] = "AddEmailToExistingContactDialog";
+const char myAddEmailToExistingContactDialogGroupName[] = "AddEmailToExistingContactDialog";
 }
 AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent)
     : QDialog(parent)

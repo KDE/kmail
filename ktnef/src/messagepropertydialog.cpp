@@ -30,7 +30,7 @@
 #include <QWindow>
 namespace
 {
-static const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
+const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
 }
 
 MessagePropertyDialog::MessagePropertyDialog(QWidget *parent, KTNEFMessage *msg)

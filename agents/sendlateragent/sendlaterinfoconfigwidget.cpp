@@ -21,7 +21,7 @@
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
-static const char myConfigureSendLaterConfigureDialogGroupName[] = "SendLaterConfigureDialog";
+const char myConfigureSendLaterConfigureDialogGroupName[] = "SendLaterConfigureDialog";
 }
 
 SendLaterInfoConfigWidget::SendLaterInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)

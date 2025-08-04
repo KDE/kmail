@@ -101,7 +101,7 @@ private:
 
 namespace
 {
-static const char myIncompleteIndexDialogGroupName[] = "IncompleteIndexDialog";
+const char myIncompleteIndexDialogGroupName[] = "IncompleteIndexDialog";
 }
 
 IncompleteIndexDialog::IncompleteIndexDialog(const QList<qint64> &unindexedCollections, QWidget *parent)

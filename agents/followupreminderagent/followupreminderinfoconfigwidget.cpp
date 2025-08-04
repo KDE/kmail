@@ -12,7 +12,7 @@
 #include <QLayout>
 namespace
 {
-static const char myConfigGroupName[] = "FollowUpReminderInfoDialog";
+const char myConfigGroupName[] = "FollowUpReminderInfoDialog";
 }
 
 FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
