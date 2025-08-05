@@ -7,7 +7,7 @@
 #pragma once
 
 #include <KIdentityManagementWidgets/IdentityTreeView>
-#include <QWidget>
+class QWidget;
 namespace KIdentityManagementCore
 {
 class Identity;

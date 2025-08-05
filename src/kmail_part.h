@@ -11,7 +11,7 @@
 #include <kparts/part.h>
 #include <kparts/readonlypart.h>
 
-#include <QWidget>
+class QWidget;
 
 class KMMainWidget;
 

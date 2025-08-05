@@ -8,9 +8,9 @@
 
 #include <Akonadi/Collection>
 #include <KStatusNotifierItem>
-
-#include <QAbstractItemModel>
-#include <QAction>
+#include <QModelIndex>
+class QAbstractItemModel;
+class QAction;
 
 class QMenu;
 

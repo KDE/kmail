@@ -7,7 +7,8 @@
 #pragma once
 
 #include <Akonadi/Collection>
-#include <QAbstractItemModel>
+#include <QModelIndex>
+class QAbstractItemModel;
 #include <QObject>
 namespace Akonadi
 {

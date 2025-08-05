@@ -9,7 +9,7 @@
 #include <Akonadi/AgentConfigurationBase>
 #include <Akonadi/Item>
 #include <QVariantList>
-#include <QWidget>
+class QWidget;
 class FollowUpReminderInfoWidget;
 class FollowUpReminderInfoConfigWidget : public Akonadi::AgentConfigurationBase
 {

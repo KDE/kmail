@@ -7,7 +7,7 @@
 #pragma once
 
 #include <PimCommonAkonadi/PluginInterface>
-#include <QObject>
+class QObject;
 class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
 {

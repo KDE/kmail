@@ -11,7 +11,7 @@
 
 #include <KCMultiDialog>
 
-#include <QHideEvent>
+class QHideEvent;
 
 class ConfigureDialog : public KCMultiDialog
 {
