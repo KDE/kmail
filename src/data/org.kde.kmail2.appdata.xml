@@ -363,7 +363,7 @@
     <screenshot type="default">
       <image>https://cdn.kde.org/screenshots/kmail/kmail.png</image>
       <caption>KMail main window with a list of email folders and emails.</caption>
-      <caption xml:lang="ar">نافذة بريدك الرئيسية مع قائمة بمجلدات البريد الإلكتروني ورسائل البريد الإلكتروني.</caption>
+      <caption xml:lang="ar">نافذة بريدك الرئيسة مع قائمة بمجلدات البريد الإلكتروني ورسائل البريد الإلكتروني.</caption>
       <caption xml:lang="bg">Основен прозорец на Kmail със списък на папки и писма.</caption>
       <caption xml:lang="ca">Finestra principal del KMail amb una llista de carpetes de correu i correus electrònics.</caption>
       <caption xml:lang="ca-valencia">Finestra principal de KMail amb una llista de carpetes de correu i correus electrònics.</caption>
