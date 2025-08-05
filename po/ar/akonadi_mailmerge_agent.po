@@ -47,7 +47,7 @@ msgstr "لوران مونتال"
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgid "Maintainer"
-msgstr "المصين"
+msgstr "الصائن"
 
 #: mailmergeconfiguredialog.cpp:61
 #, kde-format

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-20 00:43+0000\n"
+"POT-Creation-Date: 2025-08-05 00:44+0000\n"
 "PO-Revision-Date: 2025-08-02 21:21+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -8002,10 +8002,16 @@ msgid "Unable to start account wizard"
 msgstr "לא ניתן להפעיל את אשף החשבונות"
 
 #: whatsnew/whatsnewtranslations.cpp:16
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "Add new whatsnew widget."
 msgstr "הוספת וידג׳ט חדש בשם מה חדש."
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "New plugin: show collection size."
 msgstr "תוסף חדש: הצגת גודל אוסף."
 

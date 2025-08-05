@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-20 00:43+0000\n"
+"POT-Creation-Date: 2025-08-05 00:44+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -8167,12 +8167,17 @@ msgid "Unable to start account wizard"
 msgstr "ගිණුම් මායා සහකරු ආරම්භ කළ නොහැකියි. "
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:29
+#, fuzzy, kde-format
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "නව හදුනාගැනිමක් එක් කරන්න"
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
 

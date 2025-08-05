@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-20 00:43+0000\n"
+"POT-Creation-Date: 2025-08-05 00:44+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -8386,12 +8386,17 @@ msgid "Unable to start account wizard"
 msgstr "ไม่สามารถเริ่มตัวช่วยสร้างบัญชีผู้ใช้ได้"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:29
+#, fuzzy, kde-format
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "เพิ่มการแสดงตัวตัวใหม่"
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
 

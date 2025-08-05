@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-20 00:43+0000\n"
+"POT-Creation-Date: 2025-08-05 00:44+0000\n"
 "PO-Revision-Date: 2025-07-26 14:37-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -8136,10 +8136,16 @@ msgid "Unable to start account wizard"
 msgstr "Não foi possível iniciar o assistente de contas"
 
 #: whatsnew/whatsnewtranslations.cpp:16
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "Add new whatsnew widget."
 msgstr "Adicionar novo elemento whatsnew."
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "New plugin: show collection size."
 msgstr "Novo plugin: mostrar tamanho da coleção."
 

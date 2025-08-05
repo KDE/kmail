@@ -135,7 +135,7 @@ msgstr "لوران مونتال"
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format
 msgid "Maintainer"
-msgstr "المصين"
+msgstr "الصائن"
 
 #: sendlaterinfoconfigwidget.cpp:41
 #, kde-format

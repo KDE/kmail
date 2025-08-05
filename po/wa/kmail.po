@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-20 00:43+0000\n"
+"POT-Creation-Date: 2025-08-05 00:44+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -8422,12 +8422,17 @@ msgid "Unable to start account wizard"
 msgstr "Dji n' sai enonder l' macrea des contes"
 
 #: whatsnew/whatsnewtranslations.cpp:16
-#, fuzzy
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:29
+#, fuzzy, kde-format
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "Radjouter ene novele idintité"
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
 

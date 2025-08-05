@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-20 00:43+0000\n"
+"POT-Creation-Date: 2025-08-05 00:44+0000\n"
 "PO-Revision-Date: 2025-07-02 17:25+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -8066,10 +8066,16 @@ msgid "Unable to start account wizard"
 msgstr "Neizdevās palaist kontu vedni"
 
 #: whatsnew/whatsnewtranslations.cpp:16
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "Add new whatsnew widget."
 msgstr "Pievienot jaunu „kas jauns“ logdaļu."
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:29
+#, kde-format
 msgid "New plugin: show collection size."
 msgstr "Jauns spraudnis: rādīt kolekcijas izmēru."
 
