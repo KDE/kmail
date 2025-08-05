@@ -43,7 +43,7 @@ msgstr "لوران مونتال"
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
 msgid "Maintainer"
-msgstr "المصين"
+msgstr "الصائن"
 
 #: followupreminderinfoconfigwidget.cpp:33
 #, kde-format

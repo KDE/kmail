@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 02:39+0000\n"
-"PO-Revision-Date: 2025-08-03 15:34+0400\n"
+"PO-Revision-Date: 2025-08-04 18:42+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -74,7 +74,7 @@ msgstr "تصحيحات تقنية هائلة"
 
 #: aboutdata.cpp:47
 msgid "System tray notification"
-msgstr "إخطارات صينيّة النّظام"
+msgstr "إشعارات صينيّة النّظام"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
@@ -210,7 +210,7 @@ msgstr "رقع متعدّدة"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
-msgstr "فعّل تحميل مرجع خارجي لكامل المجلد"
+msgstr "مكّن تحميل مرجع خارجي لكامل المجلد"
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
@@ -609,7 +609,7 @@ msgstr "طريقة الإرسال ال&مبدئيّة:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
-msgstr "فعّل التَّراجع عن الإرْسال"
+msgstr "مكّن التَّراجع عن الإرْسال"
 
 #: configuredialog/configureaccountpage.cpp:198
 #, kde-format
@@ -663,7 +663,7 @@ msgstr "الألوان"
 #: configuredialog/configureappearancepage.cpp:105
 #, kde-format
 msgid "Layout"
-msgstr "التّخطيط"
+msgstr "التخطيط"
 
 #: configuredialog/configureappearancepage.cpp:111
 #: configuredialog/configureappearancepage.cpp:132
@@ -942,7 +942,7 @@ msgstr "صينيّة النّظام"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "فعّل أيقونة صينيّة النّظام"
+msgstr "مكّن أيقونة صينيّة النّظام"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
@@ -1124,7 +1124,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:205
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
-msgstr "فعّل طيّ الكلمات الآليّ عند العرض المحدّد"
+msgstr "مكّن طيّ الكلمات الآليّ عند العرض المحدّد"
 
 #: configuredialog/configurecomposerpage.cpp:216
 #, kde-format
@@ -1417,7 +1417,7 @@ msgstr "ترويسة غير صالحة"
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
-msgstr "ف&عّل اكتشاف المرفقات المفقودة"
+msgstr "&مكّن اكتشاف المرفقات المفقودة"
 
 #: configuredialog/configurecomposerpage.cpp:959
 #, kde-format
@@ -1558,7 +1558,7 @@ msgstr "القراءة"
 #: configuredialog/configuresecuritypage.cpp:51
 #, kde-format
 msgid "Message Disposition Notifications"
-msgstr "إخطارات ترتيب الرّسائل"
+msgstr "إشعارات ترتيب الرّسائل"
 
 #: configuredialog/configuresecuritypage.cpp:57
 #, kde-format
@@ -2149,7 +2149,7 @@ msgstr "إدراج"
 #: editor/kmcomposerwin.cpp:1699
 #, kde-format
 msgid "Spellcheck: on"
-msgstr "تدقيق الهجاء: مفعّل"
+msgstr "تدقيق الهجاء: ممكّن"
 
 #: editor/kmcomposerwin.cpp:1699
 #, kde-format
@@ -3230,13 +3230,13 @@ msgstr "النّسق المفضّل:"
 #: identity/identitydialog.cpp:570
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr "مكّن التعمية الآلية"
+msgstr "مكّن التعمية الآليّة"
 
 #: identity/identitydialog.cpp:574
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "التعمية الآلية:"
+msgstr "التعمية الآليّة:"
 
 #: identity/identitydialog.cpp:579
 #, kde-format
@@ -4364,11 +4364,11 @@ msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "لم يُعدّل شيء."
-msgstr[1] "عُدّلت هذه الهويّة لتستخدم النّقل الافتراضيّ:"
-msgstr[2] "عُدّلت هتين الهويّتين لتستخدمان النّقل الافتراضيّ:"
-msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل الافتراضيّ:"
-msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
-msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل الافتراضيّ:"
+msgstr[1] "عُدّلت هذه الهويّة لتستخدم النّقل المبدئي:"
+msgstr[2] "عُدّلت هتين الهويّتين لتستخدمان النّقل المبدئي:"
+msgstr[3] "عُدّلت %1 هويّات لتستخدم النّقل المبدئي:"
+msgstr[4] "عُدّلت %1 هويّة لتستخدم النّقل المبدئي:"
+msgstr[5] "عُدّلت %1 هويّة لتستخدم النّقل المبدئي:"
 
 #: kmkernel.cpp:1483
 #, kde-format
@@ -4930,7 +4930,7 @@ msgstr "مُرشِّح &عارض السجل…"
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr "تاريخ الإخطارات…"
+msgstr "تاريخ الإشعارات…"
 
 #: kmmainwidget.cpp:3051
 #, kde-format
@@ -5611,13 +5611,13 @@ msgstr ""
 #: kmmainwidget.cpp:5030
 #, kde-format
 msgid "Enable Unified Mailboxes?"
-msgstr "فعّل صناديق البريد الموحَّدة؟"
+msgstr "مكّن صناديق البريد الموحَّدة؟"
 
 #: kmmainwidget.cpp:5031
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
-msgstr "فعّل صناديق البريد الموحَّدة"
+msgstr "مكّن صناديق البريد الموحَّدة"
 
 #: kmmainwidget.cpp:5032
 #, kde-format
@@ -5849,8 +5849,8 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
-"فعّل هذا الخيار لرؤية المسار الكامل لكلّ مجلّد موجود في الملخّص. إن لم يكن هذا "
-"الخيار مفعّلًا، فسيُعرض المجلّد الرّئيس فقط."
+"مكّن هذا الخيار لرؤية المسار الكامل لكلّ مجلّد موجود في الملخّص. إن لم يكن هذا "
+"الخيار ممكّنًا، فسيُعرض المجلّد الرّئيس فقط."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, kde-format
@@ -6460,7 +6460,7 @@ msgstr "المجلَّد الأكثر تحديد مؤخرًا في  حواريّ
 #: settings/kmail.kcfg.in:91
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "فعّل أيقونة صينيّة النّظام"
+msgstr "مكّن أيقونة صينيّة النّظام"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: settings/kmail.kcfg.in:95
@@ -6596,9 +6596,9 @@ msgid ""
 msgstr ""
 "<qt> <p> قم بتمكين هذا الخيار إذا كنت تريد من بريدك أن يطلب إشعارات قراءة "
 "الرسائل لكل رسالة من رسائلك الصادرة. </p> <p> يؤثر هذا الخيار على الإعداد "
-"الافتراضي فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على "
-"أساس كل رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار "
-"قراءة الرسالة </em>. </p> </qt>"
+"المبدئي فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على أساس "
+"كل رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار قراءة "
+"الرسالة </em>. </p> </qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg.in:246
@@ -6615,7 +6615,7 @@ msgid ""
 "autosaving by setting it to the value 0."
 msgstr ""
 "يمكن إنشاء نسخة احتياطيَّة من النَّص في نافذة المؤلف بانتظام. تُضبط الفترة "
-"المستخدمة لإنشاء النُّسخ الاحتياطيَّة هنا. تستطيع تعطيل الحفظ الآلي من خلال وضع "
+"المستخدمة لإنشاء النُّسخ الاحتياطيَّة هنا. تستطيع تعطيل الحفظ الآليّ من خلال وضع "
 "القيمة 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
@@ -6785,7 +6785,7 @@ msgstr "خصّص ترتيب الحسابات…"
 #: ui/accountspagereceivingtab.ui:41
 #, kde-format
 msgid "New Mail Notification"
-msgstr "إخطارات البريد الجديد"
+msgstr "إشعارات البريد الجديد"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, mVerboseNotificationCheck)
 #: ui/accountspagereceivingtab.ui:65
@@ -7090,7 +7090,7 @@ msgstr "اسمح بحذف الرسائل دون تأكيد"
 #: ui/miscpagemaintab.ui:187
 #, kde-format
 msgid "Enable folders drag and drop"
-msgstr "فعّل سحب وإفلات المجلَّدات"
+msgstr "مكّن سحب وإفلات المجلَّدات"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -7526,7 +7526,7 @@ msgstr "مرفقات حزمة المفتاح والشَّهادة"
 #: ui/securitypagegeneraltab.ui:191
 #, kde-format
 msgid "Automatically import keys and certificate"
-msgstr "استورد المفاتيح والشَّهادة بشَكل آلي"
+msgstr "استورد المفاتيح والشَّهادة بشَكل آليّ"
 
 #. i18n: ectx: property (text), widget (QLabel, labelSend)
 #: ui/securitypagemdntab.ui:20
@@ -7576,7 +7576,7 @@ msgstr ""
 "مقروءة) ، و <b> محذوفة </b> و <b> مرسلة </b> (مثل إعادة التوجيه). </p> <p> "
 "الخيارات التالية هي متاح للتحكم في إرسال بريدك لإشعارات قراءة الرسالة: </p> "
 "<ul> <li> <em> تجاهل </em>: يتجاهل أي طلب لإشعارات القراءة. لن يرسل إشعار "
-"توصيل رسالة آليا (موصى به). </li> <li> <em> اسأل </em>: تجيب طلبات الإشعار "
+"توصيل رسالة آليّا (موصى به). </li> <li> <em> اسأل </em>: تجيب طلبات الإشعار "
 "بعد طلب الإذن من المستخدم. بهذه الطريقة، يمكنك إرسال إشعار قراءة للرسائل "
 "المحددة بينما ترفضها أو تتجاهلها للآخرين. </li> <li> <em> الرفض </em>: يرسل "
 "دائمًا إشعار <b> مرفوض </b>. هذا أفضل <em> قليلاً </em> من إرسال إشعارات "

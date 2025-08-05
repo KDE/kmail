@@ -129,7 +129,7 @@ msgstr "لوران مونتال"
 #: archivemailwidget.cpp:96
 #, kde-format
 msgid "Maintainer"
-msgstr "المصين"
+msgstr "الصائن"
 
 #: archivemailwidget.cpp:98
 #, kde-format
