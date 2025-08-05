@@ -53,7 +53,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Merge email addresses agent."),
                                       KAboutLicense::GPL_V2,
-                                      i18n("Copyright (C) 2021-%1 Laurent Montel", QStringLiteral("2025")));
+                                      i18n("© 2021–%1 Laurent Montel", QStringLiteral("2025")));
 
     aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
     aboutData.setProductName(QByteArrayLiteral("Akonadi/MailMergeAgent"));

@@ -100,7 +100,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     });
 
     auto iconButton =
-        new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))), i18nc("@action:button", "Pick icon..."));
+        new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))), i18nc("@action:button", "Pick icon…"));
     f->addRow(i18n("Icon:"), iconButton);
     connect(iconButton, &QPushButton::clicked, this, [iconButton, this]() {
         const auto iconName = KIconDialog::getIcon();

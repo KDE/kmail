@@ -26,7 +26,7 @@ FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KShared
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Follow Up Reminder"),
                                       KAboutLicense::GPL_V2,
-                                      i18n("Copyright (C) 2014-%1 Laurent Montel", QStringLiteral("2025")));
+                                      i18n("© 2014–%1 Laurent Montel", QStringLiteral("2025")));
 
     aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 

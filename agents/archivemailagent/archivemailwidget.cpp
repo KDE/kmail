@@ -92,7 +92,7 @@ ArchiveMailWidget::ArchiveMailWidget(const KSharedConfigPtr &config, QWidget *pa
                          QStringLiteral(KDEPIM_VERSION),
                          i18n("Archive emails automatically."),
                          KAboutLicense::GPL_V2,
-                         i18n("Copyright (C) 2014-%1 Laurent Montel", QStringLiteral("2025")));
+                         i18n("© 2014–%1 Laurent Montel", QStringLiteral("2025")));
     aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
 
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
