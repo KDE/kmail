@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-05 00:44+0000\n"
-"PO-Revision-Date: 2025-07-01 04:11+0200\n"
+"PO-Revision-Date: 2025-08-05 05:42+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -8075,7 +8075,7 @@ msgstr "ანგარიშის ოსტატის გაშვები�
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
+msgstr "ტექსტის ავტოგენერაციის რედაქტორის დამატებებში გატანის დაშვება."
 
 #: whatsnew/whatsnewtranslations.cpp:29
 #, kde-format

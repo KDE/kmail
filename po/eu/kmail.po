@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-05 00:44+0000\n"
-"PO-Revision-Date: 2025-07-23 14:04+0200\n"
+"PO-Revision-Date: 2025-08-05 12:58+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -8078,6 +8078,7 @@ msgstr "Ez da kontuen morroia abiarazteko gai"
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
 msgstr ""
+"Baimendu automatikoki sortzen duten editoreen plugineko testua esportatzea."
 
 #: whatsnew/whatsnewtranslations.cpp:29
 #, kde-format

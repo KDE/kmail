@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-05 00:44+0000\n"
-"PO-Revision-Date: 2025-07-01 16:07+0300\n"
+"PO-Revision-Date: 2025-08-05 14:19+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -8196,6 +8196,8 @@ msgstr "Не вдалося запустити майстер створення
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
 msgstr ""
+"Уможливлено експортування тексту у додатках автоматичного породження до "
+"редактора."
 
 #: whatsnew/whatsnewtranslations.cpp:29
 #, kde-format
