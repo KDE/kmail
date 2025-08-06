@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 02:39+0000\n"
-"PO-Revision-Date: 2025-08-04 18:42+0400\n"
+"PO-Revision-Date: 2025-08-05 20:08+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -166,7 +166,7 @@ msgstr "أضاف ضغط المرفقات اختياريا"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
-msgstr "أضاف حالة البريد غير المرغوب في التَّرويسات المزيَّنة"
+msgstr "أضاف حالة البريد غير المرغوب في الترويسات المزيَّنة"
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
@@ -643,7 +643,7 @@ msgstr "التمس البريد عند البدء"
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
-msgstr "وكيل إخطار البريد الجديد غير مسجّل. فضلًا راسل مديرك."
+msgstr "وكيل إشعار البريد الجديد غير مسجّل. فضلًا راسل مديرك."
 
 #: configuredialog/configureappearancepage.cpp:86
 #, kde-format
@@ -787,7 +787,7 @@ msgstr "عتبة الاقتراب من الحصّة:"
 #: configuredialog/configureappearancepage.cpp:352
 #, kde-format
 msgid "%"
-msgstr "%"
+msgstr "٪"
 
 #: configuredialog/configureappearancepage.cpp:479
 #, kde-format
@@ -830,7 +830,7 @@ msgstr "دائمًا"
 #, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "تلمحيات المجلّدات:"
+msgstr "تلميحات المجلّدات:"
 
 #: configuredialog/configureappearancepage.cpp:582
 #, kde-format
@@ -892,10 +892,10 @@ msgid ""
 "- time zone in numeric form (-0500)</li></ul><p><strong>All other input "
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
-"<html dir=\"rtl\"><p><strong>يمكن استخدام هذه التّعبيرات للتّاريخ:</strong></"
-"p><ul><li>d - اليوم كعدد بلا صفر بادئ (1-31)</li><li>dd - اليوم كعدد بصفر "
-"بادئ (01-31)</li><li>ddd - اسم اليوم المختصر (إثن - أحد)</li><li>dddd - اسم "
-"اليوم الطّويل (الإثنين - الأحد)</li><li>M - الشّهر كعدد بلا صفر بادئ (1-12)</"
+"<p><strong>يمكن استخدام هذه التّعبيرات للتّاريخ:</strong></p><ul><li>d - اليوم "
+"كعدد بلا صفر بادئ (1-31)</li><li>dd - اليوم كعدد بصفر بادئ (01-31)</"
+"li><li>ddd - اسم اليوم المختصر (الإثنين - الأحد)</li><li>dddd - اسم اليوم "
+"الطّويل (الإثنين - الأحد)</li><li>M - الشّهر كعدد بلا صفر بادئ (1-12)</"
 "li><li>MM - الشّهر كعدد بصفر بادئ (01-12)</li><li>MMM - اسم الشّهر المختصر "
 "(ينا - فبر)</li><li>MMMM - اسم الشّهر الطّويل (يناير - فبراير)</li><li>yy - "
 "السّنة كعدد بخانتين (00-99)</li><li>yyyy - السّنة كعدد بأربع خانات "
@@ -908,7 +908,7 @@ msgstr ""
 "(000-999)</li><li>AP - حوّل إلى عرض ص/م. ستُستبدل AP ب‍\"ص\" أو \"م\".</"
 "li><li>ap - بدّل إلى عرض ص/م. ستُستبدل ap ب‍\"ص\" أو \"م\".</li><li>Z - المنطقة "
 "الزّمنيّة كصيغة رقميّة (-0500)</li></ul><p><strong>سأتجاهل كلّ المحارف المدخلة "
-"الأخرى.</strong></p></html>"
+"الأخرى.</strong></p> </qt>"
 
 #: configuredialog/configureappearancepage.cpp:706
 #, kde-format
@@ -1734,7 +1734,7 @@ msgstr "لم تختر مجلّدًا"
 #, kde-format
 msgctxt "@title:window"
 msgid "Notification"
-msgstr "إخطار"
+msgstr "الإشعار"
 
 #: editor/attachment/attachmentview.cpp:168
 #, kde-format
@@ -1957,7 +1957,7 @@ msgstr "&عاجل"
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "ا&طلب إخطار التّجميع"
+msgstr "ا&طلب إشعار التّجميع"
 
 #: editor/kmcomposerwin.cpp:1386
 #, kde-format
@@ -2616,10 +2616,10 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
-"مفتاح التعمية موثوق به بشكل هامشي فقط، ولكن تم استخدامه بشكل كاف من الوقت "
-"الذي من المحتمل جدا أن يسيطر عليه الشخص المذكور. باستخدام المفتاح سيتم "
-"الوثوق به أكثر. أو يمكنك التوقيع على المفتاح، إذا أوصلتَ بصمة الإصبع بواسطة "
-"قناة أخرى. انقر فوق الأيقونة للتفاصيل."
+"مفتاح التعمية موثوق به بشكل هامشي فقط، ولكن اسُتخدم لمدة طويلة مما قد يشير "
+"إلى أن الشخص المذكور يتحكم به. استخدام المفتاح سيُثق به أكثر. أو يمكنك "
+"التوقيع على المفتاح، إذا أوصلتَ البصمة بواسطة قناة أخرى. انقر فوق الأيقونة "
+"للتفاصيل."
 
 #: editor/kmcomposerwin.cpp:3904
 #, kde-format
@@ -2750,7 +2750,7 @@ msgstr "هذا المرفق : <ul><li>%1</li></ul> أضيف خارجياً. أز
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
-msgstr "أضيفت هذه المرفقات خارجيا: <ul><li>%1</li></ul>. أزلهاإِذا كانت خطأ."
+msgstr "أضيفت هذه المرفقات خارجيا: <ul><li>%1</li></ul>. أزلها إذا كانت خطأ."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -3967,7 +3967,7 @@ msgstr "خطأ أثناء إزالة المُكرَّرات"
 #, kde-format
 msgctxt "@title:window"
 msgid "Save File as"
-msgstr "حفظ الملف بإسم"
+msgstr "حفظ الملف باسم"
 
 #: kmail_options.h:16
 #, kde-format
@@ -4597,7 +4597,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 "تحميل المراجع الخارجية في بريد html سيجعلك أكثر عرضة لـ \"البريد العشوائي\" "
-"وقد يزيد من احتمالية تعرض نظامك للاختراق من خلال الثغرات الأمنيةالحالية "
+"وقد يزيد من احتمالية تعرض نظامك للاختراق من خلال الثغرات الأمنية الحالية "
 "والمستقبلية."
 
 #: kmmainwidget.cpp:1610 kmmainwidget.cpp:4880
@@ -4805,23 +4805,23 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<html><p>هل تريد حقا حذف كافة المرفقات من الرسالة المحددة؟<br />بمجرد حذفها، "
-"لا يمكن استعادتها..</p></html>"
+"<html><p>هل تريد حذف كافة المرفقات من الرسالة المحددة؟<br />بمجرد حذفها، لا "
+"يمكن استعادتها.</p></html>"
 msgstr[1] ""
-"<html><p>هل تريد حقا حذف كافة المرفقات من الرسالة المحددة؟<br />بمجرد حذفها، "
-"لا يمكن استعادتها..</p></html>"
+"<html>هل تريد حذف كافة المرفقات من الرسالة المحددة؟<br />بمجرد حذفها، لا "
+"يمكن استعادتها.</html>"
 msgstr[2] ""
-"<html>هل تريد حقا حذف كافة المرفقات من الرسالتين المحددتين؟<br />بمجرد "
-"حذفها، لا يمكن استعادتها.</html>"
+"<html>هل تريد حذف كافة المرفقات من الرسالتين المحددتين؟<br />بمجرد حذفها، لا "
+"يمكن استعادتها.</html>"
 msgstr[3] ""
-"<html>هل تريد حقا حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، "
-"لا يمكن استعادتها.</html>"
+"<html>هل تريد حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، لا "
+"يمكن استعادتها.</html>"
 msgstr[4] ""
-"<html>هل تريد حقا حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، "
-"لا يمكن استعادتها.</html>"
+"<html>هل تريد حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، لا "
+"يمكن استعادتها.</html>"
 msgstr[5] ""
-"<html>هل تريد حقا حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، "
-"لا يمكن استعادتها.</html>"
+"<html>هل تريد حذف كافة المرفقات من الرسائل %1 المحددة؟<br />بمجرد حذفها، لا "
+"يمكن استعادتها.</html>"
 
 #: kmmainwidget.cpp:2444
 #, kde-format
@@ -5347,7 +5347,7 @@ msgstr "ما الجديد"
 #: kmmainwidget.cpp:3473
 #, kde-format
 msgid "Configure &Notifications…"
-msgstr "اضبط الإ&خطارات…"
+msgstr "اضبط الإ&شعارات…"
 
 #: kmmainwidget.cpp:3480
 #, kde-format
@@ -5410,7 +5410,7 @@ msgstr "اقفز إلى مجلّد…"
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
-msgstr "أجعض العمليّة الحاليّة"
+msgstr "أجهض العمليّة الحاليّة"
 
 #: kmmainwidget.cpp:3577
 #, kde-format
@@ -5603,8 +5603,8 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 "لديك أكثر من حساب بريد إِلكترونيٍّ لإعداده. \n"
-"أتريد تفعيل ميزه صندوق البريد الموحَّد لعرض المحتوى الموحَّدلمجلَّدات صندوق الوارد "
-"والمرسل والمسوَّدات؟ \n"
+"أتريد تفعيل ميزه صندوق البريد الموحَّد لعرض المحتوى الموحَّد لمجلَّدات صندوق "
+"الوارد والمرسل والمسوَّدات؟ \n"
 "تستطيع إعداد صندوق البريد الموحد، أو إنشاء واحد مخصص أو  \n"
 "إلغاء تفعيل هذه الميزة  في إعدادات ملحقات بريدك."
 
@@ -6534,7 +6534,8 @@ msgstr ""
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
-msgstr "تستخدم هذه القيمة لتقرر إذا ما ينبغي أن يتم عرض مقدمة بريدك."
+msgstr ""
+"تستخدم هذه القيمة لتقرر إذا ما ينبغي أن تُعرض مقدمة تعريفة لبرنامج بريدك."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
 #: settings/kmail.kcfg.in:178
@@ -6582,7 +6583,7 @@ msgstr "دقّق الهجاء قبل الإرسال"
 #: settings/kmail.kcfg.in:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "اطلُب إ&خطارات قُرأت الرسالة آليّاً"
+msgstr "اطلُب إ&شعارات قُرأت الرسالة آليّاً"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg.in:224
@@ -6622,7 +6623,7 @@ msgstr ""
 #: settings/kmail.kcfg.in:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
-msgstr "اعرض لوحة إدارة مقتطف النص ولوحة الإدراج في ا لمؤلف."
+msgstr "اعرض لوحة إدارة مقتطف النص ولوحة الإدراج في المؤلف."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
 #: settings/kmail.kcfg.in:260
@@ -7437,7 +7438,7 @@ msgid ""
 "messages that were not attached to it, you can enable this option, but you "
 "should be aware of the possible problem.</p></qt>"
 msgstr ""
-"ن<qt> <p> بعض الإعلانات بالبريد تكون بتنسيق HTML وتحتوي على مراجع على سبيل "
+"<qt> <p> بعض الإعلانات بالبريد تكون بتنسيق HTML وتحتوي على مراجع على سبيل "
 "المثال الصور التي يستخدمها المعلنون لاكتشاف أنك قد قرأت رسالتهم (&quot; علل "
 "الويب &quot;). </p> <p> ليس هناك سبب وجيه لتحميل الصور من الإنترنت في هذه "
 "الحالة، حيث يمكن للمرسل دائمًا إرفاق الصور المطلوبة مباشرةً بالرسالة. </p> <p> "
@@ -7675,8 +7676,8 @@ msgid ""
 "the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP "
 "responder below."
 msgstr ""
-"سيتم التحقق من سلامة شهادات S/MIME عبر الإنترنت باستخدام ميفاق حالة الشهادات "
-"عبر الإنترنت (OCSP). املأ مسار مجيب OCSP بالأسفل."
+"سيتحقق من سلامة شهادات S/MIME عبر الإنترنت باستخدام ميفاق حالة الشهادات عبر "
+"الإنترنت (OCSP). املأ مسار مجيب OCSP بالأسفل."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
@@ -7899,7 +7900,7 @@ msgid ""
 msgstr ""
 "إدخال خادوم LDAP هُنا  سيجعل جميع طلبات LADP تذهب لذلك الخادم أوَّلا. بشكل اكثر "
 "دقة، سيلغي هذا أيّ مضيف مُخصَّص وجزء المنفذ في رابط LADP، وسيستخدم كذلك فقط إذا "
-"فشل الاتصال ب 'الوكيل'بنية الأمر \"HOST\" أو \"HOST:PORT\". إذا حُذف المنفذ، "
+"فشل الاتصال ب 'الوكيل 'بنية الأمر \"HOST\" أو \"HOST:PORT\". إذا حُذف المنفذ، "
 "سيستخدم منفذ 389 (منفذ LADP معياري)."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
