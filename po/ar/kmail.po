@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 02:39+0000\n"
-"PO-Revision-Date: 2025-08-05 20:08+0400\n"
+"PO-Revision-Date: 2025-08-06 11:27+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2550,8 +2550,8 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 "مفتاح التعمية غير موثوق به. لم يستخدم في أي مكان لضمان أنه ينتمي إلى الشخص "
-"المذكور. باستخدام المفتاح سيتم الوثوق به أكثر. أو يمكنك التوقيع على المفتاح، "
-"إذا أوصلتَ بصمة الإصبع من قبل قناة أخرى. انقر فوق الأيقونة للتفاصيل."
+"المذكور. باستخدام المفتاح سيوثق به أكثر. أو يمكنك التوقيع على المفتاح، إذا "
+"أوصلتَ البصمة من قبل قناة أخرى. انقر فوق الأيقونة للتفاصيل."
 
 #: editor/kmcomposerwin.cpp:3862
 #, kde-format
@@ -7041,9 +7041,9 @@ msgstr ""
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
 "weight:600;\">دُرْ في كلّ المجلّدات المُعَلِّمة: </span>هذا هو نفسه \"در في جميع "
-"المجلدات\" فيما عدا أنه يأخذ المجلدات فقط في الاعتبار والتي تم تمييزها "
-"بخاصية المجلد \"العمل على البريد الجديد/غير المقروء في هذا المجلد\". </p></"
-"body></html>"
+"المجلدات\" فيما عدا أنه يأخذ المجلدات فقط في الاعتبار والتي ميزتها بخاصية "
+"المجلد \"العمل على البريد الجديد/غير المقروء في هذا المجلد\". </p></body></"
+"html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
