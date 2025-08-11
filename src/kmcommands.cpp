@@ -792,21 +792,19 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             startOfMessage = endOfMessage + 1;
             endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         }
-        if (endOfMessage == -1) {
-            endOfMessage = mMsgString.length();
-            multipleMessages = false;
-            auto msg = new KMime::Message;
-            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
-            msg->parse();
-            if (!msg->hasContent()) {
-                delete msg;
-                msg = nullptr;
-                doesNotContainMessage();
-                return;
-            }
-            KMime::Message::Ptr mMsg(msg);
-            listMessages << mMsg;
+        endOfMessage = mMsgString.length();
+        multipleMessages = false;
+        auto msg = new KMime::Message;
+        msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
+        msg->parse();
+        if (!msg->hasContent()) {
+            delete msg;
+            msg = nullptr;
+            doesNotContainMessage();
+            return;
         }
+        KMime::Message::Ptr mMsg(msg);
+        listMessages << mMsg;
         auto win = new KMReaderMainWin();
         win->showMessage(mEncoding, listMessages);
         win->show();
