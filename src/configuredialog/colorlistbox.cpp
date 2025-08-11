@@ -106,11 +106,11 @@ void ColorListBox::dragMoveEvent(QDragMoveEvent *e)
 
 void ColorListBox::dropEvent(QDropEvent *e)
 {
-    const QColor color = KColorMimeData::fromMimeData(e->mimeData());
-    if (color.isValid()) {
+    const QColor colorFromMimeData = KColorMimeData::fromMimeData(e->mimeData());
+    if (colorFromMimeData.isValid()) {
         QTreeWidgetItem *item = currentItem();
         if (item) {
-            item->setData(0, Qt::DecorationRole, color);
+            item->setData(0, Qt::DecorationRole, colorFromMimeData);
             Q_EMIT changed();
         }
         mCurrentOnDragEnter = nullptr;

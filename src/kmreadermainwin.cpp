@@ -766,7 +766,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
                 if (!(CommonKernel->folderIsSentMailFolder(col) || CommonKernel->folderIsDrafts(col) || CommonKernel->folderIsTemplates(col))) {
                     replyForwardMenu = true;
                 }
-            } else if (messageHasPayload) {
+            } else {
                 replyForwardMenu = true;
             }
 

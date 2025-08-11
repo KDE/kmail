@@ -151,16 +151,14 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEdit
                 }
                 if (interface->plugin()->hasPopupMenuSupport()) {
                     type = MessageComposer::PluginActionType::PopupMenu;
-                    if (currentAction) {
-                        lst = mActionHash.value(type);
-                        if (!lst.isEmpty()) {
-                            auto act = new QAction(this);
-                            act->setSeparator(true);
-                            lst << act << currentAction;
-                            mActionHash.insert(type, lst);
-                        } else {
-                            mActionHash.insert(type, QList<QAction *>() << currentAction);
-                        }
+                    lst = mActionHash.value(type);
+                    if (!lst.isEmpty()) {
+                        auto act = new QAction(this);
+                        act->setSeparator(true);
+                        lst << act << currentAction;
+                        mActionHash.insert(type, lst);
+                    } else {
+                        mActionHash.insert(type, QList<QAction *>() << currentAction);
                     }
                 }
                 if (interface->plugin()->hasToolBarSupport()) {

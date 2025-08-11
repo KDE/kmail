@@ -60,8 +60,8 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
         Akonadi::Item updateItem = item;
         updateItem.setPayload<KCalendarCore::Todo::Ptr>(todo);
 
-        auto job = new Akonadi::ItemModifyJob(updateItem);
-        connect(job, &Akonadi::ItemModifyJob::result, this, &FollowUpReminderFinishTaskJob::slotItemModifiedResult);
+        auto modifyJob = new Akonadi::ItemModifyJob(updateItem);
+        connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &FollowUpReminderFinishTaskJob::slotItemModifiedResult);
     } else {
         qCWarning(FOLLOWUPREMINDERAGENT_LOG) << " Found item different from 1: " << lst.count();
         Q_EMIT finishTaskFailed();

@@ -1041,9 +1041,6 @@ void KMComposerWin::rethinkFields(bool fromSlot, bool forceAllHeaders)
 
     if (!fromSlot) {
         mAllFieldsAction->setChecked(showHeaders == HDR_ALL);
-    }
-
-    if (!fromSlot) {
         mIdentityAction->setChecked(std::abs(mShowHeaders) & HDR_IDENTITY);
     }
     rethinkHeaderLine(showHeaders, HDR_IDENTITY, row, mLblIdentity, mComposerBase->identityCombo());

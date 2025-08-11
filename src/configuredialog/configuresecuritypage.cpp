@@ -318,7 +318,7 @@ void SecurityPageEncryptionTab::slotConfigureGnupg()
 {
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     dlg->setWindowTitle(i18nc("@title:window", "GnuPG Settings"));
-    KPageWidgetItem *page = nullptr;
+    const KPageWidgetItem *page = nullptr;
     const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim6/kcms/kleopatra")), QStringLiteral("kcm_kmail_gnupgsystem"));
     if (plugin.isValid()) {
         page = dlg->addModule(plugin);

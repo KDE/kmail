@@ -36,6 +36,13 @@ QStringList PotentialPhishingEmailJob::potentialPhisingEmails() const
     return mPotentialPhisingEmails;
 }
 
+bool PotentialPhishingEmailJob::containsDifferentName(const QList<QStringView> &lst, QStringView firstName) const
+{
+    return std::any_of(lst.constBegin(), lst.constEnd(), [firstName](QStringView n) {
+        return n != firstName;
+    });
+}
+
 bool PotentialPhishingEmailJob::start()
 {
     mPotentialPhisingEmails.clear();
@@ -67,11 +74,9 @@ bool PotentialPhishingEmailJob::start()
                         if (lst.count() > 1) {
                             const QStringView firstName = lst.at(0);
 
-                            for (const QStringView n : lst) {
-                                if (n != firstName) {
-                                    mPotentialPhisingEmails.append(addr);
-                                    break;
-                                }
+                            // Usage
+                            if (containsDifferentName(lst, firstName)) {
+                                mPotentialPhisingEmails.append(addr);
                             }
                         } else {
                             mPotentialPhisingEmails.append(addr);

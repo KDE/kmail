@@ -1341,14 +1341,14 @@ void AppearancePageMessageTagTab::save()
         return;
     }
 
-    QListWidgetItem *item = mTagListBox->currentItem();
+    const QListWidgetItem *item = mTagListBox->currentItem();
     if (!item) {
         return;
     }
     slotRecordTagSettings(currentRow);
     const int numberOfMsgTagList = count;
     for (int i = 0; i < numberOfMsgTagList; ++i) {
-        auto tagItem = static_cast<TagListWidgetItem *>(mTagListBox->item(i));
+        const auto tagItem = static_cast<TagListWidgetItem *>(mTagListBox->item(i));
         if ((i >= mOriginalMsgTagList.count()) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i])) {
             MailCommon::Tag::Ptr tag = tagItem->kmailTag();
             tag->priority = i;

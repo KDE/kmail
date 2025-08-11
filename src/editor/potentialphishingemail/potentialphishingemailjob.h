@@ -30,6 +30,7 @@ Q_SIGNALS:
     void potentialPhishingEmailsFound(const QStringList &emails);
 
 private:
+    [[nodiscard]] bool containsDifferentName(const QList<QStringView> &lst, QStringView firstName) const;
     QStringList mEmails;
     QStringList mPotentialPhisingEmails;
     QStringList mEmailWhiteList;

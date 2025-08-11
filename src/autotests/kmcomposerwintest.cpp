@@ -117,7 +117,7 @@ void killAgent()
     proc.waitForFinished();
 }
 
-KMime::Message::Ptr createItem(const KIdentityManagementCore::Identity &ident, QByteArray recipient = "Friends <friends@kde.example>")
+KMime::Message::Ptr createItem(const KIdentityManagementCore::Identity &ident, const QByteArray &recipient = "Friends <friends@kde.example>")
 {
     QByteArray data
         = "From: Konqui <konqui@kde.example>\n"
