@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 02:39+0000\n"
-"PO-Revision-Date: 2025-08-06 11:27+0400\n"
+"PO-Revision-Date: 2025-08-10 22:28+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -66,7 +66,7 @@ msgstr "التّوثيق"
 
 #: aboutdata.cpp:45
 msgid "Japanese language support"
-msgstr "دعم اللغة اليابانية"
+msgstr "إتاحة اللغة اليابانية"
 
 #: aboutdata.cpp:46
 msgid "Numerous technical corrections"
@@ -82,7 +82,7 @@ msgstr "رقعة لـPGP"
 
 #: aboutdata.cpp:49
 msgid "Crypto support"
-msgstr "دعم التعمية"
+msgstr "إتاحة التعمية"
 
 #: aboutdata.cpp:50
 msgid "Improved internal program documentation"
@@ -94,19 +94,19 @@ msgstr "مُساهم رئيسيٌّ , نَشِط"
 
 #: aboutdata.cpp:54
 msgid "Added maildir support"
-msgstr "أضاف دعم maildir"
+msgstr "أضاف التعامل مع maildir"
 
 #: aboutdata.cpp:56
 msgid "PGP 6 support and further enhancements of the encryption support"
-msgstr "دعم PGP 6 وتحسينات أخرى لدعم التّعمية"
+msgstr "تعامل مع PGP 6 وتحسينات أخرى للتّعمية"
 
 #: aboutdata.cpp:63
 msgid "Original encryption support PGP 2 and PGP 5 support"
-msgstr "الدّعم الأصليّ للتّعمية ودعم PGP 2 وPGP 5"
+msgstr "أول من أتاح التّعمية والتعامل مع PGP 2 وPGP 5"
 
 #: aboutdata.cpp:64
 msgid "GnuPG support"
-msgstr "دعم GnuPG"
+msgstr "إتاحة التعامل مع GnuPG"
 
 #: aboutdata.cpp:65 aboutdata.cpp:88 aboutdata.cpp:147
 msgid "Major contributor"
@@ -178,7 +178,7 @@ msgstr "إصلاح العِلّل وتنظيم التَّعليمات البرم
 
 #: aboutdata.cpp:111
 msgid "LDAP support, maintenance"
-msgstr "دعم وصيانة LADP"
+msgstr "التعامل مع LADP، والصيانة"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
@@ -194,7 +194,7 @@ msgstr "مُساهم أساسي, نَشِط"
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
-msgstr "دعم مضادّات الفيروسات"
+msgstr "إتاحة مضادّات الفيروسات"
 
 #: aboutdata.cpp:123
 msgid "Fixed widget styles"
@@ -274,11 +274,11 @@ msgstr "إدارة مشروعيّ Ägypten وKroupware"
 
 #: aboutdata.cpp:172
 msgid "Improved HTML support"
-msgstr "دعم HTML مطوّر"
+msgstr "توفير تعامل مع HTML مطوّر"
 
 #: aboutdata.cpp:173
 msgid "X-Face support"
-msgstr "دعم وجه-إكس"
+msgstr "إتاحة وجه-إكس"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
@@ -286,7 +286,7 @@ msgstr "أتمتت تحديد المستلم"
 
 #: aboutdata.cpp:175
 msgid "Beta testing of PGP 6 support"
-msgstr "تجريب اختباريّ لدعم PGP 6"
+msgstr "تجريب اختباريّ للتعامل مع PGP 6"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
@@ -1147,7 +1147,7 @@ msgid ""
 "and underlined text, lists, and external references are supported."
 msgstr ""
 "نسق جزء النص العادي من رسالة من علامة HTML. النص الغامق والمائل والمسطر "
-"والقوائم والمراجع الخارجية مدعومه."
+"والقوائم والمراجع الخارجية متاحة."
 
 #: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
@@ -7943,7 +7943,7 @@ msgid ""
 msgstr ""
 "يستطيع بريدك إرسال صورة صغيرة الحجم (48x48 بكسل) ومنخفضة الجودة مع كلِّ رسالة، "
 "مثلا قد تكون صورة لك أو صورة رمزية، ستظهر في بريد العميل المتلقي (إذا كانت "
-"مدعومة) ."
+"يتوافق معها) ."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:75
