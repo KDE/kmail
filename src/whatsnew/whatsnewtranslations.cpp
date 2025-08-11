@@ -22,10 +22,6 @@ QList<PimCommon::WhatsNewInfo> WhatsNewTranslations::createWhatsNewInfo() const
     QList<PimCommon::WhatsNewInfo> listInfo;
     {
         PimCommon::WhatsNewInfo info;
-        QStringList lst;
-        for (const KLazyLocalizedString &l : lastNewFeatures()) {
-            lst += l.toString();
-        }
         info.setNewFeatures({i18n("Add new whatsnew widget."), i18n("New plugin: show collection size.")});
         info.setVersion(QStringLiteral("6.5.0"));
         listInfo.append(std::move(info));
