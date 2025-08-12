@@ -33,7 +33,7 @@ msgstr "kde-i18n-de@kde.org"
 #: attachpropertydialog.cpp:61
 #, kde-format
 msgid "Save…"
-msgstr "Speichern..."
+msgstr "Speichern …"
 
 #: attachpropertydialog.cpp:94
 #, kde-format
@@ -94,7 +94,7 @@ msgstr "Ansicht"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr "Betrachten mit ..."
+msgstr "Betrachten mit …"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:401
 #, kde-format
@@ -106,13 +106,13 @@ msgstr "Entpacken"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "Entpacken nach ..."
+msgstr "Entpacken nach …"
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "Alles entpacken nach ..."
+msgstr "Alles entpacken nach …"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -136,13 +136,13 @@ msgstr "Nachrichtentext anzeigen"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
-msgstr "Nachrichtentext speichern unter ..."
+msgstr "Nachrichtentext speichern unter …"
 
 #: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
-msgstr "Standardordner ..."
+msgstr "Standardordner …"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -219,13 +219,13 @@ msgstr "&Öffnen mit"
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
-msgstr "&Weitere ..."
+msgstr "&Weitere …"
 
 #: ktnefmain.cpp:572 ktnefmain.cpp:580
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "&Open With…"
+msgstr "&Öffnen mit …"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
