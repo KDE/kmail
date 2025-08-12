@@ -44,7 +44,7 @@ msgstr "Nachrichtenkennung"
 #: sendlaterconfigurewidget.cpp:69
 #, kde-format
 msgid "No messages waiting…"
-msgstr "Es stehen keine Nachrichten an …"
+msgstr "Es stehen keine Nachrichten an …"
 
 #: sendlaterconfigurewidget.cpp:94
 #, kde-format
@@ -113,7 +113,7 @@ msgstr "E-Mails später senden."
 #: sendlaterinfoconfigwidget.cpp:37
 #, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "Copyright © 2013-%1 Laurent Montel"
+msgstr "© 2013-%1 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format
@@ -199,7 +199,7 @@ msgstr "Erneut senden"
 #: ui/sendlaterconfigurewidget.ui:31
 #, kde-format
 msgid "Modify…"
-msgstr "Ändern …"
+msgstr "Ändern …"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/sendlaterconfigurewidget.ui:38
