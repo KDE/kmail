@@ -312,7 +312,7 @@
       <li xml:lang="zh-CN">全面整合 - 会议邀请可轻松添加为 KOrganizer 事件，从 KAddressBook 加载地址自动完成数据、头像和加密首选项。</li>
       <li xml:lang="zh-TW">整合 — 會議要求可以輕鬆加入 KOrganizer 成為事件、地址自動完成、從 KAddressBook 載入大頭貼和加密設定。</li>
       <li>Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
-      <li xml:lang="ar">متوافق مع المعايير - يدعم بروتوكولات البريد القياسية ، ودفع البريد الإلكتروني ، والتصفية من جانب الخادم و OpenPGP و PGP / MIME و S / MIME المضمنة.</li>
+      <li xml:lang="ar">متوافق مع المعايير - يدعم بروتوكولات البريد القياسية، ودفع البريد الإلكتروني، والتصفية من جانب الخادم و OpenPGP و PGP / MIME و S / MIME المضمنة.</li>
       <li xml:lang="az">Standartlara uyğun - Standart poçt protokollarını, e-poçtu göndərir, server tərəfindəki süzgəcləmə və sətır daxili OpenPGP, PGP / MIME və S / MIME əməllərini dəstəkləyir.</li>
       <li xml:lang="bg">Стандартна съвместимост - поддържа стандартни протоколи за поща, push email, филтриране на сървърно ниво и вградени OpenPGP, PGP/MIME и S/MIME.</li>
       <li xml:lang="ca">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
