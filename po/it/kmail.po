@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-12 00:44+0000\n"
-"PO-Revision-Date: 2025-07-01 18:36+0200\n"
+"PO-Revision-Date: 2025-08-05 15:19+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -8161,6 +8161,8 @@ msgstr "Impossibile eseguire la procedura guidata per la creazione di account"
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
 msgstr ""
+"Permette di esportare del testo nelle estensioni dell'editor di generazione "
+"automatica."
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format

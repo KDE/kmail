@@ -38,7 +38,7 @@ msgstr "أزل"
 #: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
-msgstr "هل ترغب بالفعل بإزالة صندوق البريد الموحد <b>%1</b>؟"
+msgstr "هل ترغب فعلًا بإزالة صندوق البريد الموحد <b>%1</b>؟"
 
 #: settingsdialog.cpp:101
 #, kde-format
