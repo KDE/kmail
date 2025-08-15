@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-20 02:39+0000\n"
-"PO-Revision-Date: 2025-08-10 22:28+0400\n"
+"PO-Revision-Date: 2025-08-14 11:44+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1021,7 +1021,7 @@ msgstr "أزل الوسم"
 #: configuredialog/configureappearancepage.cpp:1263
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
-msgstr "تعذّر إنشاء الوسم. ثمّة وسم آخر بنفس الاسم بالفعل."
+msgstr "تعذّر إنشاء الوسم. ثمّة وسم آخر بنفس الاسم فعلًا."
 
 #: configuredialog/configurecomposerpage.cpp:65
 #, kde-format
@@ -6595,10 +6595,10 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
-"<qt> <p> قم بتمكين هذا الخيار إذا كنت تريد من بريدك أن يطلب إشعارات قراءة "
-"الرسائل لكل رسالة من رسائلك الصادرة. </p> <p> يؤثر هذا الخيار على الإعداد "
-"المبدئي فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على أساس "
-"كل رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار قراءة "
+"<qt> <p> مكّن هذا الخيار إذا كنت تريد من بريدك أن يطلب إشعارات قراءة الرسائل "
+"لكل رسالة من رسائلك الصادرة. </p> <p> يؤثر هذا الخيار على الإعداد المبدئي "
+"فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على أساس كل "
+"رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار قراءة "
 "الرسالة </em>. </p> </qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
@@ -6889,8 +6889,7 @@ msgid ""
 msgstr ""
 "بعض المجلَّدات التي تريد البحث فيها لم تفهرس بشكل كامل بعد أو استثنيت من "
 "الفهرسة. ستجدول جميع المجلدات المحددة في الأسفل كأولوية لإعادة فهرستها. إن "
-"لم تؤشّر على مجلد ربما سيفهرس لاحقا  إِلَّا إذا  قمت باستثنائه بشكل يدوي من "
-"الفهرسة."
+"لم تؤشّر على مجلد ربما سيفهرس لاحقا  إِلَّا إذا استثنائه بشكل يدوي من الفهرسة."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
