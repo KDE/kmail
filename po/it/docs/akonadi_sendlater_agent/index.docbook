@@ -5,8 +5,7 @@
 >Agente per l'invio posticipato</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Italian "INCLUDE"
-> 
+  <!ENTITY % Italian "INCLUDE">
 ]>
 
 <article id="sendlateragent" lang="&language;">

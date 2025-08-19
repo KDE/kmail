@@ -64,7 +64,7 @@
 >Mozilla Firefox</guimenuitem
 ></menuchoice
 >.</para>
-    
+
     <para
 >Se sei un amministratore e vuoi configurare automaticamente questa impostazione per i tuoi utenti, fai questo.</para>
     <itemizedlist>
@@ -385,18 +385,18 @@
 ><guimenu
 >&systemsettings;</guimenu
 ><guisubmenu
->Application 
+>Application
 Appearance</guisubmenu
 ><guimenuitem
 >Colors</guimenuitem
 ><guimenuitem
 >Colors</guimenuitem
 ></menuchoice
->, for each color 
+>, for each color
 set except <guilabel
 >Common Colors</guilabel
 > (which doesn't have it), change the <guilabel
->Alternate 
+>Alternate
 Background</guilabel
 > to be the same as the <guilabel
 >Normal Background</guilabel
@@ -407,16 +407,16 @@ Background</guilabel
 > and <emphasis
 >Mageia</emphasis
 > doesn't use the name <guilabel
->System 
+>System
 Settings</guilabel
 >.  As in <guilabel
 >KControl</guilabel
 >, the KDE 3 control centre, they name it <quote
->Configure your 
+>Configure your
 Desktop</quote
 > to distinguish it from <quote
 >Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control 
+>, a.k.a. the Mandriva/Mageia Control
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry
@@ -456,7 +456,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 > stai configurando un nuovo computer e vuoi trasferirvi tutti i tuoi messaggi di posta. Decidi di copiare tutto su una memoria USB. Il processo di copia si avvia, quindi ricevi un messaggio di errore:</para>
     <screen
 >Impossibile copiare ............argomento non valido</screen>
-    
+
     <para
 ><emphasis
 >Soluzione:</emphasis
@@ -530,7 +530,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >GnuPG</application
 >, che spesso cambiano con le nuove versioni.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >&kmail; non cifra i messaggi con una chiave pubblica inaffidabile (cioè che non sia stata controfirmata). Se vuoi cifrare con una chiave del genere, devi controllare l'identità del padrone della chiave, e, solo a questo punto, controfirmare la chiave con la tua chiave segreta. Se non vuoi o non puoi controllare l'identità del padrone della chiave, ma vuoi comunque cifrare il messaggio, controfirma la chiave localmente con <userinput
@@ -543,12 +543,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></userinput
 >.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Fidarsi di una chiave pubblica sconosciuta senza controllarla non è una buona idea.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Dalla versione di GnuPG 1.0.7 in avanti, è necessario impostare la propria chiave a <quote
@@ -592,8 +592,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >PIM Data Exporter</ulink
 > (Esportatore dei dati di PIM) per salvare una copia di sicurezza dei tuoi messaggi e delle tue impostazioni.</para
 ><para
->&nbsp;</para
-> 
+>&nbsp;</para>
   </answer>
 </qandaentry>
 
