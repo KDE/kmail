@@ -1816,8 +1816,8 @@ void KMComposerWin::setMessage(const KMime::Message::Ptr &newMsg,
         if (!identityStr.isEmpty()) {
             const auto ident = im->identityForUoid(identityStr.toUInt());
             if (ident.isNull()) {
-                if (auto hrd = newMsg->headerByType("X-KMail-Identity-Name")) {
-                    const QString identityStrName = hrd->asUnicodeString();
+                if (auto hrdIdentityName = newMsg->headerByType("X-KMail-Identity-Name")) {
+                    const QString identityStrName = hrdIdentityName->asUnicodeString();
                     const auto id = im->modifyIdentityForName(identityStrName);
                     if (!id.isNull()) {
                         mId = id.uoid();

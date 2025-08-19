@@ -46,7 +46,7 @@ void ArchiveMailManager::load()
         auto info = new ArchiveMailInfo(group);
 
         if (ArchiveMailAgentUtil::needToArchive(info)) {
-            for (ArchiveMailInfo *oldInfo : std::as_const(mListArchiveInfo)) {
+            for (const ArchiveMailInfo *oldInfo : std::as_const(mListArchiveInfo)) {
                 if (oldInfo->saveCollectionId() == info->saveCollectionId()) {
                     // already in jobscheduler
                     delete info;
