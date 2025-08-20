@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-08-07 11:38+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -113,8 +113,9 @@ msgid "Archive emails automatically."
 msgstr "Автоматично архивиране на имейли."
 
 #: archivemailwidget.cpp:95
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -207,14 +208,17 @@ msgstr "Започване на архивиране %1"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, kde-format
-msgid "Add..."
-msgstr "Добавяне..."
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Add…"
+msgid "Add…"
+msgstr "Добавяне…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Модифициране..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -262,3 +266,6 @@ msgstr "Месеци"
 #, kde-format
 msgid "Years"
 msgstr "Години"
+
+#~ msgid "Add..."
+#~ msgstr "Добавяне..."

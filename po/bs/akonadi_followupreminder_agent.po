@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2013-10-24 06:02+0000\n"
 "Last-Translator: Samir Ribić <Unknown>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: followupreminderinfoconfigwidget.cpp:29
 #, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr ""
 
 #: followupreminderinfoconfigwidget.cpp:31

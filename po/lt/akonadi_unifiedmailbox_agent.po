@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2025-01-16 13:41+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -87,9 +87,11 @@ msgid "Name:"
 msgstr "Pavadinimas:"
 
 #: unifiedmailboxeditor.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Pick icon..."
 msgctxt "@action:button"
-msgid "Pick icon..."
+msgid "Pick icon…"
 msgstr "Pasirinkti piktogramą..."
 
 #: unifiedmailboxeditor.cpp:104

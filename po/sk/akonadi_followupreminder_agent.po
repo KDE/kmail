@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -29,7 +29,7 @@ msgstr "Pripomienkovač Follow Up"
 #: followupreminderinfoconfigwidget.cpp:29
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2021 Laurent Montel"
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Copyright (C) 2014-2021 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31

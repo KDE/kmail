@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2012-05-14 16:25-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -121,7 +121,7 @@ msgstr ""
 
 #: archivemailwidget.cpp:95
 #, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr ""
 
 #: archivemailwidget.cpp:96
@@ -217,13 +217,14 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "Cuir Leis..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Athraigh..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -271,6 +272,9 @@ msgstr ""
 #, kde-format
 msgid "Years"
 msgstr ""
+
+#~ msgid "Add..."
+#~ msgstr "Cuir Leis..."
 
 #~ msgid "Remove items"
 #~ msgstr "Bain míreanna"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -31,8 +31,9 @@ msgid "Follow Up Reminder"
 msgstr "Nyomkövető emlékeztető"
 
 #: followupreminderinfoconfigwidget.cpp:29
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Copyright © Laurent Montel, 2014-%1."
 
 #: followupreminderinfoconfigwidget.cpp:31

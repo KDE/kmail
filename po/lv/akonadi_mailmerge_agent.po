@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-05-16 00:39+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-05-26 21:08+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -35,8 +35,9 @@ msgid "Merge email addresses agent."
 msgstr "E-pastu adrešu sapludināšanas aģents."
 
 #: mailmergeconfiguredialog.cpp:56
-#, kde-format
-msgid "Copyright (C) 2021-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2021-%1 Laurent Montel"
+msgid "© 2021–%1 Laurent Montel"
 msgstr "Autortiesības (C) 2021–%1 Laurent Montel"
 
 #: mailmergeconfiguredialog.cpp:58

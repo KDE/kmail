@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -30,8 +30,9 @@ msgid "Follow Up Reminder"
 msgstr "अनुवर्तन स्मरणम्"
 
 #: followupreminderinfoconfigwidget.cpp:29
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "प्रतिलिपि अधिकार (C) 2014-%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31

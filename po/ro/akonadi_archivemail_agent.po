@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2013-01-13 21:44+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -123,7 +123,7 @@ msgstr ""
 
 #: archivemailwidget.cpp:95
 #, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr ""
 
 #: archivemailwidget.cpp:96
@@ -221,13 +221,14 @@ msgstr "Începe arhivarea %1"
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "Adăugare..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Modificare..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -275,6 +276,9 @@ msgstr "Luni"
 #, kde-format
 msgid "Years"
 msgstr ""
+
+#~ msgid "Add..."
+#~ msgstr "Adăugare..."
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Adaugă arhivarea poștei"

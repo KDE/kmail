@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2015-02-07 19:02+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -114,9 +114,9 @@ msgid "Send emails later agent."
 msgstr "Send e-poster senere-agent."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr ""
+#, fuzzy, kde-format
+msgid "© 2013–%1 Laurent Montel"
+msgstr "Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, fuzzy, kde-format

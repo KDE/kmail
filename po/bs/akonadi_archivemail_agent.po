@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2014-01-31 18:56+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -126,7 +126,7 @@ msgstr "Automatski arhiviraj elektronsku poštu"
 #: archivemailwidget.cpp:95
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2012, 2013 Laurent Montel"
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Autorska prava (C) 2012, 2013 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -225,13 +225,14 @@ msgstr "Počni arhivirati %1"
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "Dodaj..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Izmijeni..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -279,6 +280,9 @@ msgstr "Mjeseci"
 #, kde-format
 msgid "Years"
 msgstr "Godine"
+
+#~ msgid "Add..."
+#~ msgstr "Dodaj..."
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Dodaj arhivnu poštu"

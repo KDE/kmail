@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2013-03-12 17:54+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -119,7 +119,7 @@ msgstr ""
 
 #: archivemailwidget.cpp:95
 #, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr ""
 
 #: archivemailwidget.cpp:96
@@ -212,13 +212,14 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "जोडा..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "बदला..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -266,6 +267,9 @@ msgstr "महीने"
 #, kde-format
 msgid "Years"
 msgstr ""
+
+#~ msgid "Add..."
+#~ msgstr "जोडा..."
 
 #~ msgid "Remove items"
 #~ msgstr "घटक काढून टाका"

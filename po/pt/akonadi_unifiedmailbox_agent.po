@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2021-06-25 10:31+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -89,7 +89,7 @@ msgstr "Nome:"
 #, fuzzy, kde-format
 #| msgid "Pick icon..."
 msgctxt "@action:button"
-msgid "Pick icon..."
+msgid "Pick icon…"
 msgstr "Escolher o ícone..."
 
 #: unifiedmailboxeditor.cpp:104

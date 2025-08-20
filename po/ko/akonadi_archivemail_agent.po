@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-08-19 23:24+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -113,8 +113,9 @@ msgid "Archive emails automatically."
 msgstr "자동으로 메일을 보관합니다."
 
 #: archivemailwidget.cpp:95
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Copyright (C) 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -204,14 +205,17 @@ msgstr "%1 보관 시작 중"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, kde-format
-msgid "Add..."
-msgstr "추가..."
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Add…"
+msgid "Add…"
+msgstr "추가…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "수정..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -259,6 +263,9 @@ msgstr "개월"
 #, kde-format
 msgid "Years"
 msgstr "년"
+
+#~ msgid "Add..."
+#~ msgstr "추가..."
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "보관된 메일 추가"

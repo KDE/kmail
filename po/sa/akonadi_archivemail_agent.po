@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -115,8 +115,9 @@ msgid "Archive emails automatically."
 msgstr "ईमेल-पत्राणि स्वयमेव संग्रहयन्तु।"
 
 #: archivemailwidget.cpp:95
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "प्रतिलिपि अधिकार (C) 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -206,14 +207,17 @@ msgstr "%1 संग्रहणं आरभत"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, kde-format
-msgid "Add..."
-msgstr "संयोजयति..."
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Add…"
+msgid "Add…"
+msgstr "संयोजयति…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "परिवर्तनं कुर्वन्तु..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -261,3 +265,6 @@ msgstr "मासाः"
 #, kde-format
 msgid "Years"
 msgstr "वर्षाः"
+
+#~ msgid "Add..."
+#~ msgstr "संयोजयति..."

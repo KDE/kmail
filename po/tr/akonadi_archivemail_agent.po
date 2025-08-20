@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2025-03-07 23:26+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -113,8 +113,9 @@ msgid "Archive emails automatically."
 msgstr "E-postaları kendiliğinden arşivleyin."
 
 #: archivemailwidget.cpp:95
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Telif hakkı © 2014–%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -204,14 +205,17 @@ msgstr "%1 arşivlemesini başlat"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, kde-format
-msgid "Add..."
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Add…"
+msgid "Add…"
 msgstr "Ekle…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Değişiklik Yap…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -259,6 +263,9 @@ msgstr "Ay"
 #, kde-format
 msgid "Years"
 msgstr "Yıl"
+
+#~ msgid "Add..."
+#~ msgstr "Ekle…"
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Posta Arşivi Ekle"

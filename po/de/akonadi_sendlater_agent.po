@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-08-19 22:34+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -111,8 +111,9 @@ msgid "Send emails later agent."
 msgstr "E-Mails später senden."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgid "© 2013–%1 Laurent Montel"
 msgstr "© 2013-%1 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39

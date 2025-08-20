@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2019-07-06 14:13+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -126,7 +126,7 @@ msgstr "Archyvuoti el. laiškus automatiškai."
 #: archivemailwidget.cpp:95
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2019 Laurent Montel"
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Autorių teisės (C) 2014-2019 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -225,13 +225,14 @@ msgstr "Pradėti archyvuoti %1"
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "Pridėti..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Modifikuoti..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -279,6 +280,9 @@ msgstr "Mėnesiai"
 #, kde-format
 msgid "Years"
 msgstr "Metai"
+
+#~ msgid "Add..."
+#~ msgstr "Pridėti..."
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Pridėti archyvuojamą paštą"

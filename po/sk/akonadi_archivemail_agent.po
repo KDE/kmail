@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2023-01-10 11:46+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -120,7 +120,7 @@ msgstr "Archivovať e-maily automaticky."
 #: archivemailwidget.cpp:95
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2021 Laurent Montel"
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Copyright (C) 2014-2021 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -218,13 +218,14 @@ msgstr "Spustiť na archiváciu %1"
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "Pridať..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Upraviť..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -272,6 +273,9 @@ msgstr "Mesiace"
 #, kde-format
 msgid "Years"
 msgstr "Roky"
+
+#~ msgid "Add..."
+#~ msgstr "Pridať..."
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Pridať archívny mail"

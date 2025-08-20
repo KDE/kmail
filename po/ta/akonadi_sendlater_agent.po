@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-08-18 17:33+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -112,8 +112,9 @@ msgid "Send emails later agent."
 msgstr "அஞ்சல்களை பின்னர் அனுப்பும் சேவை."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgid "© 2013–%1 Laurent Montel"
 msgstr "பதிப்புரிமை (C) 2013-%1 லாரென்டு மான்டெல்"
 
 #: sendlaterinfoconfigwidget.cpp:39

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-07-30 09:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -116,8 +116,9 @@ msgid "Archive emails automatically."
 msgstr "Автоматичне архівування повідомлень електронної пошти."
 
 #: archivemailwidget.cpp:95
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "© Laurent Montel, 2014–%1"
 
 #: archivemailwidget.cpp:96
@@ -213,14 +214,17 @@ msgstr "Розпочато архівування %1"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, kde-format
-msgid "Add..."
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Add…"
+msgid "Add…"
 msgstr "Додати…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Змінити…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -268,6 +272,9 @@ msgstr "місяці"
 #, kde-format
 msgid "Years"
 msgstr "роки"
+
+#~ msgid "Add..."
+#~ msgstr "Додати…"
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Додавання архіву з поштою"

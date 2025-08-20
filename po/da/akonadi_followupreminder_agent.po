@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-31 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2020-07-27 22:48+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -30,7 +30,7 @@ msgstr "Opfølgningspåmindelse"
 #: followupreminderinfoconfigwidget.cpp:29
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2020 Laurent Montel"
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Ophavsret (C) 2014-2020 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31

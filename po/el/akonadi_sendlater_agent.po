@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2020-09-20 09:37+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -119,7 +119,7 @@ msgstr "Πράκτορας ετεροχρονισμένης αποστολής �
 #: sendlaterinfoconfigwidget.cpp:37
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2013-2020 Laurent Montel"
-msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgid "© 2013–%1 Laurent Montel"
 msgstr "Copyright (C) 2013-2020 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39

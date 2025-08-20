@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -115,8 +115,9 @@ msgid "Archive emails automatically."
 msgstr "E-mailek automatikus archiválása."
 
 #: archivemailwidget.cpp:95
-#, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, fuzzy, kde-format
+#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Copyright © Laurent Montel, 2014-%1."
 
 #: archivemailwidget.cpp:96
@@ -210,14 +211,17 @@ msgstr "%1 archiválásának elkezdése"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, kde-format
-msgid "Add..."
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "Add…"
+msgid "Add…"
 msgstr "Hozzáadás…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Módosítás…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -265,6 +269,9 @@ msgstr "Hónap"
 #, kde-format
 msgid "Years"
 msgstr "Év"
+
+#~ msgid "Add..."
+#~ msgstr "Hozzáadás…"
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Archivált levél hozzáadása"

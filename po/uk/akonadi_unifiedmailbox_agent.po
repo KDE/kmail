@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_unifiedmailbox_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-03 00:39+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-07-03 19:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -88,9 +88,11 @@ msgid "Name:"
 msgstr "Назва:"
 
 #: unifiedmailboxeditor.cpp:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Pick icon..."
 msgctxt "@action:button"
-msgid "Pick icon..."
+msgid "Pick icon…"
 msgstr "Вибрати піктограму…"
 
 #: unifiedmailboxeditor.cpp:104

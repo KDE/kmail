@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2020-07-27 22:47+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -121,7 +121,7 @@ msgstr "Arkivér e-mails automatisk."
 #: archivemailwidget.cpp:95
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2014-2020 Laurent Montel"
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr "Ophavsret (C) 2012-2020 Laurent Montel"
 
 #: archivemailwidget.cpp:96
@@ -218,13 +218,14 @@ msgstr "Start arkivering af %1"
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
-msgstr "Tilføj..."
+msgid "Add…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, kde-format
-msgid "Modify..."
+#, fuzzy, kde-format
+#| msgid "Modify..."
+msgid "Modify…"
 msgstr "Ændr..."
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
@@ -272,6 +273,9 @@ msgstr "Måneder"
 #, kde-format
 msgid "Years"
 msgstr "År"
+
+#~ msgid "Add..."
+#~ msgstr "Tilføj..."
 
 #~ msgid "Add Archive Mail"
 #~ msgstr "Tilføj mailarkivering"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-11-19 00:41+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2024-11-19 23:47+0300\n"
 "Last-Translator: Antikruk <nashtlumach@gmail.com>\n"
 "Language-Team: \n"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: sendlaterinfoconfigwidget.cpp:37
 #, kde-format
-msgid "Copyright (C) 2013-%1 Laurent Montel"
+msgid "© 2013–%1 Laurent Montel"
 msgstr ""
 
 #: sendlaterinfoconfigwidget.cpp:39

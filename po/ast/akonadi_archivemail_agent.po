@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-07-30 00:42+0000\n"
+"POT-Creation-Date: 2025-08-20 00:44+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -114,7 +114,7 @@ msgstr ""
 
 #: archivemailwidget.cpp:95
 #, kde-format
-msgid "Copyright (C) 2014-%1 Laurent Montel"
+msgid "© 2014–%1 Laurent Montel"
 msgstr ""
 
 #: archivemailwidget.cpp:96
@@ -205,13 +205,13 @@ msgstr ""
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
 #, kde-format
-msgid "Add..."
+msgid "Add…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
 #, kde-format
-msgid "Modify..."
+msgid "Modify…"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
