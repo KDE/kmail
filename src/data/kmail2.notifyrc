@@ -77,7 +77,7 @@ Comment[zh_TW]=KMail 郵件軟體
 
 [Event/akonadi-instance-warning]
 Name=Akonadi server sent a warning
-Name[ar]=أرسل خادوم «أكونادي» تحذيرًا
+Name[ar]=أرسل خادم «أكونادي» تحذيرًا
 Name[az]=Akonadi serveri bir xəbərdarlıq göndərdi
 Name[be]=Сервер Akonadi адправіў папярэджанне
 Name[bg]=Akonadi сървърът изпрати предупреждение
@@ -131,7 +131,7 @@ Name[x-test]=xxAkonadi server sent a warningxx
 Name[zh_CN]=Akonadi 服务器发送了一条警告信息
 Name[zh_TW]=Akonadi 伺服器送出一個警告
 Comment=Akonadi server sent a warning
-Comment[ar]=أرسل خادوم «أكونادي» تحذيرًا
+Comment[ar]=أرسل خادم «أكونادي» تحذيرًا
 Comment[az]=Akonadi serveri bir xəbərdarlıq göndərdi
 Comment[be]=Сервер Akonadi адправіў папярэджанне
 Comment[bg]=Akonadi сървърът изпрати предупреждение
@@ -188,7 +188,7 @@ Action=None
 
 [Event/akonadi-instance-error]
 Name=Akonadi server sent an error
-Name[ar]=أرسل خادوم «أكونادي» خطأً
+Name[ar]=أرسل خادم «أكونادي» خطأً
 Name[az]=Akonadi serveri bir xəta göndərdi
 Name[be]=Сервер Akonadi адправіў памылку
 Name[bg]=Akonadi сървърът съобщава за грешка
@@ -242,7 +242,7 @@ Name[x-test]=xxAkonadi server sent an errorxx
 Name[zh_CN]=Akonadi 服务器发送了一条错误信息
 Name[zh_TW]=Akonadi 伺服器送出一個錯誤
 Comment=Akonadi server sent an error
-Comment[ar]=أرسل خادوم «أكونادي» خطأً
+Comment[ar]=أرسل خادم «أكونادي» خطأً
 Comment[az]=Akonadi serveri bir xəta göndərdi
 Comment[be]=Сервер Akonadi адправіў памылку
 Comment[bg]=Akonadi сървърът съобщава за грешка
