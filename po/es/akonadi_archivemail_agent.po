@@ -1,14 +1,15 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for akonadi_archivemail_agent.po package.
+# Copyright (C) 2013-2025 This file is copyright:
+# This file is distributed under the same license as the kmail package.
 #
-# Javier Viñal <fjvinal@gmail.com>, 2013, 2014, 2015, 2016, 2017, 2018.
-# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2013, 2014, 2015, 2016, 2017, 2018 Javier Viñal <fjvinal@gmail.com>
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-07-30 16:41+0200\n"
+"PO-Revision-Date: 2025-08-20 12:22+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -114,10 +115,9 @@ msgid "Archive emails automatically."
 msgstr "Archivar correos automáticamente."
 
 #: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright © 2014-%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
 #, kde-format
@@ -146,13 +146,13 @@ msgstr "ecuadra@eloihr.net,fjvinal@gmail.com"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr "Añadir..."
+msgstr "Añadir…"
 
 #: archivemailwidget.cpp:115
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
-msgstr "Abrir la carpeta contenedora..."
+msgstr "Abrir la carpeta contenedora…"
 
 #: archivemailwidget.cpp:118
 #, kde-format
@@ -209,18 +209,15 @@ msgstr "Empezar a archivar %1"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Add…"
+#, kde-format
 msgid "Add…"
-msgstr "Añadir..."
+msgstr "Añadir…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "Modificar..."
+msgstr "Modificar…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/archivemailwidget.ui:45
@@ -267,21 +264,3 @@ msgstr "Meses"
 #, kde-format
 msgid "Years"
 msgstr "Años"
-
-#~ msgid "Add..."
-#~ msgstr "Añadir..."
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Añadir archivo de correo"
-
-#~ msgid "Remove items"
-#~ msgstr "Eliminar elementos"
-
-#~ msgid "Remove"
-#~ msgstr "Eliminar"
-
-#~ msgid "Archive now"
-#~ msgstr "Archivar ahora"
-
-#~ msgid "Configure Archive Mail Agent"
-#~ msgstr "Configurar agente de archivado de correo"

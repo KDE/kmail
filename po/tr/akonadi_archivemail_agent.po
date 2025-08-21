@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2025-03-07 23:26+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2025-08-20 19:50+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.03.70\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: addarchivemaildialog.cpp:21
 #, kde-format
@@ -113,10 +113,9 @@ msgid "Archive emails automatically."
 msgstr "E-postaları kendiliğinden arşivleyin."
 
 #: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "Telif hakkı © 2014–%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
 #, kde-format
@@ -205,16 +204,13 @@ msgstr "%1 arşivlemesini başlat"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Add…"
+#, kde-format
 msgid "Add…"
 msgstr "Ekle…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
 msgstr "Değişiklik Yap…"
 

@@ -1,14 +1,15 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for akonadi_followupreminder_agent.po package.
+# Copyright (C) 2014-2025 This file is copyright:
+# This file is distributed under the same license as the kmail package.
 #
-# Javier Vinal <fjvinal@gmail.com>, 2014, 2015, 2016, 2017, 2018.
-# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2014, 2015, 2016, 2017, 2018 Javier Vinal <fjvinal@gmail.com>
+# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-08-01 04:54+0200\n"
+"PO-Revision-Date: 2025-08-20 12:16+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: followupreminderinfoconfigwidget.cpp:25
 #, kde-format
@@ -29,10 +30,9 @@ msgid "Follow Up Reminder"
 msgstr "Recordatorio de seguimiento"
 
 #: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright © 2014-%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
@@ -134,6 +134,3 @@ msgstr "Recordatorio de seguimiento"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Todavía se esperan respuestas a estos mensajes:"
-
-#~ msgid "Configure"
-#~ msgstr "Configurar"

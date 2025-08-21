@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-08-02 05:54+0200\n"
+"PO-Revision-Date: 2025-08-20 08:06+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.6\n"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -113,10 +113,9 @@ msgid "Send emails later agent."
 msgstr "ელფოსტის მოგვიანებით გაგზავნის აგენტი."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-%1 Laurent Montel"
+#, kde-format
 msgid "© 2013–%1 Laurent Montel"
-msgstr "(C) 2013-%1 Laurent Montel, ყველა უფლება დაცულია"
+msgstr "© 2013-%1 Laurent Montel, ყველა უფლება დაცულია"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format

@@ -34,10 +34,9 @@ msgid "Merge email addresses agent."
 msgstr "电子邮件地址合并代理程序。"
 
 #: mailmergeconfiguredialog.cpp:56
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2021-%1 Laurent Montel"
+#, kde-format
 msgid "© 2021–%1 Laurent Montel"
-msgstr "Copyright (C) 2021-%1 Laurent Montel"
+msgstr ""
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format

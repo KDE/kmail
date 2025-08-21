@@ -85,12 +85,10 @@ msgid "Name:"
 msgstr "名称："
 
 #: unifiedmailboxeditor.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Pick icon..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
-msgstr "选择图标..."
+msgstr ""
 
 #: unifiedmailboxeditor.cpp:104
 #, kde-format

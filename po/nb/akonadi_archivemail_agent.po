@@ -264,6 +264,3 @@ msgstr "måneder"
 #, kde-format
 msgid "Years"
 msgstr "År"
-
-#~ msgid "Add..."
-#~ msgstr "Legg til …"

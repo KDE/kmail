@@ -1,14 +1,15 @@
-# Copyright (C) 2023 This file is copyright:
+# Spanish translations for akonadi_unifiedmailbox_agent.po package.
+# Copyright (C) 2018-2025 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# Javier Vinal <fjvinal@gmail.com>, 2018.
-# SPDX-FileCopyrightText: 2019, 2021, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2018 Javier Vinal <fjvinal@gmail.com>
+# SPDX-FileCopyrightText: 2019, 2021, 2023, 2024, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: kmail\n"
+"Project-Id-Version: akonadi_unifiedmailbox_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-07-03 17:28+0200\n"
+"PO-Revision-Date: 2025-08-20 12:17+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #: settingsdialog.cpp:53
 #, kde-format
@@ -86,12 +87,10 @@ msgid "Name:"
 msgstr "Nombre:"
 
 #: unifiedmailboxeditor.cpp:103
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Pick icon..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
-msgstr "Elegir icono..."
+msgstr "Elegir icono…"
 
 #: unifiedmailboxeditor.cpp:104
 #, kde-format
@@ -112,7 +111,3 @@ msgstr "Enviado"
 #, kde-format
 msgid "Drafts"
 msgstr "Borradores"
-
-#~ msgctxt "@title:window"
-#~ msgid "Add an Unified MailBox"
-#~ msgstr "Añadir una bandeja de correo unificadas"
