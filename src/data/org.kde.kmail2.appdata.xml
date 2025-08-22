@@ -194,7 +194,7 @@
     <p xml:lang="zh-TW">功能：</p>
     <ul>
       <li>Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
-      <li xml:lang="ar">آمن - يحتوي برنامج بريدك على إعدادات مبدئية آمنة لحماية خصوصيتك، ودعم تشفير كامل من الطرف للطرف الآخر، واكتشاف البريد المزعج.</li>
+      <li xml:lang="ar">آمن - يحتوي برنامج بريدك على إعدادات مبدئية آمنة لحماية خصوصيتك، ودعم التعمية الكاملة من الطرف للطرف الآخر، واكتشاف البريد المزعج.</li>
       <li xml:lang="az">Təhlükəsiz - KMail, məxfiliyinizi qorumaq üçün təhlükəsiz uçdan uca şifrələmə dəstəyi və spamın aşkar edilməsi xüsusiyyətinə malikdir.</li>
       <li xml:lang="bg">Сигурност - KMail има сигурни настройки по подразбиране, за да защити вашите лични данни, има и широка поддръжка за двустранно криптиране и откриване на спам.</li>
       <li xml:lang="ca">Segur: el KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptatge extrem a extrem i detecció del correu brossa.</li>
@@ -273,7 +273,7 @@
       <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的过滤、搜索和标记功能、邮件列表管理和灵活的配置。</li>
       <li xml:lang="zh-TW">強大 — 功能包含離線支援、多重寄件者身份、多語言支援，強大的過濾、搜尋及標籤功能，郵件論壇管理以及靈活的設定。</li>
       <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
-      <li xml:lang="ar">متكامل - يمكن إضافة دعوات الاجتماعات بسهولة حيث تحمل الأحداث في "منظمك "والإكمال الآليّ للعناوين والصور الرمزية وتفضيلات التشفير من "دفتر عناوينك".</li>
+      <li xml:lang="ar">متكامل - يمكن إضافة دعوات الاجتماعات بسهولة حيث تحمل الأحداث في "منظمك "والإكمال الآليّ للعناوين والصور الرمزية وتفضيلات التعمية من "دفتر عناوينك".</li>
       <li xml:lang="az">İnteqrasiya olunmuş - Toplantı dəvətlərini KOrganizer tədbirləri kimi, ünvanların avtomatik doldurulmasını, avatarlar və kripto ayarlarını KAdressBook-dan yükləyərək asanlıqla əlavə etmək olar.</li>
       <li xml:lang="bg">Интеграция - Поканите за срещи могат лесно за бъдат добавени като събития в KOrganizer; автоматичното завършване на адреси, аватари и настройки на криптиране се зареждат от KAddressBook.</li>
       <li xml:lang="ca">Integrat: les invitacions a reunions es poden afegir amb facilitat com a esdeveniments al KOrganizer, la compleció automàtica de l'adreça, els avatars i les preferències de la criptografia es carreguen des de la llibreta d'adreces.</li>
