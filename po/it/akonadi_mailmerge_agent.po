@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2021, 2022, 2024.
+# SPDX-FileCopyrightText: 2021, 2022, 2024, 2025 Luigi Toscano <luigi.toscano@tiscali.it>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-05-21 15:35+0200\n"
+"PO-Revision-Date: 2025-08-20 13:22+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: mailmergeconfiguredialog.cpp:35
 #, kde-format
@@ -34,10 +34,9 @@ msgid "Merge email addresses agent."
 msgstr "Agente che fonde gli indirizzi di posta."
 
 #: mailmergeconfiguredialog.cpp:56
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2021-%1 Laurent Montel"
+#, kde-format
 msgid "© 2021–%1 Laurent Montel"
-msgstr "Copyright (C) 2021-%1 Laurent Montel"
+msgstr "© 2021–%1 Laurent Montel"
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format

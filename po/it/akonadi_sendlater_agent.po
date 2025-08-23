@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the akonadi_sendlater_agent package.
-# Luigi Toscano <luigi.toscano@tiscali.it>, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024.
+# SPDX-FileCopyrightText: 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024, 2025 Luigi Toscano <luigi.toscano@tiscali.it>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-08-02 17:57+0200\n"
+"PO-Revision-Date: 2025-08-20 13:22+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -112,10 +112,9 @@ msgid "Send emails later agent."
 msgstr "Agente per l'invio posticipato della posta elettronica."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-%1 Laurent Montel"
+#, kde-format
 msgid "© 2013–%1 Laurent Montel"
-msgstr "Copyright (C) 2013-%1 Laurent Montel"
+msgstr "© 2013–%1 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format
