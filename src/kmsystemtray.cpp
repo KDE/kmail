@@ -49,7 +49,7 @@ KMSystemTray::KMSystemTray(QObject *parent)
     setToolTipIconByName(QStringLiteral("kmail"));
     setIconByName(QStringLiteral("kmail-symbolic"));
 
-#if HAVE_X11
+#ifdef HAVE_X11
     KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
     if (mainWidget) {
         QWidget *mainWin = mainWidget->window();
