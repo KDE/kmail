@@ -359,6 +359,7 @@
   <url type="homepage">https://kontact.kde.org/components/kmail/</url>
   <url type="donation">https://www.kde.org/community/donations/?app=kmail&amp;source=appdata</url>
   <url type="vcs-browser">https://invent.kde.org/pim/kmail/</url>
+  <url type="contact">https://go.kde.org/matrix/#/#kontact:kde.org</url>
   <screenshots>
     <screenshot type="default">
       <image>https://cdn.kde.org/screenshots/kmail/kmail.png</image>
