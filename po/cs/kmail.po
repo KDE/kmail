@@ -342,12 +342,10 @@ msgid "Mailing List"
 msgstr "E-mailová konference"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Složka obsahuje e-mailovou konferenci"
+msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -4427,11 +4425,10 @@ msgid "Unable to start import wizard"
 msgstr "Nelze spustit průvodce importem"
 
 #: kmmainwidget.cpp:1386
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(žádné šablony)"
+msgstr ""
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5227,11 +5224,10 @@ msgid "&Add Account…"
 msgstr "Přid&at účet…"
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Co je nového?"
+msgstr ""
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -5849,10 +5845,9 @@ msgid "Kontact Summary View"
 msgstr "Pohled na shrnutí kontaktu"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003-2024 Vývojáři aplikace Kontact"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -7889,10 +7884,9 @@ msgid "Allow to export text in autogenerate editor plugins."
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Add a new identity"
+#, kde-format
 msgid "Add new whatsnew widget."
-msgstr "Přidat novou identitu"
+msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format
@@ -7934,29 +7928,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgctxt "%1 is version"
-#~ msgid "Welcome to KMail %1"
-#~ msgstr "Vítejte v KMailu %1"
-
-#~ msgid "Important changes since last version:"
-#~ msgstr "Důležité změny od poslední verze:"
-
-#~ msgid "Thank you,"
-#~ msgstr "Děkujeme,"
-
-#~ msgid "The KMail Team"
-#~ msgstr "Team KMail"
-
-#~ msgid "KMail &Introduction"
-#~ msgstr "Úvod do &KMailu"
-
-#~ msgid "Display KMail's Welcome Page"
-#~ msgstr "Zobrazit uvítací stránku KMailu"
-
-#~ msgid ""
-#~ "KMail is now based on the Akonadi Personal Information Management "
-#~ "framework, which brings many changes all around."
-#~ msgstr ""
-#~ "KMail je nyní postaven na frameworku pro správu osobních informací "
-#~ "Akonadi, který přináší mnoho všemožných změn."

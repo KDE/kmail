@@ -113,10 +113,9 @@ msgid "Archive emails automatically."
 msgstr "Automaticky archivovat e-maily."
 
 #: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "Autorská práva (C) 2014-%1 Laurent Montel"
+msgstr ""
 
 #: archivemailwidget.cpp:96
 #, kde-format
@@ -206,18 +205,15 @@ msgstr "Spustit archivaci %1"
 
 #. i18n: ectx: property (text), widget (QPushButton, addItem)
 #: ui/archivemailwidget.ui:31
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "Add…"
+#, kde-format
 msgid "Add…"
 msgstr "Přidat…"
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "Změnit..."
+msgstr "Změnit…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/archivemailwidget.ui:45
@@ -264,6 +260,3 @@ msgstr "Měsíců"
 #, kde-format
 msgid "Years"
 msgstr "Roky"
-
-#~ msgid "Add..."
-#~ msgstr "Přidat..."

@@ -114,10 +114,9 @@ msgid "Send emails later agent."
 msgstr "Agent pro odložené odesílání zpráv."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-%1 Laurent Montel"
+#, kde-format
 msgid "© 2013–%1 Laurent Montel"
-msgstr "Autorská práva (C) 2013-%1 Laurent Montel"
+msgstr ""
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format
