@@ -297,7 +297,7 @@ void KTNEFMain::extractAllFiles()
     QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
     if (!dir.isEmpty()) {
         mLastDir = dir;
-        dir.append(QLatin1Char('/'));
+        dir.append(u'/');
         const QList<KTNEFAttach *> list = mParser->message()->attachmentList();
         QList<KTNEFAttach *>::ConstIterator it;
         QList<KTNEFAttach *>::ConstIterator end(list.constEnd());
@@ -371,8 +371,8 @@ void KTNEFMain::cleanup()
 void KTNEFMain::extractTo(const QString &dirname)
 {
     QString dir = dirname;
-    if (!dir.endsWith(QLatin1Char('/'))) {
-        dir.append(QLatin1Char('/'));
+    if (!dir.endsWith(u'/')) {
+        dir.append(u'/');
     }
     const QList<KTNEFAttach *> list = mView->getSelection();
     QList<KTNEFAttach *>::ConstIterator it;
@@ -522,7 +522,7 @@ void KTNEFMain::openWith(const KService::Ptr &offer)
 
 QAction *KTNEFMain::createAppAction(const KService::Ptr &service, bool singleOffer, QActionGroup *actionGroup, QObject *parent)
 {
-    QString actionName(service->name().replace(QLatin1Char('&'), QStringLiteral("&&")));
+    QString actionName(service->name().replace(u'&', QStringLiteral("&&")));
     if (singleOffer) {
         actionName = i18n("Open &with %1", actionName);
     } else {

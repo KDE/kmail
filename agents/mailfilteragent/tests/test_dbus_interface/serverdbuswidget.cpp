@@ -5,6 +5,8 @@
 */
 
 #include "serverdbuswidget.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "dbusadaptor.h"
 
 #include <QDBusConnection>
@@ -47,9 +49,9 @@ void ServerDbusWidget::sendElements(const QList<qint64> &items, int index)
     QString str = QStringLiteral("index: %1").arg(QString::number(index));
     str += QStringLiteral("items: ");
     for (qint64 i : items) {
-        str += QString::number(i) + QLatin1Char(' ');
+        str += QString::number(i) + u' ';
     }
-    str += QLatin1Char('\n');
+    str += u'\n';
     mEdit->append(str);
 }
 

@@ -5,6 +5,8 @@
 */
 
 #include "followupremindermanager.h"
+using namespace Qt::Literals::StringLiterals;
+
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
 #include "followupremindernoanswerdialog.h"
@@ -166,7 +168,7 @@ QString FollowUpReminderManager::printDebugInfo() const
     } else {
         for (FollowUpReminder::FollowUpReminderInfo *info : std::as_const(mFollowUpReminderInfoList)) {
             if (!infoStr.isEmpty()) {
-                infoStr += QLatin1Char('\n');
+                infoStr += u'\n';
             }
             infoStr += infoToStr(info);
         }

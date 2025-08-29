@@ -372,7 +372,7 @@ bool QWinMetaFile::paint(QPaintDevice *aTarget, bool absolute)
             for (i = 0; i < cmd->numParm; ++i) {
                 param.setNum(cmd->parm[i]);
                 str += param;
-                str += QLatin1Char(' ');
+                str += u' ';
             }
             qCDebug(KTNEFAPPS_LOG) << str;
         }

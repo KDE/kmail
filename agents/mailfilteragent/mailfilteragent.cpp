@@ -400,7 +400,7 @@ QString MailFilterAgent::printCollectionMonitored() const
     } else {
         for (const Akonadi::Collection &collection : collections) {
             if (!printDebugCollection.isEmpty()) {
-                printDebugCollection += QLatin1Char('\n');
+                printDebugCollection += u'\n';
             }
             printDebugCollection += QStringLiteral("Collection name: %1\n").arg(collection.name());
             printDebugCollection += QStringLiteral("Collection id: %1\n").arg(collection.id());

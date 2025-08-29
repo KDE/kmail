@@ -239,7 +239,7 @@ QString SendLaterManager::printDebugInfo() const
     } else {
         for (MessageComposer::SendLaterInfo *info : std::as_const(mListSendLaterInfo)) {
             if (!infoStr.isEmpty()) {
-                infoStr += QLatin1Char('\n');
+                infoStr += u'\n';
             }
             infoStr += infoToStr(info);
         }

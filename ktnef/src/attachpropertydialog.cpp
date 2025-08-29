@@ -137,18 +137,17 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
         QVariant value = (*it)->value();
         if (value.userType() == QMetaType::QVariantList) {
             newItem->setExpanded(true);
-            newItem->setText(0, newItem->text(0) + " ["_L1 + QString::number(value.toList().count()) + QLatin1Char(']'));
+            newItem->setText(0, newItem->text(0) + " ["_L1 + QString::number(value.toList().count()) + u']');
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
             for (QList<QVariant>::ConstIterator lit = value.toList().constBegin(); lit != litEnd; ++lit, ++i) {
-                new QTreeWidgetItem(newItem,
-                                    QStringList() << QLatin1Char('[') + QString::number(i) + QLatin1Char(']') << QString(KTNEFProperty::formatValue(*lit)));
+                new QTreeWidgetItem(newItem, QStringList() << QLatin1Char('[') + QString::number(i) + u']' << QString(KTNEFProperty::formatValue(*lit)));
             }
         } else if (value.userType() == QMetaType::QDateTime) {
             newItem->setText(1, value.toDateTime().toString());
         } else {
             newItem->setText(1, (*it)->valueString());
-            newItem->setText(2, prefix + QLatin1Char('_') + QString::number(it.key()));
+            newItem->setText(2, prefix + u'_' + QString::number(it.key()));
         }
     }
 }

@@ -6,6 +6,7 @@
  *
  */
 #include "filtermanager.h"
+using namespace Qt::Literals::StringLiterals;
 
 #include "mailfilteragent_debug.h"
 #include <Akonadi/AgentManager>
@@ -210,7 +211,7 @@ void FilterManager::Private::showNotification(const QString &errorMsg, const QSt
     auto notify = new KNotification(QStringLiteral("mailfilterjoberror"));
     notify->setComponentName(QStringLiteral("akonadi_mailfilter_agent"));
     notify->setIconName(QStringLiteral("view-filter"));
-    notify->setText(errorMsg + QLatin1Char('\n') + jobErrorString);
+    notify->setText(errorMsg + u'\n' + jobErrorString);
     notify->sendEvent();
 }
 
