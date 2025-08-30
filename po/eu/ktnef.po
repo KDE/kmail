@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:42+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2024-07-14 08:14+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -46,25 +46,25 @@ msgstr "%1 eranskinaren propietateak"
 msgid " bytes"
 msgstr " byte"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:158
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF atributuak"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Aurrena elementu bat hautatu behar da."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:173
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Hautatutako elementua ezin da gorde etiketa huts bat duelako."
 
-#: attachpropertydialog.cpp:195
+#: attachpropertydialog.cpp:194
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

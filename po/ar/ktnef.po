@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:42+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2024-06-26 18:31+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -45,25 +45,25 @@ msgstr "خصائص المرفقات %1"
 msgid " bytes"
 msgstr "بايت"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:158
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "خصائص TNEF"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "يجب تحديد العنصر أَوَّلاً."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:173
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "لا يمكن حفظ العنصر المحدَّد لأنه يحتوي على وسم فارغ."
 
-#: attachpropertydialog.cpp:195
+#: attachpropertydialog.cpp:194
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

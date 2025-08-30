@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2025-08-20 15:17+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -119,7 +119,7 @@ msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Ezabatu elementuak"
 
-#: followupremindermanager.cpp:154
+#: followupremindermanager.cpp:156
 #, kde-format
 msgid "Answer from %1 received"
 msgstr "%1-ren erantzuna jaso da"

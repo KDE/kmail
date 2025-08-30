@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:42+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2024-06-18 08:40+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -46,25 +46,25 @@ msgstr "Властивості долучення %1"
 msgid " bytes"
 msgstr " байтів"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:158
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "Атрибути TNEF"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Спочатку слід позначити елемент."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:173
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Позначений елемент не може бути збережено, оскільки має порожню мітку."
 
-#: attachpropertydialog.cpp:195
+#: attachpropertydialog.cpp:194
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

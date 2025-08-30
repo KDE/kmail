@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:42+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2024-11-09 20:04+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -43,25 +43,25 @@ msgstr "Свойства за прикачен файл %1"
 msgid " bytes"
 msgstr " байта"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:158
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF атрибути"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:167
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Първо трябва да изберете елемент."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:173
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Избраният елемент не може да се запази, защото е с празен таг."
 
-#: attachpropertydialog.cpp:195
+#: attachpropertydialog.cpp:194
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

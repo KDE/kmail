@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2024-08-10 00:42+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2024-08-01 21:41+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -43,19 +43,19 @@ msgstr "Proprietás de missage"
 msgid " bytes"
 msgstr " octetes"
 
-#: attachpropertydialog.cpp:159
+#: attachpropertydialog.cpp:158
 #, fuzzy, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "Version de TNEF"
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:167
 #, fuzzy, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Selecter omni"
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:173
 #, fuzzy, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
@@ -63,7 +63,7 @@ msgstr ""
 "Li archive <filename>%1</filename> ne plu existe, e ne posse esser copiat al "
 "providet localisation."
 
-#: attachpropertydialog.cpp:195
+#: attachpropertydialog.cpp:194
 #, fuzzy, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

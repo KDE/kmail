@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-06 00:43+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2011-09-17 13:45-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -117,42 +117,42 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr ""
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:102
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr ""
 
-#: filtermanager.cpp:188
+#: filtermanager.cpp:189
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr ""
 
-#: filtermanager.cpp:196
+#: filtermanager.cpp:197
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr ""
 
-#: filtermanager.cpp:204
+#: filtermanager.cpp:205
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr ""
 
-#: filtermanager.cpp:221
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr ""
 
-#: filtermanager.cpp:228
+#: filtermanager.cpp:229
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr ""
 
-#: filtermanager.cpp:256
+#: filtermanager.cpp:257
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
 
-#: filtermanager.cpp:591
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr ""

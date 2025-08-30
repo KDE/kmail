@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-06 00:43+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2021-07-13 16:25+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -142,43 +142,43 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail xətası"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:102
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%2 məktubdab %1 məktub süzgəclənir"
 
-#: filtermanager.cpp:188
+#: filtermanager.cpp:189
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Poçt süzgəcinin köçürülməsininin tətbiq edilməsi xətası"
 
-#: filtermanager.cpp:196
+#: filtermanager.cpp:197
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Poçt süzgəcinin silinməsinin tətbiq edilməsi xətası"
 
-#: filtermanager.cpp:204
+#: filtermanager.cpp:205
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Poçt süzgəci dəyişikliklərinin tətbiq edilməsi xətası"
 
-#: filtermanager.cpp:221
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Süzgəc qaydalarının qiymətləndirilməsi:</b> "
 
-#: filtermanager.cpp:228
+#: filtermanager.cpp:229
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Süzgəc qaydalar uyğundur.</b>"
 
-#: filtermanager.cpp:256
+#: filtermanager.cpp:257
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
 "<b>\"%3\"-dakı \"%2\"-dan \"%1\" məktubun sezgəclənməsinə başlanıldı :</b>"
 
-#: filtermanager.cpp:591
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Məktublar süzgəclənir"

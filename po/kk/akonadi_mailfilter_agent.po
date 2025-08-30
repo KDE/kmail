@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-06 00:43+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2013-07-10 02:35+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -139,43 +139,43 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail қатесі"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:102
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 / %2 хатты сүзгілеу"
 
-#: filtermanager.cpp:188
+#: filtermanager.cpp:189
 #, fuzzy, kde-format
 #| msgid "Error applying mail filter delete"
 msgid "Error applying mail filter move"
 msgstr "Пошта сүзгісін өшіру кезде қате орын алды"
 
-#: filtermanager.cpp:196
+#: filtermanager.cpp:197
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Пошта сүзгісін өшіру кезде қате орын алды"
 
-#: filtermanager.cpp:204
+#: filtermanager.cpp:205
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Пошта сүзгісін өзгерткен кезде қате орын алды"
 
-#: filtermanager.cpp:221
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Сүзгі ережелерін қортындысы:</b> "
 
-#: filtermanager.cpp:228
+#: filtermanager.cpp:229
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Хат сүзгі ережелеріне сәйкес келеді.</b>"
 
-#: filtermanager.cpp:256
+#: filtermanager.cpp:257
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>\"%3\", \"%2\" дегендегі \"%1\" хаты сүзгілеу басталды :</b>"
 
-#: filtermanager.cpp:591
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Хаттарды сүзгілеу"

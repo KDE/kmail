@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-06 00:43+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2014-03-13 16:34+0100\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -143,43 +143,43 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-Fehler"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:102
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Naricht %1 vun %2 warrt filtert"
 
-#: filtermanager.cpp:188
+#: filtermanager.cpp:189
 #, fuzzy, kde-format
 #| msgid "Error applying mail filter delete"
 msgid "Error applying mail filter move"
 msgstr "Fehler bi't Wegdoon vun den Nettpostfilter"
 
-#: filtermanager.cpp:196
+#: filtermanager.cpp:197
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Fehler bi't Wegdoon vun den Nettpostfilter"
 
-#: filtermanager.cpp:204
+#: filtermanager.cpp:205
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Fehler bi't Ännern vun den Nettpostfilter"
 
-#: filtermanager.cpp:221
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Filterregeln warrt pröövt:</b> "
 
-#: filtermanager.cpp:228
+#: filtermanager.cpp:229
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Filterregeln hebbt passt.</b>"
 
-#: filtermanager.cpp:256
+#: filtermanager.cpp:257
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Filtern vun Naricht \"%1\" vun \"%2\" op \"%3\" fangt an:</b>"
 
-#: filtermanager.cpp:591
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Narichten warrt filtert"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-06-06 00:43+0000\n"
+"POT-Creation-Date: 2025-08-30 00:43+0000\n"
 "PO-Revision-Date: 2020-09-20 09:30+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -137,42 +137,42 @@ msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Σφάλμα του KMail"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:102
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Φιλτράρισμα μηνύματος %1 από %2"
 
-#: filtermanager.cpp:188
+#: filtermanager.cpp:189
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Σφάλμα εφαρμογής μετακίνησης του φίλτρου αλληλογραφίας"
 
-#: filtermanager.cpp:196
+#: filtermanager.cpp:197
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Σφάλμα εφαρμογής διαγραφής του φίλτρου αλληλογραφίας"
 
-#: filtermanager.cpp:204
+#: filtermanager.cpp:205
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Σφάλμα εφαρμογής τροποποιήσεων του φίλτρου αλληλογραφίας"
 
-#: filtermanager.cpp:221
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Αξιολόγηση κανόνων φίλτρου:</b> "
 
-#: filtermanager.cpp:228
+#: filtermanager.cpp:229
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Οι κανόνες του φίλτρου ταιριάζουν.</b>"
 
-#: filtermanager.cpp:256
+#: filtermanager.cpp:257
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Έναρξη φιλτραρίσματος στο μήνυμα \"%1\" από \"%2\" στο \"%3\" :</b>"
 
-#: filtermanager.cpp:591
+#: filtermanager.cpp:592
 #, kde-format
 msgid "Filtering messages"
 msgstr "Φιλτράρισμα μηνυμάτων"
