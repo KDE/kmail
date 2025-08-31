@@ -11,7 +11,6 @@
 #include <QIODevice>
 
 TaskAttribute::TaskAttribute()
-
 {
 }
 

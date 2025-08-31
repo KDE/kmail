@@ -124,7 +124,7 @@ void IdentityNgPage::slotNewIdentity()
     QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(mIdentityManager, this));
     dialog->setObjectName("new"_L1);
 
-    if (dialog->exec() == QDialog::Accepted && dialog) {
+    if (dialog->exec() == QDialog::Accepted) {
         QString identityName = dialog->identityName().trimmed();
         Q_ASSERT(!identityName.isEmpty());
 

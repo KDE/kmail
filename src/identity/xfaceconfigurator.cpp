@@ -208,7 +208,7 @@ void XFaceConfigurator::crunch(const QImage &image)
         QImage::Format_RGB444,
     };
 
-    int sizes[5] = {48, 24, 12, 6, 3};
+    const int sizes[5] = {48, 24, 12, 6, 3};
 
     while (true) {
         const QImage::Format targetFormat = formats[crunchLevel % 6];
