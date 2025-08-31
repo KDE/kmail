@@ -12,6 +12,7 @@
 #include <QTest>
 #include <qtestmouse.h>
 Q_DECLARE_METATYPE(MessageViewer::Viewer::DisplayFormatMessage)
+QTEST_MAIN(DisplayMessageFormatActionMenuTest)
 DisplayMessageFormatActionMenuTest::DisplayMessageFormatActionMenuTest(QObject *parent)
     : QObject(parent)
 {
@@ -62,7 +63,5 @@ void DisplayMessageFormatActionMenuTest::shouldDontEmitSignalWhenChangeFormat()
     menu.setDisplayMessageFormat(MessageViewer::Viewer::Text);
     QCOMPARE(spy.count(), 0);
 }
-
-QTEST_MAIN(DisplayMessageFormatActionMenuTest)
 
 #include "moc_displaymessageformatactionmenutest.cpp"

@@ -10,6 +10,7 @@
 #include <QListWidget>
 #include <QStandardPaths>
 #include <QTest>
+QTEST_MAIN(TagSelectDialogTest)
 
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
     : QObject(parent)
@@ -33,7 +34,5 @@ void TagSelectDialogTest::shouldHaveDefaultValue()
     QVERIFY(listWidgetSearchLine);
     QVERIFY(listWidgetSearchLine->isClearButtonEnabled());
 }
-
-QTEST_MAIN(TagSelectDialogTest)
 
 #include "moc_tagselectdialogtest.cpp"

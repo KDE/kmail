@@ -6,6 +6,7 @@
 #include "createfollowupreminderonexistingmessagejobtest.h"
 #include "../job/createfollowupreminderonexistingmessagejob.h"
 #include <QTest>
+QTEST_MAIN(CreateFollowupReminderOnExistingMessageJobTest)
 
 CreateFollowupReminderOnExistingMessageJobTest::CreateFollowupReminderOnExistingMessageJobTest(QObject *parent)
     : QObject(parent)
@@ -35,7 +36,5 @@ void CreateFollowupReminderOnExistingMessageJobTest::shouldValidBeforeStartJob()
     job.setCollection(col);
     QVERIFY(job.canStart());
 }
-
-QTEST_MAIN(CreateFollowupReminderOnExistingMessageJobTest)
 
 #include "moc_createfollowupreminderonexistingmessagejobtest.cpp"

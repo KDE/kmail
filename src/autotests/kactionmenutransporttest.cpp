@@ -8,6 +8,7 @@
 #include "../widgets/kactionmenutransport.h"
 #include <QMenu>
 #include <QTest>
+QTEST_MAIN(KActionMenuTransportTest)
 KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
     : QObject(parent)
 {
@@ -21,7 +22,5 @@ void KActionMenuTransportTest::shouldHaveDefaultValue()
     QVERIFY(w.menu());
     QCOMPARE(w.menu()->actions().count(), 0);
 }
-
-QTEST_MAIN(KActionMenuTransportTest)
 
 #include "moc_kactionmenutransporttest.cpp"

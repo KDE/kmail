@@ -13,6 +13,7 @@
 
 #include <QTest>
 
+QTEST_MAIN(identityaddvcarddialogtest)
 identityaddvcarddialogtest::identityaddvcarddialogtest(QObject *parent)
     : QObject(parent)
 {
@@ -82,7 +83,5 @@ void identityaddvcarddialogtest::shouldEnabledComboboxWhenSelectFromExistingVCar
     QCOMPARE(identityComboBox->isEnabled(), true);
     QCOMPARE(urlRequester->isEnabled(), false);
 }
-
-QTEST_MAIN(identityaddvcarddialogtest)
 
 #include "moc_identityaddvcarddialogtest.cpp"
