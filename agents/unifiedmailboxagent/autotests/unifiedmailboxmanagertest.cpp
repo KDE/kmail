@@ -194,7 +194,7 @@ private Q_SLOTS:
 
         // Check boxes were written to config - we don't check the contents of
         // the group, testing UnifiedMailbox serialization is done in other tests
-        QVERIFY(boxesGroup.groupList().size() == 3);
+        QCOMPARE(boxesGroup.groupList().size(), 3);
         QVERIFY(boxesGroup.hasGroup(Common::InboxBoxId));
         QVERIFY(boxesGroup.hasGroup(Common::SentBoxId));
         QVERIFY(boxesGroup.hasGroup(Common::DraftsBoxId));
@@ -268,7 +268,7 @@ private Q_SLOTS:
         manager.removeBox(mailbox->id());
 
         // Manager should have no boxes and no source collections should be monitored
-        QVERIFY(manager.begin() == manager.end());
+        QCOMPARE(manager.begin(), manager.end());
         QVERIFY(recorder.collectionsMonitored().isEmpty());
 
         // But the box still exists in the config
