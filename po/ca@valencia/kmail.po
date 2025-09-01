@@ -1223,10 +1223,10 @@ msgid ""
 msgstr ""
 "Només permet que s'especifiquen esta quantitat de destinataris. Açò s'aplica "
 "en fer un «Respon a tots», en introduir els destinataris manualment o "
-"utilitzant el selector «Selecciona…». Ajustar este límit vos ajudarà a "
-"evitar l'enviament accidental d'un missatge a molta gent. Cal tindre en "
-"compte, però, que açò no es té en compte per a les llistes de distribució o "
-"llistes de correu."
+"utilitzant el selector «Tria…». Ajustar este límit vos ajudarà a evitar "
+"l'enviament accidental d'un missatge a molta gent. Cal tindre en compte, "
+"però, que açò no es té en compte per a les llistes de distribució o llistes "
+"de correu."
 
 #: configuredialog/configurecomposerpage.cpp:360
 #, kde-format
@@ -1667,12 +1667,12 @@ msgstr "(Opció actual del sistema: %1)"
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
-msgstr "Seleccioneu el contacte"
+msgstr "Trieu el contacte"
 
 #: dialog/addemailtoexistingcontactdialog.cpp:71
 #, kde-format
 msgid "Select"
-msgstr "Selecciona"
+msgstr "Tria"
 
 #: dialog/archivefolderdialog.cpp:43
 #, kde-format
@@ -1750,7 +1750,7 @@ msgstr "Arxiva totes les subcarpetes"
 #: dialog/archivefolderdialog.cpp:171
 #, kde-format
 msgid "Please select the folder that should be archived."
-msgstr "Seleccioneu la carpeta que s'ha d'arxivar."
+msgstr "Trieu la carpeta que s'ha d'arxivar."
 
 #: dialog/archivefolderdialog.cpp:171
 #, kde-format
@@ -1794,24 +1794,22 @@ msgstr "KMail2"
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr ""
-"Seleccioneu el diccionari que s'ha d'utilitzar en verificar l'ortografia "
-"d'este missatge"
+"Trieu el diccionari que s'ha d'utilitzar en verificar l'ortografia d'este "
+"missatge"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
-"Seleccioneu la carpeta del correu enviat, on es guardarà una còpia d'este "
-"missatge"
+"Trieu la carpeta del correu enviat, on es guardarà una còpia d'este missatge"
 
 #: editor/kmcomposerwin.cpp:373
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
-"Seleccioneu el compte d'eixida que s'ha d'utilitzar per a enviar este "
-"missatge"
+"Trieu el compte d'eixida que s'ha d'utilitzar per a enviar este missatge"
 
 #: editor/kmcomposerwin.cpp:382
 #, kde-format
@@ -1951,7 +1949,7 @@ msgstr "Editor nou"
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "Selecciona els &destinataris…"
+msgstr "Tria els &destinataris…"
 
 #: editor/kmcomposerwin.cpp:1342
 #, kde-format
@@ -2129,7 +2127,7 @@ msgstr "Format &criptogràfic dels missatges"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Selecciona un format criptogràfic per a este missatge"
+msgstr "Tria un format criptogràfic per a este missatge"
 
 #: editor/kmcomposerwin.cpp:1514
 #, kde-format
@@ -2701,15 +2699,15 @@ msgid ""
 "certificates.</qt>"
 msgstr ""
 "<qt>No s'ha trobat cap certificat d'encriptació vàlid i de confiança per a "
-"«%1».<br/> <br/>Seleccioneu els certificats que s'haurien d'utilitzar per a "
-"este destinatari. Si no hi ha cap certificat adequat en la llista, també "
-"podreu buscar certificats externs clicant damunt del botó: busca certificats "
+"«%1».<br/> <br/>Trieu els certificats que s'haurien d'utilitzar per a este "
+"destinatari. Si no hi ha cap certificat adequat en la llista, també podreu "
+"buscar certificats externs clicant damunt del botó: busca certificats "
 "externs.</qt>"
 
 #: editor/kmcomposerwin.cpp:4255
 #, kde-format
 msgid "Encryption Key Selection"
-msgstr "Seleccioneu la clau d'encriptació"
+msgstr "Trieu la clau d'encriptació"
 
 #: editor/kmcomposerwin.cpp:4340
 #, kde-format
@@ -2727,7 +2725,7 @@ msgstr "Detalls"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
-msgstr "Seleccioneu un correu electrònic per a posar-lo en la llista blanca:"
+msgstr "Trieu un correu electrònic per a posar-lo en la llista blanca:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
 #, kde-format
@@ -3432,7 +3430,7 @@ msgstr "D&iccionari:"
 #: identity/identitydialog.cpp:685
 #, kde-format
 msgid "Select Send-mail Folder"
-msgstr "Seleccioneu la carpeta de correu enviat"
+msgstr "Trieu la carpeta de correu enviat"
 
 #: identity/identitydialog.cpp:687
 #, kde-format
@@ -3443,7 +3441,7 @@ msgstr "Carpeta del correu &enviat:"
 #: identity/identitydialog.cpp:693
 #, kde-format
 msgid "Select Draft Folder"
-msgstr "Seleccioneu la carpeta d'esborranys"
+msgstr "Trieu la carpeta d'esborranys"
 
 #: identity/identitydialog.cpp:695
 #, kde-format
@@ -3454,7 +3452,7 @@ msgstr "Carpeta dels esb&orranys:"
 #: identity/identitydialog.cpp:701
 #, kde-format
 msgid "Select Templates Folder"
-msgstr "Seleccioneu la carpeta de plantilles"
+msgstr "Trieu la carpeta de plantilles"
 
 #: identity/identitydialog.cpp:703
 #, kde-format
@@ -3465,7 +3463,7 @@ msgstr "Carpeta de les plan&tilles:"
 #: identity/identitydialog.cpp:710
 #, kde-format
 msgid "Select Spam Folder"
-msgstr "Seleccioneu la carpeta de correu brossa"
+msgstr "Trieu la carpeta de correu brossa"
 
 #: identity/identitydialog.cpp:712
 #, kde-format
@@ -5050,7 +5048,7 @@ msgstr "Bu&sca en els missatges…"
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
-msgstr "Selecciona &tots els missatges"
+msgstr "Tria &tots els missatges"
 
 #: kmmainwidget.cpp:3117
 #, kde-format
@@ -5488,7 +5486,7 @@ msgstr "Apunta cap a la carpeta anterior"
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
-msgstr "Selecciona la carpeta on apuntar"
+msgstr "Tria la carpeta on apuntar"
 
 #: kmmainwidget.cpp:3596
 #, kde-format
@@ -5518,19 +5516,19 @@ msgstr "Apunta cap al missatge anterior"
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
-msgstr "Selecciona el primer missatge"
+msgstr "Tria el primer missatge"
 
 #: kmmainwidget.cpp:3626
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
-msgstr "Selecciona l'últim missatge"
+msgstr "Tria l'últim missatge"
 
 #: kmmainwidget.cpp:3632
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
-msgstr "Selecciona el missatge amb el focus"
+msgstr "Tria el missatge amb el focus"
 
 #: kmmainwidget.cpp:3639
 #, kde-format
@@ -5940,8 +5938,7 @@ msgstr "Sincronitza el correu"
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
-msgstr ""
-"Seleccioneu esta opció per a sincronitzar el correu de treball en grup."
+msgstr "Trieu esta opció per a sincronitzar el correu de treball en grup."
 
 #: kontactplugin/kmail/summarywidget.cpp:50
 #, kde-format
@@ -5981,8 +5978,7 @@ msgstr "Nom del connector de resum"
 msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
-"Seleccioneu els connectors de resum que es visualitzaran en la pàgina de "
-"resum."
+"Trieu els connectors de resum que es visualitzaran en la pàgina de resum."
 
 #: kontactplugin/summary/summaryview_part.cpp:47
 #, kde-format
@@ -6507,7 +6503,7 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
-"<qt><p>Seleccioneu si voleu que KMail envie tots els missatges a la safata "
+"<qt><p>Trieu si voleu que KMail envie tots els missatges a la safata "
 "d'eixida en les comprovacions manuals o en les comprovacions de tot el "
 "correu, o si no voleu que els missatges s'envien automàticament. </p></qt>"
 
@@ -6835,7 +6831,7 @@ msgstr "Canvia l'etiqueta del missatge: %1"
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
-msgstr "Seleccioneu les etiquetes"
+msgstr "Trieu les etiquetes"
 
 #: tag/tagselectdialog.cpp:53
 #, kde-format
@@ -7190,13 +7186,13 @@ msgstr "I&nclou les subcarpetes"
 #: ui/searchwindow.ui:53
 #, kde-format
 msgid "Select specific folders:"
-msgstr "Seleccioneu carpetes específiques:"
+msgstr "Trieu les carpetes específiques:"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
 #, kde-format
 msgid "Select Folders…"
-msgstr "Selecciona les carpetes…"
+msgstr "Tria les carpetes…"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
@@ -7336,7 +7332,7 @@ msgstr "Per a certificats/c&laus d'usuari final:"
 #: ui/securitypageencryptiontab.ui:230 ui/securitypageencryptiontab.ui:292
 #, kde-format
 msgid "Select the number of days here"
-msgstr "Seleccioneu ací el nombre de dies"
+msgstr "Trieu ací el nombre de dies"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrChainCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:162
@@ -7352,8 +7348,8 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca un certificat de la cadena</h1>\n"
-"Seleccioneu el nombre mínim de dies que haurien de ser vàlids tots els "
-"certificats de la cadena sense emetre un avís.\n"
+"Trieu el nombre mínim de dies que haurien de ser vàlids tots els certificats "
+"de la cadena sense emetre un avís.\n"
 "<p>\n"
 "El valor recomanat de SPHINX és de 14 dies.\n"
 "</p></qt>"
@@ -7372,8 +7368,8 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca el certificat d'encriptació</h1>\n"
-"Seleccioneu el nombre mínim de dies que el certificat d'encriptació ha de "
-"ser vàlid sense emetre un avís.\n"
+"Trieu el nombre mínim de dies que el certificat d'encriptació ha de ser "
+"vàlid sense emetre un avís.\n"
 "<p>\n"
 "L'opció recomanada de SPHINX és de 14 dies.\n"
 "</p></qt>"
@@ -7398,8 +7394,8 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca el certificat propi</h1>\n"
-"Seleccioneu el nombre mínim de dies que el certificat propi hauria de ser "
-"vàlid sense emetre un avís.\n"
+"Trieu el nombre mínim de dies que el certificat propi hauria de ser vàlid "
+"sense emetre un avís.\n"
 "<p>\n"
 "L'opció recomanada de SPHINX és de 30 dies.\n"
 "</p></qt>"
@@ -7424,8 +7420,8 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Avisa si caduca el certificat arrel</h1>\n"
-"Seleccioneu el nombre mínim de dies que el certificat arrel hauria de ser "
-"vàlid sense emetre un avís.\n"
+"Trieu el nombre mínim de dies que el certificat arrel hauria de ser vàlid "
+"sense emetre un avís.\n"
 "<p>\n"
 "L'opció recomanada de SPHINX és de 14 dies.\n"
 "</p></qt>"
@@ -7745,8 +7741,8 @@ msgid ""
 "If this option is selected, S/MIME certificates are validated using "
 "Certificate Revocation Lists (CRLs)."
 msgstr ""
-"Si se selecciona esta opció, els certificats S/MIME es validen utilitzant "
-"les llistes de revocació de certificats (CRL)."
+"Si es tria esta opció, els certificats S/MIME es validen utilitzant les "
+"llistes de revocació de certificats (CRL)."
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
@@ -7762,9 +7758,9 @@ msgid ""
 "the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP "
 "responder below."
 msgstr ""
-"Si se selecciona esta opció, els certificats S/MIME es validen en línia "
-"utilitzant el protocol d'estat de certificats en línia (Online Certificates "
-"Status Protocol, OCSP). Empleneu l'URL del contestador OCSP davall."
+"Si es tria esta opció, els certificats S/MIME es validen en línia utilitzant "
+"el protocol d'estat de certificats en línia (Online Certificates Status "
+"Protocol, OCSP). Empleneu l'URL del contestador OCSP davall."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
