@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-12 00:44+0000\n"
-"PO-Revision-Date: 2025-05-27 16:12+0200\n"
+"PO-Revision-Date: 2025-09-02 17:56+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -336,12 +336,10 @@ msgid "Mailing List"
 msgstr "Lista de E-Posta"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Dossier contine un lista de e-posta"
+msgstr "Dossier contine un lista de e-posta singule"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -4573,11 +4571,10 @@ msgid "Unable to start import wizard"
 msgstr "Il non pote initiar assistente de importation"
 
 #: kmmainwidget.cpp:1386
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(necun patronos)"
+msgstr "(cargante patronos...)"
 
 #: kmmainwidget.cpp:1411
 #, kde-format
@@ -5380,11 +5377,10 @@ msgid "&Add Account…"
 msgstr "&Adde conto..."
 
 #: kmmainwidget.cpp:3466
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Qual es proxime?"
+msgstr "Que es de novo"
 
 #: kmmainwidget.cpp:3473
 #, kde-format
@@ -8123,18 +8119,17 @@ msgstr "Il non pote initiar assistente de conto"
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
+msgstr "Permitte exportar texto in plugins de editor autogenerate."
 
 #: whatsnew/whatsnewtranslations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Add a new identity"
+#, kde-format
 msgid "Add new whatsnew widget."
-msgstr "Adde un nove identitate"
+msgstr "Un nove widget de cosa es nove."
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "Nove plugin: monstra grandor de collection."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2016, 2020, 2021, 2022, 2024 Giovanni Sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2016, 2020, 2021, 2022, 2024, 2025 Giovanni Sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-30 00:43+0000\n"
-"PO-Revision-Date: 2024-07-31 10:25+0200\n"
+"PO-Revision-Date: 2025-09-02 17:54+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -28,10 +28,9 @@ msgid "Follow Up Reminder"
 msgstr "Memento de prosequer"
 
 #: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright (C)  2014-%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format
