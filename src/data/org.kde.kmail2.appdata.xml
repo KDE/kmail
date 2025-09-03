@@ -439,6 +439,7 @@
   </provides>
   <launchable type="desktop-id">org.kde.kmail2.desktop</launchable>
   <releases>
+    <release version="6.5.1" date="2025-09-11"/>
     <release version="6.5.0" date="2025-08-14"/>
     <release version="6.4.3" date="2025-07-03"/>
     <release version="6.4.2" date="2025-06-05"/>
