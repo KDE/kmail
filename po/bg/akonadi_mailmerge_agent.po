@@ -1,20 +1,20 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# SPDX-FileCopyrightText: 2022, 2024 Mincho Kondarev <mkondarev@yahoo.de>
+# SPDX-FileCopyrightText: 2022, 2024, 2025 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2024-05-16 11:17+0200\n"
+"PO-Revision-Date: 2025-09-03 19:52+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 25.07.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: mailmergeconfiguredialog.cpp:35
@@ -34,8 +34,7 @@ msgid "Merge email addresses agent."
 msgstr "Агент за обединяване на адреси на е-поща."
 
 #: mailmergeconfiguredialog.cpp:56
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2021-%1 Laurent Montel"
+#, kde-format
 msgid "© 2021–%1 Laurent Montel"
 msgstr "Copyright (C) 2021-%1 Laurent Montel"
 
