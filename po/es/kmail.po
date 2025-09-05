@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-12 00:44+0000\n"
-"PO-Revision-Date: 2025-08-05 23:59+0100\n"
+"PO-Revision-Date: 2025-09-04 20:27+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -3439,7 +3439,7 @@ msgstr "Seleccionar carpeta de borradores"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
-msgstr "Carpeta borra&dores:"
+msgstr "Carpeta de borra&dores:"
 
 #: identity/identitydialog.cpp:701
 #, kde-format
@@ -3466,7 +3466,7 @@ msgstr "Carpeta de correo &basura:"
 #: identity/identitydialog.cpp:715
 #, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Configurar la carpeta de caducidad…"
+msgstr "Configurar expiración de la carpeta…"
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3705,7 +3705,7 @@ msgstr "No cancelar"
 #, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Caducar la carpeta de correo basura"
+msgstr "Expiración de la carpeta de correo basura"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -4596,7 +4596,7 @@ msgstr "(ninguna plantilla)"
 #: kmmainwidget.cpp:1476
 #, kde-format
 msgid "This folder does not have any expiry options set"
-msgstr "Esta carpeta no tiene configurada ninguna opción de caducidad"
+msgstr "Esta carpeta no tiene configurada ninguna opción de expiración"
 
 #: kmmainwidget.cpp:1482
 #, kde-format
@@ -4606,13 +4606,13 @@ msgstr "<qt>¿Realmente quiere hacer que caduque la carpeta <b>%1</b>?</qt>"
 #: kmmainwidget.cpp:1483
 #, kde-format
 msgid "Expire Folder"
-msgstr "Caducar carpeta"
+msgstr "Expirar carpeta"
 
 #: kmmainwidget.cpp:1483
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
-msgstr "Ca&ducar"
+msgstr "&Expirar"
 
 #: kmmainwidget.cpp:1500
 #, kde-format
@@ -4648,18 +4648,18 @@ msgstr "Movidos todos los mensajes a la papelera"
 #: kmmainwidget.cpp:1580
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
-msgstr "¿Realmente quiere caducar todos los mensajes antiguos?"
+msgstr "¿Realmente quiere expirar todos los mensajes antiguos?"
 
 #: kmmainwidget.cpp:1581
 #, kde-format
 msgid "Expire Old Messages?"
-msgstr "¿Caducar mensajes antiguos?"
+msgstr "¿Expirar mensajes antiguos?"
 
 #: kmmainwidget.cpp:1582
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
-msgstr "Caducar"
+msgstr "Expirar"
 
 #: kmmainwidget.cpp:1607
 #, kde-format
@@ -4910,7 +4910,7 @@ msgstr "Gu&ardar como…"
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
-msgstr "Caducar todas las &carpetas"
+msgstr "&Expirar todas las carpetas"
 
 #: kmmainwidget.cpp:2961
 #, kde-format
@@ -5066,7 +5066,7 @@ msgstr "&Asignar atajo de teclado…"
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
-msgstr "Preferencia&s de caducidad"
+msgstr "Preferencia&s de expiración"
 
 #: kmmainwidget.cpp:3178
 #, kde-format
@@ -5403,7 +5403,7 @@ msgstr "Confi&gurar KMail…"
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
-msgstr "Caducar…"
+msgstr "Expirar…"
 
 #: kmmainwidget.cpp:3493
 #, kde-format
@@ -6994,7 +6994,7 @@ msgstr "Cuando se ent&re en una carpeta:"
 #: ui/miscpagemaintab.ui:68
 #, kde-format
 msgid "E&xclude important messages from expiry"
-msgstr "E&xcluir mensajes importantes de la caducidad"
+msgstr "E&xcluir mensajes importantes de la expiración"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActionEnterFolder)
 #: ui/miscpagemaintab.ui:76
