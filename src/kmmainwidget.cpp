@@ -217,14 +217,19 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     const WhatsNewTranslations translations;
     const QString newFeaturesMD5 = translations.newFeaturesMD5();
     if (!newFeaturesMD5.isEmpty()) {
-        const bool hasNewFeature = (KMailSettings::self()->previousNewFeaturesMD5() != newFeaturesMD5);
-        if (hasNewFeature) {
-            auto whatsNewMessageWidget = new PimCommon::WhatsNewMessageWidget(this, i18n("KMail"));
-            whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
-            whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
-            mTopLayout->addWidget(whatsNewMessageWidget);
+        const QString previousNewFeaturesMD5 = KMailSettings::self()->previousNewFeaturesMD5();
+        if (!previousNewFeaturesMD5.isEmpty()) {
+            const bool hasNewFeature = (previousNewFeaturesMD5 != newFeaturesMD5);
+            if (hasNewFeature) {
+                auto whatsNewMessageWidget = new PimCommon::WhatsNewMessageWidget(this, i18n("KMail"));
+                whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
+                whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
+                mTopLayout->addWidget(whatsNewMessageWidget);
+                KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+                whatsNewMessageWidget->animatedShow();
+            }
+        } else {
             KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
-            whatsNewMessageWidget->animatedShow();
         }
     }
 
