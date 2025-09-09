@@ -37,7 +37,6 @@
         "Description[ta]": "வேறெந்த தலைப்பிற்கும் பொருந்தாத அமைப்புகள்",
         "Description[tr]": "Diğer bölümlere uymayan ayarlar",
         "Description[uk]": "Інші параметри",
-        "Description[x-test]": "xxSettings that don't fit elsewherexx",
         "Description[zh_CN]": "其它设置",
         "Description[zh_TW]": "不屬於任何其他地方的設定",
         "Icon": "preferences-other",
@@ -112,7 +111,6 @@
         "Name[uz@cyrillic]": "Ҳар хил",
         "Name[uz]": "Har xil",
         "Name[wa]": "Totès sôres",
-        "Name[x-test]": "xxMiscxx",
         "Name[zh_CN]": "基本",
         "Name[zh_TW]": "其他",
         "ServiceTypes": [

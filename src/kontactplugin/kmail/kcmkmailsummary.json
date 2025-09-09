@@ -37,7 +37,6 @@
         "Description[ta]": "அஞ்சல் சுருக்கத்திற்கான அமைப்பு",
         "Description[tr]": "E-posta Özeti Ayarları",
         "Description[uk]": "Налаштування підсумку пошти",
-        "Description[x-test]": "xxMail Summary Setupxx",
         "Description[zh_CN]": "邮件摘要设置",
         "Description[zh_TW]": "郵件摘要設定",
         "Icon": "view-pim-mail",
@@ -101,7 +100,6 @@
         "Name[ug]": "يېڭى ئۇچۇرلار",
         "Name[uk]": "Нові повідомлення",
         "Name[wa]": "Noveas messaedjes",
-        "Name[x-test]": "xxNew Messagesxx",
         "Name[zh_CN]": "新邮件",
         "Name[zh_TW]": "新訊息"
     },

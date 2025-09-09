@@ -37,7 +37,6 @@
         "Description[ta]": "தோற்றத்தை மாற்றியமையுங்கள்",
         "Description[tr]": "Görünüşü Özelleştir",
         "Description[uk]": "Налаштування зовнішнього вигляду",
-        "Description[x-test]": "xxCustomize Visual Appearancexx",
         "Description[zh_CN]": "自定义视觉外观",
         "Description[zh_TW]": "調整視覺外觀",
         "Icon": "preferences-desktop-theme",
@@ -117,7 +116,6 @@
         "Name[uz@cyrillic]": "Кўриниши",
         "Name[uz]": "Koʻrinishi",
         "Name[wa]": "Rivnance",
-        "Name[x-test]": "xxAppearancexx",
         "Name[zh_CN]": "外观",
         "Name[zh_TW]": "外觀",
         "ServiceTypes": [
