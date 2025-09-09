@@ -55,7 +55,6 @@
   <name xml:lang="ta">கேமெயில்</name>
   <name xml:lang="tr">K Posta</name>
   <name xml:lang="uk">KMail</name>
-  <name xml:lang="x-test">xxKMailxx</name>
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
   <summary>A feature-rich email application</summary>
@@ -97,7 +96,6 @@
   <summary xml:lang="ta">பல அம்சங்களைக் கொண்ட மின்னஞ்சல் செயலி</summary>
   <summary xml:lang="tr">Çok özellikli bir e-posta uygulaması</summary>
   <summary xml:lang="uk">Багата на можливості програма для роботи з електронною пошти</summary>
-  <summary xml:lang="x-test">xxA feature-rich email applicationxx</summary>
   <summary xml:lang="zh-CN">功能丰富的电子邮件应用程序</summary>
   <summary xml:lang="zh-TW">多功能的電子郵件應用程式</summary>
   <description>
@@ -139,7 +137,6 @@
     <p xml:lang="sv">Kmail är en toppmodern e-postprogram som är väl integrerad med använda i stor utsträckning, såsom GMail. Det tillhandahåller många verktyg och funktioner för att maximera din produktivitet och gör det snabbt och enkelt att arbeta med stora e-postkonton. Kmail stöder ett stort antal e-postprotokoll: POP3, IMAP, Microsoft Exchange (EWS) med flera.</p>
     <p xml:lang="tr">K Posta, yaygın kullanılan e-posta sağlayıcıları ile sorunsuzca çalışan gelişmiş bir e-posta istemcisidir. Üretkenliğinizi artıracak ve büyük e-posta hesaplarıyla çalışmanızı kolaylaştıracak pek çok özellik ve araçla gelir. K Posta, geniş bir e-posta protokolü listesini destekler — POP3, IMAP, Microsoft Exchange (EWS) ve çok daha fazlası.</p>
     <p xml:lang="uk">KMail — самодостатня програма для роботи з електронною поштою, яка дуже просто інтегрується зі службами надання послуг електронної пошти, зокрема GMail. У ній передбачено багато засобів та можливостей максимального сприяння вашій продуктивності. Вона робить роботу із об'ємними архівами електронної пошти простою і швидкою. У KMail передбачено підтримку широкого діапазону протоколів електронної пошти — POP3, IMAP, Microsoft Exchange (EWS) тощо.</p>
-    <p xml:lang="x-test">xxKMail is a state-of-the-art email client that integrates well with widely used email providers like GMail. It provides many tools and features to maximize your productivity and makes working with large email accounts easy and fast. KMail supports a large variety of email protocols - POP3, IMAP, Microsoft Exchange (EWS) and more.xx</p>
     <p xml:lang="zh-CN">KMail 是一款功能先进的电子邮件客户端，能与 GMail 等常用电子邮件服务提供商进行整合。它提供了多种工具，能让您方便快捷地管理包含大量邮件的账户，提高工作效率。KMail 支持各种电子邮件协议，包括 POP3、IMAP、Microsoft Exchange (EWS) 等。</p>
     <p>Features:</p>
     <p xml:lang="ar">الميزات:</p>
@@ -189,7 +186,6 @@
     <p xml:lang="ta">அம்சங்கள்:</p>
     <p xml:lang="tr">Özellikler:</p>
     <p xml:lang="uk">Можливості:</p>
-    <p xml:lang="x-test">xxFeatures:xx</p>
     <p xml:lang="zh-CN">程序功能：</p>
     <p xml:lang="zh-TW">功能：</p>
     <ul>
@@ -230,7 +226,6 @@
       <li xml:lang="sv">Säkert: Kmail har säkra standardinställningar för att skydda din integritet, enastående genomgående krypteringsstöd, och skräppostdetektering.</li>
       <li xml:lang="tr">Güvenli — K Posta öntanımlı ayarları gizliliğinizi korur, uçtan uca şifreleme ve istenmeyen posta algılama desteği sunar.</li>
       <li xml:lang="uk">Безпека — типові параметри роботи KMail є безпечними, вони захистять ваші конфіденційні дані, забезпечать наскрізне шифрування даних та запобігатимуть появі спаму.</li>
-      <li xml:lang="x-test">xxSecure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.xx</li>
       <li xml:lang="zh-CN">安全可靠 - KMail 具有安全的默认设置、良好的端到端加密支持、可靠的垃圾邮件检测功能，为您的隐私保驾护航。</li>
       <li xml:lang="zh-TW">安全 — KMail 的預設值安全保護您的隱私，也支援偵測垃圾信以及點對點加密。</li>
       <li>Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
@@ -269,7 +264,6 @@
       <li xml:lang="sv">Kraftfullt: Funktioner omfattar stöd för nerkopplad användning, flera avsändaridentiteter, stöd för flera språk, kraftfull filtrering, sökning och etikettfunktion, hantering av sändlistor och mycket flexibel inställning.</li>
       <li xml:lang="tr">Güçlü — Çevrimiçi çalışma desteği, çoklu gönderici kimlikleri, çoklu dil desteği, güçlü süzme ve etiketleme yetenekleri, posta listesi yönetimi ve esnek yapılandırma özellikleri sunar.</li>
       <li xml:lang="uk">Потужність — серед можливостей програми можливість роботи у автономному режимі (без з'єднання із інтернетом), робота із декількома профілями надсилання повідомлень, підтримка багатомовності, потужні можливості з фільтрування, пошуку та встановлення міток, керування повідомленнями зі списків листування та надзвичайна гнучкість у налаштовуванні.</li>
-      <li xml:lang="x-test">xxPowerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.xx</li>
       <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的过滤、搜索和标记功能、邮件列表管理和灵活的配置。</li>
       <li xml:lang="zh-TW">強大 — 功能包含離線支援、多重寄件者身份、多語言支援，強大的過濾、搜尋及標籤功能，郵件論壇管理以及靈活的設定。</li>
       <li>Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
@@ -308,7 +302,6 @@
       <li xml:lang="sv">Integrerat: Mötesinbjudan kan enkelt läggas till som händelser i Korganizer, automatisk komplettering av adresser, avatarer och kryptoinställningar läses in från adressboken.</li>
       <li xml:lang="tr">Tümleşik — Toplantı davetleri K Organizatör’e kolaylıkla eklenebilir, adres otomatik tamamlaması, avatarlar ve kripto tercihleri K Adres Defteri’nden yüklenir.</li>
       <li xml:lang="uk">Інтеграція — реалізовано можливості простого додавання запрошень на зустрічі як записів подій у KOrganizer, дані автоматичного доповнення адрес, аватари та параметри шифрування завантажуються напряму з KAddressBook.</li>
-      <li xml:lang="x-test">xxIntegrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.xx</li>
       <li xml:lang="zh-CN">全面整合 - 会议邀请可轻松添加为 KOrganizer 事件，从 KAddressBook 加载地址自动完成数据、头像和加密首选项。</li>
       <li xml:lang="zh-TW">整合 — 會議要求可以輕鬆加入 KOrganizer 成為事件、地址自動完成、從 KAddressBook 載入大頭貼和加密設定。</li>
       <li>Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
@@ -348,7 +341,6 @@
       <li xml:lang="sv">Standardkompatibelt: Stöder standardiserade e-postprotokoll, push e-post, filtrering på serversidan samt OpenPGP, PGP/MIME och S/MIME på plats.</li>
       <li xml:lang="tr">Standartlara Uygun — Standart posta protokollerini, itmeli e-postaları, sunucu yanı süzmeyi ve satır içi OpenPGP, PGP/MIME ve S/MIME protokollerini destekler.</li>
       <li xml:lang="uk">Сумісність зі стандартами — передбачено підтримку стандартних протоколів електронної пошти, надсилання повідомлень, фільтрування на боці сервера та вбудовування OpenPGP, PGP/MIME і S/MIME.</li>
-      <li xml:lang="x-test">xxStandard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.xx</li>
       <li xml:lang="zh-CN">符合标准 - 支持各种标准电子邮件协议的推送电子邮件、服务器端过滤和行内 OpenPGP、PGP/MIME 和 S/MIME。</li>
       <li xml:lang="zh-TW">符合標準 — 支援標準郵件協定、推送電子郵件、伺服器的過濾，以及文內 OpenPGP、PGP/MIME 和 S/MIME。</li>
     </ul>
@@ -393,7 +385,6 @@
       <caption xml:lang="sv">Kmail huvudfönster med en lista över e-postkorgar och brev.</caption>
       <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
       <caption xml:lang="uk">Головне вікно KMail зі списком тек та повідомлень електронної пошти.</caption>
-      <caption xml:lang="x-test">xxKMail main window with a list of email folders and emails.xx</caption>
       <caption xml:lang="zh-CN">列出电子邮件文件夹和电子邮件的 KMail 主窗口。</caption>
       <caption xml:lang="zh-TW">KMail 主視窗，包含郵件資料夾清單以及電子郵件。</caption>
     </screenshot>
@@ -429,7 +420,6 @@
       <caption xml:lang="sv">E-postfönster med inbäddad översättning</caption>
       <caption xml:lang="tr">Gömülü bir çevirmen içeren e-posta oluşturucusu</caption>
       <caption xml:lang="uk">Редактор повідомлення із вбудованим перекладачем</caption>
-      <caption xml:lang="x-test">xxEmail Composer with an embedded translatorxx</caption>
       <caption xml:lang="zh-CN">带有内置翻译器的电子邮件撰写器</caption>
       <caption xml:lang="zh-TW">郵件撰寫工具以及內嵌的翻譯工具</caption>
     </screenshot>
