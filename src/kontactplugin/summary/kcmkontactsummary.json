@@ -37,7 +37,6 @@
         "Description[ta]": "சுருக்க அமைப்பு",
         "Description[tr]": "Özet Seçimi",
         "Description[uk]": "Вибір резюме",
-        "Description[x-test]": "xxSummary Selectionxx",
         "Description[zh_CN]": "摘要选择",
         "Description[zh_TW]": "摘要選取",
         "Icon": "kontact",
@@ -100,7 +99,6 @@
         "Name[ug]": "قىسقىچە مەزمۇنى",
         "Name[uk]": "Резюме",
         "Name[wa]": "Racourtis",
-        "Name[x-test]": "xxSummariesxx",
         "Name[zh_CN]": "摘要",
         "Name[zh_TW]": "摘要"
     },

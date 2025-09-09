@@ -37,7 +37,6 @@
         "Description[ta]": "காண்டாக்டுக்கான சுருக்கக்காட்சி செருகுநிரல்",
         "Description[tr]": "Kontak Özet Gösterim Eklentisi",
         "Description[uk]": "Додаток Kontact для перегляду резюме",
-        "Description[x-test]": "xxKontact SummaryView Pluginxx",
         "Description[zh_CN]": "Kontact 摘要视图插件",
         "Description[zh_TW]": "Kontact 摘要檢視外掛程式",
         "EnabledByDefault": true,
@@ -118,7 +117,6 @@
         "Name[uz@cyrillic]": "Ҳисобот",
         "Name[uz]": "Hisobot",
         "Name[wa]": "Racourti",
-        "Name[x-test]": "xxSummaryxx",
         "Name[zh_CN]": "总计",
         "Name[zh_TW]": "摘要",
         "Version": "0.1"

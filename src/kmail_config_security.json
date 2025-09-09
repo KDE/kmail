@@ -37,7 +37,6 @@
         "Description[ta]": "பாதுகாப்பு & தனியுரிமை அமைப்புகள்",
         "Description[tr]": "Güvenlik ve Gizlilik Ayarları",
         "Description[uk]": "Параметри безпеки і конфіденційності",
-        "Description[x-test]": "xxSecurity & Privacy Settingsxx",
         "Description[zh_CN]": "安全和隐私设置",
         "Description[zh_TW]": "安全性與隱私設定",
         "Icon": "security-high",
@@ -115,7 +114,6 @@
         "Name[uz@cyrillic]": "Хавфсизлик",
         "Name[uz]": "Xavfsizlik",
         "Name[wa]": "Såvrité",
-        "Name[x-test]": "xxSecurityxx",
         "Name[zh_CN]": "安全",
         "Name[zh_TW]": "安全性",
         "ServiceTypes": [

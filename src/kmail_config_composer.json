@@ -37,7 +37,6 @@
         "Description[ta]": "அஞ்சலெழுதும் இடத்திற்கான அமைப்புகள்",
         "Description[tr]": "İleti Oluşturucu Ayarları",
         "Description[uk]": "Параметри засобу створення повідомлень",
-        "Description[x-test]": "xxMessage Composer Settingsxx",
         "Description[zh_CN]": "消息撰写器设置",
         "Description[zh_TW]": "訊息編寫器設定",
         "Icon": "accessories-text-editor",
@@ -110,7 +109,6 @@
         "Name[ug]": "مۇزىكىسىنى ئىشلىگۈچى",
         "Name[uk]": "Редактор листів",
         "Name[wa]": "Finiesse po scrire",
-        "Name[x-test]": "xxComposerxx",
         "Name[zh_CN]": "撰写器",
         "Name[zh_TW]": "編寫器",
         "ServiceTypes": [

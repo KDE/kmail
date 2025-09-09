@@ -37,7 +37,6 @@
         "Description[ta]": "செருகுநிரல்களுக்கான அமைப்புகள்",
         "Description[tr]": "Ayarlar Eklentisi",
         "Description[uk]": "Додатки параметрів",
-        "Description[x-test]": "xxSettings Pluginsxx",
         "Description[zh_CN]": "设置插件",
         "Description[zh_TW]": "設定外掛程式",
         "Icon": "preferences-plugin",
@@ -113,7 +112,6 @@
         "Name[uz@cyrillic]": "Плагинлар",
         "Name[uz]": "Plaginlar",
         "Name[wa]": "Tchôkes-divins",
-        "Name[x-test]": "xxPluginsxx",
         "Name[zh_CN]": "插件",
         "Name[zh_TW]": "外掛程式",
         "ServiceTypes": [
