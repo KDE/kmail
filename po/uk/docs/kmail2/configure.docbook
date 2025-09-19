@@ -213,8 +213,7 @@ format="PNG"/></imageobject
 
 <sect2 id="configure-identities-tab">
 <title
->Вкладка «Профілі»</title
->    
+>Вкладка «Профілі»</title>
 
 <para
 >Короткий вступ до параметрів вкладки <guilabel
@@ -675,7 +674,7 @@ format="PNG"/></imageobject
 >.</para>
 </listitem>
 </varlistentry>
- 
+
 <varlistentry>
 <term
 ><guilabel
@@ -731,8 +730,7 @@ format="PNG"/></imageobject
 ><para
 >Використання цього пункту призведе до відкриття вікна навігації каталогами, за допомогою якого ви зможете вибрати файл .vcf. (Підказка: скористайтеся &kaddressbook; для експортування файла vCard, яким можна скористатися тут.)</para
 ></listitem>
-        </varlistentry
->        
+        </varlistentry>
         <varlistentry>
         <term
 ><guilabel
@@ -841,7 +839,7 @@ format="PNG"/></imageobject
 >Ці команди видобувають відомості з повідомлення, на яке ви відповідаєте або яке ви переспрямовуєте, і вставляють ці відомості до вікна редактора.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -852,7 +850,7 @@ format="PNG"/></imageobject
 >Ці команди передадуть повідомлення, на яке ви відповідаєте, на обробку конвеєром зовнішньої програми, а потім вставлять результат обробки до вікна редактора &kmail;.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -1052,8 +1050,7 @@ format="PNG"/></imageobject
 >Ви можете скористатися цією кнопкою для створення зменшеної версії зображення, яке було встановлено вами у вашому власному записів адресної книги.</para>
 </listitem>
 </varlistentry>
-</variablelist
->  
+</variablelist>
 </listitem>
 </varlistentry>
 
@@ -1074,7 +1071,7 @@ format="PNG"/></imageobject
 >&nbsp;</para
 ><!-- add whitespace -->
 </sect2>
- 
+
 </sect1>
 
 <sect1 id="configure-accounts">
@@ -1419,14 +1416,14 @@ pane that tells you if a message is &HTML; or not. This is important because
 &HTML; messages might imitate the look of a signed and encrypted message, so
 you should be aware of the fact that you are reading an &HTML; message. The &HTML;
 status bar itself cannot be influenced by the &HTML; code of the message.</para>
- 
+
 <para
 >Enable <guilabel
 >Replace smileys by emoticons</guilabel
-> if you want smileys 
+> if you want smileys
 like <userinput
 >:-)</userinput
-> appearing in the message text to be 
+> appearing in the message text to be
 replaced by emoticons (small pictures) such as
 <inlinemediaobject
 ><imageobject>
@@ -1445,11 +1442,11 @@ replaced by emoticons (small pictures) such as
 <!-- <para
 ><guilabel
 >Fallback character encoding</guilabel
->: 
-Some emails, especially those generated automatically, do not specify the 
-character encoding which needs to be used to properly display them. In such 
-cases a fallback character encoding will be used, which you can configure 
-here. Set it to the character encoding most commonly used in your part of 
+>:
+Some emails, especially those generated automatically, do not specify the
+character encoding which needs to be used to properly display them. In such
+cases a fallback character encoding will be used, which you can configure
+here. Set it to the character encoding most commonly used in your part of
 the world. As a default the encoding configured for the whole system is used.</para
 > -->
 
@@ -1799,7 +1796,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-   
+
 <para
 >Щоб створити нетипову тему складання, натисніть кнопку <guibutton
 >Налаштувати...</guibutton
@@ -1919,7 +1916,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-  
+
 <para
 >Щоб створити нетипову тему списку повідомлень, натисніть кнопку <guibutton
 >Налаштувати...</guibutton
@@ -1953,8 +1950,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Додатково</guilabel
 > ви зможете визначити, чи слід показувати заголовки. Також можна змінити розмір піктограм показу стану.</para>
 </listitem
-></varlistentry
-> 
+></varlistentry>
 </variablelist>
 </listitem
 ></varlistentry>
@@ -1986,7 +1982,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect2 id="configure-message-tags">
     <title
 >Мітки повідомлень</title>
-    
+
 <screenshot>
 <screeninfo
 >Вкладка «Мітки повідомлень» сторінки «Вигляд»</screeninfo>
@@ -2041,7 +2037,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Виберіть цей пункт, щоб пункти повідомлень із міткою було показано іншим кольором. У відповідь на вибір цього пункту програма покаже палітру кольорів. Виберіть попередньо визначений колір або скористайтеся кнопкою «Нетиповий…», щоб вибрати колір самостійно.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2052,7 +2048,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Виберіть цей пункт, щоб змінити колір тла пунктів списку повідомлень із мітками.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2065,7 +2061,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > гарнітуру шрифту.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2076,7 +2072,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Натисніть цю кнопку, щоб відкрити діалогове вікно вибору піктограми. Піктограму буде показано поряд із пунктами повідомлень із міткою у списку.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2087,7 +2083,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Скористайтеся цією кнопкою для створення клавіатурного скорочення для пов'язування цієї мітки із позначеними повідомленнями.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2109,13 +2105,13 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></menuchoice
 >.</para>
 </sect2>
- 
+
 </sect1>
 
 <sect1 id="configure-composer">
     <title
 >Сторінка редактора </title>
-    
+
     <para
 >Опис способів використання <guilabel
 >Редактора</guilabel
@@ -2128,7 +2124,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <sect2 id="configure-composer-general">
       <title
 >Загальне </title>
-    
+
     <screenshot>
     <screeninfo
 >Вкладка «Загальні» сторінки редактора</screeninfo>
@@ -2149,10 +2145,10 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >За допомогою цього діалогового вікна ви можете скоригувати обробку підписів у &kmail;. Воно надає вам змогу керувати деякими можливостями форматування, виправити параметри автоматичного доповнення та налаштувати можливість автоматичного зберігання у &kmail;. </para>
-    
+
     <variablelist>
 	<varlistentry id="configure-composer-general-append-signature">
 	  <term>
@@ -2383,12 +2379,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >+</guiicon
 >. Для пришвидшення роботи ви можете пов'язати з шаблоном якесь клавіатурне скорочення. </para>
     <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
-    
+
     <para
 >В шаблони повідомлень можна вставляти команди для підставляння тексту, це робиться шляхом введення цих команд вручну або вибору команди за допомогою меню <guimenu
 >Вставити команду</guimenu
 >. </para>
-    
+
     <para
 >Передбачено чотири типи нетипових шаблонів: їх призначено для випадків <guilabel
 >Відповісти</guilabel
@@ -2401,7 +2397,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >, тобто повного спектра дій. З шаблонами типу <guilabel
 >Універсальний</guilabel
 > не можна пов'язувати клавіатурні скорочення. </para>
-    
+
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2572,12 +2568,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Позначте пункт <guilabel
 >Увімкнути визначення відсутніх долучень</guilabel
 >, якщо ви бажаєте, щоб &kmail; попереджав вас про надсилання повідомлень без долучень, тоді як текст повідомлення містить рядки, які позначають те, що ви бажали долучити до повідомлення певний файл. Список відповідних ключових слів можна змінити. </para>
-    
+
     <para
 >Скористайтеся полем лічильника <guilabel
 >Максимальний розмір долучення:</guilabel
 > для обмеження розміру будь-якого надісланого вами долучення. Якщо ви спробуєте долучити файл розміру, який перевищує вказаний, &kmail; покаже повідомлення про помилку і відмовиться долучити файл. Зауважте, що це обмеження на окреме долучення, а не на загальний об'єм долучень. Крім того, розмір файла буде перевірено до перетворення його даних до кодування за основою 64, якщо це потрібно. </para>
-    
+
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2606,7 +2602,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-   
+
     <para
 >Щоб увімкнути автоматичне виправлення типових друкарських помилок, позначте пункт <guilabel
 >Увімкнути автовиправлення</guilabel
@@ -2621,7 +2617,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Якщо ви хочете зберегти словник автоматичного виправлення для іншого екземпляра програми або іншої програми, скористайтеся кнопкою <guibutton
 >Експортувати…</guibutton
 >. </para>
-    
+
     <para>
       <variablelist
 ><title
@@ -2676,7 +2672,7 @@ the world. As a default the encoding configured for the whole system is used.</p
            </varlistentry>
         </variablelist>
     </para>
-      
+
     <para
 >Щойно всі параметри автоматичного виправлення буде узгоджено, ви можете натиснути кнопку <guibutton
 >Застосувати</guibutton
@@ -2685,7 +2681,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. </para>
     <para
 >&nbsp;</para
-><!-- add whitespace --> 
+><!-- add whitespace -->
     </sect2>
 
     <sect2 id="configure-resize-image">
@@ -2711,12 +2707,12 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-   
+
     <para
 >За певних обставин може виникнути потреба у автоматичній зміні розмірів зображень у вихідних повідомленнях за допомогою &kmail;. Така потреба, наприклад, може виникнути, якщо поштовий сервер накладає обмеження на розмір повідомлень. Щоб наказати програмі автоматично змінювати розміри зображень, позначте пункт <guilabel
 >Автоматична зміна розмірів зображень</guilabel
 >. Передбачено декілька параметрів налаштування поведінки цієї можливості. </para>
-      
+
     <variablelist>
      <varlistentry
 ><term
@@ -2756,14 +2752,14 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. За допомогою останнього пункту цієї вкладки ви можете наказати програмі пропускати зміну розмірів зображень, які є меншими за вказані розміри зображення. </para>
        </listitem>
      </varlistentry>
-     
+
      <varlistentry
 ><term
 ><guilabel
 >Назва файла</guilabel
 ></term>
        <listitem>
-         
+
            <variablelist>
            <varlistentry
 ><term
@@ -2828,10 +2824,10 @@ the world. As a default the encoding configured for the whole system is used.</p
              </listitem>
            </varlistentry>
          </variablelist>
-         
+
          </listitem>
        </varlistentry>
-     
+
        <varlistentry
 ><term
 ><guilabel
@@ -2853,18 +2849,18 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect1 id="configure-security">
   <title
 >Сторінка безпеки</title>
-  
+
   <para
 >За допомогою діалогового вікна налаштовування захисту ви можете скоригувати деякі з параметрів обробки форматованого тексту (&HTML;). Крім того, за його допомогою можна керувати можливостями з шифрування та розшифровування, скоригувати роботу деяких алгоритмів перевірки на шахрайство та вказати спосіб обробки запитів щодо отримання повідомлень. Зауважте, що це діалогове вікно <emphasis
 >не</emphasis
 > впливає на роботу антивірусних засобів. Якщо ви хочете захиститися від вірусів, ознайомтеся із вмістом розділу <link linkend="the-anti-virus-wizard"
 >Користування &kmail;: майстер блокування вірусів</link
 >. </para>
-  
+
   <sect2 id="configure-security-reading">
     <title
 >Читання</title>
-    
+
     <screenshot>
     <screeninfo
 >Вкладка «Читання» сторінки «Безпека»</screeninfo>
@@ -2884,8 +2880,8 @@ the world. As a default the encoding configured for the whole system is used.</p
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->    
-    
+><!-- add whitespace -->
+
     <para
 >На цій сторінці ви зможете налаштувати параметри, пов'язані з безпекою читання повідомлень.</para>
 
@@ -2915,7 +2911,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >За допомогою додавання зовнішніх посилань до повідомлень спамери можуть визначати те, чи переглянули ви повідомлення, ваше місце перебування та багато інших даних, які залишатимуться на вебсерверах. Зауважте, що цей пункт не стосуватиметься &Java; або JavaScript — їхньої підтримки у &kmail; не передбачено. </para>
 	  </listitem>
 	</varlistentry>
-    
+
 	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
     <varlistentry id="configure-security-email-scams">
       <term
@@ -2935,7 +2931,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > і введіть адресу електронної пошти до діалогового вікна, яке буде показано. Будь ласка, зауважте, що у поточній версії передбачено підтримку додавання до «білого» списку лише повних адрес електронної пошти. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2946,7 +2942,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Позначте цей пункт, щоб наказати &kmail; зв'язатися із базою даних Google, у якій зібрано адреси сайтів, які підозрюють у шахрайстві, і перевірити адреси із повідомлення, а потім попередити вас, якщо буде виявлено відповідність. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2957,7 +2953,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Типово, &kmail; автоматично перевіряє усі адреси, які вбудовано до повідомлень у форматі &HTML;, і попереджає вас, якщо за допомогою якоїсь із адрес хтось намагається за вами стежити. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2968,7 +2964,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Типово, &kmail; намагатиметься автоматично розшифровувати зашифровані повідомлення під час їхнього перегляду. Якщо ви хочете робити це вручну, зніміть позначення з цього пункту. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
 	      <term
 ><guilabel
@@ -2990,7 +2986,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-message-disposition-notifications">
         <title
 >Сповіщення про долю повідомлення</title>
@@ -3014,7 +3010,7 @@ the world. As a default the encoding configured for the whole system is used.</p
           <para
 >&nbsp;</para
 ><!-- add whitespace -->
-        
+
         <variablelist>
           <varlistentry id="configure-security-reading-mdns">
 	      <term>
@@ -3049,7 +3045,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Ігнорувати всі запити на сповіщення про отримання. За вибору цього пункту сповіщення ніколи не надсилатиметься у автоматичному режимі. </para>
 		    </listitem>
           </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3060,7 +3056,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Відповіді буде надіслано лише після підтвердження користувачем надсилання відповіді. Таким чином, ви зможете надсилати відповіді для вибраних повідомлень і не надсилати їх або ігнорувати їх для інших повідомлень. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3075,7 +3071,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > кращий за варіанта з надсиланням відповідей завжди. Автор повідомлення знатиме, що з повідомленням виконано якусь дію, він просто не зможе визначити було його вилучено, прочитано тощо. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3087,7 +3083,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 		    </listitem>
 	      </varlistentry>
 	    </variablelist>
-        
+
 	    <para
 >Якщо ви непевні, спробуйте скористатися варіантом <guilabel
 >Запитати</guilabel
@@ -3097,14 +3093,14 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-        
+
 	    <para
 >За допомогою наступних пунктів (у списку <guilabel
 >Цитування початкового повідомлення</guilabel
 >) ви можете керувати тим, <emphasis
 >яку частину</emphasis
 > початкового повідомлення &kmail; надішле назад у &mdn;. </para>
-        
+
 	    <variablelist>
 	      <varlistentry>
 		    <term>
@@ -3116,7 +3112,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Окрім обов'язкового ідентифікатора повідомлень і адреси початкового отримувача у відповідь &mdn; не буде додано ніяких частин повідомлення. Цих даних має бути достатньо для того, щоб однозначно ідентифікувати повідомлення, для якого і було створено цю відповідь. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
             <term>
               <guilabel
@@ -3127,7 +3123,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >За вибору цього варіанта до сповіщення про отримання буде додано повідомлення повністю. Зазвичай, цього забагато. Додавання тексту повідомлення не додасть ніяких цінних відомостей, які автор повідомлення не зміг би встановити лише з заголовків повідомлення, але іноді відправники наполягають на такому додаванні, оскільки таким чином відправникові буде легше співвіднести сповіщення з вмістом повідомлення, ніж прості заголовки, які було б надіслано за вибору попереднього варіанта. </para>
             </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
             <term>
               <guilabel
@@ -3139,7 +3135,7 @@ the world. As a default the encoding configured for the whole system is used.</p
               </listitem>
 	      </varlistentry>
 	    </variablelist>
-        
+
 	    <para
 >Якщо не знаєте, що обрати, не змінюйте типове значення цього пункту (не визначено). </para>
 	  </listitem>
@@ -3190,7 +3186,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-      
+
       <para
 >За допомогою цієї вкладки ви зможете налаштувати параметри створення повідомлень, пов'язані з безпекою. </para>
 
@@ -3333,7 +3329,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-      
+
 
       <para
 >За допомогою цієї вкладки ви зможете увімкнути або вимкнути пов'язані з безпекою попередження. </para>
@@ -3407,7 +3403,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > і кореневих сертифікатів. </para>
 	  </listitem>
 	</varlistentry>
-	
+
     <varlistentry>
 	  <term>
 	    <guibutton
@@ -3420,7 +3416,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Якщо ви не є знавцем шифрування, вам не варто змінювати типові значення параметрів. </para>
 	  </listitem>
 	</varlistentry>
-    
+
 	<varlistentry id="configure-security-warnings-reenable-all-warnings">
 	  <term>
 	    <guilabel
@@ -3913,7 +3909,7 @@ that is used when you create a new folder.</para>
 >Якщо ви позначите цей пункт, програма спорожнятиме теку смітника кожного разу, коли ви завершуватимете роботу &kmail;. </para>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry>
       <term
 ><guilabel
@@ -3963,7 +3959,7 @@ that is used when you create a new folder.</para>
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->    
+><!-- add whitespace -->
 
     <variablelist>
 
@@ -3979,7 +3975,7 @@ that is used when you create a new folder.</para>
 > могли зрозуміти ваші відповіді на запрошення. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -3992,7 +3988,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4007,7 +4003,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
 <!--varlistentry>
 <term
 ><guilabel
@@ -4046,13 +4042,13 @@ This is the default. The user can turn this option off if they want to see the i
 <listitem>
 <para
 >When this is checked, you will not see the mail composer window. Instead,
-all invitation mails are sent automatically. If you want to see the mail 
-before sending it, you can uncheck this option. However, be aware that the 
-text in the composer window is in iCalendar syntax, and you should not try 
+all invitation mails are sent automatically. If you want to see the mail
+before sending it, you can uncheck this option. However, be aware that the
+text in the composer window is in iCalendar syntax, and you should not try
 modifying it by hand.</para>
 </listitem>
 </varlistentry--><!-- These options are no longer available. @dcb2020342-->
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4092,7 +4088,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >За допомогою цієї вкладки ви можете скоригувати спосіб, у який працюватиме пункт меню <menuchoice
 > <guimenu
@@ -4100,9 +4096,8 @@ modifying it by hand.</para>
 ><guimenuitem
 >Друкувати</guimenuitem
 > </menuchoice
->. </para
-> 
-    
+>. </para>
+
     <variablelist>
 
       <varlistentry>
@@ -4115,7 +4110,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб уможливити друк лише позначеної частини повідомлення. Типово, цей пункт не позначено, отже буде надруковано усе повідомлення. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4130,7 +4125,7 @@ modifying it by hand.</para>
 >, але у поточній версії він не працює. Іншими словами, маємо справу із вадою. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4141,7 +4136,7 @@ modifying it by hand.</para>
 >Подібно до попереднього пункту, тут маємо ваду у програмі: &kmail; завжди друкує зображення, незалежно від того, чи позначено цей пункт. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4152,7 +4147,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб наказати &kmail; друкувати параметри шифрування для зашифрованих повідомлень і/або повідомлень із цифровим підписом. </para>
         </listitem>
       </varlistentry>
-      
+
   </variablelist>
   </sect2>
 
@@ -4161,22 +4156,22 @@ modifying it by hand.</para>
 <sect1 id="configure-plugins">
     <title
 >Сторінка «Додатки»</title>
-    
+
     <para
 >До складу &kmail; включено багато спеціальних функцій, які можуть бути корисними для окремих користувачів. Ви можете вибрати одну або декілька з цих спеціальних функцій, вибравши їх на сторінці налаштування додатків. Крім того, якщо вам не потрібна певна можливість, ви можете заощадити час і місце на диску, знявши позначку з відповідного модуля додатка. </para>
-    
+
     <para
 >У багатьох дистрибутивах Linux більшість цих додатків не включено до основного пакунка &kmail;. Щоб отримати повний комплект додатків, встановіть пакунок із назвою «kdepim-addons» (або подібною). </para>
-    
+
     <para
 >Загальне поняття про те, які завдання виконує певний додаток, можна отримати, позначивши назву додатка у списку на сторінці налаштувань &kmail;. Програма показуватиме короткий опис призначення додатка у правій частині діалогового вікна. </para>
-    
+
     <para
 >Нижчен наведено список різноманітних додатків, які доступні у &kmail; (2021 рік). Зауважте, що набір «типових» додатків засновано на версії &kmail; (5.14.2) з openSUSE, яку використано як еталонну для цієї документації. Типовий набір у вашій системі може бути іншим. </para>
-    
+
     <para
 >Оскільки час від часу розробники додають нові можливості, цей список може з часом бути розширено. Існує два загальних правила, яким підкоряється структура додатків, навіть якщо певного додатка, з яким ви працюєте, немає у наведеному нижче списку. </para>
-    
+
     <para
 >1. Якщо у додатка є налаштовувані змінні, ви можете відкрити діалогове вікно налаштування цього додатка натисканням кнопки <guibutton
 >&nbsp;<inlinemediaobject
@@ -4185,13 +4180,13 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 >, яку розташовано поряд із пунктом із назвою додатка. </para>
-    
+
     <para
 >2. Після вмикання або вимикання додатка &kmail; має бути перезапущено, щоб бажані зміни набули чинності. </para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <sect2 id="configure-plugins-akonadi">
     <title
 >Akonadi і перевірка перед надсиланням</title>
@@ -4215,9 +4210,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4232,7 +4227,7 @@ modifying it by hand.</para>
 > цього підручника. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4245,7 +4240,7 @@ modifying it by hand.</para>
 >. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4256,7 +4251,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути сповіщення щодо нових повідомлень. Ви можете налаштувати перелік полів, які має бути показано у «стандартному» повідомлені сповіщення. Ви також можете вибрати звукові сигнали (декламування тексту, попередньо записані звуки), створення записів файла журналу тощо. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4269,7 +4264,7 @@ modifying it by hand.</para>
 >. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4280,7 +4275,7 @@ modifying it by hand.</para>
 >Позначте цей пункт для створення набору «уніфікованих» поштових скриньок. &kmail; автоматично створить три такі скриньки із мітками «Вхідні», «Чернетки» і «Надіслані». Якщо вами було визначено теку вхідних повідомлень для «Локальних тек» і одну або декілька тек вхідної пошти &IMAP;, &kmail; покаже вміст усіх різноманітних вхідних повідомлень у одній об'єднаній віртуальній теці «Вхідні». Ви можете скористатися діалоговим вікном налаштувань для створення додаткових віртуальних поштових скриньок, налаштувавши кожну з них відповідно до ваших потреб. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4291,7 +4286,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб додавати нові адреси до адреси вашої адресної книги кожного разу, коли ви надсилаєте повідомлення новому контакту. Скористайтеся діалоговим вікном налаштовування для прив'язки адресних книг до профілів. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4302,7 +4297,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб застосувати декілька правил до надсилання повідомлення. Цей додаток типово увімкнено, він автоматично сповіщатиме вас, коли ви спробуєте надіслати понад одну копію повідомлення одній особі. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4313,13 +4308,13 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути перевірку адрес вихідних повідомлень. Скористайтеся діалоговим вікном налаштовування для визначення «білого» списку і/або «чорного» списку для кожного визначеного профілю. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-composer">
     <title
 >Редактор</title>
@@ -4343,9 +4338,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4356,7 +4351,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб наказати редактору повідомлень відкривати зовнішній текстовий редактор після запуску. Скористайтеся діалоговим вікном налаштовування цього додатка для визначення редактора, який слід викликати. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4373,7 +4368,7 @@ modifying it by hand.</para>
 >. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4390,7 +4385,7 @@ modifying it by hand.</para>
 >. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4407,7 +4402,7 @@ modifying it by hand.</para>
 >. За допомогою цього пункту можна вставити вибрану адресу електронної пошти з адресної книги до тексту вашого повідомлення простим наведенням і клацанням лівою кнопкою миші. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4424,7 +4419,7 @@ modifying it by hand.</para>
 >. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4435,7 +4430,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб мати змову додавати невеличкий фрагмент нефункціонального коду. Цей додаток перебуває у розробці, його типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4452,7 +4447,7 @@ modifying it by hand.</para>
 >. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4469,7 +4464,7 @@ modifying it by hand.</para>
 >. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4486,7 +4481,7 @@ modifying it by hand.</para>
 >. Передбачено чотири варіанти надсилання: Nextcloud, Pastebin, Bluetooth, і Надіслати електронною поштою (відкриває друге вікно редактора повідомлень). Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4503,14 +4498,13 @@ modifying it by hand.</para>
 >. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-        
+
     <sect2 id="configure-plugins-grammar">
     <title
 >Перевірка граматики і стилі заголовків</title>
@@ -4534,9 +4528,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4553,7 +4547,7 @@ modifying it by hand.</para>
 >. Цей пункт призначено лише для перевірки французькою мовою. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4573,17 +4567,17 @@ modifying it by hand.</para>
     </variablelist>
     <para
 >&nbsp;</para
-><!-- add whitespace -->  
-    
+><!-- add whitespace -->
+
     <para
 >Наступні шість доданків надають вам змогу визначити, які стилі заголовків можна буде вибрати за допомогою меню <guimenu
 >Перегляд</guimenu
 >. Докладніші відомості наведено у розділі щодо <link linkend="the-preview-pane-headers"
 >опису різноманітних режимі перегляду заголовків</link
 > у главі «Користування &kmail;». </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4594,7 +4588,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути показ «Коротких» заголовків. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4605,7 +4599,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути показ заголовків «KMail 5.2». Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4616,7 +4610,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути показ «Вишуканих» заголовків. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4627,7 +4621,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути показ «Cute»-заголовків. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4638,7 +4632,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути показ «Довгих» заголовків. Цей додаток типово вимкнено. (Довгі заголовки подібні до стандартних, але містять дещо менш типові дані, зокрема вміст поля «Відповідати», якщо такі дані є доступними.) </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4649,14 +4643,13 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути показ «Стандартних» заголовків. Цей додаток типово вимкнено. (Стандартні заголовки подібні до вишуканих, але без затіненого тла.) </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-misc">
     <title
 >Перегляд повідомлень / Інше</title>
@@ -4680,7 +4673,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Усі наступні шість додатків забезпечують роботи спеціальних можливостей, викликати які можна лише за допомогою кнопки панелі інструментів. Скористайтеся діалоговим вікном, яке можна викликати за допомогою пункту меню <menuchoice
 ><guimenu
@@ -4693,9 +4686,9 @@ modifying it by hand.</para>
 > Налаштувати пенали... </guimenuitem
 > </menuchoice
 >, щоб додати або вилучити кнопки панелі інструментів, які пов'язано із цими функціями після вмикання відповідних додатків. </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4706,7 +4699,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб уможливити створення запису події календаря під час перегляду повідомлення у &kmail;. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4717,7 +4710,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб уможливити створення нотатки &kontact; під час перегляду повідомлення у &kmail;. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4728,7 +4721,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб уможливити створення запису завдання у &korganizer; під час перегляду повідомлення у &kmail;. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4739,7 +4732,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб увімкнути функціональну можливість «Розгорнути адресу». Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4750,7 +4743,7 @@ modifying it by hand.</para>
 >Позначте цей пункт, щоб уможливити виклик певної команди з панелі інструментів. Скористайтеся пов'язаним діалоговим вікном налаштовування для вибору виконуваного файла і визначення назви пункту програми. Вибрану вами назву згодом буде додано до кнопки на панелі інструментів, за допомогою якої ви зможете будь-коли викликати потрібну вам програми. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4763,13 +4756,12 @@ modifying it by hand.</para>
 > є типово доступною у редакторі повідомлень. Скористайтеся цим додатком (за допомогою панелі інструментів), щоб відкрити доступ до засобу перекладу з вікна попереднього перегляду повідомлень. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Наступні чотири пункти насправді не є пунктами додатків. Це вбудовані функціональні можливості &kmail;. Кожну з них можна налаштувати окремо за допомогою кнопки <guibutton
 >&nbsp;<inlinemediaobject
@@ -4778,9 +4770,9 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 >, яку буде показано поряд із назвою функції. Для застосування змінених налаштувань цих вбудованих можливостей не потрібен перезапуск програми. </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4798,7 +4790,7 @@ modifying it by hand.</para>
 ><!-- add whitespace -->
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4811,7 +4803,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4824,7 +4816,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4835,13 +4827,13 @@ modifying it by hand.</para>
 >Скористайтеся цим діалоговим вікном налаштовування для вмикання або вимикання підтримки Gravatar (Globally Recognized Avatar або «загальновизнаного аватара»). </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-tools">
         <title
 >Інструменти</title>
@@ -4866,9 +4858,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4883,7 +4875,7 @@ modifying it by hand.</para>
 >. Цей додаток типово вимкнено. Зауважте, що після встановлення програмного забезпечення для боротьби зі спамом цей додаток можна безпечно вимикати — він потрібен лише для встановлення відповідного програмного забезпечення, а не для користування ним. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4898,7 +4890,7 @@ modifying it by hand.</para>
 >. Цей додаток типово вимкнено. Зауважте, що після встановлення програмного забезпечення для боротьби із вірусами цей додаток можна безпечно вимикати — він потрібен лише для встановлення відповідного програмного забезпечення, а не для користування ним. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4915,7 +4907,7 @@ modifying it by hand.</para>
 > у вікні попереднього перегляду повідомлень. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4930,7 +4922,7 @@ modifying it by hand.</para>
 >. В основному, цю можливість призначено для розробників програми — типовий інструмент журналювання не зберігає багато даних (просто часові позначки і «Виконано» для більшості «подій»). </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4943,7 +4935,7 @@ modifying it by hand.</para>
 > до &kmail;. Якщо ви активуєте цей додаток, вам доведеться приділити доволі багато часу для коригування файла налаштувань, щоб фільтри працювали належним чином. Цей додаток типово вимкнено. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4958,10 +4950,10 @@ modifying it by hand.</para>
 >Надсилання запиту «Не стежити» може дещо підвищити рівень вашого захисту. Але єдиним певним способом уникнення пікселів для стеження є заборона отримання віддалених зображень, адреси яких вбудовано до коду повідомлень у форматі &HTML;. Цей додаток типово увімкнено. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     </sect2>
-    
+
 </sect1>
 
 <sect1 id="configure-non-gui-options">
