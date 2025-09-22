@@ -55,6 +55,7 @@ private:
     QCheckBox *const mAutoAppSignFileCheck;
     QCheckBox *const mTopQuoteCheck;
     QCheckBox *const mDashDashCheck;
+    QCheckBox *const mActivateQuickTextFormatCheck;
     QCheckBox *mReplyUsingVisualFormat = nullptr;
     QCheckBox *mSmartQuoteCheck = nullptr;
     QCheckBox *mStripSignatureCheck = nullptr;

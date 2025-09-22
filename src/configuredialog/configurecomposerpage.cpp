@@ -119,6 +119,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     , mAutoAppSignFileCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->autoTextSignatureItem()->label(), this))
     , mTopQuoteCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->prependSignatureItem()->label(), this))
     , mDashDashCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem()->label(), this))
+    , mActivateQuickTextFormatCheck(new QCheckBox(MessageComposer::MessageComposerSettings::self()->activateQuickTextFormatItem()->label(), this))
 {
     // Main layout
     auto mainLayout = new QVBoxLayout(this);
@@ -293,6 +294,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mAutoRequestMDNCheck->setObjectName(u"kcfg_RequestMDN"_s);
 
     groupGridLayout->addWidget(mAutoRequestMDNCheck, row, 0, 1, -1);
+    connect(mAutoRequestMDNCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+
     ++row;
 
     // Spacing
@@ -424,6 +427,19 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     layout->addWidget(groupBox);
 
+    // "Composer" group
+    groupBox = new QGroupBox(i18nc("@title:group", "Composer"));
+    groupHBoxLayout = new QHBoxLayout(groupBox);
+    groupHBoxLayout->addWidget(mActivateQuickTextFormatCheck);
+
+    helpText = i18n("Activate quick text format toolbar");
+    mActivateQuickTextFormatCheck->setToolTip(helpText);
+    mActivateQuickTextFormatCheck->setWhatsThis(helpText);
+
+    connect(mActivateQuickTextFormatCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+
+    layout->addWidget(groupBox);
+
     // Prevent all other tabs to inherit the height of this one
     auto scrollArea = new QScrollArea;
     scrollArea->setWidgetResizable(true);
@@ -445,6 +461,8 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
     const int maximumRecipient = MessageComposer::MessageComposerSettings::self()->maximumRecipients();
     const bool improvePlainText = MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage();
     const bool showBalooSearchInComposer = MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposer();
+    const bool showActivateQuickTextFormat = MessageComposer::MessageComposerSettings::self()->activateQuickTextFormat();
+
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
 
     mAutoAppSignFileCheck->setChecked(autoAppSignFile);
@@ -457,6 +475,7 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
     mShowRecentAddressesInComposer->setChecked(showRecentAddress);
     mShowAkonadiSearchAddressesInComposer->setChecked(showBalooSearchInComposer);
     mImprovePlainTextOfHtmlMessage->setChecked(improvePlainText);
+    mActivateQuickTextFormatCheck->setChecked(showActivateQuickTextFormat);
 
     mMaximumRecentAddress->setValue(200);
 }
@@ -470,6 +489,7 @@ void ComposerPageGeneralTab::doLoadFromGlobalSettings()
     loadWidget(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
     loadWidget(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
     loadWidget(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
+    loadWidget(mActivateQuickTextFormatCheck, MessageComposer::MessageComposerSettings::self()->activateQuickTextFormatItem());
 
     loadWidget(mReplyUsingVisualFormat, TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem());
     loadWidget(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
@@ -501,6 +521,7 @@ void ComposerPageGeneralTab::save()
     saveCheckBox(mDashDashCheck, MessageComposer::MessageComposerSettings::self()->dashDashSignatureItem());
     saveCheckBox(mSmartQuoteCheck, TemplateParser::TemplateParserSettings::self()->smartQuoteItem());
     saveCheckBox(mQuoteSelectionOnlyCheck, MessageComposer::MessageComposerSettings::self()->quoteSelectionOnlyItem());
+    saveCheckBox(mActivateQuickTextFormatCheck, MessageComposer::MessageComposerSettings::self()->activateQuickTextFormatItem());
 
     saveCheckBox(mReplyUsingVisualFormat, TemplateParser::TemplateParserSettings::self()->replyUsingVisualFormatItem());
     saveCheckBox(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
