@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-13 00:50+0000\n"
+"POT-Creation-Date: 2025-09-23 00:44+0000\n"
 "PO-Revision-Date: 2025-08-05 14:38+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -1089,13 +1089,13 @@ msgstr "Autocorrectie"
 msgid "Auto Resize Image"
 msgstr "Afbeeldingsgrootte automatisch wijzigen"
 
-#: configuredialog/configurecomposerpage.cpp:130
+#: configuredialog/configurecomposerpage.cpp:131
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Ondertekening"
 
-#: configuredialog/configurecomposerpage.cpp:135
+#: configuredialog/configurecomposerpage.cpp:136
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
@@ -1104,12 +1104,12 @@ msgstr ""
 "Automatisch de ingestelde ondertekening invoegen bij het starten van het "
 "maken van een bericht"
 
-#: configuredialog/configurecomposerpage.cpp:145
+#: configuredialog/configurecomposerpage.cpp:146
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "De ondertekening boven eventueel aangehaalde tekst plaatsen"
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:157
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
@@ -1118,18 +1118,18 @@ msgstr ""
 "Voeg de scheidingsregel van de ondertekening volgens de RFC-standaard (twee "
 "mintekens en een spatie op één regel) in voor de ondertekening"
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:168
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "Haal geen bestaande ondertekening aan bij antwoorden"
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:180
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Opmaak"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:185
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1138,7 +1138,7 @@ msgstr ""
 "Haal alleen de geselecteerde tekst aan bij antwoorden (in plaats van het "
 "gehele bericht), wanneer er tekst is geselecteerd in het berichtenvenster."
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:195
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1149,17 +1149,17 @@ msgstr ""
 "tekst, zelfs wanneer de regel is aangemaakt door het toevoegen van een extra "
 "regelafbreekteken bij het afbreken van de tekstregel."
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Automatische regelafbreking inschakelen op de ingestelde breedte"
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:217
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "De tekstbreedte voor automatische regelafbreking instellen"
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:237
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1169,7 +1169,7 @@ msgstr ""
 "formaat waarin het is ontvangen. Indien niet geactiveerd, wordt het antwoord "
 "standaard als platte tekst aangemaakt."
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:249
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1179,47 +1179,47 @@ msgstr ""
 "Vet, cursief en onderstreepte tekst, lijsten en externe verwijzingen worden "
 "ondersteund."
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "Inline"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgid "As Attachment"
 msgstr "Als bijlage"
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:261
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "De standaard voor opmaak van een doorgestuurd bericht instellen"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:265
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Standaard type voor doorsturen:"
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:283
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Ontvangers"
 
-#: configuredialog/configurecomposerpage.cpp:312
+#: configuredialog/configurecomposerpage.cpp:315
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Waarschuwen als er te veel geadresseerden zijn opgegeven"
 
-#: configuredialog/configurecomposerpage.cpp:321
+#: configuredialog/configurecomposerpage.cpp:324
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Maximum aantal geadresseerden voor de waarschuwing instellen"
 
-#: configuredialog/configurecomposerpage.cpp:339
+#: configuredialog/configurecomposerpage.cpp:342
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1234,7 +1234,7 @@ msgstr ""
 "helpt u om het verzenden van een bericht aan te veel mensen te voorkomen. "
 "Denk er echter aan dat dit geen rekening houdt met e-maillijsten."
 
-#: configuredialog/configurecomposerpage.cpp:360
+#: configuredialog/configurecomposerpage.cpp:363
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
@@ -1242,19 +1242,19 @@ msgstr ""
 "Recente ingevoerde adressen herinneren en bied ze aan voor aanvullen van "
 "geadresseerden"
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Niet opslaan"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:378
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Maximum aantal onthouden recente adressen:"
 
-#: configuredialog/configurecomposerpage.cpp:379
+#: configuredialog/configurecomposerpage.cpp:382
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
@@ -1263,24 +1263,24 @@ msgstr ""
 "Het maximum aantal recent ingevoerde adressen die onthouden zullen worden "
 "voor aanvullen"
 
-#: configuredialog/configurecomposerpage.cpp:392
+#: configuredialog/configurecomposerpage.cpp:395
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Aanvullen instellen…"
 
-#: configuredialog/configurecomposerpage.cpp:401
+#: configuredialog/configurecomposerpage.cpp:404
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Automatisch opslaan"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "No autosave"
 msgstr "Niet automatisch opslaan"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:415
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
@@ -1288,18 +1288,30 @@ msgid_plural "%v minutes"
 msgstr[0] "%v minuut"
 msgstr[1] "%v minuten"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:417
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Sla het bericht automatisch op op dit ingestelde interval"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:431
+#, fuzzy, kde-format
+#| msgid "Composer"
+msgctxt "@title:group"
+msgid "Composer"
+msgstr "Opsteller"
+
+#: configuredialog/configurecomposerpage.cpp:435
+#, kde-format
+msgid "Activate quick text format toolbar"
+msgstr ""
+
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "&Onderwerpvoorvoegsel voor beantwoordde berichten"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:646
+#: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1309,130 +1321,130 @@ msgstr ""
 "De volgende voorvoegsels herkennen (dit zijn hoofdletterongevoelige "
 "reguliere expressies):"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "A&dd…"
 msgstr "&Toevoegen…"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Re&move"
 msgstr "Verwij&deren"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Mod&ify…"
 msgstr "W&ijzigen…"
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Nieuw antwoordvoorvoegsel invoeren:"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:655
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Wilt u de voorloop van het antwoord verwijderen?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Voorvoegsel voor beantwoorden:"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:668
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Onder&werpvoorvoegsel voor doorgestuurde berichten"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Verwijderen"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Add…"
 msgstr "Toevoegen…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Modify…"
 msgstr "Wijzigen…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Nieuw voorvoegsel voor doorgestuurde berichten invoeren:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Wilt u de voorloop van het doorsturen verwijderen?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:680
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Voorvoegsel voor doorgestuurde berichten:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:724
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "Aangepast message-id achtervoegsel gebr&uiken"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Aangepast message-&id achtervoegsel:"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:752
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definieer hier uw eigen mime-velden:"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:760
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Naam"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Waarde"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:769
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Nieu&w"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:773
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Verwij&deren"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:782
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Naam:"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:792
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Waarde:"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:932
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1440,19 +1452,19 @@ msgstr ""
 "'Content-Type' is een niet geautoriseerde tekenreeks. Deze header zal niet "
 "worden opgeslagen."
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:933
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Ongeldige header"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:974
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Detectie van ontbrekende bijlagen activere&n"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:980
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1460,34 +1472,34 @@ msgstr ""
 "Herken een van de volgende trefwoorden als een intentie om een bestand bij "
 "te voegen:"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Nieuw trefwoord invoeren:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:993
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Wilt u dit bijlagewoord verwijderen?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:994
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Bijlagewoord:"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:1001
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Maximale grootte van bijlage:"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:1010
 #, kde-format
 msgid "No limit"
 msgstr "Geen limiet"

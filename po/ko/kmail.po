@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-13 00:50+0000\n"
+"POT-Creation-Date: 2025-09-23 00:44+0000\n"
 "PO-Revision-Date: 2025-07-20 01:48+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1062,43 +1062,43 @@ msgstr "자동 고침"
 msgid "Auto Resize Image"
 msgstr "그림 크기 자동 조정"
 
-#: configuredialog/configurecomposerpage.cpp:130
+#: configuredialog/configurecomposerpage.cpp:131
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "서명"
 
-#: configuredialog/configurecomposerpage.cpp:135
+#: configuredialog/configurecomposerpage.cpp:136
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr "메시지 작성을 시작할 때 자동으로 설정된 서명을 추가함"
 
-#: configuredialog/configurecomposerpage.cpp:145
+#: configuredialog/configurecomposerpage.cpp:146
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "임의의 인용문 위에 서명 삽입"
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:157
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr "서명 줄 이전에 RFC 호환 서명 구분선(대시 두 개와 공백 한 개) 삽입"
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:168
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "답장할 때 서명 포함하지 않기"
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:180
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "형식"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:185
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1107,7 +1107,7 @@ msgstr ""
 "답장을 쓸 때 메시지 창에 선택한 텍스트가 있는 경우 (완전한 메시지 대신) 선택"
 "한 텍스트만 인용합니다."
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:195
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1117,17 +1117,17 @@ msgstr ""
 "답장을 쓸 때 원본 메시지의 줄이 자동 줄 바꿈을 통하여 줄이 바뀌었을 때에도 원"
 "본 메시지의 모든 줄 앞에 인용 부호를 추가합니다."
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "지정한 폭에서 자동 줄 바꿈 사용"
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:217
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "자동 줄 바꿈에 사용할 텍스트 폭 설정"
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:237
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1136,7 +1136,7 @@ msgstr ""
 "답장을 쓰거나 전달할 때 원래 메시지가수신된 형식을 기준으로 인용 부호를 추가"
 "하며,선택하지 않으면 일반 텍스트로 답장합니다."
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:249
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1145,47 +1145,47 @@ msgstr ""
 "HTML 마크업을 기반으로 일반 텍스트 메시지를 꾸밉니다. 지원하는 형식은 굵게, "
 "기울임꼴, 밑줄, 목록, 외부 참조입니다."
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "인라인"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgid "As Attachment"
 msgstr "첨부 파일로"
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:261
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "기본 전달 메시지 형식 설정"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:265
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "기본 전달 형식:"
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:283
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "받는 사람"
 
-#: configuredialog/configurecomposerpage.cpp:312
+#: configuredialog/configurecomposerpage.cpp:315
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "받는 사람이 너무 많을 때 알림"
 
-#: configuredialog/configurecomposerpage.cpp:321
+#: configuredialog/configurecomposerpage.cpp:324
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "받는 사람이 다음보다 많을 때 알림"
 
-#: configuredialog/configurecomposerpage.cpp:339
+#: configuredialog/configurecomposerpage.cpp:342
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1199,67 +1199,79 @@ msgstr ""
 "게 메시지를 보내는 것을 방지합니다. 분배 목록이나 메일링 리스트는 여기에서 제"
 "외됩니다."
 
-#: configuredialog/configurecomposerpage.cpp:360
+#: configuredialog/configurecomposerpage.cpp:363
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr "최근에 입력한 주소를 기억하고 수신자 자동 완성에 사용함"
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "저장하지 않음"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:378
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "최대 최근 주소:"
 
-#: configuredialog/configurecomposerpage.cpp:379
+#: configuredialog/configurecomposerpage.cpp:382
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr "자동 완성에 사용하도록 기억할 최근 입력한 주소의 최대 개수입니다"
 
-#: configuredialog/configurecomposerpage.cpp:392
+#: configuredialog/configurecomposerpage.cpp:395
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "완성 설정…"
 
-#: configuredialog/configurecomposerpage.cpp:401
+#: configuredialog/configurecomposerpage.cpp:404
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "자동 저장"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "No autosave"
 msgstr "자동으로 저장하지 않음"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:415
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
 msgstr[0] "%v분"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:417
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "지정한 시간마다 자동으로 메시지 저장"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:431
+#, fuzzy, kde-format
+#| msgid "Composer"
+msgctxt "@title:group"
+msgid "Composer"
+msgstr "작성기"
+
+#: configuredialog/configurecomposerpage.cpp:435
+#, kde-format
+msgid "Activate quick text format toolbar"
+msgstr ""
+
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "답장 제목 접두사(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:646
+#: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1268,182 +1280,182 @@ msgid ""
 msgstr ""
 "다음 제목 접두사를 찾습니다 (대소문자 구분 없는 정규 표현식으로 처리합니다):"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "A&dd…"
 msgstr "추가(&D)…"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Re&move"
 msgstr "삭제(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Mod&ify…"
 msgstr "수정(&I)…"
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "새 답장 접두사 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:655
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "답장 접두사를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:657
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "답장 제목 접두사:"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:668
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "전달 제목 접두사(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "삭제(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Add…"
 msgstr "추가…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Modify…"
 msgstr "수정…"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "새 전달 접두사 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "전달 접두사를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:680
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "전달 제목 접두사:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:724
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "사용자 정의 message-id 접미사 사용(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:740
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "사용자 정의 message-id 접미사(&I):"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:752
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "사용자 정의 MIME 헤더 필드:"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:760
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "이름"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "값"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:769
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "추가(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:773
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "삭제(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:782
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "이름(&N):"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:792
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "값(&V):"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:932
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "'Content-Type'은 허용된 문자열이 아닙니다. 이 헤더는 저장되지 않습니다."
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:933
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "잘못된 헤더"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:974
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "빠진 첨부 감지 사용(&N)"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:980
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "다음 단어가 들어 있으면 파일을 첨부하는 것으로 간주:"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Enter new key word:"
 msgstr "새 단어 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:993
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "선택한 첨부 파일 단어를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:994
 #, kde-format
 msgid "Attachment Word:"
 msgstr "첨부 파일 단어:"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:1001
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "최대 첨부 크기:"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:1010
 #, kde-format
 msgid "No limit"
 msgstr "무제한"

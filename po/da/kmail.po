@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-13 00:50+0000\n"
+"POT-Creation-Date: 2025-09-23 00:44+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -1158,13 +1158,13 @@ msgstr "Autokorrektur"
 msgid "Auto Resize Image"
 msgstr "Tilpas billeder automatisk"
 
-#: configuredialog/configurecomposerpage.cpp:130
+#: configuredialog/configurecomposerpage.cpp:131
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Signatur"
 
-#: configuredialog/configurecomposerpage.cpp:135
+#: configuredialog/configurecomposerpage.cpp:136
 #, fuzzy, kde-format
 #| msgid ""
 #| "Automatically insert the configured signature\n"
@@ -1176,12 +1176,12 @@ msgstr ""
 "Indsæt automatisk den konfigurerede signatur\n"
 "når du begynder at skrive et brev"
 
-#: configuredialog/configurecomposerpage.cpp:145
+#: configuredialog/configurecomposerpage.cpp:146
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Indsæt signaturen over evt. citeret tekst"
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:157
 #, fuzzy, kde-format
 #| msgid ""
 #| "Insert the RFC-compliant signature separator\n"
@@ -1193,18 +1193,18 @@ msgstr ""
 "Indsæt RFC-overholdende signaturseparator\n"
 "(to bindestreger og et mellem på en linje før signaturen"
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:168
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "Citér ikke nogen eksisterende signatur ved svar"
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:180
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Format"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:185
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, only quote the selected text\n"
@@ -1218,7 +1218,7 @@ msgstr ""
 "for hele brevet), hvis\n"
 "der er markeret tekst i brevvinduet når du svarer."
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:195
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, add quote signs in front of all lines of the quoted text,\n"
@@ -1233,17 +1233,17 @@ msgstr ""
 "selv når linjen blev oprettet ved at tilføje et ekstra linjeskift ifm.\n"
 "ordombrydning af teksten."
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Aktivér automatisk ordombrydning ved den angivne bredde"
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:217
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "Angiv tekstbredde til automatisk ordombrydning"
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:237
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying or forwarding, quote the message\n"
@@ -1257,7 +1257,7 @@ msgstr ""
 "i, når du svarer eller videresender.\n"
 "Hvis dette er afmarkeret, vil svaret være i klartekst som standard."
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:249
 #, fuzzy, kde-format
 #| msgid ""
 #| "Format the plain text part of a message from the HTML markup.\n"
@@ -1271,50 +1271,50 @@ msgstr ""
 "Fed, kursiv og understreget tekst, lister og eksterne referencer er "
 "understøttet."
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "Indlejret"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgid "As Attachment"
 msgstr "Som bilag"
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:261
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "Sæt standardformat på videresendte breve"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:265
 #, fuzzy, kde-format
 #| msgid "Default forwarding type:"
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Standardtype af videresendelse:"
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:283
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Modtagere"
 
-#: configuredialog/configurecomposerpage.cpp:312
+#: configuredialog/configurecomposerpage.cpp:315
 #, fuzzy, kde-format
 #| msgid "Warn if too many recipients are specified"
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Advar hvis for mange modtagere er angivet"
 
-#: configuredialog/configurecomposerpage.cpp:321
+#: configuredialog/configurecomposerpage.cpp:324
 #, fuzzy, kde-format
 #| msgid "Set the maximum number of recipients for the warning"
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Angiv det maksimale antal modtagere af denne advarsel"
 
-#: configuredialog/configurecomposerpage.cpp:339
+#: configuredialog/configurecomposerpage.cpp:342
 #, fuzzy, kde-format
 #| msgid ""
 #| "Only allow this many recipients to be specified for the message.\n"
@@ -1337,7 +1337,7 @@ msgstr ""
 "undgå at sende et brev til for mange mennesker ved et uheld. Bemærk dog\n"
 " at den ikke tager højde for distributionslister eller mailinglister."
 
-#: configuredialog/configurecomposerpage.cpp:360
+#: configuredialog/configurecomposerpage.cpp:363
 #, fuzzy, kde-format
 #| msgid ""
 #| "Remember recent addresses entered,\n"
@@ -1348,20 +1348,20 @@ msgstr ""
 "Husk nylige adresser som er blevet angivet,\n"
 "og tilbyd dem som modtagerfuldførelse"
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Gem ikke"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:378
 #, fuzzy, kde-format
 #| msgid "Maximum recent addresses retained:"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Maks. antal nylige adresser der huskes:"
 
-#: configuredialog/configurecomposerpage.cpp:379
+#: configuredialog/configurecomposerpage.cpp:382
 #, fuzzy, kde-format
 #| msgid ""
 #| "The maximum number of recently entered addresses that will\n"
@@ -1373,25 +1373,25 @@ msgstr ""
 "Det maksimale antal nyligt angivne adresser som skal\n"
 "huskes til fuldførelse"
 
-#: configuredialog/configurecomposerpage.cpp:392
+#: configuredialog/configurecomposerpage.cpp:395
 #, fuzzy, kde-format
 #| msgid "Configure Completion..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Indstil fuldførelse..."
 
-#: configuredialog/configurecomposerpage.cpp:401
+#: configuredialog/configurecomposerpage.cpp:404
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Autogemning"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "No autosave"
 msgstr "Gem ikke automatisk"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:415
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1402,18 +1402,30 @@ msgid_plural "%v minutes"
 msgstr[0] " minut"
 msgstr[1] " minutter"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:417
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Gem automatisk brevet med det angivne interval"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:431
+#, fuzzy, kde-format
+#| msgid "Composer"
+msgctxt "@title:group"
+msgid "Composer"
+msgstr "Brevskriver"
+
+#: configuredialog/configurecomposerpage.cpp:435
+#, kde-format
+msgid "Activate quick text format toolbar"
+msgstr ""
+
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Emnepræfikser for sv&ar"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:646
+#: configuredialog/configurecomposerpage.cpp:672
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1426,141 +1438,141 @@ msgstr ""
 "Genkend en vilkårlig sekvens af følgende præfikser\n"
 "(indgange er ikke-versalfølsomme regulære udtryk):"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Re&move"
 msgstr "&Fjern"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Ændr..."
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Indtast nyt svarpræfiks:"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:655
 #, fuzzy, kde-format
 #| msgid "Do you want to remove selected item?"
 msgid "Do you want to remove reply prefix?"
 msgstr "Vil du fjerne det valgte element?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Emnepræfikser for sv&ar"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:668
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "&Videresend emnepræfikser"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Fjern"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Ændr..."
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Indtast nyt videresend-præfiks:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:679
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "Vil du fjerne mærket \"%1\"?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:680
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "&Videresend emnepræfikser"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:724
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Brug tilpasset brev-id-endelse:"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:740
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Tilpasset brev-&id-endelse:"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Angiv brugervalgte mime-header-felter:"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:760
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Navn"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Værdi"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:769
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "N&y"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:773
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Fjern"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:782
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Navn:"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:792
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Værdi:"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:932
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1568,21 +1580,21 @@ msgstr ""
 "\"Content-Type\" er ikke en autoriseret streng. Denne header vil ikke blive "
 "gemt."
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:933
 #, fuzzy, kde-format
 #| msgid "Invalid header"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Ugyldig header"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:974
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&Aktivér detektion af manglende bilag"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1590,37 +1602,37 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Genkend hvert af følgende nøgleord som 'Jeg vil vedlægge en fil':"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Indtast nyt nøgleord:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "Vil du fjerne kontoen: \"%1\"?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:994
 #, fuzzy, kde-format
 #| msgid "Attachment:"
 msgid "Attachment Word:"
 msgstr "Bilag:"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:1001
 #, fuzzy, kde-format
 #| msgid "Maximum Attachment Size:"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Maksimal størrelse på bilag:"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:1010
 #, kde-format
 msgid "No limit"
 msgstr "Ingen grænse"

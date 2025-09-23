@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-13 00:50+0000\n"
+"POT-Creation-Date: 2025-09-23 00:44+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -1144,13 +1144,13 @@ msgstr "Automatsko ispravljanje"
 msgid "Auto Resize Image"
 msgstr "Automatski raširi sliku"
 
-#: configuredialog/configurecomposerpage.cpp:130
+#: configuredialog/configurecomposerpage.cpp:131
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Potpis"
 
-#: configuredialog/configurecomposerpage.cpp:135
+#: configuredialog/configurecomposerpage.cpp:136
 #, fuzzy, kde-format
 #| msgid ""
 #| "Automatically insert the configured signature\n"
@@ -1160,12 +1160,12 @@ msgid ""
 "message"
 msgstr "Automatski umetni podešen potpis kada počinješ pisanje poruke"
 
-#: configuredialog/configurecomposerpage.cpp:145
+#: configuredialog/configurecomposerpage.cpp:146
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Ubaci potpis iznad bilo kojeg citiranog teksta"
 
-#: configuredialog/configurecomposerpage.cpp:156
+#: configuredialog/configurecomposerpage.cpp:157
 #, fuzzy, kde-format
 #| msgid ""
 #| "Insert the RFC-compliant signature separator\n"
@@ -1177,18 +1177,18 @@ msgstr ""
 "Umetni RFC-usaglašen  separator potpisa (dvije crtice i razmak u liniji) "
 "prije potpisa"
 
-#: configuredialog/configurecomposerpage.cpp:167
+#: configuredialog/configurecomposerpage.cpp:168
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "Kada odgodovaram, ne citiraj postojeće potpise"
 
-#: configuredialog/configurecomposerpage.cpp:179
+#: configuredialog/configurecomposerpage.cpp:180
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Format"
 
-#: configuredialog/configurecomposerpage.cpp:184
+#: configuredialog/configurecomposerpage.cpp:185
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, only quote the selected text\n"
@@ -1201,7 +1201,7 @@ msgstr ""
 "Kada odgovaram,samo citiraj izabrani tekst (umjesto cijele poruke) teskt je "
 "izabran u prozoru poruke"
 
-#: configuredialog/configurecomposerpage.cpp:194
+#: configuredialog/configurecomposerpage.cpp:195
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying, add quote signs in front of all lines of the quoted text,\n"
@@ -1217,17 +1217,17 @@ msgstr ""
 "čak i kada je red kreiran dodavanjem dodadnog kraja reda  \n"
 "prilikom formiranja izraza u tekstu."
 
-#: configuredialog/configurecomposerpage.cpp:205
+#: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Omogući automatsko formiranje izraza određenih sa"
 
-#: configuredialog/configurecomposerpage.cpp:216
+#: configuredialog/configurecomposerpage.cpp:217
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "Podesi širinu teksta za automatsko formiranje izraza"
 
-#: configuredialog/configurecomposerpage.cpp:236
+#: configuredialog/configurecomposerpage.cpp:237
 #, fuzzy, kde-format
 #| msgid ""
 #| "When replying or forwarding, quote the message\n"
@@ -1242,7 +1242,7 @@ msgstr ""
 "Iko nije označeno,odgovor će biti kao običan tekst prema zadanim "
 "podešavanjima."
 
-#: configuredialog/configurecomposerpage.cpp:248
+#: configuredialog/configurecomposerpage.cpp:249
 #, fuzzy, kde-format
 #| msgid ""
 #| "Format the plain text part of a message from the HTML markup.\n"
@@ -1255,50 +1255,50 @@ msgstr ""
 "Formatiraj jednostavni dio teksa poruke od HTML oznake.\n"
 "Podebljano,italik, i podvučeni tekst,liste,i eksterne oznake su podržane."
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgctxt "@item:inlistbox Inline mail forwarding"
 msgid "Inline"
 msgstr "Utkano"
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
 msgid "As Attachment"
 msgstr "Kao prilog"
 
-#: configuredialog/configurecomposerpage.cpp:260
+#: configuredialog/configurecomposerpage.cpp:261
 #, kde-format
 msgid "Set the default forwarded message format"
 msgstr "Podesi zadani format proslijeđene poruke"
 
-#: configuredialog/configurecomposerpage.cpp:264
+#: configuredialog/configurecomposerpage.cpp:265
 #, fuzzy, kde-format
 #| msgid "Default forwarding type:"
 msgctxt "@label:textbox"
 msgid "Default forwarding type:"
 msgstr "Tip zadanog proslijeđivanja:"
 
-#: configuredialog/configurecomposerpage.cpp:282
+#: configuredialog/configurecomposerpage.cpp:283
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Primaoci"
 
-#: configuredialog/configurecomposerpage.cpp:312
+#: configuredialog/configurecomposerpage.cpp:315
 #, fuzzy, kde-format
 #| msgid "Warn if too many recipients are specified"
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
 msgstr "Upozori ako je previše primaoca određeno"
 
-#: configuredialog/configurecomposerpage.cpp:321
+#: configuredialog/configurecomposerpage.cpp:324
 #, fuzzy, kde-format
 #| msgid "Set the maximum number of recipients for the warning"
 msgctxt "@info:tooltip"
 msgid "Set the maximum number of recipients for the warning"
 msgstr "Podesi maksimalni broj primaoca za upozorenje"
 
-#: configuredialog/configurecomposerpage.cpp:339
+#: configuredialog/configurecomposerpage.cpp:342
 #, fuzzy, kde-format
 #| msgid ""
 #| "Only allow this many recipients to be specified for the message.\n"
@@ -1321,7 +1321,7 @@ msgstr ""
 "Primijetite, ipak, da to ne uzima u obzir distribuciju listama\n"
 "ili mailing liste."
 
-#: configuredialog/configurecomposerpage.cpp:360
+#: configuredialog/configurecomposerpage.cpp:363
 #, fuzzy, kde-format
 #| msgid ""
 #| "Remember recent addresses entered,\n"
@@ -1332,20 +1332,20 @@ msgstr ""
 "Zapamti upravo unesene adrese,\n"
 "i ponudi ih za popunjavanje primatelja"
 
-#: configuredialog/configurecomposerpage.cpp:372
+#: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Ne spašavaj"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:378
 #, fuzzy, kde-format
 #| msgid "Maximum recent addresses retained:"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Maksimalno nedavnih adresa zadržano:"
 
-#: configuredialog/configurecomposerpage.cpp:379
+#: configuredialog/configurecomposerpage.cpp:382
 #, fuzzy, kde-format
 #| msgid ""
 #| "The maximum number of recently entered addresses that will\n"
@@ -1357,26 +1357,26 @@ msgstr ""
 "Maksimalan broj nedavno unešenih adresa koje će biti zapamćene za "
 "popunjavanje"
 
-#: configuredialog/configurecomposerpage.cpp:392
+#: configuredialog/configurecomposerpage.cpp:395
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Uredi redoslijed dovršavanja..."
 
-#: configuredialog/configurecomposerpage.cpp:401
+#: configuredialog/configurecomposerpage.cpp:404
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Nema auto-snimanja"
 
-#: configuredialog/configurecomposerpage.cpp:411
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgid "No autosave"
 msgstr "Nema auto-snimanja"
 
-#: configuredialog/configurecomposerpage.cpp:412
+#: configuredialog/configurecomposerpage.cpp:415
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1388,18 +1388,30 @@ msgstr[0] " minuta"
 msgstr[1] " minute"
 msgstr[2] " minuta"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:417
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Automatski spasi poruku u određenom intervalu"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:431
+#, fuzzy, kde-format
+#| msgid "Composer"
+msgctxt "@title:group"
+msgid "Composer"
+msgstr "Sastavljač"
+
+#: configuredialog/configurecomposerpage.cpp:435
+#, kde-format
+msgid "Activate quick text format toolbar"
+msgstr ""
+
+#: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Prefiks za temu &odgovora"
 
-#: configuredialog/configurecomposerpage.cpp:625
-#: configuredialog/configurecomposerpage.cpp:651
+#: configuredialog/configurecomposerpage.cpp:646
+#: configuredialog/configurecomposerpage.cpp:672
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1412,161 +1424,161 @@ msgstr ""
 "Prepoznaj bilo koji niz sljedećih prefiksa\n"
 "(unesite regularne izraze bez razlikovanja velikih i malih slova):"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Re&move"
 msgstr "&Ukloni"
 
-#: configuredialog/configurecomposerpage.cpp:633
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Izmijeni..."
 
-#: configuredialog/configurecomposerpage.cpp:633
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Unesite novi prefiks odgovora:"
 
-#: configuredialog/configurecomposerpage.cpp:634
+#: configuredialog/configurecomposerpage.cpp:655
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: configuredialog/configurecomposerpage.cpp:636
+#: configuredialog/configurecomposerpage.cpp:657
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Prefiks za temu &odgovora"
 
-#: configuredialog/configurecomposerpage.cpp:647
+#: configuredialog/configurecomposerpage.cpp:668
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Prefiksi &teme proslijeđivanja"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:657 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Ukloni"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Izmijeni..."
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Unesite novi prefiks proslijeđivanja:"
 
-#: configuredialog/configurecomposerpage.cpp:658
+#: configuredialog/configurecomposerpage.cpp:679
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: configuredialog/configurecomposerpage.cpp:659
+#: configuredialog/configurecomposerpage.cpp:680
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Prefiksi &teme proslijeđivanja"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:724
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Koristi vlastiti message-id sufiks"
 
-#: configuredialog/configurecomposerpage.cpp:719
+#: configuredialog/configurecomposerpage.cpp:740
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Vlastiti message-&id sufiks:"
 
-#: configuredialog/configurecomposerpage.cpp:731
+#: configuredialog/configurecomposerpage.cpp:752
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definišite vlastita polja mime zaglavlja:"
 
-#: configuredialog/configurecomposerpage.cpp:739
+#: configuredialog/configurecomposerpage.cpp:760
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Naziv"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:761
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Vrijednost"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:769
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "No&vo"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:773
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Ukloni"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:782
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Naziv:"
 
-#: configuredialog/configurecomposerpage.cpp:771
+#: configuredialog/configurecomposerpage.cpp:792
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Vrijednost:"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:932
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:912
+#: configuredialog/configurecomposerpage.cpp:933
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Pogrešna e-mail adresa"
 
-#: configuredialog/configurecomposerpage.cpp:953
+#: configuredialog/configurecomposerpage.cpp:974
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&Uključi prepoznavanje nedostajućih priloga"
 
-#: configuredialog/configurecomposerpage.cpp:959
+#: configuredialog/configurecomposerpage.cpp:980
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1576,25 +1588,25 @@ msgstr ""
 "Prepoznaj bilo koju od sljedećih ključnih riječi kao pokušaj dodavanja "
 "priloga:"
 
-#: configuredialog/configurecomposerpage.cpp:970
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Unesite novu ključnu riječ:"
 
-#: configuredialog/configurecomposerpage.cpp:972
+#: configuredialog/configurecomposerpage.cpp:993
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "Želite li ukloniti nalog '%1'?"
 
-#: configuredialog/configurecomposerpage.cpp:973
+#: configuredialog/configurecomposerpage.cpp:994
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "Prilozi"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:1001
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
@@ -1602,13 +1614,13 @@ msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Prilozi"
 
-#: configuredialog/configurecomposerpage.cpp:987
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:989
+#: configuredialog/configurecomposerpage.cpp:1010
 #, kde-format
 msgid "No limit"
 msgstr "Bez ograničenja"
