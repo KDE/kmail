@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-09-24 00:44+0000\n"
 "PO-Revision-Date: 2024-07-06 21:39+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -97,17 +97,17 @@ msgstr "சின்னத்தை தேர்ந்தெடு..."
 msgid "Icon:"
 msgstr "சின்னம்:"
 
-#: unifiedmailboxmanager.cpp:296
+#: unifiedmailboxmanager.cpp:298
 #, kde-format
 msgid "Inbox"
 msgstr "உள்வந்தவை"
 
-#: unifiedmailboxmanager.cpp:303
+#: unifiedmailboxmanager.cpp:305
 #, kde-format
 msgid "Sent"
 msgstr "அனுப்பியவை"
 
-#: unifiedmailboxmanager.cpp:310
+#: unifiedmailboxmanager.cpp:312
 #, kde-format
 msgid "Drafts"
 msgstr "வரைவுகள்"

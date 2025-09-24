@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-09-24 00:44+0000\n"
 "PO-Revision-Date: 2025-08-21 14:16+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -95,17 +95,17 @@ msgstr "Pictogram kiezen…"
 msgid "Icon:"
 msgstr "Pictogram:"
 
-#: unifiedmailboxmanager.cpp:296
+#: unifiedmailboxmanager.cpp:298
 #, kde-format
 msgid "Inbox"
 msgstr "Postvak in"
 
-#: unifiedmailboxmanager.cpp:303
+#: unifiedmailboxmanager.cpp:305
 #, kde-format
 msgid "Sent"
 msgstr "Verzonden"
 
-#: unifiedmailboxmanager.cpp:310
+#: unifiedmailboxmanager.cpp:312
 #, kde-format
 msgid "Drafts"
 msgstr "Concepten"

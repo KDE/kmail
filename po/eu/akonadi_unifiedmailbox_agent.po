@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-09-24 00:44+0000\n"
 "PO-Revision-Date: 2025-08-20 15:18+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -98,17 +98,17 @@ msgstr "Aukeratu ikonoa…"
 msgid "Icon:"
 msgstr "Ikonoa:"
 
-#: unifiedmailboxmanager.cpp:296
+#: unifiedmailboxmanager.cpp:298
 #, kde-format
 msgid "Inbox"
 msgstr "Sarrera ontzia"
 
-#: unifiedmailboxmanager.cpp:303
+#: unifiedmailboxmanager.cpp:305
 #, kde-format
 msgid "Sent"
 msgstr "Bidalita"
 
-#: unifiedmailboxmanager.cpp:310
+#: unifiedmailboxmanager.cpp:312
 #, kde-format
 msgid "Drafts"
 msgstr "Zirriborroak"

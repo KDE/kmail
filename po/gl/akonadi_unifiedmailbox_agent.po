@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-09-24 00:44+0000\n"
 "PO-Revision-Date: 2024-07-03 16:55+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -97,17 +97,17 @@ msgstr "Escoller unha icona…"
 msgid "Icon:"
 msgstr "Icona:"
 
-#: unifiedmailboxmanager.cpp:296
+#: unifiedmailboxmanager.cpp:298
 #, kde-format
 msgid "Inbox"
 msgstr "Entrada"
 
-#: unifiedmailboxmanager.cpp:303
+#: unifiedmailboxmanager.cpp:305
 #, kde-format
 msgid "Sent"
 msgstr "Enviada"
 
-#: unifiedmailboxmanager.cpp:310
+#: unifiedmailboxmanager.cpp:312
 #, kde-format
 msgid "Drafts"
 msgstr "Borradores"

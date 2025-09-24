@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-23 00:44+0000\n"
-"PO-Revision-Date: 2025-08-05 05:42+0200\n"
+"PO-Revision-Date: 2025-09-23 03:55+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1263,8 +1263,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "შეტყობინების ავტომატური შენახვა მითითებულ ინტერვალში ერთხელ"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "კომპოზიტორი"
@@ -1272,7 +1271,7 @@ msgstr "კომპოზიტორი"
 #: configuredialog/configurecomposerpage.cpp:435
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "სწრაფი ტექსტის დაფორმატების პანელის გააქტიურება"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
