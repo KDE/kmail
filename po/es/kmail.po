@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-09 03:30+0000\n"
-"PO-Revision-Date: 2025-09-04 20:27+0200\n"
+"PO-Revision-Date: 2025-09-23 14:21+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -230,8 +230,7 @@ msgstr "Corrección de la navegación con el teclado en la búsqueda rápida"
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
 msgstr ""
-"Corrección de arrastrar y soltar desde la libreta de direcciones al "
-"compositor"
+"Corrección de arrastrar y soltar desde la libreta de direcciones al editor"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
@@ -263,7 +262,7 @@ msgstr "Pruebas de ergonomía y mejoras"
 
 #: aboutdata.cpp:165
 msgid "Patch composer configuration"
-msgstr "Parche para la configuración del compositor"
+msgstr "Configuración del editor de parches"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -1844,7 +1843,7 @@ msgstr "As&unto:"
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
-msgstr "Compositor"
+msgstr "Editor"
 
 #: editor/kmcomposerwin.cpp:1245 editor/kmcomposerwin.cpp:1279
 #, kde-format
