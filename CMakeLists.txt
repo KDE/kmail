@@ -7,7 +7,7 @@ project(kmail VERSION ${PIM_VERSION})
 
 include(CheckIncludeFiles)
 
-set(KF_MIN_VERSION "6.16.0")
+set(KF_MIN_VERSION "6.17.0")
 set(QT_REQUIRED_VERSION "6.8.0")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
