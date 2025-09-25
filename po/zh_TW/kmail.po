@@ -18,14 +18,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-23 00:44+0000\n"
-"PO-Revision-Date: 2025-05-17 10:01+0900\n"
+"PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.11.70\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #, kde-format
@@ -346,12 +346,10 @@ msgid "Mailing List"
 msgstr "郵件論壇"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "資料夾存放郵件論壇的信件"
+msgstr "資料夾包含單一郵件論壇"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -1113,7 +1111,7 @@ msgid ""
 "even when the line was created by adding an additional line break while word-"
 "wrapping the text."
 msgstr ""
-"回覆時，在所有引言文字的前面加上引言符耗，即使文字因過長而折到新行時也一樣。"
+"回覆時，在所有引言文字的前面加上引言符號，即使文字因過長而折到新行時也一樣。"
 
 #: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
@@ -1251,8 +1249,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "在此指定間隔時間自動儲存信件"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "信件編輯器"
@@ -4385,11 +4382,10 @@ msgid "Unable to start import wizard"
 msgstr "無法啟動匯入精靈"
 
 #: kmmainwidget.cpp:1390
-#, fuzzy, kde-format
-#| msgid "(no templates)"
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "（沒有樣本）"
+msgstr "(載入樣本中…)"
 
 #: kmmainwidget.cpp:1415
 #, kde-format
@@ -5168,11 +5164,10 @@ msgid "&Add Account…"
 msgstr "新增帳號(&A)…"
 
 #: kmmainwidget.cpp:3470
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "下一個是什麼？"
+msgstr "新功能"
 
 #: kmmainwidget.cpp:3477
 #, kde-format
@@ -5794,10 +5789,9 @@ msgid "Kontact Summary View"
 msgstr "Kontact 摘要檢視"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003-2024 Kontact 開發團隊"
+msgstr "© 2003-2025 Kontact 開發團隊"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -7803,10 +7797,9 @@ msgid "Allow to export text in autogenerate editor plugins."
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Add a new identity"
+#, kde-format
 msgid "Add new whatsnew widget."
-msgstr "新增身份"
+msgstr "新增新功能元件。"
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format
