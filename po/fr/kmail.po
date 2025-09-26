@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-23 00:44+0000\n"
-"PO-Revision-Date: 2025-08-06 09:15+0200\n"
+"PO-Revision-Date: 2025-09-24 14:05+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.07.90\n"
+"X-Generator: Lokalize 25.08.1\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -1315,8 +1315,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "Automatiquement enregistrer le message à l'intervalle spécifié"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Éditeur"
@@ -1324,7 +1323,7 @@ msgstr "Éditeur"
 #: configuredialog/configurecomposerpage.cpp:435
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "Activer la barre d'outils de formatage rapide de texte"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
