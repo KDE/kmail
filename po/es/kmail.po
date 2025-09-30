@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-23 00:44+0000\n"
-"PO-Revision-Date: 2025-09-23 14:21+0100\n"
+"PO-Revision-Date: 2025-09-29 19:33+0200\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -1131,12 +1131,12 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
-msgstr "Activar el ajuste automático de palabras al ancho especificado"
+msgstr "Activar el ajuste de línea automático en la columna indicada"
 
 #: configuredialog/configurecomposerpage.cpp:217
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
-msgstr "Establecer la anchura de texto para el ajuste automático de palabras"
+msgstr "Definir la anchura del texto para el ajuste de línea automático"
 
 #: configuredialog/configurecomposerpage.cpp:237
 #, kde-format

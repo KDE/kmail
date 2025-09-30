@@ -1245,8 +1245,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "按指定的时间间隔自动保存消息"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "撰写器"
