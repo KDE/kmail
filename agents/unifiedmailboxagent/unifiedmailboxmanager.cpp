@@ -36,7 +36,7 @@ namespace
 class ReplayNextOnExit
 {
 public:
-    ReplayNextOnExit(Akonadi::ChangeRecorder &recorder)
+    explicit ReplayNextOnExit(Akonadi::ChangeRecorder &recorder)
         : mRecorder(recorder)
     {
     }

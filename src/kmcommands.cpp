@@ -292,7 +292,6 @@ void KMCommand::transferSelectedMsgs()
     mCountMsgs = 0;
     mRetrievedMsgs.clear();
     mCountMsgs = mMsgList.count();
-    uint totalSize = 0;
     // the QProgressDialog for the user-feedback. Only enable it if it's needed.
     // For some commands like KMSetStatusCommand it's not needed. Note, that
     // for some reason the QProgressDialog eats the MouseReleaseEvent (if a
@@ -338,6 +337,8 @@ void KMCommand::transferSelectedMsgs()
         // wait for the transfer and tell the progressBar the necessary steps
         if (mProgressDialog.data()) {
             connect(mProgressDialog.data(), &QProgressDialog::canceled, this, &KMCommand::slotTransferCancelled);
+            constexpr uint totalSize = 0;
+
             mProgressDialog.data()->setMaximum(totalSize);
         }
     }
@@ -1031,7 +1032,7 @@ KMCommand::Result KMRedirectCommand::execute()
 
     QScopedPointer<MailCommon::RedirectDialog> dlg(new MailCommon::RedirectDialog(sendMode, parentWidget()));
     dlg->setObjectName("redirect"_L1);
-    if (dlg->exec() == QDialog::Rejected || !dlg) {
+    if (dlg->exec() == QDialog::Rejected) {
         return Failed;
     }
     if (!TransportManager::self()->showTransportCreationDialog(parentWidget(), TransportManager::IfNoTransportExists)) {

@@ -125,7 +125,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
         Q_UNUSED(pos);
         const auto mboxSelected = view->selectionModel()->selectedIndexes();
         QMenu menu(this);
-        QAction *addAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18nc("@action", "Add"));
+        const QAction *addAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18nc("@action", "Add"));
         QAction *removeAction = nullptr;
         QAction *editAction = nullptr;
         if (!mboxSelected.isEmpty()) {
@@ -133,7 +133,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
             menu.addSeparator();
             removeAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18nc("@action", "Remove"));
         }
-        QAction *result = menu.exec(QCursor::pos());
+        const QAction *result = menu.exec(QCursor::pos());
         if (result) {
             if (result == addAction) {
                 addMailBox();

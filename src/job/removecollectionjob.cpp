@@ -113,8 +113,8 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
             Q_EMIT clearCurrentFolder();
         }
 
-        auto job = new Akonadi::CollectionDeleteJob(col);
-        connect(job, &KJob::result, this, &RemoveCollectionJob::slotDeletionCollectionResult);
+        auto collectionDeletejob = new Akonadi::CollectionDeleteJob(col);
+        connect(collectionDeletejob, &KJob::result, this, &RemoveCollectionJob::slotDeletionCollectionResult);
     } else {
         deleteLater();
     }
