@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-23 00:44+0000\n"
+"POT-Creation-Date: 2025-10-01 00:46+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -3222,7 +3222,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Нова порака"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4638,14 +4638,14 @@ msgstr "&Бипни"
 msgid "Main Toolbar"
 msgstr "Алатник за HTML"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:301
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Ве молам почекајте"
 
-#: kmcommands.cpp:305 kmcommands.cpp:376
+#: kmcommands.cpp:304 kmcommands.cpp:377
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -4653,76 +4653,76 @@ msgstr[0] "Почекајте додека се пренесува %1 порак
 msgstr[1] "Почекајте додека се пренесуваат %1 пораки"
 msgstr[2] "Почекајте додека се пренесуваат %1 пораки"
 
-#: kmcommands.cpp:524
+#: kmcommands.cpp:525
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Зачувај во датотека"
 
-#: kmcommands.cpp:711
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Отворете порака"
 
-#: kmcommands.cpp:713
+#: kmcommands.cpp:714
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Порака"
 
-#: kmcommands.cpp:742
+#: kmcommands.cpp:743
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Датотеката не содржи порака."
 
-#: kmcommands.cpp:813
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Датотеката содржи повеќе пораки. Само првата порака е прикажана."
 
-#: kmcommands.cpp:924
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "&Испраќање"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:930
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1316
+#: kmcommands.cpp:1317
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Бришење на пораки"
 
-#: kmcommands.cpp:1326
+#: kmcommands.cpp:1327
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Ја преместувам пораката %3 од %2 од %1."
 
-#: kmcommands.cpp:1534 kmcommands.cpp:1665
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Преместување на пораки"
 
-#: kmcommands.cpp:1534 kmcommands.cpp:1675
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Бришење на пораки"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

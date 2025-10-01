@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-23 00:44+0000\n"
+"POT-Creation-Date: 2025-10-01 00:46+0000\n"
 "PO-Revision-Date: 2014-02-08 00:17+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosanski <bs@li.org>\n"
@@ -3156,7 +3156,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Postavi novu poruku"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4523,14 +4523,14 @@ msgstr "&Pomoć"
 msgid "Main Toolbar"
 msgstr "Glavna alatna traka"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:301
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Molim sačekajte"
 
-#: kmcommands.cpp:305 kmcommands.cpp:376
+#: kmcommands.cpp:304 kmcommands.cpp:377
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -4538,37 +4538,37 @@ msgstr[0] "Molim sačekajte dok se prenosi %1 poruka"
 msgstr[1] "Molim sačekajte dok se prenose %1 poruke"
 msgstr[2] "Molim sačekajte dok se prenosi %1 poruka"
 
-#: kmcommands.cpp:524
+#: kmcommands.cpp:525
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Snimi u datoteku"
 
-#: kmcommands.cpp:711
+#: kmcommands.cpp:712
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "&Sljedeća poruka"
 
-#: kmcommands.cpp:713
+#: kmcommands.cpp:714
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "Poru&ka"
 
-#: kmcommands.cpp:742
+#: kmcommands.cpp:743
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Datoteka ne sadrži poruku."
 
-#: kmcommands.cpp:813
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Datoteka sadrži više poruka. Prikazana je samo prva poruka."
 
-#: kmcommands.cpp:924
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4577,41 +4577,41 @@ msgstr ""
 "Da li želite da proslijedite odabrane poruke kao dodatke u jednoj poruci "
 "(kao MIME zbirni dokument) ili kao posebne poruke?"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, fuzzy, kde-format
 #| msgid "Send As Digest"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Pošalji kao zbirni dokument"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:930
 #, fuzzy, kde-format
 #| msgid "Send Individually"
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Pošalji posebno"
 
-#: kmcommands.cpp:1316
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtriram poruke"
 
-#: kmcommands.cpp:1326
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtriram poruku %1 od %2"
 
-#: kmcommands.cpp:1534 kmcommands.cpp:1665
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Premještanje poruka nije uspjelo."
 
-#: kmcommands.cpp:1534 kmcommands.cpp:1675
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Obriši poruke"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "Select Contact"
 msgctxt "@info:progress"

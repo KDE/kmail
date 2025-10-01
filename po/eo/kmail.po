@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-09-23 00:44+0000\n"
+"POT-Creation-Date: 2025-10-01 00:46+0000\n"
 "PO-Revision-Date: 2025-03-22 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -2962,7 +2962,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Remalfermi Fermitan Vidilon"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1921
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4205,47 +4205,47 @@ msgstr "&Helpo"
 msgid "Main Toolbar"
 msgstr "Ĉefa Ilobreto"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:301
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Bonvolu atendi"
 
-#: kmcommands.cpp:305 kmcommands.cpp:376
+#: kmcommands.cpp:304 kmcommands.cpp:377
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Bonvolu atendi dum kiam la mesaĝo estas transigita"
 msgstr[1] "Bonvolu atendi dum kiam la %1 mesaĝoj estas transigitaj"
 
-#: kmcommands.cpp:524
+#: kmcommands.cpp:525
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Konservi al Dosiero"
 
-#: kmcommands.cpp:711
+#: kmcommands.cpp:712
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Malfermi Mesaĝon"
 
-#: kmcommands.cpp:713
+#: kmcommands.cpp:714
 #, kde-format
 msgid "Message"
 msgstr "Mesaĝo"
 
-#: kmcommands.cpp:742
+#: kmcommands.cpp:743
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "La dosiero ne enhavas mesaĝon."
 
-#: kmcommands.cpp:813
+#: kmcommands.cpp:814
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "La dosiero enhavas kelkajn mesaĝojn. Nur la unua estas montrata."
 
-#: kmcommands.cpp:924
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4254,39 +4254,39 @@ msgstr ""
 "Ĉu vi volas plusendi la elektitajn mesaĝojn kiel kunsendaĵojn en unu mesaĝo "
 "(kiel MIME-digest) aŭ kiel individuajn mesaĝojn?"
 
-#: kmcommands.cpp:928
+#: kmcommands.cpp:929
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Sendi Kiel Digesto"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:930
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Sendu Individue"
 
-#: kmcommands.cpp:1316
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrante mesaĝojn"
 
-#: kmcommands.cpp:1326
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrante mesaĝon %1 el %2"
 
-#: kmcommands.cpp:1534 kmcommands.cpp:1665
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Movante mesaĝojn"
 
-#: kmcommands.cpp:1534 kmcommands.cpp:1675
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Forigante mesaĝojn"
 
-#: kmcommands.cpp:1817
+#: kmcommands.cpp:1818
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
