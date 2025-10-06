@@ -221,7 +221,6 @@
    <Separator/>
    <Action name="notification_history"/>
    <Separator/>
-   <Separator/>
    <ActionList name="kmail_plugins_tools"/>
   </Menu>
   <Menu noMerge="1" name="settings">
