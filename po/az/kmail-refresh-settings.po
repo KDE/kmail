@@ -1,21 +1,21 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# Kheyyam Gojayev <xxmn77@gmail.com>, 2021, 2022, 2023.
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2025 Kheyyam Gojayev <xxmn77@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-05-19 00:43+0000\n"
-"PO-Revision-Date: 2023-02-18 17:18+0400\n"
-"Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
+"PO-Revision-Date: 2025-10-06 01:53+0400\n"
+"Last-Translator: linux <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.2\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -33,14 +33,12 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Ayarların təzələnməsi üçün KMail köməkçisi"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "© 2019-2025 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2023 Laurent Montel <montel@kde.org>"
+msgstr "© 2019-2025 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -72,8 +70,7 @@ msgid "Finish"
 msgstr "Son"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Təmizləmək"
@@ -104,8 +101,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "\"%1\" ayar faylındakı Dialoqun ölçüsünü silmək: Hazırdır"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
-msgstr "Bunu istifadə etmədən öncə Kmail/Kontact tətbiqini bağlayın."
+msgstr "istifadə etmədən öncə KMail və ya Kontact tətbiqini bağlayın."

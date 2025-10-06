@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-01 00:46+0000\n"
-"PO-Revision-Date: 2025-08-20 21:38+0400\n"
+"PO-Revision-Date: 2025-10-05 10:30+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1263,8 +1263,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "احفظ الرّسالة آليًّا كلّ س دقيقة"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "المؤلّف"
@@ -1272,7 +1271,7 @@ msgstr "المؤلّف"
 #: configuredialog/configurecomposerpage.cpp:435
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "نشّط شريط أدوات تنسيق النص السريع"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
