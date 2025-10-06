@@ -3079,6 +3079,16 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("followup_reminder_messages"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureFollowupReminder);
     }
+    {
+        auto action = new QAction(i18nc("@action", "Expand All"), this);
+        actionCollection()->addAction(QStringLiteral("expand_all"), action);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotExpandAll);
+    }
+    {
+        auto action = new QAction(i18nc("@action", "Collapse All"), this);
+        actionCollection()->addAction(QStringLiteral("collapse_all"), action);
+        connect(action, &QAction::triggered, this, &KMMainWidget::slotCollapseAll);
+    }
 
     // Disable the standard action delete key shortcut.
     QAction *const standardDelAction = akonadiStandardAction(Akonadi::StandardActionManager::DeleteItems);
@@ -5094,6 +5104,16 @@ void KMMainWidget::slotRestoreClosedMessage(Akonadi::Item::Id id)
 void KMMainWidget::slotHistoryClosedReaderChanged()
 {
     mRestoreClosedMessageMenu->setEnabled(!HistoryClosedReaderManager::self()->isEmpty());
+}
+
+void KMMainWidget::slotExpandAll()
+{
+    mFolderTreeWidget->expandAll();
+}
+
+void KMMainWidget::slotCollapseAll()
+{
+    mFolderTreeWidget->collapseAll();
 }
 
 #include "moc_kmmainwidget.cpp"

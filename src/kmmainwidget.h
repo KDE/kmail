@@ -542,6 +542,8 @@ private:
     KMAIL_NO_EXPORT void slotClearFolderAndSubFolders();
     KMAIL_NO_EXPORT void slotRestoreClosedMessage(Akonadi::Item::Id id);
     KMAIL_NO_EXPORT void slotHistoryClosedReaderChanged();
+    KMAIL_NO_EXPORT void slotExpandAll();
+    KMAIL_NO_EXPORT void slotCollapseAll();
 
     // Message actions
     QAction *mDeleteAction = nullptr;
