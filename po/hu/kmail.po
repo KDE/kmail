@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-01 00:46+0000\n"
+"POT-Creation-Date: 2025-10-07 00:44+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -315,7 +315,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Számos IMAP hiba javítása"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:223 kmmainwidget.cpp:4207 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:223 kmmainwidget.cpp:4217 kmreaderwin.cpp:264
 #: kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -1676,7 +1676,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Archívummappa"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3670
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3680
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -4134,14 +4134,14 @@ msgid "F&older"
 msgstr "&Mappa"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3519 kmmainwin.rc:134
-#: kmmainwin.rc:291
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3529 kmmainwin.rc:134
+#: kmmainwin.rc:290
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Szűrők alkalmazása a mappára"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:296
+#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:295
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Szűrők alkalmazása a mappára és összes almappájára"
@@ -4166,7 +4166,7 @@ msgid "&Forward"
 msgstr "Tová&bbítás"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3343 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3353 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Szűrő a&lkalmazása"
@@ -4178,20 +4178,20 @@ msgid "&Tools"
 msgstr "&Eszközök"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:228 kmreadermainwin.rc:78
+#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:227 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "&Beállítások"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:245 kmmainwin.rc:248
+#: kmail_part.rc:245 kmmainwin.rc:247
 #, kde-format
 msgid "&Help"
 msgstr "&Súgó"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:343 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
+#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Alap eszköztár"
@@ -4639,7 +4639,7 @@ msgstr ""
 "a kockázata, hogy adatvesztés következhet be most még nem ismert biztonsági "
 "rések kihasználása révén."
 
-#: kmmainwidget.cpp:1614 kmmainwidget.cpp:4884
+#: kmmainwidget.cpp:1614 kmmainwidget.cpp:4894
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -4973,359 +4973,373 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Nyomkövető emlékeztető üzenetek…"
 
-#: kmmainwidget.cpp:3089 util.cpp:168
+#: kmmainwidget.cpp:3083
+#, fuzzy, kde-format
+#| msgid "Expand All Groups"
+msgctxt "@action"
+msgid "Expand All"
+msgstr "Az összes csoport kibontása"
+
+#: kmmainwidget.cpp:3088
+#, fuzzy, kde-format
+#| msgid "Collapse All Groups"
+msgctxt "@action"
+msgid "Collapse All"
+msgstr "Az összes csoport összecsukása"
+
+#: kmmainwidget.cpp:3099 util.cpp:168
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Törlés"
 
-#: kmmainwidget.cpp:3094
+#: kmmainwidget.cpp:3104
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Szál át&helyezése a kukába"
 
-#: kmmainwidget.cpp:3098
+#: kmmainwidget.cpp:3108
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "A szál átmozgatása a törölt üzenetek közé"
 
-#: kmmainwidget.cpp:3101 kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:3111 kmmainwidget.cpp:4164
 #, kde-format
 msgid "Delete T&hread"
 msgstr "A szál tö&rlése"
 
-#: kmmainwidget.cpp:3108 kmmainwidget.cpp:4156
+#: kmmainwidget.cpp:3118 kmmainwidget.cpp:4166
 #, kde-format
 msgid "&Find Messages…"
 msgstr "Üzenet &keresése…"
 
-#: kmmainwidget.cpp:3114
+#: kmmainwidget.cpp:3124
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Összes ü&zenet kijelölése"
 
-#: kmmainwidget.cpp:3121
+#: kmmainwidget.cpp:3131
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Le&velezőlista-kezelés…"
 
-#: kmmainwidget.cpp:3129
+#: kmmainwidget.cpp:3139
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Akonadi gyorsítótár &törlése…"
 
-#: kmmainwidget.cpp:3134
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 "Akonadi gyorsítótár &törlése ebben a mappában és az összes almappájában"
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3149
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "Billentyűparan&cs hozzárendelése…"
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3167
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Lejárási beállítások"
 
-#: kmmainwidget.cpp:3182
+#: kmmainwidget.cpp:3192
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&Archívummappa…"
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3200
 #, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Külső h&ivatkozások betöltése"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgid "Copy Message To…"
 msgstr "Üzenet másolása ide…"
 
-#: kmmainwidget.cpp:3215
+#: kmmainwidget.cpp:3225
 #, kde-format
 msgid "Move Message To…"
 msgstr "Üzenet áthelyezése ide…"
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "&New Message…"
 msgstr "Ú&j üzenetek…"
 
-#: kmmainwidget.cpp:3222
+#: kmmainwidget.cpp:3232
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Új"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgid "Message From &Template"
 msgstr "Új üzenet adott &sablonnal"
 
-#: kmmainwidget.cpp:3236
+#: kmmainwidget.cpp:3246
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "Új üzenet a le&velezőlistára…"
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgid "&Create Filter"
 msgstr "Szűrő lét&rehozása"
 
-#: kmmainwidget.cpp:3246
+#: kmmainwidget.cpp:3256
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "A &tárgyra…"
 
-#: kmmainwidget.cpp:3253
+#: kmmainwidget.cpp:3263
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "A &feladóra…"
 
-#: kmmainwidget.cpp:3259
+#: kmmainwidget.cpp:3269
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "A &címzettre…"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3275
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "A &másolatra…"
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3289
 #, kde-format
 msgid "Mark &Thread"
 msgstr "A &szál megjelölése"
 
-#: kmmainwidget.cpp:3282
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "A szál megjelölése &olvasottnak"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "A kijelölt szálhoz tartozó összes üzenet megjelölése &olvasottnak"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "A szál megjelölése ol&vasatlannak"
 
-#: kmmainwidget.cpp:3291
+#: kmmainwidget.cpp:3301
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "A kijelölt szálhoz tartozó összes üzenet megjelölése olvasatlannak"
 
-#: kmmainwidget.cpp:3297
+#: kmmainwidget.cpp:3307
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "A szál megjelölése &fontosnak"
 
-#: kmmainwidget.cpp:3300
+#: kmmainwidget.cpp:3310
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "A Fontos megjelölés eltá&volítása"
 
-#: kmmainwidget.cpp:3303
+#: kmmainwidget.cpp:3313
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "A szál megjelölése mű&veletelemnek"
 
-#: kmmainwidget.cpp:3306
+#: kmmainwidget.cpp:3316
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "A Mű&veletelem száljelző eltávolítása"
 
-#: kmmainwidget.cpp:3310
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgid "&Watch Thread"
 msgstr "A &szál figyelése"
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3324
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "A szál figyelmen kívül &hagyása"
 
-#: kmmainwidget.cpp:3322 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3332 kmreadermainwin.cpp:488
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Mellékle&t mentése…"
 
-#: kmmainwidget.cpp:3326
+#: kmmainwidget.cpp:3336
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Összes melléklet törlése"
 
-#: kmmainwidget.cpp:3334
+#: kmmainwidget.cpp:3344
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "Visszafejtett másolása ide…"
 
-#: kmmainwidget.cpp:3338
+#: kmmainwidget.cpp:3348
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Az összes szűrő al&kalmazása"
 
-#: kmmainwidget.cpp:3347
+#: kmmainwidget.cpp:3357
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Szál / csoport ki&bontása"
 
-#: kmmainwidget.cpp:3350
+#: kmmainwidget.cpp:3360
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Jelenlegi szál vagy csoport kibontása"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3364
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Szál / csoport össze&csukása"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3367
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Jelenleg szál vagy csoport összecsukása"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3371
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Az összes szál k&ibontása"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3374
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Az összes szál kibontása az aktuális mappában"
 
-#: kmmainwidget.cpp:3368
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Az összes szál összecs&ukása"
 
-#: kmmainwidget.cpp:3371
+#: kmmainwidget.cpp:3381
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Az összes üzenetszál összecsukása az aktuális mappában"
 
-#: kmmainwidget.cpp:3375
+#: kmmainwidget.cpp:3385
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "Üzenet m&egjelenítése"
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3392
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Következő üzenet"
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgid "Go to the next message"
 msgstr "Ugrás a következő üzenetre"
 
-#: kmmainwidget.cpp:3389
+#: kmmainwidget.cpp:3399
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Következő &olvasatlan üzenet"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3407
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Következő"
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3408
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Ugrás a következő olvasatlan üzenetre"
 
-#: kmmainwidget.cpp:3402
+#: kmmainwidget.cpp:3412
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Előző üzenet"
 
-#: kmmainwidget.cpp:3404
+#: kmmainwidget.cpp:3414
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Ugrás az előző üzenetre"
 
-#: kmmainwidget.cpp:3409
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Elő&ző olvasatlan üzenet"
 
-#: kmmainwidget.cpp:3417
+#: kmmainwidget.cpp:3427
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Előző"
 
-#: kmmainwidget.cpp:3418
+#: kmmainwidget.cpp:3428
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Ugrás az előző olvasatlan üzenetre"
 
-#: kmmainwidget.cpp:3422
+#: kmmainwidget.cpp:3432
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Következő olv&asatlan mappa"
 
-#: kmmainwidget.cpp:3428
+#: kmmainwidget.cpp:3438
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Ugrás a következő, olvasatlan üzeneteket tartalmazó mappára"
 
-#: kmmainwidget.cpp:3431
+#: kmmainwidget.cpp:3441
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Előző o&lvasatlan mappa"
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3447
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Ugrás az előző, olvasatlan üzeneteket tartalmazó mappára"
 
-#: kmmainwidget.cpp:3441
+#: kmmainwidget.cpp:3451
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "A következő, &még nem olvasott szöveg"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Ugrás a következő, még nem olvasott szövegre"
 
-#: kmmainwidget.cpp:3446
+#: kmmainwidget.cpp:3456
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5334,262 +5348,262 @@ msgstr ""
 "Az aktuális üzenet lefelé görgetése. Az üzenet végére érve ugrás a "
 "következő, még nem olvasott szövegre."
 
-#: kmmainwidget.cpp:3454
+#: kmmainwidget.cpp:3464
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "Szűrők &beállítása…"
 
-#: kmmainwidget.cpp:3460
+#: kmmainwidget.cpp:3470
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "&Sieve-szkriptek kezelése…"
 
-#: kmmainwidget.cpp:3465
+#: kmmainwidget.cpp:3475
 #, kde-format
 msgid "&Add Account…"
 msgstr "Fiók hozzá&adása…"
 
-#: kmmainwidget.cpp:3470
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "Újdonságok"
 
-#: kmmainwidget.cpp:3477
+#: kmmainwidget.cpp:3487
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "Ér&tesítések beállítása…"
 
-#: kmmainwidget.cpp:3484
+#: kmmainwidget.cpp:3494
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "&KMail beállítása…"
 
-#: kmmainwidget.cpp:3491
+#: kmmainwidget.cpp:3501
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Lejárás…"
 
-#: kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3507
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Kedvenc mappa hozzáadása…"
 
-#: kmmainwidget.cpp:3503 kmmainwidget.cpp:3511
+#: kmmainwidget.cpp:3513 kmmainwidget.cpp:3521
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Az összes szűrő alkalmazása"
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3534
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Szűrők alkalmazása a mappára és összes almappájára"
 
-#: kmmainwidget.cpp:3529
+#: kmmainwidget.cpp:3539
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "KMail adatok importálása/exportálása…"
 
-#: kmmainwidget.cpp:3535
+#: kmmainwidget.cpp:3545
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "Új címjegyzékbeli névjegy…"
 
-#: kmmainwidget.cpp:3543 kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:3553 kmmainwidget.cpp:4200
 #, kde-format
 msgid "Account &Settings"
 msgstr "Fiók&beállítások"
 
-#: kmmainwidget.cpp:3547
+#: kmmainwidget.cpp:3557
 #, kde-format
 msgid "Restart Account"
 msgstr "Fiók újraindítása"
 
-#: kmmainwidget.cpp:3563
+#: kmmainwidget.cpp:3573
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Üzenet átmásolása ide"
 
-#: kmmainwidget.cpp:3569
+#: kmmainwidget.cpp:3579
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "Ugrás a mappára…"
 
-#: kmmainwidget.cpp:3575
+#: kmmainwidget.cpp:3585
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Jelenlegi művelet megszakítása"
 
-#: kmmainwidget.cpp:3581
+#: kmmainwidget.cpp:3591
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "A következő mappára lépés"
 
-#: kmmainwidget.cpp:3587
+#: kmmainwidget.cpp:3597
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Az előző mappára lépés"
 
-#: kmmainwidget.cpp:3593
+#: kmmainwidget.cpp:3603
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Lépés egy mappára"
 
-#: kmmainwidget.cpp:3600
+#: kmmainwidget.cpp:3610
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Az első mappára lépés"
 
-#: kmmainwidget.cpp:3606
+#: kmmainwidget.cpp:3616
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Az utolsó mappára lépés"
 
-#: kmmainwidget.cpp:3612
+#: kmmainwidget.cpp:3622
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Lépés a következő üzenetre"
 
-#: kmmainwidget.cpp:3618
+#: kmmainwidget.cpp:3628
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Lépés az előző üzenetre"
 
-#: kmmainwidget.cpp:3624
+#: kmmainwidget.cpp:3634
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Első üzenet kijelölése"
 
-#: kmmainwidget.cpp:3630
+#: kmmainwidget.cpp:3640
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Utolsó üzenet kijelölése"
 
-#: kmmainwidget.cpp:3636
+#: kmmainwidget.cpp:3646
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Váltás a jelenlegi üzenetre"
 
-#: kmmainwidget.cpp:3643
+#: kmmainwidget.cpp:3653
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Fókusz a gyorskeresőre"
 
-#: kmmainwidget.cpp:3651
+#: kmmainwidget.cpp:3661
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Előző üzenet bevétele a kijelölésbe"
 
-#: kmmainwidget.cpp:3657
+#: kmmainwidget.cpp:3667
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Következő üzenet bevétele a kijelölésbe"
 
-#: kmmainwidget.cpp:3664
+#: kmmainwidget.cpp:3674
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Üzenet áthelyezése ide"
 
-#: kmmainwidget.cpp:3674
+#: kmmainwidget.cpp:3684
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Összes üzenet megjelölése olvasottként ebben a mappában és almappáiban"
 
-#: kmmainwidget.cpp:3679
+#: kmmainwidget.cpp:3689
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Duplikátumok eltávolítása ebből a mappából és almappáiból"
 
-#: kmmainwidget.cpp:3685
+#: kmmainwidget.cpp:3695
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Előző kiválasztott mappa"
 
-#: kmmainwidget.cpp:3692
+#: kmmainwidget.cpp:3702
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Következő kiválasztott mappa"
 
-#: kmmainwidget.cpp:3721
+#: kmmainwidget.cpp:3731
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Kedvenc mappa hozzáadása"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4152
 #, kde-format
 msgid "&Delete Search"
 msgstr "Keresőmappa tör&lése"
 
-#: kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:4164
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "A szál át&helyezése a törölt üzenetek mappájába"
 
-#: kmmainwidget.cpp:4156
+#: kmmainwidget.cpp:4166
 #, kde-format
 msgid "Edit Search…"
 msgstr "Keresés szerkesztése…"
 
-#: kmmainwidget.cpp:4188
+#: kmmainwidget.cpp:4198
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Egyesített postafiók beállítása"
 
-#: kmmainwidget.cpp:4199
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "A törölt üzenetek eltá&volítása"
 
-#: kmmainwidget.cpp:4199
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Az összes üzenet áth&elyezése a törölt üzenetek közé"
 
-#: kmmainwidget.cpp:4250
+#: kmmainwidget.cpp:4260
 #, kde-format
 msgid "&Undo"
 msgstr "&Visszavonás"
 
-#: kmmainwidget.cpp:4252
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Visszavonás: „%1”"
 
-#: kmmainwidget.cpp:4309
+#: kmmainwidget.cpp:4319
 #, kde-format
 msgid "Filter %1"
 msgstr "%1. szűrő"
 
-#: kmmainwidget.cpp:4873
+#: kmmainwidget.cpp:4883
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Keresés…<%1>"
 
-#: kmmainwidget.cpp:4881
+#: kmmainwidget.cpp:4891
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5601,13 +5615,13 @@ msgstr ""
 "kockázata, hogy adatvesztés következhet be most még nem ismert biztonsági "
 "rések kihasználása révén."
 
-#: kmmainwidget.cpp:4885
+#: kmmainwidget.cpp:4895
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML használata"
 
-#: kmmainwidget.cpp:5031
+#: kmmainwidget.cpp:5041
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5623,41 +5637,41 @@ msgstr ""
 "postafiókokat, létrehozhat sajátokat vagy teljesen ki is kapcsolhatja a "
 "funkciót."
 
-#: kmmainwidget.cpp:5034
+#: kmmainwidget.cpp:5044
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Bekapcsolja az egyesített postafiókokat?"
 
-#: kmmainwidget.cpp:5035
+#: kmmainwidget.cpp:5045
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Egyesített postafiókok bekapcsolása"
 
-#: kmmainwidget.cpp:5036
+#: kmmainwidget.cpp:5046
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Mégse"
 
-#: kmmainwidget.cpp:5071
+#: kmmainwidget.cpp:5081
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Szeretné újraindítani az Akonadit?"
 
-#: kmmainwidget.cpp:5072
+#: kmmainwidget.cpp:5082
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi újraindítása"
 
-#: kmmainwidget.cpp:5073
+#: kmmainwidget.cpp:5083
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: kmmainwidget.cpp:5080
+#: kmmainwidget.cpp:5090
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi újraindítva."
@@ -16326,12 +16340,6 @@ msgstr "Nagyítás: %1%"
 
 #~ msgid "Please select the Chiasmus key file to use:"
 #~ msgstr "Válassza ki, melyik Chiasmus-féle kulcsfájlt szeretné használni:"
-
-#~ msgid "Expand All Groups"
-#~ msgstr "Az összes csoport kibontása"
-
-#~ msgid "Collapse All Groups"
-#~ msgstr "Az összes csoport összecsukása"
 
 #~ msgctxt "@info:tooltip"
 #~ msgid "Open a new tab"

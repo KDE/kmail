@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-01 00:46+0000\n"
+"POT-Creation-Date: 2025-10-07 00:44+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -376,7 +376,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:223 kmmainwidget.cpp:4207 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:223 kmmainwidget.cpp:4217 kmreaderwin.cpp:264
 #: kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -1877,7 +1877,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Ný mappa"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3670
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3680
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgctxt "@action"
@@ -4538,15 +4538,15 @@ msgid "F&older"
 msgstr "&Mappa"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3519 kmmainwin.rc:134
-#: kmmainwin.rc:291
+#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3529 kmmainwin.rc:134
+#: kmmainwin.rc:290
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder"
 msgstr "&Virkja allar síur"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:296
+#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:295
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
@@ -4571,7 +4571,7 @@ msgid "&Forward"
 msgstr "Á&framsenda"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3343 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3353 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Vir&kja síu"
@@ -4583,20 +4583,20 @@ msgid "&Tools"
 msgstr "&Til"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:228 kmreadermainwin.rc:78
+#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:227 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, fuzzy, kde-format
 msgid "&Settings"
 msgstr "&Sending"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:245 kmmainwin.rc:248
+#: kmail_part.rc:245 kmmainwin.rc:247
 #, fuzzy, kde-format
 msgid "&Help"
 msgstr "&Hljóðmerki"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:343 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
+#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
 #, fuzzy, kde-format
 msgid "Main Toolbar"
 msgstr "HTML tækjaslá"
@@ -5057,7 +5057,7 @@ msgstr ""
 "berskjaldaðri fyrir ruslpósti og eykur líkurnar á að mögulegar öryggisholur "
 "verði útnýttar."
 
-#: kmmainwidget.cpp:1614 kmmainwidget.cpp:4884
+#: kmmainwidget.cpp:1614 kmmainwidget.cpp:4894
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5420,242 +5420,258 @@ msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "&Leita að bréfi..."
 
-#: kmmainwidget.cpp:3089 util.cpp:168
+#: kmmainwidget.cpp:3083
+#, fuzzy, kde-format
+#| msgctxt "View->"
+#| msgid "Ex&pand All Threads"
+msgctxt "@action"
+msgid "Expand All"
+msgstr "Opna &alla þræði"
+
+#: kmmainwidget.cpp:3088
+#, fuzzy, kde-format
+#| msgctxt "View->"
+#| msgid "C&ollapse All Threads"
+msgctxt "@action"
+msgid "Collapse All"
+msgstr "&Fella saman alla þræði"
+
+#: kmmainwidget.cpp:3099 util.cpp:168
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "Eytt"
 
-#: kmmainwidget.cpp:3094
+#: kmmainwidget.cpp:3104
 #, fuzzy, kde-format
 #| msgid "M&ove Thread to Trash"
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Fl&ytja þráð í ruslið"
 
-#: kmmainwidget.cpp:3098
+#: kmmainwidget.cpp:3108
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Setja þráð í ruslakörfuna"
 
-#: kmmainwidget.cpp:3101 kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:3111 kmmainwidget.cpp:4164
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Eyða &þræði"
 
-#: kmmainwidget.cpp:3108 kmmainwidget.cpp:4156
+#: kmmainwidget.cpp:3118 kmmainwidget.cpp:4166
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
 msgstr "Finna bréf"
 
-#: kmmainwidget.cpp:3114
+#: kmmainwidget.cpp:3124
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Velja &öll bréf"
 
-#: kmmainwidget.cpp:3121
+#: kmmainwidget.cpp:3131
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "U&msjón póstlista"
 
-#: kmmainwidget.cpp:3129
+#: kmmainwidget.cpp:3139
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Heiti auðkennis"
 
-#: kmmainwidget.cpp:3134
+#: kmmainwidget.cpp:3144
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3149
 #, fuzzy, kde-format
 #| msgid "&Assign Shortcut..."
 msgid "&Assign Shortcut…"
 msgstr "Velj&a flýtilykil..."
 
-#: kmmainwidget.cpp:3157
+#: kmmainwidget.cpp:3167
 #, fuzzy, kde-format
 #| msgid "&Expiration Settings"
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Gildisloka stillingar"
 
-#: kmmainwidget.cpp:3182
+#: kmmainwidget.cpp:3192
 #, fuzzy, kde-format
 #| msgid "New Folder"
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Ný mappa"
 
-#: kmmainwidget.cpp:3190
+#: kmmainwidget.cpp:3200
 #, fuzzy, kde-format
 #| msgid "Load E&xternal References"
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Hlaða inn &utanaðkomandi tilvísunum"
 
-#: kmmainwidget.cpp:3213
+#: kmmainwidget.cpp:3223
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Message To…"
 msgstr "Nýtt bréf til..."
 
-#: kmmainwidget.cpp:3215
+#: kmmainwidget.cpp:3225
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message To…"
 msgstr "Nýtt bréf til..."
 
-#: kmmainwidget.cpp:3220
+#: kmmainwidget.cpp:3230
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "&New Message…"
 msgstr "Nýtt bréf"
 
-#: kmmainwidget.cpp:3222
+#: kmmainwidget.cpp:3232
 #, fuzzy, kde-format
 #| msgid "New"
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Ný"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3240
 #, fuzzy, kde-format
 msgid "Message From &Template"
 msgstr "Engin ný bréf frá miðlara"
 
-#: kmmainwidget.cpp:3236
+#: kmmainwidget.cpp:3246
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgid "New Message t&o Mailing-List…"
 msgstr "Nýtt bréf á póst&lista..."
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3252
 #, kde-format
 msgid "&Create Filter"
 msgstr "Búa til sí&u"
 
-#: kmmainwidget.cpp:3246
+#: kmmainwidget.cpp:3256
 #, fuzzy, kde-format
 #| msgid "Filter on &Subject..."
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "&Sía eftir viðfangsefni..."
 
-#: kmmainwidget.cpp:3253
+#: kmmainwidget.cpp:3263
 #, fuzzy, kde-format
 #| msgid "Filter on &From..."
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Sía e&ftir sendanda..."
 
-#: kmmainwidget.cpp:3259
+#: kmmainwidget.cpp:3269
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Sía eftir mót&takanda..."
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3275
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Sía eftir mót&takanda..."
 
-#: kmmainwidget.cpp:3279
+#: kmmainwidget.cpp:3289
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Merkja &þráð"
 
-#: kmmainwidget.cpp:3282
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Merkja þráð sem &lesin"
 
-#: kmmainwidget.cpp:3285
+#: kmmainwidget.cpp:3295
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Merkja öll bréf í völdum þræði sem lesin"
 
-#: kmmainwidget.cpp:3288
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Merkja þráð sem &ólesinn"
 
-#: kmmainwidget.cpp:3291
+#: kmmainwidget.cpp:3301
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Merkja öll bréf í völdum þræði sem ólesin"
 
-#: kmmainwidget.cpp:3297
+#: kmmainwidget.cpp:3307
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Merkja þráð sem &áríðandi"
 
-#: kmmainwidget.cpp:3300
+#: kmmainwidget.cpp:3310
 #, fuzzy, kde-format
 #| msgid "Remove &Important Thread Mark"
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Fjarlægja áríðandimerki af þræði"
 
-#: kmmainwidget.cpp:3303
+#: kmmainwidget.cpp:3313
 #, fuzzy, kde-format
 #| msgid "Mark Thread as &New"
 msgid "Mark Thread as &Action Item"
 msgstr "Merkja þráð sem &nýjan"
 
-#: kmmainwidget.cpp:3306
+#: kmmainwidget.cpp:3316
 #, fuzzy, kde-format
 #| msgid "Remove &Important Message Mark"
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Fjarlægja áríðandimerk&i af bréfi"
 
-#: kmmainwidget.cpp:3310
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&Fylgjast með þræði"
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3324
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Hunsa þráð"
 
-#: kmmainwidget.cpp:3322 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3332 kmreadermainwin.cpp:488
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save A&ttachments…"
 msgstr "Vista viðhengi sem"
 
-#: kmmainwidget.cpp:3326
+#: kmmainwidget.cpp:3336
 #, fuzzy, kde-format
 #| msgid "Save All Attachments..."
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Vista öll viðhengi..."
 
-#: kmmainwidget.cpp:3334
+#: kmmainwidget.cpp:3344
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Copy Decrypted To…"
 msgstr "Nýtt bréf til..."
 
-#: kmmainwidget.cpp:3338
+#: kmmainwidget.cpp:3348
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "&Virkja allar síur"
 
-#: kmmainwidget.cpp:3347
+#: kmmainwidget.cpp:3357
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Expand Thread"
@@ -5663,13 +5679,13 @@ msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Opna þráð"
 
-#: kmmainwidget.cpp:3350
+#: kmmainwidget.cpp:3360
 #, fuzzy, kde-format
 #| msgid "Expand the current thread"
 msgid "Expand the current thread or group"
 msgstr "Opna valinn þráð"
 
-#: kmmainwidget.cpp:3354
+#: kmmainwidget.cpp:3364
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "&Collapse Thread"
@@ -5677,138 +5693,138 @@ msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Fella saman þráð"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3367
 #, fuzzy, kde-format
 #| msgid "Collapse the current thread"
 msgid "Collapse the current thread or group"
 msgstr "Fella saman valinn þráð"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3371
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Opna &alla þræði"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3374
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Opna alla þræði í valinni möppu"
 
-#: kmmainwidget.cpp:3368
+#: kmmainwidget.cpp:3378
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "&Fella saman alla þræði"
 
-#: kmmainwidget.cpp:3371
+#: kmmainwidget.cpp:3381
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Fella saman alla þræði í valinni möppu"
 
-#: kmmainwidget.cpp:3375
+#: kmmainwidget.cpp:3385
 #, fuzzy, kde-format
 #| msgid "&Display Message"
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "Sýn&a bréf"
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3392
 #, fuzzy, kde-format
 #| msgid "&Next Message"
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Næsta bréf"
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgid "Go to the next message"
 msgstr "Fara að næsta bréfi"
 
-#: kmmainwidget.cpp:3389
+#: kmmainwidget.cpp:3399
 #, fuzzy, kde-format
 #| msgid "Next &Unread Message"
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Næsta ó&lesna bréf"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3407
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Næsta"
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3408
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Fara að næsta ólesna bréfi"
 
-#: kmmainwidget.cpp:3402
+#: kmmainwidget.cpp:3412
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Fyrra bréf"
 
-#: kmmainwidget.cpp:3404
+#: kmmainwidget.cpp:3414
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Fara að fyrra bréfi"
 
-#: kmmainwidget.cpp:3409
+#: kmmainwidget.cpp:3419
 #, fuzzy, kde-format
 #| msgid "Previous Unread &Message"
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Fy&rra ólesið bréf"
 
-#: kmmainwidget.cpp:3417
+#: kmmainwidget.cpp:3427
 #, fuzzy, kde-format
 #| msgid "&Previous Card"
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "&Fyrra kort"
 
-#: kmmainwidget.cpp:3418
+#: kmmainwidget.cpp:3428
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Fara að fyrra ólesna bréfi"
 
-#: kmmainwidget.cpp:3422
+#: kmmainwidget.cpp:3432
 #, fuzzy, kde-format
 #| msgid "Next Unread &Folder"
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Næsta ólesna &mappa"
 
-#: kmmainwidget.cpp:3428
+#: kmmainwidget.cpp:3438
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Fara í næstu möppu með ólesnum bréfum"
 
-#: kmmainwidget.cpp:3431
+#: kmmainwidget.cpp:3441
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Fyrri ólesna m&appa"
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3447
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Fara í fyrri möppu með ólesnum bréfum"
 
-#: kmmainwidget.cpp:3441
+#: kmmainwidget.cpp:3451
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Fara að næsta ólesna &texta"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3454
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Fara að næsta ólesna texta"
 
-#: kmmainwidget.cpp:3446
+#: kmmainwidget.cpp:3456
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5816,292 +5832,292 @@ msgid ""
 msgstr ""
 "Fletta niður núverandi bréf. Ef á enda bréfs, fara í næsta ólesna bréf."
 
-#: kmmainwidget.cpp:3454
+#: kmmainwidget.cpp:3464
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
 msgid "Configure &Filters…"
 msgstr "Stilla síu&r..."
 
-#: kmmainwidget.cpp:3460
+#: kmmainwidget.cpp:3470
 #, fuzzy, kde-format
 #| msgid "Manage Sieve Scripts"
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Sýsla með Sieve skriftur"
 
-#: kmmainwidget.cpp:3465
+#: kmmainwidget.cpp:3475
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "&Add Account…"
 msgstr "Bæta við tengingu"
 
-#: kmmainwidget.cpp:3470
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr ""
 
-#: kmmainwidget.cpp:3477
+#: kmmainwidget.cpp:3487
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "Configure &Notifications…"
 msgstr "Stilla &tilkynningar..."
 
-#: kmmainwidget.cpp:3484
+#: kmmainwidget.cpp:3494
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure KMail…"
 msgstr "Stilla &KMail..."
 
-#: kmmainwidget.cpp:3491
+#: kmmainwidget.cpp:3501
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Eyða"
 
-#: kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3507
 #, fuzzy, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Ný mappa"
 
-#: kmmainwidget.cpp:3503 kmmainwidget.cpp:3511
+#: kmmainwidget.cpp:3513 kmmainwidget.cpp:3521
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "&Virkja allar síur"
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3534
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
 
-#: kmmainwidget.cpp:3529
+#: kmmainwidget.cpp:3539
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "Import/Export KMail Data…"
 msgstr "Stilla &KMail..."
 
-#: kmmainwidget.cpp:3535
+#: kmmainwidget.cpp:3545
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
 msgid "New AddressBook Contact…"
 msgstr "Opna í vistfangaskrá"
 
-#: kmmainwidget.cpp:3543 kmmainwidget.cpp:4190
+#: kmmainwidget.cpp:3553 kmmainwidget.cpp:4200
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "&Sending"
 
-#: kmmainwidget.cpp:3547
+#: kmmainwidget.cpp:3557
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgid "Restart Account"
 msgstr "Heiti auðkennis"
 
-#: kmmainwidget.cpp:3563
+#: kmmainwidget.cpp:3573
 #, fuzzy, kde-format
 #| msgid "Copy Message to Folder"
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Afrita bréf yfir í möppu"
 
-#: kmmainwidget.cpp:3569
+#: kmmainwidget.cpp:3579
 #, fuzzy, kde-format
 msgid "Jump to Folder…"
 msgstr "Afrita í möppu"
 
-#: kmmainwidget.cpp:3575
+#: kmmainwidget.cpp:3585
 #, fuzzy, kde-format
 #| msgid "Abort Current Operation"
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Hætta við núverandi aðgerð"
 
-#: kmmainwidget.cpp:3581
+#: kmmainwidget.cpp:3591
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Beina athygli að næstu möppu"
 
-#: kmmainwidget.cpp:3587
+#: kmmainwidget.cpp:3597
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Folder"
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Beina athygli að fyrri möppu"
 
-#: kmmainwidget.cpp:3593
+#: kmmainwidget.cpp:3603
 #, fuzzy, kde-format
 #| msgid "Select Folder with Focus"
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Veldu virka möppu"
 
-#: kmmainwidget.cpp:3600
+#: kmmainwidget.cpp:3610
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Beina athygli að næstu möppu"
 
-#: kmmainwidget.cpp:3606
+#: kmmainwidget.cpp:3616
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Beina athygli að næstu möppu"
 
-#: kmmainwidget.cpp:3612
+#: kmmainwidget.cpp:3622
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Beina athygli að næstu bréfi"
 
-#: kmmainwidget.cpp:3618
+#: kmmainwidget.cpp:3628
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Beina athygli að fyrra bréfi"
 
-#: kmmainwidget.cpp:3624
+#: kmmainwidget.cpp:3634
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Velja &öll bréf"
 
-#: kmmainwidget.cpp:3630
+#: kmmainwidget.cpp:3640
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Velja &öll bréf"
 
-#: kmmainwidget.cpp:3636
+#: kmmainwidget.cpp:3646
 #, fuzzy, kde-format
 #| msgid "Select Message with Focus"
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Veldu virka bréfið"
 
-#: kmmainwidget.cpp:3643
+#: kmmainwidget.cpp:3653
 #, fuzzy, kde-format
 #| msgid "Reset Quick Search"
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Frumstilla flýtileit"
 
-#: kmmainwidget.cpp:3651
+#: kmmainwidget.cpp:3661
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Beina athygli að fyrra bréfi"
 
-#: kmmainwidget.cpp:3657
+#: kmmainwidget.cpp:3667
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Beina athygli að næstu bréfi"
 
-#: kmmainwidget.cpp:3664
+#: kmmainwidget.cpp:3674
 #, fuzzy, kde-format
 #| msgid "Move Message to Folder"
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Færa bréf í möppu"
 
-#: kmmainwidget.cpp:3674
+#: kmmainwidget.cpp:3684
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
 
-#: kmmainwidget.cpp:3679
+#: kmmainwidget.cpp:3689
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Auðlindamöppur eru undi&rmöppur af:"
 
-#: kmmainwidget.cpp:3685
+#: kmmainwidget.cpp:3695
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Fyrri ólesna m&appa"
 
-#: kmmainwidget.cpp:3692
+#: kmmainwidget.cpp:3702
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Eyða möppu"
 
-#: kmmainwidget.cpp:3721
+#: kmmainwidget.cpp:3731
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Ný mappa"
 
-#: kmmainwidget.cpp:4142
+#: kmmainwidget.cpp:4152
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Eyða leit"
 
-#: kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:4164
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Fl&ytja þráð í ruslið"
 
-#: kmmainwidget.cpp:4156
+#: kmmainwidget.cpp:4166
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search…"
 msgstr "Breyta skriftu..."
 
-#: kmmainwidget.cpp:4188
+#: kmmainwidget.cpp:4198
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Stilla &KMail..."
 
-#: kmmainwidget.cpp:4199
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Tæ&ma rusl"
 
-#: kmmainwidget.cpp:4199
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Færa öll bréf í &ruslið"
 
-#: kmmainwidget.cpp:4250
+#: kmmainwidget.cpp:4260
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4252
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4309
+#: kmmainwidget.cpp:4319
 #, kde-format
 msgid "Filter %1"
 msgstr "%1 sía"
 
-#: kmmainwidget.cpp:4873
+#: kmmainwidget.cpp:4883
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Áskrift..."
 
-#: kmmainwidget.cpp:4881
+#: kmmainwidget.cpp:4891
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6112,14 +6128,14 @@ msgstr ""
 "misnotkun þeirra sem senda ruslpóst.  HTML er jafnframt ákaflega flókin "
 "tækni og gallar í útfærslu hennar gætu veikt öryggi tölvunnar þinnar."
 
-#: kmmainwidget.cpp:4885
+#: kmmainwidget.cpp:4895
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Nota HTML"
 
-#: kmmainwidget.cpp:5031
+#: kmmainwidget.cpp:5041
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6129,45 +6145,45 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5034
+#: kmmainwidget.cpp:5044
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5035
+#: kmmainwidget.cpp:5045
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Stilla &KMail..."
 
-#: kmmainwidget.cpp:5036
+#: kmmainwidget.cpp:5046
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "&Hætta við"
 
-#: kmmainwidget.cpp:5071
+#: kmmainwidget.cpp:5081
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>Viltu örugglega fjarlægja auðkennið <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:5072
+#: kmmainwidget.cpp:5082
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Heiti auðkennis"
 
-#: kmmainwidget.cpp:5073
+#: kmmainwidget.cpp:5083
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Heiti auðkennis"
 
-#: kmmainwidget.cpp:5080
+#: kmmainwidget.cpp:5090
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -16746,18 +16762,6 @@ msgstr ""
 
 #~ msgid "Please select the Chiasmus key file to use:"
 #~ msgstr "Vinsamlega veldu Chiasmus lykilskrá sem á að nota:"
-
-#, fuzzy
-#~| msgctxt "View->"
-#~| msgid "Ex&pand All Threads"
-#~ msgid "Expand All Groups"
-#~ msgstr "Opna &alla þræði"
-
-#, fuzzy
-#~| msgctxt "View->"
-#~| msgid "C&ollapse All Threads"
-#~ msgid "Collapse All Groups"
-#~ msgstr "&Fella saman alla þræði"
 
 #, fuzzy
 #~ msgctxt "@info:tooltip"
