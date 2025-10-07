@@ -22,7 +22,7 @@ repos:
     - id: destroyed-symlinks
     #- id: check-executables-have-shebangs
  - repo: https://github.com/pre-commit/mirrors-clang-format
-   rev: v21.1.0
+   rev: v21.1.2
    hooks:
     - id: clang-format
     # force using this project's configuration rather
@@ -30,7 +30,7 @@ repos:
       args: ["--style=file:.clang-format-pre-commit"]
  - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
-   rev: v0.12.12
+   rev: v0.13.3
    hooks:
     # Run the linter.
     - id: ruff
@@ -42,7 +42,7 @@ repos:
     - id: codespell
       exclude: (textemoticons/core/data/emoji.json|textgrammarcheck/grammalecte/autotests/data/result1.json|texttranslator/translator/plugins/bergamot/autotests/data/modellanguages/models.json|textgrammarcheck/languagetool/autotests/data/test2.json|textautocorrection/core/autotests/data/custom-fr-ref.xml|textgrammarcheck/common/autotests/grammarresultutiltest.cpp|textautocorrection/core/autotests/data/custom-fr.xml)
  - repo: https://github.com/BlankSpruce/gersemi
-   rev: 0.22.1
+   rev: 0.22.3
    hooks:
     - id: gersemi
       args: ["--no-warn-about-unknown-commands"]
