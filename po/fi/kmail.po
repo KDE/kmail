@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-07 00:44+0000\n"
+"POT-Creation-Date: 2025-10-08 00:44+0000\n"
 "PO-Revision-Date: 2025-09-19 18:26+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -4328,31 +4328,31 @@ msgstr "HTML-työkalurivi"
 msgid "Text Direction Toolbar"
 msgstr "Tekstin suunta -työkalurivi"
 
-#: kmkernel.cpp:644
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail on asetettu verkottomaan tilaan ja kaikki verkkotoimenpiteet "
 "keskeytetty"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
+#: kmkernel.cpp:662 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
 #, kde-format
 msgid "Send Email"
 msgstr "Lähetä sähköposti"
 
-#: kmkernel.cpp:665 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:663 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Sähköpostin lähettäminen on mahdotonta"
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:694
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail on asetettu verkolliseen tilaan ja kaikkia verkkotoimenpiteitä "
 "jatketaan"
 
-#: kmkernel.cpp:698
+#: kmkernel.cpp:696
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4361,40 +4361,40 @@ msgstr ""
 "KMail on asetettu verkolliseen tilaan: kaikkia verkkotoimenpiteitä jatketaan "
 "heti, kun verkko on havaittu"
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:767
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail ei ole nyt verkossa. Kuinka haluat edetä?"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:769
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Verkossa/Ei verkossa"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:770
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Työskentele verkollisessa tilassa"
 
-#: kmkernel.cpp:773
+#: kmkernel.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Työskentele verkottomassa tilassa"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:795
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Verkkoyhteys havaittiin: kaikkia verkkotoimenpiteitä jatketaan"
 
-#: kmkernel.cpp:800
+#: kmkernel.cpp:798
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Verkkoyhteyttä ei havaittu: kaikki verkkotoimenpiteet on keskeytetty"
 
-#: kmkernel.cpp:895
+#: kmkernel.cpp:893
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4403,13 +4403,13 @@ msgstr ""
 "Automaattitallennustiedoston avaus kohteesta %1 epäonnistui.\n"
 "Syy: %2"
 
-#: kmkernel.cpp:896
+#: kmkernel.cpp:894
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Automaattitallennustiedoston avaaminen epäonnistui"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1457
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4417,7 +4417,7 @@ msgid_plural ""
 msgstr[0] "Tämä henkilöys muutettiin käyttämään oletuslähetystapaa."
 msgstr[1] "Nämä %1 henkilöyttä muutettiin käyttämään oletuslähetystapaa."
 
-#: kmkernel.cpp:1483
+#: kmkernel.cpp:1481
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4425,17 +4425,17 @@ msgid_plural ""
 msgstr[0] "Tämä henkilöys muutettiin käyttämään muutettua lähetystapaa:"
 msgstr[1] "Nämä %1 henkilöyttä muutettiin käyttämään muutettua lähetystapaa:"
 
-#: kmkernel.cpp:1498
+#: kmkernel.cpp:1496
 #, kde-format
 msgid "Sending messages"
 msgstr "Lähettää viestejä"
 
-#: kmkernel.cpp:1499
+#: kmkernel.cpp:1497
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Käynnistetään lähetysprosessia…"
 
-#: kmkernel.cpp:1578
+#: kmkernel.cpp:1576
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4444,7 +4444,7 @@ msgstr ""
 "Resurssi %1 on rikki.\n"
 "%2"
 
-#: kmkernel.cpp:1752 kmkernel.cpp:1758
+#: kmkernel.cpp:1750 kmkernel.cpp:1756
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

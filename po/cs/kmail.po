@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-07 00:44+0000\n"
+"POT-Creation-Date: 2025-10-08 00:44+0000\n"
 "PO-Revision-Date: 2024-09-17 13:40+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -4213,80 +4213,80 @@ msgstr "Panel nástrojů HTML"
 msgid "Text Direction Toolbar"
 msgstr "Panel nástrojů směru textu"
 
-#: kmkernel.cpp:644
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail je nastaven na odpojen, všechny síťové úlohy jsou odloženy"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
+#: kmkernel.cpp:662 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
 #, kde-format
 msgid "Send Email"
 msgstr "Odeslat e-mail"
 
-#: kmkernel.cpp:665 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:663 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, kde-format
 msgid "Impossible to send email"
 msgstr "E-mail nelze odeslat"
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:694
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail je nastaven na připojen, všechny síťové úlohy jsou obnoveny"
 
-#: kmkernel.cpp:698
+#: kmkernel.cpp:696
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:767
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail je právě v odpojeném režimu; jak si přejete pokračovat?"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:769
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Připojen/Odpojen"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:770
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Pracovat připojen"
 
-#: kmkernel.cpp:773
+#: kmkernel.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Pracovat odpojen"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:795
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:800
+#: kmkernel.cpp:798
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:895
+#: kmkernel.cpp:893
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:896
+#: kmkernel.cpp:894
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Otevření souboru automatického uložení selhalo"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1457
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4296,7 +4296,7 @@ msgstr[1] "Tyto %1 identity byly nastaveny pro používání výchozího transpo
 msgstr[2] ""
 "Těchto %1 identit bylo nastaveno pro používání výchozího transportu:"
 
-#: kmkernel.cpp:1483
+#: kmkernel.cpp:1481
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4306,17 +4306,17 @@ msgstr[1] "Tyto %1 identity byly nastaveny pro používání změněného transp
 msgstr[2] ""
 "Těchto %1 identit bylo nastaveno pro používání změněného transportu:"
 
-#: kmkernel.cpp:1498
+#: kmkernel.cpp:1496
 #, kde-format
 msgid "Sending messages"
 msgstr "Odesílám zprávy"
 
-#: kmkernel.cpp:1499
+#: kmkernel.cpp:1497
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Je inicializováno odesílání…"
 
-#: kmkernel.cpp:1578
+#: kmkernel.cpp:1576
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4325,7 +4325,7 @@ msgstr ""
 "Zdroj %1 je poškozen.\n"
 "%2"
 
-#: kmkernel.cpp:1752 kmkernel.cpp:1758
+#: kmkernel.cpp:1750 kmkernel.cpp:1756
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"

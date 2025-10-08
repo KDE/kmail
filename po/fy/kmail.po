@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-07 00:44+0000\n"
+"POT-Creation-Date: 2025-10-08 00:44+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -4792,29 +4792,29 @@ msgstr "HTML arkbalke"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:644
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail is sûnder ferbining setten. Alle netwurktaken binne útstelt"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
+#: kmkernel.cpp:662 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:665 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:663 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Stiet op it punt om in berjocht te ferstjoeren..."
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:694
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail is op ferbining setten. Alle netwurktaken wurde ferfette."
 
-#: kmkernel.cpp:698
+#: kmkernel.cpp:696
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4822,59 +4822,59 @@ msgid ""
 "connection is detected"
 msgstr "KMail is op ferbining setten. Alle netwurktaken wurde ferfette."
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:767
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail hat no gjin ferbining. Hoe wolle jo fierdergean?"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:769
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Ferbining/Sûnder ferbining"
 
-#: kmkernel.cpp:772
+#: kmkernel.cpp:770
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Mei ferbining wurkje"
 
-#: kmkernel.cpp:773
+#: kmkernel.cpp:771
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Sûnder ferbining wurkje"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:795
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "KMail is op ferbining setten. Alle netwurktaken wurde ferfette."
 
-#: kmkernel.cpp:800
+#: kmkernel.cpp:798
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail is sûnder ferbining setten. Alle netwurktaken binne útstelt"
 
-#: kmkernel.cpp:895
+#: kmkernel.cpp:893
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:896
+#: kmkernel.cpp:894
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "It automatysk bewarjen is mislearre"
 
-#: kmkernel.cpp:1459
+#: kmkernel.cpp:1457
 #, fuzzy, kde-format
 #| msgid "This identity has been changed to use the default transport:"
 #| msgid_plural ""
@@ -4886,7 +4886,7 @@ msgstr[0] "Dizze identiteit is feroare om it standert transport te brûken:"
 msgstr[1] ""
 "Dizze %1 identiteiten binne feroare om it standert transport te brûken:"
 
-#: kmkernel.cpp:1483
+#: kmkernel.cpp:1481
 #, fuzzy, kde-format
 #| msgid "This identity has been changed to use the modified transport:"
 #| msgid_plural ""
@@ -4898,25 +4898,25 @@ msgstr[0] " Dizze identiteit is feroare om it oanpaste transport te brûken:"
 msgstr[1] ""
 "Dizze %1 identiteiten binne feroare om it oanpaste transport te brûken:"
 
-#: kmkernel.cpp:1498
+#: kmkernel.cpp:1496
 #, kde-format
 msgid "Sending messages"
 msgstr "Berjjochten wurde ferstjoerd"
 
-#: kmkernel.cpp:1499
+#: kmkernel.cpp:1497
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process…"
 msgstr "Ferstjoerdproses wurdt ïnitsjonalisearre..."
 
-#: kmkernel.cpp:1578
+#: kmkernel.cpp:1576
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1752 kmkernel.cpp:1758
+#: kmkernel.cpp:1750 kmkernel.cpp:1756
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
