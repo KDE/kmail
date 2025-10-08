@@ -3349,14 +3349,14 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                     mMsg->setHeader(header);
                     mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
                 } else {
-                    if (auto hrd = mMsg->headerByType("X-KMail-Transport-Name")) {
-                        const QString identityStrName = hrd->asUnicodeString();
-                        const Transport *transport = TransportManager::self()->transportByName(identityStrName, true);
-                        if (transport) {
+                    if (auto hrdTransportName = mMsg->headerByType("X-KMail-Transport-Name")) {
+                        const QString identityStrName = hrdTransportName->asUnicodeString();
+                        const Transport *transportFromStrName = TransportManager::self()->transportByName(identityStrName, true);
+                        if (transportFromStrName) {
                             auto header = new KMime::Headers::Generic("X-KMail-Transport");
-                            header->fromUnicodeString(QString::number(transport->id()));
+                            header->fromUnicodeString(QString::number(transportFromStrName->id()));
                             mMsg->setHeader(header);
-                            mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
+                            mComposerBase->transportComboBox()->setCurrentTransport(transportFromStrName->id());
                         } else {
                             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
                         }
