@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-08 00:44+0000\n"
+"POT-Creation-Date: 2025-10-09 00:43+0000\n"
 "PO-Revision-Date: 2025-09-25 00:39+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -4185,14 +4185,14 @@ msgid "F&older"
 msgstr "&Cartella"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3529 kmmainwin.rc:134
-#: kmmainwin.rc:290
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3529 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "Applica filtri ad una cartella"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:295
+#: kmail_part.rc:139 kmail_part.rc:292 kmmainwin.rc:139 kmmainwin.rc:294
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "Applica filtri ad una cartella ed alle sue sottocartelle"
@@ -4223,26 +4223,26 @@ msgid "A&pply Filter"
 msgstr "A&pplica filtro"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:207 kmmainwin.rc:207
+#: kmail_part.rc:206 kmmainwin.rc:206
 #, kde-format
 msgid "&Tools"
 msgstr "S&trumenti"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:227 kmreadermainwin.rc:78
+#: kmail_part.rc:226 kmcomposerui.rc:106 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "Impo&stazioni"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:245 kmmainwin.rc:247
+#: kmail_part.rc:244 kmmainwin.rc:246
 #, kde-format
 msgid "&Help"
 msgstr "&Aiuto"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:344 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Barra degli strumenti principale"

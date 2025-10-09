@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-08 00:44+0000\n"
+"POT-Creation-Date: 2025-10-09 00:43+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -4231,15 +4231,15 @@ msgid "F&older"
 msgstr "&Жилд"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3529 kmmainwin.rc:134
-#: kmmainwin.rc:290
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3529 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply Filters on Folder"
 msgstr "Ҳам&ма филтерларни қўллаш"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:295
+#: kmail_part.rc:139 kmail_part.rc:292 kmmainwin.rc:139 kmmainwin.rc:294
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr ""
@@ -4270,26 +4270,26 @@ msgid "A&pply Filter"
 msgstr "Фил&терни қўллаш"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:207 kmmainwin.rc:207
+#: kmail_part.rc:206 kmmainwin.rc:206
 #, fuzzy, kde-format
 msgid "&Tools"
 msgstr "К&имга"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:227 kmreadermainwin.rc:78
+#: kmail_part.rc:226 kmcomposerui.rc:106 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, fuzzy, kde-format
 msgid "&Settings"
 msgstr "&Жўнатиш"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:245 kmmainwin.rc:247
+#: kmail_part.rc:244 kmmainwin.rc:246
 #, fuzzy, kde-format
 msgid "&Help"
 msgstr "&Бип"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:344 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, fuzzy, kde-format
 msgid "Main Toolbar"
 msgstr "HTML асбоблар панели"

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-08 00:44+0000\n"
-"PO-Revision-Date: 2025-10-05 10:30+0400\n"
+"POT-Creation-Date: 2025-10-09 00:43+0000\n"
+"PO-Revision-Date: 2025-10-08 21:32+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -4111,14 +4111,14 @@ msgid "F&older"
 msgstr "م&جلّدات"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:288 kmmainwidget.cpp:3529 kmmainwin.rc:134
-#: kmmainwin.rc:290
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3529 kmmainwin.rc:134
+#: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
 msgstr "طبّق المرشّحات على المجلّد"
 
 #. i18n: ectx: Menu (apply_filters_folder_recursive_actions)
-#: kmail_part.rc:139 kmail_part.rc:293 kmmainwin.rc:139 kmmainwin.rc:295
+#: kmail_part.rc:139 kmail_part.rc:292 kmmainwin.rc:139 kmmainwin.rc:294
 #, kde-format
 msgid "Apply Filters on Folder and all its Subfolders"
 msgstr "طبّق المرشّحات على المجلّد وكلّ مجلَّداته الفرْعيَّة"
@@ -4149,26 +4149,26 @@ msgid "A&pply Filter"
 msgstr "&طبّق المرشّح"
 
 #. i18n: ectx: Menu (tools)
-#: kmail_part.rc:207 kmmainwin.rc:207
+#: kmail_part.rc:206 kmmainwin.rc:206
 #, kde-format
 msgid "&Tools"
 msgstr "أ&دوات"
 
 #. i18n: ectx: Menu (settings)
-#: kmail_part.rc:227 kmcomposerui.rc:106 kmmainwin.rc:227 kmreadermainwin.rc:78
+#: kmail_part.rc:226 kmcomposerui.rc:106 kmmainwin.rc:226 kmreadermainwin.rc:78
 #: kontactplugin/summary/kontactsummary_part.rc:5
 #, kde-format
 msgid "&Settings"
 msgstr "إ&عدادات"
 
 #. i18n: ectx: Menu (help)
-#: kmail_part.rc:245 kmmainwin.rc:247
+#: kmail_part.rc:244 kmmainwin.rc:246
 #, kde-format
 msgid "&Help"
 msgstr "مساع&دة"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:344 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "شريط الأدوات الرّئيسيّ"
@@ -4973,18 +4973,16 @@ msgid "Followup Reminder Messages…"
 msgstr "رسائل تذكير بالمتابعة …"
 
 #: kmmainwidget.cpp:3083
-#, fuzzy, kde-format
-#| msgid "Expand All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "وسّع كل المجموعات"
+msgstr "وسّع الكل"
 
 #: kmmainwidget.cpp:3088
-#, fuzzy, kde-format
-#| msgid "Collapse All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "اطوِ كل المجموعات"
+msgstr "اطوِ الكل"
 
 #: kmmainwidget.cpp:3099 util.cpp:168
 #, kde-format
