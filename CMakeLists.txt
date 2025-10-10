@@ -252,6 +252,18 @@ set_package_properties(
             REQUIRED
 )
 
+find_package(KF6TextAddonsWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG)
+set_package_properties(
+    KF6TextAddonsWidgets
+    PROPERTIES
+        DESCRIPTION "Add text addons widget"
+        TYPE REQUIRED
+)
+
+if(${KF6TextAddonsWidgets_VERSION} VERSION_GREATER_EQUAL 1.8.45)
+    set(HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT TRUE)
+endif()
+
 configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h)
 
 include_directories(

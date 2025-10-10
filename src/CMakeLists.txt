@@ -505,6 +505,10 @@ if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
 endif()
 
+if(HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT)
+	target_link_libraries(kmailprivate PRIVATE KF6::TextAddonsWidgets)
+endif()
+
 if(KPim6AkonadiSearch_FOUND)
     target_link_libraries(
         kmailprivate
