@@ -1,11 +1,10 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# Frederik Schwarzer <schwarzer@kde.org>, 2019, 2022, 2023.
-# Burkhard Lück <lueck@hube-lueck.de>, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2019, 2022, 2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2024, 2025 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 # SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n@prly.mozmail.com>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail-refresh-settings\n"
