@@ -1,9 +1,8 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# Burkhard Lück <lueck@hube-lueck.de>, 2018, 2020, 2021.
-# Frank Steinmetzger <dev-kde@felsenfleischer.de>, 2022.
+# SPDX-FileCopyrightText: 2018, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2022 Frank Steinmetzger <dev-kde@felsenfleischer.de>
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_unifiedmailbox_agent\n"
