@@ -260,7 +260,7 @@ set_package_properties(
         TYPE REQUIRED
 )
 
-if(${KF6TextAddonsWidgets_VERSION} VERSION_GREATER_EQUAL 1.8.45)
+if(${KF6TextAddonsWidgets_VERSION} VERSION_GREATER_EQUAL 1.8.44)
     set(HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT TRUE)
 endif()
 

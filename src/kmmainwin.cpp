@@ -7,14 +7,22 @@
  */
 
 #include "kmmainwin.h"
-
+#include "config-kmail.h"
 #include "kmmainwidget.h"
 #include "tag/tagactionmanager.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
+
+#if HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT
+#include <TextAddonsWidgets/NeedUpdateVersionUtils>
+#include <TextAddonsWidgets/NeedUpdateVersionWidget>
+#include <TextAddonsWidgets/WhatsNewMessageWidget>
+#else
 #include <PimCommon/NeedUpdateVersionUtils>
 #include <PimCommon/NeedUpdateVersionWidget>
+#include <PimCommon/WhatsNewMessageWidget>
+#endif
 
 #include <KConfigGroup>
 #include <KToolBar>
@@ -73,6 +81,17 @@ KMMainWin::KMMainWin(QWidget *)
     auto mainWidget = new QWidget(this);
     auto mainWidgetLayout = new QVBoxLayout(mainWidget);
     mainWidgetLayout->setContentsMargins({});
+#if HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT
+    if (TextAddonsWidgets::NeedUpdateVersionUtils::checkVersion()) {
+        const auto status = TextAddonsWidgets::NeedUpdateVersionUtils::obsoleteVersionStatus(QLatin1String(KMAIL_RELEASE_VERSION_DATE), QDate::currentDate());
+        if (status != TextAddonsWidgets::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
+            auto needUpdateVersionWidget = new TextAddonsWidgets::NeedUpdateVersionWidget(this);
+            mainWidgetLayout->addWidget(needUpdateVersionWidget);
+            qCDebug(KMAIL_LOG) << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
+            needUpdateVersionWidget->setObsoleteVersion(status);
+        }
+    }
+#else
     if (PimCommon::NeedUpdateVersionUtils::checkVersion()) {
         const auto status = PimCommon::NeedUpdateVersionUtils::obsoleteVersionStatus(QLatin1String(KMAIL_RELEASE_VERSION_DATE), QDate::currentDate());
         if (status != PimCommon::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
@@ -82,6 +101,7 @@ KMMainWin::KMMainWin(QWidget *)
             needUpdateVersionWidget->setObsoleteVersion(status);
         }
     }
+#endif
 
     mKMMainWidget = new KMMainWidget(this, this, actionCollection());
     mainWidgetLayout->addWidget(mKMMainWidget);
