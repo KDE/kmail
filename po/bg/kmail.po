@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-13 00:42+0000\n"
-"PO-Revision-Date: 2025-09-26 15:15+0200\n"
+"PO-Revision-Date: 2025-10-14 21:55+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -5020,20 +5020,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Проследяващи съобщения за напомняне…"
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Раз&гъване на всички нишки"
+msgstr "Разгъване на всички нишки"
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Сгъване на вси&чки нишки"
+msgstr "Сгъване на всички нишки"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
