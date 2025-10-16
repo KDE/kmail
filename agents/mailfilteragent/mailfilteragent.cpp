@@ -114,6 +114,12 @@ MailFilterAgent::MailFilterAgent(const QString &id)
             notify->setComponentName(QApplication::applicationDisplayName());
             notify->setIconName(QStringLiteral("view-filter"));
             notify->setText(i18nc("Notification when the filter log was enabled", "Mail Filter Log Enabled"));
+
+            KNotificationAction *action = notify->addAction(i18n("Show Log"));
+            connect(action, &KNotificationAction::activated, this, [this]() {
+                showFilterLogDialog(0);
+            });
+
             notify->sendEvent();
         }
     }
