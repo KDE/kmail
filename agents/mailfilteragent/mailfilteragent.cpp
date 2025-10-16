@@ -368,7 +368,13 @@ void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
         mFilterLogDialog = new FilterLogDialog(nullptr);
         mFilterLogDialog->setAttribute(Qt::WA_NativeWindow, true);
     }
-    KWindowSystem::setMainWindow(mFilterLogDialog->windowHandle(), windowId);
+
+    // Do not set the main window that this dialogue "belongs to".  If this
+    // is the KMail main window, the filter log dialogue gets closed when KMail
+    // is minimised or docked to the system tray, with no way to get it back.
+    // Leave it as a standalone window with its own taskbar entry instead.
+    Q_UNUSED(windowId);
+
     mFilterLogDialog->show();
     mFilterLogDialog->raise();
     mFilterLogDialog->activateWindow();
