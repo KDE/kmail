@@ -89,6 +89,8 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     Akonadi::ServerManager *const serverManager = Akonadi::ServerManager::self();
     const QString service = serverManager->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
 
+    Q_EMIT status(AgentBase::Running, i18n("Starting"));
+
     if (serverManager->state() == Akonadi::ServerManager::Running) {
         initializeCollections();
     } else {
@@ -177,7 +179,6 @@ void MailFilterAgent::initialCollectionFetchingDone(KJob *job)
     }
     Q_EMIT status(AgentBase::Idle, i18n("Ready"));
     Q_EMIT percent(100);
-    QTimer::singleShot(2s, this, &MailFilterAgent::clearMessage);
 }
 
 void MailFilterAgent::clearMessage()
@@ -215,6 +216,8 @@ void MailFilterAgent::slotItemChanged(const Akonadi::Item &item)
 
 void MailFilterAgent::filterItem(const Akonadi::Item &item, const Akonadi::Collection &collection)
 {
+    Q_EMIT status(AgentBase::Running, i18n("Filtering messages"));
+
     MailCommon::SearchRule::RequiredPart requiredPart = mFilterManager->requiredPart(collection.resource());
 
     auto job = new Akonadi::ItemFetchJob(item);
@@ -252,6 +255,7 @@ void MailFilterAgent::itemsReceivedForFiltering(const Akonadi::Item::List &items
     Akonadi::MessageStatus status;
     status.setStatusFromFlags(item.flags());
     if (status.isRead() || status.isSpam() || status.isIgnored()) {
+        emitProgress();
         return;
     }
 
@@ -385,7 +389,7 @@ void MailFilterAgent::emitProgress(int p)
 {
     if (p == 0) {
         mProgressTimer->stop();
-        Q_EMIT status(AgentBase::Idle, QString());
+        Q_EMIT status(AgentBase::Idle, i18np("Finished filtering, %1 message processed", "Finished filtering, %1 messages processed", mProgressCounter));
     }
     mProgressCounter = p;
     Q_EMIT percent(p);
