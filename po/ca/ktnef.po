@@ -2,10 +2,10 @@
 # Copyright (C) 2004-2024 This_file_is_part_of_KDE
 #
 #
-# Orestes Mas i Casals <orestes@tsc.upc.es>, 2004.
-# Albert Astals Cid <aacid@kde.org>, 2004.
-# Josep M. Ferrer <txemaq@gmail.com>, 2012, 2016, 2017, 2020, 2022, 2024.
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2015, 2016, 2019, 2020, 2021.
+# SPDX-FileCopyrightText: 2004 Orestes Mas i Casals <orestes@tsc.upc.es>
+# SPDX-FileCopyrightText: 2004 Albert Astals Cid <aacid@kde.org>
+# SPDX-FileCopyrightText: 2012, 2016, 2017, 2020, 2022, 2024 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2013, 2014, 2015, 2016, 2019, 2020, 2021 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-10-17 00:43+0000\n"
 "PO-Revision-Date: 2024-08-14 11:27+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -163,23 +163,42 @@ msgstr "<b>Pravidla filtru odpovídají.</b>"
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Začít filtrování na zprávě \"%1\" od \"%2\" v \"%3\" :</b>"
 
-#: filtermanager.cpp:592
+#: filtermanager.cpp:592 mailfilteragent.cpp:225
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrování zpráv"
 
-#: mailfilteragent.cpp:114
+#: mailfilteragent.cpp:92
+#, kde-format
+msgid "Starting"
+msgstr ""
+
+#: mailfilteragent.cpp:116
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Záznam filtrování pošty povolen"
 
-#: mailfilteragent.cpp:178
+#: mailfilteragent.cpp:118
+#, kde-format
+msgid "Show Log"
+msgstr ""
+
+#: mailfilteragent.cpp:186
 #, kde-format
 msgid "Ready"
 msgstr "Připraven"
 
-#: mailfilteragent.cpp:264
+#: mailfilteragent.cpp:274
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrování v %1"
+
+#: mailfilteragent.cpp:398
+#, fuzzy, kde-format
+#| msgid "Filtering messages"
+msgid "Finished filtering, %1 message processed"
+msgid_plural "Finished filtering, %1 messages processed"
+msgstr[0] "Filtrování zpráv"
+msgstr[1] "Filtrování zpráv"
+msgstr[2] "Filtrování zpráv"

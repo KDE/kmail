@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-10-17 00:43+0000\n"
 "PO-Revision-Date: 2012-12-25 11:13+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -177,23 +177,40 @@ msgstr "<b>ច្បាប់​តម្រង​​បាន​ផ្គូផ
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>ចាប់ផ្ដើម​ត្រង​សារ \"%1\" ពី \"%2\" នៅ \"%3\" ៖</b>"
 
-#: filtermanager.cpp:592
+#: filtermanager.cpp:592 mailfilteragent.cpp:225
 #, kde-format
 msgid "Filtering messages"
 msgstr "ត្រង​សារ"
 
-#: mailfilteragent.cpp:114
+#: mailfilteragent.cpp:92
+#, kde-format
+msgid "Starting"
+msgstr ""
+
+#: mailfilteragent.cpp:116
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "បាន​បើក​កំណត់ហេតុ​តម្រង​សារ"
 
-#: mailfilteragent.cpp:178
+#: mailfilteragent.cpp:118
+#, kde-format
+msgid "Show Log"
+msgstr ""
+
+#: mailfilteragent.cpp:186
 #, kde-format
 msgid "Ready"
 msgstr "រួច​ហើយ"
 
-#: mailfilteragent.cpp:264
+#: mailfilteragent.cpp:274
 #, kde-format
 msgid "Filtering in %1"
 msgstr "ការ​ត្រង​នៅ​ក្នុង %1"
+
+#: mailfilteragent.cpp:398
+#, fuzzy, kde-format
+#| msgid "Filtering messages"
+msgid "Finished filtering, %1 message processed"
+msgid_plural "Finished filtering, %1 messages processed"
+msgstr[0] "ត្រង​សារ"

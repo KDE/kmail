@@ -172,8 +172,7 @@ msgstr "Obriu el fitxer TNEF"
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
-msgstr ""
-"No s'ha seleccionat cap fitxer. Seleccioneu un fitxer i torneu-ho a provar."
+msgstr "No s'ha seleccionat cap fitxer. Trieu un fitxer i torneu-ho a provar."
 
 #: ktnefmain.cpp:306 ktnefmain.cpp:382
 #, kde-format

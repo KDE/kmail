@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-10-17 00:43+0000\n"
 "PO-Revision-Date: 2015-02-07 19:02+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@lister.huftis.org>\n"
@@ -169,23 +169,41 @@ msgstr "<b>Filterregler fant et treff.</b>"
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Begynn filtrering på melding «%1» fra «%2» på «%3» :</b>"
 
-#: filtermanager.cpp:592
+#: filtermanager.cpp:592 mailfilteragent.cpp:225
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrerer meldinger"
 
-#: mailfilteragent.cpp:114
+#: mailfilteragent.cpp:92
+#, kde-format
+msgid "Starting"
+msgstr ""
+
+#: mailfilteragent.cpp:116
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "E-post filterlogg slått på"
 
-#: mailfilteragent.cpp:178
+#: mailfilteragent.cpp:118
+#, kde-format
+msgid "Show Log"
+msgstr ""
+
+#: mailfilteragent.cpp:186
 #, kde-format
 msgid "Ready"
 msgstr "Klar"
 
-#: mailfilteragent.cpp:264
+#: mailfilteragent.cpp:274
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrering i %1"
+
+#: mailfilteragent.cpp:398
+#, fuzzy, kde-format
+#| msgid "Filtering messages"
+msgid "Finished filtering, %1 message processed"
+msgid_plural "Finished filtering, %1 messages processed"
+msgstr[0] "Filtrerer meldinger"
+msgstr[1] "Filtrerer meldinger"

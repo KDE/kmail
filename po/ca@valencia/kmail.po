@@ -7950,7 +7950,7 @@ msgid ""
 "nowhere.com:3128."
 msgstr ""
 "Introduïu ací la ubicació de l'intermediari HTTP, el qual s'emprarà per a "
-"totes les sol·licituds HTTP relacionades amb S/MIME. La sintaxi és «màquina:"
+"totes les sol·licituds HTTP relacionades amb S/MIME. La sintaxi és «amfitrió:"
 "port», per exemple «el_meu_intermediari.algun_lloc.cat:3128»."
 
 #. i18n: ectx: attribute (title), widget (QWidget, tabLDAP)
@@ -7998,7 +7998,7 @@ msgstr "Ignora el punt de distribució CRL mitjançant LDAP dels certificats"
 #: ui/smimeconfiguration.ui:246
 #, kde-format
 msgid "Primary host for LDAP requests:"
-msgstr "Màquina primària per a les sol·licituds LDAP:"
+msgstr "Amfitrió primari per a les sol·licituds LDAP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customLDAPProxy)
 #: ui/smimeconfiguration.ui:257
@@ -8013,12 +8013,12 @@ msgid ""
 "(standard LDAP port) is used."
 msgstr ""
 "La introducció d'un servidor LDAP ací farà que totes les sol·licituds LDAP "
-"vagen primer a este servidor. Més precisament, esta opció modifica la "
-"màquina i el port especificats a un URL LDAP i també s'utilitzarà si la "
-"màquina i el port s'han omés a l'URL. Altres servidors LDAP només "
+"vagen primer a este servidor. Més precisament, esta opció modifica "
+"l'amfitrió i el port especificats a un URL LDAP i també s'utilitzarà si la "
+"l'amfitrió i el port s'han omés a l'URL. Altres servidors LDAP només "
 "s'utilitzaran si falla la connexió amb «l'intermediari».\n"
-"La sintaxi és «màquina» o «màquina:port». Si s'omet el port, s'utilitzarà el "
-"port 389 (que és l'estàndard LDAP)."
+"La sintaxi és «amfitrió» o «amfitrió:port». Si s'omet el port, s'utilitzarà "
+"el port 389 (que és l'estàndard LDAP)."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/xfaceconfigurator.ui:19
