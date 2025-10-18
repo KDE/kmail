@@ -3,9 +3,9 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Manuel Tortosa <manutortosa@chakra-project.org>, 2011.
+# SPDX-FileCopyrightText: 2011 Manuel Tortosa <manutortosa@chakra-project.org>
 # SPDX-FileCopyrightText: 2012, 2014, 2015, 2017, 2021, 2022, 2023, 2024 Josep M. Ferrer <txemaq@gmail.com>
-# Antoni Bella Pérez <antonibella5@yahoo.com>, 2013, 2014, 2017, 2018, 2019, 2020.
+# SPDX-FileCopyrightText: 2013, 2014, 2017, 2018, 2019, 2020 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
