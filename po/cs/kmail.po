@@ -4860,20 +4860,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Následné upomínkové zprávy…"
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Rozv&inout všechna vlákna"
+msgstr ""
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Sba&lit všechna vlákna"
+msgstr ""
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format

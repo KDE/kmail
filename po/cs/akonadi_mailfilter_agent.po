@@ -171,7 +171,7 @@ msgstr "Filtrování zpráv"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Úvod"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -182,7 +182,7 @@ msgstr "Záznam filtrování pošty povolen"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Zobrazit záznamy"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -195,10 +195,9 @@ msgid "Filtering in %1"
 msgstr "Filtrování v %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Filtrování zpráv"
-msgstr[1] "Filtrování zpráv"
-msgstr[2] "Filtrování zpráv"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""

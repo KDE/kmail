@@ -3,13 +3,13 @@
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2013, 2014, 2018, 2019, 2023, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2013, 2014, 2018, 2019, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-07-30 09:55+0300\n"
+"PO-Revision-Date: 2025-10-17 18:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -180,7 +180,7 @@ msgstr "Фільтрування повідомлень"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Запуск"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -191,7 +191,7 @@ msgstr "Увімкнено журнал фільтрування пошти"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Показати журнал"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -204,11 +204,10 @@ msgid "Filtering in %1"
 msgstr "Фільтрування у %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Фільтрування повідомлень"
-msgstr[1] "Фільтрування повідомлень"
-msgstr[2] "Фільтрування повідомлень"
-msgstr[3] "Фільтрування повідомлень"
+msgstr[0] "Завершено фільтрування, оброблено %1 повідомлення"
+msgstr[1] "Завершено фільтрування, оброблено %1 повідомлення"
+msgstr[2] "Завершено фільтрування, оброблено %1 повідомлень"
+msgstr[3] "Завершено фільтрування, оброблено %1 повідомлення"

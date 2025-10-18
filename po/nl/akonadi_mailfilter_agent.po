@@ -1,21 +1,21 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2011, 2012, 2023, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
+# SPDX-FileCopyrightText: 2011, 2012, 2023, 2024, 2025 Freek de Kruijf <freekdekruijf@kde.nl>
 # Freek de Kruijf <freekdekruijf@kde.nl>, 2011, 2013, 2014, 2018, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-07-30 13:08+0200\n"
+"PO-Revision-Date: 2025-10-18 00:56+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.08.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: filterlogdialog.cpp:44
@@ -176,7 +176,7 @@ msgstr "Berichten filteren"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Bezig met starten"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -187,7 +187,7 @@ msgstr "E-mail filterlog ingeschakeld"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Log tonen"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -200,9 +200,8 @@ msgid "Filtering in %1"
 msgstr "Filteren in %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Berichten filteren"
-msgstr[1] "Berichten filteren"
+msgstr[0] "Filteren beëindigd, %1 bericht verwerkt"
+msgstr[1] "Filteren beëindigd, %1 berichten verwerkt"
