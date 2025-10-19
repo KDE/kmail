@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2025 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-07-30 10:14+0300\n"
+"PO-Revision-Date: 2025-10-17 16:26+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
@@ -175,7 +175,7 @@ msgstr "סינון הודעות"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "מופעל"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -186,7 +186,7 @@ msgstr "יומן מסנן הודעות מופעל"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "הצגת יומן"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -199,11 +199,10 @@ msgid "Filtering in %1"
 msgstr "מתבצע סינון כחלק מ־%1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "סינון הודעות"
-msgstr[1] "סינון הודעות"
-msgstr[2] "סינון הודעות"
-msgstr[3] "סינון הודעות"
+msgstr[0] "הסינון הסתיים, הודעה אחת עברה עיבוד"
+msgstr[1] "הסינון הסתיים, שתי הודעות עברו עיבוד"
+msgstr[2] "הסינון הסתיים, %1 הודעות עברו עיבוד"
+msgstr[3] "הסינון הסתיים, %1 הודעות עברו עיבוד"

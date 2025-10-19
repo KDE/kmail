@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-13 00:42+0000\n"
-"PO-Revision-Date: 2025-09-27 11:54+0200\n"
+"PO-Revision-Date: 2025-10-18 17:41+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -4988,20 +4988,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Jarraipen oroigarri mezuak…"
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Z&abaldu hari guztiak"
+msgstr "Zabaldu dena"
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "T&olestu hari guztiak"
+msgstr "Tolestu dena"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
@@ -8116,7 +8112,7 @@ msgstr "Zerberri trepeta berria gehitzea."
 #: whatsnew/whatsnewtranslations.cpp:37
 #, kde-format
 msgid "New plugin: show collection size."
-msgstr "Hurrengo plugina: erakutsi bildumaren neurria."
+msgstr "Plugin berria: erakutsi bildumaren neurria."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

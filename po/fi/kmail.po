@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-13 00:42+0000\n"
-"PO-Revision-Date: 2025-09-19 18:26+0300\n"
+"PO-Revision-Date: 2025-10-15 21:11+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1290,8 +1290,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "Tallenna viesti automaattisesti annetun ajan välein"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Kirjoitusikkuna"
@@ -1299,7 +1298,7 @@ msgstr "Kirjoitusikkuna"
 #: configuredialog/configurecomposerpage.cpp:435
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "Aktivoi tekstin pikamuotoilutyökalurivi"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
@@ -4983,18 +4982,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Vastaamisen seurannasta muistuttajan viestit…"
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgid "Expand All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Laajenna kaikki ryhmät"
+msgstr "Laajenna kaikki"
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgid "Collapse All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Supista kaikki ryhmät"
+msgstr "Supista kaikki"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
