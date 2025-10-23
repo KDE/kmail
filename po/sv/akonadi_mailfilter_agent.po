@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2012, 2013, 2014, 2018, 2019, 2024 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2012, 2013, 2014, 2018, 2019, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-07-30 07:14+0200\n"
+"PO-Revision-Date: 2025-10-22 20:16+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
@@ -174,7 +174,7 @@ msgstr "Filtrerar brev"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Startar"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -185,7 +185,7 @@ msgstr "Logg för e-postfilter aktiverad"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Visa logg"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -198,9 +198,8 @@ msgid "Filtering in %1"
 msgstr "Filtrerar i %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Filtrerar brev"
-msgstr[1] "Filtrerar brev"
+msgstr[0] "Filtrering klar, %1 brev behandlat"
+msgstr[1] "Filtrering klar, %1 brev behandlade"
