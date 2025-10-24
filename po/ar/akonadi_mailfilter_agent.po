@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Safa Alfulaij <safa1996alfulaij@gmail.com>, 2015, 2018.
-# SPDX-FileCopyrightText: 2022, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2024, 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-08-15 11:48+0400\n"
+"PO-Revision-Date: 2025-10-23 08:57+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -176,7 +176,7 @@ msgstr "يرشّح الرّسائل"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "يبدأ"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -187,7 +187,7 @@ msgstr "فُعّل تسجيل مرشّح البريد"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "أظهر السجلّ"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -200,13 +200,12 @@ msgid "Filtering in %1"
 msgstr "يرشّح في %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "يرشّح الرّسائل"
-msgstr[1] "يرشّح الرّسائل"
-msgstr[2] "يرشّح الرّسائل"
-msgstr[3] "يرشّح الرّسائل"
-msgstr[4] "يرشّح الرّسائل"
-msgstr[5] "يرشّح الرّسائل"
+msgstr[0] "انتهت عملية الترشيح، بلغ عدد الرسائل المعالجة %1"
+msgstr[1] "انتهت عملية الترشيح، بلغ عدد الرسائل المعالجة %1"
+msgstr[2] "انتهت عملية الترشيح، بلغ عدد الرسائل المعالجة %1"
+msgstr[3] "انتهت عملية الترشيح، بلغ عدد الرسائل المعالجة %1"
+msgstr[4] "انتهت عملية الترشيح، بلغ عدد الرسائل المعالجة %1"
+msgstr[5] "انتهت عملية الترشيح، بلغ عدد الرسائل المعالجة %1"
