@@ -30,7 +30,7 @@ msgstr "Erinnerung an Folgenachrichten"
 #: followupreminderinfoconfigwidget.cpp:29
 #, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "© 2014-%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format

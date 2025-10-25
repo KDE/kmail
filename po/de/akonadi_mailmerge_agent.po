@@ -38,7 +38,7 @@ msgstr "E-Mail-Adressen zusammenführen."
 #: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "Copyright (C) 2021-%1 Laurent Montel"
-msgstr "© 2021-%1 Laurent Montel"
+msgstr "© 2021–%1 Laurent Montel"
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format

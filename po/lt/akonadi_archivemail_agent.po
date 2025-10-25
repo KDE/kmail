@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2024-07-30 00:42+0000\n"
-"PO-Revision-Date: 2019-07-06 14:13+0300\n"
+"PO-Revision-Date: 2025-10-24 20:33+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -18,60 +18,52 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.7\n"
 
 #: addarchivemaildialog.cpp:21
-#, fuzzy, kde-format
-#| msgid "Modify Archive Mail"
+#, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modifikuoti archyvuojamą paštą"
 
 #: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
-#, fuzzy, kde-format
-#| msgid "Add Archive Mail"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Pridėti archyvuojamą paštą"
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Archyvuoti visus poaplankius"
 
 #: addarchivemailwidget.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
-msgstr "&Aplankas:"
+msgstr "Aplankas:"
 
 #: addarchivemailwidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "Format:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Formatas:"
 
 #: addarchivemailwidget.cpp:56
-#, fuzzy, kde-format
-#| msgid "Path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Kelias:"
 
 #: addarchivemailwidget.cpp:63
-#, fuzzy, kde-format
-#| msgid "Backup each:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Daryti atsarginę kopiją kas:"
 
 #: addarchivemailwidget.cpp:75
-#, fuzzy, kde-format
-#| msgid "Maximum number of archive:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Didžiausias archyvų skaičius:"
@@ -91,7 +83,7 @@ msgstr "Archyvas"
 #, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
-msgstr ""
+msgstr "Naudoti rėžį"
 
 #: archivemailwidget.cpp:72
 #, kde-format
@@ -124,14 +116,12 @@ msgid "Archive emails automatically."
 msgstr "Archyvuoti el. laiškus automatiškai."
 
 #: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-2019 Laurent Montel"
+#, kde-format
 msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgstr "Autorių teisės (C) 2014-2019 Laurent Montel"
+msgstr "Autorių teisės (C) 2014-%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -157,18 +147,16 @@ msgstr "liudas@akmc.lt, <>"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "Pridėti…"
 
 #: archivemailwidget.cpp:115
-#, fuzzy, kde-format
-#| msgid "Open Containing Folder..."
+#, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
-msgstr "Atverti vidinį aplanką..."
+msgstr "Atverti vidinį aplanką…"
 
 #: archivemailwidget.cpp:118
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Ištrinti"
@@ -198,11 +186,10 @@ msgid "Do you want to delete the selected items?"
 msgstr "Ar norite ištrinti pažymėtus elementus?"
 
 #: archivemailwidget.cpp:237
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Ištrinti"
+msgstr "Ištrinti elementus"
 
 #: archivemailwidget.cpp:278
 #, kde-format

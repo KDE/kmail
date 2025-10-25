@@ -113,7 +113,7 @@ msgstr "E-Mails später senden."
 #: sendlaterinfoconfigwidget.cpp:37
 #, kde-format
 msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgstr "© 2013-%1 Laurent Montel"
+msgstr "© 2013–%1 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format
