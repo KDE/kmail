@@ -28,10 +28,9 @@ msgid "Follow Up Reminder"
 msgstr "Erinnerung an Folgenachrichten"
 
 #: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014-%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: followupreminderinfoconfigwidget.cpp:31
 #, kde-format

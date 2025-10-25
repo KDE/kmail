@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-08-20 00:44+0000\n"
-"PO-Revision-Date: 2025-01-16 14:01+0200\n"
+"PO-Revision-Date: 2025-10-24 20:29+0300\n"
 "Last-Translator: Liudas Ališauskas <liudas@akmc.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -119,10 +119,9 @@ msgid "Send emails later agent."
 msgstr "El. laiškų siuntimo vėliau agentas."
 
 #: sendlaterinfoconfigwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-%1 Laurent Montel"
+#, kde-format
 msgid "© 2013–%1 Laurent Montel"
-msgstr "Autorių teisės (C) 2013–%1 Laurent Montel"
+msgstr "© 2013–%1 Laurent Montel"
 
 #: sendlaterinfoconfigwidget.cpp:39
 #, kde-format

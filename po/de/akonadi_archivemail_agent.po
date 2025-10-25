@@ -114,10 +114,9 @@ msgid "Archive emails automatically."
 msgstr "E-Mails automatisch archivieren"
 
 #: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#, kde-format
 msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014-%1 Laurent Montel"
+msgstr "© 2014–%1 Laurent Montel"
 
 #: archivemailwidget.cpp:96
 #, kde-format
