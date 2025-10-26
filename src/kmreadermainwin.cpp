@@ -639,7 +639,7 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngin
         job->setProperty("imageUrl", imageUrl);
         job->setProperty("url", aUrl);
         job->setProperty("webhitresult", QVariant::fromValue(result));
-        connect(job, &Akonadi::ItemCopyJob::result, this, &KMReaderMainWin::slotContactSearchJobForMessagePopupDone);
+        connect(job, &Akonadi::ContactSearchJob::result, this, &KMReaderMainWin::slotContactSearchJobForMessagePopupDone);
     } else {
         showMessagePopup(mMsg, aUrl, imageUrl, aPoint, false, false, result);
     }
