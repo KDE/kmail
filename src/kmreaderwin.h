@@ -12,6 +12,7 @@
 
 #include <Akonadi/Item>
 #include <KContacts/Addressee>
+#include <MessageComposer/MDNAdviceHelper>
 #include <MessageViewer/MDNWarningWidget>
 #include <MessageViewer/Viewer>
 #include <MimeTreeParser/BodyPart>
@@ -215,7 +216,7 @@ private:
     KMAIL_NO_EXPORT void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
     KMAIL_NO_EXPORT void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
     KMAIL_NO_EXPORT void sendMdnInfo(const Akonadi::Item &item);
-    KMAIL_NO_EXPORT void slotShowMdnInfo(const QPair<QString, bool> &mdnInfo);
+    KMAIL_NO_EXPORT void slotShowMdnInfo(const MessageComposer::MDNAdviceHelper::MDNMessateInfo &mdnInfo);
     KMAIL_NO_EXPORT void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
     KMAIL_NO_EXPORT void slotOpenImage();
 

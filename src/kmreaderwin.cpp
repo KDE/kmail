@@ -911,9 +911,9 @@ void KMReaderWin::sendMdnInfo(const Akonadi::Item &item)
     }
 }
 
-void KMReaderWin::slotShowMdnInfo(const QPair<QString, bool> &mdnInfo)
+void KMReaderWin::slotShowMdnInfo(const MessageComposer::MDNAdviceHelper::MDNMessateInfo &mdnInfo)
 {
-    mViewer->showMdnInformations(mdnInfo);
+    mViewer->showMdnInformations(mdnInfo.message, mdnInfo.canDeny);
 }
 
 void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode)
