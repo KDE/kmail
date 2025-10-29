@@ -63,11 +63,9 @@ void KActionMenuTransport::updateTransportMenu()
             const QString name = transport->name().replace(QLatin1Char('&'), QStringLiteral("&&"));
             menuTransportLst.insert(name, transport->id());
         }
-        QMapIterator<QString, int> i(menuTransportLst);
-        while (i.hasNext()) {
-            i.next();
-            auto action = new QAction(i.key(), this);
-            action->setData(i.value());
+        for (const auto &[key, value] : menuTransportLst.asKeyValueRange()) {
+            auto action = new QAction(key, this);
+            action->setData(value);
             menu()->addAction(action);
         }
     }
