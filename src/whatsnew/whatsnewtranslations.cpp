@@ -49,6 +49,7 @@ QList<PimCommon::WhatsNewInfo> WhatsNewTranslations::createWhatsNewInfo() const
             lst += l.toString();
         }
         info.setNewFeatures(lst);
+        info.setBugFixings({i18n("Fix text to speech support (enqueue messages)")});
         info.setVersion(QStringLiteral("6.6.0"));
         listInfo.append(std::move(info));
     }
