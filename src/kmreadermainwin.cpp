@@ -14,7 +14,7 @@
 // widgets like a toolbar.
 
 #include "kmreadermainwin.h"
-
+#include "config-kmail.h"
 #include "historyclosedreader/historyclosedreadermanager.h"
 #include "job/composenewmessagejob.h"
 #include "kmmainwidget.h"
@@ -747,7 +747,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
         mMsgActions->addWebShortcutsMenu(menu, selectedText);
         menu->addSeparator();
         menu->addActions(mReaderWin->viewerPluginActionList(MessageViewer::ViewerPluginInterface::NeedSelection));
-#ifdef HAVE_TEXT_TO_SPEECH_SUPPORT
+#if HAVE_TEXT_TO_SPEECH_SUPPORT
         menu->addSeparator();
         menu->addAction(mReaderWin->speakTextAction());
 #endif

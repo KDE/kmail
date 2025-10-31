@@ -235,7 +235,7 @@ set_package_properties(
             OPTIONAL
 )
 if(TARGET KF6::TextEditTextToSpeech)
-    add_definitions(-DHAVE_TEXT_TO_SPEECH_SUPPORT)
+    set(HAVE_TEXT_TO_SPEECH_SUPPORT TRUE)
 endif()
 find_package(KF6TextAutoCorrectionWidgets ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
 find_package(KF6TextUtils ${KTEXTADDONS_MIN_VERSION} CONFIG REQUIRED)
