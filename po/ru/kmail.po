@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-08-22 17:29+0300\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -8224,6 +8224,11 @@ msgstr "Добавление нового виджета «Что нового?�
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Новый модуль: просмотр размера коллекции"
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -8811,6 +8811,12 @@ msgstr "Auðkenni &sendanda:"
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Ekki tókst ekki að senda (sum) bréf í biðröðinni."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format
@@ -18504,9 +18510,6 @@ msgstr ""
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Sendi bréf %1 af %2: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Ekki tókst ekki að senda (sum) bréf í biðröðinni."
 
 #, fuzzy
 #~| msgid ""

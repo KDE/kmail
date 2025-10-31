@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -8813,6 +8813,12 @@ msgstr "प्रेषक परिचय:"
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "लामवद्ध सन्देश (केही) पठाउन असफल भयो ।"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format
@@ -18867,9 +18873,6 @@ msgstr ""
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "%2 का %1 सन्देश पठाउदैछ: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "लामवद्ध सन्देश (केही) पठाउन असफल भयो ।"
 
 #, fuzzy
 #~| msgid ""

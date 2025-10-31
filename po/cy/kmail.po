@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -8451,6 +8451,12 @@ msgstr "Dynodiad yr &Anfonwr:"
 msgid "New plugin: show collection size."
 msgstr ""
 
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Methodd anfon (rhai) negeseuon yn y rhes."
+
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format
 #| msgid "Message Part Properties"
@@ -15656,9 +15662,6 @@ msgstr ""
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Anfon neges %1 o %2: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Methodd anfon (rhai) negeseuon yn y rhes."
 
 #, fuzzy
 #~| msgid ""

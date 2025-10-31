@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-10-18 17:41+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -8113,6 +8113,12 @@ msgstr "Zerberri trepeta berria gehitzea."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Plugin berria: erakutsi bildumaren neurria."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Huts egin du ilaran gordetako mezua(k) bidaltzean."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -17898,9 +17904,6 @@ msgstr "Zoom: %%1"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "%1/%2 mezua bidaltzen: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Huts egin du ilaran gordetako mezua(k) bidaltzean."
 
 #, fuzzy
 #~| msgid ""

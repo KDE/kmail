@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-10-07 04:35+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -8159,6 +8159,11 @@ msgstr "Añadir nuevo widget de novedades."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Nuevo complemento: mostrar el tamaño de la colección."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

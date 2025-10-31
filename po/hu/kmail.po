@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -8111,6 +8111,12 @@ msgstr "Újdonságok elem hozzáadása."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Új bővítmény: gyűjteményméret megjelenítése."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Nem sikerült elküldeni a későbbre halasztott üzeneteket."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -18057,9 +18063,6 @@ msgstr "Nagyítás: %1%"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Üzenet küldése - %1/%2: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Nem sikerült elküldeni a későbbre halasztott üzeneteket."
 
 #~ msgid ""
 #~ "Sending aborted:\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2014-08-15 15:47+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -8783,6 +8783,12 @@ msgstr "En nieg Identiteet tofögen"
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Senenn vun (en poor) töven Narichten fehlslaan."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -18918,9 +18924,6 @@ msgstr "Ansichtgrött"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Naricht %1 vun %2 warrt loosstüert: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Senenn vun (en poor) töven Narichten fehlslaan."
 
 #~ msgid ""
 #~ "Sending aborted:\n"

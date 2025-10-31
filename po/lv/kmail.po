@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-08-21 12:57+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -8105,6 +8105,12 @@ msgstr "Pievienot jaunu „kas jauns“ logdaļu."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Jauns spraudnis: rādīt kolekcijas izmēru."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Neizdevās nosūtīt (dažas) ierindotās vēstules."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -17202,9 +17208,6 @@ msgstr "Tālummaiņa: %1%"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Sūta %1. vēsuli no %2: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Neizdevās nosūtīt (dažas) ierindotās vēstules."
 
 #~ msgid ""
 #~ "Sending aborted:\n"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-10-07 07:24+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -8159,6 +8159,11 @@ msgstr "Dodaj nov gradnik WhatsNew."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Nov vtičnik: prikaže velikost zbirke."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

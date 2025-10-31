@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail-1.1\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2005-01-23 05:51+0100\n"
 "Last-Translator: Jañ-Mai Drapier <jan-mai.drapier@mail.dotcom.fr>\n"
 "Language-Team: Brezhoneg <Suav.Icb@wanadoo.fr>\n"
@@ -8221,6 +8221,12 @@ msgstr "Anvelezh"
 msgid "New plugin: show collection size."
 msgstr ""
 
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Falladur o kas (lod ar) kemennadoù el lost."
+
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format
 #| msgid "Message Part Properties"
@@ -13989,9 +13995,6 @@ msgstr ""
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Emaon o kas ar c'hemennad %1 diwar %2: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Falladur o kas (lod ar) kemennadoù el lost."
 
 #~ msgid "Sending aborted."
 #~ msgstr "Nulaet eo ar gas."

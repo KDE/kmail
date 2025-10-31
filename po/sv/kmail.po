@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-10-10 21:30+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -8097,6 +8097,12 @@ msgstr "Lägg till ny vad-är-nytt grafisk komponent."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Nytt insticksprogram: Visa samlingsstorlek."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Misslyckades med att skicka (vissa) köade brev."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -18166,9 +18172,6 @@ msgstr "Zoom: %1 %"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Skickar brev %1 av %2: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Misslyckades med att skicka (vissa) köade brev."
 
 #~ msgid ""
 #~ "Sending aborted:\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -8718,6 +8718,12 @@ msgstr "Жаңа іс-әлпетін қосу"
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Кезектегі (кейбір) хаттарды жіберу қатесі."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format
@@ -18704,9 +18710,6 @@ msgstr "Масштаб"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "%2: %3 дегеннің %1 хатты жіберу"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Кезектегі (кейбір) хаттарды жіберу қатесі."
 
 #, fuzzy
 #~| msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-09-02 17:56+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -8159,6 +8159,11 @@ msgstr "Un nove widget de cosa es nove."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Nove plugin: monstra grandor de collection."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

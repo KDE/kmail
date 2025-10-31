@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2025-10-07 23:41+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -8189,6 +8189,12 @@ msgstr "Nieuw widget Wat-is-nieuw toevoegen."
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Nieuwe plug-in: grootte van verzameling tonen."
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Het verzenden van (enkele) berichten in de wachtrij is mislukt."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -18422,9 +18428,6 @@ msgstr "Zoomen: %1%"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Bericht %1 van %2 wordt verzonden: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Het verzenden van (enkele) berichten in de wachtrij is mislukt."
 
 #~ msgid ""
 #~ "Sending aborted:\n"

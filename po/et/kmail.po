@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-10-13 00:42+0000\n"
+"POT-Creation-Date: 2025-10-31 00:43+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -8655,6 +8655,12 @@ msgstr "Lisa uus identiteet"
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:52
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Järjekorras olnud kirjade saatmine nurjus."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -18632,9 +18638,6 @@ msgstr "Suurendus: %1%"
 #~ msgctxt "%3: subject of message"
 #~ msgid "Sending message %1 of %2: %3"
 #~ msgstr "Saadetakse sõnumit %1 kokku %2 sõnumist: %3"
-
-#~ msgid "Failed to send (some) queued messages."
-#~ msgstr "Järjekorras olnud kirjade saatmine nurjus."
 
 #~ msgid ""
 #~ "Sending aborted:\n"
