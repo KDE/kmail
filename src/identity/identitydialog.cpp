@@ -1086,7 +1086,7 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     updateVcardButton();
     if (mVcardFilename.isEmpty()) {
         mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
-        QFileInfo fileInfo(mVcardFilename);
+        const QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
     } else {
         // Convert path.
