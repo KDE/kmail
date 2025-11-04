@@ -85,7 +85,7 @@ msgid ""
 "You will be presented with a dialog where you can configure the application-"
 "wide shortcuts."
 msgstr ""
-"Une boîte de dialogue va apparaître où vous pouvez configurer les raccourcis "
+"Une boite de dialogue va apparaitre où vous pouvez configurer les raccourcis "
 "à applicable à toute l'application."
 
 #: ktnefmain.cpp:110

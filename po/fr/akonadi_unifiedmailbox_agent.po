@@ -38,7 +38,7 @@ msgstr "Supprimer"
 #: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
-msgstr "Voulez-vous vraiment supprimer la boîte aux lettres <b>%1</b> ?"
+msgstr "Voulez-vous vraiment supprimer la boite aux lettres <b>%1</b> ?"
 
 #: settingsdialog.cpp:101
 #, kde-format
@@ -72,13 +72,13 @@ msgstr "Boîtes aux lettres unifiées"
 #: unifiedmailboxagent.cpp:167
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
-msgstr "Synchronisation de la boîte aux lettres unifiée %1"
+msgstr "Synchronisation de la boite aux lettres unifiée %1"
 
 #: unifiedmailboxeditor.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
-msgstr "Configurer la boîte aux lettres unifiée"
+msgstr "Configurer la boite aux lettres unifiée"
 
 #: unifiedmailboxeditor.cpp:97
 #, kde-format

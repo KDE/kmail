@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-31 00:43+0000\n"
-"PO-Revision-Date: 2025-09-24 14:05+0200\n"
+"PO-Revision-Date: 2025-11-01 13:16+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.2\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -98,7 +98,7 @@ msgstr "De nombreuses corrections techniques"
 
 #: aboutdata.cpp:47
 msgid "System tray notification"
-msgstr "Notifier l'arrivée de nouveaux messages dans la boîte à miniatures"
+msgstr "Notifier l'arrivée de nouveaux messages dans la boite à miniatures"
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
@@ -148,7 +148,7 @@ msgstr "Amélioration des processus asynchrones"
 
 #: aboutdata.cpp:75
 msgid "Enhanced configuration dialogs"
-msgstr "Amélioration des boîtes de dialogue de configuration"
+msgstr "Amélioration des boites de dialogue de configuration"
 
 #: aboutdata.cpp:76
 msgid "Notes/calendar integration"
@@ -272,7 +272,7 @@ msgstr "Contributeur important"
 
 #: aboutdata.cpp:149
 msgid "Improve configuration dialog"
-msgstr "Amélioration de la boîte de dialogue de configuration"
+msgstr "Amélioration de la boite de dialogue de configuration"
 
 #: aboutdata.cpp:150
 msgid "Improved message importing"
@@ -621,7 +621,7 @@ msgstr "Lors de toutes les vérifications du courriel"
 #: configuredialog/configureaccountpage.cpp:113
 #, kde-format
 msgid "Send &messages in outbox folder:"
-msgstr "Envo&yer les messages de la boîte d'envoi :"
+msgstr "Envo&yer les messages de la boite d'envoi :"
 
 #: configuredialog/configureaccountpage.cpp:119
 #, kde-format
@@ -982,7 +982,7 @@ msgstr "Boîte à miniatures"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "Activer la boîte à miniatures du système"
+msgstr "Activer la boite à miniatures du système"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
@@ -1470,7 +1470,7 @@ msgstr "&Valeur :"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
-"« Content-Type » n'est pas une chaîne permise. Cette en-tête ne sera pas "
+"« Content-Type » n'est pas une chaine permise. Cette en-tête ne sera pas "
 "enregistrée."
 
 #: configuredialog/configurecomposerpage.cpp:933
@@ -3167,7 +3167,7 @@ msgid ""
 msgstr ""
 "<qt> <h3>Votre nom</h3> <p> Ce champ doit comporter votre nom, comme vous "
 "voulez qu'il apparaisse dans l'en-tête du courrier électronique qui sera "
-"envoyé.</p> <p>Si vous le laissez vide, votre vrai nom n'apparaîtra pas, "
+"envoyé.</p> <p>Si vous le laissez vide, votre vrai nom n'apparaitra pas, "
 "seulement l'adresse électronique.</p></qt>"
 
 #: identity/identitydialog.cpp:390
@@ -5096,18 +5096,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Rappel des messages suivis…"
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgid "Expand All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Déplier tous les groupes"
+msgstr "Tout développer"
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgid "Collapse All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Réduire tous les groupes"
+msgstr "Tout réduire"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
@@ -5692,7 +5690,7 @@ msgstr "Modifier la recherche…"
 #: kmmainwidget.cpp:4208
 #, kde-format
 msgid "Configure Unified Mailbox"
-msgstr "Configurer la boîte aux lettres unifiée"
+msgstr "Configurer la boite aux lettres unifiée"
 
 #: kmmainwidget.cpp:4219
 #, kde-format
@@ -5755,7 +5753,7 @@ msgstr ""
 "Voulez-vous activer la fonctionnalité « Boîte aux lettres unifiée » afin "
 "d'afficher de manière unifiée le contenu de vos dossiers « Boîte de "
 "réception », « Envoyés » et « Brouillons » ?\n"
-"Vous pouvez configurer les boîtes aux lettres unifiées, créer des boîtes aux "
+"Vous pouvez configurer les boites aux lettres unifiées, créer des boites aux "
 "lettres personnalisées\n"
 "ou désactiver entièrement la fonctionnalité dans les paramètres des modules "
 "externes de KMail."
@@ -5763,13 +5761,13 @@ msgstr ""
 #: kmmainwidget.cpp:5058
 #, kde-format
 msgid "Enable Unified Mailboxes?"
-msgstr "Activer les boîtes aux lettres unifiées ?"
+msgstr "Activer les boites aux lettres unifiées ?"
 
 #: kmmainwidget.cpp:5059
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
-msgstr "Activer les boîtes aux lettres unifiées"
+msgstr "Activer les boites aux lettres unifiées"
 
 #: kmmainwidget.cpp:5060
 #, kde-format
@@ -6018,7 +6016,7 @@ msgid ""
 "You will be presented with a dialog where you can create and send a new "
 "email message."
 msgstr ""
-"Une boîte de dialogue s'affichera où vous pourrez créer et envoyer un "
+"Une boite de dialogue s'affichera où vous pourrez créer et envoyer un "
 "nouveau courrier électronique."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:54
@@ -6100,7 +6098,7 @@ msgid ""
 "Choosing this will show a dialog where you can select which summaries you "
 "want to see and also allow you to configure the summaries to your liking."
 msgstr ""
-"Ce choix vous présentera une boîte de dialogue dans laquelle vous pouvez "
+"Ce choix vous présentera une boite de dialogue dans laquelle vous pouvez "
 "sélectionner ce que vous voulez voir et vous permettant aussi de configurer "
 "les sommaires à votre guise."
 
@@ -6601,7 +6599,7 @@ msgid ""
 "automatically at all. </p></qt>"
 msgstr ""
 "<qt><p>Sélectionnez si vous souhaitez que KMail envoie les messages de la "
-"boîte d'envoi lors de toutes les vérifications de nouveaux messages, "
+"boite d'envoi lors de toutes les vérifications de nouveaux messages, "
 "uniquement lors des vérifications manuelles, ou si vous ne voulez pas qu'ils "
 "soient envoyés automatiquement.</p></qt>"
 
@@ -6683,7 +6681,7 @@ msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
 "email accounts are detected. We only ever ask once."
 msgstr ""
-"Demander aux utilisateurs s'ils veulent activer les boîtes aux lettres "
+"Demander aux utilisateurs s'ils veulent activer les boites aux lettres "
 "unifiées lorsque plusieurs comptes de courriel sont détectés. Nous ne "
 "demanderons qu'une seule fois."
 
@@ -7446,9 +7444,9 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Avertir si un certificat dans la chaîne expire</h1>\n"
+"<h1>Avertir si un certificat dans la chaine expire</h1>\n"
 "Sélectionner le nombre minimum de jours pendant lesquels tous les "
-"certificats dans la chaîne de certificats doivent être valables sans lancer "
+"certificats dans la chaine de certificats doivent être valables sans lancer "
 "d'avertissement.\n"
 "<p>\n"
 "Le réglage recommandé par SPHINX est de 14 jours.\n"
@@ -8273,10 +8271,11 @@ msgid "New plugin: show collection size."
 msgstr "Nouveau module externe : afficher la taille de la collection."
 
 #: whatsnew/whatsnewtranslations.cpp:52
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
+#, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr "Échec de l'envoi de (certains) messages en attente."
+msgstr ""
+"Correction de la prise en charge de la synthèse vocale (Mise en file "
+"d'attente des messages)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

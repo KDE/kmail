@@ -5,14 +5,14 @@
 # Joëlle Cornavin <jcorn@free.fr>, 2012, 2013.
 # Maxime Corteel <mcorteel@gmail.com>, 2014.
 # Simon Depiets <sdepiets@gmail.com>, 2019.
-# SPDX-FileCopyrightText: 2023, 2024 Xavier Besnard <xavier.besnard@kde.org>
+# SPDX-FileCopyrightText: 2023, 2024, 2025 Xavier Besnard <xavier.besnard@kde.org>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-08-04 14:22+0200\n"
+"PO-Revision-Date: 2025-10-18 17:15+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -20,9 +20,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 23.08.5\n"
-"X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
+"X-Environment: kde\n"
+"X-Generator: Lokalize 25.08.2\n"
 "X-Text-Markup: kde4\n"
 
 #: filterlogdialog.cpp:44
@@ -193,7 +193,7 @@ msgstr "Filtrage des messages"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Démarrage"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -204,7 +204,7 @@ msgstr "Journal de filtre de courrier électronique activé"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Afficher le journal"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -217,9 +217,8 @@ msgid "Filtering in %1"
 msgstr "Filtrage dans %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Filtrage des messages"
-msgstr[1] "Filtrage des messages"
+msgstr[0] "Le filtrage est terminé. Le message %1 a été traité."
+msgstr[1] "Le filtrage est terminé. %1 messages ont été traités."
