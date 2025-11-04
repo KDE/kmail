@@ -20,19 +20,6 @@ FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KShared
     , mWidget(new FollowUpReminderInfoWidget(parent))
 {
     parent->layout()->addWidget(mWidget);
-
-    KAboutData aboutData = KAboutData(QStringLiteral("followupreminderagent"),
-                                      i18n("Follow Up Reminder Agent"),
-                                      QStringLiteral(KDEPIM_VERSION),
-                                      i18n("Follow Up Reminder"),
-                                      KAboutLicense::GPL_V2,
-                                      i18n("© 2014–%1 Laurent Montel", QStringLiteral("2025")));
-
-    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
-
-    aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
-
-    setKAboutData(aboutData);
 }
 
 FollowUpReminderInfoConfigWidget::~FollowUpReminderInfoConfigWidget() = default;

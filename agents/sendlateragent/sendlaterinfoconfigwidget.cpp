@@ -29,20 +29,6 @@ SendLaterInfoConfigWidget::SendLaterInfoConfigWidget(const KSharedConfigPtr &con
     , mWidget(new SendLaterWidget(parent))
 {
     parent->layout()->addWidget(mWidget);
-    KAboutData aboutData = KAboutData(QStringLiteral("sendlateragent"),
-                                      i18n("Send Later Agent"),
-                                      QStringLiteral(KDEPIM_VERSION),
-                                      i18n("Send emails later agent."),
-                                      KAboutLicense::GPL_V2,
-                                      i18n("© 2013–%1 Laurent Montel", QStringLiteral("2025")));
-
-    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
-
-    aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
-
-    setKAboutData(aboutData);
-
-    aboutData.setProductName(QByteArrayLiteral("Akonadi/SendLaterAgent"));
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
 }
 
