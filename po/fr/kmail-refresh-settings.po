@@ -83,7 +83,7 @@ msgstr "Suppression des paramètres « Astuce du Jour » obsolètes : termin�
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr ""
-"Suppression des paramètres de boîtes de dialogue dans le fichier « %1 » : "
+"Suppression des paramètres de boites de dialogue dans le fichier « %1 » : "
 "terminé"
 
 #: refreshsettingscleanuppage.cpp:76
@@ -102,7 +102,7 @@ msgstr ""
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr ""
-"Nettoyage de la taille des boîtes de dialogue dans le fichier de "
+"Nettoyage de la taille des boites de dialogue dans le fichier de "
 "configuration « %1 » : terminé"
 
 #: refreshsettingsfirstpage.cpp:20
