@@ -108,7 +108,7 @@ QString IdentityEditVcardDialog::saveVcard() const
     KContacts::VCardConverter converter;
     QFile file(mVcardFileName);
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        const QByteArray data = converter.exportVCard(addr, KContacts::VCardConverter::v3_0);
+        const QByteArray data = converter.exportVCard(addr, KContacts::VCardConverter::v4_0);
         file.write(data);
         file.flush();
         file.close();
