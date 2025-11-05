@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 15:17+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 25.08.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Iñigo Salvador Azurmendi"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "xalba@ni.eus"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -104,44 +114,6 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Ez ezabatu"
 
-#: sendlaterinfoconfigwidget.cpp:33
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Beranduago bidaltzeko agentea"
-
-#: sendlaterinfoconfigwidget.cpp:35
-#, kde-format
-msgid "Send emails later agent."
-msgstr "E-postak beranduago bidaltzeko agentea"
-
-#: sendlaterinfoconfigwidget.cpp:37
-#, kde-format
-msgid "© 2013–%1 Laurent Montel"
-msgstr "© 2013–%1 Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgid "Maintainer"
-msgstr "Arduraduna"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Iñigo Salvador Azurmendi"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "xalba@ni.eus"
-
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
@@ -210,6 +182,22 @@ msgstr "Aldatu..."
 #, kde-format
 msgid "Delete"
 msgstr "Ezabatu"
+
+#~ msgid "Send Later Agent"
+#~ msgstr "Beranduago bidaltzeko agentea"
+
+#~ msgid "Send emails later agent."
+#~ msgstr "E-postak beranduago bidaltzeko agentea"
+
+#~ msgid "© 2013–%1 Laurent Montel"
+#~ msgstr "© 2013–%1 Laurent Montel"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Arduraduna"
 
 #~ msgctxt "@title:window"
 #~ msgid "Configure"

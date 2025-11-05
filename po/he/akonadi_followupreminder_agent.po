@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 22:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,39 +18,11 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 25.08.0\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "סוכן תזכורת לביצוע"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "תזכורת לביצוע"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014–%1 לורנט מונטל"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "לורנט מונטל"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "מתחזק"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "צוות התרגום של KDE ישראל"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -135,3 +107,19 @@ msgstr "תזכורת לביצוע"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "עדיין בהמתנה לתשובות על ההודעות האלו:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "סוכן תזכורת לביצוע"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "תזכורת לביצוע"
+
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2014–%1 לורנט מונטל"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "לורנט מונטל"
+
+#~ msgid "Maintainer"
+#~ msgstr "מתחזק"

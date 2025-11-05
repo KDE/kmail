@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -17,13 +17,23 @@ msgstr ""
 "X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_archivemail_agent.pot\n"
 "X-Crowdin-File-ID: 45791\n"
 
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "KDE 中国"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-china@kde.org"
+
 #: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "修改存档的邮件"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -102,90 +112,52 @@ msgstr "下个归档在"
 msgid "Storage directory"
 msgstr "存储目录"
 
-#: archivemailwidget.cpp:91
-#, kde-format
-msgid "Archive Mail Agent"
-msgstr "邮件归档代理"
-
-#: archivemailwidget.cpp:93
-#, kde-format
-msgid "Archive emails automatically."
-msgstr "自动归档邮件"
-
-#: archivemailwidget.cpp:95
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr ""
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgid "Maintainer"
-msgstr "维护者"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "KDE 中国"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "kde-china@kde.org"
-
-#: archivemailwidget.cpp:109
+#: archivemailwidget.cpp:97
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "添加..."
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:103
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "打开所在文件夹…"
 
-#: archivemailwidget.cpp:118
+#: archivemailwidget.cpp:106
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "删除"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:157
 #, kde-format
 msgid "Folder: %1"
 msgstr "文件夹：%1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:179
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "%1 天"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "归档会在 %1 完成"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:224
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "您想要删除选中项目吗？"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "删除项目"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:266
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -258,3 +230,16 @@ msgstr "月"
 #, kde-format
 msgid "Years"
 msgstr "年"
+
+#~ msgid "Archive Mail Agent"
+#~ msgstr "邮件归档代理"
+
+#~ msgid "Archive emails automatically."
+#~ msgstr "自动归档邮件"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "维护者"

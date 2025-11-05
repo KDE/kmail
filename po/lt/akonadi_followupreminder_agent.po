@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: l 10n\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2014-07-01 01:59+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
@@ -18,39 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr ""
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr ""
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr ""
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr ""
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr ""
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

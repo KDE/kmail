@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2024-08-03 11:23+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -17,40 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Usługa wiadomości przypominających"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "Wiadomość przypominająca"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright (C) 2014-%1 Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Opiekun"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Łukasz Wojniłowicz"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -134,6 +105,24 @@ msgstr "Wiadomość przypominająca"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Nadal oczekujesz na odpowiedź na te wiadomości:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Usługa wiadomości przypominających"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Wiadomość przypominająca"
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "Copyright (C) 2014-%1 Laurent Montel"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Opiekun"
 
 #~ msgid "Configure"
 #~ msgstr "Ustawienia"

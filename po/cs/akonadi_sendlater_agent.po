@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2024-08-14 11:27+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -16,6 +16,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 24.05.2\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Vít Pelčák"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "vit@pelcak.org"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -103,44 +113,6 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Nemazat"
 
-#: sendlaterinfoconfigwidget.cpp:33
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Agent pro odeslání později"
-
-#: sendlaterinfoconfigwidget.cpp:35
-#, kde-format
-msgid "Send emails later agent."
-msgstr "Agent pro odložené odesílání zpráv."
-
-#: sendlaterinfoconfigwidget.cpp:37
-#, kde-format
-msgid "© 2013–%1 Laurent Montel"
-msgstr ""
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgid "Maintainer"
-msgstr "Správce"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Vít Pelčák"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "vit@pelcak.org"
-
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
@@ -209,3 +181,16 @@ msgstr "Změnit…"
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
+
+#~ msgid "Send Later Agent"
+#~ msgstr "Agent pro odeslání později"
+
+#~ msgid "Send emails later agent."
+#~ msgstr "Agent pro odložené odesílání zpráv."
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Správce"

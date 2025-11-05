@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 22:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,13 +18,23 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 25.08.0\n"
 
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "צוות התרגום של KDE ישראל"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "kde-l10n-he@kde.org"
+
 #: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "שינוי העברת דוא״ל לארכיון"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -103,68 +113,30 @@ msgstr "ההעברה הבאה לארכיון"
 msgid "Storage directory"
 msgstr "תיקיית אחסון"
 
-#: archivemailwidget.cpp:91
-#, kde-format
-msgid "Archive Mail Agent"
-msgstr "סוכן העברת דוא״ל לארכיון"
-
-#: archivemailwidget.cpp:93
-#, kde-format
-msgid "Archive emails automatically."
-msgstr "העברת הודעות לארכיון אוטומטית."
-
-#: archivemailwidget.cpp:95
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014–%1 לורנט מונטל"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "לורנט מונטל"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgid "Maintainer"
-msgstr "מתחזק"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "צוות התרגום של KDE ישראל"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "kde-l10n-he@kde.org"
-
-#: archivemailwidget.cpp:109
+#: archivemailwidget.cpp:97
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "הוספה…"
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:103
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "פתיחת התיקייה המכילה…"
 
-#: archivemailwidget.cpp:118
+#: archivemailwidget.cpp:106
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "מחיקה"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:157
 #, kde-format
 msgid "Folder: %1"
 msgstr "תיקייה: %1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:179
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -173,23 +145,23 @@ msgstr[1] "מחרתיים"
 msgstr[2] "%1 יום"
 msgstr[3] "%1 ימים"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "ההעברה לארכיון תתבצע ב־%1"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:224
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "למחוק את הפריטים הנבחרים?"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "מחיקת פריטים"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:266
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -262,6 +234,22 @@ msgstr "חודשים"
 #, kde-format
 msgid "Years"
 msgstr "שנים"
+
+#~ msgid "Archive Mail Agent"
+#~ msgstr "סוכן העברת דוא״ל לארכיון"
+
+#~ msgid "Archive emails automatically."
+#~ msgstr "העברת הודעות לארכיון אוטומטית."
+
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2014–%1 לורנט מונטל"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "לורנט מונטל"
+
+#~ msgid "Maintainer"
+#~ msgstr "מתחזק"
 
 #~ msgid "Add..."
 #~ msgstr "הוספה…"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-21 12:52+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -18,39 +18,11 @@ msgstr ""
 "2);\n"
 "X-Generator: Lokalize 25.08.0\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Atgādinājumu aģents"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "Atgādinājumi"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014—%1 Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Uzturētājs"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Toms Trasūns"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -134,3 +106,19 @@ msgstr "Atgādinājums"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Joprojām gaidāt atbildi uz šo e-pastu:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Atgādinājumu aģents"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Atgādinājumi"
+
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2014—%1 Laurent Montel"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Uzturētājs"

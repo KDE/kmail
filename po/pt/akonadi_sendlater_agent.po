@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2022-03-25 16:29+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -17,6 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-POFile-SpellExtra: Laurent Montel\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "José Nuno Pires"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "zepires@gmail.com"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -105,46 +115,6 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Não Remover"
 
-#: sendlaterinfoconfigwidget.cpp:33
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Agente de Envio Posterior"
-
-#: sendlaterinfoconfigwidget.cpp:35
-#, kde-format
-msgid "Send emails later agent."
-msgstr "Agente para envio posterior de mensagens."
-
-#: sendlaterinfoconfigwidget.cpp:37
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2013-%1 Laurent Montel"
-msgid "© 2013–%1 Laurent Montel"
-msgstr "'Copyright' (C) 2013-%1 Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgid "Maintainer"
-msgstr "Manutenção"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "José Nuno Pires"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "zepires@gmail.com"
-
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
@@ -215,6 +185,26 @@ msgstr "Modificar..."
 #, kde-format
 msgid "Delete"
 msgstr "Apagar"
+
+#~ msgid "Send Later Agent"
+#~ msgstr "Agente de Envio Posterior"
+
+#~ msgid "Send emails later agent."
+#~ msgstr "Agente para envio posterior de mensagens."
+
+#, fuzzy
+#~| msgid "Copyright (C) 2013-%1 Laurent Montel"
+#~ msgid "© 2013–%1 Laurent Montel"
+#~ msgstr "'Copyright' (C) 2013-%1 Laurent Montel"
+
+#, fuzzy
+#~| msgid "Laurent Montel"
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Manutenção"
 
 #~ msgctxt "@title:window"
 #~ msgid "Configure"

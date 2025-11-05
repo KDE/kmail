@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2014-09-18 16:42+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -17,42 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 1.4\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Antwoortnaricht-Anstoothölper"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, fuzzy, kde-format
-#| msgid "Follow Up Reminder Agent"
-msgid "Follow Up Reminder"
-msgstr "Antwoortnaricht-Anstoothölper"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright (C) 2013, 2014 Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Pleger"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Sönke Dibbern"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -142,6 +111,28 @@ msgstr "Antwoortnaricht-Anstoothölper"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Du töövst jümmers noch op en Antwoort op dissen Nettbreef:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Antwoortnaricht-Anstoothölper"
+
+#, fuzzy
+#~| msgid "Follow Up Reminder Agent"
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Antwoortnaricht-Anstoothölper"
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "Copyright (C) 2013, 2014 Laurent Montel"
+
+#, fuzzy
+#~| msgid "Laurent Montel"
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Pleger"
 
 #~ msgid "Configure"
 #~ msgstr "Instellen"

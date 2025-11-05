@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -20,40 +20,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.08.0\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Nyomkövető emlékeztető ügynök"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "Nyomkövető emlékeztető"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright © Laurent Montel, 2014-%1."
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Karbantartó"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Kiszel Kristóf,Úr Balázs"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -136,6 +107,24 @@ msgstr "Nyomkövető emlékeztető"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Még mindig választ vár ezekre a levelekre:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Nyomkövető emlékeztető ügynök"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Nyomkövető emlékeztető"
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "Copyright © Laurent Montel, 2014-%1."
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Karbantartó"
 
 #~ msgid "Configure"
 #~ msgstr "Beállítás"

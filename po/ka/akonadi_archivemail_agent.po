@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 08:05+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -18,13 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.6\n"
 
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Temuri Doghonadze"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "Temuri.doghonadze@gmail.com"
+
 #: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "არქივის ელფოსტის შეცვლა"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -103,91 +113,53 @@ msgstr "შემდეგი დაარქივების დრო"
 msgid "Storage directory"
 msgstr "საცავის საქაღალდე"
 
-#: archivemailwidget.cpp:91
-#, kde-format
-msgid "Archive Mail Agent"
-msgstr "არქივის ელფოსტის აგენტი"
-
-#: archivemailwidget.cpp:93
-#, kde-format
-msgid "Archive emails automatically."
-msgstr "ელფოსტების ავტომატური არქივი."
-
-#: archivemailwidget.cpp:95
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014-%1 Laurent Montel"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgid "Maintainer"
-msgstr "წამყვანი პროგრამისტი"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Temuri Doghonadze"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "Temuri.doghonadze@gmail.com"
-
-#: archivemailwidget.cpp:109
+#: archivemailwidget.cpp:97
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "დამატება…"
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:103
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "შემცველი საქაღალდის გახსნა…"
 
-#: archivemailwidget.cpp:118
+#: archivemailwidget.cpp:106
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "წაშლა"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:157
 #, kde-format
 msgid "Folder: %1"
 msgstr "საქაღალდე: %1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:179
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "ხვალ"
 msgstr[1] "%1 დღეში"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "არქივი შეიქმნება %1"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:224
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ მონიშნული ჩანაწერები?"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "ჩანაწერების წაშლა"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:266
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -261,6 +233,22 @@ msgstr "თვე"
 #, kde-format
 msgid "Years"
 msgstr "წელი"
+
+#~ msgid "Archive Mail Agent"
+#~ msgstr "არქივის ელფოსტის აგენტი"
+
+#~ msgid "Archive emails automatically."
+#~ msgstr "ელფოსტების ავტომატური არქივი."
+
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2014-%1 Laurent Montel"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "წამყვანი პროგრამისტი"
 
 #~ msgid "Add..."
 #~ msgstr "დამატება..."

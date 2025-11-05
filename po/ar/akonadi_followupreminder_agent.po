@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 18:44+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -19,39 +19,11 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Lokalize 23.08.5\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "عميل متابعة التّذكيرات"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "متابعة التّذكيرات"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, kde-format
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014–%1 لوران مونتال"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "لوران مونتال"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "الصائن"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "صفا الفليج"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -138,6 +110,22 @@ msgstr "متابعة التّذكيريات"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "ما زلت تنتظر جوابًا لهذا الرسائل:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "عميل متابعة التّذكيرات"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "متابعة التّذكيرات"
+
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2014–%1 لوران مونتال"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "لوران مونتال"
+
+#~ msgid "Maintainer"
+#~ msgstr "الصائن"
 
 #~ msgid "Configure"
 #~ msgstr "اضبط"

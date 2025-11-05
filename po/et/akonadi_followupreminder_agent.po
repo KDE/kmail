@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2020-01-02 11:41+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -17,41 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 19.08.1\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Vastamise meeldetuletuse agent"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "Vastamise meeldetuletus"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-2020 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "Autoriõigus (C) 2014-2020: Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Hooldaja"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Marek Laane"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -142,6 +112,26 @@ msgstr "Vastamise meeldetuletus"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Ootad endiselt vastust kirjale:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Vastamise meeldetuletuse agent"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Vastamise meeldetuletus"
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014-2020 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "Autoriõigus (C) 2014-2020: Laurent Montel"
+
+#, fuzzy
+#~| msgid "Laurent Montel"
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Hooldaja"
 
 #~ msgid "Configure"
 #~ msgstr "Seadistamine"

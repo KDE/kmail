@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2024-08-03 12:55+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -17,13 +17,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 24.05.2\n"
 
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Steve Allewell"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "steve.allewell@gmail.com"
+
 #: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modify Archive Mail"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -102,92 +112,53 @@ msgstr "Next archive in"
 msgid "Storage directory"
 msgstr "Storage directory"
 
-#: archivemailwidget.cpp:91
-#, kde-format
-msgid "Archive Mail Agent"
-msgstr "Archive Mail Agent"
-
-#: archivemailwidget.cpp:93
-#, kde-format
-msgid "Archive emails automatically."
-msgstr "Archive emails automatically."
-
-#: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "Copyright (C) 2014-%1 Laurent Montel"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgid "Maintainer"
-msgstr "Maintainer"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Steve Allewell"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "steve.allewell@gmail.com"
-
-#: archivemailwidget.cpp:109
+#: archivemailwidget.cpp:97
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Add…"
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:103
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Open Containing Folder…"
 
-#: archivemailwidget.cpp:118
+#: archivemailwidget.cpp:106
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Delete"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:157
 #, kde-format
 msgid "Folder: %1"
 msgstr "Folder: %1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:179
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Tomorrow"
 msgstr[1] "%1 days"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Archive will be done %1"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:224
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Do you want to delete the selected items?"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Delete Items"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:266
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -264,6 +235,24 @@ msgstr "Months"
 #, kde-format
 msgid "Years"
 msgstr "Years"
+
+#~ msgid "Archive Mail Agent"
+#~ msgstr "Archive Mail Agent"
+
+#~ msgid "Archive emails automatically."
+#~ msgstr "Archive emails automatically."
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "Copyright (C) 2014-%1 Laurent Montel"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Maintainer"
 
 #~ msgid "Add..."
 #~ msgstr "Add..."

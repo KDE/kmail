@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,6 +18,16 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "Časlav Ilić"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "caslav.ilic@gmx.net"
+
 # >> @title:window
 #: addarchivemaildialog.cpp:21
 #, fuzzy, kde-format
@@ -27,7 +37,7 @@ msgid "Modify Archive Mail"
 msgstr "Izmena arhive pošte"
 
 # >> @title:window
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:279
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
@@ -118,72 +128,32 @@ msgstr "sledeće arhiviranje za"
 msgid "Storage directory"
 msgstr "fascikla skladištenja"
 
-#: archivemailwidget.cpp:91
-#, kde-format
-msgid "Archive Mail Agent"
-msgstr "Agent za arhiviranje pošte"
-
-#: archivemailwidget.cpp:93
-#, kde-format
-msgid "Archive emails automatically."
-msgstr "Arhivirajte poštu automatski."
-
-#: archivemailwidget.cpp:95
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2012-2018 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2012–2018, Loren Montel"
-
-#: archivemailwidget.cpp:96
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Loren Montel"
-
-#: archivemailwidget.cpp:96
-#, kde-format
-msgid "Maintainer"
-msgstr "Održavalac"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Časlav Ilić"
-
-#: archivemailwidget.cpp:98
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "caslav.ilic@gmx.net"
-
-#: archivemailwidget.cpp:109
+#: archivemailwidget.cpp:97
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: archivemailwidget.cpp:115
+#: archivemailwidget.cpp:103
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Otvori obuhvatajuću fasciklu..."
 
-#: archivemailwidget.cpp:118
+#: archivemailwidget.cpp:106
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action"
 msgid "Delete"
 msgstr "Obriši"
 
-#: archivemailwidget.cpp:169
+#: archivemailwidget.cpp:157
 #, kde-format
 msgid "Folder: %1"
 msgstr "Fascikla: %1"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:179
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -192,26 +162,26 @@ msgstr[1] "%1 dana"
 msgstr[2] "%1 dana"
 msgstr[3] "sutra"
 
-#: archivemailwidget.cpp:200
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Archive will be done %1"
 msgstr ""
 "Arhiviranje će biti završeno %1|/|Arhiviranje će biti završeno $[na-riječ %1 "
 "gen]"
 
-#: archivemailwidget.cpp:236
+#: archivemailwidget.cpp:224
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Želite li da obrišete izabrane stavke?"
 
-#: archivemailwidget.cpp:237
+#: archivemailwidget.cpp:225
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Obriši"
 
-#: archivemailwidget.cpp:278
+#: archivemailwidget.cpp:266
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -287,6 +257,26 @@ msgstr "meseci"
 #, kde-format
 msgid "Years"
 msgstr "godina"
+
+#~ msgid "Archive Mail Agent"
+#~ msgstr "Agent za arhiviranje pošte"
+
+#~ msgid "Archive emails automatically."
+#~ msgstr "Arhivirajte poštu automatski."
+
+#, fuzzy
+#~| msgid "Copyright (C) 2012-2018 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2012–2018, Loren Montel"
+
+#, fuzzy
+#~| msgid "Laurent Montel"
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Loren Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Održavalac"
 
 #~ msgid "Add..."
 #~ msgstr "Dodaj..."

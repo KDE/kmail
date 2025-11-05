@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,41 +18,11 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Podsetnik na odgovor"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "Podsetnik na odgovor"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-2018 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "© 2014–2018, Loren Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Loren Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Održavalac"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Časlav Ilić"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -152,3 +122,23 @@ msgstr "Podsetnik na odgovor"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "I dalje čekate odgovor na ovu poruku:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Podsetnik na odgovor"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Podsetnik na odgovor"
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014-2018 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "© 2014–2018, Loren Montel"
+
+#, fuzzy
+#~| msgid "Laurent Montel"
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Loren Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Održavalac"

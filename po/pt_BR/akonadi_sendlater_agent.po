@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-20 00:44+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2025-08-22 12:30-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 25.08.0\n"
+
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr "André Marcelo Alvarenga"
+
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr "alvarenga@kde.org"
 
 #: sendlaterconfigurewidget.cpp:56
 #, kde-format
@@ -105,45 +115,6 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Não excluir"
 
-# A tradução do nome da ferramenta como "Agente de Envio" já indica sua funcionalidade, não sendo necessário incluir a palavra "Posterior". (Alvarenga)
-#: sendlaterinfoconfigwidget.cpp:33
-#, kde-format
-msgid "Send Later Agent"
-msgstr "Agente de Envio"
-
-#: sendlaterinfoconfigwidget.cpp:35
-#, kde-format
-msgid "Send emails later agent."
-msgstr "Agente para envio posterior de e-mails."
-
-#: sendlaterinfoconfigwidget.cpp:37
-#, kde-format
-msgid "© 2013–%1 Laurent Montel"
-msgstr "© 2013–%1 Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: sendlaterinfoconfigwidget.cpp:39
-#, kde-format
-msgid "Maintainer"
-msgstr "Mantenedor"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "André Marcelo Alvarenga"
-
-#: sendlaterinfoconfigwidget.cpp:41
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "alvarenga@kde.org"
-
 #: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
@@ -212,6 +183,23 @@ msgstr "Modificar..."
 #, kde-format
 msgid "Delete"
 msgstr "Excluir"
+
+# A tradução do nome da ferramenta como "Agente de Envio" já indica sua funcionalidade, não sendo necessário incluir a palavra "Posterior". (Alvarenga)
+#~ msgid "Send Later Agent"
+#~ msgstr "Agente de Envio"
+
+#~ msgid "Send emails later agent."
+#~ msgstr "Agente para envio posterior de e-mails."
+
+#~ msgid "© 2013–%1 Laurent Montel"
+#~ msgstr "© 2013–%1 Laurent Montel"
+
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Mantenedor"
 
 #~ msgctxt "@title:window"
 #~ msgid "Configure"

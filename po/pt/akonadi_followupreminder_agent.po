@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-08-30 00:43+0000\n"
+"POT-Creation-Date: 2025-11-05 00:45+0000\n"
 "PO-Revision-Date: 2022-03-25 16:28+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -13,41 +13,11 @@ msgstr ""
 "X-POFile-SpellExtra: Laurent Montel Lembretes\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: followupreminderinfoconfigwidget.cpp:25
-#, kde-format
-msgid "Follow Up Reminder Agent"
-msgstr "Agente de Lembretes de Seguimentos"
-
-#: followupreminderinfoconfigwidget.cpp:27
-#, kde-format
-msgid "Follow Up Reminder"
-msgstr "Lembrete de Seguimento"
-
-#: followupreminderinfoconfigwidget.cpp:29
-#, fuzzy, kde-format
-#| msgid "Copyright (C) 2014-%1 Laurent Montel"
-msgid "© 2014–%1 Laurent Montel"
-msgstr "'Copyright' (C) 2014-%1 de Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
-msgctxt "@info:credit"
-msgid "Laurent Montel"
-msgstr "Laurent Montel"
-
-#: followupreminderinfoconfigwidget.cpp:31
-#, kde-format
-msgid "Maintainer"
-msgstr "Manutenção"
-
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "José Nuno Pires"
 
-#: followupreminderinfoconfigwidget.cpp:33
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
@@ -134,3 +104,23 @@ msgstr "Lembrete de Seguimento"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Ainda está à espera de uma resposta para este e-mail:"
+
+#~ msgid "Follow Up Reminder Agent"
+#~ msgstr "Agente de Lembretes de Seguimentos"
+
+#~ msgid "Follow Up Reminder"
+#~ msgstr "Lembrete de Seguimento"
+
+#, fuzzy
+#~| msgid "Copyright (C) 2014-%1 Laurent Montel"
+#~ msgid "© 2014–%1 Laurent Montel"
+#~ msgstr "'Copyright' (C) 2014-%1 de Laurent Montel"
+
+#, fuzzy
+#~| msgid "Laurent Montel"
+#~ msgctxt "@info:credit"
+#~ msgid "Laurent Montel"
+#~ msgstr "Laurent Montel"
+
+#~ msgid "Maintainer"
+#~ msgstr "Manutenção"

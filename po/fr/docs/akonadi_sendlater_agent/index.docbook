@@ -66,7 +66,7 @@
 ><guimenuitem
 >Envoyer plus tard</guimenuitem
 ></menuchoice
->. Cela ouvre une boîte de dialogue qui vous permet de programmer l'envoi de vos courriers électroniques à une date et une heure spécifiées.</para>
+>. Cela ouvre une boite de dialogue qui vous permet de programmer l'envoi de vos courriers électroniques à une date et une heure spécifiées.</para>
 
 <screenshot>
 <screeninfo
@@ -139,7 +139,7 @@
 
 <para
 ><action
->Une boîte de dialogue s'ouvre ; elle vous permet de modifier le programme et de supprimer les courriers électroniques qui ont été envoyés avec la fonctionnalité d'envoi différé.</action>
+>Une boite de dialogue s'ouvre ; elle vous permet de modifier le programme et de supprimer les courriers électroniques qui ont été envoyés avec la fonctionnalité d'envoi différé.</action>
 </para>
 <para
 >Il n'est pas possible de modifier le contenu (corps, en-têtes, &etc;) d'un message programmé pour expédition. </para>
