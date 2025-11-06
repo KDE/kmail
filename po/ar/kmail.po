@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-09 03:30+0000\n"
-"PO-Revision-Date: 2025-10-15 20:20+0400\n"
+"PO-Revision-Date: 2025-11-05 18:13+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -182,7 +182,7 @@ msgstr "التعامل مع LADP، والصيانة"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr "مُساهم رئيسيٌّ في «أكونادي»"
+msgstr "مُساهم رئيس في «أكونادي»"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
