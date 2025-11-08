@@ -65,14 +65,9 @@
 #include <MailCommon/FilterManager>
 #include <MailCommon/MailFilter>
 #include <PimCommon/PimUtil>
-#if HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT
+#include <PimCommonAkonadi/CollectionAclPage>
 #include <TextAddonsWidgets/WhatsNewDialog>
 #include <TextAddonsWidgets/WhatsNewMessageWidget>
-#else
-#include <PimCommon/WhatsNewDialog>
-#include <PimCommon/WhatsNewMessageWidget>
-#endif
-#include <PimCommonAkonadi/CollectionAclPage>
 #include <mailcommon/mailcommonsettings_base.h>
 
 #include <MessageViewer/HeaderStyle>
@@ -225,13 +220,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
         if (!previousNewFeaturesMD5.isEmpty()) {
             const bool hasNewFeature = (previousNewFeaturesMD5 != newFeaturesMD5);
             if (hasNewFeature) {
-#if HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT
                 auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageWidget(this, i18n("KMail"));
                 whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
-#else
-                auto whatsNewMessageWidget = new PimCommon::WhatsNewMessageWidget(this, i18n("KMail"));
-                whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
-#endif
                 whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
                 mTopLayout->addWidget(whatsNewMessageWidget);
                 KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
@@ -4224,11 +4214,7 @@ void KMMainWidget::updateMoveAllToTrash()
 void KMMainWidget::slotShowWhatsNews()
 {
     const WhatsNewTranslations translations;
-#if HAVE_TEXTUTILS_HAS_WHATSNEW_SUPPORT
     TextAddonsWidgets::WhatsNewDialog dlg(translations.createWhatsNewInfo(), this, i18n("KMail"));
-#else
-    PimCommon::WhatsNewDialog dlg(translations.createWhatsNewInfo(), this, i18n("KMail"));
-#endif
     dlg.updateInformations();
     dlg.exec();
 }
