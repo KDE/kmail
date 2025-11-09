@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_sendlater_agent.pot\n"
-"X-Crowdin-File-ID: 45599\n"
+"X-Crowdin-File: /kf6-stable/messages/kmail/akonadi_sendlater_agent.pot\n"
+"X-Crowdin-File-ID: 49716\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -177,16 +177,3 @@ msgstr "修改..."
 #, kde-format
 msgid "Delete"
 msgstr "删除"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "延迟发送助手"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "延迟发送电子邮件助手。"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "维护者"

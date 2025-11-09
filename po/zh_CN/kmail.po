@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kmail/kmail.pot\n"
-"X-Crowdin-File-ID: 45421\n"
+"X-Crowdin-File: /kf6-stable/messages/kmail/kmail.pot\n"
+"X-Crowdin-File-ID: 52632\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1254,7 +1254,7 @@ msgstr "撰写器"
 #: configuredialog/configurecomposerpage.cpp:435
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "激活快速文本格式工具栏"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
@@ -4788,20 +4788,16 @@ msgid "Followup Reminder Messages…"
 msgstr "提醒后续邮件"
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "展开全部线索(&P)"
+msgstr "展开全部"
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "折叠全部线索(&O)"
+msgstr "折叠全部"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
@@ -7837,7 +7833,7 @@ msgstr "新插件：显示集合大小。"
 #: whatsnew/whatsnewtranslations.cpp:52
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr ""
+msgstr "修复文本转语音支持（新增消息）"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

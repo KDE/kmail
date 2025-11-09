@@ -14,9 +14,9 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_followupreminder_agent."
+"X-Crowdin-File: /kf6-stable/messages/kmail/akonadi_followupreminder_agent."
 "pot\n"
-"X-Crowdin-File-ID: 45673\n"
+"X-Crowdin-File-ID: 49852\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -104,16 +104,3 @@ msgstr "后续提醒"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "您仍在等待这些邮件的回复："
-
-#~ msgid "Follow Up Reminder Agent"
-#~ msgstr "后续提醒代理"
-
-#~ msgid "Follow Up Reminder"
-#~ msgstr "后续提醒"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "维护者"
