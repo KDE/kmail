@@ -171,7 +171,7 @@ msgstr "过滤消息"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "正在启动"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -182,7 +182,7 @@ msgstr "邮件过滤器日志已启用"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "显示日志"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -195,8 +195,7 @@ msgid "Filtering in %1"
 msgstr "正在 %1 中过滤"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "过滤消息"
+msgstr[0] "筛选完成，已处理 %1 条消息"

@@ -5,20 +5,21 @@
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2013, 2014, 2015, 2016, 2018, 2019, 2020.
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2019, 2021, 2022.
 # SPDX-FileCopyrightText: 2025 Marcus Gama <marcus.gama@gmail.com>
+# SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-05 00:45+0000\n"
-"PO-Revision-Date: 2025-08-22 12:30-0300\n"
-"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"PO-Revision-Date: 2025-11-08 21:10-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -59,7 +60,7 @@ msgstr "ID da mensagem"
 #: sendlaterconfigurewidget.cpp:69
 #, kde-format
 msgid "No messages waiting…"
-msgstr "Não há mensagens em espera..."
+msgstr "Não há mensagens em espera…"
 
 #: sendlaterconfigurewidget.cpp:94
 #, kde-format
@@ -176,7 +177,7 @@ msgstr "Reenviar"
 #: ui/sendlaterconfigurewidget.ui:31
 #, kde-format
 msgid "Modify…"
-msgstr "Modificar..."
+msgstr "Modificar…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/sendlaterconfigurewidget.ui:38

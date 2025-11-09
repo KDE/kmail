@@ -36,7 +36,7 @@ msgstr "电子邮件地址合并代理程序。"
 #: mailmergeconfiguredialog.cpp:56
 #, kde-format
 msgid "© 2021–%1 Laurent Montel"
-msgstr ""
+msgstr "© 2021–%1 Laurent Montel"
 
 #: mailmergeconfiguredialog.cpp:58
 #, kde-format

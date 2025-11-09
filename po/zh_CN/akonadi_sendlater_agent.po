@@ -177,16 +177,3 @@ msgstr "修改..."
 #, kde-format
 msgid "Delete"
 msgstr "删除"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "延迟发送助手"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "延迟发送电子邮件助手。"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "维护者"
