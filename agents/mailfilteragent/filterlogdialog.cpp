@@ -204,7 +204,7 @@ void FilterLogDialog::readConfig()
         FilterLog::instance()->setMaxLogSize(maxLogSize);
     }
 
-    KConfigGroup geometryGroup(KSharedConfig::openConfig(), QStringLiteral("Geometry"));
+    KConfigGroup geometryGroup(KSharedConfig::openStateConfig(), QStringLiteral("Geometry"));
     const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400));
     if (size.isValid()) {
         resize(size);
@@ -216,7 +216,7 @@ void FilterLogDialog::readConfig()
 FilterLogDialog::~FilterLogDialog()
 {
     disconnect(mTextEdit->editor(), &TextCustomEditor::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
-    KConfigGroup myGroup(KSharedConfig::openConfig(), QStringLiteral("Geometry"));
+    KConfigGroup myGroup(KSharedConfig::openStateConfig(), QStringLiteral("Geometry"));
     myGroup.writeEntry("filterLogSize", size());
     myGroup.sync();
 }
