@@ -179,19 +179,3 @@ msgstr "Промяна…"
 #, kde-format
 msgid "Delete"
 msgstr "Изтриване"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "Агент за отложено изпращане"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "Агент за отложено изпращане на писма."
-
-#~ msgid "© 2013–%1 Laurent Montel"
-#~ msgstr "© 2013–%1 Laurent Montel"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Поддръжка"

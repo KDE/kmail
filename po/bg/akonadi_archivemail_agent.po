@@ -234,22 +234,3 @@ msgstr "Месеци"
 #, kde-format
 msgid "Years"
 msgstr "Години"
-
-#~ msgid "Archive Mail Agent"
-#~ msgstr "Агент за архивиране на поща"
-
-#~ msgid "Archive emails automatically."
-#~ msgstr "Автоматично архивиране на имейли."
-
-#~ msgid "© 2014–%1 Laurent Montel"
-#~ msgstr "Copyright (C) 2014-%1 Laurent Montel"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Поддръжка"
-
-#~ msgid "Add..."
-#~ msgstr "Добавяне..."

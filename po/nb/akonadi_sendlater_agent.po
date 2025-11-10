@@ -181,21 +181,3 @@ msgstr "Endre …"
 #, kde-format
 msgid "Delete"
 msgstr "Slett"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "Send senere-agent"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "Send e-poster senere-agent."
-
-#, fuzzy
-#~ msgid "© 2013–%1 Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#, fuzzy
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Vedlikeholder"
