@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-31 00:43+0000\n"
-"PO-Revision-Date: 2025-10-10 15:24+0200\n"
+"PO-Revision-Date: 2025-11-02 17:12+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -8199,10 +8199,9 @@ msgid "New plugin: show collection size."
 msgstr "Nuova estensione: mostra la dimensione della collezione."
 
 #: whatsnew/whatsnewtranslations.cpp:52
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
+#, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr "Spedizione di alcuni messaggi in attesa non riuscita."
+msgstr "Correzione del supporto di sintesi vocale (coda dei messaggi)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

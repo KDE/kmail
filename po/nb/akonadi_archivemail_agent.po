@@ -236,21 +236,3 @@ msgstr "måneder"
 #, kde-format
 msgid "Years"
 msgstr "År"
-
-#~ msgid "Archive Mail Agent"
-#~ msgstr "Postarkiv-agent"
-
-#~ msgid "Archive emails automatically."
-#~ msgstr "Arkiver e-poster automatisk"
-
-#, fuzzy
-#~ msgid "© 2014–%1 Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#, fuzzy
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Vedlikeholder"
