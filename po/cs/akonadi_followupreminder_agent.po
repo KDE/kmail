@@ -106,16 +106,3 @@ msgstr "Připomínka pro následnou činnost"
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Stále čekáte na odpověď na tyto e-maily:"
-
-#~ msgid "Follow Up Reminder Agent"
-#~ msgstr "Agent připomínek pro následnou činnost"
-
-#~ msgid "Follow Up Reminder"
-#~ msgstr "Připomínka pro následnou činnost"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Správce"

@@ -232,16 +232,3 @@ msgstr "Měsíců"
 #, kde-format
 msgid "Years"
 msgstr "Roky"
-
-#~ msgid "Archive Mail Agent"
-#~ msgstr "Agent archivace pošty"
-
-#~ msgid "Archive emails automatically."
-#~ msgstr "Automaticky archivovat e-maily."
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Správce"

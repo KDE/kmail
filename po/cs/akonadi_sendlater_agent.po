@@ -181,16 +181,3 @@ msgstr "Změnit…"
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "Agent pro odeslání později"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "Agent pro odložené odesílání zpráv."
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Správce"
