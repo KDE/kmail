@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-31 00:43+0000\n"
-"PO-Revision-Date: 2025-11-07 17:58+0100\n"
+"PO-Revision-Date: 2025-11-12 11:26+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -2842,8 +2842,7 @@ msgstr ""
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
-"Изпратената папка не е дефинирана. Моля, задайте я, преди да изпратите "
-"пощата."
+"Няма зададена папка „Изпратени“. Моля, задайте я, преди да изпратите пощата."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
