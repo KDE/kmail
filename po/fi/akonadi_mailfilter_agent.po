@@ -1,6 +1,6 @@
 # Copyright © 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdepim package.
-# SPDX-FileCopyrightText: 2012, 2013, 2018, 2020, 2023, 2024 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2012, 2013, 2018, 2020, 2023, 2024, 2025 Tommi Nieminen <translator@legisign.org>
 # Lasse Liehu <lasse.liehu@gmail.com>, 2012, 2013, 2014.
 #
 # KDE Finnish translation sprint participants:
@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-10-17 00:43+0000\n"
-"PO-Revision-Date: 2024-10-16 17:57+0300\n"
+"PO-Revision-Date: 2025-10-31 20:23+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
@@ -180,7 +180,7 @@ msgstr "Suodatetaan viestejä"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Käynnistyy"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -191,7 +191,7 @@ msgstr "Sähköpostisuodinloki käytössä"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Näytä loki"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -204,9 +204,8 @@ msgid "Filtering in %1"
 msgstr "Suodatetaan: %1"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Suodatetaan viestejä"
-msgstr[1] "Suodatetaan viestejä"
+msgstr[0] "Suodatus valmis: käsiteltiin yksi viesti"
+msgstr[1] "Suodatus valmis: käsiteltiin %1 viestiä"
