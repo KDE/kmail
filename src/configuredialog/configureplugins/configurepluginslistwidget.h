@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include <PimCommon/ConfigurePluginsListWidget>
+#include <PimCommon/ConfigurePluginsWidget>
 #include <PimCommon/PluginUtil>
 #include <QList>
-class ConfigurePluginsListWidget : public PimCommon::ConfigurePluginsListWidget
+class ConfigurePluginsListWidget : public TextAddonsWidgets::ConfigurePluginsWidget
 {
     Q_OBJECT
 public:
@@ -25,7 +25,7 @@ public:
 private:
     void slotConfigureClicked(const QString &configureGroupName, const QString &identifier);
     void initializeAgentPlugins();
-    [[nodiscard]] PimCommon::PluginUtilData createAgentPluginData(const QString &agentIdentifier, const QString &path);
+    [[nodiscard]] TextAddonsWidgets::PluginUtilData createAgentPluginData(const QString &agentIdentifier, const QString &path);
     [[nodiscard]] bool agentActivateState(const QString &agentIdentifier, const QString &pathName);
     void changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable);
     void saveAkonadiAgent();
@@ -41,5 +41,5 @@ private:
     QList<PluginItem *> mPluginConvertTextItems;
     QList<PluginItem *> mPluginConfigureItems;
     QList<PluginItem *> mPluginCheckBeforeDeletingItems;
-    QList<PimCommon::PluginUtilData> mPluginUtilDataList;
+    QList<TextAddonsWidgets::PluginUtilData> mPluginUtilDataList;
 };
