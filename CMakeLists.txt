@@ -262,10 +262,6 @@ set_package_properties(
             REQUIRED
 )
 
-if(${KF6TextAddonsWidgets_VERSION} VERSION_GREATER_EQUAL 1.8.61)
-    set(HAVE_PLUGIN_UTILS_SUPPORT TRUE)
-endif()
-
 configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h)
 
 include_directories(
