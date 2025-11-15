@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-09 00:43+0000\n"
+"POT-Creation-Date: 2025-11-15 00:42+0000\n"
 "PO-Revision-Date: 2025-11-01 13:16+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -1557,62 +1557,62 @@ msgstr "Impression"
 msgid "User Feedback"
 msgstr "Retours des utilisateurs"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:199
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "Modules complémentaires de vérification avant l'envoi"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:208
 #, kde-format
 msgid "Composer Plugins"
 msgstr "Modules complémentaires d'édition"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:216
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "Modules externes de vérification grammaticale"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
 #, kde-format
 msgid "Tools Plugins"
 msgstr "Modules complémentaires d'outils"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:237
 #, kde-format
 msgid "Editor Plugins"
 msgstr "Modules complémentaires d'édition"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
 #, kde-format
 msgid "Message Viewer"
 msgstr "Afficheur de messages"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Modules complémentaires pour WebEngine"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Modules complémentaires de style d'en-tête"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Modules de conversion de texte"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
 #, kde-format
 msgid "Misc"
 msgstr "Divers"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Confirmer la suppression des modules externes de courriels"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Agents Akonadi"

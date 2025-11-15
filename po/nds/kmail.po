@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-09 00:43+0000\n"
+"POT-Creation-Date: 2025-11-15 00:42+0000\n"
 "PO-Revision-Date: 2014-08-15 15:47+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -1665,70 +1665,70 @@ msgstr "Drucken"
 msgid "User Feedback"
 msgstr "Bruker-ID"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:199
 #, fuzzy, kde-format
 #| msgid "Ask Before Sending"
 msgid "Check Before Send Plugins"
 msgstr "Ehr't Loosstüern fragen"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:208
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Composer Plugins"
 msgstr "Narichteneditor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:216
 #, fuzzy, kde-format
 #| msgid "Ask Before Sending"
 msgid "Grammar Checker Plugins"
 msgstr "Ehr't Loosstüern fragen"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Tools Plugins"
 msgstr "Narichteneditor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:237
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Editor Plugins"
 msgstr "Narichteneditor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
 #, fuzzy, kde-format
 #| msgid "Message Structure Viewer"
 msgid "Message Viewer"
 msgstr "Narichten-Struktuurkieker"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
 #, kde-format
 msgid "Webengine Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, fuzzy, kde-format
 #| msgid "Ask Before Sending"
 msgid "Header Style Plugins"
 msgstr "Ehr't Loosstüern fragen"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Text Conversion Plugins"
 msgstr "Narichteneditor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
 #, kde-format
 msgid "Misc"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
 #, fuzzy, kde-format
 #| msgid "Akonadi porting"
 msgid "Akonadi Agents"

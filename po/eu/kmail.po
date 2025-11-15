@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-09 00:43+0000\n"
+"POT-Creation-Date: 2025-11-15 00:42+0000\n"
 "PO-Revision-Date: 2025-10-18 17:41+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1518,62 +1518,62 @@ msgstr "Inprimatzea"
 msgid "User Feedback"
 msgstr "Erabiltzaileen erreakzioa"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:199
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "Egiaztatu bidali aurretik pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:208
 #, kde-format
 msgid "Composer Plugins"
 msgstr "Konposatzaile pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:216
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "Gramatika egiaztatzeko plugina"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
 #, kde-format
 msgid "Tools Plugins"
 msgstr "Tresnen pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:237
 #, kde-format
 msgid "Editor Plugins"
 msgstr "Editorearen pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
 #, kde-format
 msgid "Message Viewer"
 msgstr "Mezu-erakuslea"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Web-motor pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Goiburu-estilo pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Testua bihurtzeko pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
 #, kde-format
 msgid "Misc"
 msgstr "Hainbat"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Baieztatu e-postak ezabatzea pluginak"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi agenteak"

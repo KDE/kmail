@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-09 00:43+0000\n"
+"POT-Creation-Date: 2025-11-15 00:42+0000\n"
 "PO-Revision-Date: 2025-03-22 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -1515,62 +1515,62 @@ msgstr "Presado"
 msgid "User Feedback"
 msgstr "Uzanto-Reago"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:189
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:199
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "Kromaĵoj por Kontrolo Antaŭ Sendado"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:196
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:208
 #, kde-format
 msgid "Composer Plugins"
 msgstr "Komponistaj Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:202
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:216
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "Gramatik-Kontrolilaj Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:212
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
 #, kde-format
 msgid "Tools Plugins"
 msgstr "Ilaj Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:219
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:237
 #, kde-format
 msgid "Editor Plugins"
 msgstr "Redaktilaj Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:227
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
 #, kde-format
 msgid "Message Viewer"
 msgstr "Mesaĝo-Vidilo"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:235
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Webengine-Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:243
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Kapostil-Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:250
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Tekstokonvertilaj Kromaĵoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
 #, kde-format
 msgid "Misc"
 msgstr "Misc"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Kromaĵoj por Konfirmi Forigon de Retpoŝtoj"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi Agentoj"
