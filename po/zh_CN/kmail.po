@@ -20,14 +20,17 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, 玛丽苏, Guo Yunhe, Tyson Tan, Wordless Echo, Integral, 9z"
+msgstr ""
+"KDE 中国, 玛丽苏, Guo Yunhe, Tyson Tan, Wordless Echo, Integral, 9z, "
+"ShiroAzusa"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "kde-china@kde.org, i@marguerite.su, i@guoyunhe.me, tds00@qq.com, "
-"wordless@echo.moe, integral@member.fsf.org, ihchiz@outlook.com"
+"wordless@echo.moe, integral@member.fsf.org, ihchiz@outlook.com, "
+"azusa@shiroazusa.net"
 
 #: aboutdata.cpp:33
 msgid "Maintainer"
@@ -2471,6 +2474,7 @@ msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
+"此收件人使用了 Autocrypt 传播密钥。该密钥来自第三方收件人。此密钥未被验证。"
 
 #: editor/kmcomposerwin.cpp:3812
 #, kde-format
@@ -2479,6 +2483,7 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
+"此收件人使用了 Autocrypt 密钥。该密钥未被验证。收件人希望得到加密回复。"
 
 #: editor/kmcomposerwin.cpp:3816
 #, kde-format
@@ -2487,6 +2492,7 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
+"此收件人使用了 Autocrypt 密钥。该密钥未被验证。收件人不希望收到加密回复。"
 
 #: editor/kmcomposerwin.cpp:3843
 #, kde-format
@@ -2496,6 +2502,8 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"加密密钥不可信。其有效性不足。如果您通过其他渠道确认了密钥指纹，可以对该密钥"
+"进行签名。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:3851
 #, kde-format
@@ -2506,6 +2514,9 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"加密密钥不可信。尚未通过任何途径验证其归属。随着使用次数增加，系统将逐渐信任"
+"该密钥。若您已通过其他渠道确认过密钥指纹，也可手动对该密钥进行签名。点击图标"
+"查看详情。"
 
 #: editor/kmcomposerwin.cpp:3859
 #, kde-format
@@ -2513,7 +2524,7 @@ msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
-msgstr ""
+msgstr "加密密钥不可信。其 TOFU 数据存在冲突。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:3865
 #, kde-format
@@ -2521,7 +2532,7 @@ msgctxt "@info:tooltip"
 msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
-msgstr ""
+msgstr "加密密钥不可信。其 TOFU 数据中的有效性未知。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:3871
 #, kde-format
@@ -2540,6 +2551,9 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"加密密钥仅被部分信任，且使用时间不足，无法验证其归属。随着使用时间增加，系统"
+"将逐步提升该密钥的信任等级。若您已通过其他渠道确认过密钥指纹，也可手动对该密"
+"钥进行签名。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2548,6 +2562,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"加密密钥仅被部分信任。若您已通过其他渠道确认过密钥指纹，也可手动对该密钥进行"
+"签名。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:3893
 #, kde-format
@@ -2558,6 +2574,9 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"加密密钥当前处于部分信任状态，但因其使用次数足够多，系统判断其极有可能由声明"
+"者实际控制。继续使用该密钥将提升其信任等级。若您已通过其他渠道确认过密钥指"
+"纹，也可手动对该密钥进行签名。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2566,6 +2585,8 @@ msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
+"加密密钥已被完全信任。您可以通过对该密钥进行签名来提升其信任等级。点击图标查"
+"看详情。"
 
 #: editor/kmcomposerwin.cpp:3906
 #, kde-format
@@ -2574,6 +2595,7 @@ msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
+"加密密钥已被最终信任，或已被另一个最终信任的密钥签名。点击图标查看详情。"
 
 #: editor/kmcomposerwin.cpp:4023
 #, kde-format
@@ -3415,7 +3437,7 @@ msgstr "您必须为此身份提供一个电子邮件地址。"
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr ""
+msgstr "空电子邮件地址"
 
 #: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
@@ -4650,6 +4672,7 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
+"<html>您是否要删除选中的这 %1 条消息？<br />一旦删除将无法恢复。</html>"
 
 #: kmmainwidget.cpp:2448
 #, kde-format
@@ -4657,13 +4680,14 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>请注意，从经过数字签名的消息中删除附件将导致其签名失效。</p></html>"
 
 #: kmmainwidget.cpp:2453
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
-msgstr ""
+msgstr "<html><p>无法从加密消息中删除附件。<br />加密消息将被忽略。</p></html>"
 
 #: kmmainwidget.cpp:2458
 #, kde-format
@@ -5207,7 +5231,7 @@ msgstr "应用所有过滤器"
 #: kmmainwidget.cpp:3534
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr ""
+msgstr "将过滤器应用于文件夹及其所有子文件夹"
 
 #: kmmainwidget.cpp:3539
 #, kde-format
