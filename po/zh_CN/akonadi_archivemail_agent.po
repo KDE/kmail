@@ -90,7 +90,7 @@ msgstr "归档"
 #, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
-msgstr ""
+msgstr "使用范围"
 
 #: archivemailwidget.cpp:72
 #, kde-format
