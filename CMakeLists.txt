@@ -83,7 +83,7 @@ set(GPG_ERROR_REQUIRED_VERSION "1.36")
 set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
 set(KDEPIM_LIB_SOVERSION "6")
 
-set(KTEXTADDONS_MIN_VERSION "1.8.64")
+set(KTEXTADDONS_MIN_VERSION "1.8.69")
 option(
     KDEPIM_ENTERPRISE_BUILD
     "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client."
