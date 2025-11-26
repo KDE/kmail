@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2025-10-31 09:38+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -3976,88 +3976,139 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "הגדרת נושא ההודעה"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "נושא"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "שליחת עותק: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address type:"
+msgid "Address"
+msgstr "סוג כתובת:"
 
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "שליחת עותק סמוי: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "שליחת תגובה (replyTo) אל ‚כתובת’ (address)"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "הוספת ‚כותרת/header’ להודעה. אפשר לחזור על זה כמה פעמים"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "לקרוא את תוכן ההודעה מ‚קובץ/file’"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&קובץ"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "הגדרת תוכן ההודעה"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "טקסט עשיר"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "הוספת צרופה להודעה. אפשר לחזור על זה כמה פעמים"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment Word:"
+msgid "Attachment Url"
+msgstr "מילת צרופה:"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "רק לבדוק אם יש הודעות חדשות"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "התחלה במזעור לשורת המשימות"
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "לפתוח רק את חלון כתיבת ההודעות"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "הגדרת שם זהות"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "&Identity"
+msgid "Identity"
+msgstr "&זהות"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "הצגת קובץ ההודעה שסופק"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "הודעה"
+
+#: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "הגדרת תוכן ההודעה כ־html"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Copy Message"
+#| msgid_plural "Copy %1 Messages"
+msgid "Body Message"
+msgstr "העתקת הודעה"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "הצגת אפשרויות זמינות למשוב משתמש"
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"

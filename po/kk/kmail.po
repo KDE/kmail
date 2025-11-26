@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -4339,11 +4339,24 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Хат тақырыбы"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Тақырыбы"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Хатқа 'header' айдарын қосу. Қайталауға болады."
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "&Адрес кітапшасы"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4351,87 +4364,123 @@ msgstr "Хатқа 'header' айдарын қосу. Қайталауға бол
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Хатқа 'header' айдарын қосу. Қайталауға болады."
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Жауабын 'address' дегенге жіберу"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Хатқа 'header' айдарын қосу. Қайталауға болады."
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Хат бетін 'file' дегеннен алу"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Файл"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Хат беті"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Пішімделген мәтін"
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Хатқа тіркеме қосу. Бұны қайталауға болады"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "Тіркеме"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Тек жаңа хаттар бар-жоғын тексеру"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Тек құрастырғыш терезесін ашу"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "Set Identity To"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Іс-әлпеті:"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgid "Identity"
+msgstr "&Іс-әлпеті:"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Келтірген хат файлын қарау"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Message Url"
+msgstr "&Хат"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Хат беті"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "Хаттың беті"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, fuzzy, kde-format
 #| msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgctxt "@info:shell"
@@ -9725,12 +9774,6 @@ msgstr "Масштаб"
 #~ msgstr "Кімге"
 
 #, fuzzy
-#~| msgctxt "Settings regarding the subject when composing a message."
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Тақырыбы"
-
-#, fuzzy
 #~| msgid "sender: "
 #~ msgid "Answer"
 #~ msgstr "жіберуші: "
@@ -10268,16 +10311,6 @@ msgstr "Масштаб"
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "Бастапқы түрін қа&рау"
-
-#, fuzzy
-#~| msgid "&Address Book"
-#~ msgid "Address Book"
-#~ msgstr "&Адрес кітапшасы"
-
-#, fuzzy
-#~| msgid "Attachment"
-#~ msgid "Attachment"
-#~ msgstr "Тіркеме"
 
 #, fuzzy
 #~ msgid "Manage Storage Service"
@@ -12541,9 +12574,6 @@ msgstr "Масштаб"
 
 #~ msgid "Complete Message"
 #~ msgstr "Толық хат"
-
-#~ msgid "Body of Message"
-#~ msgstr "Хаттың беті"
 
 #~ msgid "Anywhere in Headers"
 #~ msgstr "Айдарында"
@@ -17368,11 +17398,6 @@ msgstr "Масштаб"
 
 #~ msgid "List only open folders"
 #~ msgstr "Тек ашық қапшықтардағысы көрсетілсін"
-
-#, fuzzy
-#~| msgid "&Identity:"
-#~ msgid "Identity:"
-#~ msgstr "&Іс-әлпеті:"
 
 #, fuzzy
 #~| msgid ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2024-09-17 13:40+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -3907,88 +3907,140 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Nastavit předmět zprávy"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Předmět"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Poslat Kopie: na 'adresu'. Lze zopakovat"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address type:"
+msgid "Address"
+msgstr "Typ adresy:"
 
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Poslat Skrytá kopie: na 'adresu'. Lze zopakovat"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Nastavit odpověď na 'adresu'"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Přidat hlavičku do zprávy, lze zopakovat"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Načíst tělo zprávy ze souboru 'file'"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Soubor"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Nastavit tělo zprávy"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Formátovaný text"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Přidat přílohu do zprávy, lze opakovat"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgctxt "Config->Composer->Attachments"
+#| msgid "Attachments"
+msgid "Attachment Url"
+msgstr "Přílohy"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Pouze zkontrolovat novou poštu"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Spustit minimalizovaný do lišty"
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Otevřít pouze okno editoru zpráv"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Nastavit název identity"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "&Identity"
+msgid "Identity"
+msgstr "&Identita"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Zobrazit daný soubor se zprávou"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Zpráva"
+
+#: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Nastavit tělo zprávy jako html"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Copy Message"
+#| msgid_plural "Copy %1 Messages"
+msgid "Body Message"
+msgstr "Kopírovat %1 zprávu"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Seznam dostupných voleb pro uživatelskou zpětnou vazbu"
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"

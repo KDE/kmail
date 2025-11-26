@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2025-09-02 17:56+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -4043,88 +4043,138 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Assigna subjecto de message"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Subjecto"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Inviar CC: a 'adresse'. Isto pote esser repetite"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address Book"
+msgid "Address"
+msgstr "Adressario"
 
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Invia BCC: a 'adresse'. Isto pote esser repetite"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Fixa responde A  'adresse'"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Adde 'capite' a message de e-posta. Isto pote esser repetite"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Lege corpore de message ex 'file'"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&File"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Fixa corpore de message"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Rich Text"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Adde un attachamento al e-posta. Isto pote esser repetite"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment Word:"
+msgid "Attachment Url"
+msgstr "Parola de Attachamento:"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Solo verifica pro nove e-posta"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Starta minimisate a area de notification"
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Solmente aperi fenestra de compositor"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Fixa nomine de Identitate"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "&Identity"
+msgid "Identity"
+msgstr "&Identitate"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Vide le date file de message"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Message"
+
+#: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Fixa corpore de message como html"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "Corpore del message"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Lista le optiones disponibile per responsa de usator"
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -9179,12 +9229,6 @@ msgstr "Zoom: %1"
 #~ msgstr "A"
 
 #, fuzzy
-#~| msgctxt "Settings regarding the subject when composing a message."
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Subjecto"
-
-#, fuzzy
 #~| msgctxt "@item:inlistbox Show receiver."
 #~| msgid "Receiver"
 #~ msgid "Received"
@@ -9701,9 +9745,6 @@ msgstr "Zoom: %1"
 
 #~ msgid "Source:"
 #~ msgstr "Fonte:"
-
-#~ msgid "Address Book"
-#~ msgstr "Adressario"
 
 #~ msgid "CSV"
 #~ msgstr "CSV"
@@ -11963,9 +12004,6 @@ msgstr "Zoom: %1"
 
 #~ msgid "Complete Message"
 #~ msgstr "Message Complete"
-
-#~ msgid "Body of Message"
-#~ msgstr "Corpore del message"
 
 #~ msgid "Anywhere in Headers"
 #~ msgstr "Ubique in capites"

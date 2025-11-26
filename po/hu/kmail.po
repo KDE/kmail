@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -4008,88 +4008,137 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Az üzenet tárgyának beállítása"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Tárgy"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Másolat küldése a címre. Ez megismételhető"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address Book"
+msgid "Address"
+msgstr "Címjegyzék"
 
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Titkos másolat küldése a címre. Ez megismételhető"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Válasz beállítása a „címre”"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "„Fejléc” hozzáadása az üzenethez. Ez megismételhető"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Az üzenettörzs beolvasása „fájl”-ból"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Fájl"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Az üzenet törzsének megadása"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Rich Text"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Melléklet hozzáadása az üzenethez (a művelet megismételhető)"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "Melléklet"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Csak az új üzenetek ellenőrzése"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Indítás a tálcára minimalizálva"
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Csak az üzenetszerkesztő ablak megnyitása"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Az azonosító nevének beállítása"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Identity:"
+msgid "Identity"
+msgstr "Identitás:"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "A megadott üzenetfájl megtekintése"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Üzenet"
+
+#: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Az üzenet törzsének megadása HTML-ként"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "Üzenettörzs"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Listázza a felhasználói visszajelzés lehetséges opcióit"
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -9146,12 +9195,6 @@ msgstr "Nagyítás: %1%"
 #~ msgstr "Címzett"
 
 #, fuzzy
-#~| msgctxt "Settings regarding the subject when composing a message."
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Tárgy"
-
-#, fuzzy
 #~| msgid "Answer: "
 #~ msgid "Answer"
 #~ msgstr "Válasz: "
@@ -9687,14 +9730,8 @@ msgstr "Nagyítás: %1%"
 #~ msgid "Source:"
 #~ msgstr "Forrás:"
 
-#~ msgid "Address Book"
-#~ msgstr "Címjegyzék"
-
 #~ msgid "CSV"
 #~ msgstr "CSV"
-
-#~ msgid "Attachment"
-#~ msgstr "Melléklet"
 
 #~ msgid "Manage Storage Service"
 #~ msgstr "Tároló szolgáltatás kezelése"
@@ -11936,9 +11973,6 @@ msgstr "Nagyítás: %1%"
 
 #~ msgid "Complete Message"
 #~ msgstr "Teljes üzenet"
-
-#~ msgid "Body of Message"
-#~ msgstr "Üzenettörzs"
 
 #~ msgid "Anywhere in Headers"
 #~ msgstr "Bárhol a fejlécekben"
@@ -16754,9 +16788,6 @@ msgstr "Nagyítás: %1%"
 
 #~ msgid "Use the default identity for this account"
 #~ msgstr "Az alapértelmezett identitás használata az azonosítóhoz"
-
-#~ msgid "Identity:"
-#~ msgstr "Identitás:"
 
 #~ msgid ""
 #~ "Here you see the different namespaces that your IMAP server supports.\n"

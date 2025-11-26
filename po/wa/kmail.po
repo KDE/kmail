@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -4230,11 +4230,24 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Defini l' sudjet do messaedje"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Sudjet"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Radjouter èn ataetchmint a l' emile. On l' pout fé sacwants côps."
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "Cal&pin d' adresses"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4242,87 +4255,124 @@ msgstr "Radjouter èn ataetchmint a l' emile. On l' pout fé sacwants côps."
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Radjouter èn ataetchmint a l' emile. On l' pout fé sacwants côps."
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, fuzzy, kde-format
 #| msgid "Send CC: to 'address'"
 msgid "Set replyTo to 'address'"
 msgstr "Evoyî CC : aviè « adresse »"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Radjouter èn ataetchmint a l' emile. On l' pout fé sacwants côps."
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Lére li coir do messaedje a pårti di « fitchî »"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Fitchî"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Defini l' coir do messaedje"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Tecse eritchî"
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Radjouter èn ataetchmint a l' emile. On l' pout fé sacwants côps."
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgctxt "Attachement indication"
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "Ataetchmint"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Èn fé k' waitî après des noveas emiles"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Èn fé k' drovi l' purnea po scrire"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Novele Idintité"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgid "Identity"
+msgstr "&Idintité:"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Vey li fitchî messaedje diné"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Message Url"
+msgstr "&Messaedje"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Defini l' coir do messaedje"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "Coir do messaedje"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, fuzzy, kde-format
 #| msgid "Send message to 'address' or attach the file the 'URL' points to"
 msgctxt "@info:shell"
@@ -9358,12 +9408,6 @@ msgstr "Zoumer"
 #~ msgstr "Po"
 
 #, fuzzy
-#~| msgctxt "Settings regarding the subject when composing a message."
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Sudjet"
-
-#, fuzzy
 #~| msgid "Answer: "
 #~ msgid "Answer"
 #~ msgstr "Response:"
@@ -9873,17 +9917,6 @@ msgstr "Zoumer"
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "&Vey li sourdant"
-
-#, fuzzy
-#~| msgid "&Address Book"
-#~ msgid "Address Book"
-#~ msgstr "Cal&pin d' adresses"
-
-#, fuzzy
-#~| msgctxt "Attachement indication"
-#~| msgid "Attachment"
-#~ msgid "Attachment"
-#~ msgstr "Ataetchmint"
 
 #, fuzzy
 #~ msgid "Manage Storage Service"
@@ -11472,9 +11505,6 @@ msgstr "Zoumer"
 
 #~ msgid "Complete Message"
 #~ msgstr "Fini messaedje"
-
-#~ msgid "Body of Message"
-#~ msgstr "Coir do messaedje"
 
 #, fuzzy
 #~| msgctxt "View->headers->"
@@ -14545,11 +14575,6 @@ msgstr "Zoumer"
 #, fuzzy
 #~ msgid "Load attach&ments on demand"
 #~ msgstr "Ni nén mostrer les ataetchmints e purnea des messaedjes"
-
-#, fuzzy
-#~| msgid "&Identity:"
-#~ msgid "Identity:"
-#~ msgstr "&Idintité:"
 
 #, fuzzy
 #~ msgid "Namespaces:"

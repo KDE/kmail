@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2025-06-22 11:37+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -4041,10 +4041,21 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Indicar o asunto da mensaxe"
 
+#: kmail_options.h:17
+#, kde-format
+msgid "Subject"
+msgstr "Asunto"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Enviar o campo de copia (CC:) ao enderezo (address). Pode repetirse."
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address Book"
+msgid "Address"
+msgstr "Caderno de enderezos"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4052,78 +4063,116 @@ msgid "Send BCC: to 'address'. This can be repeated"
 msgstr ""
 "Enviar o campo de copia oculta (BCC:) ao enderezo (address). Pode repetirse."
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Definir replyTo como «enderezo»"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Engadir unha «cabeceira» á mensaxe. Isto pódese repetir"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Ler o corpo da mensaxe desde o «ficheiro»"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Ficheiro"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Definir o corpo da mensaxe"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Texto enriquecido"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Engadir un anexo á mensaxe. Isto pódese repetir."
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment Word:"
+msgid "Attachment Url"
+msgstr "Palabra de anexo:"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Só comprobar o correo novo"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Iniciar minimizado na área de notificacións"
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Só abrir a xanela de edición"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Definir o nome da identidade"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgctxt "@action"
+#| msgid "&Identity"
+msgid "Identity"
+msgstr "&Identidade"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Ver o ficheiro de mensaxe dado"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Mensaxe"
+
+#: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Definir o corpo da mensaxe como HTML"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Copy Message"
+#| msgid_plural "Copy %1 Messages"
+msgid "Body Message"
+msgstr "Copiar a mensaxe"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Lista todas as opcións dispoñíbeis de comentarios."
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -9160,9 +9209,6 @@ msgstr "Ampliación: %1%"
 #~ msgid "To"
 #~ msgstr "Para"
 
-#~ msgid "Subject"
-#~ msgstr "Asunto"
-
 #~ msgid "Dead Line"
 #~ msgstr "Data límite"
 
@@ -9642,9 +9688,6 @@ msgstr "Ampliación: %1%"
 
 #~ msgid "Source:"
 #~ msgstr "Fonte:"
-
-#~ msgid "Address Book"
-#~ msgstr "Caderno de enderezos"
 
 #~ msgid "CSV"
 #~ msgstr "CSV"

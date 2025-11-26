@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -3834,88 +3834,137 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Mearrit reivve fáttá"
 
+# unreviewed-context
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Fáddá"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr ""
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "Čujuhus&girji"
 
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr ""
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr ""
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Lasit mildusa reivii. Dát leat geardduhahtti."
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Viečča reivesisdoalu «fiillas»"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Fiila"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Vállje reivve sisdoalu."
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, kde-format
+msgid "Text"
+msgstr ""
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Lasit mildusa reivii. Dát leat geardduhahtti."
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgctxt "Config->Composer->Attachments"
+#| msgid "Attachments"
+msgid "Attachment Url"
+msgstr "Mildosat"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Iskka dušše leago ođđa e-boasta"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Raba dušše čállinprográmma"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Identitehtanamma"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+msgid "Identity"
+msgstr "&Identitehta"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Čájet meroštuvvon reivefiilla"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Diehtu"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Vállje reivve sisdoalu."
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Body Message"
+msgstr "Diehtu"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"

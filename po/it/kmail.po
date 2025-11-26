@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2025-11-02 17:12+0100\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -4058,89 +4058,136 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Imposta l'oggetto del messaggio"
 
+#: kmail_options.h:17
+#, kde-format
+msgid "Subject"
+msgstr "Oggetto"
+
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Spedisci in CC: a «indirizzo». Questa opzione può essere ripetuta"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address Book"
+msgid "Address"
+msgstr "Rubrica indirizzi"
 
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Spedisci in BCC: a «indirizzo». Questa opzione può essere ripetuta"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Imposta replyTo a «indirizzo»"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr ""
 "Aggiungi «intestazione» al messaggio. Questa opzione può essere ripetuta"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Leggi il corpo del messaggio da «file»"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&File"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Imposta il corpo del messaggio"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Testo formattato"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Aggiungi un allegato al messaggio. Questa opzione può essere ripetuta"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "Allegato"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Controlla solo la presenza di nuovi messaggi"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr "Avvia minimizzato nel vassoio di sistema"
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Apri solo la finestra del compositore"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Imposta nome identità"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Identity:"
+msgid "Identity"
+msgstr "Identità:"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Visualizza il file del messaggio dato"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Messaggio"
+
+#: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Imposta il corpo del messaggio come HTML"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "Corpo del messaggio"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr "Mostra le opzioni disponibili per le segnalazioni degli utenti"
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -9254,9 +9301,6 @@ msgstr "Ingrandimento: %1%"
 #~ msgid "To"
 #~ msgstr "A"
 
-#~ msgid "Subject"
-#~ msgstr "Oggetto"
-
 #~ msgid "Dead Line"
 #~ msgstr "Scadenza"
 
@@ -9777,14 +9821,8 @@ msgstr "Ingrandimento: %1%"
 #~ msgid "Source:"
 #~ msgstr "Origine:"
 
-#~ msgid "Address Book"
-#~ msgstr "Rubrica indirizzi"
-
 #~ msgid "CSV"
 #~ msgstr "CSV"
-
-#~ msgid "Attachment"
-#~ msgstr "Allegato"
 
 #~ msgid "Manage Storage Service"
 #~ msgstr "Gestisci i servizi di memorizzazione"
@@ -12335,9 +12373,6 @@ msgstr "Ingrandimento: %1%"
 
 #~ msgid "Complete Message"
 #~ msgstr "Messaggio completo"
-
-#~ msgid "Body of Message"
-#~ msgstr "Corpo del messaggio"
 
 #~ msgid "Anywhere in Headers"
 #~ msgstr "Ovunque nell'intestazione"
@@ -17652,9 +17687,6 @@ msgstr "Ingrandimento: %1%"
 
 #~ msgid "Use the default identity for this account"
 #~ msgstr "Usa l'identità predefinita per questo account"
-
-#~ msgid "Identity:"
-#~ msgstr "Identità:"
 
 #~ msgid ""
 #~ "Here you see the different namespaces that your IMAP server supports.\n"

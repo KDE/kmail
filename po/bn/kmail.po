@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -4148,11 +4148,23 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "বার্তার বিষয় নির্ধারণ করো"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgid "Subject"
+msgid "Subject"
+msgstr "বিষয়"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "বার্তায় 'হেডার' যোগ করো "
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "ঠিকানা তালিকা (&ত)"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4160,87 +4172,120 @@ msgstr "বার্তায় 'হেডার' যোগ করো "
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "বার্তায় 'হেডার' যোগ করো "
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgid "Set replyTo to 'address'"
 msgstr "উত্ত&র পাবার ঠিকানা:"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "বার্তায় 'হেডার' যোগ করো "
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr ""
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+msgid "File"
+msgstr "ফাইল থেকে"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 #| msgid "Set subject of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "বার্তার বিষয় নির্ধারণ করো"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, kde-format
+msgid "Text"
+msgstr ""
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "বার্তায় 'হেডার' যোগ করো "
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "অ্যাটাচমেন্ট"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "শুধু নতুন মেইল-এর জন্য পরীক্ষা করো"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "শুধু রচনাক্ষেত্র উইণ্ডো খোলো"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "&New identity:"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "&নতুন পরিচিতি:"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgid "Identity"
+msgstr "&পরিচিতি:"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "Deleting messages failed."
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "বার্তা মুছে ফেলা ব্যর্থ।"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Message Url"
+msgstr "&রচনা"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set subject of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "বার্তার বিষয় নির্ধারণ করো"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+msgid "Body Message"
+msgstr "বার্তা খোলো"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -8893,11 +8938,6 @@ msgstr ""
 #~ msgstr "গ্রা&হক"
 
 #, fuzzy
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "বিষয়"
-
-#, fuzzy
 #~| msgid "sender: "
 #~ msgid "Answer"
 #~ msgstr "প্রেরক:"
@@ -9304,16 +9344,6 @@ msgstr ""
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "&উত্‍স দেখাও"
-
-#, fuzzy
-#~| msgid "&Address Book"
-#~ msgid "Address Book"
-#~ msgstr "ঠিকানা তালিকা (&ত)"
-
-#, fuzzy
-#~| msgid "Attachment"
-#~ msgid "Attachment"
-#~ msgstr "অ্যাটাচমেন্ট"
 
 #, fuzzy
 #~ msgid "Manage Storage Service"
@@ -10315,10 +10345,6 @@ msgstr ""
 #~| msgid "Delete Message"
 #~ msgid "Complete Message"
 #~ msgstr "বার্তা মুছে ফেলো"
-
-#, fuzzy
-#~ msgid "Body of Message"
-#~ msgstr "বার্তা খোলো"
 
 #, fuzzy
 #~| msgid "Rewrite Header"
@@ -12791,11 +12817,6 @@ msgstr ""
 
 #~ msgid "List only open folders"
 #~ msgstr "শুধুমাত্র খোলা ফোল্ডার তালিকাবদ্ধ করো"
-
-#, fuzzy
-#~| msgid "&Identity:"
-#~ msgid "Identity:"
-#~ msgstr "&পরিচিতি:"
 
 #~ msgid "Namespaces:"
 #~ msgstr "নেম-স্পেস:"

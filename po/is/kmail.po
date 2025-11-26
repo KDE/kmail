@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -4399,11 +4399,23 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Setja viðfangsefni bréfs"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Viðfangsefni"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Bæta viðhengi við bréfið. Þetta er hægt að endurtaka"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "&Vistfangaskrá"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4411,88 +4423,123 @@ msgstr "Bæta viðhengi við bréfið. Þetta er hægt að endurtaka"
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Bæta viðhengi við bréfið. Þetta er hægt að endurtaka"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, fuzzy, kde-format
 #| msgid "Send CC: to 'address'"
 msgid "Set replyTo to 'address'"
 msgstr "Senda CC: til 'netfangs'"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Bæta viðhengi við bréfið. Þetta er hægt að endurtaka"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Lesa meginefni bréfs úr 'skrá'"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+msgid "File"
+msgstr "Skrá"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Setja meginefni bréfs"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, kde-format
+msgid "Text"
+msgstr ""
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Bæta viðhengi við bréfið. Þetta er hægt að endurtaka"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgctxt "Config->Composer->Attachments"
+#| msgid "A&ttachments"
+msgid "Attachment Url"
+msgstr "Við&hengi"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Gá eingöngu að nýjum pósti"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Opna eingöngu ritilinn"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "Set Identity To"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Setja auðkenni sem"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgid "Identity"
+msgstr "&Auðkenni:"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Skoða uppgefna bréfaskrá"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Message Url"
+msgstr "&Bréf"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Setja meginefni bréfs"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Todo Message"
+msgid "Body Message"
+msgstr "Verkþáttur"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, fuzzy, kde-format
 #| msgid "Send message to 'address' resp. attach the file the 'URL' points to"
 msgctxt "@info:shell"
@@ -9734,11 +9781,6 @@ msgstr ""
 #~ msgstr "Til"
 
 #, fuzzy
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Viðfangsefni"
-
-#, fuzzy
 #~| msgid "sender: "
 #~ msgid "Answer"
 #~ msgstr "sendandi: "
@@ -10246,17 +10288,6 @@ msgstr ""
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "S&koða frumtexta"
-
-#, fuzzy
-#~| msgid "&Address Book"
-#~ msgid "Address Book"
-#~ msgstr "&Vistfangaskrá"
-
-#, fuzzy
-#~| msgctxt "Config->Composer->Attachments"
-#~| msgid "A&ttachments"
-#~ msgid "Attachment"
-#~ msgstr "Við&hengi"
 
 #, fuzzy
 #~ msgid "Manage Storage Service"
@@ -12320,11 +12351,6 @@ msgstr ""
 #~| msgid "Delete Message"
 #~ msgid "Complete Message"
 #~ msgstr "Eyða bréfi"
-
-#, fuzzy
-#~| msgid "Todo Message"
-#~ msgid "Body of Message"
-#~ msgstr "Verkþáttur"
 
 #, fuzzy
 #~| msgid "Rewrite Header"
@@ -17160,11 +17186,6 @@ msgstr ""
 
 #~ msgid "List only open folders"
 #~ msgstr "Sýna aðeins opnar möppur"
-
-#, fuzzy
-#~| msgid "&Identity:"
-#~ msgid "Identity:"
-#~ msgstr "&Auðkenni:"
 
 #, fuzzy
 #~| msgid ""

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -4176,11 +4176,24 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Ορισμός θέματος του μηνύματος"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Θέμα"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Προσθήκη 'επικεφαλίδας' στο μήνυμα. Αυτό μπορεί να επαναληφθεί"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "Address Book"
+msgid "Address"
+msgstr "Βιβλίο διευθύνσεων"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4188,80 +4201,116 @@ msgstr "Προσθήκη 'επικεφαλίδας' στο μήνυμα. Αυτ�
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Προσθήκη 'επικεφαλίδας' στο μήνυμα. Αυτό μπορεί να επαναληφθεί"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr "Ρυθμίστε την αποστολή απάντησης στη 'διεύθυνση'"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Προσθήκη 'επικεφαλίδας' στο μήνυμα. Αυτό μπορεί να επαναληφθεί"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Ανάγνωση του σώματος του μηνύματος από το 'αρχείο'"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "&Αρχείο"
+
+#: kmail_options.h:29
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Καθορισμός σώματος του μηνύματος"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Text"
+msgstr "Εμπλουτισμένο κείμενο"
+
+#: kmail_options.h:30
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Προσθήκη ενός συνημμένου στο μήνυμα. Αυτό μπορεί να επαναληφθεί"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "Συνημμένο"
+
+#: kmail_options.h:31
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Έλεγχος μόνο για νέα αλληλογραφία"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, kde-format
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Άνοιγμα μόνο του παραθύρου σύνταξης"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "Set Identity To"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Ορισμός ταυτότητας σε"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Identity:"
+msgid "Identity"
+msgstr "Ταυτότητα:"
+
+#: kmail_options.h:35
 #, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Προβολή του δοσμένου αρχείου μηνύματος"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "Message"
+msgid "Message Url"
+msgstr "Μήνυμα"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Καθορισμός σώματος του μηνύματος"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "Σώμα μηνύματος"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -9535,12 +9584,6 @@ msgstr "Εστίαση"
 #~ msgstr "Προς"
 
 #, fuzzy
-#~| msgctxt "Settings regarding the subject when composing a message."
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Θέμα"
-
-#, fuzzy
 #~| msgid "Answer: "
 #~ msgid "Answer"
 #~ msgstr "Απάντηση: "
@@ -10092,14 +10135,8 @@ msgstr "Εστίαση"
 #~ msgid "Source:"
 #~ msgstr "Πηγή:"
 
-#~ msgid "Address Book"
-#~ msgstr "Βιβλίο διευθύνσεων"
-
 #~ msgid "CSV"
 #~ msgstr "CSV"
-
-#~ msgid "Attachment"
-#~ msgstr "Συνημμένο"
 
 #~ msgid "Manage Storage Service"
 #~ msgstr "Διαχείριση της υπηρεσίας αποθήκευσης"
@@ -12468,9 +12505,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Complete Message"
 #~ msgstr "Πλήρες μήνυμα"
-
-#~ msgid "Body of Message"
-#~ msgstr "Σώμα μηνύματος"
 
 #~ msgid "Anywhere in Headers"
 #~ msgstr "Οπουδήποτε στις κεφαλίδες"
@@ -17333,9 +17367,6 @@ msgstr "Εστίαση"
 
 #~ msgid "List only open folders"
 #~ msgstr "Εμφάνιση μόνον ανοικτών φακέλων"
-
-#~ msgid "Identity:"
-#~ msgstr "Ταυτότητα:"
 
 #~ msgid ""
 #~ "Here you see the different namespaces that your IMAP server supports.\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -4098,11 +4098,23 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Хабар мавзусини кўрсатиш"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgid "Subject"
+msgid "Subject"
+msgstr "Мавзу"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Хабарга илова қўшиш. Буни такрорлаш мумкин."
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "Манзиллар &дафтари"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4110,83 +4122,116 @@ msgstr "Хабарга илова қўшиш. Буни такрорлаш мум
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "Хабарга илова қўшиш. Буни такрорлаш мумкин."
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, kde-format
 msgid "Set replyTo to 'address'"
 msgstr ""
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "Хабарга илова қўшиш. Буни такрорлаш мумкин."
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "Хабар таркибини файлдан ўқиш"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+msgid "File"
+msgstr "Файл"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "Хабарларни ўчириш"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, kde-format
+msgid "Text"
+msgstr ""
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Хабарга илова қўшиш. Буни такрорлаш мумкин."
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "Илова"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "Фақат янги хабарга текшириш"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "Фақат хабар яратиш ойнасини очиш"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "Янги шахсият"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "&Identity:"
+msgid "Identity"
+msgstr "Ша&хсият:"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "Хабарнинг &ҳажмини кўрсатиш"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Message Url"
+msgstr "&Хабар"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "Хабарларни ўчириш"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+msgid "Body Message"
+msgstr "Хабарларни ўчириш"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -8750,11 +8795,6 @@ msgstr ""
 #~ msgstr "Кимга"
 
 #, fuzzy
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "Мавзу"
-
-#, fuzzy
 #~| msgid "sender: "
 #~ msgid "Answer"
 #~ msgstr "жўнатувчи:"
@@ -9117,16 +9157,6 @@ msgstr ""
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "Манбани &кўриш"
-
-#, fuzzy
-#~| msgid "&Address Book"
-#~ msgid "Address Book"
-#~ msgstr "Манзиллар &дафтари"
-
-#, fuzzy
-#~| msgid "Attachment"
-#~ msgid "Attachment"
-#~ msgstr "Илова"
 
 #, fuzzy
 #~ msgid "Manage Storage Service"
@@ -10138,10 +10168,6 @@ msgstr ""
 #~| msgid "Delete Message"
 #~ msgid "Complete Message"
 #~ msgstr "Хатни ўчириш"
-
-#, fuzzy
-#~ msgid "Body of Message"
-#~ msgstr "Хабарларни ўчириш"
 
 #, fuzzy
 #~| msgctxt "View->headers->"
@@ -12417,11 +12443,6 @@ msgstr ""
 
 #~ msgid "List only open folders"
 #~ msgstr "Фақат очилган жилдларни кўрсатиш"
-
-#, fuzzy
-#~| msgid "&Identity:"
-#~ msgid "Identity:"
-#~ msgstr "Ша&хсият:"
 
 #, fuzzy
 #~| msgid "Replace:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-11-26 00:44+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -4171,11 +4171,24 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "ਸੁਨੇਹੇ ਦਾ ਵਿਸ਼ਾ ਦਿਓ"
 
+#: kmail_options.h:17
+#, fuzzy, kde-format
+#| msgctxt "Settings regarding the subject when composing a message."
+#| msgid "Subject"
+msgid "Subject"
+msgstr "ਵਿਸ਼ਾ"
+
 #: kmail_options.h:19
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgid "Send CC: to 'address'. This can be repeated"
 msgstr "ਮੇਲ ਨਾਲ ਅਟੈਂਚਮੈਂਟ ਕਰੋ। ਇਹ ਨੂੰ ਦੁਹਰਾਇਆ ਜਾ ਸਕਦਾ ਹੈ"
+
+#: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
+#, fuzzy, kde-format
+#| msgid "&Address Book"
+msgid "Address"
+msgstr "ਐਡਰੈੱਸ ਬੁੱਕ(&A)"
 
 #: kmail_options.h:22
 #, fuzzy, kde-format
@@ -4183,88 +4196,124 @@ msgstr "ਮੇਲ ਨਾਲ ਅਟੈਂਚਮੈਂਟ ਕਰੋ। ਇਹ ਨ�
 msgid "Send BCC: to 'address'. This can be repeated"
 msgstr "ਮੇਲ ਨਾਲ ਅਟੈਂਚਮੈਂਟ ਕਰੋ। ਇਹ ਨੂੰ ਦੁਹਰਾਇਆ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: kmail_options.h:25
+#: kmail_options.h:24
 #, fuzzy, kde-format
 #| msgid "Send CC: to 'address'"
 msgid "Set replyTo to 'address'"
 msgstr "'ਐਡਰੈੱਸ' ਨੂੰ CC: ਭੇਜੋ"
 
-#: kmail_options.h:28
+#: kmail_options.h:26
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
 msgstr "ਮੇਲ ਨਾਲ ਅਟੈਂਚਮੈਂਟ ਕਰੋ। ਇਹ ਨੂੰ ਦੁਹਰਾਇਆ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: kmail_options.h:30
+#: kmail_options.h:28
 #, fuzzy, kde-format
 #| msgid "Read message body from 'file'"
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
 msgstr "'ਫਾਇਲ' ਵਿੱਚੋਂ ਸੁਨੇਹਾ ਭਾਗ ਪੜ੍ਹੋ"
 
-#: kmail_options.h:31
+#: kmail_options.h:28
+#, fuzzy, kde-format
+#| msgid "&File"
+msgid "File"
+msgstr "ਫਾਇਲ(&F)"
+
+#: kmail_options.h:29
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message"
 msgstr "ਸੁਨੇਹਾ ਦਾ ਭਾਗ ਸੈੱਟ ਕਰੋ"
 
-#: kmail_options.h:32
+#: kmail_options.h:29
+#, kde-format
+msgid "Text"
+msgstr ""
+
+#: kmail_options.h:30
 #, fuzzy, kde-format
 #| msgid "Add an attachment to the mail. This can be repeated"
 msgctxt "@info:shell"
 msgid "Add an attachment to the mail. This can be repeated"
 msgstr "ਮੇਲ ਨਾਲ ਅਟੈਂਚਮੈਂਟ ਕਰੋ। ਇਹ ਨੂੰ ਦੁਹਰਾਇਆ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: kmail_options.h:33
+#: kmail_options.h:30
+#, fuzzy, kde-format
+#| msgctxt "Attachement indication"
+#| msgid "Attachment"
+msgid "Attachment Url"
+msgstr "ਅਟੈਚਮੈਂਟ"
+
+#: kmail_options.h:31
 #, fuzzy, kde-format
 #| msgid "Only check for new mail"
 msgctxt "@info:shell"
 msgid "Only check for new mail"
 msgstr "ਕੇਵਲ ਨਵੀਂ ਮੇਲ ਲਈ ਚੈੱਕ ਕਰੋ"
 
-#: kmail_options.h:34
+#: kmail_options.h:32
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: kmail_options.h:35
+#: kmail_options.h:33
 #, fuzzy, kde-format
 #| msgid "Only open composer window"
 msgctxt "@info:shell"
 msgid "Only open composer window"
 msgstr "ਸਿਰਫ਼ ਨਵੀਂ ਕੰਪੋਜ਼ਰ ਵਿੰਡੋ ਖੋਲ੍ਹੋ"
 
-#: kmail_options.h:36
+#: kmail_options.h:34
 #, fuzzy, kde-format
 #| msgid "Set Identity To"
 msgctxt "@info:shell"
 msgid "Set identity name"
 msgstr "ਪਛਾਣ ਸੈੱਟ ਕਰੋ"
 
-#: kmail_options.h:37
+#: kmail_options.h:34
+#, fuzzy, kde-format
+#| msgid "Identity:"
+msgid "Identity"
+msgstr "ਪਛਾਣ:"
+
+#: kmail_options.h:35
 #, fuzzy, kde-format
 #| msgid "View the given message file"
 msgctxt "@info:shell"
 msgid "View the given message file"
 msgstr "ਦਿੱਤੇ ਸੁਨੇਹਾ ਫਾਇਲ ਦੀ ਝਲਕ"
 
-#: kmail_options.h:38
+#: kmail_options.h:35
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Message Url"
+msgstr "ਸੁਨੇਹਾ(&M)"
+
+#: kmail_options.h:36
 #, fuzzy, kde-format
 #| msgid "Set body of message"
 msgctxt "@info:shell"
 msgid "Set body of message as html"
 msgstr "ਸੁਨੇਹਾ ਦਾ ਭਾਗ ਸੈੱਟ ਕਰੋ"
 
-#: kmail_options.h:40
+#: kmail_options.h:36
+#, fuzzy, kde-format
+#| msgid "Body of Message"
+msgid "Body Message"
+msgstr "ਸੁਨੇਹਾ ਦਾ ਮੁੱਖ ਭਾਗ"
+
+#: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
 
-#: kmail_options.h:45
+#: kmail_options.h:43
 #, kde-format
 msgctxt "@info:shell"
 msgid "Send message to 'address' or attach the file the 'URL' points to"
@@ -9056,12 +9105,6 @@ msgstr ""
 #~ msgstr "ਵੱਲ"
 
 #, fuzzy
-#~| msgctxt "Settings regarding the subject when composing a message."
-#~| msgid "Subject"
-#~ msgid "Subject"
-#~ msgstr "ਵਿਸ਼ਾ"
-
-#, fuzzy
 #~| msgid "Answer: "
 #~ msgid "Answer"
 #~ msgstr "ਜਵਾਬ: "
@@ -9506,17 +9549,6 @@ msgstr ""
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "ਸਰੋਤ ਵੇਖੋ(&V)"
-
-#, fuzzy
-#~| msgid "&Address Book"
-#~ msgid "Address Book"
-#~ msgstr "ਐਡਰੈੱਸ ਬੁੱਕ(&A)"
-
-#, fuzzy
-#~| msgctxt "Attachement indication"
-#~| msgid "Attachment"
-#~ msgid "Attachment"
-#~ msgstr "ਅਟੈਚਮੈਂਟ"
 
 #, fuzzy
 #~| msgid "Storage Size"
@@ -10892,9 +10924,6 @@ msgstr ""
 
 #~ msgid "Complete Message"
 #~ msgstr "ਪੂਰਾ ਸੁਨੇਹਾ"
-
-#~ msgid "Body of Message"
-#~ msgstr "ਸੁਨੇਹਾ ਦਾ ਮੁੱਖ ਭਾਗ"
 
 #~ msgid "Anywhere in Headers"
 #~ msgstr "ਹੈੱਡਰ ਵਿੱਚ ਕਿਤੇ ਵੀ"
@@ -13994,9 +14023,6 @@ msgstr ""
 
 #~ msgid "List only open folders"
 #~ msgstr "ਸਿਰਫ਼ ਖੁੱਲ੍ਹੇ ਫੋਲਡਰ ਸੂਚੀਬੱਧ"
-
-#~ msgid "Identity:"
-#~ msgstr "ਪਛਾਣ:"
 
 #~ msgid "Namespaces:"
 #~ msgstr "ਨਾਂ ਥਾਂ:"
