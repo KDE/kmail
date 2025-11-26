@@ -311,7 +311,7 @@ void KMCommand::transferSelectedMsgs()
         complete = false;
         Akonadi::Item::List ids;
         ids.reserve(100);
-        for (const Akonadi::Item &item : mMsgList) {
+        for (const Akonadi::Item &item : std::as_const(mMsgList)) {
             ids.append(item);
             if (ids.count() >= 100) {
                 fetchMessages(ids);
@@ -1830,7 +1830,7 @@ KMCommand::Result KMDeleteAttachmentsCommand::execute()
 
 void KMDeleteAttachmentsCommand::slotCanceled()
 {
-    for (auto job : mRunningJobs) {
+    for (auto job : std::as_const(mRunningJobs)) {
         job->kill();
     }
     complete(KMCommand::Canceled);
