@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-11-01 01:54+0100\n"
+"PO-Revision-Date: 2025-11-27 00:19+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -4044,9 +4044,7 @@ msgid "Set subject of message"
 msgstr "Definir el asunto del mensaje"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "Asunto"
 
@@ -4056,10 +4054,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Enviar Cc a «dirección». Se puede repetir."
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address type:"
+#, kde-format
 msgid "Address"
-msgstr "Tipo de dirección:"
+msgstr "Dirección"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4084,10 +4081,9 @@ msgid "Read message body from 'file'"
 msgstr "Leer el cuerpo-del-mensaje desde «archivo»"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Archivo"
+msgstr "Archivo"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4096,10 +4092,9 @@ msgid "Set body of message"
 msgstr "Definir el cuerpo del mensaje"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Texto enriquecido"
+msgstr "Texto"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4108,10 +4103,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Añadir un adjunto al correo. Se puede repetir."
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment Word:"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Palabra de adjunto:"
+msgstr "URL del adjunto"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4138,11 +4132,9 @@ msgid "Set identity name"
 msgstr "Definir nombre de la identidad"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "&Identidad"
+msgstr "Identidad"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4151,10 +4143,9 @@ msgid "View the given message file"
 msgstr "Ver el archivo de mensaje dado"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Mensaje"
+msgstr "URL del mensaje"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4163,11 +4154,9 @@ msgid "Set body of message as html"
 msgstr "Definir el cuerpo del mensaje como HTML"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "Copiar mensaje"
+msgstr "Cuerpo del mensaje"
 
 #: kmail_options.h:38
 #, kde-format

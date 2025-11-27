@@ -4091,7 +4091,8 @@ msgid "Set subject of message"
 msgstr "Betreff der Nachricht setzen"
 
 #: kmail_options.h:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Subject"
 msgid "Subject"
 msgstr "Betreff"
 

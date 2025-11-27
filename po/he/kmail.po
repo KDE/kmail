@@ -21,14 +21,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-10-31 09:38+0200\n"
+"PO-Revision-Date: 2025-11-26 10:22+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.08.3\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 
@@ -3977,9 +3977,7 @@ msgid "Set subject of message"
 msgstr "הגדרת נושא ההודעה"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "נושא"
 
@@ -3989,10 +3987,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "שליחת עותק: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address type:"
+#, kde-format
 msgid "Address"
-msgstr "סוג כתובת:"
+msgstr "כתובת"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4017,10 +4014,9 @@ msgid "Read message body from 'file'"
 msgstr "לקרוא את תוכן ההודעה מ‚קובץ/file’"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&קובץ"
+msgstr "קובץ"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4029,10 +4025,9 @@ msgid "Set body of message"
 msgstr "הגדרת תוכן ההודעה"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "טקסט עשיר"
+msgstr "טקסט"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4041,10 +4036,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "הוספת צרופה להודעה. אפשר לחזור על זה כמה פעמים"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment Word:"
+#, kde-format
 msgid "Attachment Url"
-msgstr "מילת צרופה:"
+msgstr "כתובת צרופה"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4071,11 +4065,9 @@ msgid "Set identity name"
 msgstr "הגדרת שם זהות"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "&זהות"
+msgstr "זהות"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4084,10 +4076,9 @@ msgid "View the given message file"
 msgstr "הצגת קובץ ההודעה שסופק"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "הודעה"
+msgstr "כתובת הודעה"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4096,11 +4087,9 @@ msgid "Set body of message as html"
 msgstr "הגדרת תוכן ההודעה כ־html"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "העתקת הודעה"
+msgstr "תוכן הודעה"
 
 #: kmail_options.h:38
 #, kde-format

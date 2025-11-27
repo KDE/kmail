@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-10-31 06:33+0100\n"
+"PO-Revision-Date: 2025-11-26 07:27+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -4023,9 +4023,7 @@ msgid "Set subject of message"
 msgstr "Nastavi zadevo sporočila"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "Zadeva"
 
@@ -4035,10 +4033,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Pošlji Kp: na »naslov«. To se lahko ponovi"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address type:"
+#, kde-format
 msgid "Address"
-msgstr "Vrsta naslova:"
+msgstr "Naslov"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4063,8 +4060,7 @@ msgid "Read message body from 'file'"
 msgstr "Preberi telo sporočila iz 'datoteke'"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
 msgstr "Datoteka"
 
@@ -4075,10 +4071,9 @@ msgid "Set body of message"
 msgstr "Nastavi telo sporočila"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Bogato besedilo"
+msgstr "Besedilo"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4087,10 +4082,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Dodaj prilogo k pošti. To se lahko ponovi"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment Word:"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Beseda priloga:"
+msgstr "Url priloge"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4117,11 +4111,9 @@ msgid "Set identity name"
 msgstr "Nastavi ime identitete"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "&Istovetnost"
+msgstr "Istovetnost"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4130,10 +4122,9 @@ msgid "View the given message file"
 msgstr "Poglej dano datoteko sporočila"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Sporočilo"
+msgstr "Url sporočila"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4142,11 +4133,9 @@ msgid "Set body of message as html"
 msgstr "Nastavi telo sporočila kot html"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "Kopiraj %1 sporočil"
+msgstr "Telo sporočila"
 
 #: kmail_options.h:38
 #, kde-format

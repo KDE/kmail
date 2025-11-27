@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-10-31 04:25+0100\n"
+"PO-Revision-Date: 2025-11-26 03:29+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4013,9 +4013,7 @@ msgid "Set subject of message"
 msgstr "შეტყობინების სათაურის დაყენება"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "თემა"
 
@@ -4025,10 +4023,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "ასლის გაგზავნა 'მისამართზე'. შეგიძლიათ, გამეოროთ"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address type:"
+#, kde-format
 msgid "Address"
-msgstr "მისამართის ტიპი:"
+msgstr "მისამართი"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4053,10 +4050,9 @@ msgid "Read message body from 'file'"
 msgstr "შეტყობინების ტანის მითითებული 'ფაილიდან' წაკითხვა"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&ფაილი"
+msgstr "ფაილი"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4065,10 +4061,9 @@ msgid "Set body of message"
 msgstr "შეტყობინების სხეულის დაყენება"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "მდიდარი ტექსტი"
+msgstr "ტექსტი"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4077,10 +4072,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "შეტყობინებისთვის მიმაგრებული ფაილის დამატება. შეგიძლიათ, გაიმეოროთ"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment Word:"
+#, kde-format
 msgid "Attachment Url"
-msgstr "მიმაგრების სიტყვა:"
+msgstr "მიმაგრებული ფაილის Url"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4107,11 +4101,9 @@ msgid "Set identity name"
 msgstr "იდენტიფიკატორის სახელის დაყენება"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "&იდენტიფიკაცია"
+msgstr "იდენტიფიკაცია"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4120,10 +4112,9 @@ msgid "View the given message file"
 msgstr "მითითებული შეტყობინების ფაილის გამოტანა"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "შეტყობინება"
+msgstr "შეტყობინების URL"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4132,11 +4123,9 @@ msgid "Set body of message as html"
 msgstr "შეტყობინების სხეულის დაყენება HTML-ზე"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "შეტყობინების კოპირება"
+msgstr "შეტყობინების სხეული"
 
 #: kmail_options.h:38
 #, kde-format
