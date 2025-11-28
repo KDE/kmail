@@ -4108,11 +4108,9 @@ msgid "Set subject of message"
 msgstr "Définir l'objet du message"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
-msgstr "Sujet"
+msgstr "Objet"
 
 #: kmail_options.h:19
 #, kde-format
