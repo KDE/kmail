@@ -606,7 +606,7 @@ private:
 
     KSharedConfig::Ptr mConfig;
     QString mXmlGuiInstance;
-    ConfigureDialog *mConfigureDialog = nullptr;
+    QPointer<ConfigureDialog> mConfigureDialog = nullptr;
 
     QTimer *mBackgroundTasksTimer = nullptr;
     MailCommon::JobScheduler *const mJobScheduler;

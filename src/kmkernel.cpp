@@ -1166,7 +1166,7 @@ void KMKernel::slotShowConfigurationDialog()
     }
 
     if (!mConfigureDialog) {
-        mConfigureDialog = new ConfigureDialog(nullptr, false);
+        mConfigureDialog = new ConfigureDialog(getKMMainWidget(), false);
         mConfigureDialog->setObjectName("configure"_L1);
         connect(mConfigureDialog, &ConfigureDialog::configChanged, this, &KMKernel::slotConfigChanged);
     }
