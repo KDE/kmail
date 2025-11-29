@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-11-01 13:16+0100\n"
+"PO-Revision-Date: 2025-11-27 09:35+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 25.11.80\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -4120,10 +4120,9 @@ msgstr ""
 "plusieurs fois."
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "Carnet d'adresses"
+msgstr "Adresse"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4152,10 +4151,9 @@ msgid "Read message body from 'file'"
 msgstr "Lire le corps du message à partir de « fichier »."
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Fichier"
+msgstr "Fichier"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4164,10 +4162,9 @@ msgid "Set body of message"
 msgstr "Définir le corps du message"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Texte enrichi"
+msgstr "Texte"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4178,10 +4175,9 @@ msgstr ""
 "plusieurs fois."
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Pièce jointe"
+msgstr "URL de pièce jointe"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4208,10 +4204,9 @@ msgid "Set identity name"
 msgstr "Définir le nom d'identité"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "Identité :"
+msgstr "Identité"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4220,10 +4215,9 @@ msgid "View the given message file"
 msgstr "Afficher le fichier de message fourni."
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Message"
+msgstr "URL de message"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4232,8 +4226,7 @@ msgid "Set body of message as html"
 msgstr "Définir le corps du message au format « HTML »"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Body of Message"
+#, kde-format
 msgid "Body Message"
 msgstr "Corps du message"
 
