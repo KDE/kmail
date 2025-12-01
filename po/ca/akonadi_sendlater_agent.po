@@ -183,29 +183,3 @@ msgstr "Modifica…"
 #, kde-format
 msgid "Delete"
 msgstr "Suprimeix"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "Agent d'enviament més tard"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "Agent d'enviament de correus més tard."
-
-#~ msgid "© 2013–%1 Laurent Montel"
-#~ msgstr "© 2013–%1 Laurent Montel"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Mantenidor"
-
-#~ msgctxt "@title:window"
-#~ msgid "Configure"
-#~ msgstr "Configuració"
-
-#~ msgid "Remove items"
-#~ msgstr "Elimina els elements"
-
-#~ msgid "Remove"
-#~ msgstr "Elimina"

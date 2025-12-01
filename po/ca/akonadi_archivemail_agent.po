@@ -239,25 +239,3 @@ msgstr "Mesos"
 #, kde-format
 msgid "Years"
 msgstr "Anys"
-
-#~ msgid "Archive Mail Agent"
-#~ msgstr "Agent d'arxivat de correu"
-
-#~ msgid "Archive emails automatically."
-#~ msgstr "Arxiva automàticament els correus electrònics."
-
-#~ msgid "© 2014–%1 Laurent Montel"
-#~ msgstr "© 2014–%1 Laurent Montel"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Mantenidor"
-
-#~ msgid "Add..."
-#~ msgstr "Afegeix..."
-
-#~ msgid "Add Archive Mail"
-#~ msgstr "Afegeix un arxiu de correu"
