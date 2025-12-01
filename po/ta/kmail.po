@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-08-10 21:02+0530\n"
+"PO-Revision-Date: 2025-11-30 14:24+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 25.08.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -128,7 +128,7 @@ msgstr "பல பிழைதிருத்தங்கள்"
 
 #: aboutdata.cpp:72
 msgid "Improved asynchronous processes"
-msgstr ""
+msgstr "பின்னணிப் பணிகளை மேம்படுத்தினார்"
 
 #: aboutdata.cpp:75
 msgid "Enhanced configuration dialogs"
@@ -140,7 +140,7 @@ msgstr "குறிப்புகள்/நாள்காட்டி ஒர�
 
 #: aboutdata.cpp:77
 msgid "Improve efficiency and consistency of code"
-msgstr ""
+msgstr "நிரலின் பயன்திறனையும் இசைவையும் மேம்படுத்தினார்"
 
 #: aboutdata.cpp:78
 msgid "New message list and new folder tree"
@@ -156,7 +156,7 @@ msgstr "பல பிழைகளை சரிசெய்தார்"
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
-msgstr ""
+msgstr "நிறுத்தற்குறிகளிலிருந்து முகவடிகளை உருவாக்குவது"
 
 #: aboutdata.cpp:94
 msgid "Improve 'Mark Message as' popup menu"
@@ -180,15 +180,15 @@ msgstr "அலங்கார தலைப்புகளில் ஸ்பே�
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
-msgstr ""
+msgstr "செய்யவேண்டியவற்றின் நிலையைக் கையாளும் அம்சத்தை இயற்றினார்"
 
 #: aboutdata.cpp:109
 msgid "Bug fixes, code cleanup"
-msgstr ""
+msgstr "பிழைதிருத்தங்களும் நிரல்தொடர் மேம்பாட்டும்."
 
 #: aboutdata.cpp:111
 msgid "LDAP support, maintenance"
-msgstr ""
+msgstr "LDAP ஆதவும் பராமரிப்பும்"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
@@ -200,7 +200,7 @@ msgstr "ஆவணமாக்கம், இன்னும் பங்களி
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
-msgstr ""
+msgstr "முக்கிய பங்களிப்பாளர், இன்னும் செயல்படுகிறார்"
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
@@ -208,7 +208,7 @@ msgstr "வைரஸ்-எதிர்ப்பு துணை"
 
 #: aboutdata.cpp:123
 msgid "Fixed widget styles"
-msgstr ""
+msgstr "தோற்றத்திட்டங்களை சரிசெய்தார்"
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
@@ -232,7 +232,7 @@ msgstr "POP வடிகட்டிகள்"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr ""
+msgstr "Solaris-இல் ஏற்படும் முறிவை சரிசெய்தார்"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
@@ -268,11 +268,11 @@ msgstr "சாளர அளவுமாற்றத்திலிருந்�
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
-msgstr ""
+msgstr "qt-cast தனை மேம்படுத்தினார்; QUrl(), தனை சரிசெய்தார்"
 
 #: aboutdata.cpp:161
 msgid "Usability tests and improvements"
-msgstr ""
+msgstr "பயன்மை சோதனைகளும் மாற்றங்களும்"
 
 #: aboutdata.cpp:165
 msgid "Patch composer configuration"
@@ -1277,8 +1277,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "நீங்கள் எழுதி முடிக்காத அஞ்சல்கள் இந்த இடைவெளியில் தானாக சேமிக்கப்படும்"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "அஞ்சலெழுதும் இடம்"
@@ -1286,7 +1285,7 @@ msgstr "அஞ்சலெழுதும் இடம்"
 #: configuredialog/configurecomposerpage.cpp:435
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "விரை உரைவடிவமைப்பு கருவிப்பட்டையை இயக்கு"
 
 #: configuredialog/configurecomposerpage.cpp:641
 #, kde-format
@@ -3955,10 +3954,9 @@ msgid "Set subject of message"
 msgstr "செய்தியின் தலைப்பை அமை"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
-msgstr "பொருள்"
+msgstr "தலைப்பு"
 
 #: kmail_options.h:19
 #, kde-format
@@ -3966,10 +3964,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "'address'-க்கு நகலனுப்பும். இதை பலமுறை பயன்படுத்தலாம்"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "&Address Book"
+#, kde-format
 msgid "Address"
-msgstr "&முகவரி புத்தகம்."
+msgstr "முகவரி"
 
 #: kmail_options.h:22
 #, kde-format
@@ -3994,10 +3991,9 @@ msgid "Read message body from 'file'"
 msgstr "'file'-இலிருந்து அஞ்சலின் உரையை நிரப்பும்"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&கோப்பு"
+msgstr "கோப்பு"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4006,10 +4002,9 @@ msgid "Set body of message"
 msgstr "அஞ்சலின் உரையை அமைக்கும்"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "மேம்பட்ட உரை"
+msgstr "உரை"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4018,10 +4013,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "அஞ்சலுடன் ஓர் உடனிணைப்பை சேர்க்கும். இதை பலமுறை பயன்படுத்தலாம்"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "இணைப்பு"
+msgstr "உடனிணைப்பு"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4048,10 +4042,9 @@ msgid "Set identity name"
 msgstr "பயன்படுத்த வேண்டிய அடையாளத்தை குறிக்கும்"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "அடையாளம்:"
+msgstr "அடையாளம்"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4060,10 +4053,9 @@ msgid "View the given message file"
 msgstr "குறிப்பிடப்படும் அஞ்சல் கோப்பை திறந்து காட்டும்"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "அஞ்சல்"
+msgstr "அஞ்சலின் முகவரி"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4072,10 +4064,9 @@ msgid "Set body of message as html"
 msgstr "அஞ்சலின் உரையை HTML-ஆக அமைக்கும்"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Todo Message"
+#, kde-format
 msgid "Body Message"
-msgstr "செய்யவேண்டிய செய்தி"
+msgstr "உடற்பகுதி"
 
 #: kmail_options.h:38
 #, kde-format
@@ -4464,13 +4455,10 @@ msgid "KMail Error"
 msgstr "கேமெயில் சிக்கல்"
 
 #: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Data Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr "\"PIM Data Exporter\"-ஐ துவக்க முடியவில்லை. நீங்கள் நிறுவியதை சரிபாருங்கள்"
+msgstr "\"ImportWizard\" தனைத் துவக்க முடியவில்லை. நிறுவியதை சரிபார்க்கவும்"
 
 #: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
 #, kde-format
@@ -4965,20 +4953,16 @@ msgid "Followup Reminder Messages…"
 msgstr "பதிலளிக்க நினைவூட்ட வேண்டிய அஞ்சல்கள்…"
 
 #: kmmainwidget.cpp:3083
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Ex&pand All Threads"
+msgstr "அனைத்தையும் விரிவாக்கு"
 
 #: kmmainwidget.cpp:3088
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "தலைப்புச் சேர்"
+msgstr "அனைத்தையும் சுருக்கு"
 
 #: kmmainwidget.cpp:3099 util.cpp:168
 #, kde-format
@@ -8013,24 +7997,22 @@ msgstr "கணக்கு உதவிநிரலை துவக்க மு
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
+msgstr "உரையை உருவாக்கும் செருகுநிரல்களிலிருந்து உரையைப் பெறும் ஆதரவு"
 
 #: whatsnew/whatsnewtranslations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Add a new identity"
+#, kde-format
 msgid "Add new whatsnew widget."
-msgstr "புதிய அடையாளத்தை சேர்"
+msgstr "புதியவை என்ன என்பதைக் காட்டும் புதிய உட்பொதிநிரல் செர்க்கப்பட்டுள்ளது."
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "தொகுப்பின் அளவைக் காட்டும் புதிய செருகுநிரல்."
 
 #: whatsnew/whatsnewtranslations.cpp:36
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
+#, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr "(சில) வரிசையில் இருக்கும் செய்திகளை அனுப்புவதில் தோல்வி."
+msgstr "உரையைப் பேச்சாக்கும் அம்சம் சரிசெய்யப்பட்டுள்ளது (அஞ்சல்களை வரிசைப்படுத்துவது)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
