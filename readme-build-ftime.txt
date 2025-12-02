@@ -12,7 +12,7 @@ make install
 
 ## Command line
 
-cmake -preset ftime-trace
+cmake --preset ftime-trace
 
 ClangBuildAnalyzer --start $PWD/build-ftime-trace
 cmake --build --preset ftime-trace
