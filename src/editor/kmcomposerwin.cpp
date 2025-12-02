@@ -4256,7 +4256,7 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
         Kleo::KeySelectionDialog::ValidEncryptionKeys | (opgp ? Kleo::KeySelectionDialog::OpenPGPKeys : 0) | (x509 ? Kleo::KeySelectionDialog::SMIMEKeys : 0),
         false, // multi-selection
         false); // "remember choice" box;
-
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
     dlg->open();
 
     connect(dlg, &QDialog::accepted, this, [dlg, recipient, line, this]() {
