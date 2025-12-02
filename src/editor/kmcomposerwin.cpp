@@ -4181,10 +4181,10 @@ void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
     Q_ASSERT(line);
 
     connect(line, &MessageComposer::RecipientLineNG::countChanged, this, [this, line]() {
-        this->slotRecipientAdded(line);
+        slotRecipientAdded(line);
     });
     connect(line, &MessageComposer::RecipientLineNG::iconClicked, this, [this, line]() {
-        this->slotRecipientLineIconClicked(line);
+        slotRecipientLineIconClicked(line);
     });
     connect(line, &MessageComposer::RecipientLineNG::destroyed, this, &KMComposerWin::slotRecipientEditorFocusChanged, Qt::QueuedConnection);
     connect(
@@ -4192,7 +4192,7 @@ void KMComposerWin::slotRecipientEditorLineAdded(KPIM::MultiplyingLine *line_)
         &MessageComposer::RecipientLineNG::activeChanged,
         this,
         [this, line]() {
-            this->slotRecipientFocusLost(line);
+            slotRecipientFocusLost(line);
         },
         Qt::QueuedConnection);
 
