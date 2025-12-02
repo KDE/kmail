@@ -3330,9 +3330,9 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
     if (ident.organization().isEmpty()) {
         mMsg->removeHeader<KMime::Headers::Organization>();
     } else {
-        auto const organization = new KMime::Headers::Organization;
+        auto organization = std::unique_ptr<KMime::Headers::Organization>(new KMime::Headers::Organization);
         organization->fromUnicodeString(ident.organization());
-        mMsg->setHeader(organization);
+        mMsg->setHeader(std::move(organization));
     }
 
     addFaceHeaders(ident, mMsg);
@@ -3344,18 +3344,18 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                 int transportId = mailtransportStr.toInt();
                 const Transport *transport = TransportManager::self()->transportById(transportId, false); /*don't return default transport */
                 if (transport) {
-                    auto header = new KMime::Headers::Generic("X-KMail-Transport");
+                    auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Transport"));
                     header->fromUnicodeString(QString::number(transport->id()));
-                    mMsg->setHeader(header);
+                    mMsg->setHeader(std::move(header));
                     mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
                 } else {
                     if (auto hrdTransportName = mMsg->headerByType("X-KMail-Transport-Name")) {
                         const QString identityStrName = hrdTransportName->asUnicodeString();
                         const Transport *transportFromStrName = TransportManager::self()->transportByName(identityStrName, true);
                         if (transportFromStrName) {
-                            auto header = new KMime::Headers::Generic("X-KMail-Transport");
+                            auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Transport"));
                             header->fromUnicodeString(QString::number(transportFromStrName->id()));
-                            mMsg->setHeader(header);
+                            mMsg->setHeader(std::move(header));
                             mComposerBase->transportComboBox()->setCurrentTransport(transportFromStrName->id());
                         } else {
                             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
@@ -3369,9 +3369,9 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
             const Transport *transport = TransportManager::self()->transportById(transportId, true);
             if (transport) {
-                auto header = new KMime::Headers::Generic("X-KMail-Transport");
+                auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Transport"));
                 header->fromUnicodeString(QString::number(transport->id()));
-                mMsg->setHeader(header);
+                mMsg->setHeader(std::move(header));
                 mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
             } else {
                 mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
@@ -3384,18 +3384,18 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             mMsg->removeHeader("X-KMail-Transport");
             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
         } else {
-            auto header = new KMime::Headers::Generic("X-KMail-Transport");
+            auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Transport"));
             header->fromUnicodeString(QString::number(transport->id()));
-            mMsg->setHeader(header);
+            mMsg->setHeader(std::move(header));
             mComposerBase->transportComboBox()->setCurrentTransport(transport->id());
         }
     }
 
     const bool fccIsDisabled = ident.disabledFcc();
     if (fccIsDisabled) {
-        auto header = new KMime::Headers::Generic("X-KMail-FccDisabled");
+        auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-FccDisabled"));
         header->fromUnicodeString(QStringLiteral("true"));
-        mMsg->setHeader(header);
+        mMsg->setHeader(std::move(header));
     } else {
         mMsg->removeHeader("X-KMail-FccDisabled");
     }
