@@ -1145,9 +1145,9 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
         return;
     }
 
-    auto header = new KMime::Headers::Generic("X-KMail-Templates");
+    auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Templates"));
     header->fromUnicodeString(ident.templates());
-    mMsg->setHeader(header);
+    mMsg->setHeader(std::move(header));
 
     if (mode == TemplateParser::TemplateParserJob::NewMessage) {
         auto job = new KMComposerUpdateTemplateJob;
@@ -1758,9 +1758,9 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
             for (int i = numNL; i > 0; --i) {
                 xface.insert(i * 70, QStringLiteral("\n\t"));
             }
-            auto header = new KMime::Headers::Generic("X-Face");
+            auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-Face"));
             header->fromUnicodeString(xface);
-            msg->setHeader(header);
+            msg->setHeader(std::move(header));
         }
     }
 
@@ -1782,9 +1782,9 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
                 face.insert(72, QStringLiteral("\n\t"));
             }
 
-            auto header = new KMime::Headers::Generic("Face");
+            auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("Face"));
             header->fromUnicodeString(face);
-            msg->setHeader(header);
+            msg->setHeader(std::move(header));
         }
     }
 }

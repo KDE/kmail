@@ -40,9 +40,9 @@ void FillComposerJob::start()
         mMsg->to()->fromUnicodeString(mSettings.mTo);
     }
     if (mSettings.mIdentity > 0) {
-        auto h = new KMime::Headers::Generic("X-KMail-Identity");
+        auto h = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Identity"));
         h->from7BitString(QByteArray::number(mSettings.mIdentity));
-        mMsg->setHeader(h);
+        mMsg->setHeader(std::move(h));
     }
     if (!mSettings.mBody.isEmpty()) {
         mMsg->setBody(mSettings.mBody.toUtf8());

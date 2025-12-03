@@ -112,10 +112,10 @@ bool MailServiceImpl::sendMessage(const QString &from,
         msg->setBody(body.toUtf8());
     }
 
-    auto part = new KMime::Content;
+    auto part = std::unique_ptr<KMime::Content>(new KMime::Content);
     part->contentTransferEncoding()->setEncoding(KMime::Headers::CEbase64);
     part->setBody(attachment); // TODO: check it!
-    msg->appendContent(part);
+    msg->appendContent(std::move(part));
 
     KMail::makeComposer(msg, false, false);
     return true;
