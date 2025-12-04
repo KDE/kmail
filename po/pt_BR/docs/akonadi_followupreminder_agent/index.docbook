@@ -5,8 +5,7 @@
 >Agente de Lembretes de Acompanhamento</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Brazilian-Portuguese "INCLUDE"
-> 
+  <!ENTITY % Brazilian-Portuguese "INCLUDE">
 ]>
 
 <article id="followupreminder" lang="&language;">
@@ -47,9 +46,9 @@
 </copyright>
 
 <date
->10/06/2014</date>
+>21/09/21</date>
 <releaseinfo
->&kde; 4.14</releaseinfo>
+>5.13 (Applications 19.12)</releaseinfo>
 
 </articleinfo>
 
@@ -60,6 +59,78 @@
 <para
 >O &i18n-followupreminderagent; é um agente do Akonadi para mensagens com lembretes de acompanhamento </para>
 
+<sect2 id="using-kapp">
+<title
+>Usando o &i18n-followupreminderagent;</title>
+
+<para
+>Use <menuchoice
+><guimenu
+>Opções</guimenu
+><guimenuitem
+>Criar lembrete de acompanhamento</guimenuitem
+></menuchoice
+> na janela de composição do &kmail; para abrir uma janela que permite criar um lembrete para acompanhar seu e-mail atual em uma data específica.</para>
+
+<screenshot>
+<screeninfo
+>Janela do &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="add-followup-reminder.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Janela do &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Janela do &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+<para
+>Pressione a seta para baixo ao lado do campo <guilabel
+>Data</guilabel
+> para selecionar a data no widget de calendário do &kde;. Também é possível escolher o calendário para o lembrete usando a lista suspensa <guilabel
+>Salvar tarefa em</guilabel
+>.</para>
+<para
+>Para remover lembretes que você agendou, use <menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar &kmail;...</guimenuitem
+></menuchoice
+> e então selecione a página <guilabel
+>Plugins</guilabel
+> no &kmail; e pressione o botão de configuração ao lado do item <guilabel
+>Agente de lembrete de acompanhamento</guilabel
+>. Em seguida, use o menu de contexto aberto com um &RMB; clique em um item de lembrete para selecionar a ação <guimenuitem
+>Excluir</guimenuitem
+>. </para>
+
+<screenshot>
+<screeninfo
+>Configurar o &i18n-followupreminderagent;</screeninfo>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="followupreminder-configure.png" format="PNG"/>
+    </imageobject>
+    <textobject>
+      <phrase
+>Configurar o &i18n-followupreminderagent;</phrase>
+    </textobject>
+    <caption>
+      <para
+>Configurar o &i18n-followupreminderagent;</para>
+    </caption>
+  </mediaobject>
+</screenshot>
+
+</sect2>
+
 <sect2 id="credits">
 
 <title
@@ -68,16 +139,15 @@
 <para
 >&i18n-followupreminderagent;</para>
 <para
->Direitos autorais do programa 2014 de &Laurent.Montel; &Laurent.Montel.mail; </para>
+>Direitos autorais do programa 2014-2019 de &Laurent.Montel; &Laurent.Montel.mail; </para>
 <para
->Direitos autorais da documentação Copyright &copy; 2014 de &Laurent.Montel; &Laurent.Montel.mail; </para>
+>Direitos autorais da documentação &copy; 2014-2019 de &Laurent.Montel; &Laurent.Montel.mail; </para>
 
 <para
 >Tradução de André Marcelo Alvarenga <email
 >alvarenga@kde.org</email
 ></para
-> 
-&underFDL; &underGPL; </sect2>
+> &underFDL; &underGPL; </sect2>
 
 </sect1>
 

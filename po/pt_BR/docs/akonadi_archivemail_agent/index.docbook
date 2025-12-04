@@ -5,8 +5,7 @@
 >Agente de Arquivamento de E-mails</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Brazilian-Portuguese "INCLUDE"
-> 
+  <!ENTITY % Brazilian-Portuguese "INCLUDE">
 ]>
 
 <article id="archivemailagent" lang="&language;">
@@ -55,9 +54,9 @@
 >&FDLNotice;</legalnotice>
 
 <date
->30/08/2013</date>
+>21/09/2019</date>
 <releaseinfo
->&kde; 4.11</releaseinfo>
+>5.13 (Applications 19.12)</releaseinfo>
 </articleinfo>
 
 <sect1 id="introduction">
@@ -75,7 +74,7 @@
 <para
 >Use a opção <menuchoice
 ><guimenu
->Ferramentas</guimenu
+>Configurações</guimenu
 ><guimenuitem
 >Configurar o arquivamento automático...</guimenuitem
 > </menuchoice
@@ -123,7 +122,7 @@
 >, pelo caminho da pasta selecionada na lista de pastas do &kmail;, pela data no formato <userinput
 >ano-mês-dia</userinput
 > e pela extensão do arquivo selecionado, como &eg;, <filename
->Archive_Pasta local_caixa_de_entrada_2013-09-03.tar.bz2</filename
+>Archive_Pasta local_caixa_de_entrada_2019-09-03.tar.bz2</filename
 >. </para
 ></listitem>
 <listitem
@@ -178,6 +177,18 @@
 <para
 >Você pode usar a opção à esquerda de cada item da lista para ativar ou desativar o arquivamento desta tarefa. </para>
 <para
+>É possível acessar esta janela de configuração posteriormente usando<menuchoice
+><guimenu
+>Configurações</guimenu
+> <guimenuitem
+>Configurar &kmail;...</guimenuitem
+></menuchoice
+> e, em seguida, selecionando a página <guilabel
+>Plugins</guilabel
+> na janela principal do &kmail; e pressionando o botão de configuração ao lado do item <guilabel
+>Agente de arquivamento de e-mail</guilabel
+>. </para>
+<para
 >Usando o menu de contexto que aparece com o &RMB; sobre uma tarefa de arquivamento, você poderá abrir a pasta que contém os arquivos ou iniciar a tarefa imediatamente. Isto irá substituir um arquivamento que tenha sido criado para o mesmo dia sem qualquer notificação. </para>
 
 </sect2>
@@ -190,16 +201,15 @@
 <para
 >&i18n-archivemailagent;</para>
 <para
->Direitos autorais do programa 2013 Laurent Montel montel@kde.org </para>
+>Direitos autorais do programa 2013-2019 Laurent Montel montel@kde.org </para>
 <para
->Direitos autorais da documentação Copyright &copy; 2013 Laurent Montel montel@kde.org </para>
+>Direitos autorais da documentação Copyright &copy; 2013-2019 Laurent Montel montel@kde.org </para>
 
 <para
 >Tradução de André Marcelo Alvarenga <email
 >alvarenga@kde.org</email
 ></para
-> 
-&underFDL; &underGPL; </sect2>
+> &underFDL; &underGPL; </sect2>
 
 </sect1>
 

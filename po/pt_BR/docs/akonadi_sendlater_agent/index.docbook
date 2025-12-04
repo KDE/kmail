@@ -5,8 +5,7 @@
 >Agente de Envio</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Brazilian-Portuguese "INCLUDE"
-> 
+  <!ENTITY % Brazilian-Portuguese "INCLUDE">
 ]>
 
 <article id="sendlateragent" lang="&language;">
@@ -57,9 +56,9 @@
 </copyright>
 
 <date
->30/11/2013</date>
+>21/09/2019</date>
 <releaseinfo
->&kde; 4.12</releaseinfo>
+>5.13 (Applications 19.12)</releaseinfo>
 
 </articleinfo>
 
@@ -126,9 +125,13 @@
 ><guimenu
 >Ferramentas</guimenu
 > <guimenuitem
->Configurar o Agente de Envio...</guimenuitem
+>Configurar &kmail;...</guimenuitem
 ></menuchoice
-> do &kmail;. </para>
+> e selecione a página <guilabel
+>Plugins</guilabel
+> no &kmail; e pressione o botão de configuração no item <guilabel
+>Agente de Envio</guilabel
+>; </para>
 
 <screenshot>
 <screeninfo
@@ -164,16 +167,15 @@
 <para
 >&i18n-sendlateragent;</para>
 <para
->Direitos autorais do programa 2013 de &Laurent.Montel; &Laurent.Montel.mail; </para>
+>Direitos autorais do programa 2013-2019 de &Laurent.Montel; &Laurent.Montel.mail; </para>
 <para
->Direitos autorais da documentação Copyright &copy; 2013 de &Laurent.Montel; &Laurent.Montel.mail; </para>
+>Direitos autorais da documentação &copy; 2013-2019 de &Laurent.Montel; &Laurent.Montel.mail; </para>
 
 <para
 >Tradução de André Marcelo Alvarenga <email
 >alvarenga@kde.org</email
 ></para
-> 
-&underFDL; &underGPL; </sect2>
+> &underFDL; &underGPL; </sect2>
 
 </sect1>
 
