@@ -1,7 +1,5 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN" "dtd/kdedbx45.dtd" [
-  <!ENTITY kappname "&kmail;">
-  <!ENTITY package "kdepim">
   <!ENTITY kmail-intro SYSTEM "intro.docbook">
   <!ENTITY kmail-getting-started SYSTEM "getting-started.docbook">
   <!ENTITY kmail-using-kmail SYSTEM "using-kmail.docbook">
@@ -13,56 +11,6 @@
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Brazilian-Portuguese "INCLUDE"
 > <!-- change language only here -->
-  <!ENTITY html "<acronym
->HTML</acronym
->">
-  <!ENTITY gpg "<application
->GPG</application
->">
-  <!ENTITY gpgsm "<application
->GpgSM</application
->">
-  <!ENTITY mdn "<acronym
->MDN</acronym
->">
-  <!ENTITY acl "<acronym
->ACL</acronym
->">
-  <!ENTITY imap "<acronym
->IMAP</acronym
->">
-  <!ENTITY nntp "<acronym
->NNTP</acronym
->">
-  <!ENTITY openpgp "<acronym
->OpenPGP</acronym
->">
-  <!ENTITY smime "<acronym
->S/MIME</acronym
->">
-  <!ENTITY kolab "<acronym
->Kolab</acronym
->">
-  <!ENTITY Laurent.Montel '<personname
-><firstname
->Laurent</firstname
-><surname
->Montel</surname
-></personname
->'>
-  <!ENTITY Laurent.Montel.mail '<email
->montel@kde.org</email
->'>
-  <!ENTITY Scarlett.Clark '<personname
-><firstname
->Scarlett</firstname
-><surname
->Clark</surname
-></personname
->'>
-  <!ENTITY Scarlett.Clark.mail '<email
->scarlett@scarlettgatelyclark.com</email
->'>
 ]>
 <book id="kmail" lang="&language;">
 <bookinfo>
@@ -78,7 +26,7 @@
 -->
 
 <!-- TODO:
-*index (see kdegames/kpat/)
+* index (see kdegames/kpat/)
 
 * guisubmenu vs. guititem ??
 * more about security?
@@ -107,73 +55,29 @@
 
 <authorgroup>
 <author
-><firstname
->Daniel</firstname
-> <surname
->Naber</surname
-> <affiliation
-><address
->&Daniel.Naber.mail; </address
-></affiliation>
-</author>
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
 
 <author
-><firstname
->David</firstname
-> <surname
->Rugge</surname
-> <affiliation
-><address
->&David.Rugge.mail; </address
-></affiliation>
-</author>
+>&David.Rugge; &David.Rugge.mail; </author>
 
 <author
-><firstname
->Laurent</firstname
-> <surname
->Montel</surname
-> <affiliation
-><address
->&Laurent.Montel.mail; </address
-></affiliation>
-</author>
+>&Laurent.Montel; &Laurent.Montel.mail; </author>
 
 <author
-><firstname
->Scarlett</firstname
-> <surname
->Clark</surname
-> <affiliation
-><address
->&Scarlett.Clark.mail; </address
-></affiliation>
-</author>
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
 
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
 
 <othercredit role="translator"
 ><firstname
->Marcus</firstname
+>Luiz Fernando</firstname
 ><surname
->Gama</surname
+>Ranghetti</surname
 ><affiliation
 ><address
 ><email
->marcus.gama@gmail.com</email
-></address
-></affiliation
-><contrib
->Tradução</contrib
-></othercredit
-><othercredit role="translator"
-><firstname
->André Marcelo</firstname
-><surname
->Alvarenga</surname
-><affiliation
-><address
-><email
->andrealvarenga@gmx.net</email
+>elchevive@opensuse.org</email
 ></address
 ></affiliation
 ><contrib
@@ -206,7 +110,7 @@
 <holder
 >&Daniel.Naber;</holder>
 <holder
->Ingo Kl&ouml;cker</holder>
+>&Ingo.Kloecker;</holder>
 </copyright>
 <copyright>
 <year
@@ -214,18 +118,24 @@
 <holder
 >&Laurent.Montel;</holder>
 </copyright>
+<copyright>
+<year
+>2020</year>
+<holder
+>&David.Bryant;</holder>
+</copyright>
 
 <legalnotice
 >&FDLNotice;</legalnotice>
 <date
->26/06/2013</date>
+>14/08/2020</date>
 <releaseinfo
->(&kde; 4.12)</releaseinfo>
+>5.14.2 (Applications 20.04.2)</releaseinfo>
 
 <abstract>
 
 <para
->O &kmail; é o cliente de e-mail amigável e poderoso do &kde;.</para>
+>O &kmail; é o cliente de e-mail poderoso e fácil de usar do &kde;.</para>
 
 </abstract>
 
@@ -253,7 +163,7 @@
 </keywordset>
 </bookinfo>
 
- &kmail-intro; <!-- 4.7-->
+&kmail-intro; <!-- 4.7-->
 &kmail-getting-started; <!-- 4.7-->
 &kmail-using-kmail; <!-- 4.11 -->
 &kmail-configure;  <!-- 4.11 -->
@@ -262,21 +172,6 @@
 &kmail-troubleshooting; <!-- exported from UserBase -->
 &kmail-credits-and-licenses;
 
-<appendix id="installation">
-<title
->Instalação</title>
-
-<sect1 id="getting-kmail">
-<title
->Como obter o &kmail;</title>
-&install.intro.documentation; </sect1>
-
-<sect1 id="compilation">
-<title
->Compilação e instalação</title>
-&install.compile.documentation; </sect1>
-
-</appendix>
 </book>
 
 <!--

@@ -3,27 +3,11 @@
 <chapterinfo>
 <authorgroup>
 <author
-><firstname
->Daniel</firstname
-> <surname
->Naber</surname
-> <affiliation
-><address
-> <email
->daniel.naber@t-online.de</email>
-</address
-></affiliation>
-</author>
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
 <author
-><firstname
->Scarlett</firstname
-> <surname
->Clark</surname
-> <affiliation
-><address
->&Scarlett.Clark.mail; </address
-></affiliation>
-</author>
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
 <othercredit role="translator"
 ><firstname
 >Marcus</firstname
@@ -55,9 +39,9 @@
 > 
 </authorgroup>
 <date
->12/12/2013</date>
+>16/08/2020</date>
 <releaseinfo
->&kde; 4.12</releaseinfo>
+>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
 
@@ -83,7 +67,7 @@
 </screenshot>
 
 <para
->A equipe do &kmail; lhes dá as boas-vindas ao &kmail;, um cliente de e-mail amigável para o &kde;. Nosso objetivo é torná-lo um programa que seja bonito e intuitivo, sem sacrificar sua potencialidade. </para>
+>A equipe do &kmail; lhes dá as boas-vindas ao &kmail;, um cliente de e-mail amigável do &kde;. Nosso objetivo é tornar o &kmail; um programa que seja bonito e intuitivo, sem sacrificar seu poder. </para>
 
 <para
 >Se você nunca configurou um cliente de e-mail em um sistema &UNIX;, sugerimos que leia primeiro a seção <link linkend="getting-started"
@@ -93,11 +77,11 @@
 <title
 >Algumas funcionalidades do &kmail;</title>
 <para
->Alguns referências para excelentes funcionalidades disponíveis no &kmail;</para>
+>Aqui está um breve guia sobre algumas das excelentes funcionalidades disponíveis no &kmail;</para>
 <itemizedlist>
 <listitem>
 <para
->Você não precisa usar o seu mouse para utilizar o &kmail;. Tudo pode ser feito com os <link linkend="keyboard-shortcuts"
+>Você não precisa usar o seu mouse ao usar o &kmail;. Tudo pode ser feito com os <link linkend="keyboard-shortcuts"
 >Atalhos de teclado</link
 >.</para>
 </listitem>
@@ -105,23 +89,24 @@
 <para
 >Ainda que o &kmail; possa ser considerado confiável, você deverá manter cópias de segurança das suas mensagens, &ie;, use uma das opções de exportação/arquivamento apresentadas em <link linkend="backups"
 >Opções de backup</link
-> para guardar suas configurações e e-mail em local seguro.</para>
+> para guardar suas configurações e e-mail em local seguro regularmente.</para>
 </listitem>
 <listitem>
 <para
->O &kmail; é capaz de importar e-mails em diversos formatos, a partir dos seus aplicativos de e-mail anteriores, usando as opções de <link linkend="import-restore"
+>O &kmail; facilita a importação de e-mails de diversos aplicativos de e-mail. As opções são descritas em <link linkend="import-restore"
 >Restaurar e importar no &kmail;</link
 >.</para>
 </listitem>
 <listitem>
 <para
->Organize suas pastas com facilidade, usando as diversas opções do &kmail; para <link linkend="folders"
+>Você pode separar suas mensagens em diferentes categorias usando as extensas opções de <link linkend="folders"
 >Pastas</link
->. Algumas das funcionalidades incluem o tratamento por pastas: listas de e-mail, ACL (apenas no &imap;) e o arquivamento.</para>
+> do &kmail;. As funcionalidades incluem: tratamento especial para pastas específicas: listas de discussão, ACL (somente &IMAP;) e arquivamento.</para
+> <!-- todo: start a glossary -->
 </listitem>
 <listitem>
 <para
->Complemente a configuração das suas pastas com <link linkend="filters"
+>Você pode complementar a configuração das suas pastas com <link linkend="filters"
 >filtros</link
 > altamente personalizáveis.</para>
 </listitem>
@@ -129,15 +114,15 @@
 <para
 >Por padrão, o &kmail; irá detectar os <link linkend="configure-security-email-scams"
 >e-mails suspeitos</link
-> mais comuns. Também poderá combater SPAM e vírus com os assistentes incorporados para funcionar com programas externos, de modo a verificarem os e-mails a medida em que forem recebidos. Veja o <link linkend="the-anti-spam-wizard"
->Assistente de antispam</link
-> e o <link linkend="the-anti-virus-wizard"
->Assistente de antivírus</link
+> mais comuns. Você também pode combater SPAM e vírus criando filtros que funcionam com programas externos para analisar e-mails assim que eles chegam. Veja <link linkend="the-anti-spam-wizard"
+>Anti Spam</link
+> e <link linkend="the-anti-virus-wizard"
+>Antivírus</link
 > para mais detalhes.</para>
 </listitem>
 <listitem>
 <para
->Faça o gerenciamento simples das definições por conta, usando várias <link linkend="configure-identity"
+>É fácil gerenciar várias contas de e-mail usando diferentes <link linkend="configure-identity"
 >identidades</link
 >.</para>
 </listitem>
@@ -147,20 +132,15 @@
 <sect2 id="getting-help">
 <title
 >Obtendo ajuda</title>
-<note
-><para
->Se tiver problemas com a migração para o &kmail; 2, leia o capítulo <link linkend="troubleshooting"
->Solução de problemas</link
->. </para
-></note>
+
 <para
->A página do &kmail; pode ser encontrada em <ulink url="http://userbase.kde.org/KMail"
->http://userbase.kde.org/KMail</ulink
->. Lá você encontrará referências importantes como, &eg;, para as listas de discussão de usuários e desenvolvedores. Por favor, relate os erros do &kmail; usando a opção <menuchoice
+>A página do &kmail; pode ser encontrada em <ulink url="https://apps.kde.org/kmail2/"
+>https://apps.kde.org/kmail2/</ulink
+>. Lá você encontrará links úteis (&eg;, para as listas de discussão de usuários e desenvolvedores e para as páginas da wiki da comunidade). Por favor, reporte quaisquer bugs no &kmail; usando <menuchoice
 ><guimenu
 >Ajuda</guimenu
 ><guimenuitem
->Relatar erro...</guimenuitem
+>Reportar bug...</guimenuitem
 ></menuchoice
 >.</para>
 </sect2>

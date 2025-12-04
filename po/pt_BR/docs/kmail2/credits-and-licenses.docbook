@@ -3,25 +3,13 @@
 <chapterinfo>
 <authorgroup>
 <author
-><firstname
->Daniel</firstname
-> <surname
->Naber</surname
-> <affiliation
-><address
->&Daniel.Naber.mail; </address
-></affiliation>
-</author>
+>&Daniel.Naber; &Daniel.Naber.mail; </author>
 <author
-><firstname
->David</firstname
-> <surname
->Rugge</surname
-> <affiliation
-><address
->&David.Rugge.mail; </address
-></affiliation>
-</author>
+>&David.Rugge; &David.Rugge.mail; </author>
+<author
+>&Scarlett.Clark; &Scarlett.Clark.mail; </author>
+<author
+>&David.Bryant; &David.Bryant.mail; </author>
 <othercredit role="translator"
 ><firstname
 >Marcus</firstname
@@ -39,22 +27,28 @@
 > 
 </authorgroup>
 <date
->24/04/2013</date>
+>10/09/2021</date>
 <releaseinfo
->&kde; 4.11</releaseinfo>
+>5.14.2 (Applications 20.04.2)</releaseinfo>
 </chapterinfo>
 
 <title
 >Créditos e licença</title>
 
 <para
->&kmail;: Direitos autorais da equipe de desenvolvimento do &kmail;, 1997-2013</para>
-&underGPL; &underFDL; <sect1 id="team">
+>&kmail;: Direitos autorais dos desenvolvedores do &kmail;, 1997-2021</para
+>&underGPL; &underFDL; <sect1 id="team">
 <title
->Equipe de Desenvolvimento</title>
-<!-- please keep in sync with the authors list on the webpage -->
+>Equipe de desenvolvimento do programa</title>
+<!-- please keep in sync with the authors list in the "Help ==
+> About KMail" widget. -->
+<!-- Refer to program module aboutdata.cpp and git log history when revising this section. -->
 
-<!-- don't modify manually, this list is generated: -->
+<para
+>Essas são as pessoas que merecem o maior crédito por terem criado inicialmente o &kmail; e por o terem desenvolvido desde o seu nascimento em 1997 até à sua infância <emphasis
+>ca.</emphasis
+> em 2005. Podem ser considerados os pais do &kmail;. Alguns deles ainda contribuem com código e correções de bugs para o projeto atualmente.</para>
+
 <itemizedlist>
 <listitem
 ><para
@@ -62,11 +56,15 @@
 ></listitem>
 <listitem
 ><para
->Ingo Kl&ouml;cker (kloecker at kde org): Mantenedor anterior</para
+>Ingo Klöcker (kloecker at kde org): Mantenedor anterior, ainda ativo</para
 ></listitem>
 <listitem
 ><para
->Don Sanders (sanders at kde org): Adaptação e co-mantenedor</para
+>Thomas McGuire (mcguire at kde org): Mantenedor anterior</para
+></listitem>
+<listitem
+><para
+>Don Sanders (sanders at kde org): Antigo co-mantenedor</para
 ></listitem>
 <listitem
 ><para
@@ -74,19 +72,23 @@
 ></listitem>
 <listitem
 ><para
->Michael H&auml;ckel (haeckel at kde org): Mantenedor anterior</para
+>Michael Häckel (haeckel at kde org): Mantenedor anterior</para
 ></listitem>
 <listitem
 ><para
->Till Adam (till at adam-lilienthal de): Desenvolvimento base</para
+>Till Adam (till at adam-lilienthal de): Antigo desenvolvedor base</para
 ></listitem>
 <listitem
 ><para
->Carsten Burghardt (burghardt at kde org): Desenvolvimento base</para
+>Volker Krause (vkrause at adam-lilienthal de): Desenvolvedor base</para
 ></listitem>
 <listitem
 ><para
->Marc Mutz (mutz at kde org): Desenvolvimento base</para
+>Carsten Burghardt (burghardt at kde org): Antigo desenvolvedor base</para
+></listitem>
+<listitem
+><para
+>Marc Mutz (mutz at kde org): Antigo desenvolvedor base</para
 ></listitem>
 <listitem
 ><para
@@ -94,27 +96,31 @@
 ></listitem>
 <listitem
 ><para
->Zack Rusin (zack at kde org): Desenvolvimento base</para
+>Zack Rusin (zack at kde org): Antigo desenvolvedor base</para
 ></listitem>
 <listitem
 ><para
->Toyohiro Asukai (toyohiro at ksmplus com)</para
+>Toyohiro Asukai (toyohiro at ksmplus com): Suporte para o idioma japonês</para
 ></listitem>
 <listitem
 ><para
->Waldo Bastian (bastian at kde org)</para
+>Waldo Bastian (bastian at kde org): Diversas correções técnicas</para
 ></listitem>
 <listitem
 ><para
->Ryan Breen (ryan at ryanbreen com): notificação na área de notificação</para
+>Ryan Breen (ryan at ryanbreen com): Notificação na área de notificação</para
 ></listitem>
 <listitem
 ><para
->Steven Brown (swbrown at ucsd edu)</para
+>Steven Brown (swbrown at ucsd edu): Patch para o PGP</para
 ></listitem>
 <listitem
 ><para
->Matthias Kalle Dalheimer (kalle at kde org)</para
+>Matthias Kalle Dalheimer (kalle at kde org): Suporte à criptografia</para
+></listitem>
+<listitem
+><para
+>Matt Douhan (matt at fruitsalad org): Melhoria na documentação interna do programa</para
 ></listitem>
 <listitem
 ><para
@@ -122,7 +128,7 @@
 ></listitem>
 <listitem
 ><para
->David Faure (faure at kde org)</para
+>David Faure (faure at kde org): Colaborador principal, ainda ativo</para
 ></listitem>
 <listitem
 ><para
@@ -130,7 +136,7 @@
 ></listitem>
 <listitem
 ><para
->Kurt Granroth (granroth at kde org)</para
+>Kurt Granroth (granroth at kde org): Adição do suporte ao maildir</para
 ></listitem>
 <listitem
 ><para
@@ -162,7 +168,7 @@
 ></listitem>
 <listitem
 ><para
->Stephan Kulow (coolo at kde org)</para
+>Stephan Kulow (coolo at kde org): Colaborador principal</para
 ></listitem>
 <listitem
 ><para
@@ -186,11 +192,11 @@
 ></listitem>
 <listitem
 ><para
->Carsten Pfeiffer (pfeiffer at kde org)</para
+>Carsten Pfeiffer (pfeiffer at kde org): Correções de vários bugs</para
 ></listitem>
 <listitem
 ><para
->Sven Radej (radej at kde org)</para
+>Sven Radej (radej at kde org): Melhoria dos processos assíncronos</para
 ></listitem>
 <listitem
 ><para
@@ -202,15 +208,19 @@
 ></listitem>
 <listitem
 ><para
->Espen Sand (espen at kde org)</para
+>Espen Sand (espen at kde org): Aprimoramento dos diálogos de configuração</para
 ></listitem>
 <listitem
 ><para
->Aaron J. Seigo (aseigo at olympusproject org)</para
+>Aaron J. Seigo (aseigo at olympusproject org): Correções técnicas; notas/integração do calendário</para
 ></listitem>
 <listitem
 ><para
->George Staikos (staikos at kde org)</para
+>George Staikos (staikos at kde org): Melhoria da eficiência e consistência do código</para
+></listitem>
+<listitem
+><para
+>Szymon Stefanek (pragma at kvirc net): Nova lista de mensagens e nova árvore de pastas</para
 ></listitem>
 <listitem
 ><para
@@ -226,7 +236,7 @@
 ></listitem>
 <listitem
 ><para
->Bo Thorsen (bo at sonofthor dk)</para
+>Bo Thorsen (bo at sonofthor dk): Muitas contribuições valiosas</para
 ></listitem>
 <listitem
 ><para
@@ -246,11 +256,11 @@
 ></listitem>
 <listitem
 ><para
->Markus W&uuml;bben (markus wuebben at kde org)</para
+>Markus Wübben (markus wuebben at kde org): Exterminou muitos bugs</para
 ></listitem>
 <listitem
 ><para
->Karl-Heinz Zimmer (khz at kde org)</para
+>Karl-Heinz Zimmer (khz at kde org): Colaborador principal</para
 ></listitem>
 </itemizedlist>
 
@@ -258,37 +268,278 @@
 
 <sect1 id="credits">
 <title
->Créditos</title>
+>Créditos -- Os Primeiros Dias</title>
+
+<para
+>Essas são as pessoas que ajudaram a construir o programa quando ele ainda era bem jovem. Pense nelas como os vizinhos amigáveis ​​que ensinaram ao &kmail; lições importantes sobre a vida e cuidaram da criança quando ela se afastou da casa dos pais.</para>
 
 <itemizedlist>
+<listitem
+><para
+>Sam Abed (earlgreykde at pop netspace net au): Smiley ==
+> processamento de emoticon</para
+></listitem>
+<listitem
+><para
+>Joern Ahrens (joern ahrens at kdemail net): Melhoria no menu de contexto 'Marcar mensagem como'</para
+></listitem>
+<listitem
+><para
+>Tom Albers (toma at kde org): Manutenção do Bugzilla</para
+></listitem>
+<listitem
+><para
+>Jaime Torres Amate (jtamate at gmail com): Melhorias na velocidade de execução</para
+></listitem>
+<listitem
+><para
+>Albert Cervera Areny (albertca at hotpop com): Opcionalmente comprimir anexos</para
+></listitem>
+<listitem
+><para
+>Jonathan Armond (jon armond at gmail com)</para
+></listitem>
+<listitem
+><para
+>Patrick Audley (unknown): Adicionado o status de spam status aos cabeçalhos Bonitos</para
+></listitem>
+<listitem
+><para
+>Benjamin Azan (b azan at free fr): Implementação da manipulação do status de tarefas</para
+></listitem>
+<listitem
+><para
+>Davide Bettio (davide bettio at kdemail net): Correções de bugs, limpeza do código</para
+></listitem>
+<listitem
+><para
+>Pradeepto Bhattacharya (pradeepto at kde org): Suporte ao LDAP, manutenção</para
+></listitem>
+<listitem
+><para
+>Bruno Bigras (bigras bruno at gmail com)</para
+></listitem>
+<listitem
+><para
+>Bertjan Broeksema (broeksema at kde org): Colaborador principal para o Akonadi</para
+></listitem>
+<listitem
+><para
+>David Bryant (davidbryant at gvtc com): Documentação, ainda ativo</para
+></listitem>
+<listitem
+><para
+>Albert Astals Cid (aacid at kde org): Colaborador substancial, ainda ativo</para
+></listitem>
+<listitem
+><para
+>Frederick Emmott (fred87 at users sf net): Suporte a antivírus</para
+></listitem>
+<listitem
+><para
+>Christophe Giboudeaux (christophe at krop fr): Colaborador principal, ainda ativo</para
+></listitem>
+<listitem
+><para
+>Sandro Giessl (sgiessl at gmail com): Correção de estilos de widget</para
+></listitem>
+<listitem
+><para
+>Olivier Goffart (ogoffart at kde org): Correção de bugs</para
+></listitem>
+<listitem
+><para
+>Severin Greimel (greimel-kde at fs-pw uni-muenchen de): Vários patches</para
+></listitem>
+<listitem
+><para
+>Shaheed Haque (shaheedhaque at gmail com): Correções de bugs</para
+></listitem>
+<listitem
+><para
+>Ingo Heeskens (ingo at fivemile org): Ativar o carregamento de referência externa para uma pasta inteira</para
+></listitem>
+<listitem
+><para
+>Kurt Hindenburg (kurt hindenburg at gmail com): Excluir um tópico inteiro</para
+></listitem>
 <listitem
 ><para
 >Heiko Hund (heiko at ist eigentlich net): Filtros POP</para
 ></listitem>
 <listitem
 ><para
->Bernhard Reiter (bernhard at intevation de): Gerenciador do projeto &Auml;gypten e Kroupware</para
+>Torsten Kasch (tk at genetik uni-bielefeld de): Patch para travamento no Solaris</para
 ></listitem>
 <listitem
 ><para
->Jan Simonson (jan at simonson pp se): Testes beta do suporte PGP 6</para
+>Jason 'vanRijn' Kasper (vr at movingparts net): Escolha de fontes para mensagens novas/não lidas/importantes</para
 ></listitem>
 <listitem
 ><para
->Patrick S. Vogt (patrick vogt at unibas ch): Registro horário nas mensagens 'Transmissão completa'</para
+>Martijn Klingens (klingens at kde org): Corrição da navegação rápida por teclado na pesquisa</para
 ></listitem>
 <listitem
 ><para
->Jan-Oliver Wagner (jan at intevation de): &Auml;gypten e Kroupware</para
+>Christoph Klünter (chris at inferno nadir org): Correção do recurso de arrastar e soltar do livro de endereços para o compositor.</para
 ></listitem>
 <listitem
 ><para
->Wolfgang Westphal (wolfgang westphal at gmx de): várias chaves de criptografia por endereço</para
+>Martin Koller (kollix at aon at): Colaborador substancial</para
+></listitem>
+<listitem
+><para
+>Tobias König (tokoe at kde org): Colaborador principal</para
+></listitem>
+<listitem
+><para
+>Nikolai Kosjar (nikolai kosjar at qt io)</para
+></listitem>
+<listitem
+><para
+>Francois Kritzinger (unknown): Melhoria do diálogo de configuração</para
+></listitem>
+<listitem
+><para
+>Danny Kukawka (danny kukawka at bisect de): Melhoria na importação de mensagens</para
+></listitem>
+<listitem
+><para
+>Roger Larsson (roger larsson at norran net): Adicionou detalhes às mensagens na barra de status</para
+></listitem>
+<listitem
+><para
+>Michael Leupold (lemma at confuego org)</para
+></listitem>
+<listitem
+><para
+>Thiago Macieira (thiago at kde org)</para
+></listitem>
+<listitem
+><para
+>Andras Mantia (amantia at kde org)</para
+></listitem>
+<listitem
+><para
+>Jonathan Marten (jjm at keelhaul me uk)</para
+></listitem>
+<listitem
+><para
+>Sergio Luis Martins (iamsergio at gmail com)</para
+></listitem>
+<listitem
+><para
+>Jeffrey McGee (jeffreym at cs tamu edu): Patch para o problema de redimensionamento da janela</para
+></listitem>
+<listitem
+><para
+>Thomas Moenicke (tm at php-qt org)</para
+></listitem>
+<listitem
+><para
+>Dirk Müller (mueller at kde org): Otimização do qt-cast; correção do QUrl()</para
+></listitem>
+<listitem
+><para
+>Torgny Nyblom (nyblom at kde org): Colaborador substancial</para
+></listitem>
+<listitem
+><para
+>OpenUsability (contact at openusability org): Testes de usabilidade e melhorias</para
+></listitem>
+<listitem
+><para
+>Mario Teijeiro Otero (emeteo at escomposlinux org)</para
+></listitem>
+<listitem
+><para
+>Kevin Ottens (ervin at kde org)</para
+></listitem>
+<listitem
+><para
+>Simon Perreault (nomis80 at nomis80 org): Patch para configuração do compositor</para
+></listitem>
+<listitem
+><para
+>Jakob Petsovits (jpetso at gmx at)</para
+></listitem>
+<listitem
+><para
+>Romain Pokrzywka (romain at kdab net)</para
+></listitem>
+<listitem
+><para
+>Bernhard Reiter (bernhard at intevation de): Gerenciamento do projeto Ägypten e Kroupware</para
+></listitem>
+<listitem
+><para
+>Darío Andrés Rodríguez (andresbajotierra at gmail com)</para
+></listitem>
+<listitem
+><para
+>Edwin Schepers (yez at familieschepers nl): Melhoria no suporte ao &HTML;</para
+></listitem>
+<listitem
+><para
+>Jakob Schröter (cvsci at camaya net): Suporte ao X-Face</para
+></listitem>
+<listitem
+><para
+>Cornelius Schumacher (schumacher at kde org): Colaborador principal</para
+></listitem>
+<listitem
+><para
+>Jan Simonson (jan at simonson pp se): Teste beta do suporte ao PGP 6</para
+></listitem>
+<listitem
+><para
+>Paul Sprakes (kdecvs at sprakes co uk): Correção de bugs, limpeza dos menus de contexto</para
+></listitem>
+<listitem
+><para
+>Jarosław Staniek (staniek at kde org): Porte para o MS Windows®</para
+></listitem>
+<listitem
+><para
+>Will Stephenson (wstephenson at kde org): Indicador de estatus para IM</para
+></listitem>
+<listitem
+><para
+>Hasso Tepper (hasso at kde org): Melhoria do layout do editor de destinatários</para
+></listitem>
+<listitem
+><para
+>Frank Thieme (frank at fthieme net): Correções de bugs</para
+></listitem>
+<listitem
+><para
+>Patrick S. Vogt (patrick vogt at unibas ch): Registro horário nas mensagens de status de 'Transmissão completa'</para
+></listitem>
+<listitem
+><para
+>Jan-Oliver Wagner (jan at intevation de): Gerenciamento do projeto Ägypten e Kroupware</para
+></listitem>
+<listitem
+><para
+>Wolfgang Westphal (wolfgang westphal at gmx de): Múltiplas chaves de criptografia por endereço</para
+></listitem>
+<listitem
+><para
+>Allen Winter (winter at kde org): Colaborador principal, ainda ativo</para
+></listitem>
+<listitem
+><para
+>Urs Wolfer (uwolfer at kde org): Melhoria no processamento de ícone/imagem</para
 ></listitem>
 <listitem
 ><para
 >Thorsten Zachmann (t zachmann at zagge de): Filtros de POP</para
 ></listitem>
+<listitem
+><para
+>Thomas Zander (zander at kde org): Correção de vários bugs no &IMAP;</para
+></listitem>
+
 </itemizedlist>
 
 </sect1>
@@ -298,24 +549,21 @@
 >Documentação</title>
 
 <para
->Atualização para o &kmail; 4.11 realizada por Laurent Montel <email
->montel@kde.org</email
-> e Scarlett Clark <email
->scarlett@scarlettgatelyclark.com</email
-></para>
+>Atualização para o &kmail; 5.14.2 por &David.Bryant; &David.Bryant.mail;.</para>
 
 <para
->Atualização para o &kmail; 1.7, por Ingo Kl&ouml;cker &Ingo.Kloecker.mail; e &Marc.Mutz; &Marc.Mutz.mail;, capítulo do Assistente de antispam por &Andreas.Gungl; &Andreas.Gungl.mail;, seção sobre o registro de filtros por &Andreas.Gungl; &Andreas.Gungl.mail; e &Brad.Hards; &Brad.Hards.mail;, outras alterações por &Daniel.Naber; &Daniel.Naber.mail;.</para>
+>Atualização para o &kmail; 4.11 por &Laurent.Montel; &Laurent.Montel.mail; e &Scarlett.Clark; &Scarlett.Clark.mail;.</para>
 
 <para
->Atualização do &kmail; 1.2 até o 1.5 por &Daniel.Naber; &Daniel.Naber.mail;, capítulo do <application
+>Atualização para o &kmail; 1.7 por &Ingo.Kloecker; &Ingo.Kloecker.mail; e &Marc.Mutz; &Marc.Mutz.mail;. Capítulo do Assistente Anti-Spam por &Andreas.Gungl; &Andreas.Gungl.mail;. Seção sobre o registro de filtro por &Andreas.Gungl; &Andreas.Gungl.mail; e &Brad.Hards; &Brad.Hards.mail;. Alterações adicionais por &Daniel.Naber; &Daniel.Naber.mail;.</para>
+
+<para
+>Atualização para &kmail; de 1.2 a 1.5 por &Daniel.Naber; &Daniel.Naber.mail;,Capítulo sobre o <application
 >OpenPGP</application
-> de &Andreas.Gungl; &Andreas.Gungl.mail; e Ingo Kl&ouml;cker &Ingo.Kloecker.mail;, capítulo do filtro de mensagens de &Marc.Mutz; &Marc.Mutz.mail;, capítulo do filtro de transferências de &Thorsten.Zachmann; &Thorsten.Zachmann.mail;. As outras partes foram contribuídas por vários programadores do &kmail;.</para>
+> por &Andreas.Gungl; &Andreas.Gungl.mail; e &Ingo.Kloecker; &Ingo.Kloecker.mail;, capítulo sobre filtro de mensagens por &Marc.Mutz; &Marc.Mutz.mail;, e capítulo sobre filtro de download por &Thorsten.Zachmann; &Thorsten.Zachmann.mail;. Outras partes foram contribuídas por vários desenvolvedores do &kmail;.</para>
 
 <para
->Documentação do &kmail; 1.0 de &David.Rugge; &David.Rugge.mail;. Documentação original de Markus Wuebben <email
->markus.&Bernd.Johannes.Wuebben.mail;</email
->, Robert Williams <email
+>Documentação do &kmail; 1.0 de &David.Rugge; &David.Rugge.mail;. Documentação original por &Bernd.Johannes.Wuebben; &Bernd.Johannes.Wuebben.mail;, Robert Williams <email
 >rwilliams@kde.org</email
 > (Editor).</para>
 
