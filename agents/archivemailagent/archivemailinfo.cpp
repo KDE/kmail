@@ -4,12 +4,13 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "archivemailinfo.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "archivemailagent_debug.h"
 #include <KLocalizedString>
+#include <QDebug>
 #include <QDir>
 
+using namespace Qt::Literals::StringLiterals;
 ArchiveMailInfo::ArchiveMailInfo() = default;
 
 ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)

@@ -6,7 +6,7 @@
 #pragma once
 #include "kmail_private_export.h"
 #include <Akonadi/Item>
-#include <QDebug>
+class QDebug;
 #include <QString>
 
 class KMAILTESTS_TESTS_EXPORT HistoryClosedReaderInfo

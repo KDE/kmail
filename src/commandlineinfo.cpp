@@ -9,6 +9,7 @@
 #include "kmail_options.h"
 #include "messagecore/stringutil.h"
 #include <QCommandLineParser>
+#include <QDebug>
 using namespace Qt::Literals::StringLiterals;
 CommandLineInfo::CommandLineInfo() = default;
 

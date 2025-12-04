@@ -9,7 +9,7 @@
 #include <KConfigGroup>
 #include <MailCommon/BackupJob>
 #include <QDate>
-#include <QDebug>
+class QDebug;
 #include <QUrl>
 
 class ArchiveMailInfo

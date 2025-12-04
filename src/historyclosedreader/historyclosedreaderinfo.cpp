@@ -4,6 +4,7 @@
 */
 
 #include "historyclosedreaderinfo.h"
+#include <QDebug>
 
 HistoryClosedReaderInfo::HistoryClosedReaderInfo() = default;
 

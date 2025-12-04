@@ -6,7 +6,7 @@
 
 #pragma once
 #include "kmail_private_export.h"
-#include <QDebug>
+class QDebug;
 #include <QUrl>
 
 class KMAILTESTS_TESTS_EXPORT CommandLineInfo
