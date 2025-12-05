@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-12-05 00:43+0000\n"
 "PO-Revision-Date: 2025-10-09 00:56+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -80,7 +80,7 @@ msgstr "최대 백업 수:"
 msgid "unlimited"
 msgstr "무제한"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:102 archivemailinfo.cpp:118
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"

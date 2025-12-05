@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-12-05 00:43+0000\n"
 "PO-Revision-Date: 2025-08-20 15:16+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -83,7 +83,7 @@ msgstr "Artxiboen gehienezko kopurua:"
 msgid "unlimited"
 msgstr "mugagabea"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:102 archivemailinfo.cpp:118
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"

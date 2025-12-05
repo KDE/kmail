@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bosnianuniversetranslation\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-12-05 00:43+0000\n"
 "PO-Revision-Date: 2014-01-31 18:56+0100\n"
 "Last-Translator: Samir Ribić <megaribi@epn.ba>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -91,7 +91,7 @@ msgstr "Maksimalan broj arhiva:"
 msgid "unlimited"
 msgstr "neograničeno"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:102 archivemailinfo.cpp:118
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-12-05 00:43+0000\n"
 "PO-Revision-Date: 2025-09-25 02:24+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -82,7 +82,7 @@ msgstr "封存最大數量："
 msgid "unlimited"
 msgstr "不限制"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:102 archivemailinfo.cpp:118
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
