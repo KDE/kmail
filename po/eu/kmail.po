@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-10-18 17:41+0200\n"
+"PO-Revision-Date: 2025-12-07 11:36+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.08.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -4026,8 +4026,7 @@ msgid "Set subject of message"
 msgstr "Ezarri mezuaren gaia"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "Gaia"
 
@@ -4037,10 +4036,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Bidali CC: «helbide»arekin. Hau errepika daiteke"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "&Address Book"
+#, kde-format
 msgid "Address"
-msgstr "&Helbide-liburua"
+msgstr "Helbidea"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4065,10 +4063,9 @@ msgid "Read message body from 'file'"
 msgstr "Irakurri mezuaren gorputza 'fitxategi'tik"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Fitxategia"
+msgstr "Fitxategia"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4077,10 +4074,9 @@ msgid "Set body of message"
 msgstr "Ezarri mezuaren gorputza"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Testu aberastua"
+msgstr "Testua"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4089,10 +4085,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Postari eranskin bat gehitu. hau errepika daiteke"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Eranskina"
+msgstr "Eranskinaren URLa"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4119,10 +4114,9 @@ msgid "Set identity name"
 msgstr "Ezarri nortasun-izena"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "&Identitatea:"
+msgstr "Nortasuna"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4131,10 +4125,9 @@ msgid "View the given message file"
 msgstr "Ikusi emandako mezu-fitxategia"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Mezua"
+msgstr "Mezuaren URLa"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4143,10 +4136,9 @@ msgid "Set body of message as html"
 msgstr "Ezarri mezuaren gorputza HTML gisa"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Todo Message"
+#, kde-format
 msgid "Body Message"
-msgstr "Zereginen mezua"
+msgstr "Mezuaren gorputza"
 
 #: kmail_options.h:38
 #, kde-format
@@ -8162,10 +8154,9 @@ msgid "New plugin: show collection size."
 msgstr "Plugin berria: erakutsi bildumaren neurria."
 
 #: whatsnew/whatsnewtranslations.cpp:36
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
+#, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr "Huts egin du ilaran gordetako mezua(k) bidaltzean."
+msgstr "Testutik ahotsera euskarria konpondu (mezuak ilaran ipini)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
