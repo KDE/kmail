@@ -52,7 +52,7 @@ void SpellCheckerConfigDialog::readConfig()
 {
     create(); // ensure a window is created
     windowHandle()->resize(QSize(600, 400));
-    KConfigGroup group(KSharedConfig::openStateConfig(), QStringLiteral("SpellCheckerConfigDialog"));
+    const KConfigGroup group(KSharedConfig::openStateConfig(), QStringLiteral("SpellCheckerConfigDialog"));
     KWindowConfig::restoreWindowSize(windowHandle(), group);
     resize(windowHandle()->size()); // workaround for QTBUG-40584
 }
