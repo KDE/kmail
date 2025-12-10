@@ -3908,9 +3908,7 @@ msgid "Set subject of message"
 msgstr "Nastavit předmět zprávy"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "Předmět"
 
@@ -3920,10 +3918,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Poslat Kopie: na 'adresu'. Lze zopakovat"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address type:"
+#, kde-format
 msgid "Address"
-msgstr "Typ adresy:"
+msgstr "Adresa"
 
 #: kmail_options.h:22
 #, kde-format
@@ -3948,10 +3945,9 @@ msgid "Read message body from 'file'"
 msgstr "Načíst tělo zprávy ze souboru 'file'"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Soubor"
+msgstr "Soubor"
 
 #: kmail_options.h:29
 #, kde-format
@@ -3960,10 +3956,9 @@ msgid "Set body of message"
 msgstr "Nastavit tělo zprávy"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Formátovaný text"
+msgstr "Text"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4003,11 +3998,9 @@ msgid "Set identity name"
 msgstr "Nastavit název identity"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "&Identita"
+msgstr "Identita"
 
 #: kmail_options.h:35
 #, kde-format
