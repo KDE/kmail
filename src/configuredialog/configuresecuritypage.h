@@ -52,8 +52,8 @@ private:
 
 private:
     void slotLinkClicked(const QString &link);
-    QButtonGroup *mMDNGroup = nullptr;
-    QButtonGroup *mOrigQuoteGroup = nullptr;
+    QButtonGroup *const mMDNGroup;
+    QButtonGroup *const mOrigQuoteGroup;
     Ui_SecurityPageMDNTab mUi;
 };
 

@@ -163,11 +163,12 @@ QString SecurityPageMDNTab::helpAnchor() const
 
 SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mMDNGroup(new QButtonGroup(this))
+    , mOrigQuoteGroup(new QButtonGroup(this))
 {
     mUi.setupUi(this);
 
     // "ignore", "ask", "deny", "always send" radiobuttons
-    mMDNGroup = new QButtonGroup(this);
     connect(mMDNGroup, &QButtonGroup::buttonClicked, this, &SecurityPageMDNTab::slotEmitChanged);
     mMDNGroup->addButton(mUi.radioIgnore, 0);
     mMDNGroup->addButton(mUi.radioAsk, 1);
@@ -175,7 +176,6 @@ SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
     mMDNGroup->addButton(mUi.radioAlways, 3);
 
     // "Original Message quote" radiobuttons
-    mOrigQuoteGroup = new QButtonGroup(this);
     connect(mOrigQuoteGroup, &QButtonGroup::buttonClicked, this, &SecurityPageMDNTab::slotEmitChanged);
     mOrigQuoteGroup->addButton(mUi.radioNothing, 0);
     mOrigQuoteGroup->addButton(mUi.radioFull, 1);
