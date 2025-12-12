@@ -93,7 +93,7 @@ ArchiveMailWidget::~ArchiveMailWidget() = default;
 void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-    QMenu menu(parentWidget());
+    QMenu menu(mWidget.treeWidget);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &ArchiveMailWidget::slotAddItem);
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
@@ -220,7 +220,7 @@ bool ArchiveMailWidget::save() const
 void ArchiveMailWidget::slotDeleteItem()
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
-    const int answer = KMessageBox::warningTwoActions(parentWidget(),
+    const int answer = KMessageBox::warningTwoActions(mWidget.treeWidget,
                                                       i18n("Do you want to delete the selected items?"),
                                                       i18nc("@title:window", "Delete Items"),
                                                       KStandardGuiItem::del(),
@@ -245,7 +245,7 @@ void ArchiveMailWidget::slotModifyItem()
             return;
         }
         auto archiveItem = static_cast<ArchiveMailItem *>(item);
-        QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(archiveItem->info(), parentWidget());
+        QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(archiveItem->info(), mWidget.treeWidget);
         qCDebug(ARCHIVEMAILAGENT_LOG) << " archiveItem->info() " << *archiveItem->info();
         if (dialog->exec()) {
             ArchiveMailInfo *info = dialog->info();
@@ -258,11 +258,11 @@ void ArchiveMailWidget::slotModifyItem()
 
 void ArchiveMailWidget::slotAddItem()
 {
-    QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(nullptr, parentWidget());
+    QPointer<AddArchiveMailDialog> dialog = new AddArchiveMailDialog(nullptr, mWidget.addItem);
     if (dialog->exec()) {
         ArchiveMailInfo *info = dialog->info();
         if (verifyExistingArchive(info)) {
-            KMessageBox::error(parentWidget(),
+            KMessageBox::error(mWidget.addItem,
                                i18n("Cannot add a second archive for this folder. Modify the existing one instead."),
                                i18nc("@title:window", "Add Archive Mail"));
             delete info;
@@ -303,7 +303,7 @@ void ArchiveMailWidget::slotOpenFolder()
         if (archiveItemInfo) {
             const QUrl url = archiveItemInfo->url();
             auto job = new KIO::OpenUrlJob(url);
-            job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, parentWidget()));
+            job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mWidget.treeWidget));
             job->setRunExecutables(false);
             job->start();
         }
