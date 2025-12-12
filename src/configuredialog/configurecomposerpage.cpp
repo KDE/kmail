@@ -721,31 +721,8 @@ QString ComposerPageHeadersTab::helpAnchor() const
 
 ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     : ConfigModuleTab(parent)
-    , mCreateOwnMessageIdCheck(new QCheckBox(i18nc("@option:check", "&Use custom message-id suffix"), this))
-    , mMessageIdSuffixEdit(new QLineEdit(this))
 {
     auto vlay = new QVBoxLayout(this);
-
-    // "Use custom Message-Id suffix" checkbox:
-    connect(mCreateOwnMessageIdCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
-    vlay->addWidget(mCreateOwnMessageIdCheck);
-
-    // "Message-Id suffix" line edit and label:
-    auto hlay = new QHBoxLayout(); // inherits spacing
-    vlay->addLayout(hlay);
-    mMessageIdSuffixEdit->setClearButtonEnabled(true);
-    // only ASCII letters, digits, plus, minus and dots are allowed
-    auto messageIdSuffixValidator = new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*")), this);
-    mMessageIdSuffixEdit->setValidator(messageIdSuffixValidator);
-    auto label = new QLabel(i18nc("@label:textbox", "Custom message-&id suffix:"), this);
-    label->setBuddy(mMessageIdSuffixEdit);
-    label->setEnabled(false); // since !mCreateOwnMessageIdCheck->isChecked()
-    mMessageIdSuffixEdit->setEnabled(false);
-    hlay->addWidget(label);
-    hlay->addWidget(mMessageIdSuffixEdit, 1);
-    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled, label, &QWidget::setEnabled);
-    connect(mCreateOwnMessageIdCheck, &QAbstractButton::toggled, mMessageIdSuffixEdit, &QWidget::setEnabled);
-    connect(mMessageIdSuffixEdit, &QLineEdit::textChanged, this, &ConfigModuleTab::slotEmitChanged);
 
     // horizontal rule and "custom header fields" label:
     vlay->addWidget(new KSeparator(Qt::Horizontal, this));
@@ -875,11 +852,6 @@ void ComposerPageHeadersTab::slotRemoveMimeHeader()
 
 void ComposerPageHeadersTab::doLoadOther()
 {
-    mMessageIdSuffixEdit->setText(MessageComposer::MessageComposerSettings::customMsgIDSuffix());
-    const bool state =
-        (!MessageComposer::MessageComposerSettings::customMsgIDSuffix().isEmpty() && MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix());
-    mCreateOwnMessageIdCheck->setChecked(state);
-
     mHeaderList->clear();
     mTagNameEdit->clear();
     mTagValueEdit->clear();
@@ -907,9 +879,6 @@ void ComposerPageHeadersTab::doLoadOther()
 
 void ComposerPageHeadersTab::save()
 {
-    MessageComposer::MessageComposerSettings::self()->setCustomMsgIDSuffix(mMessageIdSuffixEdit->text());
-    MessageComposer::MessageComposerSettings::self()->setUseCustomMessageIdSuffix(mCreateOwnMessageIdCheck->isChecked());
-
     // Clean config
     const int oldHeadersCount = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {
@@ -945,13 +914,7 @@ void ComposerPageHeadersTab::save()
 void ComposerPageHeadersTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
-    const QString messageIdSuffix = MessageComposer::MessageComposerSettings::customMsgIDSuffix();
-    const bool useCustomMessageIdSuffix = MessageComposer::MessageComposerSettings::useCustomMessageIdSuffix();
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
-
-    mMessageIdSuffixEdit->setText(messageIdSuffix);
-    const bool state = (!messageIdSuffix.isEmpty() && useCustomMessageIdSuffix);
-    mCreateOwnMessageIdCheck->setChecked(state);
 
     mHeaderList->clear();
     mTagNameEdit->clear();

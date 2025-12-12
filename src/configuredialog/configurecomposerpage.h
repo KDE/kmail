@@ -147,8 +147,6 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    QCheckBox *const mCreateOwnMessageIdCheck;
-    QLineEdit *const mMessageIdSuffixEdit;
     ListView *mHeaderList = nullptr;
     QPushButton *mRemoveHeaderButton = nullptr;
     QLineEdit *mTagNameEdit = nullptr;
