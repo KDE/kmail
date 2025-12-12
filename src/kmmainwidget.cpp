@@ -585,7 +585,7 @@ void KMMainWidget::slotShowSelectedFolderInPane()
     if (mCurrentCollection.isValid()) {
         const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->entityTreeModel(), mCurrentCollection);
         if (idx.isValid()) {
-            mMessagePane->setCurrentFolder(mCurrentCollection, idx, false, mPreSelectionMode);
+            mMessagePane->setCurrentFolder(mCurrentCollection, idx, mPreSelectionMode);
         }
     }
     updateMessageActions();
