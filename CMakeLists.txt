@@ -37,6 +37,13 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
     endif()
 endif()
 if(NOT ${PRE_COMMIT_INSTALLED})
+    find_program(PRE_COMMIT_EXECUTABLE pre-commit)
+    if(PRE_COMMIT_EXECUTABLE)
+        message(
+            WARNING
+            "This module has pre-commit support. pre-commit binary was found. Please execute pre-commit install -f"
+        )
+    endif()
     include(KDEGitCommitHooks)
     include(KDEClangFormat)
     kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
