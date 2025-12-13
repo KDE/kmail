@@ -691,7 +691,6 @@ ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
 
 void ComposerPageSubjectTab::doLoadFromGlobalSettings()
 {
-    qDebug() << " void ComposerPageSubjectTab::doLoadFromGlobalSettings()";
     loadWidget(mReplyListEditor, MessageCore::MessageCoreSettings::self()->replyPrefixesItem());
     loadWidget(mForwardListEditor, MessageCore::MessageCoreSettings::self()->forwardPrefixesItem());
     loadWidget(mReplaceForwardPrefixCheck, MessageCore::MessageCoreSettings::self()->replaceForwardPrefixItem());
