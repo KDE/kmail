@@ -4703,6 +4703,8 @@ void KMMainWidget::slotMessageSelected(const Akonadi::Item &item)
                 itemFetchJob->setProperty("_resource", QVariant::fromValue(resource));
                 connect(itemFetchJob, &ItemFetchJob::itemsReceived, this, &KMMainWidget::itemsReceived);
                 connect(itemFetchJob, &Akonadi::ItemFetchJob::result, this, &KMMainWidget::itemsFetchDone);
+            } else {
+                qCWarning(KMAIL_LOG) << " mCurrentCollection is not valid it's a bug";
             }
         }
     }
