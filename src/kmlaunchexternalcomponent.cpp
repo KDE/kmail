@@ -30,52 +30,36 @@ KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObj
 
 KMLaunchExternalComponent::~KMLaunchExternalComponent() = default;
 
-void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
+void KMLaunchExternalComponent::createAgentConfigurationDialog(const QString &agentName, const QString &errorMessage)
 {
-    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_archivemail_agent"));
+    auto agent = Akonadi::AgentManager::self()->instance(agentName);
     if (agent.isValid()) {
         QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
         dlg->exec();
         delete dlg;
     } else {
-        KMessageBox::error(mParentWidget, i18n("Archive Mail Agent was not registered."));
+        KMessageBox::error(mParentWidget, errorMessage);
     }
+}
+
+void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
+{
+    createAgentConfigurationDialog(QStringLiteral("akonadi_archivemail_agent"), i18n("Archive Mail Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotConfigureSendLater()
 {
-    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_sendlater_agent"));
-    if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
-    } else {
-        KMessageBox::error(mParentWidget, i18n("Send Later Agent was not registered."));
-    }
+    createAgentConfigurationDialog(QStringLiteral("akonadi_sendlater_agent"), i18n("Send Later Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotConfigureMailMerge()
 {
-    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_mailmerge_agent"));
-    if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
-    } else {
-        KMessageBox::error(mParentWidget, i18n("Mail Merge Agent was not registered."));
-    }
+    createAgentConfigurationDialog(QStringLiteral("akonadi_mailmerge_agent"), i18n("Mail Merge Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
-    auto agent = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_followupreminder_agent"));
-    if (agent.isValid()) {
-        QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
-        dlg->exec();
-        delete dlg;
-    } else {
-        KMessageBox::error(mParentWidget, i18n("Followup Reminder Agent was not registered."));
-    }
+    createAgentConfigurationDialog(QStringLiteral("akonadi_followupreminder_agent"), i18n("Followup Reminder Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotStartCertManager()
