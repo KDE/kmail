@@ -1061,6 +1061,8 @@ void KMMainWidget::createWidgets()
     mMessagePane->setXmlGuiClient(mGUIClient);
     connect(mMessagePane, &MessageList::Pane::messageSelected, this, &KMMainWidget::slotMessageSelected);
     connect(mMessagePane, &MessageList::Pane::selectionChanged, this, &KMMainWidget::startUpdateMessageActionsTimer);
+    connect(mMessagePane, &MessageList::Pane::messageCollapsed, this, &KMMainWidget::startUpdateMessageActionsTimer);
+    connect(mMessagePane, &MessageList::Pane::messageExpanded, this, &KMMainWidget::startUpdateMessageActionsTimer);
     connect(mMessagePane, &CollectionPane::currentTabChanged, this, &KMMainWidget::refreshMessageListSelection);
     connect(mMessagePane, &MessageList::Pane::messageActivated, this, &KMMainWidget::slotMessageActivated);
     connect(mMessagePane, &MessageList::Pane::messageStatusChangeRequest, this, &KMMainWidget::slotMessageStatusChangeRequest);
