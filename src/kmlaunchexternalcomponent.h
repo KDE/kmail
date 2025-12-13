@@ -29,5 +29,6 @@ public:
     void slotShowNotificationHistory();
 
 private:
+    void createAgentConfigurationDialog(const QString &agentName, const QString &errorMessage);
     QWidget *const mParentWidget;
 };
