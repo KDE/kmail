@@ -4781,12 +4781,12 @@ void KMMainWidget::itemsFetchDone(KJob *job)
     }
 }
 
-QAction *KMMainWidget::akonadiStandardAction(Akonadi::StandardActionManager::Type type)
+QAction *KMMainWidget::akonadiStandardAction(Akonadi::StandardActionManager::Type type) const
 {
     return mAkonadiStandardActionManager->action(type);
 }
 
-QAction *KMMainWidget::akonadiStandardAction(Akonadi::StandardMailActionManager::Type type)
+QAction *KMMainWidget::akonadiStandardAction(Akonadi::StandardMailActionManager::Type type) const
 {
     return mAkonadiStandardActionManager->action(type);
 }

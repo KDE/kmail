@@ -148,16 +148,16 @@ public:
     */
     static const KMMainWidget *mainWidgetList();
 
-    QWidget *vacationScriptIndicator() const;
+    [[nodiscard]] QWidget *vacationScriptIndicator() const;
     [[nodiscard]] QWidget *dkimWidgetInfo() const;
-    MailCommon::FolderTreeView *folderTreeView() const;
+    [[nodiscard]] MailCommon::FolderTreeView *folderTreeView() const;
 
     /** Returns the XML GUI client. */
     KXMLGUIClient *guiClient() const;
 
-    KMail::TagActionManager *tagActionManager() const;
+    [[nodiscard]] KMail::TagActionManager *tagActionManager() const;
 
-    KMail::FolderShortcutActionManager *folderShortcutActionManager() const;
+    [[nodiscard]] KMail::FolderShortcutActionManager *folderShortcutActionManager() const;
     void savePaneSelection();
 
     void updatePaneTagComboBox();
@@ -184,9 +184,9 @@ public:
      */
     [[nodiscard]] QList<KActionCollection *> actionCollections() const;
     void refreshMessageListSelection();
-    Akonadi::StandardMailActionManager *standardMailActionManager() const;
-    QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type);
-    QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type);
+    [[nodiscard]] Akonadi::StandardMailActionManager *standardMailActionManager() const;
+    [[nodiscard]] QAction *akonadiStandardAction(Akonadi::StandardActionManager::Type type) const;
+    [[nodiscard]] QAction *akonadiStandardAction(Akonadi::StandardMailActionManager::Type type) const;
     [[nodiscard]] QWidget *zoomLabelIndicator() const;
 
     void clearPluginActions();
