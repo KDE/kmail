@@ -30,7 +30,7 @@ static void copyAddresses(const KMime::Headers::Generics::AddressList *from, KMi
         return;
     }
 
-    const KMime::Types::Mailbox::List mailboxes = from->mailboxes();
+    const QList<KMime::Types::Mailbox> mailboxes = from->mailboxes();
     for (const KMime::Types::Mailbox &mbox : mailboxes) {
         to->addAddress(mbox);
     }

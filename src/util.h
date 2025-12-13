@@ -23,7 +23,7 @@ namespace Util
  * Returns any mailing list post addresses set on the
  *  parent collection (the mail folder) of the item.
  */
-KMAILTESTS_TESTS_EXPORT KMime::Types::Mailbox::List mailingListsFromMessage(const Akonadi::Item &item);
+KMAILTESTS_TESTS_EXPORT QList<KMime::Types::Mailbox> mailingListsFromMessage(const Akonadi::Item &item);
 
 /**
  * Whether or not the mail item has the keep-reply-in-folder

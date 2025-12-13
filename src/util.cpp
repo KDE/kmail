@@ -24,9 +24,9 @@ using namespace MailCommon;
 using namespace KMail;
 using namespace Qt::Literals::StringLiterals;
 
-KMime::Types::Mailbox::List KMail::Util::mailingListsFromMessage(const Akonadi::Item &item)
+QList<KMime::Types::Mailbox> KMail::Util::mailingListsFromMessage(const Akonadi::Item &item)
 {
-    KMime::Types::Mailbox::List addresses;
+    QList<KMime::Types::Mailbox> addresses;
     // determine the mailing list posting address
     const Akonadi::Collection parentCollection = item.parentCollection();
     if (parentCollection.isValid()) {
