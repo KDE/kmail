@@ -18,14 +18,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-26 00:44+0000\n"
-"PO-Revision-Date: 2025-08-22 17:29+0300\n"
-"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
+"PO-Revision-Date: 2025-12-12 14:01+0200\n"
+"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.0\n"
+"X-Generator: Lokalize 25.08.3\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Environment: kde\n"
@@ -1316,8 +1316,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "Автоматически сохранять письмо с указанной периодичностью"
 
 #: configuredialog/configurecomposerpage.cpp:431
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Редактор"
@@ -4085,7 +4084,7 @@ msgid "Set subject of message"
 msgstr "Задать тему письма"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
+#, kde-format
 msgid "Subject"
 msgstr "Тема"
 
@@ -4095,9 +4094,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Отправить копию по адресу «address». Этот параметр может повторяться."
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
+#, kde-format
 msgid "Address"
-msgstr "&Адресная книга"
+msgstr "Адрес"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4125,10 +4124,9 @@ msgid "Read message body from 'file'"
 msgstr "Прочитать тело письма из файла «file»"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Файл"
+msgstr "Файл"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4137,10 +4135,9 @@ msgid "Set body of message"
 msgstr "Задать тело письма"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Текст с форматированием"
+msgstr "Текст"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4149,10 +4146,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Добавить одно или несколько вложений в письмо"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment Word:"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Слово вложения:"
+msgstr "URL вложения"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4179,11 +4175,9 @@ msgid "Set identity name"
 msgstr "Указать имя профиля"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "Проф&иль"
+msgstr "Профиль"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4192,10 +4186,9 @@ msgid "View the given message file"
 msgstr "Просмотреть указанный файл с письмом"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Письма"
+msgstr "URL письма"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4204,11 +4197,9 @@ msgid "Set body of message as html"
 msgstr "Задать тело письма как HTML"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "Копировать %1 письмо"
+msgstr "Текст письма"
 
 #: kmail_options.h:38
 #, kde-format
@@ -5138,20 +5129,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Письма, оставшиеся без ответа…"
 
 #: kmmainwidget.cpp:3083
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Р&азвернуть все дискуссии"
+msgstr "Развернуть все"
 
 #: kmmainwidget.cpp:3088
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Св&ернуть все дискуссии"
+msgstr "Свернуть все"
 
 #: kmmainwidget.cpp:3099 util.cpp:168
 #, kde-format
