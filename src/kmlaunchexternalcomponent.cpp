@@ -186,7 +186,7 @@ void KMLaunchExternalComponent::slotShowNotificationHistory()
     if (!newMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
     } else {
-        newMailNotifierInterface->showNotNotificationHistoryDialog(0); // TODO fix me windid
+        newMailNotifierInterface->showNotNotificationHistoryDialog(mParentWidget->winId());
     }
     delete newMailNotifierInterface;
 }
