@@ -4847,7 +4847,7 @@ void KMMainWidget::updatePaneTagComboBox()
 
 void KMMainWidget::slotCreateAddressBookContact()
 {
-    auto job = new CreateNewContactJob(this, this);
+    auto job = new CreateNewContactJob(this);
     job->start();
 }
 
