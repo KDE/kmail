@@ -8,7 +8,6 @@
 
 #include "kmail_debug.h"
 #include "kmkernel.h"
-#include "kmsystemtray.h"
 #include "settings/kmailsettings.h"
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
@@ -50,7 +49,7 @@ UnityServiceManager::UnityServiceManager(QObject *parent)
 
 UnityServiceManager::~UnityServiceManager()
 {
-    mSystemTray = nullptr;
+    delete mSystemTray;
 }
 
 bool UnityServiceManager::excludeFolder(const Akonadi::Collection &collection) const

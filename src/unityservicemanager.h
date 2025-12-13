@@ -6,15 +6,16 @@
 
 #pragma once
 
+#include "kmsystemtray.h"
 #include <Akonadi/Collection>
 #include <QModelIndex>
 #include <QObject>
+#include <QPointer>
 class QDBusServiceWatcher;
 class QAbstractItemModel;
 class QWindow;
 namespace KMail
 {
-class KMSystemTray;
 class UnityServiceManager : public QObject
 {
     Q_OBJECT
@@ -40,7 +41,7 @@ private:
     void initUnity();
     [[nodiscard]] bool hasUnreadMail() const;
     QDBusServiceWatcher *const mUnityServiceWatcher;
-    KMail::KMSystemTray *mSystemTray = nullptr;
+    QPointer<KMail::KMSystemTray> mSystemTray;
     int mCount = 0;
     bool mUnityServiceAvailable = false;
 };
