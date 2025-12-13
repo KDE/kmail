@@ -397,7 +397,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     groupGridLayout->addWidget(configureCompletionButton, row, 1, 1, 2);
     groupGridLayout->setRowStretch(row, 1);
 
-    groupBox->setLayout(groupGridLayout);
     layout->addWidget(groupBox);
 
     // "Autosave" group
