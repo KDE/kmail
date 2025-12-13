@@ -121,7 +121,7 @@ void IdentityNgPage::slotNewIdentity()
 {
     Q_ASSERT(!mIdentityDialog);
 
-    QScopedPointer<NewIdentityDialog> dialog(new NewIdentityDialog(mIdentityManager, this));
+    QPointer<NewIdentityDialog> dialog(new NewIdentityDialog(mIdentityManager, this));
     dialog->setObjectName("new"_L1);
 
     if (dialog->exec() == QDialog::Accepted) {
