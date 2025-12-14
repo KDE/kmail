@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-26 00:44+0000\n"
+"POT-Creation-Date: 2025-12-14 00:42+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -376,7 +376,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:223 kmmainwidget.cpp:4217 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:223 kmmainwidget.cpp:4219 kmreaderwin.cpp:264
 #: kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -1283,18 +1283,18 @@ msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Configurar..."
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:403
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:413
 #, fuzzy, kde-format
 msgid "No autosave"
 msgstr "no"
 
-#: configuredialog/configurecomposerpage.cpp:415
+#: configuredialog/configurecomposerpage.cpp:414
 #, fuzzy, kde-format
 #| msgid "5 minutes"
 msgctxt "Interval suffix"
@@ -1303,29 +1303,29 @@ msgid_plural "%v minutes"
 msgstr[0] "5 minutes"
 msgstr[1] "5 minutes"
 
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:416
 #, fuzzy, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Proprietás de missage"
 
-#: configuredialog/configurecomposerpage.cpp:431
+#: configuredialog/configurecomposerpage.cpp:430
 #, fuzzy, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Nov element"
 
-#: configuredialog/configurecomposerpage.cpp:435
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:641
+#: configuredialog/configurecomposerpage.cpp:640
 #, fuzzy, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "&Tema"
 
-#: configuredialog/configurecomposerpage.cpp:646
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1333,181 +1333,169 @@ msgid ""
 "insensitive regular expressions):"
 msgstr "Li sequent files ne posset esser extraet:"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:952
 #, fuzzy, kde-format
 msgid "A&dd…"
 msgstr "Adjunter"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:952
 #, fuzzy, kde-format
 msgid "Re&move"
 msgstr "Remover"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:952
 #, kde-format
 msgid "Mod&ify…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:653
 #, fuzzy, kde-format
 msgid "Enter new reply prefix:"
 msgstr "&Responder"
 
-#: configuredialog/configurecomposerpage.cpp:655
+#: configuredialog/configurecomposerpage.cpp:654
 #, fuzzy, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Remover"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, fuzzy, kde-format
 msgid "Reply Prefix:"
 msgstr "&Responder"
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:667
 #, fuzzy, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "&Tema"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
 #, fuzzy, kde-format
 msgid "Remo&ve"
 msgstr "Remover"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, fuzzy, kde-format
 msgid "Add…"
 msgstr "Adjunter…"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Modify…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, fuzzy, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Nov carte"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Remover"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Forward Prefix:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:724
-#, fuzzy, kde-format
-msgctxt "@option:check"
-msgid "&Use custom message-id suffix"
-msgstr "Proprietás de missage"
-
-#: configuredialog/configurecomposerpage.cpp:740
-#, fuzzy, kde-format
-msgctxt "@label:textbox"
-msgid "Custom message-&id suffix:"
-msgstr "ID:"
-
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:727
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Listar li supportat tipes MIME."
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:735
 #, fuzzy, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nómine"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:736
 #, fuzzy, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valore"
 
-#: configuredialog/configurecomposerpage.cpp:769
+#: configuredialog/configurecomposerpage.cpp:744
 #, fuzzy, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Nov element"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:748
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Remover"
 
-#: configuredialog/configurecomposerpage.cpp:782
+#: configuredialog/configurecomposerpage.cpp:757
 #, fuzzy, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Nómine:"
 
-#: configuredialog/configurecomposerpage.cpp:792
+#: configuredialog/configurecomposerpage.cpp:767
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "Valore"
 
-#: configuredialog/configurecomposerpage.cpp:932
+#: configuredialog/configurecomposerpage.cpp:899
 #, fuzzy, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "Tip:"
 
-#: configuredialog/configurecomposerpage.cpp:933
+#: configuredialog/configurecomposerpage.cpp:900
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "it es ínvalid."
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:935
 #, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Atachamentes"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:941
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "&Atachar"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:952
 #, fuzzy, kde-format
 msgid "Enter new key word:"
 msgstr "Nov element"
 
-#: configuredialog/configurecomposerpage.cpp:993
+#: configuredialog/configurecomposerpage.cpp:954
 #, fuzzy, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Remover"
 
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:955
 #, fuzzy, kde-format
 msgid "Attachment Word:"
 msgstr "Have un atachament"
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:962
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Grandore"
 
-#: configuredialog/configurecomposerpage.cpp:1008
+#: configuredialog/configurecomposerpage.cpp:969
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ko"
 
-#: configuredialog/configurecomposerpage.cpp:1010
+#: configuredialog/configurecomposerpage.cpp:971
 #, fuzzy, kde-format
 msgid "No limit"
 msgstr "no"
@@ -1713,7 +1701,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Archive"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3680
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3682
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1953,7 +1941,7 @@ msgstr "File"
 msgid "&Insert Recent Text File"
 msgstr "File"
 
-#: editor/kmcomposerwin.cpp:1321 kmmainwidget.cpp:3006
+#: editor/kmcomposerwin.cpp:1321 kmmainwidget.cpp:3008
 #, kde-format
 msgid "&Address Book"
 msgstr "&Adressarium"
@@ -2258,13 +2246,13 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Proprietás de missage"
 
-#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:165
+#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:152
 #, fuzzy, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "mistresssilvara@hotmail.com"
 
-#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:167
+#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
@@ -4056,7 +4044,7 @@ msgid "F&older"
 msgstr "Liste de fólderes:"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3529 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3531 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder"
@@ -4088,7 +4076,7 @@ msgid "&Forward"
 msgstr ""
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3353 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3355 kmmainwin.rc:191
 #, fuzzy, kde-format
 msgid "A&pply Filter"
 msgstr "Applicar"
@@ -4240,12 +4228,12 @@ msgstr "Panel de instrumentarium"
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail"
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
+#: kmkernel.cpp:662 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
 #, fuzzy, kde-format
 msgid "Send Email"
 msgstr "Cliente de postage de KDE"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:663 kmmainwidget.cpp:2504 kmmainwidget.cpp:2519
 #, fuzzy, kde-format
 msgid "Impossible to send email"
 msgstr "A"
@@ -4347,59 +4335,59 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:47
 #, fuzzy, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Archive"
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, fuzzy, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Reveni plu tard"
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:57
 #, fuzzy, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Postage"
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr ""
 
-#: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
+#: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, fuzzy, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr "Gerente de files"
 
-#: kmlaunchexternalcomponent.cpp:90 kmlaunchexternalcomponent.cpp:98
+#: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail"
 
-#: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
 #, fuzzy, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "A"
 
-#: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
+#: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, fuzzy, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmlaunchexternalcomponent.cpp:141 kmlaunchexternalcomponent.cpp:149
+#: kmlaunchexternalcomponent.cpp:128 kmlaunchexternalcomponent.cpp:136
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
@@ -4407,14 +4395,14 @@ msgstr ""
 "Ne successat trovar li componente KPart de Ark; ples controlar vor "
 "installation."
 
-#: kmlaunchexternalcomponent.cpp:178
+#: kmlaunchexternalcomponent.cpp:165
 #, fuzzy, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr "Li fólder <filename>%1</filename> ne posset esser creat."
 
-#: kmlaunchexternalcomponent.cpp:180
+#: kmlaunchexternalcomponent.cpp:167
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
@@ -4447,89 +4435,89 @@ msgstr "mistresssilvara@hotmail.com"
 msgid "Unable to start import wizard"
 msgstr "Importar"
 
-#: kmmainwidget.cpp:1390
+#: kmmainwidget.cpp:1392
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
 msgstr "Modelles"
 
-#: kmmainwidget.cpp:1415
+#: kmmainwidget.cpp:1417
 #, fuzzy, kde-format
 msgid "No Subject"
 msgstr "&Tema"
 
-#: kmmainwidget.cpp:1428
+#: kmmainwidget.cpp:1430
 #, fuzzy, kde-format
 msgid "(no templates)"
 msgstr "Modelles"
 
-#: kmmainwidget.cpp:1480
+#: kmmainwidget.cpp:1482
 #, fuzzy, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:1486
+#: kmmainwidget.cpp:1488
 #, fuzzy, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:1487
+#: kmmainwidget.cpp:1489
 #, fuzzy, kde-format
 msgid "Expire Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:1487
+#: kmmainwidget.cpp:1489
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr ""
 
-#: kmmainwidget.cpp:1504
+#: kmmainwidget.cpp:1506
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Li archive es vacui o Ark ne posse aperter su contenete."
 
-#: kmmainwidget.cpp:1504
+#: kmmainwidget.cpp:1506
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "A"
 
-#: kmmainwidget.cpp:1505
+#: kmmainwidget.cpp:1507
 #, fuzzy, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:1507
+#: kmmainwidget.cpp:1509
 #, fuzzy, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr "De"
 
-#: kmmainwidget.cpp:1530
+#: kmmainwidget.cpp:1532
 #, fuzzy, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1584
+#: kmmainwidget.cpp:1586
 #, fuzzy, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1585
+#: kmmainwidget.cpp:1587
 #, fuzzy, kde-format
 msgid "Expire Old Messages?"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1586
+#: kmmainwidget.cpp:1588
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr ""
 
-#: kmmainwidget.cpp:1611
+#: kmmainwidget.cpp:1613
 #, fuzzy, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4537,19 +4525,19 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmmainwidget.cpp:1614 kmmainwidget.cpp:4894
+#: kmmainwidget.cpp:1616 kmmainwidget.cpp:4898
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Avise"
 
-#: kmmainwidget.cpp:1615
+#: kmmainwidget.cpp:1617
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "&Aperter in un extern application"
 
-#: kmmainwidget.cpp:1688
+#: kmmainwidget.cpp:1690
 #, fuzzy, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4560,137 +4548,137 @@ msgid_plural ""
 msgstr[0] "Remover"
 msgstr[1] "Remover"
 
-#: kmmainwidget.cpp:1693
+#: kmmainwidget.cpp:1695
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:1693
+#: kmmainwidget.cpp:1695
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:1708
+#: kmmainwidget.cpp:1710
 #, fuzzy, kde-format
 msgid "Moving messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1710 kmmainwidget.cpp:1910
+#: kmmainwidget.cpp:1712 kmmainwidget.cpp:1912
 #, fuzzy, kde-format
 msgid "Deleting messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1725 kmmainwidget.cpp:1930
+#: kmmainwidget.cpp:1727 kmmainwidget.cpp:1932
 #, fuzzy, kde-format
 msgid "Messages deleted successfully."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1727
+#: kmmainwidget.cpp:1729
 #, fuzzy, kde-format
 msgid "Messages moved successfully."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1732 kmmainwidget.cpp:1943
+#: kmmainwidget.cpp:1734 kmmainwidget.cpp:1945
 #, fuzzy, kde-format
 msgid "Deleting messages failed."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1734 kmmainwidget.cpp:1956
+#: kmmainwidget.cpp:1736 kmmainwidget.cpp:1958
 #, fuzzy, kde-format
 msgid "Deleting messages canceled."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1738
+#: kmmainwidget.cpp:1740
 #, fuzzy, kde-format
 msgid "Moving messages failed."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1740
+#: kmmainwidget.cpp:1742
 #, fuzzy, kde-format
 msgid "Moving messages canceled."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1812
+#: kmmainwidget.cpp:1814
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "A"
 
-#: kmmainwidget.cpp:1839
+#: kmmainwidget.cpp:1841
 #, fuzzy, kde-format
 msgid "Copying messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1847
+#: kmmainwidget.cpp:1849
 #, fuzzy, kde-format
 msgid "Messages copied successfully."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1850
+#: kmmainwidget.cpp:1852
 #, fuzzy, kde-format
 msgid "Copying messages failed."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1852
+#: kmmainwidget.cpp:1854
 #, fuzzy, kde-format
 msgid "Copying messages canceled."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1862
+#: kmmainwidget.cpp:1864
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "A"
 
-#: kmmainwidget.cpp:1907
+#: kmmainwidget.cpp:1909
 #, fuzzy, kde-format
 msgid "Moving messages to trash…"
 msgstr "A"
 
-#: kmmainwidget.cpp:1914
+#: kmmainwidget.cpp:1916
 #, fuzzy, kde-format
 msgid "Deleting and moving messages to trash…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1927
+#: kmmainwidget.cpp:1929
 #, fuzzy, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1934
+#: kmmainwidget.cpp:1936
 #, fuzzy, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1940
+#: kmmainwidget.cpp:1942
 #, fuzzy, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1947
+#: kmmainwidget.cpp:1949
 #, fuzzy, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1953
+#: kmmainwidget.cpp:1955
 #, fuzzy, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:1960
+#: kmmainwidget.cpp:1962
 #, fuzzy, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:2241
+#: kmmainwidget.cpp:2243
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "A"
 
-#: kmmainwidget.cpp:2433
+#: kmmainwidget.cpp:2435
 #, fuzzy, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4701,7 +4689,7 @@ msgid_plural ""
 msgstr[0] "Remover"
 msgstr[1] "Remover"
 
-#: kmmainwidget.cpp:2436
+#: kmmainwidget.cpp:2438
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -4709,7 +4697,7 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] "Remover"
 msgstr[1] "Remover files"
 
-#: kmmainwidget.cpp:2441
+#: kmmainwidget.cpp:2443
 #, fuzzy, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4720,767 +4708,767 @@ msgid_plural ""
 msgstr[0] "Remover"
 msgstr[1] "Remover"
 
-#: kmmainwidget.cpp:2448
+#: kmmainwidget.cpp:2450
 #, fuzzy, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr "De"
 
-#: kmmainwidget.cpp:2453
+#: kmmainwidget.cpp:2455
 #, fuzzy, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:2458
+#: kmmainwidget.cpp:2460
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:2487
+#: kmmainwidget.cpp:2489
 #, fuzzy, kde-format
 msgid "Work Offline"
 msgstr "Installa li paccage gettext por usar ti function"
 
-#: kmmainwidget.cpp:2490
+#: kmmainwidget.cpp:2492
 #, fuzzy, kde-format
 msgid "Work Online"
 msgstr "Installa li paccage gettext por usar ti function"
 
-#: kmmainwidget.cpp:2949
+#: kmmainwidget.cpp:2951
 #, fuzzy, kde-format
 msgid "Save &As…"
 msgstr "Gardar un copie quam..."
 
-#: kmmainwidget.cpp:2960
+#: kmmainwidget.cpp:2962
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:2965
+#: kmmainwidget.cpp:2967
 #, fuzzy, kde-format
 msgid "Check &Mail"
 msgstr "Controlar li postage"
 
-#: kmmainwidget.cpp:2973
+#: kmmainwidget.cpp:2975
 #, fuzzy, kde-format
 msgid "Check Mail In"
 msgstr "Aperter in un nov carte"
 
-#: kmmainwidget.cpp:2978
+#: kmmainwidget.cpp:2980
 #, fuzzy, kde-format
 msgid "Check Mail"
 msgstr "Controlar li postage"
 
-#: kmmainwidget.cpp:2979
+#: kmmainwidget.cpp:2981
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Controlar li postage"
 
-#: kmmainwidget.cpp:2983
+#: kmmainwidget.cpp:2985
 #, fuzzy, kde-format
 msgid "&Send Queued Messages"
 msgstr "Inviar nu"
 
-#: kmmainwidget.cpp:2991
+#: kmmainwidget.cpp:2993
 #, fuzzy, kde-format
 msgid "Online status (unknown)"
 msgstr "ínconosset"
 
-#: kmmainwidget.cpp:2996
+#: kmmainwidget.cpp:2998
 #, fuzzy, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Inviar nu"
 
-#: kmmainwidget.cpp:3016
+#: kmmainwidget.cpp:3018
 #, fuzzy, kde-format
 msgid "Certificate Manager"
 msgstr "Gerente de files"
 
-#: kmmainwidget.cpp:3027
+#: kmmainwidget.cpp:3029
 #, fuzzy, kde-format
 msgid "&Import Messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3038
+#: kmmainwidget.cpp:3040
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr ""
 
-#: kmmainwidget.cpp:3045
+#: kmmainwidget.cpp:3047
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Pri li componente de visor"
 
-#: kmmainwidget.cpp:3050
+#: kmmainwidget.cpp:3052
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Notification"
 
-#: kmmainwidget.cpp:3055
+#: kmmainwidget.cpp:3057
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&De"
 
-#: kmmainwidget.cpp:3060
+#: kmmainwidget.cpp:3062
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Redacter"
 
-#: kmmainwidget.cpp:3066
+#: kmmainwidget.cpp:3068
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "Gerente de archives de KDE"
 
-#: kmmainwidget.cpp:3072
+#: kmmainwidget.cpp:3074
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3078
+#: kmmainwidget.cpp:3080
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3083
+#: kmmainwidget.cpp:3085
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Expand All"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3088
+#: kmmainwidget.cpp:3090
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Collapse All"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3099 util.cpp:168
+#: kmmainwidget.cpp:3101 util.cpp:168
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Remover"
 
-#: kmmainwidget.cpp:3104
+#: kmmainwidget.cpp:3106
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "A"
 
-#: kmmainwidget.cpp:3108
+#: kmmainwidget.cpp:3110
 #, fuzzy, kde-format
 msgid "Move thread to trashcan"
 msgstr "A"
 
-#: kmmainwidget.cpp:3111 kmmainwidget.cpp:4164
+#: kmmainwidget.cpp:3113 kmmainwidget.cpp:4166
 #, fuzzy, kde-format
 msgid "Delete T&hread"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:3118 kmmainwidget.cpp:4166
+#: kmmainwidget.cpp:3120 kmmainwidget.cpp:4168
 #, fuzzy, kde-format
 msgid "&Find Messages…"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3124
+#: kmmainwidget.cpp:3126
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3131
+#: kmmainwidget.cpp:3133
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3139
+#: kmmainwidget.cpp:3141
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Vacuar li recent files"
 
-#: kmmainwidget.cpp:3144
+#: kmmainwidget.cpp:3146
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3149
+#: kmmainwidget.cpp:3151
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr ""
 
-#: kmmainwidget.cpp:3167
+#: kmmainwidget.cpp:3169
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "Parametres"
 
-#: kmmainwidget.cpp:3192
+#: kmmainwidget.cpp:3194
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "Archivar"
 
-#: kmmainwidget.cpp:3200
+#: kmmainwidget.cpp:3202
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "&Aperter in un extern application"
 
-#: kmmainwidget.cpp:3223
+#: kmmainwidget.cpp:3225
 #, fuzzy, kde-format
 msgid "Copy Message To…"
 msgstr "A"
 
-#: kmmainwidget.cpp:3225
+#: kmmainwidget.cpp:3227
 #, fuzzy, kde-format
 msgid "Move Message To…"
 msgstr "A"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3232
 #, fuzzy, kde-format
 msgid "&New Message…"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3234
 #, fuzzy, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Nov"
 
-#: kmmainwidget.cpp:3240
+#: kmmainwidget.cpp:3242
 #, fuzzy, kde-format
 msgid "Message From &Template"
 msgstr "De"
 
-#: kmmainwidget.cpp:3246
+#: kmmainwidget.cpp:3248
 #, fuzzy, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3252
+#: kmmainwidget.cpp:3254
 #, fuzzy, kde-format
 msgid "&Create Filter"
 msgstr "Crear..."
 
-#: kmmainwidget.cpp:3256
+#: kmmainwidget.cpp:3258
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "&Tema"
 
-#: kmmainwidget.cpp:3263
+#: kmmainwidget.cpp:3265
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "&De"
 
-#: kmmainwidget.cpp:3269
+#: kmmainwidget.cpp:3271
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "A"
 
-#: kmmainwidget.cpp:3275
+#: kmmainwidget.cpp:3277
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Panel tactil activ"
 
-#: kmmainwidget.cpp:3289
+#: kmmainwidget.cpp:3291
 #, kde-format
 msgid "Mark &Thread"
 msgstr ""
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3294
 #, fuzzy, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Aperter solmen por letion"
 
-#: kmmainwidget.cpp:3295
+#: kmmainwidget.cpp:3297
 #, fuzzy, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3300
 #, fuzzy, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Aperter solmen por letion"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3303
 #, fuzzy, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3309
 #, fuzzy, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Aperter solmen por letion"
 
-#: kmmainwidget.cpp:3310
+#: kmmainwidget.cpp:3312
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "&Remover"
 
-#: kmmainwidget.cpp:3313
+#: kmmainwidget.cpp:3315
 #, fuzzy, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Nov element"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3318
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "&Remover"
 
-#: kmmainwidget.cpp:3320
+#: kmmainwidget.cpp:3322
 #, kde-format
 msgid "&Watch Thread"
 msgstr ""
 
-#: kmmainwidget.cpp:3324
+#: kmmainwidget.cpp:3326
 #, fuzzy, kde-format
 msgid "&Ignore Thread"
 msgstr "Ignorar"
 
-#: kmmainwidget.cpp:3332 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3334 kmreadermainwin.cpp:488
 #, fuzzy, kde-format
 msgid "Save A&ttachments…"
 msgstr "Atachamentes"
 
-#: kmmainwidget.cpp:3336
+#: kmmainwidget.cpp:3338
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:3344
+#: kmmainwidget.cpp:3346
 #, fuzzy, kde-format
 msgid "Copy Decrypted To…"
 msgstr "A"
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3350
 #, fuzzy, kde-format
 msgid "Appl&y All Filters"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3359
 #, fuzzy, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Gruppe"
 
-#: kmmainwidget.cpp:3360
+#: kmmainwidget.cpp:3362
 #, fuzzy, kde-format
 msgid "Expand the current thread or group"
 msgstr "Gruppe"
 
-#: kmmainwidget.cpp:3364
+#: kmmainwidget.cpp:3366
 #, fuzzy, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Gruppe"
 
-#: kmmainwidget.cpp:3367
+#: kmmainwidget.cpp:3369
 #, fuzzy, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Gruppe"
 
-#: kmmainwidget.cpp:3371
+#: kmmainwidget.cpp:3373
 #, fuzzy, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3376
 #, fuzzy, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3378
+#: kmmainwidget.cpp:3380
 #, fuzzy, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3381
+#: kmmainwidget.cpp:3383
 #, fuzzy, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3385
+#: kmmainwidget.cpp:3387
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3394
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3395
+#: kmmainwidget.cpp:3397
 #, fuzzy, kde-format
 msgid "Go to the next message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3401
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3407
+#: kmmainwidget.cpp:3409
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Inserter li sequent tag"
 
-#: kmmainwidget.cpp:3408
+#: kmmainwidget.cpp:3410
 #, fuzzy, kde-format
 msgid "Go to the next unread message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3412
+#: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3414
+#: kmmainwidget.cpp:3416
 #, fuzzy, kde-format
 msgid "Go to the previous message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3421
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3427
+#: kmmainwidget.cpp:3429
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "&Precedent"
 
-#: kmmainwidget.cpp:3428
+#: kmmainwidget.cpp:3430
 #, fuzzy, kde-format
 msgid "Go to the previous unread message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3434
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3438
+#: kmmainwidget.cpp:3440
 #, fuzzy, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3441
+#: kmmainwidget.cpp:3443
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3447
+#: kmmainwidget.cpp:3449
 #, fuzzy, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3451
+#: kmmainwidget.cpp:3453
 #, fuzzy, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Previder quam textu"
 
-#: kmmainwidget.cpp:3454
+#: kmmainwidget.cpp:3456
 #, fuzzy, kde-format
 msgid "Go to the next unread text"
 msgstr "Previder quam textu"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3458
 #, fuzzy, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3464
+#: kmmainwidget.cpp:3466
 #, fuzzy, kde-format
 msgid "Configure &Filters…"
 msgstr "Filtres de POP"
 
-#: kmmainwidget.cpp:3470
+#: kmmainwidget.cpp:3472
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "Gerer vor files"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3477
 #, fuzzy, kde-format
 msgid "&Add Account…"
 msgstr "Adjunter"
 
-#: kmmainwidget.cpp:3480
+#: kmmainwidget.cpp:3482
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "Metode(s) de compression:"
 
-#: kmmainwidget.cpp:3487
+#: kmmainwidget.cpp:3489
 #, fuzzy, kde-format
 msgid "Configure &Notifications…"
 msgstr "Configurar..."
 
-#: kmmainwidget.cpp:3494
+#: kmmainwidget.cpp:3496
 #, fuzzy, kde-format
 msgid "&Configure KMail…"
 msgstr "KMail"
 
-#: kmmainwidget.cpp:3501
+#: kmmainwidget.cpp:3503
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr ""
 
-#: kmmainwidget.cpp:3507
+#: kmmainwidget.cpp:3509
 #, fuzzy, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Adjunter"
 
-#: kmmainwidget.cpp:3513 kmmainwidget.cpp:3521
+#: kmmainwidget.cpp:3515 kmmainwidget.cpp:3523
 #, fuzzy, kde-format
 msgid "Apply All Filters"
 msgstr "Omni"
 
-#: kmmainwidget.cpp:3534
+#: kmmainwidget.cpp:3536
 #, fuzzy, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Filtres de POP"
 
-#: kmmainwidget.cpp:3539
+#: kmmainwidget.cpp:3541
 #, fuzzy, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "KMail"
 
-#: kmmainwidget.cpp:3545
+#: kmmainwidget.cpp:3547
 #, fuzzy, kde-format
 msgid "New AddressBook Contact…"
 msgstr "Nov element"
 
-#: kmmainwidget.cpp:3553 kmmainwidget.cpp:4200
+#: kmmainwidget.cpp:3555 kmmainwidget.cpp:4202
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "Parametres"
 
-#: kmmainwidget.cpp:3557
+#: kmmainwidget.cpp:3559
 #, fuzzy, kde-format
 msgid "Restart Account"
 msgstr "Conto"
 
-#: kmmainwidget.cpp:3573
+#: kmmainwidget.cpp:3575
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "A"
 
-#: kmmainwidget.cpp:3579
+#: kmmainwidget.cpp:3581
 #, fuzzy, kde-format
 msgid "Jump to Folder…"
 msgstr "A"
 
-#: kmmainwidget.cpp:3585
+#: kmmainwidget.cpp:3587
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Actual: %1"
 
-#: kmmainwidget.cpp:3591
+#: kmmainwidget.cpp:3593
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3597
+#: kmmainwidget.cpp:3599
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3603
+#: kmmainwidget.cpp:3605
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Selecter"
 
-#: kmmainwidget.cpp:3610
+#: kmmainwidget.cpp:3612
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3616
+#: kmmainwidget.cpp:3618
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3622
+#: kmmainwidget.cpp:3624
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3628
+#: kmmainwidget.cpp:3630
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3634
+#: kmmainwidget.cpp:3636
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Selecter"
 
-#: kmmainwidget.cpp:3640
+#: kmmainwidget.cpp:3642
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Selecter"
 
-#: kmmainwidget.cpp:3646
+#: kmmainwidget.cpp:3648
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Selecter"
 
-#: kmmainwidget.cpp:3653
+#: kmmainwidget.cpp:3655
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Serchar localmen"
 
-#: kmmainwidget.cpp:3661
+#: kmmainwidget.cpp:3663
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3667
+#: kmmainwidget.cpp:3669
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Proprietás de missage"
 
-#: kmmainwidget.cpp:3674
+#: kmmainwidget.cpp:3676
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "A"
 
-#: kmmainwidget.cpp:3684
+#: kmmainwidget.cpp:3686
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:3689
+#: kmmainwidget.cpp:3691
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:3695
+#: kmmainwidget.cpp:3697
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3702
+#: kmmainwidget.cpp:3704
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Liste de fólderes:"
 
-#: kmmainwidget.cpp:3731
+#: kmmainwidget.cpp:3733
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Adjunter"
 
-#: kmmainwidget.cpp:4152
+#: kmmainwidget.cpp:4154
 #, fuzzy, kde-format
 msgid "&Delete Search"
 msgstr "Remover"
 
-#: kmmainwidget.cpp:4164
+#: kmmainwidget.cpp:4166
 #, fuzzy, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "A"
 
-#: kmmainwidget.cpp:4166
+#: kmmainwidget.cpp:4168
 #, fuzzy, kde-format
 msgid "Edit Search…"
 msgstr "Redacter"
 
-#: kmmainwidget.cpp:4198
+#: kmmainwidget.cpp:4200
 #, fuzzy, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Unit lettre-buxes"
 
-#: kmmainwidget.cpp:4209
+#: kmmainwidget.cpp:4211
 #, fuzzy, kde-format
 msgid "E&mpty Trash"
 msgstr "Li archive es vacui o Ark ne posse aperter su contenete."
 
-#: kmmainwidget.cpp:4209
+#: kmmainwidget.cpp:4211
 #, fuzzy, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Ciffrat missages"
 
-#: kmmainwidget.cpp:4260
+#: kmmainwidget.cpp:4262
 #, kde-format
 msgid "&Undo"
 msgstr "&Defar"
 
-#: kmmainwidget.cpp:4262
+#: kmmainwidget.cpp:4264
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Defar: %1"
 
-#: kmmainwidget.cpp:4319
+#: kmmainwidget.cpp:4321
 #, kde-format
 msgid "Filter %1"
 msgstr ""
 
-#: kmmainwidget.cpp:4883
+#: kmmainwidget.cpp:4887
 #, fuzzy, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Serchar por files"
 
-#: kmmainwidget.cpp:4891
+#: kmmainwidget.cpp:4895
 #, fuzzy, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5488,13 +5476,13 @@ msgid ""
 "present and anticipated security exploits."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmmainwidget.cpp:4895
+#: kmmainwidget.cpp:4899
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Predefinit por li region"
 
-#: kmmainwidget.cpp:5041
+#: kmmainwidget.cpp:5045
 #, fuzzy, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5504,41 +5492,41 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr "mistresssilvara@hotmail.com"
 
-#: kmmainwidget.cpp:5044
+#: kmmainwidget.cpp:5048
 #, fuzzy, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Unit lettre-buxes"
 
-#: kmmainwidget.cpp:5045
+#: kmmainwidget.cpp:5049
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Unit lettre-buxes"
 
-#: kmmainwidget.cpp:5046
+#: kmmainwidget.cpp:5050
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Anullar"
 
-#: kmmainwidget.cpp:5081
+#: kmmainwidget.cpp:5085
 #, fuzzy, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Esque vu vole remover ti tag? On ne posse defar to."
 
-#: kmmainwidget.cpp:5082
+#: kmmainwidget.cpp:5086
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Reiniciar nu"
 
-#: kmmainwidget.cpp:5083
+#: kmmainwidget.cpp:5087
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5094
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -7820,6 +7808,16 @@ msgstr[1] "&Responder"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Scale: %1%"
+
+#, fuzzy
+#~ msgctxt "@option:check"
+#~ msgid "&Use custom message-id suffix"
+#~ msgstr "Proprietás de missage"
+
+#, fuzzy
+#~ msgctxt "@label:textbox"
+#~ msgid "Custom message-&id suffix:"
+#~ msgstr "ID:"
 
 #, fuzzy
 #~ msgctxt "%1 is version"
