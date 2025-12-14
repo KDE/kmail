@@ -64,7 +64,6 @@
 #include <MailCommon/FavoriteCollectionWidget>
 #include <MailCommon/FilterManager>
 #include <MailCommon/MailFilter>
-#include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/CollectionAclPage>
 #include <TextAddonsWidgets/WhatsNewDialog>
 #include <TextAddonsWidgets/WhatsNewMessageWidget>

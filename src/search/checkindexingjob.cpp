@@ -12,8 +12,6 @@
 #include <Akonadi/CollectionFetchScope>
 #include <Akonadi/CollectionStatistics>
 
-#include <PimCommon/PimUtil>
-
 CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedItems, QObject *parent)
     : QObject(parent)
     , mIndexedItems(indexedItems)

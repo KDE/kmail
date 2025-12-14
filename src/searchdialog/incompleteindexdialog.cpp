@@ -17,7 +17,6 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 
-#include <PimCommon/PimUtil>
 #include <PimCommonAkonadi/MailUtil>
 
 #include <KConfigGroup>
