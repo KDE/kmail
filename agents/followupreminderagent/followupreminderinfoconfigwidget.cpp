@@ -10,11 +10,6 @@
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <QLayout>
-namespace
-{
-const char myConfigGroupName[] = "FollowUpReminderInfoDialog";
-}
-
 FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
     , mWidget(new FollowUpReminderInfoWidget(parent))

@@ -19,10 +19,6 @@
 #include <QIcon>
 #include <QWindow>
 using namespace Qt::Literals::StringLiterals;
-namespace
-{
-const char myConfigureSendLaterConfigureDialogGroupName[] = "SendLaterConfigureDialog";
-}
 
 SendLaterInfoConfigWidget::SendLaterInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)
