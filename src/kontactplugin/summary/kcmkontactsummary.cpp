@@ -8,7 +8,6 @@
 */
 
 #include "kcmkontactsummary.h"
-#include <KAboutData>
 #include <KConfig>
 #include <KConfigGroup>
 #include <KLocalizedString>

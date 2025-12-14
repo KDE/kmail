@@ -17,7 +17,6 @@
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
-#include <KAboutData>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>

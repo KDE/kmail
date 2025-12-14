@@ -13,8 +13,6 @@
 #include <KMime/Message>
 #include <PimCommonAkonadi/CheckedCollectionWidget>
 
-#include "kmailplugin_debug.h"
-#include <KAboutData>
 #include <KAcceleratorManager>
 #include <KConfig>
 #include <KLocalizedString>
