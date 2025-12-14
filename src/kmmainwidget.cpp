@@ -3743,8 +3743,9 @@ void KMMainWidget::slotAddFavoriteFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-    KMail::KMKnotify notifyDlg(this);
-    notifyDlg.exec();
+    QPointer<KMail::KMKnotify> notifyDlg = new KMail::KMKnotify(this);
+    notifyDlg->exec();
+    delete notifyDlg;
 }
 
 //-----------------------------------------------------------------------------
