@@ -19,9 +19,6 @@ public:
 
     [[nodiscard]] QList<Akonadi::Item::Id> messagesToRemove() const;
 
-    [[nodiscard]] QSize restoreDialogSize() const override;
-    void saveDialogSize(const QSize &size) override;
-
     [[nodiscard]] bool save() const override;
     void load() override;
 

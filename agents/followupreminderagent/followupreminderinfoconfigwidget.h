@@ -20,8 +20,6 @@ public:
 
     [[nodiscard]] bool save() const override;
     void load() override;
-    [[nodiscard]] QSize restoreDialogSize() const override;
-    void saveDialogSize(const QSize &size) override;
 
 private:
     FollowUpReminderInfoWidget *const mWidget;

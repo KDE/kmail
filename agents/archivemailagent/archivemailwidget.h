@@ -44,9 +44,6 @@ public:
 
     void needReloadConfig();
 
-    QSize restoreDialogSize() const override;
-    void saveDialogSize(const QSize &size) override;
-
 private:
     void createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item = nullptr);
     [[nodiscard]] bool verifyExistingArchive(ArchiveMailInfo *info) const;

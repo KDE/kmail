@@ -60,17 +60,4 @@ void SendLaterInfoConfigWidget::slotNeedToReloadConfig()
     mWidget->needToReload();
 }
 
-QSize SendLaterInfoConfigWidget::restoreDialogSize() const
-{
-    auto group = config()->group(QLatin1StringView(myConfigureSendLaterConfigureDialogGroupName));
-    const QSize size = group.readEntry("Size", QSize(800, 600));
-    return size;
-}
-
-void SendLaterInfoConfigWidget::saveDialogSize(const QSize &size)
-{
-    auto group = config()->group(QLatin1StringView(myConfigureSendLaterConfigureDialogGroupName));
-    group.writeEntry("Size", size);
-}
-
 #include "moc_sendlaterinfoconfigwidget.cpp"
