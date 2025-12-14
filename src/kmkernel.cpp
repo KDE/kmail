@@ -579,7 +579,7 @@ void KMKernel::raise()
                          QDBusConnection::sessionBus());
     QDBusReply<int> reply;
     if (!iface.isValid() || !(reply = iface.call(QStringLiteral("newInstance"))).isValid()) {
-        QDBusError err = iface.lastError();
+        const QDBusError err = iface.lastError();
         qCritical() << "Communication problem with KMail. "
                     << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
     }
@@ -1291,7 +1291,7 @@ void KMKernel::selectCollectionFromId(Akonadi::Collection::Id id)
         return;
     }
 
-    Akonadi::Collection colFolder = CommonKernel->collectionFromId(id);
+    const Akonadi::Collection colFolder = CommonKernel->collectionFromId(id);
 
     if (colFolder.isValid()) {
         widget->slotSelectCollectionFolder(colFolder);
