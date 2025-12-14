@@ -4216,9 +4216,10 @@ void KMMainWidget::updateMoveAllToTrash()
 void KMMainWidget::slotShowWhatsNews()
 {
     const WhatsNewTranslations translations;
-    TextAddonsWidgets::WhatsNewDialog dlg(translations.createWhatsNewInfo(), this, i18n("KMail"));
-    dlg.updateInformations();
-    dlg.exec();
+    QPointer<TextAddonsWidgets::WhatsNewDialog> dlg = new TextAddonsWidgets::WhatsNewDialog(translations.createWhatsNewInfo(), this, i18n("KMail"));
+    dlg->updateInformations();
+    dlg->exec();
+    delete dlg;
 }
 
 void KMMainWidget::slotShowStartupFolder()
