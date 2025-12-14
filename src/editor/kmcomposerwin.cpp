@@ -46,7 +46,8 @@
 #include "warningwidgets/externaleditorwarning.h"
 #include "widgets/cryptostateindicatorwidget.h"
 #include "widgets/kactionmenutransport.h"
-#include <PimCommon/PimUtil>
+#include <TextAddonsWidgets/ExecutableUtils>
+
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"
 #include "activities/identityactivities.h"
@@ -1321,7 +1322,7 @@ void KMComposerWin::setupActions()
     action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QStringLiteral("addressbook"), action);
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("kaddressbook"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook"));
     if (path.isEmpty()) {
         action->setEnabled(false);
     } else {
@@ -2216,7 +2217,7 @@ void KMComposerWin::slotAddressBook()
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, this));
     job->start();
 #else
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("kaddressbook"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(this,
                            i18n("Could not start \"KAddressbook\" program. "
@@ -4221,7 +4222,7 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
     const auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
 
     if (!recipient->key().isNull()) {
-        const QString exec = PimCommon::Util::findExecutable(QStringLiteral("kleopatra"));
+        const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
         if (exec.isEmpty()
             || !QProcess::startDetached(exec,
                                         {QStringLiteral("--query"),

@@ -16,8 +16,8 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <MailCommon/FilterManager>
-#include <PimCommon/PimUtil>
 #include <QPointer>
+#include <TextAddonsWidgets/ExecutableUtils>
 
 #include <QProcess>
 #include <QStandardPaths>
@@ -77,7 +77,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
                            i18nc("@title:window", "KMail Error"));
     }
 #else
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("kleopatra"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start certificate manager; "
@@ -102,7 +102,7 @@ void KMLaunchExternalComponent::slotImportWizard()
                            i18nc("@title:window", "Unable to start \"ImportWizard\" program"));
     }
 #else
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("akonadiimportwizard"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadiimportwizard"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"ImportWizard\" program. "
@@ -128,7 +128,7 @@ void KMLaunchExternalComponent::slotExportData()
                            i18nc("@title:window", "Unable to start \"PIM Data Exporter\" program"));
     }
 #else
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("pimdataexporter"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("pimdataexporter"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"PIM Data Exporter\" program. "
@@ -146,7 +146,7 @@ void KMLaunchExternalComponent::slotRunAddressBook()
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
     job->start();
 #else
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("kaddressbook"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook"));
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"KAddressbook\" program. "
@@ -159,7 +159,7 @@ void KMLaunchExternalComponent::slotRunAddressBook()
 void KMLaunchExternalComponent::slotImport()
 {
     const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("akonadiimportwizard"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadiimportwizard"));
     if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the ImportWizard. "

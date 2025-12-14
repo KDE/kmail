@@ -7,14 +7,13 @@
 #include "util.h"
 
 #include "job/handleclickedurljob.h"
-#include <MessageComposer/MessageHelper>
-#include <MessageCore/StringUtil>
-#include <PimCommon/PimUtil>
-
 #include "kmail_debug.h"
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KMime/Message>
+#include <MessageComposer/MessageHelper>
+#include <MessageCore/StringUtil>
+#include <TextAddonsWidgets/ExecutableUtils>
 
 #include <QAction>
 #include <QProcess>
@@ -71,7 +70,7 @@ bool KMail::Util::handleClickedURL(const QUrl &url,
             lst << QStringLiteral("--parent-windowid") << QString::number(static_cast<qlonglong>(parentWidget->winId()));
         }
         lst << QStringLiteral("--query") << url.path();
-        QString exec = PimCommon::Util::findExecutable(QStringLiteral("kleopatra"));
+        QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
         if (exec.isEmpty()) {
             qCWarning(KMAIL_LOG) << "Could not find kleopatra executable in PATH";
             return false;
@@ -174,7 +173,7 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
 
 void KMail::Util::executeAccountWizard(QWidget *parentWidget)
 {
-    const QString path = PimCommon::Util::findExecutable(QStringLiteral("accountwizard"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("accountwizard"));
     if (path.isEmpty() || !QProcess::startDetached(path, {})) {
         KMessageBox::error(parentWidget,
                            i18n("Could not start the account wizard. "
