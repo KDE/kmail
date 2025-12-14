@@ -5,10 +5,6 @@
 */
 #include "followupreminderinfoconfigwidget.h"
 #include "followupreminderinfowidget.h"
-#include "kmail-version.h"
-#include <KAboutData>
-#include <KLocalizedString>
-#include <KSharedConfig>
 #include <QLayout>
 FollowUpReminderInfoConfigWidget::FollowUpReminderInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
     : Akonadi::AgentConfigurationBase(config, parent, args)

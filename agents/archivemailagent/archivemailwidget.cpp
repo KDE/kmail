@@ -14,8 +14,6 @@
 #include <KIO/JobUiDelegateFactory>
 #include <KIO/OpenUrlJob>
 
-#include "kmail-version.h"
-
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 

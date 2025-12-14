@@ -7,17 +7,8 @@
 #include "sendlaterinfoconfigwidget.h"
 #include "sendlaterremovemessagejob.h"
 
-#include "kmail-version.h"
 #include "sendlaterconfigurewidget.h"
 
-#include <KAboutData>
-#include <KConfigGroup>
-#include <KLocalizedString>
-#include <KSharedConfig>
-#include <KWindowConfig>
-#include <QApplication>
-#include <QIcon>
-#include <QWindow>
 using namespace Qt::Literals::StringLiterals;
 
 SendLaterInfoConfigWidget::SendLaterInfoConfigWidget(const KSharedConfigPtr &config, QWidget *parent, const QVariantList &args)
