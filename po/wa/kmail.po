@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-12-14 02:32+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -1350,19 +1350,19 @@ msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Apontyî ôre di completaedje..."
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:403
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Pont di schapaedje tot seu"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgid "No autosave"
 msgstr "Pont di schapaedje tot seu"
 
-#: configuredialog/configurecomposerpage.cpp:415
+#: configuredialog/configurecomposerpage.cpp:414
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1371,31 +1371,31 @@ msgid_plural "%v minutes"
 msgstr[0] " mun"
 msgstr[1] " mun"
 
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:416
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "Dimander otomaticmint des notifiaedjes di lijhaedje des &messaedjes"
 
-#: configuredialog/configurecomposerpage.cpp:431
+#: configuredialog/configurecomposerpage.cpp:430
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Aspougneu"
 
-#: configuredialog/configurecomposerpage.cpp:435
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:641
+#: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Betchetes di re&sponse pol sudjet"
 
-#: configuredialog/configurecomposerpage.cpp:646
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1408,161 +1408,161 @@ msgstr ""
 "Ricnoxhe tot l' minme li kéne shûte des betchetes shuvantes\n"
 "(les intrêyes sont des erîlêyès ratourneures sins rwaitî al casse):"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Re&move"
 msgstr "&Oister"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Candjî..."
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Dinez ene novele betchete di response:"
 
-#: configuredialog/configurecomposerpage.cpp:655
+#: configuredialog/configurecomposerpage.cpp:654
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "Voloz vs oister l' conte « %1 » ?"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Betchetes di re&sponse pol sudjet"
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Betchetes di &rcassaedje pol sudjet"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Oister"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Candjî..."
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Dinez ene novele betchete di rcassaedje:"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "Voloz vs oister l' conte « %1 » ?"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:679
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Betchetes di &rcassaedje pol sudjet"
 
-#: configuredialog/configurecomposerpage.cpp:724
+#: configuredialog/configurecomposerpage.cpp:722
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Eployî cawete d' id di messaedje a vosse môde"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:738
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Cawete d' &id di messaedje a vosse môde:"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:750
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Defini tchamps d' tiestire mime a vosse môde:"
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:758
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "No"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:759
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valixhance"
 
-#: configuredialog/configurecomposerpage.cpp:769
+#: configuredialog/configurecomposerpage.cpp:767
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "No&vea"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Oister"
 
-#: configuredialog/configurecomposerpage.cpp:782
+#: configuredialog/configurecomposerpage.cpp:780
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&No :"
 
-#: configuredialog/configurecomposerpage.cpp:792
+#: configuredialog/configurecomposerpage.cpp:790
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Valixhance :"
 
-#: configuredialog/configurecomposerpage.cpp:932
+#: configuredialog/configurecomposerpage.cpp:930
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:933
+#: configuredialog/configurecomposerpage.cpp:931
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "M&ete en alaedje sinateure"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Mete e&n alaedje li deteccion des ataetchmints mankant"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:978
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1572,38 +1572,38 @@ msgstr ""
 "Riconoxhe tolminme kés mots clés clé ki shuvèt come voleur ataetchî on "
 "fitchî :"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Intrez novea mot clé :"
 
-#: configuredialog/configurecomposerpage.cpp:993
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "Voloz vs oister l' conte « %1 » ?"
 
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:992
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "A&taetchmints"
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:999
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Come ataetchmint"
 
-#: configuredialog/configurecomposerpage.cpp:1008
+#: configuredialog/configurecomposerpage.cpp:1006
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ko"
 
-#: configuredialog/configurecomposerpage.cpp:1010
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgid "No limit"
 msgstr "Nole limite"
@@ -2428,7 +2428,7 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "L' evoyaedje des messaedjes a fwait berwete."
 
-#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:165
+#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:152
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -2439,7 +2439,7 @@ msgstr ""
 "Dji n' a savou enonder l' programe « Ebagueu d' apontiaedje PIM ». Verifyîz "
 "vost astalaedje, s' i vs plait."
 
-#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:167
+#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgctxt "@title:window"
@@ -4691,30 +4691,30 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1 : %2"
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:47
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "L' adjint d' årtchivaedje des emiles n' a nén stî eredjistré."
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Send Later Agent was not registered."
 msgstr "L' adjint d' årtchivaedje des emiles n' a nén stî eredjistré."
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:57
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Mail Merge Agent was not registered."
 msgstr "L' adjint d' årtchivaedje des emiles n' a nén stî eredjistré."
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:62
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Followup Reminder Agent was not registered."
 msgstr "L' adjint d' årtchivaedje des emiles n' a nén stî eredjistré."
 
-#: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
+#: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager; please check your installation."
 msgid ""
@@ -4724,14 +4724,14 @@ msgstr ""
 "Dji n' a savou enonder li manaedjeu d' acertineure ; verifyîz vost "
 "astalaedje, s' i vs plait."
 
-#: kmlaunchexternalcomponent.cpp:90 kmlaunchexternalcomponent.cpp:98
+#: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Messaedje d' aroke di KMail"
 
-#: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4742,14 +4742,14 @@ msgstr ""
 "Dji n' a savou enonder l' programe « Ebagueu d' apontiaedje PIM ». Verifyîz "
 "vost astalaedje, s' i vs plait."
 
-#: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, fuzzy, kde-format
 #| msgid "Unable to start import wizard"
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "Dji n' sai enonder l' macrea d' abagaedje"
 
-#: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
+#: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4761,14 +4761,14 @@ msgstr ""
 "Dji n' a savou enonder l' programe « Ebagueu d' apontiaedje PIM ». Verifyîz "
 "vost astalaedje, s' i vs plait."
 
-#: kmlaunchexternalcomponent.cpp:141 kmlaunchexternalcomponent.cpp:149
+#: kmlaunchexternalcomponent.cpp:128 kmlaunchexternalcomponent.cpp:136
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Dji n' sai enonder l' programe « Ebagueu d' apontiaedje PIM »."
 
-#: kmlaunchexternalcomponent.cpp:178
+#: kmlaunchexternalcomponent.cpp:165
 #, fuzzy, kde-format
 #| msgid "Could not start the import wizard. Please check your installation."
 msgid ""
@@ -4778,7 +4778,7 @@ msgstr ""
 "Dji n' a savou abaguer l' macrea d' abagaedje. Verifyîz vost astalaedje, s' "
 "i vs plait."
 
-#: kmlaunchexternalcomponent.cpp:180
+#: kmlaunchexternalcomponent.cpp:167
 #, fuzzy, kde-format
 #| msgid "Unable to start import wizard"
 msgctxt "@title:window"

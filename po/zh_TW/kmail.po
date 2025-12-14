@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-12-14 02:32+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1226,47 +1226,47 @@ msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "設定補完…"
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:403
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "自動儲存"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgid "No autosave"
 msgstr "不自動儲存"
 
-#: configuredialog/configurecomposerpage.cpp:415
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
 msgstr[0] "%v 分鐘"
 
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "在此指定間隔時間自動儲存信件"
 
-#: configuredialog/configurecomposerpage.cpp:431
+#: configuredialog/configurecomposerpage.cpp:430
 #, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "信件編輯器"
 
-#: configuredialog/configurecomposerpage.cpp:435
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:641
+#: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "回覆主題前置文字(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:646
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1274,181 +1274,181 @@ msgid ""
 "insensitive regular expressions):"
 msgstr "辨認下列的前置文字（各項目是不區分大小寫的正則表達式）："
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "A&dd…"
 msgstr "新增(&D)…"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Re&move"
 msgstr "移除(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Mod&ify…"
 msgstr "修改(&I)…"
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "輸入新的回覆前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:655
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "您確定要移除回覆前置文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "回覆前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "轉寄主題前置文字(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "移除(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Add…"
 msgstr "新增…"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Modify…"
 msgstr "修改…"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "輸入新的轉寄前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "您確定要移除轉寄前置文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "轉寄前置文字："
 
-#: configuredialog/configurecomposerpage.cpp:724
+#: configuredialog/configurecomposerpage.cpp:722
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "使用自訂的 Message-Id 項目(&U)"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:738
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "自訂 Message-Id 項目(&I)："
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:750
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "定義電子郵件的 mime 自訂標頭："
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:758
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "名稱"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:759
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "數值"
 
-#: configuredialog/configurecomposerpage.cpp:769
+#: configuredialog/configurecomposerpage.cpp:767
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "新的(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "移除(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:782
+#: configuredialog/configurecomposerpage.cpp:780
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "名稱(&N)："
 
-#: configuredialog/configurecomposerpage.cpp:792
+#: configuredialog/configurecomposerpage.cpp:790
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "數值(&V)："
 
-#: configuredialog/configurecomposerpage.cpp:932
+#: configuredialog/configurecomposerpage.cpp:930
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "'Content-Type' 是不被允許的字串。這個標頭不會被儲存。"
 
-#: configuredialog/configurecomposerpage.cpp:933
+#: configuredialog/configurecomposerpage.cpp:931
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "無效的標頭"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "判斷是否忘記附加檔案(&N)"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:978
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "檢查信件中是否有下列關鍵字，以顯示此封信是否應該有附檔而忘了加上去："
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Enter new key word:"
 msgstr "輸入新的關鍵字："
 
-#: configuredialog/configurecomposerpage.cpp:993
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "您確定要移除這個附件文字嗎？"
 
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:992
 #, kde-format
 msgid "Attachment Word:"
 msgstr "附加文字："
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:999
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "最大附件大小："
 
-#: configuredialog/configurecomposerpage.cpp:1008
+#: configuredialog/configurecomposerpage.cpp:1006
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:1010
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgid "No limit"
 msgstr "不限制"
@@ -2189,13 +2189,13 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "傳送信件失敗"
 
-#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:165
+#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "無法啟動 \"KAddressBook\" 程式。請檢查安裝是否完整。"
 
-#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:167
+#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
@@ -4284,72 +4284,72 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:47
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "郵件封存代理程式未註冊。"
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "稍後傳送代理程式未註冊。"
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:57
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "郵件合併代理程式未註冊。"
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "回覆提醒代理程式未註冊。"
 
-#: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
+#: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
 msgstr "無法啟動憑證管理員。請檢查是否有正確安裝 Kleopatra。"
 
-#: kmlaunchexternalcomponent.cpp:90 kmlaunchexternalcomponent.cpp:98
+#: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail 錯誤"
 
-#: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "無法啟動匯入精靈 \"ImportWizard\" 程式。請檢查安裝是否完整。"
 
-#: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "無法啟動匯入精靈 \"ImportWizard\" 程式"
 
-#: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
+#: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr "無法啟動 PIM 資料匯出工具。請檢查安裝是否完整。"
 
-#: kmlaunchexternalcomponent.cpp:141 kmlaunchexternalcomponent.cpp:149
+#: kmlaunchexternalcomponent.cpp:128 kmlaunchexternalcomponent.cpp:136
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "無法啟動 PIM 資料匯出工具"
 
-#: kmlaunchexternalcomponent.cpp:178
+#: kmlaunchexternalcomponent.cpp:165
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr "無法啟動匯入精靈。請檢查您是否正確安裝 ImportWizard。"
 
-#: kmlaunchexternalcomponent.cpp:180
+#: kmlaunchexternalcomponent.cpp:167
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"

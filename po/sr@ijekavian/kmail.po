@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-12-14 02:32+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1407,7 +1407,7 @@ msgid "Configure Completion…"
 msgstr "Подеси довршавање..."
 
 # >> @item:intext
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:403
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
@@ -1415,12 +1415,12 @@ msgid "Autosave"
 msgstr "ништа"
 
 # >> @item:intext
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgid "No autosave"
 msgstr "ништа"
 
-#: configuredialog/configurecomposerpage.cpp:415
+#: configuredialog/configurecomposerpage.cpp:414
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1434,33 +1434,33 @@ msgstr[2] " минута"
 msgstr[3] " минут"
 
 # >> @info:whatsthis
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Аутоматски уписује поруку по задатом периоду."
 
 # >! Contexts
 # >> @item font application
-#: configuredialog/configurecomposerpage.cpp:431
+#: configuredialog/configurecomposerpage.cpp:430
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Састављач"
 
-#: configuredialog/configurecomposerpage.cpp:435
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:641
+#: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Преф&икси теме у одговорима"
 
 # >> @label:textbox
-#: configuredialog/configurecomposerpage.cpp:646
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1473,82 +1473,82 @@ msgstr ""
 "Препознај било који низ следећих префикса\n"
 "(ставке су регуларни изрази без разликовања величине слова):"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Re&move"
 msgstr "Ук&лони"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Измени..."
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Унесите нови префикс у одговорима:"
 
-#: configuredialog/configurecomposerpage.cpp:655
+#: configuredialog/configurecomposerpage.cpp:654
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "Желите ли да уклоните ознаку „%1“?"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Преф&икси теме у одговорима"
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Пре&фикси теме у прослеђивањима"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Уклони"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Измени..."
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Унесите нови префикс у прослеђивањима:"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:678
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "Желите ли да уклоните ознаку „%1“?"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:679
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Пре&фикси теме у прослеђивањима"
 
-#: configuredialog/configurecomposerpage.cpp:724
+#: configuredialog/configurecomposerpage.cpp:722
 #, fuzzy, kde-format
 #| msgid "&Use custom message-id suffix"
 msgctxt "@option:check"
@@ -1556,79 +1556,79 @@ msgid "&Use custom message-id suffix"
 msgstr "Посебан &суфикс за ид. поруке"
 
 # rewrite-msgid: /Custom.*id//
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:738
 #, fuzzy, kde-format
 #| msgid "Custom message-&id suffix:"
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Суф&икс:"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:750
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Дефинишите посебна МИМЕ поља заглавља:"
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:758
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "име"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:759
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "вредност"
 
-#: configuredialog/configurecomposerpage.cpp:769
+#: configuredialog/configurecomposerpage.cpp:767
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Ново"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Ук&лони"
 
-#: configuredialog/configurecomposerpage.cpp:782
+#: configuredialog/configurecomposerpage.cpp:780
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Име:"
 
-#: configuredialog/configurecomposerpage.cpp:792
+#: configuredialog/configurecomposerpage.cpp:790
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Вредност:"
 
-#: configuredialog/configurecomposerpage.cpp:932
+#: configuredialog/configurecomposerpage.cpp:930
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:933
+#: configuredialog/configurecomposerpage.cpp:931
 #, fuzzy, kde-format
 #| msgid "Only headers"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "само заглавља"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Откривање &недостајућих прилога"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:978
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1636,40 +1636,40 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Препознај намеру да се приложи фајл по некој од следећих кључних речи:"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Унесите нову кључну реч:"
 
-#: configuredialog/configurecomposerpage.cpp:993
+#: configuredialog/configurecomposerpage.cpp:991
 #, fuzzy, kde-format
 #| msgid "Do you want to remove tag '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "Желите ли да уклоните ознаку „%1“?"
 
 # >> @title:tab
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:992
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "Прилози"
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:999
 #, fuzzy, kde-format
 #| msgid "Maximum Attachment Size:"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Највећа величина прилога:"
 
-#: configuredialog/configurecomposerpage.cpp:1008
+#: configuredialog/configurecomposerpage.cpp:1006
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
 # >> @item:inrange
-#: configuredialog/configurecomposerpage.cpp:1010
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgid "No limit"
 msgstr "без ограничења"
@@ -2507,7 +2507,7 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Слање поруке није успело"
 
-#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:165
+#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:152
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -2516,7 +2516,7 @@ msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "Не могу да покренем Извозник ПИМ поставки. Проверите инсталацију."
 
-#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:167
+#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgctxt "@title:window"
@@ -4892,28 +4892,28 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:47
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Агент за архивирање поште није регистрован."
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Агент за касније слање није регистрован."
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:57
 #, fuzzy, kde-format
 #| msgid "Archive Mail Agent was not registered."
 msgid "Mail Merge Agent was not registered."
 msgstr "Агент за архивирање поште није регистрован."
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Агент подсетника на одговор није регистрован."
 
-#: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
+#: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4922,14 +4922,14 @@ msgstr ""
 "Не могу да покренем менаџер сертификата. Проверите да ли је Клеопатра "
 "правилно инсталирана."
 
-#: kmlaunchexternalcomponent.cpp:90 kmlaunchexternalcomponent.cpp:98
+#: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Грешка К‑поште"
 
-#: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4938,14 +4938,14 @@ msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "Не могу да покренем Извозник ПИМ поставки. Проверите инсталацију."
 
-#: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, fuzzy, kde-format
 #| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "Не могу да покренем чаробњак за увоз"
 
-#: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
+#: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Setting Exporter\" program. Please check your "
@@ -4955,14 +4955,14 @@ msgid ""
 "installation."
 msgstr "Не могу да покренем Извозник ПИМ поставки. Проверите инсталацију."
 
-#: kmlaunchexternalcomponent.cpp:141 kmlaunchexternalcomponent.cpp:149
+#: kmlaunchexternalcomponent.cpp:128 kmlaunchexternalcomponent.cpp:136
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Setting Exporter\" program"
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Не могу да покренем Извозник ПИМ поставки"
 
-#: kmlaunchexternalcomponent.cpp:178
+#: kmlaunchexternalcomponent.cpp:165
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4971,7 +4971,7 @@ msgstr ""
 "Не могу да покренем чаробњак за увоз. Проверите да ли је чаробњак за увоз "
 "правилно инсталиран."
 
-#: kmlaunchexternalcomponent.cpp:180
+#: kmlaunchexternalcomponent.cpp:167
 #, fuzzy, kde-format
 #| msgid "Unable to start ImportWizard"
 msgctxt "@title:window"

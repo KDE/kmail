@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-12-14 02:32+0000\n"
 "PO-Revision-Date: 2025-11-01 13:16+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -1291,18 +1291,18 @@ msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Configurer le complètement…"
 
-#: configuredialog/configurecomposerpage.cpp:404
+#: configuredialog/configurecomposerpage.cpp:403
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Enregistrement automatique"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:413
 #, kde-format
 msgid "No autosave"
 msgstr "Pas d'enregistrement automatique"
 
-#: configuredialog/configurecomposerpage.cpp:415
+#: configuredialog/configurecomposerpage.cpp:414
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
@@ -1310,29 +1310,29 @@ msgid_plural "%v minutes"
 msgstr[0] "%v minute"
 msgstr[1] "%v minutes"
 
-#: configuredialog/configurecomposerpage.cpp:417
+#: configuredialog/configurecomposerpage.cpp:416
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Automatiquement enregistrer le message à l'intervalle spécifié"
 
-#: configuredialog/configurecomposerpage.cpp:431
+#: configuredialog/configurecomposerpage.cpp:430
 #, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Éditeur"
 
-#: configuredialog/configurecomposerpage.cpp:435
+#: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr "Activer la barre d'outils de formatage rapide de texte"
 
-#: configuredialog/configurecomposerpage.cpp:641
+#: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Préfixes pour le su&jet d'une réponse"
 
-#: configuredialog/configurecomposerpage.cpp:646
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:645
+#: configuredialog/configurecomposerpage.cpp:671
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1342,130 +1342,130 @@ msgstr ""
 "Reconnaître toute séquence des préfixes suivants (Les entrées sont des "
 "expressions rationnelles non sensibles à la casse) :"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "A&dd…"
 msgstr "A&jouter..."
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Re&move"
 msgstr "Su&pprimer"
 
-#: configuredialog/configurecomposerpage.cpp:654
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Mod&ifier…"
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Saisissez un nouveau préfixe de réponse :"
 
-#: configuredialog/configurecomposerpage.cpp:655
+#: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Voulez-vous vraiment supprimer le préfixe de réponse ?"
 
-#: configuredialog/configurecomposerpage.cpp:657
+#: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Préfixe pour la réponse :"
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Pré&fixes pour le sujet d'un message transmis"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:678 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "Su&pprimer"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Add…"
 msgstr "Ajouter..."
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Modify…"
 msgstr "Modifier…"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Saisissez un nouveau préfixe de transmission :"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Voulez-vous vraiment supprimer le préfixe de transfert ?"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Préfixe pour un transfert :"
 
-#: configuredialog/configurecomposerpage.cpp:724
+#: configuredialog/configurecomposerpage.cpp:722
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message-id suffix"
 msgstr "&Utiliser un suffixe personnalisé pour le champ « Message-Id »"
 
-#: configuredialog/configurecomposerpage.cpp:740
+#: configuredialog/configurecomposerpage.cpp:738
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Custom message-&id suffix:"
 msgstr "Suff&ixe personnalisé pour le champ « Message-Id » :"
 
-#: configuredialog/configurecomposerpage.cpp:752
+#: configuredialog/configurecomposerpage.cpp:750
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Définir des champs d'en-tête « MIME » personnalisés :"
 
-#: configuredialog/configurecomposerpage.cpp:760
+#: configuredialog/configurecomposerpage.cpp:758
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nom"
 
-#: configuredialog/configurecomposerpage.cpp:761
+#: configuredialog/configurecomposerpage.cpp:759
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valeur"
 
-#: configuredialog/configurecomposerpage.cpp:769
+#: configuredialog/configurecomposerpage.cpp:767
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Nouveau"
 
-#: configuredialog/configurecomposerpage.cpp:773
+#: configuredialog/configurecomposerpage.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Suppri&mer"
 
-#: configuredialog/configurecomposerpage.cpp:782
+#: configuredialog/configurecomposerpage.cpp:780
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "No&m :"
 
-#: configuredialog/configurecomposerpage.cpp:792
+#: configuredialog/configurecomposerpage.cpp:790
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Valeur :"
 
-#: configuredialog/configurecomposerpage.cpp:932
+#: configuredialog/configurecomposerpage.cpp:930
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
@@ -1473,19 +1473,19 @@ msgstr ""
 "« Content-Type » n'est pas une chaine permise. Cette en-tête ne sera pas "
 "enregistrée."
 
-#: configuredialog/configurecomposerpage.cpp:933
+#: configuredialog/configurecomposerpage.cpp:931
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "En-tête non valable"
 
-#: configuredialog/configurecomposerpage.cpp:974
+#: configuredialog/configurecomposerpage.cpp:972
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Activer la détection des pièces joi&ntes manquantes"
 
-#: configuredialog/configurecomposerpage.cpp:980
+#: configuredialog/configurecomposerpage.cpp:978
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1493,34 +1493,34 @@ msgstr ""
 "Reconnaître n'importe lequel des mots clés suivants comme une intention pour "
 "joindre un fichier :"
 
-#: configuredialog/configurecomposerpage.cpp:991
+#: configuredialog/configurecomposerpage.cpp:989
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Saisissez un nouveau mot clé :"
 
-#: configuredialog/configurecomposerpage.cpp:993
+#: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Voulez-vous vraiment supprimer le texte de pièce jointe ?"
 
-#: configuredialog/configurecomposerpage.cpp:994
+#: configuredialog/configurecomposerpage.cpp:992
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Mot pour pièce jointe :"
 
-#: configuredialog/configurecomposerpage.cpp:1001
+#: configuredialog/configurecomposerpage.cpp:999
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Taille maximale de pièce jointe :"
 
-#: configuredialog/configurecomposerpage.cpp:1008
+#: configuredialog/configurecomposerpage.cpp:1006
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ko"
 
-#: configuredialog/configurecomposerpage.cpp:1010
+#: configuredialog/configurecomposerpage.cpp:1008
 #, kde-format
 msgid "No limit"
 msgstr "Pas de limite"
@@ -2277,7 +2277,7 @@ msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Échec de l'envoi du message"
 
-#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:165
+#: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
@@ -2285,7 +2285,7 @@ msgstr ""
 "Impossible de lancer l'application KAddressBook. Veuillez vérifier votre "
 "installation."
 
-#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:167
+#: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
@@ -4547,27 +4547,27 @@ msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1 : %2"
 
-#: kmlaunchexternalcomponent.cpp:40
+#: kmlaunchexternalcomponent.cpp:47
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "L'agent d'archivage de courriel n'a pas été enregistré."
 
-#: kmlaunchexternalcomponent.cpp:51
+#: kmlaunchexternalcomponent.cpp:52
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "L'agent d'envoi différé n'a pas été enregistré."
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:57
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "L'agent de fusion de courriels n'a pas été enregistré."
 
-#: kmlaunchexternalcomponent.cpp:74
+#: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "L'agent de rappel des messages suivis n'a pas été enregistré"
 
-#: kmlaunchexternalcomponent.cpp:88 kmlaunchexternalcomponent.cpp:96
+#: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4576,13 +4576,13 @@ msgstr ""
 "Impossible de lancer le gestionnaire de certificats ; veuillez vérifier que "
 "Kleopatra est correctement installé."
 
-#: kmlaunchexternalcomponent.cpp:90 kmlaunchexternalcomponent.cpp:98
+#: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Erreur de KMail"
 
-#: kmlaunchexternalcomponent.cpp:113 kmlaunchexternalcomponent.cpp:121
+#: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
@@ -4590,14 +4590,14 @@ msgstr ""
 "Impossible de lancer le programme d'assistant d'importation "
 "« ImportWizard ». Veuillez vérifier votre installation."
 
-#: kmlaunchexternalcomponent.cpp:115 kmlaunchexternalcomponent.cpp:123
+#: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr ""
 "Impossible de lancer le programme d'assistant d'importation « ImportWizard »."
 
-#: kmlaunchexternalcomponent.cpp:139 kmlaunchexternalcomponent.cpp:147
+#: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -4606,13 +4606,13 @@ msgstr ""
 "Impossible de lancer le programme d'exportation des données PIM. Veuillez "
 "vérifier votre installation."
 
-#: kmlaunchexternalcomponent.cpp:141 kmlaunchexternalcomponent.cpp:149
+#: kmlaunchexternalcomponent.cpp:128 kmlaunchexternalcomponent.cpp:136
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Impossible de lancer le programme d'exportation de données « PIM »"
 
-#: kmlaunchexternalcomponent.cpp:178
+#: kmlaunchexternalcomponent.cpp:165
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4621,7 +4621,7 @@ msgstr ""
 "Impossible de lancer l'assistant d'importation. Veuillez vérifier que "
 "ImportWizard est correctement installé."
 
-#: kmlaunchexternalcomponent.cpp:180
+#: kmlaunchexternalcomponent.cpp:167
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
