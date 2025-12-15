@@ -205,7 +205,7 @@ using Sonnet::DictionaryComboBox;
 using namespace Qt::Literals::StringLiterals;
 Q_DECLARE_METATYPE(MessageComposer::Recipient::Ptr)
 
-KMail::Composer *KMail::makeComposer(const QSharedPointer<KMime::Message> &msg,
+KMail::Composer *KMail::makeComposer(const std::shared_ptr<KMime::Message> &msg,
                                      bool lastSignState,
                                      bool lastEncryptState,
                                      Composer::TemplateContext context,
@@ -216,7 +216,7 @@ KMail::Composer *KMail::makeComposer(const QSharedPointer<KMime::Message> &msg,
     return KMComposerWin::create(msg, lastSignState, lastEncryptState, context, identity, textSelection, customTemplate);
 }
 
-KMail::Composer *KMComposerWin::create(const QSharedPointer<KMime::Message> &msg,
+KMail::Composer *KMComposerWin::create(const std::shared_ptr<KMime::Message> &msg,
                                        bool lastSignState,
                                        bool lastEncryptState,
                                        Composer::TemplateContext context,
@@ -229,7 +229,7 @@ KMail::Composer *KMComposerWin::create(const QSharedPointer<KMime::Message> &msg
 
 int KMComposerWin::s_composerNumber = 0;
 
-KMComposerWin::KMComposerWin(const QSharedPointer<KMime::Message> &aMsg,
+KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
                              bool lastSignState,
                              bool lastEncryptState,
                              Composer::TemplateContext context,
@@ -1119,7 +1119,7 @@ void KMComposerWin::rethinkHeaderLine(int aValue, int aMask, int &aRow, QLabel *
 }
 
 void KMComposerWin::slotUpdateComposer(const KIdentityManagementCore::Identity &ident,
-                                       const QSharedPointer<KMime::Message> &msg,
+                                       const std::shared_ptr<KMime::Message> &msg,
                                        uint uoid,
                                        uint uoldId,
                                        bool wasModified)
@@ -1752,7 +1752,7 @@ uint KMComposerWin::currentIdentity() const
     return mComposerBase->identityCombo()->currentIdentity();
 }
 
-void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &ident, const QSharedPointer<KMime::Message> &msg)
+void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &ident, const std::shared_ptr<KMime::Message> &msg)
 {
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
         msg->removeHeader("X-Face");
@@ -1794,7 +1794,7 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
     }
 }
 
-void KMComposerWin::setMessage(const QSharedPointer<KMime::Message> &newMsg,
+void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
                                bool lastSignState,
                                bool lastEncryptState,
                                bool mayAutoSign,
@@ -2766,7 +2766,7 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
     if (composer->error() == MessageComposer::ComposerJob::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
         Akonadi::Item printItem;
-        printItem.setPayload<QSharedPointer<KMime::Message>>(composer->resultMessages().constFirst());
+        printItem.setPayload<std::shared_ptr<KMime::Message>>(composer->resultMessages().constFirst());
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().constFirst()), printItem);
         const bool isHtml = mComposerBase->editor()->textMode() == MessageComposer::RichTextComposerNg::Rich;
         const MessageViewer::Viewer::DisplayFormatMessage format = isHtml ? MessageViewer::Viewer::Html : MessageViewer::Viewer::Text;

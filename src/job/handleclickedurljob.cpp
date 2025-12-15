@@ -24,7 +24,7 @@ HandleClickedUrlJob::~HandleClickedUrlJob() = default;
 
 void HandleClickedUrlJob::start()
 {
-    mMsg = QSharedPointer<KMime::Message>(new KMime::Message);
+    mMsg = std::shared_ptr<KMime::Message>(new KMime::Message);
     mIdentity = !mFolder.isNull() ? mFolder->identity() : 0;
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
     // Already defined in MessageHelper::initHeader

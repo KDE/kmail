@@ -239,8 +239,8 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
 {
     if (FilterLog::instance()->isLogging()) {
         FilterLog::instance()->addSeparator();
-        if (item.hasPayload<QSharedPointer<KMime::Message>>()) {
-            auto msg = item.payload<QSharedPointer<KMime::Message>>();
+        if (item.hasPayload<std::shared_ptr<KMime::Message>>()) {
+            auto msg = item.payload<std::shared_ptr<KMime::Message>>();
             QString subject;
             if (auto msgSubject = msg->subject(false)) {
                 subject = msgSubject->asUnicodeString();
@@ -408,7 +408,7 @@ bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, co
         return true;
     }
 
-    if (!item.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!item.hasPayload<std::shared_ptr<KMime::Message>>()) {
         qCCritical(MAILFILTERAGENT_LOG) << "Filter is null or item doesn't have correct payload.";
         return false;
     }
@@ -437,7 +437,7 @@ bool FilterManager::process(const Akonadi::Item &item, bool needsFullPayload, co
 
 bool FilterManager::processContextItem(ItemContext context)
 {
-    const auto msg = context.item().payload<QSharedPointer<KMime::Message>>();
+    const auto msg = context.item().payload<std::shared_ptr<KMime::Message>>();
     msg->assemble();
 
     auto col = Akonadi::EntityTreeModel::updatedCollection(MailCommon::Kernel::self()->kernelIf()->collectionModel(), context.item().parentCollection());
@@ -496,7 +496,7 @@ bool FilterManager::process(const QList<MailFilter *> &mailFilters,
         return false;
     }
 
-    if (!item.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!item.hasPayload<std::shared_ptr<KMime::Message>>()) {
         qCCritical(MAILFILTERAGENT_LOG) << "Filter is null or item doesn't have correct payload.";
         return false;
     }

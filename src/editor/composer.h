@@ -73,7 +73,7 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    virtual void setMessage(const QSharedPointer<KMime::Message> &newMsg,
+    virtual void setMessage(const std::shared_ptr<KMime::Message> &newMsg,
                             bool lastSignState = false,
                             bool lastEncryptState = false,
                             bool mayAutoSign = true,
@@ -140,7 +140,7 @@ public: // kmcommand
     virtual void addAttach(KMime::Content *msgPart) = 0;
 };
 
-KMAIL_EXPORT Composer *makeComposer(const QSharedPointer<KMime::Message> &msg = QSharedPointer<KMime::Message>(),
+KMAIL_EXPORT Composer *makeComposer(const std::shared_ptr<KMime::Message> &msg = std::shared_ptr<KMime::Message>(),
                                     bool lastSignState = false,
                                     bool lastEncryptState = false,
                                     Composer::TemplateContext context = Composer::TemplateContext::NoTemplate,

@@ -38,7 +38,7 @@ bool MailServiceImpl::sendMessage(const QString &from,
         return false;
     }
 
-    QSharedPointer<KMime::Message> msg(new KMime::Message);
+    std::shared_ptr<KMime::Message> msg(new KMime::Message);
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
 
     // Already defined in MessageHelper::initHeader
@@ -88,7 +88,7 @@ bool MailServiceImpl::sendMessage(const QString &from,
         return false;
     }
 
-    QSharedPointer<KMime::Message> msg(new KMime::Message);
+    std::shared_ptr<KMime::Message> msg(new KMime::Message);
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
     // Already defined in MessageHelper::initHeader
     msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));

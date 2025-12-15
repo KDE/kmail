@@ -154,7 +154,7 @@ KMCommand::KMCommand(QWidget *parent)
 KMCommand::KMCommand(QWidget *parent, const Akonadi::Item &msg)
     : KMCommand(parent)
 {
-    if (msg.isValid() || msg.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (msg.isValid() || msg.hasPayload<std::shared_ptr<KMime::Message>>()) {
         mMsgList.append(msg);
     }
 }
@@ -400,7 +400,7 @@ KMMailtoComposeCommand::KMMailtoComposeCommand(const QUrl &url, const Akonadi::I
 
 KMCommand::Result KMMailtoComposeCommand::execute()
 {
-    QSharedPointer<KMime::Message> msg(new KMime::Message);
+    std::shared_ptr<KMime::Message> msg(new KMime::Message);
     uint id = 0;
 
     if (mMessage.isValid() && mMessage.parentCollection().isValid()) {
@@ -431,7 +431,7 @@ KMMailtoReplyCommand::KMMailtoReplyCommand(QWidget *parent, const QUrl &url, con
 KMCommand::Result KMMailtoReplyCommand::execute()
 {
     Akonadi::Item item = retrievedMessage();
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -472,7 +472,7 @@ KMCommand::Result KMMailtoForwardCommand::execute()
 {
     // TODO : consider factoring createForward into this method.
     Akonadi::Item item = retrievedMessage();
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -548,7 +548,7 @@ void KMUrlSaveCommand::slotUrlSaveResult(KJob *job)
     Q_EMIT completed(this);
 }
 
-KMEditMessageCommand::KMEditMessageCommand(QWidget *parent, const QSharedPointer<KMime::Message> &msg)
+KMEditMessageCommand::KMEditMessageCommand(QWidget *parent, const std::shared_ptr<KMime::Message> &msg)
     : KMCommand(parent)
     , mMessage(msg)
 {
@@ -588,7 +588,7 @@ KMCommand::Result KMEditItemCommand::execute()
     if (!item.isValid() || !item.parentCollection().isValid()) {
         return Failed;
     }
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -657,12 +657,12 @@ KMCommand::Result KMUseTemplateCommand::execute()
     if (!item.isValid() || !item.parentCollection().isValid() || !CommonKernel->folderIsTemplates(item.parentCollection())) {
         return Failed;
     }
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
 
-    QSharedPointer<KMime::Message> newMsg(new KMime::Message);
+    std::shared_ptr<KMime::Message> newMsg(new KMime::Message);
     newMsg->setContent(msg->encodedContent());
     newMsg->parse();
     // these fields need to be regenerated for the new message
@@ -773,7 +773,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             }
             startOfMessage += 1; // the message starts after the '\n'
         }
-        QList<QSharedPointer<KMime::Message>> listMessages;
+        QList<std::shared_ptr<KMime::Message>> listMessages;
 
         // check for multiple messages in the file
         bool multipleMessages = true;
@@ -788,7 +788,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
                 doesNotContainMessage();
                 return;
             }
-            QSharedPointer<KMime::Message> mMsg(msg);
+            std::shared_ptr<KMime::Message> mMsg(msg);
             listMessages << mMsg;
             startOfMessage = endOfMessage + 1;
             endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
@@ -804,7 +804,7 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             doesNotContainMessage();
             return;
         }
-        QSharedPointer<KMime::Message> mMsg(msg);
+        std::shared_ptr<KMime::Message> mMsg(msg);
         listMessages << mMsg;
         auto win = new KMReaderMainWin();
         win->showMessage(mEncoding, listMessages);
@@ -841,7 +841,7 @@ KMCommand::Result KMReplyCommand::execute()
 {
     KCursorSaver saver(Qt::WaitCursor);
     Akonadi::Item item = retrievedMessage();
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -895,7 +895,7 @@ KMForwardCommand::KMForwardCommand(QWidget *parent, const Akonadi::Item &msg, ui
 
 KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
 {
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -931,13 +931,13 @@ KMCommand::Result KMForwardCommand::execute()
 
         if (answer == KMessageBox::ButtonCode::PrimaryAction) {
             Akonadi::Item firstItem(msgList.first());
-            MessageFactoryNG factory(QSharedPointer<KMime::Message>(new KMime::Message),
+            MessageFactoryNG factory(std::shared_ptr<KMime::Message>(new KMime::Message),
                                      firstItem.id(),
                                      CommonKernel->collectionFromId(firstItem.parentCollection().id()));
             factory.setIdentityManager(KMKernel::self()->identityManager());
             factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
-            QPair<QSharedPointer<KMime::Message>, KMime::Content *> fwdMsg = factory.createForwardDigestMIME(msgList);
+            QPair<std::shared_ptr<KMime::Message>, KMime::Content *> fwdMsg = factory.createForwardDigestMIME(msgList);
             KMail::Composer *win = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::TemplateContext::Forward, mIdentity);
             win->addAttach(fwdMsg.second);
             win->show();
@@ -989,13 +989,13 @@ KMCommand::Result KMForwardAttachedCommand::execute()
 {
     Akonadi::Item::List msgList = retrievedMsgs();
     Akonadi::Item firstItem(msgList.first());
-    MessageFactoryNG factory(QSharedPointer<KMime::Message>(new KMime::Message),
+    MessageFactoryNG factory(std::shared_ptr<KMime::Message>(new KMime::Message),
                              firstItem.id(),
                              CommonKernel->collectionFromId(firstItem.parentCollection().id()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
-    QPair<QSharedPointer<KMime::Message>, QList<KMime::Content *>> fwdMsg = factory.createAttachedForward(msgList);
+    QPair<std::shared_ptr<KMime::Message>, QList<KMime::Content *>> fwdMsg = factory.createAttachedForward(msgList);
     if (!mWin) {
         mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::TemplateContext::Forward, mIdentity);
     }
@@ -1052,7 +1052,7 @@ KMCommand::Result KMRedirectCommand::execute()
     const QString bcc = dlg->bcc();
     const Akonadi::Item::List lstItems = retrievedMsgs();
     for (const Akonadi::Item &item : lstItems) {
-        const QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+        const std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
         if (!msg) {
             return Failed;
         }
@@ -1077,7 +1077,7 @@ KMCommand::Result KMRedirectCommand::execute()
             fcc = QString::number(sentAttribute->moveToCollection().id());
         }
 
-        const QSharedPointer<KMime::Message> newMsg = factory.createRedirect(to, cc, bcc, transportId, fcc, identity);
+        const std::shared_ptr<KMime::Message> newMsg = factory.createRedirect(to, cc, bcc, transportId, fcc, identity);
         if (!newMsg) {
             return Failed;
         }
@@ -1363,7 +1363,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
     QByteArray name;
     QString value;
     Akonadi::Item item = retrievedMessage();
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
@@ -1433,10 +1433,10 @@ KMCommand::Result KMCopyDecryptedCommand::execute()
     const auto items = retrievedMsgs();
     for (const auto &item : items) {
         // Decrypt
-        if (!item.hasPayload<QSharedPointer<KMime::Message>>()) {
+        if (!item.hasPayload<std::shared_ptr<KMime::Message>>()) {
             continue;
         }
-        const auto msg = item.payload<QSharedPointer<KMime::Message>>();
+        const auto msg = item.payload<std::shared_ptr<KMime::Message>>();
         bool wasEncrypted;
         auto decMsg = MailCommon::CryptoUtils::decryptMessage(msg, wasEncrypted);
         if (!wasEncrypted) {
@@ -1758,8 +1758,8 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
     KMime::Content::List contentsToSave;
     const Akonadi::Item::List lstItems = retrievedMsgs();
     for (const Akonadi::Item &item : lstItems) {
-        if (item.hasPayload<QSharedPointer<KMime::Message>>()) {
-            contentsToSave += item.payload<QSharedPointer<KMime::Message>>()->attachments();
+        if (item.hasPayload<std::shared_ptr<KMime::Message>>()) {
+            contentsToSave += item.payload<std::shared_ptr<KMime::Message>>()->attachments();
         } else {
             qCWarning(KMAIL_LOG) << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
@@ -1786,12 +1786,12 @@ KMCommand::Result KMDeleteAttachmentsCommand::execute()
     setDeletesItself(true);
 
     for (const auto &item : retrievedMsgs()) {
-        if (!item.hasPayload<QSharedPointer<KMime::Message>>()) {
+        if (!item.hasPayload<std::shared_ptr<KMime::Message>>()) {
             qCWarning(KMAIL_LOG) << "Retrieved Item" << item.id() << "does not have KMime::Message payload, ignoring.";
             continue;
         }
 
-        auto message = item.payload<QSharedPointer<KMime::Message>>();
+        auto message = item.payload<std::shared_ptr<KMime::Message>>();
         const auto attachments = message->attachments();
         if (!attachments.empty()) {
             if (const auto actuallyDeleted = MessageViewer::Util::deleteAttachments(attachments); actuallyDeleted > 0) {
@@ -1877,15 +1877,15 @@ KMResendMessageCommand::KMResendMessageCommand(QWidget *parent, const Akonadi::I
 KMCommand::Result KMResendMessageCommand::execute()
 {
     Akonadi::Item item = retrievedMessage();
-    QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(item);
+    std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(item);
     if (!msg) {
         return Failed;
     }
     MessageFactoryNG factory(msg, item.id(), CommonKernel->collectionFromId(item.parentCollection().id()));
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
-    QSharedPointer<KMime::Message> newMsg = factory.createResend();
-    newMsg->contentType()->setCharset(MimeTreeParser::NodeHelper::charset(msg.data()));
+    std::shared_ptr<KMime::Message> newMsg = factory.createResend();
+    newMsg->contentType()->setCharset(MimeTreeParser::NodeHelper::charset(msg.get()));
 
     KMail::Composer *win = KMail::makeComposer();
     bool lastEncrypt = false;
@@ -1909,7 +1909,7 @@ KMShareImageCommand::KMShareImageCommand(const QUrl &url, QWidget *parent)
 
 KMCommand::Result KMShareImageCommand::execute()
 {
-    QSharedPointer<KMime::Message> msg(new KMime::Message);
+    std::shared_ptr<KMime::Message> msg(new KMime::Message);
     uint id = 0;
 
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), id);
@@ -1948,7 +1948,7 @@ Akonadi::ItemFetchJob *KMFetchMessageCommand::createFetchJob(const Akonadi::Item
 KMCommand::Result KMFetchMessageCommand::execute()
 {
     Akonadi::Item item = retrievedMessage();
-    if (!item.isValid() || !item.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!item.isValid() || !item.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return Failed;
     }
 

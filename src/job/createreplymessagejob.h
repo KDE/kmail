@@ -20,7 +20,7 @@ struct KMAILTESTS_TESTS_EXPORT CreateReplyMessageJobSettings {
     QString selection;
     QString templateStr;
     Akonadi::Item item;
-    QSharedPointer<KMime::Message> msg;
+    std::shared_ptr<KMime::Message> msg;
     MessageComposer::ReplyStrategy replyStrategy = MessageComposer::ReplySmart;
     bool noQuote = false;
     bool replyAsHtml = false;

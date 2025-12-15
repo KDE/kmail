@@ -21,7 +21,7 @@ KMComposerCreateNewComposerJob::~KMComposerCreateNewComposerJob() = default;
 
 void KMComposerCreateNewComposerJob::start()
 {
-    mMsg = QSharedPointer<KMime::Message>(new KMime::Message());
+    mMsg = std::shared_ptr<KMime::Message>(new KMime::Message());
 
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mCurrentIdentity);
     auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);

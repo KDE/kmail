@@ -89,7 +89,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
     }
 
     if (mItem.isValid()) {
-        const QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(mItem);
+        const std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(mItem);
         if (!msg) {
             sendError(i18n("Message is not a real message"), SendLaterManager::CanNotFetchItem);
             return;
@@ -110,7 +110,7 @@ void SendLaterJob::slotJobFinished(KJob *job)
     }
 }
 
-void SendLaterJob::updateAndCleanMessageBeforeSending(const QSharedPointer<KMime::Message> &msg)
+void SendLaterJob::updateAndCleanMessageBeforeSending(const std::shared_ptr<KMime::Message> &msg)
 {
     msg->date()->setDateTime(QDateTime::currentDateTime());
     MessageComposer::removeDraftCryptoHeaders(msg);

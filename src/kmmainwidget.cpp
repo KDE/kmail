@@ -1405,7 +1405,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
     const Akonadi::Item::List items = fetchJob->items();
     const int numberOfItems = items.count();
     for (int idx = 0; idx < numberOfItems; ++idx) {
-        QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(items.at(idx));
+        std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(items.at(idx));
         if (msg) {
             QString subj;
             if (auto subject = msg->subject(false)) {
@@ -2173,7 +2173,7 @@ void KMMainWidget::openFilterDialog(const QByteArray &field, const QString &valu
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSubjectFilter()
 {
-    const QSharedPointer<KMime::Message> msg = mMessagePane->currentMessage();
+    const std::shared_ptr<KMime::Message> msg = mMessagePane->currentMessage();
     if (!msg) {
         return;
     }
@@ -2187,7 +2187,7 @@ void KMMainWidget::slotSubjectFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFromFilter()
 {
-    QSharedPointer<KMime::Message> msg = mMessagePane->currentMessage();
+    std::shared_ptr<KMime::Message> msg = mMessagePane->currentMessage();
     if (!msg) {
         return;
     }
@@ -2203,7 +2203,7 @@ void KMMainWidget::slotFromFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotToFilter()
 {
-    QSharedPointer<KMime::Message> msg = mMessagePane->currentMessage();
+    std::shared_ptr<KMime::Message> msg = mMessagePane->currentMessage();
     if (!msg) {
         return;
     }
@@ -2216,7 +2216,7 @@ void KMMainWidget::slotToFilter()
 
 void KMMainWidget::slotCcFilter()
 {
-    QSharedPointer<KMime::Message> msg = mMessagePane->currentMessage();
+    std::shared_ptr<KMime::Message> msg = mMessagePane->currentMessage();
     if (!msg) {
         return;
     }
@@ -2387,10 +2387,10 @@ void KMMainWidget::slotSaveAttachments()
     // is also displayed in the viewer. For this, create a dummy item without a parent collection / item id,
     // so that KMCommand doesn't download it.
     KMSaveAttachmentsCommand *saveCommand = nullptr;
-    if (mMsgView && selectedMessages.size() == 1 && mMsgView->messageItem().hasPayload<QSharedPointer<KMime::Message>>()
+    if (mMsgView && selectedMessages.size() == 1 && mMsgView->messageItem().hasPayload<std::shared_ptr<KMime::Message>>()
         && selectedMessages.first().id() == mMsgView->messageItem().id()) {
         Akonadi::Item dummyItem;
-        dummyItem.setPayload<QSharedPointer<KMime::Message>>(mMsgView->messageItem().payload<QSharedPointer<KMime::Message>>());
+        dummyItem.setPayload<std::shared_ptr<KMime::Message>>(mMsgView->messageItem().payload<std::shared_ptr<KMime::Message>>());
         saveCommand = new KMSaveAttachmentsCommand(this, dummyItem, mMsgView->viewer());
     } else {
         saveCommand = new KMSaveAttachmentsCommand(this, selectedMessages, mMsgView->viewer());
@@ -4959,7 +4959,7 @@ void KMMainWidget::slotRedirectCurrentMessage()
 {
     if (messageView() && messageView()->viewer()) {
         const Akonadi::Item currentItem = messageView()->viewer()->messageItem();
-        if (!currentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+        if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
             return;
         }
         auto command = new KMRedirectCommand(this, currentItem);
@@ -4974,11 +4974,11 @@ void KMMainWidget::replyMessageTo(const Akonadi::Item &item, bool replyToAll)
     command->start();
 }
 
-void KMMainWidget::slotReplyMessageTo(const QSharedPointer<KMime::Message> &message, bool replyToAll)
+void KMMainWidget::slotReplyMessageTo(const std::shared_ptr<KMime::Message> &message, bool replyToAll)
 {
     Akonadi::Item item;
 
-    item.setPayload<QSharedPointer<KMime::Message>>(message);
+    item.setPayload<std::shared_ptr<KMime::Message>>(message);
     item.setMimeType(KMime::Message::mimeType());
     replyMessageTo(item, replyToAll);
 }

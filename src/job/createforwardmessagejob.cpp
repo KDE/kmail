@@ -38,7 +38,7 @@ void CreateForwardMessageJob::start()
     mMessageFactory->createForwardAsync();
 }
 
-void CreateForwardMessageJob::slotCreateForwardDone(const QSharedPointer<KMime::Message> &fmsg)
+void CreateForwardMessageJob::slotCreateForwardDone(const std::shared_ptr<KMime::Message> &fmsg)
 {
     if (mSettings.url.isValid()) {
         fmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url).toLower());

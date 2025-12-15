@@ -32,7 +32,7 @@ KMSearchMessageModel::~KMSearchMessageModel() = default;
 
 static QString toolTip(const Akonadi::Item &item)
 {
-    auto msg = item.payload<QSharedPointer<KMime::Message>>();
+    auto msg = item.payload<std::shared_ptr<KMime::Message>>();
 
     const QColor bckColor = QApplication::palette().color(QPalette::ToolTipBase);
     const QColor txtColor = QApplication::palette().color(QPalette::ToolTipText);

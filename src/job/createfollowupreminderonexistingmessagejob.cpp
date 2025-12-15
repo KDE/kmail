@@ -45,12 +45,12 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    if (!mMessageItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!mMessageItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         qCDebug(KMAIL_LOG) << " item has not payload";
         deleteLater();
         return;
     }
-    auto msg = mMessageItem.payload<QSharedPointer<KMime::Message>>();
+    auto msg = mMessageItem.payload<std::shared_ptr<KMime::Message>>();
     if (msg) {
         auto reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
         KMime::Headers::MessageID *messageID = msg->messageID(false);

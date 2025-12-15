@@ -66,7 +66,7 @@ public:
 
     void setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMode updateMode = MimeTreeParser::Delayed);
 
-    void setMessage(const QSharedPointer<KMime::Message> &message);
+    void setMessage(const std::shared_ptr<KMime::Message> &message);
 
     /** Instead of settings a message to be shown sets a message part
       to be shown */
@@ -192,7 +192,7 @@ public Q_SLOTS:
     void slotAddUrlToBookmark();
     void slotUrlClicked(const Akonadi::Item &, const QUrl &);
     void slotShowReader(KMime::Content *, bool html, const QString &);
-    void slotShowMessage(const QSharedPointer<KMime::Message> &message, const QString &encoding);
+    void slotShowMessage(const std::shared_ptr<KMime::Message> &message, const QString &encoding);
     void slotDeleteMessage(const Akonadi::Item &);
     void slotSaveImageOnDisk();
 

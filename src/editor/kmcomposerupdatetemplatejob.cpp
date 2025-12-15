@@ -38,7 +38,7 @@ void KMComposerUpdateTemplateJob::slotFinished()
     deleteLater();
 }
 
-void KMComposerUpdateTemplateJob::setMsg(const QSharedPointer<KMime::Message> &msg)
+void KMComposerUpdateTemplateJob::setMsg(const std::shared_ptr<KMime::Message> &msg)
 {
     mMsg = msg;
 }

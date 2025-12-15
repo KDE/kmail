@@ -70,7 +70,7 @@ public:
 private:
     KMAIL_NO_EXPORT void slotOpenComposer();
     OpenComposerSettings mOpenComposerSettings;
-    QSharedPointer<KMime::Message> mMsg = nullptr;
+    std::shared_ptr<KMime::Message> mMsg = nullptr;
     KMail::Composer::TemplateContext mContext = KMail::Composer::TemplateContext::New;
     uint mIdentityId = 0;
 };

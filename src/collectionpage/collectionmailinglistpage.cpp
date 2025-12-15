@@ -200,8 +200,8 @@ void CollectionMailingListPage::slotFetchDone(KJob *job)
     int num = items.size();
     for (int i = --num; (i > num - maxchecks) && (i >= 0); --i) {
         Akonadi::Item item = items[i];
-        if (item.hasPayload<QSharedPointer<KMime::Message>>()) {
-            auto message = item.payload<QSharedPointer<KMime::Message>>();
+        if (item.hasPayload<std::shared_ptr<KMime::Message>>()) {
+            auto message = item.payload<std::shared_ptr<KMime::Message>>();
             mMailingList = MessageCore::MailingList::detect(message);
             if (mMailingList.features() & MailingList::Post) {
                 break;

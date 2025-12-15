@@ -118,7 +118,7 @@ KMReaderMainWin::~KMReaderMainWin()
     if (mMsg.isValid()) {
         HistoryClosedReaderInfo info;
         info.setItem(mMsg.id());
-        QSharedPointer<KMime::Message> message = MessageComposer::Util::message(mMsg);
+        std::shared_ptr<KMime::Message> message = MessageComposer::Util::message(mMsg);
         if (message) {
             if (auto subject = message->subject(false)) {
                 info.setSubject(subject->asUnicodeString());
@@ -155,7 +155,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     mParentCollection = parentCollection;
     mReaderWin->setOverrideEncoding(encoding);
     mReaderWin->setMessage(msg, MimeTreeParser::Force);
-    QSharedPointer<KMime::Message> message = MessageComposer::Util::message(msg);
+    std::shared_ptr<KMime::Message> message = MessageComposer::Util::message(msg);
     QString caption;
     if (message) {
         if (auto subject = message->subject(false)) {
@@ -214,7 +214,7 @@ void KMReaderMainWin::showPreviousMessage()
     updateButtons();
 }
 
-void KMReaderMainWin::showMessage(const QString &encoding, const QList<QSharedPointer<KMime::Message>> &message)
+void KMReaderMainWin::showMessage(const QString &encoding, const QList<std::shared_ptr<KMime::Message>> &message)
 {
     if (message.isEmpty()) {
         return;
@@ -229,10 +229,10 @@ void KMReaderMainWin::showMessage(const QString &encoding, const QList<QSharedPo
     updateButtons();
 }
 
-void KMReaderMainWin::initializeMessage(const QSharedPointer<KMime::Message> &message)
+void KMReaderMainWin::initializeMessage(const std::shared_ptr<KMime::Message> &message)
 {
     Akonadi::Item item;
-    item.setPayload<QSharedPointer<KMime::Message>>(message);
+    item.setPayload<std::shared_ptr<KMime::Message>>(message);
     Akonadi::MessageFlags::copyMessageFlags(*message, item);
     item.setMimeType(KMime::Message::mimeType());
 
@@ -248,12 +248,12 @@ void KMReaderMainWin::initializeMessage(const QSharedPointer<KMime::Message> &me
     updateActions();
 }
 
-void KMReaderMainWin::showMessage(const QString &encoding, const QSharedPointer<KMime::Message> &message)
+void KMReaderMainWin::showMessage(const QString &encoding, const std::shared_ptr<KMime::Message> &message)
 {
     if (!message) {
         return;
     }
-    const QList<QSharedPointer<KMime::Message>> lst{message};
+    const QList<std::shared_ptr<KMime::Message>> lst{message};
     showMessage(encoding, lst);
 }
 
@@ -332,7 +332,7 @@ void KMReaderMainWin::slotTrashMessage()
 
 void KMReaderMainWin::slotForwardInlineMsg()
 {
-    if (!mReaderWin->messageItem().hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!mReaderWin->messageItem().hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     KMCommand *command = nullptr;
@@ -353,7 +353,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
 
 void KMReaderMainWin::slotForwardAttachedMessage()
 {
-    if (!mReaderWin->messageItem().hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!mReaderWin->messageItem().hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     KMCommand *command = nullptr;
@@ -394,7 +394,7 @@ void KMReaderMainWin::slotNewMessageToRecipients()
 void KMReaderMainWin::slotRedirectMessage()
 {
     const Akonadi::Item currentItem = mReaderWin->messageItem();
-    if (!currentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     auto command = new KMRedirectCommand(this, currentItem);
@@ -405,7 +405,7 @@ void KMReaderMainWin::slotRedirectMessage()
 void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 {
     const Akonadi::Item currentItem = mReaderWin->messageItem();
-    if (!currentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     auto command = new KMReplyCommand(this, currentItem, MessageComposer::ReplySmart, mReaderWin->copyText(), false, tmpl);
@@ -417,7 +417,7 @@ void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 {
     const Akonadi::Item currentItem = mReaderWin->messageItem();
-    if (!currentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     auto command = new KMReplyCommand(this, currentItem, MessageComposer::ReplyAll, mReaderWin->copyText(), false, tmpl);
@@ -430,7 +430,7 @@ void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
 void KMReaderMainWin::slotCustomForwardMsg(const QString &tmpl)
 {
     const Akonadi::Item currentItem = mReaderWin->messageItem();
-    if (!currentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+    if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     auto command = new KMForwardCommand(this, currentItem, 0, tmpl, mReaderWin->copyText());
@@ -679,7 +679,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
 
     bool urlMenuAdded = false;
     bool copyAdded = false;
-    const bool messageHasPayload = msg.hasPayload<QSharedPointer<KMime::Message>>();
+    const bool messageHasPayload = msg.hasPayload<std::shared_ptr<KMime::Message>>();
     if (!url.isEmpty()) {
         if (url.scheme() == "mailto"_L1) {
             // popup on a mailto URL

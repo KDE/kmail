@@ -146,10 +146,10 @@ bool KMail::Util::mailingListHelp(const QSharedPointer<MailCommon::FolderSetting
     return false;
 }
 
-void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const QSharedPointer<KMime::Message> &msg)
+void KMail::Util::lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const std::shared_ptr<KMime::Message> &msg)
 {
-    lastSign = KMime::isSigned(msg.data());
-    lastEncrypt = KMime::isEncrypted(msg.data());
+    lastSign = KMime::isSigned(msg.get());
+    lastEncrypt = KMime::isEncrypted(msg.get());
 }
 
 void KMail::Util::addQActionHelpText(QAction *action, const QString &text)

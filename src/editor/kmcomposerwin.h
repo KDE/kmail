@@ -125,7 +125,7 @@ class KMComposerWin : public KMail::Composer
     friend class ::KMComposerEditor;
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
-    explicit KMComposerWin(const QSharedPointer<KMime::Message> &msg,
+    explicit KMComposerWin(const std::shared_ptr<KMime::Message> &msg,
                            bool lastSignState,
                            bool lastEncryptState,
                            TemplateContext context = TemplateContext::NoTemplate,
@@ -141,7 +141,7 @@ public:
     };
     Q_ENUM(ModeType)
 
-    static Composer *create(const QSharedPointer<KMime::Message> &msg,
+    static Composer *create(const std::shared_ptr<KMime::Message> &msg,
                             bool lastSignState,
                             bool lastEncryptState,
                             TemplateContext context = TemplateContext::NoTemplate,
@@ -181,7 +181,7 @@ public: // kmkernel, kmcommands, callback
      * Set the message the composer shall work with. This discards
      * previous messages without calling applyChanges() on them before.
      */
-    void setMessage(const QSharedPointer<KMime::Message> &newMsg,
+    void setMessage(const std::shared_ptr<KMime::Message> &newMsg,
                     bool lastSignState = false,
                     bool lastEncryptState = false,
                     bool mayAutoSign = true,
@@ -426,7 +426,7 @@ private Q_SLOTS:
 
     void slotDelayedCheckSendNow();
     void
-    slotUpdateComposer(const KIdentityManagementCore::Identity &ident, const QSharedPointer<KMime::Message> &msg, uint uoid, uint uoldId, bool wasModified);
+    slotUpdateComposer(const KIdentityManagementCore::Identity &ident, const std::shared_ptr<KMime::Message> &msg, uint uoid, uint uoldId, bool wasModified);
 
     void slotEncryptionButtonIconUpdate();
 
@@ -582,7 +582,7 @@ private:
     [[nodiscard]] bool sendLaterRegistered() const;
     void slotRecipientEditorLineFocused();
     void updateHamburgerMenu();
-    void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const QSharedPointer<KMime::Message> &msg);
+    void addFaceHeaders(const KIdentityManagementCore::Identity &ident, const std::shared_ptr<KMime::Message> &msg);
     void slotTooManyRecipients(bool b);
     void createAttachmentFromExternalMissing();
     void createTooMyRecipientWarning();
@@ -613,7 +613,7 @@ private:
     QLabel *mStatusbarLabel = nullptr;
     bool mDone = false;
 
-    QSharedPointer<KMime::Message> mMsg;
+    std::shared_ptr<KMime::Message> mMsg;
     QGridLayout *mGrid = nullptr;
     const QString mTextSelection;
     const QString mCustomTemplate;

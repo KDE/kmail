@@ -16,7 +16,7 @@
 struct KMAILTESTS_TESTS_EXPORT CreateForwardMessageJobSettings {
     QUrl url;
     Akonadi::Item item;
-    QSharedPointer<KMime::Message> msg = nullptr;
+    std::shared_ptr<KMime::Message> msg = nullptr;
     QString templateStr;
     QString selection;
     uint identity = 0;
@@ -33,7 +33,7 @@ public:
     void setSettings(const CreateForwardMessageJobSettings &value);
 
 private:
-    KMAIL_NO_EXPORT void slotCreateForwardDone(const QSharedPointer<KMime::Message> &msg);
+    KMAIL_NO_EXPORT void slotCreateForwardDone(const std::shared_ptr<KMime::Message> &msg);
     MessageComposer::MessageFactoryNG *mMessageFactory = nullptr;
     CreateForwardMessageJobSettings mSettings;
 };

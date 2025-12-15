@@ -12,7 +12,7 @@
 #include <Akonadi/MessageFlags>
 #include <Akonadi/MessageStatus>
 
-SaveDraftJob::SaveDraftJob(const QSharedPointer<KMime::Message> &msg, const Akonadi::Collection &col, QObject *parent)
+SaveDraftJob::SaveDraftJob(const std::shared_ptr<KMime::Message> &msg, const Akonadi::Collection &col, QObject *parent)
     : KJob(parent)
     , mMsg(msg)
     , mCollection(col)

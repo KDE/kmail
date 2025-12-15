@@ -642,7 +642,7 @@ void KMReaderWin::setMessage(const Akonadi::Item &item, MimeTreeParser::UpdateMo
     }
 }
 
-void KMReaderWin::setMessage(const QSharedPointer<KMime::Message> &message)
+void KMReaderWin::setMessage(const std::shared_ptr<KMime::Message> &message)
 {
     mViewer->setFolderIdentity(0);
     mViewer->setMessage(message);
@@ -682,7 +682,7 @@ void KMReaderWin::slotShowReader(KMime::Content *msgPart, bool html, const QStri
     win->show();
 }
 
-void KMReaderWin::slotShowMessage(const QSharedPointer<KMime::Message> &message, const QString &encoding)
+void KMReaderWin::slotShowMessage(const std::shared_ptr<KMime::Message> &message, const QString &encoding)
 {
     auto win = new KMReaderMainWin();
     win->showMessage(encoding, message);
@@ -707,7 +707,7 @@ bool KMReaderWin::printSelectedText(bool preview)
     auto composer = new ::MessageComposer::ComposerJob;
     composer->textPart()->setCleanPlainText(str);
     composer->textPart()->setWrappedPlainText(str);
-    auto messagePtr = messageItem().payload<QSharedPointer<KMime::Message>>();
+    auto messagePtr = messageItem().payload<std::shared_ptr<KMime::Message>>();
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
     if (auto to = messagePtr->to(false)) {
         composer->infoPart()->setTo(QStringList() << to->asUnicodeString());
@@ -732,7 +732,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
     if (composer->error() == ::MessageComposer::ComposerJob::NoError) {
         Q_ASSERT(composer->resultMessages().size() == 1);
         Akonadi::Item printItem;
-        printItem.setPayload<QSharedPointer<KMime::Message>>(composer->resultMessages().constFirst());
+        printItem.setPayload<std::shared_ptr<KMime::Message>>(composer->resultMessages().constFirst());
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().constFirst()), printItem);
         const bool useFixedFont = MessageViewer::MessageViewerSettings::self()->useFixedFont();
         const QString overrideEncoding = MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding();
