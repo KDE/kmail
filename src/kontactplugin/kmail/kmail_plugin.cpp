@@ -87,14 +87,17 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
 
     if (VCalDrag::fromMimeData(md, cal) || ICalDrag::fromMimeData(md, cal)) {
         QTemporaryFile tmp(QStringLiteral("incidences-kmail_XXXXXX.ics"));
-        tmp.setAutoRemove(false);
-        tmp.open();
-        FileStorage storage(cal, tmp.fileName());
-        if (!storage.save()) {
-            qCWarning(KMAILPLUGIN_LOG) << " Impossible to save data in filestorage";
-            return;
+        if (tmp.open()) {
+            tmp.setAutoRemove(false);
+            FileStorage storage(cal, tmp.fileName());
+            if (!storage.save()) {
+                qCWarning(KMAILPLUGIN_LOG) << " Impossible to save data in filestorage";
+                return;
+            }
+            openComposer(QUrl::fromLocalFile(tmp.fileName()));
+        } else {
+            qCWarning(KMAILPLUGIN_LOG) << " Impossible to create temporary file";
         }
-        openComposer(QUrl::fromLocalFile(tmp.fileName()));
     } else if (KContacts::VCardDrag::fromMimeData(md, list)) {
         QStringList to;
         to.reserve(list.count());

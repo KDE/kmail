@@ -473,8 +473,12 @@ void KTNEFMain::slotShowMessageText()
     const QString rtf = mParser->message()->rtfString();
     if (!rtf.isEmpty()) {
         auto tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/ktnef/"_L1 + "ktnef_XXXXXX.rtf"_L1);
+        if (!tmpFile->open()) {
+            qCWarning(KTNEFAPPS_LOG) << "Impossible to open temporary file";
+            delete tmpFile;
+            return;
+        }
         tmpFile->setAutoRemove(false);
-        tmpFile->open();
         tmpFile->setPermissions(QFile::ReadUser);
         tmpFile->write(rtf.toLocal8Bit());
         tmpFile->close();
