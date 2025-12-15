@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-05 00:43+0000\n"
+"POT-Creation-Date: 2025-12-15 00:43+0000\n"
 "PO-Revision-Date: 2025-08-22 09:09+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -25,23 +25,13 @@ msgstr ""
 "X-Generator: Lokalize 25.08.0\n"
 "X-Text-Markup: kde4\n"
 
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Joëlle Cornavin"
-
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "jcorn@free.fr"
-
 #: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modifier une archive de courrier électronique"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:264
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -100,73 +90,73 @@ msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Utiliser un intervalle"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Name"
 msgstr "Nom"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Last archive"
 msgstr "Dernière archive"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Next archive in"
 msgstr "Archive suivante dans"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
 msgstr "Dossier de stockage"
 
-#: archivemailwidget.cpp:97
+#: archivemailwidget.cpp:94
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Ajouter..."
 
-#: archivemailwidget.cpp:103
+#: archivemailwidget.cpp:100
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Ouvrir le dossier contenant..."
 
-#: archivemailwidget.cpp:106
+#: archivemailwidget.cpp:103
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: archivemailwidget.cpp:157
+#: archivemailwidget.cpp:154
 #, kde-format
 msgid "Folder: %1"
 msgstr "Dossier : %1"
 
-#: archivemailwidget.cpp:179
+#: archivemailwidget.cpp:176
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Demain"
 msgstr[1] "%1 jours"
 
-#: archivemailwidget.cpp:188
+#: archivemailwidget.cpp:185
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "L'archive sera terminée le %1"
 
-#: archivemailwidget.cpp:224
+#: archivemailwidget.cpp:221
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Voulez-vous supprimer les éléments sélectionnés ?"
 
-#: archivemailwidget.cpp:225
+#: archivemailwidget.cpp:222
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Supprimer des éléments"
 
-#: archivemailwidget.cpp:266
+#: archivemailwidget.cpp:263
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -243,6 +233,14 @@ msgstr "Mois"
 #, kde-format
 msgid "Years"
 msgstr "Années"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Joëlle Cornavin"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "jcorn@free.fr"
 
 #~ msgid "Archive Mail Agent"
 #~ msgstr "Agent d'archive de courrier électronique"

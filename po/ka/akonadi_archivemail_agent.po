@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-05 00:43+0000\n"
+"POT-Creation-Date: 2025-12-15 00:43+0000\n"
 "PO-Revision-Date: 2025-08-20 08:05+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -18,23 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.6\n"
 
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr "Temuri Doghonadze"
-
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr "Temuri.doghonadze@gmail.com"
-
 #: addarchivemaildialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "არქივის ელფოსტის შეცვლა"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:267
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:264
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -93,73 +83,73 @@ msgctxt "@option:check"
 msgid "Use Range"
 msgstr "დიაპაზონის გამოყენება"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Name"
 msgstr "სახელი"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Last archive"
 msgstr "ბოლო დაარქივება"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Next archive in"
 msgstr "შემდეგი დაარქივების დრო"
 
-#: archivemailwidget.cpp:72
+#: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
 msgstr "საცავის საქაღალდე"
 
-#: archivemailwidget.cpp:97
+#: archivemailwidget.cpp:94
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "დამატება…"
 
-#: archivemailwidget.cpp:103
+#: archivemailwidget.cpp:100
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "შემცველი საქაღალდის გახსნა…"
 
-#: archivemailwidget.cpp:106
+#: archivemailwidget.cpp:103
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "წაშლა"
 
-#: archivemailwidget.cpp:157
+#: archivemailwidget.cpp:154
 #, kde-format
 msgid "Folder: %1"
 msgstr "საქაღალდე: %1"
 
-#: archivemailwidget.cpp:179
+#: archivemailwidget.cpp:176
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "ხვალ"
 msgstr[1] "%1 დღეში"
 
-#: archivemailwidget.cpp:188
+#: archivemailwidget.cpp:185
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "არქივი შეიქმნება %1"
 
-#: archivemailwidget.cpp:224
+#: archivemailwidget.cpp:221
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ მონიშნული ჩანაწერები?"
 
-#: archivemailwidget.cpp:225
+#: archivemailwidget.cpp:222
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "ჩანაწერების წაშლა"
 
-#: archivemailwidget.cpp:266
+#: archivemailwidget.cpp:263
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
@@ -233,6 +223,14 @@ msgstr "თვე"
 #, kde-format
 msgid "Years"
 msgstr "წელი"
+
+#~ msgctxt "NAME OF TRANSLATORS"
+#~ msgid "Your names"
+#~ msgstr "Temuri Doghonadze"
+
+#~ msgctxt "EMAIL OF TRANSLATORS"
+#~ msgid "Your emails"
+#~ msgstr "Temuri.doghonadze@gmail.com"
 
 #~ msgid "Archive Mail Agent"
 #~ msgstr "არქივის ელფოსტის აგენტი"
