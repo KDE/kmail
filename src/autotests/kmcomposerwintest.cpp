@@ -117,7 +117,7 @@ void killAgent()
     proc.waitForFinished();
 }
 
-KMime::Message::Ptr createItem(const KIdentityManagementCore::Identity &ident, const QByteArray &recipient = "Friends <friends@kde.example>")
+QSharedPointer<KMime::Message> createItem(const KIdentityManagementCore::Identity &ident, const QByteArray &recipient = "Friends <friends@kde.example>")
 {
     QByteArray data
         = "From: Konqui <konqui@kde.example>\n"
@@ -133,7 +133,7 @@ KMime::Message::Ptr createItem(const KIdentityManagementCore::Identity &ident, c
                                                                     "It DOES end with a linebreak.\n"
                                                                     "\n";
 
-    auto msgPtr = KMime::Message::Ptr(new KMime::Message());
+    auto msgPtr = QSharedPointer<KMime::Message>(new KMime::Message());
     msgPtr->setContent(data);
     msgPtr->parse();
     return msgPtr;

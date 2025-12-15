@@ -18,7 +18,7 @@ public:
     explicit KMComposerUpdateTemplateJob(QObject *parent = nullptr);
     ~KMComposerUpdateTemplateJob() override;
     void start();
-    void setMsg(const KMime::Message::Ptr &msg);
+    void setMsg(const QSharedPointer<KMime::Message> &msg);
 
     void setCustomTemplate(const QString &customTemplate);
 
@@ -34,14 +34,14 @@ public:
 
     void setCollection(const Akonadi::Collection &col);
 Q_SIGNALS:
-    void updateComposer(const KIdentityManagementCore::Identity &ident, const KMime::Message::Ptr &msg, uint uoid, uint uoldId, bool wasModified);
+    void updateComposer(const KIdentityManagementCore::Identity &ident, const QSharedPointer<KMime::Message> &msg, uint uoid, uint uoldId, bool wasModified);
 
 private:
     void slotFinished();
 
     QString mTextSelection;
     QString mCustomTemplate;
-    KMime::Message::Ptr mMsg;
+    QSharedPointer<KMime::Message> mMsg;
     Akonadi::Collection mCollectionForNewMessage;
     uint mUoldId = 0;
     uint mUoid = 0;

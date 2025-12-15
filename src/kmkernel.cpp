@@ -877,7 +877,7 @@ void KMKernel::recoverDeadLetters()
         qCDebug(KMAIL_LOG) << "Opening autosave file:" << file.absoluteFilePath();
         QFile autoSaveFile(file.absoluteFilePath());
         if (autoSaveFile.open(QIODevice::ReadOnly)) {
-            const KMime::Message::Ptr autoSaveMessage(new KMime::Message());
+            const QSharedPointer<KMime::Message> autoSaveMessage(new KMime::Message());
             const QByteArray msgData = autoSaveFile.readAll();
             autoSaveMessage->setContent(msgData);
             autoSaveMessage->parse();

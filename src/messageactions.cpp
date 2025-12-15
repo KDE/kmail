@@ -334,7 +334,7 @@ void MessageActions::slotItemModified(const Akonadi::Item &item, const QSet<QByt
 
 void MessageActions::updateActions()
 {
-    const bool hasPayload = mCurrentItem.hasPayload<KMime::Message::Ptr>();
+    const bool hasPayload = mCurrentItem.hasPayload<QSharedPointer<KMime::Message>>();
     bool itemValid = mCurrentItem.isValid();
     Akonadi::Collection parent;
     if (itemValid) { //=> valid
@@ -362,7 +362,7 @@ void MessageActions::updateActions()
     mPrintAction->setEnabled(mMessageView != nullptr);
     mPrintPreviewAction->setEnabled(mMessageView != nullptr);
     mExportToPdfAction->setEnabled(uniqItem);
-    if (mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
+    if (mCurrentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
         if (mCurrentItem.loadedPayloadParts().contains("RFC822")) {
             updateMailingListActions(mCurrentItem);
         } else {
@@ -403,10 +403,10 @@ void MessageActions::clearMailingListActions()
 
 void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
 {
-    if (!messageItem.hasPayload<KMime::Message::Ptr>()) {
+    if (!messageItem.hasPayload<QSharedPointer<KMime::Message>>()) {
         return;
     }
-    auto message = messageItem.payload<KMime::Message::Ptr>();
+    auto message = messageItem.payload<QSharedPointer<KMime::Message>>();
     const MessageCore::MailingList mailList = MessageCore::MailingList::detect(message);
 
     if (mailList.features() == MessageCore::MailingList::None) {
@@ -471,7 +471,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
 
 void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
 {
-    if (!mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
+    if (!mCurrentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
         return;
     }
 
@@ -545,7 +545,7 @@ void MessageActions::slotReplyAllToMsg()
 
 void MessageActions::slotNoQuoteReplyToMsg()
 {
-    if (!mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
+    if (!mCurrentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
         return;
     }
     auto command = new KMReplyCommand(mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true);
@@ -566,7 +566,7 @@ void MessageActions::slotRunUrl(QAction *urlAction)
 
 void MessageActions::slotMailingListFilter()
 {
-    if (!mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
+    if (!mCurrentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
         return;
     }
 
@@ -674,8 +674,8 @@ void MessageActions::editCurrentMessage()
             command = new KMEditItemCommand(mParent, mCurrentItem, false);
         }
         command->start();
-    } else if (mCurrentItem.hasPayload<KMime::Message::Ptr>()) {
-        command = new KMEditMessageCommand(mParent, mCurrentItem.payload<KMime::Message::Ptr>());
+    } else if (mCurrentItem.hasPayload<QSharedPointer<KMime::Message>>()) {
+        command = new KMEditMessageCommand(mParent, mCurrentItem.payload<QSharedPointer<KMime::Message>>());
         command->start();
     }
 }

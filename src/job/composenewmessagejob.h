@@ -29,5 +29,5 @@ private:
     Akonadi::Collection mCurrentCollection;
     Akonadi::Item mRecipientsFrom;
     uint mIdentity = 0;
-    KMime::Message::Ptr mMsg = nullptr;
+    QSharedPointer<KMime::Message> mMsg = nullptr;
 };

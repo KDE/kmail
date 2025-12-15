@@ -50,7 +50,7 @@ mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::F
 [[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListArchives(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
 [[nodiscard]] KMAILTESTS_TESTS_EXPORT bool mailingListHelp(const QSharedPointer<MailCommon::FolderSettings> &fd, const Akonadi::Collection &col);
 
-KMAILTESTS_TESTS_EXPORT void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const KMime::Message::Ptr &msg);
+KMAILTESTS_TESTS_EXPORT void lastEncryptAndSignState(bool &lastEncrypt, bool &lastSign, const QSharedPointer<KMime::Message> &msg);
 
 KMAILTESTS_TESTS_EXPORT void addQActionHelpText(QAction *action, const QString &text);
 

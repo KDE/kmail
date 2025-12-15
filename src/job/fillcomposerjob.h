@@ -83,5 +83,5 @@ public:
 private:
     void slotOpenComposer();
     FillComposerJobSettings mSettings;
-    KMime::Message::Ptr mMsg = nullptr;
+    QSharedPointer<KMime::Message> mMsg = nullptr;
 };

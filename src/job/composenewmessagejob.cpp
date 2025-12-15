@@ -38,7 +38,7 @@ static void copyAddresses(const KMime::Headers::Generics::AddressList *from, KMi
 
 void ComposeNewMessageJob::start()
 {
-    mMsg = KMime::Message::Ptr(new KMime::Message());
+    mMsg = QSharedPointer<KMime::Message>(new KMime::Message());
 
     mIdentity = mFolder ? mFolder->identity() : 0;
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
@@ -48,12 +48,12 @@ void ComposeNewMessageJob::start()
     if (mFolder) {
         parser->process(mMsg, mCurrentCollection.id());
     } else {
-        parser->process(KMime::Message::Ptr());
+        parser->process(QSharedPointer<KMime::Message>());
     }
 
     if (mRecipientsFrom.isValid()) {
         // Copy the recipient list from the original message
-        const KMime::Message::Ptr msg = MessageComposer::Util::message(mRecipientsFrom);
+        const QSharedPointer<KMime::Message> msg = MessageComposer::Util::message(mRecipientsFrom);
         if (msg) {
             copyAddresses(msg->to(false), mMsg->to());
             copyAddresses(msg->cc(false), mMsg->cc());

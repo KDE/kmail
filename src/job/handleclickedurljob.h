@@ -30,5 +30,5 @@ private:
     Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderSettings> mFolder;
     uint mIdentity = 0;
-    KMime::Message::Ptr mMsg = nullptr;
+    QSharedPointer<KMime::Message> mMsg = nullptr;
 };

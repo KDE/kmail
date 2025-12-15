@@ -516,7 +516,7 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void slotRemoveDuplicateRecursive();
     KMAIL_NO_EXPORT void slotRedirectCurrentMessage();
     KMAIL_NO_EXPORT void slotEditCurrentVacation();
-    KMAIL_NO_EXPORT void slotReplyMessageTo(const KMime::Message::Ptr &message, bool replyToAll);
+    KMAIL_NO_EXPORT void slotReplyMessageTo(const QSharedPointer<KMime::Message> &message, bool replyToAll);
 
 private:
     KMAIL_NO_EXPORT void slotSetFocusToViewer();

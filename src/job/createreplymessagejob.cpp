@@ -58,7 +58,7 @@ void CreateReplyMessageJob::start()
 
 void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFactoryNG::MessageReply &reply)
 {
-    KMime::Message::Ptr rmsg = reply.msg;
+    QSharedPointer<KMime::Message> rmsg = reply.msg;
     if (mSettings.url.isValid()) {
         rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url));
     }

@@ -57,12 +57,12 @@ void FollowUpReminderJob::slotItemFetchJobDone(KJob *job)
         return;
     }
     const Akonadi::Item item = items.constFirst();
-    if (!item.hasPayload<KMime::Message::Ptr>()) {
+    if (!item.hasPayload<QSharedPointer<KMime::Message>>()) {
         qCCritical(FOLLOWUPREMINDERAGENT_LOG) << "Item has not payload";
         deleteLater();
         return;
     }
-    const auto msg = item.payload<KMime::Message::Ptr>();
+    const auto msg = item.payload<QSharedPointer<KMime::Message>>();
     if (msg) {
         KMime::Headers::InReplyTo *replyTo = msg->inReplyTo(false);
         if (replyTo) {

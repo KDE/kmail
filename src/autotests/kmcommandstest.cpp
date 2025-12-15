@@ -37,12 +37,12 @@ Akonadi::Item createItem(const KIdentityManagementCore::Identity &ident)
                                                                     "It DOES end with a linebreak.\n"
                                                                     "\n";
 
-    KMime::Message::Ptr msgPtr = KMime::Message::Ptr(new KMime::Message());
+    QSharedPointer<KMime::Message> msgPtr = QSharedPointer<KMime::Message>(new KMime::Message());
     Akonadi::Item item;
     Akonadi::Collection col(0);
     msgPtr->setContent(data);
     msgPtr->parse();
-    item.setPayload<KMime::Message::Ptr>(msgPtr);
+    item.setPayload<QSharedPointer<KMime::Message>>(msgPtr);
     item.setParentCollection(col);
 
     return item;

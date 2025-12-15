@@ -61,8 +61,8 @@ public:
      */
     void showMessage(const QString &encoding, const Akonadi::Item &msg, const Akonadi::Collection &parentCollection = Akonadi::Collection());
 
-    void showMessage(const QString &encoding, const QList<KMime::Message::Ptr> &message);
-    void showMessage(const QString &encoding, const KMime::Message::Ptr &message);
+    void showMessage(const QString &encoding, const QList<QSharedPointer<KMime::Message>> &message);
+    void showMessage(const QString &encoding, const QSharedPointer<KMime::Message> &message);
     void showMessagePopup(const Akonadi::Item &msg,
                           const QUrl &aUrl,
                           const QUrl &imageUrl,
@@ -109,7 +109,7 @@ private:
     KMAIL_NO_EXPORT void slotSelectMoreMessageTagList();
     KMAIL_NO_EXPORT void toggleMessageSetTag(const Akonadi::Item::List &select, const Akonadi::Tag &tag);
     KMAIL_NO_EXPORT void slotUpdateMessageTagList(const Akonadi::Tag &tag);
-    KMAIL_NO_EXPORT void initializeMessage(const KMime::Message::Ptr &message);
+    KMAIL_NO_EXPORT void initializeMessage(const QSharedPointer<KMime::Message> &message);
     KMAIL_NO_EXPORT void showNextMessage();
     KMAIL_NO_EXPORT void showPreviousMessage();
     KMAIL_NO_EXPORT void updateButtons();
@@ -117,7 +117,7 @@ private:
     KMAIL_NO_EXPORT void initializeAkonadiStandardAction();
     KMAIL_NO_EXPORT void slotMarkMailAs();
 
-    QList<KMime::Message::Ptr> mListMessage;
+    QList<QSharedPointer<KMime::Message>> mListMessage;
     int mCurrentMessageIndex = 0;
     Akonadi::Collection mParentCollection;
     Akonadi::Item mMsg;

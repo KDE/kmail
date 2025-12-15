@@ -24,6 +24,6 @@ public:
 private:
     void slotCreateNewComposer(bool forceCursorPosition);
     Akonadi::Collection mCollectionForNewMessage;
-    KMime::Message::Ptr mMsg = nullptr;
+    QSharedPointer<KMime::Message> mMsg = nullptr;
     uint mCurrentIdentity = 0;
 };

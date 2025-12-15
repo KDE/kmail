@@ -34,7 +34,7 @@ private:
     void slotMessageTransfered(const Akonadi::Item::List &);
     void slotJobFinished(KJob *);
     void slotDeleteItem(KJob *);
-    void updateAndCleanMessageBeforeSending(const KMime::Message::Ptr &msg);
+    void updateAndCleanMessageBeforeSending(const QSharedPointer<KMime::Message> &msg);
     Akonadi::ItemFetchScope mFetchScope;
     SendLaterManager *const mManager;
     MessageComposer::SendLaterInfo *const mInfo;

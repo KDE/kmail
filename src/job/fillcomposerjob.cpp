@@ -23,7 +23,7 @@ FillComposerJob::~FillComposerJob() = default;
 
 void FillComposerJob::start()
 {
-    mMsg = KMime::Message::Ptr(new KMime::Message);
+    mMsg = QSharedPointer<KMime::Message>(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mSettings.mIdentity);
     // Already defined in MessageHelper::initHeader
     mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
@@ -51,7 +51,7 @@ void FillComposerJob::start()
         auto parser = new TemplateParser::TemplateParserJob(mMsg, TemplateParser::TemplateParserJob::NewMessage, this);
         connect(parser, &TemplateParser::TemplateParserJob::parsingDone, this, &FillComposerJob::slotOpenComposer);
         parser->setIdentityManager(KMKernel::self()->identityManager());
-        parser->process(KMime::Message::Ptr());
+        parser->process(QSharedPointer<KMime::Message>());
     }
 }
 
@@ -108,7 +108,7 @@ void FillComposerJob::slotOpenComposer()
         context = KMail::Composer::TemplateContext::NoTemplate;
     }
 
-    KMail::Composer *cWin = KMail::makeComposer(KMime::Message::Ptr(), false, false, context);
+    KMail::Composer *cWin = KMail::makeComposer(QSharedPointer<KMime::Message>(), false, false, context);
     cWin->setMessage(mMsg, false, false, !isICalInvitation /* mayAutoSign */);
     cWin->setSigningAndEncryptionDisabled(isICalInvitation && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites());
     if (noWordWrap) {

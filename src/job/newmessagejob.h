@@ -56,5 +56,5 @@ private:
     NewMessageJobSettings mNewMessageJobSettings;
     Akonadi::Collection mCollection;
     QUrl mAttachURL;
-    KMime::Message::Ptr mMsg = nullptr;
+    QSharedPointer<KMime::Message> mMsg = nullptr;
 };

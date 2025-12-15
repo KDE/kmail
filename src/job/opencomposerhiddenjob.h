@@ -42,5 +42,5 @@ public:
 private:
     void slotOpenComposer();
     OpenComposerHiddenJobSettings mSettings;
-    KMime::Message::Ptr mMsg = nullptr;
+    QSharedPointer<KMime::Message> mMsg = nullptr;
 };

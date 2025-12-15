@@ -34,7 +34,7 @@ OpenComposerJob::~OpenComposerJob() = default;
 
 void OpenComposerJob::start()
 {
-    mMsg = KMime::Message::Ptr(new KMime::Message);
+    mMsg = QSharedPointer<KMime::Message>(new KMime::Message);
     if (!mOpenComposerSettings.mIdentity.isEmpty()) {
         if (KMKernel::self()->identityManager()->identities().contains(mOpenComposerSettings.mIdentity)) {
             const KIdentityManagementCore::Identity id = KMKernel::self()->identityManager()->modifyIdentityForName(mOpenComposerSettings.mIdentity);

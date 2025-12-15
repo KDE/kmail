@@ -22,7 +22,7 @@ NewMessageJob::~NewMessageJob() = default;
 void NewMessageJob::start()
 {
     mAttachURL = QUrl::fromLocalFile(mNewMessageJobSettings.mAttachURL);
-    mMsg = KMime::Message::Ptr(new KMime::Message);
+    mMsg = QSharedPointer<KMime::Message>(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
     // Already defined in MessageHelper::initHeader
     mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));

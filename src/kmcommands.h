@@ -257,11 +257,11 @@ class KMAILTESTS_TESTS_EXPORT KMEditMessageCommand : public KMCommand
     Q_OBJECT
 
 public:
-    explicit KMEditMessageCommand(QWidget *parent, const KMime::Message::Ptr &msg);
+    explicit KMEditMessageCommand(QWidget *parent, const QSharedPointer<KMime::Message> &msg);
 
 private:
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
-    KMime::Message::Ptr mMessage;
+    QSharedPointer<KMime::Message> mMessage;
 };
 
 class KMAILTESTS_TESTS_EXPORT KMUseTemplateCommand : public KMCommand
