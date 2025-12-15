@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-14 02:32+0000\n"
+"POT-Creation-Date: 2025-12-15 02:30+0000\n"
 "PO-Revision-Date: 2025-11-15 21:18+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -318,8 +318,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "Rättade många IMAP-fel"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4228
-#: kmmainwidget.cpp:4230 kmreaderwin.cpp:264 kmsystemtray.cpp:48
+#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4229
+#: kmmainwidget.cpp:4231 kmreaderwin.cpp:264 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -4645,7 +4645,7 @@ msgstr ""
 "skräppost och dessutom ökar sannolikheten för att nuvarande och möjliga "
 "framtida säkerhetsluckor utnyttjas för intrång i ditt system."
 
-#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4909
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5008,12 +5008,12 @@ msgstr "&Flytta tråd till papperskorg"
 msgid "Move thread to trashcan"
 msgstr "Flytta tråd till papperskorg"
 
-#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4175
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Ta bort tr&åd"
 
-#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4177
 #, kde-format
 msgid "&Find Messages…"
 msgstr "Sök e&fter brev…"
@@ -5414,7 +5414,7 @@ msgstr "Importera och exportera Kmail-data…"
 msgid "New AddressBook Contact…"
 msgstr "Ny adressbokskontakt…"
 
-#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4210
+#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4211
 #, kde-format
 msgid "Account &Settings"
 msgstr "Kontoin&ställningar"
@@ -5555,58 +5555,58 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Lägg till favoritkorg"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4163
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Ta bort sökkorg"
 
-#: kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:4175
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "&Flytta tråd till papperskorg"
 
-#: kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:4177
 #, kde-format
 msgid "Edit Search…"
 msgstr "Redigera sökning…"
 
-#: kmmainwidget.cpp:4208
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Anpassa förenade brevlådor"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Töm &papperskorgen"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Flytta alla brev till papperskorg"
 
-#: kmmainwidget.cpp:4274
+#: kmmainwidget.cpp:4275
 #, kde-format
 msgid "&Undo"
 msgstr "Å&ngra"
 
-#: kmmainwidget.cpp:4276
+#: kmmainwidget.cpp:4277
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "Å&ngra: \"%1\""
 
-#: kmmainwidget.cpp:4333
+#: kmmainwidget.cpp:4334
 #, kde-format
 msgid "Filter %1"
 msgstr "Filteråtgärd %1"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4898
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Sök… <%1>"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5617,13 +5617,13 @@ msgstr ""
 "ökar risken att du till följd av säkerhetsluckor råkar ut för obehörigt "
 "intrång i ditt system."
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4910
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Använd HTML"
 
-#: kmmainwidget.cpp:5055
+#: kmmainwidget.cpp:5056
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5638,41 +5638,41 @@ msgstr ""
 "Du kan ställa in förenade brevlådor, skapa egna eller inaktivera\n"
 "funktionen helt och hållet i Kmails inställningar av insticksmoduler."
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Aktivera förenade brevlådor?"
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5060
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Aktivera förenade brevlådor"
 
-#: kmmainwidget.cpp:5060
+#: kmmainwidget.cpp:5061
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Vill du starta om Akonadi?"
 
-#: kmmainwidget.cpp:5096
+#: kmmainwidget.cpp:5097
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Starta om Akonadi"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5098
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Starta om"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5105
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi har startats om."

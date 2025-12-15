@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-14 02:32+0000\n"
+"POT-Creation-Date: 2025-12-15 02:30+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -364,8 +364,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4228
-#: kmmainwidget.cpp:4230 kmreaderwin.cpp:264 kmsystemtray.cpp:48
+#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4229
+#: kmmainwidget.cpp:4231 kmreaderwin.cpp:264 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -5062,7 +5062,7 @@ msgstr ""
 "HTML मेलमा बाह्य सन्दर्भ लोड गर्दा तपाईँलाई \"स्पाम\" गर्न धेरै बेदनिय बनाउछ र तपाईँको "
 "प्रणाली उपस्थित र अनुमानित सुरक्षा शोषणद्वारा जोखिम बनाउने सम्भावना बढ्न सक्छ ।"
 
-#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4909
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5460,12 +5460,12 @@ msgstr "थ्रेड रद्दीटोकरीमा सार्नु�
 msgid "Move thread to trashcan"
 msgstr "थ्रेड रद्दीटोकरीमा सार्नुहोस्"
 
-#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4175
 #, kde-format
 msgid "Delete T&hread"
 msgstr "थ्रेड मेट्नुहोस्"
 
-#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
@@ -5911,7 +5911,7 @@ msgstr "केडीई मेल कन्फिगर गर्नुहोस
 msgid "New AddressBook Contact…"
 msgstr "ठेगाना पुस्तक..."
 
-#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4210
+#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4211
 #, fuzzy, kde-format
 msgid "Account &Settings"
 msgstr "प्रेषण"
@@ -6072,61 +6072,61 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "नयाँ फोल्डर"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4163
 #, kde-format
 msgid "&Delete Search"
 msgstr "खोजी मेट्नुहोस्"
 
-#: kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:4175
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "थ्रेड रद्दीटोकरीमा सार्नुहोस्"
 
-#: kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "Edit Script..."
 msgid "Edit Search…"
 msgstr "स्क्रिप्ट सम्पादन गर्नुहोस्..."
 
-#: kmmainwidget.cpp:4208
+#: kmmainwidget.cpp:4209
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "केडीई मेल कन्फिगर गर्नुहोस्..."
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "रद्दीटोकरी खाली गर्नुहोस्"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "सबै सन्देश रद्दीटोकरीमा सार्नुहोस्"
 
-#: kmmainwidget.cpp:4274
+#: kmmainwidget.cpp:4275
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4276
+#: kmmainwidget.cpp:4277
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4333
+#: kmmainwidget.cpp:4334
 #, kde-format
 msgid "Filter %1"
 msgstr "फिल्टर %1"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4898
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "सदस्यता..."
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -6136,14 +6136,14 @@ msgstr ""
 "मेलमा HTMLको प्रयोग गर्नाले तापाईँलाई \"स्पाम\" गर्न धेरै बेदनीय बनाउछ र तपाईँको प्रणाली "
 "उपस्थित र अनुमानित सुरक्षा शोषणद्वारा जोखिम बनाउने सम्भावना बढ्न सक्छ ।"
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4910
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML प्रयोग गर्नुहोस्"
 
-#: kmmainwidget.cpp:5055
+#: kmmainwidget.cpp:5056
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6153,46 +6153,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5060
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "केडीई मेल कन्फिगर गर्नुहोस्..."
 
-#: kmmainwidget.cpp:5060
+#: kmmainwidget.cpp:5061
 #, fuzzy, kde-format
 #| msgid "C&ancel"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "रद्द गर्नुहोस्"
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5096
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to restart Akonadi?"
 msgstr "<qt>तपाईँ वास्तवमै <b>%1</b> नामकरण गरिएको परिचय हटाउन चाहनुहुन्छ ?</qt>"
 
-#: kmmainwidget.cpp:5096
+#: kmmainwidget.cpp:5097
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "परिचय नाम"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5098
 #, fuzzy, kde-format
 #| msgid "Identity Name"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "परिचय नाम"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5105
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""

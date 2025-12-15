@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-14 02:32+0000\n"
+"POT-Creation-Date: 2025-12-15 02:30+0000\n"
 "PO-Revision-Date: 2025-08-10 21:02+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -331,8 +331,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "பல IMAP பிழைகளை சரிசெய்தார்"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4228
-#: kmmainwidget.cpp:4230 kmreaderwin.cpp:264 kmsystemtray.cpp:48
+#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4229
+#: kmmainwidget.cpp:4231 kmreaderwin.cpp:264 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -4583,7 +4583,7 @@ msgstr ""
 "நிபுநர்கள் எதிர்பார்க்கக்கூடிய தாக்குதல்களால் உங்கள் கணினி பாதிக்கப்படுவதற்கான வாய்ப்பை "
 "அதிகரிக்கும்."
 
-#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4909
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -4950,12 +4950,12 @@ msgstr "தொடரை அகற்றிடத்திற்கு ந&கர
 msgid "Move thread to trashcan"
 msgstr "சம்பந்தப்பட்ட அஞ்சல்கள்களை அகற்றிடத்திற்கு நகர்த்தும்"
 
-#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4175
 #, kde-format
 msgid "Delete T&hread"
 msgstr "&சார்ந்த அஞ்சல்களை நீக்கு"
 
-#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4177
 #, kde-format
 msgid "&Find Messages…"
 msgstr "&அஞ்சல்களை கண்டுபிடி…"
@@ -5356,7 +5356,7 @@ msgstr "கேமெயிலின் தரவை இறக்குமதி/
 msgid "New AddressBook Contact…"
 msgstr "முகவரிப்புத்தகத்தில் புதிய தொடர்பு…"
 
-#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4210
+#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4211
 #, kde-format
 msgid "Account &Settings"
 msgstr "கணக்கிற்கான &அமைப்புகள்"
@@ -5497,58 +5497,58 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "பிடித்த அடைவுகளில் புதியதை சேர்த்தல்"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4163
 #, kde-format
 msgid "&Delete Search"
 msgstr "&தேடலை நீக்கு"
 
-#: kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:4175
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "சார்ந்த அஞ்சல்களை அகற்றிடத்திற்கு ந&கர்த்து"
 
-#: kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:4177
 #, kde-format
 msgid "Edit Search…"
 msgstr "தேடலை திருத்து…"
 
-#: kmmainwidget.cpp:4208
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டியை அமை"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&அகற்றிடத்தை காலியாக்கு"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "அனைத்து அஞ்சல்களையும் அ&கற்றிடத்திற்கு நகர்த்து"
 
-#: kmmainwidget.cpp:4274
+#: kmmainwidget.cpp:4275
 #, kde-format
 msgid "&Undo"
 msgstr "&செயல்நீக்கு"
 
-#: kmmainwidget.cpp:4276
+#: kmmainwidget.cpp:4277
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&செயல்நீக்கு: \"%1\""
 
-#: kmmainwidget.cpp:4333
+#: kmmainwidget.cpp:4334
 #, kde-format
 msgid "Filter %1"
 msgstr "வடிகட்டி %1"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4898
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "தேடு… <%1>"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5558,13 +5558,13 @@ msgstr ""
 "அஞ்சல்களில் HTML-ஐ அனுமதித்தல், உங்களை ஸ்பேமுக்கு ஆளாக்கலாம். மேலும், நிபுநர்கள் "
 "எதிர்பார்க்கக்கூடிய தாக்குதல்களால் உங்கள் கணினி பாதிக்கப்படுவதற்கான வாய்ப்பை அதிகரிக்கும்."
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4910
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML-ஐ பயன்படுத்து"
 
-#: kmmainwidget.cpp:5055
+#: kmmainwidget.cpp:5056
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5579,41 +5579,41 @@ msgstr ""
 "கேமெயிலின் செருகுநிரல் அமைப்புகளில் இவ்வம்சத்தை மாற்றியமைக்கலாம், அல்லது முழுதாக "
 "முடக்கலாம்."
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டிகளை இயக்கலாமா?"
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5060
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டிகளை இயக்கு"
 
-#: kmmainwidget.cpp:5060
+#: kmmainwidget.cpp:5061
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "ரத்து செய்"
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi-யை மீள்துவக்க வேண்டுமா?"
 
-#: kmmainwidget.cpp:5096
+#: kmmainwidget.cpp:5097
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi-யை மீள்துவக்கு"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5098
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "மீள்துவக்கு"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5105
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi மீள்துவக்கப்பட்டது"

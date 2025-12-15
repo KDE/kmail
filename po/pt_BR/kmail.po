@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-14 02:32+0000\n"
+"POT-Creation-Date: 2025-12-15 02:30+0000\n"
 "PO-Revision-Date: 2025-11-08 21:16-0300\n"
 "Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -334,8 +334,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "Corrigiu muitos erros no IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4228
-#: kmmainwidget.cpp:4230 kmreaderwin.cpp:264 kmsystemtray.cpp:48
+#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4229
+#: kmmainwidget.cpp:4231 kmreaderwin.cpp:264 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -4698,7 +4698,7 @@ msgstr ""
 "\"spam\" e pode aumentar a probabilidade de seu sistema ser comprometido por "
 "falhas de segurança a serem descobertas."
 
-#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4909
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
@@ -5061,12 +5061,12 @@ msgstr "M&over discussão para o lixo"
 msgid "Move thread to trashcan"
 msgstr "Mover discussão para o lixo"
 
-#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4175
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Excluir &discussão"
 
-#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4177
 #, kde-format
 msgid "&Find Messages…"
 msgstr "&Localizar mensagens…"
@@ -5467,7 +5467,7 @@ msgstr "Importar/Exportar dados do KMail…"
 msgid "New AddressBook Contact…"
 msgstr "Novo contato do livro de endereços…"
 
-#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4210
+#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4211
 #, kde-format
 msgid "Account &Settings"
 msgstr "Configuraçõe&s da conta"
@@ -5608,58 +5608,58 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Adicionar pasta favorita"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4163
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Excluir pesquisa"
 
-#: kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:4175
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "M&over discussão para o lixo"
 
-#: kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:4177
 #, kde-format
 msgid "Edit Search…"
 msgstr "Editar pesquisa…"
 
-#: kmmainwidget.cpp:4208
+#: kmmainwidget.cpp:4209
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Configurar caixa de mensagens unificada"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Esva&ziar o lixo"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "&Mover todas as mensagens para o lixo"
 
-#: kmmainwidget.cpp:4274
+#: kmmainwidget.cpp:4275
 #, kde-format
 msgid "&Undo"
 msgstr "&Desfazer"
 
-#: kmmainwidget.cpp:4276
+#: kmmainwidget.cpp:4277
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Desfazer: \"%1\""
 
-#: kmmainwidget.cpp:4333
+#: kmmainwidget.cpp:4334
 #, kde-format
 msgid "Filter %1"
 msgstr "Filtro %1"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4898
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Pesquisar… <%1>"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5669,13 +5669,13 @@ msgstr ""
 "O uso de e-mail HTML irá torná-lo vulnerável a \"spam\" e pode aumentar a "
 "possibilidade do seu sistema ser comprometido por falhas de segurança."
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4910
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Usar HTML"
 
-#: kmmainwidget.cpp:5055
+#: kmmainwidget.cpp:5056
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5693,41 +5693,41 @@ msgstr ""
 "ou desativar completamente a funcionalidade nas configurações do plugin do "
 "KMail."
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Habilitar caixas de mensagens unificadas?"
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5060
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Habilitar caixas de mensagens unificadas"
 
-#: kmmainwidget.cpp:5060
+#: kmmainwidget.cpp:5061
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Deseja reiniciar o Akonadi?"
 
-#: kmmainwidget.cpp:5096
+#: kmmainwidget.cpp:5097
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Reiniciar Akonadi"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5098
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Reiniciar"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5105
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi reiniciado."

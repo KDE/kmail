@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-14 02:32+0000\n"
+"POT-Creation-Date: 2025-12-15 02:30+0000\n"
 "PO-Revision-Date: 2013-09-08 07:05+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -324,8 +324,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4228
-#: kmmainwidget.cpp:4230 kmreaderwin.cpp:264 kmsystemtray.cpp:48
+#: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4229
+#: kmmainwidget.cpp:4231 kmreaderwin.cpp:264 kmsystemtray.cpp:48
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -4609,7 +4609,7 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:1624 kmmainwidget.cpp:4909
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -4976,12 +4976,12 @@ msgstr "ئەخلەتخانىغا يۆتكە"
 msgid "Move thread to trashcan"
 msgstr ""
 
-#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4175
 #, kde-format
 msgid "Delete T&hread"
 msgstr ""
 
-#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "&Find in Message..."
 msgid "&Find Messages…"
@@ -5413,7 +5413,7 @@ msgstr ""
 msgid "New AddressBook Contact…"
 msgstr ""
 
-#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4210
+#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4211
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
@@ -5572,61 +5572,61 @@ msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "ئارخىپلاش"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4163
 #, kde-format
 msgid "&Delete Search"
 msgstr ""
 
-#: kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:4175
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr ""
 
-#: kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:4177
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgid "Edit Search…"
 msgstr "ئىزدەۋاتىدۇ…"
 
-#: kmmainwidget.cpp:4208
+#: kmmainwidget.cpp:4209
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "Configure Unified Mailbox"
 msgstr "ئۇقتۇرۇش سەپلىمە(&N)…"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "ئەخلەتخانىنى تازىلا(&M)"
 
-#: kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:4220
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr ""
 
-#: kmmainwidget.cpp:4274
+#: kmmainwidget.cpp:4275
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4276
+#: kmmainwidget.cpp:4277
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4333
+#: kmmainwidget.cpp:4334
 #, kde-format
 msgid "Filter %1"
 msgstr "سۈزگۈچ %1"
 
-#: kmmainwidget.cpp:4897
+#: kmmainwidget.cpp:4898
 #, fuzzy, kde-format
 #| msgid "Searching..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "ئىزدەۋاتىدۇ…"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4906
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5634,14 +5634,14 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4909
+#: kmmainwidget.cpp:4910
 #, fuzzy, kde-format
 #| msgid "HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML"
 
-#: kmmainwidget.cpp:5055
+#: kmmainwidget.cpp:5056
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5651,45 +5651,45 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5059
+#: kmmainwidget.cpp:5060
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "ئۇقتۇرۇش سەپلىمە(&N)…"
 
-#: kmmainwidget.cpp:5060
+#: kmmainwidget.cpp:5061
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr ""
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5096
 #, fuzzy, kde-format
 #| msgid "Do you want to save the message for later or discard it?"
 msgid "Do you want to restart Akonadi?"
 msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
 
-#: kmmainwidget.cpp:5096
+#: kmmainwidget.cpp:5097
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "قايتا قوزغات"
 
-#: kmmainwidget.cpp:5097
+#: kmmainwidget.cpp:5098
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "قايتا قوزغات"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5105
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
