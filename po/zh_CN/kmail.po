@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:51+0000\n"
+"POT-Creation-Date: 2025-12-16 13:25+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -317,7 +317,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "修复了许多 IMAP 错误"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:222 kmmainwidget.cpp:4219 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:222 kmmainwidget.cpp:4219 kmreaderwin.cpp:263
 #: kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -383,7 +383,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "用于向邮件列表发送邮件的 URL："
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
 #, kde-format
 msgid "Subscribe to List"
 msgstr "订阅邮件列表"
@@ -2917,76 +2917,76 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "已有身份(&E)："
 
-#: identity/identitydialog.cpp:225
+#: identity/identitydialog.cpp:224
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr "无法启动 OpenPGP 证书生成。"
 
-#: identity/identitydialog.cpp:238
+#: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "无法启动 OpenPGP 证书生成: %1"
 
-#: identity/identitydialog.cpp:247
+#: identity/identitydialog.cpp:246
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "正在生成 OpenPGP 证书..."
 
-#: identity/identitydialog.cpp:249
+#: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr "创建一个 OpenPGP 证书需要大量随机数。这可能需要几分钟…"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "无法生成 OpenPGP 证书: %1"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:271
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "密钥生成已取消。"
 
-#: identity/identitydialog.cpp:312
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "No key"
 msgstr "没有密钥"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:313
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
 msgstr "生成新的 OpenPGP 证书"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "密钥生成出错"
 
-#: identity/identitydialog.cpp:343
+#: identity/identitydialog.cpp:342
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "编辑身份"
 
-#: identity/identitydialog.cpp:367
+#: identity/identitydialog.cpp:366
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "常规"
 
-#: identity/identitydialog.cpp:374
+#: identity/identitydialog.cpp:373
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "您的名字(&Y)："
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -2997,13 +2997,13 @@ msgstr ""
 "头中的姓名；</p><p>如果您将此域留空，将不会出现您真实的姓名，而仅仅是电子邮件"
 "地址。</p></qt>"
 
-#: identity/identitydialog.cpp:390
+#: identity/identitydialog.cpp:389
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "组织(&Z)："
 
-#: identity/identitydialog.cpp:395
+#: identity/identitydialog.cpp:394
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3013,13 +3013,13 @@ msgstr ""
 "<qt><h3>组织</h3><p>您应该在此域中输入您组织的名称，如果您想要在发出信的信头"
 "中显示组织名称的话。</p><p>一般来说将此域留空很安全。</p></qt>"
 
-#: identity/identitydialog.cpp:407
+#: identity/identitydialog.cpp:406
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "电子邮件地址(&E)："
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:411
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3033,13 +3033,13 @@ msgstr ""
 "个身份，或者在下面的字段中加入额外的地址别名。</p><p>若是您将此字段留空，或者"
 "写错了，别人就无法回信给您。</p></qt>"
 
-#: identity/identitydialog.cpp:431
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "电子邮件地址别名(&L)："
 
-#: identity/identitydialog.cpp:436
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3054,12 +3054,12 @@ msgstr ""
 "td></tr><tr><th>别名：</th><td>first@example.org<br>last@example.org</td></"
 "tr></table><p>请每行输入一个别名地址。</p></qt>"
 
-#: identity/identitydialog.cpp:453
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "Cryptography"
 msgstr "加密"
 
-#: identity/identitydialog.cpp:459
+#: identity/identitydialog.cpp:458
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3073,29 +3073,29 @@ msgstr ""
 "邮件功能不会因此受到影响。</p><p>您可以在 <a>https://www.gnupg.org</a> 找到关"
 "于密钥的更多信息。</p></qt>"
 
-#: identity/identitydialog.cpp:465
+#: identity/identitydialog.cpp:464
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP 签名密钥："
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:470
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "使用相同的密钥进行加密和签名"
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP 密钥："
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP 签名密钥："
 
-#: identity/identitydialog.cpp:506
+#: identity/identitydialog.cpp:505
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3110,13 +3110,13 @@ msgstr ""
 "使用 OpenPGP 对您寄出消息的副本进行加密；普通的邮件功能不会因此受到影响。</"
 "p><p>您可以在 <a>https://www.gnupg.org</a> 找到关于密钥的更多信息</p></qt>"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:512
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP 加密密钥："
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:522
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3128,13 +3128,13 @@ msgstr ""
 "以将此处留空，但是 KMail 将无法使用 S/MIME 对电子邮件进行数字签名；普通的邮件"
 "功能不会因此受到影响。</p></qt>"
 
-#: identity/identitydialog.cpp:528
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME 签名证书："
 
-#: identity/identitydialog.cpp:542
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3147,83 +3147,83 @@ msgstr ""
 "的“附加我的证书”功能。</p><p>您可以将此处留空，但是 KMail 将无法使用 S/MIME "
 "对电子邮件进行数字签名；普通的邮件功能不会因此受到影响。</p></qt>"
 
-#: identity/identitydialog.cpp:548
+#: identity/identitydialog.cpp:547
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME 加密证书："
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "首选格式："
 
-#: identity/identitydialog.cpp:570
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "启用 Autocrypt"
 
-#: identity/identitydialog.cpp:574
+#: identity/identitydialog.cpp:573
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Autocrypt："
 
-#: identity/identitydialog.cpp:579
+#: identity/identitydialog.cpp:578
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "让别人知道您喜欢加密"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:581
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "覆盖安全默认值的全局设置"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "覆盖默认值："
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "签名消息"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "尽可能加密消息"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:595
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "试图发送未签名消息时警告"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "试图发送未加密消息时警告"
 
-#: identity/identitydialog.cpp:609
+#: identity/identitydialog.cpp:608
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "高级"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "回信地址(&R)："
 
-#: identity/identitydialog.cpp:621
+#: identity/identitydialog.cpp:620
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3239,13 +3239,13 @@ msgstr ""
 "却让回信发到一组地址。</p><p>如果您对此选项不太确定的话，请将此域留空。</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:638
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "抄送地址(&C)："
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:644
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3260,13 +3260,13 @@ msgstr ""
 "p><p>要指定多个地址，请使用逗号分隔抄送收件人列表。</p><p>如果您对此选项不太"
 "确定的话，请将此字段留空。</p></qt>"
 
-#: identity/identitydialog.cpp:661
+#: identity/identitydialog.cpp:660
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "密件抄送地址(&B)："
 
-#: identity/identitydialog.cpp:665
+#: identity/identitydialog.cpp:664
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3281,160 +3281,160 @@ msgstr ""
 "息发送到您的另外一个账户中。</p><p>要指定多个地址，请使用逗号分隔密件抄送收件"
 "人列表。</p><p>如果您对此选项不太确定的话，请将此域留空。</p></qt>"
 
-#: identity/identitydialog.cpp:679
+#: identity/identitydialog.cpp:678
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "字典(&I)："
 
-#: identity/identitydialog.cpp:685
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "选择发件箱文件夹"
 
-#: identity/identitydialog.cpp:687
+#: identity/identitydialog.cpp:686
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "已发文件夹(&F)："
 
-#: identity/identitydialog.cpp:693
+#: identity/identitydialog.cpp:692
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "选择草稿文件夹"
 
-#: identity/identitydialog.cpp:695
+#: identity/identitydialog.cpp:694
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "草稿文件夹(&D)："
 
-#: identity/identitydialog.cpp:701
+#: identity/identitydialog.cpp:700
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "选择模板文件夹"
 
-#: identity/identitydialog.cpp:703
+#: identity/identitydialog.cpp:702
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "模板文件夹(&T)："
 
-#: identity/identitydialog.cpp:710
+#: identity/identitydialog.cpp:709
 #, kde-format
 msgid "Select Spam Folder"
 msgstr "选择垃圾邮件文件夹"
 
-#: identity/identitydialog.cpp:712
+#: identity/identitydialog.cpp:711
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
 msgstr "垃圾邮件文件夹：(&F)"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:714
 #, kde-format
 msgid "Configure Expire Folder..."
 msgstr "配置过期文件夹..."
 
-#: identity/identitydialog.cpp:726
+#: identity/identitydialog.cpp:725
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "对外账户："
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:732
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "将我的 vCard 附加到消息"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "创建..."
 
-#: identity/identitydialog.cpp:738
+#: identity/identitydialog.cpp:737
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "自动更正语言："
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "恢复默认域名"
 
-#: identity/identitydialog.cpp:753
+#: identity/identitydialog.cpp:752
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "默认域名(&T)："
 
-#: identity/identitydialog.cpp:759
+#: identity/identitydialog.cpp:758
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr "<qt><p>默认域名用于在只有用户名的情况下补全电子邮件地址。</p></qt>"
 
-#: identity/identitydialog.cpp:776
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "为此身份使用自定义消息模板(&U)"
 
-#: identity/identitydialog.cpp:790
+#: identity/identitydialog.cpp:789
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "复制全局模板(&C)"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:796
 #, kde-format
 msgid "Templates"
 msgstr "模板"
 
-#: identity/identitydialog.cpp:803
+#: identity/identitydialog.cpp:802
 #, kde-format
 msgid "Signature"
 msgstr "签名"
 
-#: identity/identitydialog.cpp:810
+#: identity/identitydialog.cpp:809
 #, kde-format
 msgid "Picture"
 msgstr "图像"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:815
 #, kde-format
 msgid "Activities"
 msgstr "活动"
 
-#: identity/identitydialog.cpp:867
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "无效的电子邮件别名“%1”"
 
-#: identity/identitydialog.cpp:875
+#: identity/identitydialog.cpp:874
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "您必须为此身份提供一个电子邮件地址。"
 
-#: identity/identitydialog.cpp:875
+#: identity/identitydialog.cpp:874
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "空电子邮件地址"
 
-#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "无效的电子邮件地址"
 
-#: identity/identitydialog.cpp:938
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3445,14 +3445,14 @@ msgstr ""
 "所配置的 OpenPGP 签名密钥之一不包含为此身份(%1)配置的电子邮件地址。\n"
 "这可能导致接收方试图校验此配置制作的签名时得到警告。"
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:946
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr "所配置的 OpenPGP 加密密钥之一不包含为此身份(%1)配置的电子邮件地址。"
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3463,43 +3463,43 @@ msgstr ""
 "所配置的 S/MIME 签名证书之一不包含为此身份(%1)配置的电子邮件地址。\n"
 "这可能导致接收方试图校验此配置制作的签名时得到警告。"
 
-#: identity/identitydialog.cpp:963
+#: identity/identitydialog.cpp:962
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr "所配置的 S/MIME 加密证书之一不包含为此身份(%1)配置的电子邮件地址。"
 
-#: identity/identitydialog.cpp:973
+#: identity/identitydialog.cpp:972
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "未在密钥/证书中找到电子邮件地址"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:984
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "签名文件无效"
 
-#: identity/identitydialog.cpp:1000
+#: identity/identitydialog.cpp:999
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "编辑身份“%1”"
 
-#: identity/identitydialog.cpp:1081
+#: identity/identitydialog.cpp:1080
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr "当前身份的一些自定义文件夹不存在；因此会使用默认的草稿文件夹。"
 
-#: identity/identitydialog.cpp:1336
+#: identity/identitydialog.cpp:1335
 #, kde-format
 msgid "Create…"
 msgstr "创建..."
 
-#: identity/identitydialog.cpp:1338
+#: identity/identitydialog.cpp:1337
 #, kde-format
 msgid "Edit…"
 msgstr "编辑..."
@@ -3738,12 +3738,12 @@ msgstr "添加到地址簿中"
 msgid "Contact created successfully"
 msgstr "成功创建联系人"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:837
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "无法保存联系人：%1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4218,67 +4218,67 @@ msgstr "HTML 工具栏"
 msgid "Text Direction Toolbar"
 msgstr "文本方向工具栏"
 
-#: kmkernel.cpp:642
+#: kmkernel.cpp:641
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail 设置为脱机；所有的网络任务都将被推迟"
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:661 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, kde-format
 msgid "Send Email"
 msgstr "发送电子邮件"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
+#: kmkernel.cpp:662 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
 #, kde-format
 msgid "Impossible to send email"
 msgstr "无法发送邮件。"
 
-#: kmkernel.cpp:694
+#: kmkernel.cpp:693
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail 设置为联机；所有的网络任务都已恢复"
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:695
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "KMail 已设置为联机；所有的网络任务都将在检测到网络链接时恢复"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail 目前处于脱机模式。您打算如何继续？"
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:768
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "联机/脱机"
 
-#: kmkernel.cpp:770
+#: kmkernel.cpp:769
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "联机工作"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:770
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "脱机工作"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:794
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "检测到网络连接，所有的网络任务都已恢复"
 
-#: kmkernel.cpp:798
+#: kmkernel.cpp:797
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "未检测到网络连接，所有的网络任务都已挂起"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4287,37 +4287,37 @@ msgstr ""
 "打开位于 %1 的自动保存文件失败。\n"
 "原因：%2"
 
-#: kmkernel.cpp:894
+#: kmkernel.cpp:893
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "打开自动保存文件失败"
 
-#: kmkernel.cpp:1457
+#: kmkernel.cpp:1456
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
 msgstr[0] "这 %1 个身份已经更改为使用默认传送方式："
 
-#: kmkernel.cpp:1481
+#: kmkernel.cpp:1480
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
 msgstr[0] "这 %1 个身份已经更改为使用修改的传送方式："
 
-#: kmkernel.cpp:1496
+#: kmkernel.cpp:1495
 #, kde-format
 msgid "Sending messages"
 msgstr "发送消息中"
 
-#: kmkernel.cpp:1497
+#: kmkernel.cpp:1496
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "正在初始化发送流程…"
 
-#: kmkernel.cpp:1576
+#: kmkernel.cpp:1575
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4326,7 +4326,7 @@ msgstr ""
 "资源 %1 已损坏。\n"
 "%2"
 
-#: kmkernel.cpp:1750 kmkernel.cpp:1756
+#: kmkernel.cpp:1749 kmkernel.cpp:1755
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5564,113 +5564,113 @@ msgstr "隐藏菜单栏"
 msgid "Cannot copy item. %1"
 msgstr "无法复制条目。%1"
 
-#: kmreaderwin.cpp:122
+#: kmreaderwin.cpp:121
 #, kde-format
 msgid "New Message To…"
 msgstr "撰写新信件给"
 
-#: kmreaderwin.cpp:128
+#: kmreaderwin.cpp:127
 #, kde-format
 msgid "Reply To…"
 msgstr "回复给 …"
 
-#: kmreaderwin.cpp:134
+#: kmreaderwin.cpp:133
 #, kde-format
 msgid "Forward To…"
 msgstr "转发给"
 
-#: kmreaderwin.cpp:140
+#: kmreaderwin.cpp:139
 #, kde-format
 msgid "Add to Address Book"
 msgstr "添加到地址簿中"
 
-#: kmreaderwin.cpp:145
+#: kmreaderwin.cpp:144
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "添加到已有账户"
 
-#: kmreaderwin.cpp:151
+#: kmreaderwin.cpp:150
 #, kde-format
 msgid "Open in Address Book"
 msgstr "在地址簿中打开"
 
-#: kmreaderwin.cpp:156
+#: kmreaderwin.cpp:155
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "将此链接加为书签"
 
-#: kmreaderwin.cpp:161
+#: kmreaderwin.cpp:160
 #, kde-format
 msgid "Edit contact…"
 msgstr "编辑联系人"
 
-#: kmreaderwin.cpp:167
+#: kmreaderwin.cpp:166
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "链接另存为"
 
-#: kmreaderwin.cpp:173
+#: kmreaderwin.cpp:172
 #, kde-format
 msgid "&Find in Message…"
 msgstr "在信件中查找(&F)..."
 
-#: kmreaderwin.cpp:179
+#: kmreaderwin.cpp:178
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "保存相片到本地"
 
-#: kmreaderwin.cpp:185
+#: kmreaderwin.cpp:184
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "打开图像"
 
-#: kmreaderwin.cpp:191
+#: kmreaderwin.cpp:190
 #, kde-format
 msgid "Show HTML Format"
 msgstr "显示 HTML 格式"
 
-#: kmreaderwin.cpp:192
+#: kmreaderwin.cpp:191
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "对来自此收件人的邮件显示 HTML 格式"
 
-#: kmreaderwin.cpp:198
+#: kmreaderwin.cpp:197
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "对来自此收件人的邮件加载外部引用"
 
-#: kmreaderwin.cpp:204
+#: kmreaderwin.cpp:203
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "共享图像"
 
-#: kmreaderwin.cpp:267
+#: kmreaderwin.cpp:266
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE 电子邮件客户端"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "正在获取文件夹内容"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 #, kde-format
 msgid "Please wait . . ."
 msgstr "请等待..."
 
-#: kmreaderwin.cpp:282 kmreaderwin.cpp:291
+#: kmreaderwin.cpp:281 kmreaderwin.cpp:290
 #, kde-format
 msgid "Offline"
 msgstr "离线"
 
-#: kmreaderwin.cpp:284
+#: kmreaderwin.cpp:283
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5678,7 +5678,7 @@ msgid ""
 msgstr ""
 "KMail 处于离线模式。点击<a href=\"kmail:goOnline\">此处</a>转为在线. . .</p>"
 
-#: kmreaderwin.cpp:293
+#: kmreaderwin.cpp:292
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5687,7 +5687,7 @@ msgstr ""
 "账户处于离线模式。点击<a href=\"kmail:goResourceOnline\">此处</a>转为在"
 "线. . .</p>"
 
-#: kmreaderwin.cpp:848
+#: kmreaderwin.cpp:847
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "成功修改联系人"
@@ -5886,180 +5886,180 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "文件夹 %1 的属性"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:63
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "回复(&R)"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:160
+#: messageactions.cpp:64 searchdialog/searchwindowdialog.cpp:160
 #, kde-format
 msgid "&Reply…"
 msgstr "回复(&R)"
 
-#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:164
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr "回复所有人(&A)..."
 
-#: messageactions.cpp:67
+#: messageactions.cpp:66
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "回复作者(&U)..."
 
-#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:168
+#: messageactions.cpp:67 searchdialog/searchwindowdialog.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "回复到邮件列表(&L)..."
 
-#: messageactions.cpp:69
+#: messageactions.cpp:68
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "无引文回复(&Q)..."
 
-#: messageactions.cpp:70
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "内联(&I)"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "作为附件(&A)..."
 
-#: messageactions.cpp:72
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "重定向(&R)..."
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "向收件人发送新信息"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "标记消息(&K)"
 
-#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:172
+#: messageactions.cpp:74 searchdialog/searchwindowdialog.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "转发(&F)"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "邮件列表(&L)..."
 
-#: messageactions.cpp:77
+#: messageactions.cpp:76
 #, kde-format
 msgid "&Edit As New"
 msgstr "作为新邮件编辑（&E）"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "按邮件列表过滤(&L)..."
 
-#: messageactions.cpp:79
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "添加后续提醒"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:80
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "重新发送(&G)..."
 
-#: messageactions.cpp:82
+#: messageactions.cpp:81
 #, kde-format
 msgid "New Message From &Template"
 msgstr "新建基于模板的消息(&T)"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:83
 #, kde-format
 msgid "Export to PDF…"
 msgstr "导出为 PDF"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "归档信件"
 
-#: messageactions.cpp:401
+#: messageactions.cpp:400
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "按邮件列表过滤(&L)..."
 
-#: messageactions.cpp:437
+#: messageactions.cpp:436
 #, kde-format
 msgid "<unknown>"
 msgstr "<unknown>"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:436
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "邮件列表名称：%1"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:439
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "打开列表归档中的消息"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:442
 #, kde-format
 msgid "Post New Message"
 msgstr "发送新消息"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:445
 #, kde-format
 msgid "Go to Archive"
 msgstr "转到归档"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:448
 #, kde-format
 msgid "Request Help"
 msgstr "请求帮助"
 
-#: messageactions.cpp:452
+#: messageactions.cpp:451
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "联系属主"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "从列表取消订阅"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "按邮件列表 %1 过滤"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:643
 #, kde-format
 msgid "email"
 msgstr "电子邮件"
 
-#: messageactions.cpp:647
+#: messageactions.cpp:646
 #, kde-format
 msgid "web"
 msgstr "网页"
 
-#: messageactions.cpp:652
+#: messageactions.cpp:651
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6067,13 +6067,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1(%2)"
 
-#: messageactions.cpp:755
+#: messageactions.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "导出为 PDF"
 
-#: messageactions.cpp:757
+#: messageactions.cpp:756
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF 文档 (*.pdf)"

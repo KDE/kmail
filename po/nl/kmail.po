@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:51+0000\n"
+"POT-Creation-Date: 2025-12-16 13:25+0000\n"
 "PO-Revision-Date: 2025-11-26 14:58+0100\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -333,7 +333,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Veel bugs met IMAP gerepareerd"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:222 kmmainwidget.cpp:4219 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:222 kmmainwidget.cpp:4219 kmreaderwin.cpp:263
 #: kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -399,7 +399,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "URL voor zender naar discussiegroep:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Voor discussiegroep inschrijven"
@@ -3044,24 +3044,24 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Bestaande identiteiten:"
 
-#: identity/identitydialog.cpp:225
+#: identity/identitydialog.cpp:224
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr "Kon generatie van OpenPGP certificaat niet starten."
 
-#: identity/identitydialog.cpp:238
+#: identity/identitydialog.cpp:237
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "Kon generatie van OpenPGP certificaat niet starten: %1"
 
-#: identity/identitydialog.cpp:247
+#: identity/identitydialog.cpp:246
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "Een OpenPGP certificaat wordt gegenereerd…"
 
-#: identity/identitydialog.cpp:249
+#: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
@@ -3070,52 +3070,52 @@ msgstr ""
 "Het proces van genereren van een OpenPGP certificaat vereist een groot "
 "aantal willekeurige getallen. Dit kan een aantal minuten duren…"
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "Kon geen OpenPGP certificaat genereren: %1"
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:271
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "Het genereren is geannuleerd."
 
-#: identity/identitydialog.cpp:312
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "No key"
 msgstr "Geen sleutel"
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:313
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
 msgstr "Een nieuw OpenPGP-certificaat genereren"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "Fout bij aanmaken van sleutel"
 
-#: identity/identitydialog.cpp:343
+#: identity/identitydialog.cpp:342
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Identiteit bewerken"
 
-#: identity/identitydialog.cpp:367
+#: identity/identitydialog.cpp:366
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Algemeen"
 
-#: identity/identitydialog.cpp:374
+#: identity/identitydialog.cpp:373
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "N&aam:"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3126,13 +3126,13 @@ msgstr ""
 "in de kop van de berichten die u verzendt.</p> <p>Als u dit veld leeglaat, "
 "zal uw echte naam niet worden genoemd, maar alleen het e-mailadres.</p></qt>"
 
-#: identity/identitydialog.cpp:390
+#: identity/identitydialog.cpp:389
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Organi&satie:"
 
-#: identity/identitydialog.cpp:395
+#: identity/identitydialog.cpp:394
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3143,13 +3143,13 @@ msgstr ""
 "wilt laten vermelden in de kop van de berichten die u verzendt.</p> "
 "<p>Gewoonlijk wordt dit veld leeg gelaten.</p></qt>"
 
-#: identity/identitydialog.cpp:407
+#: identity/identitydialog.cpp:406
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&E-mailadres:"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:411
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3165,13 +3165,13 @@ msgstr ""
 "leeg laat, of er een onjuist e-mailadres inzet,  kunnen de personen aan wie "
 "u een e-mail stuurt deze niet beantwoorden.</p></qt>"
 
-#: identity/identitydialog.cpp:431
+#: identity/identitydialog.cpp:430
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "E-mail&alias:"
 
-#: identity/identitydialog.cpp:436
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3188,12 +3188,12 @@ msgstr ""
 "th><td>eerste@example.org<br>laatste@example.org</td></tr></table><p>Typ één "
 "aliasadres per regel.</p></qt>"
 
-#: identity/identitydialog.cpp:453
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "Cryptography"
 msgstr "Cryptografie"
 
-#: identity/identitydialog.cpp:459
+#: identity/identitydialog.cpp:458
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3209,29 +3209,29 @@ msgstr ""
 "hinder van ondervinden.</p><p>U vindt meer informatie over sleutels op "
 "<a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:465
+#: identity/identitydialog.cpp:464
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-ondertekeningssleutel:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:470
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Zelfde sleutel voor versleuteling en ondertekenen gebruiken"
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:480
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP-sleutel:"
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-ondertekeningssleutel:"
 
-#: identity/identitydialog.cpp:506
+#: identity/identitydialog.cpp:505
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3249,13 +3249,13 @@ msgstr ""
 "hier geen hinder van ondervinden.</p><p>U vindt meer informatie over "
 "sleutels op <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:512
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP-versleutelingssleutel:"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:522
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3268,13 +3268,13 @@ msgstr ""
 "maar KMail zal dan niet uw berichten digitaal ondertekenen met S/MIME. "
 "Normale e-mailfuncties zullen hier geen hinder van ondervinden.</p></qt>"
 
-#: identity/identitydialog.cpp:528
+#: identity/identitydialog.cpp:527
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-ondertekeningscertificaat:"
 
-#: identity/identitydialog.cpp:542
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3290,84 +3290,84 @@ msgstr ""
 "berichten naar uzelf te versleutelen met S/MIME. Dit heeft geen invloed op "
 "de overige e-mailfuncties.</p></qt>"
 
-#: identity/identitydialog.cpp:548
+#: identity/identitydialog.cpp:547
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-versleutelingscertificaat:"
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:564
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Voorkeursformaat:"
 
-#: identity/identitydialog.cpp:570
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "Automatisch versleutelen inschakelen"
 
-#: identity/identitydialog.cpp:574
+#: identity/identitydialog.cpp:573
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Automatisch versleutelen:"
 
-#: identity/identitydialog.cpp:579
+#: identity/identitydialog.cpp:578
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Laat anderen weten dat u de voorkeur geeft aan versleuteling"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:581
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "Overschrijf globale instellingen voor standaarden voor beveiliging"
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:584
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Overschrijf standaarden:"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:589
 #, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Berichten ondertekenen"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:592
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Berichten versleutelen, indien mogelijk"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:595
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Waarschuwen voor het verzenden van niet-ondertekende berichten"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:598
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr ""
 "Waarschuwen wanneer niet-versleutelde berichten zullen worden verstuurd"
 
-#: identity/identitydialog.cpp:609
+#: identity/identitydialog.cpp:608
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "Geavanceerd"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "Antwoo&rdadres:"
 
-#: identity/identitydialog.cpp:621
+#: identity/identitydialog.cpp:620
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3385,13 +3385,13 @@ msgstr ""
 "mailadres wordt gestuurd.</p><p>Als u twijfelt, laat dan dit veld leeg.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:638
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&Cc-adressen:"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:644
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3408,13 +3408,13 @@ msgstr ""
 "<p>Om meer dan één adres op te geven scheidt u de geadresseerden door een "
 "komma.</p><p>Als u twijfelt, laat dit veld dan leeg.</p></qt>"
 
-#: identity/identitydialog.cpp:661
+#: identity/identitydialog.cpp:660
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&BCC-adres:"
 
-#: identity/identitydialog.cpp:665
+#: identity/identitydialog.cpp:664
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3433,98 +3433,98 @@ msgstr ""
 "geadresseerden gescheiden door een komma.</p><p>Als u twijfelt, laat dit "
 "veld dan leeg.</p></qt>"
 
-#: identity/identitydialog.cpp:679
+#: identity/identitydialog.cpp:678
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "W&oordenboek:"
 
-#: identity/identitydialog.cpp:685
+#: identity/identitydialog.cpp:684
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Map Verzonden e-mail selecteren"
 
-#: identity/identitydialog.cpp:687
+#: identity/identitydialog.cpp:686
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "Map voor verzonden berich&ten:"
 
-#: identity/identitydialog.cpp:693
+#: identity/identitydialog.cpp:692
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Map voor concepten selecteren"
 
-#: identity/identitydialog.cpp:695
+#: identity/identitydialog.cpp:694
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "&Map voor concepten:"
 
-#: identity/identitydialog.cpp:701
+#: identity/identitydialog.cpp:700
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Map voor sjablonen selecteren"
 
-#: identity/identitydialog.cpp:703
+#: identity/identitydialog.cpp:702
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "Sja&bloonmap:"
 
-#: identity/identitydialog.cpp:710
+#: identity/identitydialog.cpp:709
 #, kde-format
 msgid "Select Spam Folder"
 msgstr "Spammap selecteren"
 
-#: identity/identitydialog.cpp:712
+#: identity/identitydialog.cpp:711
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
 msgstr "Spam&map:"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:714
 #, kde-format
 msgid "Configure Expire Folder..."
 msgstr "Verlopen van map configureren..."
 
-#: identity/identitydialog.cpp:726
+#: identity/identitydialog.cpp:725
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Uitgaand account:"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:732
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Mijn vCard in bericht bijvoegen"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Aanmaken…"
 
-#: identity/identitydialog.cpp:738
+#: identity/identitydialog.cpp:737
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Autocorrectietaal:"
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:749
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Standaard domeinnaam herstellen"
 
-#: identity/identitydialog.cpp:753
+#: identity/identitydialog.cpp:752
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "S&tandaarddomein:"
 
-#: identity/identitydialog.cpp:759
+#: identity/identitydialog.cpp:758
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3533,62 +3533,62 @@ msgstr ""
 "<qt> <p>Het standaard domein wordt gebruikt om e-mailadressen die alleen "
 "bestaan uit een gebruikersnaam aan te vullen.</p></qt>"
 
-#: identity/identitydialog.cpp:776
+#: identity/identitydialog.cpp:775
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "Aangepaste berichtsjablonen gebr&uiken voor deze identiteit"
 
-#: identity/identitydialog.cpp:790
+#: identity/identitydialog.cpp:789
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "Globale sjablonen &kopiëren"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:796
 #, kde-format
 msgid "Templates"
 msgstr "Sjablonen"
 
-#: identity/identitydialog.cpp:803
+#: identity/identitydialog.cpp:802
 #, kde-format
 msgid "Signature"
 msgstr "Handtekening"
 
-#: identity/identitydialog.cpp:810
+#: identity/identitydialog.cpp:809
 #, kde-format
 msgid "Picture"
 msgstr "Afbeelding"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:815
 #, kde-format
 msgid "Activities"
 msgstr "Activiteiten"
 
-#: identity/identitydialog.cpp:867
+#: identity/identitydialog.cpp:866
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Ongeldige e-mailalias \"%1\""
 
-#: identity/identitydialog.cpp:875
+#: identity/identitydialog.cpp:874
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "U moet een e-mailadres voor deze identiteit leveren."
 
-#: identity/identitydialog.cpp:875
+#: identity/identitydialog.cpp:874
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Leeg e-mailadres"
 
-#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Ongeldig e-mailadres"
 
-#: identity/identitydialog.cpp:938
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3601,7 +3601,7 @@ msgstr ""
 "Dit kan leiden tot waarschuwingen aan de kant van de ontvanger wanneer u "
 "probeert om handtekeningen te verifiëren met deze instellingen."
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:946
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3610,7 +3610,7 @@ msgstr ""
 "Één van de ingestelde OpenPGP-sleutels voor versleuteling bevat geen "
 "gebruikers-id met een e-mailadres voor deze identiteit (%1)."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3623,7 +3623,7 @@ msgstr ""
 "Dit kan leiden tot waarschuwingen aan de kant van de ontvanger wanneer u "
 "probeert om handtekeningen te verifiëren met deze instellingen."
 
-#: identity/identitydialog.cpp:963
+#: identity/identitydialog.cpp:962
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3632,24 +3632,24 @@ msgstr ""
 "Één van de ingestelde S/MIME-versleutelingscertificaten bevat geen ingesteld "
 "e-mailadres voor deze identiteit (%1)."
 
-#: identity/identitydialog.cpp:973
+#: identity/identitydialog.cpp:972
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-mailadres werd niet gevonden in sleutels/certificaten"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:984
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Het handtekeningsbestand is ongeldig"
 
-#: identity/identitydialog.cpp:1000
+#: identity/identitydialog.cpp:999
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identiteit \"%1\" bewerken"
 
-#: identity/identitydialog.cpp:1081
+#: identity/identitydialog.cpp:1080
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3658,12 +3658,12 @@ msgstr ""
 "Enige eigen mappen voor identiteit bestaan niet (meer); in plaats daarvan "
 "zullen de standaard mappen worden gebruikt."
 
-#: identity/identitydialog.cpp:1336
+#: identity/identitydialog.cpp:1335
 #, kde-format
 msgid "Create…"
 msgstr "Aanmaken…"
 
-#: identity/identitydialog.cpp:1338
+#: identity/identitydialog.cpp:1337
 #, kde-format
 msgid "Edit…"
 msgstr "Bewerken…"
@@ -3908,12 +3908,12 @@ msgstr "Toevoegen aan adresboek"
 msgid "Contact created successfully"
 msgstr "Contactpersoon met succes aangemaakt."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:837
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Contactpersoon kan niet opgeslagen worden: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4398,28 +4398,28 @@ msgstr "HTML werkbalk"
 msgid "Text Direction Toolbar"
 msgstr "Werkbalk voor tekstrichting"
 
-#: kmkernel.cpp:642
+#: kmkernel.cpp:641
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail is ingesteld op de offline-modus. Alle netwerktaken zijn uitgesteld"
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:661 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, kde-format
 msgid "Send Email"
 msgstr "E-mail verzenden"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
+#: kmkernel.cpp:662 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Verzenden van een e-mail is onmogelijk"
 
-#: kmkernel.cpp:694
+#: kmkernel.cpp:693
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail is ingesteld op de online-modus. Alle netwerktaken worden hervat"
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:695
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4428,40 +4428,40 @@ msgstr ""
 "KMail is ingesteld op de online-modus; alle netwerktaken worden hervat "
 "wanneer een netwerkverbinding wordt gedetecteerd"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail bevindt zich in de offline-modus. Hoe wilt u verdergaan?"
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:768
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Online/Offline"
 
-#: kmkernel.cpp:770
+#: kmkernel.cpp:769
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Online werken"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:770
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Offline werken"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:794
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Netwerkverbinding gedetecteerd, alle netwerktaken worden hervat"
 
-#: kmkernel.cpp:798
+#: kmkernel.cpp:797
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Geen netwerkverbinding gedetecteerd, alle netwerktaken zijn uitgesteld"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4470,13 +4470,13 @@ msgstr ""
 "Openen van bestand voor automatisch opslaan in %1 is mislukt.\n"
 "Reden: %2"
 
-#: kmkernel.cpp:894
+#: kmkernel.cpp:893
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Openen van het bestand voor automatisch opslaan is mislukt"
 
-#: kmkernel.cpp:1457
+#: kmkernel.cpp:1456
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4488,7 +4488,7 @@ msgstr[1] ""
 "Deze %1 identiteiten zijn veranderd zodat ze gebruik maken van het standaard "
 "transport:"
 
-#: kmkernel.cpp:1481
+#: kmkernel.cpp:1480
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4500,17 +4500,17 @@ msgstr[1] ""
 "Deze %1 identiteiten zijn veranderd zodat ze gebruik maken van het "
 "aangepaste transport:"
 
-#: kmkernel.cpp:1496
+#: kmkernel.cpp:1495
 #, kde-format
 msgid "Sending messages"
 msgstr "Berichten worden verzonden"
 
-#: kmkernel.cpp:1497
+#: kmkernel.cpp:1496
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Verzendproces wordt geïnitialiseerd…"
 
-#: kmkernel.cpp:1576
+#: kmkernel.cpp:1575
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4519,7 +4519,7 @@ msgstr ""
 "Hulpbron %1 is gebroken.\n"
 "%2"
 
-#: kmkernel.cpp:1750 kmkernel.cpp:1756
+#: kmkernel.cpp:1749 kmkernel.cpp:1755
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5797,114 +5797,114 @@ msgstr "Menubalk verbergen"
 msgid "Cannot copy item. %1"
 msgstr "Kan item niet kopiëren. %1"
 
-#: kmreaderwin.cpp:122
+#: kmreaderwin.cpp:121
 #, kde-format
 msgid "New Message To…"
 msgstr "Nieuw bericht aan…"
 
-#: kmreaderwin.cpp:128
+#: kmreaderwin.cpp:127
 #, kde-format
 msgid "Reply To…"
 msgstr "Antwoord zenden aan…"
 
-#: kmreaderwin.cpp:134
+#: kmreaderwin.cpp:133
 #, kde-format
 msgid "Forward To…"
 msgstr "Doorsturen naar…"
 
-#: kmreaderwin.cpp:140
+#: kmreaderwin.cpp:139
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Toevoegen aan adresboek"
 
-#: kmreaderwin.cpp:145
+#: kmreaderwin.cpp:144
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Aan bestaande contactpersoon toegevoegd"
 
-#: kmreaderwin.cpp:151
+#: kmreaderwin.cpp:150
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Openen in adresboek"
 
-#: kmreaderwin.cpp:156
+#: kmreaderwin.cpp:155
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Bladwijzer aanmaken voor deze koppeling"
 
-#: kmreaderwin.cpp:161
+#: kmreaderwin.cpp:160
 #, kde-format
 msgid "Edit contact…"
 msgstr "Contactpersoon bewerken…"
 
-#: kmreaderwin.cpp:167
+#: kmreaderwin.cpp:166
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Koppeling opslaan als…"
 
-#: kmreaderwin.cpp:173
+#: kmreaderwin.cpp:172
 #, kde-format
 msgid "&Find in Message…"
 msgstr "&Zoeken in bericht…"
 
-#: kmreaderwin.cpp:179
+#: kmreaderwin.cpp:178
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Afbeelding opslaan op schijf…"
 
-#: kmreaderwin.cpp:185
+#: kmreaderwin.cpp:184
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Afbeelding openen…"
 
-#: kmreaderwin.cpp:191
+#: kmreaderwin.cpp:190
 #, kde-format
 msgid "Show HTML Format"
 msgstr "HTML-format tonen"
 
-#: kmreaderwin.cpp:192
+#: kmreaderwin.cpp:191
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Toon het HTML-format wanneer e-mail van deze contactpersoon komt"
 
-#: kmreaderwin.cpp:198
+#: kmreaderwin.cpp:197
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr ""
 "Externe verwijzingen voor dit e-mailbericht ophalen voor deze contactpersoon."
 
-#: kmreaderwin.cpp:204
+#: kmreaderwin.cpp:203
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Afbeelding delen…"
 
-#: kmreaderwin.cpp:267
+#: kmreaderwin.cpp:266
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "De E-mailclient van KDE"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Inhoud van map wordt opgehaald"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Even geduld . . ."
 
-#: kmreaderwin.cpp:282 kmreaderwin.cpp:291
+#: kmreaderwin.cpp:281 kmreaderwin.cpp:290
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:284
+#: kmreaderwin.cpp:283
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5913,7 +5913,7 @@ msgstr ""
 "KMail is op het moment in offline-modus. Klik <a href=\"kmail:goOnline"
 "\">hier</a> om online te gaan. . .</p>"
 
-#: kmreaderwin.cpp:293
+#: kmreaderwin.cpp:292
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5922,7 +5922,7 @@ msgstr ""
 "Account is op dit moment in offline-modus. Klik <a href=\"kmail:"
 "goResourceOnline\">hier</a> om online te gaan. . .</p>"
 
-#: kmreaderwin.cpp:848
+#: kmreaderwin.cpp:847
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Contactpersoon met succes gewijzigd."
@@ -6130,180 +6130,180 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Eigenschappen van map %1"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:63
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "Beantwoo&rden"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:160
+#: messageactions.cpp:64 searchdialog/searchwindowdialog.cpp:160
 #, kde-format
 msgid "&Reply…"
 msgstr "Beantwoo&rden…"
 
-#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:164
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:164
 #, kde-format
 msgid "Reply to &All…"
 msgstr "&Allen beantwoorden…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:66
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "Af&zender beantwoorden…"
 
-#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:168
+#: messageactions.cpp:67 searchdialog/searchwindowdialog.cpp:168
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "Beantwoorden aan d&iscussiegroep…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:68
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Beantwoorden &zonder aanhalingen…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&In tekstgedeelte…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "&Als bijlage…"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&Omleiden…"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Nieuw bericht aan ontvangers…"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Bericht ma&rkeren"
 
-#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:172
+#: messageactions.cpp:74 searchdialog/searchwindowdialog.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Doorsturen"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "E-mail&lijst"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:76
 #, kde-format
 msgid "&Edit As New"
 msgstr "Als nieuw b&ewerken"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Filteren op &discussiegroep…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Herinneren aan vervolgactie toevoegen…"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:80
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Opnieu&w verzenden…"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:81
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Nieuw berich&t van sjabloon"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:83
 #, kde-format
 msgid "Export to PDF…"
 msgstr "Naar PDF exporteren…"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Bericht archiveren"
 
-#: messageactions.cpp:401
+#: messageactions.cpp:400
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Filteren op discussiegroep…"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:436
 #, kde-format
 msgid "<unknown>"
 msgstr "<onbekend>"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:436
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Naam e-maillijst: %1"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:439
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Bericht openen in lijstarchief"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:442
 #, kde-format
 msgid "Post New Message"
 msgstr "Nieuw bericht posten"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:445
 #, kde-format
 msgid "Go to Archive"
 msgstr "Ga naar archief"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:448
 #, kde-format
 msgid "Request Help"
 msgstr "Hulp vragen"
 
-#: messageactions.cpp:452
+#: messageactions.cpp:451
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Eigenaar van contact"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Van discussielijst uitschrijven"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Filteren op discussiegroep %1…"
 
-#: messageactions.cpp:644
+#: messageactions.cpp:643
 #, kde-format
 msgid "email"
 msgstr "e-mail"
 
-#: messageactions.cpp:647
+#: messageactions.cpp:646
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:652
+#: messageactions.cpp:651
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6311,13 +6311,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:755
+#: messageactions.cpp:754
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Naar PDF exporteren"
 
-#: messageactions.cpp:757
+#: messageactions.cpp:756
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF document (*.pdf)"

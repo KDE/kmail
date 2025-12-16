@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:51+0000\n"
+"POT-Creation-Date: 2025-12-16 13:25+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -371,7 +371,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:222 kmmainwidget.cpp:4219 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:222 kmmainwidget.cpp:4219 kmreaderwin.cpp:263
 #: kmsystemtray.cpp:48 kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
@@ -443,7 +443,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "توصیف فهرست نامه:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:455
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
 #, kde-format
 msgid "Subscribe to List"
 msgstr "اشتراک با فهرست"
@@ -3258,82 +3258,82 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "هویتهای &موجود:‌"
 
-#: identity/identitydialog.cpp:225
+#: identity/identitydialog.cpp:224
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr ""
 
-#: identity/identitydialog.cpp:238
+#: identity/identitydialog.cpp:237
 #, fuzzy, kde-format
 #| msgid "Could not start process for %1."
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "نتوانست فرآیند را برای %1 آغاز کند."
 
-#: identity/identitydialog.cpp:247
+#: identity/identitydialog.cpp:246
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "وارد کردن واژه کلیدی جدید:"
 
-#: identity/identitydialog.cpp:249
+#: identity/identitydialog.cpp:248
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
 
-#: identity/identitydialog.cpp:267
+#: identity/identitydialog.cpp:266
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr ""
 
-#: identity/identitydialog.cpp:272
+#: identity/identitydialog.cpp:271
 #, fuzzy, kde-format
 #| msgid "Deleting messages canceled."
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "حذف پیامها لغو شد."
 
-#: identity/identitydialog.cpp:312
+#: identity/identitydialog.cpp:311
 #, kde-format
 msgid "No key"
 msgstr ""
 
-#: identity/identitydialog.cpp:314
+#: identity/identitydialog.cpp:313
 #, fuzzy, kde-format
 #| msgid "Enter new key word:"
 msgid "Generate a new OpenPGP certificate"
 msgstr "وارد کردن واژه کلیدی جدید:"
 
-#: identity/identitydialog.cpp:329
+#: identity/identitydialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr ""
 
-#: identity/identitydialog.cpp:343
+#: identity/identitydialog.cpp:342
 #, fuzzy, kde-format
 #| msgid "Edit Identity"
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "ویرایش هویت"
 
-#: identity/identitydialog.cpp:367
+#: identity/identitydialog.cpp:366
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "عمومی"
 
-#: identity/identitydialog.cpp:374
+#: identity/identitydialog.cpp:373
 #, fuzzy, kde-format
 #| msgid "&Your name:"
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "نام &شما:‌"
 
-#: identity/identitydialog.cpp:379
+#: identity/identitydialog.cpp:378
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3345,14 +3345,14 @@ msgstr ""
 "را سفید بگذارید، نام حقیقیتان ظاهر نمی‌شود؛ فقط نشانی رایانامه ظاهر می‌شود.</"
 "p></qt>"
 
-#: identity/identitydialog.cpp:390
+#: identity/identitydialog.cpp:389
 #, fuzzy, kde-format
 #| msgid "Organi&zation:"
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "&سازمان:‌"
 
-#: identity/identitydialog.cpp:395
+#: identity/identitydialog.cpp:394
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3363,14 +3363,14 @@ msgstr ""
 "ارسال می‌شود، نمایش داده شود، این حوزه باید نام سازمانتان را داشته باشد.</"
 "p><p>سفید گذاشتن این، ایمن )و عادی( است.</p></qt>"
 
-#: identity/identitydialog.cpp:407
+#: identity/identitydialog.cpp:406
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "نشانی &رایانامه:‌"
 
-#: identity/identitydialog.cpp:412
+#: identity/identitydialog.cpp:411
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>Email address</h3><p>This field should have your full email "
@@ -3387,14 +3387,14 @@ msgstr ""
 "باشد.</p><p>اگر این را سفید بگذارید، یا آن را اشتباه بنویسید، افراد در پاسخ "
 "دادن به شما دچار مشکل می‌شوند.</p></qt>"
 
-#: identity/identitydialog.cpp:431
+#: identity/identitydialog.cpp:430
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "نشانی &رایانامه:‌"
 
-#: identity/identitydialog.cpp:436
+#: identity/identitydialog.cpp:435
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3405,12 +3405,12 @@ msgid ""
 "alias address per line.</p></qt>"
 msgstr ""
 
-#: identity/identitydialog.cpp:453
+#: identity/identitydialog.cpp:452
 #, kde-format
 msgid "Cryptography"
 msgstr "رمزنگاری"
 
-#: identity/identitydialog.cpp:459
+#: identity/identitydialog.cpp:458
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3432,31 +3432,31 @@ msgstr ""
 "بیشتر در مورد کلیدها را می‌توانید در <a>http://www.gnupg.org</a> بیابید</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:465
+#: identity/identitydialog.cpp:464
 #, fuzzy, kde-format
 #| msgid "OpenPGP signing key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "کلید امضای OpenPGP:"
 
-#: identity/identitydialog.cpp:471
+#: identity/identitydialog.cpp:470
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr ""
 
-#: identity/identitydialog.cpp:481
+#: identity/identitydialog.cpp:480
 #, fuzzy, kde-format
 #| msgid "OpenPGP key 0x%1"
 msgid "OpenPGP key:"
 msgstr "کلید OpenPGP ۰ × %1"
 
-#: identity/identitydialog.cpp:489
+#: identity/identitydialog.cpp:488
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "کلید امضای OpenPGP:"
 
-#: identity/identitydialog.cpp:506
+#: identity/identitydialog.cpp:505
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>The OpenPGP key you choose here will be used to encrypt messages "
@@ -3480,14 +3480,14 @@ msgstr ""
 "می‌کنید، نمی‌باشد؛ کارهای عادی نامه تحت تأثیر واقع نمی‌شوند.</p><p>مطالب بیشتر "
 "در مورد کلیدها را می‌توانید در <a>http://www.gnupg.org</a> بیابید</p></qt>"
 
-#: identity/identitydialog.cpp:513
+#: identity/identitydialog.cpp:512
 #, fuzzy, kde-format
 #| msgid "OpenPGP encryption key:"
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "کلید رمزبندی OpenPGP:"
 
-#: identity/identitydialog.cpp:523
+#: identity/identitydialog.cpp:522
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3500,14 +3500,14 @@ msgstr ""
 "KMail قادر به رقمی نوشتن رایانامه‌ها با استفاده از S/مایم نمی‌باشد؛ کارهای "
 "عادی نامه تحت تأثیر واقع نمی‌شود.</p></qt>"
 
-#: identity/identitydialog.cpp:528
+#: identity/identitydialog.cpp:527
 #, fuzzy, kde-format
 #| msgid "S/MIME signing certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "گواهی‌نامه امضای S/مایم‌:"
 
-#: identity/identitydialog.cpp:542
+#: identity/identitydialog.cpp:541
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3522,93 +3522,93 @@ msgstr ""
 "خروجی برای این که از S/مایم استفاده می‌کنید، نمی‌باشد؛کارهای عادی نامه تحت "
 "تأثیر واقع نمی‌شود.</p></qt>"
 
-#: identity/identitydialog.cpp:548
+#: identity/identitydialog.cpp:547
 #, fuzzy, kde-format
 #| msgid "S/MIME encryption certificate:"
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "گواهی‌نامه رمزبندی S/مایم:"
 
-#: identity/identitydialog.cpp:565
+#: identity/identitydialog.cpp:564
 #, fuzzy, kde-format
 #| msgid "Preferred crypto message format:"
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "قالب پیام رمز ارجح:"
 
-#: identity/identitydialog.cpp:570
+#: identity/identitydialog.cpp:569
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgid "Enable Autocrypt"
 msgstr " اشتراکها فعال شوند؟"
 
-#: identity/identitydialog.cpp:574
+#: identity/identitydialog.cpp:573
 #, fuzzy, kde-format
 #| msgid "Enable Subscriptions?"
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr " اشتراکها فعال شوند؟"
 
-#: identity/identitydialog.cpp:579
+#: identity/identitydialog.cpp:578
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr ""
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:581
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr ""
 
-#: identity/identitydialog.cpp:585
+#: identity/identitydialog.cpp:584
 #, fuzzy, kde-format
 #| msgid "Overwrite File?"
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "پرونده جای‌نوشت شود؟"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:589
 #, fuzzy, kde-format
 #| msgid "&Sign Message"
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "&امضای پیام‌"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:592
 #, fuzzy, kde-format
 #| msgid "Automatically encrypt &messages whenever possible"
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "رمزبندی &پیامها به طور خودکار، در صورت امکان‌"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:595
 #, fuzzy, kde-format
 #| msgid "Warn when trying to send &unsigned messages"
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "اخطار، هنگام سعی برای ارسال پیامهای &بدون امضا‌"
 
-#: identity/identitydialog.cpp:599
+#: identity/identitydialog.cpp:598
 #, fuzzy, kde-format
 #| msgid "&Warn when trying to send unencrypted messages"
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "&اخطار، هنگام تلاش برای ارسال پیامهای رمزبندی‌نشده‌"
 
-#: identity/identitydialog.cpp:609
+#: identity/identitydialog.cpp:608
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "پیشرفته"
 
-#: identity/identitydialog.cpp:617
+#: identity/identitydialog.cpp:616
 #, fuzzy, kde-format
 #| msgid "&Reply-To address:"
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&پاسخ به نشانی:‌"
 
-#: identity/identitydialog.cpp:621
+#: identity/identitydialog.cpp:620
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3626,14 +3626,14 @@ msgstr ""
 "اما هر کدام برای رفتن به نشانی یک گروه پاسخ می‌دهد.</p><p>اگر شک دارید، این "
 "حوزه را خالی بگذارید.</p></qt>"
 
-#: identity/identitydialog.cpp:639
+#: identity/identitydialog.cpp:638
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "نشانیهای &ر.ن.م:‌"
 
-#: identity/identitydialog.cpp:645
+#: identity/identitydialog.cpp:644
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3658,14 +3658,14 @@ msgstr ""
 "یک نشانی، از کاما برای جدا کردن فهرست گیرنده‌های ر.ن.م استفاده کنید.</"
 "p><p>اگر شک دارید، این حوزه را خالی بگذارید.</p></qt>"
 
-#: identity/identitydialog.cpp:661
+#: identity/identitydialog.cpp:660
 #, fuzzy, kde-format
 #| msgid "&BCC addresses:"
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "نشانیهای &ر.ن.م:‌"
 
-#: identity/identitydialog.cpp:665
+#: identity/identitydialog.cpp:664
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3682,114 +3682,114 @@ msgstr ""
 "یک نشانی، از کاما برای جدا کردن فهرست گیرنده‌های ر.ن.م استفاده کنید.</"
 "p><p>اگر شک دارید، این حوزه را خالی بگذارید.</p></qt>"
 
-#: identity/identitydialog.cpp:679
+#: identity/identitydialog.cpp:678
 #, fuzzy, kde-format
 #| msgid "D&ictionary:"
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "&واژه‌نامه:‌"
 
-#: identity/identitydialog.cpp:685
+#: identity/identitydialog.cpp:684
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgid "Select Send-mail Folder"
 msgstr "پوشه نامه &ارسالی‌"
 
-#: identity/identitydialog.cpp:687
+#: identity/identitydialog.cpp:686
 #, fuzzy, kde-format
 #| msgid "Sent-mail &folder:"
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "&پوشه نامه ارسالی:‌"
 
-#: identity/identitydialog.cpp:693
+#: identity/identitydialog.cpp:692
 #, fuzzy, kde-format
 #| msgid "Select Style"
 msgid "Select Draft Folder"
 msgstr "برگزیدن سبک"
 
-#: identity/identitydialog.cpp:695
+#: identity/identitydialog.cpp:694
 #, fuzzy, kde-format
 #| msgid "&Drafts folder:"
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "پوشه &پیش‌نویسها:‌"
 
-#: identity/identitydialog.cpp:701
+#: identity/identitydialog.cpp:700
 #, fuzzy, kde-format
 #| msgid "Cut Folder"
 msgid "Select Templates Folder"
 msgstr "برش پوشه"
 
-#: identity/identitydialog.cpp:703
+#: identity/identitydialog.cpp:702
 #, fuzzy, kde-format
 #| msgid "&Templates folder:"
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "پوشه &قالبها:‌"
 
-#: identity/identitydialog.cpp:710
+#: identity/identitydialog.cpp:709
 #, fuzzy, kde-format
 #| msgid "Select Style"
 msgid "Select Spam Folder"
 msgstr "برگزیدن سبک"
 
-#: identity/identitydialog.cpp:712
+#: identity/identitydialog.cpp:711
 #, fuzzy, kde-format
 #| msgid "Sent-mail &folder:"
 msgctxt "@option:check"
 msgid "Spam &folder:"
 msgstr "&پوشه نامه ارسالی:‌"
 
-#: identity/identitydialog.cpp:715
+#: identity/identitydialog.cpp:714
 #, fuzzy, kde-format
 #| msgid "Configure &POP Filters..."
 msgid "Configure Expire Folder..."
 msgstr "پیکربندی پالایه‌های &قرارداد دفتر پست...‌"
 
-#: identity/identitydialog.cpp:726
+#: identity/identitydialog.cpp:725
 #, fuzzy, kde-format
 #| msgid "Configure Account"
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "پیکربندی حساب"
 
-#: identity/identitydialog.cpp:733
+#: identity/identitydialog.cpp:732
 #, fuzzy, kde-format
 #| msgid "Add 'header' to message"
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "افزودن »سرآیند« به پیام"
 
-#: identity/identitydialog.cpp:734
+#: identity/identitydialog.cpp:733
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "تغییر نام..."
 
-#: identity/identitydialog.cpp:738
+#: identity/identitydialog.cpp:737
 #, fuzzy, kde-format
 #| msgid "Choose &language:"
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "انتخاب &زبان:‌"
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:749
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "دامنه &پیش‌فرض:‌"
 
-#: identity/identitydialog.cpp:753
+#: identity/identitydialog.cpp:752
 #, fuzzy, kde-format
 #| msgid "Defaul&t domain:"
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "دامنه &پیش‌فرض:‌"
 
-#: identity/identitydialog.cpp:759
+#: identity/identitydialog.cpp:758
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3798,61 +3798,61 @@ msgstr ""
 "<qt><p>دامنه پیش‌فرض، برای کامل کردن نشانیهای رایانامه‌ای که فقط متشکل از نام "
 "کاربر هستند، استفاده می‌شود.</p></qt>"
 
-#: identity/identitydialog.cpp:776
+#: identity/identitydialog.cpp:775
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates"
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "&استفاده از قالبهای پیام سفارشی‌"
 
-#: identity/identitydialog.cpp:790
+#: identity/identitydialog.cpp:789
 #, fuzzy, kde-format
 #| msgid "&Copy Global Templates"
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&رونوشت قالبهای سراسری‌"
 
-#: identity/identitydialog.cpp:797
+#: identity/identitydialog.cpp:796
 #, kde-format
 msgid "Templates"
 msgstr "قالبها"
 
-#: identity/identitydialog.cpp:803
+#: identity/identitydialog.cpp:802
 #, kde-format
 msgid "Signature"
 msgstr "امضا"
 
-#: identity/identitydialog.cpp:810
+#: identity/identitydialog.cpp:809
 #, kde-format
 msgid "Picture"
 msgstr "عکس"
 
-#: identity/identitydialog.cpp:816
+#: identity/identitydialog.cpp:815
 #, fuzzy, kde-format
 #| msgid "Important Message"
 msgid "Activities"
 msgstr "پیام مهم"
 
-#: identity/identitydialog.cpp:867
+#: identity/identitydialog.cpp:866
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgid "Invalid Email Alias \"%1\""
 msgstr "نشانی رایانامه‌ای نامعتبر"
 
-#: identity/identitydialog.cpp:875
+#: identity/identitydialog.cpp:874
 #, fuzzy, kde-format
 #| msgid "&Use custom message templates"
 msgid "You must provide an email for this identity."
 msgstr "&استفاده از قالبهای پیام سفارشی‌"
 
-#: identity/identitydialog.cpp:875
+#: identity/identitydialog.cpp:874
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "نشانی رایانامه"
 
-#: identity/identitydialog.cpp:880 job/addressvalidationjob.cpp:81
+#: identity/identitydialog.cpp:879 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
@@ -3860,7 +3860,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "نشانی رایانامه‌ای نامعتبر"
 
-#: identity/identitydialog.cpp:938
+#: identity/identitydialog.cpp:937
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3873,7 +3873,7 @@ msgstr ""
 "هنگامی که سعی می‌کنید امضاهایی که با این پیکربندی ساخته‌شده‌اند را تغییر دهید، "
 "ممکن است منجر به پیامهای خطا در سمت دریافت بشود."
 
-#: identity/identitydialog.cpp:947
+#: identity/identitydialog.cpp:946
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3882,7 +3882,7 @@ msgstr ""
 "یکی از کلیدهای پیکربندی‌شده رمز‌بندی OpenPGP، حاوی شناسه کاربر دارای نشانی "
 "رایانامه پیکربندی‌شده برای این هویت )%1( نیست."
 
-#: identity/identitydialog.cpp:954
+#: identity/identitydialog.cpp:953
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3895,7 +3895,7 @@ msgstr ""
 "هنگامی که سعی می‌کنید امضاها را با این پیکربندی تغییر دهید، ممکن است منجر به "
 "پیامهای اخطار در سمت دریافت شود."
 
-#: identity/identitydialog.cpp:963
+#: identity/identitydialog.cpp:962
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3904,26 +3904,26 @@ msgstr ""
 "یکی از گواهی‌نامه‌های پیکربندی‌شده رمز‌بندی S/مایم، حاوی نشانی رایانامه "
 "پیکربندی‌شده برای این هویت )%1( نمی‌باشد."
 
-#: identity/identitydialog.cpp:973
+#: identity/identitydialog.cpp:972
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "نشانی رایانامه‌ای در کلید/گواهی‌نامه‌ها یافت نشد"
 
-#: identity/identitydialog.cpp:985
+#: identity/identitydialog.cpp:984
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "پرونده امضا معتبر نیست"
 
-#: identity/identitydialog.cpp:1000
+#: identity/identitydialog.cpp:999
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "ویرایش هویت »%1«"
 
-#: identity/identitydialog.cpp:1081
+#: identity/identitydialog.cpp:1080
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3935,13 +3935,13 @@ msgstr ""
 "پوشه سفارشی پیش‌نویسها برای هویت »%1« )دیگر( موجود نیست؛ بنابراین، از پوشه "
 "پیش‌فرض پیش‌نویسها استفاده می‌شود."
 
-#: identity/identitydialog.cpp:1336
+#: identity/identitydialog.cpp:1335
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "تغییر نام..."
 
-#: identity/identitydialog.cpp:1338
+#: identity/identitydialog.cpp:1337
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"
@@ -4218,12 +4218,12 @@ msgstr "افزودن به کتاب نشانی"
 msgid "Contact created successfully"
 msgstr "پیامها با موفقیت حذف شدند."
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:837
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:838
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:837
 #, fuzzy, kde-format
 #| msgid "Unable to edit attachment"
 msgctxt "@title:window"
@@ -4753,29 +4753,29 @@ msgstr "میله ابزار زنگام"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:642
+#: kmkernel.cpp:641
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail، برای برون‌خط شدن تنظیم می‌شود؛ تمام کارهای شبکه معلق می‌شوند"
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:661 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "&ارسال نامه‌"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
+#: kmkernel.cpp:662 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "در مورد ارسال رایانامه..."
 
-#: kmkernel.cpp:694
+#: kmkernel.cpp:693
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail، برای برخط شدن تنظیم می‌شود؛ تمام کارهای شبکه از سر گرفته می‌شوند"
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:695
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4783,59 +4783,59 @@ msgid ""
 "connection is detected"
 msgstr "KMail، برای برخط شدن تنظیم می‌شود؛ تمام کارهای شبکه از سر گرفته می‌شوند"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "در حال حاضر KMail در حالت برون‌خط است. چقدر می‌خواهید پیش بروید؟"
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:768
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "بر‌خط/برون‌خط"
 
-#: kmkernel.cpp:770
+#: kmkernel.cpp:769
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "کار کردن برخط"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:770
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "کار کردن برون‌‌خط"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:794
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "KMail، برای برخط شدن تنظیم می‌شود؛ تمام کارهای شبکه از سر گرفته می‌شوند"
 
-#: kmkernel.cpp:798
+#: kmkernel.cpp:797
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "KMail، برای برون‌خط شدن تنظیم می‌شود؛ تمام کارهای شبکه معلق می‌شوند"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:892
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:894
+#: kmkernel.cpp:893
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "خرابی در ذخیره خودکار"
 
-#: kmkernel.cpp:1457
+#: kmkernel.cpp:1456
 #, fuzzy, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4843,7 +4843,7 @@ msgid_plural ""
 msgstr[0] "این %1 هویت برای استفاده از انتقال پیش‌فرض تغییر داده شده است:"
 msgstr[1] ""
 
-#: kmkernel.cpp:1481
+#: kmkernel.cpp:1480
 #, fuzzy, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4851,25 +4851,25 @@ msgid_plural ""
 msgstr[0] "این %1 هویت برای استفاده از انتقال پیش‌فرض تغییر داده شده است:"
 msgstr[1] ""
 
-#: kmkernel.cpp:1496
+#: kmkernel.cpp:1495
 #, kde-format
 msgid "Sending messages"
 msgstr "ارسال پیامها"
 
-#: kmkernel.cpp:1497
+#: kmkernel.cpp:1496
 #, fuzzy, kde-format
 #| msgid "Initiating sender process..."
 msgid "Initiating sending process…"
 msgstr "آغاز فرایند فرستنده..."
 
-#: kmkernel.cpp:1576
+#: kmkernel.cpp:1575
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1750 kmkernel.cpp:1756
+#: kmkernel.cpp:1749 kmkernel.cpp:1755
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -6259,130 +6259,130 @@ msgstr ""
 msgid "Cannot copy item. %1"
 msgstr "حرکت دادن پیامها به پوشه"
 
-#: kmreaderwin.cpp:122
+#: kmreaderwin.cpp:121
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "New Message To…"
 msgstr "پیام جدید به..."
 
-#: kmreaderwin.cpp:128
+#: kmreaderwin.cpp:127
 #, fuzzy, kde-format
 #| msgid "&Reply To"
 msgid "Reply To…"
 msgstr "&پاسخ به‌"
 
-#: kmreaderwin.cpp:134
+#: kmreaderwin.cpp:133
 #, fuzzy, kde-format
 #| msgid "Forward To"
 msgid "Forward To…"
 msgstr "پیش‌‌سو به"
 
-#: kmreaderwin.cpp:140
+#: kmreaderwin.cpp:139
 #, kde-format
 msgid "Add to Address Book"
 msgstr "افزودن به کتاب نشانی"
 
-#: kmreaderwin.cpp:145
+#: kmreaderwin.cpp:144
 #, fuzzy, kde-format
 #| msgid "Unable to edit attachment"
 msgid "Add to Existing Contact"
 msgstr "قادر به ویرایش پیوست نیست"
 
-#: kmreaderwin.cpp:151
+#: kmreaderwin.cpp:150
 #, kde-format
 msgid "Open in Address Book"
 msgstr "باز کردن در کتاب نشانی"
 
-#: kmreaderwin.cpp:156
+#: kmreaderwin.cpp:155
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "چوب الف کردن این پیوند"
 
-#: kmreaderwin.cpp:161
+#: kmreaderwin.cpp:160
 #, fuzzy, kde-format
 #| msgid "Edit With..."
 msgid "Edit contact…"
 msgstr "ویرایش با..."
 
-#: kmreaderwin.cpp:167
+#: kmreaderwin.cpp:166
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "ذخیره پیوند به عنوان..."
 
-#: kmreaderwin.cpp:173
+#: kmreaderwin.cpp:172
 #, fuzzy, kde-format
 #| msgid "&Find in Message..."
 msgid "&Find in Message…"
 msgstr "&یافتن در پیام...‌"
 
-#: kmreaderwin.cpp:179
+#: kmreaderwin.cpp:178
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "ذخیره پیوند به عنوان..."
 
-#: kmreaderwin.cpp:185
+#: kmreaderwin.cpp:184
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "ذخیره پیوند به عنوان..."
 
-#: kmreaderwin.cpp:191
+#: kmreaderwin.cpp:190
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgid "Show HTML Format"
 msgstr "استفاده از زنگام"
 
-#: kmreaderwin.cpp:192
+#: kmreaderwin.cpp:191
 #, fuzzy, kde-format
 #| msgid "Load external references from the Internet for this message."
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "بار کردن مرجعهای خارجی از اینترنت برای این پیام."
 
-#: kmreaderwin.cpp:198
+#: kmreaderwin.cpp:197
 #, fuzzy, kde-format
 #| msgid "Load external references from the Internet for this message."
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "بار کردن مرجعهای خارجی از اینترنت برای این پیام."
 
-#: kmreaderwin.cpp:204
+#: kmreaderwin.cpp:203
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Share image…"
 msgstr "ذخیره پیوند به عنوان..."
 
-#: kmreaderwin.cpp:267
+#: kmreaderwin.cpp:266
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "کارخواه رایانامه KDE"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 #, fuzzy, kde-format
 #| msgid "Retrieving folderlist"
 msgid "Retrieving Folder Contents"
 msgstr "بازیابی فهرست پوشه"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:275
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "لطفاً، صبر کنید"
 
-#: kmreaderwin.cpp:282 kmreaderwin.cpp:291
+#: kmreaderwin.cpp:281 kmreaderwin.cpp:290
 #, fuzzy, kde-format
 #| msgid "offline"
 msgid "Offline"
 msgstr "برون‌خط"
 
-#: kmreaderwin.cpp:284
+#: kmreaderwin.cpp:283
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6395,7 +6395,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>برون‌خط</h2><p>در حال حاضر، KMail در حالت برون‌خط "
 "است. <a href=\"kmail:goOnline\">اینجا</a> را فشار دهید تا برخط شود . . .</p> "
 
-#: kmreaderwin.cpp:293
+#: kmreaderwin.cpp:292
 #, fuzzy, kde-format
 #| msgid ""
 #| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
@@ -6408,7 +6408,7 @@ msgstr ""
 "<h2 style='margin-top: 0px;'>برون‌خط</h2><p>در حال حاضر، KMail در حالت برون‌خط "
 "است. <a href=\"kmail:goOnline\">اینجا</a> را فشار دهید تا برخط شود . . .</p> "
 
-#: kmreaderwin.cpp:848
+#: kmreaderwin.cpp:847
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully"
 msgid "Contact modified successfully"
@@ -6622,45 +6622,45 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "ویژگیهای پوشه %1"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:63
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&پاسخ‌"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:160
+#: messageactions.cpp:64 searchdialog/searchwindowdialog.cpp:160
 #, fuzzy, kde-format
 #| msgctxt "Message->"
 #| msgid "&Reply"
 msgid "&Reply…"
 msgstr "&پاسخ‌"
 
-#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:164
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:164
 #, fuzzy, kde-format
 #| msgid "Reply to All"
 msgid "Reply to &All…"
 msgstr "پاسخ به همه"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:66
 #, fuzzy, kde-format
 #| msgid "Reply to A&uthor..."
 msgid "Reply to A&uthor…"
 msgstr "پاسخ به &نویسنده...‌"
 
-#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:168
+#: messageactions.cpp:67 searchdialog/searchwindowdialog.cpp:168
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Reply to Mailing-&List…"
 msgstr "پاسخ به &فهرست نامه...‌"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:68
 #, fuzzy, kde-format
 #| msgid "Reply Without &Quote..."
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "پاسخ بدون &نقل قول...‌"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -6668,14 +6668,14 @@ msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&درون‌برنامه‌ای‌"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "به عنوان &پیوست...‌"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 #| msgctxt "Message->Forward->"
 #| msgid "&Redirect..."
@@ -6683,148 +6683,148 @@ msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&تغییر جهت...‌"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:72
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "پیام جدید &در فهرست نامه...‌"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:73
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&نشان‌دار کردن پیام‌"
 
-#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:172
+#: messageactions.cpp:74 searchdialog/searchwindowdialog.cpp:172
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&پیش‌سو‌"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:75
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "فهرست پستی"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:76
 #, fuzzy, kde-format
 #| msgid "&Edit Message"
 msgid "&Edit As New"
 msgstr "&ویرایش پیام‌"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:77
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "پالایش بر اساس &فهرست نامه...‌"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:78
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "&یافتن پیامها...‌"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:80
 #, fuzzy, kde-format
 #| msgid "Send A&gain..."
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "ارسال &دوباره...‌"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:81
 #, kde-format
 msgid "New Message From &Template"
 msgstr "پیام جدید از &قالب‌"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:83
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgid "Export to PDF…"
 msgstr "انقضا"
 
-#: messageactions.cpp:85
+#: messageactions.cpp:84
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "پیام جدید به..."
 
-#: messageactions.cpp:401
+#: messageactions.cpp:400
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "پالایش در فهرست نامه..."
 
-#: messageactions.cpp:437
+#: messageactions.cpp:436
 #, fuzzy, kde-format
 #| msgid "unknown"
 msgid "<unknown>"
 msgstr "ناشناخته"
 
-#: messageactions.cpp:437
+#: messageactions.cpp:436
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "فهرست پستی"
 
-#: messageactions.cpp:440
+#: messageactions.cpp:439
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "پیام OpenPGP - امضای بد"
 
-#: messageactions.cpp:443
+#: messageactions.cpp:442
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "پیام جدید"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:445
 #, fuzzy, kde-format
 #| msgid "Go to Line"
 msgid "Go to Archive"
 msgstr "برو به خط"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:448
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "فهرست کمک"
 
-#: messageactions.cpp:452
+#: messageactions.cpp:451
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "تماسها"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:457
 #, fuzzy, kde-format
 #| msgid "Unsubscribe from List"
 msgid "Unsubscribe from List"
 msgstr "عدم اشتراک از فهرست"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:466
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "پالایش در فهرست نامه %1..."
 
-#: messageactions.cpp:644
+#: messageactions.cpp:643
 #, kde-format
 msgid "email"
 msgstr "رایانامه"
 
-#: messageactions.cpp:647
+#: messageactions.cpp:646
 #, fuzzy, kde-format
 msgid "web"
 msgstr "شبکه"
 
-#: messageactions.cpp:652
+#: messageactions.cpp:651
 #, fuzzy, kde-format
 #| msgid "Mail: %1"
 msgctxt ""
@@ -6833,14 +6833,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "نامه: %1"
 
-#: messageactions.cpp:755
+#: messageactions.cpp:754
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "انقضا"
 
-#: messageactions.cpp:757
+#: messageactions.cpp:756
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
