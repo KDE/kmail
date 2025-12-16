@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2025-12-16 06:51+0000\n"
 "PO-Revision-Date: 2013-03-11 16:13+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -173,42 +173,42 @@ msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr ""
 
-#: ktnefmain.cpp:487
+#: ktnefmain.cpp:491
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr ""
 
-#: ktnefmain.cpp:505
+#: ktnefmain.cpp:509
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr ""
 
-#: ktnefmain.cpp:527
+#: ktnefmain.cpp:531
 #, kde-format
 msgid "Open &with %1"
 msgstr ""
 
-#: ktnefmain.cpp:529
+#: ktnefmain.cpp:533
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr ""
 
-#: ktnefmain.cpp:554
+#: ktnefmain.cpp:558
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr ""
 
-#: ktnefmain.cpp:570
+#: ktnefmain.cpp:574
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr ""
 
-#: ktnefmain.cpp:572 ktnefmain.cpp:580
+#: ktnefmain.cpp:576 ktnefmain.cpp:584
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2025-12-16 06:51+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -2006,485 +2006,485 @@ msgctxt "@title:window"
 msgid "Composer"
 msgstr "Cyfansoddydd"
 
-#: editor/kmcomposerwin.cpp:1243 editor/kmcomposerwin.cpp:1277
+#: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1281
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Anfon Ebost"
 
-#: editor/kmcomposerwin.cpp:1250 editor/kmcomposerwin.cpp:1283
+#: editor/kmcomposerwin.cpp:1254 editor/kmcomposerwin.cpp:1287
 #, fuzzy, kde-format
 msgid "&Send Mail Via"
 msgstr "&Sendmail"
 
-#: editor/kmcomposerwin.cpp:1252
+#: editor/kmcomposerwin.cpp:1256
 #, fuzzy, kde-format
 msgid "Send"
 msgstr "An&fon"
 
-#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1267
+#: editor/kmcomposerwin.cpp:1259 editor/kmcomposerwin.cpp:1271
 #, kde-format
 msgid "Send &Later"
 msgstr "Anfon yn &Nes Ymlaen"
 
-#: editor/kmcomposerwin.cpp:1261 editor/kmcomposerwin.cpp:1274
+#: editor/kmcomposerwin.cpp:1265 editor/kmcomposerwin.cpp:1278
 #, fuzzy, kde-format
 msgid "Send &Later Via"
 msgstr "Anfon yn &Nes Ymlaen"
 
-#: editor/kmcomposerwin.cpp:1263
+#: editor/kmcomposerwin.cpp:1267
 #, fuzzy, kde-format
 #| msgid "Queued"
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "Mewn Ciw"
 
-#: editor/kmcomposerwin.cpp:1292
+#: editor/kmcomposerwin.cpp:1296
 #, fuzzy, kde-format
 msgid "Save as &Draft"
 msgstr "&Cadw fel Drafft"
 
-#: editor/kmcomposerwin.cpp:1294
+#: editor/kmcomposerwin.cpp:1298
 #, fuzzy, kde-format
 #| msgid "Search in &all local folders"
 msgid "Save email in Draft folder"
 msgstr "Chwilio mewn &pob un blyfell leol"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1302
 #, fuzzy, kde-format
 msgid "Save as &Template"
 msgstr "&Amnewid"
 
-#: editor/kmcomposerwin.cpp:1299
+#: editor/kmcomposerwin.cpp:1303
 #, fuzzy, kde-format
 msgid "Save email in Template folder"
 msgstr "&Amnewid"
 
-#: editor/kmcomposerwin.cpp:1303
+#: editor/kmcomposerwin.cpp:1307
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgid "Save as &File"
 msgstr "Cadw i Ffeil"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "Save email as text or html file"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1312
 #, fuzzy, kde-format
 #| msgid "&Insert File..."
 msgid "&Insert Text File…"
 msgstr "Mewn&osod Ffeil..."
 
-#: editor/kmcomposerwin.cpp:1312
+#: editor/kmcomposerwin.cpp:1316
 #, fuzzy, kde-format
 msgid "&Insert Recent Text File"
 msgstr "Mewnosod Ffeil"
 
-#: editor/kmcomposerwin.cpp:1322 kmmainwidget.cpp:3007
+#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3007
 #, kde-format
 msgid "&Address Book"
 msgstr "&Llyfr Cyfeiriadau"
 
-#: editor/kmcomposerwin.cpp:1323
+#: editor/kmcomposerwin.cpp:1327
 #, fuzzy, kde-format
 #| msgid "Open in Address Book"
 msgid "Open Address Book"
 msgstr "Agor yn y Lyfr Cyfeiriadau"
 
-#: editor/kmcomposerwin.cpp:1331
+#: editor/kmcomposerwin.cpp:1335
 #, kde-format
 msgid "&New Composer"
 msgstr "Cyfan&soddydd Newydd"
 
-#: editor/kmcomposerwin.cpp:1337
+#: editor/kmcomposerwin.cpp:1341
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "<derbynwyr>"
 
-#: editor/kmcomposerwin.cpp:1340
+#: editor/kmcomposerwin.cpp:1344
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Tanysgrifiad"
 
-#: editor/kmcomposerwin.cpp:1364
+#: editor/kmcomposerwin.cpp:1368
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "atodiad"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1372
 #, fuzzy, kde-format
 #| msgid "Cl&ean Spaces"
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Glan&hau Gofodnodau"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1376
 #, fuzzy, kde-format
 #| msgid "Use Fi&xed Font"
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Def&nyddio Wynebfath Penodol"
 
-#: editor/kmcomposerwin.cpp:1378
+#: editor/kmcomposerwin.cpp:1382
 #, fuzzy, kde-format
 #| msgid "&Urgent"
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "Ar &Frys"
 
-#: editor/kmcomposerwin.cpp:1380
+#: editor/kmcomposerwin.cpp:1384
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "&Gofyn am Hysbysiad Lleoliad"
 
-#: editor/kmcomposerwin.cpp:1384
+#: editor/kmcomposerwin.cpp:1388
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "&Gofyn am Hysbysiad Lleoliad"
 
-#: editor/kmcomposerwin.cpp:1389
+#: editor/kmcomposerwin.cpp:1393
 #, fuzzy, kde-format
 #| msgid "&Wordwrap"
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Amlapio testun"
 
-#: editor/kmcomposerwin.cpp:1394
+#: editor/kmcomposerwin.cpp:1398
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "Golygu..."
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1403
 #, fuzzy, kde-format
 #| msgid "&Automatic Spellchecking"
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "G&wirio Sillafu Ymysgogol"
 
-#: editor/kmcomposerwin.cpp:1415
+#: editor/kmcomposerwin.cpp:1419
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Anfon Cadarnhad"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "Rich Text"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1418
+#: editor/kmcomposerwin.cpp:1422
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Anfon Cadarnhad"
 
-#: editor/kmcomposerwin.cpp:1422
+#: editor/kmcomposerwin.cpp:1426
 #, fuzzy, kde-format
 #| msgid "&All Fields"
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Pob Maes"
 
-#: editor/kmcomposerwin.cpp:1425
+#: editor/kmcomposerwin.cpp:1429
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&dynodiad"
 
-#: editor/kmcomposerwin.cpp:1428
+#: editor/kmcomposerwin.cpp:1432
 #, fuzzy, kde-format
 #| msgid "&Dictionary"
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Geiriadur"
 
-#: editor/kmcomposerwin.cpp:1431
+#: editor/kmcomposerwin.cpp:1435
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Plygell Ebostau Anfonedig"
 
-#: editor/kmcomposerwin.cpp:1434
+#: editor/kmcomposerwin.cpp:1438
 #, fuzzy, kde-format
 #| msgid "&Mail Transport"
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Cludiant Ebost"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1441
 #, fuzzy, kde-format
 #| msgid "&From"
 msgctxt "@action"
 msgid "&From"
 msgstr "&Oddiwrth"
 
-#: editor/kmcomposerwin.cpp:1440
+#: editor/kmcomposerwin.cpp:1444
 #, fuzzy, kde-format
 #| msgid "S&ubject"
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "P&wnc"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1449
 #, fuzzy, kde-format
 #| msgid "Append S&ignature"
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Atodi &Llofnod"
 
-#: editor/kmcomposerwin.cpp:1449
+#: editor/kmcomposerwin.cpp:1453
 #, fuzzy, kde-format
 #| msgid "Append S&ignature"
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Atodi &Llofnod"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1457
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1472
 #, fuzzy, kde-format
 #| msgid "Spellchecker"
 msgid "&Spellchecker…"
 msgstr "Gwirydd Sillafu"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Spellchecker"
 msgstr "Gwirydd Sillafu"
 
-#: editor/kmcomposerwin.cpp:1473
+#: editor/kmcomposerwin.cpp:1477
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "C&êl-ysgrifo Neges"
 
-#: editor/kmcomposerwin.cpp:1474
+#: editor/kmcomposerwin.cpp:1478
 #, kde-format
 msgid "Encrypt"
 msgstr "Cêl-ysgrifo"
 
-#: editor/kmcomposerwin.cpp:1476
+#: editor/kmcomposerwin.cpp:1480
 #, kde-format
 msgid "&Sign Message"
 msgstr "Llof&odi Neges"
 
-#: editor/kmcomposerwin.cpp:1477
+#: editor/kmcomposerwin.cpp:1481
 #, kde-format
 msgid "Sign"
 msgstr "Llofnodi"
 
-#: editor/kmcomposerwin.cpp:1504
+#: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1507
+#: editor/kmcomposerwin.cpp:1511
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "G&waredu"
 
-#: editor/kmcomposerwin.cpp:1512
+#: editor/kmcomposerwin.cpp:1516
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgid "Create Follow Up Reminder…"
 msgstr "&Canfod Negeseuon..."
 
-#: editor/kmcomposerwin.cpp:1546
+#: editor/kmcomposerwin.cpp:1550
 #, fuzzy, kde-format
 msgid "Configure KMail…"
 msgstr "&Furffweddu KMail..."
 
-#: editor/kmcomposerwin.cpp:1577 kmmainwin.cpp:225 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:536
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1580 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1681 editor/kmcomposerwin.cpp:4022
+#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4026
 #, fuzzy, kde-format
 #| msgid " Line: %1 "
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr "Llinell: %1"
 
-#: editor/kmcomposerwin.cpp:1684
+#: editor/kmcomposerwin.cpp:1688
 #, fuzzy, kde-format
 #| msgid " Column: %1 "
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr "Colofn: %1"
 
-#: editor/kmcomposerwin.cpp:1689
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "OVR"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1689
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "INS"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1697
+#: editor/kmcomposerwin.cpp:1701
 #, fuzzy, kde-format
 msgid "Spellcheck: on"
 msgstr "Gwirydd Sillafu"
 
-#: editor/kmcomposerwin.cpp:1697
+#: editor/kmcomposerwin.cpp:1701
 #, fuzzy, kde-format
 msgid "Spellcheck: off"
 msgstr "Gwirydd Sillafu"
 
-#: editor/kmcomposerwin.cpp:2075
+#: editor/kmcomposerwin.cpp:2079
 #, fuzzy, kde-format
 msgid "Re&save as Template"
 msgstr "&Amnewid"
 
-#: editor/kmcomposerwin.cpp:2075
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&Cadw fel Drafft"
 
-#: editor/kmcomposerwin.cpp:2076
+#: editor/kmcomposerwin.cpp:2080
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
 "time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2078
+#: editor/kmcomposerwin.cpp:2082
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
 "later time."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2082
+#: editor/kmcomposerwin.cpp:2086
 #, fuzzy, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Hoffech daflu'r neges neu ei chadw tan hwyrach?"
 
-#: editor/kmcomposerwin.cpp:2083
+#: editor/kmcomposerwin.cpp:2087
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Cyfan&soddydd Newydd"
 
-#: editor/kmcomposerwin.cpp:2151
+#: editor/kmcomposerwin.cpp:2155
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Methwyd symud y negeseuon."
 
-#: editor/kmcomposerwin.cpp:2152
+#: editor/kmcomposerwin.cpp:2156
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Methwyd symud y negeseuon."
 
-#: editor/kmcomposerwin.cpp:2223 kmlaunchexternalcomponent.cpp:152
+#: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:152
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "Methu cychwyn rheolydd tystysgrif.  Gwiriwch eich gosodiad!"
 
-#: editor/kmcomposerwin.cpp:2225 kmlaunchexternalcomponent.cpp:154
+#: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:154
 #, fuzzy, kde-format
 #| msgid "Unable to start external editor."
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "Methu cychwyn golygydd allanol."
 
-#: editor/kmcomposerwin.cpp:2348
+#: editor/kmcomposerwin.cpp:2352
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Mewnosod Ffeil"
 
-#: editor/kmcomposerwin.cpp:2413
+#: editor/kmcomposerwin.cpp:2417
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2414
+#: editor/kmcomposerwin.cpp:2418
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Ychwanegu Atodiad..."
 
-#: editor/kmcomposerwin.cpp:2429
+#: editor/kmcomposerwin.cpp:2433
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2429 editor/kmcomposerwin.cpp:2534
+#: editor/kmcomposerwin.cpp:2433 editor/kmcomposerwin.cpp:2538
 #, fuzzy, kde-format
 msgid "Name of the attachment:"
 msgstr "atodiad"
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2439
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2439
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "&Galluogi llofnod"
 
-#: editor/kmcomposerwin.cpp:2486
+#: editor/kmcomposerwin.cpp:2490
 #, fuzzy, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Neges wedi'i chêl-ysgrifo"
 msgstr[1] "Neges wedi'i chêl-ysgrifo"
 
-#: editor/kmcomposerwin.cpp:2487
+#: editor/kmcomposerwin.cpp:2491
 #, fuzzy, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Ychwanegu Atodiad..."
 msgstr[1] "Ychwanegu Atodiad..."
 
-#: editor/kmcomposerwin.cpp:2533
+#: editor/kmcomposerwin.cpp:2537
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "atodiad"
 
-#: editor/kmcomposerwin.cpp:2629
+#: editor/kmcomposerwin.cpp:2633
 #, kde-format
 msgid "unnamed"
 msgstr "di-enw"
 
-#: editor/kmcomposerwin.cpp:2655
+#: editor/kmcomposerwin.cpp:2659
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2496,14 +2496,14 @@ msgstr ""
 "p><p>Gallwch ddiffinio'r allwedd OpenPGP a ddylir ei defnyddio efo'r "
 "dynodiad cyfredol yn y ffurfweddiad dynodiad.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2662
+#: editor/kmcomposerwin.cpp:2666
 #, fuzzy, kde-format
 #| msgid "Undefined Signing Key"
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Allwedd Lofnodi heb ei Diffinio"
 
-#: editor/kmcomposerwin.cpp:2827
+#: editor/kmcomposerwin.cpp:2831
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2511,142 +2511,142 @@ msgid ""
 "for each message."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:2836
+#: editor/kmcomposerwin.cpp:2840
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "Rhaid i chi benodi o leiaf un derbyniwr yn y maes I:."
 
-#: editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2846
 #, fuzzy, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Nid ydych wedi penodi pwnc.  Anfon y neges beth bynnag?"
 
-#: editor/kmcomposerwin.cpp:2844
+#: editor/kmcomposerwin.cpp:2848
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Dim Enw wedi'i Benodi"
 
-#: editor/kmcomposerwin.cpp:2845 editor/kmcomposerwin.cpp:2859
+#: editor/kmcomposerwin.cpp:2849 editor/kmcomposerwin.cpp:2863
 #, fuzzy, kde-format
 #| msgid "S&end as Is"
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "A&nfon e"
 
-#: editor/kmcomposerwin.cpp:2846
+#: editor/kmcomposerwin.cpp:2850
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Na, Gadewch i Mi Benodi'r Pwnc"
 
-#: editor/kmcomposerwin.cpp:2856
+#: editor/kmcomposerwin.cpp:2860
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Nid ydych wedi penodi pwnc.  Anfon y neges beth bynnag?"
 
-#: editor/kmcomposerwin.cpp:2858
+#: editor/kmcomposerwin.cpp:2862
 #, fuzzy, kde-format
 #| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Ni Phenodwyd Pwnc"
 
-#: editor/kmcomposerwin.cpp:2860
+#: editor/kmcomposerwin.cpp:2864
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Na, Gadewch i Mi Benodi'r Pwnc"
 
-#: editor/kmcomposerwin.cpp:2905
+#: editor/kmcomposerwin.cpp:2909
 #, fuzzy, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Rhaid i chi benodi o leiaf un derbyniwr yn y maes I:."
 
-#: editor/kmcomposerwin.cpp:3091
+#: editor/kmcomposerwin.cpp:3095
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "About to send email…"
 msgstr "Ar fin anfon ebost..."
 
-#: editor/kmcomposerwin.cpp:3092
+#: editor/kmcomposerwin.cpp:3096
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Anfon Cadarnhad"
 
-#: editor/kmcomposerwin.cpp:3093
+#: editor/kmcomposerwin.cpp:3097
 #, fuzzy, kde-format
 #| msgid "&Send Now"
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Anfo&n Rwan"
 
-#: editor/kmcomposerwin.cpp:3094
+#: editor/kmcomposerwin.cpp:3098
 #, fuzzy, kde-format
 #| msgid "Send &Later"
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Anfon yn &Nes Ymlaen"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3178
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3179
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "<derbynwyr>"
 
-#: editor/kmcomposerwin.cpp:3176
+#: editor/kmcomposerwin.cpp:3180
 #, fuzzy, kde-format
 #| msgid "&Send as Is"
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Anfon e"
 
-#: editor/kmcomposerwin.cpp:3177
+#: editor/kmcomposerwin.cpp:3181
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "<derbynwyr>"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3218
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3220
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Anfon Cadarnhad"
 
-#: editor/kmcomposerwin.cpp:3217
+#: editor/kmcomposerwin.cpp:3221
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Anfon Cadarnhad"
 
-#: editor/kmcomposerwin.cpp:3218
+#: editor/kmcomposerwin.cpp:3222
 #, fuzzy, kde-format
 #| msgid "Message as Plain Text"
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Neges fel Testun Plaen"
 
-#: editor/kmcomposerwin.cpp:3430
+#: editor/kmcomposerwin.cpp:3434
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2654,7 +2654,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3443
+#: editor/kmcomposerwin.cpp:3447
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2662,7 +2662,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3459
+#: editor/kmcomposerwin.cpp:3463
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2670,7 +2670,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3472
+#: editor/kmcomposerwin.cpp:3476
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2678,26 +2678,26 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3645
+#: editor/kmcomposerwin.cpp:3649
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Cêl-ysgrifo"
 
-#: editor/kmcomposerwin.cpp:3647
+#: editor/kmcomposerwin.cpp:3651
 #, fuzzy, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Peidio â Chêl-ysg&rifo"
 
-#: editor/kmcomposerwin.cpp:3787
+#: editor/kmcomposerwin.cpp:3791
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3809
+#: editor/kmcomposerwin.cpp:3813
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2705,7 +2705,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3813
+#: editor/kmcomposerwin.cpp:3817
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2713,7 +2713,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3817
+#: editor/kmcomposerwin.cpp:3821
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2721,7 +2721,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3844
+#: editor/kmcomposerwin.cpp:3848
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2730,7 +2730,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3852
+#: editor/kmcomposerwin.cpp:3856
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2740,7 +2740,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3860
+#: editor/kmcomposerwin.cpp:3864
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2748,7 +2748,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3870
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2756,7 +2756,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3876
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2764,7 +2764,7 @@ msgid ""
 "for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3880
+#: editor/kmcomposerwin.cpp:3884
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2774,7 +2774,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3888
+#: editor/kmcomposerwin.cpp:3892
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2782,7 +2782,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3894
+#: editor/kmcomposerwin.cpp:3898
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2792,7 +2792,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3902
+#: editor/kmcomposerwin.cpp:3906
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2800,7 +2800,7 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3907
+#: editor/kmcomposerwin.cpp:3911
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2808,12 +2808,12 @@ msgid ""
 "trusted key. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:4024
+#: editor/kmcomposerwin.cpp:4028
 #, kde-format
 msgid " Column: %1 "
 msgstr "Colofn: %1"
 
-#: editor/kmcomposerwin.cpp:4241
+#: editor/kmcomposerwin.cpp:4245
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "if in your language something like 'key(s)' isn't possible please use the "
@@ -2836,12 +2836,12 @@ msgstr ""
 "\n"
 "Dewiswch yr allwedd(au) a ddylir eu defnyddio ar gyfer y derbyniwr yma."
 
-#: editor/kmcomposerwin.cpp:4253
+#: editor/kmcomposerwin.cpp:4257
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Dewis Allwedd Cêl-ysgrifo"
 
-#: editor/kmcomposerwin.cpp:4338
+#: editor/kmcomposerwin.cpp:4342
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -3108,7 +3108,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Neges Newydd"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4440,7 +4440,7 @@ msgid "&Help"
 msgstr "&Blîp"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:344 kmcomposerui.rc:111 kmmainwin.rc:346 kmreadermainwin.rc:89
+#: kmail_part.rc:345 kmcomposerui.rc:111 kmmainwin.rc:347 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr ""
@@ -4507,27 +4507,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1319
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Dileu Negeseuon"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1329
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Symud neges %3 o %2 oddiwrth %1."
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1537 kmcommands.cpp:1668
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Methwyd symud y negeseuon."
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1537 kmcommands.cpp:1678
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Dileu Negeseuon"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1820
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"
