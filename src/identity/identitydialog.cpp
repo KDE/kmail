@@ -17,7 +17,6 @@
 #include "identityinvalidfolder.h"
 
 #include <QGpgME/Job>
-#include <QGpgME/Protocol>
 
 #include <KIdentityManagementCore/IdentityManager>
 

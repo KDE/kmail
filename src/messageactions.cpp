@@ -22,7 +22,6 @@
 #include <MessageViewer/MessageViewerSettings>
 
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/ItemFetchJob>
 #include <Akonadi/MessageParts>
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 #include <Debug/akonadisearchdebugdialog.h>

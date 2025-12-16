@@ -22,7 +22,6 @@
 #include <Akonadi/AddEmailDisplayJob>
 #include <Akonadi/OpenEmailAddressJob>
 #include <KEmailAddress>
-#include <MailCommon/MailUtil>
 #include <MessageViewer/CSSHelper>
 #include <MessageViewer/HeaderStrategy>
 #include <MessageViewer/MarkMessageReadHandler>

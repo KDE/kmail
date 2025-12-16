@@ -63,7 +63,6 @@ using KMail::MailServiceImpl;
 
 #include <MailCommon/FolderSettings>
 
-#include <KMessageBox>
 #include <KNotification>
 
 #include "kmail_debug.h"
