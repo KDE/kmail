@@ -84,6 +84,15 @@ KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer
     mReaderWin->setMsgPart(aMsgPart);
 }
 
+KMReaderMainWin::KMReaderMainWin(const std::shared_ptr<KMime::Content> &aMsgPart,
+                                 MessageViewer::Viewer::DisplayFormatMessage format,
+                                 const QString &encoding,
+                                 const QString &name)
+    : KMReaderMainWin(aMsgPart.get(), format, encoding, name)
+{
+    m_msgPart = aMsgPart;
+}
+
 void KMReaderMainWin::initKMReaderMainWin()
 {
     setCentralWidget(mReaderWin);

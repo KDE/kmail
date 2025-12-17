@@ -105,7 +105,7 @@ void AttachmentController::selectionChanged()
     setSelectedParts(selectedParts);
 }
 
-void AttachmentController::onShowAttachment(KMime::Content *content, const QByteArray &charset)
+void AttachmentController::onShowAttachment(const std::shared_ptr<KMime::Content> &content, const QByteArray &charset)
 {
     const QString charsetStr = QString::fromLatin1(charset);
     if (content->bodyAsMessage()) {

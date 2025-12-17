@@ -42,6 +42,10 @@ public:
     KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage format, bool htmlLoadExtDefault, const QString &name = QString());
     explicit KMReaderMainWin(const QString &name = QString());
     KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, const QString &name = QString());
+    KMReaderMainWin(const std::shared_ptr<KMime::Content> &aMsgPart,
+                    MessageViewer::Viewer::DisplayFormatMessage format,
+                    const QString &encoding,
+                    const QString &name = QString());
     ~KMReaderMainWin() override;
 
     void setUseFixedFont(bool useFixedFont);
@@ -130,4 +134,5 @@ private:
     KMail::TagActionManager *mTagActionManager = nullptr;
     KToggleAction *mHideMenuBarAction = nullptr;
     Akonadi::StandardMailActionManager *mAkonadiStandardActionManager = nullptr;
+    std::shared_ptr<KMime::Content> m_msgPart;
 };

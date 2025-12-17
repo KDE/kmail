@@ -39,7 +39,7 @@ private:
     void slotActionsCreated();
     void addAttachmentItems(const Akonadi::Item::List &items);
     void selectionChanged();
-    void onShowAttachment(KMime::Content *content, const QByteArray &charset);
+    void onShowAttachment(const std::shared_ptr<KMime::Content> &content, const QByteArray &charset);
     void doubleClicked(const QModelIndex &itemClicked);
     void slotSelectAllAttachment();
 
