@@ -709,13 +709,13 @@ bool KMReaderWin::printSelectedText(bool preview)
     composer->textPart()->setWrappedPlainText(str);
     auto messagePtr = messageItem().payload<std::shared_ptr<KMime::Message>>();
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
-    if (auto to = messagePtr->to(false)) {
+    if (auto to = messagePtr->to(KMime::CreatePolicy::DontCreate)) {
         composer->infoPart()->setTo(QStringList() << to->asUnicodeString());
     }
-    if (auto cc = messagePtr->cc(false)) {
+    if (auto cc = messagePtr->cc(KMime::CreatePolicy::DontCreate)) {
         composer->infoPart()->setCc(QStringList() << cc->asUnicodeString());
     }
-    if (auto subject = messagePtr->subject(false)) {
+    if (auto subject = messagePtr->subject(KMime::CreatePolicy::DontCreate)) {
         composer->infoPart()->setSubject(subject->asUnicodeString());
     }
     composer->setProperty("preview", preview);

@@ -120,7 +120,7 @@ KMReaderMainWin::~KMReaderMainWin()
         info.setItem(mMsg.id());
         std::shared_ptr<KMime::Message> message = MessageComposer::Util::message(mMsg);
         if (message) {
-            if (auto subject = message->subject(false)) {
+            if (auto subject = message->subject(KMime::CreatePolicy::DontCreate)) {
                 info.setSubject(subject->asUnicodeString());
             }
         }
@@ -158,7 +158,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     std::shared_ptr<KMime::Message> message = MessageComposer::Util::message(msg);
     QString caption;
     if (message) {
-        if (auto subject = message->subject(false)) {
+        if (auto subject = message->subject(KMime::CreatePolicy::DontCreate)) {
             caption = subject->asUnicodeString();
         }
     }
@@ -240,7 +240,7 @@ void KMReaderMainWin::initializeMessage(const std::shared_ptr<KMime::Message> &m
     mMsgActions->setCurrentMessage(item);
 
     mReaderWin->setMessage(message);
-    if (auto subject = message->subject(false)) {
+    if (auto subject = message->subject(KMime::CreatePolicy::DontCreate)) {
         setCaption(subject->asUnicodeString());
     }
     mTrashAction->setEnabled(false);

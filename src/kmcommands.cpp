@@ -410,7 +410,7 @@ KMCommand::Result KMMailtoComposeCommand::execute()
 
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), id);
     // Already defined in MessageHelper::initHeader
-    msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
+    msg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
     msg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mUrl));
 
     KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::TemplateContext::New, id);
@@ -1914,7 +1914,7 @@ KMCommand::Result KMShareImageCommand::execute()
 
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager(), id);
     // Already defined in MessageHelper::initHeader
-    msg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
+    msg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
 
     KMail::Composer *win = KMail::makeComposer(msg, false, false, KMail::Composer::TemplateContext::New, id);
     win->setFocusToSubject();

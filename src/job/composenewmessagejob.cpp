@@ -55,10 +55,10 @@ void ComposeNewMessageJob::start()
         // Copy the recipient list from the original message
         const std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(mRecipientsFrom);
         if (msg) {
-            copyAddresses(msg->to(false), mMsg->to());
-            copyAddresses(msg->cc(false), mMsg->cc());
-            copyAddresses(msg->bcc(false), mMsg->bcc());
-            copyAddresses(msg->replyTo(false), mMsg->replyTo());
+            copyAddresses(msg->to(KMime::CreatePolicy::DontCreate), mMsg->to());
+            copyAddresses(msg->cc(KMime::CreatePolicy::DontCreate), mMsg->cc());
+            copyAddresses(msg->bcc(KMime::CreatePolicy::DontCreate), mMsg->bcc());
+            copyAddresses(msg->replyTo(KMime::CreatePolicy::DontCreate), mMsg->replyTo());
         } else {
             qCWarning(KMAIL_LOG) << "Original message" << mRecipientsFrom.id() << "not found";
         }

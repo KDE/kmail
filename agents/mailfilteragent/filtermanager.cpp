@@ -242,15 +242,15 @@ void FilterManager::Private::beginFiltering(const Akonadi::Item &item) const
         if (item.hasPayload<std::shared_ptr<KMime::Message>>()) {
             auto msg = item.payload<std::shared_ptr<KMime::Message>>();
             QString subject;
-            if (auto msgSubject = msg->subject(false)) {
+            if (auto msgSubject = msg->subject(KMime::CreatePolicy::DontCreate)) {
                 subject = msgSubject->asUnicodeString();
             }
             QString from;
-            if (auto msgFrom = msg->from(false)) {
+            if (auto msgFrom = msg->from(KMime::CreatePolicy::DontCreate)) {
                 from = msgFrom->asUnicodeString();
             }
             QDateTime dateTime;
-            if (auto msgDate = msg->date(false)) {
+            if (auto msgDate = msg->date(KMime::CreatePolicy::DontCreate)) {
                 dateTime = msgDate->dateTime();
             }
             const QString date = QLocale().toString(dateTime, QLocale::LongFormat);

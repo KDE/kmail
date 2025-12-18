@@ -53,7 +53,7 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
     auto msg = mMessageItem.payload<std::shared_ptr<KMime::Message>>();
     if (msg) {
         auto reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
-        KMime::Headers::MessageID *messageID = msg->messageID(false);
+        KMime::Headers::MessageID *messageID = msg->messageID(KMime::CreatePolicy::DontCreate);
         if (messageID) {
             const QString messageIdStr = messageID->asUnicodeString();
             reminderJob->setMessageId(messageIdStr);
@@ -67,11 +67,11 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         reminderJob->setFollowUpReminderDate(mDate);
         reminderJob->setCollectionToDo(mCollection);
         reminderJob->setOriginalMessageItemId(mMessageItem.id());
-        KMime::Headers::To *to = msg->to(false);
+        KMime::Headers::To *to = msg->to(KMime::CreatePolicy::DontCreate);
         if (to) {
             reminderJob->setTo(to->asUnicodeString());
         }
-        KMime::Headers::Subject *subject = msg->subject(false);
+        KMime::Headers::Subject *subject = msg->subject(KMime::CreatePolicy::DontCreate);
         if (subject) {
             reminderJob->setSubject(subject->asUnicodeString());
         }

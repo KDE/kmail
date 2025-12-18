@@ -1408,7 +1408,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
         std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(items.at(idx));
         if (msg) {
             QString subj;
-            if (auto subject = msg->subject(false)) {
+            if (auto subject = msg->subject(KMime::CreatePolicy::DontCreate)) {
                 subj = subject->asUnicodeString();
             }
 
@@ -2178,7 +2178,7 @@ void KMMainWidget::slotSubjectFilter()
         return;
     }
     QString str;
-    if (auto subject = msg->subject(false)) {
+    if (auto subject = msg->subject(KMime::CreatePolicy::DontCreate)) {
         str = subject->asUnicodeString();
     }
     openFilterDialog("Subject", str);
@@ -2221,7 +2221,7 @@ void KMMainWidget::slotCcFilter()
         return;
     }
     QString str;
-    if (auto cc = msg->cc(false)) {
+    if (auto cc = msg->cc(KMime::CreatePolicy::DontCreate)) {
         str = cc->asUnicodeString();
     }
     openFilterDialog("Cc", str);

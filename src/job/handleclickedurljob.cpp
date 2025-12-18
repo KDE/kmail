@@ -28,7 +28,7 @@ void HandleClickedUrlJob::start()
     mIdentity = !mFolder.isNull() ? mFolder->identity() : 0;
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mIdentity);
     // Already defined in MessageHelper::initHeader
-    mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
+    mMsg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
 
     const QList<QPair<QString, QString>> fields = MessageCore::StringUtil::parseMailtoUrl(mUrl);
     for (int i = 0; i < fields.count(); ++i) {

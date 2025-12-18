@@ -1231,7 +1231,7 @@ void KMComposerWin::setQuotePrefix(uint uoid)
         }
     }
     QString fromStr;
-    if (auto h = mMsg->from(false)) {
+    if (auto h = mMsg->from(KMime::CreatePolicy::DontCreate)) {
         fromStr = h->displayString();
     }
     mComposerBase->editor()->setQuotePrefixName(MessageCore::StringUtil::formatQuotePrefix(quotePrefix, fromStr));
@@ -1877,10 +1877,10 @@ void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
     data.setNewMessage(mContext == TemplateContext::New);
     mPluginEditorConvertTextManagerInterface->setInitialData(data);
 
-    if (auto msgFrom = mMsg->from(false)) {
+    if (auto msgFrom = mMsg->from(KMime::CreatePolicy::DontCreate)) {
         mEdtFrom->setText(msgFrom->asUnicodeString());
     }
-    if (auto msgSubject = mMsg->subject(false)) {
+    if (auto msgSubject = mMsg->subject(KMime::CreatePolicy::DontCreate)) {
         mEdtSubject->setPlainText(msgSubject->asUnicodeString());
     }
 

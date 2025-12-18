@@ -25,7 +25,7 @@ void NewMessageJob::start()
     mMsg = std::shared_ptr<KMime::Message>(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
     // Already defined in MessageHelper::initHeader
-    mMsg->contentType(false)->setCharset(QByteArrayLiteral("utf-8"));
+    mMsg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
     // set basic headers
     if (!mNewMessageJobSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc);
