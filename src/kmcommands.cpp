@@ -1755,7 +1755,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand(QWidget *parent, const Akonad
 
 KMCommand::Result KMSaveAttachmentsCommand::execute()
 {
-    KMime::Content::List contentsToSave;
+    QList<KMime::Content *> contentsToSave;
     const Akonadi::Item::List lstItems = retrievedMsgs();
     for (const Akonadi::Item &item : lstItems) {
         if (item.hasPayload<std::shared_ptr<KMime::Message>>()) {
