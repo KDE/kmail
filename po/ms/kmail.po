@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 13:25+0000\n"
+"POT-Creation-Date: 2025-12-19 00:44+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -1942,7 +1942,7 @@ msgid "Show attachment list"
 msgstr "ada lampiran"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:486 kontactplugin/kmail/kmail_plugin.cpp:41
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2332,7 +2332,7 @@ msgstr "&Cari Mesej"
 msgid "Configure KMail…"
 msgstr "&Konfigur KMail..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5609,7 +5609,7 @@ msgstr "&Awasi Rantaian"
 msgid "&Ignore Thread"
 msgstr "&Abaikan Rantaian"
 
-#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:497
 #, fuzzy, kde-format
 #| msgid "Save A&ttachments..."
 msgid "Save A&ttachments…"
@@ -6157,29 +6157,29 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Langganan..."
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:500 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Allihkan ke Tong Sampah"
 
-#: kmreadermainwin.cpp:492
+#: kmreadermainwin.cpp:501
 #, fuzzy, kde-format
 #| msgid "trash"
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Sampah"
 
-#: kmreadermainwin.cpp:493
+#: kmreadermainwin.cpp:502
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Alihkan mesej ke tong sampah"
 
-#: kmreadermainwin.cpp:539
+#: kmreadermainwin.cpp:548
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:622
+#: kmreadermainwin.cpp:631
 #, fuzzy, kde-format
 msgid "Cannot copy item. %1"
 msgstr "_n: 1 mesej baru dalam %2"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 13:25+0000\n"
+"POT-Creation-Date: 2025-12-19 00:44+0000\n"
 "PO-Revision-Date: 2024-09-17 13:40+0200\n"
 "Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1740,7 +1740,7 @@ msgid "Show attachment list"
 msgstr "Zobrazit seznam příloh"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:486 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2091,7 +2091,7 @@ msgstr "Vytvořit připomínku pro následnou činnost…"
 msgid "Configure KMail…"
 msgstr "Nastavit KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5094,7 +5094,7 @@ msgstr "Sle&dovat vlákno"
 msgid "&Ignore Thread"
 msgstr "&Ignorovat vlákno"
 
-#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:497
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Uloži&t přílohy…"
@@ -5590,28 +5590,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Spouští se…"
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:500 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Přesunout do &koše"
 
-#: kmreadermainwin.cpp:492
+#: kmreadermainwin.cpp:501
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Koš"
 
-#: kmreadermainwin.cpp:493
+#: kmreadermainwin.cpp:502
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Přesunout zprávu do koše"
 
-#: kmreadermainwin.cpp:539
+#: kmreadermainwin.cpp:548
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Skrýt nabídku"
 
-#: kmreadermainwin.cpp:622
+#: kmreadermainwin.cpp:631
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Položku nelze zkopírovat. %1"

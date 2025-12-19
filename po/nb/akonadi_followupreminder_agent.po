@@ -96,11 +96,3 @@ msgstr ""
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"
 msgstr "Du venter fortsatt på et svar om denne e-posten:"
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Bjørn Steensrud"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "bjornst@skogkatt.homelinux.org"

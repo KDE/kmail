@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 13:25+0000\n"
+"POT-Creation-Date: 2025-12-19 00:44+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -1799,7 +1799,7 @@ msgid "Show attachment list"
 msgstr "Liste de fólderes:"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:486 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "KMail"
@@ -2152,7 +2152,7 @@ msgstr "Crear..."
 msgid "Configure KMail…"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, fuzzy, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5046,7 +5046,7 @@ msgstr ""
 msgid "&Ignore Thread"
 msgstr "Ignorar"
 
-#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:497
 #, fuzzy, kde-format
 msgid "Save A&ttachments…"
 msgstr "Atachamentes"
@@ -5537,28 +5537,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr ""
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:500 util.cpp:167
 #, fuzzy, kde-format
 msgid "&Move to Trash"
 msgstr "A"
 
-#: kmreadermainwin.cpp:492
+#: kmreadermainwin.cpp:501
 #, fuzzy, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Paper-corb"
 
-#: kmreadermainwin.cpp:493
+#: kmreadermainwin.cpp:502
 #, fuzzy, kde-format
 msgid "Move message to trashcan"
 msgstr "A"
 
-#: kmreadermainwin.cpp:539
+#: kmreadermainwin.cpp:548
 #, fuzzy, kde-format
 msgid "Hide menu bar"
 msgstr "Menú de servicie «Compresser»"
 
-#: kmreadermainwin.cpp:622
+#: kmreadermainwin.cpp:631
 #, fuzzy, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Copiar li originale al traduction"

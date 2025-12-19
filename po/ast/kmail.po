@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 13:25+0000\n"
+"POT-Creation-Date: 2025-12-19 00:44+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -1703,7 +1703,7 @@ msgid "Show attachment list"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:486 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr ""
@@ -2054,7 +2054,7 @@ msgstr ""
 msgid "Configure KMail…"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -4927,7 +4927,7 @@ msgstr ""
 msgid "&Ignore Thread"
 msgstr ""
 
-#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:497
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr ""
@@ -5418,28 +5418,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr ""
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:500 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr ""
 
-#: kmreadermainwin.cpp:492
+#: kmreadermainwin.cpp:501
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr ""
 
-#: kmreadermainwin.cpp:493
+#: kmreadermainwin.cpp:502
 #, kde-format
 msgid "Move message to trashcan"
 msgstr ""
 
-#: kmreadermainwin.cpp:539
+#: kmreadermainwin.cpp:548
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:622
+#: kmreadermainwin.cpp:631
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr ""

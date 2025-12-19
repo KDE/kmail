@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 13:25+0000\n"
+"POT-Creation-Date: 2025-12-19 00:44+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@lister.huftis.org>\n"
@@ -1738,7 +1738,7 @@ msgid "Show attachment list"
 msgstr "Mildosat"
 
 #: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:477 kontactplugin/kmail/kmail_plugin.cpp:41
+#: kmreadermainwin.cpp:486 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr ""
@@ -2092,7 +2092,7 @@ msgstr ""
 msgid "Configure KMail…"
 msgstr "Heivet KMail …"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:536
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3822,11 +3822,8 @@ msgctxt "@info:shell"
 msgid "Set subject of message"
 msgstr "Mearrit reivve fáttá"
 
-# unreviewed-context
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "Fáddá"
 
@@ -5003,7 +5000,7 @@ msgstr "&Gozit gođđosa"
 msgid "&Ignore Thread"
 msgstr "Badjelgeahča &gođđasa"
 
-#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:488
+#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:497
 #, fuzzy, kde-format
 msgid "Save A&ttachments…"
 msgstr "Vurke &mildosiid nugo …"
@@ -5497,28 +5494,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "&Heivehusat"
 
-#: kmreadermainwin.cpp:491 util.cpp:167
+#: kmreadermainwin.cpp:500 util.cpp:167
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Sirdde ruskalihtái"
 
-#: kmreadermainwin.cpp:492
+#: kmreadermainwin.cpp:501
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr ""
 
-#: kmreadermainwin.cpp:493
+#: kmreadermainwin.cpp:502
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Sirdde reivve ruskalihtái"
 
-#: kmreadermainwin.cpp:539
+#: kmreadermainwin.cpp:548
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:622
+#: kmreadermainwin.cpp:631
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr ""
@@ -7751,13 +7748,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~ msgctxt "@option:check"
-#~ msgid "&Use custom message-id suffix"
-#~ msgstr "&Geavat iesdefinerejuvvon message-id-suffivssa"
-
-#, fuzzy
-#~ msgctxt "@label:textbox"
-#~ msgid "Custom message-&id suffix:"
-#~ msgstr "Iešdefinerejuvvon message-&id-suffiksa:"
