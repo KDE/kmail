@@ -171,11 +171,3 @@ msgstr "Změnit…"
 #, kde-format
 msgid "Delete"
 msgstr "Smazat"
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Vít Pelčák"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "vit@pelcak.org"

@@ -7989,11 +7989,3 @@ msgstr[2] "Odpověď \"mimo kancelář\" je na serverech aktivní"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Přiblížení: %1%"
-
-#~ msgctxt "@option:check"
-#~ msgid "&Use custom message-id suffix"
-#~ msgstr "&Použít uživatelskou identifikační příponu"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Custom message-&id suffix:"
-#~ msgstr "Uživatelská &identifikační přípona:"
