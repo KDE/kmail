@@ -194,7 +194,6 @@ using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;
 using namespace KMail;
-using KMime::Types::AddrSpecList;
 using KPIM::ProgressManager;
 using PimCommon::BroadcastStatus;
 
@@ -2192,7 +2191,7 @@ void KMMainWidget::slotFromFilter()
         return;
     }
 
-    AddrSpecList al = MessageHelper::extractAddrSpecs(msg, "From");
+    const auto al = MessageHelper::extractAddrSpecs(msg, "From");
     if (al.empty()) {
         openFilterDialog("From", msg->from()->asUnicodeString());
     } else {
