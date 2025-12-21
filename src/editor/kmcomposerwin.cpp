@@ -547,8 +547,10 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
 
     connect(mEdtFrom, &MessageComposer::ComposerLineEdit::completionModeChanged, this, &KMComposerWin::slotCompletionModeChanged);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &KMComposerWin::slotFolderRemoved);
-    connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::slotConfigChanged);
-    connect(kmkernel, &KMKernel::configChanged, this, &KMComposerWin::runKeyResolver);
+    connect(kmkernel, &KMKernel::configChanged, this, [this]() {
+        slotConfigChanged();
+        runKeyResolver();
+    });
 
     mMainWidget->resize(800, 600);
     setCentralWidget(mMainWidget);
