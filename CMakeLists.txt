@@ -39,14 +39,31 @@ endif()
 if(NOT ${PRE_COMMIT_INSTALLED})
     find_program(PRE_COMMIT_EXECUTABLE pre-commit)
     if(PRE_COMMIT_EXECUTABLE)
-        message(
-            WARNING
-            "This module has pre-commit support. pre-commit binary was found. Please execute pre-commit install -f"
+        message(STATUS "This module has pre-commit support. pre-commit binary was found. Installing pre-commit hook")
+        execute_process(
+            COMMAND
+                "${PRE_COMMIT_EXECUTABLE}" install -f
+            ERROR_QUIET
+            RESULT_VARIABLE _precommitresult
+            WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
         )
+        if(_precommitresult EQUAL 0)
+            message(STATUS "Pre-commit installed.")
+        else()
+            message(
+                WARNING
+                "Error during installing pre-commit hook: ${PRE_COMMIT_EXECUTABLE} project source dir ${PROJECT_SOURCE_DIR}"
+            )
+            include(KDEGitCommitHooks)
+            include(KDEClangFormat)
+            kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
+        endif()
+    else()
+        message(WARNING "This module has pre-commit support. pre-commit binary was not found.")
+        include(KDEGitCommitHooks)
+        include(KDEClangFormat)
+        kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
     endif()
-    include(KDEGitCommitHooks)
-    include(KDEClangFormat)
-    kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 endif()
 
 include(CheckFunctionExists)
