@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-21 00:44+0000\n"
+"POT-Creation-Date: 2025-12-22 00:43+0000\n"
 "PO-Revision-Date: 2025-11-26 07:27+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -1843,287 +1843,287 @@ msgctxt "@title:window"
 msgid "Composer"
 msgstr "Sestavljalnik"
 
-#: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1281
+#: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1283
 #, kde-format
 msgid "&Send Mail"
 msgstr "Pošlji pošto"
 
-#: editor/kmcomposerwin.cpp:1254 editor/kmcomposerwin.cpp:1287
+#: editor/kmcomposerwin.cpp:1256 editor/kmcomposerwin.cpp:1289
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "Pošlji pošto preko"
 
-#: editor/kmcomposerwin.cpp:1256
+#: editor/kmcomposerwin.cpp:1258
 #, kde-format
 msgid "Send"
 msgstr "Pošlji"
 
-#: editor/kmcomposerwin.cpp:1259 editor/kmcomposerwin.cpp:1271
+#: editor/kmcomposerwin.cpp:1261 editor/kmcomposerwin.cpp:1273
 #, kde-format
 msgid "Send &Later"
 msgstr "Pošlji kasneje"
 
-#: editor/kmcomposerwin.cpp:1265 editor/kmcomposerwin.cpp:1278
+#: editor/kmcomposerwin.cpp:1267 editor/kmcomposerwin.cpp:1280
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Pošlji kasneje preko"
 
-#: editor/kmcomposerwin.cpp:1267
+#: editor/kmcomposerwin.cpp:1269
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "V vrsto"
 
-#: editor/kmcomposerwin.cpp:1296
+#: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save as &Draft"
 msgstr "Shrani kot osnutek"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1300
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "Shrani pošto v mapo z osnutki"
 
-#: editor/kmcomposerwin.cpp:1302
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "Save as &Template"
 msgstr "Shrani kot predlogo"
 
-#: editor/kmcomposerwin.cpp:1303
+#: editor/kmcomposerwin.cpp:1305
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "Shrani pošto v mapo s predlogami"
 
-#: editor/kmcomposerwin.cpp:1307
+#: editor/kmcomposerwin.cpp:1309
 #, kde-format
 msgid "Save as &File"
 msgstr "Shrani v datoteko"
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1310
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "Shrani pošto kot besedilno ali HTML datoteko"
 
-#: editor/kmcomposerwin.cpp:1312
+#: editor/kmcomposerwin.cpp:1314
 #, kde-format
 msgid "&Insert Text File…"
 msgstr "Vstav&i besedilno datoteko…"
 
-#: editor/kmcomposerwin.cpp:1316
+#: editor/kmcomposerwin.cpp:1318
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "Vstav&i nedavno besedilno datoteko"
 
-#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3006
+#: editor/kmcomposerwin.cpp:1328 kmmainwidget.cpp:3006
 #, kde-format
 msgid "&Address Book"
 msgstr "&Adresar"
 
-#: editor/kmcomposerwin.cpp:1327
+#: editor/kmcomposerwin.cpp:1329
 #, kde-format
 msgid "Open Address Book"
 msgstr "Odpri imenik"
 
-#: editor/kmcomposerwin.cpp:1335
+#: editor/kmcomposerwin.cpp:1337
 #, kde-format
 msgid "&New Composer"
 msgstr "&Nov sestavljalnik"
 
-#: editor/kmcomposerwin.cpp:1341
+#: editor/kmcomposerwin.cpp:1343
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Izberi p&rejemnike…"
 
-#: editor/kmcomposerwin.cpp:1344
+#: editor/kmcomposerwin.cpp:1346
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Shrani seznam za razpošiljanje…"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1370
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Prilepi kot prilogo"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1374
 #, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Počisti pr&esledke"
 
-#: editor/kmcomposerwin.cpp:1376
+#: editor/kmcomposerwin.cpp:1378
 #, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Uporabi pisavo stalne širine"
 
-#: editor/kmcomposerwin.cpp:1382
+#: editor/kmcomposerwin.cpp:1384
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "N&ujno"
 
-#: editor/kmcomposerwin.cpp:1384
+#: editor/kmcomposerwin.cpp:1386
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Zahtevaj obvestilo o usodi"
 
-#: editor/kmcomposerwin.cpp:1388
+#: editor/kmcomposerwin.cpp:1390
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Zahtevaj potrdilo o dostavi"
 
-#: editor/kmcomposerwin.cpp:1393
+#: editor/kmcomposerwin.cpp:1395
 #, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "Prelom vrstic na besedah"
 
-#: editor/kmcomposerwin.cpp:1398
+#: editor/kmcomposerwin.cpp:1400
 #, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "Izrezki"
 
-#: editor/kmcomposerwin.cpp:1403
+#: editor/kmcomposerwin.cpp:1405
 #, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "S&amodejno preverjanje črkovanja"
 
-#: editor/kmcomposerwin.cpp:1419
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Urejanje bogatega besedila"
 
-#: editor/kmcomposerwin.cpp:1421
+#: editor/kmcomposerwin.cpp:1423
 #, kde-format
 msgid "Rich Text"
 msgstr "Bogato besedilo"
 
-#: editor/kmcomposerwin.cpp:1422
+#: editor/kmcomposerwin.cpp:1424
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Preklopi način urejanja z obogatenim besedilom"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1428
 #, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "Vs&a polja"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1431
 #, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Istovetnost"
 
-#: editor/kmcomposerwin.cpp:1432
+#: editor/kmcomposerwin.cpp:1434
 #, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "Slovar"
 
-#: editor/kmcomposerwin.cpp:1435
+#: editor/kmcomposerwin.cpp:1437
 #, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Mapa po&slanih sporočil"
 
-#: editor/kmcomposerwin.cpp:1438
+#: editor/kmcomposerwin.cpp:1440
 #, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "Prenos pošte"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1443
 #, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "Od"
 
-#: editor/kmcomposerwin.cpp:1444
+#: editor/kmcomposerwin.cpp:1446
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "Zadeva"
 
-#: editor/kmcomposerwin.cpp:1449
+#: editor/kmcomposerwin.cpp:1451
 #, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Pripni podp&is na konec"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1455
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Pripni podpis na zač&etek"
 
-#: editor/kmcomposerwin.cpp:1457
+#: editor/kmcomposerwin.cpp:1459
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Vstavi podpis na položaju kazalke"
 
-#: editor/kmcomposerwin.cpp:1472
+#: editor/kmcomposerwin.cpp:1474
 #, kde-format
 msgid "&Spellchecker…"
 msgstr "Črkovalnik…"
 
-#: editor/kmcomposerwin.cpp:1473
+#: editor/kmcomposerwin.cpp:1475
 #, kde-format
 msgid "Spellchecker"
 msgstr "Črkovalnik"
 
-#: editor/kmcomposerwin.cpp:1477
+#: editor/kmcomposerwin.cpp:1479
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "Šifriraj sporočilo"
 
-#: editor/kmcomposerwin.cpp:1478
+#: editor/kmcomposerwin.cpp:1480
 #, kde-format
 msgid "Encrypt"
 msgstr "Šifriraj"
 
-#: editor/kmcomposerwin.cpp:1480
+#: editor/kmcomposerwin.cpp:1482
 #, kde-format
 msgid "&Sign Message"
 msgstr "Podpiši sporočilo"
 
-#: editor/kmcomposerwin.cpp:1481
+#: editor/kmcomposerwin.cpp:1483
 #, kde-format
 msgid "Sign"
 msgstr "Podpiši"
 
-#: editor/kmcomposerwin.cpp:1508
+#: editor/kmcomposerwin.cpp:1510
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "Oblika šifriranja sporočil"
 
-#: editor/kmcomposerwin.cpp:1511
+#: editor/kmcomposerwin.cpp:1513
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Izberi obliko šifriranja za to sporočilo"
 
-#: editor/kmcomposerwin.cpp:1516
+#: editor/kmcomposerwin.cpp:1518
 #, kde-format
 msgid "Create Follow Up Reminder…"
 msgstr "Ustvari opomnik za nadaljevanje…"
 
-#: editor/kmcomposerwin.cpp:1550
+#: editor/kmcomposerwin.cpp:1552
 #, kde-format
 msgid "Configure KMail…"
 msgstr "Konfiguriraj KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
+#: editor/kmcomposerwin.cpp:1583 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2132,55 +2132,55 @@ msgstr ""
 "<qt>To bo povsem skrilo menijsko vrstico. Spet jo lahko prikažete s "
 "pritiskom %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1586 kmmainwin.cpp:228
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Skrij menijsko vrstico"
 
-#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4026
+#: editor/kmcomposerwin.cpp:1687 editor/kmcomposerwin.cpp:4028
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Vrstica: %1 "
 
-#: editor/kmcomposerwin.cpp:1688
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Stolpec: %1 "
 
-#: editor/kmcomposerwin.cpp:1693
+#: editor/kmcomposerwin.cpp:1695
 #, kde-format
 msgid "OVR"
 msgstr "PREP"
 
-#: editor/kmcomposerwin.cpp:1693
+#: editor/kmcomposerwin.cpp:1695
 #, kde-format
 msgid "INS"
 msgstr "VST"
 
-#: editor/kmcomposerwin.cpp:1701
+#: editor/kmcomposerwin.cpp:1703
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Preverjanje črkovanja: vklopljeno"
 
-#: editor/kmcomposerwin.cpp:1701
+#: editor/kmcomposerwin.cpp:1703
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Preverjanje črkovanja: izklopljeno"
 
-#: editor/kmcomposerwin.cpp:2079
+#: editor/kmcomposerwin.cpp:2081
 #, kde-format
 msgid "Re&save as Template"
 msgstr "Znova &shrani kot predlogo"
 
-#: editor/kmcomposerwin.cpp:2079
+#: editor/kmcomposerwin.cpp:2081
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&Shrani kot osnutek"
 
-#: editor/kmcomposerwin.cpp:2080
+#: editor/kmcomposerwin.cpp:2082
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2189,7 +2189,7 @@ msgstr ""
 "Znova shrani to sporočilo v mapo »Predloge«. Uredite in pošljete ga lahko "
 "kasneje."
 
-#: editor/kmcomposerwin.cpp:2082
+#: editor/kmcomposerwin.cpp:2084
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2197,83 +2197,83 @@ msgid ""
 msgstr ""
 "Shrani to sporočilo v mapo »Osnutki«. Uredite in pošljete ga lahko kasneje."
 
-#: editor/kmcomposerwin.cpp:2086
+#: editor/kmcomposerwin.cpp:2088
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Ali želite zavreči sporočilo ali ga shraniti za kasneje?"
 
-#: editor/kmcomposerwin.cpp:2087
+#: editor/kmcomposerwin.cpp:2089
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Zapri sestavljalnik"
 
-#: editor/kmcomposerwin.cpp:2155
+#: editor/kmcomposerwin.cpp:2157
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Samodejno shranjevanje sporočila ni uspelo"
 
-#: editor/kmcomposerwin.cpp:2156
+#: editor/kmcomposerwin.cpp:2158
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Pošiljanje sporočila ni uspelo"
 
-#: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:152
+#: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
 "Ni bilo mogoče zagnati programa \"KAddressbook\". Preverite vašo namestitev."
 
-#: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:154
+#: editor/kmcomposerwin.cpp:2231 kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "Ni bilo mogoče zagnati programa \"KAddressbook\""
 
-#: editor/kmcomposerwin.cpp:2352
+#: editor/kmcomposerwin.cpp:2354
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Vstavi datoteko"
 
-#: editor/kmcomposerwin.cpp:2417
+#: editor/kmcomposerwin.cpp:2419
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Dodaj kot znotrajvrstično sliko"
 
-#: editor/kmcomposerwin.cpp:2418
+#: editor/kmcomposerwin.cpp:2420
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Dodaj kot prilogo"
 
-#: editor/kmcomposerwin.cpp:2433
+#: editor/kmcomposerwin.cpp:2435
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2433 editor/kmcomposerwin.cpp:2538
+#: editor/kmcomposerwin.cpp:2435 editor/kmcomposerwin.cpp:2540
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Ime priloge:"
 
-#: editor/kmcomposerwin.cpp:2439
+#: editor/kmcomposerwin.cpp:2441
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Ime priloge ne more biti prazno"
 
-#: editor/kmcomposerwin.cpp:2439
+#: editor/kmcomposerwin.cpp:2441
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Neveljavno ime priloge"
 
-#: editor/kmcomposerwin.cpp:2490
+#: editor/kmcomposerwin.cpp:2492
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
@@ -2282,7 +2282,7 @@ msgstr[1] "Dodaj naslov URL v sporočilo"
 msgstr[2] "Dodaj naslova URL v sporočilo"
 msgstr[3] "Dodaj naslove URL v sporočilo"
 
-#: editor/kmcomposerwin.cpp:2491
+#: editor/kmcomposerwin.cpp:2493
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
@@ -2291,18 +2291,18 @@ msgstr[1] "Dodaj datoteko kot prilogo"
 msgstr[2] "Dodaj datoteki kot prilogo"
 msgstr[3] "Dodaj datoteke kot prilogo"
 
-#: editor/kmcomposerwin.cpp:2537
+#: editor/kmcomposerwin.cpp:2539
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Besedilo z odložišča vstavi kot prilogo"
 
-#: editor/kmcomposerwin.cpp:2633
+#: editor/kmcomposerwin.cpp:2635
 #, kde-format
 msgid "unnamed"
 msgstr "neimenovano"
 
-#: editor/kmcomposerwin.cpp:2659
+#: editor/kmcomposerwin.cpp:2661
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2313,13 +2313,13 @@ msgstr ""
 "(OpenPGP ali S/MIME), ki se naj za to uporabi.</p> <p>Izberite ključ, ki naj "
 "se uporabi, v nastavitvah istovetnosti.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2666
+#: editor/kmcomposerwin.cpp:2668
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Nedoločen podpisovalni ključ"
 
-#: editor/kmcomposerwin.cpp:2831
+#: editor/kmcomposerwin.cpp:2833
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2330,84 +2330,84 @@ msgstr ""
 "naslove za vse istovetnosti, da vam jih ne bo treba vnašati za vsako "
 "sporočilo."
 
-#: editor/kmcomposerwin.cpp:2840
+#: editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "V polju »Za«, »Kp« ali »Skp« morate navesti vsaj enega prejemnika."
 
-#: editor/kmcomposerwin.cpp:2846
+#: editor/kmcomposerwin.cpp:2848
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Polje Za: je prazno. Ali vseeno pošljem sporočilo?"
 
-#: editor/kmcomposerwin.cpp:2848
+#: editor/kmcomposerwin.cpp:2850
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Ni določenega polja Za"
 
-#: editor/kmcomposerwin.cpp:2849 editor/kmcomposerwin.cpp:2863
+#: editor/kmcomposerwin.cpp:2851 editor/kmcomposerwin.cpp:2865
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Pošlji kot je"
 
-#: editor/kmcomposerwin.cpp:2850
+#: editor/kmcomposerwin.cpp:2852
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "Določite polje Za"
 
-#: editor/kmcomposerwin.cpp:2860
+#: editor/kmcomposerwin.cpp:2862
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Niste navedli zadeve. Ali vseeno pošljem sporočilo?"
 
-#: editor/kmcomposerwin.cpp:2862
+#: editor/kmcomposerwin.cpp:2864
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Ni določenega polja Zadeva"
 
-#: editor/kmcomposerwin.cpp:2864
+#: editor/kmcomposerwin.cpp:2866
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "Določite Zadevo"
 
-#: editor/kmcomposerwin.cpp:2909
+#: editor/kmcomposerwin.cpp:2911
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Da bi lahko šifrirali osnutek, morate navesti vsaj enega prejemnika."
 
-#: editor/kmcomposerwin.cpp:3095
+#: editor/kmcomposerwin.cpp:3097
 #, kde-format
 msgid "About to send email…"
 msgstr "E-pošta bo poslana…"
 
-#: editor/kmcomposerwin.cpp:3096
+#: editor/kmcomposerwin.cpp:3098
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Pošlji potrditev"
 
-#: editor/kmcomposerwin.cpp:3097
+#: editor/kmcomposerwin.cpp:3099
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Pošlji zdaj"
 
-#: editor/kmcomposerwin.cpp:3098
+#: editor/kmcomposerwin.cpp:3100
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Pošlji kasneje"
 
-#: editor/kmcomposerwin.cpp:3178
+#: editor/kmcomposerwin.cpp:3180
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2415,25 +2415,25 @@ msgid ""
 msgstr ""
 "Pošto poskušate poslati več kot %1 prejemnikom. Ali vseeno pošljem sporočilo?"
 
-#: editor/kmcomposerwin.cpp:3179
+#: editor/kmcomposerwin.cpp:3181
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Preveč prejemnikov"
 
-#: editor/kmcomposerwin.cpp:3180
+#: editor/kmcomposerwin.cpp:3182
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Pošlji kot je"
 
-#: editor/kmcomposerwin.cpp:3181
+#: editor/kmcomposerwin.cpp:3183
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Ur&edi prejemnike"
 
-#: editor/kmcomposerwin.cpp:3218
+#: editor/kmcomposerwin.cpp:3220
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2442,25 +2442,25 @@ msgstr ""
 "Izklop načina HTML bo povzročil izgubo oblikovanja besedila. Ali ste "
 "prepričani?"
 
-#: editor/kmcomposerwin.cpp:3220
+#: editor/kmcomposerwin.cpp:3222
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Bolj ohlapno oblikovanje?"
 
-#: editor/kmcomposerwin.cpp:3221
+#: editor/kmcomposerwin.cpp:3223
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Ohlapno oblikovanje"
 
-#: editor/kmcomposerwin.cpp:3222
+#: editor/kmcomposerwin.cpp:3224
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Dodaj Markup navadno besedilo"
 
-#: editor/kmcomposerwin.cpp:3434
+#: editor/kmcomposerwin.cpp:3436
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2470,7 +2470,7 @@ msgstr ""
 "Vaš izbrani ključ PGP (%1) ne obstaja v zbirki ključev ali pa ni primeren za "
 "šifriranje."
 
-#: editor/kmcomposerwin.cpp:3447
+#: editor/kmcomposerwin.cpp:3449
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2480,7 +2480,7 @@ msgstr ""
 "Vaš izbrani podpisni ključ PGP (%1) ne obstaja v vaši zbirki ključev ali pa "
 "ga ni primeren za podpisovanje."
 
-#: editor/kmcomposerwin.cpp:3463
+#: editor/kmcomposerwin.cpp:3465
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2490,7 +2490,7 @@ msgstr ""
 "Vaš izbrani ključ SMIME (%1) ne obstaja v zbirki ključev ali pa ni primeren "
 "za šifriranje."
 
-#: editor/kmcomposerwin.cpp:3476
+#: editor/kmcomposerwin.cpp:3478
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2500,25 +2500,25 @@ msgstr ""
 "Vaš izbrani podpisni ključ SMIME (%1) ne obstaja v vaši zbirki ključev ali "
 "pa ga ni primeren za podpisovanje."
 
-#: editor/kmcomposerwin.cpp:3649
+#: editor/kmcomposerwin.cpp:3651
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Šifriraj"
 
-#: editor/kmcomposerwin.cpp:3651
+#: editor/kmcomposerwin.cpp:3653
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Ne šifriraj"
 
-#: editor/kmcomposerwin.cpp:3791
+#: editor/kmcomposerwin.cpp:3793
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Ni mogoče najti ključa prejemnika."
 
-#: editor/kmcomposerwin.cpp:3813
+#: editor/kmcomposerwin.cpp:3815
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2528,7 +2528,7 @@ msgstr ""
 "Za tega prejemnika se uporablja samodejni ključ. Ta ključ smo dobili od "
 "prejemnikov tretje stranke. Ta ključ ni preverjen."
 
-#: editor/kmcomposerwin.cpp:3817
+#: editor/kmcomposerwin.cpp:3819
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2538,7 +2538,7 @@ msgstr ""
 "Za tega naslovnika se uporablja avtošifrirni ključ. Ta ključ ni preverjen. "
 "Prejemnik raje dobiva šifrirane odgovore."
 
-#: editor/kmcomposerwin.cpp:3821
+#: editor/kmcomposerwin.cpp:3823
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2548,7 +2548,7 @@ msgstr ""
 "Za tega naslovnika se uporablja avtošifrirni ključ. Ta ključ ni preverjen. "
 "Prejemnik raje nima šifriranih odgovorov."
 
-#: editor/kmcomposerwin.cpp:3848
+#: editor/kmcomposerwin.cpp:3850
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2560,7 +2560,7 @@ msgstr ""
 "ta ključ, če ste prstni odtis posredovali po drugem kanalu. Kliknite na "
 "ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3856
+#: editor/kmcomposerwin.cpp:3858
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2574,7 +2574,7 @@ msgstr ""
 "zaupanja vreden. Ta ključ lahko podpišete, če vam je prstni odtis posredoval "
 "drugi kanal. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3864
+#: editor/kmcomposerwin.cpp:3866
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2584,7 +2584,7 @@ msgstr ""
 "Ta šifrirni ključ ni zaupanja vreden. Ima nasprotujoče si podatke TOFU. "
 "Kliknite na ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3870
+#: editor/kmcomposerwin.cpp:3872
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2594,7 +2594,7 @@ msgstr ""
 "Ta šifrirni ključ ni zaupanja vreden. V podatkih TOFU ima neznano "
 "veljavnost. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3876
+#: editor/kmcomposerwin.cpp:3878
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2604,7 +2604,7 @@ msgstr ""
 "Ta šifrirni ključ ni zaupanja vreden. Ključ je označen kot slab. Kliknite "
 "ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3886
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2618,7 +2618,7 @@ msgstr ""
 "bo bolj zaupanja vreden. Lahko pa podpišete ključ, če ste sporočili prstni "
 "odtis po drugem kanalu. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3892
+#: editor/kmcomposerwin.cpp:3894
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2628,7 +2628,7 @@ msgstr ""
 "Ta šifrirni ključ je le robno zaupanja vreden. Ključ lahko podpišete, če ste "
 "posredovali prstni odtis po drugem kanalu. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3898
+#: editor/kmcomposerwin.cpp:3900
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2642,7 +2642,7 @@ msgstr ""
 "bo bolj zaupanja vreden. Lahko pa podpišete ključ, če ste sporočili prstni "
 "odtis prek drugega kanala. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3908
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2652,7 +2652,7 @@ msgstr ""
 "Ta šifrirni ključ je v celoti zaupanja vreden. Raven varnosti lahko dvignete "
 "tako, da podpišete ključ. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:3911
+#: editor/kmcomposerwin.cpp:3913
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2662,12 +2662,12 @@ msgstr ""
 "Ta šifrirni ključ je polno zaupanja vreden ali je podpisan od drugega polno "
 "zaupanja vrednega ključa. Kliknite ikono za podrobnosti."
 
-#: editor/kmcomposerwin.cpp:4028
+#: editor/kmcomposerwin.cpp:4030
 #, kde-format
 msgid " Column: %1 "
 msgstr " Stolpec: %1 "
 
-#: editor/kmcomposerwin.cpp:4245
+#: editor/kmcomposerwin.cpp:4247
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2684,12 +2684,12 @@ msgstr ""
 "prejemnika. Če na seznamu ni ustreznega potrdila, lahko zunanja potrdila "
 "poiščete tudi s klikom na gumb: poišči zunanja potrdila.</qt>"
 
-#: editor/kmcomposerwin.cpp:4257
+#: editor/kmcomposerwin.cpp:4259
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Izbira šifrirnega ključa"
 
-#: editor/kmcomposerwin.cpp:4342
+#: editor/kmcomposerwin.cpp:4344
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
