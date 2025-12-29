@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-22 00:43+0000\n"
+"POT-Creation-Date: 2025-12-29 00:44+0000\n"
 "PO-Revision-Date: 2025-11-26 10:22+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -2126,7 +2126,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "הסתרת סרגל תפריטים"
 
-#: editor/kmcomposerwin.cpp:1687 editor/kmcomposerwin.cpp:4028
+#: editor/kmcomposerwin.cpp:1687 editor/kmcomposerwin.cpp:4048
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2219,47 +2219,47 @@ msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "לא ניתן להפעיל את התוכנית „KAddressbook” (פנקס כתובות)"
 
-#: editor/kmcomposerwin.cpp:2354
+#: editor/kmcomposerwin.cpp:2353
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "הוספת קובץ"
 
-#: editor/kmcomposerwin.cpp:2419
+#: editor/kmcomposerwin.cpp:2439
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "הוספה כתמונה מו&טבעת"
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2440
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "הוספה כ&צרופה"
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2455
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2435 editor/kmcomposerwin.cpp:2540
+#: editor/kmcomposerwin.cpp:2455 editor/kmcomposerwin.cpp:2560
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "שם הצרופה:"
 
-#: editor/kmcomposerwin.cpp:2441
+#: editor/kmcomposerwin.cpp:2461
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "שם הצרופה לא יכול להישאר ריק"
 
-#: editor/kmcomposerwin.cpp:2441
+#: editor/kmcomposerwin.cpp:2461
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "שם הצרופה שגוי"
 
-#: editor/kmcomposerwin.cpp:2492
+#: editor/kmcomposerwin.cpp:2512
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
@@ -2268,7 +2268,7 @@ msgstr[1] "הוספת כתובות להודעה"
 msgstr[2] "הוספת כתובות להודעה"
 msgstr[3] "הוספת כתובות להודעה"
 
-#: editor/kmcomposerwin.cpp:2493
+#: editor/kmcomposerwin.cpp:2513
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
@@ -2277,18 +2277,18 @@ msgstr[1] "&צירוף קבצים"
 msgstr[2] "&צירוף קבצים"
 msgstr[3] "&צירוף קבצים"
 
-#: editor/kmcomposerwin.cpp:2539
+#: editor/kmcomposerwin.cpp:2559
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "הוספת טקסט מלוח הגזירים כצרופה"
 
-#: editor/kmcomposerwin.cpp:2635
+#: editor/kmcomposerwin.cpp:2655
 #, kde-format
 msgid "unnamed"
 msgstr "ללא שם"
 
-#: editor/kmcomposerwin.cpp:2661
+#: editor/kmcomposerwin.cpp:2681
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2298,13 +2298,13 @@ msgstr ""
 "<qt><p>כדי לאפשר חתימה על ההודעה הזאת תחיל יש להגדיר מפתח חתימה לשימוש "
 "(OpenPGP או S/MIME).</p><p>נא לבחור את המפתח לשימוש בהגדרות הזהות.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2668
+#: editor/kmcomposerwin.cpp:2688
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "מפתח חתימה לא מוגדר"
 
-#: editor/kmcomposerwin.cpp:2833
+#: editor/kmcomposerwin.cpp:2853
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2314,134 +2314,134 @@ msgstr ""
 "יש למלא את כתובת הדוא״ל שלך בשדה מאת:, יש גם להגדיר את כתובת הדוא״ל שלך לכל "
 "הזהויות, כדי שלא יהיה צורך למלא אותה בכל הודעה מחדש."
 
-#: editor/kmcomposerwin.cpp:2842
+#: editor/kmcomposerwin.cpp:2862
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
 "as BCC."
 msgstr "יש לציין נמען אחד לפחות, או בשדה אל: או כעותק או כעותק סמוי."
 
-#: editor/kmcomposerwin.cpp:2848
+#: editor/kmcomposerwin.cpp:2868
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "שדה אל: ריק. לשלוח את ההודעה בכל זאת?"
 
-#: editor/kmcomposerwin.cpp:2850
+#: editor/kmcomposerwin.cpp:2870
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "לא צוין אל:"
 
-#: editor/kmcomposerwin.cpp:2851 editor/kmcomposerwin.cpp:2865
+#: editor/kmcomposerwin.cpp:2871 editor/kmcomposerwin.cpp:2885
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "ל&שלוח ללא שינוי"
 
-#: editor/kmcomposerwin.cpp:2852
+#: editor/kmcomposerwin.cpp:2872
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&ציון שדה אל"
 
-#: editor/kmcomposerwin.cpp:2862
+#: editor/kmcomposerwin.cpp:2882
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "לא ציינת נושא. לשלוח את ההודעה בכל זאת?"
 
-#: editor/kmcomposerwin.cpp:2864
+#: editor/kmcomposerwin.cpp:2884
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "לא צוין נושא"
 
-#: editor/kmcomposerwin.cpp:2866
+#: editor/kmcomposerwin.cpp:2886
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&ציון שדה הנושא"
 
-#: editor/kmcomposerwin.cpp:2911
+#: editor/kmcomposerwin.cpp:2931
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "צריך לציין לפחות נמען אחד כדי להצפין טיוטה."
 
-#: editor/kmcomposerwin.cpp:3097
+#: editor/kmcomposerwin.cpp:3117
 #, kde-format
 msgid "About to send email…"
 msgstr "הודעה עומדת להישלח…"
 
-#: editor/kmcomposerwin.cpp:3098
+#: editor/kmcomposerwin.cpp:3118
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "אימות שליחה"
 
-#: editor/kmcomposerwin.cpp:3099
+#: editor/kmcomposerwin.cpp:3119
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "לשלוח &עכשיו"
 
-#: editor/kmcomposerwin.cpp:3100
+#: editor/kmcomposerwin.cpp:3120
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "לשלוח &אחר כך"
 
-#: editor/kmcomposerwin.cpp:3180
+#: editor/kmcomposerwin.cpp:3200
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr "ניסית לשלוח את ההודעה ליותר מ־%1 נמענים. לשלוח את ההודעה בכל זאת?"
 
-#: editor/kmcomposerwin.cpp:3181
+#: editor/kmcomposerwin.cpp:3201
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "יותר מדי נמענים"
 
-#: editor/kmcomposerwin.cpp:3182
+#: editor/kmcomposerwin.cpp:3202
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "ל&שלוח ללא שינוי"
 
-#: editor/kmcomposerwin.cpp:3183
+#: editor/kmcomposerwin.cpp:3203
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&עריכת נמענים"
 
-#: editor/kmcomposerwin.cpp:3220
+#: editor/kmcomposerwin.cpp:3240
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "כיבוי מצב HTML יגרום לטקסט לאבד את העיצוב. לבצע את זה?"
 
-#: editor/kmcomposerwin.cpp:3222
+#: editor/kmcomposerwin.cpp:3242
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "לוותר על העיצוב?"
 
-#: editor/kmcomposerwin.cpp:3223
+#: editor/kmcomposerwin.cpp:3243
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "עיצוב דליל"
 
-#: editor/kmcomposerwin.cpp:3224
+#: editor/kmcomposerwin.cpp:3244
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "הוספת סימון טקסט פשוט"
 
-#: editor/kmcomposerwin.cpp:3436
+#: editor/kmcomposerwin.cpp:3456
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2449,7 +2449,7 @@ msgid ""
 "for encryption."
 msgstr "מפתח ה־GPG שבחרת (%1) לא קיים בצרור המפתחות שלך או שאינו מותאם להצפנה."
 
-#: editor/kmcomposerwin.cpp:3449
+#: editor/kmcomposerwin.cpp:3469
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2458,7 +2458,7 @@ msgid ""
 msgstr ""
 "מפתח חתימת ה־GPG שבחרת (%1) לא קיים בצרור המפתחות שלך או שאינו מותאם לחתימה."
 
-#: editor/kmcomposerwin.cpp:3465
+#: editor/kmcomposerwin.cpp:3485
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2467,7 +2467,7 @@ msgid ""
 msgstr ""
 "מפתח ה־SMIME שבחרת (%1) לא קיים בצרור המפתחות שלך או שאינו מותאם להצפנה."
 
-#: editor/kmcomposerwin.cpp:3478
+#: editor/kmcomposerwin.cpp:3498
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2477,25 +2477,25 @@ msgstr ""
 "מפתח חתימת ה־SMIME שבחרת (%1) לא קיים בצרור המפתחות שלך או שאינו מותאם "
 "לחתימה."
 
-#: editor/kmcomposerwin.cpp:3651
+#: editor/kmcomposerwin.cpp:3671
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "להצפין"
 
-#: editor/kmcomposerwin.cpp:3653
+#: editor/kmcomposerwin.cpp:3673
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "לא להצפין"
 
-#: editor/kmcomposerwin.cpp:3793
+#: editor/kmcomposerwin.cpp:3813
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "לא נמצאו מפתחות לנמען."
 
-#: editor/kmcomposerwin.cpp:3815
+#: editor/kmcomposerwin.cpp:3835
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2505,7 +2505,7 @@ msgstr ""
 "לנמען הזה נעשה שימוש במפתח gossip (רכילות) מבית Autocrypt. קיבלנו את המפתח "
 "הזה מגורמי צד־שלישי. המפתח לא מאומת."
 
-#: editor/kmcomposerwin.cpp:3819
+#: editor/kmcomposerwin.cpp:3839
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2515,7 +2515,7 @@ msgstr ""
 "לנמען הזה נעשה שימוש במפתח הצפנה אוטומטי. המפתח הזה לא מאומת. הנמען מעדיף "
 "תגובות מוצפנות."
 
-#: editor/kmcomposerwin.cpp:3823
+#: editor/kmcomposerwin.cpp:3843
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2525,7 +2525,7 @@ msgstr ""
 "לנמען הזה נעשה שימוש במפתח הצפנה אוטומטי. המפתח הזה לא מאומת. הנמען לא מעדיף "
 "תגובות מוצפנות."
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3870
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2536,7 +2536,7 @@ msgstr ""
 "מפתח ההצפנה מפוקפק. הוא לא אמין מספיק. אפשר לחתום על המפתח, אם מסרת את טביעת "
 "האצבע בערוץ אחר. לחיצה על הסמל תציג פרטים נוספים."
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3878
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2549,7 +2549,7 @@ msgstr ""
 "שנטען שהוא שייך. על ידי שימוש במפתח האמון בו יגבר. או שאפשר לחתום על המפתח, "
 "אם מסרת את טביעת האצבע דרך נתיב אחר. יש ללחוץ על הסמל לפרטים נוספים."
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3886
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2557,7 +2557,7 @@ msgid ""
 "icon for details."
 msgstr "מפתח ההצפנה לא אמין. נתוני ה־TOFU שלו סותרים. יש ללחוץ על הסמל לפרטים."
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3892
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2566,7 +2566,7 @@ msgid ""
 msgstr ""
 "מפתח ההצפנה לא אמין. התוקף שלו לא ידוע בנתוני TOFU. יש ללחוץ על הסמל לפרטים."
 
-#: editor/kmcomposerwin.cpp:3878
+#: editor/kmcomposerwin.cpp:3898
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2575,7 +2575,7 @@ msgid ""
 msgstr ""
 "מפתח ההצפנה אינו אמין. המפתח מסומן כגרוע. יש ללחוץ על הסמל לפרטים נוספים."
 
-#: editor/kmcomposerwin.cpp:3886
+#: editor/kmcomposerwin.cpp:3906
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2589,7 +2589,7 @@ msgstr ""
 "על המפתח, אם מסרת את טביעת האצבע דרך נתיב אחר. יש ללחוץ על הסמל לפרטים "
 "נוספים."
 
-#: editor/kmcomposerwin.cpp:3894
+#: editor/kmcomposerwin.cpp:3914
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2599,7 +2599,7 @@ msgstr ""
 "מפתח ההצפנה אמין באופן גבולי. אפשר לחתום על המפתח, אם מסרת את טביעת האצבע "
 "באמצעים אחרים. יש ללחוץ על הסמל לפרטים."
 
-#: editor/kmcomposerwin.cpp:3900
+#: editor/kmcomposerwin.cpp:3920
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2613,7 +2613,7 @@ msgstr ""
 "לחתום על המפתח, אם תקשרת את טביעת האצבע דרך ערוץ אחר. אפשר ללחוץ על הסמל "
 "לפרטים נוספים."
 
-#: editor/kmcomposerwin.cpp:3908
+#: editor/kmcomposerwin.cpp:3928
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2623,7 +2623,7 @@ msgstr ""
 "מפתח האבטחה מהימן לחלוטין. אפשר להגביר את רמת האבטחה על ידי חתימה על המפתח. "
 "לחיצה על הסמל תציג פרטים נוספים."
 
-#: editor/kmcomposerwin.cpp:3913
+#: editor/kmcomposerwin.cpp:3933
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2633,12 +2633,12 @@ msgstr ""
 "מפתח ההצפנה אמין לחלוטין או שהוא נחתם על ידי מפתח אמין לחלוטין אחר. אפשר "
 "ללחוץ על הסמל לפרטים נוספים."
 
-#: editor/kmcomposerwin.cpp:4030
+#: editor/kmcomposerwin.cpp:4050
 #, kde-format
 msgid " Column: %1 "
 msgstr " עמודה: %1 "
 
-#: editor/kmcomposerwin.cpp:4247
+#: editor/kmcomposerwin.cpp:4267
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2654,12 +2654,12 @@ msgstr ""
 "לנמען הזה. אם אין אישור מתאים ברשימה שלך אפשר גם לחפש אישורים חיצוניים "
 "בלחיצה על הכפתור: חיפוש אחר אישורים חיצוניים.</qt>"
 
-#: editor/kmcomposerwin.cpp:4259
+#: editor/kmcomposerwin.cpp:4279
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "בחירת מפתח הצפנה"
 
-#: editor/kmcomposerwin.cpp:4344
+#: editor/kmcomposerwin.cpp:4364
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
