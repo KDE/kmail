@@ -164,7 +164,7 @@ bool FollowUpReminderInfoWidget::save() const
     if (!mChanged) {
         return false;
     }
-    KSharedConfig::Ptr config = KSharedConfig::openConfig();
+    KSharedConfig::Ptr config = FollowUpReminder::FollowUpReminderUtil::defaultConfig();
 
     // first, delete all filter groups:
     const QStringList filterGroups = config->groupList().filter(QRegularExpression(followUpItemPattern()));
