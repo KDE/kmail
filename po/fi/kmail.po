@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-15 02:30+0000\n"
-"PO-Revision-Date: 2025-10-15 21:11+0300\n"
+"PO-Revision-Date: 2025-11-30 15:38+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -8097,10 +8097,9 @@ msgid "New plugin: show collection size."
 msgstr "Uusi liitännäinen: näytä kokoelman koko."
 
 #: whatsnew/whatsnewtranslations.cpp:52
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
+#, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr "Joidenkin jonossa olleiden viestien lähetys epäonnistui."
+msgstr "Korjaa puhesynteesituki (vie viestit jonoon)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
