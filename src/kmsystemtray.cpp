@@ -16,6 +16,8 @@
 
 #include <KLocalizedString>
 #include <KWindowSystem>
+#include <QDBusConnectionInterface>
+#include <QDBusInterface>
 #include <QMenu>
 
 #include "widgets/kactionmenutransport.h"
@@ -189,6 +191,11 @@ void KMSystemTray::slotActivated()
 #else
     KWindowSystem::activateWindow(mainWin->windowHandle());
 #endif
+
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral("org.kde.kontact"))) {
+        QDBusInterface kontactIface(QStringLiteral("org.kde.kontact"), QStringLiteral("/KontactInterface"), QStringLiteral("org.kde.kontact.KontactInterface"));
+        kontactIface.asyncCall(QStringLiteral("selectPlugin"), QStringLiteral("kontact_kmailplugin"));
+    }
 }
 
 void KMSystemTray::slotContextMenuAboutToShow()
