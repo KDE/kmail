@@ -538,7 +538,7 @@ private:
     void doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn);
 
     void changeCryptoAction();
-    void applyComposerSetting(MessageComposer::ComposerViewBase *mComposerBase);
+    void applyComposerSetting(MessageComposer::ComposerViewBase *composerBase);
     /**
      * Creates a simple composer that creates a KMime::Message out of the composer content.
      * Crypto handling is not done, therefore the name "simple".

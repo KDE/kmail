@@ -3692,19 +3692,19 @@ void KMMainWidget::setupActions()
 
     {
         QList<QAction *> listActions;
-        auto act = new QAction(i18nc("@action", "Previous Selected Folder"), this); // TODO fix me i18n
-        actionCollection()->setDefaultShortcut(act, QKeySequence(Qt::CTRL | Qt::Key_Tab));
-        actionCollection()->addAction(QStringLiteral("previous_folder"), act);
-        listActions.append(act);
+        auto actSelect = new QAction(i18nc("@action", "Previous Selected Folder"), this); // TODO fix me i18n
+        actionCollection()->setDefaultShortcut(actSelect, QKeySequence(Qt::CTRL | Qt::Key_Tab));
+        actionCollection()->addAction(QStringLiteral("previous_folder"), actSelect);
+        listActions.append(actSelect);
 
-        connect(act, &QAction::triggered, this, &KMMainWidget::undoSwitchFolder);
+        connect(actSelect, &QAction::triggered, this, &KMMainWidget::undoSwitchFolder);
 
-        act = new QAction(i18nc("@action", "Next Selected Folder"), this); // TODO fix me i18n
-        actionCollection()->addAction(QStringLiteral("next_folder"), act);
+        actSelect = new QAction(i18nc("@action", "Next Selected Folder"), this); // TODO fix me i18n
+        actionCollection()->addAction(QStringLiteral("next_folder"), actSelect);
         QKeyCombination combinationKeys(Qt::SHIFT, Qt::Key_Tab);
-        actionCollection()->setDefaultShortcut(act, QKeySequence(combinationKeys, QKeyCombination(Qt::CTRL)));
-        connect(act, &QAction::triggered, this, &KMMainWidget::redoSwitchFolder);
-        listActions.append(act);
+        actionCollection()->setDefaultShortcut(actSelect, QKeySequence(combinationKeys, QKeyCombination(Qt::CTRL)));
+        connect(actSelect, &QAction::triggered, this, &KMMainWidget::redoSwitchFolder);
+        listActions.append(actSelect);
 
         mCollectionSwitcherTreeViewManager->addActions(listActions);
     }

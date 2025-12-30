@@ -1839,8 +1839,8 @@ void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
             }
         }
     } else {
-        if (auto hrd = newMsg->headerByType("X-KMail-Identity-Name")) {
-            const QString identityStrName = hrd->asUnicodeString();
+        if (auto hrdIdentityName = newMsg->headerByType("X-KMail-Identity-Name")) {
+            const QString identityStrName = hrdIdentityName->asUnicodeString();
             const auto id = im->modifyIdentityForName(identityStrName);
             if (!id.isNull()) {
                 mId = id.uoid();
@@ -2959,13 +2959,13 @@ void KMComposerWin::slotDoDelayedSend(KJob *job)
     doDelayedSend(method, saveIn);
 }
 
-void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *mComposerBase)
+void KMComposerWin::applyComposerSetting(MessageComposer::ComposerViewBase *composerBase)
 {
-    mComposerBase->setFrom(from());
-    mComposerBase->setSubject(subject());
-    mComposerBase->setUrgent(mUrgentAction->isChecked());
-    mComposerBase->setMDNRequested(mRequestMDNAction->isChecked());
-    mComposerBase->setRequestDeleveryConfirmation(mRequestDeliveryConfirmation->isChecked());
+    composerBase->setFrom(from());
+    composerBase->setSubject(subject());
+    composerBase->setUrgent(mUrgentAction->isChecked());
+    composerBase->setMDNRequested(mRequestMDNAction->isChecked());
+    composerBase->setRequestDeleveryConfirmation(mRequestDeliveryConfirmation->isChecked());
 }
 
 void KMComposerWin::doDelayedSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn)
@@ -3714,9 +3714,9 @@ void KMComposerWin::runKeyResolver()
                 const auto rec = storage->getRecipient(recipient.toUtf8());
                 GpgME::Key autocryptKey;
                 if (rec) {
-                    const auto key = rec->gpgKey();
-                    if (!key.isBad() && key.canEncrypt()) {
-                        autocryptKey = key;
+                    const auto gpgKey = rec->gpgKey();
+                    if (!gpgKey.isBad() && gpgKey.canEncrypt()) {
+                        autocryptKey = gpgKey;
                     } else {
                         const auto gossipKey = rec->gossipKey();
                         if (!gossipKey.isBad() && gossipKey.canEncrypt()) {
