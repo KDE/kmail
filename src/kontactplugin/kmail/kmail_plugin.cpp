@@ -3,7 +3,7 @@
 
   SPDX-FileCopyrightText: 2003-2013 Kontact Developer <kde-pim@kde.org>
 
-  SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
+  SPDX-License-Identifier: GPL-2.0-or-later WITH LicenseRef-Qt-Commercial-exception-1.0
 */
 
 #include "kmail_plugin.h"

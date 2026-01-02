@@ -5,7 +5,7 @@
   SPDX-FileCopyrightText: 2003 Tobias Koenig <tokoe@kde.org>
   SPDX-FileCopyrightText: 2013-2025 Laurent Montel <montel@kde.org>
 
-  SPDX-License-Identifier: GPL-2.0-or-later WITH Qt-Commercial-exception-1.0
+  SPDX-License-Identifier: GPL-2.0-or-later WITH LicenseRef-Qt-Commercial-exception-1.0
 */
 
 #include "summarywidget.h"
