@@ -238,7 +238,9 @@ void ConfigurePluginsListWidget::initialize()
                                                             MessageComposer::PluginEditorManager::self()->configGroupName(),
                                                             MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
                                                             mPluginEditorItems,
-                                                            pluginEditorGroupName());
+                                                            pluginEditorGroupName(),
+                                                            true,
+                                                            PimCommon::PluginUtil::pluginConfigFile());
 
     // Load messageviewer plugin
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(),
