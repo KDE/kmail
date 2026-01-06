@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-29 00:44+0000\n"
+"POT-Creation-Date: 2026-01-06 00:44+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1623,40 +1623,40 @@ msgstr "កម្មវិធី​តែង"
 msgid "Editor Plugins"
 msgstr "កម្មវិធី​តែង"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
 #, fuzzy, kde-format
 #| msgid "Message Window"
 msgid "Message Viewer"
 msgstr "បង្អួច​សារ"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Webengine Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
 #, fuzzy, kde-format
 #| msgid "Check spelling before sending"
 msgid "Header Style Plugins"
 msgstr "ពិនិត្យ​អក្ខរាវិរុទ្ធ​មុន​ពេល​ផ្ញើ"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Text Conversion Plugins"
 msgstr "កម្មវិធី​តែង"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:318
 #, kde-format
 msgid "Akonadi Agents"
 msgstr ""

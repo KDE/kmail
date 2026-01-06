@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-29 00:44+0000\n"
+"POT-Creation-Date: 2026-01-06 00:44+0000\n"
 "PO-Revision-Date: 2025-12-20 22:59+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1529,37 +1529,37 @@ msgstr "Araç Eklentileri"
 msgid "Editor Plugins"
 msgstr "Editör Eklentileri"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
 #, kde-format
 msgid "Message Viewer"
 msgstr "İleti Görüntüleyicisi"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Web Motoru Eklentileri"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Üstbilgi Biçem Eklentileri"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Metin Dönüştürme Eklentileri"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
 msgstr "Diğer"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "E-posta Silmeyi Onayla Eklentileri"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:318
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi Yardımcıları"

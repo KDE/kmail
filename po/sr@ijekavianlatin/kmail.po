@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-29 00:44+0000\n"
+"POT-Creation-Date: 2026-01-06 00:44+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1724,38 +1724,38 @@ msgstr "Alatni priključci"
 msgid "Editor Plugins"
 msgstr "Priključci uređivača"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
 #, kde-format
 msgid "Message Viewer"
 msgstr "Prikazivač poruka"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Priključci veb motora"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Priključci stila zaglavlja"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
 #, fuzzy, kde-format
 #| msgid "Composer Plugins"
 msgid "Text Conversion Plugins"
 msgstr "Priključci sastavljača"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:318
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadijevi agenti"

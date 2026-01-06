@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-29 00:44+0000\n"
+"POT-Creation-Date: 2026-01-06 00:44+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1498,37 +1498,37 @@ msgstr "工具外掛程式"
 msgid "Editor Plugins"
 msgstr "編輯器外掛程式"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
 #, kde-format
 msgid "Message Viewer"
 msgstr "信件檢視器"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Webengine 外掛程式"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "標頭風格外掛程式"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "文字轉換外掛程式"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
 msgstr "雜項"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "確認刪除郵件外掛程式"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:318
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi 代理程式"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-29 00:44+0000\n"
+"POT-Creation-Date: 2026-01-06 00:44+0000\n"
 "PO-Revision-Date: 2025-11-26 03:29+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -1515,37 +1515,37 @@ msgstr "ხელსაწყოს დამატებები"
 msgid "Editor Plugins"
 msgstr "რედაქტორის დამატებები"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:245
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
 #, kde-format
 msgid "Message Viewer"
 msgstr "შეტყობინების ნახვა"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:255
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Webengine -ის დამატებები"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:265
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "თავსართის სტილის დამატებები"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:274
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "ტექსტის გადაყვანის დამატებები"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:283
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
 msgstr "სხვანი"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:292
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "ელფოსტების წაშლის დადასტურების დამატებები"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:316
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:318
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi -ის აგენტები"
