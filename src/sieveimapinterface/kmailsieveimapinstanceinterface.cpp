@@ -25,16 +25,16 @@ QList<KSieveCore::SieveImapInstance> KMailSieveImapInstanceInterface::sieveImapI
         sieveInstance.setName(instance.name());
         switch (instance.status()) {
         case Akonadi::AgentInstance::Idle:
-            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Idle);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Status::Idle);
             break;
         case Akonadi::AgentInstance::Running:
-            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Running);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Status::Running);
             break;
         case Akonadi::AgentInstance::Broken:
-            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Broken);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Status::Broken);
             break;
         case Akonadi::AgentInstance::NotConfigured:
-            sieveInstance.setStatus(KSieveCore::SieveImapInstance::NotConfigured);
+            sieveInstance.setStatus(KSieveCore::SieveImapInstance::Status::NotConfigured);
             break;
         }
         listInstance.append(sieveInstance);
