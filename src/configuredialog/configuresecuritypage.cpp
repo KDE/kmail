@@ -324,7 +324,8 @@ void SecurityPageEncryptionTab::slotConfigureGnupg()
         page = dlg->addModule(plugin);
     }
     if (!page) {
-        auto info = new QLabel(i18nc("@label:textbox", "The module is missing. Please verify your installation. This module is provided by Kleopatra."), this);
+        auto info =
+            new QLabel(i18nc("@label:textbox", "The module is missing. Please verify your installation. This module is provided by kdepim-addons."), this);
         QFont font = info->font();
         font.setBold(true);
         info->setFont(font);
