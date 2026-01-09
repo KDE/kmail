@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-06 00:44+0000\n"
+"POT-Creation-Date: 2026-01-09 00:44+0000\n"
 "PO-Revision-Date: 2025-11-26 16:38+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -1628,33 +1628,37 @@ msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Параметри GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:327
-#, kde-format
+#: configuredialog/configuresecuritypage.cpp:328
+#, fuzzy, kde-format
+#| msgctxt "@label:textbox"
+#| msgid ""
+#| "The module is missing. Please verify your installation. This module is "
+#| "provided by Kleopatra."
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
-"provided by Kleopatra."
+"provided by kdepim-addons."
 msgstr ""
 "Не вистачає модуля. Будь ласка, перевірте, чи все встановлено належними "
 "чином. Потрібний нам модуль є частиною пакунка Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Помилка під час спроби налаштувати модуль GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:399
+#: configuredialog/configuresecuritypage.cpp:400
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Цей параметр потребує наявності dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "без проксі"
 
-#: configuredialog/configuresecuritypage.cpp:540
+#: configuredialog/configuresecuritypage.cpp:541
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Поточний параметр системи: %1)"

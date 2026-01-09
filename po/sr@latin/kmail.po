@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-06 00:44+0000\n"
+"POT-Creation-Date: 2026-01-09 00:44+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1823,7 +1823,7 @@ msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Postavke GnuPG‑a..."
 
-#: configuredialog/configuresecuritypage.cpp:327
+#: configuredialog/configuresecuritypage.cpp:328
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1831,28 +1831,28 @@ msgstr "Postavke GnuPG‑a..."
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
-"provided by Kleopatra."
+"provided by kdepim-addons."
 msgstr ""
 "Nedostaje modul, proverite instalaciju. Ovaj modul treba da dolazi uz "
 "Kleopatru."
 
-#: configuredialog/configuresecuritypage.cpp:332
+#: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "Greška modula za podešavanje GnuPG‑a"
 
-#: configuredialog/configuresecuritypage.cpp:399
+#: configuredialog/configuresecuritypage.cpp:400
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Ova opcija zahteva ‘dirmngr’ >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:538 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "bez proksija"
 
-#: configuredialog/configuresecuritypage.cpp:540
+#: configuredialog/configuresecuritypage.cpp:541
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Trenutna sistemska postavka: %1)"
