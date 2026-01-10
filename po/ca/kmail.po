@@ -1,5 +1,5 @@
 # Translation of kmail.po to Catalan
-# Copyright (C) 1998-2025 This_file_is_part_of_KDE
+# Copyright (C) 1998-2026 This_file_is_part_of_KDE
 #
 # SPDX-FileCopyrightText: 1998, 1999, 2000, 2004, 2005, 2006 Sebastià Pla i Sanz <sps@sastia.com>
 # SPDX-FileCopyrightText: 2002, 2003, 2004, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
@@ -7,13 +7,13 @@
 # SPDX-FileCopyrightText: 2005 David Gil <al016950@yahoo.es>
 # SPDX-FileCopyrightText: 2009 Joan Maspons <joanmaspons@gmail.com>
 # SPDX-FileCopyrightText: 2009, 2010, 2011 Manuel Tortosa Moreno <manutortosa@chakra-project.org>
-# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-09 00:44+0000\n"
-"PO-Revision-Date: 2025-11-26 11:00+0100\n"
+"PO-Revision-Date: 2026-01-09 09:11+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
@@ -1631,18 +1631,14 @@ msgid "GnuPG Settings"
 msgstr "Configuració del GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
 "Manca el mòdul. Verifiqueu aquesta instal·lació. Aquest mòdul és "
-"proporcionat pel Kleopatra."
+"proporcionat pel «kdepim-addons»."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format

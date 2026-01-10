@@ -173,27 +173,3 @@ msgstr "Modifica…"
 #, kde-format
 msgid "Delete"
 msgstr "Suprimix"
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Antoni Bella"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "antonibella5@yahoo.com"
-
-#~ msgid "Send Later Agent"
-#~ msgstr "Agent d'enviament més tard"
-
-#~ msgid "Send emails later agent."
-#~ msgstr "Agent d'enviament de correus més tard."
-
-#~ msgid "© 2013–%1 Laurent Montel"
-#~ msgstr "© 2013–%1 Laurent Montel"
-
-#~ msgctxt "@info:credit"
-#~ msgid "Laurent Montel"
-#~ msgstr "Laurent Montel"
-
-#~ msgid "Maintainer"
-#~ msgstr "Mantenidor"

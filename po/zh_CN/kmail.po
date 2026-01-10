@@ -1586,16 +1586,12 @@ msgid "GnuPG Settings"
 msgstr "GnuPG 设置"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
-msgstr "模块缺失。请验证您的安装是否完整。此模块由 Kleopatra 提供。"
+msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format

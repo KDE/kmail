@@ -1,6 +1,6 @@
 # translation of kmail.po to Turkish
 # Copyright (C) 2000,2003, 2004, 2005, 2008 Free Software Foundation, Inc.
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Emir SARI <emir_sari@icloud.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Emir SARI <emir_sari@icloud.com>
 # Mehmet TARIMCI <mehmet@gelecek.com.tr>, 2000.
 # Görkem Çetin <gorkem@kde.org>, 2003, 2004.
 # Barış Metin <baris@uludag.org.tr>, 2004.
@@ -18,15 +18,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-09 00:44+0000\n"
-"PO-Revision-Date: 2025-12-20 22:59+0300\n"
-"Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
+"PO-Revision-Date: 2026-01-09 17:10+0300\n"
+"Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.11.80\n"
+"X-Generator: Lokalize 25.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1618,17 +1618,13 @@ msgid "GnuPG Settings"
 msgstr "GnuPG Ayarları"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
-"Bu modül eksik. Lütfen kurulumu doğrulayın. Bu modül Kleopatra tarafından "
+"Modül eksik. Lütfen kurulumu doğrulayın. Bu modül, kdepim-addons tarafından "
 "sağlanmaktadır."
 
 #: configuredialog/configuresecuritypage.cpp:333

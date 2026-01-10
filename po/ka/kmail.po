@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-09 00:44+0000\n"
-"PO-Revision-Date: 2025-11-26 03:29+0100\n"
+"PO-Revision-Date: 2026-01-09 05:59+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -1605,18 +1605,14 @@ msgid "GnuPG Settings"
 msgstr "GnuPG-ის მორგება"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
-"მოდული ვერ ვიპოვე. შეამოწმეთ თქვენი ფაილები. ეს მოდული Kleopatra-ის მერაა "
-"მოწოდებული."
+"მოდული ვერ ვიპოვე. შეამოწმეთ თქვენი ფაილები. ეს მოდული kdepim-addons-ის "
+"მერაა მოწოდებული."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
