@@ -1,5 +1,5 @@
 # translation of kmail.po to
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 # Ahmad M. Zawawi <azawawi@emirates.net.ae>, 2004.
 # Ahmad M. Zawawi <zawawi@arabeyes.org>, 2004.
 # Usamah Ali Al-Maqdad <msareehi@kacst.edu.sa>, 2004.
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-09 00:44+0000\n"
-"PO-Revision-Date: 2025-11-27 12:21+0400\n"
+"PO-Revision-Date: 2026-01-10 10:26+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -1606,16 +1606,12 @@ msgid "GnuPG Settings"
 msgstr "إعدادات GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
-msgstr "الوحدة ناقصة. رجاءً افحص التّثبيت لديك. توفّر «كليوبترا» هذه الوحدة."
+msgstr "الوحدة ناقصة. رجاءً افحص التّثبيت لديك. يوفّر kdepim-addons هذه الوحدة."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
