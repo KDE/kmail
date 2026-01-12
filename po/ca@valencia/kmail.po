@@ -258,7 +258,7 @@ msgstr "S'ha millorat la barra d'estat dels missatges"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
-msgstr "Pedaç per al problema en redimensionar la finestra"
+msgstr "Pedaç per al problema mentre es redimensionava la finestra"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
@@ -2241,13 +2241,13 @@ msgstr "Tanca l'editor"
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
-msgstr "No s'ha pogut guardar automàticament el missatge"
+msgstr "Ha fallat mentre es guardava automàticament el missatge"
 
 #: editor/kmcomposerwin.cpp:2151
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
-msgstr "No s'ha pogut enviar el missatge"
+msgstr "Ha fallat mentre s'enviava el missatge"
 
 #: editor/kmcomposerwin.cpp:2222 kmlaunchexternalcomponent.cpp:152
 #, kde-format
@@ -3094,7 +3094,7 @@ msgstr "Genera un certificat OpenPGP nou"
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
-msgstr "S'ha produït un error en generar la clau"
+msgstr "S'ha produït un error mentre es generava la clau"
 
 #: identity/identitydialog.cpp:343
 #, kde-format
@@ -4031,14 +4031,14 @@ msgstr "S'estan eliminant els duplicats"
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr "S'ha produït un error en eliminar els correus duplicats: «%1»"
+msgstr "S'ha produït un error mentre s'eliminaven els correus duplicats: «%1»"
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
 #, kde-format
 msgctxt "@title:window"
 msgid "Error while removing duplicates"
-msgstr "S'ha produït un error en eliminar els duplicats"
+msgstr "S'ha produït un error mentre s'eliminaven els duplicats"
 
 #: job/saveasfilejob.cpp:26
 #, kde-format
@@ -4433,7 +4433,7 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
-"No s'ha pogut obrir el fitxer de guardada automàtica a %1.\n"
+"Ha fallat mentre s'obria el fitxer de guardada automàtica a %1.\n"
 "Motiu: %2"
 
 #: kmkernel.cpp:894
@@ -4830,8 +4830,7 @@ msgstr "L'acció de moure els missatges cap a dins de la paperera ha fallat."
 #: kmmainwidget.cpp:1957
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
-msgstr ""
-"No s'han pogut suprimir o moure els missatges cap a dins de la paperera."
+msgstr "Ha fallat mentre se suprimia o es movien els missatges a la paperera."
 
 #: kmmainwidget.cpp:1963
 #, kde-format

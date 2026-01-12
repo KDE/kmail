@@ -148,18 +148,21 @@ msgstr "S'està filtrant el missatge %1 de %2"
 #: filtermanager.cpp:189
 #, kde-format
 msgid "Error applying mail filter move"
-msgstr "S'ha produït un error en aplicar el moviment del filtre de correu"
+msgstr ""
+"S'ha produït un error mentre s'aplicava el moviment del filtre de correu"
 
 #: filtermanager.cpp:197
 #, kde-format
 msgid "Error applying mail filter delete"
-msgstr "S'ha produït un error en aplicar la supressió del filtre de correu"
+msgstr ""
+"S'ha produït un error mentre s'aplicava la supressió del filtre de correu"
 
 #: filtermanager.cpp:205
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr ""
-"S'ha produït un error en aplicar les modificacions del filtre de correu"
+"S'ha produït un error mentre s'aplicaven les modificacions del filtre de "
+"correu"
 
 #: filtermanager.cpp:222
 #, kde-format
