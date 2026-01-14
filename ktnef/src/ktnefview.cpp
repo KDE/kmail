@@ -115,10 +115,8 @@ QList<KTNEFAttach *> KTNEFView::getSelection()
     return mAttachments;
 }
 
-void KTNEFView::startDrag(Qt::DropActions dropAction)
+void KTNEFView::startDrag([[maybe_unused]] Qt::DropActions dropAction)
 {
-    Q_UNUSED(dropAction)
-
     QTreeWidgetItemIterator it(this, QTreeWidgetItemIterator::Selected);
     QList<KTNEFAttach *> list;
     while (*it) {

@@ -207,18 +207,15 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
     });
 }
 
-bool UnifiedMailboxAgent::retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts)
+bool UnifiedMailboxAgent::retrieveItems([[maybe_unused]] const Akonadi::Item::List &items, [[maybe_unused]] const QSet<QByteArray> &parts)
 {
-    Q_UNUSED(items)
-    Q_UNUSED(parts)
     qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "retrieveItems() called but we can't own any items! This is a bug in Akonadi";
     return false;
 }
 
-bool UnifiedMailboxAgent::retrieveItem(const Akonadi::Item &item, const QSet<QByteArray> &parts)
+bool UnifiedMailboxAgent::retrieveItem(const Akonadi::Item &item, [[maybe_unused]] const QSet<QByteArray> &parts)
 {
     // This method should never be called by Akonadi
-    Q_UNUSED(parts)
     qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "retrieveItem() for item" << item.id() << "called but we can't own any items! This is a bug in Akonadi";
     return false;
 }

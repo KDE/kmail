@@ -98,9 +98,8 @@ Akonadi::Collection::Id DummyKernel::lastSelectedFolder()
     return Akonadi::Collection::Id();
 }
 
-void DummyKernel::setLastSelectedFolder(Akonadi::Collection::Id col)
+void DummyKernel::setLastSelectedFolder([[maybe_unused]] Akonadi::Collection::Id col)
 {
-    Q_UNUSED(col)
 }
 
 void DummyKernel::expunge(Akonadi::Collection::Id id, bool sync)

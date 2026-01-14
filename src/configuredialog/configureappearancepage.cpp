@@ -1054,11 +1054,12 @@ void AppearancePageMessageTagTab::slotCustomMenuRequested(const QPoint &)
     }
 }
 
-void AppearancePageMessageTagTab::slotRowsMoved(const QModelIndex &, int sourcestart, int sourceEnd, const QModelIndex &, int destinationRow)
+void AppearancePageMessageTagTab::slotRowsMoved([[maybe_unused]] const QModelIndex &,
+                                                [[maybe_unused]] int sourcestart,
+                                                [[maybe_unused]] int sourceEnd,
+                                                [[maybe_unused]] const QModelIndex &,
+                                                [[maybe_unused]] int destinationRow)
 {
-    Q_UNUSED(sourceEnd)
-    Q_UNUSED(sourcestart)
-    Q_UNUSED(destinationRow)
     updateButtons();
     slotEmitChangeCheck();
 }

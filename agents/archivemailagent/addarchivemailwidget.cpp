@@ -131,9 +131,8 @@ void AddArchiveMailWidget::slotUpdateOkButton()
     Q_EMIT enableOkButton(valid);
 }
 
-void AddArchiveMailWidget::slotFolderChanged(const Akonadi::Collection &collection)
+void AddArchiveMailWidget::slotFolderChanged([[maybe_unused]] const Akonadi::Collection &collection)
 {
-    Q_UNUSED(collection)
     slotUpdateOkButton();
 }
 

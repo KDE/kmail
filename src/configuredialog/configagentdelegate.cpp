@@ -164,9 +164,8 @@ QWidget *ConfigAgentDelegate::createEditor(QWidget *, const QStyleOptionViewItem
     return nullptr;
 }
 
-bool ConfigAgentDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool ConfigAgentDelegate::editorEvent(QEvent *event, [[maybe_unused]] QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    Q_UNUSED(model)
     if (!index.isValid()) {
         return false;
     }

@@ -282,8 +282,7 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
     connect(mComposerBase->expiryChecker().get(),
             &Kleo::ExpiryChecker::expiryMessage,
             this,
-            [&](const GpgME::Key &key, QString msg, Kleo::ExpiryChecker::ExpiryInformation info, bool isNewMessage) {
-                Q_UNUSED(isNewMessage);
+            [&](const GpgME::Key &key, QString msg, Kleo::ExpiryChecker::ExpiryInformation info, [[maybe_unused]] bool isNewMessage) {
                 if (info == Kleo::ExpiryChecker::OwnKeyExpired || info == Kleo::ExpiryChecker::OwnKeyNearExpiry) {
                     const auto plainMsg = msg.replace("<p>"_L1, " "_L1).replace("</p>"_L1, " "_L1).replace("<p align=center>"_L1, " "_L1);
                     mNearExpiryWarning->addInfo(plainMsg);
@@ -814,12 +813,11 @@ void KMComposerWin::addAttachment(const QList<KMail::Composer::AttachmentInfo> &
 }
 
 void KMComposerWin::addAttachment(const QString &name,
-                                  KMime::Headers::contentEncoding cte,
+                                  [[maybe_unused]] KMime::Headers::contentEncoding cte,
                                   const QString &charset,
                                   const QByteArray &data,
                                   const QByteArray &mimeType)
 {
-    Q_UNUSED(cte)
     mComposerBase->addAttachment(name, name, charset, data, mimeType);
 }
 

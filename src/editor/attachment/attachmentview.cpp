@@ -96,9 +96,8 @@ void AttachmentView::saveHeaderState()
     grp.sync();
 }
 
-void AttachmentView::contextMenuEvent(QContextMenuEvent *event)
+void AttachmentView::contextMenuEvent([[maybe_unused]] QContextMenuEvent *event)
 {
-    Q_UNUSED(event)
     Q_EMIT contextMenuRequested();
 }
 

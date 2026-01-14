@@ -145,9 +145,8 @@ MailFilterAgent::~MailFilterAgent()
     delete mFilterLogDialog;
 }
 
-void MailFilterAgent::configure(WId windowId)
+void MailFilterAgent::configure([[maybe_unused]] WId windowId)
 {
-    Q_UNUSED(windowId)
 }
 
 void MailFilterAgent::initializeCollections()
@@ -372,7 +371,7 @@ void MailFilterAgent::reload()
     initializeCollections();
 }
 
-void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
+void MailFilterAgent::showFilterLogDialog([[maybe_unused]] qlonglong windowId)
 {
     if (!mFilterLogDialog) {
         mFilterLogDialog = new FilterLogDialog(nullptr);
@@ -383,7 +382,6 @@ void MailFilterAgent::showFilterLogDialog(qlonglong windowId)
     // is the KMail main window, the filter log dialogue gets closed when KMail
     // is minimised or docked to the system tray, with no way to get it back.
     // Leave it as a standalone window with its own taskbar entry instead.
-    Q_UNUSED(windowId);
 
     mFilterLogDialog->show();
     mFilterLogDialog->raise();
