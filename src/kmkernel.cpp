@@ -1431,10 +1431,8 @@ MessageComposer::MessageSender *KMKernel::msgSender()
     return the_msgSender;
 }
 
-void KMKernel::transportRemoved(int id, const QString &name)
+void KMKernel::transportRemoved([[maybe_unused]] int id, const QString &name)
 {
-    Q_UNUSED(id)
-
     // reset all identities using the deleted transport
     QStringList changedIdents;
     KIdentityManagementCore::IdentityManager *im = identityManager();
@@ -1462,10 +1460,8 @@ void KMKernel::transportRemoved(int id, const QString &name)
     }
 }
 
-void KMKernel::transportRenamed(int id, const QString &oldName, const QString &newName)
+void KMKernel::transportRenamed([[maybe_unused]] int id, const QString &oldName, const QString &newName)
 {
-    Q_UNUSED(id)
-
     QStringList changedIdents;
     KIdentityManagementCore::IdentityManager *im = identityManager();
     KIdentityManagementCore::IdentityManager::Iterator end = im->modifyEnd();
@@ -1911,10 +1907,8 @@ void KMKernel::setShuttingDown(bool flag)
     the_shuttingDown = flag;
 }
 
-void KMKernel::expunge(Akonadi::Collection::Id col, bool sync)
+void KMKernel::expunge([[maybe_unused]] Akonadi::Collection::Id col, [[maybe_unused]] bool sync)
 {
-    Q_UNUSED(col)
-    Q_UNUSED(sync)
 }
 
 #if KMAIL_WITH_KUSERFEEDBACK

@@ -91,7 +91,7 @@ void SummaryView::doSync()
 
 KParts::Part *SummaryView::createPart()
 {
-    mPart = new SummaryViewPart(core(), aboutData(), this);
+    mPart = new SummaryViewPart(core(), this);
     mPart->setObjectName("summaryPart"_L1);
     return mPart;
 }

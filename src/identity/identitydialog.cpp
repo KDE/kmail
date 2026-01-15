@@ -112,12 +112,11 @@ using namespace Qt::Literals::StringLiterals;
 class EmptyPassphraseProvider : public GpgME::PassphraseProvider
 {
 public:
-    char *getPassphrase(const char *useridHint, const char *description, bool previousWasBad, bool &canceled) override
+    char *getPassphrase([[maybe_unused]] const char *useridHint,
+                        [[maybe_unused]] const char *description,
+                        [[maybe_unused]] bool previousWasBad,
+                        [[maybe_unused]] bool &canceled) override
     {
-        Q_UNUSED(useridHint);
-        Q_UNUSED(description);
-        Q_UNUSED(previousWasBad);
-        Q_UNUSED(canceled);
         return gpgrt_strdup("");
     }
 };

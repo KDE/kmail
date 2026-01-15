@@ -74,10 +74,8 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi
         job->setProperty("ProgressItem", QVariant::fromValue(item));
         item->setProperty("ClearCacheFoldersJob", QVariant::fromValue(qobject_cast<Akonadi::Job *>(job)));
         connect(job, &Akonadi::ClearCacheFoldersJob::clearCacheDone, this, &ClearCacheJobInFolderAndSubFolderJob::clearCacheDone);
-        connect(job, &Akonadi::ClearCacheFoldersJob::finished, this, [this, job](bool success) {
+        connect(job, &Akonadi::ClearCacheFoldersJob::finished, this, [this, job]([[maybe_unused]] bool success) {
             // TODO use it
-            Q_UNUSED(success)
-
             slotFinished(job);
         });
         // connect(job, &Akonadi::ClearCacheFoldersJob::description, this, &ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheUpdate);

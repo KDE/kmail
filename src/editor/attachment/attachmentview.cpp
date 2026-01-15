@@ -174,10 +174,8 @@ void AttachmentView::selectNewAttachment()
     }
 }
 
-void AttachmentView::startDrag(Qt::DropActions supportedActions)
+void AttachmentView::startDrag([[maybe_unused]] Qt::DropActions supportedActions)
 {
-    Q_UNUSED(supportedActions)
-
     const QModelIndexList selection = selectionModel()->selectedRows();
     if (!selection.isEmpty()) {
         QMimeData *mimeData = model()->mimeData(selection);

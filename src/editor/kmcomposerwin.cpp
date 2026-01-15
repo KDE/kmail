@@ -4344,9 +4344,8 @@ void KMComposerWin::slotIdentityDeleted(uint uoid)
     }
 }
 
-void KMComposerWin::slotTransportRemoved(int id, const QString &name)
+void KMComposerWin::slotTransportRemoved(int id, [[maybe_unused]] const QString &name)
 {
-    Q_UNUSED(name)
     if (mComposerBase->transportComboBox()->currentTransportId() == id) {
         mIncorrectIdentityFolderWarning->mailTransportIsInvalid();
     }

@@ -812,9 +812,8 @@ void KMReaderWin::slotContactHtmlOptions()
     job->start();
 }
 
-void KMReaderWin::slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent)
+void KMReaderWin::slotContactHtmlPreferencesUpdated([[maybe_unused]] const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent)
 {
-    Q_UNUSED(contact)
     if (mViewer->messageItem().id() == id) {
         mViewer->slotChangeDisplayMail(showAsHTML ? Viewer::Html : Viewer::Text, remoteContent);
     }

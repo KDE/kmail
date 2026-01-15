@@ -162,14 +162,12 @@ void UnityServiceManager::initUnity()
     mUnityServiceWatcher->setConnection(QDBusConnection::sessionBus());
     mUnityServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration | QDBusServiceWatcher::WatchForRegistration);
     mUnityServiceWatcher->addWatchedService(QStringLiteral("com.canonical.Unity"));
-    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceRegistered, this, [this](const QString &service) {
-        Q_UNUSED(service)
+    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceRegistered, this, [this]([[maybe_unused]] const QString &service) {
         mUnityServiceAvailable = true;
         updateCount();
     });
 
-    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, [this](const QString &service) {
-        Q_UNUSED(service)
+    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, [this]([[maybe_unused]] const QString &service) {
         mUnityServiceAvailable = false;
     });
 

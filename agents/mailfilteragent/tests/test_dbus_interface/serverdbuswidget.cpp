@@ -55,9 +55,8 @@ void ServerDbusWidget::sendElements(const QList<qint64> &items, int index)
     mEdit->append(str);
 }
 
-void ServerDbusWidget::showDialog(qlonglong windowId)
+void ServerDbusWidget::showDialog([[maybe_unused]] qlonglong windowId)
 {
-    Q_UNUSED(windowId);
     qDebug() << " show dialog";
     QMessageBox::warning(this, QStringLiteral("TITLE"), QStringLiteral("MESSAGE"));
 }

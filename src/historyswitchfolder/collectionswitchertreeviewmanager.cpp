@@ -32,9 +32,8 @@ void CollectionSwitcherTreeViewManager::addActions(const QList<QAction *> &lst)
     mCollectionSwitcherTreeView->addActions(lst);
 }
 
-void CollectionSwitcherTreeViewManager::activateCollection(const QModelIndex &index)
+void CollectionSwitcherTreeViewManager::activateCollection([[maybe_unused]] const QModelIndex &index)
 {
-    Q_UNUSED(index)
     if (mCollectionSwitcherTreeView->selectionModel()->selectedRows().isEmpty()) {
         return;
     }

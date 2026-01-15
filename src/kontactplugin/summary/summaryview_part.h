@@ -34,7 +34,7 @@ class SummaryViewPart : public KParts::Part
     Q_OBJECT
 
 public:
-    SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent = nullptr);
+    SummaryViewPart(KontactInterface::Core *core, QObject *parent = nullptr);
     ~SummaryViewPart() override;
 
 public Q_SLOTS:

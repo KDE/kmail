@@ -41,12 +41,11 @@ using PimCommon::BroadcastStatus;
 #include <QVBoxLayout>
 using namespace Qt::Literals::StringLiterals;
 
-SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, const KAboutData &aboutData, QObject *parent)
+SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, QObject *parent)
     : KParts::Part(parent)
     , mCore(core)
     , mConfigAction(new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure Summary View…"), this))
 {
-    Q_UNUSED(aboutData)
     setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
 
     loadLayout();

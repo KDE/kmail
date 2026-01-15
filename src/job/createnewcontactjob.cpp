@@ -126,9 +126,8 @@ void CreateNewContactJob::createContact()
     delete dlg;
 }
 
-void CreateNewContactJob::contactStored(const Akonadi::Item &item)
+void CreateNewContactJob::contactStored([[maybe_unused]] const Akonadi::Item &item)
 {
-    Q_UNUSED(item)
     PimCommon::BroadcastStatus::instance()->setStatusMsg(i18n("Contact created successfully"));
 }
 

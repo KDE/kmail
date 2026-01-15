@@ -1277,9 +1277,8 @@ void KMMainWidget::slotCollectionChanged(const Akonadi::Collection &collection, 
     }
 }
 
-void KMMainWidget::slotItemAdded(const Akonadi::Item &msg, const Akonadi::Collection &col)
+void KMMainWidget::slotItemAdded([[maybe_unused]] const Akonadi::Item &msg, const Akonadi::Collection &col)
 {
-    Q_UNUSED(msg)
     if (col.isValid()) {
         if (col == CommonKernel->outboxCollectionFolder()) {
             startUpdateMessageActionsTimer();
