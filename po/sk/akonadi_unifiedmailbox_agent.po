@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_unifiedmailbox_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2021-07-20 17:52+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -47,21 +47,21 @@ msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Naozaj odstrániť?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:127
 #, fuzzy, kde-format
 #| msgid "Add"
 msgctxt "@action"
 msgid "Add"
 msgstr "Pridať"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:131
 #, fuzzy, kde-format
 #| msgid "Modify"
 msgctxt "@action"
 msgid "Modify"
 msgstr "Zmeniť"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:133
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"

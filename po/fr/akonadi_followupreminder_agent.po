@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2025-08-22 09:08+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -54,32 +54,32 @@ msgstr "Reçue"
 msgid "On hold"
 msgstr "En attente"
 
-#: followupreminderinfowidget.cpp:219
+#: followupreminderinfowidget.cpp:218
 #, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Afficher un message"
 
-#: followupreminderinfowidget.cpp:222
+#: followupreminderinfowidget.cpp:221
 #, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Afficher le message original"
 
-#: followupreminderinfowidget.cpp:225
+#: followupreminderinfowidget.cpp:224
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: followupreminderinfowidget.cpp:252
+#: followupreminderinfowidget.cpp:251
 #, kde-format
 msgid "Do you want to delete this selected item?"
 msgid_plural "Do you want to delete these %1 selected items?"
 msgstr[0] "Voulez-vous vraiment supprimer cet élément sélectionné ?"
 msgstr[1] "Voulez-vous supprimer ces %1 éléments sélectionnés ?"
 
-#: followupreminderinfowidget.cpp:253
+#: followupreminderinfowidget.cpp:252
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"

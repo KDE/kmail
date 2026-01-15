@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2024-08-19 22:34+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -169,7 +169,7 @@ msgstr "<b>Filterregeln wurden angewandt.</b>"
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Filterung beginnt bei Nachricht „%1“ von „%2“ um „%3“ :</b>"
 
-#: filtermanager.cpp:592 mailfilteragent.cpp:225
+#: filtermanager.cpp:592 mailfilteragent.cpp:224
 #, kde-format
 msgid "Filtering messages"
 msgstr "Nachrichten werden gefiltert"
@@ -190,17 +190,17 @@ msgstr "E-Mail-Filter-Protokoll aktiviert"
 msgid "Show Log"
 msgstr ""
 
-#: mailfilteragent.cpp:186
+#: mailfilteragent.cpp:185
 #, kde-format
 msgid "Ready"
 msgstr "Bereit"
 
-#: mailfilteragent.cpp:274
+#: mailfilteragent.cpp:273
 #, kde-format
 msgid "Filtering in %1"
 msgstr "%1 wird gefiltert"
 
-#: mailfilteragent.cpp:398
+#: mailfilteragent.cpp:396
 #, fuzzy, kde-format
 #| msgid "Filtering messages"
 msgid "Finished filtering, %1 message processed"

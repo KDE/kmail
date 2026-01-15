@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-09 00:44+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2025-08-21 12:57+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -414,18 +414,18 @@ msgstr "Vēstkopas palīdzība"
 msgid "Not available"
 msgstr "Nav pieejams"
 
-#: collectionpage/collectionmailinglistpage.cpp:185
-#: collectionpage/collectionmailinglistpage.cpp:220
+#: collectionpage/collectionmailinglistpage.cpp:184
+#: collectionpage/collectionmailinglistpage.cpp:219
 #, kde-format
 msgid "Not available."
 msgstr "Nav pieejams."
 
-#: collectionpage/collectionmailinglistpage.cpp:213
+#: collectionpage/collectionmailinglistpage.cpp:212
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
 msgstr "„KMail“ šajā mapē nespēja atrast nevienu vēstkopu."
 
-#: collectionpage/collectionmailinglistpage.cpp:216
+#: collectionpage/collectionmailinglistpage.cpp:215
 #, kde-format
 msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
@@ -514,7 +514,7 @@ msgstr "&Nelasīta:"
 msgid "(%1%)"
 msgstr "(%1 %)"
 
-#: configuredialog/configagentdelegate.cpp:214
+#: configuredialog/configagentdelegate.cpp:213
 #, kde-format
 msgid "Retrieval Options"
 msgstr "Izguves opcijas"
@@ -1008,19 +1008,19 @@ msgstr "&Birku iestatījumi"
 msgid "Delete"
 msgstr "Dzēst"
 
-#: configuredialog/configureappearancepage.cpp:1182
+#: configuredialog/configureappearancepage.cpp:1183
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Vai tiešām vēlaties noņemt birku „%1“?"
 
-#: configuredialog/configureappearancepage.cpp:1183
+#: configuredialog/configureappearancepage.cpp:1184
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Noņemt birku"
 
-#: configuredialog/configureappearancepage.cpp:1228
-#: configuredialog/configureappearancepage.cpp:1263
+#: configuredialog/configureappearancepage.cpp:1229
+#: configuredialog/configureappearancepage.cpp:1264
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Neizdodas izveidot birku. Jau eksistē birka ar tādu pašu nosaukumu."
@@ -1747,7 +1747,7 @@ msgctxt "@title:window"
 msgid "Notification"
 msgstr "Paziņojumi"
 
-#: editor/attachment/attachmentview.cpp:168
+#: editor/attachment/attachmentview.cpp:167
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
@@ -1755,371 +1755,371 @@ msgstr[0] "%1 piesaistne (%2)"
 msgstr[1] "%1 piesaistnes (%2)"
 msgstr[2] "%1 piesaistņu (%2)"
 
-#: editor/attachment/attachmentview.cpp:200
+#: editor/attachment/attachmentview.cpp:199
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Slēpt piesaistņu sarakstu"
 
-#: editor/attachment/attachmentview.cpp:202
+#: editor/attachment/attachmentview.cpp:201
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Parādīt piesaistņu sarakstu"
 
-#: editor/kmcomposerwin.cpp:327 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
 #: kmreadermainwin.cpp:486 kontactplugin/kmail/kmail_plugin.cpp:41
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:358
+#: editor/kmcomposerwin.cpp:357
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Atlasiet vārdnīcu šīs vēstules pareizrakstības pārbaudei"
 
-#: editor/kmcomposerwin.cpp:365
+#: editor/kmcomposerwin.cpp:364
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Atlasiet nosūtnes mapi, kur saglabāt šīs vēstules kopiju"
 
-#: editor/kmcomposerwin.cpp:374
+#: editor/kmcomposerwin.cpp:373
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Atlasiet izejošo kontu šīs vēstules nosūtīšanai"
 
-#: editor/kmcomposerwin.cpp:383
+#: editor/kmcomposerwin.cpp:382
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Iestatiet e-pasta adresi „No:“ laukam šai vēstulei"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:411
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identitāte:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Vārdnīca:"
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:413
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "&Nosūtnes mape:"
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:414
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "&Pasta transports:"
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&No:"
 
-#: editor/kmcomposerwin.cpp:417
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Temats:"
 
-#: editor/kmcomposerwin.cpp:486
+#: editor/kmcomposerwin.cpp:485
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Redaktors"
 
-#: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1283
+#: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1281
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Sūtīt pastu"
 
-#: editor/kmcomposerwin.cpp:1256 editor/kmcomposerwin.cpp:1289
+#: editor/kmcomposerwin.cpp:1254 editor/kmcomposerwin.cpp:1287
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "&Sūtīt pastu ar"
 
-#: editor/kmcomposerwin.cpp:1258
+#: editor/kmcomposerwin.cpp:1256
 #, kde-format
 msgid "Send"
 msgstr "Sūtīt"
 
-#: editor/kmcomposerwin.cpp:1261 editor/kmcomposerwin.cpp:1273
+#: editor/kmcomposerwin.cpp:1259 editor/kmcomposerwin.cpp:1271
 #, kde-format
 msgid "Send &Later"
 msgstr "Sūtīt vē&lāk"
 
-#: editor/kmcomposerwin.cpp:1267 editor/kmcomposerwin.cpp:1280
+#: editor/kmcomposerwin.cpp:1265 editor/kmcomposerwin.cpp:1278
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Sūtīt vē&lāk ar"
 
-#: editor/kmcomposerwin.cpp:1269
+#: editor/kmcomposerwin.cpp:1267
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "Ierindot"
 
-#: editor/kmcomposerwin.cpp:1298
+#: editor/kmcomposerwin.cpp:1296
 #, kde-format
 msgid "Save as &Draft"
 msgstr "Saglabāt kā &melnrakstu"
 
-#: editor/kmcomposerwin.cpp:1300
+#: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "Saglabāt vēstuli melnrakstu mapē"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1302
 #, kde-format
 msgid "Save as &Template"
 msgstr "Saglabāt kā &veidni"
 
-#: editor/kmcomposerwin.cpp:1305
+#: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "Saglabāt e-pastu veidņu mapē"
 
-#: editor/kmcomposerwin.cpp:1309
+#: editor/kmcomposerwin.cpp:1307
 #, kde-format
 msgid "Save as &File"
 msgstr "Saglabāt kā &datni"
 
-#: editor/kmcomposerwin.cpp:1310
+#: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "Saglabāt kā teksta vai HTML datni"
 
-#: editor/kmcomposerwin.cpp:1314
+#: editor/kmcomposerwin.cpp:1312
 #, kde-format
 msgid "&Insert Text File…"
 msgstr "&Ievietot teksta datni…"
 
-#: editor/kmcomposerwin.cpp:1318
+#: editor/kmcomposerwin.cpp:1316
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "&Ievietot neseno teksta datni"
 
-#: editor/kmcomposerwin.cpp:1328 kmmainwidget.cpp:3006
+#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3006
 #, kde-format
 msgid "&Address Book"
 msgstr "&Adrešu grāmata"
 
-#: editor/kmcomposerwin.cpp:1329
+#: editor/kmcomposerwin.cpp:1327
 #, kde-format
 msgid "Open Address Book"
 msgstr "Atvērt adrešu grāmatu"
 
-#: editor/kmcomposerwin.cpp:1337
+#: editor/kmcomposerwin.cpp:1335
 #, kde-format
 msgid "&New Composer"
 msgstr "&Jauns redaktora logs"
 
-#: editor/kmcomposerwin.cpp:1343
+#: editor/kmcomposerwin.cpp:1341
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Atlasiet &saņēmējus…"
 
-#: editor/kmcomposerwin.cpp:1346
+#: editor/kmcomposerwin.cpp:1344
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Saglabāt &adresātu sarakstu…"
 
-#: editor/kmcomposerwin.cpp:1370
+#: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Ielīmēt kā &piesaistni"
 
-#: editor/kmcomposerwin.cpp:1374
+#: editor/kmcomposerwin.cpp:1372
 #, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "&Notīrīt atstarpes"
 
-#: editor/kmcomposerwin.cpp:1378
+#: editor/kmcomposerwin.cpp:1376
 #, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Lietot &fiksētu fontu"
 
-#: editor/kmcomposerwin.cpp:1384
+#: editor/kmcomposerwin.cpp:1382
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Steidzama"
 
-#: editor/kmcomposerwin.cpp:1386
+#: editor/kmcomposerwin.cpp:1384
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "&Pieprasīt piegādes paziņojumu"
 
-#: editor/kmcomposerwin.cpp:1390
+#: editor/kmcomposerwin.cpp:1388
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "&Pieprasīt saņemšanas paziņojumu"
 
-#: editor/kmcomposerwin.cpp:1395
+#: editor/kmcomposerwin.cpp:1393
 #, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Rindu aplaušana"
 
-#: editor/kmcomposerwin.cpp:1400
+#: editor/kmcomposerwin.cpp:1398
 #, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "&Fragmenti"
 
-#: editor/kmcomposerwin.cpp:1405
+#: editor/kmcomposerwin.cpp:1403
 #, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Automātiska pareizrakstības pārbaude"
 
-#: editor/kmcomposerwin.cpp:1421
+#: editor/kmcomposerwin.cpp:1419
 #, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Formatēta teksta rediģēšana"
 
-#: editor/kmcomposerwin.cpp:1423
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "Rich Text"
 msgstr "Formatēts teksts"
 
-#: editor/kmcomposerwin.cpp:1424
+#: editor/kmcomposerwin.cpp:1422
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Pārslēgt formatēta teksta rediģēšanu"
 
-#: editor/kmcomposerwin.cpp:1428
+#: editor/kmcomposerwin.cpp:1426
 #, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Visi lauki"
 
-#: editor/kmcomposerwin.cpp:1431
+#: editor/kmcomposerwin.cpp:1429
 #, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identitāte"
 
-#: editor/kmcomposerwin.cpp:1434
+#: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Vārdnīca"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1435
 #, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Nosūtnes mape"
 
-#: editor/kmcomposerwin.cpp:1440
+#: editor/kmcomposerwin.cpp:1438
 #, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Pasta transports"
 
-#: editor/kmcomposerwin.cpp:1443
+#: editor/kmcomposerwin.cpp:1441
 #, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&No"
 
-#: editor/kmcomposerwin.cpp:1446
+#: editor/kmcomposerwin.cpp:1444
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Temats"
 
-#: editor/kmcomposerwin.cpp:1451
+#: editor/kmcomposerwin.cpp:1449
 #, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "&Pievienot parakstu beigām"
 
-#: editor/kmcomposerwin.cpp:1455
+#: editor/kmcomposerwin.cpp:1453
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Pievienot parakstu &sākumam"
 
-#: editor/kmcomposerwin.cpp:1459
+#: editor/kmcomposerwin.cpp:1457
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Pievienot parakstu pie &kursora"
 
-#: editor/kmcomposerwin.cpp:1474
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "&Spellchecker…"
 msgstr "&Pareizrakstības pārbaude..."
 
-#: editor/kmcomposerwin.cpp:1475
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Spellchecker"
 msgstr "Pareizrakstības pārbaudītājs"
 
-#: editor/kmcomposerwin.cpp:1479
+#: editor/kmcomposerwin.cpp:1477
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "Ši&frēt vēstuli"
 
-#: editor/kmcomposerwin.cpp:1480
+#: editor/kmcomposerwin.cpp:1478
 #, kde-format
 msgid "Encrypt"
 msgstr "Šifrēt"
 
-#: editor/kmcomposerwin.cpp:1482
+#: editor/kmcomposerwin.cpp:1480
 #, kde-format
 msgid "&Sign Message"
 msgstr "Parak&stīt vēstuli"
 
-#: editor/kmcomposerwin.cpp:1483
+#: editor/kmcomposerwin.cpp:1481
 #, kde-format
 msgid "Sign"
 msgstr "Parakstīt"
 
-#: editor/kmcomposerwin.cpp:1510
+#: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "&Vēstules kriptogrāfijas formāts"
 
-#: editor/kmcomposerwin.cpp:1513
+#: editor/kmcomposerwin.cpp:1511
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Atlasiet šīs vēstules kriptogrāfijas formātu"
 
-#: editor/kmcomposerwin.cpp:1518
+#: editor/kmcomposerwin.cpp:1516
 #, kde-format
 msgid "Create Follow Up Reminder…"
 msgstr "Izveidot atgādinājumu…"
 
-#: editor/kmcomposerwin.cpp:1552
+#: editor/kmcomposerwin.cpp:1550
 #, kde-format
 msgid "Configure KMail…"
 msgstr "Konfigurēt „KMail“..."
 
-#: editor/kmcomposerwin.cpp:1583 kmmainwin.cpp:225 kmreadermainwin.cpp:545
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:545
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2128,55 +2128,55 @@ msgstr ""
 "<qt>Šī opcija izvēlnes joslu pilnībā paslēps. Lai to atkal parādītu, "
 "rakstiet „%1“.</qt>"
 
-#: editor/kmcomposerwin.cpp:1586 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Paslēpt izvēlnes joslu"
 
-#: editor/kmcomposerwin.cpp:1687 editor/kmcomposerwin.cpp:4048
+#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4046
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Rinda: %1 "
 
-#: editor/kmcomposerwin.cpp:1690
+#: editor/kmcomposerwin.cpp:1688
 #, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Kolonna: %1 "
 
-#: editor/kmcomposerwin.cpp:1695
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "OVR"
 msgstr "OVR"
 
-#: editor/kmcomposerwin.cpp:1695
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "INS"
 msgstr "INS"
 
-#: editor/kmcomposerwin.cpp:1703
+#: editor/kmcomposerwin.cpp:1701
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Pareizrakstība: ieslēgta"
 
-#: editor/kmcomposerwin.cpp:1703
+#: editor/kmcomposerwin.cpp:1701
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Pareizrakstība: izslēgta"
 
-#: editor/kmcomposerwin.cpp:2081
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "Re&save as Template"
 msgstr "&Saglabāt kā veidni"
 
-#: editor/kmcomposerwin.cpp:2081
+#: editor/kmcomposerwin.cpp:2079
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Saglabāt kā &melnrakstu"
 
-#: editor/kmcomposerwin.cpp:2082
+#: editor/kmcomposerwin.cpp:2080
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2185,7 +2185,7 @@ msgstr ""
 "Saglabā šo vēstuli veidņu mapē, lai vēlāk izmantotu jaunu vēstuļu "
 "rakstīšanai."
 
-#: editor/kmcomposerwin.cpp:2084
+#: editor/kmcomposerwin.cpp:2082
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2194,82 +2194,82 @@ msgstr ""
 "Saglabā šo vēstuli Melnrakstu mapē, lai vēlāk turpinātu rediģēšanu un "
 "nosūtītu."
 
-#: editor/kmcomposerwin.cpp:2088
+#: editor/kmcomposerwin.cpp:2086
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Vai vēlaties saglabāt šo vēstuli vēlākai turpināšanai vai izmest?"
 
-#: editor/kmcomposerwin.cpp:2089
+#: editor/kmcomposerwin.cpp:2087
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Aizvērt redaktoru"
 
-#: editor/kmcomposerwin.cpp:2157
+#: editor/kmcomposerwin.cpp:2155
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Neizdevās automātiski saglabāt"
 
-#: editor/kmcomposerwin.cpp:2158
+#: editor/kmcomposerwin.cpp:2156
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Vēstuli neizdevās nosūtīt"
 
-#: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:152
+#: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "Neizdevās palaist „KAddressbook“ programmu. Pārbaudiet instalāciju."
 
-#: editor/kmcomposerwin.cpp:2231 kmlaunchexternalcomponent.cpp:154
+#: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "Neizdevās palaist „KAddressbook“ programmu."
 
-#: editor/kmcomposerwin.cpp:2353
+#: editor/kmcomposerwin.cpp:2351
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Ievietot datni"
 
-#: editor/kmcomposerwin.cpp:2439
+#: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Pievienot attēlu vēstures &saturam"
 
-#: editor/kmcomposerwin.cpp:2440
+#: editor/kmcomposerwin.cpp:2438
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Pievienot kā &piesaistni"
 
-#: editor/kmcomposerwin.cpp:2455
+#: editor/kmcomposerwin.cpp:2453
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2455 editor/kmcomposerwin.cpp:2560
+#: editor/kmcomposerwin.cpp:2453 editor/kmcomposerwin.cpp:2558
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Piesaistnes nosaukums:"
 
-#: editor/kmcomposerwin.cpp:2461
+#: editor/kmcomposerwin.cpp:2459
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Piesaistnes nosaukums nevar būt tukšs"
 
-#: editor/kmcomposerwin.cpp:2461
+#: editor/kmcomposerwin.cpp:2459
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Nederīgs piesaistnes nosaukums"
 
-#: editor/kmcomposerwin.cpp:2512
+#: editor/kmcomposerwin.cpp:2510
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
@@ -2277,7 +2277,7 @@ msgstr[0] "Vēstulē pievienot URL"
 msgstr[1] "Vēstulē pievienot URL"
 msgstr[2] "Vēstulē pievienot URL"
 
-#: editor/kmcomposerwin.cpp:2513
+#: editor/kmcomposerwin.cpp:2511
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
@@ -2285,18 +2285,18 @@ msgstr[0] "&Pievienot datni kā piesaistni"
 msgstr[1] "&Pievienot datnes kā piesaistni"
 msgstr[2] "&Pievienot datnes kā piesaistni"
 
-#: editor/kmcomposerwin.cpp:2559
+#: editor/kmcomposerwin.cpp:2557
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Ievietot starpliktuves tekstu kā piesaistni"
 
-#: editor/kmcomposerwin.cpp:2655
+#: editor/kmcomposerwin.cpp:2653
 #, kde-format
 msgid "unnamed"
 msgstr "nenosaukts"
 
-#: editor/kmcomposerwin.cpp:2681
+#: editor/kmcomposerwin.cpp:2679
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2307,13 +2307,13 @@ msgstr ""
 "(OpenPGP vai S/MIME) parakstīšanas atslēga.</p><p>Norādiet atslēgu "
 "identitātes konfigurācijā.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2688
+#: editor/kmcomposerwin.cpp:2686
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Parakstīšanas atslēga nav definēta"
 
-#: editor/kmcomposerwin.cpp:2853
+#: editor/kmcomposerwin.cpp:2851
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2323,7 +2323,7 @@ msgstr ""
 "Ievadiet e-pasta adresi „No:“ laukā. Norādiet e-pasta adresi visām savām "
 "identitātēm, lai tā šeit nebūtu jāievada katru reizi."
 
-#: editor/kmcomposerwin.cpp:2862
+#: editor/kmcomposerwin.cpp:2860
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2331,77 +2331,77 @@ msgid ""
 msgstr ""
 "Jums ir jānorāda vismaz viens saņēmējs „Kam:“ vai „CC“, vai „BCC“ laukā"
 
-#: editor/kmcomposerwin.cpp:2868
+#: editor/kmcomposerwin.cpp:2866
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "„Kam:“ lauks ir tukšs. Vai sūtīt šo vēstuli?"
 
-#: editor/kmcomposerwin.cpp:2870
+#: editor/kmcomposerwin.cpp:2868
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Nav norādīts „Kam:“"
 
-#: editor/kmcomposerwin.cpp:2871 editor/kmcomposerwin.cpp:2885
+#: editor/kmcomposerwin.cpp:2869 editor/kmcomposerwin.cpp:2883
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "&Sūtīt šādu"
 
-#: editor/kmcomposerwin.cpp:2872
+#: editor/kmcomposerwin.cpp:2870
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Norādīt „Kam“ sūtāt"
 
-#: editor/kmcomposerwin.cpp:2882
+#: editor/kmcomposerwin.cpp:2880
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Jūs nenorādījāt tēmu. Vai sūtīt tāpat?"
 
-#: editor/kmcomposerwin.cpp:2884
+#: editor/kmcomposerwin.cpp:2882
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Nav norādīts temats"
 
-#: editor/kmcomposerwin.cpp:2886
+#: editor/kmcomposerwin.cpp:2884
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Norādīt tēmu"
 
-#: editor/kmcomposerwin.cpp:2931
+#: editor/kmcomposerwin.cpp:2929
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Lai melnrakstu varētu šifrēt, ir jānorāda vismaz viens saņēmējs."
 
-#: editor/kmcomposerwin.cpp:3117
+#: editor/kmcomposerwin.cpp:3115
 #, kde-format
 msgid "About to send email…"
 msgstr "Gatavojas sūtīt vēstuli..."
 
-#: editor/kmcomposerwin.cpp:3118
+#: editor/kmcomposerwin.cpp:3116
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Nosūtīšanas apstiprināšana"
 
-#: editor/kmcomposerwin.cpp:3119
+#: editor/kmcomposerwin.cpp:3117
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Sūtīt tagad"
 
-#: editor/kmcomposerwin.cpp:3120
+#: editor/kmcomposerwin.cpp:3118
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Sūtīt vē&lāk"
 
-#: editor/kmcomposerwin.cpp:3200
+#: editor/kmcomposerwin.cpp:3198
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2409,50 +2409,50 @@ msgid ""
 msgstr ""
 "Jūs mēģināt nosūtīt vēstuli vairāk nekā %1 saņēmējiem. Vai tiešām nosūtīt?"
 
-#: editor/kmcomposerwin.cpp:3201
+#: editor/kmcomposerwin.cpp:3199
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Pārāk daudz saņēmēju"
 
-#: editor/kmcomposerwin.cpp:3202
+#: editor/kmcomposerwin.cpp:3200
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Sūtīt šādu"
 
-#: editor/kmcomposerwin.cpp:3203
+#: editor/kmcomposerwin.cpp:3201
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Rediģēt saņēmējus"
 
-#: editor/kmcomposerwin.cpp:3240
+#: editor/kmcomposerwin.cpp:3238
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "Izslēdzot HTML režīmu, tiks pazaudēta visa formatēšana. Turpināt?"
 
-#: editor/kmcomposerwin.cpp:3242
+#: editor/kmcomposerwin.cpp:3240
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Vai pazaudēt formatējumu?"
 
-#: editor/kmcomposerwin.cpp:3243
+#: editor/kmcomposerwin.cpp:3241
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Zaudēt formatējumu"
 
-#: editor/kmcomposerwin.cpp:3244
+#: editor/kmcomposerwin.cpp:3242
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Pievienot marķēšanu vienkāršam tekstam"
 
-#: editor/kmcomposerwin.cpp:3456
+#: editor/kmcomposerwin.cpp:3454
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2462,7 +2462,7 @@ msgstr ""
 "Jūsu atlasītā PGP atslēga (%1) neeksistē jūsu atslēgu saišķī vai nav "
 "pieejama šifrēšanai."
 
-#: editor/kmcomposerwin.cpp:3469
+#: editor/kmcomposerwin.cpp:3467
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2472,7 +2472,7 @@ msgstr ""
 "Jūsu atlasītā PGP parakstīšanas atslēga (%1) neeksistē jūsu atslēgu saišķī "
 "vai nav piemērota parakstīšanai."
 
-#: editor/kmcomposerwin.cpp:3485
+#: editor/kmcomposerwin.cpp:3483
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2482,7 +2482,7 @@ msgstr ""
 "Jūsu atlasītā SMIME atslēga (%1) neeksistē jūsu atslēgu saišķī vai nav "
 "piemērota šifrēšanai"
 
-#: editor/kmcomposerwin.cpp:3498
+#: editor/kmcomposerwin.cpp:3496
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2492,25 +2492,25 @@ msgstr ""
 "Atlasītā SMIME parakstīšanas atslēga (%1) neeksistē jūsu atslēgu saišķī vai "
 "nav piemērota parakstīšanai."
 
-#: editor/kmcomposerwin.cpp:3671
+#: editor/kmcomposerwin.cpp:3669
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Šifrēt"
 
-#: editor/kmcomposerwin.cpp:3673
+#: editor/kmcomposerwin.cpp:3671
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "&Nešifrēt"
 
-#: editor/kmcomposerwin.cpp:3813
+#: editor/kmcomposerwin.cpp:3811
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Nav atrasta saņēmēja atslēga."
 
-#: editor/kmcomposerwin.cpp:3835
+#: editor/kmcomposerwin.cpp:3833
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2520,7 +2520,7 @@ msgstr ""
 "Ar šo saņēmēju tiek izmantota „Autocrypt“ „gossip“ šifrēšanas atslēga. Šo "
 "atslēgu esam saņēmuši no trešās puses. Atslēga nav apstiprināta."
 
-#: editor/kmcomposerwin.cpp:3839
+#: editor/kmcomposerwin.cpp:3837
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2530,7 +2530,7 @@ msgstr ""
 "Ar šo saņēmēju tiek izmantota „Autocrypt“ šifrēšanas atslēga. Šī atslēga nav "
 "pārbaudīta. Saņēmējs dod priekšroku šifrētām atbildēm."
 
-#: editor/kmcomposerwin.cpp:3843
+#: editor/kmcomposerwin.cpp:3841
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2540,7 +2540,7 @@ msgstr ""
 "Ar šo saņēmēju tiek izmantota „Autocrypt“ atslēga. Šī atslēga nav "
 "pārbaudīta. Saņēmējs nedod priekšroku šifrētām atbildēm."
 
-#: editor/kmcomposerwin.cpp:3870
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2552,7 +2552,7 @@ msgstr ""
 "parakstīt atslēgu, ja nododat atšifrēšanas nospiedumu pa citu komunikācijas "
 "kanālu. Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3878
+#: editor/kmcomposerwin.cpp:3876
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2567,7 +2567,7 @@ msgstr ""
 "nodevāt pa citu komunikācijas kanālu. Spiediet uz ikonas, lai uzzinātu "
 "vairāk."
 
-#: editor/kmcomposerwin.cpp:3886
+#: editor/kmcomposerwin.cpp:3884
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2577,7 +2577,7 @@ msgstr ""
 "Šifrēšanas atslēga nav uzticama. Tā satur konfliktējošus TOFU datus. "
 "Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3892
+#: editor/kmcomposerwin.cpp:3890
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2587,7 +2587,7 @@ msgstr ""
 "Šifrēšanas atslēga nav uzticama. Tai ir nezināma TOFU datu validitāte. "
 "Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3898
+#: editor/kmcomposerwin.cpp:3896
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2597,7 +2597,7 @@ msgstr ""
 "Šifrēšanas atslēga nav uzticama. Atslēga ir atzīmēta kā slikta. Spiediet uz "
 "ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3906
+#: editor/kmcomposerwin.cpp:3904
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2612,7 +2612,7 @@ msgstr ""
 "nodevāt, izmantojot citu komunikācijas kanālu. Spiediet uz ikonas, lai "
 "uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3914
+#: editor/kmcomposerwin.cpp:3912
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2623,7 +2623,7 @@ msgstr ""
 "atšifrēšanas nospiedumu nodevāt, izmantojot citu komunikācijas kanālu. "
 "Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3920
+#: editor/kmcomposerwin.cpp:3918
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2638,7 +2638,7 @@ msgstr ""
 "atslēgu, ja atšifrēšanas nospiedumu nodevāt pa citu komunikācijas kanālu. "
 "Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3928
+#: editor/kmcomposerwin.cpp:3926
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2648,7 +2648,7 @@ msgstr ""
 "Atšifrēšanas atslēga ir pilnībā uzticama. Varat palielināt drošības līmeni, "
 "parakstot šo atslēgu. Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:3933
+#: editor/kmcomposerwin.cpp:3931
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2658,12 +2658,12 @@ msgstr ""
 "Šifrēšanas atslēga ir uzticama vai ir parakstīta ar citu uzticamu atslēgu. "
 "Spiediet uz ikonas, lai uzzinātu vairāk."
 
-#: editor/kmcomposerwin.cpp:4050
+#: editor/kmcomposerwin.cpp:4048
 #, kde-format
 msgid " Column: %1 "
 msgstr " Kolonna: %1 "
 
-#: editor/kmcomposerwin.cpp:4267
+#: editor/kmcomposerwin.cpp:4265
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2680,12 +2680,12 @@ msgstr ""
 "saņēmējam. Ja sarakstā nav piemērota sertifikāta, varat meklēt ārējus "
 "sertifikātus, klikšķinot uz pogas: meklēt ārējus sertifikātus.</qt>"
 
-#: editor/kmcomposerwin.cpp:4279
+#: editor/kmcomposerwin.cpp:4277
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Šifrēšanas atslēgas izvēle"
 
-#: editor/kmcomposerwin.cpp:4364
+#: editor/kmcomposerwin.cpp:4362
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"

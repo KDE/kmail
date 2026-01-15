@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2025-10-17 06:31+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -172,7 +172,7 @@ msgstr "<b>Filtrirna pravila se ujemajo.</b>"
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Začni filtrirati pri sporočilu »%1« od »%2« z dne »%3«:</b>"
 
-#: filtermanager.cpp:592 mailfilteragent.cpp:225
+#: filtermanager.cpp:592 mailfilteragent.cpp:224
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtriranje sporočil"
@@ -193,17 +193,17 @@ msgstr "Dnevnik filtriranja pošte je omogočen"
 msgid "Show Log"
 msgstr "Pokaži dnevnik"
 
-#: mailfilteragent.cpp:186
+#: mailfilteragent.cpp:185
 #, kde-format
 msgid "Ready"
 msgstr "Pripravljen"
 
-#: mailfilteragent.cpp:274
+#: mailfilteragent.cpp:273
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtriranje v %1"
 
-#: mailfilteragent.cpp:398
+#: mailfilteragent.cpp:396
 #, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2025-10-19 11:10+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -170,7 +170,7 @@ msgstr "<b> Правилата за филтриране съвпадат. </b>"
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b> Започнете филтриране на съобщение „%1“ от „%2“ от „%3“: </b>"
 
-#: filtermanager.cpp:592 mailfilteragent.cpp:225
+#: filtermanager.cpp:592 mailfilteragent.cpp:224
 #, kde-format
 msgid "Filtering messages"
 msgstr "Филтриране на съобщенията"
@@ -191,17 +191,17 @@ msgstr "Дневникът на филтъра за поща е активира
 msgid "Show Log"
 msgstr "Показване на дневника"
 
-#: mailfilteragent.cpp:186
+#: mailfilteragent.cpp:185
 #, kde-format
 msgid "Ready"
 msgstr "Готово"
 
-#: mailfilteragent.cpp:274
+#: mailfilteragent.cpp:273
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Филтриране в %1"
 
-#: mailfilteragent.cpp:398
+#: mailfilteragent.cpp:396
 #, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"

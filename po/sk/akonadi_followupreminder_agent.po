@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2021-07-20 17:51+0200\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -47,28 +47,28 @@ msgstr "Prijaté"
 msgid "On hold"
 msgstr "Pozdržané"
 
-#: followupreminderinfowidget.cpp:219
+#: followupreminderinfowidget.cpp:218
 #, fuzzy, kde-format
 #| msgid "Show Message"
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Zobraziť správu"
 
-#: followupreminderinfowidget.cpp:222
+#: followupreminderinfowidget.cpp:221
 #, fuzzy, kde-format
 #| msgid "Show Message"
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Zobraziť správu"
 
-#: followupreminderinfowidget.cpp:225
+#: followupreminderinfowidget.cpp:224
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action"
 msgid "Delete"
 msgstr "Vymazať"
 
-#: followupreminderinfowidget.cpp:252
+#: followupreminderinfowidget.cpp:251
 #, fuzzy, kde-format
 #| msgid "Do you want to remove this selected item?"
 #| msgid_plural "Do you want to remove these %1 selected items?"
@@ -78,7 +78,7 @@ msgstr[0] "Chcete odstrániť túto vybranú položku?"
 msgstr[1] "Chcete odstrániť tieto %1 vybrané položky?"
 msgstr[2] "Chcete odstrániť týchto %1 vybraných položiek?"
 
-#: followupreminderinfowidget.cpp:253
+#: followupreminderinfowidget.cpp:252
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"

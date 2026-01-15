@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2026-01-15 00:43+0000\n"
 "PO-Revision-Date: 2025-10-09 00:56+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -47,31 +47,31 @@ msgstr "수신"
 msgid "On hold"
 msgstr "대기 중"
 
-#: followupreminderinfowidget.cpp:219
+#: followupreminderinfowidget.cpp:218
 #, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "메시지 보기"
 
-#: followupreminderinfowidget.cpp:222
+#: followupreminderinfowidget.cpp:221
 #, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "원래 메시지 보기"
 
-#: followupreminderinfowidget.cpp:225
+#: followupreminderinfowidget.cpp:224
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "삭제"
 
-#: followupreminderinfowidget.cpp:252
+#: followupreminderinfowidget.cpp:251
 #, kde-format
 msgid "Do you want to delete this selected item?"
 msgid_plural "Do you want to delete these %1 selected items?"
 msgstr[0] "선택한 항목 %1개를 삭제하시겠습니까?"
 
-#: followupreminderinfowidget.cpp:253
+#: followupreminderinfowidget.cpp:252
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
