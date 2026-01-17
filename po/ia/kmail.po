@@ -1,14 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2020, 2021, 2022, 2023, 2024, 2025 g.sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2016, 2020, 2021, 2022, 2023, 2024, 2025, 2026 g.sora <g.sora@tiscali.it>
 # giovanni <g.sora@tiscali.it>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-15 02:30+0000\n"
-"PO-Revision-Date: 2025-09-02 17:56+0200\n"
+"PO-Revision-Date: 2026-01-16 12:18+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -1275,8 +1275,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr "Salveguarda automaticamente le message a iste intervallo specificate"
 
 #: configuredialog/configurecomposerpage.cpp:430
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Compositor"
@@ -1284,7 +1283,7 @@ msgstr "Compositor"
 #: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "Activa barra de instrumento de formato d etexto rapide"
 
 #: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
@@ -5014,20 +5013,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Messages de rememorar de continuation..."
 
 #: kmmainwidget.cpp:3093
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "Ex&pand All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "E&xpande omne topicos"
+msgstr "Expande toto"
 
 #: kmmainwidget.cpp:3098
-#, fuzzy, kde-format
-#| msgctxt "View->"
-#| msgid "C&ollapse All Threads"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Plica  &omne topicos"
+msgstr "Plica toto"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
@@ -8164,6 +8159,8 @@ msgstr "Nove plugin: monstra grandor de collection."
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr ""
+"Fixa supporto de Texto-a-Pronunciation (TextToSpeech) (messages ponite retro "
+"in cauda)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
