@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2020, 2023, 2024 g.sora <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2011, 2012, 2013, 2020, 2023, 2024, 2026 g.sora <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-15 00:43+0000\n"
-"PO-Revision-Date: 2024-07-31 10:25+0200\n"
+"PO-Revision-Date: 2026-01-16 11:59+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -177,7 +177,7 @@ msgstr "Filtrante messages"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Initiante"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -188,7 +188,7 @@ msgstr "Registro de filtro de posta habilitate"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Monstra registro"
 
 #: mailfilteragent.cpp:185
 #, kde-format
@@ -201,9 +201,8 @@ msgid "Filtering in %1"
 msgstr "Filtrante messages in %1"
 
 #: mailfilteragent.cpp:396
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Filtrante messages"
-msgstr[1] "Filtrante messages"
+msgstr[0] "Filtrar terminate, %1 message processate"
+msgstr[1] "Filtrar terminate, %1 messages processate"
