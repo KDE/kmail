@@ -356,6 +356,17 @@ if(TARGET KPim6::PimCommonActivities)
     endif()
 endif()
 
+option(WARNINGS_AS_ERRORS "Warnings are errors -Werror" OFF)
+if(WARNINGS_AS_ERRORS)
+    if(MSVC)
+        add_compile_options(/WX)
+        add_compile_options(/wd4996)
+    else()
+        add_compile_options(-Werror)
+        add_compile_options(-Wno-error=deprecated-declarations)
+    endif()
+endif()
+
 configure_file(config-kmail.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-kmail.h)
 
 add_subdirectory(src)
