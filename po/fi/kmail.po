@@ -3,7 +3,7 @@
 # Author: Artnay
 # Author: Lliehu
 # Author: Niklas Laxström
-# SPDX-FileCopyrightText: 2009, 2010, 2011, 2024, 2025 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2009, 2010, 2011, 2024, 2025, 2026 Tommi Nieminen <translator@legisign.org>
 # Teemu Rytilahti <teemu.rytilahti@d5k.net>, 2003.
 # Eero Häkkinen <eero.hakkinen@iki.fi>, 2003.
 # Kim Enkovaara <kim.enkovaara@iki.fi>, 2003, 2005, 2006.
@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-16 00:44+0000\n"
-"PO-Revision-Date: 2025-11-30 15:38+0200\n"
+"PO-Revision-Date: 2026-01-05 17:05+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -4023,10 +4023,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Lisää kopio annettuun osoitteeseen. Tämän voi toistaa"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "Osoitekirja"
+msgstr "Osoite"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4051,10 +4050,9 @@ msgid "Read message body from 'file'"
 msgstr "Lue viestirunko tiedostosta."
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Tiedosto"
+msgstr "Tiedosto"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4063,10 +4061,9 @@ msgid "Set body of message"
 msgstr "Aseta viestin runko."
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Muotoiltu teksti"
+msgstr "Teksti"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4075,10 +4072,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Lisää viestiin liite; tämän voi toistaa"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Liite"
+msgstr "Liitteen verkko-osoite"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4105,10 +4101,9 @@ msgid "Set identity name"
 msgstr "Aseta henkilöyden nimi"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "&Henkilöys:"
+msgstr "Henkilöys"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4117,10 +4112,9 @@ msgid "View the given message file"
 msgstr "Näytä annettu viestitiedosto"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Viesti"
+msgstr "Viestin verkko-osoite"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4129,8 +4123,7 @@ msgid "Set body of message as html"
 msgstr "Aseta viestin runko HTML:ksi"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Body of Message"
+#, kde-format
 msgid "Body Message"
 msgstr "Viestirunko"
 
