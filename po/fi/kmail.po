@@ -3,7 +3,7 @@
 # Author: Artnay
 # Author: Lliehu
 # Author: Niklas Laxström
-# SPDX-FileCopyrightText: 2009, 2010, 2011, 2024, 2025 Tommi Nieminen <translator@legisign.org>
+# SPDX-FileCopyrightText: 2009, 2010, 2011, 2024, 2025, 2026 Tommi Nieminen <translator@legisign.org>
 # Teemu Rytilahti <teemu.rytilahti@d5k.net>, 2003.
 # Eero Häkkinen <eero.hakkinen@iki.fi>, 2003.
 # Kim Enkovaara <kim.enkovaara@iki.fi>, 2003, 2005, 2006.
