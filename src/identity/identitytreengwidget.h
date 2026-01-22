@@ -23,7 +23,7 @@ public:
     explicit IdentityTreeNgWidget(QWidget *parent = nullptr);
     ~IdentityTreeNgWidget() override;
 
-    KIdentityManagementCore::IdentityManager *identityManager() const;
+    [[nodiscard]] KIdentityManagementCore::IdentityManager *identityManager() const;
     void setIdentityManager(KIdentityManagementCore::IdentityManager *im);
 
 Q_SIGNALS:

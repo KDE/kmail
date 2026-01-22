@@ -21,7 +21,7 @@ public:
     explicit KMailPluginEditorCheckBeforeSendManagerInterface(QObject *parent = nullptr);
     ~KMailPluginEditorCheckBeforeSendManagerInterface() override;
 
-    QWidget *parentWidget() const;
+    [[nodiscard]] QWidget *parentWidget() const;
     void setParentWidget(QWidget *parentWidget);
 
     // TODO add Identity

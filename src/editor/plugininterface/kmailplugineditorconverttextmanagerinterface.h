@@ -36,7 +36,7 @@ public:
     [[nodiscard]] QList<QAction *> actionsType(MessageComposer::PluginActionType::Type type);
 
     void reformatText();
-    MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertTextToFormat(MessageComposer::TextPart *textPart);
+    [[nodiscard]] MessageComposer::PluginEditorConvertTextInterface::ConvertTextStatus convertTextToFormat(MessageComposer::TextPart *textPart);
 
     void setInitialData(const MessageComposer::PluginEditorConverterInitialData &data);
     void setDataBeforeConvertingText(const MessageComposer::PluginEditorConverterBeforeConvertingData &data);
