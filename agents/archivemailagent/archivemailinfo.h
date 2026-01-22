@@ -9,11 +9,12 @@
 #include <KConfigGroup>
 #include <MailCommon/BackupJob>
 #include <QDate>
-class QDebug;
 #include <QUrl>
 
+class QDebug;
 class ArchiveMailInfo
 {
+    Q_GADGET
 public:
     explicit ArchiveMailInfo(const KConfigGroup &config);
     ArchiveMailInfo(const ArchiveMailInfo &info);
@@ -23,12 +24,13 @@ public:
 
     ArchiveMailInfo &operator=(const ArchiveMailInfo &old);
 
-    enum ArchiveUnit {
+    enum class ArchiveUnit {
         ArchiveDays = 0,
         ArchiveWeeks,
         ArchiveMonths,
         ArchiveYears,
     };
+    Q_ENUM(ArchiveUnit)
 
     [[nodiscard]] QUrl realUrl(const QString &folderName, bool &dirExist) const;
 
@@ -79,7 +81,7 @@ private:
     QDate mLastDateSaved;
     int mArchiveAge = 1;
     MailCommon::BackupJob::ArchiveType mArchiveType = MailCommon::BackupJob::Zip;
-    ArchiveUnit mArchiveUnit = ArchiveMailInfo::ArchiveDays;
+    ArchiveUnit mArchiveUnit = ArchiveMailInfo::ArchiveUnit::ArchiveDays;
     Akonadi::Collection::Id mSaveCollectionId = -1;
     QUrl mPath;
     QList<int> mRanges;

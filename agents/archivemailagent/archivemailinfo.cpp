@@ -175,7 +175,7 @@ void ArchiveMailInfo::readConfig(const KConfigGroup &config)
     }
     mSaveSubCollection = config.readEntry("saveSubCollection", false);
     mArchiveType = static_cast<MailCommon::BackupJob::ArchiveType>(config.readEntry("archiveType", (int)MailCommon::BackupJob::Zip));
-    mArchiveUnit = static_cast<ArchiveUnit>(config.readEntry("archiveUnit", (int)ArchiveDays));
+    mArchiveUnit = static_cast<ArchiveUnit>(config.readEntry("archiveUnit", (int)ArchiveUnit::ArchiveDays));
     Akonadi::Collection::Id tId = config.readEntry("saveCollectionId", mSaveCollectionId);
     mArchiveAge = config.readEntry("archiveAge", 1);
     mMaximumArchiveCount = config.readEntry("maximumArchiveCount", 0);

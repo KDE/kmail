@@ -10,16 +10,16 @@ QDate ArchiveMailAgentUtil::diffDate(const ArchiveMailInfo *info)
 {
     QDate diffDate(info->lastDateSaved());
     switch (info->archiveUnit()) {
-    case ArchiveMailInfo::ArchiveDays:
+    case ArchiveMailInfo::ArchiveUnit::ArchiveDays:
         diffDate = diffDate.addDays(info->archiveAge());
         break;
-    case ArchiveMailInfo::ArchiveWeeks:
+    case ArchiveMailInfo::ArchiveUnit::ArchiveWeeks:
         diffDate = diffDate.addDays(info->archiveAge() * 7);
         break;
-    case ArchiveMailInfo::ArchiveMonths:
+    case ArchiveMailInfo::ArchiveUnit::ArchiveMonths:
         diffDate = diffDate.addMonths(info->archiveAge());
         break;
-    case ArchiveMailInfo::ArchiveYears:
+    case ArchiveMailInfo::ArchiveUnit::ArchiveYears:
         diffDate = diffDate.addYears(info->archiveAge());
         break;
     }

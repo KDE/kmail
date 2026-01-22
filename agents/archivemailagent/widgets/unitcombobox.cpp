@@ -10,10 +10,10 @@
 UnitComboBox::UnitComboBox(QWidget *parent)
     : QComboBox(parent)
 {
-    addItem(i18n("Days"), static_cast<int>(ArchiveMailInfo::ArchiveDays));
-    addItem(i18n("Weeks"), static_cast<int>(ArchiveMailInfo::ArchiveWeeks));
-    addItem(i18n("Months"), static_cast<int>(ArchiveMailInfo::ArchiveMonths));
-    addItem(i18n("Years"), static_cast<int>(ArchiveMailInfo::ArchiveYears));
+    addItem(i18n("Days"), static_cast<int>(ArchiveMailInfo::ArchiveUnit::ArchiveDays));
+    addItem(i18n("Weeks"), static_cast<int>(ArchiveMailInfo::ArchiveUnit::ArchiveWeeks));
+    addItem(i18n("Months"), static_cast<int>(ArchiveMailInfo::ArchiveUnit::ArchiveMonths));
+    addItem(i18n("Years"), static_cast<int>(ArchiveMailInfo::ArchiveUnit::ArchiveYears));
 }
 
 UnitComboBox::~UnitComboBox() = default;
