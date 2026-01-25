@@ -1,5 +1,5 @@
 # Translation for kmail.po to Euskara/Basque (eu).
-# Copyright (C) 2003-2025 This file is copyright:
+# Copyright (C) 2003-2026 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 # SPDX-FileCopyrightText: 2023, 2024, 2025, 2026 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
@@ -7,20 +7,20 @@
 # Marcos  <marcos@euskalgnu.org>, 2003, 2004, 2005, 2006.
 # Ion Gaztañaga <igaztanaga@gmail.com>, 2005.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2007.
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2010, 2011, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2010, 2011, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-01-16 00:44+0000\n"
-"PO-Revision-Date: 2026-01-05 10:08+0100\n"
+"PO-Revision-Date: 2026-01-24 13:55+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.0\n"
+"X-Generator: Lokalize 25.12.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, kde-format
@@ -1621,18 +1621,14 @@ msgid "GnuPG Settings"
 msgstr "GnuPG ezarpenak"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
-"Modulua falta da. Mesedez, egiaztatu zure instalazioa. Modulu hau Kleopatrak "
-"hornitzen du."
+"Modulua falta da. Mesedez, egiaztatu zure instalazioa. Modulu hau kdepim-"
+"addons-ek hornitzen du."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
