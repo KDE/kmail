@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:44+0000\n"
+"POT-Creation-Date: 2026-01-27 00:45+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -313,7 +313,7 @@ msgstr "Bir çox İMAP xətalarının sazlanması"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:221 kmmainwidget.cpp:4217 kmreaderwin.cpp:263
-#: kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -6238,17 +6238,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Əlaqə uğurla dəyişdirildi"
 
-#: kmsystemtray.cpp:93
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "Yenu məktub burada:"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Oxunmamış məktublar yoxdur"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

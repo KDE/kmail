@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:44+0000\n"
+"POT-Creation-Date: 2026-01-27 00:45+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -345,7 +345,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:221 kmmainwidget.cpp:4217 kmreaderwin.cpp:263
-#: kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -6045,18 +6045,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Xabarlar muvaffaqiyatli koʻchirildi."
 
-#: kmsystemtray.cpp:93
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "Yangi xabar"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 #| msgid "There are no unread messages"
 msgid "There are no unread messages"
 msgstr "Oʻqilmagan xabar yoʻq"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 #| msgid "Unread Message"
 msgid "1 unread message"

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:44+0000\n"
+"POT-Creation-Date: 2026-01-27 00:45+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -356,7 +356,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:221 kmmainwidget.cpp:4217 kmreaderwin.cpp:263
-#: kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "কে-মেইল"
@@ -6111,18 +6111,18 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "বার্তা সরানো সফল"
 
-#: kmsystemtray.cpp:93
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "নতুন বার্তা আছে"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 #| msgid "There are no unread messages"
 msgid "There are no unread messages"
 msgstr "কোন অপঠিত বার্তা নেই"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 #| msgid "Unread Message"
 msgid "1 unread message"

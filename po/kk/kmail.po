@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:44+0000\n"
+"POT-Creation-Date: 2026-01-27 00:45+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -348,7 +348,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:221 kmmainwidget.cpp:4217 kmreaderwin.cpp:263
-#: kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -6345,17 +6345,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Контакт сәтті өзгертілді"
 
-#: kmsystemtray.cpp:93
+#: kmsystemtray.cpp:95
 #, kde-format
 msgid "New Messages In"
 msgstr "Жаңа хаттары бар "
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Оқылмаған хаттар жоқ"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

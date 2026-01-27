@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:44+0000\n"
+"POT-Creation-Date: 2026-01-27 00:45+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -352,7 +352,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:221 kmmainwidget.cpp:4217 kmreaderwin.cpp:263
-#: kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -5985,17 +5985,17 @@ msgstr ""
 msgid "Contact modified successfully"
 msgstr "Imiyalezo inciphisa ubungakanani"
 
-#: kmsystemtray.cpp:93
+#: kmsystemtray.cpp:95
 #, fuzzy, kde-format
 msgid "New Messages In"
 msgstr "&Umyalezo Omtsha..."
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "&Phelisa imiyalezo emidala"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

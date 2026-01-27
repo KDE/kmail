@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-16 00:44+0000\n"
+"POT-Creation-Date: 2026-01-27 00:45+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -377,7 +377,7 @@ msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:221 kmmainwidget.cpp:4217 kmreaderwin.cpp:263
-#: kmsystemtray.cpp:48 kmsystemtray.cpp:79
+#: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -5691,17 +5691,17 @@ msgstr "Extraer ad ci"
 msgid "Contact modified successfully"
 msgstr "Modificat"
 
-#: kmsystemtray.cpp:93
+#: kmsystemtray.cpp:95
 #, fuzzy, kde-format
 msgid "New Messages In"
 msgstr "Ciffrat missages"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "Ciffrat missages"
 
-#: kmsystemtray.cpp:268
+#: kmsystemtray.cpp:275
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
