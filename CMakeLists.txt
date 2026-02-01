@@ -111,11 +111,6 @@ set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
 set(KDEPIM_LIB_SOVERSION "6")
 
 set(KTEXTADDONS_MIN_VERSION "1.9.1")
-option(
-    KDEPIM_ENTERPRISE_BUILD
-    "Enable features specific to the enterprise branch, which are normally disabled. Also, it disables many components not needed for Kontact such as the Kolab client."
-    FALSE
-)
 
 find_package(
     Qt6
@@ -288,8 +283,6 @@ set_package_properties(
         TYPE
             REQUIRED
 )
-
-configure_file(config-enterprise.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-enterprise.h)
 
 include_directories(
     ${kmail_SOURCE_DIR}

@@ -8,7 +8,6 @@
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
-#include <config-enterprise.h>
 class QCheckBox;
 class QSpinBox;
 class QSpinBox;
@@ -68,11 +67,6 @@ private:
     QSpinBox *mMaximumRecipients = nullptr;
     QCheckBox *mImprovePlainTextOfHtmlMessage = nullptr;
     QSpinBox *mMaximumRecentAddress = nullptr;
-#if KDEPIM_ENTERPRISE_BUILD
-    QComboBox *mForwardTypeCombo = nullptr;
-    QCheckBox *mRecipientCheck = nullptr;
-    QSpinBox *mRecipientSpin = nullptr;
-#endif
 };
 
 class ComposerPageTemplatesTab : public ConfigModuleTab

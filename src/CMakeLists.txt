@@ -418,17 +418,6 @@ ki18n_wrap_ui(kmailprivate
     ui/identityngpage.ui
 )
 
-# KCFG files. The main kmail.kcfg is configured by CMake and put
-# in the build directory.
-
-if(KDEPIM_ENTERPRISE_BUILD)
-    set(WARN_TOOMANY_RECIPIENTS_DEFAULT true)
-else()
-    set(WARN_TOOMANY_RECIPIENTS_DEFAULT false)
-endif()
-
-configure_file(settings/kmail.kcfg.in ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg)
-
 kconfig_add_kcfg_files(kmailprivate_LIB_SRCS
     settings/globalsettings_kmail.kcfgc
     editor/custommimeheader/custommimeheader.kcfgc
@@ -668,7 +657,7 @@ install(
         data/kmail_view.desktop
     DESTINATION ${KDE_INSTALL_APPDIR}
 )
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kmail.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/settings/kmail.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 install(FILES data/org.kde.kmail2.appdata.xml DESTINATION ${KDE_INSTALL_METAINFODIR})
 
 install(FILES data/kmail2.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})

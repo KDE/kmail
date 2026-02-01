@@ -46,9 +46,6 @@ using PimCommon::RecentAddresses;
 #include <QVBoxLayout>
 
 #include <PimCommonAkonadi/CompletionConfigureDialog>
-#if KDEPIM_ENTERPRISE_BUILD
-#include <QComboBox>
-#endif
 using namespace Qt::Literals::StringLiterals;
 
 QString ComposerPage::helpAnchor() const
@@ -253,28 +250,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     connect(mImprovePlainTextOfHtmlMessage, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupVBoxLayout->addWidget(mImprovePlainTextOfHtmlMessage);
     QLabel *label = nullptr;
-#if KDEPIM_ENTERPRISE_BUILD
-    // "Default forwarding type" combobox
-    mForwardTypeCombo = new QComboBox(this);
-    mForwardTypeCombo->addItems(QStringList() << i18nc("@item:inlistbox Inline mail forwarding", "Inline") << i18n("As Attachment"));
-
-    helpText = i18n("Set the default forwarded message format");
-    mForwardTypeCombo->setToolTip(helpText);
-    mForwardTypeCombo->setWhatsThis(helpText);
-
-    label = new QLabel(i18nc("@label:textbox", "Default forwarding type:"), this);
-    label->setBuddy(mForwardTypeCombo);
-
-    connect(mForwardTypeCombo, &QComboBox::activated, this, &ComposerPageGeneralTab::slotEmitChanged);
-
-    auto forwardTypeWrapper = new QWidget;
-    auto forwardTypeWrapperLayout = new QHBoxLayout(forwardTypeWrapper);
-    forwardTypeWrapperLayout->setContentsMargins({});
-    forwardTypeWrapperLayout->addWidget(label);
-    forwardTypeWrapperLayout->addWidget(mForwardTypeCombo);
-    forwardTypeWrapperLayout->addStretch();
-    groupVBoxLayout->addWidget(forwardTypeWrapper);
-#endif
 
     groupBox->setLayout(groupVBoxLayout);
     layout->addWidget(groupBox);
@@ -307,29 +282,6 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     connect(mShowAkonadiSearchAddressesInComposer, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
     groupGridLayout->addWidget(mShowAkonadiSearchAddressesInComposer, row, 0, 1, -1);
     ++row;
-
-#if KDEPIM_ENTERPRISE_BUILD
-    // "Warn if too many recipients" checkbox/spinbox
-    mRecipientCheck = new QCheckBox(KMailSettings::self()->tooManyRecipientsItem()->label(), this);
-    mRecipientCheck->setObjectName("kcfg_TooManyRecipients"_L1);
-    mRecipientCheck->setToolTip(i18nc("@info:tooltip", "Warn if too many recipients are specified"));
-
-    mRecipientSpin = new QSpinBox(this);
-    mRecipientSpin->setMaximum(100 /*max*/);
-    mRecipientSpin->setMinimum(1 /*min*/);
-    mRecipientSpin->setSingleStep(1 /*step*/);
-    mRecipientSpin->setValue(5 /*init*/);
-    mRecipientSpin->setObjectName("kcfg_RecipientThreshold"_L1);
-    mRecipientSpin->setEnabled(false);
-    mRecipientSpin->setToolTip(i18nc("@info:tooltip", "Set the maximum number of recipients for the warning"));
-
-    // only enable the spinbox if the checkbox is checked
-    connect(mRecipientCheck, &QCheckBox::toggled, mRecipientSpin, &QSpinBox::setEnabled);
-
-    groupGridLayout->addWidget(mRecipientCheck, row, 0, 1, 2);
-    groupGridLayout->addWidget(mRecipientSpin, row, 2);
-    ++row;
-#endif
 
     // "Maximum Reply-to-All recipients" spinbox
     mMaximumRecipients = new QSpinBox(this);
@@ -501,16 +453,6 @@ void ComposerPageGeneralTab::doLoadFromGlobalSettings()
     loadWidget(mShowAkonadiSearchAddressesInComposer, MessageComposer::MessageComposerSettings::self()->showBalooSearchInComposerItem());
     mImprovePlainTextOfHtmlMessage->setChecked(MessageComposer::MessageComposerSettings::self()->improvePlainTextOfHtmlMessage());
 
-#if KDEPIM_ENTERPRISE_BUILD
-    mRecipientCheck->setChecked(KMailSettings::self()->tooManyRecipients());
-    mRecipientSpin->setValue(KMailSettings::self()->recipientThreshold());
-    if (KMailSettings::self()->forwardingInlineByDefault()) {
-        mForwardTypeCombo->setCurrentIndex(0);
-    } else {
-        mForwardTypeCombo->setCurrentIndex(1);
-    }
-#endif
-
     mMaximumRecentAddress->setValue(RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->maxCount());
 }
 
@@ -534,11 +476,6 @@ void ComposerPageGeneralTab::save()
     MessageComposer::MessageComposerSettings::self()->setShowRecentAddressesInComposer(mShowRecentAddressesInComposer->isChecked());
     MessageComposer::MessageComposerSettings::self()->setShowBalooSearchInComposer(mShowAkonadiSearchAddressesInComposer->isChecked());
     MessageComposer::MessageComposerSettings::self()->setImprovePlainTextOfHtmlMessage(mImprovePlainTextOfHtmlMessage->isChecked());
-#if KDEPIM_ENTERPRISE_BUILD
-    KMailSettings::self()->setTooManyRecipients(mRecipientCheck->isChecked());
-    KMailSettings::self()->setRecipientThreshold(mRecipientSpin->value());
-    KMailSettings::self()->setForwardingInlineByDefault(mForwardTypeCombo->currentIndex() == 0);
-#endif
 
     RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->setMaxCount(mMaximumRecentAddress->value());
 
