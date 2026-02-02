@@ -431,7 +431,7 @@ private Q_SLOTS:
     void slotEncryptionButtonIconUpdate();
 
 public: // kmcommand
-    void addAttach(KMime::Content *msgPart) override;
+    void addAttach(const KMime::Content *msgPart) override;
 
     const KIdentityManagementCore::Identity &identity() const;
     [[nodiscard]] bool pgpAutoSign() const;

@@ -137,7 +137,7 @@ public: // kmcommand
     /**
      * Add an attachment to the list.
      */
-    virtual void addAttach(KMime::Content *msgPart) = 0;
+    virtual void addAttach(const KMime::Content *msgPart) = 0;
 };
 
 KMAIL_EXPORT Composer *makeComposer(const std::shared_ptr<KMime::Message> &msg = std::shared_ptr<KMime::Message>(),

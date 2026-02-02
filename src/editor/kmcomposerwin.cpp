@@ -2207,7 +2207,7 @@ Kleo::CryptoMessageFormat KMComposerWin::cryptoMessageFormat() const
     return cb2format(mCryptoModuleAction->currentItem());
 }
 
-void KMComposerWin::addAttach(KMime::Content *msgPart)
+void KMComposerWin::addAttach(const KMime::Content *msgPart)
 {
     mComposerBase->addAttachmentPart(msgPart);
     setModified(true);
