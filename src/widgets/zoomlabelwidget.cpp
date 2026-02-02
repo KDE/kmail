@@ -28,15 +28,11 @@ void ZoomLabelWidget::setZoom(qreal zoomFactor)
 
 void ZoomLabelWidget::wheelEvent(QWheelEvent *event)
 {
-    if (event->modifiers() == Qt::ControlModifier) {
-        const int y = event->angleDelta().y();
-        if (y < 0) {
-            Q_EMIT changeZoom(mZoomFactor - 10);
-        } else if (y > 0) {
-            Q_EMIT changeZoom(mZoomFactor + 10);
-        }
-    } else {
-        QLabel::wheelEvent(event);
+    const int y = event->angleDelta().y();
+    if (y < 0) {
+        Q_EMIT changeZoom(mZoomFactor - 10);
+    } else if (y > 0) {
+        Q_EMIT changeZoom(mZoomFactor + 10);
     }
 }
 #include "moc_zoomlabelwidget.cpp"

@@ -310,6 +310,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
 
     mZoomLabelIndicator = new ZoomLabelWidget(mCurrentStatusBar);
     if (mMsgView) {
+        connect(mZoomLabelIndicator, &ZoomLabelWidget::changeZoom, mMsgView, &KMReaderWin::zoomChangeRequested);
         setZoomChanged(mMsgView->viewer()->webViewZoomFactor());
     }
     connect(mVacationScriptIndicator, &KMail::VacationScriptIndicatorWidget::clicked, this, &KMMainWidget::slotEditVacation);

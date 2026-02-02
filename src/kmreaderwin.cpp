@@ -102,6 +102,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, QWidget *mainWindow, KActionCollectio
     connect(mViewer, &MessageViewer::Viewer::sendResponse, this, &KMReaderWin::slotSendMdnResponse);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::itemChanged, this, &KMReaderWin::slotItemModified);
 
+    connect(this, &KMReaderWin::zoomChangeRequested, mViewer, &MessageViewer::Viewer::setWebViewZoomFactor);
     mViewer->addMessageLoadedHandler(new MessageViewer::MarkMessageReadHandler(this));
 
     vlay->addWidget(mViewer);

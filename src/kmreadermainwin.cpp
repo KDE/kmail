@@ -104,6 +104,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     setAutoSaveSettings(stateConfigGroup(), true);
 
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
+    connect(mZoomLabelIndicator, &ZoomLabelWidget::changeZoom, mReaderWin, &KMReaderWin::zoomChangeRequested);
     statusBar()->addPermanentWidget(mZoomLabelIndicator);
     setZoomChanged(mReaderWin->viewer()->webViewZoomFactor());
     statusBar()->addPermanentWidget(mReaderWin->viewer()->dkimWidgetInfo());

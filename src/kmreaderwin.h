@@ -174,6 +174,7 @@ Q_SIGNALS:
     void zoomChanged(qreal factor);
     void showPreviousMessage();
     void showNextMessage();
+    void zoomChangeRequested(qreal zoom);
 
 public Q_SLOTS:
 
