@@ -16,4 +16,13 @@ public:
     ~ZoomLabelWidget() override;
 
     void setZoom(qreal zoomFactor);
+
+protected:
+    void wheelEvent(QWheelEvent *event) override;
+
+Q_SIGNALS:
+    void changeZoom(qreal zoomFactor);
+
+private:
+    qreal mZoomFactor = 100.0;
 };
