@@ -937,11 +937,10 @@ KMCommand::Result KMForwardCommand::execute()
             factory.setIdentityManager(KMKernel::self()->identityManager());
             factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
-            QPair<std::shared_ptr<KMime::Message>, KMime::Content *> fwdMsg = factory.createForwardDigestMIME(msgList);
+            const auto fwdMsg = factory.createForwardDigestMIME(msgList);
             KMail::Composer *win = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::TemplateContext::Forward, mIdentity);
-            win->addAttach(fwdMsg.second);
+            win->addAttach(fwdMsg.second.get());
             win->show();
-            delete fwdMsg.second;
             return OK;
         } else if (answer == KMessageBox::ButtonCode::SecondaryAction) { // NO MIME DIGEST, Multiple forward
             Akonadi::Item::List::const_iterator it;
@@ -995,13 +994,12 @@ KMCommand::Result KMForwardAttachedCommand::execute()
     factory.setIdentityManager(KMKernel::self()->identityManager());
     factory.setFolderIdentity(MailCommon::Util::folderIdentity(firstItem));
 
-    QPair<std::shared_ptr<KMime::Message>, QList<KMime::Content *>> fwdMsg = factory.createAttachedForward(msgList);
+    const auto fwdMsg = factory.createAttachedForward(msgList);
     if (!mWin) {
         mWin = KMail::makeComposer(fwdMsg.first, false, false, KMail::Composer::TemplateContext::Forward, mIdentity);
     }
-    for (KMime::Content *attach : std::as_const(fwdMsg.second)) {
-        mWin->addAttach(attach);
-        delete attach;
+    for (const auto &attach : fwdMsg.second) {
+        mWin->addAttach(attach.get());
     }
     mWin->show();
     return OK;
