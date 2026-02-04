@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# SPDX-FileCopyrightText: 2013, 2015, 2019, 2020, 2023, 2024 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2013, 2015, 2019, 2020, 2023, 2024, 2026 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:41+0000\n"
-"PO-Revision-Date: 2024-08-19 23:25+0200\n"
+"PO-Revision-Date: 2026-02-04 00:11+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: filterlogdialog.cpp:44
 #, kde-format
@@ -173,7 +173,7 @@ msgstr "메시지 필터 중"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "시작 중"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -184,7 +184,7 @@ msgstr "메일 필터 기록 사용함"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "로그 표시"
 
 #: mailfilteragent.cpp:186
 #, kde-format
@@ -197,8 +197,7 @@ msgid "Filtering in %1"
 msgstr "%1 필터 중"
 
 #: mailfilteragent.cpp:398
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "메시지 필터 중"
+msgstr[0] "필터 완료됨, 메시지 %1개를 처리함"
