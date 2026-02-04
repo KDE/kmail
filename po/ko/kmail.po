@@ -3,7 +3,7 @@
 # LinuxKorea Co. <kde@linuxkorea.co.kr>, 2000.
 # Louis JANG <louis@mizi.com>, 2001.
 # KIM KyungHeon <tody@teoal.net>, 2002, 2003, 2004.
-# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2007, 2009, 2010, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Shinjo Park <kde@peremen.name>
 #
 # Expire: "오래된 메시지 정리"로 번역. 받은 지 오래 된 메시지를 단순히 삭제하는 것이 아니라 특정한 폴더로 이동하는 기능도 있으므로 "정리"로 번역.
 # Archive: 폴더를 파일로 압축하는 것은 압축, 폴더를 자동으로 정리하는 것은 아카이브로 번역.
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-03 00:47+0000\n"
-"PO-Revision-Date: 2025-10-09 00:57+0200\n"
+"PO-Revision-Date: 2026-02-04 00:11+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1592,18 +1592,14 @@ msgid "GnuPG Settings"
 msgstr "GnuPG 설정"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
-"모듈이 없습니다. 설치 상태를 확인하십시오. 이 모듈은 Kleopatra에서 제공합니"
-"다."
+"모듈이 없습니다. 설치 상태를 확인하십시오. 이 모듈은 kdepim-addons에서 제공합"
+"니다."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -3951,9 +3947,7 @@ msgid "Set subject of message"
 msgstr "메시지 제목 설정"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "제목"
 
@@ -3963,10 +3957,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "참조를 'address'로 전송. 반복할 수 있음"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "주소록"
+msgstr "주소"
 
 #: kmail_options.h:22
 #, kde-format
@@ -3991,10 +3984,9 @@ msgid "Read message body from 'file'"
 msgstr "'file'에서 메시지 본문 읽어오기"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "파일(&F)"
+msgstr "파일"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4003,10 +3995,9 @@ msgid "Set body of message"
 msgstr "메시지 본문 설정"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "서식 있는 텍스트"
+msgstr "텍스트"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4015,10 +4006,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "메일에 첨부 파일 추가. 반복할 수 있음"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment Word:"
+#, kde-format
 msgid "Attachment Url"
-msgstr "첨부 파일 단어:"
+msgstr "첨부 URL"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4045,11 +4035,9 @@ msgid "Set identity name"
 msgstr "프로필 이름 설정"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "프로필(&I)"
+msgstr "프로필"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4058,10 +4046,9 @@ msgid "View the given message file"
 msgstr "지정한 메시지 파일 표시"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "메시지"
+msgstr "메시지 URL"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4070,11 +4057,9 @@ msgid "Set body of message as html"
 msgstr "메시지 본문을 HTML로 설정"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "메시지 %1개 복사"
+msgstr "본문 메시지"
 
 #: kmail_options.h:38
 #, kde-format
@@ -8019,7 +8004,7 @@ msgstr "새 플러그인: 모음집 크기 표시."
 #: whatsnew/whatsnewtranslations.cpp:36
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr ""
+msgstr "텍스트 읽어주기 지원 수리(메시지 대기열에 추가)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
