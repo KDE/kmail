@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:47+0000\n"
+"POT-Creation-Date: 2026-02-05 00:44+0000\n"
 "PO-Revision-Date: 2026-02-01 13:39+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -7984,21 +7984,29 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "கணக்கு உதவிநிரலை துவக்க முடியவில்லை"
 
-#: whatsnew/whatsnewtranslations.cpp:16
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr "உரையை உருவாக்கும் செருகுநிரல்களிலிருந்து உரையைப் பெறும் ஆதரவு"
+#: whatsnew/whatsnewtranslations.cpp:17
+msgid ""
+"HTML messages are shown with their intended colors by default. To override "
+"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
+"option"
+msgstr ""
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "Add new whatsnew widget."
 msgstr "புதியவை என்ன என்பதைக் காட்டும் புதிய உட்பொதிநிரல் செர்க்கப்பட்டுள்ளது."
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "தொகுப்பின் அளவைக் காட்டும் புதிய செருகுநிரல்."
 
-#: whatsnew/whatsnewtranslations.cpp:36
+#: whatsnew/whatsnewtranslations.cpp:37
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr "உரையை உருவாக்கும் செருகுநிரல்களிலிருந்து உரையைப் பெறும் ஆதரவு"
+
+#: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr "உரையைப் பேச்சாக்கும் அம்சம் சரிசெய்யப்பட்டுள்ளது (அஞ்சல்களை வரிசைப்படுத்துவது)"

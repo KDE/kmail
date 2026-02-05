@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:47+0000\n"
+"POT-Creation-Date: 2026-02-05 00:44+0000\n"
 "PO-Revision-Date: 2025-11-21 01:40+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -8121,22 +8121,30 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Kan inte starta kontoguiden"
 
-#: whatsnew/whatsnewtranslations.cpp:16
-msgid "Allow to export text in autogenerate editor plugins."
+#: whatsnew/whatsnewtranslations.cpp:17
+msgid ""
+"HTML messages are shown with their intended colors by default. To override "
+"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
+"option"
 msgstr ""
-"Tillåt att exportera text i automatiskt genererade editorinsticksprogram"
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "Add new whatsnew widget."
 msgstr "Lägg till ny vad-är-nytt grafisk komponent."
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Nytt insticksprogram: Visa samlingsstorlek."
 
-#: whatsnew/whatsnewtranslations.cpp:36
+#: whatsnew/whatsnewtranslations.cpp:37
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+"Tillåt att exportera text i automatiskt genererade editorinsticksprogram"
+
+#: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr "Rätta stöd för text till tal (köade brev)"

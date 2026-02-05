@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:47+0000\n"
+"POT-Creation-Date: 2026-02-05 00:44+0000\n"
 "PO-Revision-Date: 2023-12-12 19:31+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -8630,22 +8630,30 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Nie je možné spustiť sprievodcu účtami"
 
-#: whatsnew/whatsnewtranslations.cpp:16
-msgid "Allow to export text in autogenerate editor plugins."
+#: whatsnew/whatsnewtranslations.cpp:17
+msgid ""
+"HTML messages are shown with their intended colors by default. To override "
+"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
+"option"
 msgstr ""
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, fuzzy, kde-format
 #| msgid "Add a new identity"
 msgid "Add new whatsnew widget."
 msgstr "Pridať novú identitu"
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr ""
 
-#: whatsnew/whatsnewtranslations.cpp:36
+#: whatsnew/whatsnewtranslations.cpp:37
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr ""

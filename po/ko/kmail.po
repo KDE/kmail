@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:47+0000\n"
+"POT-Creation-Date: 2026-02-05 00:44+0000\n"
 "PO-Revision-Date: 2026-02-04 00:11+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7987,21 +7987,29 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "계정 마법사를 시작할 수 없음"
 
-#: whatsnew/whatsnewtranslations.cpp:16
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr "자동 생성 편집기 플러그인에서 텍스트 내보내기를 허용합니다."
+#: whatsnew/whatsnewtranslations.cpp:17
+msgid ""
+"HTML messages are shown with their intended colors by default. To override "
+"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
+"option"
+msgstr ""
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "Add new whatsnew widget."
 msgstr "새 새로운 항목 위젯을 추가합니다."
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "새 플러그인: 모음집 크기 표시."
 
-#: whatsnew/whatsnewtranslations.cpp:36
+#: whatsnew/whatsnewtranslations.cpp:37
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr "자동 생성 편집기 플러그인에서 텍스트 내보내기를 허용합니다."
+
+#: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr "텍스트 읽어주기 지원 수리(메시지 대기열에 추가)"

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:47+0000\n"
+"POT-Creation-Date: 2026-02-05 00:44+0000\n"
 "PO-Revision-Date: 2026-01-09 17:10+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -8118,22 +8118,30 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Hesap Sihirbazı Başlatılamadı"
 
-#: whatsnew/whatsnewtranslations.cpp:16
-msgid "Allow to export text in autogenerate editor plugins."
+#: whatsnew/whatsnewtranslations.cpp:17
+msgid ""
+"HTML messages are shown with their intended colors by default. To override "
+"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
+"option"
 msgstr ""
-"Metni kendiliğinden üreten düzenleyici eklentilerine dışa aktarmayı destekle"
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "Add new whatsnew widget."
 msgstr "“Neler Yeni” araç takımını ekle"
 
-#: whatsnew/whatsnewtranslations.cpp:25
+#: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "New plugin: show collection size."
 msgstr "Yeni eklenti: Koleksiyon boyutunu göster"
 
-#: whatsnew/whatsnewtranslations.cpp:36
+#: whatsnew/whatsnewtranslations.cpp:37
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+"Metni kendiliğinden üreten düzenleyici eklentilerine dışa aktarmayı destekle"
+
+#: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr "Metin konuşma desteğini onar (iletileri kuyruğa koy)"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-03 00:47+0000\n"
+"POT-Creation-Date: 2026-02-05 00:44+0000\n"
 "PO-Revision-Date: 2026-01-30 00:37+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -8171,23 +8171,31 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "No se puede iniciar el asistente de cuentas"
 
-#: whatsnew/whatsnewtranslations.cpp:16
+#: whatsnew/whatsnewtranslations.cpp:17
+msgid ""
+"HTML messages are shown with their intended colors by default. To override "
+"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
+"option"
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:27
+#, kde-format
+msgid "Add new whatsnew widget."
+msgstr "Añadir nuevo widget de novedades."
+
+#: whatsnew/whatsnewtranslations.cpp:27
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr "Nuevo complemento: mostrar el tamaño de la colección."
+
+#: whatsnew/whatsnewtranslations.cpp:37
+#, kde-format
 msgid "Allow to export text in autogenerate editor plugins."
 msgstr ""
 "Permitir exportar texto en los complementos del editor de generación "
 "automática."
 
-#: whatsnew/whatsnewtranslations.cpp:25
-#, kde-format
-msgid "Add new whatsnew widget."
-msgstr "Añadir nuevo widget de novedades."
-
-#: whatsnew/whatsnewtranslations.cpp:25
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr "Nuevo complemento: mostrar el tamaño de la colección."
-
-#: whatsnew/whatsnewtranslations.cpp:36
+#: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
 msgstr "Corrección de la implementación de texto a voz (encolar mensajes)"
