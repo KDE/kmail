@@ -15,7 +15,7 @@ QList<KLazyLocalizedString> WhatsNewTranslations::lastNewFeatures() const
 {
     const QList<KLazyLocalizedString> info{
         kli18n("HTML messages are shown with their intended colors by default. To override this, uncheck the \"Appearance->Colors->Do not change color from "
-               "HTML mail\" option")};
+               "original HTML mail\" option")};
     return info;
 }
 
