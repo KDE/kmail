@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-15 02:30+0000\n"
-"PO-Revision-Date: 2026-01-16 12:18+0100\n"
+"PO-Revision-Date: 2026-02-05 18:14+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2789,7 +2789,7 @@ msgid ""
 "it's an error."
 msgstr ""
 "Iste attachamento: <ul><li>%1</li></ul> esseva addite externemente. Remove "
-"lo siillo es un error."
+"lo si illo es un error."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
@@ -2798,7 +2798,7 @@ msgid ""
 "if it's an error."
 msgstr ""
 "Iste attachamentos:<ul><li>%1</li></ul>  esseva addite externemente. Remove "
-"los siil es un error."
+"los si illo es un error."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -3863,7 +3863,7 @@ msgstr "Installa pngquant per obtener un melior qualitate de imagine."
 #: identity/xfaceconfigurator.cpp:269
 #, kde-format
 msgid "pngquant exited with code %1: %2"
-msgstr "pngquant exiiva con codice %1: %2"
+msgstr "pngquant exiva con codice %1: %2"
 
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
