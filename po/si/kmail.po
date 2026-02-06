@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
 "PO-Revision-Date: 2011-11-27 12:16+0530\n"
 "Last-Translator: Danishka Navin <danishka@gmail.com>\n"
 "Language-Team: Sinhala <info@hanthana.org>\n"
@@ -3020,7 +3020,7 @@ msgid "Reopen Closed Viewer"
 msgstr "නව පණිවුඩයක් යවන්න"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4396,27 +4396,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "ස්වායත්තව යැවීම"
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "පණිවුඩ පෙරහන්කරණය"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "පණිවුඩ %2 කින් %1 ක් පෙරහන්කරණය"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "පණිවුඩ ගෙනයමින් "
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "පණිවුඩ මකමින් "
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@info:progress"
@@ -8233,8 +8233,8 @@ msgstr "ගිණුම් මායා සහකරු ආරම්භ කළ �
 #: whatsnew/whatsnewtranslations.cpp:17
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:27

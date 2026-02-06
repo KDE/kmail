@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -2906,7 +2906,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Pri li componente de visor"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4167,27 +4167,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Inviar p&lu tard"
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Proprietás de missage"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -7754,8 +7754,8 @@ msgstr ""
 #: whatsnew/whatsnewtranslations.cpp:17
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:27

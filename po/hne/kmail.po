@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -3086,7 +3086,7 @@ msgid "Reopen Closed Viewer"
 msgstr "नवा संदेस"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4472,27 +4472,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "संदेस छनइया करत हे"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%2 मं से %1 संदेस छनइया करत हे"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "संदेस खिसकाय जात हे"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "संदेस मिटात हे"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"
@@ -8360,8 +8360,8 @@ msgstr "खाता बनाए मं अक्छम."
 #: whatsnew/whatsnewtranslations.cpp:17
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:27

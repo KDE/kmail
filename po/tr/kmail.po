@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
-"PO-Revision-Date: 2026-01-09 17:10+0300\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
+"PO-Revision-Date: 2026-02-05 16:48+0300\n"
 "Last-Translator: Emir SARI <emir_sari@îcloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.12.0\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2944,7 +2944,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Kapatılan Görüntüleyiciyi Yeniden Aç"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4293,27 +4293,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Tek Tek Gönder"
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "İletiler süzülüyor"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1/%2 ileti süzülüyor"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "İletiler taşınıyor"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "İletiler siliniyor"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -8119,11 +8119,19 @@ msgid "Unable to start account wizard"
 msgstr "Hesap Sihirbazı Başlatılamadı"
 
 #: whatsnew/whatsnewtranslations.cpp:17
+#, fuzzy
+#| msgid ""
+#| "HTML messages are shown with their intended colors by default. To "
+#| "override this, uncheck the \"Appearance->Colors->Do not change color from "
+#| "HTML mail\" option"
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
+"HTML iletiler öntanımlı olarak kendi renkleriyle gösterilirler. Bunu "
+"geçersiz kılmak için “Görünüş → Renkler → Özgün HTML iletisindeki renkleri "
+"değiştirme” seçeneğinin işaretini kaldırın."
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format

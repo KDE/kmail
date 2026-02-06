@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2842,7 +2842,7 @@ msgid "Reopen Closed Viewer"
 msgstr "重新開啟已關閉的檢視器"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4156,27 +4156,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "個別傳送"
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "過濾信件中"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "過濾 %1 封信件（共 %2 封）"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "移動信件中"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "刪除信件中"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -7854,8 +7854,8 @@ msgstr "無法啟動帳號精靈"
 #: whatsnew/whatsnewtranslations.cpp:17
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:27

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -3034,7 +3034,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Αποστολή νέου μηνύματος"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4469,27 +4469,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Αποστολή ανεξάρτητα"
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "Φιλτράρισμα μηνυμάτων"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Φιλτράρισμα μηνύματος %1 από %2"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Μετακίνηση μηνυμάτων"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Διαγραφή μηνυμάτων"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, fuzzy, kde-format
 #| msgid "Select attachment:"
 msgctxt "@info:progress"
@@ -8509,8 +8509,8 @@ msgstr "Αδυναμία εκκίνησης οδηγού λογαριασμού"
 #: whatsnew/whatsnewtranslations.cpp:17
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:27

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-05 00:44+0000\n"
-"PO-Revision-Date: 2026-01-16 11:57+0100\n"
+"POT-Creation-Date: 2026-02-06 00:45+0000\n"
+"PO-Revision-Date: 2026-02-05 18:53+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2776,7 +2776,7 @@ msgid ""
 "it's an error."
 msgstr ""
 "Iste attachamento: <ul><li>%1</li></ul> esseva addite externemente. Remove "
-"lo siillo es un error."
+"lo si illo es un error."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
@@ -2785,7 +2785,7 @@ msgid ""
 "if it's an error."
 msgstr ""
 "Iste attachamentos:<ul><li>%1</li></ul>  esseva addite externemente. Remove "
-"los siil es un error."
+"los si illo es un error."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -2966,7 +2966,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Reaperi visor claudite"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1924
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3850,7 +3850,7 @@ msgstr "Installa pngquant per obtener un melior qualitate de imagine."
 #: identity/xfaceconfigurator.cpp:269
 #, kde-format
 msgid "pngquant exited with code %1: %2"
-msgstr "pngquant exiiva con codice %1: %2"
+msgstr "pngquant exiva con codice %1: %2"
 
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
@@ -4318,27 +4318,27 @@ msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Invia individualmente"
 
-#: kmcommands.cpp:1319
+#: kmcommands.cpp:1317
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrante messages"
 
-#: kmcommands.cpp:1329
+#: kmcommands.cpp:1327
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrante messages %1 de %2"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1668
+#: kmcommands.cpp:1535 kmcommands.cpp:1666
 #, kde-format
 msgid "Moving messages"
 msgstr "Movente Messages"
 
-#: kmcommands.cpp:1537 kmcommands.cpp:1678
+#: kmcommands.cpp:1535 kmcommands.cpp:1676
 #, kde-format
 msgid "Deleting messages"
 msgstr "Delente messages"
 
-#: kmcommands.cpp:1820
+#: kmcommands.cpp:1818
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -8169,11 +8169,19 @@ msgid "Unable to start account wizard"
 msgstr "Il non pote initiar assistente de conto"
 
 #: whatsnew/whatsnewtranslations.cpp:17
+#, fuzzy
+#| msgid ""
+#| "HTML messages are shown with their intended colors by default. To "
+#| "override this, uncheck the \"Appearance->Colors->Do not change color from "
+#| "HTML mail\" option"
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
-"this, uncheck the \"Appearance->Colors->Do not change color from HTML mail\" "
-"option"
+"this, uncheck the \"Appearance->Colors->Do not change color from original "
+"HTML mail\" option"
 msgstr ""
+"Messages HTML es monstrate per definition con lor colores intendite. Per "
+"ultrapassar isto, leva marda ab option  \"Apparentia->Colores->Non modificar "
+"color ab posta de HTML\" "
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
