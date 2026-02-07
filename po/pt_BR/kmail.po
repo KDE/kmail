@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-06 00:45+0000\n"
-"PO-Revision-Date: 2026-02-05 05:43-0300\n"
+"PO-Revision-Date: 2026-02-06 08:19-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -8187,11 +8187,6 @@ msgid "Unable to start account wizard"
 msgstr "Não foi possível iniciar o assistente de contas"
 
 #: whatsnew/whatsnewtranslations.cpp:17
-#, fuzzy
-#| msgid ""
-#| "HTML messages are shown with their intended colors by default. To "
-#| "override this, uncheck the \"Appearance->Colors->Do not change color from "
-#| "HTML mail\" option"
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
@@ -8199,7 +8194,7 @@ msgid ""
 msgstr ""
 "As mensagens HTML são exibidas com suas cores originais por padrão. Para "
 "alterar isso, desmarque a opção \"Aparência -> Cores -> Não alterar a cor do "
-"e-mail HTML\"."
+"e-mail HTML original\"."
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format

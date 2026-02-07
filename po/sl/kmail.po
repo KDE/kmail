@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-06 00:45+0000\n"
-"PO-Revision-Date: 2026-02-05 07:04+0100\n"
+"PO-Revision-Date: 2026-02-06 07:08+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -8173,11 +8173,6 @@ msgid "Unable to start account wizard"
 msgstr "Ni mogoče zagnati čarovnika za račune"
 
 #: whatsnew/whatsnewtranslations.cpp:17
-#, fuzzy
-#| msgid ""
-#| "HTML messages are shown with their intended colors by default. To "
-#| "override this, uncheck the \"Appearance->Colors->Do not change color from "
-#| "HTML mail\" option"
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
@@ -8185,7 +8180,7 @@ msgid ""
 msgstr ""
 "Sporočila HTML so privzeto prikazana v predvidenih barvah. Če želite to "
 "preglasiti, počistite možnost \"Videz->Barve->Ne spreminjaj barve iz "
-"sporočil HTML\"."
+"sporočil HTML\""
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
