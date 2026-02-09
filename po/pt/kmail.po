@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-06 00:45+0000\n"
+"POT-Creation-Date: 2026-02-09 00:44+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -1087,56 +1087,56 @@ msgstr "Remover a Marca"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Não é possível criar a marca. Já existe uma marca com esse nome."
 
-#: configuredialog/configurecomposerpage.cpp:65
+#: configuredialog/configurecomposerpage.cpp:62
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "Geral"
 
-#: configuredialog/configurecomposerpage.cpp:72
+#: configuredialog/configurecomposerpage.cpp:69
 #, kde-format
 msgid "Standard Templates"
 msgstr "Modelos-Padrão"
 
-#: configuredialog/configurecomposerpage.cpp:78
+#: configuredialog/configurecomposerpage.cpp:75
 #, kde-format
 msgid "Custom Templates"
 msgstr "Modelos Personalizados"
 
-#: configuredialog/configurecomposerpage.cpp:84
+#: configuredialog/configurecomposerpage.cpp:81
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "Assunto"
 
-#: configuredialog/configurecomposerpage.cpp:91
+#: configuredialog/configurecomposerpage.cpp:88
 #, kde-format
 msgid "Headers"
 msgstr "Cabeçalhos"
 
-#: configuredialog/configurecomposerpage.cpp:97
+#: configuredialog/configurecomposerpage.cpp:94
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "Anexos"
 
-#: configuredialog/configurecomposerpage.cpp:103
+#: configuredialog/configurecomposerpage.cpp:100
 #, kde-format
 msgid "Autocorrection"
 msgstr "Auto-correcção"
 
-#: configuredialog/configurecomposerpage.cpp:109
+#: configuredialog/configurecomposerpage.cpp:106
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "Auto-Dimensionar a Imagem"
 
-#: configuredialog/configurecomposerpage.cpp:131
+#: configuredialog/configurecomposerpage.cpp:128
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Assinatura"
 
-#: configuredialog/configurecomposerpage.cpp:136
+#: configuredialog/configurecomposerpage.cpp:133
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
@@ -1145,12 +1145,12 @@ msgstr ""
 "Inserir automaticamente a assinatura configurada ao começar a compor uma "
 "mensagem"
 
-#: configuredialog/configurecomposerpage.cpp:146
+#: configuredialog/configurecomposerpage.cpp:143
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Inserir a assinatura antes de qualquer texto citado"
 
-#: configuredialog/configurecomposerpage.cpp:157
+#: configuredialog/configurecomposerpage.cpp:154
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
@@ -1159,18 +1159,18 @@ msgstr ""
 "Insere o separador de assinaturas compatível com o RFC (dois traços e um "
 "espaço numa linha) antes da assinatura"
 
-#: configuredialog/configurecomposerpage.cpp:168
+#: configuredialog/configurecomposerpage.cpp:165
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "Ao responder, não citar nenhuma assinatura existente"
 
-#: configuredialog/configurecomposerpage.cpp:180
+#: configuredialog/configurecomposerpage.cpp:177
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Formato"
 
-#: configuredialog/configurecomposerpage.cpp:185
+#: configuredialog/configurecomposerpage.cpp:182
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1179,7 +1179,7 @@ msgstr ""
 "Ao responder, citar apenas o texto seleccionado (em vez da mensagem "
 "completa), quando existir texto seleccionado na janela da mensagem."
 
-#: configuredialog/configurecomposerpage.cpp:195
+#: configuredialog/configurecomposerpage.cpp:192
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1190,17 +1190,17 @@ msgstr ""
 "texto citado, mesmo que a linha tenha sido criada com uma mudança de linha "
 "adicional enquanto o texto mudava de linha."
 
-#: configuredialog/configurecomposerpage.cpp:206
+#: configuredialog/configurecomposerpage.cpp:203
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Activar a mudança de linha automática na largura indicada"
 
-#: configuredialog/configurecomposerpage.cpp:217
+#: configuredialog/configurecomposerpage.cpp:214
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "Definir a largura de texto para a mudança de linha automática"
 
-#: configuredialog/configurecomposerpage.cpp:237
+#: configuredialog/configurecomposerpage.cpp:234
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1210,7 +1210,7 @@ msgstr ""
 "que foi recebido ou, se a opção estiver desligada, irá responder como texto "
 "simples por omissão."
 
-#: configuredialog/configurecomposerpage.cpp:249
+#: configuredialog/configurecomposerpage.cpp:246
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1220,50 +1220,13 @@ msgstr ""
 "HTML. É suportado o texto negrito, itálico e sublinhado, assim como as "
 "referências externas."
 
-#: configuredialog/configurecomposerpage.cpp:259
-#, kde-format
-msgctxt "@item:inlistbox Inline mail forwarding"
-msgid "Inline"
-msgstr "Incorporado"
-
-#: configuredialog/configurecomposerpage.cpp:259
-#, kde-format
-msgid "As Attachment"
-msgstr "Como Anexo"
-
-#: configuredialog/configurecomposerpage.cpp:261
-#, kde-format
-msgid "Set the default forwarded message format"
-msgstr "Define o formato predefinido das mensagens encaminhadas"
-
-#: configuredialog/configurecomposerpage.cpp:265
-#, fuzzy, kde-format
-#| msgid "Default forwarding type:"
-msgctxt "@label:textbox"
-msgid "Default forwarding type:"
-msgstr "Tipo de encaminhamento por omissão:"
-
-#: configuredialog/configurecomposerpage.cpp:283
+#: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Destinatários"
 
-#: configuredialog/configurecomposerpage.cpp:315
-#, fuzzy, kde-format
-#| msgid "Warn if too many recipients are specified"
-msgctxt "@info:tooltip"
-msgid "Warn if too many recipients are specified"
-msgstr "Avisar se indicar demasiados destinatários"
-
-#: configuredialog/configurecomposerpage.cpp:324
-#, fuzzy, kde-format
-#| msgid "Set the maximum number of recipients for the warning"
-msgctxt "@info:tooltip"
-msgid "Set the maximum number of recipients for the warning"
-msgstr "Definir o número máximo de destinatários para o aviso"
-
-#: configuredialog/configurecomposerpage.cpp:342
+#: configuredialog/configurecomposerpage.cpp:294
 #, fuzzy, kde-format
 #| msgid ""
 #| "Only allow this many recipients to be specified for the message. This "
@@ -1285,7 +1248,7 @@ msgstr ""
 "Lembre-se contudo que isto não tem em conta as listas de distribuição ou "
 "outras listas de correio."
 
-#: configuredialog/configurecomposerpage.cpp:363
+#: configuredialog/configurecomposerpage.cpp:315
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
@@ -1293,20 +1256,20 @@ msgstr ""
 "Recordar os endereços recentes introduzidos, oferecendo-se para a "
 "completação do destinatário"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:327
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Sem gravar"
 
-#: configuredialog/configurecomposerpage.cpp:378
+#: configuredialog/configurecomposerpage.cpp:330
 #, fuzzy, kde-format
 #| msgid "Maximum recent addresses retained:"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Máximo de endereços recentes retidos:"
 
-#: configuredialog/configurecomposerpage.cpp:382
+#: configuredialog/configurecomposerpage.cpp:334
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
@@ -1315,25 +1278,25 @@ msgstr ""
 "O número máximo de endereços introduzidos recentemente que serão recordados "
 "na completação"
 
-#: configuredialog/configurecomposerpage.cpp:395
+#: configuredialog/configurecomposerpage.cpp:347
 #, fuzzy, kde-format
 #| msgid "Configure Completion..."
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Configurar a Completação..."
 
-#: configuredialog/configurecomposerpage.cpp:403
+#: configuredialog/configurecomposerpage.cpp:355
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Auto-gravação"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:365
 #, kde-format
 msgid "No autosave"
 msgstr "Sem auto-gravação"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:366
 #, fuzzy, kde-format
 #| msgctxt "Interval suffix"
 #| msgid " minute"
@@ -1344,30 +1307,30 @@ msgid_plural "%v minutes"
 msgstr[0] " minuto"
 msgstr[1] " minutos"
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:368
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Gravar automaticamente a mensagem com este período de tempo"
 
-#: configuredialog/configurecomposerpage.cpp:430
+#: configuredialog/configurecomposerpage.cpp:382
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Compositor"
 
-#: configuredialog/configurecomposerpage.cpp:434
+#: configuredialog/configurecomposerpage.cpp:386
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:640
+#: configuredialog/configurecomposerpage.cpp:577
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Prefi&xos do Assunto nas Respostas"
 
-#: configuredialog/configurecomposerpage.cpp:645
-#: configuredialog/configurecomposerpage.cpp:671
+#: configuredialog/configurecomposerpage.cpp:582
+#: configuredialog/configurecomposerpage.cpp:608
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes (entries are case-"
@@ -1380,144 +1343,144 @@ msgstr ""
 "Reconhecer qualquer dos seguintes prefixos (os itens são expressões "
 "regulares que não distinguem maiúsculas de minúsculas):"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:590
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:590
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "Re&mover"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:590
+#: configuredialog/configurecomposerpage.cpp:889
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Modificar..."
 
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:590
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Indicar o novo prefixo de resposta:"
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:591
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Deseja remover o prefixo da resposta?"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Prefixo nas Respostas:"
 
-#: configuredialog/configurecomposerpage.cpp:667
+#: configuredialog/configurecomposerpage.cpp:604
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Pre&fixos do Assunto nos Reencaminhamentos"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:614 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "Remo&ver"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:614
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:614
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Modificar..."
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:614
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Indique o novo prefixo de reenvio:"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Deseja remover o prefixo do encaminhamento?"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:616
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Prefixo nos Reencaminhamentos:"
 
-#: configuredialog/configurecomposerpage.cpp:727
+#: configuredialog/configurecomposerpage.cpp:664
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definir os cabeçalhos de MIME personalizados:"
 
-#: configuredialog/configurecomposerpage.cpp:735
+#: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nome"
 
-#: configuredialog/configurecomposerpage.cpp:736
+#: configuredialog/configurecomposerpage.cpp:673
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valor"
 
-#: configuredialog/configurecomposerpage.cpp:744
+#: configuredialog/configurecomposerpage.cpp:681
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "No&vo"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:685
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Re&mover"
 
-#: configuredialog/configurecomposerpage.cpp:757
+#: configuredialog/configurecomposerpage.cpp:694
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Nome:"
 
-#: configuredialog/configurecomposerpage.cpp:767
+#: configuredialog/configurecomposerpage.cpp:704
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Valor:"
 
-#: configuredialog/configurecomposerpage.cpp:899
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "O 'Content-Type' não é um texto autorizado. Este cabeçalho não será gravado."
 
-#: configuredialog/configurecomposerpage.cpp:900
+#: configuredialog/configurecomposerpage.cpp:837
 #, fuzzy, kde-format
 #| msgid "Invalid header"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Cabeçalho inválido"
 
-#: configuredialog/configurecomposerpage.cpp:935
+#: configuredialog/configurecomposerpage.cpp:872
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Activar a detecção dos a&nexos em falta"
 
-#: configuredialog/configurecomposerpage.cpp:941
+#: configuredialog/configurecomposerpage.cpp:878
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1527,35 +1490,35 @@ msgstr ""
 "Reconhecer qualquer uma das palavras seguintes como intenção de anexar um "
 "ficheiro:"
 
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Indique a nova palavra-chave:"
 
-#: configuredialog/configurecomposerpage.cpp:954
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Deseja remover esta palavra de anexo?"
 
-#: configuredialog/configurecomposerpage.cpp:955
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Palavra de Anexos:"
 
-#: configuredialog/configurecomposerpage.cpp:962
+#: configuredialog/configurecomposerpage.cpp:899
 #, fuzzy, kde-format
 #| msgid "Maximum Attachment Size:"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Tamanho Máximo do Anexo:"
 
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:971
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "Sem limite"
@@ -6928,7 +6891,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.in:54
+#: settings/kmail.kcfg:54
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6940,19 +6903,19 @@ msgstr ""
 "ou 'Itens de Acção'"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.in:58
+#: settings/kmail.kcfg:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "Permitir as opções locais nas pastas apenas para leitura"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.in:64
+#: settings/kmail.kcfg:64
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "Enviar as mensagens em espera ao verificar o correio"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.in:65
+#: settings/kmail.kcfg:65
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6964,44 +6927,44 @@ msgstr ""
 "mensagens automaticamente de todo.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.in:77
+#: settings/kmail.kcfg:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr ""
 "A pasta seleccionada mais recentemente na janela de selecção de pastas."
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg.in:91
+#: settings/kmail.kcfg:91
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Activar o ícone na bandeja do sistema"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg.in:95
+#: settings/kmail.kcfg:95
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Iniciar minimizado na bandeja"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.in:99
+#: settings/kmail.kcfg:99
 #, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Mostrar o Correio Não-Lido na Barra de Tarefas"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.in:103
+#: settings/kmail.kcfg:103
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "Indique o e&ditor:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.in:107
+#: settings/kmail.kcfg:107
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Usar um editor e&xterno em vez do compositor"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:113
+#: settings/kmail.kcfg:113
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -7011,31 +6974,31 @@ msgstr ""
 "sua quota."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:117
+#: settings/kmail.kcfg:117
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Esvaziar a pasta de lixo local ao sair do programa"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:121
+#: settings/kmail.kcfg:121
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Apagar as mensagens sem confirmação"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:125
+#: settings/kmail.kcfg:125
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Permite iniciar a pasta específica"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:129
+#: settings/kmail.kcfg:129
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Indique a pasta a abrir ao iniciar o programa"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg:163
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -7046,7 +7009,7 @@ msgstr ""
 "questionado uma vez."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg:171
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -7055,26 +7018,26 @@ msgstr ""
 "Este valor é usado para decidir se a Introdução ao KMail deverá ser mostrada."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg:178
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Mostrar o campo de texto de pesquisa rápida de pastas"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg:186
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Encaminhar incorporada por omissão."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Avisar se o número de destinatários for maior que:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg:191 settings/kmail.kcfg:198
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -7085,25 +7048,25 @@ msgstr ""
 "pedir uma confirmação antes do envio do e-mail. O aviso poder-se-á desligar."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg:212
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Confirmar a&ntes de enviar"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg:219
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Confirmar a ortografia antes de enviar"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Pedir automaticamente as notificações de disposição das &mensagens"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg:224
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -7119,13 +7082,13 @@ msgstr ""
 "<em>Opções</em>-><em>Pedir a Notificação de Disposição</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg:246
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Gravar automaticamente a cada:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg:247
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -7138,118 +7101,118 @@ msgstr ""
 "como 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
 "Mostrar a Gestão de Excertos de Texto e o Painel de Inserção no compositor."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "Se assinalada, as mensagens enviadas serão guardadas encriptadas"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg:264
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Uma lista com todos os URL's usados recentemente"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg:270
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Uma lista com todas as codificações usadas recentemente"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg:276
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Mostrar o indicador de legenda de cifra"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:280
+#: settings/kmail.kcfg:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Validar o Atalho Predefinido de Envio"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:334
+#: settings/kmail.kcfg:334
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "Área de Antevisão da Mensagem"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:337
+#: settings/kmail.kcfg:337
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Não mostrar uma área de antevisão da mensagem"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:340
+#: settings/kmail.kcfg:340
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Mostrar a área de antevisão da mensagem sob a lista de mensagens"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg:343
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Mostrar a área de antevisão da mensagem a seguir à lista de mensagens"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:350
+#: settings/kmail.kcfg:350
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "Lista de Pastas"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:353
+#: settings/kmail.kcfg:353
 #, kde-format
 msgid "Long folder list"
 msgstr "Lista de pastas longa"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:356
+#: settings/kmail.kcfg:356
 #, kde-format
 msgid "Short folder list"
 msgstr "Lista de pastas curta"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg:365
 #, kde-format
 msgid "Message template for new message"
 msgstr "Modelo das mensagens novas"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:370
+#: settings/kmail.kcfg:370
 #, kde-format
 msgid "Message template for reply"
 msgstr "Modelo da mensagem de resposta"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:375
+#: settings/kmail.kcfg:375
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Modelo da mensagem de resposta para todos"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:380
+#: settings/kmail.kcfg:380
 #, kde-format
 msgid "Message template for forward"
 msgstr "Modelo da mensagem de encaminhamento"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:385
+#: settings/kmail.kcfg:385
 #, kde-format
 msgid "Quote characters"
 msgstr "Caracteres de citação"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:400
+#: settings/kmail.kcfg:400
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Indica a política usada na sua visualização"
@@ -8675,6 +8638,34 @@ msgstr[1] "Resposta 'fora do escritório' activa nos servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliação: %1%"
+
+#~ msgctxt "@item:inlistbox Inline mail forwarding"
+#~ msgid "Inline"
+#~ msgstr "Incorporado"
+
+#~ msgid "As Attachment"
+#~ msgstr "Como Anexo"
+
+#~ msgid "Set the default forwarded message format"
+#~ msgstr "Define o formato predefinido das mensagens encaminhadas"
+
+#, fuzzy
+#~| msgid "Default forwarding type:"
+#~ msgctxt "@label:textbox"
+#~ msgid "Default forwarding type:"
+#~ msgstr "Tipo de encaminhamento por omissão:"
+
+#, fuzzy
+#~| msgid "Warn if too many recipients are specified"
+#~ msgctxt "@info:tooltip"
+#~ msgid "Warn if too many recipients are specified"
+#~ msgstr "Avisar se indicar demasiados destinatários"
+
+#, fuzzy
+#~| msgid "Set the maximum number of recipients for the warning"
+#~ msgctxt "@info:tooltip"
+#~ msgid "Set the maximum number of recipients for the warning"
+#~ msgstr "Definir o número máximo de destinatários para o aviso"
 
 #, fuzzy
 #~| msgid "&Use custom message-id suffix"

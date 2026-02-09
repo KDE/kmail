@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-06 00:45+0000\n"
+"POT-Creation-Date: 2026-02-09 00:44+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1018,68 +1018,68 @@ msgstr "टैग हटाएँ"
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "वयं टैग् निर्मातुं न शक्नुमः। समाननाम्नः टैग् पूर्वमेव अस्ति ।"
 
-#: configuredialog/configurecomposerpage.cpp:65
+#: configuredialog/configurecomposerpage.cpp:62
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "सामान्य"
 
-#: configuredialog/configurecomposerpage.cpp:72
+#: configuredialog/configurecomposerpage.cpp:69
 #, kde-format
 msgid "Standard Templates"
 msgstr "मानक टेम्पलेट्स"
 
-#: configuredialog/configurecomposerpage.cpp:78
+#: configuredialog/configurecomposerpage.cpp:75
 #, kde-format
 msgid "Custom Templates"
 msgstr "कस्टम टेम्पलेट्स"
 
-#: configuredialog/configurecomposerpage.cpp:84
+#: configuredialog/configurecomposerpage.cpp:81
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "विषयः"
 
-#: configuredialog/configurecomposerpage.cpp:91
+#: configuredialog/configurecomposerpage.cpp:88
 #, kde-format
 msgid "Headers"
 msgstr "शीर्षकम्"
 
-#: configuredialog/configurecomposerpage.cpp:97
+#: configuredialog/configurecomposerpage.cpp:94
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "आसक्तिः"
 
-#: configuredialog/configurecomposerpage.cpp:103
+#: configuredialog/configurecomposerpage.cpp:100
 #, kde-format
 msgid "Autocorrection"
 msgstr "स्वशुद्धिकरणम्"
 
-#: configuredialog/configurecomposerpage.cpp:109
+#: configuredialog/configurecomposerpage.cpp:106
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "स्वतः प्रतिबिम्बस्य आकारं परिवर्तयतु"
 
-#: configuredialog/configurecomposerpage.cpp:131
+#: configuredialog/configurecomposerpage.cpp:128
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "हस्ताक्षर"
 
-#: configuredialog/configurecomposerpage.cpp:136
+#: configuredialog/configurecomposerpage.cpp:133
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr "सन्देशस्य रचनां आरभ्य विन्यस्तहस्ताक्षरं स्वयमेव सम्मिलितं कुर्वन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:146
+#: configuredialog/configurecomposerpage.cpp:143
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "कस्यापि उद्धृतपाठस्य उपरि हस्ताक्षरं निवेशयन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:157
+#: configuredialog/configurecomposerpage.cpp:154
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
@@ -1087,18 +1087,18 @@ msgid ""
 msgstr ""
 "हस्ताक्षरस्य पूर्वं RFC-अनुरूपं हस्ताक्षरविभाजकं (द्वौ डैशौ रेखायां च एकं स्थानं) सम्मिलितं कुर्वन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:168
+#: configuredialog/configurecomposerpage.cpp:165
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "उत्तरं दत्त्वा विद्यमानं किमपि हस्ताक्षरं न उद्धृतव्यम्"
 
-#: configuredialog/configurecomposerpage.cpp:180
+#: configuredialog/configurecomposerpage.cpp:177
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "प्रारूप"
 
-#: configuredialog/configurecomposerpage.cpp:185
+#: configuredialog/configurecomposerpage.cpp:182
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1107,7 +1107,7 @@ msgstr ""
 "उत्तरं ददाति समये केवलं चयनितं पाठं (पूर्णसन्देशस्य स्थाने) उद्धृतं कुर्वन्तु, यदि सन्देशविण्डो मध्ये "
 "पाठः चयनितः अस्ति ।"
 
-#: configuredialog/configurecomposerpage.cpp:195
+#: configuredialog/configurecomposerpage.cpp:192
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1117,17 +1117,17 @@ msgstr ""
 "उत्तरं ददाति समये उद्धृतपाठस्य सर्वासु पङ्क्तयः पुरतः उद्धरणचिह्नानि योजयन्तु, यदा अपि "
 "पाठस्य शब्दवेष्टने अतिरिक्तपङ्क्तिविच्छेदं योजयित्वा रेखा निर्मितवती आसीत्"
 
-#: configuredialog/configurecomposerpage.cpp:206
+#: configuredialog/configurecomposerpage.cpp:203
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "निर्दिष्टविस्तारे स्वचालितशब्दवेष्टनं सक्षमं कुर्वन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:217
+#: configuredialog/configurecomposerpage.cpp:214
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "स्वचालितशब्दवेष्टनार्थं पाठविस्तारं सेट् कुर्वन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:237
+#: configuredialog/configurecomposerpage.cpp:234
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1136,7 +1136,7 @@ msgstr ""
 "उत्तरं ददाति वा अग्रे प्रेषयति वा सति सन्देशं प्राप्ते मूलस्वरूपेण उद्धृत्य स्थापयन्तु । यदि "
 "अनिरीक्षितं भवति तर्हि उत्तरं पूर्वनिर्धारितरूपेण साधारणपाठरूपेण भविष्यति ।"
 
-#: configuredialog/configurecomposerpage.cpp:249
+#: configuredialog/configurecomposerpage.cpp:246
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1145,47 +1145,13 @@ msgstr ""
 "HTML मार्कअप तः सन्देशस्य साधारणपाठभागं स्वरूपयन्तु । बोल्ड्, इटालिक तथा रेखांकितपाठः, "
 "सूचीः, बाह्यसन्दर्भाः च समर्थिताः सन्ति ।"
 
-#: configuredialog/configurecomposerpage.cpp:259
-#, kde-format
-msgctxt "@item:inlistbox Inline mail forwarding"
-msgid "Inline"
-msgstr "इन्लाइन्"
-
-#: configuredialog/configurecomposerpage.cpp:259
-#, kde-format
-msgid "As Attachment"
-msgstr "आसक्तित्वेन"
-
-#: configuredialog/configurecomposerpage.cpp:261
-#, kde-format
-msgid "Set the default forwarded message format"
-msgstr "पूर्वनिर्धारितं अग्रे प्रेषितं सन्देशस्वरूपं सेट् कुर्वन्तु"
-
-#: configuredialog/configurecomposerpage.cpp:265
-#, kde-format
-msgctxt "@label:textbox"
-msgid "Default forwarding type:"
-msgstr "पूर्वनिर्धारितः अग्रेषणप्रकारः :"
-
-#: configuredialog/configurecomposerpage.cpp:283
+#: configuredialog/configurecomposerpage.cpp:258
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "प्राप्तकर्ता"
 
-#: configuredialog/configurecomposerpage.cpp:315
-#, kde-format
-msgctxt "@info:tooltip"
-msgid "Warn if too many recipients are specified"
-msgstr "यदि अत्यधिकाः प्राप्तकर्ताः निर्दिष्टाः सन्ति तर्हि चेतयन्तु"
-
-#: configuredialog/configurecomposerpage.cpp:324
-#, kde-format
-msgctxt "@info:tooltip"
-msgid "Set the maximum number of recipients for the warning"
-msgstr "चेतावनी कृते अधिकतमं प्राप्तकर्तानां संख्यां सेट् कुर्वन्तु"
-
-#: configuredialog/configurecomposerpage.cpp:342
+#: configuredialog/configurecomposerpage.cpp:294
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1199,49 +1165,49 @@ msgstr ""
 "सीमां निर्धारयित्वा भवन्तः अत्यधिकजनानाम् कृते आकस्मिकरूपेण सन्देशं न प्रेषयितुं साहाय्यं कुर्वन्ति "
 "।  परन्तु ध्यानं कुर्वन्तु यत् एतत् वितरणसूचीनां वा मेलसूचीनां वा गणनां न करोति ।"
 
-#: configuredialog/configurecomposerpage.cpp:363
+#: configuredialog/configurecomposerpage.cpp:315
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr "अद्यतनं प्रविष्टानि पत्तनानि स्मर्यताम्, ग्राहकसमाप्त्यर्थं च अर्पयन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:375
+#: configuredialog/configurecomposerpage.cpp:327
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "न सेव्"
 
-#: configuredialog/configurecomposerpage.cpp:378
+#: configuredialog/configurecomposerpage.cpp:330
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "अधिकतमं हाले एव स्थापितानि पत्तनानि :"
 
-#: configuredialog/configurecomposerpage.cpp:382
+#: configuredialog/configurecomposerpage.cpp:334
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr "सद्यः प्रविष्टानां पत्तनानां अधिकतमसंख्या या समाप्त्यर्थं स्मर्यते"
 
-#: configuredialog/configurecomposerpage.cpp:395
+#: configuredialog/configurecomposerpage.cpp:347
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "समाप्ति विन्यस्तं कुर्वन्तु…"
 
-#: configuredialog/configurecomposerpage.cpp:403
+#: configuredialog/configurecomposerpage.cpp:355
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "स्वतः रक्षतु"
 
-#: configuredialog/configurecomposerpage.cpp:413
+#: configuredialog/configurecomposerpage.cpp:365
 #, kde-format
 msgid "No autosave"
 msgstr "न स्वतः रक्षितुम्"
 
-#: configuredialog/configurecomposerpage.cpp:414
+#: configuredialog/configurecomposerpage.cpp:366
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
@@ -1249,30 +1215,30 @@ msgid_plural "%v minutes"
 msgstr[0] "%एकनिमेषे"
 msgstr[1] "%v निमेषाः"
 
-#: configuredialog/configurecomposerpage.cpp:416
+#: configuredialog/configurecomposerpage.cpp:368
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "अस्मिन् निर्दिष्टे अन्तराले स्वयमेव सन्देशं रक्षन्तु"
 
-#: configuredialog/configurecomposerpage.cpp:430
+#: configuredialog/configurecomposerpage.cpp:382
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "रचयिता"
 
-#: configuredialog/configurecomposerpage.cpp:434
+#: configuredialog/configurecomposerpage.cpp:386
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:640
+#: configuredialog/configurecomposerpage.cpp:577
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Repl&y विषय उपसर्गाः"
 
-#: configuredialog/configurecomposerpage.cpp:645
-#: configuredialog/configurecomposerpage.cpp:671
+#: configuredialog/configurecomposerpage.cpp:582
+#: configuredialog/configurecomposerpage.cpp:608
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1282,169 +1248,169 @@ msgstr ""
 "निम्नलिखित उपसर्गाणां कोऽपि क्रमः ज्ञातव्यः (प्रविष्टयः केस-असंवेदनशीलाः नियमितव्यञ्जनाः "
 "सन्ति):"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:590
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr "संयोजयति…"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:590
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "अपाकरोति"
 
-#: configuredialog/configurecomposerpage.cpp:653
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:590
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Mod&ify…"
 
-#: configuredialog/configurecomposerpage.cpp:653
+#: configuredialog/configurecomposerpage.cpp:590
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "नूतनं उत्तरोपसर्गं प्रविष्टं कुर्वन्तु:"
 
-#: configuredialog/configurecomposerpage.cpp:654
+#: configuredialog/configurecomposerpage.cpp:591
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "किं भवन्तः उत्तर-उपसर्गं हर्तुं इच्छन्ति ?"
 
-#: configuredialog/configurecomposerpage.cpp:656
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "उत्तरम् उपसर्गः :"
 
-#: configuredialog/configurecomposerpage.cpp:667
+#: configuredialog/configurecomposerpage.cpp:604
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "For&ward विषय उपसर्गाः"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:614 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "अपाकरोति"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:614
 #, kde-format
 msgid "Add…"
 msgstr "संयोजयति…"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:614
 #, kde-format
 msgid "Modify…"
 msgstr "परिवर्तनं कुर्वन्तु…"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:614
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "नूतनं अग्रे उपसर्गं प्रविष्टं कुर्वन्तु:"
 
-#: configuredialog/configurecomposerpage.cpp:678
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "किं भवन्तः अग्रे उपसर्गं हर्तुं इच्छन्ति ?"
 
-#: configuredialog/configurecomposerpage.cpp:679
+#: configuredialog/configurecomposerpage.cpp:616
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "अग्रे उपसर्गः :"
 
-#: configuredialog/configurecomposerpage.cpp:727
+#: configuredialog/configurecomposerpage.cpp:664
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "कस्टम् माइम हेडर क्षेत्राणि परिभाषयन्तु:"
 
-#: configuredialog/configurecomposerpage.cpp:735
+#: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "नामः"
 
-#: configuredialog/configurecomposerpage.cpp:736
+#: configuredialog/configurecomposerpage.cpp:673
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "मूल्यम्‌"
 
-#: configuredialog/configurecomposerpage.cpp:744
+#: configuredialog/configurecomposerpage.cpp:681
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "नूतनम्‌"
 
-#: configuredialog/configurecomposerpage.cpp:748
+#: configuredialog/configurecomposerpage.cpp:685
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "अपाकरोति"
 
-#: configuredialog/configurecomposerpage.cpp:757
+#: configuredialog/configurecomposerpage.cpp:694
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&नामः:"
 
-#: configuredialog/configurecomposerpage.cpp:767
+#: configuredialog/configurecomposerpage.cpp:704
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&मूल्यम्‌:"
 
-#: configuredialog/configurecomposerpage.cpp:899
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "'Content-Type' अधिकृतं स्ट्रिंग् नास्ति । एतत् शीर्षकं न रक्षितं भविष्यति।"
 
-#: configuredialog/configurecomposerpage.cpp:900
+#: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "अमान्यशीर्षकम्"
 
-#: configuredialog/configurecomposerpage.cpp:935
+#: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "E&nable detection of गम्यमानसंलग्नकानां"
 
-#: configuredialog/configurecomposerpage.cpp:941
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "निम्नलिखितमुख्यशब्देषु कञ्चित् सञ्चिकां संलग्नं कर्तुं अभिप्रायः इति ज्ञातव्यम् ।"
 
-#: configuredialog/configurecomposerpage.cpp:952
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "नूतनं कीलशब्दं प्रविशतु:"
 
-#: configuredialog/configurecomposerpage.cpp:954
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "किं भवन्तः एतत् आसक्तिशब्दं दूरीकर्तुं इच्छन्ति ?"
 
-#: configuredialog/configurecomposerpage.cpp:955
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "आसक्ति शब्दः"
 
-#: configuredialog/configurecomposerpage.cpp:962
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "अधिकतमः आसक्तिः आकारः :"
 
-#: configuredialog/configurecomposerpage.cpp:969
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:971
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "न सीमा"
@@ -6423,7 +6389,7 @@ msgid " – "
 msgstr " – ९. "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg.in:54
+#: settings/kmail.kcfg:54
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6434,19 +6400,19 @@ msgstr ""
 "पुटं प्रति गमनम्) पुटे पुरातनसन्देशानां स्वयमेव समाप्तिः निवारयति ।"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg.in:58
+#: settings/kmail.kcfg:58
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "केवलं पठनीयपुटेषु स्थानीयध्वजान् अनुमन्यताम्"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.in:64
+#: settings/kmail.kcfg:64
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "मेलपरीक्षायां पङ्क्तिबद्धं मेलं प्रेषयन्तु"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg.in:65
+#: settings/kmail.kcfg:65
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6458,43 +6424,43 @@ msgstr ""
 "सर्वथा ।</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg.in:77
+#: settings/kmail.kcfg:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr "पुटचयनसंवादे अद्यतनतमं पुटम् ।"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg.in:91
+#: settings/kmail.kcfg:91
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "सिस्टम् ट्रे चिह्नं सक्षमं कुर्वन्तु"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg.in:95
+#: settings/kmail.kcfg:95
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "ट्रे यावत् न्यूनीकृत्य आरभत"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg.in:99
+#: settings/kmail.kcfg:99
 #, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "TaskBar मध्ये अपठितं ईमेल दर्शयतु"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg.in:103
+#: settings/kmail.kcfg:103
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "e&ditor निर्दिष्टं कुर्वन्तु:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg.in:107
+#: settings/kmail.kcfg:107
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "composer इत्यस्य स्थाने e&xternal editor इत्यस्य उपयोगं कुर्वन्तु"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg.in:113
+#: settings/kmail.kcfg:113
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6502,31 +6468,31 @@ msgid ""
 msgstr "कदा उपयोक्तारं चेतयितुं यत् पुटं स्वस्य कोटासीमायाः समीपे अस्ति इति सीमा ।"
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg.in:117
+#: settings/kmail.kcfg:117
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "प्रोग्राम् निर्गमनसमये स्थानीयकचरापुटं रिक्तं कुर्वन्तु"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg.in:121
+#: settings/kmail.kcfg:121
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "पुष्टिं विना सन्देशान् विलोपयन्तु"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg.in:125
+#: settings/kmail.kcfg:125
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "विशिष्टं पुटं आरभ्यतुं अनुमतिं ददातु"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg.in:129
+#: settings/kmail.kcfg:129
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "कार्यक्रमस्य आरम्भे उद्घाटयितुं पुटं निर्दिशन्तु"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg.in:163
+#: settings/kmail.kcfg:163
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6536,7 +6502,7 @@ msgstr ""
 "इच्छन्ति वा इति पृच्छितव्यम् वा। वयं कदापि एकवारमेव पृच्छामः।"
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg.in:171
+#: settings/kmail.kcfg:171
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6544,26 +6510,26 @@ msgid ""
 msgstr "एतत् मूल्यं KMail Introduction प्रदर्शितव्यं वा इति निर्णयार्थं उपयुज्यते ।"
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg.in:178
+#: settings/kmail.kcfg:178
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "पुटस्य त्वरितं अन्वेषणपङ्क्तिसम्पादनं दर्शयतु"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg.in:186
+#: settings/kmail.kcfg:186
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "पूर्वनिर्धारितरूपेण Inline अग्रे प्रेषयन्तु।"
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg.in:189
+#: settings/kmail.kcfg:189
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "यदि प्राप्तकर्तृणां संख्या :"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg.in:191 settings/kmail.kcfg.in:198
+#: settings/kmail.kcfg:191 settings/kmail.kcfg:198
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6574,25 +6540,25 @@ msgstr ""
 "पुष्टिं च याचयिष्यति । चेतावनी निष्क्रियं कर्तुं शक्यते।"
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:212
+#: settings/kmail.kcfg:212
 #, kde-format
 msgid "Confirm &before send"
 msgstr "&प्रेषणात् पूर्वं पुष्टिं कुर्वन्तु"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg.in:219
+#: settings/kmail.kcfg:219
 #, kde-format
 msgid "Check spelling before send"
 msgstr "प्रेषणात् पूर्वं वर्तनीं पश्यन्तु"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:223
+#: settings/kmail.kcfg:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "स्वचालितरूपेण &सन्देशप्रवृत्तिसूचनानां अनुरोधं कुर्वन्तु"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg.in:224
+#: settings/kmail.kcfg:224
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6608,13 +6574,13 @@ msgstr ""
 "<em>अनुरोध-विस्थापन-सूचना</em> .</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:246
+#: settings/kmail.kcfg:246
 #, kde-format
 msgid "Autosave interval:"
 msgstr "स्वतः रक्षणान्तरम् :"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg.in:247
+#: settings/kmail.kcfg:247
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6626,115 +6592,115 @@ msgstr ""
 "।"
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg.in:254
+#: settings/kmail.kcfg:254
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "संगीतकारे Text Snippet Management and Insertion Panel दर्शयन्तु ।"
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg.in:260
+#: settings/kmail.kcfg:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "परीक्षन्ते सति प्रेषिताः सन्देशाः एन्क्रिप्टेड्-रूपेण संगृहीताः भविष्यन्ति"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg.in:264
+#: settings/kmail.kcfg:264
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "सद्यः प्रयुक्तानां सर्वेषां URL-समूहानां सूची"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg.in:270
+#: settings/kmail.kcfg:270
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "सद्यः प्रयुक्तानां सर्वेषां एन्कोडिंग्-सङ्ख्यानां सूची"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg.in:276
+#: settings/kmail.kcfg:276
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "क्रिप्टो लेबल सूचकं दर्शयतु"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg.in:280
+#: settings/kmail.kcfg:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "पूर्वनिर्धारितशॉर्टकट् प्रेषयतु प्रमाणीकरणं कुर्वन्तु"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:334
+#: settings/kmail.kcfg:334
 #, kde-format
 msgid "Message preview pane:"
 msgstr "सन्देशपूर्वावलोकनफलकम् :"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:337
+#: settings/kmail.kcfg:337
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "सन्देशपूर्वावलोकनफलकं न दर्शयन्तु"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:340
+#: settings/kmail.kcfg:340
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "सन्देशसूचिकायाः अधः सन्देशपूर्वावलोकनफलकं दर्शयतु"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg.in:343
+#: settings/kmail.kcfg:343
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "सन्देशसूचिकायाः पार्श्वे सन्देशपूर्वावलोकनफलकं दर्शयतु"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:350
+#: settings/kmail.kcfg:350
 #, kde-format
 msgid "Folder list:"
 msgstr "पुटसूची :"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:353
+#: settings/kmail.kcfg:353
 #, kde-format
 msgid "Long folder list"
 msgstr "दीर्घा पुटसूची"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg.in:356
+#: settings/kmail.kcfg:356
 #, kde-format
 msgid "Short folder list"
 msgstr "लघुपुटसूची"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:365
+#: settings/kmail.kcfg:365
 #, kde-format
 msgid "Message template for new message"
 msgstr "नूतनसन्देशस्य कृते सन्देशस्य टेम्पलेट्"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:370
+#: settings/kmail.kcfg:370
 #, kde-format
 msgid "Message template for reply"
 msgstr "उत्तरार्थं सन्देशस्य टेम्पलेट्"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:375
+#: settings/kmail.kcfg:375
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "सर्वेषां उत्तरार्थं सन्देशस्य टेम्पलेट्"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:380
+#: settings/kmail.kcfg:380
 #, kde-format
 msgid "Message template for forward"
 msgstr "अग्रे कृते सन्देशस्य टेम्पलेट्"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg.in:385
+#: settings/kmail.kcfg:385
 #, kde-format
 msgid "Quote characters"
 msgstr "उद्धरण वर्ण"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg.in:400
+#: settings/kmail.kcfg:400
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "नीतिप्रदर्शने प्रयुक्तां नीतिं निर्दिशति"
@@ -8089,6 +8055,28 @@ msgstr[1] "सर्वरेषु सक्रियः कार्याल�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "जूमः %1% ."
+
+#~ msgctxt "@item:inlistbox Inline mail forwarding"
+#~ msgid "Inline"
+#~ msgstr "इन्लाइन्"
+
+#~ msgid "As Attachment"
+#~ msgstr "आसक्तित्वेन"
+
+#~ msgid "Set the default forwarded message format"
+#~ msgstr "पूर्वनिर्धारितं अग्रे प्रेषितं सन्देशस्वरूपं सेट् कुर्वन्तु"
+
+#~ msgctxt "@label:textbox"
+#~ msgid "Default forwarding type:"
+#~ msgstr "पूर्वनिर्धारितः अग्रेषणप्रकारः :"
+
+#~ msgctxt "@info:tooltip"
+#~ msgid "Warn if too many recipients are specified"
+#~ msgstr "यदि अत्यधिकाः प्राप्तकर्ताः निर्दिष्टाः सन्ति तर्हि चेतयन्तु"
+
+#~ msgctxt "@info:tooltip"
+#~ msgid "Set the maximum number of recipients for the warning"
+#~ msgstr "चेतावनी कृते अधिकतमं प्राप्तकर्तानां संख्यां सेट् कुर्वन्तु"
 
 #~ msgctxt "@option:check"
 #~ msgid "&Use custom message-id suffix"
