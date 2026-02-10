@@ -7893,25 +7893,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "在消息内"
-
-#~ msgid "As Attachment"
-#~ msgstr "有附件"
-
-#~ msgid "Set the default forwarded message format"
-#~ msgstr "设定默认转发格式"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "默认转发类型："
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "收件人过多时警告"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Set the maximum number of recipients for the warning"
-#~ msgstr "收件人大于一定数量时警告"
