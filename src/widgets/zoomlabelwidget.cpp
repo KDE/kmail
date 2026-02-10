@@ -35,4 +35,10 @@ void ZoomLabelWidget::wheelEvent(QWheelEvent *event)
         Q_EMIT changeZoom(mZoomFactor + 10);
     }
 }
+
+void ZoomLabelWidget::mousePressEvent([[maybe_unused]] QMouseEvent *event)
+{
+    Q_EMIT changeZoom(100.0);
+}
+
 #include "moc_zoomlabelwidget.cpp"

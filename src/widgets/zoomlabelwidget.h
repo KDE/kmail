@@ -19,6 +19,7 @@ public:
 
 protected:
     void wheelEvent(QWheelEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 Q_SIGNALS:
     void changeZoom(qreal zoomFactor);
