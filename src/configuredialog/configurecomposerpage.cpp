@@ -289,6 +289,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     mMaximumRecipients->setMinimum(0);
     mMaximumRecipients->setSingleStep(1);
     mMaximumRecipients->setValue(1);
+    mMaximumRecipients->setEnabled(false);
 
     helpText = i18n(
         "Only allow this many recipients to be specified for the message. This applies to doing a \"Reply to All\", entering recipients manually"
@@ -301,7 +302,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
     label->setBuddy(mMaximumRecipients);
 
     connect(mMaximumRecipients, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
-
+    connect(mShowAkonadiSearchAddressesInComposer, &QAbstractButton::toggled, mMaximumRecipients, &QWidget::setEnabled);
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecipients, row, 2);
     ++row;
