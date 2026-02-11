@@ -300,9 +300,11 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 
     label = new QLabel(MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem()->label(), this);
     label->setBuddy(mMaximumRecipients);
+    label->setEnabled(false);
 
     connect(mMaximumRecipients, &QSpinBox::valueChanged, this, &ConfigModuleTab::slotEmitChanged);
     connect(mShowAkonadiSearchAddressesInComposer, &QAbstractButton::toggled, mMaximumRecipients, &QWidget::setEnabled);
+    connect(mShowAkonadiSearchAddressesInComposer, &QAbstractButton::toggled, label, &QWidget::setEnabled);
     groupGridLayout->addWidget(label, row, 0, 1, 2);
     groupGridLayout->addWidget(mMaximumRecipients, row, 2);
     ++row;
