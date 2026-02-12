@@ -4,20 +4,20 @@
 # Krasimir Arnaudov <texas_kia@yahoo.com>, 2005.
 # Zlatko Popov <zlatkopopov@fsa-bg.org>, 2005, 2006, 2007, 2008.
 # Yasen Pramatarov <yasen@lindeas.com>, 2010, 2011, 2013.
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Mincho Kondarev <mkondarev@yahoo.de>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Mincho Kondarev <mkondarev@yahoo.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-15 02:30+0000\n"
-"PO-Revision-Date: 2025-11-12 11:26+0100\n"
+"PO-Revision-Date: 2026-02-11 22:24+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 26.03.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -781,7 +781,7 @@ msgstr "Ред&уване на цветовете при многократно 
 #, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
-msgstr "&Запазване на цвета от оригиналната HTML поща"
+msgstr "&Запазване на цвета от оригиналното HTML съобщение"
 
 #: configuredialog/configureappearancepage.cpp:347
 #, kde-format
