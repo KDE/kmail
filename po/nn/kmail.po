@@ -7890,20 +7890,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "I teksten"
-
-#~ msgid "As Attachment"
-#~ msgstr "Som vedlegg"
-
-#, fuzzy
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "Sta&ndarddomene:"
-
-#, fuzzy
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "Åtvar ved for mange mottakarar"

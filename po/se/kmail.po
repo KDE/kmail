@@ -7721,12 +7721,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-# unreviewed-context
-#~ msgid "As Attachment"
-#~ msgstr "Mielddusin"
-
-#, fuzzy
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "S&tandárddomeana:"

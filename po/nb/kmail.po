@@ -7943,28 +7943,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "I teksten"
-
-#~ msgid "As Attachment"
-#~ msgstr "Som vedlegg"
-
-#~ msgid "Set the default forwarded message format"
-#~ msgstr "Bestem standard format for videresendte meldinger"
-
-#, fuzzy
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "Standard type for videresending:"
-
-#, fuzzy
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "Si fra om for mange adressater er angitt"
-
-#, fuzzy
-#~ msgctxt "@info:tooltip"
-#~ msgid "Set the maximum number of recipients for the warning"
-#~ msgstr "oppgi høyeste antall adressater for varsling"

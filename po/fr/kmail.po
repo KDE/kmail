@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-01-09 10:30+0100\n"
+"PO-Revision-Date: 2026-02-12 21:22+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.2\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -8251,6 +8251,10 @@ msgid ""
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
+"Les messages au format « HTML » sont affichés avec leurs couleurs prévues "
+"par défaut. Pour modifier ceci, veuillez désélectionner l'option "
+"« Apparence / Couleurs / Ne pas modifier la couleur du courrier orignal en "
+"HTML »."
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
