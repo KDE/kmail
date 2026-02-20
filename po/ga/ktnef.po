@@ -275,11 +275,10 @@ msgid ""
 msgstr ""
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
-msgstr "Michael Goffioul"
+msgstr ""
 
 #: main.cpp:36
 #, kde-format
@@ -287,11 +286,10 @@ msgid "Author"
 msgstr "Údar"
 
 #: main.cpp:38
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
-msgstr "Allen Winter"
+msgstr ""
 
 #: main.cpp:38
 #, kde-format
@@ -304,12 +302,10 @@ msgid "An optional argument 'file' "
 msgstr ""
 
 #: messagepropertydialog.cpp:42
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Properties"
+#, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
-msgstr "Airíonna"
+msgstr ""
 
 #: messagepropertydialog.cpp:55
 #, kde-format
@@ -349,18 +345,6 @@ msgstr "Méid comhaid:"
 
 #. i18n: ectx: property (text), widget (QLabel, mMimeLabel)
 #: ui/attachpropertywidgetbase.ui:199
-#, fuzzy, kde-format
-#| msgid "Mime type:"
+#, kde-format
 msgid "MIME type:"
-msgstr "Cineál MIME:"
-
-#, fuzzy
-#~| msgid "&Save..."
-#~ msgid "Save..."
-#~ msgstr "&Sábháil..."
-
-#~ msgid "Close this dialog"
-#~ msgstr "Dún an dialóg seo"
-
-#~ msgid "&Close"
-#~ msgstr "&Dún"
+msgstr ""
