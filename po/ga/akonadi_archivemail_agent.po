@@ -18,46 +18,40 @@ msgstr ""
 "3 : 4\n"
 
 #: addarchivemaildialog.cpp:21
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
-msgstr "Cuir gach fofhillteán i gcartlann"
+msgstr ""
 
 #: addarchivemaildialog.cpp:23 archivemailwidget.cpp:264
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
-msgstr "Cuir gach fofhillteán i gcartlann"
+msgstr ""
 
 #: addarchivemailwidget.cpp:28
-#, fuzzy, kde-format
-#| msgid "Archive all subfolders"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
-msgstr "Cuir gach fofhillteán i gcartlann"
+msgstr ""
 
 #: addarchivemailwidget.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
-msgstr "&Fillteán:"
+msgstr ""
 
 #: addarchivemailwidget.cpp:48
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
-msgstr "F&ormáid:"
+msgstr ""
 
 #: addarchivemailwidget.cpp:56
-#, fuzzy, kde-format
-#| msgid "Path:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
-msgstr "Conair:"
+msgstr ""
 
 #: addarchivemailwidget.cpp:63
 #, kde-format
@@ -121,11 +115,10 @@ msgid "Open Containing Folder…"
 msgstr ""
 
 #: archivemailwidget.cpp:103
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action"
 msgid "Delete"
-msgstr "Scrios"
+msgstr ""
 
 #: archivemailwidget.cpp:154
 #, kde-format
@@ -138,9 +131,6 @@ msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
 
 #: archivemailwidget.cpp:185
 #, kde-format
@@ -153,11 +143,10 @@ msgid "Do you want to delete the selected items?"
 msgstr ""
 
 #: archivemailwidget.cpp:222
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
-msgstr "Scrios"
+msgstr ""
 
 #: archivemailwidget.cpp:263
 #, kde-format
@@ -183,10 +172,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, modifyItem)
 #: ui/archivemailwidget.ui:38
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
-msgstr "Athraigh..."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/archivemailwidget.ui:45
@@ -233,23 +221,3 @@ msgstr ""
 #, kde-format
 msgid "Years"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Archive all subfolders"
-#~ msgid "Archive Mail Agent"
-#~ msgstr "Cuir gach fofhillteán i gcartlann"
-
-#~ msgid "Add..."
-#~ msgstr "Cuir Leis..."
-
-#~ msgid "Remove items"
-#~ msgstr "Bain míreanna"
-
-#~ msgid "Remove"
-#~ msgstr "Bain"
-
-#, fuzzy
-#~| msgctxt "Start of the filename for a mail archive file"
-#~| msgid "Archive"
-#~ msgid "Archive now"
-#~ msgstr "Cartlann"

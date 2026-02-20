@@ -115,11 +115,10 @@ msgid ""
 msgstr ""
 
 #: filterlogdialog.cpp:331
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "Earráid KMail"
+msgstr ""
 
 #: filtermanager.cpp:102
 #, kde-format
@@ -193,6 +192,3 @@ msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
 msgstr[0] ""
 msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
