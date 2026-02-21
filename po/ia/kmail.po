@@ -2457,7 +2457,7 @@ msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
-"De-activar modo HTML facera assi que le texto perdera le formattation. Tu es "
+"De-activar modo HTML facera assi que le texto perdera le fnormatation. Tu es "
 "secur?"
 
 #: editor/kmcomposerwin.cpp:3215
@@ -10305,7 +10305,7 @@ msgstr "Zoom: %1"
 #~ msgstr "Re&move Characteres de Citar"
 
 #~ msgid "Paste Without Formatting"
-#~ msgstr "Colla sin formattar"
+#~ msgstr "Colla sin fnormatar"
 
 #~ msgid "Configure..."
 #~ msgstr "Configura..."
