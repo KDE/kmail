@@ -10,9 +10,7 @@
 #include <QDataStream>
 #include <QIODevice>
 
-TaskAttribute::TaskAttribute()
-{
-}
+TaskAttribute::TaskAttribute() = default;
 
 TaskAttribute::TaskAttribute(Akonadi::Item::Id id)
     : mId(id)
