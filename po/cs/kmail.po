@@ -1,38 +1,40 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Lukáš Tinkl <ltinkl@redhat.com>, 2010, 2011, 2012.
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024 Vít Pelčák <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2023, 2024, 2026 Vít Pelčák <vit@pelcak.org>
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012, 2013.
 # SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2026 Libor Filípek <filipek.libor@protonmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-15 02:30+0000\n"
-"PO-Revision-Date: 2024-09-17 13:40+0200\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-02-10 08:48+0100\n"
+"Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.08.1\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Milan Hejpetr,Lukáš Tinkl,Ivo Jánský,Klára Cihlářová,Petr Uzel,Jakub Friedl,"
-"Pavel Patz,Vít Pelčák"
+"Pavel Patz,Vít Pelčák,Libor Filípek"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "mhejpetr@iss.cz,lukas@kde.org,Ivo.Jansky@seznam.cz,koty@seznam.cz,petr."
-"uzel@centrum.cz,jfriedl@suse.cz,pavel.patz@gmail.com,vit@pelcak.org"
+"uzel@centrum.cz,jfriedl@suse.cz,pavel.patz@gmail.com,vit@pelcak.org,libor."
+"filipek@gmail.com"
 
 #: aboutdata.cpp:33
 msgid "Maintainer"
@@ -112,7 +114,7 @@ msgstr "Hlavní přispěvatel"
 
 #: aboutdata.cpp:71
 msgid "Various and sundry bug fixes"
-msgstr ""
+msgstr "Různé opravy chyb"
 
 #: aboutdata.cpp:72
 msgid "Improved asynchronous processes"
@@ -128,7 +130,7 @@ msgstr "Integrace poznámek/kalendáře"
 
 #: aboutdata.cpp:77
 msgid "Improve efficiency and consistency of code"
-msgstr ""
+msgstr "Zlepšena efektivita a konzistence kódu"
 
 #: aboutdata.cpp:78
 msgid "New message list and new folder tree"
@@ -140,15 +142,15 @@ msgstr "Spousta užitečných příspěvků"
 
 #: aboutdata.cpp:87
 msgid "Killed lots of bugs"
-msgstr "Opravil spoustu chyb"
+msgstr "Opravena spousta chyb"
 
 #: aboutdata.cpp:92
 msgid "Smiley-->emoticons processing"
-msgstr ""
+msgstr "Smajlíci --> emotikony"
 
 #: aboutdata.cpp:94
 msgid "Improve 'Mark Message as' popup menu"
-msgstr ""
+msgstr "Vylepšené rozbalovací menu „Označit zprávu jako“"
 
 #: aboutdata.cpp:97
 msgid "Bugzilla maintenance"
@@ -164,15 +166,15 @@ msgstr "Volitelně komprimovat přílohy"
 
 #: aboutdata.cpp:107
 msgid "Added spam status to fancy headers"
-msgstr ""
+msgstr "Přidán stav spamu do efektních záhlaví"
 
 #: aboutdata.cpp:108
 msgid "Implemented todo status handling"
-msgstr ""
+msgstr "Implementováno zpracování stavu úkolů"
 
 #: aboutdata.cpp:109
 msgid "Bug fixes, code cleanup"
-msgstr ""
+msgstr "Oprava chyb, úklid kódu"
 
 #: aboutdata.cpp:111
 msgid "LDAP support, maintenance"
@@ -188,7 +190,7 @@ msgstr "Dokumentace, stále aktivní"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
-msgstr ""
+msgstr "Významný přispěvatel, stále aktivní"
 
 #: aboutdata.cpp:121
 msgid "Anti-virus support"
@@ -196,7 +198,7 @@ msgstr "Podpora pro antivirus"
 
 #: aboutdata.cpp:123
 msgid "Fixed widget styles"
-msgstr ""
+msgstr "Opravné styly widgetů"
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
@@ -208,7 +210,7 @@ msgstr "Několik úprav"
 
 #: aboutdata.cpp:128
 msgid "Enable external reference loading for a whole folder"
-msgstr ""
+msgstr "Povoleno načítání externích odkazů pro celou složku"
 
 #: aboutdata.cpp:131
 msgid "Delete an entire thread"
@@ -220,43 +222,43 @@ msgstr "POP filtry"
 
 #: aboutdata.cpp:133
 msgid "Patch Solaris crash"
-msgstr ""
+msgstr "Oprava selhání na systému Solaris"
 
 #: aboutdata.cpp:135
 msgid "Choice of fonts for new/unread/important messages"
-msgstr ""
+msgstr "Výběr písma pro nové/nepřečtené/důležité zprávy"
 
 #: aboutdata.cpp:139
 msgid "Fix Quick Search keyboard navigation"
-msgstr ""
+msgstr "Oprava navigace klávesnicí v rychlém vyhledávání"
 
 #: aboutdata.cpp:143
 msgid "Fix drag and drop from address book to composer"
-msgstr ""
+msgstr "Oprava přetahování z adresáře do editoru"
 
 #: aboutdata.cpp:146 aboutdata.cpp:160
 msgid "Substantial contributor"
-msgstr ""
+msgstr "Významný přispěvatel"
 
 #: aboutdata.cpp:149
 msgid "Improve configuration dialog"
-msgstr ""
+msgstr "Vylepšené konfigurační okno"
 
 #: aboutdata.cpp:150
 msgid "Improved message importing"
-msgstr ""
+msgstr "Vylepšené importování zpráv"
 
 #: aboutdata.cpp:151
 msgid "Improve status bar messages"
-msgstr ""
+msgstr "Vylepšené zprávy ve stavovém řádku"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
-msgstr ""
+msgstr "Oprava problému se změnou velikosti okna"
 
 #: aboutdata.cpp:159
 msgid "Optimize qt-cast; fix QUrl()"
-msgstr ""
+msgstr "Optimalizováno qt-cast; opraveno QUrl()"
 
 #: aboutdata.cpp:161
 msgid "Usability tests and improvements"
@@ -264,7 +266,7 @@ msgstr "Testy použitelnosti a vylepšení"
 
 #: aboutdata.cpp:165
 msgid "Patch composer configuration"
-msgstr ""
+msgstr "Opravená konfigurace editoru"
 
 #: aboutdata.cpp:170 aboutdata.cpp:185
 msgid "Ägypten and Kroupware project management"
@@ -280,7 +282,7 @@ msgstr "Podpora X-Face"
 
 #: aboutdata.cpp:174
 msgid "Automated recipient selection"
-msgstr ""
+msgstr "Automatický výběr příjemce"
 
 #: aboutdata.cpp:175
 msgid "Beta testing of PGP 6 support"
@@ -288,19 +290,19 @@ msgstr "Beta testování podpory pro PGP 6"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "Oprava chyb, vyčištění kontextových nabídek"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
-msgstr ""
+msgstr "Port do MS Windows®"
 
 #: aboutdata.cpp:181
 msgid "IM status indicator"
-msgstr ""
+msgstr "Indikátor stavu IM"
 
 #: aboutdata.cpp:182
 msgid "Improve layout of recipients editor"
-msgstr ""
+msgstr "Vylepšené rozvržení editoru příjemců"
 
 #: aboutdata.cpp:184
 msgid "Timestamp for 'Transmission completed' status messages"
@@ -312,11 +314,11 @@ msgstr "Více šifrovacích klíčů na adresu"
 
 #: aboutdata.cpp:188
 msgid "Improved icon/image processing"
-msgstr ""
+msgstr "Vylepšené zpracování ikon/obrázků"
 
 #: aboutdata.cpp:190
 msgid "Fixed many IMAP bugs"
-msgstr ""
+msgstr "Opraveno mnoho chyb v IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
 #: kmmainwidget.cpp:229 kmmainwidget.cpp:232 kmmainwidget.cpp:4229
@@ -346,7 +348,7 @@ msgstr "E-mailová konference"
 #, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr ""
+msgstr "Složka obsahuje jediný seznam adresátů"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -643,6 +645,7 @@ msgstr "Zkontrolovat poštu při spuštění"
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
+"Agent pro oznamování nové pošty není zaregistrován. Obraťte se na správce."
 
 #: configuredialog/configureappearancepage.cpp:86
 #, kde-format
@@ -932,7 +935,7 @@ msgstr "Okno se zprávou"
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
-msgstr ""
+msgstr "Po odpovědi nebo přeposlání zprávy zavřít samostatné okno zprávy"
 
 #: configuredialog/configureappearancepage.cpp:835
 #, kde-format
@@ -960,7 +963,7 @@ msgstr "Zobrazit nepřečtenou poštu v panelu úloh"
 #: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
-msgstr ""
+msgstr "Aktivity Plasma"
 
 #: configuredialog/configureappearancepage.cpp:873
 #, kde-format
@@ -1022,7 +1025,7 @@ msgstr "Odstranit značku"
 #: configuredialog/configureappearancepage.cpp:1263
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
-msgstr ""
+msgstr "Nelze vytvořit značku. Značka se stejným názvem již existuje."
 
 #: configuredialog/configurecomposerpage.cpp:65
 #, kde-format
@@ -1078,12 +1081,12 @@ msgstr "Podpis"
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
-msgstr ""
+msgstr "Automaticky vložit nakonfigurovaný podpis při zahájení psaní zprávy"
 
 #: configuredialog/configurecomposerpage.cpp:146
 #, kde-format
 msgid "Insert the signature above any quoted text"
-msgstr ""
+msgstr "Vložit podpis nad jakýkoli citovaný text"
 
 #: configuredialog/configurecomposerpage.cpp:157
 #, kde-format
@@ -1091,11 +1094,13 @@ msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
+"Vložit oddělovač podpisu v souladu s RFC (dvě pomlčky a mezera na řádku) "
+"před podpis."
 
 #: configuredialog/configurecomposerpage.cpp:168
 #, kde-format
 msgid "When replying, do not quote any existing signature"
-msgstr ""
+msgstr "Při odpovídání necitovat žádný existující podpis"
 
 #: configuredialog/configurecomposerpage.cpp:180
 #, kde-format
@@ -1109,6 +1114,8 @@ msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
+"Při odpovídání citovat pouze vybraný text (namísto celé zprávy), pokud je v "
+"okně zprávy vybrán nějaký text."
 
 #: configuredialog/configurecomposerpage.cpp:195
 #, kde-format
@@ -1117,16 +1124,18 @@ msgid ""
 "even when the line was created by adding an additional line break while word-"
 "wrapping the text."
 msgstr ""
+"Při odpovídání přidat před všechny řádky citovaného textu uvozovky, i když "
+"byl řádek vytvořen přidáním dalšího konce řádku při zalamování textu."
 
 #: configuredialog/configurecomposerpage.cpp:206
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
-msgstr ""
+msgstr "Povolit automatické zalomení textu na zadanou šířku"
 
 #: configuredialog/configurecomposerpage.cpp:217
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
-msgstr ""
+msgstr "Nastavte šířku textu pro automatické zalomení řádků"
 
 #: configuredialog/configurecomposerpage.cpp:237
 #, kde-format
@@ -1134,6 +1143,9 @@ msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
+"Při odpovídání nebo přeposílání uvést zprávu v původním formátu, v jakém "
+"byla přijata. Pokud není zaškrtnuto, bude odpověď ve výchozím nastavení v "
+"prostém textu."
 
 #: configuredialog/configurecomposerpage.cpp:249
 #, kde-format
@@ -1141,6 +1153,8 @@ msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
+"Formátovat část zprávy v prostém textu z HTML značek. Podporován je tučný, "
+"kurzívní a podtržený text, seznamy a externí odkazy."
 
 #: configuredialog/configurecomposerpage.cpp:259
 #, kde-format
@@ -1156,7 +1170,7 @@ msgstr "Jako příloha"
 #: configuredialog/configurecomposerpage.cpp:261
 #, kde-format
 msgid "Set the default forwarded message format"
-msgstr ""
+msgstr "Nastavit výchozí formát přeposílaných zpráv"
 
 #: configuredialog/configurecomposerpage.cpp:265
 #, kde-format
@@ -1174,7 +1188,7 @@ msgstr "Příjemci"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Warn if too many recipients are specified"
-msgstr ""
+msgstr "Upozornit, pokud je zadáno příliš mnoho příjemců"
 
 #: configuredialog/configurecomposerpage.cpp:324
 #, kde-format
@@ -1191,12 +1205,18 @@ msgid ""
 "sending a message to too many people.  Note, however, that it does not take "
 "account of distribution lists or mailing lists."
 msgstr ""
+"Povolit zadání pouze tohoto počtu příjemců zprávy. To se vztahuje na funkci "
+"\"Odpovědět všem\", ruční zadávání příjemců nebo použití výběru \"Vybrat…"
+"\".  Nastavení tohoto limitu vám pomůže zabránit náhodnému odeslání zprávy "
+"příliš velkému počtu osob. Upozorňujeme však, že nebere v úvahu distribuční "
+"seznamy ani mailing listy."
 
 #: configuredialog/configurecomposerpage.cpp:363
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
+"Zapamatovat si naposledy zadané adresy a nabídnout dokončování příjemců."
 
 #: configuredialog/configurecomposerpage.cpp:375
 #, kde-format
@@ -1208,7 +1228,7 @@ msgstr "Neukládat"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
-msgstr ""
+msgstr "Maximální počet uchovaných adres z poslední doby:"
 
 #: configuredialog/configurecomposerpage.cpp:382
 #, kde-format
@@ -1216,6 +1236,8 @@ msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
+"Maximální počet naposledy zadaných adres, které budou zapamatovány pro "
+"dokončování příjemců"
 
 #: configuredialog/configurecomposerpage.cpp:395
 #, kde-format
@@ -1252,17 +1274,17 @@ msgstr "Automaticky uložit zprávu po tomto konkrétním intervalu"
 #, kde-format
 msgctxt "@title:group"
 msgid "Composer"
-msgstr ""
+msgstr "Editor"
 
 #: configuredialog/configurecomposerpage.cpp:434
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "Aktivovat panel nástrojů pro rychlý formát textu"
 
 #: configuredialog/configurecomposerpage.cpp:640
 #, kde-format
 msgid "Repl&y Subject Prefixes"
-msgstr "Prefi&xy předmětu odpovědi"
+msgstr "Přei&dpony předmětu odpovědi"
 
 #: configuredialog/configurecomposerpage.cpp:645
 #: configuredialog/configurecomposerpage.cpp:671
@@ -1272,6 +1294,8 @@ msgid ""
 "Recognize any sequence of the following prefixes (entries are case-"
 "insensitive regular expressions):"
 msgstr ""
+"Rozpoznat libovolnou sekvenci následujících prefixů (záznamy jsou regulární "
+"výrazy bez rozlišení velkých a malých písmen):"
 
 #: configuredialog/configurecomposerpage.cpp:653
 #: configuredialog/configurecomposerpage.cpp:989
@@ -1294,7 +1318,7 @@ msgstr "Změn&it…"
 #: configuredialog/configurecomposerpage.cpp:653
 #, kde-format
 msgid "Enter new reply prefix:"
-msgstr "Vložit nový prefix odpovědi:"
+msgstr "Vložit novou předponu odpovědi:"
 
 #: configuredialog/configurecomposerpage.cpp:654
 #, kde-format
@@ -1304,12 +1328,12 @@ msgstr "Přejete si odstranit předponu odpovědi?"
 #: configuredialog/configurecomposerpage.cpp:656
 #, kde-format
 msgid "Reply Prefix:"
-msgstr ""
+msgstr "Předpona odpovědi:"
 
 #: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
 msgid "For&ward Subject Prefixes"
-msgstr "Prefixy předmětu př&eposlání"
+msgstr "Předměty předmětu př&eposlání"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
 #: configuredialog/configurecomposerpage.cpp:677 ui/identityngpage.ui:73
@@ -1340,7 +1364,7 @@ msgstr "Přejete si odstranit předponu přeposlání?"
 #: configuredialog/configurecomposerpage.cpp:679
 #, kde-format
 msgid "Forward Prefix:"
-msgstr ""
+msgstr "Předpona přeposílání:"
 
 #: configuredialog/configurecomposerpage.cpp:722
 #, kde-format
@@ -1400,7 +1424,7 @@ msgstr "&Hodnota:"
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
-msgstr ""
+msgstr "'Content-Type' není povolený řetězec. Tato hlavička nebude uložena."
 
 #: configuredialog/configurecomposerpage.cpp:931
 #, kde-format
@@ -1430,12 +1454,12 @@ msgstr "Vložit nové klíčové slovo:"
 #: configuredialog/configurecomposerpage.cpp:991
 #, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr ""
+msgstr "Chcete odstranit toto klíčové slovo pro přílohu?"
 
 #: configuredialog/configurecomposerpage.cpp:992
 #, kde-format
 msgid "Attachment Word:"
-msgstr ""
+msgstr "Klíčové slovo pro přílohu:"
 
 #: configuredialog/configurecomposerpage.cpp:999
 #, kde-format
@@ -1609,11 +1633,13 @@ msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by Kleopatra."
 msgstr ""
+"Modul chybí. Zkontrolujte prosím instalaci. Tento modul je poskytován "
+"aplikací Kleopatra."
 
 #: configuredialog/configuresecuritypage.cpp:332
 #, kde-format
 msgid "GnuPG Configure Module Error"
-msgstr ""
+msgstr "Chyba konfiguračního modulu GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:399
 #, kde-format
@@ -1768,19 +1794,19 @@ msgstr "Vyberte slovník použitý ke kontrole pravopisu této zprávy."
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
-msgstr ""
+msgstr "Vyberte složku odeslané pošty, do které bude uložena kopie této zprávy"
 
 #: editor/kmcomposerwin.cpp:373
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr ""
+msgstr "Vyberte odchozí účet, který chcete použít pro odeslání této zprávy"
 
 #: editor/kmcomposerwin.cpp:382
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr ""
+msgstr "Nastavte e-mailovou adresu \"Od:\" pro tuto zprávu."
 
 #: editor/kmcomposerwin.cpp:411
 #, kde-format
@@ -1873,7 +1899,7 @@ msgstr "Uloži&t jako šablonu"
 #: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save email in Template folder"
-msgstr ""
+msgstr "Uložit e-mail do složky Šablony"
 
 #: editor/kmcomposerwin.cpp:1302
 #, kde-format
@@ -1883,7 +1909,7 @@ msgstr "Uložit jako &soubor"
 #: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "Save email as text or html file"
-msgstr ""
+msgstr "Uložit e-mail jako textový nebo html soubor"
 
 #: editor/kmcomposerwin.cpp:1307
 #, kde-format
@@ -1991,7 +2017,7 @@ msgstr "Formátovaný text"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr ""
+msgstr "Přepnout režim úpravy formátovaného textu"
 
 #: editor/kmcomposerwin.cpp:1421
 #, kde-format
@@ -2092,7 +2118,7 @@ msgstr "Formát ši&frované zprávy"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr ""
+msgstr "Vyberte kryptografický formát pro tuto zprávu"
 
 #: editor/kmcomposerwin.cpp:1511
 #, kde-format
@@ -2205,12 +2231,13 @@ msgstr "Odesílání zprávy selhalo"
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
+"Nelze spustit aplikaci \"KAddressbook\". Zkontrolujte prosím instalaci."
 
 #: editor/kmcomposerwin.cpp:2224 kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr ""
+msgstr "Nelze spustit aplikaci \"KAddressbook\""
 
 #: editor/kmcomposerwin.cpp:2347
 #, kde-format
@@ -2337,7 +2364,7 @@ msgstr "Poslat tak, jak j&e"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
-msgstr ""
+msgstr "&Zadejte pole Komu"
 
 #: editor/kmcomposerwin.cpp:2855
 #, kde-format
@@ -2417,6 +2444,8 @@ msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
+"Vypnutím režimu HTML dojde ke ztrátě formátování textu. Opravdu chcete "
+"pokračovat?"
 
 #: editor/kmcomposerwin.cpp:3215
 #, kde-format
@@ -2434,7 +2463,7 @@ msgstr "Zahodit formátování"
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
-msgstr ""
+msgstr "Přidat značku prostý text"
 
 #: editor/kmcomposerwin.cpp:3429
 #, kde-format
@@ -2443,6 +2472,8 @@ msgid ""
 "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable "
 "for encryption."
 msgstr ""
+"Váš vybraný klíč PGP (%1) neexistuje ve vašem klíčovém svazku nebo není "
+"vhodný pro šifrování."
 
 #: editor/kmcomposerwin.cpp:3442
 #, kde-format
@@ -2451,6 +2482,8 @@ msgid ""
 "Your selected PGP signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Váš vybraný podpisový klíč PGP (%1) neexistuje ve vašem klíčovém svazku nebo "
+"není vhodný pro podpis."
 
 #: editor/kmcomposerwin.cpp:3458
 #, kde-format
@@ -2459,6 +2492,8 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
+"Váš vybraný klíč SMIME (%1) neexistuje ve vašem klíčovém svazku nebo není "
+"vhodný pro šifrování."
 
 #: editor/kmcomposerwin.cpp:3471
 #, kde-format
@@ -2467,6 +2502,8 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
+"Váš vybraný podpisový klíč SMIME (%1) neexistuje ve vašem klíčovém svazku "
+"nebo není vhodný pro podpis."
 
 #: editor/kmcomposerwin.cpp:3644
 #, kde-format
@@ -2484,7 +2521,7 @@ msgstr "Nešifrovat"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Pro příjemce nebyl nalezen žádný klíč."
 
 #: editor/kmcomposerwin.cpp:3808
 #, kde-format
@@ -2493,6 +2530,8 @@ msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
+"Pro tohoto příjemce se používá klíč Autocrypt gossip. Tento klíč je získán "
+"od třetích stran. Tento klíč není ověřen."
 
 #: editor/kmcomposerwin.cpp:3812
 #, kde-format
@@ -2501,6 +2540,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
+"Pro tohoto příjemce se používá klíč Autocrypt. Tento klíč není ověřen. "
+"Příjemce preferuje šifrované odpovědi."
 
 #: editor/kmcomposerwin.cpp:3816
 #, kde-format
@@ -2509,6 +2550,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
+"Pro tohoto příjemce se používá klíč Autocrypt. Tento klíč není ověřen. "
+"Příjemce nepreferuje šifrované odpovědi."
 
 #: editor/kmcomposerwin.cpp:3843
 #, kde-format
@@ -2518,6 +2561,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
+"Šifrovací klíč není důvěryhodný. Nemá dostatečnou platnost. Klíč můžete "
+"podepsat, pokud jste otisk přenesli jiným kanálem. Klikněte na ikonu pro "
+"podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3851
 #, kde-format
@@ -2528,6 +2574,10 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
+"Šifrovací klíč není důvěryhodný. Nebyl nikde použit, aby bylo možné zaručit, "
+"že patří uvedené osobě. Použitím klíče se zvýší jeho důvěryhodnost. Nebo "
+"můžete klíč podepsat, pokud jste otisk přenesli jiným kanálem. Klikněte na "
+"ikonu pro podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3859
 #, kde-format
@@ -2536,6 +2586,8 @@ msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
+"Šifrovací klíč není důvěryhodný. Obsahuje konfliktní data TOFU. Klikněte na "
+"ikonu pro podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3865
 #, kde-format
@@ -2544,6 +2596,8 @@ msgid ""
 "The encryption key is not trusted. It has unknown validity in TOFU data. "
 "Click the icon for details."
 msgstr ""
+"Šifrovací klíč není důvěryhodný. Jeho platnost v datech TOFU je neznámá. "
+"Kliknutím na ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3871
 #, kde-format
@@ -2552,6 +2606,8 @@ msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
+"Šifrovací klíč není důvěryhodný. Klíč je označen jako neplatný. Klikněte na "
+"ikonu pro podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3879
 #, kde-format
@@ -2562,6 +2618,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
+"Šifrovací klíč je pouze okrajově důvěryhodný a nebyl použit dostatečně "
+"dlouho, aby bylo možné zaručit, že patří uvedené osobě. Používáním klíče se "
+"zvýší jeho důvěryhodnost. Nebo můžete klíč podepsat, pokud jste otisk "
+"přenesli jiným kanálem. Klikněte na ikonu pro podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3887
 #, kde-format
@@ -2570,6 +2630,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Šifrovací klíč je pouze okrajově důvěryhodný. Klíč můžete podepsat, pokud "
+"jste otisk přenesli jiným kanálem. Klikněte na ikonu pro podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3893
 #, kde-format
@@ -2580,6 +2642,10 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
+"Šifrovací klíč je důvěryhodný jen okrajově, ale byl použit dostatečně krát, "
+"aby byl s velkou pravděpodobností kontrolován uvedenou osobou. Použitím "
+"klíče bude důvěryhodnost zvýšena. Nebo můžete klíč podepsat, pokud jste "
+"otisk přenesli jiným kanálem. Klikněte na ikonu pro podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3901
 #, kde-format
@@ -2588,6 +2654,8 @@ msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
+"Šifrovací klíč je plně důvěryhodný. Úroveň zabezpečení můžete zvýšit "
+"podpisem klíče. Kliknutím na ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3906
 #, kde-format
@@ -2596,6 +2664,8 @@ msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
+"Šifrovací klíč je důvěryhodný nebo je podepsán jiným důvěryhodným klíčem. "
+"Kliknutím na ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:4023
 #, kde-format
@@ -2614,6 +2684,10 @@ msgid ""
 "external certificates by clicking the button: search for external "
 "certificates.</qt>"
 msgstr ""
+"<qt>Pro \"%1\" nebyl nalezen žádný platný a důvěryhodný šifrovací certifikát."
+"<br/><br/>Vyberte certifikát(y), které mají být použity pro tohoto příjemce. "
+"Pokud v seznamu není žádný vhodný certifikát, můžete také vyhledat externí "
+"certifikáty kliknutím na tlačítko: vyhledat externí certifikáty.</qt>"
 
 #: editor/kmcomposerwin.cpp:4252
 #, kde-format
@@ -2636,7 +2710,7 @@ msgstr "Podrobnosti"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
-msgstr ""
+msgstr "Vyberte e-mail, který chcete přidat do seznamu povolených adres:"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:24
 #, kde-format
@@ -2644,6 +2718,8 @@ msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details…)</a>"
 msgstr ""
+"Nalezeny potenciální phishingové e-mailové adresy <a href=\"phishingdetails"
+"\">(podrobnosti…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
@@ -2664,6 +2740,9 @@ msgid ""
 "Mail can be send accidentally.\n"
 "What do you want to do?"
 msgstr ""
+"Tato zkratka umožňuje odesílat e-maily přímo.\n"
+"E-mail může být odeslán omylem.\n"
+"Co chcete udělat?"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
@@ -2691,6 +2770,8 @@ msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
+"Tato příloha: <ul><li>%1</li></ul> byla přidána externě. Odstraňte ji, pokud "
+"se jedná o chybu."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
@@ -2698,6 +2779,8 @@ msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
 "if it's an error."
 msgstr ""
+"Tyto přílohy: <ul><li>%1</li></ul> byly přidány externě. Odstraňte je, pokud "
+"se jedná o chybu."
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:22
 #, kde-format
@@ -2730,19 +2813,22 @@ msgid ""
 "Transport was not found. Please verify that you will use a correct mail "
 "transport."
 msgstr ""
+"Transport nebyl nalezen. Zkontrolujte prosím, zda používáte správný poštovní "
+"transport."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:70
 #, kde-format
 msgid "Sent Folder is not defined. Please set it before sending the mail."
 msgstr ""
+"Složka \"Odeslané\" není definována. Před odesláním e-mailu ji prosím "
+"nastavte."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:74
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
 msgstr ""
-"Identita nebyla nalezena. Prosím, ujistěte se, že používáte správnou "
-"identitu."
+"Identita nebyla nalezena. Ujistěte se prosím, že používáte správnou identitu."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
@@ -2750,13 +2836,14 @@ msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
 msgstr ""
-"Slovník nebyl nalezen. Prosím, ujistěte se, že používáte správný slovník."
+"Slovník nebyl nalezen. Ujistěte se prosím, že používáte správný slovník."
 
 #: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
 msgctxt "@info:status"
 msgid "We have reached maximum recipients. Truncating recipients list to %1."
 msgstr ""
+"Dosáhli jsme maximálního počtu příjemců. Seznam příjemců je zkrácen na %1."
 
 #: editor/widgets/cryptostateindicatorwidget.cpp:80
 #, kde-format
@@ -2798,7 +2885,7 @@ msgstr "Nelze vytvořit složku. %1"
 #: folderarchive/folderarchiveagentjob.cpp:32
 #, kde-format
 msgid "Archive folder not defined. Please verify settings for account %1"
-msgstr ""
+msgstr "Složka archivu není definována. Zkontrolujte prosím nastavení účtu %1."
 
 #: folderarchive/folderarchiveagentjob.cpp:36
 #, kde-format
@@ -2814,7 +2901,7 @@ msgstr "Seznam sbírek je prázdný. %1"
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
-msgstr ""
+msgstr "Tato složka %1 je pouze pro čtení. Ověřte prosím konfiguraci účtu %2."
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -2824,7 +2911,7 @@ msgstr "Zprávy nelze přesunout."
 #: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
-msgstr ""
+msgstr "Nelze načíst složku. Nahlášená chyba: %1"
 
 #: folderarchive/folderarchivemanager.cpp:81
 #, kde-format
@@ -2834,7 +2921,7 @@ msgstr "Nebyla navrácena žádná složka."
 #: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
-msgstr ""
+msgstr "Nelze načíst nadřazenou složku. Nahlášená chyba: %1"
 
 #: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
@@ -2855,7 +2942,7 @@ msgstr "Zkratka složky %1"
 #, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr ""
+msgstr "Uzavřený prohlížeč"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
@@ -2866,7 +2953,7 @@ msgstr "Vyprázdnit historii"
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr ""
+msgstr "Znovu otevřít uzavřený prohlížeč"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
@@ -2952,6 +3039,8 @@ msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
 "random numbers. This may require several minutes…"
 msgstr ""
+"Proces generování certifikátu OpenPGP vyžaduje velké množství náhodných "
+"čísel. To může trvat několik minut..."
 
 #: identity/identitydialog.cpp:267
 #, kde-format
@@ -3042,6 +3131,12 @@ msgid ""
 "alias addresses in the field below.</p><p>If you leave this blank, or get it "
 "wrong, people will have trouble replying to you.</p></qt>"
 msgstr ""
+"<qt><h3>E-mailová adresa</h3><p>Do tohoto pole zadejte svou úplnou e-"
+"mailovou adresu. </p><p>Tato adresa je primární adresa, která se používá pro "
+"veškerou odchozí poštu. Pokud máte více než jednu adresu, vytvořte novou "
+"identitu nebo přidejte další aliasové adresy do pole níže.</p><p>Pokud toto "
+"pole ponecháte prázdné nebo zadáte nesprávnou adresu, budou mít lidé potíže "
+"s odpovědí na vaše zprávy.</p></qt>"
 
 #: identity/identitydialog.cpp:431
 #, kde-format
@@ -3059,6 +3154,12 @@ msgid ""
 "th><td>first@example.org<br>last@example.org</td></tr></table><p>Type one "
 "alias address per line.</p></qt>"
 msgstr ""
+"<qt><h3>Aliasy e-mailových adres</h3><p>Toto pole obsahuje aliasy adres, "
+"které by měly být rovněž považovány za patřící k této identitě (na rozdíl od "
+"reprezentace jiné identity). </p><p>Příklad:</p><table><tr><th>Primární "
+"adresa:</th><td>first.last@example.org</td></tr><tr><th>Aliasy:<th><td> "
+"first@example.org<br>last@example.org</td></tr></table><p>Zadejte jednu "
+"aliasovou adresu na řádek.</p></qt>"
 
 #: identity/identitydialog.cpp:453
 #, kde-format
@@ -3090,7 +3191,7 @@ msgstr "Podepisovací klíč OpenPGP:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
-msgstr ""
+msgstr "Použít stejný klíč pro šifrování a podepisování"
 
 #: identity/identitydialog.cpp:481
 #, kde-format
@@ -3339,18 +3440,18 @@ msgstr "S&ložka se šablonami:"
 #: identity/identitydialog.cpp:710
 #, kde-format
 msgid "Select Spam Folder"
-msgstr ""
+msgstr "Vyberte složku Spam"
 
 #: identity/identitydialog.cpp:712
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr ""
+msgstr "Složka S&pam:"
 
 #: identity/identitydialog.cpp:715
 #, kde-format
 msgid "Configure Expire Folder..."
-msgstr ""
+msgstr "Nastavit složku pro vypršené..."
 
 #: identity/identitydialog.cpp:726
 #, kde-format
@@ -3437,7 +3538,7 @@ msgstr "Neplatná e-mailová přezdívka \"%1\""
 #: identity/identitydialog.cpp:875
 #, kde-format
 msgid "You must provide an email for this identity."
-msgstr ""
+msgstr "Pro tuto identitu musíte zadat e-mailovou adresu."
 
 #: identity/identitydialog.cpp:875
 #, kde-format
@@ -3519,6 +3620,8 @@ msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
 "folders will be used."
 msgstr ""
+"Některé vlastní složky pro identitu již neexistují, proto budou použity "
+"výchozí složky."
 
 #: identity/identitydialog.cpp:1336
 #, kde-format
@@ -3556,7 +3659,7 @@ msgstr "Smazat vizitku"
 #: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
-msgstr ""
+msgstr "Soubor vCard nelze smazat."
 
 #: identity/identityeditvcarddialog.cpp:124
 #, kde-format
@@ -3586,7 +3689,7 @@ msgstr "Nerušit"
 #, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr ""
+msgstr "Nechat vypršet složku Spam"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -3672,7 +3775,7 @@ msgstr "Obličej"
 #: identity/xfaceconfigurator.cpp:41
 #, kde-format
 msgid "X-Face"
-msgstr ""
+msgstr "X-Face"
 
 #: identity/xfaceconfigurator.cpp:42
 #, kde-format
@@ -3680,6 +3783,8 @@ msgid ""
 "More information under <a href=\"https://quimby.gnus.org/circus/face/"
 "\">https://quimby.gnus.org/circus/face/</a>."
 msgstr ""
+"Více informací na <a href=\"https://quimby.gnus.org/circus/face/\">https://"
+"quimby.gnus.org/circus/face/</a>."
 
 #: identity/xfaceconfigurator.cpp:43
 #, kde-format
@@ -3698,22 +3803,22 @@ msgstr "Nebude odeslán žádný obrázek."
 #: identity/xfaceconfigurator.cpp:128
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
-msgstr ""
+msgstr "KMail odešle barevný obrázek prostřednictvím hlavičky Face."
 
 #: identity/xfaceconfigurator.cpp:131
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
-msgstr ""
+msgstr "KMail odešle černobílý obrázek prostřednictvím hlavičky X-Face."
 
 #: identity/xfaceconfigurator.cpp:134
 #, kde-format
 msgid "KMail will send both a colored and a black-and-white image."
-msgstr ""
+msgstr "KMail odešle barevný i černobílý obrázek."
 
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
-msgstr ""
+msgstr "Nepodařilo se zmenšit velikost obrázku tak, aby se vešel do záhlaví."
 
 #: identity/xfaceconfigurator.cpp:174
 #, kde-format
@@ -3721,16 +3826,18 @@ msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
 "better compression results."
 msgstr ""
+"Nepodařilo se zmenšit velikost obrázku tak, aby se vešel do záhlaví. "
+"Nainstalujte pngquant, abyste dosáhli lepších výsledků komprese."
 
 #: identity/xfaceconfigurator.cpp:182
 #, kde-format
 msgid "Install pngquant to obtain better image quality."
-msgstr ""
+msgstr "Nainstalujte pngquant pro získání lepší kvality obrázku."
 
 #: identity/xfaceconfigurator.cpp:269
 #, kde-format
 msgid "pngquant exited with code %1: %2"
-msgstr ""
+msgstr "pngquant ukončen s kódem %1: %2"
 
 #: job/addemailtoexistingcontactjob.cpp:54
 #, kde-format
@@ -3887,7 +3994,7 @@ msgstr "Odstraňuji duplicity"
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:96
 #, kde-format
 msgid "Error occurred during removing duplicate emails: '%1'"
-msgstr ""
+msgstr "Při odstraňování duplicitních e-mailů došlo k chybě: \"%1\""
 
 #: job/removeduplicatemailjob.cpp:64
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:97
@@ -4232,7 +4339,8 @@ msgstr "E-mail nelze odeslat"
 #: kmkernel.cpp:694
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
-msgstr "KMail je nastaven na připojen, všechny síťové úlohy jsou obnoveny"
+msgstr ""
+"KMail je nastaven na režim připojen, všechny síťové úlohy jsou obnoveny"
 
 #: kmkernel.cpp:696
 #, kde-format
@@ -4240,11 +4348,13 @@ msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
+"KMail je nastaven na režim připojen; všechny síťové úlohy budou obnoveny, "
+"jakmile bude detekováno síťové připojení"
 
 #: kmkernel.cpp:767
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
-msgstr "KMail je právě v odpojeném režimu; jak si přejete pokračovat?"
+msgstr "KMail je právě v režimu odpojen; jak si přejete pokračovat?"
 
 #: kmkernel.cpp:769
 #, kde-format
@@ -4267,12 +4377,13 @@ msgstr "Pracovat odpojen"
 #: kmkernel.cpp:795
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
-msgstr ""
+msgstr "Bylo zjištěno připojení k síti, všechny síťové úlohy byly obnoveny"
 
 #: kmkernel.cpp:798
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
+"Nebylo zjištěno žádné síťové připojení, všechny síťové úlohy jsou pozastaveny"
 
 #: kmkernel.cpp:893
 #, kde-format
@@ -4280,6 +4391,8 @@ msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
+"Nepodařilo se otevřít soubor automatického ukládání v %1.\n"
+"Důvod: %2"
 
 #: kmkernel.cpp:894
 #, kde-format
@@ -4335,17 +4448,17 @@ msgstr "%1: %2"
 #: kmlaunchexternalcomponent.cpp:47
 #, kde-format
 msgid "Archive Mail Agent was not registered."
-msgstr ""
+msgstr "Agent pro archivaci pošty nebyl zaregistrován."
 
 #: kmlaunchexternalcomponent.cpp:52
 #, kde-format
 msgid "Send Later Agent was not registered."
-msgstr ""
+msgstr "Agent pro \"Odeslat později\" nebyl zaregistrován."
 
 #: kmlaunchexternalcomponent.cpp:57
 #, kde-format
 msgid "Mail Merge Agent was not registered."
-msgstr ""
+msgstr "Agent hromadné korespondence nebyl zaregistrován."
 
 #: kmlaunchexternalcomponent.cpp:62
 #, kde-format
@@ -4372,12 +4485,13 @@ msgstr "Chyba KMailu"
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
+"Nelze spustit aplikaci \"ImportWizard\". Zkontrolujte prosím instalaci."
 
 #: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr ""
+msgstr "Nelze spustit aplikaci \"ImportWizard\""
 
 #: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, kde-format
@@ -4413,6 +4527,7 @@ msgstr "Nelze spustit průvodce importem"
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
+"V systému byl nalezen další poštovní program. Chcete z něj importovat data?"
 
 #: kmmainwidget.cpp:342
 #, kde-format
@@ -4440,7 +4555,7 @@ msgstr "Nelze spustit průvodce importem"
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr ""
+msgstr "(načítání šablon…)"
 
 #: kmmainwidget.cpp:1425
 #, kde-format
@@ -4700,17 +4815,23 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Vybraná zpráva je zašifrována. V současné době není možné mazat přílohy ze "
+"zašifrovaných zpráv."
 msgstr[1] ""
+"Výběr obsahuje pouze šifrované zprávy, ze kterých v současné době není možné "
+"mazat přílohy."
 msgstr[2] ""
+"Výběr obsahuje pouze šifrované zprávy, ze kterých v současné době není možné "
+"mazat přílohy."
 
 #: kmmainwidget.cpp:2446
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Odstranit přílohy ze šifrované zprávy"
+msgstr[1] "Odstranit přílohy ze šifrovaných zpráv"
+msgstr[2] "Odstranit přílohy ze šifrovaných zpráv"
 
 #: kmmainwidget.cpp:2451
 #, kde-format
@@ -4721,8 +4842,14 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
+"<html><p>Opravdu chcete odstranit všechny přílohy z vybrané zprávy?<br />Po "
+"odstranění je nelze obnovit.</p></html>"
 msgstr[1] ""
+"<html>Opravdu chcete odstranit všechny přílohy ze %1 vybraných zpráv?<br /"
+">Po odstranění je nelze obnovit.</html>"
 msgstr[2] ""
+"<html>Opravdu chcete odstranit všechny přílohy z %1 vybraných zpráv?<br />Po "
+"odstranění je nelze obnovit.</html>"
 
 #: kmmainwidget.cpp:2458
 #, kde-format
@@ -4730,6 +4857,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
+"<html><p>Upozorňujeme, že odstranění příloh z kryptograficky podepsané "
+"zprávy způsobí neplatnost jejího podpisu.</p></html>"
 
 #: kmmainwidget.cpp:2463
 #, kde-format
@@ -4737,6 +4866,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>V současné době není možné mazat přílohy ze šifrovaných zpráv.<br /"
+">Šifrované zprávy budou ignorovány.</p></html>"
 
 #: kmmainwidget.cpp:2468
 #, kde-format
@@ -4833,7 +4964,7 @@ msgstr "Historie upozornění…"
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
-msgstr ""
+msgstr "&Importovat z jiného e-mailového klienta…"
 
 #: kmmainwidget.cpp:3070
 #, kde-format
@@ -4863,13 +4994,13 @@ msgstr "Následné upomínkové zprávy…"
 #, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr ""
+msgstr "Rozbalit vše"
 
 #: kmmainwidget.cpp:3098
 #, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr ""
+msgstr "Sbalit vše"
 
 #: kmmainwidget.cpp:3109 util.cpp:168
 #, kde-format
@@ -5003,7 +5134,7 @@ msgstr "Filtr na &Komu…"
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
-msgstr ""
+msgstr "Filtr na &Skryté kopii…"
 
 #: kmmainwidget.cpp:3299
 #, kde-format
@@ -5251,7 +5382,7 @@ msgstr "Přid&at účet…"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr ""
+msgstr "Co je nového"
 
 #: kmmainwidget.cpp:3497
 #, kde-format
@@ -5410,12 +5541,13 @@ msgstr "Přesunout zprávu do složky"
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
+"Označit všechny zprávy v této složce a všech jejích podsložkách jako přečtené"
 
 #: kmmainwidget.cpp:3699
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
-msgstr ""
+msgstr "Odebrat duplikáty v této složce a všech jejích podsložkách"
 
 #: kmmainwidget.cpp:3705
 #, kde-format
@@ -5427,7 +5559,7 @@ msgstr "Předchozí vybraná složka"
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
-msgstr ""
+msgstr "Další vybraná složka"
 
 #: kmmainwidget.cpp:3741
 #, kde-format
@@ -5512,6 +5644,11 @@ msgid ""
 "You can configure unified mailboxes, create custom ones or\n"
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
+"Máte nastaveno více než jeden e-mailový účet.\n"
+"Chcete povolit funkci sjednocené schránky, aby se zobrazoval sjednocený "
+"obsah vaší doručené pošty, odeslaných zpráv a konceptů?\n"
+"Sjednocené schránky můžete nakonfigurovat, vytvořit vlastní nebo\n"
+"tuto funkci zcela zakázat v nastavení pluginů KMailu."
 
 #: kmmainwidget.cpp:5059
 #, kde-format
@@ -5656,13 +5793,13 @@ msgstr "Zobrazit formát HTML"
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
-msgstr ""
+msgstr "Zobrazit formát HTML, když přijde e-mail od tohoto kontaktu"
 
 #: kmreaderwin.cpp:198
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
-msgstr ""
+msgstr "Načíst externí reference, když přijde pošta pro tento kontakt"
 
 #: kmreaderwin.cpp:204
 #, kde-format
@@ -5751,6 +5888,9 @@ msgid ""
 "in the summary. If this option is not enabled, then only the base folder "
 "path will be shown."
 msgstr ""
+"Tuto možnost povolte, pokud chcete vidět úplnou cestu ke každé složce "
+"uvedené v souhrnu. Pokud tato možnost není povolena, zobrazí se pouze "
+"základní cesta ke složce."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:43
 #, kde-format
@@ -5765,6 +5905,8 @@ msgid ""
 "You will be presented with a dialog where you can create and send a new "
 "email message."
 msgstr ""
+"Zobrazí se dialogové okno, ve kterém můžete vytvořit a odeslat novou e-"
+"mailovou zprávu."
 
 #: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
@@ -5778,6 +5920,7 @@ msgstr "Synchronizovat poštu"
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
 msgstr ""
+"Vyberte tuto možnost pro synchronizaci e-mailů ve vaší pracovní skupině."
 
 #: kontactplugin/kmail/summarywidget.cpp:50
 #, kde-format
@@ -5841,6 +5984,9 @@ msgid ""
 "Choosing this will show a dialog where you can select which summaries you "
 "want to see and also allow you to configure the summaries to your liking."
 msgstr ""
+"Po výběru této možnosti se zobrazí dialogové okno, ve kterém můžete vybrat, "
+"které souhrny chcete vidět, a také si souhrny nakonfigurovat podle svých "
+"představ."
 
 #: kontactplugin/summary/summaryview_part.cpp:107
 #, kde-format
@@ -5871,7 +6017,7 @@ msgstr "Pohled na shrnutí kontaktu"
 #: kontactplugin/summary/summaryview_plugin.cpp:106
 #, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr ""
+msgstr "© 2003-2025 Vývojáři Kontactu"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
@@ -6215,12 +6361,12 @@ msgstr "Poslední hledání"
 #: searchdialog/searchwindowdialog.cpp:431
 #, kde-format
 msgid "You did not selected a valid folder."
-msgstr ""
+msgstr "Nevybrali jste platnou složku."
 
 #: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
-msgstr ""
+msgstr "Zapomněli jste vybrat kolekce."
 
 #: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
@@ -6241,7 +6387,7 @@ msgstr "Zapomněli jste přidat podmínky."
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
-msgstr ""
+msgstr "Podmínka nemůže být použita s méně než 4 znaky."
 
 #: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
@@ -6275,6 +6421,9 @@ msgid ""
 "that another search folder with the same name already exists. Error returned "
 "\"%1\"."
 msgstr ""
+"Při přejmenování vyhledávací složky došlo k problému. Častým důvodem je to, "
+"že již existuje jiná vyhledávací složka se stejným názvem. Vrátila se chyba "
+"\"%1\"."
 
 #: searchdialog/searchwindowdialog.cpp:778
 #, kde-format
@@ -6401,13 +6550,13 @@ msgstr "Smazat zprávy bez potvrzení"
 #: settings/kmail.kcfg.in:125
 #, kde-format
 msgid "Allow to start specific folder"
-msgstr ""
+msgstr "Povolit konkrétní složku po spuštění"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
 #: settings/kmail.kcfg.in:129
 #, kde-format
 msgid "Specify the folder to open when the program is started"
-msgstr ""
+msgstr "Určete složku, která se má otevřít při spuštění aplikace."
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg.in:163
@@ -6416,6 +6565,8 @@ msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
 "email accounts are detected. We only ever ask once."
 msgstr ""
+"Zda se uživatelů zeptat, jestli chtějí povolit sjednocené poštovní schránky, "
+"pokud je detekováno více než jeden e-mailový účet. Ptáme se pouze jednou."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
 #: settings/kmail.kcfg.in:171
@@ -6435,7 +6586,7 @@ msgstr "Zobrazovat políčko pro rychle hledání ve složkách"
 #: settings/kmail.kcfg.in:186
 #, kde-format
 msgid "Forward Inline As Default."
-msgstr ""
+msgstr "Přeposlat vložené jako výchozí"
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg.in:189
@@ -6452,6 +6603,8 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
+"Pokud je počet příjemců větší než tato hodnota, KMail zobrazí varování a "
+"před odesláním e-mailu požádá o potvrzení. Varování lze vypnout."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg.in:212
@@ -6515,7 +6668,7 @@ msgstr "Zobrazovat v editoru Správce útržků a Panel vkládání."
 #: settings/kmail.kcfg.in:260
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
-msgstr ""
+msgstr "Při kontrole budou odeslané zprávy uloženy v zašifrované podobě"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
 #: settings/kmail.kcfg.in:264
@@ -6533,13 +6686,13 @@ msgstr "Seznam všech nedávno použitých kódování"
 #: settings/kmail.kcfg.in:276
 #, kde-format
 msgid "Show crypto label indicator"
-msgstr ""
+msgstr "Zobrazit indikátor kryptografického štítku"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
 #: settings/kmail.kcfg.in:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr ""
+msgstr "Ověřit výchozí zkratku pro odeslání"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg.in:334
@@ -6617,7 +6770,7 @@ msgstr "Znaky pro citaci"
 #: settings/kmail.kcfg.in:400
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
-msgstr ""
+msgstr "Určuje zásady použité při jejich zobrazování"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
 #, kde-format
@@ -6773,6 +6926,10 @@ msgid ""
 "for priority reindexing. If you uncheck a folder it may still be indexed "
 "later, unless it was manually excluded from indexing."
 msgstr ""
+"Některé složky, ve kterých chcete vyhledávat, ještě nejsou plně indexovány "
+"nebo byly z indexování vyloučeny. Všechny níže zaškrtnuté složky budou "
+"naplánovány k prioritnímu přeindexování. Pokud zaškrtnutí u složky zrušíte, "
+"může být i tak později indexována, pokud nebyla ručně z indexování vyloučena."
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
@@ -6893,6 +7050,41 @@ msgid ""
 "been marked with the folder property \"Act on new/unread mail in this folder"
 "\".</p></body></html>"
 msgstr ""
+"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"https://www.w3.org/TR/"
+"REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css"
+"\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'Sans Serif'; font-size:10pt; font-"
+"weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Při přechodu na další "
+"nepřečtenou zprávu se může stát, že pod aktuální zprávou již žádné další "
+"nepřečtené zprávy nejsou.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Neopakovat:</span> Vyhledávání se zastaví u poslední zprávy v "
+"aktuální složce.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Opakovat v aktuální složce:</span> Hledání bude pokračovat na "
+"začátku seznamu zpráv, ale nepřesune se do jiné složky.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Opakovat ve všech složkách:</span> Hledání bude pokračovat na "
+"začátku seznamu zpráv. Pokud nebudou nalezeny žádné nepřečtené zprávy, bude "
+"pokračovat v další složce.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\">Podobně při hledání "
+"předchozí nepřečtené zprávy se hledání spustí od spodní části seznamu zpráv "
+"a pokračuje do předchozí složky v závislosti na tom, která možnost je "
+"vybrána.</p>\n"
+"<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+"weight:600;\">Smyčka ve všech označených složkách: </span>Je to stejné jako "
+"\"Smyčka ve všech složkách\", s tím rozdílem, že se berou v úvahu pouze "
+"složky, které byly označeny vlastností složky \"Pracovat s novými/"
+"nepřečtenými e-maily v této složce\".</p></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
@@ -7777,13 +7969,13 @@ msgstr "Neposílat"
 #: ui/xfaceconfigurator.ui:32
 #, kde-format
 msgid "Send color (Face)"
-msgstr ""
+msgstr "Odeslat barevné (Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr ""
+msgstr "Odeslat černobílé (X-Face)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:42
@@ -7865,7 +8057,7 @@ msgstr "Informace o účtu"
 #: userfeedback/accountinfosource.cpp:29
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
-msgstr ""
+msgstr "Počet a typ účtů nakonfigurovaných v KMailu (příjemce a odesílatel)."
 
 #: userfeedback/plugininfosource.cpp:19
 #, kde-format
@@ -7905,22 +8097,22 @@ msgstr "Nelze spustit průvodce účtem"
 
 #: whatsnew/whatsnewtranslations.cpp:16
 msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
+msgstr "Povolit export textu v pluginech pro automatické generování v editoru."
 
 #: whatsnew/whatsnewtranslations.cpp:37
 #, kde-format
 msgid "Add new whatsnew widget."
-msgstr ""
+msgstr "Přidat nový widget „Co je nového“."
 
 #: whatsnew/whatsnewtranslations.cpp:37
 #, kde-format
 msgid "New plugin: show collection size."
-msgstr ""
+msgstr "Nový plugin: zobrazení velikosti sbírky."
 
 #: whatsnew/whatsnewtranslations.cpp:52
 #, kde-format
 msgid "Fix text to speech support (enqueue messages)"
-msgstr ""
+msgstr "Oprava podpory převodu textu na řeč (zařazení zpráv do fronty)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
