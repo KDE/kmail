@@ -1,21 +1,22 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # SPDX-FileCopyrightText: 2012, 2013, 2014, 2015, 2017, 2020, 2023, 2024 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2026 Libor Filípek <filipek.libor@protonmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-16 06:51+0000\n"
-"PO-Revision-Date: 2024-06-18 16:08+0200\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
-"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2026-01-15 18:26+0100\n"
+"Last-Translator: Libor Filípek <filipek.libor@protonmail.com>\n"
+"Language-Team: \n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 24.05.1\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -65,7 +66,7 @@ msgstr "Vybranou položku nelze uložit protože má prázdnou značku."
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
-msgstr ""
+msgstr "Nelze otevřít soubor pro zápis, zkontrolujte oprávnění souboru."
 
 #: ktnefmain.cpp:96
 #, kde-format
@@ -152,8 +153,9 @@ msgstr "Nelze otevřít soubor \"%1\"."
 msgctxt "@info:status"
 msgid "%1 attachment found"
 msgid_plural "%1 attachments found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "nalezena %1 příloha"
+msgstr[1] "nalezeny %1 přílohy"
+msgstr[2] "nalezeno %1 příloh"
 
 #: ktnefmain.cpp:210
 #, kde-format
@@ -165,25 +167,26 @@ msgstr "Otevřít soubor TNEF"
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
-msgstr ""
+msgstr "Není vybrán žádný soubor. Vyberte soubor a zkuste to znovu."
 
 #: ktnefmain.cpp:306 ktnefmain.cpp:382
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
-msgstr ""
+msgstr "Nelze extrahovat soubor \"%1\"."
 
 #: ktnefmain.cpp:491
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
-msgstr ""
+msgstr "Zpráva neobsahuje žádná data ve formátu Rich Text."
 
 #: ktnefmain.cpp:509
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr ""
+"Nelze otevřít soubor \"%1\" pro zápis, zkontrolujte oprávnění k souboru."
 
 #: ktnefmain.cpp:531
 #, kde-format
@@ -264,7 +267,7 @@ msgstr "KTnef"
 #: main.cpp:32
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
-msgstr ""
+msgstr "Prohlížeč příloh e-mailů ve formátu TNEF"
 
 #: main.cpp:34
 #, kde-format
@@ -295,12 +298,12 @@ msgstr "Allen Winter"
 #: main.cpp:38
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
-msgstr ""
+msgstr "Autor, portováno do Qt4/KDE4"
 
 #: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
-msgstr ""
+msgstr "Volitelný argument 'file' "
 
 #: messagepropertydialog.cpp:42
 #, kde-format
