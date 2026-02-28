@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-01 13:39+0530\n"
+"PO-Revision-Date: 2026-02-27 21:47+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5920,10 +5920,9 @@ msgid "Kontact Summary View"
 msgstr "கான்டாக்டு தொகுப்புப்பார்வை"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:106
-#, fuzzy, kde-format
-#| msgid "(c) 2003-2024 The Kontact developers"
+#, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "(c) 2003-2024 கான்டாக்டு நிரலாளர்கள்"
+msgstr "(c) 2003-2025 காண்டாக்ட்டு நிரலாளர்கள்"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:108
 #, kde-format
