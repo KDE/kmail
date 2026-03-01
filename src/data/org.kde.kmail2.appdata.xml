@@ -313,7 +313,7 @@
       <li xml:lang="bg">Стандартна съвместимост - поддържа стандартни протоколи за поща, push email, филтриране на сървърно ниво и вградени OpenPGP, PGP/MIME и S/MIME.</li>
       <li xml:lang="ca">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="ca-valencia">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
-      <li xml:lang="cs">Podporující standardy - podporuje standardní e-mailové protokoly, push email, filtrování na straně serveru a vložené OpenPGP, PGP/MIME a S/MIME.</li>
+      <li xml:lang="cs">Podporující standardy - Podporuje standardní e-mailové protokoly, push email, filtrování na straně serveru a vložené OpenPGP, PGP/MIME a S/MIME.</li>
       <li xml:lang="da">Standardoverholdelse - Understøtter standard mailprotokoller, push-e-mail, filtrering på serversiden og indlejret OpenPGP, PGP/MIME og S/MIME.</li>
       <li xml:lang="de">Standardkonform - Unterstützt Standard-Mail-Protokolle, Push-E-Mail, serverseitige Filterung und Inline OpenPGP, PGP/MIME und S/MIME.</li>
       <li xml:lang="el">Σε συμμόρφωση με τα πρότυπα - Υποστηρίζει πρότυπα πρωτόκολλα αλληλογραφίας, ώθηση αλληλογραφίας, φιλτράρισμα διακομιστή και εμβόλιμα OpenPGP, PGP/MIME και S/MIME.</li>
@@ -387,6 +387,7 @@
       <caption xml:lang="sa">ईमेलपुटस्य ईमेलस्य च सूचीसहितं KMail मुख्यविण्डो ।</caption>
       <caption xml:lang="sl">Glavno okno KMail s seznamom e-poštnih map in e-poštnih sporočil.</caption>
       <caption xml:lang="sv">Kmail huvudfönster med en lista över e-postkorgar och brev.</caption>
+      <caption xml:lang="ta">அஞ்சல் அடைவுகளையும் மின்னஞ்சல்களையும் காட்டும் கேமெயிலின் பிரதான சாளரம்.</caption>
       <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
       <caption xml:lang="uk">Головне вікно KMail зі списком тек та повідомлень електронної пошти.</caption>
       <caption xml:lang="zh-CN">列出电子邮件文件夹和电子邮件的 KMail 主窗口。</caption>
@@ -423,6 +424,7 @@
       <caption xml:lang="sa">एम्बेडेड् अनुवादकेन सह ईमेल कम्पोजर</caption>
       <caption xml:lang="sl">Sestavljalnik e-pošte z vdelanim prevajalnikom</caption>
       <caption xml:lang="sv">E-postfönster med inbäddad översättning</caption>
+      <caption xml:lang="ta">உட்பொதிந்த மொழிபெயர்ப்பியைக் கொண்ட அஞ்சல் திருத்தி</caption>
       <caption xml:lang="tr">Gömülü bir çevirmen içeren e-posta oluşturucusu</caption>
       <caption xml:lang="uk">Редактор повідомлення із вбудованим перекладачем</caption>
       <caption xml:lang="zh-CN">带有内置翻译器的电子邮件撰写器</caption>
@@ -467,6 +469,7 @@
         <p xml:lang="bg">Програмата за преглед на имейли в KMail премахва реклами и проследяващ код от имейлите ви, използвайки по-мощен блокер на реклами, написан на Rust. Програмата за съставяне на имейли вече директно показва валидността и нивото на доверие на OpenPGP ключовете на вашите получатели и ви предупреждава, когато един от ключовете им е почти изтекъл или е с изтекъл срок на валидност.</p>
         <p xml:lang="ca">El visualitzador de correu electrònic del KMail elimina els anuncis i el codi de seguiment dels vostres correus electrònics utilitzant un bloquejador d'anuncis més potent escrit en Rust. L'editor de correu electrònic ara mostra directament la validesa i el nivell de confiança de les claus OpenPGP dels destinataris i us avisa quan una de les seves claus està gairebé caducada o caducada.</p>
         <p xml:lang="ca-valencia">El visor de correu electrònic de KMail elimina els anuncis i el codi de seguiment dels vostres correus electrònics utilitzant un bloquejador d'anuncis més potent escrit en Rust. L'editor de correu electrònic ara mostra directament la validesa i el nivell de confiança de les claus OpenPGP dels destinataris i vos avisa quan una de les seues claus està quasi caducada o caducada.</p>
+        <p xml:lang="cs">Prohlížeč e-mailů KMail odstraňuje reklamy a sledovací kód z vašich e-mailů pomocí výkonnějšího blokovače reklam napsaného v jazyce Rust. Editor e-mailů nyní přímo zobrazuje platnost a úroveň důvěryhodnosti klíčů OpenPGP vašich příjemců a varuje vás, když jeden z jejich klíčů téměř vyprší nebo vypršel.</p>
         <p xml:lang="es">El visor de correo electrónico de KMail elimina la publicidad y el código de seguimiento del correo electrónico mediante un bloqueador de anuncios más potente, desarrollado en Rust. El editor de correo electrónico muestra ahora directamente la validez y el nivel de confianza de las claves OpenPGP de los destinatarios y le avisa cuando una de sus claves está a punto de caducar o ha caducado.</p>
         <p xml:lang="fr">L'afficheur de courriels de KMail supprime les publicités et le code de suivi de vos courriels grâce au plus puissant bloqueur de publicités écrit en Rust. Le composeur de courriels affiche désormais directement la validité et le niveau de confiance des clés « OpenPGP » de vos destinataires et vous avertit lorsqu'une de leurs clés est presque expirée ou expirée.</p>
         <p xml:lang="he">מציג הדוא״ל KMail מסיר פרסומות וקוד מעקב מהודעות הדוא״ל שלך באמצעות חוסם פרסומות חזק יותר שנכתב ב־Rust. חלון כתיבת הדוא״ל מציג מעתה את תוקף ורמת האמון של מפתחות ה־OpenPGP של הנמענים שלך ומזהיר אותך כשאחד מהמפתחות שלהם פג או עומד לפוג באופן ישיר.</p>
@@ -484,6 +487,7 @@
         <p xml:lang="bg">В допълнение към разнообразието от съществуващи онлайн услуги, KMail вече поддържа няколко офлайн и отворени функции с изкуствен интелект. Преводите могат да бъдат конфигурирани да използват модела за превод Bergamot, използван и от Firefox. Може също да използва двигателя vosk-api за преобразуване на реч в текст.</p>
         <p xml:lang="ca">A més de diversos serveis en línia preexistents, el KMail ara admet algunes funcions d'IA fora de línia i de codi obert. Es poden configurar les traduccions per a utilitzar el model de traducció de Bergamot, també utilitzat pel Firefox. També pot utilitzar el motor «vosk-api» per convertir la parla en text.</p>
         <p xml:lang="ca-valencia">A més de diversos serveis en línia preexistents, KMail ara admet algunes característiques d'IA fora de línia i de codi obert. Es poden configurar les traduccions per a utilitzar el model de traducció de Bergamot, també utilitzat per Firefox. També pot utilitzar el motor «vosk-api» per a convertir la parla en text.</p>
+        <p xml:lang="cs">Kromě řady již existujících online služeb nyní KMail podporuje několik offline a open source funkcí umělé inteligence. Překlady lze nastavit tak, aby využívaly překladový model Bergamot, který používá také Firefox. Lze také použít modul vosk-api pro převod řeči na text.</p>
         <p xml:lang="es">Además de una variedad de servicios en línea preexistentes, KMail admite ahora algunas funciones de inteligencia artificial de código abierto y sin conexión. Las traducciones se pueden configurar para que usen el modelo de traducción Bergamot, también usado por Firefox. También puede usar el motor vosk-api para convertir voz a texto.</p>
         <p xml:lang="fr">En plus d'une variété de services en ligne préexistants, KMail prend désormais en charge quelques fonctionnalités d'IA hors ligne et « Open source ». Les traductions peuvent être configurées pour utiliser le modèle de traduction Bergamot, également utilisé par Firefox. Il peut également utiliser le moteur « vosk-api » pour convertir la parole en texte.</p>
         <p xml:lang="he">בנוסף למגוון שירותים מקוונים מובנים, KMail תומך מעתה במגוון יכולות בינה מלאכותית בקוד פתוח וללא חיבור לאינטרנט. אפשר להגדיר שתרגומים ישתמשו במודל תרגום Bergamot, אותו אחד שמשמש את Firefox. אפשר גם להשתמש במנוע vosk-api כדי להמיר דיבור לטקסט.</p>
@@ -501,6 +505,7 @@
         <p xml:lang="bg">Обърнете внимание, че по подразбиране всички тези функции на изкуствен интелект са деактивирани и трябва изрично да ги активирате в настройките на KMail.</p>
         <p xml:lang="ca">Tingueu en compte que, de manera predeterminada, totes aquestes funcions d'IA estan desactivades i cal que les habiliteu explícitament a la configuració del KMail.</p>
         <p xml:lang="ca-valencia">Cal tindre en compte que, de manera predeterminada, totes estes funcions d'IA estan desactivades i cal que les habiliteu explícitament a la configuració de KMail.</p>
+        <p xml:lang="cs">Všimněte si, že ve výchozím nastavení jsou všechny tyto funkce AI deaktivovány a je nutné je výslovně povolit v nastavení KMailu.</p>
         <p xml:lang="es">Tenga en cuenta que, de forma predeterminada, todas estas funciones de IA están desactivadas y que debe activarlas explícitamente en la configuración de KMail.</p>
         <p xml:lang="fr">Veuillez noter que par défaut, toutes ces fonctionnalités d'IA sont désactivées et vous devez les activer explicitement dans la configuration de KMail.</p>
         <p xml:lang="he">נא לשים שכברירת מחדל יכולות הבינה המלאכותית האלה כבויות וצריך להפעיל אותן במפורש בהגדרות של KMail.</p>
@@ -511,6 +516,7 @@
         <p xml:lang="pt-BR">Observe que, por padrão, todos esses recursos de IA estão desativados e você precisa ativá-los explicitamente nas configurações do KMail.</p>
         <p xml:lang="ru">По умолчанию все эти функции ИИ отключены, их необходимо явно включить в настройках KMail.</p>
         <p xml:lang="sl">Upoštevajte, da so vse te zmožnosti umetne inteligence privzeto onemogočene in jih morate izrecno omogočiti v nastavitvah KMail.</p>
+        <p xml:lang="ta">இயல்பிருப்பாக, மேற்கண்ட AI (செயற்கை நுண்ணறிவு) அம்சங்கள் முடக்கப்பிருக்கும். அவற்றை கேமெயிலின் அமைப்புகளுக்குள் சென்று கைமுறையாக இயக்க வேண்டும்.</p>
         <p xml:lang="tr">Öntanımlı olarak tüm bu yapay zekâ özelliklerinin devre dışı olduğunu ve bunları K Posta ayarlarında açıkça etkinleştirmeniz gerektiğini unutmayın.</p>
         <p xml:lang="uk">Зауважте, що типово усі ці можливості ШІ вимкнено, і вам слід явним чином увімкнути їх у параметрах KMail.</p>
       </description>
