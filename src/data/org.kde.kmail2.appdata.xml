@@ -264,7 +264,7 @@
       <li xml:lang="sk">Výkonný - Medzi funkcie patrí podpora offline, viacnásobné identity odosielateľa, podpora viacerých jazykov, výkonné filtrovanie, vyhľadávanie a označovanie, správa zoznamov adries a veľmi flexibilná konfigurácia.</li>
       <li xml:lang="sl">Zmogljiv - funkcije vključujejo podporo brez povezave, več identitet pošiljatelja, podporo za več jezikov, zmogljivo filtriranje, iskanje in označevanje, upravljanje s poštnimi seznami in zelo prilagodljive nastavitve.</li>
       <li xml:lang="sv">Kraftfullt: Funktioner omfattar stöd för nerkopplad användning, flera avsändaridentiteter, stöd för flera språk, kraftfull filtrering, sökning och etikettfunktion, hantering av sändlistor och mycket flexibel inställning.</li>
-      <li xml:lang="tr">Güçlü — Çevrimiçi çalışma desteği, çoklu gönderici kimlikleri, çoklu dil desteği, güçlü süzme ve etiketleme yetenekleri, posta listesi yönetimi ve esnek yapılandırma özellikleri sunar.</li>
+      <li xml:lang="tr">Güçlü — Çevrimdışı çalışma desteği, çoklu gönderici kimlikleri, çoklu dil desteği, güçlü süzme, arama ve künyeleme yetenekleri, posta listesi yönetimi ve esnek yapılandırma özellikleri sunar.</li>
       <li xml:lang="uk">Потужність — серед можливостей програми можливість роботи у автономному режимі (без з'єднання із інтернетом), робота із декількома профілями надсилання повідомлень, підтримка багатомовності, потужні можливості з фільтрування, пошуку та встановлення міток, керування повідомленнями зі списків листування та надзвичайна гнучкість у налаштовуванні.</li>
       <li xml:lang="zh-CN">功能强大 - 包括离线支持、多个发件人身份、多语言支持、强大的过滤、搜索和标记功能、邮件列表管理和灵活的配置。</li>
       <li xml:lang="zh-TW">強大 — 功能包含離線支援、多重寄件者身份、多語言支援，強大的過濾、搜尋及標籤功能，郵件論壇管理以及靈活的設定。</li>
@@ -342,7 +342,7 @@
       <li xml:lang="sk">Podporuje štandardy - Podporuje štandardné poštové protokoly, push e-mail, filtrovanie na strane servera a inline OpenPGP, PGP/MIME a S/MIME.</li>
       <li xml:lang="sl">Združljiv s standardi - Podpira standardne poštne protokole, potisno e-pošto, filtriranje pošte na poštnem strežniku in inline OpenPGP, PGP/MIME in S/MIME.</li>
       <li xml:lang="sv">Standardkompatibelt: Stöder standardiserade e-postprotokoll, push e-post, filtrering på serversidan samt OpenPGP, PGP/MIME och S/MIME på plats.</li>
-      <li xml:lang="tr">Standartlara Uygun — Standart posta protokollerini, itmeli e-postaları, sunucu yanı süzmeyi ve satır içi OpenPGP, PGP/MIME ve S/MIME protokollerini destekler.</li>
+      <li xml:lang="tr">Standartlara Uygun — Standart posta protokollerini, anlık iletilen e-postaları, sunucu taraflı süzmeyi ve satır içi olarak OpenPGP, PGP/MIME ve S/MIME protokollerini destekler.</li>
       <li xml:lang="uk">Сумісність зі стандартами — передбачено підтримку стандартних протоколів електронної пошти, надсилання повідомлень, фільтрування на боці сервера та вбудовування OpenPGP, PGP/MIME і S/MIME.</li>
       <li xml:lang="zh-CN">符合标准 - 支持各种标准电子邮件协议的推送电子邮件、服务器端过滤和行内 OpenPGP、PGP/MIME 和 S/MIME。</li>
       <li xml:lang="zh-TW">符合標準 — 支援標準郵件協定、推送電子郵件、伺服器的過濾，以及文內 OpenPGP、PGP/MIME 和 S/MIME。</li>
@@ -388,7 +388,7 @@
       <caption xml:lang="sl">Glavno okno KMail s seznamom e-poštnih map in e-poštnih sporočil.</caption>
       <caption xml:lang="sv">Kmail huvudfönster med en lista över e-postkorgar och brev.</caption>
       <caption xml:lang="ta">அஞ்சல் அடைவுகளையும் மின்னஞ்சல்களையும் காட்டும் கேமெயிலின் பிரதான சாளரம்.</caption>
-      <caption xml:lang="tr">E-postalar klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
+      <caption xml:lang="tr">E-posta klasörleri ve iletileriyle birlikte K Posta ana penceresi</caption>
       <caption xml:lang="uk">Головне вікно KMail зі списком тек та повідомлень електронної пошти.</caption>
       <caption xml:lang="zh-CN">列出电子邮件文件夹和电子邮件的 KMail 主窗口。</caption>
       <caption xml:lang="zh-TW">KMail 主視窗，包含郵件資料夾清單以及電子郵件。</caption>
@@ -481,7 +481,7 @@
         <p xml:lang="pt-BR">O visualizador de e-mails KMail remove anúncios e códigos de rastreamento dos seus e-mails usando um bloqueador de anúncios mais poderoso, escrito em Rust. O editor de e-mails agora exibe diretamente a validade e o nível de confiança das chaves OpenPGP dos seus destinatários e avisa quando uma das chaves está prestes a expirar ou já expirou.</p>
         <p xml:lang="ru">Приложение для работы с электронной почтой KMail удаляет рекламу и код отслеживания из ваших писем с помощью более мощного блокировщика рекламы, написанного на Rust. Редактор писем теперь напрямую показывает действительность и уровень доверия ключей OpenPGP ваших адресатов и предупреждает вас, когда один из их ключей почти истёк или истёк.</p>
         <p xml:lang="sl">Pregledovalnik e-pošte KMail odstrani oglase in kodo za sledenje iz vaših e-poštnih sporočil z uporabo zmogljivejšega blokatorja oglasov, napisanega v Rustu. Sestavljalec e-pošte zdaj neposredno prikazuje veljavnost in stopnjo zaupanja ključev OpenPGP vaših prejemnikov in vas opozori, ko je eden od njihovih ključev skoraj potekel ali je potekel.</p>
-        <p xml:lang="tr">K Posta e-posta görüntüleyicisi, Rust dilinde yazılmış daha güçlü bir reklâm engelleyici kullanarak e-postalarınızdan reklâmları ve izleme kodlarını kaldırır. E-posta oluşturucusu, artık alıcılarınızın OpenPGP anahtarlarının geçerliliğini ve güven düzeyini doğrudan gösterir ve anahtarlarından birinin süresinin dolmak üzere olduğunu veya dolduğunu size bildirir.</p>
+        <p xml:lang="tr">K Posta e-posta görüntüleyicisi, Rust dilinde yazılmış daha güçlü bir reklâm engelleyici kullanarak e-postalarınızdan reklâmları ve izleme kodlarını temizler. E-posta oluşturucusu, artık alıcılarınızın OpenPGP anahtarlarının geçerliliğini ve güven düzeyini doğrudan gösterir; anahtarlardan birinin süresi dolmak üzere olduğunda veya dolduğunda sizi uyarır.</p>
         <p xml:lang="uk">Переглядач електронної пошти KMail вилучає рекламу та код відстеження з ваших листів за допомогою потужнішого блокувальника реклами, написаного на Rust. У новій версії редактор електронних листів безпосередньо показує чинність та рівень довіри до ключів OpenPGP ваших одержувачів і попереджає вас, коли строк дії одного з їхніх ключів майже закінчився або минув.</p>
         <p>In addition of a variety of pre-existing online services, KMail now supports a few offline and open source AI features. Translations can be configured to use the Bergamot translation model, also used by Firefox. It can also use the vosk-api engine to convert speech to text.</p>
         <p xml:lang="ar">بالإضافة إلى مجموعة متنوعة من الخدمات المتوفرة مسبقًا عبر الإنترنت، يدعم بريدك الآن بعض ميزات الذكاء الاصطناعي المفتوحة المصدر والتي تعمل دون اتصال. يمكن ضبط الترجمات لاستخدام نموذج ترجمة "بيرغاموت" (Bergamot)، وهو ذاته المستخدم في متصفح "فايرفوكس". كما يمكنه استخدام محرك (vosk-api) لتحويل الكلام إلى نص.</p>
