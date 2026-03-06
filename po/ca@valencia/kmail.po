@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-06 08:45+0100\n"
+"PO-Revision-Date: 2026-03-05 10:54+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.04.0\n"
+"X-Generator: Lokalize 25.12.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -624,7 +624,7 @@ msgstr "Afig un compte de correu…"
 #: configuredialog/configureaccountpage.cpp:199
 #, kde-format
 msgid "Custom Account…"
-msgstr "Personalitza un compte…"
+msgstr "Compte personalitzat…"
 
 #: configuredialog/configureaccountpage.cpp:263
 #, kde-format
@@ -8217,25 +8217,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "Inclòs"
-
-#~ msgid "As Attachment"
-#~ msgstr "Com a adjunt"
-
-#~ msgid "Set the default forwarded message format"
-#~ msgstr "Establix el format predeterminat del missatge reenviat"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "Tipus de reenviament predeterminat:"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "Avisa si s'especifiquen massa destinataris"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Set the maximum number of recipients for the warning"
-#~ msgstr "Establix el nombre màxim de destinataris per a l'avís"
