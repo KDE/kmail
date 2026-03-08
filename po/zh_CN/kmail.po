@@ -1100,7 +1100,7 @@ msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
-"在回复时，如果您事先在消息窗口中选中了一段文字，将只把这部分文字作为引用内"
+"在回复时，如果您事先在消息窗口中选中了一段文本，将只把这部分文本作为引用内"
 "容。"
 
 #: configuredialog/configurecomposerpage.cpp:192
@@ -1110,18 +1110,18 @@ msgid ""
 "even when the line was created by adding an additional line break while word-"
 "wrapping the text."
 msgstr ""
-"在回复时，在引用文字的全部行的前面添加引用标记，即使这些行是由于在自动换行时"
+"在回复时，在引用文本的全部行的前面添加引用标记，即使这些行是由于在自动换行时"
 "添加了多余的换行而产生的。"
 
 #: configuredialog/configurecomposerpage.cpp:203
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
-msgstr "启用文字在特定宽度自动折行"
+msgstr "启用文本在特定宽度自动折行"
 
 #: configuredialog/configurecomposerpage.cpp:214
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
-msgstr "设置自动折行的文字宽度"
+msgstr "设置自动折行的文本宽度"
 
 #: configuredialog/configurecomposerpage.cpp:234
 #, kde-format
@@ -2211,7 +2211,7 @@ msgstr[0] "添加文件为附件(&A)"
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
-msgstr "将剪贴板内的文字作为附件插入"
+msgstr "将剪贴板内的文本作为附件插入"
 
 #: editor/kmcomposerwin.cpp:2653
 #, kde-format
