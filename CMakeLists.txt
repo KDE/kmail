@@ -308,7 +308,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     string(APPEND CMAKE_CXX_FLAGS " -Wshadow")
 endif()
 ecm_set_disabled_deprecation_versions(QT 6.11.0
-    KF 6.23.0
+    KF 6.24.0
     KMIME 6.7.0
 )
 find_package(KF6UserFeedback ${KF_MIN_VERSION} CONFIG)
