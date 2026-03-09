@@ -2848,7 +2848,7 @@ msgstr "لم يُرجع مجلّد."
 #: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
-msgstr "تعذّر جلب المجلّد الأبّ. الخطأ كان: %1"
+msgstr "تعذّر جلب المجلّد الأب. الخطأ كان: %1"
 
 #: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
@@ -7940,7 +7940,7 @@ msgstr "أرسل لون (وجه)"
 #: ui/xfaceconfigurator.ui:37
 #, kde-format
 msgid "Send monochrome (X-Face)"
-msgstr "أَرسَل صورة أُحاديَّة اللَّون (وجه-إكس)"
+msgstr "أَرسَل صورة أحاديّة اللَّون (وجه-إكس)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:42
