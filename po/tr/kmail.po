@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-09 19:50+0300\n"
+"PO-Revision-Date: 2026-03-09 21:48+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.07.70\n"
+"X-Generator: Lokalize 25.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -640,7 +640,7 @@ msgstr "Elle posta denetimini etkinleştir"
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
-msgstr "K Posta kapatılırken çevrimdışı kipe geç"
+msgstr "K Posta kapatılırken çevrim dışı kipe geç"
 
 #: configuredialog/configureaccountpage.cpp:278
 #, kde-format
@@ -4318,7 +4318,7 @@ msgstr "Metin Yönü Araç Çubuğu"
 #: kmkernel.cpp:641
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
-msgstr "K Posta çevrimdışı olarak ayarlanmış; tüm ağ işleri beklemede"
+msgstr "K Posta çevrim dışı olarak ayarlanmış; tüm ağ işleri beklemede"
 
 #: kmkernel.cpp:661 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
 #, kde-format
@@ -4348,26 +4348,26 @@ msgstr ""
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
-"K Posta şu anda çevrimdışı çalışıyor. İşlemi nasıl gerçekleştirmek "
+"K Posta şu anda çevrim dışı çalışıyor. İşlemi nasıl gerçekleştirmek "
 "istiyorsunuz?"
 
 #: kmkernel.cpp:768
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr "Çevrimiçi/Çevrimdışı"
+msgstr "Çevrim İçi/Çevrim Dışı"
 
 #: kmkernel.cpp:769
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
-msgstr "Çevrimiçi Çalış"
+msgstr "Çevrim İçi Çalış"
 
 #: kmkernel.cpp:770
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
-msgstr "Çevrimdışı Çalış"
+msgstr "Çevrim Dışı Çalış"
 
 #: kmkernel.cpp:794
 #, kde-format
@@ -4866,12 +4866,12 @@ msgstr "Ekleri Sil"
 #: kmmainwidget.cpp:2487
 #, kde-format
 msgid "Work Offline"
-msgstr "Çevrimdışı Çalış"
+msgstr "Çevrim Dışı Çalış"
 
 #: kmmainwidget.cpp:2490
 #, kde-format
 msgid "Work Online"
-msgstr "Çevrimiçi Çalış"
+msgstr "Çevrim İçi Çalış"
 
 #: kmmainwidget.cpp:2949
 #, kde-format
@@ -6440,7 +6440,7 @@ msgid ""
 "(or moving to an archive folder) the messages that are marked 'Important' or "
 "'Action Item'"
 msgstr ""
-"Bu seçenek, 'önemli' veya 'Hareket Unsuru' olarak işaretlenmiş iletilerin "
+"Bu seçenek, “Önemli” veya “Eylem Ögesi” olarak işaretlenmiş iletilerin "
 "silinmesini (veya arşiv klasörüne taşınmasını) ve eski iletilerin otomatik "
 "olarak devre dışı kalmasını önler"
 
@@ -6464,7 +6464,7 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
-"<qt><p>K Posta'nın giden kutusundaki bütün iletileri elle veya tüm posta "
+"<qt><p>K Posta’nın giden kutusundaki bütün iletileri elle veya tüm posta "
 "denetiminde göndermesini ya da iletilerin hiçbir şekilde otomatik olarak "
 "gönderilmemesini ayarlayabilirsiniz.</p></qt>"
 
@@ -6555,7 +6555,7 @@ msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
 msgstr ""
-"Bu değer K Posta Karşılaması'nın gösterilip gösterilmeyeceğine karar vermek "
+"Bu değer, K Posta Karşılaması’nın gösterilip gösterilmeyeceğine karar vermek "
 "için kullanılır."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
@@ -6616,11 +6616,11 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
-"<qt><p>K Posta'nın giden her iletiniz için İleti Durum Bildirimleri "
-"(MDN'ler) göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu "
+"<qt><p>K Posta’nın giden her iletiniz için İleti Durum Bildirimleri "
+"(MDN’ler) göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu "
 "seçenek yalnızca öntanımlıları etkiler; düzenleyici ekranında her ileti için "
 "MDN isteğini etkin veya devre dışı yapabilirsiniz, bunun için "
-"<em>Seçenekler</em>-><em>Durum Bildirimi İste</em> menü ögesini seçin.</p></"
+"<em>Seçenekler</em> → <em>Durum Bildirimi İste</em> menü ögesini seçin.</p></"
 "qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
@@ -6658,7 +6658,7 @@ msgstr ""
 #: settings/kmail.kcfg:264
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr "En son kullanılan URL'lerin listesi"
+msgstr "En son kullanılan URL’lerin listesi"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg:270
