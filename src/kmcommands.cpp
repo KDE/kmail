@@ -528,7 +528,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
     }
 
     if (!recentDirClass.isEmpty()) {
-        KRecentDirs::add(recentDirClass, saveUrl.path());
+        KRecentDirs::add(recentDirClass, saveUrl.adjusted(QUrl::RemoveFilename | QUrl::StripTrailingSlash).path());
     }
 
     KIO::Job *job = KIO::file_copy(mUrl, saveUrl, -1, KIO::Overwrite);
