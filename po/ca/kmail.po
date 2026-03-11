@@ -8219,33 +8219,3 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "Inclòs"
-
-#~ msgid "As Attachment"
-#~ msgstr "Com a adjunt"
-
-#~ msgid "Set the default forwarded message format"
-#~ msgstr "Estableix el format predeterminat del missatge reenviat"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "Tipus de reenviament predeterminat:"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "Avisa si s'especifiquen massa destinataris"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Set the maximum number of recipients for the warning"
-#~ msgstr "Estableix el nombre màxim de destinataris per a l'avís"
-
-#~ msgctxt "@option:check"
-#~ msgid "&Use custom message-id suffix"
-#~ msgstr "&Usa el sufix personalitzat d'identificador del missatge"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Custom message-&id suffix:"
-#~ msgstr "Sufix personalitzat d'&identificador del missatge:"
