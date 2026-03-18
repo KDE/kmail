@@ -8,6 +8,7 @@
 
 #include "kmail_debug.h"
 #include "kmkernel.h"
+#include "util.h"
 #include <KMime/Message>
 #include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
@@ -34,6 +35,10 @@ void HandleClickedUrlJob::start()
     for (int i = 0; i < fields.count(); ++i) {
         const QPair<QString, QString> element = fields.at(i);
         if (element.first == "to"_L1) {
+            if (KMail::Util::checkNoReplyEmails(element.second, nullptr)) {
+                deleteLater();
+                return;
+            }
             mMsg->to()->fromUnicodeString(element.second);
         } else if (element.first == "subject"_L1) {
             const QString subject = element.second;

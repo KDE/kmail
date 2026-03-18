@@ -60,7 +60,12 @@ void CreateReplyMessageJob::slotCreateReplyDone(const MessageComposer::MessageFa
 {
     std::shared_ptr<KMime::Message> rmsg = reply.msg;
     if (mSettings.url.isValid()) {
-        rmsg->to()->fromUnicodeString(KEmailAddress::decodeMailtoUrl(mSettings.url));
+        const QString email = KEmailAddress::decodeMailtoUrl(mSettings.url);
+        if (KMail::Util::checkNoReplyEmails(email, nullptr)) {
+            deleteLater();
+            return;
+        }
+        rmsg->to()->fromUnicodeString(email);
     }
     bool lastEncrypt = false;
     bool lastSign = false;
