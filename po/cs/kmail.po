@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-10 08:48+0100\n"
+"PO-Revision-Date: 2026-03-16 15:13+0100\n"
 "Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1586,6 +1586,8 @@ msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
+"Modul chybí. Zkontrolujte prosím instalaci. Tento modul je poskytován kdepim-"
+"addons."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -4026,11 +4028,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Přidat přílohu do zprávy, lze opakovat"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Přílohy"
+msgstr "Url přílohy"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4068,10 +4068,9 @@ msgid "View the given message file"
 msgstr "Zobrazit daný soubor se zprávou"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Zpráva"
+msgstr "Url zprávy"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4080,11 +4079,9 @@ msgid "Set body of message as html"
 msgstr "Nastavit tělo zprávy jako html"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Copy Message"
-#| msgid_plural "Copy %1 Messages"
+#, kde-format
 msgid "Body Message"
-msgstr "Kopírovat %1 zprávu"
+msgstr "Tělo zprávy"
 
 #: kmail_options.h:38
 #, kde-format
@@ -5644,7 +5641,7 @@ msgstr ""
 "Chcete povolit funkci sjednocené schránky, aby se zobrazoval sjednocený "
 "obsah vaší doručené pošty, odeslaných zpráv a konceptů?\n"
 "Sjednocené schránky můžete nakonfigurovat, vytvořit vlastní nebo\n"
-"tuto funkci zcela zakázat v nastavení pluginů KMailu."
+"tuto funkci zcela zakázat v nastavení modulů KMailu."
 
 #: kmmainwidget.cpp:5048
 #, kde-format
@@ -8097,6 +8094,9 @@ msgid ""
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
+"Zprávy HTML jsou ve výchozím stavu zobrazovány se zamýšlenými barvami. Pro "
+"změnu tohoto chování odškrtněte volbu \"Vzhled->Barvy->Neměnit barvu "
+"původního e-mailu HTML\"."
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
@@ -8106,12 +8106,12 @@ msgstr "Přidat nový widget „Co je nového“."
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
 msgid "New plugin: show collection size."
-msgstr "Nový plugin: zobrazení velikosti sbírky."
+msgstr "Nový modul: zobrazení velikosti sbírky."
 
 #: whatsnew/whatsnewtranslations.cpp:37
 #, kde-format
 msgid "Allow to export text in autogenerate editor plugins."
-msgstr "Povolit export textu v pluginech pro automatické generování v editoru."
+msgstr "Povolit export textu v modulech pro automatické generování v editoru."
 
 #: whatsnew/whatsnewtranslations.cpp:38
 #, kde-format
