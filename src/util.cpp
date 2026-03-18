@@ -15,6 +15,7 @@
 #include <MessageCore/StringUtil>
 #include <TextAddonsWidgets/ExecutableUtils>
 
+#include <KEmailAddress>
 #include <QAction>
 #include <QProcess>
 #include <QStandardPaths>
@@ -22,6 +23,25 @@
 using namespace MailCommon;
 using namespace KMail;
 using namespace Qt::Literals::StringLiterals;
+
+bool KMail::Util::checkNoReplyEmails(const QString &email, QWidget *parent)
+{
+    QString tname;
+    QString temail;
+    KEmailAddress::extractEmailAddressAndName(email, temail, tname); // ignore return value
+    if (temail.startsWith("noreply@"_L1)) {
+        const int answer = KMessageBox::questionTwoActions(
+            parent,
+            i18nc("@info", "It appears that this email from %1 is not being monitored. Do you wish to reply to this email?", email),
+            i18nc("@title:window", "Email not monitored"),
+            KGuiItem(i18nc("@action:button", "Do Not Send")),
+            KGuiItem(i18nc("@action:button", "Send EMail")));
+        if (answer == KMessageBox::ButtonCode::PrimaryAction) {
+            return true;
+        }
+    }
+    return false;
+}
 
 QList<KMime::Types::Mailbox> KMail::Util::mailingListsFromMessage(const Akonadi::Item &item)
 {

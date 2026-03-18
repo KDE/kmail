@@ -60,6 +60,7 @@ KMAILTESTS_TESTS_EXPORT void addQActionHelpText(QAction *action, const QString &
  */
 KMAILTESTS_TESTS_EXPORT void setActionTrashOrDelete(QAction *action, bool isInTrashFolder);
 
+[[nodiscard]] bool checkNoReplyEmails(const QString &email, QWidget *parent);
 void executeAccountWizard(QWidget *parentWidget);
 }
 }

@@ -400,6 +400,11 @@ KMMailtoComposeCommand::KMMailtoComposeCommand(const QUrl &url, const Akonadi::I
 
 KMCommand::Result KMMailtoComposeCommand::execute()
 {
+    const QString email = KEmailAddress::decodeMailtoUrl(mUrl);
+    if (KMail::Util::checkNoReplyEmails(email, parentWidget())) {
+        return OK;
+    }
+
     std::shared_ptr<KMime::Message> msg(new KMime::Message);
     uint id = 0;
 
