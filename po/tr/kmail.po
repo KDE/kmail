@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2026-03-10 13:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -2910,7 +2910,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Kapatılan Görüntüleyiciyi Yeniden Aç"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4211,34 +4211,34 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Lütfen ileti aktarılırken bekleyin"
 msgstr[1] "Lütfen %1 ileti aktarılırken bekleyin"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Dosyaya Kaydet"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "İletiyi Aç"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, kde-format
 msgid "Message"
 msgstr "İleti"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Dosya bir ileti içermiyor."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Dosya birden fazla ileti içeriyor. Yalnızca ilk ileti gösteriliyor."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4247,39 +4247,39 @@ msgstr ""
 "Seçili iletileri tek bir iletinin ekleri olarak mı (MIME özeti olarak) yoksa "
 "tek tek iletiler olarak mı iletmek istiyorsunuz?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Özet Olarak Gönder"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Tek Tek Gönder"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr "İletiler süzülüyor"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1/%2 ileti süzülüyor"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "İletiler taşınıyor"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "İletiler siliniyor"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -4990,7 +4990,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Tümünü Daralt"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5682,7 +5682,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Başlatılıyor…"
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Çöp Kutusuna &Taşı"
@@ -8059,18 +8059,47 @@ msgstr "Eklentiler Bilgisi"
 msgid "Plugins used in KMail."
 msgstr "K Posta’da kullanılan eklentiler."
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do Not Cancel"
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "İptal Etme"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "İletiyi &Gönder"
+
+#: util.cpp:190
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Sil"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Çöp Kutusuna Taşı"
 
-#: util.cpp:179
+#: util.cpp:199
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8079,7 +8108,7 @@ msgstr ""
 "Hesap sihirbazı başlatılamıyor. AccountWizard’ın doğru bir biçimde kurulu "
 "olduğundan emin olun."
 
-#: util.cpp:181
+#: util.cpp:201
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

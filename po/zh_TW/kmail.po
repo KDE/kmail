@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2808,7 +2808,7 @@ msgid "Reopen Closed Viewer"
 msgstr "重新開啟已關閉的檢視器"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4075,34 +4075,34 @@ msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 封信件傳送中，請稍候…"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "儲存到檔案"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "開啟訊息"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, kde-format
 msgid "Message"
 msgstr "信件"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "檔案中未含有任何信件。"
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "檔案中有一封以上的信件。將只顯示第一封。"
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4110,39 +4110,39 @@ msgid ""
 msgstr ""
 "您要在一封信件中以附加檔方式（MIME 摘要）轉寄選取的信件，還是要個別轉寄？"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "傳送摘要"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "個別傳送"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr "過濾信件中"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "過濾 %1 封信件（共 %2 封）"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "移動信件中"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "刪除信件中"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -4814,7 +4814,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "收起所有討論串(&O)"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5503,7 +5503,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "啟動中…"
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "移到垃圾桶(&M)"
@@ -7793,25 +7793,54 @@ msgstr "外掛程式資訊"
 msgid "Plugins used in KMail."
 msgstr "KMail 所使用的外掛程式。"
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+#| msgctxt "@action:button"
+#| msgid "Do Not Cancel"
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "不要取消"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "傳送(&S)"
+
+#: util.cpp:190
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "刪除"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "移到垃圾桶"
 
-#: util.cpp:179
+#: util.cpp:199
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr "無法啟動帳號精靈。請檢查您是否正確安裝 AccountWizard。"
 
-#: util.cpp:181
+#: util.cpp:201
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

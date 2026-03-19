@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim/kmail.po\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2004-12-03 14:52-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -2773,7 +2773,7 @@ msgid "Reopen Closed Viewer"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3982,73 +3982,73 @@ msgstr[2] "Fan go fóill; %1 theachtaireacht á n-aistriú"
 msgstr[3] "Fan go fóill; %1 dteachtaireacht á n-aistriú"
 msgstr[4] "Fan go fóill; %1 teachtaireacht á n-aistriú"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr ""
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr ""
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, kde-format
 msgid "Message"
 msgstr ""
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Níl aon teachtaireacht sa chomhad."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr ""
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr ""
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr ""
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "Teachtaireachtaí á mbogadh"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "Teachtaireachtaí á scriosadh"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -4718,7 +4718,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr ""
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5400,7 +5400,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr ""
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Cuir sa Bhruscar"
@@ -7584,25 +7584,52 @@ msgstr ""
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, kde-format
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr ""
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Seol Post"
+
+#: util.cpp:190
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Cuir sa Bhruscar"
 
-#: util.cpp:179
+#: util.cpp:199
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
 msgstr ""
 
-#: util.cpp:181
+#: util.cpp:201
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

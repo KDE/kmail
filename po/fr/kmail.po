@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2026-02-12 21:22+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
@@ -2978,7 +2978,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Ouvrir à nouveau l'afficheur venant d'être fermé"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4308,34 +4308,34 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Veuillez patienter pendant le transfert de ce message"
 msgstr[1] "Veuillez patienter pendant le transfert de ces %1 messages"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Enregistrer dans un fichier"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Ouvrir un message"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, kde-format
 msgid "Message"
 msgstr "Message"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Le fichier ne contient pas de message."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Le fichier contient plusieurs messages. Seul le premier est affiché."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4345,39 +4345,39 @@ msgstr ""
 "jointe dans un seul message (sous la même forme qu'une réduction MIME), ou "
 "en tant que messages individuels ?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Envoyer en tant que résumé"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Envoyer individuellement"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrage des messages"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrage du message %1 sur %2"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "Déplacement des messages"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "Suppression des messages"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5098,7 +5098,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Tout réduire"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5794,7 +5794,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Démarrage en cours…"
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Déplacer dans la corbeille"
@@ -8219,18 +8219,46 @@ msgstr "Informations de modules externes"
 msgid "Plugins used in KMail."
 msgstr "Modules externes utilisés dans KMail."
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+#| msgid "Do &Not Sign"
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "&Ne pas signer"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Envoyer le courriel"
+
+#: util.cpp:190
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Déplacer dans la corbeille"
 
-#: util.cpp:179
+#: util.cpp:199
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8239,7 +8267,7 @@ msgstr ""
 "Impossible de lancer l'assistant de comptes. Veuillez vérifier que le module "
 "« AccountWizard » est correctement installé."
 
-#: util.cpp:181
+#: util.cpp:201
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
@@ -15827,9 +15855,6 @@ msgstr "Zoom : %1 %"
 #~ msgctxt "to sign"
 #~ msgid "&Sign"
 #~ msgstr "&Signer"
-
-#~ msgid "Do &Not Sign"
-#~ msgstr "&Ne pas signer"
 
 #~ msgid ""
 #~ "There are conflicting signing preferences for these recipients.\n"

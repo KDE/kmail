@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -3112,7 +3112,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Mesej Baru"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4542,76 +4542,76 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "_n: Tunggu sementara mesej dipindahkan"
 msgstr[1] "Tunggu sementara  %1 mesej dipindahkan"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Simpan ke dalam Fail"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Buka Mesej"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Mesej"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Fail tidak mengandungi mesej."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Fail mengandungi berbilang mesej. Hanya mesej pertama dipaparkan."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Hantar tanpa tandatangan?"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Menghapuskan mesej"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Mengalihkan mesej %3 daripada %2 dari %1."
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "Mengalihkan mesej"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "Menghapuskan mesej"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, fuzzy, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5358,7 +5358,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Run&tuhkan Semua Rantaian"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6117,7 +6117,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Langganan..."
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Allihkan ke Tong Sampah"
@@ -8684,18 +8684,45 @@ msgstr "Hantar Pengesahan"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "B&atalkan"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Hantar Mel"
+
+#: util.cpp:190
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Dihapuskan"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Alihkan ke Tong Sampah"
 
-#: util.cpp:179
+#: util.cpp:199
 #, fuzzy, kde-format
 #| msgid "Could not start certificate manager. Please check your installation."
 msgid ""
@@ -8703,7 +8730,7 @@ msgid ""
 "properly installed."
 msgstr "Tidak dapat memulakan pengurus sijil. Semak pemasangan anda."
 
-#: util.cpp:181
+#: util.cpp:201
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -3093,7 +3093,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Poster novea messaedje"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4444,39 +4444,39 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Tårdjîz s' i vs plait tins kel messaedje est berweté"
 msgstr[1] "Tårdjîz s' i vs plait tins k' les %1 messaedjes sont berwetés"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Schaper en on fitchî"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Drovi messaedje"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Messaedje"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "I gn a pont d' messaedje e fitchî."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 "I gn a sacwants messaedjes e fitchî. I gn a kel prumî messaedje ki srè "
 "mostré."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4485,41 +4485,41 @@ msgstr ""
 "Voloz vs ricassî les messaedjes tchoezis come des ataetchmints dins on seu "
 "messaedje (come on MIME groupé) ou come de messaedjes diferins ?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, fuzzy, kde-format
 #| msgid "Send As Digest"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Evoyî come groupé"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, fuzzy, kde-format
 #| msgid "Send Individually"
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Evoyî come diferins"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr "Dji passe les messaedjes al passete"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Dji passe li messaedje %1 di %2 al passete"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "Dji bodje les messaedjes"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "Dji disface les messaedjes"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, fuzzy, kde-format
 #| msgid "Delete Attachment"
 msgctxt "@info:progress"
@@ -5291,7 +5291,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Totafwait c&atchî totes les lignoûles"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6052,7 +6052,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Dj' enonde..."
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Taper å &batch"
@@ -8419,19 +8419,47 @@ msgstr "Pondants et djondants so l' elodjaedje"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+#| msgid "Do &Not Sign"
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "Èn &nén siner"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Evoyî emile"
+
+#: util.cpp:190
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Disfacer"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Taper å batch"
 
-#: util.cpp:179
+#: util.cpp:199
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -8441,7 +8469,7 @@ msgstr ""
 "Dji n' a savou abaguer l' macrea des contes. Verifyîz vost astalaedje, s' i "
 "vs plait."
 
-#: util.cpp:181
+#: util.cpp:201
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -13755,9 +13783,6 @@ msgstr "Zoumer"
 #~ msgctxt "to sign"
 #~ msgid "&Sign"
 #~ msgstr "&Siner"
-
-#~ msgid "Do &Not Sign"
-#~ msgstr "Èn &nén siner"
 
 #~ msgid "Send Unsigned?"
 #~ msgstr "Evoyî nén siner ?"

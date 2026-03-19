@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -3133,7 +3133,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Saada uus kiri"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4528,36 +4528,36 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Palun oota, kuni kirja liigutamine on lõpetatud"
 msgstr[1] "Palun oota, kuni %1 kirja liigutamine on lõpetatud"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, fuzzy, kde-format
 #| msgid "Save To File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Salvestamine failina"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Kirja avamine"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, kde-format
 msgid "Message"
 msgstr "Kiri"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Fail ei sisalda kirja."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Fail sisaldab mitu kirja, näidatakse ainult esimest."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4566,41 +4566,41 @@ msgstr ""
 "Kas soovid valitud kirjad edastada kaasatud failidena ühes kirjas (MIME "
 "referaadina) või eraldi kirjadena?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, fuzzy, kde-format
 #| msgid "Send As Digest"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Saada referaadina"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, fuzzy, kde-format
 #| msgid "Send Individually"
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Saada eraldi"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr "Kirjade filtreerimine"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1. kirja filtreerimine (kokku %2)"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "Kirjade liigutamine"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "Kirjade kustutamine"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, fuzzy, kde-format
 #| msgid "Select attachment:"
 msgctxt "@info:progress"
@@ -5346,7 +5346,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Sulge kõik rühmad"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6116,7 +6116,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Alustamine..."
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Liiguta prügikasti"
@@ -8609,18 +8609,46 @@ msgstr "Ppluginateave"
 msgid "Plugins used in KMail."
 msgstr "KMailis kasutatavad pluginad."
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+#| msgid "Do &Not Sign"
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "Ä&ra signeeri"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Saada kiri"
+
+#: util.cpp:190
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Kustuta"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Prügikasti liigutamine"
 
-#: util.cpp:179
+#: util.cpp:199
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8629,7 +8657,7 @@ msgstr ""
 "Kontonõustaja käivitamine nurjus. Palun kontrolli, kas AccountWizard on "
 "korrektselt paigaldatud."
 
-#: util.cpp:181
+#: util.cpp:201
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -15890,9 +15918,6 @@ msgstr "Suurendus: %1%"
 #~ msgctxt "to sign"
 #~ msgid "&Sign"
 #~ msgstr "&Signeeri"
-
-#~ msgid "Do &Not Sign"
-#~ msgstr "Ä&ra signeeri"
 
 #~ msgid ""
 #~ "There are conflicting signing preferences for these recipients.\n"

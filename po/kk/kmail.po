@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -3126,7 +3126,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Жаңа хатты жолдау"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4550,37 +4550,37 @@ msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 хат тасымалдауы біткенше күте тұрыңыз"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Файлға сақтау"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Хатты ашу"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Хат"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Файлдың құрамында хат жоқ."
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "Бұл файлдың құрамында бірнеше хат бар. Тек бірінші хат көрсетілген."
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4589,41 +4589,41 @@ msgstr ""
 "Таңдалған хаттарды бір хаттың тіркемесі (MIME жинағы) ретінде, әлде бөлек "
 "хаттар ретінде басқаға жолдамақсыз ба?"
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, fuzzy, kde-format
 #| msgid "Send As Digest"
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Жинағын жіберу"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, fuzzy, kde-format
 #| msgid "Send Individually"
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Бөлек жіберу"
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, kde-format
 msgid "Filtering messages"
 msgstr "Хаттарды сүзгілеу"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 / %2 хатты сүзгілеу"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, kde-format
 msgid "Moving messages"
 msgstr "Хаттарды жылжыту"
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, kde-format
 msgid "Deleting messages"
 msgstr "Хаттарды өшіру"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"
@@ -5368,7 +5368,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Барлық ілеспе топтарды &бүктеу"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6127,7 +6127,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Бастау..."
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Өшірілгендерге &тастау"
@@ -8674,19 +8674,47 @@ msgstr "Тіркеу мәліметі"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+#| msgid "Do &Not Sign"
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "Қолтаңбала&мау"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+#| msgid "&Send Mail"
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Хатты жіберу"
+
+#: util.cpp:190
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Өшіру"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Өшірілгендерге жылжыту"
 
-#: util.cpp:179
+#: util.cpp:199
 #, fuzzy, kde-format
 #| msgid "Could not start the account wizard. Please check your installation."
 msgid ""
@@ -8694,7 +8722,7 @@ msgid ""
 "properly installed."
 msgstr "Тіркелгі шебері жегілмеді. Орнатылғанын тексеріңіз."
 
-#: util.cpp:181
+#: util.cpp:201
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"
@@ -15982,9 +16010,6 @@ msgstr "Масштаб"
 #~ msgctxt "to sign"
 #~ msgid "&Sign"
 #~ msgstr "Қ&олтаңбалау"
-
-#~ msgid "Do &Not Sign"
-#~ msgstr "Қолтаңбала&мау"
 
 #~ msgid ""
 #~ "There are conflicting signing preferences for these recipients.\n"

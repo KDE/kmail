@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-02-12 00:44+0000\n"
+"POT-Creation-Date: 2026-03-19 00:47+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -2991,7 +2991,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Umyalezo omtsha"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1922
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4280,75 +4280,75 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Nceda linda ngelixa umyalezo uthunyelwe"
 msgstr[1] "Nceda linda ngelixa imiyalezo %1 ithunyelwe"
 
-#: kmcommands.cpp:525
+#: kmcommands.cpp:530
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Gcina Kwifayile"
 
-#: kmcommands.cpp:712
+#: kmcommands.cpp:717
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Umyalezo"
 
-#: kmcommands.cpp:714
+#: kmcommands.cpp:719
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Umyalezo"
 
-#: kmcommands.cpp:743
+#: kmcommands.cpp:748
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "&Phelisa imiyalezo emidala"
 
-#: kmcommands.cpp:814
+#: kmcommands.cpp:819
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr ""
 
-#: kmcommands.cpp:925
+#: kmcommands.cpp:930
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:929
+#: kmcommands.cpp:934
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Thumela ifolisiwe"
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1317
+#: kmcommands.cpp:1322
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Cima Imiyalezo"
 
-#: kmcommands.cpp:1327
+#: kmcommands.cpp:1332
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1666
+#: kmcommands.cpp:1540 kmcommands.cpp:1671
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Ukuhambisa umyalezo %3 we %2 kwi %1."
 
-#: kmcommands.cpp:1535 kmcommands.cpp:1676
+#: kmcommands.cpp:1540 kmcommands.cpp:1681
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Cima Imiyalezo"
 
-#: kmcommands.cpp:1818
+#: kmcommands.cpp:1823
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"
@@ -5062,7 +5062,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Wi&sa Yonke Imisonto"
 
-#: kmmainwidget.cpp:3099 util.cpp:167
+#: kmmainwidget.cpp:3099 util.cpp:187
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5789,7 +5789,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Inkcazelo"
 
-#: kmreadermainwin.cpp:501 util.cpp:167
+#: kmreadermainwin.cpp:501 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Yisa Emgqomeni"
@@ -8126,18 +8126,44 @@ msgstr "Ulwazi lobuntu bakho"
 msgid "Plugins used in KMail."
 msgstr ""
 
-#: util.cpp:170
+#: util.cpp:35
+#, kde-format
+msgctxt "@info"
+msgid ""
+"It appears that this email from %1 is not being monitored. Do you wish to "
+"reply to this email?"
+msgstr ""
+
+#: util.cpp:36
+#, kde-format
+msgctxt "@title:window"
+msgid "Email not monitored"
+msgstr ""
+
+#: util.cpp:37
+#, fuzzy, kde-format
+msgctxt "@action:button"
+msgid "Do Not Send"
+msgstr "&Sukufihla"
+
+#: util.cpp:38
+#, fuzzy, kde-format
+msgctxt "@action:button"
+msgid "Send EMail"
+msgstr "&Thumela iposi"
+
+#: util.cpp:190
 #, fuzzy, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Ci&ma"
 
-#: util.cpp:170
+#: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
 msgstr "Yiya Kwinkunkuma"
 
-#: util.cpp:179
+#: util.cpp:199
 #, fuzzy, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8145,7 +8171,7 @@ msgid ""
 msgstr ""
 "Ayikwazanga ukuqala umphathi wesiqinisekiso. Nceda hlola ufakelo lwakho!"
 
-#: util.cpp:181
+#: util.cpp:201
 #, fuzzy, kde-format
 #| msgid "Unable to create account"
 msgctxt "@title:window"
