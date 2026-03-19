@@ -521,7 +521,7 @@ set_target_properties(
 )
 
 ########### kcm_kmail ###############
-add_library(kcm_kmail_static STATIC ${kcm_kmail_PART_SRCS})
+add_library(kcm_kmail_static STATIC)
 target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 target_link_libraries(
     kcm_kmail_static

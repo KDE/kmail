@@ -44,7 +44,6 @@ endmacro()
 archivemail_agent(archivemailinfotest.cpp)
 
 set(_test2
-    ${_source}
     ../widgets/hourcombobox.cpp
     ../archivemailrangewidget.cpp
     ../archivemailagentutil.cpp
