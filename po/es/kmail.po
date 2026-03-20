@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-02-06 11:35+0100\n"
+"PO-Revision-Date: 2026-03-19 12:02+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -8118,27 +8118,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Parece que este mensaje de %1 no está siendo monitorizado. ¿Quiere responder "
+"a este mensaje?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Mensaje no monitorizado"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "No cancelar"
+msgstr "No enviar"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "En&viar correo"
+msgstr "Enviar mensaje"
 
 #: util.cpp:190
 #, kde-format
@@ -8232,25 +8231,3 @@ msgstr[1] "Respuesta fuera de la oficina activa en los servidores"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Ampliación: %1 %"
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "Intercalado"
-
-#~ msgid "As Attachment"
-#~ msgstr "Como adjunto"
-
-#~ msgid "Set the default forwarded message format"
-#~ msgstr "Establecer el formato predeterminado de reenvío"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "Tipo de reenvío predeterminado:"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "Advertir si se especifican demasiados destinatarios"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Set the maximum number of recipients for the warning"
-#~ msgstr "Establecer el máximo número de destinatarios para la advertencia"

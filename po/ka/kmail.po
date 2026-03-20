@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-02-06 06:28+0100\n"
+"PO-Revision-Date: 2026-03-19 04:49+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -8071,27 +8071,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"როგორც ჩანს, %1-ისგან ელფოსტის მონიტორინგი არ ხდება. გნებავთ ამ ელფოსტაზე "
+"პასუხის გაცემა?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "ელფოსტის მონიტორინგი არ ხდება"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "არ გააუქმო"
+msgstr "არ გააგზავნო"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&ელფოსტის გაგზავნა"
+msgstr "ელფოსტის გაგზავნა"
 
 #: util.cpp:190
 #, kde-format

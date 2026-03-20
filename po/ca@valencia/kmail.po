@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-03-05 10:54+0100\n"
+"PO-Revision-Date: 2026-03-19 11:26+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -771,7 +771,7 @@ msgstr "Primer pla de la barra d'estat HTML - Missatge HTML"
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
-msgstr "Utilit&za colors personalitzats"
+msgstr "&Utilitza colors personalitzats"
 
 #: configuredialog/configureappearancepage.cpp:320
 #, kde-format
@@ -3490,7 +3490,7 @@ msgstr ""
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
-msgstr "Utilit&za plantilles de missatge personalitzades per a esta identitat"
+msgstr "&Utilitza plantilles de missatge personalitzades per a esta identitat"
 
 #: identity/identitydialog.cpp:788
 #, kde-format
@@ -3744,7 +3744,7 @@ msgstr "Identitat &nova:"
 #, kde-format
 msgctxt "@option:radio"
 msgid "&Use System Settings values"
-msgstr "Utilit&za els valors de Configuració del sistema"
+msgstr "&Utilitza els valors de Configuració del sistema"
 
 #: identity/newidentitydialog.cpp:81
 #, kde-format
@@ -8134,27 +8134,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Pareix que este correu electrònic de %1 no se seguix. Voleu respondre a este "
+"correu electrònic?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Correu electrònic no seguit"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "No la cancel·les"
+msgstr "No envies"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Envia el correu"
+msgstr "Envia un correu"
 
 #: util.cpp:190
 #, kde-format

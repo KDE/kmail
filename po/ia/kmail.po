@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-02-06 17:22+0100\n"
+"PO-Revision-Date: 2026-03-19 10:56+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -8115,27 +8115,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Il semblaque iste eposta ex %1 non es surveliate. Tu vole responder a iste "
+"eposta?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Eposta non surveliate"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "Non Cancella"
+msgstr "Non Invia"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Invia posta"
+msgstr "Invia E-posta"
 
 #: util.cpp:190
 #, kde-format

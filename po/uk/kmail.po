@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-02-06 07:09+0200\n"
+"PO-Revision-Date: 2026-03-19 12:35+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -8189,27 +8189,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Здається, це повідомлення електронної пошти від %1 перебуває поза "
+"спостереженням. Хочете відповісти на це повідомлення електронної пошти?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Адреса ел. пошти без спостереження"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "Не скасовувати"
+msgstr "Не надсилати"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Надіслати пошту"
+msgstr "Надіслати листа"
 
 #: util.cpp:190
 #, kde-format
