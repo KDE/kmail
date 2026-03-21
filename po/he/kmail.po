@@ -21,16 +21,16 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-02-06 10:37+0200\n"
+"PO-Revision-Date: 2026-03-20 08:08+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.1\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1263,7 +1263,7 @@ msgstr ""
 #: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "A&dd…"
-msgstr "הו&ספה"
+msgstr "הו&ספה…"
 
 #: configuredialog/configurecomposerpage.cpp:593
 #: configuredialog/configurecomposerpage.cpp:892
@@ -2076,7 +2076,7 @@ msgstr "יצירת תזכורת המשך טיפול…"
 #: editor/kmcomposerwin.cpp:1550
 #, kde-format
 msgid "Configure KMail…"
-msgstr "הגדרת KMail..."
+msgstr "הגדרת KMail…"
 
 #: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:546
 #, kde-format
@@ -2824,7 +2824,7 @@ msgstr "רשימת האוספים ריקה. %1"
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
-msgstr "התיקייה הזאת %1 היא לקריאה בלבד. נא לוודא שהגדרות החשבון %2 נכונות."
+msgstr "התיקייה הזאת %1 היא לקריאה בלבד. נא לוודא שהגדרות החשבון %2 נכונות"
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -3186,7 +3186,7 @@ msgstr "אישור הצפנת S/MIME:"
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
-msgstr "תצורה מועדפת"
+msgstr "תצורה מועדפת:"
 
 #: identity/identitydialog.cpp:568
 #, kde-format
@@ -3747,7 +3747,7 @@ msgstr ""
 #: identity/xfaceconfigurator.cpp:182
 #, kde-format
 msgid "Install pngquant to obtain better image quality."
-msgstr "יש להתקין את pngquant כדי לקבל איכות תמונה משופרת"
+msgstr "יש להתקין את pngquant כדי לקבל איכות תמונה משופרת."
 
 #: identity/xfaceconfigurator.cpp:269
 #, kde-format
@@ -3939,7 +3939,7 @@ msgstr "נושא"
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "שליחת עותק: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
+msgstr "שליחת עותק: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
 #, kde-format
@@ -3949,7 +3949,7 @@ msgstr "כתובת"
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "שליחת עותק סמוי: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה."
+msgstr "שליחת עותק סמוי: (BCC) אל ‚כתובת’ (address). ניתן לחזור על זה"
 
 #: kmail_options.h:24
 #, kde-format
@@ -4723,7 +4723,7 @@ msgstr "ההודעות נמחקות ומועברות לאשפה…"
 #: kmmainwidget.cpp:1927
 #, kde-format
 msgid "Messages moved to trash successfully."
-msgstr "ההודעות הועברו לאשפה בהצלחה"
+msgstr "ההודעות הועברו לאשפה בהצלחה."
 
 #: kmmainwidget.cpp:1934
 #, kde-format
@@ -6032,7 +6032,7 @@ msgstr "תגובה ללא &ציטוט…"
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
-msgstr "כ&חלק מההודעה"
+msgstr "כ&חלק מההודעה…"
 
 #: messageactions.cpp:70
 #, kde-format
@@ -6262,7 +6262,7 @@ msgstr "&חיפוש"
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
-msgstr "כ&חלק מההודעה"
+msgstr "כ&חלק מההודעה…"
 
 #: searchdialog/searchwindowdialog.cpp:180
 #, kde-format
@@ -7680,7 +7680,7 @@ msgid ""
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
 "נא למלא כאן את כתובת השרת לאימות אישורים מקוון (משיב OCSP). הכתובת בדרך כלל "
-"מתחילה ב־http://‎"
+"מתחילה ב־http://‎."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
@@ -7798,7 +7798,7 @@ msgstr "להשתמש במתווך ה־HTTP של המ&ערכת:"
 #: ui/smimeconfiguration.ui:196
 #, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr "להשתמש במתווך ה&זה לבקשות HTTP:"
+msgstr "להשתמש במתווך ה&זה לבקשות HTTP: "
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
@@ -7999,28 +7999,25 @@ msgctxt "@info"
 msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
-msgstr ""
+msgstr "נראה שתיבת הדוא״ל של %1 לא מושגחת. להגיב להודעה הזאת?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "תיבת הדוא״ל לא מושגחת"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "לא לבטל"
+msgstr "לא לשלוח"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "ל&שלוח דוא״ל"
+msgstr "לשלוח דוא״ל"
 
 #: util.cpp:190
 #, kde-format

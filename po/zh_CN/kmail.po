@@ -7824,19 +7824,16 @@ msgid "Email not monitored"
 msgstr ""
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "不要取消"
+msgstr ""
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "发送邮件(&S)"
+msgstr ""
 
 #: util.cpp:190
 #, kde-format
