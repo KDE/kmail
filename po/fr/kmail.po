@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-19 00:47+0000\n"
-"PO-Revision-Date: 2026-02-12 21:22+0100\n"
+"PO-Revision-Date: 2026-03-20 08:41+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -8226,26 +8226,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Il semble que ce courriel de %1 ne soit pas surveillé. Voulez-vous vraiment "
+"répondre à ce courriel ?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Courriel non surveillé"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "&Ne pas signer"
+msgstr "Ne pas envoyer"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Envoyer le courriel"
+msgstr "Envoyer le courriel"
 
 #: util.cpp:190
 #, kde-format
