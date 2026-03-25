@@ -59,7 +59,7 @@ public:
      * Creates a new search window.
      *
      * @param parent The parent widget.
-     * @param collection The folder which will be pre-selected as the base folder
+     * @param collection The folder which will be preselected as the base folder
      *                   of search operations.
      */
     explicit SearchWindowDialog(KMMainWidget *parent, const Akonadi::Collection &collection = Akonadi::Collection());
