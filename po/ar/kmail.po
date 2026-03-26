@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-11 20:25+0400\n"
+"PO-Revision-Date: 2026-03-25 11:51+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -3405,7 +3405,7 @@ msgstr "استعد اسم المجال المبدئيّ"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "المجال ال&مبدئيّ:"
+msgstr "النطاق ال&مبدئيّ:"
 
 #: identity/identitydialog.cpp:757
 #, kde-format
