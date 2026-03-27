@@ -103,7 +103,7 @@ set(KDEPIM_DEV_VERSION alpha)
 set(RELEASE_SERVICE_VERSION "26.07.40")
 
 # Update it for each release
-set(KMAIL_RELEASE_VERSION_DATE "26.03.10") # yy.MM.dd
+set(KMAIL_RELEASE_VERSION_DATE "26.07.10") # yy.MM.dd
 
 # add an extra space
 if(DEFINED KDEPIM_DEV_VERSION)
