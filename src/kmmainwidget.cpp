@@ -1343,6 +1343,7 @@ void KMMainWidget::slotManageSieveScripts()
     }
 
     mManageSieveDialog = new KSieveUi::ManageSieveScriptsDialog(mSievePasswordProvider);
+    // TODO mManageSieveDialog->setTextAutoGenerateManager(kmkernel->)
     connect(mManageSieveDialog.data(), &KSieveUi::ManageSieveScriptsDialog::finished, this, &KMMainWidget::slotCheckVacation);
     mManageSieveDialog->show();
 }
