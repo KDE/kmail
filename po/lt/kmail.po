@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-03-15 00:29+0200\n"
+"PO-Revision-Date: 2026-03-28 23:26+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -299,7 +299,7 @@ msgstr "PGP 6 palaikymo beta testavimas"
 
 #: aboutdata.cpp:177
 msgid "Bug fixes, cleaned up context menus"
-msgstr ""
+msgstr "Klaidų pataisymai, sutvarkyti kontekstiniai meniu"
 
 #: aboutdata.cpp:180
 msgid "Port to MS Windows®"
@@ -311,7 +311,7 @@ msgstr ""
 
 #: aboutdata.cpp:182
 msgid "Improve layout of recipients editor"
-msgstr ""
+msgstr "Pagerintas gavėjų redaktoriaus išdėstymas"
 
 #: aboutdata.cpp:184
 #, fuzzy
@@ -389,7 +389,7 @@ msgid "Invoke Handler"
 msgstr "Iškviesti tvarkymo priemonę"
 
 #: collectionpage/collectionmailinglistpage.cpp:101
-#, fuzzy, kde-format
+#, kde-format
 msgid "Address type:"
 msgstr "Adreso tipas:"
 
@@ -668,11 +668,9 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:86
-#, fuzzy, kde-format
-#| msgctxt "General options for the message list."
-#| msgid "General"
+#, kde-format
 msgid "General"
-msgstr "Bendri"
+msgstr "Bendra"
 
 #: configuredialog/configureappearancepage.cpp:93
 #, kde-format
@@ -746,24 +744,20 @@ msgid "Apply &to:"
 msgstr "Kam pri&taikyti:"
 
 #: configuredialog/configureappearancepage.cpp:303
-#, fuzzy
 msgid "Quoted Text - First Level"
 msgstr "Cituojamas tekstas – pirmas lygis"
 
 #: configuredialog/configureappearancepage.cpp:304
-#, fuzzy
 msgid "Quoted Text - Second Level"
 msgstr "Cituojamas tekstas – antras lygis"
 
 #: configuredialog/configureappearancepage.cpp:305
-#, fuzzy
 msgid "Quoted Text - Third Level"
 msgstr "Cituojamas tekstas – trečias lygis"
 
 #: configuredialog/configureappearancepage.cpp:306
-#, fuzzy
 msgid "Link"
-msgstr "Jungtis"
+msgstr "Nuoroda"
 
 #: configuredialog/configureappearancepage.cpp:307
 msgid "Unread Message"
@@ -2103,13 +2097,12 @@ msgid "Insert Signature At C&ursor Position"
 msgstr "Įterpti parašą ž&ymeklio vietoje"
 
 #: editor/kmcomposerwin.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Spellchecker"
+#, kde-format
 msgid "&Spellchecker…"
-msgstr "Rašybos tikrinimas"
+msgstr "&Rašybos tikrinimas…"
 
 #: editor/kmcomposerwin.cpp:1473
-#, fuzzy, kde-format
+#, kde-format
 msgid "Spellchecker"
 msgstr "Rašybos tikrinimas"
 
@@ -2134,16 +2127,15 @@ msgid "Sign"
 msgstr "Pasirašyti"
 
 #: editor/kmcomposerwin.cpp:1508
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "&Kriptografinis laiško formatas"
 
 #: editor/kmcomposerwin.cpp:1511
-#, fuzzy, kde-format
-#| msgid "Select a cryptographic format for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
-msgstr "Pasirinkite šio laiško kriptografinį formatą"
+msgstr "Pasirinkite kriptografinį šio laiško formatą"
 
 #: editor/kmcomposerwin.cpp:1516
 #, fuzzy, kde-format
@@ -2157,13 +2149,13 @@ msgid "Configure KMail…"
 msgstr "Konfigūruoti KMail…"
 
 #: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:546
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>Tai pilnai paslėps meniu juostą. Norėdami vėl ją parodyti spauskite %1.</"
-"qt>"
+"<qt>Tai visiškai paslėps meniu juostą. Norėdami vėl ją pamatyti paspauskite "
+"%1.</qt>"
 
 #: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
 #, kde-format
@@ -2194,12 +2186,12 @@ msgid "INS"
 msgstr "ĮTRP"
 
 #: editor/kmcomposerwin.cpp:1701
-#, fuzzy, kde-format
+#, kde-format
 msgid "Spellcheck: on"
-msgstr "Rašybos tikrinimas: išjungtas"
+msgstr "Rašybos tikrinimas: įjungtas"
 
 #: editor/kmcomposerwin.cpp:1701
-#, fuzzy, kde-format
+#, kde-format
 msgid "Spellcheck: off"
 msgstr "Rašybos tikrinimas: išjungtas"
 
@@ -2338,15 +2330,15 @@ msgid "unnamed"
 msgstr "bevardis"
 
 #: editor/kmcomposerwin.cpp:2679
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
 "(OpenPGP or S/MIME) signing key to use.</p><p>Please select the key to use "
 "in the identity configuration.</p></qt>"
 msgstr ""
-"<qt><p>Norėdami pasirašyti šį laišką, Jūs pirma turėtumėte nurodyti raktą, "
-"kuris turėtų būti tam naudojamas (OpenPGP arba S/MIME). </p><p>Prašome "
-"nurodyti naudotiną raktą tapatybės konfigūracijoje.</p></qt>"
+"<qt><p>Norėdami turėti galimybę pasirašyti šį laišką, pirmiausiai, turite "
+"apibrėžti, kurį (OpenPGP arba S/MIME) pasirašymo raktą naudoti. </"
+"p><p>Tapatybės konfigūracijoje pasirinkite, kurį raktą naudoti.</p></qt>"
 
 #: editor/kmcomposerwin.cpp:2686
 #, kde-format
@@ -2375,13 +2367,12 @@ msgstr ""
 "kopija“."
 
 #: editor/kmcomposerwin.cpp:2866
-#, fuzzy, kde-format
+#, kde-format
 msgid "To: field is empty. Send message anyway?"
-msgstr "Laukas „Kam:“ yra tuščias. Ar vis tiek siųsti?"
+msgstr "Laukas „Kam:“ yra tuščias. Ar vis tiek siųsti laišką?"
 
 #: editor/kmcomposerwin.cpp:2868
-#, fuzzy, kde-format
-#| msgid "No To: specified"
+#, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Lauke „Kam:“ nėra adresato"
@@ -2482,15 +2473,13 @@ msgid ""
 msgstr "Išjungus HTML režimą bus prarastas formatavimas. Ar tikrai išjungti?"
 
 #: editor/kmcomposerwin.cpp:3240
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Prarasti formatavimą?"
 
 #: editor/kmcomposerwin.cpp:3241
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Prarasti formatavimą"
@@ -2722,7 +2711,7 @@ msgid "Send Now"
 msgstr "Siųsti dabar"
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
 msgstr "Nustatyti šio laiško temą"
@@ -2746,7 +2735,7 @@ msgid "Remove Shortcut"
 msgstr "Pašalinti klavišų derinį"
 
 #: editor/validatesendmailshortcut.cpp:33
-#, fuzzy, kde-format
+#, kde-format
 msgid "Ask Before Sending"
 msgstr "Klausti prieš siunčiant"
 
@@ -2793,9 +2782,9 @@ msgid "&Remind me later"
 msgstr "P&riminti vėliau"
 
 #: editor/warningwidgets/externaleditorwarning.cpp:18
-#, fuzzy, kde-format
+#, kde-format
 msgid "External editor was started."
-msgstr "Išorinis redaktorius buvo paleistas."
+msgstr "Buvo paleistas išorinis redaktorius."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:66
 #, kde-format
@@ -5241,14 +5230,14 @@ msgid "Filter on &Cc…"
 msgstr "Filtruoti „&Kam“..."
 
 #: kmmainwidget.cpp:3289
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark &Thread"
 msgstr "Žymėti &giją"
 
 #: kmmainwidget.cpp:3292
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark Thread as &Read"
-msgstr "Žymėti giją &skaityta"
+msgstr "Žymėti giją kaip &skaitytą"
 
 #: kmmainwidget.cpp:3295
 #, fuzzy, kde-format
@@ -5256,9 +5245,9 @@ msgid "Mark all messages in the selected thread as read"
 msgstr "Žymėti visus pasirinktos gijos laiškus skaitytais"
 
 #: kmmainwidget.cpp:3298
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark Thread as &Unread"
-msgstr "Žymėti giją ne&skaityta"
+msgstr "Žymėti giją kaip &neskaitytą"
 
 #: kmmainwidget.cpp:3301
 #, fuzzy, kde-format
@@ -5266,9 +5255,9 @@ msgid "Mark all messages in the selected thread as unread"
 msgstr "Žymėti visus pasirinktos gijos laiškus neskaitytais"
 
 #: kmmainwidget.cpp:3307
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark Thread as &Important"
-msgstr "Žymėti giją s&varbia"
+msgstr "Žymėti giją kaip s&varbią"
 
 #: kmmainwidget.cpp:3310
 #, fuzzy, kde-format
@@ -6246,7 +6235,7 @@ msgid "New Message to Recipients…"
 msgstr "Naujas laiškas pašto s&ąrašui..."
 
 #: messageactions.cpp:73
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mar&k Message"
 msgstr "Žymėti &laišką"
 
@@ -6844,10 +6833,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:334
-#, fuzzy, kde-format
-#| msgid "Message Preview Pane"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "Laiškų peržiūros langas"
+msgstr "Laiškų peržiūros polangis:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:337
@@ -7648,7 +7636,7 @@ msgstr "Išimtys"
 #: ui/securitypagegeneraltab.ui:98
 #, kde-format
 msgid "E-mails Scams"
-msgstr ""
+msgstr "Apgaulingi laiškai"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: ui/securitypagegeneraltab.ui:104
@@ -7657,12 +7645,14 @@ msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
 "techniques used to deceive you"
 msgstr ""
+"Programa KMail gali analizuoti, ar laiškuose yra įtartinų suktybių, "
+"ieškodama juose plačiai paplitusių metodų, kuriais siekiama jus apgauti"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
 #: ui/securitypagegeneraltab.ui:114
 #, kde-format
 msgid "Informs if message reading is a suspected email scam"
-msgstr ""
+msgstr "Informuoja, jei įtariama, kad skaitomas laiškas yra apgaulingas"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/securitypagegeneraltab.ui:121
@@ -7714,7 +7704,7 @@ msgstr "Automatiškai importuoti raktus ir liudijimus"
 
 #. i18n: ectx: property (text), widget (QLabel, labelSend)
 #: ui/securitypagemdntab.ui:20
-#, fuzzy, kde-format
+#, kde-format
 msgid "Send policy:"
 msgstr "Siuntimo taisyklė:"
 
@@ -7801,25 +7791,25 @@ msgstr "Visada siųsti"
 
 #. i18n: ectx: property (text), widget (QLabel, labelQuote)
 #: ui/securitypagemdntab.ui:86
-#, fuzzy, kde-format
+#, kde-format
 msgid "Quote original message:"
-msgstr "Cituoti laišką - šaltinį:"
+msgstr "Cituoti pradinį laišką:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioNothing)
 #: ui/securitypagemdntab.ui:99
-#, fuzzy, kde-format
+#, kde-format
 msgid "Nothing"
-msgstr "Nieko"
+msgstr "Nėra"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioFull)
 #: ui/securitypagemdntab.ui:109
-#, fuzzy, kde-format
+#, kde-format
 msgid "Full message"
 msgstr "Visą laišką"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioHeaders)
 #: ui/securitypagemdntab.ui:119
-#, fuzzy, kde-format
+#, kde-format
 msgid "Only headers"
 msgstr "Tik antraštes"
 
@@ -8197,7 +8187,7 @@ msgstr[2] "Perkelti laiškus"
 msgstr[3] "Perkelti laiškus"
 
 #: undostack.cpp:96
-#, fuzzy, kde-format
+#, kde-format
 msgid "There is nothing to undo."
 msgstr "Nėra ko atšaukti."
 
