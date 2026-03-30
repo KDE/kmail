@@ -302,6 +302,33 @@ set_package_properties(
             REQUIRED
 )
 
+set(KTEXTADDONS_WITH_TEXTAUTOGENERATETEXT_VERSION "${KTEXTADDONS_MIN_VERSION}")
+
+option(OPTION_ADD_AUTOGENERATETEXT "Add support for autogenerate text plugin" ON)
+if(OPTION_ADD_AUTOGENERATETEXT)
+    find_package(KF6TextAutoGenerateText ${KTEXTADDONS_WITH_TEXTAUTOGENERATETEXT_VERSION} CONFIG)
+    set_package_properties(
+        KF6TextAutoGenerateText
+        PROPERTIES
+            TYPE
+                OPTIONAL
+            PURPOSE
+                "Required for building AI plugins support"
+            DESCRIPTION
+                "Use AI plugin"
+    )
+    option(OPTION_ADD_INTERNAL_PLUGIN "Add support for internal plugin (experimental)" OFF)
+endif()
+
+if(TARGET KF6::TextAutoGenerateText)
+    set(HAVE_TEXT_AUTOGENERATE_TEXT TRUE)
+    if(${KF6TextAutoGenerateText_VERSION} VERSION_GREATER_EQUAL 2.0.50)
+        if(OPTION_ADD_INTERNAL_PLUGIN)
+            set(HAVE_SIEVEEDITOR_TEXTAUTOGENERATE_INTERNAL_TOOLS TRUE)
+        endif()
+    endif()
+endif()
+
 include_directories(
     ${kmail_SOURCE_DIR}
     ${kmail_BINARY_DIR}
