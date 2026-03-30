@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-03-28 00:45+0000\n"
-"PO-Revision-Date: 2026-03-19 11:26+0100\n"
+"PO-Revision-Date: 2026-03-29 13:01+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 25.04.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
@@ -689,15 +689,15 @@ msgstr "Cos del missatge"
 
 #: configuredialog/configureappearancepage.cpp:133
 msgid "Message List - Unread Messages"
-msgstr "Llista de missatges - Missatges sense llegir"
+msgstr "Llista de missatges – Missatges sense llegir"
 
 #: configuredialog/configureappearancepage.cpp:134
 msgid "Message List - Important Messages"
-msgstr "Llista de missatges - Missatges importants"
+msgstr "Llista de missatges – Missatges importants"
 
 #: configuredialog/configureappearancepage.cpp:135
 msgid "Message List - Action Item Messages"
-msgstr "Llista de missatges - Missatges amb un element d'acció"
+msgstr "Llista de missatges – Missatges amb un element d'acció"
 
 #: configuredialog/configureappearancepage.cpp:136
 msgid "Fixed Width Font"
@@ -725,15 +725,15 @@ msgstr "A&plica a:"
 
 #: configuredialog/configureappearancepage.cpp:303
 msgid "Quoted Text - First Level"
-msgstr "Text citat - Primer nivell"
+msgstr "Text citat – Primer nivell"
 
 #: configuredialog/configureappearancepage.cpp:304
 msgid "Quoted Text - Second Level"
-msgstr "Text citat - Segon nivell"
+msgstr "Text citat – Segon nivell"
 
 #: configuredialog/configureappearancepage.cpp:305
 msgid "Quoted Text - Third Level"
-msgstr "Text citat - Tercer nivell"
+msgstr "Text citat – Tercer nivell"
 
 #: configuredialog/configureappearancepage.cpp:306
 msgid "Link"
@@ -753,19 +753,19 @@ msgstr "Missatge amb un element d'acció"
 
 #: configuredialog/configureappearancepage.cpp:310
 msgid "HTML Status Bar Background - No HTML Message"
-msgstr "Fons de la barra d'estat HTML - Missatge no HTML"
+msgstr "Fons de la barra d'estat HTML – Missatge no HTML"
 
 #: configuredialog/configureappearancepage.cpp:311
 msgid "HTML Status Bar Foreground - No HTML Message"
-msgstr "Primer pla de la barra d'estat HTML - Missatge no HTML"
+msgstr "Primer pla de la barra d'estat HTML – Missatge no HTML"
 
 #: configuredialog/configureappearancepage.cpp:312
 msgid "HTML Status Bar Background - HTML Message"
-msgstr "Fons de la barra d'estat HTML - Missatge HTML"
+msgstr "Fons de la barra d'estat HTML – Missatge HTML"
 
 #: configuredialog/configureappearancepage.cpp:313
 msgid "HTML Status Bar Foreground - HTML Message"
-msgstr "Primer pla de la barra d'estat HTML - Missatge HTML"
+msgstr "Primer pla de la barra d'estat HTML – Missatge HTML"
 
 #: configuredialog/configureappearancepage.cpp:318
 #, kde-format
@@ -837,7 +837,7 @@ msgstr "Sempre"
 #, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "Consells de les carpetes:"
+msgstr "Consells d'eina de les carpetes:"
 
 #: configuredialog/configureappearancepage.cpp:582
 #, kde-format
@@ -902,25 +902,25 @@ msgid ""
 "characters will be ignored.</strong></p></qt>"
 msgstr ""
 "<qt><p><strong>Estes són les expressions que poden utilitzar-se per a la "
-"data:</strong></p><ul><li>d - el dia com a un número sense el zero afegit "
-"(1-31)</li><li>dd - el dia com a un número amb el zero afegit (01-31)</"
-"li><li>ddd - el nom del dia en format abreujat (dil - diu)</li><li>dddd - el "
-"nom del dia en format llarg (dilluns - diumenge)</li><li>M - el mes com a un "
-"número sense el zero afegit (1-12)</li> <li>MM - el mes com a un número amb "
-"el zero afegit (01-12)</li><li>MMM - el nom del mes en format abreujat (gen "
-"- dec)</li><li>MMMM - el nom del mes en format llarg (gener - desembre)</"
-"li><li>yy - l'any com a un número de dos dígits (00-99)</li><li>yyyy - l'any "
+"data:</strong></p><ul><li>d – el dia com a un número sense el zero afegit "
+"(1-31)</li><li>dd – el dia com a un número amb el zero afegit (01-31)</"
+"li><li>ddd – el nom del dia en format abreujat (dil – diu)</li><li>dddd – el "
+"nom del dia en format llarg (dilluns – diumenge)</li><li>M – el mes com a un "
+"número sense el zero afegit (1-12)</li> <li>MM – el mes com a un número amb "
+"el zero afegit (01-12)</li><li>MMM – el nom del mes en format abreujat (gen "
+"– dec)</li><li>MMMM – el nom del mes en format llarg (gener – desembre)</"
+"li><li>yy – l'any com a un número de dos dígits (00-99)</li><li>yyyy – l'any "
 "com a un número de quatre dígits (0000-9999) </li></ul><p><strong>Per al "
-"temps poden utilitzar-se les següents expressions:</strong></p><ul><li>h - "
-"l'hora sense el zero afegit (0-23 o 1-12 si són AM/PM)</li><li>hh - l'hora "
-"amb el zero afegit (00-23 o 01-12 si són AM/PM)</li><li>m - els minuts sense "
-"el zero afegit (0-59)</li><li>mm - els minuts amb el zero afegit (00-59) </"
-"li><li>s - els segons sense el zero afegit (0-59)</li><li>ss - els segons "
-"amb el zero afegit (00-59)</li><li>z - els mil·lisegons sense els zeros "
-"afegits (0-999) </li><li>zzz - els mil·lisegons amb els zeros afegits "
-"(000-999)</li><li>AP - la marca per a mostrar AM/PM. AP se substituirà per "
-"«AM» o «PM».</li><li>ap - la marca per a mostrar AM/PM. ap se substituirà "
-"per «am» o «pm».</li><li>Z - la zona horària en format numèric (-0500)</li></"
+"temps poden utilitzar-se les següents expressions:</strong></p><ul><li>h – "
+"l'hora sense el zero afegit (0-23 o 1-12 si són AM/PM)</li><li>hh – l'hora "
+"amb el zero afegit (00-23 o 01-12 si són AM/PM)</li><li>m – els minuts sense "
+"el zero afegit (0-59)</li><li>mm – els minuts amb el zero afegit (00-59) </"
+"li><li>s – els segons sense el zero afegit (0-59)</li><li>ss – els segons "
+"amb el zero afegit (00-59)</li><li>z – els mil·lisegons sense els zeros "
+"afegits (0-999) </li><li>zzz – els mil·lisegons amb els zeros afegits "
+"(000-999)</li><li>AP – la marca per a mostrar AM/PM. AP se substituirà per "
+"«AM» o «PM».</li><li>ap – la marca per a mostrar AM/PM. ap se substituirà "
+"per «am» o «pm».</li><li>Z – el fus horari en format numèric (-0500)</li></"
 "ul><p><strong>Tots els altres caràcters introduïts s'ometran.</strong></p></"
 "qt>"
 
@@ -5812,7 +5812,7 @@ msgstr "Bu&sca en el missatge…"
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
-msgstr "Guarda la imatge al disc…"
+msgstr "Guarda la imatge en el disc…"
 
 #: kmreaderwin.cpp:185
 #, kde-format
