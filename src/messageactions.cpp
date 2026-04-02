@@ -381,8 +381,8 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
         return;
     }
 
-    auto fetchJob = static_cast<Akonadi::ItemFetchJob *>(job);
-    if (fetchJob->items().isEmpty()) {
+    auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
+    if (!fetchJob || fetchJob->items().isEmpty()) {
         return;
     }
     const Akonadi::Item messageItem = fetchJob->items().constFirst();
@@ -748,6 +748,9 @@ void MessageActions::slotAddFollowupReminder()
 
 void MessageActions::slotExportToPdf()
 {
+    if (!mMessageView) {
+        return;
+    }
     QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, QStringLiteral(".pdf"));
     fileName = QFileDialog::getSaveFileName(mParent,
                                             i18nc("@title:window", "Export to PDF"),

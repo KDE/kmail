@@ -2289,7 +2289,9 @@ void KMMainWidget::slotApplyFilterOnFolder(bool recursive)
     if (mCurrentCollection.isValid()) {
         const Akonadi::Collection::List cols = applyFilterOnCollection(recursive);
         auto action = qobject_cast<QAction *>(sender());
-        applyFilter(cols, action->property("filter_id").toString());
+        if (action) {
+            applyFilter(cols, action->property("filter_id").toString());
+        }
     }
 }
 
@@ -2526,7 +2528,7 @@ void KMMainWidget::slotSendQueuedVia(MailTransport::Transport *transport)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowBusySplash()
 {
-    if (mReaderWindowActive) {
+    if (mReaderWindowActive && mMsgView) {
         mMsgView->displayBusyPage();
     }
 }

@@ -111,7 +111,9 @@ void ManageShowCollectionProperties::slotCollectionPropertiesContinued(KJob *job
 
     if (job) {
         auto sync = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
-        Q_ASSERT(sync);
+        if (!sync) {
+            return;
+        }
         if (sync->property("collectionId") != mMainWidget->currentCollection().id()) {
             return;
         }
@@ -171,7 +173,9 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
     progressItem->setStatus(i18n("Done"));
 
     auto fetch = qobject_cast<Akonadi::CollectionFetchJob *>(job);
-    Q_ASSERT(fetch);
+    if (!fetch) {
+        return;
+    }
     if (fetch->collections().isEmpty()) {
         qCWarning(KMAIL_LOG) << "no collection";
         return;

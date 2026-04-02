@@ -30,7 +30,7 @@ void SecondaryWindow::closeEvent(QCloseEvent *e)
 {
     // if there's a system tray applet then just do what needs to be done if a
     // window is closed.
-    if (kmkernel->haveSystemTrayApplet()) {
+    if (kmkernel && kmkernel->haveSystemTrayApplet()) {
         // BEGIN of code borrowed from KMainWindow::closeEvent
 
         // Clear the flag that tells KMainWindow to not restore the window

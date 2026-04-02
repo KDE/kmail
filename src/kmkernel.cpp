@@ -1677,7 +1677,11 @@ QStringList KMKernel::customTemplates()
 void KMKernel::openFilterDialog(bool createDummyFilter)
 {
     if (!mFilterEditDialog) {
-        mFilterEditDialog = new MailCommon::KMFilterDialog(getKMMainWidget()->actionCollections(), nullptr, createDummyFilter);
+        KMMainWidget *mainWidget = getKMMainWidget();
+        if (!mainWidget) {
+            return;
+        }
+        mFilterEditDialog = new MailCommon::KMFilterDialog(mainWidget->actionCollections(), nullptr, createDummyFilter);
         mFilterEditDialog->setObjectName("filterdialog"_L1);
     }
     mFilterEditDialog->show();
@@ -1687,7 +1691,9 @@ void KMKernel::openFilterDialog(bool createDummyFilter)
 
 void KMKernel::createFilter(const QByteArray &field, const QString &value)
 {
-    mFilterEditDialog->createFilter(field, value);
+    if (mFilterEditDialog) {
+        mFilterEditDialog->createFilter(field, value);
+    }
 }
 
 void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collectionList)

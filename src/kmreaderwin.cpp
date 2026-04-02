@@ -709,6 +709,9 @@ bool KMReaderWin::printSelectedText(bool preview)
     composer->textPart()->setCleanPlainText(str);
     composer->textPart()->setWrappedPlainText(str);
     auto messagePtr = messageItem().payload<std::shared_ptr<KMime::Message>>();
+    if (!messagePtr) {
+        return false;
+    }
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
     if (auto to = messagePtr->to(KMime::CreatePolicy::DontCreate)) {
         composer->infoPart()->setTo(QStringList() << to->asUnicodeString());
@@ -729,9 +732,13 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
 {
     const bool preview = job->property("preview").toBool();
     auto composer = qobject_cast<::MessageComposer::ComposerJob *>(job);
-    Q_ASSERT(composer);
+    if (!composer) {
+        return;
+    }
     if (composer->error() == ::MessageComposer::ComposerJob::NoError) {
-        Q_ASSERT(composer->resultMessages().size() == 1);
+        if (composer->resultMessages().isEmpty()) {
+            return;
+        }
         Akonadi::Item printItem;
         printItem.setPayload<std::shared_ptr<KMime::Message>>(composer->resultMessages().constFirst());
         Akonadi::MessageFlags::copyMessageFlags(*(composer->resultMessages().constFirst()), printItem);
