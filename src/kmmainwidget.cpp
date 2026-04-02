@@ -4728,6 +4728,9 @@ void KMMainWidget::itemsReceived(const Akonadi::Item::List &list)
         return;
     }
 
+    if (list.isEmpty()) {
+        return;
+    }
     Item item = list.first();
 
     if (mMessagePane) {
