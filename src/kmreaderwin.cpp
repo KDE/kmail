@@ -144,7 +144,7 @@ void KMReaderWin::createActions()
 
     mAddEmailToExistingContactAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("Add to Existing Contact"), this);
     ac->setShortcutsConfigurable(mAddEmailToExistingContactAction, false);
-    ac->addAction(QStringLiteral("add_to_existing_contact"), mAddAddrBookAction);
+    ac->addAction(QStringLiteral("add_to_existing_contact"), mAddEmailToExistingContactAction);
     connect(mAddEmailToExistingContactAction, &QAction::triggered, this, &KMReaderWin::slotMailToAddToExistingContact);
 
     // open in addressbook
@@ -160,7 +160,7 @@ void KMReaderWin::createActions()
 
     mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact…"), this);
     ac->setShortcutsConfigurable(mEditContactAction, false);
-    ac->addAction(QStringLiteral("edit_contact"), mOpenAddrBookAction);
+    ac->addAction(QStringLiteral("edit_contact"), mEditContactAction);
     connect(mEditContactAction, &QAction::triggered, this, &KMReaderWin::slotEditContact);
 
     // save URL as
