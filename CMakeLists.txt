@@ -90,7 +90,7 @@ include(ECMDeprecationSettings)
 include(ECMFeatureSummary)
 
 # Do NOT add quote
-set(KDEPIM_DEV_VERSION rc)
+set(KDEPIM_DEV_VERSION)
 set(RELEASE_SERVICE_VERSION "26.04.0")
 
 # Update it for each release
