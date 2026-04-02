@@ -517,7 +517,7 @@ void KMKernel::fillComposer(bool hidden,
                                            identity,
                                            forceShowWindow,
                                            htmlBody);
-    auto job = new FillComposerJob;
+    auto job = new FillComposerJob(this);
     job->setSettings(std::move(settings));
     job->start();
 }
