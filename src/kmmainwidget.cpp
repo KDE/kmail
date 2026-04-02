@@ -911,6 +911,8 @@ void KMMainWidget::readConfig()
     kmkernel->toggleSystemTray();
     mAccountActionMenu->setAccountsOrder(KMKernel::self()->mailCommonSettings()->order());
 
+    disconnect(Akonadi::AgentManager::self(), &AgentManager::instanceAdded, this, &KMMainWidget::updateFileMenu);
+    disconnect(Akonadi::AgentManager::self(), &AgentManager::instanceRemoved, this, &KMMainWidget::updateFileMenu);
     connect(Akonadi::AgentManager::self(), &AgentManager::instanceAdded, this, &KMMainWidget::updateFileMenu);
     connect(Akonadi::AgentManager::self(), &AgentManager::instanceRemoved, this, &KMMainWidget::updateFileMenu);
 }
