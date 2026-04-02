@@ -790,6 +790,8 @@ void KMReaderWin::updateHtmlActions()
         mLoadExternalReference->setChecked(false);
         mViewAsHtml->setChecked(false);
     } else {
+        mViewAsHtml->setChecked(false);
+        mLoadExternalReference->setChecked(false);
         const QStringList customs = mSearchedAddress.customs();
         for (const QString &custom : customs) {
             if (custom.contains("MailPreferedFormatting"_L1)) {
