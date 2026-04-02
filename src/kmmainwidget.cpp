@@ -4041,7 +4041,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
         if (mCurrentCollection.isValid()) {
             const Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance(mCurrentCollection.resource());
 
-            mCollectionProperties->setEnabled(!mCurrentFolderSettings->isStructural() && (instance.status() != Akonadi::AgentInstance::Broken));
+            mCollectionProperties->setEnabled(mCurrentFolderSettings && !mCurrentFolderSettings->isStructural()
+                                              && (instance.status() != Akonadi::AgentInstance::Broken));
         } else {
             mCollectionProperties->setEnabled(false);
         }

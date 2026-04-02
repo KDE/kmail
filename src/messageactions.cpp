@@ -352,14 +352,15 @@ void MessageActions::updateActions()
     mReplyAuthorAction->setEnabled(hasPayload);
     mReplyAllAction->setEnabled(hasPayload);
     mReplyListAction->setEnabled(hasPayload);
-    mNoQuoteReplyAction->setEnabled(hasPayload);
     mSendAgainAction->setEnabled(hasPayload);
 
     mStatusMenu->setEnabled(multiVisible);
 
     mPrintAction->setEnabled(mMessageView != nullptr);
     mPrintPreviewAction->setEnabled(mMessageView != nullptr);
-    mExportToPdfAction->setEnabled(uniqItem);
+    mExportToPdfAction->setEnabled(uniqItem && mMessageView != nullptr);
+    mNewMessageFromTemplateAction->setEnabled(uniqItem);
+    mAddFollowupReminderAction->setEnabled(itemValid);
     if (mCurrentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         if (mCurrentItem.loadedPayloadParts().contains("RFC822")) {
             updateMailingListActions(mCurrentItem);
