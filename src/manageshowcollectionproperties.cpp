@@ -152,9 +152,6 @@ void ManageShowCollectionProperties::showCollectionPropertiesContinued(const QSt
     fetch->setProperty("pageToShow", pageToShow);
     fetch->setProperty("progressItem", QVariant::fromValue(progressItem));
     connect(fetch, &KJob::result, this, &ManageShowCollectionProperties::slotCollectionPropertiesFinished);
-    // clang-format off
-    connect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), fetch, SLOT(kill()));
-    // clang-format on
 }
 
 void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
