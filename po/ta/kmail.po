@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-03-28 00:45+0000\n"
+"POT-Creation-Date: 2026-04-03 00:44+0000\n"
 "PO-Revision-Date: 2026-02-27 21:47+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -331,7 +331,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "பல IMAP பிழைகளை சரிசெய்தார்"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:221 kmmainwidget.cpp:4219 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:221 kmmainwidget.cpp:4224 kmreaderwin.cpp:264
 #: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -397,7 +397,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "பட்டியலுக்கு அஞ்சலிடுவதற்கான முகவரி:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:453
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
 #, kde-format
 msgid "Subscribe to List"
 msgstr "பட்டியலில் சேர்"
@@ -1637,7 +1637,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "அடைவை காப்பகப்படுத்தல்"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3681
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3685
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1880,7 +1880,7 @@ msgstr "&உரைக்கோப்பை நுழை…"
 msgid "&Insert Recent Text File"
 msgstr "சமீபமான உரைக்கோப்பை நு&ழை"
 
-#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3007
+#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3011
 #, kde-format
 msgid "&Address Book"
 msgstr "&முகவரி புத்தகம்"
@@ -3755,7 +3755,7 @@ msgstr "Akonadi-யின் தற்காலிக நினைவிடத�
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:171
+#: manageshowcollectionproperties.cpp:170
 #, kde-format
 msgid "Done"
 msgstr "முடிந்தது "
@@ -3771,12 +3771,12 @@ msgstr "முகவரிப்புத்தகத்தில் சேர�
 msgid "Contact created successfully"
 msgstr "தொடர்பு வெற்றிகரமாக உருவாக்கப்பட்டது"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:837
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:846
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "தொடர்பை சேமிக்க முடியவில்லை: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:837
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:846
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4073,7 +4073,7 @@ msgid "F&older"
 msgstr "&அடைவு"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3530 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3534 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4105,7 +4105,7 @@ msgid "&Forward"
 msgstr "&முன்னனுப்பு"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3354 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3358 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "&வடிகட்டியை செயல்படுத்து"
@@ -4259,12 +4259,12 @@ msgstr ""
 "கேமெயில் தொடர்பற்ற நிலைக்கு மாற்றப்பட்டுள்ளது; இணையத்தை பயன்படுத்தும் அனைத்து அம்சங்களும் "
 "முடக்கப்பட்டுள்ளன"
 
-#: kmkernel.cpp:661 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
+#: kmkernel.cpp:661 kmmainwidget.cpp:2506 kmmainwidget.cpp:2521
 #, kde-format
 msgid "Send Email"
 msgstr "மின்னஞ்சலை அனுப்பு"
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2503 kmmainwidget.cpp:2518
+#: kmkernel.cpp:662 kmmainwidget.cpp:2507 kmmainwidget.cpp:2522
 #, kde-format
 msgid "Impossible to send email"
 msgstr "மின்னஞ்சலை அனுப்ப இயலாது"
@@ -4368,7 +4368,7 @@ msgstr ""
 "%1 என்பது முடங்கியுள்ளது.\n"
 "%2"
 
-#: kmkernel.cpp:1745 kmkernel.cpp:1751
+#: kmkernel.cpp:1751 kmkernel.cpp:1757
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4478,61 +4478,61 @@ msgstr "இறக்குமதி உதவிநிரலை துவக்�
 msgid "Unable to start import wizard"
 msgstr "இறக்குமதி உதவிநிரலை துவக்க முடியவில்லை."
 
-#: kmmainwidget.cpp:1391
+#: kmmainwidget.cpp:1393
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
 msgstr "(வார்ப்புருகள் ஏற்றப்படுகின்றன…)"
 
-#: kmmainwidget.cpp:1416
+#: kmmainwidget.cpp:1418
 #, kde-format
 msgid "No Subject"
 msgstr "தலைப்பில்லாத‍து"
 
-#: kmmainwidget.cpp:1429
+#: kmmainwidget.cpp:1431
 #, kde-format
 msgid "(no templates)"
 msgstr "(வார்ப்புருகள் இல்லை)"
 
-#: kmmainwidget.cpp:1481
+#: kmmainwidget.cpp:1483
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "இந்த அடைவிற்கான காலாவதி அமைப்புகள் அமைக்கப்படவில்லை"
 
-#: kmmainwidget.cpp:1487
+#: kmmainwidget.cpp:1489
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt><b>%1</b> என்ற அடைவை உறுதியாக காலாவதியாக்க வேண்டுமா?</qt>"
 
-#: kmmainwidget.cpp:1488
+#: kmmainwidget.cpp:1490
 #, kde-format
 msgid "Expire Folder"
 msgstr "அடைவை காலாவதியாக்குதல்"
 
-#: kmmainwidget.cpp:1488
+#: kmmainwidget.cpp:1490
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "கா&லாவதியாக்கு"
 
-#: kmmainwidget.cpp:1505
+#: kmmainwidget.cpp:1507
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "அகற்றிடத்தை காலியாக்குவது"
 
-#: kmmainwidget.cpp:1505
+#: kmmainwidget.cpp:1507
 #, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "அகற்றிடத்துக்கு நகர்த்துவது"
 
-#: kmmainwidget.cpp:1506
+#: kmmainwidget.cpp:1508
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "உறுதியாக அகற்றிடத்தை காலியாக்க விரும்புகிறீர்களா?"
 
-#: kmmainwidget.cpp:1508
+#: kmmainwidget.cpp:1510
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4541,28 +4541,28 @@ msgstr ""
 "<qt><b>%1</b> என்ற அடைவிலுள்ள அனைத்து அஞ்சல்களையும் அகற்றிடத்திற்கு நகர்த்த "
 "விரும்புகிறீர்களா?</qt>"
 
-#: kmmainwidget.cpp:1531
+#: kmmainwidget.cpp:1533
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "அனைத்து அஞ்சல்களும் அகற்றிடத்திற்கு நகர்த்தப்பட்டன"
 
-#: kmmainwidget.cpp:1585
+#: kmmainwidget.cpp:1587
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "உறுதியாக அனைத்து பழைய அஞ்சல்களையும் காலாவதியாக்க விரும்புகிறீர்களா?"
 
-#: kmmainwidget.cpp:1586
+#: kmmainwidget.cpp:1588
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "பழைய அஞ்சல்களை காலாவதியாக்கலாமா?"
 
-#: kmmainwidget.cpp:1587
+#: kmmainwidget.cpp:1589
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "காலாவதியாக்கு"
 
-#: kmmainwidget.cpp:1612
+#: kmmainwidget.cpp:1614
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4573,19 +4573,19 @@ msgstr ""
 "நிபுநர்கள் எதிர்பார்க்கக்கூடிய தாக்குதல்களால் உங்கள் கணினி பாதிக்கப்படுவதற்கான வாய்ப்பை "
 "அதிகரிக்கும்."
 
-#: kmmainwidget.cpp:1615 kmmainwidget.cpp:4899
+#: kmmainwidget.cpp:1617 kmmainwidget.cpp:4907
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "பாதுகாப்பு எச்சரிக்கை"
 
-#: kmmainwidget.cpp:1616
+#: kmmainwidget.cpp:1618
 #, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "வெளி இணைப்புகளை ஏற்று"
 
-#: kmmainwidget.cpp:1689
+#: kmmainwidget.cpp:1691
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4600,137 +4600,137 @@ msgstr[1] ""
 "<qt>தேர்வு செய்த %1 அஞ்சல்களை உறுதியாக நீக்க விரும்புகிறீர்களா?<br />நீக்கிய பின் அவற்றை "
 "திரும்ப‍ப்பெற முடியாது.</qt>"
 
-#: kmmainwidget.cpp:1694
+#: kmmainwidget.cpp:1696
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "அஞ்சல்களை நீக்குவது"
 
-#: kmmainwidget.cpp:1694
+#: kmmainwidget.cpp:1696
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "அஞ்சலை நீக்குவது"
 
-#: kmmainwidget.cpp:1709
+#: kmmainwidget.cpp:1711
 #, kde-format
 msgid "Moving messages…"
 msgstr "அஞ்சல்கள் நகர்த்தப்படுகின்றன…"
 
-#: kmmainwidget.cpp:1711 kmmainwidget.cpp:1911
+#: kmmainwidget.cpp:1713 kmmainwidget.cpp:1913
 #, kde-format
 msgid "Deleting messages…"
 msgstr "அஞ்சல்கள் நீக்கப்படுகின்றன…"
 
-#: kmmainwidget.cpp:1726 kmmainwidget.cpp:1931
+#: kmmainwidget.cpp:1728 kmmainwidget.cpp:1933
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "அஞ்சல்கள் வெற்றிகரமாக நீக்கப்பட்டன."
 
-#: kmmainwidget.cpp:1728
+#: kmmainwidget.cpp:1730
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "அஞ்சல்கள் வெற்றிகரமாக நகர்த்தப்பட்டன."
 
-#: kmmainwidget.cpp:1733 kmmainwidget.cpp:1944
+#: kmmainwidget.cpp:1735 kmmainwidget.cpp:1946
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "அஞ்சல்களை நீக்குதல் தோல்வியடைந்தது."
 
-#: kmmainwidget.cpp:1735 kmmainwidget.cpp:1957
+#: kmmainwidget.cpp:1737 kmmainwidget.cpp:1959
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "அஞ்சல்களை நீக்குதல் ரத்து செய்யப்பட்டது."
 
-#: kmmainwidget.cpp:1739
+#: kmmainwidget.cpp:1741
 #, kde-format
 msgid "Moving messages failed."
 msgstr "அஞ்சல்களை நகர்த்தல் தோல்வியடைந்தது."
 
-#: kmmainwidget.cpp:1741
+#: kmmainwidget.cpp:1743
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "அஞ்சல்களை நகர்த்தல் ரத்து செய்யப்பட்டது."
 
-#: kmmainwidget.cpp:1813
+#: kmmainwidget.cpp:1815
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "அஞ்சல்களை வேறு அடைவுக்கு நகர்த்தல்"
 
-#: kmmainwidget.cpp:1840
+#: kmmainwidget.cpp:1842
 #, kde-format
 msgid "Copying messages…"
 msgstr "அஞ்சல்கள் நகலெடுக்கப்படுகின்றன…"
 
-#: kmmainwidget.cpp:1848
+#: kmmainwidget.cpp:1850
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "அஞ்சல்கள் வெற்றிகரமாக நகலெடுக்கப்பட்டன."
 
-#: kmmainwidget.cpp:1851
+#: kmmainwidget.cpp:1853
 #, kde-format
 msgid "Copying messages failed."
 msgstr "அஞ்சல்களை நகலெடுத்தல் தோல்வியடைந்தது."
 
-#: kmmainwidget.cpp:1853
+#: kmmainwidget.cpp:1855
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "அஞ்சல்களை நகலெடுத்தல் ரத்து செய்யப்பட்டது."
 
-#: kmmainwidget.cpp:1863
+#: kmmainwidget.cpp:1865
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "அஞ்சல்களை வேறு அடைவுக்கு நகலெடுத்தல்"
 
-#: kmmainwidget.cpp:1908
+#: kmmainwidget.cpp:1910
 #, kde-format
 msgid "Moving messages to trash…"
 msgstr "அஞ்சல்கள் அகற்றிடத்திற்கு நகர்த்தப்படுகின்றன…"
 
-#: kmmainwidget.cpp:1915
+#: kmmainwidget.cpp:1917
 #, kde-format
 msgid "Deleting and moving messages to trash…"
 msgstr "அஞ்சல்கள் நீக்கப்படுகின்றன அல்லது அகற்றிடத்திற்கு நகர்த்தப்படுகின்றன…"
 
-#: kmmainwidget.cpp:1928
+#: kmmainwidget.cpp:1930
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "அஞ்சல்கள் வெற்றிகரமாக அகற்றிடத்திற்கு நகர்த்தப்பட்டன."
 
-#: kmmainwidget.cpp:1935
+#: kmmainwidget.cpp:1937
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "அஞ்சல்கள் வெற்றிகரமாக அகற்றிடத்திற்கு நகர்த்தப்பட்டன அல்லது நீக்கப்பட்டன"
 
-#: kmmainwidget.cpp:1941
+#: kmmainwidget.cpp:1943
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "அஞ்சல்களை அகற்றிடத்திற்கு நகர்த்தல் தோல்வியடைந்தது."
 
-#: kmmainwidget.cpp:1948
+#: kmmainwidget.cpp:1950
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "அஞ்சல்களை நீக்குதல் அல்லது அகற்றிடத்திற்கு நகர்த்தல் தோல்வியடைந்தது."
 
-#: kmmainwidget.cpp:1954
+#: kmmainwidget.cpp:1956
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "அஞ்சல்களை அகற்றிடத்திற்கு நகர்த்தல் ரத்து செய்யப்பட்டது."
 
-#: kmmainwidget.cpp:1961
+#: kmmainwidget.cpp:1963
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "அஞ்சல்களை அகற்றிடத்திற்கு நகர்த்தல் அல்லது நீக்குதல் ரத்து செய்யப்பட்டது."
 
-#: kmmainwidget.cpp:2242
+#: kmmainwidget.cpp:2244
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "அடைவிற்கு தாவு"
 
-#: kmmainwidget.cpp:2434
+#: kmmainwidget.cpp:2438
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4745,7 +4745,7 @@ msgstr[1] ""
 "தேர்ந்தெடுத்துள்ள அனைத்து அஞ்சல்களும் மறையாக்கம் செய்யப்பட்டிருக்கின்றன. மறையாக்கிய "
 "அஞ்சல்களிலிருந்து இப்போதைக்கு உடனிணைப்புகளை நீக்க முடியாது."
 
-#: kmmainwidget.cpp:2437
+#: kmmainwidget.cpp:2441
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -4753,7 +4753,7 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] "மறையாக்கிய அஞ்சலிலிருந்து உடனிணைப்புகளை நீக்குவது"
 msgstr[1] "மறையாக்கிய அஞ்சல்களிலிருந்து உடனிணைப்புகளை நீக்குவது"
 
-#: kmmainwidget.cpp:2442
+#: kmmainwidget.cpp:2446
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4768,7 +4768,7 @@ msgstr[1] ""
 "<html><p>தேர்ந்தெடுத்துள்ள %1 அஞ்சல்களிலுள்ள அனைத்து உடனிணைப்புகளையும் உறுதியாக நீக்க "
 "வேண்டுமா?<br />நீக்கிய பின், அவற்றைத் திரும்ப‍ப்பெற முடியாது.</p></html>"
 
-#: kmmainwidget.cpp:2449
+#: kmmainwidget.cpp:2453
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
@@ -4777,7 +4777,7 @@ msgstr ""
 "<html><p>எண்ம முறையில் கையொப்பமிடப்பட்டுள்ள அஞ்சலிலிருந்து உடனிணைப்புகளை நீக்குவது, "
 "அதிலுள்ள கையொப்பத்தை செல்லுபடியாகாத‍தாக்கிவிடும்.</p></html>"
 
-#: kmmainwidget.cpp:2454
+#: kmmainwidget.cpp:2458
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
@@ -4786,491 +4786,491 @@ msgstr ""
 "<html><p>மறையாக்கப்பட்டுள்ள அஞ்சல்களிலிருந்து இப்போதைக்கு உடனிணைப்புகளை நீக்க முடியாது."
 "<br />மறையாக்கிய அஞ்சல்கள் மாற்றப்படா.</p></html>"
 
-#: kmmainwidget.cpp:2459
+#: kmmainwidget.cpp:2463
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "உடனிணைப்புகளை நீக்குவது"
 
-#: kmmainwidget.cpp:2488
+#: kmmainwidget.cpp:2492
 #, kde-format
 msgid "Work Offline"
 msgstr "தொடர்பற்ற நிலையில் இயங்கு"
 
-#: kmmainwidget.cpp:2491
+#: kmmainwidget.cpp:2495
 #, kde-format
 msgid "Work Online"
 msgstr "தொடர்புள்ள நிலையில் இயங்கு"
 
-#: kmmainwidget.cpp:2950
+#: kmmainwidget.cpp:2954
 #, kde-format
 msgid "Save &As…"
 msgstr "&வேறு பெயரில் சேமி…"
 
-#: kmmainwidget.cpp:2961
+#: kmmainwidget.cpp:2965
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "அனைத்து அடைவுகளையும் கா&லாவதியாக்கு"
 
-#: kmmainwidget.cpp:2966
+#: kmmainwidget.cpp:2970
 #, kde-format
 msgid "Check &Mail"
 msgstr "அஞ்சலுள்ளதா &என பார்"
 
-#: kmmainwidget.cpp:2974
+#: kmmainwidget.cpp:2978
 #, kde-format
 msgid "Check Mail In"
 msgstr "இதில் அஞ்சலுள்ளதா என பார்"
 
-#: kmmainwidget.cpp:2979
+#: kmmainwidget.cpp:2983
 #, kde-format
 msgid "Check Mail"
 msgstr "அஞ்சலுள்ளதா என பார்"
 
-#: kmmainwidget.cpp:2980
+#: kmmainwidget.cpp:2984
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "அஞ்சலுள்ளதா என பார்க்கும்"
 
-#: kmmainwidget.cpp:2984
+#: kmmainwidget.cpp:2988
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "அ&னுப்புவரிசையிலுள்ள அஞ்சல்களை அனுப்பு"
 
-#: kmmainwidget.cpp:2992
+#: kmmainwidget.cpp:2996
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "தொடர்பின் நிலை (தெரியாதது)"
 
-#: kmmainwidget.cpp:2997
+#: kmmainwidget.cpp:3001
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "அனுப்புவரிசையிலுள்ள அஞ்சல்களை இதன் மூலம் அனுப்பு"
 
-#: kmmainwidget.cpp:3017
+#: kmmainwidget.cpp:3021
 #, kde-format
 msgid "Certificate Manager"
 msgstr "சான்றிதழ் மேலாளர்"
 
-#: kmmainwidget.cpp:3028
+#: kmmainwidget.cpp:3032
 #, kde-format
 msgid "&Import Messages…"
 msgstr "அஞ்சல்களை இ&றக்குமதி செய்…"
 
-#: kmmainwidget.cpp:3039
+#: kmmainwidget.cpp:3043
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr ""
 
-#: kmmainwidget.cpp:3046
+#: kmmainwidget.cpp:3050
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "வடிகட்டிக்கான வரலாற்றுப்பதிவுக்காட்டி…"
 
-#: kmmainwidget.cpp:3051
+#: kmmainwidget.cpp:3055
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "அறிவிப்பு வரலாறு…"
 
-#: kmmainwidget.cpp:3056
+#: kmmainwidget.cpp:3060
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "வேறு மின்னஞ்சல் செயலியிலிருந்து &இறக்குமதி செய்…"
 
-#: kmmainwidget.cpp:3061
+#: kmmainwidget.cpp:3065
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "\"அலுவலகத்தில் இல்லை\" பதில்களை திருத்து…"
 
-#: kmmainwidget.cpp:3067
+#: kmmainwidget.cpp:3071
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "தானியக்க காப்பகப்படுத்தலை &அமை…"
 
-#: kmmainwidget.cpp:3073
+#: kmmainwidget.cpp:3077
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "தாமதமான அஞ்சல்கள்…"
 
-#: kmmainwidget.cpp:3079
+#: kmmainwidget.cpp:3083
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "பதிலளிக்க நினைவூட்ட வேண்டிய அஞ்சல்கள்…"
 
-#: kmmainwidget.cpp:3084
+#: kmmainwidget.cpp:3088
 #, kde-format
 msgctxt "@action"
 msgid "Expand All"
 msgstr "அனைத்தையும் விரிவாக்கு"
 
-#: kmmainwidget.cpp:3089
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgctxt "@action"
 msgid "Collapse All"
 msgstr "அனைத்தையும் சுருக்கு"
 
-#: kmmainwidget.cpp:3100 util.cpp:187
+#: kmmainwidget.cpp:3104 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&நீக்கு"
 
-#: kmmainwidget.cpp:3105
+#: kmmainwidget.cpp:3109
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "தொடரை அகற்றிடத்திற்கு ந&கர்த்து"
 
-#: kmmainwidget.cpp:3109
+#: kmmainwidget.cpp:3113
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "சம்பந்தப்பட்ட அஞ்சல்கள்களை அகற்றிடத்திற்கு நகர்த்தும்"
 
-#: kmmainwidget.cpp:3112 kmmainwidget.cpp:4166
+#: kmmainwidget.cpp:3116 kmmainwidget.cpp:4171
 #, kde-format
 msgid "Delete T&hread"
 msgstr "&சார்ந்த அஞ்சல்களை நீக்கு"
 
-#: kmmainwidget.cpp:3119 kmmainwidget.cpp:4168
+#: kmmainwidget.cpp:3123 kmmainwidget.cpp:4173
 #, kde-format
 msgid "&Find Messages…"
 msgstr "&அஞ்சல்களை கண்டுபிடி…"
 
-#: kmmainwidget.cpp:3125
+#: kmmainwidget.cpp:3129
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "&அனைத்து அஞ்சல்களையும் தேர்வுசெய்"
 
-#: kmmainwidget.cpp:3132
+#: kmmainwidget.cpp:3136
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "அஞ்சல் &பட்டியல் மேலாண்மை…"
 
-#: kmmainwidget.cpp:3140
+#: kmmainwidget.cpp:3144
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Akonadi-யின் &தற்காலிக நினைவிடத்தை காலியாக்கு…"
 
-#: kmmainwidget.cpp:3145
+#: kmmainwidget.cpp:3149
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "&இவ்வடைவிலும் இதில் சார்ந்தவற்றிலும் Akonadi-யின் தற்காலிக நினைவிடத்தை காலியாக்கு"
 
-#: kmmainwidget.cpp:3150
+#: kmmainwidget.cpp:3154
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "&சுருக்குவழியை அமை…"
 
-#: kmmainwidget.cpp:3168
+#: kmmainwidget.cpp:3172
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&காலாவதி அமைப்புகள்"
 
-#: kmmainwidget.cpp:3193
+#: kmmainwidget.cpp:3197
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&அடைவை காப்பகப்படுத்து…"
 
-#: kmmainwidget.cpp:3201
+#: kmmainwidget.cpp:3205
 #, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "வெளி &இணைப்புகளை ஏற்று"
 
-#: kmmainwidget.cpp:3224
+#: kmmainwidget.cpp:3228
 #, kde-format
 msgid "Copy Message To…"
 msgstr "அஞ்சலை வேறு இடத்திற்கு நகலெடு…"
 
-#: kmmainwidget.cpp:3226
+#: kmmainwidget.cpp:3230
 #, kde-format
 msgid "Move Message To…"
 msgstr "அஞ்சலை வேறு இடத்திற்கு நகர்த்து…"
 
-#: kmmainwidget.cpp:3231
+#: kmmainwidget.cpp:3235
 #, kde-format
 msgid "&New Message…"
 msgstr "&புதிய அஞ்சல்…"
 
-#: kmmainwidget.cpp:3233
+#: kmmainwidget.cpp:3237
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "புதியது"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3245
 #, kde-format
 msgid "Message From &Template"
 msgstr "&வார்ப்புருவிலிருந்து அஞ்சல்"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3251
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "அஞ்சல் பட்டிய&லுக்கு புதிய அஞ்சல்U+"
 
-#: kmmainwidget.cpp:3253
+#: kmmainwidget.cpp:3257
 #, kde-format
 msgid "&Create Filter"
 msgstr "&வடிகட்டியை உருவாக்கு"
 
-#: kmmainwidget.cpp:3257
+#: kmmainwidget.cpp:3261
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "&பொருளை கொண்டு வடிகட்டு…"
 
-#: kmmainwidget.cpp:3264
+#: kmmainwidget.cpp:3268
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "&அனுப்புநரை கொண்டு வடிகட்டு…"
 
-#: kmmainwidget.cpp:3270
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "பெ&றுநரை கொண்டு வடிகட்டு…"
 
-#: kmmainwidget.cpp:3276
+#: kmmainwidget.cpp:3280
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "&நகல் முகவரிகளை கொண்டு வடிகட்டு…"
 
-#: kmmainwidget.cpp:3290
+#: kmmainwidget.cpp:3294
 #, kde-format
 msgid "Mark &Thread"
 msgstr "&சார்ந்த அஞ்சல்களை குறி"
 
-#: kmmainwidget.cpp:3293
+#: kmmainwidget.cpp:3297
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "சார்ந்த அஞ்சல்களை &படித்த‍வையாக குறி"
 
-#: kmmainwidget.cpp:3296
+#: kmmainwidget.cpp:3300
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "தேர்ந்தெடுக்கப்பட்ட அஞ்சலுடன் சம்பந்தப்பட்ட அனைத்து அஞ்சல்களையும் படித்த‍தாக குறிக்கும்"
 
-#: kmmainwidget.cpp:3299
+#: kmmainwidget.cpp:3303
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "சார்ந்த அஞ்சல்களை ப&டிக்காத‍வையாக குறி"
 
-#: kmmainwidget.cpp:3302
+#: kmmainwidget.cpp:3306
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "தேர்ந்தெடுக்கப்பட்ட அஞ்சலுடன் சம்பந்தப்பட்ட அனைத்து அஞ்சல்களையும் படிக்காத‍தாக குறிக்கும்"
 
-#: kmmainwidget.cpp:3308
+#: kmmainwidget.cpp:3312
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "சார்ந்த அஞ்சல்களை &முக்கியமானவையாக குறி"
 
-#: kmmainwidget.cpp:3311
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "தொடரை &முக்கியமானதாக குறித்ததை நீக்கு"
 
-#: kmmainwidget.cpp:3314
+#: kmmainwidget.cpp:3318
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "தொடரை &செயலுக்கானதாக குறி"
 
-#: kmmainwidget.cpp:3317
+#: kmmainwidget.cpp:3321
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "தொடரை &செயலுக்கானதாக குறிக்கும் குறிப்பை நீக்கு"
 
-#: kmmainwidget.cpp:3321
+#: kmmainwidget.cpp:3325
 #, kde-format
 msgid "&Watch Thread"
 msgstr "சார்ந்தவற்றை &கவனி"
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3329
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "சார்ந்தவற்றை பொ&ருட்படுத்தாதே"
 
-#: kmmainwidget.cpp:3333 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3337 kmreadermainwin.cpp:498
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "&உடனிணைப்புகளை சேமி…"
 
-#: kmmainwidget.cpp:3337
+#: kmmainwidget.cpp:3341
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "அனைத்து உடனிணைப்புகளையும் நீக்கு"
 
-#: kmmainwidget.cpp:3345
+#: kmmainwidget.cpp:3349
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "மறையாக்கத்தை நீக்கி வேறு இடத்தில் நகலெடு…"
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3353
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "&அனைத்து வடிகட்டிகளையும் செயல்படுத்து"
 
-#: kmmainwidget.cpp:3358
+#: kmmainwidget.cpp:3362
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "சார்ந்தவற்றின் தொகுப்பை &விரி"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3365
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "தற்போதைய அஞ்சல் தொகுப்பை விரிக்கும்"
 
-#: kmmainwidget.cpp:3365
+#: kmmainwidget.cpp:3369
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "சார்ந்தவற்றின் தொகுப்பை சு&ருக்கு"
 
-#: kmmainwidget.cpp:3368
+#: kmmainwidget.cpp:3372
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "தற்போதைய அஞ்சல் தொகுப்பை சுருக்கும்"
 
-#: kmmainwidget.cpp:3372
+#: kmmainwidget.cpp:3376
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "அனைத்து தொகுப்புகளையும் வி&ரி"
 
-#: kmmainwidget.cpp:3375
+#: kmmainwidget.cpp:3379
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "தற்போதைய அடைவிலுள்ள அனைத்து தொகுப்புகளையும் விரிக்கும்"
 
-#: kmmainwidget.cpp:3379
+#: kmmainwidget.cpp:3383
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "அனைத்து தொகுப்புகளையும் சுரு&க்கு"
 
-#: kmmainwidget.cpp:3382
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "தற்போதைய அடைவிலுள்ள அனைத்து தொகுப்புகளையும் சுருக்கும்"
 
-#: kmmainwidget.cpp:3386
+#: kmmainwidget.cpp:3390
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&அஞ்சலை காட்டு"
 
-#: kmmainwidget.cpp:3393
+#: kmmainwidget.cpp:3397
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "அ&டுத்த அஞ்சல்"
 
-#: kmmainwidget.cpp:3396
+#: kmmainwidget.cpp:3400
 #, kde-format
 msgid "Go to the next message"
 msgstr "அடுத்த அஞ்சலுக்கு செல்லும்"
 
-#: kmmainwidget.cpp:3400
+#: kmmainwidget.cpp:3404
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "அடு&த்த படிக்கப்படாத அஞ்சல்"
 
-#: kmmainwidget.cpp:3408
+#: kmmainwidget.cpp:3412
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "அடுத்தது"
 
-#: kmmainwidget.cpp:3409
+#: kmmainwidget.cpp:3413
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "படிக்கப்படாத அடுத்த அஞ்சலுக்கு செல்லும்"
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&முந்தைய அஞ்சல்"
 
-#: kmmainwidget.cpp:3415
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "Go to the previous message"
 msgstr "முந்தைய அஞ்சலுக்கு செல்லும்"
 
-#: kmmainwidget.cpp:3420
+#: kmmainwidget.cpp:3424
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "மு&ந்தைய படிக்கப்படாத அஞ்சல்"
 
-#: kmmainwidget.cpp:3428
+#: kmmainwidget.cpp:3432
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "முந்தையது"
 
-#: kmmainwidget.cpp:3429
+#: kmmainwidget.cpp:3433
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "படிக்கப்படாத முந்தைய அஞ்சலுக்கு செல்லும்"
 
-#: kmmainwidget.cpp:3433
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "அடுத்த படிக்கப்படாத அடை&வு"
 
-#: kmmainwidget.cpp:3439
+#: kmmainwidget.cpp:3443
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "படிக்கப்படாத அஞ்சல்களை கொண்ட அடுத்த அடைவிற்கு செல்லும்"
 
-#: kmmainwidget.cpp:3442
+#: kmmainwidget.cpp:3446
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "முந்தை&ய படிக்கப்படாத அடைவு"
 
-#: kmmainwidget.cpp:3448
+#: kmmainwidget.cpp:3452
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "படிக்கப்படாத அஞ்சல்களை கொண்ட முந்தைய அடைவிற்கு செல்லும்"
 
-#: kmmainwidget.cpp:3452
+#: kmmainwidget.cpp:3456
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "படிக்கப்படாத அடுத்த &உரை"
 
-#: kmmainwidget.cpp:3455
+#: kmmainwidget.cpp:3459
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "அடுத்த படிக்கப்படாத உரைக்கு செல்லும்"
 
-#: kmmainwidget.cpp:3457
+#: kmmainwidget.cpp:3461
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5279,262 +5279,262 @@ msgstr ""
 "தற்போதைய அஞ்சலில் கீழே உருளும். அஞ்சலின் முடிவில் இருந்தால், அடுத்த படிக்காத அஞ்சலுக்கு "
 "செல்லும்."
 
-#: kmmainwidget.cpp:3465
+#: kmmainwidget.cpp:3469
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "&வடிகட்டிகளை அமை…"
 
-#: kmmainwidget.cpp:3471
+#: kmmainwidget.cpp:3475
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "வடிகட்டி &சிறுநிரல்களை நிர்வகி…"
 
-#: kmmainwidget.cpp:3476
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgid "&Add Account…"
 msgstr "&கணக்கை சேர்…"
 
-#: kmmainwidget.cpp:3481
+#: kmmainwidget.cpp:3485
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "புதியவை என்ன?"
 
-#: kmmainwidget.cpp:3488
+#: kmmainwidget.cpp:3492
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "அ&றிவிப்புகளை அமை…"
 
-#: kmmainwidget.cpp:3495
+#: kmmainwidget.cpp:3499
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "&கேமெயிலை அமை…"
 
-#: kmmainwidget.cpp:3502
+#: kmmainwidget.cpp:3506
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "காலாவதியாக்கு…"
 
-#: kmmainwidget.cpp:3508
+#: kmmainwidget.cpp:3512
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "பிடித்த அடைவுகளில் சேர்…"
 
-#: kmmainwidget.cpp:3514 kmmainwidget.cpp:3522
+#: kmmainwidget.cpp:3518 kmmainwidget.cpp:3526
 #, kde-format
 msgid "Apply All Filters"
 msgstr "அனைத்து வடிகட்டிகளையும் செயல்படுத்து"
 
-#: kmmainwidget.cpp:3535
+#: kmmainwidget.cpp:3539
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "அடைவின்மீதும் அதில் சார்ந்த அடைவுகளின் மீதும் வடிகட்டிகளை செயல்படுத்து"
 
-#: kmmainwidget.cpp:3540
+#: kmmainwidget.cpp:3544
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "கேமெயிலின் தரவை இறக்குமதி/ஏற்றுமதி செய்…"
 
-#: kmmainwidget.cpp:3546
+#: kmmainwidget.cpp:3550
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "முகவரிப்புத்தகத்தில் புதிய தொடர்பு…"
 
-#: kmmainwidget.cpp:3554 kmmainwidget.cpp:4202
+#: kmmainwidget.cpp:3558 kmmainwidget.cpp:4207
 #, kde-format
 msgid "Account &Settings"
 msgstr "கணக்கிற்கான &அமைப்புகள்"
 
-#: kmmainwidget.cpp:3558
+#: kmmainwidget.cpp:3562
 #, kde-format
 msgid "Restart Account"
 msgstr "கணக்கை மீள்துவக்கு"
 
-#: kmmainwidget.cpp:3574
+#: kmmainwidget.cpp:3578
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "அஞ்சலை அடைவுக்கு நகலெடு"
 
-#: kmmainwidget.cpp:3580
+#: kmmainwidget.cpp:3584
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "அடைவிற்கு தாவு…"
 
-#: kmmainwidget.cpp:3586
+#: kmmainwidget.cpp:3590
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "தற்போதைய செயல்பாட்டை ரத்து செய்"
 
-#: kmmainwidget.cpp:3592
+#: kmmainwidget.cpp:3596
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "அடுத்த அடைவை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3598
+#: kmmainwidget.cpp:3602
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "முந்தைய அடைவை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3604
+#: kmmainwidget.cpp:3608
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "குவியத்தை கொண்ட அடைவை தேர்வு செய்"
 
-#: kmmainwidget.cpp:3611
+#: kmmainwidget.cpp:3615
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "முதல் அடைவை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3617
+#: kmmainwidget.cpp:3621
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "கடைசி அடைவை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3623
+#: kmmainwidget.cpp:3627
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "அடுத்த அஞ்சலை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3629
+#: kmmainwidget.cpp:3633
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "முந்தைய அஞ்சலை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3635
+#: kmmainwidget.cpp:3639
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "முதல் அஞ்சலை தேர்ந்தெடு"
 
-#: kmmainwidget.cpp:3641
+#: kmmainwidget.cpp:3645
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "கடைசி அஞ்சலை தேர்ந்தெடு"
 
-#: kmmainwidget.cpp:3647
+#: kmmainwidget.cpp:3651
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "குவியத்திலுள்ள அஞ்சலை தேர்ந்தெடு"
 
-#: kmmainwidget.cpp:3654
+#: kmmainwidget.cpp:3658
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "விரை தேடலை குவியப்படுத்து"
 
-#: kmmainwidget.cpp:3662
+#: kmmainwidget.cpp:3666
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "முந்தைய அஞ்சலை தேர்வில் உட்படுத்து"
 
-#: kmmainwidget.cpp:3668
+#: kmmainwidget.cpp:3672
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "அடுத்த அஞ்சலை தேர்வில் உட்படுத்து"
 
-#: kmmainwidget.cpp:3675
+#: kmmainwidget.cpp:3679
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "அஞ்சலை அடைவிற்கு நகர்த்து"
 
-#: kmmainwidget.cpp:3685
+#: kmmainwidget.cpp:3689
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "இவ்வடைவிலும் சார்ந்துள்ள அடைவுகளிலும் உள்ள அனைத்து அஞ்சல்களையும் படித்த‍தாக குறி"
 
-#: kmmainwidget.cpp:3690
+#: kmmainwidget.cpp:3694
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "இவ்வடைவிலும் சார்ந்துள்ளவற்றிலும் பலமுறை உள்ளவற்றை ஒன்றுபோக நீக்கு"
 
-#: kmmainwidget.cpp:3696
+#: kmmainwidget.cpp:3700
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "தேர்ந்தெடுக்கப்பட்ட முந்தைய அடைவு"
 
-#: kmmainwidget.cpp:3703
+#: kmmainwidget.cpp:3707
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "தேர்ந்தெடுக்கப்பட்ட அடுத்த அடைவு"
 
-#: kmmainwidget.cpp:3732
+#: kmmainwidget.cpp:3736
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "பிடித்த அடைவுகளில் புதியதை சேர்த்தல்"
 
-#: kmmainwidget.cpp:4154
+#: kmmainwidget.cpp:4159
 #, kde-format
 msgid "&Delete Search"
 msgstr "&தேடலை நீக்கு"
 
-#: kmmainwidget.cpp:4166
+#: kmmainwidget.cpp:4171
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "சார்ந்த அஞ்சல்களை அகற்றிடத்திற்கு ந&கர்த்து"
 
-#: kmmainwidget.cpp:4168
+#: kmmainwidget.cpp:4173
 #, kde-format
 msgid "Edit Search…"
 msgstr "தேடலை திருத்து…"
 
-#: kmmainwidget.cpp:4200
+#: kmmainwidget.cpp:4205
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டியை அமை"
 
-#: kmmainwidget.cpp:4211
+#: kmmainwidget.cpp:4216
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "&அகற்றிடத்தை காலியாக்கு"
 
-#: kmmainwidget.cpp:4211
+#: kmmainwidget.cpp:4216
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "அனைத்து அஞ்சல்களையும் அ&கற்றிடத்திற்கு நகர்த்து"
 
-#: kmmainwidget.cpp:4263
+#: kmmainwidget.cpp:4268
 #, kde-format
 msgid "&Undo"
 msgstr "&செயல்நீக்கு"
 
-#: kmmainwidget.cpp:4265
+#: kmmainwidget.cpp:4270
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&செயல்நீக்கு: \"%1\""
 
-#: kmmainwidget.cpp:4322
+#: kmmainwidget.cpp:4327
 #, kde-format
 msgid "Filter %1"
 msgstr "வடிகட்டி %1"
 
-#: kmmainwidget.cpp:4888
+#: kmmainwidget.cpp:4896
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "தேடு… <%1>"
 
-#: kmmainwidget.cpp:4896
+#: kmmainwidget.cpp:4904
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5544,13 +5544,13 @@ msgstr ""
 "அஞ்சல்களில் HTML-ஐ அனுமதித்தல், உங்களை ஸ்பேமுக்கு ஆளாக்கலாம். மேலும், நிபுநர்கள் "
 "எதிர்பார்க்கக்கூடிய தாக்குதல்களால் உங்கள் கணினி பாதிக்கப்படுவதற்கான வாய்ப்பை அதிகரிக்கும்."
 
-#: kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4908
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML-ஐ பயன்படுத்து"
 
-#: kmmainwidget.cpp:5046
+#: kmmainwidget.cpp:5054
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5565,41 +5565,41 @@ msgstr ""
 "கேமெயிலின் செருகுநிரல் அமைப்புகளில் இவ்வம்சத்தை மாற்றியமைக்கலாம், அல்லது முழுதாக "
 "முடக்கலாம்."
 
-#: kmmainwidget.cpp:5049
+#: kmmainwidget.cpp:5057
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டிகளை இயக்கலாமா?"
 
-#: kmmainwidget.cpp:5050
+#: kmmainwidget.cpp:5058
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "ஒருங்கிணைந்த அஞ்சல்பெட்டிகளை இயக்கு"
 
-#: kmmainwidget.cpp:5051
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "ரத்து செய்"
 
-#: kmmainwidget.cpp:5086
+#: kmmainwidget.cpp:5094
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Akonadi-யை மீள்துவக்க வேண்டுமா?"
 
-#: kmmainwidget.cpp:5087
+#: kmmainwidget.cpp:5095
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi-யை மீள்துவக்கு"
 
-#: kmmainwidget.cpp:5088
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "மீள்துவக்கு"
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5103
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi மீள்துவக்கப்பட்டது"
@@ -5760,7 +5760,7 @@ msgstr ""
 "இக்கணக்கு இப்போது தொடர்பற்ற நிலையில் உள்ளது. தொடர்புள்ள நிலைக்கு மாற <a href=\"kmail:"
 "goResourceOnline\">இங்கு</a> கிளிக் செய்யுங்கள் . . .</p>"
 
-#: kmreaderwin.cpp:847
+#: kmreaderwin.cpp:856
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "தொடர்பு வெற்றிகரமாக மாற்றப்பட்டது"
@@ -5942,7 +5942,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "டொபையாசு கோனிகு"
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:136
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
 #, kde-format
 msgid "Retrieving folder properties"
 msgstr "அடைவின் பண்புகள் கண்டறியப்படுகின்றன"
@@ -5952,7 +5952,7 @@ msgstr "அடைவின் பண்புகள் கண்டறியப�
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr "பிணைய தொடர்பு இல்லை. அடைவின் விவரங்களை புதுப்பிக்க முடியாது."
 
-#: manageshowcollectionproperties.cpp:183
+#: manageshowcollectionproperties.cpp:184
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -6070,68 +6070,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "அஞ்சலை காப்பகப்படுத்து"
 
-#: messageactions.cpp:399
+#: messageactions.cpp:400
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "அஞ்சல் பட்டியலின்படி வடிகட்டு…"
 
-#: messageactions.cpp:435
+#: messageactions.cpp:436
 #, kde-format
 msgid "<unknown>"
 msgstr "<தெரியாதது>"
 
-#: messageactions.cpp:435
+#: messageactions.cpp:436
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "அஞ்சல் பட்டியலின் பெயர்: %1"
 
-#: messageactions.cpp:438
+#: messageactions.cpp:439
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "அஞ்சலை பட்டியலின் காப்பகத்தில் திற"
 
-#: messageactions.cpp:441
+#: messageactions.cpp:442
 #, kde-format
 msgid "Post New Message"
 msgstr "புதிய அஞ்சலை அனுப்பு"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:445
 #, kde-format
 msgid "Go to Archive"
 msgstr "காப்பகத்திற்கு செல்"
 
-#: messageactions.cpp:447
+#: messageactions.cpp:448
 #, kde-format
 msgid "Request Help"
 msgstr "உதவி கோரு"
 
-#: messageactions.cpp:450
+#: messageactions.cpp:451
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "உரிமையாளரை தொடர்பு கொள்"
 
-#: messageactions.cpp:456
+#: messageactions.cpp:457
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "பட்டியலிலிருந்து விலகு"
 
-#: messageactions.cpp:465
+#: messageactions.cpp:466
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "%1 அஞ்சல் பட்டியலின்படி வடிகட்டு…"
 
-#: messageactions.cpp:642
+#: messageactions.cpp:643
 #, kde-format
 msgid "email"
 msgstr "மின்னஞ்சல்"
 
-#: messageactions.cpp:645
+#: messageactions.cpp:646
 #, kde-format
 msgid "web"
 msgstr "இணையம்"
 
-#: messageactions.cpp:650
+#: messageactions.cpp:651
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6139,13 +6139,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:753
+#: messageactions.cpp:757
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF-ஆக ஏற்றுமதி செய்வது"
 
-#: messageactions.cpp:755
+#: messageactions.cpp:759
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF ஆவணம் (*.pdf)"
