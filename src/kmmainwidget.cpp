@@ -1921,7 +1921,11 @@ void KMMainWidget::trashMessageSelected(MessageList::Core::MessageItemSetReferen
 
 void KMMainWidget::slotTrashMessagesCompleted(KMTrashMsgCommand *command)
 {
-    Q_ASSERT(command);
+    if (!command) {
+        Q_ASSERT(command);
+        qCWarning(KMAIL_LOG) << "Command is nullptr. It's bug";
+        return;
+    }
     mMessagePane->markMessageItemsAsAboutToBeRemoved(command->refSet(), false);
     mMessagePane->deletePersistentSet(command->refSet());
     if (command->result() == KMCommand::OK) {
