@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.07.80\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.07.80\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -32,14 +32,12 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Asistent KMailu na obnovovanie nastavenia"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "(c) 2019-2021 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "© 2019-2025 Laurent Montel <montel@kde.org>"
 msgstr "(c) 2019-2021 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
-#, fuzzy, kde-format
-#| msgid "Laurent Montel"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
@@ -71,8 +69,7 @@ msgid "Finish"
 msgstr "Dokončiť"
 
 #: refreshsettingscleanuppage.cpp:22
-#, fuzzy, kde-format
-#| msgid "Clean"
+#, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Vyčistiť"
@@ -103,8 +100,7 @@ msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Vyčistiť veľkosť dialógových okien v súbore nastavení `%1`: Hotovo"
 
 #: refreshsettingsfirstpage.cpp:20
-#, fuzzy, kde-format
-#| msgid "Please close KMail/Kontact before using it."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
 msgstr "Prosím zatvorte KMail/Kontact pred použitím."

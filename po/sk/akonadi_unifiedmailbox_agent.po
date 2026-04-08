@@ -13,19 +13,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.07.80\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.07.80\n"
 
 #: settingsdialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Pridať"
 
 #: settingsdialog.cpp:68
-#, fuzzy, kde-format
-#| msgid "Modify"
+#, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Zmeniť"
@@ -41,29 +39,25 @@ msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Naozaj chcete odstrániť združený mailbox <b>%1</b>?"
 
 #: settingsdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Really Remove?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Naozaj odstrániť?"
 
 #: settingsdialog.cpp:127
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Pridať"
 
 #: settingsdialog.cpp:131
-#, fuzzy, kde-format
-#| msgid "Modify"
+#, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "Zmeniť"
 
 #: settingsdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Odstrániť"
@@ -90,11 +84,10 @@ msgid "Name:"
 msgstr "Názov:"
 
 #: unifiedmailboxeditor.cpp:103
-#, fuzzy, kde-format
-#| msgid "Pick icon..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
-msgstr "Vybrať ikonu..."
+msgstr "Vybrať ikonu…"
 
 #: unifiedmailboxeditor.cpp:104
 #, kde-format
@@ -117,7 +110,6 @@ msgid "Drafts"
 msgstr "Koncepty"
 
 #, fuzzy
-#~| msgid "Add an Unified MailBox"
 #~ msgctxt "@title:window"
 #~ msgid "Add an Unified MailBox"
 #~ msgstr "Pridať Združený mailbox"
