@@ -3808,13 +3808,13 @@ void KMMainWidget::slotCollapseThread()
 void KMMainWidget::slotExpandAllThreads()
 {
     // TODO: Make this asynchronous ? (if there is enough demand)
-    KCursorSaver saver(Qt::WaitCursor);
+    const KCursorSaver saver(Qt::WaitCursor);
     mMessagePane->setAllThreadsExpanded(true);
 }
 
 void KMMainWidget::slotCollapseAllThreads()
 {
-    KCursorSaver saver(Qt::WaitCursor);
+    const KCursorSaver saver(Qt::WaitCursor);
     mMessagePane->setAllThreadsExpanded(false);
 }
 
@@ -5114,7 +5114,7 @@ void KMMainWidget::slotClearCacheDone()
 
 void KMMainWidget::slotRestoreClosedMessage(Akonadi::Item::Id id)
 {
-    qDebug() << " ID " << id;
+    qCDebug(KMAIL_LOG) << " ID " << id;
     slotMessageActivated(Akonadi::Item(id));
 }
 
