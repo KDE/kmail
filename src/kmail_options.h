@@ -37,6 +37,7 @@ static void kmail_options(QCommandLineParser *parser)
 #if KMAIL_WITH_KUSERFEEDBACK
     parser->addOption(QCommandLineOption(QStringLiteral("feedback"), i18nc("@info:shell", "Lists the available options for user feedback")));
 #endif
+    parser->addOption(QCommandLineOption(QStringLiteral("debug"), i18nc("@info:shell", "Activate Debug Mode")));
 
     parser->addOptions(options);
     parser->addPositionalArgument(QStringLiteral("address"),
