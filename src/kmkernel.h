@@ -493,6 +493,7 @@ public:
     FolderArchiveManager *folderArchiveManager() const;
 
     [[nodiscard]] bool allowToDebug() const;
+    void setAllowToDebug(bool debug);
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
     [[nodiscard]] Akonadi::Search::PIM::IndexedItems *indexedItems() const;
 #endif

@@ -1898,6 +1898,11 @@ bool KMKernel::allowToDebug() const
     return mDebug;
 }
 
+void KMKernel::setAllowToDebug(bool debug)
+{
+    mDebug = debug;
+}
+
 bool KMKernel::firstStart() const
 {
     return the_firstStart;
