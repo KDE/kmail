@@ -159,6 +159,10 @@ int main(int argc, char *argv[])
         return 0;
     }
 #endif
+    bool enableDebug = false;
+    if (cmdArgs->isSet(QStringLiteral("debug"))) {
+        enableDebug = true;
+    }
 
     if (!KMailApplication::start(args)) {
         qCDebug(KMAIL_LOG) << "Another instance of KMail already running";
@@ -176,6 +180,7 @@ int main(int argc, char *argv[])
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
 
+    kmkernel->setAllowToDebug(enableDebug);
     // If the instance hasn't been created yet, do that now
     app.setEventLoopReached();
     app.delayedInstanceCreation(args, QDir::currentPath());
