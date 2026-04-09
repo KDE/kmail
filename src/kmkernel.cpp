@@ -1039,7 +1039,7 @@ void KMKernel::cleanup()
         RecentAddresses::self(config.data())->save(config.data());
     }
 
-    Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
+    const Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
     if (trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
             const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
