@@ -1871,8 +1871,8 @@ bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
         job->fetchScope().fetchFullPayload();
         job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
         if (job->exec()) {
-            if (job->items().count() >= 1) {
-                const auto item = job->items().at(0);
+            if (!job->items().isEmpty()) {
+                const auto item = job->items().constFirst();
                 mainWidget->replyMessageTo(item, replyToAll);
                 return true;
             }
