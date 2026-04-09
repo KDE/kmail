@@ -13,12 +13,11 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.07.80\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.07.80\n"
 
 #: filterlogdialog.cpp:44
-#, fuzzy, kde-format
-#| msgid "Share..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Zdieľať..."
@@ -30,8 +29,7 @@ msgid "Filter Log Viewer"
 msgstr "Prehliadač záznamu filtrov"
 
 #: filterlogdialog.cpp:68
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Zaznamenávať aktivity filtra"
@@ -52,15 +50,13 @@ msgid "Logging Details"
 msgstr "Detaily záznamu"
 
 #: filterlogdialog.cpp:101
-#, fuzzy, kde-format
-#| msgid "Log pattern description"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Popis vzoru záznamu"
 
 #: filterlogdialog.cpp:106
-#, fuzzy, kde-format
-#| msgid "Log filter &rule evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Zaznamenávať vyhodnotenie &pravidiel filtrov"
@@ -80,22 +76,19 @@ msgstr ""
 "filtra."
 
 #: filterlogdialog.cpp:118
-#, fuzzy, kde-format
-#| msgid "Log filter pattern evaluation"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Zaznamenávať vyhodnotenie vzorky filtrov"
 
 #: filterlogdialog.cpp:123
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Zaznamenávať akcie filtrov"
 
 #: filterlogdialog.cpp:133
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Obmedzenie veľkosti záznamu:"
@@ -134,8 +127,7 @@ msgstr ""
 "\"%2\" je detailný popis chyby."
 
 #: filterlogdialog.cpp:331
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Chyba KMail"
@@ -183,7 +175,7 @@ msgstr "Filtrujú sa správy"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Starting"
 
 #: mailfilteragent.cpp:116
 #, kde-format
@@ -194,7 +186,7 @@ msgstr "Záznam filtra mailu povolený"
 #: mailfilteragent.cpp:118
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Zobraziť záznam"
 
 #: mailfilteragent.cpp:185
 #, kde-format
@@ -207,10 +199,9 @@ msgid "Filtering in %1"
 msgstr "Filtrovanie v %1"
 
 #: mailfilteragent.cpp:396
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Filtrujú sa správy"
-msgstr[1] "Filtrujú sa správy"
-msgstr[2] "Filtrujú sa správy"
+msgstr[0] "Finished filtering, %1 message processed"
+msgstr[1] "Finished filtering, %1 messages processed"
+msgstr[2] "Finished filtering, %1 messages processed"
