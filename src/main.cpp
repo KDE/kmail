@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 
 #if KMAIL_WITH_KUSERFEEDBACK
     if (cmdArgs->isSet(QStringLiteral("feedback"))) {
-        KMailUserFeedbackProvider userFeedback(nullptr);
+        const KMailUserFeedbackProvider userFeedback(nullptr);
         QTextStream(stdout) << userFeedback.describeDataSources() << '\n';
         return 0;
     }
