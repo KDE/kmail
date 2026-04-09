@@ -22,7 +22,7 @@ repos:
     - id: destroyed-symlinks
     #- id: check-executables-have-shebangs
  - repo: https://github.com/pre-commit/mirrors-clang-format
-   rev: v22.1.1
+   rev: v22.1.3
    hooks:
     - id: clang-format
     # force using this project's configuration rather
@@ -30,7 +30,7 @@ repos:
       args: ["--style=file:.clang-format-pre-commit"]
  - repo: https://github.com/astral-sh/ruff-pre-commit
   # Ruff version.
-   rev: v0.15.7
+   rev: v0.15.9
    hooks:
     # Run the linter.
     - id: ruff
