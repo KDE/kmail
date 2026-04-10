@@ -195,7 +195,7 @@ AboutData::AboutData()
                  QStringLiteral(KDEPIM_VERSION),
                  i18n("KDE Email Client"),
                  KAboutLicense::GPL,
-                 i18n("Copyright © %1, KMail authors", QStringLiteral("2025")),
+                 i18n("Copyright © %1, KMail authors", QStringLiteral("2026")),
                  QString(),
                  QStringLiteral("https://apps.kde.org/kmail2/"))
 {
