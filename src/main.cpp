@@ -184,7 +184,6 @@ int main(int argc, char *argv[])
     // If the instance hasn't been created yet, do that now
     app.setEventLoopReached();
     app.delayedInstanceCreation(args, QDir::currentPath());
-    // kmkernel->setSystemTryAssociatedWindow(app.focusWindow());
 
     // Go!
     const int ret = qApp->exec();
