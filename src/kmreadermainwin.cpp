@@ -635,8 +635,8 @@ void KMReaderMainWin::slotCopyMoveResult(KJob *job)
 
 void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngineViewer::WebHitTestResult &result, const QPoint &aPoint)
 {
-    QUrl aUrl = result.linkUrl();
-    QUrl imageUrl = result.imageUrl();
+    const QUrl aUrl = result.linkUrl();
+    const QUrl imageUrl = result.imageUrl();
     mMsg = aMsg;
 
     const QString email = KEmailAddress::firstEmailAddress(aUrl.path()).toLower();
