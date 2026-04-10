@@ -293,7 +293,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
 // Move to KMail::Util instead?
 KConfigGroup KMKernel::resourceConfigGroup(const QString &id)
 {
-    return (KConfigGroup(KMKernel::config(), QStringLiteral("Resource %1").arg(id)));
+    return KConfigGroup(KMKernel::config(), QStringLiteral("Resource %1").arg(id));
 }
 
 /********************************************************************/
