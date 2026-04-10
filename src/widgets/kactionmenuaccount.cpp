@@ -97,7 +97,6 @@ void KActionMenuAccount::updateAccountMenu()
 #if 0 // TODO
             if (mAccountActivities && mAccountActivities->hasActivitySupport()) {
                 if (!mAccountActivities->filterAcceptsRow(type.activities())) {
-                    // TODO
                     continue;
                 }
             }
