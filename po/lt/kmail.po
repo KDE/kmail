@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-03-28 23:26+0200\n"
+"PO-Revision-Date: 2026-04-11 00:10+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -187,7 +187,7 @@ msgstr "LDAP palaikymas, priežiūra"
 
 #: aboutdata.cpp:115
 msgid "Major contributor to Akonadi"
-msgstr ""
+msgstr "Aktyvus Akonadi talkininkas"
 
 #: aboutdata.cpp:116
 #, fuzzy
@@ -1384,10 +1384,10 @@ msgid "Value"
 msgstr "Reikšmė"
 
 #: configuredialog/configurecomposerpage.cpp:684
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
-msgstr "&Nauja"
+msgstr "&Naujas"
 
 #: configuredialog/configurecomposerpage.cpp:688
 #, kde-format
@@ -1451,14 +1451,13 @@ msgid "Attachment Word:"
 msgstr "Priedas"
 
 #: configuredialog/configurecomposerpage.cpp:902
-#, fuzzy, kde-format
-#| msgid "Attachment:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "Priedas:"
+msgstr "Didžiausias priedo dydis:"
 
 #: configuredialog/configurecomposerpage.cpp:909
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
@@ -1584,7 +1583,7 @@ msgid "Encryption"
 msgstr "Šifravimas"
 
 #: configuredialog/configuresecuritypage.cpp:63
-#, fuzzy, kde-format
+#, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME tikrinimas"
 
@@ -1599,14 +1598,12 @@ msgid "Do you want to remove this email address?"
 msgstr "Ar norite pašalinti šį el. pašto adresą?"
 
 #: configuredialog/configuresecuritypage.cpp:126
-#, fuzzy, kde-format
-#| msgid ""
-#| "Changing the global HTML setting will override all folder specific values."
+#, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
-"Pakeičiant globalius HTML nustatymus, bus anuliuotos visos specifinės "
-"aplankų reikšmės."
+"Pakeitus visuotinę HTML nuostatą, bus nustelbtos visos specifinės aplankų "
+"reikšmės."
 
 #: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
@@ -1676,10 +1673,10 @@ msgid "Archive"
 msgstr "Archyvas"
 
 #: dialog/archivefolderdialog.cpp:52
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
-msgstr "Aplanko archyvavimas"
+msgstr "Archyvuoti aplanką"
 
 #: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3680
 #, kde-format
@@ -1788,11 +1785,10 @@ msgid "KMail2"
 msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:357
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
-msgstr "Parinkite žodyną, naudojamą šio laiško rašybos tikrinimui"
+msgstr "Pasirinkite, kurį žodyną naudoti tikrinant rašybą šiame laiške"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
@@ -1976,10 +1972,10 @@ msgid "Use Fi&xed Font"
 msgstr "Naudoti &lygiaplotį šriftą"
 
 #: editor/kmcomposerwin.cpp:1382
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
-msgstr "&Skubus"
+msgstr "Sk&ubus"
 
 #: editor/kmcomposerwin.cpp:1384
 #, fuzzy, kde-format
@@ -4384,15 +4380,13 @@ msgstr "KMail nustatytas dirbti atsijungus; visi darbai tinkle sustabdyti"
 
 #: kmkernel.cpp:661 kmmainwidget.cpp:2501 kmmainwidget.cpp:2516
 #, fuzzy, kde-format
-#| msgid "&Send Mail"
 msgid "Send Email"
-msgstr "Siųsti &paštą"
+msgstr "Siųsti el. laišką"
 
 #: kmkernel.cpp:662 kmmainwidget.cpp:2502 kmmainwidget.cpp:2517
 #, fuzzy, kde-format
-#| msgid "About to send email..."
 msgid "Impossible to send email"
-msgstr "Ruošiuosi siųsti laišką..."
+msgstr "Neįmanoma išsiųsti el. laišką"
 
 #: kmkernel.cpp:693
 #, fuzzy, kde-format
@@ -4672,21 +4666,21 @@ msgid "Move to Trash"
 msgstr "Perkelti į šiukšlinę"
 
 #: kmmainwidget.cpp:1505
-#, fuzzy, kde-format
+#, kde-format
 msgid "Are you sure you want to empty the trash folder?"
-msgstr "Ar tikrai norite ištuštinti šiukšlinę?"
+msgstr "Ar tikrai norite išvalyti šiukšlinės aplanką?"
 
 #: kmmainwidget.cpp:1507
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr ""
-"<qt>Ar tikrai norite perkelti visus laiškus iš aplanko <b>%1</b> į šiukšlinę?"
+"<qt>Ar tikrai norite iš aplanko <b>%1</b> perkelti visus laiškus į šiukšlinę?"
 "</qt>"
 
 #: kmmainwidget.cpp:1530
-#, fuzzy, kde-format
+#, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Visi laiškai perkelti į šiukšlinę"
 
@@ -4975,7 +4969,7 @@ msgid "&Expire All Folders"
 msgstr "Ištri&nti senus laiškus visuose aplankuose"
 
 #: kmmainwidget.cpp:2965
-#, fuzzy, kde-format
+#, kde-format
 msgid "Check &Mail"
 msgstr "&Tikrinti paštą"
 
@@ -4985,13 +4979,12 @@ msgid "Check Mail In"
 msgstr "Tikrinti paštą iš"
 
 #: kmmainwidget.cpp:2978
-#, fuzzy, kde-format
+#, kde-format
 msgid "Check Mail"
 msgstr "Tikrinti paštą"
 
 #: kmmainwidget.cpp:2979
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Tikrinti paštą"
@@ -5872,11 +5865,10 @@ msgid "Edit contact…"
 msgstr "Taisyti adresatą…"
 
 #: kmreaderwin.cpp:167
-#, fuzzy, kde-format
-#| msgid "Save Link As..."
+#, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
-msgstr "Įrašyti nuorodą kaip..."
+msgstr "Įrašyti nuorodą kaip…"
 
 #: kmreaderwin.cpp:173
 #, fuzzy, kde-format
@@ -6271,11 +6263,10 @@ msgid "Add Followup Reminder…"
 msgstr "&Ieškoti laiškų..."
 
 #: messageactions.cpp:80
-#, fuzzy, kde-format
-#| msgid "Send A&gain..."
+#, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
-msgstr "S&iųsti iš naujo..."
+msgstr "Siųsti &dar kartą…"
 
 #: messageactions.cpp:81
 #, kde-format
@@ -6653,15 +6644,15 @@ msgstr "Rodyti neperskaitytus laiškus sistemos dėkle"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg:103
-#, fuzzy, kde-format
+#, kde-format
 msgid "Specify e&ditor:"
-msgstr "Parinkti re&daktorių:"
+msgstr "Nurodykite re&daktorių:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
 #: settings/kmail.kcfg:107
-#, fuzzy, kde-format
+#, kde-format
 msgid "Use e&xternal editor instead of composer"
-msgstr "&Vietoje vidinio, naudoti išorinį redaktorių"
+msgstr "Vietoj rengyklės, naudo&ti išorinį redaktorių"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
 #: settings/kmail.kcfg:113
@@ -6673,15 +6664,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
 #: settings/kmail.kcfg:117
-#, fuzzy, kde-format
+#, kde-format
 msgid "Empty the local trash folder on program exit"
-msgstr "Iš&tuštinti vietinę šiukšlinę išjungiant programą"
+msgstr "Išjungiant programą išvalyti vietinį šiukšlinės aplanką"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg:121
-#, fuzzy, kde-format
+#, kde-format
 msgid "Delete messages without confirmation"
-msgstr "Siuntimas be patvirtinimo"
+msgstr "Ištrinti laiškus neprašant patvirtinimo"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg:125
