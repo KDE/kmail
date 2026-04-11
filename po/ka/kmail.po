@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-10 00:51+0000\n"
-"PO-Revision-Date: 2026-03-19 04:49+0100\n"
+"PO-Revision-Date: 2026-04-10 05:50+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4091,7 +4091,7 @@ msgstr "მომხმარებლის უკუკავშირის �
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "გამართვის რეჟიმის გააქტიურება"
 
 #: kmail_options.h:44
 #, kde-format

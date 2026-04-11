@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-10 00:51+0000\n"
-"PO-Revision-Date: 2026-03-19 12:35+0200\n"
+"PO-Revision-Date: 2026-04-10 08:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4151,7 +4151,7 @@ msgstr "Показати доступні варіанти для відгукі
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Задіяти режим діагностики"
 
 #: kmail_options.h:44
 #, kde-format

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-10 00:51+0000\n"
-"PO-Revision-Date: 2023-12-12 19:31+0100\n"
+"PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
@@ -4097,7 +4097,7 @@ msgstr "Uvádza dostupné možnosti spätnej väzby od používateľov"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Aktivovať režim ladenia"
 
 #: kmail_options.h:44
 #, kde-format
