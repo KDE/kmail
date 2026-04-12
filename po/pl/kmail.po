@@ -1,6 +1,6 @@
 # translation of kmail.po to Polish
 # translation of kmail.po to
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Early translations by Paweł Jabłoński <pawel.jablonski@mail.lze.lodz.pl>
 # Maintained by Jacek Stolarczyk <jacek@mer.chemia.polsl.gliwice.pl>
 # Michal Rudolf <mrudolf@kdewebdev.org>, 2002,2003, 2004, 2005, 2006, 2008, 2009, 2010.
@@ -13,16 +13,16 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-10 00:51+0000\n"
-"PO-Revision-Date: 2025-06-14 14:18+0200\n"
+"PO-Revision-Date: 2026-04-11 08:18+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
-"Language-Team: Polish <kde-i18n-doc@kde.org>\n"
+"Language-Team: pl\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1254,7 +1254,7 @@ msgstr "Tworzenie wiadomości"
 #: configuredialog/configurecomposerpage.cpp:389
 #, kde-format
 msgid "Activate quick text format toolbar"
-msgstr ""
+msgstr "Włącz pasek narzędzi szybkiego formatowania tekstu"
 
 #: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
@@ -1947,13 +1947,13 @@ msgstr "&Pilna"
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "&Żądaj powiadomienia o losie wiadomości"
+msgstr "Popr&oś o potwierdzenie przeczytania"
 
 #: editor/kmcomposerwin.cpp:1388
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
-msgstr "&Żądaj powiadomienia o losie wiadomości"
+msgstr "Popr&oś o potwierdzenie dostarczenia"
 
 #: editor/kmcomposerwin.cpp:1393
 #, kde-format
@@ -1977,7 +1977,7 @@ msgstr "S&amopoprawianie pisowni"
 #, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
-msgstr "Edytowanie formatowanego tekstu"
+msgstr "Pisanie tekstem z formatowaniem"
 
 #: editor/kmcomposerwin.cpp:1421
 #, kde-format
@@ -1988,7 +1988,7 @@ msgstr "Formatowany tekst"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
-msgstr "Przełącz tryb edytowania formatowanego tekstu"
+msgstr "Przełącz na tryb pisania tekstem z formatowaniem"
 
 #: editor/kmcomposerwin.cpp:1426
 #, kde-format
@@ -2083,7 +2083,7 @@ msgstr "Podpisz"
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "&Cryptographic Message Format"
-msgstr "Format zaszy&frowanej wiadomości"
+msgstr "Format zaszyfrowanej wiadomoś&ci"
 
 #: editor/kmcomposerwin.cpp:1511
 #, kde-format
@@ -2094,7 +2094,7 @@ msgstr "Wybierz format szyfrowania dla tej wiadomości"
 #: editor/kmcomposerwin.cpp:1516
 #, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr "Usługa przypominania o kontynuacji…"
+msgstr "Utwórz przypomnienie o wiadomości…"
 
 #: editor/kmcomposerwin.cpp:1550
 #, kde-format
@@ -4001,10 +4001,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Wyślij DW: na 'adres'. Można to powtórzyć"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "Książka adresowa"
+msgstr "Adres"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4029,10 +4028,9 @@ msgid "Read message body from 'file'"
 msgstr "Odczytaj treść wiadomości z 'pliku'"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Plik"
+msgstr "Plik"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4041,10 +4039,9 @@ msgid "Set body of message"
 msgstr "Ustaw treść wiadomości"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Formatowany tekst"
+msgstr "Tekst"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4053,10 +4050,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Dodaj załącznik do wiadomości. Operację tę można powtarzać"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Załącznik"
+msgstr "Adres URL załącznika"
 
 #: kmail_options.h:31
 #, kde-format
@@ -5016,7 +5012,7 @@ msgstr "Opóźnione wiadomości…"
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "Wiadomości przypominająca…"
+msgstr "Wiadomości przypominające o sobie…"
 
 #: kmmainwidget.cpp:3092
 #, fuzzy, kde-format
@@ -6171,7 +6167,7 @@ msgstr "Odfiltruj po &listach dyskusyjnych…"
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr "Dodaj przypomnienie…"
+msgstr "Dodaj przypomnienie o wiadomości…"
 
 #: messageactions.cpp:80
 #, kde-format
@@ -6228,7 +6224,7 @@ msgstr "Przejdź do archiwum"
 #: messageactions.cpp:448
 #, kde-format
 msgid "Request Help"
-msgstr "Zażądaj pomocy"
+msgstr "Poszukaj pomocy"
 
 #: messageactions.cpp:451
 #, kde-format
@@ -6654,7 +6650,7 @@ msgstr "Sprawdź pisownię przed wysłaniem"
 #: settings/kmail.kcfg:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "Zawsze żądaj potwierdzenia losu wiado&mości"
+msgstr "Zawsze proś o potwierdzenie przeczytania wiado&mości"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
