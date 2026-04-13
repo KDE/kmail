@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-27 21:47+0530\n"
+"PO-Revision-Date: 2026-04-12 18:49+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6384,6 +6384,9 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
+"<qt><p>வெளிப்பெட்டியிலுள்ள அஞ்சல்களை எப்போது தானாக அனுப்ப வேண்டுமென்று அமைக்கலாம்: "
+"அஞ்சலுள்ளதா என பார்க்கும்போதா, கைமுறையாக அஞ்சலுள்ளதா என பார்க்கும்போதா, அல்லது ஒருபோதும் "
+"வேண்டாமா. </p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg:77
@@ -6500,6 +6503,8 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
+"இத்தனை பெறுநர்களுக்கு மேல் இருந்தால், அனுப்புவதை கேமெயில் உறுதிப்படுத்தும். விரும்பினால் "
+"இந்த எச்சரிக்கையை முடக்கலாம்."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg:212
