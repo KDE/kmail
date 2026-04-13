@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-10 00:51+0000\n"
-"PO-Revision-Date: 2026-02-27 21:47+0530\n"
+"PO-Revision-Date: 2026-04-12 18:49+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
 "Language: ta\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6390,6 +6390,9 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
+"<qt><p>வெளிப்பெட்டியிலுள்ள அஞ்சல்களை எப்போது தானாக அனுப்ப வேண்டுமென்று அமைக்கலாம்: "
+"அஞ்சலுள்ளதா என பார்க்கும்போதா, கைமுறையாக அஞ்சலுள்ளதா என பார்க்கும்போதா, அல்லது ஒருபோதும் "
+"வேண்டாமா. </p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg:77
@@ -6506,6 +6509,8 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
+"இத்தனை பெறுநர்களுக்கு மேல் இருந்தால், அனுப்புவதை கேமெயில் உறுதிப்படுத்தும். விரும்பினால் "
+"இந்த எச்சரிக்கையை முடக்கலாம்."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg:212
@@ -7937,26 +7942,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"%1 தனிலிருந்தான இந்த மின்னஞ்சலுக்க வரும் பதில்களை யாரும் கண்காணிக்காதது போல் தெரிகிறது. "
+"உறுதியாக பதிலளிக்க வேண்டுமா?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "கண்காணிக்கப்படாத அஞ்சல் முகவரி"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "குறியிடாதே"
+msgstr "அனுப்ப வேண்டாம்"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "அஞ்&சலை அனுப்பு"
+msgstr "அஞ்சலை அனுப்பு"
 
 #: util.cpp:190
 #, kde-format
