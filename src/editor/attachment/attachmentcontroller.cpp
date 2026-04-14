@@ -124,7 +124,7 @@ void AttachmentController::onShowAttachment(const std::shared_ptr<KMime::Content
 void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
 {
     if (!itemClicked.isValid()) {
-        qCDebug(KMAIL_LOG) << "Received an invalid item clicked index";
+        qCWarning(KMAIL_LOG) << "Received an invalid item clicked index";
         return;
     }
     // The itemClicked index will contain the column information. But we want to retrieve

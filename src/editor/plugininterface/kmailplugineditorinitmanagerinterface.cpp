@@ -38,11 +38,11 @@ void KMailPluginEditorInitManagerInterface::setParentWidget(QWidget *parentWidge
 void KMailPluginEditorInitManagerInterface::initializePlugins()
 {
     if (mWasInitialized) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Plugin was already initialized. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Plugin was already initialized. This is a bug";
         return;
     }
     if (!mRichTextEditor) {
-        qCDebug(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Richtexteditor is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginEditorInitManagerInterface : Richtexteditor is null. This is a bug";
         return;
     }
     if (!mParentWidget) {

@@ -59,18 +59,18 @@ void KMailPluginGrammarEditorManagerInterface::setCustomToolsWidget(PimCommon::C
 void KMailPluginGrammarEditorManagerInterface::initializePlugins()
 {
     if (mWasInitialized) {
-        qCDebug(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Plugin was already initialized. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Plugin was already initialized. This is a bug";
         return;
     }
     if (!mRichTextEditor) {
-        qCDebug(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Richtexteditor is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Richtexteditor is null. This is a bug";
         return;
     }
     if (!mParentWidget) {
         qCDebug(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : Parent is null. This is a bug";
     }
     if (!mCustomToolsWidget) {
-        qCDebug(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : mCustomToolsWidget is null. This is a bug";
+        qCWarning(KMAIL_LOG) << "KMailPluginGrammarEditorManagerInterface : mCustomToolsWidget is null. This is a bug";
         return;
     }
 
