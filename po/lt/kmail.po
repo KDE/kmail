@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-10 00:51+0000\n"
-"PO-Revision-Date: 2026-04-11 00:10+0300\n"
+"PO-Revision-Date: 2026-04-14 00:10+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -1225,41 +1225,36 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:350
-#, fuzzy, kde-format
-#| msgid "Configure Completion Order..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr "Redaguoti užbaigimo tvarką..."
+msgstr "Konfigūruoti užbaigimą…"
 
 #: configuredialog/configurecomposerpage.cpp:358
-#, fuzzy, kde-format
-#| msgid "No autosave"
+#, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
-msgstr "Automatinio išsaugojimo nėra"
+msgstr "Automatinis įrašymas"
 
 #: configuredialog/configurecomposerpage.cpp:368
-#, fuzzy, kde-format
+#, kde-format
 msgid "No autosave"
-msgstr "Automatinio išsaugojimo nėra"
+msgstr "Be automatinio įrašymo"
 
 #: configuredialog/configurecomposerpage.cpp:369
-#, fuzzy, kde-format
-#| msgctxt "Interval suffix"
-#| msgid " minute"
-#| msgid_plural " minutes"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
 msgstr[0] " minutė"
 msgstr[1] " minutės"
 msgstr[2] " minučių"
-msgstr[3] " minutės"
+msgstr[3] " minutė"
 
 #: configuredialog/configurecomposerpage.cpp:371
-#, fuzzy, kde-format
+#, kde-format
 msgid "Automatically save the message at this specified interval"
-msgstr "Automatiškai išsaugoti laišką šiuo nustatytu laiko intervalu"
+msgstr "Automatiškai įrašyti laišką šiuo nustatytu laiko intervalu"
 
 #: configuredialog/configurecomposerpage.cpp:385
 #, kde-format
@@ -1426,29 +1421,27 @@ msgid "E&nable detection of missing attachments"
 msgstr "Į&jungti trūkstamų priedų aptikimą"
 
 #: configuredialog/configurecomposerpage.cpp:881
-#, fuzzy, kde-format
-#| msgid ""
-#| "Recognize any of the following key words as intention to attach a file:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
-msgstr "Bet kurį iš šių raktažodžių laikyti ketinimu pridėti failą:"
+msgstr ""
+"Atpažinus bet kurį iš šių žodžių, bus manoma, jog turite ketinimų pridėti "
+"failą:"
 
 #: configuredialog/configurecomposerpage.cpp:892
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enter new key word:"
-msgstr "Įrašyti naują raktažodį:"
+msgstr "Įveskite naują raktažodį:"
 
 #: configuredialog/configurecomposerpage.cpp:894
-#, fuzzy, kde-format
-#| msgid "Do you want to remove tag '%1'?"
+#, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr "Ar norite pašalinti žymę: „%1“?"
+msgstr "Ar tikrai norite pašalinti šį priedo žodį?"
 
 #: configuredialog/configurecomposerpage.cpp:895
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Word:"
-msgstr "Priedas"
+msgstr "Priedo žodis:"
 
 #: configuredialog/configurecomposerpage.cpp:902
 #, kde-format
@@ -1463,7 +1456,7 @@ msgid " kB"
 msgstr " kB"
 
 #: configuredialog/configurecomposerpage.cpp:911
-#, fuzzy, kde-format
+#, kde-format
 msgid "No limit"
 msgstr "Neribotas"
 
@@ -2703,6 +2696,8 @@ msgid ""
 "Found potential phishing email addresses <a href=\"phishingdetails"
 "\">(details…)</a>"
 msgstr ""
+"Aptikti galimai sukčiavimui naudojami el. pašto adresai <a href="
+"\"phishingdetails\">(išsamiau…)</a>"
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
 #, kde-format
@@ -3473,27 +3468,25 @@ msgid "Autocorrection language:"
 msgstr "Automatinio taisymo kalba:"
 
 #: identity/identitydialog.cpp:748
-#, fuzzy, kde-format
-#| msgid "Restore default domain name"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
-msgstr "Atkurti numatytą domeno vardą:"
+msgstr "Atkurti numatytąjį domeno vardą"
 
 #: identity/identitydialog.cpp:751
-#, fuzzy, kde-format
-#| msgid "Defaul&t domain:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Numa&tytasis domenas:"
 
 #: identity/identitydialog.cpp:757
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
 "consist of the user's name.</p></qt>"
 msgstr ""
-"<qt><p>Numatytasis domenas yra naudojamas užbaigti el. pašto adresams, kurie "
-"turi tik naudotojų vardus.</p></qt>"
+"<qt><p>Numatytasis domenas yra naudojamas užbaigti el. pašto adresus, "
+"kuriuose yra tik naudotojo vardas.</p></qt>"
 
 #: identity/identitydialog.cpp:774
 #, fuzzy, kde-format
@@ -3920,20 +3913,19 @@ msgid "Do Not Attach"
 msgstr "Nepridėti"
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
-msgstr "Ištrinti paieškos aplanką"
+msgstr "Ištrinti paiešką"
 
 #: job/removecollectionjob.cpp:60
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the search <b>%1</b>?<br />Any messages "
 "it shows will still be available in their original folder.</qt>"
 msgstr ""
-"<qt>Ar tikrai norite ištrinti paieškos aplanką <b>%1</b>?<br />Aplanke "
-"rodomi laiškai nebus ištrinti, nes jie saugomi kituose aplankuose.</qt>"
+"<qt>Ar tikrai norite ištrinti paiešką „<b>%1</b>“?<br />Bet kokie joje "
+"rodomi laiškai ir toliau bus prieinami savo pradiniuose aplankuose.</qt>"
 
 #: job/removecollectionjob.cpp:63
 #, kde-format
@@ -3948,9 +3940,9 @@ msgid "Delete Folder"
 msgstr "Ištrinti aplanką"
 
 #: job/removecollectionjob.cpp:70
-#, fuzzy, kde-format
+#, kde-format
 msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
-msgstr "<qt>Ar tikrai norite pašalinti tuščią aplanką <b>%1</b>?</qt>"
+msgstr "<qt>Ar tikrai norite ištrinti tuščią aplanką <b>%1</b>?</qt>"
 
 #: job/removecollectionjob.cpp:75
 #, kde-format
@@ -5243,9 +5235,9 @@ msgid "Mark Thread as &Read"
 msgstr "Žymėti giją kaip &skaitytą"
 
 #: kmmainwidget.cpp:3304
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark all messages in the selected thread as read"
-msgstr "Žymėti visus pasirinktos gijos laiškus skaitytais"
+msgstr "Žymėti visus laiškus pasirinktoje gijoje kaip skaitytus"
 
 #: kmmainwidget.cpp:3307
 #, kde-format
@@ -5253,9 +5245,9 @@ msgid "Mark Thread as &Unread"
 msgstr "Žymėti giją kaip &neskaitytą"
 
 #: kmmainwidget.cpp:3310
-#, fuzzy, kde-format
+#, kde-format
 msgid "Mark all messages in the selected thread as unread"
-msgstr "Žymėti visus pasirinktos gijos laiškus neskaitytais"
+msgstr "Žymėti visus laiškus pasirinktoje gijoje kaip neskaitytus"
 
 #: kmmainwidget.cpp:3316
 #, kde-format
@@ -5730,22 +5722,21 @@ msgid "Filter %1"
 msgstr "Filtruoti: %1"
 
 #: kmmainwidget.cpp:4900
-#, fuzzy, kde-format
-#| msgctxt "Show shortcut for focus quick search. Don't change it"
-#| msgid "Search...<%1>"
+#, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
-msgstr "Ieškoti...<%1>"
+msgstr "Ieškoti… <%1>"
 
 #: kmmainwidget.cpp:4908
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
 "increase the likelihood that your system will be compromised by other "
 "present and anticipated security exploits."
 msgstr ""
-"Naudojant laiškuose HTML gali padidėti tikimybė gauti „brukalą“;  taip pat "
-"išauga Jūsų sistemos pažeidimo dėl esamų ar būsimų saugumo skylių tikimybė."
+"HTML naudojimas el. laiškuose gali padaryti jus pažeidžiamus „brukalui“ ir "
+"padidinti tikimybė, jog esamos ar būsimos saugumo spragos statys jūsų "
+"sistema į pavojų."
 
 #: kmmainwidget.cpp:4912
 #, kde-format
@@ -5865,9 +5856,9 @@ msgid "Open in Address Book"
 msgstr "Atverti adresų knygoje"
 
 #: kmreaderwin.cpp:156
-#, fuzzy, kde-format
+#, kde-format
 msgid "Bookmark This Link"
-msgstr "Įdėti žymelę šiai nuorodai"
+msgstr "Įrašyti šią nuorodą į žymeles"
 
 #: kmreaderwin.cpp:161
 #, kde-format
