@@ -118,7 +118,7 @@ target_link_libraries(
     KPim6::AkonadiCore
     KPim6::AkonadiMime
     KPim6::AkonadiAgentWidgetBase
-    KPim6::Mime
+    KF6::Mime
     KPim6::IdentityManagementCore
     KF6::DBusAddons
     KF6::Notifications

@@ -80,7 +80,7 @@ target_link_libraries(
     KPim6::AkonadiCore
     KPim6::AkonadiMime
     KPim6::AkonadiAgentWidgetBase
-    KPim6::Mime
+    KF6::Mime
     KF6::CalendarCore
     KF6::DBusAddons
     Qt::Widgets

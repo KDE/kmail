@@ -53,7 +53,7 @@ target_link_libraries(
     KPim6::AkonadiCore
     KPim6::AkonadiMime
     KPim6::MailTransport
-    KPim6::Mime
+    KF6::Mime
     KPim6::MessageComposer
     KPim6::MessageCore
     KPim6::PimCommon

@@ -242,7 +242,11 @@ find_package(KPim6MailTransport ${KMAILTRANSPORT_LIB_VERSION} CONFIG REQUIRED)
 find_package(KPim6TextEdit ${KPIMTEXTEDIT_LIB_VERSION} CONFIG REQUIRED)
 
 find_package(KPim6KontactInterface ${KONTACTINTERFACE_LIB_VERSION} CONFIG REQUIRED)
-find_package(KPim6Mime ${KMIME_LIB_VERSION} CONFIG REQUIRED)
+find_package(KF6Mime ${KF_MIN_VERSION} CONFIG)
+if(NOT TARGET KF6::Mime)
+    find_package(KPim6Mime ${KMIME_LIB_VERSION} CONFIG REQUIRED)
+    add_library(KF6::Mime ALIAS KPim6::Mime)
+endif()
 
 find_package(KPim6Gravatar ${LIBGRAVATAR_VERSION} CONFIG REQUIRED)
 find_package(KPim6Libkdepim ${LIBKDEPIM_LIB_VERSION} CONFIG REQUIRED)

@@ -54,7 +54,7 @@ target_link_libraries(
     Qt::Widgets
     KPim6::AkonadiCore
     KF6::CalendarCore
-    KPim6::Mime
+    KF6::Mime
     KPim6::MessageComposer
     kmailprivate
 )

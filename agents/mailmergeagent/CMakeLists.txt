@@ -50,7 +50,7 @@ target_link_libraries(
     mailmergeagent
     KPim6::AkonadiCore
     KPim6::AkonadiMime
-    #KPim6::Mime
+    #KF6::Mime
     KPim6::MessageComposer
     KPim6::MessageCore
     KF6::DBusAddons

@@ -447,7 +447,7 @@ target_link_libraries(
         KF6::I18n
         KF6::SonnetUi
         KPim6::Gravatar
-        KPim6::Mime
+        KF6::Mime
         KPim6::AkonadiCore
         KPim6::AkonadiContactWidgets
         KPim6::AkonadiMime

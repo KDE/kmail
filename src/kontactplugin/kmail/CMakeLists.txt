@@ -27,7 +27,7 @@ add_dependencies(kontact_kmailplugin kmail_xml)
 
 target_link_libraries(
     kontact_kmailplugin
-    KPim6::Mime
+    KF6::Mime
     KF6::I18n
     KPim6::KontactInterface
     KF6::CalendarCore
@@ -55,7 +55,7 @@ add_dependencies(kcmkmailsummary kmail_xml)
 target_link_libraries(
     kcmkmailsummary
     KF6::KCMUtils
-    KPim6::Mime
+    KF6::Mime
     KPim6::PimCommonAkonadi
     Qt::DBus
     KF6::I18n
