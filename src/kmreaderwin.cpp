@@ -52,12 +52,14 @@ using namespace MessageViewer;
 
 #include "kmail_debug.h"
 #include <KActionCollection>
+#include <KIO/Job>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KToggleAction>
 #include <QAction>
 #include <QDesktopServices>
 #include <QMenu>
+#include <QUrl>
 
 #include <QClipboard>
 

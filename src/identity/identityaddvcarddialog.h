@@ -7,10 +7,10 @@
 #pragma once
 #include "kmail_private_export.h"
 #include <QDialog>
-#include <QUrl>
 class QButtonGroup;
 class QComboBox;
 class KUrlRequester;
+class QUrl;
 
 class KMAILTESTS_TESTS_EXPORT IdentityAddVcardDialog : public QDialog
 {

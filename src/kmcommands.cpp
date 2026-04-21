@@ -111,6 +111,7 @@
 #include <KIO/FileCopyJob>
 #include <KIO/JobUiDelegate>
 #include <KIO/StatJob>
+#include <KIO/TransferJob>
 
 #include <QApplication>
 #include <QByteArray>

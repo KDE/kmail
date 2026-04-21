@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QUrl>
 #include <QVBoxLayout>
 using namespace Qt::Literals::StringLiterals;
 

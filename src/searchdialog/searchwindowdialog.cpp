@@ -20,6 +20,7 @@
 #include "kmsearchmessagemodel.h"
 #include "searchdescriptionattribute.h"
 #include "searchpatternwarning.h"
+#include <KActionCollection>
 #include <MailCommon/FolderRequester>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/MailKernel>

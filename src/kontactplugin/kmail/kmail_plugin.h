@@ -11,9 +11,8 @@
 #include <KontactInterface/Plugin>
 #include <KontactInterface/UniqueAppHandler>
 
-#include <QUrl>
 class OrgKdeKmailKmailInterface;
-
+class QUrl;
 namespace KontactInterface
 {
 class UniqueAppWatcher;

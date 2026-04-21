@@ -10,7 +10,6 @@
 #include <MessageViewer/Viewer>
 
 #include <Akonadi/MessageStatus>
-#include <KIO/TransferJob>
 #include <KMime/Message>
 
 #include <Akonadi/Collection>
@@ -45,6 +44,7 @@ class AttachmentStrategy;
 namespace KIO
 {
 class Job;
+class TransferJob;
 }
 namespace KMail
 {

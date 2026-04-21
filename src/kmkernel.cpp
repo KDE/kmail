@@ -92,6 +92,7 @@ using KMail::MailServiceImpl;
 
 #include <QDir>
 #include <QFileInfo>
+#include <QUrl>
 #include <QWidget>
 
 #include <MailCommon/ResourceReadConfigFile>

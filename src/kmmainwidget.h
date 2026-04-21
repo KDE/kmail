@@ -19,7 +19,6 @@
 #include "messageactions.h"
 #include <Akonadi/StandardMailActionManager>
 #include <Akonadi/Tag>
-#include <KActionCollection>
 #include <KXMLGUIClient>
 #include <MailCommon/FolderSettings>
 #include <MessageList/View>
@@ -65,7 +64,7 @@ class KActionMenuTransport;
 class KActionMenuAccount;
 class ZoomLabelWidget;
 class HistoryClosedReaderMenu;
-
+class KActionCollection;
 namespace KIO
 {
 class Job;

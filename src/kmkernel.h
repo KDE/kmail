@@ -9,8 +9,6 @@
 #include <QObject>
 #include <QPointer>
 
-#include <QUrl>
-
 #include "kmail_export.h"
 #include "settings/kmailsettings.h"
 #include <Akonadi/ServerManager>
@@ -21,7 +19,7 @@
 
 #define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
-
+class QUrl;
 class QAbstractItemModel;
 namespace Akonadi
 {

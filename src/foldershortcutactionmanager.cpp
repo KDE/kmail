@@ -16,6 +16,7 @@
 #include <KLocalizedString>
 #include <QAction>
 #include <QIcon>
+#include <QModelIndex>
 
 using namespace KMail;
 using namespace MailCommon;

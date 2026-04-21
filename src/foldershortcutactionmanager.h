@@ -9,10 +9,10 @@
 #include <Akonadi/Collection>
 
 #include <QHash>
-#include <QModelIndex>
 #include <QObject>
 
 class QAction;
+class QModelIndex;
 
 class KActionCollection;
 

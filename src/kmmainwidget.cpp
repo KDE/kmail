@@ -39,6 +39,7 @@
 #include "widgets/collectionpane.h"
 #include "widgets/kactionmenuaccount.h"
 #include "widgets/kactionmenutransport.h"
+#include <KActionCollection>
 #include <KSieveUi/SieveDebugDialog>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/MailKernel>

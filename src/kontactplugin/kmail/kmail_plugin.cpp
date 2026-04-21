@@ -28,6 +28,7 @@
 
 #include <QDropEvent>
 #include <QStandardPaths>
+#include <QUrl>
 
 using namespace KCalUtils;
 using namespace KCalendarCore;

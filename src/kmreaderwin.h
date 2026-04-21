@@ -15,13 +15,13 @@
 #include <MessageComposer/MDNAdviceHelper>
 #include <MessageViewer/MDNWarningWidget>
 #include <MessageViewer/Viewer>
-#include <MimeTreeParser/BodyPart>
-#include <QUrl>
+// #include <MimeTreeParser/BodyPart>
 #include <QWidget>
 class KActionCollection;
 class QAction;
 class KToggleAction;
 class QMenu;
+class QUrl;
 namespace MessageViewer
 {
 class CSSHelper;
