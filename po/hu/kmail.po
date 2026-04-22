@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-10 00:51+0000\n"
+"POT-Creation-Date: 2026-04-22 00:46+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -315,7 +315,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Számos IMAP hiba javítása"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:221 kmmainwidget.cpp:4228 kmreaderwin.cpp:264
+#: kmmainwidget.cpp:222 kmmainwidget.cpp:4229 kmreaderwin.cpp:266
 #: kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1634,7 +1634,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Archívummappa"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3689
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3690
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1731,8 +1731,8 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Mellékletlista elrejtése"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:41
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
+#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -1874,7 +1874,7 @@ msgstr "Szövegfájl &beszúrása…"
 msgid "&Insert Recent Text File"
 msgstr "A legutó&bbi szövegfájl beszúrása"
 
-#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3015
+#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3016
 #, kde-format
 msgid "&Address Book"
 msgstr "&Címjegyzék"
@@ -2083,7 +2083,7 @@ msgstr "Nyomkövető emlékeztető létrehozása…"
 msgid "Configure KMail…"
 msgstr "KMail beállítása…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:546
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:546
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2092,7 +2092,7 @@ msgstr ""
 "<qt>Teljesen elrejti a menüsávot. Ezzel a paranccsal állítható vissza: %1.</"
 "qt>"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:230
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -2886,7 +2886,7 @@ msgstr "Nem sikerült visszaadni a mappák listáját."
 msgid "Messages archived"
 msgstr "Üzenetek archiválva"
 
-#: foldershortcutactionmanager.cpp:123 foldershortcutactionmanager.cpp:124
+#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr "Gyorsbillentyű mappához (%1)"
@@ -2909,7 +2909,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Bezárt megjelenító újranyitása"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1927
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1928
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -2932,38 +2932,38 @@ msgstr "Nincs kép"
 msgid "No picture set for your address book entry."
 msgstr "Nincs beállítva kép a címbejegyzésben."
 
-#: identity/identityaddvcarddialog.cpp:28
+#: identity/identityaddvcarddialog.cpp:29
 #: identity/identityeditvcarddialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
 msgstr "Saját vCard létrehozása"
 
-#: identity/identityaddvcarddialog.cpp:48 identity/newidentitydialog.cpp:70
+#: identity/identityaddvcarddialog.cpp:49 identity/newidentitydialog.cpp:70
 #, kde-format
 msgctxt "@option:radio"
 msgid "&With empty fields"
 msgstr "Üres &mezőkkel"
 
-#: identity/identityaddvcarddialog.cpp:54
+#: identity/identityaddvcarddialog.cpp:55
 #, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
 msgstr "&Létező vCard-ból"
 
-#: identity/identityaddvcarddialog.cpp:66
+#: identity/identityaddvcarddialog.cpp:67
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&vCard path:"
 msgstr "&vCard útvonal:"
 
-#: identity/identityaddvcarddialog.cpp:77
+#: identity/identityaddvcarddialog.cpp:78
 #, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "Már létező vCard &kettőzése"
 
-#: identity/identityaddvcarddialog.cpp:89 identity/newidentitydialog.cpp:91
+#: identity/identityaddvcarddialog.cpp:90 identity/newidentitydialog.cpp:91
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
@@ -3826,12 +3826,12 @@ msgstr "Felvétel a címjegyzékbe"
 msgid "Contact created successfully"
 msgstr "Partner sikeresen létrehozva"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:846
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "A partner nem tárolható: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:846
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4147,7 +4147,7 @@ msgid "F&older"
 msgstr "&Mappa"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3538 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3539 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4179,7 +4179,7 @@ msgid "&Forward"
 msgstr "Tová&bbítás"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3362 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3363 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Szűrő a&lkalmazása"
@@ -4209,47 +4209,47 @@ msgstr "&Súgó"
 msgid "Main Toolbar"
 msgstr "Alap eszköztár"
 
-#: kmcommands.cpp:301
+#: kmcommands.cpp:302
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Kis türelmet"
 
-#: kmcommands.cpp:304 kmcommands.cpp:377
+#: kmcommands.cpp:305 kmcommands.cpp:378
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Egy kis türelmet kérek - 1 üzenet letöltése van folyamatban"
 msgstr[1] "Egy kis türelmet kérek - %1 üzenet letöltése van folyamatban"
 
-#: kmcommands.cpp:530
+#: kmcommands.cpp:531
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Mentés fájlba"
 
-#: kmcommands.cpp:717
+#: kmcommands.cpp:718
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Üzenet megnyitása"
 
-#: kmcommands.cpp:719
+#: kmcommands.cpp:720
 #, kde-format
 msgid "Message"
 msgstr "Üzenet"
 
-#: kmcommands.cpp:748
+#: kmcommands.cpp:749
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "A fájl nem tartalmaz üzenetet."
 
-#: kmcommands.cpp:819
+#: kmcommands.cpp:820
 #, kde-format
 msgid "The file contains multiple messages. Only the first message is shown."
 msgstr "A fájl több üzenetet tartalmaz. Csak az első lesz megjelenítve."
 
-#: kmcommands.cpp:930
+#: kmcommands.cpp:931
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4258,39 +4258,39 @@ msgstr ""
 "A kijelölt üzeneteket egy üzenetben, mellékletként szeretné továbbítani vagy "
 "egyesével?"
 
-#: kmcommands.cpp:934
+#: kmcommands.cpp:935
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Elküldés egyben"
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:936
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Elküldés külön-külön"
 
-#: kmcommands.cpp:1322
+#: kmcommands.cpp:1323
 #, kde-format
 msgid "Filtering messages"
 msgstr "Üzenetszűrés"
 
-#: kmcommands.cpp:1332
+#: kmcommands.cpp:1333
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Üzenetszűrés - %2 / %1"
 
-#: kmcommands.cpp:1540 kmcommands.cpp:1671
+#: kmcommands.cpp:1541 kmcommands.cpp:1672
 #, kde-format
 msgid "Moving messages"
 msgstr "Üzenetek áthelyezése"
 
-#: kmcommands.cpp:1540 kmcommands.cpp:1681
+#: kmcommands.cpp:1541 kmcommands.cpp:1682
 #, kde-format
 msgid "Deleting messages"
 msgstr "Üzenetek törlése"
 
-#: kmcommands.cpp:1823
+#: kmcommands.cpp:1824
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -4326,28 +4326,28 @@ msgstr "HTML eszköztár"
 msgid "Text Direction Toolbar"
 msgstr "Szövegirány eszköztár"
 
-#: kmkernel.cpp:641
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "A KMail offline módba vált, minden hálózati adatátvitel fel lesz függesztve"
 
-#: kmkernel.cpp:661 kmmainwidget.cpp:2510 kmmainwidget.cpp:2525
+#: kmkernel.cpp:662 kmmainwidget.cpp:2511 kmmainwidget.cpp:2526
 #, kde-format
 msgid "Send Email"
 msgstr "E-mail küldése"
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2511 kmmainwidget.cpp:2526
+#: kmkernel.cpp:663 kmmainwidget.cpp:2512 kmmainwidget.cpp:2527
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Lehetetlen e-mailt küldeni"
 
-#: kmkernel.cpp:693
+#: kmkernel.cpp:694
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "A KMail online módba vált, a hálózati adatátvitel folytatódhat"
 
-#: kmkernel.cpp:695
+#: kmkernel.cpp:696
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4356,40 +4356,40 @@ msgstr ""
 "A KMail online; az összes hálózati feladat folytatódni fog hálózati "
 "kapcsolat észlelésekor"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:767
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "A KMail jelenleg offline módban van, mit szeretne tenni?"
 
-#: kmkernel.cpp:768
+#: kmkernel.cpp:769
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Online/Offline"
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:770
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Online módba váltás"
 
-#: kmkernel.cpp:770
+#: kmkernel.cpp:771
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Offline módban maradjon"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:795
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Hálózati kapcsolat észlelve,  a hálózati feladatok folytatása"
 
-#: kmkernel.cpp:797
+#: kmkernel.cpp:798
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Nem észlelhető hálózati kapcsolat, a hálózati feladatok felfüggesztve"
 
-#: kmkernel.cpp:892
+#: kmkernel.cpp:893
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4398,13 +4398,13 @@ msgstr ""
 "Nem sikerült megnyitni az automatikusan mentett fájlt (%1).\n"
 "Ok: %2"
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:894
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Az automatikusan mentett fájlt megnyitása sikertelen"
 
-#: kmkernel.cpp:1454
+#: kmkernel.cpp:1455
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4413,7 +4413,7 @@ msgstr[0] "Ennél az azonosítónál az alapértelmezett továbbító lett beál
 msgstr[1] ""
 "Ennél a(z) %1 azonosítónál az alapértelmezett továbbító lett beállítva:"
 
-#: kmkernel.cpp:1476
+#: kmkernel.cpp:1477
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4421,17 +4421,17 @@ msgid_plural ""
 msgstr[0] "Ennél az azonosítónál a módosított továbbító lett beállítva."
 msgstr[1] "Ennél a(z) %1 azonosítónál a módosított továbbító lett beállítva."
 
-#: kmkernel.cpp:1491
+#: kmkernel.cpp:1492
 #, kde-format
 msgid "Sending messages"
 msgstr "Üzenetek küldése"
 
-#: kmkernel.cpp:1492
+#: kmkernel.cpp:1493
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Küldés előkészítése…"
 
-#: kmkernel.cpp:1571
+#: kmkernel.cpp:1572
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4440,7 +4440,7 @@ msgstr ""
 "A(z) %1 erőforrás sérült.\n"
 "%2"
 
-#: kmkernel.cpp:1751 kmkernel.cpp:1757
+#: kmkernel.cpp:1752 kmkernel.cpp:1758
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4524,93 +4524,93 @@ msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Nem lehet elindítani az Importvarázslót"
 
-#: kmmainwidget.cpp:328
+#: kmmainwidget.cpp:329
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 "Egy másik levelező található a rendszeren. Szeretne adatokat importálni "
 "belőle?"
 
-#: kmmainwidget.cpp:331
+#: kmmainwidget.cpp:332
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "Importálás"
 
-#: kmmainwidget.cpp:332
+#: kmmainwidget.cpp:333
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "Nem kell importálni"
 
-#: kmmainwidget.cpp:337
+#: kmmainwidget.cpp:338
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
 "Nem lehet elindítani az importálás varázslót. Ellenőrizze a telepítését."
 
-#: kmmainwidget.cpp:339
+#: kmmainwidget.cpp:340
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Nem lehet elindítani az importálás varázslót"
 
-#: kmmainwidget.cpp:1393
+#: kmmainwidget.cpp:1394
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
 msgstr "(sablonok betöltése…)"
 
-#: kmmainwidget.cpp:1418
+#: kmmainwidget.cpp:1419
 #, kde-format
 msgid "No Subject"
 msgstr "Nincs tárgy"
 
-#: kmmainwidget.cpp:1431
+#: kmmainwidget.cpp:1432
 #, kde-format
 msgid "(no templates)"
 msgstr "(nincs sablon)"
 
-#: kmmainwidget.cpp:1483
+#: kmmainwidget.cpp:1484
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Erre a mappára nincsenek beállítva eltávolítási szabályok"
 
-#: kmmainwidget.cpp:1489
+#: kmmainwidget.cpp:1490
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Biztosan azt szeretné, hogy el legyen távolítva a(z) <b>%1</b> mappa "
 "tartalma?</qt>"
 
-#: kmmainwidget.cpp:1490
+#: kmmainwidget.cpp:1491
 #, kde-format
 msgid "Expire Folder"
 msgstr "A mappa tartalma legyen eltávolítva"
 
-#: kmmainwidget.cpp:1490
+#: kmmainwidget.cpp:1491
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Eltávolítás"
 
-#: kmmainwidget.cpp:1507
+#: kmmainwidget.cpp:1508
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "A Kuka ürítése"
 
-#: kmmainwidget.cpp:1507
+#: kmmainwidget.cpp:1508
 #, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Áthelyezés a Kukába"
 
-#: kmmainwidget.cpp:1508
+#: kmmainwidget.cpp:1509
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Biztosan ki szeretné üríteni a törölt üzenetek mappáját?"
 
-#: kmmainwidget.cpp:1510
+#: kmmainwidget.cpp:1511
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4619,28 +4619,28 @@ msgstr ""
 "<qt>Biztosan át szeretné mozgatni az összes üzenetet a(z) <b>%1</b> mappából "
 "a törölt üzenetek közé?</qt>"
 
-#: kmmainwidget.cpp:1533
+#: kmmainwidget.cpp:1534
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Az összes üzenet átkerült a törölt üzenetek közé"
 
-#: kmmainwidget.cpp:1587
+#: kmmainwidget.cpp:1588
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Biztosan azt szeretné, hogy az összes régi üzenet el legyen távolítva?"
 
-#: kmmainwidget.cpp:1588
+#: kmmainwidget.cpp:1589
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "A régi üzenetek el legyenek távolítva?"
 
-#: kmmainwidget.cpp:1589
+#: kmmainwidget.cpp:1590
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Eltávolítás"
 
-#: kmmainwidget.cpp:1614
+#: kmmainwidget.cpp:1615
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4652,19 +4652,19 @@ msgstr ""
 "a kockázata, hogy adatvesztés következhet be most még nem ismert biztonsági "
 "rések kihasználása révén."
 
-#: kmmainwidget.cpp:1617 kmmainwidget.cpp:4911
+#: kmmainwidget.cpp:1618 kmmainwidget.cpp:4912
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Biztonsági figyelmeztetés"
 
-#: kmmainwidget.cpp:1618
+#: kmmainwidget.cpp:1619
 #, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Külső hivatkozások betöltése"
 
-#: kmmainwidget.cpp:1691
+#: kmmainwidget.cpp:1692
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4679,137 +4679,137 @@ msgstr[1] ""
 "<qt>Biztosan törölni szeretné a kijelölt %1 üzenetet?<br />A törölt "
 "üzeneteket nem lehet később visszanyerni!</qt>"
 
-#: kmmainwidget.cpp:1696
+#: kmmainwidget.cpp:1697
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Üzenetek törlése"
 
-#: kmmainwidget.cpp:1696
+#: kmmainwidget.cpp:1697
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Üzenet törlése"
 
-#: kmmainwidget.cpp:1711
+#: kmmainwidget.cpp:1712
 #, kde-format
 msgid "Moving messages…"
 msgstr "Üzenetek áthelyezése…"
 
-#: kmmainwidget.cpp:1713 kmmainwidget.cpp:1913
+#: kmmainwidget.cpp:1714 kmmainwidget.cpp:1914
 #, kde-format
 msgid "Deleting messages…"
 msgstr "Üzenetek törlése…"
 
-#: kmmainwidget.cpp:1728 kmmainwidget.cpp:1937
+#: kmmainwidget.cpp:1729 kmmainwidget.cpp:1938
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "Az üzenetek törlése sikeresen megtörtént."
 
-#: kmmainwidget.cpp:1730
+#: kmmainwidget.cpp:1731
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "Az üzenetek áthelyezése sikeresen befejeződött."
 
-#: kmmainwidget.cpp:1735 kmmainwidget.cpp:1950
+#: kmmainwidget.cpp:1736 kmmainwidget.cpp:1951
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "Az üzeneteket nem sikerült törölni."
 
-#: kmmainwidget.cpp:1737 kmmainwidget.cpp:1963
+#: kmmainwidget.cpp:1738 kmmainwidget.cpp:1964
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "Az üzenetek törlése félbe lett szakítva."
 
-#: kmmainwidget.cpp:1741
+#: kmmainwidget.cpp:1742
 #, kde-format
 msgid "Moving messages failed."
 msgstr "Az üzeneteket nem sikerült áthelyezni."
 
-#: kmmainwidget.cpp:1743
+#: kmmainwidget.cpp:1744
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "Az üzenetek áthelyezése félbe lett szakítva."
 
-#: kmmainwidget.cpp:1815
+#: kmmainwidget.cpp:1816
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "Üzenetek áthelyezése ide"
 
-#: kmmainwidget.cpp:1842
+#: kmmainwidget.cpp:1843
 #, kde-format
 msgid "Copying messages…"
 msgstr "Üzenetek átmásolása…"
 
-#: kmmainwidget.cpp:1850
+#: kmmainwidget.cpp:1851
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "Az üzenetek átmásolása sikeresen befejeződött."
 
-#: kmmainwidget.cpp:1853
+#: kmmainwidget.cpp:1854
 #, kde-format
 msgid "Copying messages failed."
 msgstr "Az üzeneteket nem sikerült átmásolni."
 
-#: kmmainwidget.cpp:1855
+#: kmmainwidget.cpp:1856
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "Az üzenetek átmásolása megszakadt."
 
-#: kmmainwidget.cpp:1865
+#: kmmainwidget.cpp:1866
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Üzenetek átmásolása ide"
 
-#: kmmainwidget.cpp:1910
+#: kmmainwidget.cpp:1911
 #, kde-format
 msgid "Moving messages to trash…"
 msgstr "Üzenetek áthelyezése a törölt üzenetek közé…"
 
-#: kmmainwidget.cpp:1917
+#: kmmainwidget.cpp:1918
 #, kde-format
 msgid "Deleting and moving messages to trash…"
 msgstr "Üzenetek törlése és áthelyezése a kukába…"
 
-#: kmmainwidget.cpp:1934
+#: kmmainwidget.cpp:1935
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Az üzeneteket sikerült áthelyezni a kukába."
 
-#: kmmainwidget.cpp:1941
+#: kmmainwidget.cpp:1942
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Az üzeneteket sikerült áthelyezni a kukába vagy törölni"
 
-#: kmmainwidget.cpp:1947
+#: kmmainwidget.cpp:1948
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Az üzeneteket nem sikerült áthelyezni a kukába."
 
-#: kmmainwidget.cpp:1954
+#: kmmainwidget.cpp:1955
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "Az üzeneteket nem sikerült törölni vagy áthelyezni a kukába."
 
-#: kmmainwidget.cpp:1960
+#: kmmainwidget.cpp:1961
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Az üzenetek áthelyezése a kukába megszakadt."
 
-#: kmmainwidget.cpp:1967
+#: kmmainwidget.cpp:1968
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Az üzenetek törlése vagy áthelyezése kukába megszakadt."
 
-#: kmmainwidget.cpp:2248
+#: kmmainwidget.cpp:2249
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Ugrás a mappára"
 
-#: kmmainwidget.cpp:2442
+#: kmmainwidget.cpp:2443
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4824,7 +4824,7 @@ msgstr[1] ""
 "A kiválasztás csak titkosított üzeneteket tartalmaz, amikből jelenleg nem "
 "lehetséges mellékleteket törölni."
 
-#: kmmainwidget.cpp:2445
+#: kmmainwidget.cpp:2446
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -4832,7 +4832,7 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] "Mellékletek törlése titkosított üzenetből"
 msgstr[1] "Mellékletek törlése titkosított üzenetekből"
 
-#: kmmainwidget.cpp:2450
+#: kmmainwidget.cpp:2451
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4847,7 +4847,7 @@ msgstr[1] ""
 "<html><p>Biztosan törölni szeretné a(z) %1 kiválasztott üzenet összes "
 "mellékletét?<br />A törlés után nem lehet azokat visszaállítani.</p></html>"
 
-#: kmmainwidget.cpp:2457
+#: kmmainwidget.cpp:2458
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
@@ -4856,7 +4856,7 @@ msgstr ""
 "<html><p>Vegye figyelembe, hogy a mellékletek törlése egy kriptográfiailag "
 "aláírt üzenetből érvényteleníti annak aláírását.</p></html>"
 
-#: kmmainwidget.cpp:2462
+#: kmmainwidget.cpp:2463
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
@@ -4865,494 +4865,494 @@ msgstr ""
 "<html><p>Jelenleg nem lehetséges törölni a titkosított üzenetek mellékleteit."
 "<br />A titkosított üzenetek figyelmen kívül lesznek hagyva.</p></html>"
 
-#: kmmainwidget.cpp:2467
+#: kmmainwidget.cpp:2468
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "Mellékletek törlése"
 
-#: kmmainwidget.cpp:2496
+#: kmmainwidget.cpp:2497
 #, kde-format
 msgid "Work Offline"
 msgstr "Offline módban maradjon"
 
-#: kmmainwidget.cpp:2499
+#: kmmainwidget.cpp:2500
 #, kde-format
 msgid "Work Online"
 msgstr "Online módba váltás"
 
-#: kmmainwidget.cpp:2958
+#: kmmainwidget.cpp:2959
 #, kde-format
 msgid "Save &As…"
 msgstr "Mentés máské&nt…"
 
-#: kmmainwidget.cpp:2969
+#: kmmainwidget.cpp:2970
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "Elé&vülés az összes mappában"
 
-#: kmmainwidget.cpp:2974
+#: kmmainwidget.cpp:2975
 #, kde-format
 msgid "Check &Mail"
 msgstr "Üzenetek &letöltése"
 
-#: kmmainwidget.cpp:2982
+#: kmmainwidget.cpp:2983
 #, kde-format
 msgid "Check Mail In"
 msgstr "Üzenetek letöltése"
 
-#: kmmainwidget.cpp:2987
+#: kmmainwidget.cpp:2988
 #, kde-format
 msgid "Check Mail"
 msgstr "Üzenetek letöltése"
 
-#: kmmainwidget.cpp:2988
+#: kmmainwidget.cpp:2989
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Üzenetek letöltése"
 
-#: kmmainwidget.cpp:2992
+#: kmmainwidget.cpp:2993
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "A &sorban álló üzenetek elküldése"
 
-#: kmmainwidget.cpp:3000
+#: kmmainwidget.cpp:3001
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Kapcsolati állapot (ismeretlen)"
 
-#: kmmainwidget.cpp:3005
+#: kmmainwidget.cpp:3006
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "A sorban álló üzenetek elküldése ezzel"
 
-#: kmmainwidget.cpp:3025
+#: kmmainwidget.cpp:3026
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Tanúsítványkezelő"
 
-#: kmmainwidget.cpp:3036
+#: kmmainwidget.cpp:3037
 #, kde-format
 msgid "&Import Messages…"
 msgstr "Üzenetek &importálása…"
 
-#: kmmainwidget.cpp:3047
+#: kmmainwidget.cpp:3048
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "A &Sieve hibakeresése…"
 
-#: kmmainwidget.cpp:3054
+#: kmmainwidget.cpp:3055
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Szűrési nap&ló megjelenítője…"
 
-#: kmmainwidget.cpp:3059
+#: kmmainwidget.cpp:3060
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Értesítések előzményei…"
 
-#: kmmainwidget.cpp:3064
+#: kmmainwidget.cpp:3065
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&Importálás másik levelezőprogramból…"
 
-#: kmmainwidget.cpp:3069
+#: kmmainwidget.cpp:3070
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "A „Házon kívül vagyok” üzenetek beállítása…"
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3076
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "&Automatikus archiválás beállítása…"
 
-#: kmmainwidget.cpp:3081
+#: kmmainwidget.cpp:3082
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Késleltetett üzenetek…"
 
-#: kmmainwidget.cpp:3087
+#: kmmainwidget.cpp:3088
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Nyomkövető emlékeztető üzenetek…"
 
-#: kmmainwidget.cpp:3092
+#: kmmainwidget.cpp:3093
 #, fuzzy, kde-format
 #| msgid "Expand All Groups"
 msgctxt "@action"
 msgid "Expand All"
 msgstr "Az összes csoport kibontása"
 
-#: kmmainwidget.cpp:3097
+#: kmmainwidget.cpp:3098
 #, fuzzy, kde-format
 #| msgid "Collapse All Groups"
 msgctxt "@action"
 msgid "Collapse All"
 msgstr "Az összes csoport összecsukása"
 
-#: kmmainwidget.cpp:3108 util.cpp:187
+#: kmmainwidget.cpp:3109 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Törlés"
 
-#: kmmainwidget.cpp:3113
+#: kmmainwidget.cpp:3114
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Szál át&helyezése a kukába"
 
-#: kmmainwidget.cpp:3117
+#: kmmainwidget.cpp:3118
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "A szál átmozgatása a törölt üzenetek közé"
 
-#: kmmainwidget.cpp:3120 kmmainwidget.cpp:4175
+#: kmmainwidget.cpp:3121 kmmainwidget.cpp:4176
 #, kde-format
 msgid "Delete T&hread"
 msgstr "A szál tö&rlése"
 
-#: kmmainwidget.cpp:3127 kmmainwidget.cpp:4177
+#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4178
 #, kde-format
 msgid "&Find Messages…"
 msgstr "Üzenet &keresése…"
 
-#: kmmainwidget.cpp:3133
+#: kmmainwidget.cpp:3134
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "Összes ü&zenet kijelölése"
 
-#: kmmainwidget.cpp:3140
+#: kmmainwidget.cpp:3141
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "Le&velezőlista-kezelés…"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3149
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "Akonadi gyorsítótár &törlése…"
 
-#: kmmainwidget.cpp:3153
+#: kmmainwidget.cpp:3154
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 "Akonadi gyorsítótár &törlése ebben a mappában és az összes almappájában"
 
-#: kmmainwidget.cpp:3158
+#: kmmainwidget.cpp:3159
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "Billentyűparan&cs hozzárendelése…"
 
-#: kmmainwidget.cpp:3176
+#: kmmainwidget.cpp:3177
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Lejárási beállítások"
 
-#: kmmainwidget.cpp:3201
+#: kmmainwidget.cpp:3202
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&Archívummappa…"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3210
 #, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Külső h&ivatkozások betöltése"
 
-#: kmmainwidget.cpp:3232
+#: kmmainwidget.cpp:3233
 #, kde-format
 msgid "Copy Message To…"
 msgstr "Üzenet másolása ide…"
 
-#: kmmainwidget.cpp:3234
+#: kmmainwidget.cpp:3235
 #, kde-format
 msgid "Move Message To…"
 msgstr "Üzenet áthelyezése ide…"
 
-#: kmmainwidget.cpp:3239
+#: kmmainwidget.cpp:3240
 #, kde-format
 msgid "&New Message…"
 msgstr "Ú&j üzenetek…"
 
-#: kmmainwidget.cpp:3241
+#: kmmainwidget.cpp:3242
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Új"
 
-#: kmmainwidget.cpp:3249
+#: kmmainwidget.cpp:3250
 #, kde-format
 msgid "Message From &Template"
 msgstr "Új üzenet adott &sablonnal"
 
-#: kmmainwidget.cpp:3255
+#: kmmainwidget.cpp:3256
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "Új üzenet a le&velezőlistára…"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3262
 #, kde-format
 msgid "&Create Filter"
 msgstr "Szűrő lét&rehozása"
 
-#: kmmainwidget.cpp:3265
+#: kmmainwidget.cpp:3266
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "A &tárgyra…"
 
-#: kmmainwidget.cpp:3272
+#: kmmainwidget.cpp:3273
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "A &feladóra…"
 
-#: kmmainwidget.cpp:3278
+#: kmmainwidget.cpp:3279
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "A &címzettre…"
 
-#: kmmainwidget.cpp:3284
+#: kmmainwidget.cpp:3285
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "A &másolatra…"
 
-#: kmmainwidget.cpp:3298
+#: kmmainwidget.cpp:3299
 #, kde-format
 msgid "Mark &Thread"
 msgstr "A &szál megjelölése"
 
-#: kmmainwidget.cpp:3301
+#: kmmainwidget.cpp:3302
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "A szál megjelölése &olvasottnak"
 
-#: kmmainwidget.cpp:3304
+#: kmmainwidget.cpp:3305
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "A kijelölt szálhoz tartozó összes üzenet megjelölése &olvasottnak"
 
-#: kmmainwidget.cpp:3307
+#: kmmainwidget.cpp:3308
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "A szál megjelölése ol&vasatlannak"
 
-#: kmmainwidget.cpp:3310
+#: kmmainwidget.cpp:3311
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "A kijelölt szálhoz tartozó összes üzenet megjelölése olvasatlannak"
 
-#: kmmainwidget.cpp:3316
+#: kmmainwidget.cpp:3317
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "A szál megjelölése &fontosnak"
 
-#: kmmainwidget.cpp:3319
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "A Fontos megjelölés eltá&volítása"
 
-#: kmmainwidget.cpp:3322
+#: kmmainwidget.cpp:3323
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "A szál megjelölése mű&veletelemnek"
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3326
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "A Mű&veletelem száljelző eltávolítása"
 
-#: kmmainwidget.cpp:3329
+#: kmmainwidget.cpp:3330
 #, kde-format
 msgid "&Watch Thread"
 msgstr "A &szál figyelése"
 
-#: kmmainwidget.cpp:3333
+#: kmmainwidget.cpp:3334
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "A szál figyelmen kívül &hagyása"
 
-#: kmmainwidget.cpp:3341 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:498
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Mellékle&t mentése…"
 
-#: kmmainwidget.cpp:3345
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Összes melléklet törlése"
 
-#: kmmainwidget.cpp:3353
+#: kmmainwidget.cpp:3354
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "Visszafejtett másolása ide…"
 
-#: kmmainwidget.cpp:3357
+#: kmmainwidget.cpp:3358
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Az összes szűrő al&kalmazása"
 
-#: kmmainwidget.cpp:3366
+#: kmmainwidget.cpp:3367
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "Szál / csoport ki&bontása"
 
-#: kmmainwidget.cpp:3369
+#: kmmainwidget.cpp:3370
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Jelenlegi szál vagy csoport kibontása"
 
-#: kmmainwidget.cpp:3373
+#: kmmainwidget.cpp:3374
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "Szál / csoport össze&csukása"
 
-#: kmmainwidget.cpp:3376
+#: kmmainwidget.cpp:3377
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Jelenleg szál vagy csoport összecsukása"
 
-#: kmmainwidget.cpp:3380
+#: kmmainwidget.cpp:3381
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "Az összes szál k&ibontása"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3384
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Az összes szál kibontása az aktuális mappában"
 
-#: kmmainwidget.cpp:3387
+#: kmmainwidget.cpp:3388
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "Az összes szál összecs&ukása"
 
-#: kmmainwidget.cpp:3390
+#: kmmainwidget.cpp:3391
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Az összes üzenetszál összecsukása az aktuális mappában"
 
-#: kmmainwidget.cpp:3394
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "Üzenet m&egjelenítése"
 
-#: kmmainwidget.cpp:3401
+#: kmmainwidget.cpp:3402
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Következő üzenet"
 
-#: kmmainwidget.cpp:3404
+#: kmmainwidget.cpp:3405
 #, kde-format
 msgid "Go to the next message"
 msgstr "Ugrás a következő üzenetre"
 
-#: kmmainwidget.cpp:3408
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Következő &olvasatlan üzenet"
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Következő"
 
-#: kmmainwidget.cpp:3417
+#: kmmainwidget.cpp:3418
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Ugrás a következő olvasatlan üzenetre"
 
-#: kmmainwidget.cpp:3421
+#: kmmainwidget.cpp:3422
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Előző üzenet"
 
-#: kmmainwidget.cpp:3423
+#: kmmainwidget.cpp:3424
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Ugrás az előző üzenetre"
 
-#: kmmainwidget.cpp:3428
+#: kmmainwidget.cpp:3429
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Elő&ző olvasatlan üzenet"
 
-#: kmmainwidget.cpp:3436
+#: kmmainwidget.cpp:3437
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Előző"
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3438
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Ugrás az előző olvasatlan üzenetre"
 
-#: kmmainwidget.cpp:3441
+#: kmmainwidget.cpp:3442
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Következő olv&asatlan mappa"
 
-#: kmmainwidget.cpp:3447
+#: kmmainwidget.cpp:3448
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Ugrás a következő, olvasatlan üzeneteket tartalmazó mappára"
 
-#: kmmainwidget.cpp:3450
+#: kmmainwidget.cpp:3451
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Előző o&lvasatlan mappa"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3457
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Ugrás az előző, olvasatlan üzeneteket tartalmazó mappára"
 
-#: kmmainwidget.cpp:3460
+#: kmmainwidget.cpp:3461
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "A következő, &még nem olvasott szöveg"
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3464
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Ugrás a következő, még nem olvasott szövegre"
 
-#: kmmainwidget.cpp:3465
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5361,262 +5361,262 @@ msgstr ""
 "Az aktuális üzenet lefelé görgetése. Az üzenet végére érve ugrás a "
 "következő, még nem olvasott szövegre."
 
-#: kmmainwidget.cpp:3473
+#: kmmainwidget.cpp:3474
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "Szűrők &beállítása…"
 
-#: kmmainwidget.cpp:3479
+#: kmmainwidget.cpp:3480
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "&Sieve-szkriptek kezelése…"
 
-#: kmmainwidget.cpp:3484
+#: kmmainwidget.cpp:3485
 #, kde-format
 msgid "&Add Account…"
 msgstr "Fiók hozzá&adása…"
 
-#: kmmainwidget.cpp:3489
+#: kmmainwidget.cpp:3490
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "Újdonságok"
 
-#: kmmainwidget.cpp:3496
+#: kmmainwidget.cpp:3497
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "Ér&tesítések beállítása…"
 
-#: kmmainwidget.cpp:3503
+#: kmmainwidget.cpp:3504
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "&KMail beállítása…"
 
-#: kmmainwidget.cpp:3510
+#: kmmainwidget.cpp:3511
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Lejárás…"
 
-#: kmmainwidget.cpp:3516
+#: kmmainwidget.cpp:3517
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Kedvenc mappa hozzáadása…"
 
-#: kmmainwidget.cpp:3522 kmmainwidget.cpp:3530
+#: kmmainwidget.cpp:3523 kmmainwidget.cpp:3531
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Az összes szűrő alkalmazása"
 
-#: kmmainwidget.cpp:3543
+#: kmmainwidget.cpp:3544
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Szűrők alkalmazása a mappára és összes almappájára"
 
-#: kmmainwidget.cpp:3548
+#: kmmainwidget.cpp:3549
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "KMail adatok importálása/exportálása…"
 
-#: kmmainwidget.cpp:3554
+#: kmmainwidget.cpp:3555
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "Új címjegyzékbeli névjegy…"
 
-#: kmmainwidget.cpp:3562 kmmainwidget.cpp:4211
+#: kmmainwidget.cpp:3563 kmmainwidget.cpp:4212
 #, kde-format
 msgid "Account &Settings"
 msgstr "Fiók&beállítások"
 
-#: kmmainwidget.cpp:3566
+#: kmmainwidget.cpp:3567
 #, kde-format
 msgid "Restart Account"
 msgstr "Fiók újraindítása"
 
-#: kmmainwidget.cpp:3582
+#: kmmainwidget.cpp:3583
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Üzenet átmásolása ide"
 
-#: kmmainwidget.cpp:3588
+#: kmmainwidget.cpp:3589
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "Ugrás a mappára…"
 
-#: kmmainwidget.cpp:3594
+#: kmmainwidget.cpp:3595
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Jelenlegi művelet megszakítása"
 
-#: kmmainwidget.cpp:3600
+#: kmmainwidget.cpp:3601
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "A következő mappára lépés"
 
-#: kmmainwidget.cpp:3606
+#: kmmainwidget.cpp:3607
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Az előző mappára lépés"
 
-#: kmmainwidget.cpp:3612
+#: kmmainwidget.cpp:3613
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Lépés egy mappára"
 
-#: kmmainwidget.cpp:3619
+#: kmmainwidget.cpp:3620
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Az első mappára lépés"
 
-#: kmmainwidget.cpp:3625
+#: kmmainwidget.cpp:3626
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Az utolsó mappára lépés"
 
-#: kmmainwidget.cpp:3631
+#: kmmainwidget.cpp:3632
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Lépés a következő üzenetre"
 
-#: kmmainwidget.cpp:3637
+#: kmmainwidget.cpp:3638
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Lépés az előző üzenetre"
 
-#: kmmainwidget.cpp:3643
+#: kmmainwidget.cpp:3644
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Első üzenet kijelölése"
 
-#: kmmainwidget.cpp:3649
+#: kmmainwidget.cpp:3650
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Utolsó üzenet kijelölése"
 
-#: kmmainwidget.cpp:3655
+#: kmmainwidget.cpp:3656
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Váltás a jelenlegi üzenetre"
 
-#: kmmainwidget.cpp:3662
+#: kmmainwidget.cpp:3663
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Fókusz a gyorskeresőre"
 
-#: kmmainwidget.cpp:3670
+#: kmmainwidget.cpp:3671
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Előző üzenet bevétele a kijelölésbe"
 
-#: kmmainwidget.cpp:3676
+#: kmmainwidget.cpp:3677
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Következő üzenet bevétele a kijelölésbe"
 
-#: kmmainwidget.cpp:3683
+#: kmmainwidget.cpp:3684
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Üzenet áthelyezése ide"
 
-#: kmmainwidget.cpp:3693
+#: kmmainwidget.cpp:3694
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Összes üzenet megjelölése olvasottként ebben a mappában és almappáiban"
 
-#: kmmainwidget.cpp:3698
+#: kmmainwidget.cpp:3699
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Duplikátumok eltávolítása ebből a mappából és almappáiból"
 
-#: kmmainwidget.cpp:3704
+#: kmmainwidget.cpp:3705
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Előző kiválasztott mappa"
 
-#: kmmainwidget.cpp:3711
+#: kmmainwidget.cpp:3712
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Következő kiválasztott mappa"
 
-#: kmmainwidget.cpp:3740
+#: kmmainwidget.cpp:3741
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Kedvenc mappa hozzáadása"
 
-#: kmmainwidget.cpp:4163
+#: kmmainwidget.cpp:4164
 #, kde-format
 msgid "&Delete Search"
 msgstr "Keresőmappa tör&lése"
 
-#: kmmainwidget.cpp:4175
+#: kmmainwidget.cpp:4176
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "A szál át&helyezése a törölt üzenetek mappájába"
 
-#: kmmainwidget.cpp:4177
+#: kmmainwidget.cpp:4178
 #, kde-format
 msgid "Edit Search…"
 msgstr "Keresés szerkesztése…"
 
-#: kmmainwidget.cpp:4209
+#: kmmainwidget.cpp:4210
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Egyesített postafiók beállítása"
 
-#: kmmainwidget.cpp:4220
+#: kmmainwidget.cpp:4221
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "A törölt üzenetek eltá&volítása"
 
-#: kmmainwidget.cpp:4220
+#: kmmainwidget.cpp:4221
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "Az összes üzenet áth&elyezése a törölt üzenetek közé"
 
-#: kmmainwidget.cpp:4272
+#: kmmainwidget.cpp:4273
 #, kde-format
 msgid "&Undo"
 msgstr "&Visszavonás"
 
-#: kmmainwidget.cpp:4274
+#: kmmainwidget.cpp:4275
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Visszavonás: „%1”"
 
-#: kmmainwidget.cpp:4331
+#: kmmainwidget.cpp:4332
 #, kde-format
 msgid "Filter %1"
 msgstr "%1. szűrő"
 
-#: kmmainwidget.cpp:4900
+#: kmmainwidget.cpp:4901
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Keresés…<%1>"
 
-#: kmmainwidget.cpp:4908
+#: kmmainwidget.cpp:4909
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5628,13 +5628,13 @@ msgstr ""
 "kockázata, hogy adatvesztés következhet be most még nem ismert biztonsági "
 "rések kihasználása révén."
 
-#: kmmainwidget.cpp:4912
+#: kmmainwidget.cpp:4913
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML használata"
 
-#: kmmainwidget.cpp:5058
+#: kmmainwidget.cpp:5059
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5650,46 +5650,46 @@ msgstr ""
 "postafiókokat, létrehozhat sajátokat vagy teljesen ki is kapcsolhatja a "
 "funkciót."
 
-#: kmmainwidget.cpp:5061
+#: kmmainwidget.cpp:5062
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Bekapcsolja az egyesített postafiókokat?"
 
-#: kmmainwidget.cpp:5062
+#: kmmainwidget.cpp:5063
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Egyesített postafiókok bekapcsolása"
 
-#: kmmainwidget.cpp:5063
+#: kmmainwidget.cpp:5064
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Mégse"
 
-#: kmmainwidget.cpp:5098
+#: kmmainwidget.cpp:5099
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Szeretné újraindítani az Akonadit?"
 
-#: kmmainwidget.cpp:5099
+#: kmmainwidget.cpp:5100
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Akonadi újraindítása"
 
-#: kmmainwidget.cpp:5100
+#: kmmainwidget.cpp:5101
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: kmmainwidget.cpp:5107
+#: kmmainwidget.cpp:5108
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi újraindítva."
 
-#: kmmainwin.cpp:54
+#: kmmainwin.cpp:56
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
@@ -5721,113 +5721,113 @@ msgstr "Menüsáv elrejtése"
 msgid "Cannot copy item. %1"
 msgstr "Nem lehet másolni az elemet. %1"
 
-#: kmreaderwin.cpp:122
+#: kmreaderwin.cpp:124
 #, kde-format
 msgid "New Message To…"
 msgstr "Új üzenet…"
 
-#: kmreaderwin.cpp:128
+#: kmreaderwin.cpp:130
 #, kde-format
 msgid "Reply To…"
 msgstr "Válaszcím…"
 
-#: kmreaderwin.cpp:134
+#: kmreaderwin.cpp:136
 #, kde-format
 msgid "Forward To…"
 msgstr "Továbbítás…"
 
-#: kmreaderwin.cpp:140
+#: kmreaderwin.cpp:142
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Felvétel a címjegyzékbe"
 
-#: kmreaderwin.cpp:145
+#: kmreaderwin.cpp:147
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Hozzáadás a létező partnerhez"
 
-#: kmreaderwin.cpp:151
+#: kmreaderwin.cpp:153
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Megnyitás a címjegyzékben"
 
-#: kmreaderwin.cpp:156
+#: kmreaderwin.cpp:158
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Könyvjelző létrehozása a linkre"
 
-#: kmreaderwin.cpp:161
+#: kmreaderwin.cpp:163
 #, kde-format
 msgid "Edit contact…"
 msgstr "Névjegy szerkesztése…"
 
-#: kmreaderwin.cpp:167
+#: kmreaderwin.cpp:169
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Hivatkozása mentése másként…"
 
-#: kmreaderwin.cpp:173
+#: kmreaderwin.cpp:175
 #, kde-format
 msgid "&Find in Message…"
 msgstr "&Keresés az üzenetben…"
 
-#: kmreaderwin.cpp:179
+#: kmreaderwin.cpp:181
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Kép mentése a lemezre…"
 
-#: kmreaderwin.cpp:185
+#: kmreaderwin.cpp:187
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Kép megnyitása…"
 
-#: kmreaderwin.cpp:191
+#: kmreaderwin.cpp:193
 #, kde-format
 msgid "Show HTML Format"
 msgstr "HTML formátum megjelenítése"
 
-#: kmreaderwin.cpp:192
+#: kmreaderwin.cpp:194
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "HTML formátum megjelenítése, amikor a levél ettől a partnertől érkezik"
 
-#: kmreaderwin.cpp:198
+#: kmreaderwin.cpp:200
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "Külső hivatkozás betöltése, amikor a levél ettől a partnertől érkezik"
 
-#: kmreaderwin.cpp:204
+#: kmreaderwin.cpp:206
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Kép megosztása…"
 
-#: kmreaderwin.cpp:267
+#: kmreaderwin.cpp:269
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "A KDE levelezőkliense"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:278
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Mappatartalmak lekérése"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:278
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Kis türelmet…"
 
-#: kmreaderwin.cpp:282 kmreaderwin.cpp:291
+#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:284
+#: kmreaderwin.cpp:286
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5836,7 +5836,7 @@ msgstr ""
 "A KMail jelenleg offline módban van. <a href=\"kmail:goOnline\">Kattintson "
 "ide</a>, ha online módba szeretne váltani…</p>"
 
-#: kmreaderwin.cpp:293
+#: kmreaderwin.cpp:295
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5845,7 +5845,7 @@ msgstr ""
 "A fiók jelenleg offline módban van. Kattintson <a href=\"kmail:"
 "goResourceOnline\">ide</a>, hogy elérhető legyen…</p>"
 
-#: kmreaderwin.cpp:856
+#: kmreaderwin.cpp:858
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "A partner sikeresen módosítva"
@@ -5891,13 +5891,13 @@ msgstr ""
 "összes mappa teljes elérési útját. Ha nincs bekapcsolva, csak az alapmappa "
 "elérési útja jelenik meg."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:43
+#: kontactplugin/kmail/kmail_plugin.cpp:44
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Új üzenet…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:49
+#: kontactplugin/kmail/kmail_plugin.cpp:50
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5907,14 +5907,14 @@ msgstr ""
 "Megjelenik egy párbeszédablak, ahol új e-mail üzenetet hozhat létre és "
 "küldhet el."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:54
+#: kontactplugin/kmail/kmail_plugin.cpp:55
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Levél szinkronizálása"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:57
+#: kontactplugin/kmail/kmail_plugin.cpp:58
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -6057,12 +6057,12 @@ msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Válasz"
 
-#: messageactions.cpp:64 searchdialog/searchwindowdialog.cpp:160
+#: messageactions.cpp:64 searchdialog/searchwindowdialog.cpp:161
 #, kde-format
 msgid "&Reply…"
 msgstr "&Válasz…"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:164
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:165
 #, kde-format
 msgid "Reply to &All…"
 msgstr "Vál&asz mindenkinek…"
@@ -6072,7 +6072,7 @@ msgstr "Vál&asz mindenkinek…"
 msgid "Reply to A&uthor…"
 msgstr "Válasz a &feladónak…"
 
-#: messageactions.cpp:67 searchdialog/searchwindowdialog.cpp:168
+#: messageactions.cpp:67 searchdialog/searchwindowdialog.cpp:169
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "Válasz küldése a &levelezőlistára…"
@@ -6112,7 +6112,7 @@ msgstr "Új üzenet a címzetteknek…"
 msgid "Mar&k Message"
 msgstr "Meg&jelölés"
 
-#: messageactions.cpp:74 searchdialog/searchwindowdialog.cpp:172
+#: messageactions.cpp:74 searchdialog/searchwindowdialog.cpp:173
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
@@ -6301,86 +6301,86 @@ msgstr "Mappa"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "A keresés nem sikerült. A talált hibák: <ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindowdialog.cpp:78
+#: searchdialog/searchwindowdialog.cpp:79
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Üzenet keresése"
 
-#: searchdialog/searchwindowdialog.cpp:94
+#: searchdialog/searchwindowdialog.cpp:95
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Keresés"
 
-#: searchdialog/searchwindowdialog.cpp:176
+#: searchdialog/searchwindowdialog.cpp:177
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "Beá&gyazva…"
 
-#: searchdialog/searchwindowdialog.cpp:180
+#: searchdialog/searchwindowdialog.cpp:181
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "&Mellékletként…"
 
-#: searchdialog/searchwindowdialog.cpp:194
+#: searchdialog/searchwindowdialog.cpp:195
 #, kde-format
 msgid "Save Attachments…"
 msgstr "Melléklet mentése…"
 
-#: searchdialog/searchwindowdialog.cpp:200
+#: searchdialog/searchwindowdialog.cpp:201
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Kijelölés törlése"
 
-#: searchdialog/searchwindowdialog.cpp:204
+#: searchdialog/searchwindowdialog.cpp:205
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Ugrás az eredeti mappára"
 
-#: searchdialog/searchwindowdialog.cpp:293
+#: searchdialog/searchwindowdialog.cpp:294
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 találat"
 msgstr[1] "%1 találat"
 
-#: searchdialog/searchwindowdialog.cpp:363
-#: searchdialog/searchwindowdialog.cpp:405
+#: searchdialog/searchwindowdialog.cpp:364
+#: searchdialog/searchwindowdialog.cpp:406
 #, kde-format
 msgid "Last Search"
 msgstr "Utolsó keresés"
 
-#: searchdialog/searchwindowdialog.cpp:431
+#: searchdialog/searchwindowdialog.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
 msgstr "Nem érvényes mappát választott ki."
 
-#: searchdialog/searchwindowdialog.cpp:445
+#: searchdialog/searchwindowdialog.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Elfelejtette a gyűjtemények kijelölését."
 
-#: searchdialog/searchwindowdialog.cpp:463
+#: searchdialog/searchwindowdialog.cpp:464
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Elfelejtette a feltétel meghatározását."
 
-#: searchdialog/searchwindowdialog.cpp:468
+#: searchdialog/searchwindowdialog.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Minden kijelölt mappa üres vagy nincs indexelve."
 
-#: searchdialog/searchwindowdialog.cpp:474
+#: searchdialog/searchwindowdialog.cpp:475
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Elfelejtett feltételeket hozzáadni."
 
-#: searchdialog/searchwindowdialog.cpp:478
+#: searchdialog/searchwindowdialog.cpp:479
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
@@ -6388,32 +6388,32 @@ msgstr ""
 "A tartalmazott feltételeket nem lehet használni 4-nél kevesebb "
 "karakterszámmal."
 
-#: searchdialog/searchwindowdialog.cpp:521
+#: searchdialog/searchwindowdialog.cpp:522
 #, kde-format
 msgid "Searching…"
 msgstr "Keresés…"
 
-#: searchdialog/searchwindowdialog.cpp:534
+#: searchdialog/searchwindowdialog.cpp:535
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Nem kérhetők le a keresési eredmények. %1"
 
-#: searchdialog/searchwindowdialog.cpp:537
+#: searchdialog/searchwindowdialog.cpp:538
 #, kde-format
 msgid "Search failed."
 msgstr "A keresés nem sikerült."
 
-#: searchdialog/searchwindowdialog.cpp:578
+#: searchdialog/searchwindowdialog.cpp:579
 #, kde-format
 msgid "Search complete."
 msgstr "A keresés befejeződött."
 
-#: searchdialog/searchwindowdialog.cpp:616
+#: searchdialog/searchwindowdialog.cpp:617
 #, kde-format
 msgid "Search stopped."
 msgstr "A keresés leállítva."
 
-#: searchdialog/searchwindowdialog.cpp:674
+#: searchdialog/searchwindowdialog.cpp:675
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6423,21 +6423,21 @@ msgstr ""
 "Hiba történt a keresési mappa átnevezése közben. Ennek általában az az oka, "
 "hogy már létezik keresési mappa ezzel a névvel. A visszaadott hiba: „%1”."
 
-#: searchdialog/searchwindowdialog.cpp:778
+#: searchdialog/searchwindowdialog.cpp:779
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Üzenet másolása"
 msgstr[1] "%1 üzenet másolása"
 
-#: searchdialog/searchwindowdialog.cpp:781
+#: searchdialog/searchwindowdialog.cpp:782
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Üzenet kivágása"
 msgstr[1] "%1 üzenet kivágása"
 
-#: searchdialog/searchwindowdialog.cpp:910
+#: searchdialog/searchwindowdialog.cpp:911
 #, kde-format
 msgid "Checking index status…"
 msgstr "Index állapotának ellenőrzése…"
