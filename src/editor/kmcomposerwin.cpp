@@ -3454,7 +3454,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
                                                   "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable for encryption.",
                                                   QString::fromLatin1(ident.pgpEncryptionKey())));
                 mNearExpiryWarning->setWarning(true);
-                mNearExpiryWarning->show();
+                mNearExpiryWarning->animatedShow();
             } else {
                 mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnEncryptionKey);
             }
@@ -3467,7 +3467,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
                                                       "Your selected PGP signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
                                                       QString::fromLatin1(ident.pgpSigningKey())));
                     mNearExpiryWarning->setWarning(true);
-                    mNearExpiryWarning->show();
+                    mNearExpiryWarning->animatedShow();
                 } else {
                     mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
                 }
@@ -3483,7 +3483,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
                                                   "Your selected SMIME key (%1) doesn't exist in your keyring or is not suitable for encryption.",
                                                   QString::fromLatin1(ident.smimeEncryptionKey())));
                 mNearExpiryWarning->setWarning(true);
-                mNearExpiryWarning->show();
+                mNearExpiryWarning->animatedShow();
             } else {
                 mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnEncryptionKey);
             }
@@ -3496,7 +3496,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
                                                       "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
                                                       QString::fromLatin1(ident.smimeSigningKey())));
                     mNearExpiryWarning->setWarning(true);
-                    mNearExpiryWarning->show();
+                    mNearExpiryWarning->animatedShow();
                 } else {
                     mComposerBase->expiryChecker()->checkKey(key, Kleo::ExpiryChecker::OwnSigningKey);
                 }
