@@ -7,7 +7,6 @@
 
 #include "archivemailagent_debug.h"
 #include <KLocalizedString>
-#include <QDebug>
 #include <QDir>
 
 using namespace Qt::Literals::StringLiterals;
