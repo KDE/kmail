@@ -497,13 +497,13 @@ void MessageActions::setupForwardActions(KActionCollection *ac)
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
         ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT | Qt::Key_F));
-        QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)), mParent, SLOT(slotForwardInlineMsg()));
+        connect(mForwardActionMenu, SIGNAL(triggered(bool)), mParent, SLOT(slotForwardInlineMsg()));
     } else {
         mForwardActionMenu->insertAction(mRedirectAction, mForwardAttachedAction);
         mForwardActionMenu->insertAction(mRedirectAction, mForwardInlineAction);
         ac->setDefaultShortcut(mForwardInlineAction, QKeySequence(Qt::Key_F));
         ac->setDefaultShortcut(mForwardAttachedAction, QKeySequence(Qt::SHIFT | Qt::Key_F));
-        QObject::connect(mForwardActionMenu, SIGNAL(triggered(bool)), mParent, SLOT(slotForwardAttachedMessage()));
+        connect(mForwardActionMenu, SIGNAL(triggered(bool)), mParent, SLOT(slotForwardAttachedMessage()));
     }
 }
 
