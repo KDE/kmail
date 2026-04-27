@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-02-04 00:11+0100\n"
+"PO-Revision-Date: 2026-04-26 22:45+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -7959,6 +7959,9 @@ msgid ""
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
+"기본값으로 HTML 메시지는 원래 의도했던 색상대로 표시됩니다. 이 설정을 재정의"
+"하려면 \"모양->색상->원래 HTML 메일의 색상 변경하지 않기\" 옵션의 선택을 해제"
+"하십시오"
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
