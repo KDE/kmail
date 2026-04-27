@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-22 00:46+0000\n"
-"PO-Revision-Date: 2026-02-04 00:11+0100\n"
+"PO-Revision-Date: 2026-04-26 22:45+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -4037,7 +4037,7 @@ msgstr "사용자 피드백 옵션을 표시합니다"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "디버그 모드 활성화"
 
 #: kmail_options.h:44
 #, kde-format
@@ -7941,27 +7941,25 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"%1 님이 보낸 이 이메일이 방치되고 있는 것 같습니다. 답장을 쓰시겠습니까?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "이메일이 방치됨"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "@action:button"
-#| msgid "Do Not Cancel"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "취소하지 않기"
+msgstr "보내지 않음"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "메일 보내기(&S)"
+msgstr "이메일 보내기"
 
 #: util.cpp:190
 #, kde-format
@@ -7994,6 +7992,9 @@ msgid ""
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
+"기본값으로 HTML 메시지는 원래 의도했던 색상대로 표시됩니다. 이 설정을 재정의"
+"하려면 \"모양->색상->원래 HTML 메일의 색상 변경하지 않기\" 옵션의 선택을 해제"
+"하십시오"
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
