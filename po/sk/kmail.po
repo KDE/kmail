@@ -2095,7 +2095,7 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>Toto skryje panel ponuky úplne. Môžete ho zase zobraziť napísaním %1.</"
+"<qt>Toto úplne skryje panel ponuky. Môžete ho znova zobraziť stlačením %1.</"
 "qt>"
 
 #: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
