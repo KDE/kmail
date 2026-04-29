@@ -107,14 +107,51 @@ target_link_libraries(
     kmailprivate
 )
 
-add_akonadi_isolated_test_advanced( kmcomposerwintest.cpp "kmcomposerwintest.h"
-	"Qt::Test;KPim6::IdentityManagementWidgets;KPim6::Libkleo;KPim6::MessageCore;KPim6::MessageComposer;KPim6::TemplateParser;KF6::XmlGui;Qt::Widgets;KF6::I18n;kmailprivate;KF6::Codecs"
+add_akonadi_isolated_test(SOURCE kmcomposerwintest.cpp LINK_LIBRARIES
+    Qt::Test
+    KPim6::IdentityManagementWidgets
+    KPim6::Libkleo
+    KPim6::MessageCore
+    KPim6::MessageComposer
+    KPim6::TemplateParser
+    KF6::XmlGui
+    Qt::Widgets
+    KF6::I18n
+    kmailprivate
+    KF6::Codecs
 )
 
-add_akonadi_isolated_test_advanced( tagselectdialogtest.cpp  "tagselectdialogtest.h" "kmailprivate;KPim6::MailCommon;KPim6::Libkdepim;KF6::ItemViews;KPim6::TemplateParser;KF6::XmlGui;KF6::Completion;KF6::I18n")
+add_akonadi_isolated_test(SOURCE tagselectdialogtest.cpp LINK_LIBRARIES
+    kmailprivate
+    KPim6::MailCommon
+    KPim6::Libkdepim
+    KF6::ItemViews
+    KPim6::TemplateParser
+    KF6::XmlGui
+    KF6::Completion
+    KF6::I18n
+)
 
-add_akonadi_isolated_test_advanced(kmcommandstest.cpp "kmcommandstest.h"
-    "Qt::Test;Qt::Widgets;KPim6::AkonadiCore;KF6::XmlGui;KF6::Bookmarks;KF6::Contacts;KF6::I18n;KPim6::IdentityManagementCore;KF6::KIOCore;KF6::KIOFileWidgets;KPim6::MessageCore;KPim6::MessageComposer;KPim6::MessageList;KPim6::MessageViewer;KPim6::MailCommon;KPim6::AkonadiMime;KPim6::Libkdepim;KPim6::TemplateParser;kmailprivate"
+add_akonadi_isolated_test(SOURCE kmcommandstest.cpp LINK_LIBRARIES
+    Qt::Test
+    Qt::Widgets
+    KPim6::AkonadiCore
+    KF6::XmlGui
+    KF6::Bookmarks
+    KF6::Contacts
+    KF6::I18n
+    KPim6::IdentityManagementCore
+    KF6::KIOCore
+    KF6::KIOFileWidgets
+    KPim6::MessageCore
+    KPim6::MessageComposer
+    KPim6::MessageList
+    KPim6::MessageViewer
+    KPim6::MailCommon
+    KPim6::AkonadiMime
+    KPim6::Libkdepim
+    KPim6::TemplateParser
+    kmailprivate
 )
 
 add_executable(
