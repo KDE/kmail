@@ -2490,8 +2490,8 @@ msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Autocrypt gossip key is používaný na this recipient. We got this key from "
-"3rd party recipients. This key is not verified."
+"Pre tohto príjemcu sa používa kľúč Autocrypt gossip. Tento kľúč sme získali "
+"od príjemcov tretích strán. Tento kľúč nie je overený."
 
 #: editor/kmcomposerwin.cpp:3837
 #, kde-format
@@ -2500,8 +2500,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient prefers encrypted replies."
 msgstr ""
-"Autocrypt key is používaný na this recipient. This key is not verified. The "
-"recipient prefers encrypted replies."
+"Pre tohto príjemcu sa používa kľúč Autocrypt. Tento kľúč nie je overený. "
+"Príjemca uprednostňuje šifrované odpovede."
 
 #: editor/kmcomposerwin.cpp:3841
 #, kde-format
@@ -2510,8 +2510,8 @@ msgid ""
 "Autocrypt key is used for this recipient. This key is not verified. The "
 "recipient does not prefer encrypted replies."
 msgstr ""
-"Autocrypt key is používaný na this recipient. This key is not verified. The "
-"recipient does not prefer encrypted replies."
+"Pre tohto príjemcu sa používa kľúč Autocrypt. Tento kľúč nie je overený. "
+"Príjemca neuprednostňuje šifrované odpovede."
 
 #: editor/kmcomposerwin.cpp:3868
 #, kde-format
@@ -2521,9 +2521,9 @@ msgid ""
 "the key, if you communicated the fingerprint by another channel. Click the "
 "icon for details."
 msgstr ""
-"The encryption key is not trusted. It hasn't enough validity. Môžete sign "
-"the key, ak communicated the fingerprint by another channel. Click the icon "
-"for details."
+"Šifrovací kľúč nie je dôveryhodný. Nemá dostatočnú platnosť. Kľúč môžete "
+"podpísať, ak ste odtlačok overili iným kanálom. Kliknutím na ikonu zobrazíte "
+"podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3876
 #, kde-format
@@ -2534,10 +2534,10 @@ msgid ""
 "you can sign the key, if you communicated the fingerprint by another "
 "channel. Click the icon for details."
 msgstr ""
-"The encryption key is not trusted. It hasn't been used anywhere to guarantee "
-"it belongs to the stated person. By using the key will be trusted more. Or "
-"môžete sign the key, ak communicated the fingerprint by another channel. "
-"Click the icon for details."
+"Šifrovací kľúč nie je dôveryhodný. Nebol použitý nikde, čo by zaručovalo, že "
+"patrí uvedenej osobe. Používaním kľúča sa jeho dôveryhodnosť zvýši. Prípadne "
+"môžete kľúč podpísať, ak ste odtlačok overili iným kanálom. Kliknutím na "
+"ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3884
 #, kde-format
@@ -2578,10 +2578,10 @@ msgid ""
 "trusted more. Or you can sign the key, if you communicated the fingerprint "
 "by another channel. Click the icon for details."
 msgstr ""
-"The encryption key is only marginally trusted and hasn't been used enough "
-"time to guarantee it belongs to the stated person. By using the key will be "
-"trusted more. Or môžete sign the key, ak communicated the fingerprint by "
-"another channel. Click the icon for details."
+"Šifrovací kľúč je len okrajovo dôveryhodný a nebol použitý dostatočne dlho, "
+"aby sa zaručilo, že patrí uvedenej osobe. Používaním kľúča sa jeho "
+"dôveryhodnosť zvýši. Prípadne môžete kľúč podpísať, ak ste odtlačok overili "
+"iným kanálom. Kliknutím na ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3912
 #, kde-format
@@ -2590,8 +2590,8 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
-"The encryption key is only marginally trusted. Môžete sign the key, ak "
-"communicated the fingerprint by another channel. Click the icon for details."
+"Šifrovací kľúč je len okrajovo dôveryhodný. Kľúč môžete podpísať, ak ste "
+"odtlačok overili iným kanálom. Kliknutím na ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3918
 #, kde-format
@@ -2602,10 +2602,10 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
-"The encryption key is only marginally trusted, but has been used enough "
-"times to be very likely controlled by the stated person. By using the key "
-"will be trusted more. Or môžete sign the key, ak communicated the "
-"fingerprint by another channel. Click the icon for details."
+"Šifrovací kľúč je len okrajovo dôveryhodný, ale bol použitý dostatočne veľa "
+"ráz, aby s veľkou pravdepodobnosťou patril uvedenej osobe. Používaním kľúča "
+"sa jeho dôveryhodnosť zvýši. Prípadne môžete kľúč podpísať, ak ste odtlačok "
+"overili iným kanálom. Kliknutím na ikonu zobrazíte podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3926
 #, kde-format
@@ -3137,7 +3137,7 @@ msgstr ""
 "podpisovanie správ. Môžete tiež použiť kľúče GnuPG.</p><p>Môžete to nechať "
 "prázdne, ale KMail nebude môcť pomocou OpenPGP digitálne podpisovať e-maily; "
 "normálne poštové funkcie to neovplyvní.</p><p>Viac o kľúčoch nájdete na "
-"<a>http://www.gnupg.org</a></p></qt>"
+"<a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3171,12 +3171,12 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Kľúč OpenPGP, ktorý tu vyberiete, sa budete používať pre šifrovanie "
-"správ posielaných sebe samému a pre funkciu \"Priložiť môj verejný kľúč\". "
-"Môžete použiť aj kľúče GnuPG.</p><p>Môžete to nechať prázdne, ale KMail vám "
-"nebude môcť šifrovať kópie odchádzajúcich správ pomocou OpenPGP; normálne "
-"poštové funkcie to neovplyvní.</p><p>Viac o kľúčoch nájdete na <a>http://www."
-"gnupg.org</a></p></qt>"
+"<qt><p>Kľúč OpenPGP, ktorý tu vyberiete, sa použije na šifrovanie správ "
+"posielaných sebe samému a pre funkciu \"Priložiť môj verejný kľúč\" v "
+"editore správ. Môžete použiť aj kľúče GnuPG.</p><p>Môžete to nechať prázdne, "
+"ale KMail vám nebude môcť šifrovať kópie odchádzajúcich správ pomocou "
+"OpenPGP; normálne poštové funkcie to neovplyvní.</p><p>Viac o kľúčoch "
+"nájdete na <a>https://www.gnupg.org</a></p></qt>"
 
 #: identity/identitydialog.cpp:511
 #, kde-format
@@ -3304,11 +3304,11 @@ msgid ""
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
 "<qt><h3>Adresy pre odpovede</h3><p>Toto nastavuje hlavičku <tt>Reply-to:</"
-"tt>, ktorá obsahuje inú než normálnu adresu použitú v poli <tt>Od:</tt>.</"
-"p><p>To sa hodí, ak máte skupinu ľudí, s ktorými pracujete na rovnakej "
-"pozícii. Napríklad chcete, aby všetky posielané správy mali vašu adresu ako "
-"odosielateľa, ale aby odpovede šli na skupinovú adresu.</p><p>Ak neviete, "
-"nechajte toto pole prázdne.</p></qt>"
+"tt>, ktorá obsahuje inú e-mailovú adresu než normálnu adresu v poli <tt>Od:</"
+"tt>.</p><p>To sa hodí, ak máte skupinu ľudí, ktorí pracujú na rovnakej "
+"pozícii. Napríklad chcete, aby všetky odoslané správy obsahovali vašu adresu "
+"v poli <tt>Od:</tt>, ale odpovede aby smerovali na skupinovú adresu.</"
+"p><p>Ak si nie ste istí, nechajte toto pole prázdne.</p></qt>"
 
 #: identity/identitydialog.cpp:637
 #, kde-format
@@ -4854,8 +4854,8 @@ msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
-"<html><p>Všimnite si, že deleting attachments from a cryptographically "
-"signed message will invalidate its signature.</p></html>"
+"<html><p>Upozorňujeme, že odstránenie príloh z kryptograficky podpísanej "
+"správy zneplatní jej podpis.</p></html>"
 
 #: kmmainwidget.cpp:2463
 #, kde-format
@@ -7605,23 +7605,25 @@ msgid ""
 "sense e.g. for customer relationship management, it has been made available."
 "</li></ul></qt>"
 msgstr ""
-"<qt><h3>Politika pre potvrdenia o </h3><p>MDN sú zovšeobecnením funkcie "
-"<b>potvrdenie o prečítaní</b>. Autor správy požaduje poslanie potvrdenia o "
-"doručení a poštový klient príjemcu vygeneruje odpoveď, z ktorej autor môže "
-"zistiť, čo sa s jeho správou stalo. Obvyklé typy potvrdení sú <b>zobrazená</"
-"b> (čiže prečítaná), <b>odstránená</b> a <b>predaná ďalej</b>.</p><p>Na "
-"ovládanie MDN v KMail máte tieto možnosti:</p><ul><li><em>Ignorovať</em>: "
-"Ignoruje všetky požiadavky na potvrdenia. Žiadne MDN sa nikdy nebude "
-"automaticky posielať (doporučené).</li><li><em>Pýtať sa</em>: Posielať "
-"potvrdenia iba po získaní súhlasu od používateľa. Takto môžete pre vybrané "
-"správy MDN posielať a pre ostatné ich ignorovať alebo odmietnuť.</"
-"li><li><em>Odmietnuť</em>: Vždy posielať potvrdenie <b>odmietnuté</b>. To je "
-"len o <em>niečo málo </em> lepšie než vždy MDN posielať. Autor aj tak zistí, "
-"že sa so správou niečo stalo, iba nevie presne čo..</li><li><em>Vždy poslať</"
-"em>: Vždy poslať požadované potvrdenie. To znamená, že autor správy zistí, "
-"kedy sa so správou čo dialo (či bola zobrazená, odstránená atď.). Táto voľba "
-"sa silne nedoporučuje, ale pretože má zmysel napríklad pri správe "
-"komunikácie s klientami, je k dispozícii.</li></ul></qt>"
+"<qt><h3>Politika pre potvrdenia o doručení správy</h3><p>MDN sú "
+"zovšeobecnením funkcie, ktorá sa bežne nazýva <b>potvrdenie o prečítaní</b>. "
+"Autor správy požaduje poslanie potvrdenia o doručení a poštový klient "
+"príjemcu vygeneruje odpoveď, z ktorej autor môže zistiť, čo sa s jeho "
+"správou stalo. Obvyklé typy potvrdení sú <b>zobrazená</b> (čiže prečítaná), "
+"<b>odstránená</b> a <b>predaná ďalej</b> (napr. preposlaná).</p><p>Na "
+"ovládanie odosielania MDN v KMail máte tieto možnosti:</"
+"p><ul><li><em>Ignorovať</em>: Ignoruje všetky požiadavky na potvrdenia. "
+"Žiadne MDN sa nikdy nebude automaticky posielať (odporúčané).</"
+"li><li><em>Pýtať sa</em>: Odpovedá na požiadavky iba po získaní súhlasu od "
+"používateľa. Takto môžete pre vybrané správy MDN posielať a pre ostatné ich "
+"ignorovať alebo odmietnuť.</li><li><em>Odmietnuť</em>: Vždy posiela "
+"potvrdenie <b>odmietnuté</b>. To je len o <em>niečo málo</em> lepšie než "
+"vždy MDN posielať. Autor aj tak zistí, že sa so správou niečo stalo, iba "
+"nevie presne čo.</li><li><em>Vždy poslať</em>: Vždy pošle požadované "
+"potvrdenie. To znamená, že autor správy zistí, kedy sa so správou čo dialo "
+"(či bola zobrazená, odstránená atď.). Táto voľba sa silne neodporúča, ale "
+"keďže má zmysel napríklad pri správe komunikácie s klientmi, je k dispozícii."
+"</li></ul></qt>"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioIgnore)
 #: ui/securitypagemdntab.ui:33
@@ -7982,9 +7984,9 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
-"<qt>KMail môže poslať spolu so správou malý (48x48 bodov), nízkokvalitný, "
-"čiernobiely obrázok. Napríklad to môže byť Váš obrázok alebo glyph. Je "
-"zobrazený v poštovom klientovi adresáta (ak to podporuje).</qt>"
+"KMail môže poslať spolu so správou malý (48x48 bodov) nízkokvalitný obrázok. "
+"Napríklad to môže byť vaša fotografia alebo symbol. Je zobrazený v poštovom "
+"klientovi adresáta (ak to podporuje)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:75
