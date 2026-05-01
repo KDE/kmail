@@ -184,7 +184,7 @@ msgstr "Major contributor to Akonadi"
 
 #: aboutdata.cpp:116
 msgid "Documentation, still active"
-msgstr "Dokumentácia"
+msgstr "Dokumentácia, stále aktívna"
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
@@ -196,7 +196,7 @@ msgstr "Podpora antivirov"
 
 #: aboutdata.cpp:123
 msgid "Fixed widget styles"
-msgstr "Písmo s pevnou šírkou"
+msgstr "Pevné štýly miniaplikácií"
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
@@ -248,7 +248,7 @@ msgstr "Žiadna čakajúca správa..."
 
 #: aboutdata.cpp:151
 msgid "Improve status bar messages"
-msgstr "Dôležitá správa"
+msgstr "Zlepšiť správy stavového riadka"
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
@@ -383,7 +383,7 @@ msgstr "Typ adresy:"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
-msgstr "Popis distribučného zoznamu:"
+msgstr "URL na odosielanie do konferencie:"
 
 #: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
 #, kde-format
@@ -708,7 +708,7 @@ msgstr "Výstup tlače"
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "Stav:"
+msgstr "Po&užívať vlastné písma"
 
 #: configuredialog/configureappearancepage.cpp:168
 #, kde-format
@@ -922,7 +922,7 @@ msgstr "Zobrazenie dátumu"
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "Nová identita"
+msgstr "Zobraziť vlastnú identitu"
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -1935,7 +1935,7 @@ msgstr "Urgentná"
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
-msgstr "&Požadovať potvrdenie o doručení"
+msgstr "&Požadovať oznámenie o naložení so správou"
 
 #: editor/kmcomposerwin.cpp:1388
 #, kde-format
@@ -2056,7 +2056,7 @@ msgstr "&Zašifrovať správu"
 #: editor/kmcomposerwin.cpp:1478
 #, kde-format
 msgid "Encrypt"
-msgstr "Šifrovanie"
+msgstr "Šifrovať"
 
 #: editor/kmcomposerwin.cpp:1480
 #, kde-format
@@ -2066,7 +2066,7 @@ msgstr "&Podpísať správu"
 #: editor/kmcomposerwin.cpp:1481
 #, kde-format
 msgid "Sign"
-msgstr "Podpis"
+msgstr "Podpísať"
 
 #: editor/kmcomposerwin.cpp:1508
 #, kde-format
@@ -2191,13 +2191,13 @@ msgstr "Poslanie správy zlyhalo"
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr ""
-"Nepodarilo sa spustiť program „Export dát PIM“. Skontrolujte svojuinštaláciu."
+"Nepodarilo sa spustiť program „KAddressbook“. Skontrolujte svoju inštaláciu."
 
 #: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:154
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "Nie je možné spustiť program \"Export dát PIM\""
+msgstr "Nie je možné spustiť program „KAddressbook“"
 
 #: editor/kmcomposerwin.cpp:2351
 #, kde-format
@@ -2323,7 +2323,7 @@ msgstr "Poslať &ako je"
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
-msgstr "Zadať &predmet"
+msgstr "Zadať pole &Komu"
 
 #: editor/kmcomposerwin.cpp:2880
 #, kde-format
@@ -2475,7 +2475,7 @@ msgstr "Šifrovanie"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "Šifrovanie"
+msgstr "Nešifrovať"
 
 #: editor/kmcomposerwin.cpp:3811
 #, kde-format
@@ -2546,8 +2546,8 @@ msgid ""
 "The encryption key is not trusted. It has conflicting TOFU data. Click the "
 "icon for details."
 msgstr ""
-"Pre tohto príjemcu sa použije šifrovanie s nízkou bezpečnosťou (šifrovací "
-"kľúč je nedôveryhodný). Kliknite na ikonu pre podrobnosti."
+"Šifrovací kľúč nie je dôveryhodný. Obsahuje konfliktné údaje TOFU. Kliknite "
+"na ikonu pre podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3890
 #, kde-format
@@ -2566,8 +2566,8 @@ msgid ""
 "The encryption key is not trusted. The key is marked as bad. Click the icon "
 "for details."
 msgstr ""
-"Pre tohto príjemcu sa použije šifrovanie s nízkou bezpečnosťou (šifrovací "
-"kľúč je nedôveryhodný). Kliknite na ikonu pre podrobnosti."
+"Šifrovací kľúč nie je dôveryhodný. Kľúč je označený ako chybný. Kliknite na "
+"ikonu pre podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3904
 #, kde-format
@@ -2614,8 +2614,8 @@ msgid ""
 "The encryption key is fully trusted. You can raise the security level, by "
 "signing the key. Click the icon for details."
 msgstr ""
-"Pre tohto príjemcu sa použije šifrovanie s vysokou bezpečnosťou (šifrovací "
-"kľúč je dôveryhodný). Kliknite na ikonu pre podrobnosti."
+"Šifrovací kľúč je plne dôveryhodný. Úroveň bezpečnosti môžete zvýšiť "
+"podpísaním kľúča. Kliknite na ikonu pre podrobnosti."
 
 #: editor/kmcomposerwin.cpp:3931
 #, kde-format
@@ -2624,8 +2624,8 @@ msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Pre tohto príjemcu sa použije šifrovanie s vysokou bezpečnosťou (šifrovací "
-"kľúč je dôveryhodný). Kliknite na ikonu pre podrobnosti."
+"Šifrovací kľúč je absolútne dôveryhodný alebo ho podpísal iný absolútne "
+"dôveryhodný kľúč. Kliknite na ikonu pre podrobnosti."
 
 #: editor/kmcomposerwin.cpp:4048
 #, kde-format
@@ -2914,7 +2914,7 @@ msgstr "História farieb"
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "Poslať novú správu"
+msgstr "Znovu otvoriť zatvorený prehliadač"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1928
@@ -3012,7 +3012,7 @@ msgstr "Could not generate an OpenPGP certificate: %1"
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Zmazanie správ zrušené."
+msgstr "Generovanie kľúča bolo zrušené."
 
 #: identity/identitydialog.cpp:310
 #, kde-format
@@ -3232,13 +3232,13 @@ msgstr "Uprednostňovaný formát:"
 #: identity/identitydialog.cpp:568
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr "Šifrovanie"
+msgstr "Povoliť Autocrypt"
 
 #: identity/identitydialog.cpp:572
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "Šifrovanie"
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:577
 #, kde-format
@@ -3255,7 +3255,7 @@ msgstr "Overwrite global settings for security defaults"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "Nastaviť ako štandardné"
+msgstr "Prepísať predvolené nastavenia:"
 
 #: identity/identitydialog.cpp:588
 #, kde-format
@@ -3397,18 +3397,18 @@ msgstr "Priečinok pre ša&blóny:"
 #: identity/identitydialog.cpp:708
 #, kde-format
 msgid "Select Spam Folder"
-msgstr "Vybrať priečinok konceptov"
+msgstr "Vybrať priečinok nevyžiadanej pošty"
 
 #: identity/identitydialog.cpp:710
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Priečinok pre &odoslané:"
+msgstr "Priečinok pre &nevyžiadanú poštu:"
 
 #: identity/identitydialog.cpp:713
 #, kde-format
 msgid "Configure Expire Folder..."
-msgstr "Zrušiť platnosť priečinku"
+msgstr "Nakonfigurovať zrušenie platnosti priečinku..."
 
 #: identity/identitydialog.cpp:724
 #, kde-format
@@ -3495,7 +3495,7 @@ msgstr "Neplatný e-mailový alias \"%1\""
 #: identity/identitydialog.cpp:873
 #, kde-format
 msgid "You must provide an email for this identity."
-msgstr "&Použiť vlastné šablóny pre správy pre túto identitu"
+msgstr "Pre túto identitu musíte zadať e-mailovú adresu."
 
 #: identity/identitydialog.cpp:873
 #, kde-format
@@ -3646,7 +3646,7 @@ msgstr "Nerušiť"
 #, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "Zrušiť platnosť priečinku"
+msgstr "Zrušiť platnosť priečinku nevyžiadanej pošty"
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -3754,7 +3754,7 @@ msgstr ""
 #: identity/xfaceconfigurator.cpp:125
 #, kde-format
 msgid "No image will be sent."
-msgstr "Správa bude kryptovaná"
+msgstr "Žiadny obrázok nebude odoslaný."
 
 #: identity/xfaceconfigurator.cpp:128
 #, kde-format
@@ -3864,7 +3864,7 @@ msgstr "Pripojiť"
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
-msgstr "&Priložiť"
+msgstr "Neprikladať"
 
 #: job/removecollectionjob.cpp:58
 #, kde-format
@@ -3980,7 +3980,7 @@ msgstr "Predmet"
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "Pridať 'hlavičku' k správe. Toto môžete urobiť opakovane"
+msgstr "Poslať CC: na 'adresu'. Toto môžete urobiť opakovane"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
 #, kde-format
@@ -3990,7 +3990,7 @@ msgstr "Adresa"
 #: kmail_options.h:22
 #, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "Pridať 'hlavičku' k správe. Toto môžete urobiť opakovane"
+msgstr "Poslať BCC: na 'adresu'. Toto môžete urobiť opakovane"
 
 #: kmail_options.h:24
 #, kde-format
@@ -4034,7 +4034,7 @@ msgstr "Pridať prílohy k správe. Toto môžete urobiť opakovane"
 #: kmail_options.h:30
 #, kde-format
 msgid "Attachment Url"
-msgstr "Príloha"
+msgstr "URL prílohy"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4074,13 +4074,13 @@ msgstr "Zobraziť zadaný súbor správy"
 #: kmail_options.h:35
 #, kde-format
 msgid "Message Url"
-msgstr "Správa"
+msgstr "URL správy"
 
 #: kmail_options.h:36
 #, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "Nastaviť text správy"
+msgstr "Nastaviť text správy ako HTML"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4459,7 +4459,7 @@ msgstr "Agent pre poslanie neskôr nebol registrovaný."
 #: kmlaunchexternalcomponent.cpp:57
 #, kde-format
 msgid "Mail Merge Agent was not registered."
-msgstr "Archive Mail Agent nebol registrovaný."
+msgstr "Mail Merge Agent nebol registrovaný."
 
 #: kmlaunchexternalcomponent.cpp:62
 #, kde-format
@@ -4485,13 +4485,13 @@ msgstr "Chyba KMail"
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Nepodarilo sa spustiť program „Export dát PIM“. Skontrolujte svojuinštaláciu."
+"Nepodarilo sa spustiť program „ImportWizard“. Skontrolujte svoju inštaláciu."
 
 #: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Nie je možné spustiť sprievodcu importom"
+msgstr "Nie je možné spustiť program „ImportWizard“"
 
 #: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, kde-format
@@ -4520,7 +4520,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Nie je možné spustiť sprievodcu importom"
+msgstr "Nie je možné spustiť ImportWizard"
 
 #: kmmainwidget.cpp:329
 #, kde-format
@@ -4553,7 +4553,7 @@ msgstr "Nie je možné spustiť sprievodcu importom"
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "(žiadne šablóny)"
+msgstr "(načítavanie šablón…)"
 
 #: kmmainwidget.cpp:1419
 #, kde-format
@@ -4955,7 +4955,7 @@ msgstr "Prehliadač záznamu filtrov"
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr "Upozornenie"
+msgstr "História upozornení…"
 
 #: kmmainwidget.cpp:3065
 #, kde-format
@@ -4991,13 +4991,13 @@ msgstr "Pripomienkovač správ Followup..."
 #, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "R&ozbaliť všetky vlákna"
+msgstr "R&ozbaliť všetko"
 
 #: kmmainwidget.cpp:3098
 #, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Z&abaliť všetky vlákna"
+msgstr "Z&abaliť všetko"
 
 #: kmmainwidget.cpp:3109 util.cpp:187
 #, kde-format
@@ -5048,7 +5048,9 @@ msgstr "Vymazať vyrovnávaciu pamäť Akonadi"
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
-msgstr "Označiť duplicity v tomto priečinku a vo všetkých podpriečinkoch"
+msgstr ""
+"Vymazať vyrovnávaciu pamäť Akonadi v tomto priečinku a vo všetkých "
+"podpriečinkoch"
 
 #: kmmainwidget.cpp:3159
 #, kde-format
@@ -5551,7 +5553,7 @@ msgstr "Označiť duplicity v tomto priečinku a vo všetkých podpriečinkoch"
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
-msgstr "Pre&dchádzajúci neprečítaný priečinok"
+msgstr "Pre&dchádzajúci vybraný priečinok"
 
 #: kmmainwidget.cpp:3712
 #, kde-format
@@ -5673,7 +5675,7 @@ msgstr "Do chcete to restart Akonadi?"
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
-msgstr "Reštartovať účet"
+msgstr "Reštartovať Akonadi"
 
 #: kmmainwidget.cpp:5101
 #, kde-format
@@ -6101,7 +6103,7 @@ msgstr "&Presmerovať..."
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr "N&ová správa do konferencie..."
+msgstr "Nová správa adresátom…"
 
 #: messageactions.cpp:73
 #, kde-format
@@ -7179,13 +7181,13 @@ msgstr "Otvoriť správu"
 #: ui/securitypageencryptiontab.ui:17
 #, kde-format
 msgid "Security defaults"
-msgstr "Nastaviť ako štandardné"
+msgstr "Predvolené nastavenia bezpečnosti"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AlwaysEncryptDrafts)
 #: ui/securitypageencryptiontab.ui:23
 #, kde-format
 msgid "Encrypt draft messages"
-msgstr "Šifrované správy"
+msgstr "Šifrovať správy v konceptoch"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -7221,13 +7223,13 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:44
 #, kde-format
 msgid "Encry&pt sent messages"
-msgstr "Šifrované správy"
+msgstr "Šifrovať odoslané správy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
 #, kde-format
 msgid "Sign all messages"
-msgstr "&Podpísať správu"
+msgstr "Podpísať všetky správy"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
@@ -7239,7 +7241,7 @@ msgstr "Automaticky šifrovať správy, ak je to možné"
 #: ui/securitypageencryptiontab.ui:74
 #, kde-format
 msgid "Encryption indicators"
-msgstr "Zobraziť indikátor šifrovaného popisu"
+msgstr "Indikátory šifrovania"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowCryptoLabelIndicator)
 #: ui/securitypageencryptiontab.ui:80
@@ -7339,7 +7341,7 @@ msgstr ""
 #: ui/securitypageencryptiontab.ui:214
 #, kde-format
 msgid "For own certificates:"
-msgstr "Pre koreňové certifikáty:"
+msgstr "Pre vlastné certifikáty:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
@@ -7354,11 +7356,11 @@ msgid ""
 "</p></qt>"
 msgstr ""
 "<qt>\n"
-"<h1>Varovať, ak koreňový certifikát vyprší</h1>\n"
+"<h1>Varovať, ak vlastný certifikát vyprší</h1>\n"
 "Vyberte minimálny počet dní, po ktorom sa má zobraziť varovanie v prípade, "
-"že platnosť koreňového certifikátu čoskoro vyprší.\n"
+"že platnosť vlastného certifikátu čoskoro vyprší.\n"
 "<p>\n"
-"Odporúčané nastavenie pre SPHINX je 14 dní.\n"
+"Odporúčané nastavenie pre SPHINX je 30 dní.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
@@ -7974,7 +7976,7 @@ msgstr "Send monochrome (X-Face)"
 #: ui/xfaceconfigurator.ui:42
 #, kde-format
 msgid "Send both"
-msgstr "Poslať teraz"
+msgstr "Odoslať oboje"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/xfaceconfigurator.ui:65
