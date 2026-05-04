@@ -7,7 +7,6 @@
 #include "secondarywindow.h"
 
 #include <KMime/Message>
-#include <QUrl>
 
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
@@ -17,6 +16,7 @@ class KMReaderWin;
 class QAction;
 class KJob;
 class ZoomLabelWidget;
+class QUrl;
 
 namespace KMail
 {

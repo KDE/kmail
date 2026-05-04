@@ -41,6 +41,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QStatusBar>
+#include <QUrl>
 #include <TemplateParser/CustomTemplatesMenu>
 
 #include "tag/tagactionmanager.h"
