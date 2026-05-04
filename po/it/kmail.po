@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-04-22 00:46+0000\n"
-"PO-Revision-Date: 2026-03-26 00:14+0100\n"
+"PO-Revision-Date: 2026-04-14 16:53+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -4138,7 +4138,7 @@ msgstr "Mostra le opzioni disponibili per le segnalazioni degli utenti"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Attivazione della modalità di debug"
 
 #: kmail_options.h:44
 #, kde-format
