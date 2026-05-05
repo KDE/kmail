@@ -14,7 +14,7 @@ Dependencies:
     'pim/kidentitymanagement' : '@same'
     'pim/kldap' : '@same'
     'pim/kmailtransport' : '@same'
-    'pim/kmime' : '@same'
+    'frameworks/kmime' : '@same'
     'pim/kontactinterface' : '@same'
     'pim/kpimtextedit' : '@same'
     'pim/ktnef' : '@same'
