@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-22 00:46+0000\n"
+"POT-Creation-Date: 2026-05-05 00:45+0000\n"
 "PO-Revision-Date: 2025-10-20 20:21+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -1756,7 +1756,7 @@ msgid "Show attachment list"
 msgstr "Liste der Anhänge anzeigen"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
-#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2113,7 +2113,7 @@ msgstr "Erinnerung an Folgenachricht erstellen …"
 msgid "Configure KMail…"
 msgstr "KMail einrichten …"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:546
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:547
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5299,7 +5299,7 @@ msgstr "Gruppe über&wachen"
 msgid "&Ignore Thread"
 msgstr "Gruppe &ignorieren"
 
-#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:499
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "A&nhänge speichern …"
@@ -5803,28 +5803,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Startvorgang …"
 
-#: kmreadermainwin.cpp:501 util.cpp:187
+#: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "In den &Papierkorb verschieben"
 
-#: kmreadermainwin.cpp:502
+#: kmreadermainwin.cpp:503
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "In &Papierkorb verschieben"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Nachricht in den Papierkorb verschieben"
 
-#: kmreadermainwin.cpp:549
+#: kmreadermainwin.cpp:550
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Menüleiste ausblenden"
 
-#: kmreadermainwin.cpp:632
+#: kmreadermainwin.cpp:633
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Die Nachricht kann nicht kopiert werden. %1"

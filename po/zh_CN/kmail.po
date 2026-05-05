@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-22 00:46+0000\n"
+"POT-Creation-Date: 2026-05-05 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -1700,7 +1700,7 @@ msgid "Show attachment list"
 msgstr "显示附件列表"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
-#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2051,7 +2051,7 @@ msgstr "创建后续提醒"
 msgid "Configure KMail…"
 msgstr "配置 KMail..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:546
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:547
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5013,7 +5013,7 @@ msgstr "观察线索(&W)"
 msgid "&Ignore Thread"
 msgstr "忽略线索(&I)"
 
-#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:499
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "保存附件(&T)..."
@@ -5510,28 +5510,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "正在启动..."
 
-#: kmreadermainwin.cpp:501 util.cpp:187
+#: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "移到废件夹(&M)"
 
-#: kmreadermainwin.cpp:502
+#: kmreadermainwin.cpp:503
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "废件夹"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "将消息放入废件夹"
 
-#: kmreadermainwin.cpp:549
+#: kmreadermainwin.cpp:550
 #, kde-format
 msgid "Hide menu bar"
 msgstr "隐藏菜单栏"
 
-#: kmreadermainwin.cpp:632
+#: kmreadermainwin.cpp:633
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "无法复制条目。%1"

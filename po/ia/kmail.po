@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-22 00:46+0000\n"
+"POT-Creation-Date: 2026-05-05 00:45+0000\n"
 "PO-Revision-Date: 2026-04-19 17:30+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1736,7 +1736,7 @@ msgid "Show attachment list"
 msgstr "Monstra lista de attachamento"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
-#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2091,7 +2091,7 @@ msgstr "Crea memorar de continuation..."
 msgid "Configure KMail…"
 msgstr "Configura KMail..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:546
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:547
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5214,7 +5214,7 @@ msgstr "&Observa topico"
 msgid "&Ignore Thread"
 msgstr "&Ignora topico"
 
-#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:499
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Salveguarda A&ttachamentos..."
@@ -5717,28 +5717,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Initiante…"
 
-#: kmreadermainwin.cpp:501 util.cpp:187
+#: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Move al corbe"
 
-#: kmreadermainwin.cpp:502
+#: kmreadermainwin.cpp:503
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Corbe"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Move message a corbe"
 
-#: kmreadermainwin.cpp:549
+#: kmreadermainwin.cpp:550
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Cela barra de menu"
 
-#: kmreadermainwin.cpp:632
+#: kmreadermainwin.cpp:633
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Non pote copiar elemento. %1"

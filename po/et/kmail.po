@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-22 00:46+0000\n"
+"POT-Creation-Date: 2026-05-05 00:45+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1891,7 +1891,7 @@ msgid "Show attachment list"
 msgstr "Kaasatud failide nimekirja näitamine"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
-#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2278,7 +2278,7 @@ msgstr "Loo vastamise meeldetuletus..."
 msgid "Configure KMail…"
 msgstr "KMaili seadistamine..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:546
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:547
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5565,7 +5565,7 @@ msgstr "Jälgi lõi&me"
 msgid "&Ignore Thread"
 msgstr "&Ignoreeri lõime"
 
-#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:499
 #, fuzzy, kde-format
 #| msgid "Save Attachment"
 msgid "Save A&ttachments…"
@@ -6122,28 +6122,28 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Alustamine..."
 
-#: kmreadermainwin.cpp:501 util.cpp:187
+#: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Liiguta prügikasti"
 
-#: kmreadermainwin.cpp:502
+#: kmreadermainwin.cpp:503
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Prügikasti"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Liiguta kiri prügikasti"
 
-#: kmreadermainwin.cpp:549
+#: kmreadermainwin.cpp:550
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Peida menüüriba"
 
-#: kmreadermainwin.cpp:632
+#: kmreadermainwin.cpp:633
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Elemendi kopeerimine nurjus. %1"

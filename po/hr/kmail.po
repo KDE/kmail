@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-22 00:46+0000\n"
+"POT-Creation-Date: 2026-05-05 00:45+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -1862,7 +1862,7 @@ msgstr "Pogledaj prilog: "
 # pmap: =/nom=KMail/gen=KMaila/dat=KMailu/
 # pmap: =/aku=KMail/lok=KMailu/ins=KMailom/_r=m/_b=j/
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
-#: kmreadermainwin.cpp:487 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2244,7 +2244,7 @@ msgstr "&Nađi poruke…"
 msgid "Configure KMail…"
 msgstr "&Namjesti KMail..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:546
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:547
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -5334,7 +5334,7 @@ msgstr "&Gledaj nit"
 msgid "&Ignore Thread"
 msgstr "&Ignoriraj nit"
 
-#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:498
+#: kmmainwidget.cpp:3342 kmreadermainwin.cpp:499
 #, fuzzy, kde-format
 msgid "Save A&ttachments…"
 msgstr "Snimi prilog kao"
@@ -5879,29 +5879,29 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Pokrećem…"
 
-#: kmreadermainwin.cpp:501 util.cpp:187
+#: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Pre&mjesti u smeće"
 
-#: kmreadermainwin.cpp:502
+#: kmreadermainwin.cpp:503
 #, fuzzy, kde-format
 #| msgid "trash"
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "smeće"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Premjesti poruku u smeće"
 
-#: kmreadermainwin.cpp:549
+#: kmreadermainwin.cpp:550
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:632
+#: kmreadermainwin.cpp:633
 #, fuzzy, kde-format
 #| msgid ""
 #| "Cannot open file \"%1\":\n"
