@@ -16,7 +16,6 @@
 
 #include <TextAddonsWidgets/NeedUpdateVersionUtils>
 #include <TextAddonsWidgets/NeedUpdateVersionWidget>
-#include <TextAddonsWidgets/WhatsNewMessageWidget>
 
 #include <KConfigGroup>
 #include <KToolBar>
