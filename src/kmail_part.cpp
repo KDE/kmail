@@ -97,7 +97,9 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
     KParts::ReadOnlyPart::guiActivateEvent(e);
     if (e->activated()) {
-        KMKernel::self()->setSystemTryAssociatedWindow(mainWidget->window()->windowHandle());
+        if (KMKernel::self()) {
+            KMKernel::self()->setSystemTryAssociatedWindow(mainWidget->window()->windowHandle());
+        }
         mainWidget->initializeFilterActions(true);
         mainWidget->tagActionManager()->createActions();
         mainWidget->folderShortcutActionManager()->createActions();
