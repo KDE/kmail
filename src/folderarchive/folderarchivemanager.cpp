@@ -146,10 +146,10 @@ void FolderArchiveManager::load()
     // Be sure to clear cache.
     mFolderArchiveCache->clearCache();
 
-    KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
+    const KConfig config(FolderArchive::FolderArchiveUtil::configFileName());
     const QStringList accountList = config.groupList().filter(QRegularExpression(FolderArchive::FolderArchiveUtil::groupConfigPattern()));
     for (const QString &account : accountList) {
-        KConfigGroup group = config.group(account);
+        const KConfigGroup group = config.group(account);
         auto info = new FolderArchiveAccountInfo(group);
         if (info->enabled()) {
             mListAccountInfo.append(info);

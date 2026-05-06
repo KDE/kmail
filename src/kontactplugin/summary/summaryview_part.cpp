@@ -113,8 +113,8 @@ void SummaryViewPart::updateWidgets()
 
     mMainLayout->insertWidget(2, mFrame);
 
-    KConfig config(QStringLiteral("kontact_summaryrc"));
-    KConfigGroup grp(&config, QString());
+    const KConfig config(QStringLiteral("kontact_summaryrc"));
+    const KConfigGroup grp(&config, QString());
     QStringList activeSummaries;
     if (grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
@@ -462,8 +462,8 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
 
 void SummaryViewPart::loadLayout()
 {
-    KConfig config(QStringLiteral("kontact_summaryrc"));
-    KConfigGroup grp(&config, QString());
+    const KConfig config(QStringLiteral("kontact_summaryrc"));
+    const KConfigGroup grp(&config, QString());
 
     if (grp.hasKey("LeftColumnSummaries")) {
         mLeftColumnSummaries = grp.readEntry("LeftColumnSummaries", QStringList());

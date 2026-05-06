@@ -91,8 +91,8 @@ void KCMKontactSummary::load()
 
     QStringList activeSummaries;
 
-    KConfig config(QStringLiteral("kontact_summaryrc"));
-    KConfigGroup grp(&config, QString());
+    const KConfig config(QStringLiteral("kontact_summaryrc"));
+    const KConfigGroup grp(&config, QString());
     if (grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     } else {
