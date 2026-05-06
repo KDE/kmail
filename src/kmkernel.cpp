@@ -1718,11 +1718,11 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
                         break;
                     }
                 }
+                delete iface;
             }
-            delete iface;
         } else if (typeIdentifier.contains(POP3_RESOURCE_IDENTIFIER)) {
             OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
-            if (iface->isValid()) {
+            if (iface && iface->isValid()) {
                 for (const Akonadi::Collection &collection : std::as_const(collectionList)) {
                     const Akonadi::Collection::Id collectionId = collection.id();
                     if (iface->targetCollection() == collectionId) {
@@ -1732,8 +1732,8 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
                         break;
                     }
                 }
+                delete iface;
             }
-            delete iface;
         }
     }
 }
