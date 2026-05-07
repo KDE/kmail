@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-05 00:45+0000\n"
+"POT-Creation-Date: 2026-05-07 00:45+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1716,7 +1716,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "संलग्नकसूचीं दर्शयतु"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:100
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
 #: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgid "KMail2"
@@ -2068,7 +2068,7 @@ msgstr "अनुवर्तन स्मरणं रचयन्तु…"
 msgid "Configure KMail…"
 msgstr "KMail विन्यस्तं कुर्वन्तु…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:227 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:226 kmreadermainwin.cpp:547
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2076,7 +2076,7 @@ msgid ""
 msgstr ""
 "<qt>एतेन मेनू-पट्टिका पूर्णतया गोप्यते । %1.</qt> इति टङ्कयित्वा पुनः दर्शयितुं शक्नुवन्ति"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:230
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:229
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -5637,7 +5637,7 @@ msgstr "पुनः आरभत"
 msgid "Akonadi restarted."
 msgstr "अकोनाडी पुनः आरब्धा ।"
 
-#: kmmainwin.cpp:56
+#: kmmainwin.cpp:55
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
