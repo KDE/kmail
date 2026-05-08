@@ -647,7 +647,7 @@ void SearchWindowDialog::scheduleRename(const QString &text)
         mUi.mSearchFolderOpenBtn->setEnabled(false);
     } else {
         mRenameTimer.stop();
-        mUi.mSearchFolderOpenBtn->setEnabled(!text.isEmpty());
+        mUi.mSearchFolderOpenBtn->setEnabled(mFolder.isValid());
     }
 }
 
