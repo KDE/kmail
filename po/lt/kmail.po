@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-07 00:45+0000\n"
-"PO-Revision-Date: 2026-04-14 00:10+0300\n"
+"PO-Revision-Date: 2026-05-08 01:22+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -655,11 +655,10 @@ msgid "Switch offline on KMail Shutdown"
 msgstr "Atsijungti išjungiant KMail"
 
 #: configuredialog/configureaccountpage.cpp:278
-#, fuzzy, kde-format
-#| msgid "Check mail on startup"
+#, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
-msgstr "Tikrinti paštą paleidimo metu"
+msgstr "Tikrinti paštą programos paleidimo metu"
 
 #: configuredialog/configureaccountpage.cpp:325
 #, kde-format
@@ -1999,11 +1998,10 @@ msgid "&Snippets"
 msgstr "&Fragmentai"
 
 #: editor/kmcomposerwin.cpp:1403
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
-msgstr "&Automatiškai tikrinti rašybą"
+msgstr "&Automatinis rašybos tikrinimas"
 
 #: editor/kmcomposerwin.cpp:1419
 #, kde-format
@@ -3448,11 +3446,10 @@ msgid "Outgoing Account:"
 msgstr "Išsiuntimo paskyra:"
 
 #: identity/identitydialog.cpp:731
-#, fuzzy, kde-format
-#| msgid "Attach my vCard to message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
-msgstr "Pridėti mano vCard laiške"
+msgstr "Pridėti į laišką mano vCard vizitinę kortelę"
 
 #: identity/identitydialog.cpp:732
 #, kde-format
@@ -3527,10 +3524,9 @@ msgid "Invalid Email Alias \"%1\""
 msgstr "Neteisinga el. pašto alternatyva „%1“"
 
 #: identity/identitydialog.cpp:873
-#, fuzzy, kde-format
-#| msgid "&Use custom message templates for this identity"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "Naudoti savadarbį laiško šabloną šiai tapatybei"
+msgstr "Privalote pateikti šiai tapatybei skirtą el. paštą."
 
 #: identity/identitydialog.cpp:873
 #, kde-format
@@ -3590,8 +3586,7 @@ msgstr ""
 "tapatybei konfigūruoto el. pašto adreso (%1)"
 
 #: identity/identitydialog.cpp:971
-#, fuzzy, kde-format
-#| msgid "Email Address Not Found in Key/Certificates"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "El. pašto adresas nerastas tarp raktų/liudijimų"
@@ -4720,11 +4715,10 @@ msgid "Security Warning"
 msgstr "Saugumo įspėjimas"
 
 #: kmmainwidget.cpp:1619
-#, fuzzy, kde-format
-#| msgid "Load External References"
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
-msgstr "Įkelti nuorodas iš išorės"
+msgstr "Įkelti išorines nuorodas"
 
 #: kmmainwidget.cpp:1692
 #, fuzzy, kde-format
@@ -6719,9 +6713,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg:189
-#, fuzzy, kde-format
+#, kde-format
 msgid "Warn if the number of recipients is more than:"
-msgstr "Perspėti, jei gavėjų skaičius yra daugiau nei:"
+msgstr "Įspėti, jei gavėjų skaičius yra daugiau nei:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
