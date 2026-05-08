@@ -89,22 +89,22 @@ void CheckIndexingManager::callToReindexCollection()
                                                QStringLiteral("/"),
                                                QStringLiteral("org.freedesktop.Akonadi.Indexer"));
         if (interfaceAkonadiIndexer.isValid()) {
-            qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
+            qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsNeedToBeReIndexed;
             interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
         }
     }
 }
 
-void CheckIndexingManager::indexingFinished(qint64 index, bool reindexCollection)
+void CheckIndexingManager::indexingFinished(qint64 col, bool reindexCollection)
 {
-    if (index != -1) {
-        if (!mCollectionsIndexed.contains(index)) {
-            mCollectionsIndexed.append(index);
+    if (col != -1) {
+        if (!mCollectionsIndexed.contains(col)) {
+            mCollectionsIndexed.append(col);
         }
     }
-    if (reindexCollection) {
-        if (!mCollectionsNeedToBeReIndexed.contains(index)) {
-            mCollectionsNeedToBeReIndexed.append(index);
+    if (reindexCollection && col != -1) {
+        if (!mCollectionsNeedToBeReIndexed.contains(col)) {
+            mCollectionsNeedToBeReIndexed.append(col);
         }
         if (mCollectionsNeedToBeReIndexed.count() > 30) {
             callToReindexCollection();
