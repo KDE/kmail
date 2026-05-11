@@ -1557,7 +1557,7 @@ msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
-msgstr ""
+msgstr "模块缺失。请验证您的安装是否完整。此模块由 kdepim-addons 提供。"
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -3844,7 +3844,7 @@ msgstr "设置消息主题"
 #: kmail_options.h:17
 #, kde-format
 msgid "Subject"
-msgstr ""
+msgstr "主题"
 
 #: kmail_options.h:19
 #, kde-format
@@ -3854,7 +3854,7 @@ msgstr "CC 至“address”，此项可重复"
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
 #, kde-format
 msgid "Address"
-msgstr ""
+msgstr "地址"
 
 #: kmail_options.h:22
 #, kde-format
@@ -3881,7 +3881,7 @@ msgstr "从“file”中读入消息正文"
 #: kmail_options.h:28
 #, kde-format
 msgid "File"
-msgstr ""
+msgstr "文件"
 
 #: kmail_options.h:29
 #, kde-format
@@ -3892,7 +3892,7 @@ msgstr "设置消息正文"
 #: kmail_options.h:29
 #, kde-format
 msgid "Text"
-msgstr ""
+msgstr "文本"
 
 #: kmail_options.h:30
 #, kde-format
@@ -3903,7 +3903,7 @@ msgstr "添加附件到邮件，可重复多次"
 #: kmail_options.h:30
 #, kde-format
 msgid "Attachment Url"
-msgstr ""
+msgstr "附件 URL"
 
 #: kmail_options.h:31
 #, kde-format
@@ -3932,7 +3932,7 @@ msgstr "设置身份名称"
 #: kmail_options.h:34
 #, kde-format
 msgid "Identity"
-msgstr ""
+msgstr "身份"
 
 #: kmail_options.h:35
 #, kde-format
@@ -3943,7 +3943,7 @@ msgstr "查看给定的消息文件"
 #: kmail_options.h:35
 #, kde-format
 msgid "Message Url"
-msgstr ""
+msgstr "消息 URL"
 
 #: kmail_options.h:36
 #, kde-format
@@ -3954,7 +3954,7 @@ msgstr "设置消息正文为 html"
 #: kmail_options.h:36
 #, kde-format
 msgid "Body Message"
-msgstr ""
+msgstr "信件正文"
 
 #: kmail_options.h:38
 #, kde-format
@@ -3966,7 +3966,7 @@ msgstr "列出用户反馈的可用选项"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "激活调试模式"
 
 #: kmail_options.h:44
 #, kde-format
