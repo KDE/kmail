@@ -94,7 +94,7 @@ public:
     void setAutoEncrypt(bool autoEncrypt);
 
 Q_SIGNALS:
-    void overrideChanged(bool override);
+    void overrideChanged();
     void hasOverrideChanged(bool hasOverride);
 
     void acceptedSolutionChanged(bool acceptedSolution);

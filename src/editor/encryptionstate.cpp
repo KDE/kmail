@@ -25,7 +25,7 @@ void EncryptionState::setOverride(bool setByUser)
         Q_EMIT hasOverrideChanged(true);
         // Before the override setting was undefined, we should trigger a signal with correct state
         mOverride = setByUser;
-        Q_EMIT overrideChanged(setByUser);
+        Q_EMIT overrideChanged();
         return;
     }
 
@@ -34,7 +34,7 @@ void EncryptionState::setOverride(bool setByUser)
     }
 
     mOverride = setByUser;
-    Q_EMIT overrideChanged(mOverride);
+    Q_EMIT overrideChanged();
 }
 
 void EncryptionState::toggleOverride()
@@ -49,7 +49,7 @@ void EncryptionState::unsetOverride()
     }
     mHasOverride = false;
     Q_EMIT hasOverrideChanged(false);
-    Q_EMIT overrideChanged(false);
+    Q_EMIT overrideChanged();
 }
 
 bool EncryptionState::hasOverride() const
