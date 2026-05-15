@@ -67,6 +67,8 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, QObject *parent)
 
     setXMLFile(QStringLiteral("kontactsummary_part.rc"));
 
+    qApp->installEventFilter(this);
+
     QTimer::singleShot(0, this, &SummaryViewPart::slotTextChanged);
 }
 
@@ -505,12 +507,13 @@ QString SummaryViewPart::widgetName(QWidget *widget) const
     return {};
 }
 
-bool SummaryViewPart::event(QEvent *e)
+bool SummaryViewPart::eventFilter(QObject *obj, QEvent *e)
 {
-    if (e->type() == QEvent::ApplicationPaletteChange) {
+    if (obj == qApp && e->type() == QEvent::ApplicationPaletteChange) {
         slotAdjustPalette();
+        updateSummaries();
     }
-    return KParts::Part::event(e);
+    return KParts::Part::eventFilter(obj, e);
 }
 
 #include "moc_summaryview_part.cpp"

@@ -48,8 +48,8 @@ Q_SIGNALS:
 
 protected:
     void partActivateEvent(KParts::PartActivateEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *e) override;
 
-    bool event(QEvent *e) override;
 protected Q_SLOTS:
     void slotConfigure();
     void updateWidgets();
