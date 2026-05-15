@@ -37,17 +37,6 @@ public:
         return mInfo;
     }
 
-    [[nodiscard]] virtual QString text(int column) const
-    {
-        if (column == 0) {
-            return mInfo.name();
-        } else if (column == 1) {
-            return mInfo.description();
-        } else {
-            return {};
-        }
-    }
-
 private:
     Q_DISABLE_COPY(PluginItem)
     const KPluginMetaData mInfo;
