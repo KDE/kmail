@@ -128,7 +128,6 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     // Create a action for each tag and plug it into various places
     int i = 0;
     bool needToAddMoreAction = false;
-    const int numberOfTag(tags.size());
     // It is assumed the tags are sorted
     for (const MailCommon::Tag::Ptr &tag : tags) {
         if (i < s_numberMaxTag) {
@@ -138,7 +137,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
                 createTagAction(tag, false);
             }
 
-            if (i == s_numberMaxTag && i < numberOfTag) {
+            if (i == s_numberMaxTag) {
                 needToAddMoreAction = true;
             }
         }
