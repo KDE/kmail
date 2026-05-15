@@ -3018,17 +3018,16 @@ void KMComposerWin::slotSendLater()
         if (wasRegistered) {
             MessageComposer::SendLaterInfo *info = nullptr;
             QPointer<MessageComposer::SendLaterDialog> dlg = new MessageComposer::SendLaterDialog(info, this);
-            if (dlg->exec()) {
+            if (dlg->exec() && !dlg.isNull()) {
                 info = dlg->info();
                 const MessageComposer::SendLaterDialog::SendLaterAction action = dlg->action();
-                delete dlg;
                 switch (action) {
                 case MessageComposer::SendLaterDialog::Unknown:
                     qCDebug(KMAIL_LOG) << "Sendlater action \"Unknown\": Need to fix it.";
                     break;
                 case MessageComposer::SendLaterDialog::Canceled:
+                    delete dlg;
                     return;
-                    break;
                 case MessageComposer::SendLaterDialog::PutInOutbox:
                     doSend(MessageComposer::MessageSender::SendLater);
                     break;
@@ -3041,9 +3040,8 @@ void KMComposerWin::slotSendLater()
                     }
                     break;
                 }
-            } else {
-                delete dlg;
             }
+            delete dlg;
         } else {
             doSend(MessageComposer::MessageSender::SendLater);
         }
@@ -4165,7 +4163,7 @@ void KMComposerWin::slotFollowUpMail(bool toggled)
 {
     if (toggled) {
         QPointer<MessageComposer::FollowUpReminderSelectDateDialog> dlg = new MessageComposer::FollowUpReminderSelectDateDialog(this);
-        if (dlg->exec()) {
+        if (dlg->exec() && !dlg.isNull()) {
             mComposerBase->setFollowUpDate(dlg->selectedDate());
             mComposerBase->setFollowUpCollection(dlg->collection());
         } else {

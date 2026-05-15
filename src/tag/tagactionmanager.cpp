@@ -227,7 +227,7 @@ void TagActionManager::newTagActionClicked()
 {
     QPointer<MailCommon::AddTagDialog> dialog = new MailCommon::AddTagDialog(QList<KActionCollection *>() << mActionCollection, nullptr);
     dialog->setTags(TagMonitorManager::self()->tags());
-    if (dialog->exec() == QDialog::Accepted) {
+    if (dialog->exec() == QDialog::Accepted && !dialog.isNull()) {
         mNewTagId = dialog->tag().id();
         // Assign tag to all selected items right away
         Q_EMIT tagActionTriggered(dialog->tag());
