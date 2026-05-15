@@ -116,11 +116,11 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
     for (int i = 0; i < nbCol; ++i) {
         const QModelIndex child = mModelProxy->index(i, 0, parent);
         const auto col = mModelProxy->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        const int showCollection = mModelProxy->data(child, Qt::CheckStateRole).toInt();
+        const auto showCollection = static_cast<Qt::CheckState>(mModelProxy->data(child, Qt::CheckStateRole).toInt());
 
         if (col.isValid()) {
             const Akonadi::CollectionStatistics stats = col.statistics();
-            if (((stats.unreadCount()) != Q_INT64_C(0)) && showCollection) {
+            if (((stats.unreadCount()) != Q_INT64_C(0)) && showCollection == Qt::Checked) {
                 // Collection Name.
                 KUrlLabel *urlLabel = nullptr;
 
