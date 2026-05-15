@@ -167,7 +167,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                 // Folder icon.
                 auto icon = mModelProxy->data(child, Qt::DecorationRole).value<QIcon>();
                 label = new QLabel(this);
-                label->setPixmap(icon.pixmap(label->height() / 1.5));
+                label->setPixmap(icon.pixmap(style()->pixelMetric(QStyle::PM_SmallIconSize)));
                 label->setMaximumWidth(label->minimumSizeHint().width());
                 label->setAlignment(Qt::AlignVCenter);
                 mLayout->addWidget(label, counter, 0);
