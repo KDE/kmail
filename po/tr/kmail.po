@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-07 00:45+0000\n"
+"POT-Creation-Date: 2026-05-16 00:44+0000\n"
 "PO-Revision-Date: 2026-05-02 19:55+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -2101,7 +2101,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menü Çubuğunu Gizle"
 
-#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4046
+#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4044
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2344,30 +2344,30 @@ msgid ""
 "draft."
 msgstr "Bir taslağı şifreleyebilmek için en az bir alıcı belirtmelisiniz."
 
-#: editor/kmcomposerwin.cpp:3115
+#: editor/kmcomposerwin.cpp:3113
 #, kde-format
 msgid "About to send email…"
 msgstr "E-posta gönderilmek üzere…"
 
-#: editor/kmcomposerwin.cpp:3116
+#: editor/kmcomposerwin.cpp:3114
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Onay Gönder"
 
-#: editor/kmcomposerwin.cpp:3117
+#: editor/kmcomposerwin.cpp:3115
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Şimdi Gö&nder"
 
-#: editor/kmcomposerwin.cpp:3118
+#: editor/kmcomposerwin.cpp:3116
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Son&ra Gönder"
 
-#: editor/kmcomposerwin.cpp:3198
+#: editor/kmcomposerwin.cpp:3196
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2376,25 +2376,25 @@ msgstr ""
 "%1 adet alıcıdan fazla kişiye posta yollamaya çalışıyorsunuz. Yine de ileti "
 "yollansın mı?"
 
-#: editor/kmcomposerwin.cpp:3199
+#: editor/kmcomposerwin.cpp:3197
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Pek Çok Alıcı"
 
-#: editor/kmcomposerwin.cpp:3200
+#: editor/kmcomposerwin.cpp:3198
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Olduğu Gibi Gönder"
 
-#: editor/kmcomposerwin.cpp:3201
+#: editor/kmcomposerwin.cpp:3199
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Alıcıları Dü&zenle"
 
-#: editor/kmcomposerwin.cpp:3238
+#: editor/kmcomposerwin.cpp:3236
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2403,25 +2403,25 @@ msgstr ""
 "HTML kipinin kapatılması, metin biçimlendirmesinin kaybolmasına yol açacak. "
 "Emin misiniz?"
 
-#: editor/kmcomposerwin.cpp:3240
+#: editor/kmcomposerwin.cpp:3238
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Biçimlendirmeyi Kaldır?"
 
-#: editor/kmcomposerwin.cpp:3241
+#: editor/kmcomposerwin.cpp:3239
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Biçimlendirmeyi Kaybet"
 
-#: editor/kmcomposerwin.cpp:3242
+#: editor/kmcomposerwin.cpp:3240
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Düz Metin Biçimlendirmesi Ekle"
 
-#: editor/kmcomposerwin.cpp:3454
+#: editor/kmcomposerwin.cpp:3452
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2431,7 +2431,7 @@ msgstr ""
 "Seçili PGP anahtarınız (%1) anahtar zincirinizde bulunmuyor veya şifreleme "
 "için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3467
+#: editor/kmcomposerwin.cpp:3465
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2441,7 +2441,7 @@ msgstr ""
 "Seçili PGP imzalama anahtarınız (%1) anahtar zincirinizde bulunmuyor veya "
 "imzalama için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3483
+#: editor/kmcomposerwin.cpp:3481
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2451,7 +2451,7 @@ msgstr ""
 "Seçili SMIME anahtarınız (%1) anahtar zincirinizde bulunmuyor veya şifreleme "
 "için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3496
+#: editor/kmcomposerwin.cpp:3494
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2461,25 +2461,25 @@ msgstr ""
 "Seçili SMIME imzalama anahtarınız (%1) anahtar zincirinizde bulunmuyor veya "
 "imzalama için uygun değil."
 
-#: editor/kmcomposerwin.cpp:3669
+#: editor/kmcomposerwin.cpp:3667
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Şifrele"
 
-#: editor/kmcomposerwin.cpp:3671
+#: editor/kmcomposerwin.cpp:3669
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Şifreleme"
 
-#: editor/kmcomposerwin.cpp:3811
+#: editor/kmcomposerwin.cpp:3809
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Alıcı için bir anahtar bulunamadı."
 
-#: editor/kmcomposerwin.cpp:3833
+#: editor/kmcomposerwin.cpp:3831
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2489,7 +2489,7 @@ msgstr ""
 "Bu alıcı için kendiliğinden şifreleme dedikodu anahtarı kullanıldı. Bu "
 "anahtarı üçüncü kişilerden aldık. Anahtar doğrulanmadı."
 
-#: editor/kmcomposerwin.cpp:3837
+#: editor/kmcomposerwin.cpp:3835
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2499,7 +2499,7 @@ msgstr ""
 "Bu alıcı için kendiliğinden şifreleme anahtarı kullanıldı. Anahtar "
 "doğrulanmadı. Alıcı, şifrelenmiş yanıtlar yeğliyor."
 
-#: editor/kmcomposerwin.cpp:3841
+#: editor/kmcomposerwin.cpp:3839
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2509,7 +2509,7 @@ msgstr ""
 "Bu alıcı için kendiliğinden şifreleme anahtarı kullanıldı. Anahtar "
 "doğrulanmadı. Alıcı, şifrelenmiş yanıtlar yeğlemiyor."
 
-#: editor/kmcomposerwin.cpp:3868
+#: editor/kmcomposerwin.cpp:3866
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2521,7 +2521,7 @@ msgstr ""
 "başka bir kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için "
 "simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3876
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2535,7 +2535,7 @@ msgstr ""
 "anahtar o kadar güvenilir olur. Veya parmak izini başka bir kanaldan "
 "ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2545,7 +2545,7 @@ msgstr ""
 "Şifreleme anahtarına güvenilmiyor. Çelişkili TOFU verisine sahip. Ayrıntılar "
 "için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3890
+#: editor/kmcomposerwin.cpp:3888
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2555,7 +2555,7 @@ msgstr ""
 "Şifreleme anahtarına güvenilmiyor. TOFU verisindeki geçerliliği bilinmiyor. "
 "Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3896
+#: editor/kmcomposerwin.cpp:3894
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2565,7 +2565,7 @@ msgstr ""
 "Şifreleme anahtarına güvenilmiyor. Anahtar bozuk olarak imlendi. Ayrıntılar "
 "için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3904
+#: editor/kmcomposerwin.cpp:3902
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2580,7 +2580,7 @@ msgstr ""
 "kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için simgeye "
 "tıklayın."
 
-#: editor/kmcomposerwin.cpp:3912
+#: editor/kmcomposerwin.cpp:3910
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2591,7 +2591,7 @@ msgstr ""
 "kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. Ayrıntılar için simgeye "
 "tıklayın."
 
-#: editor/kmcomposerwin.cpp:3918
+#: editor/kmcomposerwin.cpp:3916
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2606,7 +2606,7 @@ msgstr ""
 "parmak izini başka bir kanaldan ilettiyseniz anahtarı imzalayabilirsiniz. "
 "Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3926
+#: editor/kmcomposerwin.cpp:3924
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2616,7 +2616,7 @@ msgstr ""
 "Şifreleme anahtarı güvenilir. Anahtarı imzalayarak güvenlik düzeyini "
 "yükseltebilirsiniz. Ayrıntılar için simgeye tıklayın."
 
-#: editor/kmcomposerwin.cpp:3931
+#: editor/kmcomposerwin.cpp:3929
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2627,12 +2627,12 @@ msgstr ""
 "güvenilen başka bir anahtar tarafından imzalandı. Ayrıntılar için simgeye "
 "tıklayın."
 
-#: editor/kmcomposerwin.cpp:4048
+#: editor/kmcomposerwin.cpp:4046
 #, kde-format
 msgid " Column: %1 "
 msgstr " Sütun: %1 "
 
-#: editor/kmcomposerwin.cpp:4265
+#: editor/kmcomposerwin.cpp:4263
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2649,12 +2649,12 @@ msgstr ""
 "sertifika yoksa dış sertifikalar aramak için arama düğmesini "
 "kullanabilirsiniz.</qt>"
 
-#: editor/kmcomposerwin.cpp:4277
+#: editor/kmcomposerwin.cpp:4275
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Şifreleme Anahtarı Seçimi"
 
-#: editor/kmcomposerwin.cpp:4361
+#: editor/kmcomposerwin.cpp:4359
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -5940,13 +5940,13 @@ msgstr "İzlenen klasörlerde okunmamış ileti yok"
 msgid "Open Folder: \"%1\""
 msgstr "Klasörü aç: “%1”"
 
-#: kontactplugin/summary/kcmkontactsummary.cpp:60
+#: kontactplugin/summary/kcmkontactsummary.cpp:49
 #, kde-format
 msgctxt "@title:column plugin name"
 msgid "Summary Plugin Name"
 msgstr "Özet Eklenti Adı"
 
-#: kontactplugin/summary/kcmkontactsummary.cpp:75
+#: kontactplugin/summary/kcmkontactsummary.cpp:64
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
@@ -5979,12 +5979,12 @@ msgstr ""
 "kutusu gösterecektir. Ayrıca özetleri dilediğiniz gibi "
 "yapılandırabileceksiniz."
 
-#: kontactplugin/summary/summaryview_part.cpp:106
+#: kontactplugin/summary/summaryview_part.cpp:108
 #, kde-format
 msgid "Summary for %1"
 msgstr "%1 Özeti"
 
-#: kontactplugin/summary/summaryview_part.cpp:364
+#: kontactplugin/summary/summaryview_part.cpp:366
 #, kde-format
 msgid "What's next?"
 msgstr "Sırada ne var?"
@@ -6762,28 +6762,28 @@ msgstr "Alıntı karakterleri"
 msgid "Specifies the policy used when displaying policy"
 msgstr "Politikayı görüntülemede kullanılan politikayı belirtir"
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:203
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "İleti künyesi: %1"
 
-#: tag/tagactionmanager.cpp:155
+#: tag/tagactionmanager.cpp:154
 #, kde-format
 msgid "Add new tag…"
 msgstr "Yeni künye ekle…"
 
-#: tag/tagactionmanager.cpp:168
+#: tag/tagactionmanager.cpp:167
 #, kde-format
 msgctxt "@action"
 msgid "More…"
 msgstr "Daha Fazla…"
 
-#: tag/tagactionmanager.cpp:197
+#: tag/tagactionmanager.cpp:196
 #, kde-format
 msgid "Tag not Found"
 msgstr "Künye bulunamadı"
 
-#: tag/tagactionmanager.cpp:207
+#: tag/tagactionmanager.cpp:206
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "İleti künyesini aç/kapat: %1"

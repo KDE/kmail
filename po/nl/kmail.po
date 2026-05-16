@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-07 00:45+0000\n"
+"POT-Creation-Date: 2026-05-16 00:44+0000\n"
 "PO-Revision-Date: 2026-04-10 11:31+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -2128,7 +2128,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menubalk verbergen"
 
-#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4046
+#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4044
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2374,30 +2374,30 @@ msgstr ""
 "U moet tenminste één geadresseerde opgeven om een concept te kunnen "
 "versleutelen."
 
-#: editor/kmcomposerwin.cpp:3115
+#: editor/kmcomposerwin.cpp:3113
 #, kde-format
 msgid "About to send email…"
 msgstr "Staat op het punt een bericht te verzenden…"
 
-#: editor/kmcomposerwin.cpp:3116
+#: editor/kmcomposerwin.cpp:3114
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Bevestiging verzenden"
 
-#: editor/kmcomposerwin.cpp:3117
+#: editor/kmcomposerwin.cpp:3115
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Nu ver&zenden"
 
-#: editor/kmcomposerwin.cpp:3118
+#: editor/kmcomposerwin.cpp:3116
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "&Later verzenden"
 
-#: editor/kmcomposerwin.cpp:3198
+#: editor/kmcomposerwin.cpp:3196
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2406,25 +2406,25 @@ msgstr ""
 "U probeert een bericht toe te sturen aan meer dan %1 geadresseerden. Moet "
 "het bericht wel worden verstuurd?"
 
-#: editor/kmcomposerwin.cpp:3199
+#: editor/kmcomposerwin.cpp:3197
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Te veel geadresseerden"
 
-#: editor/kmcomposerwin.cpp:3200
+#: editor/kmcomposerwin.cpp:3198
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Zo &verzenden"
 
-#: editor/kmcomposerwin.cpp:3201
+#: editor/kmcomposerwin.cpp:3199
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Geadresseerden b&ewerken"
 
-#: editor/kmcomposerwin.cpp:3238
+#: editor/kmcomposerwin.cpp:3236
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2433,25 +2433,25 @@ msgstr ""
 "HTML-modus uitschakelen veroorzaakt dat de tekst alle opmaak verliest. Echt "
 "doen?"
 
-#: editor/kmcomposerwin.cpp:3240
+#: editor/kmcomposerwin.cpp:3238
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Opmaak verliezen?"
 
-#: editor/kmcomposerwin.cpp:3241
+#: editor/kmcomposerwin.cpp:3239
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Losse opmaak"
 
-#: editor/kmcomposerwin.cpp:3242
+#: editor/kmcomposerwin.cpp:3240
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Markering als platte tekst toevoegen"
 
-#: editor/kmcomposerwin.cpp:3454
+#: editor/kmcomposerwin.cpp:3452
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2461,7 +2461,7 @@ msgstr ""
 "Uw geselecteerde PGP-sleutel (%1) bestaat niet in uw sleutelring of is niet "
 "geschikt voor versleutelen."
 
-#: editor/kmcomposerwin.cpp:3467
+#: editor/kmcomposerwin.cpp:3465
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2471,7 +2471,7 @@ msgstr ""
 "Uw geselecteerde PGP-sleutel (%1) bestaat niet in uw sleutelring of is niet "
 "geschikt voor ondertekenen."
 
-#: editor/kmcomposerwin.cpp:3483
+#: editor/kmcomposerwin.cpp:3481
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2481,7 +2481,7 @@ msgstr ""
 "Uw geselecteerde SMIME-sleutel (%1) bestaat niet in uw sleutelring of is "
 "niet geschikt voor versleutelen."
 
-#: editor/kmcomposerwin.cpp:3496
+#: editor/kmcomposerwin.cpp:3494
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2491,25 +2491,25 @@ msgstr ""
 "Uw geselecteerde SMIME-sleutel (%1) bestaat niet in uw sleutelring of is "
 "niet geschikt voor ondertekenen."
 
-#: editor/kmcomposerwin.cpp:3669
+#: editor/kmcomposerwin.cpp:3667
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Versleutelen"
 
-#: editor/kmcomposerwin.cpp:3671
+#: editor/kmcomposerwin.cpp:3669
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Niet versleutelen"
 
-#: editor/kmcomposerwin.cpp:3811
+#: editor/kmcomposerwin.cpp:3809
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Geen sleutel gevonden voor de ontvanger."
 
-#: editor/kmcomposerwin.cpp:3833
+#: editor/kmcomposerwin.cpp:3831
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2519,7 +2519,7 @@ msgstr ""
 "Roddelsleutel autocrypt is voor deze ontvanger gebruikt. We kregen deze "
 "sleutel van derden. Deze sleutel is niet geverifieerd."
 
-#: editor/kmcomposerwin.cpp:3837
+#: editor/kmcomposerwin.cpp:3835
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2529,7 +2529,7 @@ msgstr ""
 "Sleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is niet "
 "geverifieerd. De ontvanger heeft voorkeur voor versleutelde antwoorden."
 
-#: editor/kmcomposerwin.cpp:3841
+#: editor/kmcomposerwin.cpp:3839
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2539,7 +2539,7 @@ msgstr ""
 "Sleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is niet "
 "geverifieerd. De ontvanger heeft geen voorkeur voor versleutelde antwoorden."
 
-#: editor/kmcomposerwin.cpp:3868
+#: editor/kmcomposerwin.cpp:3866
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2551,7 +2551,7 @@ msgstr ""
 "geldigheid. U kunt de sleutel ondertekenen, als u de vingerafdruk "
 "communiceert via een ander kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3876
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2566,7 +2566,7 @@ msgstr ""
 "sleutel ondertekenen, als u de vingerafdruk communiceert via een ander "
 "kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2576,7 +2576,7 @@ msgstr ""
 "De sleutel voor versleuteling is niet vertrouwd. Deze heeft TOFU-gegevens "
 "die in conflict zijn. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3890
+#: editor/kmcomposerwin.cpp:3888
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2586,7 +2586,7 @@ msgstr ""
 "De sleutel voor versleuteling is niet vertrouwd. Deze heeft TOFU-gegevens "
 "waarvan de geldigheid niet bekend is. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3896
+#: editor/kmcomposerwin.cpp:3894
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2596,7 +2596,7 @@ msgstr ""
 "De sleutel voor versleuteling is niet vertrouwd. De sleutel is als slecht "
 "gemarkeerd. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3904
+#: editor/kmcomposerwin.cpp:3902
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2611,7 +2611,7 @@ msgstr ""
 "de sleutel ondertekenen, als u de vingerafdruk communiceert via een ander "
 "kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3912
+#: editor/kmcomposerwin.cpp:3910
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2622,7 +2622,7 @@ msgstr ""
 "sleutel ondertekenen, als u de vingerafdruk communiceert via een ander "
 "kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3918
+#: editor/kmcomposerwin.cpp:3916
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2637,7 +2637,7 @@ msgstr ""
 "Of u kunt de sleutel ondertekenen, als u de vingerafdruk communiceert via "
 "een ander kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3926
+#: editor/kmcomposerwin.cpp:3924
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2648,7 +2648,7 @@ msgstr ""
 "beveiligingsniveau verhogen door de sleutel te ondertekenen. Klik op het "
 "pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3931
+#: editor/kmcomposerwin.cpp:3929
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2658,12 +2658,12 @@ msgstr ""
 "De sleutel voor versleuteling is volledig vertrouwd of is ondertekend door "
 "een ander die volledig wordt vertrouwd. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:4048
+#: editor/kmcomposerwin.cpp:4046
 #, kde-format
 msgid " Column: %1 "
 msgstr " Kolom: %1 "
 
-#: editor/kmcomposerwin.cpp:4265
+#: editor/kmcomposerwin.cpp:4263
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2680,12 +2680,12 @@ msgstr ""
 "voor deze geadresseerde. Indien er geen geschikt certificaat in de lijst is "
 "kunt u ook zoeken naar externe certificaten door op de knop te drukken.</qt>"
 
-#: editor/kmcomposerwin.cpp:4277
+#: editor/kmcomposerwin.cpp:4275
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Sleutelselectie voor versleuteling"
 
-#: editor/kmcomposerwin.cpp:4361
+#: editor/kmcomposerwin.cpp:4359
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -5996,13 +5996,13 @@ msgstr "Er zijn geen ongelezen berichten in de geobserveerde mappen"
 msgid "Open Folder: \"%1\""
 msgstr "Map openen: \"%1\""
 
-#: kontactplugin/summary/kcmkontactsummary.cpp:60
+#: kontactplugin/summary/kcmkontactsummary.cpp:49
 #, kde-format
 msgctxt "@title:column plugin name"
 msgid "Summary Plugin Name"
 msgstr "Naam pluginoverzicht"
 
-#: kontactplugin/summary/kcmkontactsummary.cpp:75
+#: kontactplugin/summary/kcmkontactsummary.cpp:64
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Select the plugin summaries to show on the summary page."
@@ -6036,12 +6036,12 @@ msgstr ""
 "Dit kiezen laat een dialoog zien waarin u kunt selcteren welke overzichten u "
 "wilt zien en ook u toestaan de overzichten naar eigen wensen in te richten."
 
-#: kontactplugin/summary/summaryview_part.cpp:106
+#: kontactplugin/summary/summaryview_part.cpp:108
 #, kde-format
 msgid "Summary for %1"
 msgstr "Overzicht voor %1"
 
-#: kontactplugin/summary/summaryview_part.cpp:364
+#: kontactplugin/summary/summaryview_part.cpp:366
 #, kde-format
 msgid "What's next?"
 msgstr "Wat komt er nu?"
@@ -6827,28 +6827,28 @@ msgstr "Aanhaaltekens"
 msgid "Specifies the policy used when displaying policy"
 msgstr "Specificeert het gebruikte beleid bij het weergeven van het beleid"
 
-#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:204
+#: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:203
 #, kde-format
 msgid "Message Tag: %1"
 msgstr "Berichttag: %1"
 
-#: tag/tagactionmanager.cpp:155
+#: tag/tagactionmanager.cpp:154
 #, kde-format
 msgid "Add new tag…"
 msgstr "Nieuwe tag toevoegen…"
 
-#: tag/tagactionmanager.cpp:168
+#: tag/tagactionmanager.cpp:167
 #, kde-format
 msgctxt "@action"
 msgid "More…"
 msgstr "Meer…"
 
-#: tag/tagactionmanager.cpp:197
+#: tag/tagactionmanager.cpp:196
 #, kde-format
 msgid "Tag not Found"
 msgstr "Tag niet gevonden"
 
-#: tag/tagactionmanager.cpp:207
+#: tag/tagactionmanager.cpp:206
 #, kde-format
 msgid "Toggle Message Tag: %1"
 msgstr "Omschakelen van berichttag: %1"
