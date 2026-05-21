@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -6914,9 +6914,10 @@ msgstr "允许删除邮件而无需确认"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "启用文件夹拖放"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "发送发件箱中的消息(&M)："
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -7925,3 +7926,6 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "启用文件夹拖放"

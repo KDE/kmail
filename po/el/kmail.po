@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -7440,9 +7440,10 @@ msgstr "Αποστολή χωρίς επιβεβαίωση"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Αποστολή μηνυμάτων στο &φάκελο εξερχομένων:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17

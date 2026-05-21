@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2026-04-10 11:31+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -7186,9 +7186,10 @@ msgstr "Verwijderen van berichten zonder bevestiging toestaan"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Slepen en loslaten van mappen inschakelen"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Berichte&n in postvak-uit verzenden:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8268,6 +8269,9 @@ msgstr[1] "Afwezigheidsantwoord actief op servers"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoomen: %1%"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Slepen en loslaten van mappen inschakelen"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"

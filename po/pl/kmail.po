@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2026-04-11 08:18+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
@@ -7162,9 +7162,10 @@ msgstr "Zezwól na usuwanie wiadomości bez potwierdzenia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Włącz przeciągnie i upuszczanie katalogów"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Wyślij wiado&mości z katalogu 'do wysłania':"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8223,6 +8224,9 @@ msgstr[2] "Odpowiedź poza biurem aktywna na serwerach"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Przybliżenie: %1%"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Włącz przeciągnie i upuszczanie katalogów"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"

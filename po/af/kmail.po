@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -7093,7 +7093,7 @@ msgstr "Formateering (HTML)"
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
 #, kde-format
-msgid "Enable folders drag and drop"
+msgid "Enable drag and drop messages into folders"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)

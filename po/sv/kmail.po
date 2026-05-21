@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2025-11-21 01:40+0100\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -7122,9 +7122,10 @@ msgstr "Tillåt att brev tas bort utan bekräftelse"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Aktivera dra och släpp för kataloger"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Skicka &brev i utkorgen:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8183,6 +8184,9 @@ msgstr[1] "Frånvarosvar aktivt på servrar"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1 %"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Aktivera dra och släpp för kataloger"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"

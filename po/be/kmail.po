@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2024-06-05 07:03\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -6894,9 +6894,10 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr ""
+#, fuzzy, kde-format
+#| msgid "Could not add message to folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Немагчыма дадаць паведамленне ў тэчку:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -20356,9 +20357,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "No misspellings encountered."
 #~ msgstr "Арфаграфічных памылак не знойдзена."
-
-#~ msgid "Could not add message to folder:"
-#~ msgstr "Немагчыма дадаць паведамленне ў тэчку:"
 
 #, fuzzy
 #~ msgid "Key Conflict"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2026-04-26 12:21+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -7123,9 +7123,10 @@ msgstr "Baimendu mezuak baieztapenik gabe ezabatzea"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Gaitu karpetak arrastatu eta jaregitea"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Bidali irteerako ontziko &mezuak:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8191,6 +8192,9 @@ msgstr[1] "Bulegotik kanpo erantzuna zerbitzarietan aktibo dago"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %%1"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Gaitu karpetak arrastatu eta jaregitea"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2025-08-21 12:57+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -7133,9 +7133,10 @@ msgstr "Ļaut dzēst vēstules bez apstiprinājuma"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Ieslēgt mapju vilkšanu un nomešanu"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "&Nosūtīt izsūtnē esošās vēstules."
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8196,6 +8197,9 @@ msgstr[2] "Serveros ir ieslēgta „Neesmu birojā“ atbilde"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Tālummaiņa: %1%"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Ieslēgt mapju vilkšanu un nomešanu"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"

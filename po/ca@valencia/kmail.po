@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2026-04-10 09:19+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -7182,9 +7182,10 @@ msgstr "Permet suprimir els missatges sense confirmació"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Activa arrossega i deixa anar en les carpetes"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "Envia els &missatges que hi ha en la carpeta eixida:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8251,3 +8252,6 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Activa arrossega i deixa anar en les carpetes"

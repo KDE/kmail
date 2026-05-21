@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2025-10-20 20:21+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -7248,9 +7248,10 @@ msgstr "Löschen von Nachrichten ohne Bestätigung erlauben"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "Ziehen und Ablegen von Ordnern aktivieren"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "N&achrichten im Postausgang senden:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8327,6 +8328,9 @@ msgstr[1] "Abwesenheitsbenachrichtigung aktiv auf Servern"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Vergrößerung: %1 %"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "Ziehen und Ablegen von Ordnern aktivieren"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"

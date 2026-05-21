@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-16 00:44+0000\n"
+"POT-Creation-Date: 2026-05-21 00:45+0000\n"
 "PO-Revision-Date: 2026-04-12 18:49+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -6997,9 +6997,10 @@ msgstr "உறுதிப்படுத்தாமல் அஞ்சல்�
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, kde-format
-msgid "Enable folders drag and drop"
-msgstr "அடைவுகளை இழுத்துப்போட விடு"
+#, fuzzy, kde-format
+#| msgid "Send &messages in outbox folder:"
+msgid "Enable drag and drop messages into folders"
+msgstr "வெளிப்பெட்டி அடைவிலுள்ள &அஞ்சல்களை அனுப்புதல்:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8049,6 +8050,9 @@ msgstr[1] "அலுவலகத்தில் இல்லாததாக ப�
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "உருப்பெருக்கம்: %1%"
+
+#~ msgid "Enable folders drag and drop"
+#~ msgstr "அடைவுகளை இழுத்துப்போட விடு"
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"
