@@ -6914,10 +6914,9 @@ msgstr "允许删除邮件而无需确认"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "发送发件箱中的消息(&M)："
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -7926,6 +7925,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Enable folders drag and drop"
-#~ msgstr "启用文件夹拖放"

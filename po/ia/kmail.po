@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-21 00:45+0000\n"
-"PO-Revision-Date: 2026-04-19 17:30+0200\n"
+"PO-Revision-Date: 2026-05-22 12:09+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -7165,10 +7165,9 @@ msgstr "Permitte deler messages sin confirmation"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "Invia  &messages in dossier de partita:"
+msgstr "Habilta traher e poner de messages in dossieres"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
