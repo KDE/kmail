@@ -7125,10 +7125,9 @@ msgstr "Povoliť mazanie správ bez potvrdenia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "&Poslať poštu z priečinku outbox:"
+msgstr "Povoliť presúvanie správ do priečinkov myšou"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
