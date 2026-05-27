@@ -13,9 +13,7 @@ WhatsNewTranslations::~WhatsNewTranslations() = default;
 // Use by newFeaturesMD5
 QList<KLazyLocalizedString> WhatsNewTranslations::lastNewFeatures() const
 {
-    const QList<KLazyLocalizedString> info{
-        kli18n("HTML messages are shown with their intended colors by default. To override this, uncheck the \"Appearance->Colors->Do not change color from "
-               "original HTML mail\" option")};
+    const QList<KLazyLocalizedString> info{};
     return info;
 }
 
@@ -30,13 +28,17 @@ QList<TextAddonsWidgets::WhatsNewInfo> WhatsNewTranslations::createWhatsNewInfo(
     }
     {
         TextAddonsWidgets::WhatsNewInfo info;
-        QStringList lst;
-        for (const KLazyLocalizedString &l : lastNewFeatures()) {
-            lst += l.toString();
-        }
         info.setNewFeatures({i18n("Allow to export text in autogenerate editor plugins.")});
         info.setBugFixings({i18n("Fix text to speech support (enqueue messages)")});
         info.setVersion(QStringLiteral("6.6.0"));
+        listInfo.append(std::move(info));
+    }
+    {
+        TextAddonsWidgets::WhatsNewInfo info;
+        info.setNewFeatures(
+            {i18n("HTML messages are shown with their intended colors by default. To override this, uncheck the \"Appearance->Colors->Do not change color from "
+                  "original HTML mail\" option")});
+        info.setVersion(QStringLiteral("6.7.0"));
         listInfo.append(std::move(info));
     }
     {
@@ -47,7 +49,7 @@ QList<TextAddonsWidgets::WhatsNewInfo> WhatsNewTranslations::createWhatsNewInfo(
         }
         info.setNewFeatures(lst);
         info.setBugFixings({});
-        info.setVersion(QStringLiteral("6.7.0"));
+        info.setVersion(QStringLiteral("6.8.0"));
         listInfo.append(std::move(info));
     }
     return listInfo;
