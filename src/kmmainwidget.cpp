@@ -4251,7 +4251,7 @@ void KMMainWidget::updateMoveAllToTrash()
 void KMMainWidget::slotShowWhatsNews()
 {
 #if HAVE_WHATSNEWSNGSUPPORT
-    TextAddonsWidgets::WhatsNewNgDialog dlg(this);
+    TextAddonsWidgets::WhatsNewNgDialog dlg(i18n("KMail"), this);
     dlg.setReleases(mReleasesInfo);
     dlg.exec();
 #else
