@@ -443,7 +443,7 @@
     <release version="6.7.0" date="2026-04-16">
       <description>
         <ul>
-          <li>HTML messages are shown with their intended colors by default. To override this, uncheck the \"Appearance->Colors->Do not change color from original HTML mail\" option</li>
+          <li>HTML messages are shown with their intended colors by default. To override this, uncheck the \"Appearance-&gt;Colors-&gt;Do not change color from original HTML mail\" option</li>
         </ul>
       </description>
     </release>
