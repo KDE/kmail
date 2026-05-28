@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-21 00:45+0000\n"
+"POT-Creation-Date: 2026-05-28 00:44+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -8462,33 +8462,34 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Methu creu cyfrif"
 
-#: whatsnew/whatsnewtranslations.cpp:17
+#: whatsnew/whatsnewtranslations.cpp:25
+#, fuzzy, kde-format
+msgid "Add new whatsnew widget."
+msgstr "Dynodiad yr &Anfonwr:"
+
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:31
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:32
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Methodd anfon (rhai) negeseuon yn y rhes."
+
+#: whatsnew/whatsnewtranslations.cpp:39
+#, kde-format
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, fuzzy, kde-format
-msgid "Add new whatsnew widget."
-msgstr "Dynodiad yr &Anfonwr:"
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr ""
-
-#: whatsnew/whatsnewtranslations.cpp:37
-#, kde-format
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
-
-#: whatsnew/whatsnewtranslations.cpp:38
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
-msgid "Fix text to speech support (enqueue messages)"
-msgstr "Methodd anfon (rhai) negeseuon yn y rhes."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format

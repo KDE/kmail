@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-21 00:45+0000\n"
+"POT-Creation-Date: 2026-05-28 00:44+0000\n"
 "PO-Revision-Date: 2026-05-25 21:28+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7986,7 +7986,28 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "계정 마법사를 시작할 수 없음"
 
-#: whatsnew/whatsnewtranslations.cpp:17
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "Add new whatsnew widget."
+msgstr "새 새로운 항목 위젯을 추가합니다."
+
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr "새 플러그인: 모음집 크기 표시."
+
+#: whatsnew/whatsnewtranslations.cpp:31
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr "자동 생성 편집기 플러그인에서 텍스트 내보내기를 허용합니다."
+
+#: whatsnew/whatsnewtranslations.cpp:32
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "텍스트 읽어주기 지원 수리(메시지 대기열에 추가)"
+
+#: whatsnew/whatsnewtranslations.cpp:39
+#, kde-format
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
@@ -7995,26 +8016,6 @@ msgstr ""
 "기본값으로 HTML 메시지는 원래 의도했던 색상대로 표시됩니다. 이 설정을 재정의"
 "하려면 \"모양->색상->원래 HTML 메일의 색상 변경하지 않기\" 옵션의 선택을 해제"
 "하십시오"
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "Add new whatsnew widget."
-msgstr "새 새로운 항목 위젯을 추가합니다."
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr "새 플러그인: 모음집 크기 표시."
-
-#: whatsnew/whatsnewtranslations.cpp:37
-#, kde-format
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr "자동 생성 편집기 플러그인에서 텍스트 내보내기를 허용합니다."
-
-#: whatsnew/whatsnewtranslations.cpp:38
-#, kde-format
-msgid "Fix text to speech support (enqueue messages)"
-msgstr "텍스트 읽어주기 지원 수리(메시지 대기열에 추가)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

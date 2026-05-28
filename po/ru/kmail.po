@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-21 00:45+0000\n"
+"POT-Creation-Date: 2026-05-28 00:44+0000\n"
 "PO-Revision-Date: 2026-04-03 19:48+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -8231,7 +8231,28 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Ошибка запуска мастера учётных записей"
 
-#: whatsnew/whatsnewtranslations.cpp:17
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "Add new whatsnew widget."
+msgstr "Добавление нового виджета «Что нового?»."
+
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr "Новый модуль: просмотр размера коллекции"
+
+#: whatsnew/whatsnewtranslations.cpp:31
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr "Разрешён экспорт текста в подключаемых модулях редактора."
+
+#: whatsnew/whatsnewtranslations.cpp:32
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Исправления в подсистеме синтеза речи (добавление сообщений в очередь)"
+
+#: whatsnew/whatsnewtranslations.cpp:39
+#, kde-format
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
@@ -8240,26 +8261,6 @@ msgstr ""
 "HTML-сообщения по умолчанию отображаются с их исходными цветами. Чтобы это "
 "переопределить, снимите флажок в параметре «Внешний вид → Цвета → Не "
 "изменять цвета исходного сообщения в формате HTML»;"
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "Add new whatsnew widget."
-msgstr "Добавление нового виджета «Что нового?»."
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr "Новый модуль: просмотр размера коллекции"
-
-#: whatsnew/whatsnewtranslations.cpp:37
-#, kde-format
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr "Разрешён экспорт текста в подключаемых модулях редактора."
-
-#: whatsnew/whatsnewtranslations.cpp:38
-#, kde-format
-msgid "Fix text to speech support (enqueue messages)"
-msgstr "Исправления в подсистеме синтеза речи (добавление сообщений в очередь)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

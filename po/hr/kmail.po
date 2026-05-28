@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-21 00:45+0000\n"
+"POT-Creation-Date: 2026-05-28 00:44+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -8262,33 +8262,34 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Ne mogu stvoriti račun"
 
-#: whatsnew/whatsnewtranslations.cpp:17
+#: whatsnew/whatsnewtranslations.cpp:25
+#, fuzzy, kde-format
+msgid "Add new whatsnew widget."
+msgstr "Identitet pošiljao&ca:"
+
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:31
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+
+#: whatsnew/whatsnewtranslations.cpp:32
+#, fuzzy, kde-format
+#| msgid "Failed to send (some) queued messages."
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Nisam mogao poslati (neke) od poredanih poruka."
+
+#: whatsnew/whatsnewtranslations.cpp:39
+#, kde-format
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, fuzzy, kde-format
-msgid "Add new whatsnew widget."
-msgstr "Identitet pošiljao&ca:"
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr ""
-
-#: whatsnew/whatsnewtranslations.cpp:37
-#, kde-format
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
-
-#: whatsnew/whatsnewtranslations.cpp:38
-#, fuzzy, kde-format
-#| msgid "Failed to send (some) queued messages."
-msgid "Fix text to speech support (enqueue messages)"
-msgstr "Nisam mogao poslati (neke) od poredanih poruka."
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, fuzzy, kde-format

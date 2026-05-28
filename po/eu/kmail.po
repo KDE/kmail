@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-21 00:45+0000\n"
+"POT-Creation-Date: 2026-05-28 00:44+0000\n"
 "PO-Revision-Date: 2026-04-26 12:21+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -8127,7 +8127,29 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Ez da kontuen morroia abiarazteko gai"
 
-#: whatsnew/whatsnewtranslations.cpp:17
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "Add new whatsnew widget."
+msgstr "Zerberri trepeta berria gehitzea."
+
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr "Plugin berria: erakutsi bildumaren neurria."
+
+#: whatsnew/whatsnewtranslations.cpp:31
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+"Baimendu automatikoki sortzen duten editoreen plugineko testua esportatzea."
+
+#: whatsnew/whatsnewtranslations.cpp:32
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Testutik ahotsera euskarria konpondu (mezuak ilaran ipini)"
+
+#: whatsnew/whatsnewtranslations.cpp:39
+#, kde-format
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
@@ -8136,27 +8158,6 @@ msgstr ""
 "HTML mezuak era lehenetsian beren jatorrizko koloreekin erakusten dira.Hori "
 "gainidazteko, kendu marka \"Itxura->Koloreak->Ez aldatu jatorrizko HTML "
 "posten jatorrizko kolorea\" aukeran."
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "Add new whatsnew widget."
-msgstr "Zerberri trepeta berria gehitzea."
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr "Plugin berria: erakutsi bildumaren neurria."
-
-#: whatsnew/whatsnewtranslations.cpp:37
-#, kde-format
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
-"Baimendu automatikoki sortzen duten editoreen plugineko testua esportatzea."
-
-#: whatsnew/whatsnewtranslations.cpp:38
-#, kde-format
-msgid "Fix text to speech support (enqueue messages)"
-msgstr "Testutik ahotsera euskarria konpondu (mezuak ilaran ipini)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format

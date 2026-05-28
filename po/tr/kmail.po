@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-21 00:45+0000\n"
+"POT-Creation-Date: 2026-05-28 00:44+0000\n"
 "PO-Revision-Date: 2026-05-21 11:58+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -8119,7 +8119,29 @@ msgctxt "@title:window"
 msgid "Unable to start account wizard"
 msgstr "Hesap Sihirbazı Başlatılamadı"
 
-#: whatsnew/whatsnewtranslations.cpp:17
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "Add new whatsnew widget."
+msgstr "Yeni “Neler Yeni” araç takımını ekle"
+
+#: whatsnew/whatsnewtranslations.cpp:25
+#, kde-format
+msgid "New plugin: show collection size."
+msgstr "Yeni eklenti: Koleksiyon büyüklüğünü göster"
+
+#: whatsnew/whatsnewtranslations.cpp:31
+#, kde-format
+msgid "Allow to export text in autogenerate editor plugins."
+msgstr ""
+"Kendinden üretme düzenleyici eklentilerinden metin dışa aktarmayı destekle"
+
+#: whatsnew/whatsnewtranslations.cpp:32
+#, kde-format
+msgid "Fix text to speech support (enqueue messages)"
+msgstr "Metin konuşma desteğini onar (iletileri kuyruğa koy)"
+
+#: whatsnew/whatsnewtranslations.cpp:39
+#, kde-format
 msgid ""
 "HTML messages are shown with their intended colors by default. To override "
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
@@ -8128,27 +8150,6 @@ msgstr ""
 "HTML iletileri, öntanımlı olarak amaçlanan renklerle gösterilir. Bunu "
 "değiştirmek için “Görünüş → Renkler → Özgün HTML iletisindeki renkleri "
 "değiştirme” seçeneğinin işaretini kaldırın."
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "Add new whatsnew widget."
-msgstr "Yeni “Neler Yeni” araç takımını ekle"
-
-#: whatsnew/whatsnewtranslations.cpp:27
-#, kde-format
-msgid "New plugin: show collection size."
-msgstr "Yeni eklenti: Koleksiyon büyüklüğünü göster"
-
-#: whatsnew/whatsnewtranslations.cpp:37
-#, kde-format
-msgid "Allow to export text in autogenerate editor plugins."
-msgstr ""
-"Kendinden üretme düzenleyici eklentilerinden metin dışa aktarmayı destekle"
-
-#: whatsnew/whatsnewtranslations.cpp:38
-#, kde-format
-msgid "Fix text to speech support (enqueue messages)"
-msgstr "Metin konuşma desteğini onar (iletileri kuyruğa koy)"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
