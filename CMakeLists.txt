@@ -303,6 +303,17 @@ set_package_properties(
             REQUIRED
 )
 
+if(
+    ${KF6CoreAddons_VERSION}
+        VERSION_GREATER_EQUAL
+        6.26.0
+    AND ${KF6TextAddonsWidgets_VERSION}
+        VERSION_GREATER_EQUAL
+        2.0.68
+)
+    set(HAVE_WHATSNEWSNGSUPPORT TRUE)
+endif()
+
 set(KTEXTADDONS_WITH_TEXTAUTOGENERATETEXT_VERSION "${KTEXTADDONS_MIN_VERSION}")
 
 option(OPTION_ADD_AUTOGENERATETEXT "Add support for autogenerate text plugin" ON)
