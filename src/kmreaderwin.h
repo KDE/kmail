@@ -215,7 +215,7 @@ private:
     KMAIL_NO_EXPORT void createActions();
     KMAIL_NO_EXPORT void updateHtmlActions();
     KMAIL_NO_EXPORT void slotContactHtmlPreferencesUpdated(const Akonadi::Item &contact, Akonadi::Item::Id id, bool showAsHTML, bool remoteContent);
-    KMAIL_NO_EXPORT void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode);
+    KMAIL_NO_EXPORT void slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, MessageCore::MDN::SendingMode sendingMode);
     KMAIL_NO_EXPORT void sendMdnInfo(const Akonadi::Item &item);
     KMAIL_NO_EXPORT void slotShowMdnInfo(const MessageComposer::MDNAdviceHelper::MDNMessateInfo &mdnInfo);
     KMAIL_NO_EXPORT void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);

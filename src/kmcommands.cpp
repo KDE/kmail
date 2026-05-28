@@ -47,7 +47,7 @@
 
 #include <KIdentityManagementCore/IdentityManager>
 
-#include <KMime/MDN>
+#include <MessageCore/MDN>
 
 #include <Akonadi/ItemCopyJob>
 #include <Akonadi/ItemCreateJob>
@@ -1089,7 +1089,7 @@ KMCommand::Result KMRedirectCommand::execute()
         MessageStatus status;
         status.setStatusFromFlags(item.flags());
         if (!status.isRead()) {
-            FilterAction::sendMDN(item, KMime::MDN::Dispatched);
+            FilterAction::sendMDN(item, MessageCore::MDN::Dispatched);
         }
 
         if (!kmkernel->msgSender()->send(newMsg, method)) {

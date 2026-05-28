@@ -31,7 +31,7 @@
 using MessageViewer::CSSHelper;
 #include "util.h"
 #include <Akonadi/MessageFlags>
-#include <KMime/MDN>
+#include <MessageCore/MDN>
 #include <MessageCore/StringUtil>
 #include <QCryptographicHash>
 
@@ -926,7 +926,7 @@ void KMReaderWin::slotShowMdnInfo(const MessageComposer::MDNAdviceHelper::MDNMes
     mViewer->showMdnInformations(mdnInfo.message, mdnInfo.canDeny);
 }
 
-void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, KMime::MDN::SendingMode sendingMode)
+void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseType type, MessageCore::MDN::SendingMode sendingMode)
 {
     MailCommon::MDNWarningJob::ResponseMDN response = MailCommon::MDNWarningJob::ResponseMDN::Unknown;
     switch (type) {
