@@ -19,7 +19,6 @@
 #include "searchdialog/searchwindowdialog.h"
 #include "undostack.h"
 #include "util.h"
-#include "whatsnew/whatsnewtranslations.h"
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
 #include <MailCommon/FolderSelectionDialog>
@@ -66,8 +65,16 @@
 #include <MailCommon/FilterManager>
 #include <MailCommon/MailFilter>
 #include <PimCommonAkonadi/CollectionAclPage>
+
+#if HAVE_WHATSNEWSNGSUPPORT
+#include <TextAddonsWidgets/WhatsNewMessageNgWidget>
+#include <TextAddonsWidgets/WhatsNewNgDialog>
+#else
+#include "whatsnew/whatsnewtranslations.h"
 #include <TextAddonsWidgets/WhatsNewDialog>
 #include <TextAddonsWidgets/WhatsNewMessageWidget>
+#endif
+
 #include <mailcommon/mailcommonsettings_base.h>
 
 #include <MessageViewer/HeaderStyle>
@@ -212,19 +219,37 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mActionCollection = actionCollection;
     mTopLayout = new QVBoxLayout(this);
     mTopLayout->setContentsMargins({});
+    QString newFeaturesMD5;
+#if HAVE_WHATSNEWSNGSUPPORT
+    const KAboutData aboutData = KAboutData::fromAppStreamForApplication();
+    mReleasesInfo = aboutData.releases();
+    if (!mReleasesInfo.isEmpty()) {
+        newFeaturesMD5 = mReleasesInfo.constFirst().untranslatedDescription();
+    }
+#else
     const WhatsNewTranslations translations;
-    const QString newFeaturesMD5 = translations.newFeaturesMD5();
+    newFeaturesMD5 = translations.newFeaturesMD5();
+#endif
     if (!newFeaturesMD5.isEmpty()) {
         const QString previousNewFeaturesMD5 = KMailSettings::self()->previousNewFeaturesMD5();
         if (!previousNewFeaturesMD5.isEmpty()) {
             const bool hasNewFeature = (previousNewFeaturesMD5 != newFeaturesMD5);
             if (hasNewFeature) {
+#if HAVE_WHATSNEWSNGSUPPORT
+                auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageNgWidget(this);
+                whatsNewMessageWidget->setReleases(mReleasesInfo);
+                whatsNewMessageWidget->setObjectName(u"whatsNewMessageWidget"_s);
+                mTopLayout->addWidget(whatsNewMessageWidget);
+                KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+                whatsNewMessageWidget->animatedShow();
+#else
                 auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageWidget(this, i18n("KMail"));
                 whatsNewMessageWidget->setWhatsNewInfos(translations.createWhatsNewInfo());
                 whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
                 mTopLayout->addWidget(whatsNewMessageWidget);
                 KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
                 whatsNewMessageWidget->animatedShow();
+#endif
             }
         } else {
             KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
@@ -4225,11 +4250,17 @@ void KMMainWidget::updateMoveAllToTrash()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotShowWhatsNews()
 {
+#if HAVE_WHATSNEWSNGSUPPORT
+    TextAddonsWidgets::WhatsNewNgDialog dlg(this);
+    dlg.setReleases(mReleasesInfo);
+    dlg.exec();
+#else
     const WhatsNewTranslations translations;
     QPointer<TextAddonsWidgets::WhatsNewDialog> dlg = new TextAddonsWidgets::WhatsNewDialog(translations.createWhatsNewInfo(), this, i18n("KMail"));
     dlg->updateInformations();
     dlg->exec();
     delete dlg;
+#endif
 }
 
 void KMMainWidget::slotShowStartupFolder()
