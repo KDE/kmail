@@ -8199,33 +8199,3 @@ msgstr[1] "Отговор извън офиса активен на сървър
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
-
-#~ msgctxt "@item:inlistbox Inline mail forwarding"
-#~ msgid "Inline"
-#~ msgstr "Вградено"
-
-#~ msgid "As Attachment"
-#~ msgstr "Като прикрепен файл"
-
-#~ msgid "Set the default forwarded message format"
-#~ msgstr "Задаване на формата за препратено съобщение по подразбиране"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Default forwarding type:"
-#~ msgstr "Тип пренасочване по подразбиране:"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Warn if too many recipients are specified"
-#~ msgstr "Предупреждаване, ако са посочени твърде много получатели"
-
-#~ msgctxt "@info:tooltip"
-#~ msgid "Set the maximum number of recipients for the warning"
-#~ msgstr "Задаване на максималния брой получатели за предупреждението"
-
-#~ msgctxt "@option:check"
-#~ msgid "&Use custom message-id suffix"
-#~ msgstr "&Потребителска наставка за идентификация на съобщение"
-
-#~ msgctxt "@label:textbox"
-#~ msgid "Custom message-&id suffix:"
-#~ msgstr "Потребителска наставка (message-&id):"

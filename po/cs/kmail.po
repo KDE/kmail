@@ -11,15 +11,15 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2026-03-16 15:13+0100\n"
-"Last-Translator:  Vít Pelčák <vit@pelcak.org>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2026-05-28 12:03+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
+"Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1094,7 +1094,7 @@ msgid ""
 "line) before the signature"
 msgstr ""
 "Vložit oddělovač podpisu v souladu s RFC (dvě pomlčky a mezera na řádku) "
-"před podpis."
+"před podpis"
 
 #: configuredialog/configurecomposerpage.cpp:165
 #, kde-format
@@ -1181,7 +1181,7 @@ msgstr ""
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
-"Zapamatovat si naposledy zadané adresy a nabídnout dokončování příjemců."
+"Zapamatovat si naposledy zadané adresy a nabídnout dokončování příjemců"
 
 #: configuredialog/configurecomposerpage.cpp:330
 #, kde-format
@@ -1741,7 +1741,7 @@ msgstr "KMail2"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
-msgstr "Vyberte slovník použitý ke kontrole pravopisu této zprávy."
+msgstr "Vyberte slovník použitý ke kontrole pravopisu této zprávy"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
@@ -1759,7 +1759,7 @@ msgstr "Vyberte odchozí účet, který chcete použít pro odeslání této zpr
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Nastavte e-mailovou adresu \"Od:\" pro tuto zprávu."
+msgstr "Nastavte e-mailovou adresu \"Od:\" pro tuto zprávu"
 
 #: editor/kmcomposerwin.cpp:411
 #, kde-format
@@ -2838,7 +2838,7 @@ msgstr "Nelze vytvořit složku. %1"
 #: folderarchive/folderarchiveagentjob.cpp:32
 #, kde-format
 msgid "Archive folder not defined. Please verify settings for account %1"
-msgstr "Složka archivu není definována. Zkontrolujte prosím nastavení účtu %1."
+msgstr "Složka archivu není definována. Zkontrolujte prosím nastavení účtu %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:36
 #, kde-format
@@ -2854,7 +2854,7 @@ msgstr "Seznam sbírek je prázdný. %1"
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
-msgstr "Tato složka %1 je pouze pro čtení. Ověřte prosím konfiguraci účtu %2."
+msgstr "Tato složka %1 je pouze pro čtení. Ověřte prosím konfiguraci účtu %2"
 
 #: folderarchive/folderarchiveagentjob.cpp:102
 #, kde-format
@@ -2993,7 +2993,7 @@ msgid ""
 "random numbers. This may require several minutes…"
 msgstr ""
 "Proces generování certifikátu OpenPGP vyžaduje velké množství náhodných "
-"čísel. To může trvat několik minut..."
+"čísel. To může trvat několik minut…"
 
 #: identity/identitydialog.cpp:265
 #, kde-format
@@ -3233,7 +3233,7 @@ msgstr "Povolit automatické šifrování"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "Automaticky šifrovat"
+msgstr "Automaticky šifrovat:"
 
 #: identity/identitydialog.cpp:577
 #, kde-format
@@ -6385,7 +6385,7 @@ msgstr "Podmínka nemůže být použita s méně než 4 znaky."
 #: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
-msgstr "Hledání..."
+msgstr "Hledání…"
 
 #: searchdialog/searchwindowdialog.cpp:534
 #, kde-format
@@ -6549,7 +6549,7 @@ msgstr "Povolit konkrétní složku po spuštění"
 #: settings/kmail.kcfg:129
 #, kde-format
 msgid "Specify the folder to open when the program is started"
-msgstr "Určete složku, která se má otevřít při spuštění aplikace."
+msgstr "Určete složku, která se má otevřít při spuštění aplikace"
 
 #. i18n: ectx: label, entry, group (General)
 #: settings/kmail.kcfg:163
@@ -6579,7 +6579,7 @@ msgstr "Zobrazovat políčko pro rychle hledání ve složkách"
 #: settings/kmail.kcfg:186
 #, kde-format
 msgid "Forward Inline As Default."
-msgstr "Přeposlat vložené jako výchozí"
+msgstr "Přeposlat vložené jako výchozí."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
 #: settings/kmail.kcfg:189
@@ -7992,7 +7992,7 @@ msgstr ""
 #: ui/xfaceconfigurator.ui:75
 #, kde-format
 msgid "An informative text about the current mode!"
-msgstr "Informační text o aktuálním režimu."
+msgstr "Informační text o aktuálním režimu!"
 
 #: undosend/undosendcombobox.cpp:22
 #, kde-format
@@ -8096,7 +8096,7 @@ msgid ""
 msgstr ""
 "Zprávy HTML jsou ve výchozím stavu zobrazovány se zamýšlenými barvami. Pro "
 "změnu tohoto chování odškrtněte volbu \"Vzhled->Barvy->Neměnit barvu "
-"původního e-mailu HTML\"."
+"původního e-mailu HTML\""
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
