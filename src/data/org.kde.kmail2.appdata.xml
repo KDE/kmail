@@ -451,9 +451,11 @@
           <li xml:lang="cs">Zprávy ve formátu HTML se ve výchozím nastavení zobrazují v původních barvách. Chcete-li toto nastavení změnit, zrušte zaškrtnutí políčka Vzhled -&gt; Barvy -&gt; Nezměnit barvu původního e-mailu HTML</li>
           <li xml:lang="es">Los mensajes HTML se muestran con sus colores de forma predeterminada. Para anular esto, desmarque la opción «Aspecto-&gt;Colores&gt;No cambiar los colores del mensaje HTML original».</li>
           <li xml:lang="he">הודעות HTML מופיעות עם הצבע הייעודי שלהן כברירת מחדל. כדי לעקוף את זה, יש לבטל את הסימון של האפשרות „מראה-&gt;צבעים-&gt;לא לשנות את הצבע מהודעת ה־HTML המקורית”</li>
+          <li xml:lang="it">I messaggi HTML sono mostrati, come impostazione predefinita, con i colori previsti. Per cambiare questo comportamento, disabilitare l'opzione in \"Aspetto-&gt;Colori-&gt;Non modificare il colore del messaggio di posta originale in HTML\".</li>
           <li xml:lang="ka">HTML შეტყობინებები ნაგულისხმევად მათთვის სასურველ ფერებშია ნაჩვენები. ამის გადასაფარად მოხსენით თოლია \"გარეგნობა-&gt;ფერები-&gt;HTML ელფოსტის ორიგინალი ფერების არშეცვლა\"</li>
           <li xml:lang="nl">HTML-berichten worden standaard weergegeven met de bedoelde kleuren. Om dit te wijzigen, schakelt u de optie "Uiterlijk -&gt; Kleuren -&gt; Kleur niet wijzigen ten opzichte van originele HTML-mail" uit</li>
           <li xml:lang="pt-BR">As mensagens HTML são exibidas com suas cores originais por padrão. Para alterar isso, desmarque a opção \"Aparência -&gt; Cores -&gt; Não alterar a cor do e-mail HTML original\".</li>
+          <li xml:lang="sk">HTML správy sa predvolene zobrazujú s ich zamýšľanými farbami. Ak to chcete prepísať, zrušte začiarknutie možnosti \"Vzhľad-&gt;Farby-&gt;Nemeniť farbu z pôvodnej HTML pošty\"</li>
           <li xml:lang="sl">Sporočila HTML so privzeto prikazana v predvidenih barvah. Če želite to preglasiti, počistite možnost "Videz-&gt;Barve-&gt;Ne spreminjaj barve iz izvirnega sporočila HTML".</li>
           <li xml:lang="tr">HTML iletileri artık olması gereken renklerle gösteriliyor. Bunu geçersiz kılmak için “Görünüş → Renkler → Özgün HTML iletisindeki renkleri değiştirme” seçeneğini işaretleyin.</li>
           <li xml:lang="uk">Типово, повідомлення HTML буде показано із визначеними відправником кольорами. Щоб перевизначити ці кольори, зніміть позначення з пункту «Вигляд-&gt;Кольори-&gt;Не змінювати колір з початкового повідомлення HTML».</li>
@@ -473,9 +475,11 @@
           <li xml:lang="cs">Povolit export textu v modulech pro automatické generování v editoru.</li>
           <li xml:lang="es">Permitir exportación de texto en los complementos de generación automática del editor.</li>
           <li xml:lang="he">לאפשר לייצא טקסט בתוספי עורך ליצירה אוטומטית.</li>
+          <li xml:lang="it">Permette di esportare del testo nelle estensioni dell'editor di generazione automatica.</li>
           <li xml:lang="ka">ტექსტის გატანის დაშვება რედაქტორის დამატებების ავტოგენერაციაში.</li>
           <li xml:lang="nl">Toestaan tekst te exporteren in automatisch gegenereerde editor-plugins.</li>
           <li xml:lang="pt-BR">Permitir exportar texto em plugins de edição de geração automática.</li>
+          <li xml:lang="sk">Umožnený export textu v zásuvných moduloch automatického generovania editora.</li>
           <li xml:lang="sl">Dovoli izvoz besedila v vtičnikih urejevalnika za samodejno generiranje.</li>
           <li xml:lang="tr">Düzenleyici eklentilerine metin dışa aktarmaya olanak tanı</li>
           <li xml:lang="uk">Уможливлено експортування тексту у додатках автоматичного породження до редактора.</li>
@@ -486,9 +490,11 @@
           <li xml:lang="cs">Oprava podpory převodu textu na řeč (zařazení zpráv do fronty)</li>
           <li xml:lang="es">Corregir la compatibilidad con lectura de texto (encolar mensajes).</li>
           <li xml:lang="he">תוקנה התמיכה בהקראה (הוספת הודעות לתור)</li>
+          <li xml:lang="it">Correzione del supporto di sintesi vocale (coda dei messaggi)</li>
           <li xml:lang="ka">გასწორდა ტექსტის წარმოთქმის მხარდაჭერა (შეტყობინებების რიგში ჩასმა)</li>
           <li xml:lang="nl">Ondersteuning van tekst naar spraak repareren (berichten in wachtrij zetten)</li>
           <li xml:lang="pt-BR">Corrige suporte para conversão de texto para fala (enfileirar mensagens)</li>
+          <li xml:lang="sk">Opravená podpora prevodu textu na reč (zaraďovanie správ do frontu)</li>
           <li xml:lang="sl">Popravljena podpora za pretvorbo besedila v govor (postavljanje sporočil v čakalno vrsto)</li>
           <li xml:lang="tr">Konuşma desteğini onar (iletileri kuyrukla)</li>
           <li xml:lang="uk">Виправлено підтримку озвучення тексту (черга повідомлень)</li>
@@ -508,10 +514,12 @@
           <li xml:lang="cs">Přidat nový widget „Co je nového“.</li>
           <li xml:lang="es">Añadir nuevo elemento de novedades.</li>
           <li xml:lang="he">הוספת וידג׳ט חדש בשם מה חדש.</li>
+          <li xml:lang="it">Aggiunto un nuovo oggetto Cosa c'è di nuovo.</li>
           <li xml:lang="ka">ახალი სიახლეების ვიჯეტის დამატება.</li>
           <li xml:lang="nl">Nieuw widget Wat-is-nieuw toevoegen.</li>
           <li xml:lang="pt-BR">Adicionado novo elemento 'O que há de novo?'.</li>
-          <li xml:lang="sl">Doda nov pripomoček za novice.</li>
+          <li xml:lang="sk">Pridaný nový widget noviniek.</li>
+          <li xml:lang="sl">Doda nov gradnik za kaj je novega.</li>
           <li xml:lang="tr">“Neler Yeni” araç takımı</li>
           <li xml:lang="uk">Додано новий віджет зі списком можливостей нової версії.</li>
           <li>New plugin: show collection size.</li>
@@ -521,9 +529,11 @@
           <li xml:lang="cs">Nový modul: zobrazení velikosti sbírky.</li>
           <li xml:lang="es">Nuevo complemento: mostrar el tamaño de la colección.</li>
           <li xml:lang="he">תוסף חדש: הצגת גודל אוסף.</li>
+          <li xml:lang="it">Nuova estensione: mostra la dimensione della collezione.</li>
           <li xml:lang="ka">ახალი დამატება: კოლექციის ზომის ჩვენება.</li>
           <li xml:lang="nl">Nieuwe plug-in: grootte van verzameling tonen.</li>
           <li xml:lang="pt-BR">Novo plugin: mostrar tamanho da coleção.</li>
+          <li xml:lang="sk">Nový zásuvný modul: zobrazenie veľkosti kolekcie.</li>
           <li xml:lang="sl">Novi vtičnik: prikazuje velikost zbirke.</li>
           <li xml:lang="tr">Yeni eklenti: Koleksiyon boyutunu göster</li>
           <li xml:lang="uk">Новий додаток: показ розміру збірки.</li>
