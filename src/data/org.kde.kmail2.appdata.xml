@@ -450,6 +450,7 @@
           <li xml:lang="ca-valencia">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar açò, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canvies el color del correu HTML original»</li>
           <li xml:lang="cs">Zprávy ve formátu HTML se ve výchozím nastavení zobrazují v původních barvách. Chcete-li toto nastavení změnit, zrušte zaškrtnutí políčka Vzhled -&gt; Barvy -&gt; Nezměnit barvu původního e-mailu HTML</li>
           <li xml:lang="es">Los mensajes HTML se muestran con sus colores de forma predeterminada. Para anular esto, desmarque la opción «Aspecto-&gt;Colores&gt;No cambiar los colores del mensaje HTML original».</li>
+          <li xml:lang="fr">Les messages au format « HTML » sont affichés avec leurs couleurs prévue par défaut. Pour modifier cela, veuillez décocher l'option « Apparence / Couleurs / Ne pas modifier la couleur du courriel original en HTML »</li>
           <li xml:lang="he">הודעות HTML מופיעות עם הצבע הייעודי שלהן כברירת מחדל. כדי לעקוף את זה, יש לבטל את הסימון של האפשרות „מראה-&gt;צבעים-&gt;לא לשנות את הצבע מהודעת ה־HTML המקורית”</li>
           <li xml:lang="it">I messaggi HTML sono mostrati, come impostazione predefinita, con i colori previsti. Per cambiare questo comportamento, disabilitare l'opzione in \"Aspetto-&gt;Colori-&gt;Non modificare il colore del messaggio di posta originale in HTML\".</li>
           <li xml:lang="ka">HTML შეტყობინებები ნაგულისხმევად მათთვის სასურველ ფერებშია ნაჩვენები. ამის გადასაფარად მოხსენით თოლია \"გარეგნობა-&gt;ფერები-&gt;HTML ელფოსტის ორიგინალი ფერების არშეცვლა\"</li>
@@ -474,6 +475,7 @@
           <li xml:lang="ca-valencia">Permet exportar text en connectors d'editor de generació automàtica.</li>
           <li xml:lang="cs">Povolit export textu v modulech pro automatické generování v editoru.</li>
           <li xml:lang="es">Permitir exportación de texto en los complementos de generación automática del editor.</li>
+          <li xml:lang="fr">Autoriser l'exportation de texte dans les modules externes auto-générés d'éditeurs .</li>
           <li xml:lang="he">לאפשר לייצא טקסט בתוספי עורך ליצירה אוטומטית.</li>
           <li xml:lang="it">Permette di esportare del testo nelle estensioni dell'editor di generazione automatica.</li>
           <li xml:lang="ka">ტექსტის გატანის დაშვება რედაქტორის დამატებების ავტოგენერაციაში.</li>
@@ -489,6 +491,7 @@
           <li xml:lang="ca-valencia">Corregix la implementació del text a veu (cua de missatges)</li>
           <li xml:lang="cs">Oprava podpory převodu textu na řeč (zařazení zpráv do fronty)</li>
           <li xml:lang="es">Corregir la compatibilidad con lectura de texto (encolar mensajes).</li>
+          <li xml:lang="fr">Correction du texte pour la prise en charge de la synthèse vocale (Mise en file des messages)</li>
           <li xml:lang="he">תוקנה התמיכה בהקראה (הוספת הודעות לתור)</li>
           <li xml:lang="it">Correzione del supporto di sintesi vocale (coda dei messaggi)</li>
           <li xml:lang="ka">გასწორდა ტექსტის წარმოთქმის მხარდაჭერა (შეტყობინებების რიგში ჩასმა)</li>
@@ -513,6 +516,7 @@
           <li xml:lang="ca-valencia">Afig un giny nou «Què hi ha de nou».</li>
           <li xml:lang="cs">Přidat nový widget „Co je nového“.</li>
           <li xml:lang="es">Añadir nuevo elemento de novedades.</li>
+          <li xml:lang="fr">Ajouter un nouveau composant graphique « Quoi de neuf ».</li>
           <li xml:lang="he">הוספת וידג׳ט חדש בשם מה חדש.</li>
           <li xml:lang="it">Aggiunto un nuovo oggetto Cosa c'è di nuovo.</li>
           <li xml:lang="ka">ახალი სიახლეების ვიჯეტის დამატება.</li>
@@ -528,6 +532,7 @@
           <li xml:lang="ca-valencia">Connector nou: mostra la mida de la col·lecció.</li>
           <li xml:lang="cs">Nový modul: zobrazení velikosti sbírky.</li>
           <li xml:lang="es">Nuevo complemento: mostrar el tamaño de la colección.</li>
+          <li xml:lang="fr">Nouveau module externe : affichage de la taille de la collection.</li>
           <li xml:lang="he">תוסף חדש: הצגת גודל אוסף.</li>
           <li xml:lang="it">Nuova estensione: mostra la dimensione della collezione.</li>
           <li xml:lang="ka">ახალი დამატება: კოლექციის ზომის ჩვენება.</li>
