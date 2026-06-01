@@ -241,6 +241,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
                 whatsNewMessageWidget->setObjectName(u"whatsNewMessageWidget"_s);
                 mTopLayout->addWidget(whatsNewMessageWidget);
                 KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+                KMailSettings::self()->save();
                 whatsNewMessageWidget->animatedShow();
 #else
                 auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageWidget(this, i18n("KMail"));
@@ -248,11 +249,13 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
                 whatsNewMessageWidget->setObjectName(QStringLiteral("whatsNewMessageWidget"));
                 mTopLayout->addWidget(whatsNewMessageWidget);
                 KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+                KMailSettings::self()->save();
                 whatsNewMessageWidget->animatedShow();
 #endif
             }
         } else {
             KMailSettings::self()->setPreviousNewFeaturesMD5(newFeaturesMD5);
+            KMailSettings::self()->save();
         }
     }
 
