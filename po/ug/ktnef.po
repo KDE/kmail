@@ -8,24 +8,25 @@ msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-12-16 06:51+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-05-31 19:00-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #: attachpropertydialog.cpp:61
 #, kde-format
@@ -73,7 +74,7 @@ msgctxt "@info:whatsthis"
 msgid ""
 "You will be presented with a dialog where you can configure the application-"
 "wide shortcuts."
-msgstr ""
+msgstr "پىروگراممىنىڭ تېزلەتمىسىنى سەپلەيدىغان سۆزلەشكۈنى كۆرسىتىدۇ."
 
 #: ktnefmain.cpp:110
 #, kde-format
@@ -94,20 +95,16 @@ msgid "Extract"
 msgstr "ئايرىش"
 
 #: ktnefmain.cpp:123 ktnefmain.cpp:402
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "يېشىش ئورنى…"
+msgstr ""
 
 #: ktnefmain.cpp:128
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Extract To..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "يېشىش ئورنى…"
+msgstr ""
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:405
 #, kde-format
@@ -191,19 +188,19 @@ msgstr ""
 #: ktnefmain.cpp:531
 #, kde-format
 msgid "Open &with %1"
-msgstr ""
+msgstr "%1 دا ئاچ(&O)"
 
 #: ktnefmain.cpp:533
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
-msgstr ""
+msgstr "%1"
 
 #: ktnefmain.cpp:558
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
-msgstr ""
+msgstr "ئاچقۇز(&O)"
 
 #: ktnefmain.cpp:574
 #, kde-format
@@ -215,13 +212,13 @@ msgstr ""
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr ""
+msgstr "ئاچقۇز(&O)…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
 #, kde-format
 msgid "&File"
-msgstr ""
+msgstr "ھۆججەت(&F)"
 
 #. i18n: ectx: Menu (action)
 #: ktnefui.rc:9
@@ -251,7 +248,7 @@ msgstr "ھۆججەت ئاتى"
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
-msgstr "ھۆججەت تىپى"
+msgstr "ھۆججەت تۈرى"
 
 #: ktnefview.cpp:72
 #, kde-format
@@ -262,7 +259,7 @@ msgstr "چوڭلۇقى"
 #: main.cpp:30
 #, kde-format
 msgid "KTnef"
-msgstr "KTnef"
+msgstr ""
 
 #: main.cpp:32
 #, kde-format
@@ -277,20 +274,18 @@ msgid ""
 msgstr ""
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid "Michael Goffioul"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
-msgstr "Michael Goffioul"
+msgstr ""
 
 #: main.cpp:36
 #, kde-format
 msgid "Author"
-msgstr "ئاپتور"
+msgstr "يازغۇچى"
 
 #: main.cpp:38
-#, fuzzy, kde-format
-#| msgid "Allen Winter"
+#, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
@@ -306,12 +301,10 @@ msgid "An optional argument 'file' "
 msgstr ""
 
 #: messagepropertydialog.cpp:42
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu"
-#| msgid "Properties"
+#, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
-msgstr "خاسلىق"
+msgstr ""
 
 #: messagepropertydialog.cpp:55
 #, kde-format
@@ -355,7 +348,6 @@ msgstr "ھۆججەت چوڭلۇقى:"
 msgid "MIME type:"
 msgstr ""
 
-#, fuzzy
 #~| msgid "&Save..."
 #~ msgid "Save..."
 #~ msgstr "ساقلا(&S)…"

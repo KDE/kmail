@@ -7,37 +7,38 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-29 00:44+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"POT-Creation-Date: 2026-06-02 00:44+0000\n"
+"PO-Revision-Date: 2026-05-31 19:00-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr "ئابدۇقادىر ئابلىز، غەيرەت كەنجى"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
+msgstr "sahranbay@gmail.com, gheyret@gmail.com"
 
 #: aboutdata.cpp:33
 msgid "Maintainer"
-msgstr "مەسئۇل كىشى"
+msgstr "ئاسرىغۇچى"
 
 #: aboutdata.cpp:34 aboutdata.cpp:36 aboutdata.cpp:37
 msgid "Former maintainer"
-msgstr "بۇرۇنقى مەسئۇل ئادەم"
+msgstr "سابىق ئاسرىغۇچى"
 
 #: aboutdata.cpp:35
 msgid "Original author"
-msgstr "ئەسلى ئاپتور"
+msgstr "ئەسلى يازغۇچى"
 
 #: aboutdata.cpp:38
 msgid "Former co-maintainer"
@@ -53,7 +54,7 @@ msgstr "غوللۇق ئىجادىيەتچىلەر"
 
 #: aboutdata.cpp:44
 msgid "Documentation"
-msgstr "قوللانمىلار"
+msgstr "قوللانما"
 
 #: aboutdata.cpp:45
 msgid "Japanese language support"
@@ -64,10 +65,8 @@ msgid "Numerous technical corrections"
 msgstr ""
 
 #: aboutdata.cpp:47
-#, fuzzy
-#| msgid "Enable system tray icon"
 msgid "System tray notification"
-msgstr "سىستېما قونداق سىنبەلگىسىنى ئىناۋەتلىك قىل"
+msgstr ""
 
 #: aboutdata.cpp:48
 msgid "Patch for PGP"
@@ -146,10 +145,8 @@ msgid "Improve 'Mark Message as' popup menu"
 msgstr ""
 
 #: aboutdata.cpp:97
-#, fuzzy
-#| msgid "Maintenance"
 msgid "Bugzilla maintenance"
-msgstr "ئاسراش"
+msgstr ""
 
 #: aboutdata.cpp:99
 msgid "Improved execution speed"
@@ -180,10 +177,8 @@ msgid "Major contributor to Akonadi"
 msgstr ""
 
 #: aboutdata.cpp:116
-#, fuzzy
-#| msgid "Documentation"
 msgid "Documentation, still active"
-msgstr "قوللانمىلار"
+msgstr ""
 
 #: aboutdata.cpp:118
 msgid "Substantial contributor, still active"
@@ -199,7 +194,7 @@ msgstr ""
 
 #: aboutdata.cpp:124 aboutdata.cpp:126 aboutdata.cpp:183
 msgid "Bug fixes"
-msgstr ""
+msgstr "كەمتۈك تۈزىتىش"
 
 #: aboutdata.cpp:125
 msgid "Several patches"
@@ -210,10 +205,8 @@ msgid "Enable external reference loading for a whole folder"
 msgstr ""
 
 #: aboutdata.cpp:131
-#, fuzzy
-#| msgid "Delete Search"
 msgid "Delete an entire thread"
-msgstr "ئىزدەشنى ئۆچۈرۈش"
+msgstr ""
 
 #: aboutdata.cpp:132 aboutdata.cpp:189
 msgid "POP filters"
@@ -244,16 +237,12 @@ msgid "Improve configuration dialog"
 msgstr ""
 
 #: aboutdata.cpp:150
-#, fuzzy
-#| msgid "Message Body"
 msgid "Improved message importing"
-msgstr "ئۇچۇر گەۋدىسى"
+msgstr ""
 
 #: aboutdata.cpp:151
-#, fuzzy
-#| msgid "New Message"
 msgid "Improve status bar messages"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
 #: aboutdata.cpp:157
 msgid "Patch for window resizing problem"
@@ -324,11 +313,11 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:246 kmmainwidget.cpp:4254 kmmainwidget.cpp:4259
+#: kmmainwidget.cpp:247 kmmainwidget.cpp:4257 kmmainwidget.cpp:4262
 #: kmreaderwin.cpp:266 kmsystemtray.cpp:50 kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
-msgstr "KMail"
+msgstr "KMail  تور خەت"
 
 #: aboutdata.cpp:196
 #, kde-format
@@ -347,11 +336,10 @@ msgid "Mailing List"
 msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgid "Filter %1"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "سۈزگۈچ %1"
+msgstr ""
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -440,22 +428,19 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectionquotapage.cpp:23
-#, fuzzy, kde-format
-#| msgid "Quota"
+#, kde-format
 msgctxt "@title:tab Quota page."
 msgid "Quota"
-msgstr "نورما"
+msgstr ""
 
 #: collectionpage/collectionquotawidget.cpp:24
-#, fuzzy, kde-format
-#| msgid "Usage:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Usage:"
 msgstr "ئىشلىتىش ئۇسۇلى:"
 
 #: collectionpage/collectionquotawidget.cpp:30
-#, fuzzy, kde-format
-#| msgid "Status:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Status:"
 msgstr "ھالىتى:"
@@ -486,11 +471,10 @@ msgid ""
 msgstr ""
 
 #: collectionpage/collectiontemplatespage.cpp:28
-#, fuzzy, kde-format
-#| msgid "Templates"
+#, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
-msgstr "قېلىپلار"
+msgstr "قېلىپ"
 
 #: collectionpage/collectionviewpage.cpp:36
 #, kde-format
@@ -499,11 +483,10 @@ msgid "View"
 msgstr "كۆرۈنۈش"
 
 #: collectionpage/collectionviewpage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
-msgstr "ئىختىيارى سىنبەلگىلىرىنى ئىشلەت(&I)"
+msgstr ""
 
 #: collectionpage/collectionviewpage.cpp:61
 #, kde-format
@@ -528,11 +511,10 @@ msgid "Retrieval Options"
 msgstr "ئېلىش تاللانمىلىرى"
 
 #: configuredialog/configureaccountpage.cpp:56
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
-msgstr "كىملىك(&I)"
+msgstr "كىملىك"
 
 #: configuredialog/configureaccountpage.cpp:62
 #, kde-format
@@ -560,11 +542,10 @@ msgid "Outgoing accounts (add at least one):"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:100
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:102
 #, kde-format
@@ -572,11 +553,10 @@ msgid "Before sending:"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:104
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
-msgstr "ئېلخەت تەكشۈر"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:111
 #, kde-format
@@ -620,16 +600,14 @@ msgid "Enable Undo Send"
 msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:198
-#, fuzzy, kde-format
-#| msgid "&Add..."
+#, kde-format
 msgid "Add Mail Account…"
-msgstr "قوش(&A)…"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:199
-#, fuzzy, kde-format
-#| msgid "&Add..."
+#, kde-format
 msgid "Custom Account…"
-msgstr "قوش(&A)…"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:263
 #, kde-format
@@ -663,12 +641,12 @@ msgstr "ئادەتتىكى"
 #: configuredialog/configureappearancepage.cpp:93
 #, kde-format
 msgid "Fonts"
-msgstr "خەت نۇسخىلىرى"
+msgstr "خەت نۇسخا"
 
 #: configuredialog/configureappearancepage.cpp:99
 #, kde-format
 msgid "Colors"
-msgstr "رەڭلەر"
+msgstr "رەڭ"
 
 #: configuredialog/configureappearancepage.cpp:105
 #, kde-format
@@ -715,11 +693,10 @@ msgid "Printing Output"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:144
-#, fuzzy, kde-format
-#| msgid "Use custom &icons"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
-msgstr "ئىختىيارى سىنبەلگىلىرىنى ئىشلەت(&I)"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:168
 #, kde-format
@@ -772,11 +749,10 @@ msgid "HTML Status Bar Foreground - HTML Message"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:318
-#, fuzzy, kde-format
-#| msgid "&Use custom colors"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
-msgstr "ئىختىيارى رەڭلەرنى ئىشلەت(&U)"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:320
 #, kde-format
@@ -809,18 +785,16 @@ msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
-#, fuzzy, kde-format
-#| msgid "Never"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "ھەرگىز"
 
 #: configuredialog/configureappearancepage.cpp:490
-#, fuzzy, kde-format
-#| msgid "Archive"
+#, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
-msgstr "ئارخىپلاش"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:492
 #, kde-format
@@ -835,18 +809,16 @@ msgid "As list"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:506
-#, fuzzy, kde-format
-#| msgid "Always"
+#, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "ھەمىشە"
 
 #: configuredialog/configureappearancepage.cpp:508
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
-msgstr "قىسقۇچ تىزىملىكى"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:582
 #, kde-format
@@ -910,17 +882,15 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:706
-#, fuzzy, kde-format
-#| msgid "Date Display"
+#, kde-format
 msgid "Date Display:"
-msgstr "چېسلا كۆرسىتىش"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:811
-#, fuzzy, kde-format
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
-msgstr "يېڭى كىملىك"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:816
 #, kde-format
@@ -940,11 +910,10 @@ msgid "System Tray"
 msgstr "سىستېما قوندىقى"
 
 #: configuredialog/configureappearancepage.cpp:841
-#, fuzzy, kde-format
-#| msgid "Enable system tray icon"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "سىستېما قونداق سىنبەلگىسىنى ئىناۋەتلىك قىل"
+msgstr "سىستېما قونداق سىنبەلگىسىنى قوزغىتىدۇ"
 
 #: configuredialog/configureappearancepage.cpp:845
 #, kde-format
@@ -959,14 +928,12 @@ msgid "Show unread email in Taskbar"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:868
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgid "Plasma activities"
-msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:873
-#, fuzzy, kde-format
-#| msgid "Enable"
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "قوزغات"
@@ -977,18 +944,16 @@ msgid "A&vailable Tags"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:958
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "يېڭى خەتكۈش قوش"
 
 #: configuredialog/configureappearancepage.cpp:963
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
-msgstr "چىقىرىۋەت"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:972
 #, kde-format
@@ -1008,8 +973,7 @@ msgid "Ta&g Settings"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:1052
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgid "Delete"
 msgstr "ئۆچۈر"
 
@@ -1019,11 +983,10 @@ msgid "Do you want to remove tag '%1'?"
 msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:1184
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
-msgstr "چىقىرىۋەت"
+msgstr "بەلگىنى چىقىرىۋەت"
 
 #: configuredialog/configureappearancepage.cpp:1229
 #: configuredialog/configureappearancepage.cpp:1264
@@ -1051,12 +1014,12 @@ msgstr ""
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
-msgstr "تېما"
+msgstr "ماۋزۇ"
 
 #: configuredialog/configurecomposerpage.cpp:88
 #, kde-format
 msgid "Headers"
-msgstr "بەت قېشى"
+msgstr "بەت قاش"
 
 #: configuredialog/configurecomposerpage.cpp:94
 #, kde-format
@@ -1075,8 +1038,7 @@ msgid "Auto Resize Image"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:128
-#, fuzzy, kde-format
-#| msgid "Signature"
+#, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "ئىمزا"
@@ -1106,11 +1068,10 @@ msgid "When replying, do not quote any existing signature"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:177
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgctxt "@title:group"
 msgid "Format"
-msgstr "پىچىمى(&O):"
+msgstr "پىچىمى"
 
 #: configuredialog/configurecomposerpage.cpp:182
 #, kde-format
@@ -1155,7 +1116,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
-msgstr ""
+msgstr "تاپشۇرۇۋالغۇچىلار"
 
 #: configuredialog/configurecomposerpage.cpp:295
 #, kde-format
@@ -1174,11 +1135,10 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:330
-#, fuzzy, kde-format
-#| msgid "No autosave"
+#, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
-msgstr "ئاپتوماتىك ساقلىمىسۇن"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:333
 #, kde-format
@@ -1194,18 +1154,16 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:350
-#, fuzzy, kde-format
-#| msgid "Configure Completion Order..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
-msgstr "تولۇقلاش تەرتىپىنى سەپلەش"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:358
-#, fuzzy, kde-format
-#| msgid "No autosave"
+#, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
-msgstr "ئاپتوماتىك ساقلىمىسۇن"
+msgstr "ئاپتوماتىك ساقلاش"
 
 #: configuredialog/configurecomposerpage.cpp:368
 #, kde-format
@@ -1213,12 +1171,11 @@ msgid "No autosave"
 msgstr "ئاپتوماتىك ساقلىمىسۇن"
 
 #: configuredialog/configurecomposerpage.cpp:369
-#, fuzzy, kde-format
-#| msgid " min"
+#, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
 msgid_plural "%v minutes"
-msgstr[0] " مىنۇت"
+msgstr[0] ""
 
 #: configuredialog/configurecomposerpage.cpp:371
 #, kde-format
@@ -1226,8 +1183,7 @@ msgid "Automatically save the message at this specified interval"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:385
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "مۇزىكىسىنى ئىشلىگۈچى"
@@ -1265,10 +1221,9 @@ msgstr "چىقىرىۋەت(&M)"
 
 #: configuredialog/configurecomposerpage.cpp:593
 #: configuredialog/configurecomposerpage.cpp:892
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Mod&ify…"
-msgstr "ئۆزگەرت…"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
@@ -1276,10 +1231,9 @@ msgid "Enter new reply prefix:"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:594
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgid "Do you want to remove reply prefix?"
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
@@ -1300,11 +1254,10 @@ msgstr "چىقىرىۋەت(&V)"
 #: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
-msgstr ""
+msgstr "قوش…"
 
 #: configuredialog/configurecomposerpage.cpp:617
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgid "Modify…"
 msgstr "ئۆزگەرت…"
 
@@ -1314,16 +1267,14 @@ msgid "Enter new forward prefix:"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:618
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgid "Do you want to remove forward prefix?"
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:619
-#, fuzzy, kde-format
-#| msgid "&Forward"
+#, kde-format
 msgid "Forward Prefix:"
-msgstr "ئالدىغا(&F)"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:667
 #, kde-format
@@ -1350,8 +1301,7 @@ msgid "Ne&w"
 msgstr "يېڭى(&W)"
 
 #: configuredialog/configurecomposerpage.cpp:688
-#, fuzzy, kde-format
-#| msgid "Re&move"
+#, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "چىقىرىۋەت(&M)"
@@ -1363,8 +1313,7 @@ msgid "&Name:"
 msgstr "ئاتى(&N):"
 
 #: configuredialog/configurecomposerpage.cpp:707
-#, fuzzy, kde-format
-#| msgid "&Value:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "قىممىتى(&V):"
@@ -1376,11 +1325,10 @@ msgid ""
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:840
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
-msgstr "ئىناۋەتسىز ئېلخەت ئادرېسى"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:875
 #, kde-format
@@ -1400,31 +1348,26 @@ msgid "Enter new key word:"
 msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:894
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:895
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgid "Attachment Word:"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:902
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:909
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
-msgstr " كىلوبايت"
+msgstr " kB"
 
 #: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
@@ -1432,16 +1375,14 @@ msgid "No limit"
 msgstr "چەك يوق"
 
 #: configuredialog/configuredialoglistview.cpp:55
-#, fuzzy, kde-format
-#| msgid "Add"
+#, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "قوش"
 
 #: configuredialog/configuredialoglistview.cpp:57
 #: identity/identityngpage.cpp:247
-#, fuzzy, kde-format
-#| msgid "Remove"
+#, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "چىقىرىۋەت"
@@ -1449,7 +1390,7 @@ msgstr "چىقىرىۋەت"
 #: configuredialog/configuremiscpage.cpp:34
 #, kde-format
 msgid "Folders"
-msgstr "قىسقۇچلار"
+msgstr "قىسقۇچ"
 
 #: configuredialog/configuremiscpage.cpp:37
 #, kde-format
@@ -1464,7 +1405,7 @@ msgstr "بېسىش"
 #: configuredialog/configuremiscpage.cpp:43
 #, kde-format
 msgid "User Feedback"
-msgstr ""
+msgstr "ئىشلەتكۈچى قايتۇرما ئىنكاسى"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:199
 #, kde-format
@@ -1472,10 +1413,9 @@ msgid "Check Before Send Plugins"
 msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:208
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Composer Plugins"
-msgstr "مۇزىكىسىنى ئىشلىگۈچى"
+msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:216
 #, kde-format
@@ -1483,22 +1423,19 @@ msgid "Grammar Checker Plugins"
 msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:228
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Tools Plugins"
-msgstr "مۇزىكىسىنى ئىشلىگۈچى"
+msgstr "قورال قىستۇرمىسى"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:237
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Editor Plugins"
-msgstr "مۇزىكىسىنى ئىشلىگۈچى"
+msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
-#, fuzzy, kde-format
-#| msgid "Message List"
+#, kde-format
 msgid "Message Viewer"
-msgstr "ئۇچۇر تىزىمى"
+msgstr "ئۇچۇر كۆرگۈچ"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
@@ -1506,21 +1443,19 @@ msgid "Webengine Plugins"
 msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
-#, fuzzy, kde-format
-#| msgid "Custom Headers Style"
+#, kde-format
 msgid "Header Style Plugins"
-msgstr "بەت قېشى"
+msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgid "Text Conversion Plugins"
-msgstr "مۇزىكىسىنى ئىشلىگۈچى"
+msgstr ""
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
-msgstr ""
+msgstr "ئارىلاش"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
@@ -1543,10 +1478,9 @@ msgid "Message Disposition Notifications"
 msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:57
-#, fuzzy, kde-format
-#| msgid "Encrypting"
+#, kde-format
 msgid "Encryption"
-msgstr "شىفىرلاۋاتىدۇ"
+msgstr "شىفىرلاش"
 
 #: configuredialog/configuresecuritypage.cpp:63
 #, kde-format
@@ -1554,16 +1488,14 @@ msgid "S/MIME Validation"
 msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:90
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgid "Email Address:"
-msgstr "ئېلخەت ئادرېسلىرى"
+msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:91
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgid "Do you want to remove this email address?"
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr "بۇ ئېلخەت ئادرېسىنى چىقىرىۋېتەمسىز؟"
 
 #: configuredialog/configuresecuritypage.cpp:126
 #, kde-format
@@ -1575,19 +1507,16 @@ msgstr ""
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
-#, fuzzy, kde-format
-#| msgid " day"
-#| msgid_plural " days"
+#, kde-format
 msgid "%v day"
 msgid_plural "%v days"
-msgstr[0] " كۈن"
+msgstr[0] "%v كۈن"
 
 #: configuredialog/configuresecuritypage.cpp:320
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
-msgstr "تەڭشەك(&S)"
+msgstr ""
 
 #: configuredialog/configuresecuritypage.cpp:328
 #, kde-format
@@ -1619,51 +1548,45 @@ msgid "(Current system setting: %1)"
 msgstr "(نۆۋەتتىكى سىستېما تەڭشىكى: %1)"
 
 #: dialog/addemailtoexistingcontactdialog.cpp:35
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
-msgstr "خەت نۇسخا تاللا"
+msgstr ""
 
 #: dialog/addemailtoexistingcontactdialog.cpp:71
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#, kde-format
 msgid "Select"
-msgstr "خەت نۇسخا تاللا"
+msgstr "تاللا"
 
 #: dialog/archivefolderdialog.cpp:43
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
-msgstr "ئارخىپلاش"
+msgstr "ئارخىپ"
 
 #: dialog/archivefolderdialog.cpp:52
-#, fuzzy, kde-format
-#| msgid "Archive"
+#, kde-format
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
-msgstr "ئارخىپلاش"
+msgstr ""
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3715
-#, fuzzy, kde-format
-#| msgid "Archive"
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3718
+#, kde-format
 msgctxt "@action"
 msgid "Archive"
-msgstr "ئارخىپلاش"
+msgstr "ئارخىپ"
 
 #: dialog/archivefolderdialog.cpp:72
-#, fuzzy, kde-format
-#| msgid "&Folder:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "قىسقۇچ(&F):"
 
 #: dialog/archivefolderdialog.cpp:82
-#, fuzzy, kde-format
-#| msgid "F&ormat:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
-msgstr "پىچىمى(&O):"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:88
 #, kde-format
@@ -1686,11 +1609,10 @@ msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr ""
 
 #: dialog/archivefolderdialog.cpp:97
-#, fuzzy, kde-format
-#| msgid "Archive"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
-msgstr "ئارخىپلاش"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:101
 #, kde-format
@@ -1704,11 +1626,10 @@ msgid "&Delete folder and subfolders after completion"
 msgstr ""
 
 #: dialog/archivefolderdialog.cpp:113
-#, fuzzy, kde-format
-#| msgid "Archive"
+#, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
-msgstr "ئارخىپلاش"
+msgstr ""
 
 #: dialog/archivefolderdialog.cpp:171
 #, kde-format
@@ -1716,15 +1637,13 @@ msgid "Please select the folder that should be archived."
 msgstr ""
 
 #: dialog/archivefolderdialog.cpp:171
-#, fuzzy, kde-format
-#| msgid "Message Body"
+#, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
-msgstr "ئۇچۇر گەۋدىسى"
+msgstr ""
 
 #: dialog/kmknotify.cpp:32
-#, fuzzy, kde-format
-#| msgid "Notification"
+#, kde-format
 msgctxt "@title:window"
 msgid "Notification"
 msgstr "ئۇقتۇرۇش"
@@ -1736,27 +1655,22 @@ msgid_plural "%1 attachments (%2)"
 msgstr[0] ""
 
 #: editor/attachment/attachmentview.cpp:197
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
 #: editor/attachment/attachmentview.cpp:199
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
 #: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgid "KMail2"
-msgstr "KMail"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:357
 #, kde-format
@@ -1783,25 +1697,22 @@ msgid "Set the \"From:\" email address for this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:411
-#, fuzzy, kde-format
-#| msgid "&Identity:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "كىملىك(&I):"
 
 #: editor/kmcomposerwin.cpp:412
-#, fuzzy, kde-format
-#| msgid "&Dictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "لۇغەت(&D):"
 
 #: editor/kmcomposerwin.cpp:413
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:414
 #, kde-format
@@ -1822,8 +1733,7 @@ msgid "S&ubject:"
 msgstr "ماۋزۇ(&U):"
 
 #: editor/kmcomposerwin.cpp:485
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "مۇزىكىسىنى ئىشلىگۈچى"
@@ -1890,17 +1800,16 @@ msgid "Save email as text or html file"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1312
-#, fuzzy, kde-format
-#| msgid "Insert"
+#, kde-format
 msgid "&Insert Text File…"
-msgstr "قىستۇر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1316
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3041
+#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3044
 #, kde-format
 msgid "&Address Book"
 msgstr "ئادرېس دەپتىرى(&A)"
@@ -1916,11 +1825,10 @@ msgid "&New Composer"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1341
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1344
 #, kde-format
@@ -1929,11 +1837,10 @@ msgid "Save &Distribution List…"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1368
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
-msgstr "قوشۇلما سۈپىتىدە قوش(&A)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1372
 #, kde-format
@@ -1942,8 +1849,7 @@ msgid "Cl&ean Spaces"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1376
-#, fuzzy, kde-format
-#| msgid "Use Fi&xed Font"
+#, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "تەڭ كەڭلىكتىكى خەت نۇسخىسى(&X)"
@@ -1979,11 +1885,10 @@ msgid "&Snippets"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1403
-#, fuzzy, kde-format
-#| msgid "&Automatic Spellchecking"
+#, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
-msgstr "ئاپتوماتىك ئىملا تەكشۈرۈش(&A)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1419
 #, kde-format
@@ -2003,47 +1908,40 @@ msgid "Toggle rich text editing mode"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1426
-#, fuzzy, kde-format
-#| msgid "Available Filters"
+#, kde-format
 msgctxt "@action"
 msgid "&All Fields"
-msgstr "ئىشلەتكىلى بولىدىغان سۈزگۈچلەر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1429
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgctxt "@action"
 msgid "&Identity"
-msgstr "كىملىك(&I)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1432
-#, fuzzy, kde-format
-#| msgid "&Dictionary"
+#, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "لۇغەت(&D)"
 
 #: editor/kmcomposerwin.cpp:1435
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1438
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
-msgstr "KMail  خاتالىقى"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1441
-#, fuzzy, kde-format
-#| msgctxt "sender address field"
-#| msgid "&From:"
+#, kde-format
 msgctxt "@action"
 msgid "&From"
-msgstr "ئورنى(&F):"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1444
 #, kde-format
@@ -2052,18 +1950,16 @@ msgid "S&ubject"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1449
-#, fuzzy, kde-format
-#| msgid "Signature"
+#, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
-msgstr "ئىمزا"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1453
-#, fuzzy, kde-format
-#| msgid "OCSP responder signature:"
+#, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
-msgstr "OCSP ئىنكاسچىنىڭ ئىمزاسى:"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1457
 #, kde-format
@@ -2072,10 +1968,9 @@ msgid "Insert Signature At C&ursor Position"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1472
-#, fuzzy, kde-format
-#| msgid "Spellchecker"
+#, kde-format
 msgid "&Spellchecker…"
-msgstr "ئىملا تەكشۈرگۈچ"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1473
 #, kde-format
@@ -2114,16 +2009,14 @@ msgid "Select a cryptographic format for this message"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:1516
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1550
-#, fuzzy, kde-format
-#| msgid "Chang&e..."
+#, kde-format
 msgid "Configure KMail…"
-msgstr "ئۆزگەرت(&E)…"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:226 kmreadermainwin.cpp:547
 #, kde-format
@@ -2131,13 +2024,14 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
+"<qt>بۇ مەشغۇلات تىزىملىك بالداقنى پۈتۈنلەي يوشۇرىدۇ. %1 نى بېسىپ قايتا "
+"كۆرسىتەلەيسىز.</qt>"
 
 #: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:229
-#, fuzzy, kde-format
-#| msgid "Hide menu bar"
+#, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
-msgstr "تىزىملىك بالدىقىنى يوشۇر"
+msgstr "تىزىملىك بالداقنى يوشۇر"
 
 #: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4044
 #, kde-format
@@ -2146,21 +2040,20 @@ msgid " Line: %1 "
 msgstr " قۇر: %1 "
 
 #: editor/kmcomposerwin.cpp:1688
-#, fuzzy, kde-format
-#| msgid " Column: %1 "
+#, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
-msgstr " ئىستون: %1 "
+msgstr " رەت: %1 "
 
 #: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "OVR"
-msgstr "OVR"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "INS"
-msgstr "INS"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:1701
 #, kde-format
@@ -2202,46 +2095,40 @@ msgid "Do you want to save the message for later or discard it?"
 msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
 
 #: editor/kmcomposerwin.cpp:2087
-#, fuzzy, kde-format
-#| msgid "Close Composer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
-msgstr "Composer نى يېپىش"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2155
-#, fuzzy, kde-format
-#| msgid "New Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2156
-#, fuzzy, kde-format
-#| msgid "Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
-msgstr "ئۇچۇرلار"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2227 kmlaunchexternalcomponent.cpp:152
-#, fuzzy, kde-format
-#| msgid "Could not start backupmail. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr "ھېسابات يېتەكچىسىنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2229 kmlaunchexternalcomponent.cpp:154
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "ھېسابات يېتەكچىسىنى باشلىغىلى بولمىدى"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2351
-#, fuzzy, kde-format
-#| msgid "Insert"
+#, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
-msgstr "قىستۇر"
+msgstr "ھۆججەت قىستۇر"
 
 #: editor/kmcomposerwin.cpp:2437
 #, kde-format
@@ -2250,18 +2137,16 @@ msgid "Add as &Inline Image"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:2438
-#, fuzzy, kde-format
-#| msgid "Add as &Attachment"
+#, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
-msgstr "قوشۇلما سۈپىتىدە قوش(&A)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2453
-#, fuzzy, kde-format
-#| msgid "KMail"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail"
-msgstr "KMail"
+msgstr "KMail  تور خەت"
 
 #: editor/kmcomposerwin.cpp:2453 editor/kmcomposerwin.cpp:2558
 #, kde-format
@@ -2274,18 +2159,16 @@ msgid "Attachment name can't be empty"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:2459
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
-msgstr "ئىناۋەتسىز ئېلخەت ئادرېسى"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2510
-#, fuzzy, kde-format
-#| msgid "Add 'header' to message"
+#, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
-msgstr[0] "ئۇچۇرغا «قاش» قوش"
+msgstr[0] ""
 
 #: editor/kmcomposerwin.cpp:2511
 #, kde-format
@@ -2345,11 +2228,10 @@ msgid "No To: specified"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:2869 editor/kmcomposerwin.cpp:2883
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr "مۇشۇ پېتى يوللا(&S)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2870
 #, kde-format
@@ -2363,11 +2245,10 @@ msgid "You did not specify a subject. Send message anyway?"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:2882
-#, fuzzy, kde-format
-#| msgid "No Subject"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
-msgstr "تېما يوق"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:2884
 #, kde-format
@@ -2388,22 +2269,19 @@ msgid "About to send email…"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3114
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "ئەۋەتىشنى جەزملە"
 
 #: editor/kmcomposerwin.cpp:3115
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
-msgstr "ھازىر ئەۋەت(&S)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3116
-#, fuzzy, kde-format
-#| msgid "Send &Later"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "كېيىن ئەۋەت(&L)"
@@ -2422,18 +2300,16 @@ msgid "Too many recipients"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3198
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
-msgstr "مۇشۇ پېتى يوللا(&S)"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3199
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3236
 #, kde-format
@@ -2443,18 +2319,16 @@ msgid ""
 msgstr "HTML ھالىتى تاقالسا تېكىستنىڭ پىچىمى يوقىلىدۇ. شۇنداق بولسا بولامدۇ؟"
 
 #: editor/kmcomposerwin.cpp:3238
-#, fuzzy, kde-format
-#| msgid "Lose the formatting?"
+#, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
-msgstr "پىچىمىنى يوق قىلامسىز؟"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3239
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
-msgstr "پىچىمىنى يوق قىلىش"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3240
 #, kde-format
@@ -2495,18 +2369,16 @@ msgid ""
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:3667
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "شىفىر"
 
 #: editor/kmcomposerwin.cpp:3669
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
-msgstr "شىفىر"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3809
 #, kde-format
@@ -2628,7 +2500,7 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:4046
 #, kde-format
 msgid " Column: %1 "
-msgstr " ئىستون: %1 "
+msgstr " رەت: %1 "
 
 #: editor/kmcomposerwin.cpp:4263
 #, kde-format
@@ -2646,20 +2518,19 @@ msgstr ""
 #: editor/kmcomposerwin.cpp:4275
 #, kde-format
 msgid "Encryption Key Selection"
-msgstr ""
+msgstr "شىفىرلاش ئاچقۇچىنى تاللاش"
 
 #: editor/kmcomposerwin.cpp:4359
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:29
 #, kde-format
 msgctxt "@title:window"
 msgid "Details"
-msgstr ""
+msgstr "تەپسىلاتى"
 
 #: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
 #, kde-format
@@ -2675,18 +2546,16 @@ msgid ""
 msgstr ""
 
 #: editor/potentialphishingemail/potentialphishingemailwarning.cpp:27
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgctxt "@action"
 msgid "Send Now"
-msgstr "ھازىر ئەۋەت(&S)"
+msgstr ""
 
 #: editor/subjectlineeditwithautocorrection.cpp:16
-#, fuzzy, kde-format
-#| msgid "Set subject of message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set a subject for this message"
-msgstr "ئۇچۇرنىڭ ماۋزۇسىنى بەلگىلە"
+msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:30
 #, kde-format
@@ -2697,17 +2566,14 @@ msgid ""
 msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:31
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure shortcut"
-msgstr "تور تېزلەتمىلىرىنى سەپلەش…"
+msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:32
-#, fuzzy, kde-format
-#| msgctxt "@title:tab Shortcut settings for a folder."
-#| msgid "Shortcut"
+#, kde-format
 msgid "Remove Shortcut"
-msgstr "تېزلەتمە"
+msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:33
 #, kde-format
@@ -2715,10 +2581,9 @@ msgid "Ask Before Sending"
 msgstr ""
 
 #: editor/validatesendmailshortcut.cpp:34
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "Sending Without Confirmation"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr ""
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:41
 #, kde-format
@@ -2830,10 +2695,9 @@ msgid "Archive folder not defined. Please verify settings for account %1"
 msgstr ""
 
 #: folderarchive/folderarchiveagentjob.cpp:36
-#, fuzzy, kde-format
-#| msgid "Message Body"
+#, kde-format
 msgid "No messages selected."
-msgstr "ئۇچۇر گەۋدىسى"
+msgstr ""
 
 #: folderarchive/folderarchiveagentjob.cpp:71
 #, kde-format
@@ -2847,10 +2711,9 @@ msgid ""
 msgstr ""
 
 #: folderarchive/folderarchiveagentjob.cpp:102
-#, fuzzy, kde-format
-#| msgid "Total messages:"
+#, kde-format
 msgid "Cannot move messages."
-msgstr "جەمئىي ئۇچۇر سانى:"
+msgstr ""
 
 #: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
@@ -2873,10 +2736,9 @@ msgid "Unable to return list of folders."
 msgstr ""
 
 #: folderarchive/folderarchivemanager.cpp:166
-#, fuzzy, kde-format
-#| msgid "Messages"
+#, kde-format
 msgid "Messages archived"
-msgstr "ئۇچۇرلار"
+msgstr ""
 
 #: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
 #, kde-format
@@ -2892,21 +2754,20 @@ msgstr ""
 #: historyclosedreader/historyclosedreadermenu.cpp:57
 #, kde-format
 msgid "Clear History"
-msgstr ""
+msgstr "تارىخنى تازىلا"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:76
-#, fuzzy, kde-format
-#| msgid "Unread Message"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "ئوقۇلمىغان ئۇچۇر"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1928
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
-msgstr ""
+msgstr "سۈرەت"
 
 #: identity/encodedimagepicker.cpp:134
 #, kde-format
@@ -2915,11 +2776,10 @@ msgstr ""
 
 #: identity/encodedimagepicker.cpp:134 identity/encodedimagepicker.cpp:144
 #: identity/encodedimagepicker.cpp:152
-#, fuzzy, kde-format
-#| msgid "Picture"
+#, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
-msgstr "سۈرەت"
+msgstr ""
 
 #: identity/encodedimagepicker.cpp:144 identity/encodedimagepicker.cpp:152
 #, kde-format
@@ -2928,11 +2788,10 @@ msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:29
 #: identity/identityeditvcarddialog.cpp:41
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
-msgstr "ئىزدەشنى ئۆچۈرۈش"
+msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:49 identity/newidentitydialog.cpp:70
 #, kde-format
@@ -2959,11 +2818,10 @@ msgid "&Duplicate existing vCard"
 msgstr ""
 
 #: identity/identityaddvcarddialog.cpp:90 identity/newidentitydialog.cpp:91
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
-msgstr "تەڭشەك(&S)"
+msgstr ""
 
 #: identity/identitydialog.cpp:223
 #, kde-format
@@ -2995,11 +2853,10 @@ msgid "Could not generate an OpenPGP certificate: %1"
 msgstr ""
 
 #: identity/identitydialog.cpp:270
-#, fuzzy, kde-format
-#| msgid "The operation was canceled by the user."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "ئىشلەتكۈچى مەشغۇلاتنى بىكار قىلدى"
+msgstr ""
 
 #: identity/identitydialog.cpp:310
 #, kde-format
@@ -3018,8 +2875,7 @@ msgid "Key Generation Error"
 msgstr ""
 
 #: identity/identitydialog.cpp:341
-#, fuzzy, kde-format
-#| msgid "Edit Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "كىملىك تەھرىرلەش"
@@ -3031,12 +2887,10 @@ msgid "General"
 msgstr "ئادەتتىكى"
 
 #: identity/identitydialog.cpp:372
-#, fuzzy, kde-format
-#| msgctxt "NAME OF TRANSLATORS"
-#| msgid "Your names"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
-msgstr "ئابدۇقادىر ئابلىز, غەيرەت كەنجى"
+msgstr ""
 
 #: identity/identitydialog.cpp:377
 #, kde-format
@@ -3061,11 +2915,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:405
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
-msgstr "ئېلخەت ئادرېسى(&E):"
+msgstr ""
 
 #: identity/identitydialog.cpp:410
 #, kde-format
@@ -3078,11 +2931,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:429
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
-msgstr "ئېلخەت ئادرېسى(&E):"
+msgstr ""
 
 #: identity/identitydialog.cpp:434
 #, kde-format
@@ -3159,11 +3011,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:526
-#, fuzzy, kde-format
-#| msgid "Do not check certificate policies"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
-msgstr "ئىسپاتنامە تۈزۈمىنى تەكشۈرمە"
+msgstr ""
 
 #: identity/identitydialog.cpp:540
 #, kde-format
@@ -3176,11 +3027,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:546
-#, fuzzy, kde-format
-#| msgid "Do not check certificate policies"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
-msgstr "ئىسپاتنامە تۈزۈمىنى تەكشۈرمە"
+msgstr ""
 
 #: identity/identitydialog.cpp:563
 #, kde-format
@@ -3189,17 +3039,15 @@ msgid "Preferred format:"
 msgstr ""
 
 #: identity/identitydialog.cpp:568
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgid "Enable Autocrypt"
-msgstr "شىفىر"
+msgstr ""
 
 #: identity/identitydialog.cpp:572
-#, fuzzy, kde-format
-#| msgid "Encrypt"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "شىفىر"
+msgstr ""
 
 #: identity/identitydialog.cpp:577
 #, kde-format
@@ -3213,39 +3061,34 @@ msgid "Overwrite global settings for security defaults"
 msgstr ""
 
 #: identity/identitydialog.cpp:583
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
-msgstr "كۆڭۈلدىكى قىلىپ بەلگىلە"
+msgstr ""
 
 #: identity/identitydialog.cpp:588
-#, fuzzy, kde-format
-#| msgid "Moving messages"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
-msgstr "ئۇچۇرلار يۆتكىلىۋاتىدۇ."
+msgstr ""
 
 #: identity/identitydialog.cpp:591
-#, fuzzy, kde-format
-#| msgid "Unread messages:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
-msgstr "ئوقۇلمىغان ئۇچۇر:"
+msgstr ""
 
 #: identity/identitydialog.cpp:594
-#, fuzzy, kde-format
-#| msgid "Go to the next unread message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
-msgstr "كېيىنكى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
+msgstr ""
 
 #: identity/identitydialog.cpp:597
-#, fuzzy, kde-format
-#| msgid "Go to the next unread message"
+#, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
-msgstr "كېيىنكى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
+msgstr ""
 
 #: identity/identitydialog.cpp:607
 #, kde-format
@@ -3254,11 +3097,10 @@ msgid "Advanced"
 msgstr "ئالىي"
 
 #: identity/identitydialog.cpp:615
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
-msgstr "ئېلخەت ئادرېسى(&E):"
+msgstr ""
 
 #: identity/identitydialog.cpp:619
 #, kde-format
@@ -3272,11 +3114,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:637
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
-msgstr "ئېلخەت ئادرېسى(&E):"
+msgstr ""
 
 #: identity/identitydialog.cpp:643
 #, kde-format
@@ -3290,11 +3131,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:659
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
-msgstr "ئېلخەت ئادرېسى(&E):"
+msgstr ""
 
 #: identity/identitydialog.cpp:663
 #, kde-format
@@ -3308,76 +3148,65 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:677
-#, fuzzy, kde-format
-#| msgid "&Dictionary:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
-msgstr "لۇغەت(&D):"
+msgstr ""
 
 #: identity/identitydialog.cpp:683
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Select Send-mail Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:685
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:691
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Select Draft Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:693
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:699
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Select Templates Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:701
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:708
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Select Spam Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:710
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #: identity/identitydialog.cpp:713
-#, fuzzy, kde-format
-#| msgid "Configure Web Shortcuts..."
+#, kde-format
 msgid "Configure Expire Folder..."
-msgstr "تور تېزلەتمىلىرىنى سەپلەش…"
+msgstr ""
 
 #: identity/identitydialog.cpp:724
-#, fuzzy, kde-format
-#| msgid "&Add..."
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
-msgstr "قوش(&A)…"
+msgstr ""
 
 #: identity/identitydialog.cpp:731
 #, kde-format
@@ -3386,18 +3215,16 @@ msgid "Attach my vCard to message"
 msgstr ""
 
 #: identity/identitydialog.cpp:732
-#, fuzzy, kde-format
-#| msgid "Create..."
+#, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "قۇر…"
 
 #: identity/identitydialog.cpp:736
-#, fuzzy, kde-format
-#| msgid "Autocorrection"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
-msgstr "ئۆزلۈكىدىن تۈزەت"
+msgstr ""
 
 #: identity/identitydialog.cpp:748
 #, kde-format
@@ -3406,12 +3233,10 @@ msgid "Restore default domain name"
 msgstr ""
 
 #: identity/identitydialog.cpp:751
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox Show default value."
-#| msgid "Default"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
-msgstr "كۆڭۈلدىكى"
+msgstr ""
 
 #: identity/identitydialog.cpp:757
 #, kde-format
@@ -3421,11 +3246,10 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:774
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr ""
 
 #: identity/identitydialog.cpp:788
 #, kde-format
@@ -3436,7 +3260,7 @@ msgstr ""
 #: identity/identitydialog.cpp:795
 #, kde-format
 msgid "Templates"
-msgstr "قېلىپلار"
+msgstr "قېلىپ"
 
 #: identity/identitydialog.cpp:801
 #, kde-format
@@ -3446,13 +3270,12 @@ msgstr "ئىمزا"
 #: identity/identitydialog.cpp:808
 #, kde-format
 msgid "Picture"
-msgstr "سۈرەت"
+msgstr "رەسىم"
 
 #: identity/identitydialog.cpp:814
-#, fuzzy, kde-format
-#| msgid "Activate"
+#, kde-format
 msgid "Activities"
-msgstr "ئاكتىپلا"
+msgstr "پائالىيەت"
 
 #: identity/identitydialog.cpp:865
 #, kde-format
@@ -3460,22 +3283,19 @@ msgid "Invalid Email Alias \"%1\""
 msgstr ""
 
 #: identity/identitydialog.cpp:873
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgid "You must provide an email for this identity."
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr ""
 
 #: identity/identitydialog.cpp:873
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
-msgstr "ئېلخەت ئادرېسلىرى"
+msgstr ""
 
 #: identity/identitydialog.cpp:878 job/addressvalidationjob.cpp:81
 #: job/addressvalidationjob.cpp:86
-#, fuzzy, kde-format
-#| msgid "Invalid Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "ئىناۋەتسىز ئېلخەت ئادرېسى"
@@ -3524,11 +3344,10 @@ msgid "The signature file is not valid"
 msgstr ""
 
 #: identity/identitydialog.cpp:998
-#, fuzzy, kde-format
-#| msgid "Edit Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
-msgstr "كىملىك تەھرىرلەش"
+msgstr ""
 
 #: identity/identitydialog.cpp:1079
 #, kde-format
@@ -3538,16 +3357,14 @@ msgid ""
 msgstr ""
 
 #: identity/identitydialog.cpp:1334
-#, fuzzy, kde-format
-#| msgid "Create..."
+#, kde-format
 msgid "Create…"
 msgstr "قۇر…"
 
 #: identity/identitydialog.cpp:1336
-#, fuzzy, kde-format
-#| msgid "&Edit"
+#, kde-format
 msgid "Edit…"
-msgstr "تەھرىر(&E)"
+msgstr "تەھرىر…"
 
 #: identity/identityeditvcarddialog.cpp:35
 #, kde-format
@@ -3556,10 +3373,9 @@ msgid "Edit own vCard"
 msgstr ""
 
 #: identity/identityeditvcarddialog.cpp:38
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgid "Delete current vCard"
-msgstr "ئىزدەشنى ئۆچۈرۈش"
+msgstr ""
 
 #: identity/identityeditvcarddialog.cpp:57
 #, kde-format
@@ -3568,11 +3384,10 @@ msgstr ""
 
 #: identity/identityeditvcarddialog.cpp:58
 #: identity/identityeditvcarddialog.cpp:78
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete vCard"
-msgstr "ئىزدەشنى ئۆچۈرۈش"
+msgstr ""
 
 #: identity/identityeditvcarddialog.cpp:78
 #, kde-format
@@ -3583,14 +3398,13 @@ msgstr ""
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
-msgstr ""
+msgstr "راستتىنلا ۋاز كېچەمسىز؟"
 
 #: identity/identityeditvcarddialog.cpp:125
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr "جەزملەش"
 
 #: identity/identityeditvcarddialog.cpp:126
 #, kde-format
@@ -3605,11 +3419,10 @@ msgid "Do Not Cancel"
 msgstr ""
 
 #: identity/identityexpirespamfolderdialog.cpp:18
-#, fuzzy, kde-format
-#| msgid "Available Filters"
+#, kde-format
 msgctxt "@title:window"
 msgid "Expire Spam Folder"
-msgstr "ئىشلەتكىلى بولىدىغان سۈزگۈچلەر"
+msgstr ""
 
 #: identity/identityngpage.cpp:202
 #, kde-format
@@ -3617,22 +3430,19 @@ msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 
 #: identity/identityngpage.cpp:205
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
+#, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
+msgstr[0] ""
 
 #: identity/identityngpage.cpp:208
-#, fuzzy, kde-format
-#| msgid "Remove Identity"
+#, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
-msgstr[0] "كىملىك چىقىرىۋېتىش"
+msgstr[0] ""
 
 #: identity/identityngpage.cpp:209
-#, fuzzy, kde-format
-#| msgid "&Remove"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "چىقىرىۋەت(&R)"
@@ -3641,42 +3451,37 @@ msgstr "چىقىرىۋەت(&R)"
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
-msgstr ""
+msgstr "قوش…"
 
 #: identity/identityngpage.cpp:243
-#, fuzzy, kde-format
-#| msgid "Modify..."
+#, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "ئۆزگەرت…"
 
 #: identity/identityngpage.cpp:244
-#, fuzzy, kde-format
-#| msgid "Rename"
+#, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "ئات ئۆزگەرت"
 
 #: identity/identityngpage.cpp:255
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgctxt "@action"
 msgid "Set as Default"
 msgstr "كۆڭۈلدىكى قىلىپ بەلگىلە"
 
 #: identity/newidentitydialog.cpp:38
-#, fuzzy, kde-format
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@title:window"
 msgid "New Identity"
-msgstr "يېڭى كىملىك"
+msgstr ""
 
 #: identity/newidentitydialog.cpp:61
-#, fuzzy, kde-format
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "&New identity:"
-msgstr "يېڭى كىملىك"
+msgstr ""
 
 #: identity/newidentitydialog.cpp:76
 #, kde-format
@@ -3685,11 +3490,10 @@ msgid "&Use System Settings values"
 msgstr ""
 
 #: identity/newidentitydialog.cpp:81
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
-msgstr "تەڭشەك(&S)"
+msgstr ""
 
 #: identity/xfaceconfigurator.cpp:40
 #, kde-format
@@ -3716,10 +3520,9 @@ msgid ""
 msgstr ""
 
 #: identity/xfaceconfigurator.cpp:125
-#, fuzzy, kde-format
-#| msgid "Message will be encrypted"
+#, kde-format
 msgid "No image will be sent."
-msgstr "ئۇچۇر شىفىرلىنىدۇ"
+msgstr ""
 
 #: identity/xfaceconfigurator.cpp:128
 #, kde-format
@@ -3759,10 +3562,9 @@ msgid "pngquant exited with code %1: %2"
 msgstr ""
 
 #: job/addemailtoexistingcontactjob.cpp:54
-#, fuzzy, kde-format
-#| msgid "&Email address:"
+#, kde-format
 msgid "Email added successfully."
-msgstr "ئېلخەت ئادرېسى(&E):"
+msgstr ""
 
 #: job/addressvalidationjob.cpp:77
 #, kde-format
@@ -3771,10 +3573,9 @@ msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] ""
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:69
-#, fuzzy, kde-format
-#| msgid "Restart"
+#, kde-format
 msgid "Clear Akonadi Cache"
-msgstr "قايتا قوزغات"
+msgstr ""
 
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
@@ -3785,8 +3586,7 @@ msgid "Done"
 msgstr "تامام"
 
 #: job/createnewcontactjob.cpp:66
-#, fuzzy, kde-format
-#| msgid "Add to Address Book"
+#, kde-format
 msgctxt "@title:window"
 msgid "Add to Address Book"
 msgstr "ئادرېس دەپتىرىگە قوش"
@@ -3802,11 +3602,10 @@ msgid "Contact cannot be stored: %1"
 msgstr "ئالاقەداشنى ساقلىغىلى بولمىدى: %1"
 
 #: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
-msgstr "ئالاقەداشنى ساقلاش مەغلۇپ بولدى"
+msgstr ""
 
 #: job/opencomposerjob.cpp:122
 #, kde-format
@@ -3814,32 +3613,28 @@ msgid "Do you want to attach this folder \"%1\"?"
 msgstr ""
 
 #: job/opencomposerjob.cpp:123
-#, fuzzy, kde-format
-#| msgid "Archive"
+#, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
-msgstr "ئارخىپلاش"
+msgstr ""
 
 #: job/opencomposerjob.cpp:124
-#, fuzzy, kde-format
-#| msgid "&Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Attach"
-msgstr "قوشۇل(&A)"
+msgstr "قوشۇمچە"
 
 #: job/opencomposerjob.cpp:125
-#, fuzzy, kde-format
-#| msgid "&Attach"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
-msgstr "قوشۇل(&A)"
+msgstr ""
 
 #: job/removecollectionjob.cpp:58
-#, fuzzy, kde-format
-#| msgid "Delete Search"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
-msgstr "ئىزدەشنى ئۆچۈرۈش"
+msgstr ""
 
 #: job/removecollectionjob.cpp:60
 #, kde-format
@@ -3855,8 +3650,7 @@ msgid "&Delete"
 msgstr "ئۆچۈر(&D)"
 
 #: job/removecollectionjob.cpp:65
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "قىسقۇچ ئۆچۈر"
@@ -3918,43 +3712,36 @@ msgid "Error while removing duplicates"
 msgstr ""
 
 #: job/saveasfilejob.cpp:26
-#, fuzzy, kde-format
-#| msgid "Save to File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save File as"
-msgstr "ھۆججەتكە ساقلاش"
+msgstr ""
 
 #: kmail_options.h:16
-#, fuzzy, kde-format
-#| msgid "Set subject of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set subject of message"
-msgstr "ئۇچۇرنىڭ ماۋزۇسىنى بەلگىلە"
+msgstr ""
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgctxt "Settings regarding the subject when composing a message."
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
-msgstr "تېما"
+msgstr "ماۋزۇ"
 
 #: kmail_options.h:19
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
+#, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "ئېلخەتكە قوشۇلما قوشىدۇ. بۇنى قايتا-قايتا قىلىشقا بولىدۇ"
+msgstr ""
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "&Address Book"
+#, kde-format
 msgid "Address"
-msgstr "ئادرېس دەپتىرى(&A)"
+msgstr "ئادرېس"
 
 #: kmail_options.h:22
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
+#, kde-format
 msgid "Send BCC: to 'address'. This can be repeated"
-msgstr "ئېلخەتكە قوشۇلما قوشىدۇ. بۇنى قايتا-قايتا قىلىشقا بولىدۇ"
+msgstr ""
 
 #: kmail_options.h:24
 #, kde-format
@@ -3962,50 +3749,43 @@ msgid "Set replyTo to 'address'"
 msgstr ""
 
 #: kmail_options.h:26
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
-msgstr "ئېلخەتكە قوشۇلما قوشىدۇ. بۇنى قايتا-قايتا قىلىشقا بولىدۇ"
+msgstr ""
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "Read message body from 'file'"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Read message body from 'file'"
-msgstr "‹ھۆججەتتىن› ئۇچۇر گەۋدىسىنى ئوقۇش"
+msgstr ""
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "ھۆججەت(&F)"
+msgstr "ھۆججەت"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message"
-msgstr "ئۇچۇرنىڭ گەۋدىسىنى بەلگىلە"
+msgstr ""
 
 #: kmail_options.h:29
 #, kde-format
 msgid "Text"
+msgstr "تېكىست"
+
+#: kmail_options.h:30
+#, kde-format
+msgctxt "@info:shell"
+msgid "Add an attachment to the mail. This can be repeated"
 msgstr ""
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Add an attachment to the mail. This can be repeated"
-msgctxt "@info:shell"
-msgid "Add an attachment to the mail. This can be repeated"
-msgstr "ئېلخەتكە قوشۇلما قوشىدۇ. بۇنى قايتا-قايتا قىلىشقا بولىدۇ"
-
-#: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgid "Attachment Url"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
 #: kmail_options.h:31
 #, kde-format
@@ -4026,17 +3806,15 @@ msgid "Only open composer window"
 msgstr ""
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "New Identity"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set identity name"
-msgstr "يېڭى كىملىك"
+msgstr ""
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "&Identity"
+#, kde-format
 msgid "Identity"
-msgstr "كىملىك(&I)"
+msgstr "سالاھىيەت"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4045,29 +3823,28 @@ msgid "View the given message file"
 msgstr ""
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Messages"
+#, kde-format
 msgid "Message Url"
-msgstr "ئۇچۇرلار"
+msgstr ""
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Set body of message"
+#, kde-format
 msgctxt "@info:shell"
 msgid "Set body of message as html"
-msgstr "ئۇچۇرنىڭ گەۋدىسىنى بەلگىلە"
+msgstr ""
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "New Message"
+#, kde-format
 msgid "Body Message"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
 #: kmail_options.h:38
 #, kde-format
 msgctxt "@info:shell"
 msgid "Lists the available options for user feedback"
 msgstr ""
+"ئىشلەتكۈچى قايتۇرما ئىنكاسىنىڭ ئىشلەتكىلى بولىدىغان تاللانما تىزىمىنى "
+"كۆرسىتىدۇ"
 
 #: kmail_options.h:40
 #, kde-format
@@ -4119,7 +3896,7 @@ msgid "F&older"
 msgstr ""
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3564 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3567 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4151,7 +3928,7 @@ msgid "&Forward"
 msgstr "ئالدىغا(&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3388 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3391 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr ""
@@ -4160,7 +3937,7 @@ msgstr ""
 #: kmail_part.rc:206 kmmainwin.rc:206
 #, kde-format
 msgid "&Tools"
-msgstr "قوراللار(&T)"
+msgstr "قورال(&T)"
 
 #. i18n: ectx: Menu (settings)
 #: kmail_part.rc:226 kmcomposerui.rc:106 kmmainwin.rc:226 kmreadermainwin.rc:78
@@ -4182,11 +3959,10 @@ msgid "Main Toolbar"
 msgstr "ئاساسىي قورال بالداق"
 
 #: kmcommands.cpp:302
-#, fuzzy, kde-format
-#| msgid "Please wait"
+#, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
-msgstr "سەل ساقلاڭ"
+msgstr ""
 
 #: kmcommands.cpp:305 kmcommands.cpp:378
 #, kde-format
@@ -4195,24 +3971,21 @@ msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] ""
 
 #: kmcommands.cpp:531
-#, fuzzy, kde-format
-#| msgid "Save to File"
+#, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
-msgstr "ھۆججەتكە ساقلاش"
+msgstr ""
 
 #: kmcommands.cpp:718
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: kmcommands.cpp:720
-#, fuzzy, kde-format
-#| msgid "Messages"
+#, kde-format
 msgid "Message"
-msgstr "ئۇچۇرلار"
+msgstr "ئۇچۇر"
 
 #: kmcommands.cpp:749
 #, kde-format
@@ -4232,11 +4005,10 @@ msgid ""
 msgstr ""
 
 #: kmcommands.cpp:935
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
-msgstr "مۇشۇ پېتى يوللا(&S)"
+msgstr ""
 
 #: kmcommands.cpp:936
 #, kde-format
@@ -4257,7 +4029,7 @@ msgstr "ئۇچۇرنى سۈزۈۋاتىدۇ %1/%2"
 #: kmcommands.cpp:1541 kmcommands.cpp:1672
 #, kde-format
 msgid "Moving messages"
-msgstr "ئۇچۇرلار يۆتكىلىۋاتىدۇ."
+msgstr "ئۇچۇر يۆتكەۋاتىدۇ"
 
 #: kmcommands.cpp:1541 kmcommands.cpp:1682
 #, kde-format
@@ -4265,11 +4037,10 @@ msgid "Deleting messages"
 msgstr ""
 
 #: kmcommands.cpp:1824
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
-msgstr "خەت نۇسخا تاللا"
+msgstr ""
 
 #. i18n: ectx: Menu (insert)
 #: kmcomposerui.rc:38
@@ -4306,13 +4077,12 @@ msgstr ""
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2536 kmmainwidget.cpp:2551
-#, fuzzy, kde-format
-#| msgid "email"
+#: kmkernel.cpp:662 kmmainwidget.cpp:2539 kmmainwidget.cpp:2554
+#, kde-format
 msgid "Send Email"
-msgstr "email"
+msgstr "ئېلخەت يوللا"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2537 kmmainwidget.cpp:2552
+#: kmkernel.cpp:663 kmmainwidget.cpp:2540 kmmainwidget.cpp:2555
 #, kde-format
 msgid "Impossible to send email"
 msgstr ""
@@ -4335,22 +4105,19 @@ msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail  ھازىر تورسىز ھالەتتە. قانداق قىلىسىز؟"
 
 #: kmkernel.cpp:769
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr "توردا / توردا يوق"
+msgstr ""
 
 #: kmkernel.cpp:770
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "توردىكى خىزمەت"
 
 #: kmkernel.cpp:771
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "تورسىز خىزمەت"
@@ -4373,11 +4140,10 @@ msgid ""
 msgstr ""
 
 #: kmkernel.cpp:894
-#, fuzzy, kde-format
-#| msgid "New Message"
+#, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
 #: kmkernel.cpp:1455
 #, kde-format
@@ -4437,179 +4203,166 @@ msgid "Followup Reminder Agent was not registered."
 msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
-#, fuzzy, kde-format
-#| msgid "Could not start certificate manager; please check your installation."
+#, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
 "properly installed."
-msgstr "ئىسپاتنامە باشقۇرغۇچنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail  خاتالىقى"
 
 #: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
-#, fuzzy, kde-format
-#| msgid "Could not start backupmail. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr "ھېسابات يېتەكچىسىنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "ھېسابات يېتەكچىسىنى باشلىغىلى بولمىدى"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
-#, fuzzy, kde-format
-#| msgid "Could not start backupmail. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
-msgstr "ھېسابات يېتەكچىسىنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:128 kmlaunchexternalcomponent.cpp:136
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
-msgstr "ھېسابات يېتەكچىسىنى باشلىغىلى بولمىدى"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid "Could not start the account wizard. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
-msgstr "ھېسابات يېتەكچىسىنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "ھېسابات يېتەكچىسىنى باشلىغىلى بولمىدى"
-
-#: kmmainwidget.cpp:354
-#, kde-format
-msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 
 #: kmmainwidget.cpp:357
 #, kde-format
-msgctxt "@action:button"
-msgid "Import"
+msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 
-#: kmmainwidget.cpp:358
+#: kmmainwidget.cpp:360
+#, kde-format
+msgctxt "@action:button"
+msgid "Import"
+msgstr "ئەكىر"
+
+#: kmmainwidget.cpp:361
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
-msgstr ""
+msgstr "ئىمپورت قىلماق"
 
-#: kmmainwidget.cpp:363
+#: kmmainwidget.cpp:366
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
 
-#: kmmainwidget.cpp:365
+#: kmmainwidget.cpp:368
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr ""
 
-#: kmmainwidget.cpp:1419
-#, fuzzy, kde-format
-#| msgid "Moving messages"
+#: kmmainwidget.cpp:1422
+#, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
-msgstr "ئۇچۇرلار يۆتكىلىۋاتىدۇ."
+msgstr ""
 
-#: kmmainwidget.cpp:1444
+#: kmmainwidget.cpp:1447
 #, kde-format
 msgid "No Subject"
 msgstr "تېما يوق"
 
-#: kmmainwidget.cpp:1457
+#: kmmainwidget.cpp:1460
 #, kde-format
 msgid "(no templates)"
 msgstr ""
 
-#: kmmainwidget.cpp:1509
+#: kmmainwidget.cpp:1512
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr ""
 
-#: kmmainwidget.cpp:1515
+#: kmmainwidget.cpp:1518
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr ""
 
-#: kmmainwidget.cpp:1516
+#: kmmainwidget.cpp:1519
 #, kde-format
 msgid "Expire Folder"
 msgstr ""
 
-#: kmmainwidget.cpp:1516
-#, fuzzy, kde-format
-#| msgid "Expire"
+#: kmmainwidget.cpp:1519
+#, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
-msgstr "ئىناۋەتلىك ۋاقتى"
+msgstr ""
 
-#: kmmainwidget.cpp:1533
-#, fuzzy, kde-format
-#| msgid "Empty Trash"
+#: kmmainwidget.cpp:1536
+#, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
-msgstr "ئەخلەتخانىنى تازىلاش"
+msgstr "ئەخلەتخانىنى بوشات"
 
-#: kmmainwidget.cpp:1533
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#: kmmainwidget.cpp:1536
+#, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "ئەخلەتخانىغا يۆتكە"
 
-#: kmmainwidget.cpp:1534
+#: kmmainwidget.cpp:1537
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr ""
 
-#: kmmainwidget.cpp:1536
+#: kmmainwidget.cpp:1539
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
 "trash?</qt>"
 msgstr ""
 
-#: kmmainwidget.cpp:1559
+#: kmmainwidget.cpp:1562
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr ""
 
-#: kmmainwidget.cpp:1613
+#: kmmainwidget.cpp:1616
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr ""
 
-#: kmmainwidget.cpp:1614
+#: kmmainwidget.cpp:1617
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr ""
 
-#: kmmainwidget.cpp:1615
-#, fuzzy, kde-format
-#| msgid "Expire"
+#: kmmainwidget.cpp:1618
+#, kde-format
 msgctxt "@action:button"
 msgid "Expire"
-msgstr "ئىناۋەتلىك ۋاقتى"
+msgstr ""
 
-#: kmmainwidget.cpp:1640
+#: kmmainwidget.cpp:1643
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4617,22 +4370,19 @@ msgid ""
 "compromised by other present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:1643 kmmainwidget.cpp:4943
-#, fuzzy, kde-format
-#| msgid "Security Warning"
+#: kmmainwidget.cpp:1646 kmmainwidget.cpp:4946
+#, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "بىخەتەرلىك ئاگاھلاندۇرۇشى"
 
-#: kmmainwidget.cpp:1644
-#, fuzzy, kde-format
-#| msgctxt "continuation of \"obtain picture from\""
-#| msgid "External Source"
+#: kmmainwidget.cpp:1647
+#, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
-msgstr "سىرتقى مەنبە"
+msgstr ""
 
-#: kmmainwidget.cpp:1717
+#: kmmainwidget.cpp:1720
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4642,148 +4392,137 @@ msgid_plural ""
 "deleted, they cannot be restored.</qt>"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:1722
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:1725
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:1722
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:1725
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "ئۇچۇر ئۆچۈر"
 
-#: kmmainwidget.cpp:1737
-#, fuzzy, kde-format
-#| msgid "Moving messages"
+#: kmmainwidget.cpp:1740
+#, kde-format
 msgid "Moving messages…"
-msgstr "ئۇچۇرلار يۆتكىلىۋاتىدۇ."
+msgstr ""
 
-#: kmmainwidget.cpp:1739 kmmainwidget.cpp:1939
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#: kmmainwidget.cpp:1742 kmmainwidget.cpp:1942
+#, kde-format
 msgid "Deleting messages…"
-msgstr "ئۇچۇرلارنى سۈزۈۋاتىدۇ"
+msgstr ""
 
-#: kmmainwidget.cpp:1754 kmmainwidget.cpp:1963
+#: kmmainwidget.cpp:1757 kmmainwidget.cpp:1966
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr ""
 
-#: kmmainwidget.cpp:1756
+#: kmmainwidget.cpp:1759
 #, kde-format
 msgid "Messages moved successfully."
 msgstr ""
 
-#: kmmainwidget.cpp:1761 kmmainwidget.cpp:1976
+#: kmmainwidget.cpp:1764 kmmainwidget.cpp:1979
 #, kde-format
 msgid "Deleting messages failed."
 msgstr ""
 
-#: kmmainwidget.cpp:1763 kmmainwidget.cpp:1989
+#: kmmainwidget.cpp:1766 kmmainwidget.cpp:1992
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr ""
 
-#: kmmainwidget.cpp:1767
+#: kmmainwidget.cpp:1770
 #, kde-format
 msgid "Moving messages failed."
 msgstr ""
 
-#: kmmainwidget.cpp:1769
+#: kmmainwidget.cpp:1772
 #, kde-format
 msgid "Moving messages canceled."
 msgstr ""
 
-#: kmmainwidget.cpp:1841
-#, fuzzy, kde-format
-#| msgid "New Message"
+#: kmmainwidget.cpp:1844
+#, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
-#: kmmainwidget.cpp:1868
-#, fuzzy, kde-format
-#| msgid "Moving messages"
-msgid "Copying messages…"
-msgstr "ئۇچۇرلار يۆتكىلىۋاتىدۇ."
-
-#: kmmainwidget.cpp:1876
+#: kmmainwidget.cpp:1871
 #, kde-format
-msgid "Messages copied successfully."
+msgid "Copying messages…"
 msgstr ""
 
 #: kmmainwidget.cpp:1879
 #, kde-format
+msgid "Messages copied successfully."
+msgstr ""
+
+#: kmmainwidget.cpp:1882
+#, kde-format
 msgid "Copying messages failed."
 msgstr ""
 
-#: kmmainwidget.cpp:1881
+#: kmmainwidget.cpp:1884
 #, kde-format
 msgid "Copying messages canceled."
 msgstr ""
 
-#: kmmainwidget.cpp:1891
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Properties of Folder %1"
+#: kmmainwidget.cpp:1894
+#, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
-msgstr "قىسقۇچ ‹%1› نىڭ خاسلىقى"
+msgstr ""
 
-#: kmmainwidget.cpp:1936
-#, fuzzy, kde-format
-#| msgid "Move message to trashcan"
+#: kmmainwidget.cpp:1939
+#, kde-format
 msgid "Moving messages to trash…"
-msgstr "ئۇچۇرنى ئەخلەتخانىغا يۆتكە"
+msgstr ""
 
-#: kmmainwidget.cpp:1943
-#, fuzzy, kde-format
-#| msgid "Move message to trashcan"
+#: kmmainwidget.cpp:1946
+#, kde-format
 msgid "Deleting and moving messages to trash…"
-msgstr "ئۇچۇرنى ئەخلەتخانىغا يۆتكە"
+msgstr ""
 
-#: kmmainwidget.cpp:1960
+#: kmmainwidget.cpp:1963
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr ""
 
-#: kmmainwidget.cpp:1967
+#: kmmainwidget.cpp:1970
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr ""
 
-#: kmmainwidget.cpp:1973
+#: kmmainwidget.cpp:1976
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr ""
 
-#: kmmainwidget.cpp:1980
+#: kmmainwidget.cpp:1983
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr ""
 
-#: kmmainwidget.cpp:1986
+#: kmmainwidget.cpp:1989
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr ""
 
-#: kmmainwidget.cpp:1993
-#, fuzzy, kde-format
-#| msgid "Move message to trashcan"
+#: kmmainwidget.cpp:1996
+#, kde-format
 msgid "Deleting or moving messages to trash canceled."
-msgstr "ئۇچۇرنى ئەخلەتخانىغا يۆتكە"
+msgstr ""
 
-#: kmmainwidget.cpp:2274
+#: kmmainwidget.cpp:2277
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr ""
 
-#: kmmainwidget.cpp:2468
+#: kmmainwidget.cpp:2471
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4793,14 +4532,14 @@ msgid_plural ""
 "not possible to delete attachments."
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2471
+#: kmmainwidget.cpp:2474
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
 msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2476
+#: kmmainwidget.cpp:2479
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4810,831 +4549,767 @@ msgid_plural ""
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
 
-#: kmmainwidget.cpp:2483
+#: kmmainwidget.cpp:2486
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2488
+#: kmmainwidget.cpp:2491
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2493
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#: kmmainwidget.cpp:2496
+#, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
-msgstr "خەت نۇسخا تاللا"
+msgstr ""
 
-#: kmmainwidget.cpp:2522
+#: kmmainwidget.cpp:2525
 #, kde-format
 msgid "Work Offline"
 msgstr "تورسىز خىزمەت"
 
-#: kmmainwidget.cpp:2525
+#: kmmainwidget.cpp:2528
 #, kde-format
 msgid "Work Online"
 msgstr "توردىكى خىزمەت"
 
-#: kmmainwidget.cpp:2984
-#, fuzzy, kde-format
-#| msgid "Save &As..."
+#: kmmainwidget.cpp:2987
+#, kde-format
 msgid "Save &As…"
 msgstr "باشقا ئاتتا ساقلا(&A)…"
 
-#: kmmainwidget.cpp:2995
-#, fuzzy, kde-format
-#| msgid "Available Filters"
+#: kmmainwidget.cpp:2998
+#, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
-msgstr "ئىشلەتكىلى بولىدىغان سۈزگۈچلەر"
+msgstr ""
 
-#: kmmainwidget.cpp:3000
+#: kmmainwidget.cpp:3003
 #, kde-format
 msgid "Check &Mail"
 msgstr ""
 
-#: kmmainwidget.cpp:3008
+#: kmmainwidget.cpp:3011
 #, kde-format
 msgid "Check Mail In"
 msgstr ""
 
-#: kmmainwidget.cpp:3013
+#: kmmainwidget.cpp:3016
 #, kde-format
 msgid "Check Mail"
 msgstr "ئېلخەت تەكشۈر"
 
-#: kmmainwidget.cpp:3014
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#: kmmainwidget.cpp:3017
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "ئېلخەت تەكشۈر"
 
-#: kmmainwidget.cpp:3018
+#: kmmainwidget.cpp:3021
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr ""
 
-#: kmmainwidget.cpp:3026
+#: kmmainwidget.cpp:3029
 #, kde-format
 msgid "Online status (unknown)"
 msgstr ""
 
-#: kmmainwidget.cpp:3031
+#: kmmainwidget.cpp:3034
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr ""
 
-#: kmmainwidget.cpp:3051
+#: kmmainwidget.cpp:3054
 #, kde-format
 msgid "Certificate Manager"
 msgstr "گۇۋاھنامە باشقۇرغۇچ"
 
-#: kmmainwidget.cpp:3062
+#: kmmainwidget.cpp:3065
 #, kde-format
 msgid "&Import Messages…"
 msgstr ""
 
-#: kmmainwidget.cpp:3073
+#: kmmainwidget.cpp:3076
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr ""
 
-#: kmmainwidget.cpp:3080
-#, fuzzy, kde-format
-#| msgid "GnuPG Log Viewer"
+#: kmmainwidget.cpp:3083
+#, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
-msgstr "GnuPG خاتىرە كۆرگۈ"
+msgstr ""
 
-#: kmmainwidget.cpp:3085
-#, fuzzy, kde-format
-#| msgid "Notification"
+#: kmmainwidget.cpp:3088
+#, kde-format
 msgctxt "@action"
 msgid "Notification History…"
-msgstr "ئۇقتۇرۇش"
+msgstr ""
 
-#: kmmainwidget.cpp:3090
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr ""
 
-#: kmmainwidget.cpp:3095
+#: kmmainwidget.cpp:3098
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr ""
 
-#: kmmainwidget.cpp:3101
-#, fuzzy, kde-format
-#| msgid "Chang&e..."
+#: kmmainwidget.cpp:3104
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
-msgstr "ئۆزگەرت(&E)…"
+msgstr ""
 
-#: kmmainwidget.cpp:3107
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:3110
+#, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3113
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:3116
+#, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3118
+#: kmmainwidget.cpp:3121
 #, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr ""
+msgstr "ھەممىنى ياي"
 
-#: kmmainwidget.cpp:3123
+#: kmmainwidget.cpp:3126
 #, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr ""
+msgstr "ھەممىنى يىغ"
 
-#: kmmainwidget.cpp:3134 util.cpp:187
+#: kmmainwidget.cpp:3137 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "ئۆچۈر(&D)"
 
-#: kmmainwidget.cpp:3139
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#: kmmainwidget.cpp:3142
+#, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
-msgstr "ئەخلەتخانىغا يۆتكە"
+msgstr ""
 
-#: kmmainwidget.cpp:3143
+#: kmmainwidget.cpp:3146
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr ""
 
-#: kmmainwidget.cpp:3146 kmmainwidget.cpp:4201
+#: kmmainwidget.cpp:3149 kmmainwidget.cpp:4204
 #, kde-format
 msgid "Delete T&hread"
 msgstr ""
 
-#: kmmainwidget.cpp:3153 kmmainwidget.cpp:4203
-#, fuzzy, kde-format
-#| msgid "&Find in Message..."
+#: kmmainwidget.cpp:3156 kmmainwidget.cpp:4206
+#, kde-format
 msgid "&Find Messages…"
-msgstr "خەتتىن تاپ(&F)…"
+msgstr ""
 
-#: kmmainwidget.cpp:3159
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:3162
+#, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3169
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr ""
 
-#: kmmainwidget.cpp:3174
-#, fuzzy, kde-format
-#| msgid "Restart"
+#: kmmainwidget.cpp:3177
+#, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
-msgstr "قايتا قوزغات"
+msgstr ""
 
-#: kmmainwidget.cpp:3179
+#: kmmainwidget.cpp:3182
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr ""
 
-#: kmmainwidget.cpp:3184
+#: kmmainwidget.cpp:3187
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr ""
 
-#: kmmainwidget.cpp:3202
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#: kmmainwidget.cpp:3205
+#, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
-msgstr "تەڭشەك(&S)"
+msgstr ""
 
-#: kmmainwidget.cpp:3227
-#, fuzzy, kde-format
-#| msgid "Archive"
+#: kmmainwidget.cpp:3230
+#, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
-msgstr "ئارخىپلاش"
+msgstr ""
 
-#: kmmainwidget.cpp:3235
-#, fuzzy, kde-format
-#| msgctxt "continuation of \"obtain picture from\""
-#| msgid "External Source"
+#: kmmainwidget.cpp:3238
+#, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
-msgstr "سىرتقى مەنبە"
+msgstr ""
 
-#: kmmainwidget.cpp:3258
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Properties of Folder %1"
+#: kmmainwidget.cpp:3261
+#, kde-format
 msgid "Copy Message To…"
-msgstr "قىسقۇچ ‹%1› نىڭ خاسلىقى"
+msgstr ""
 
-#: kmmainwidget.cpp:3260
-#, fuzzy, kde-format
-#| msgid "New Message"
+#: kmmainwidget.cpp:3263
+#, kde-format
 msgid "Move Message To…"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
-#: kmmainwidget.cpp:3265
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#: kmmainwidget.cpp:3268
+#, kde-format
 msgid "&New Message…"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
-#: kmmainwidget.cpp:3267
+#: kmmainwidget.cpp:3270
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "يېڭى"
 
-#: kmmainwidget.cpp:3275
+#: kmmainwidget.cpp:3278
 #, kde-format
 msgid "Message From &Template"
 msgstr ""
 
-#: kmmainwidget.cpp:3281
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#: kmmainwidget.cpp:3284
+#, kde-format
 msgid "New Message t&o Mailing-List…"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
-#: kmmainwidget.cpp:3287
+#: kmmainwidget.cpp:3290
 #, kde-format
 msgid "&Create Filter"
 msgstr ""
 
-#: kmmainwidget.cpp:3291
-#, fuzzy, kde-format
-#| msgid "GnuPG Log Viewer"
+#: kmmainwidget.cpp:3294
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
-msgstr "GnuPG خاتىرە كۆرگۈ"
+msgstr ""
 
-#: kmmainwidget.cpp:3298
-#, fuzzy, kde-format
-#| msgid "GnuPG Log Viewer"
+#: kmmainwidget.cpp:3301
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
-msgstr "GnuPG خاتىرە كۆرگۈ"
+msgstr ""
 
-#: kmmainwidget.cpp:3304
-#, fuzzy, kde-format
-#| msgid "GnuPG Log Viewer"
+#: kmmainwidget.cpp:3307
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
-msgstr "GnuPG خاتىرە كۆرگۈ"
+msgstr ""
 
-#: kmmainwidget.cpp:3310
-#, fuzzy, kde-format
-#| msgid "GnuPG Log Viewer"
+#: kmmainwidget.cpp:3313
+#, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
-msgstr "GnuPG خاتىرە كۆرگۈ"
-
-#: kmmainwidget.cpp:3324
-#, kde-format
-msgid "Mark &Thread"
 msgstr ""
 
 #: kmmainwidget.cpp:3327
 #, kde-format
-msgid "Mark Thread as &Read"
+msgid "Mark &Thread"
 msgstr ""
 
 #: kmmainwidget.cpp:3330
 #, kde-format
-msgid "Mark all messages in the selected thread as read"
+msgid "Mark Thread as &Read"
 msgstr ""
 
 #: kmmainwidget.cpp:3333
 #, kde-format
-msgid "Mark Thread as &Unread"
+msgid "Mark all messages in the selected thread as read"
 msgstr ""
 
 #: kmmainwidget.cpp:3336
 #, kde-format
+msgid "Mark Thread as &Unread"
+msgstr ""
+
+#: kmmainwidget.cpp:3339
+#, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr ""
 
-#: kmmainwidget.cpp:3342
+#: kmmainwidget.cpp:3345
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr ""
 
-#: kmmainwidget.cpp:3345
+#: kmmainwidget.cpp:3348
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr ""
 
-#: kmmainwidget.cpp:3348
+#: kmmainwidget.cpp:3351
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr ""
 
-#: kmmainwidget.cpp:3351
+#: kmmainwidget.cpp:3354
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr ""
 
-#: kmmainwidget.cpp:3355
+#: kmmainwidget.cpp:3358
 #, kde-format
 msgid "&Watch Thread"
 msgstr ""
 
-#: kmmainwidget.cpp:3359
+#: kmmainwidget.cpp:3362
 #, kde-format
 msgid "&Ignore Thread"
 msgstr ""
 
-#: kmmainwidget.cpp:3367 kmreadermainwin.cpp:499
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#: kmmainwidget.cpp:3370 kmreadermainwin.cpp:499
+#, kde-format
 msgid "Save A&ttachments…"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
-#: kmmainwidget.cpp:3371
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#: kmmainwidget.cpp:3374
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
-msgstr "خەت نۇسخا تاللا"
+msgstr ""
 
-#: kmmainwidget.cpp:3379
+#: kmmainwidget.cpp:3382
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr ""
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr ""
 
-#: kmmainwidget.cpp:3392
+#: kmmainwidget.cpp:3395
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr ""
 
-#: kmmainwidget.cpp:3395
+#: kmmainwidget.cpp:3398
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr ""
 
-#: kmmainwidget.cpp:3399
+#: kmmainwidget.cpp:3402
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr ""
 
-#: kmmainwidget.cpp:3402
+#: kmmainwidget.cpp:3405
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr ""
 
-#: kmmainwidget.cpp:3406
+#: kmmainwidget.cpp:3409
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr ""
 
-#: kmmainwidget.cpp:3409
+#: kmmainwidget.cpp:3412
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr ""
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3416
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr ""
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr ""
 
-#: kmmainwidget.cpp:3420
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:3423
+#, kde-format
 msgctxt "@action"
 msgid "&Display Message"
-msgstr "ئۇچۇر ئۆچۈر"
-
-#: kmmainwidget.cpp:3427
-#, fuzzy, kde-format
-#| msgid "&New Message..."
-msgctxt "@action"
-msgid "&Next Message"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: kmmainwidget.cpp:3430
+#, kde-format
+msgctxt "@action"
+msgid "&Next Message"
+msgstr ""
+
+#: kmmainwidget.cpp:3433
 #, kde-format
 msgid "Go to the next message"
 msgstr ""
 
-#: kmmainwidget.cpp:3434
-#, fuzzy, kde-format
-#| msgid "Unread Message"
+#: kmmainwidget.cpp:3437
+#, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
-msgstr "ئوقۇلمىغان ئۇچۇر"
+msgstr ""
 
-#: kmmainwidget.cpp:3442
+#: kmmainwidget.cpp:3445
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "كېيىنكى"
 
-#: kmmainwidget.cpp:3443
+#: kmmainwidget.cpp:3446
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "كېيىنكى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
 
-#: kmmainwidget.cpp:3447
-#, fuzzy, kde-format
-#| msgid "Unread Message"
+#: kmmainwidget.cpp:3450
+#, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
-msgstr "ئوقۇلمىغان ئۇچۇر"
+msgstr ""
 
-#: kmmainwidget.cpp:3449
+#: kmmainwidget.cpp:3452
 #, kde-format
 msgid "Go to the previous message"
 msgstr ""
 
-#: kmmainwidget.cpp:3454
-#, fuzzy, kde-format
-#| msgid "Unread Message"
+#: kmmainwidget.cpp:3457
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
-msgstr "ئوقۇلمىغان ئۇچۇر"
+msgstr ""
 
-#: kmmainwidget.cpp:3462
+#: kmmainwidget.cpp:3465
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "ئالدىنقى"
 
-#: kmmainwidget.cpp:3463
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "ئالدىنقى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
 
-#: kmmainwidget.cpp:3467
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#: kmmainwidget.cpp:3470
+#, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3473
+#: kmmainwidget.cpp:3476
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr ""
 
-#: kmmainwidget.cpp:3476
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#: kmmainwidget.cpp:3479
+#, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3482
+#: kmmainwidget.cpp:3485
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr ""
 
-#: kmmainwidget.cpp:3486
+#: kmmainwidget.cpp:3489
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr ""
 
-#: kmmainwidget.cpp:3489
+#: kmmainwidget.cpp:3492
 #, kde-format
 msgid "Go to the next unread text"
 msgstr ""
 
-#: kmmainwidget.cpp:3491
+#: kmmainwidget.cpp:3494
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
 "message."
 msgstr ""
 
-#: kmmainwidget.cpp:3499
-#, fuzzy, kde-format
-#| msgid "Chang&e..."
+#: kmmainwidget.cpp:3502
+#, kde-format
 msgid "Configure &Filters…"
-msgstr "ئۆزگەرت(&E)…"
+msgstr ""
 
-#: kmmainwidget.cpp:3505
+#: kmmainwidget.cpp:3508
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr ""
 
-#: kmmainwidget.cpp:3510
-#, fuzzy, kde-format
-#| msgid "&Add..."
+#: kmmainwidget.cpp:3513
+#, kde-format
 msgid "&Add Account…"
-msgstr "قوش(&A)…"
+msgstr ""
 
-#: kmmainwidget.cpp:3515
+#: kmmainwidget.cpp:3518
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
+msgstr "يېڭىلىق"
+
+#: kmmainwidget.cpp:3525
+#, kde-format
+msgid "Configure &Notifications…"
+msgstr "ئۇقتۇرۇش سەپلە(&N)…"
+
+#: kmmainwidget.cpp:3532
+#, kde-format
+msgid "&Configure KMail…"
 msgstr ""
 
-#: kmmainwidget.cpp:3522
-#, fuzzy, kde-format
-#| msgid "Configure &Notifications..."
-msgid "Configure &Notifications…"
-msgstr "ئۇقتۇرۇش سەپلىمە(&N)…"
-
-#: kmmainwidget.cpp:3529
-#, fuzzy, kde-format
-#| msgid "Chang&e..."
-msgid "&Configure KMail…"
-msgstr "ئۆزگەرت(&E)…"
-
-#: kmmainwidget.cpp:3536
-#, fuzzy, kde-format
-#| msgid "Expire"
+#: kmmainwidget.cpp:3539
+#, kde-format
 msgctxt "@action"
 msgid "Expire…"
-msgstr "ئىناۋەتلىك ۋاقتى"
+msgstr ""
 
-#: kmmainwidget.cpp:3542
-#, fuzzy, kde-format
-#| msgid "Archive"
+#: kmmainwidget.cpp:3545
+#, kde-format
 msgid "Add Favorite Folder…"
-msgstr "ئارخىپلاش"
+msgstr ""
 
-#: kmmainwidget.cpp:3548 kmmainwidget.cpp:3556
-#, fuzzy, kde-format
-#| msgid "Available Filters"
+#: kmmainwidget.cpp:3551 kmmainwidget.cpp:3559
+#, kde-format
 msgid "Apply All Filters"
-msgstr "ئىشلەتكىلى بولىدىغان سۈزگۈچلەر"
+msgstr ""
 
-#: kmmainwidget.cpp:3569
+#: kmmainwidget.cpp:3572
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr ""
 
-#: kmmainwidget.cpp:3574
+#: kmmainwidget.cpp:3577
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr ""
 
-#: kmmainwidget.cpp:3580
+#: kmmainwidget.cpp:3583
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr ""
 
-#: kmmainwidget.cpp:3588 kmmainwidget.cpp:4237
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#: kmmainwidget.cpp:3591 kmmainwidget.cpp:4240
+#, kde-format
 msgid "Account &Settings"
-msgstr "تەڭشەك(&S)"
+msgstr ""
 
-#: kmmainwidget.cpp:3592
-#, fuzzy, kde-format
-#| msgid "Restart"
+#: kmmainwidget.cpp:3595
+#, kde-format
 msgid "Restart Account"
-msgstr "قايتا قوزغات"
+msgstr ""
 
-#: kmmainwidget.cpp:3608
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Properties of Folder %1"
+#: kmmainwidget.cpp:3611
+#, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
-msgstr "قىسقۇچ ‹%1› نىڭ خاسلىقى"
+msgstr ""
 
-#: kmmainwidget.cpp:3614
+#: kmmainwidget.cpp:3617
 #, kde-format
 msgid "Jump to Folder…"
 msgstr ""
 
-#: kmmainwidget.cpp:3620
+#: kmmainwidget.cpp:3623
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr ""
 
-#: kmmainwidget.cpp:3626
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#: kmmainwidget.cpp:3629
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
-msgstr "كېيىنكى قىسقۇچقا فوكۇسلىنىش"
+msgstr ""
 
-#: kmmainwidget.cpp:3632
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
+#: kmmainwidget.cpp:3635
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
-msgstr "ئالدىنقى قىسقۇچقا فوكۇسلىنىش"
+msgstr ""
 
-#: kmmainwidget.cpp:3638
-#, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
+#: kmmainwidget.cpp:3641
+#, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
-msgstr "قىسقۇچنى فوكۇستا تاللاش"
+msgstr ""
 
-#: kmmainwidget.cpp:3645
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#: kmmainwidget.cpp:3648
+#, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
-msgstr "كېيىنكى قىسقۇچقا فوكۇسلىنىش"
+msgstr ""
 
-#: kmmainwidget.cpp:3651
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#: kmmainwidget.cpp:3654
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
-msgstr "كېيىنكى قىسقۇچقا فوكۇسلىنىش"
+msgstr ""
 
-#: kmmainwidget.cpp:3657
-#, fuzzy, kde-format
-#| msgid "Focus on Next Folder"
+#: kmmainwidget.cpp:3660
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
-msgstr "كېيىنكى قىسقۇچقا فوكۇسلىنىش"
+msgstr ""
 
-#: kmmainwidget.cpp:3663
-#, fuzzy, kde-format
-#| msgid "Focus on Previous Folder"
+#: kmmainwidget.cpp:3666
+#, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
-msgstr "ئالدىنقى قىسقۇچقا فوكۇسلىنىش"
+msgstr ""
 
-#: kmmainwidget.cpp:3669
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:3672
+#, kde-format
 msgctxt "@action"
 msgid "Select First Message"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3675
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#: kmmainwidget.cpp:3678
+#, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3681
-#, fuzzy, kde-format
-#| msgid "Select Folder with Focus"
+#: kmmainwidget.cpp:3684
+#, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
-msgstr "قىسقۇچنى فوكۇستا تاللاش"
+msgstr ""
 
-#: kmmainwidget.cpp:3688
+#: kmmainwidget.cpp:3691
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
-msgstr ""
+msgstr "تېز ئىزدەش بالداققا فوكۇسلاشنى تەڭشەيدۇ"
 
-#: kmmainwidget.cpp:3696
+#: kmmainwidget.cpp:3699
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr ""
 
-#: kmmainwidget.cpp:3702
+#: kmmainwidget.cpp:3705
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr ""
 
-#: kmmainwidget.cpp:3709
-#, fuzzy, kde-format
-#| msgid "New Message"
+#: kmmainwidget.cpp:3712
+#, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
-#: kmmainwidget.cpp:3719
+#: kmmainwidget.cpp:3722
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3724
+#: kmmainwidget.cpp:3727
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr ""
 
-#: kmmainwidget.cpp:3730
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#: kmmainwidget.cpp:3733
+#, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3737
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#: kmmainwidget.cpp:3740
+#, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
-#: kmmainwidget.cpp:3766
-#, fuzzy, kde-format
-#| msgid "Archive"
+#: kmmainwidget.cpp:3769
+#, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
-msgstr "ئارخىپلاش"
+msgstr ""
 
-#: kmmainwidget.cpp:4189
+#: kmmainwidget.cpp:4192
 #, kde-format
 msgid "&Delete Search"
 msgstr ""
 
-#: kmmainwidget.cpp:4201
+#: kmmainwidget.cpp:4204
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr ""
 
-#: kmmainwidget.cpp:4203
-#, fuzzy, kde-format
-#| msgid "Searching..."
+#: kmmainwidget.cpp:4206
+#, kde-format
 msgid "Edit Search…"
-msgstr "ئىزدەۋاتىدۇ…"
+msgstr ""
 
-#: kmmainwidget.cpp:4235
-#, fuzzy, kde-format
-#| msgid "Configure &Notifications..."
+#: kmmainwidget.cpp:4238
+#, kde-format
 msgid "Configure Unified Mailbox"
-msgstr "ئۇقتۇرۇش سەپلىمە(&N)…"
+msgstr ""
 
-#: kmmainwidget.cpp:4246
+#: kmmainwidget.cpp:4249
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "ئەخلەتخانىنى تازىلا(&M)"
 
-#: kmmainwidget.cpp:4246
+#: kmmainwidget.cpp:4249
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr ""
 
-#: kmmainwidget.cpp:4304
+#: kmmainwidget.cpp:4307
 #, kde-format
 msgid "&Undo"
-msgstr ""
+msgstr "يېنىۋال(&U)"
 
-#: kmmainwidget.cpp:4306
+#: kmmainwidget.cpp:4309
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4363
+#: kmmainwidget.cpp:4366
 #, kde-format
 msgid "Filter %1"
 msgstr "سۈزگۈچ %1"
 
-#: kmmainwidget.cpp:4932
-#, fuzzy, kde-format
-#| msgid "Searching..."
+#: kmmainwidget.cpp:4935
+#, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
-msgstr "ئىزدەۋاتىدۇ…"
+msgstr "ئىزدە…<%1>"
 
-#: kmmainwidget.cpp:4940
+#: kmmainwidget.cpp:4943
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5642,14 +5317,13 @@ msgid ""
 "present and anticipated security exploits."
 msgstr ""
 
-#: kmmainwidget.cpp:4944
-#, fuzzy, kde-format
-#| msgid "HTML"
+#: kmmainwidget.cpp:4947
+#, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
-msgstr "HTML"
+msgstr ""
 
-#: kmmainwidget.cpp:5090
+#: kmmainwidget.cpp:5093
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5659,55 +5333,50 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5093
+#: kmmainwidget.cpp:5096
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5094
-#, fuzzy, kde-format
-#| msgid "Configure &Notifications..."
+#: kmmainwidget.cpp:5097
+#, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
-msgstr "ئۇقتۇرۇش سەپلىمە(&N)…"
+msgstr ""
 
-#: kmmainwidget.cpp:5095
+#: kmmainwidget.cpp:5098
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
+msgstr "ۋاز كەچ"
+
+#: kmmainwidget.cpp:5133
+#, kde-format
+msgid "Do you want to restart Akonadi?"
 msgstr ""
 
-#: kmmainwidget.cpp:5130
-#, fuzzy, kde-format
-#| msgid "Do you want to save the message for later or discard it?"
-msgid "Do you want to restart Akonadi?"
-msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
-
-#: kmmainwidget.cpp:5131
-#, fuzzy, kde-format
-#| msgid "Restart"
+#: kmmainwidget.cpp:5134
+#, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
-msgstr "قايتا قوزغات"
+msgstr ""
 
-#: kmmainwidget.cpp:5132
-#, fuzzy, kde-format
-#| msgid "Restart"
+#: kmmainwidget.cpp:5135
+#, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "قايتا قوزغات"
 
-#: kmmainwidget.cpp:5139
+#: kmmainwidget.cpp:5142
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
 
 #: kmmainwin.cpp:55
-#, fuzzy, kde-format
-#| msgid "Starting..."
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
-msgstr "باشلاۋاتىدۇ…"
+msgstr ""
 
 #: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
@@ -5728,7 +5397,7 @@ msgstr "ئۇچۇرنى ئەخلەتخانىغا يۆتكە"
 #: kmreadermainwin.cpp:550
 #, kde-format
 msgid "Hide menu bar"
-msgstr "تىزىملىك بالدىقىنى يوشۇر"
+msgstr "تىزىملىك بالداقنى يوشۇر"
 
 #: kmreadermainwin.cpp:633
 #, kde-format
@@ -5736,10 +5405,9 @@ msgid "Cannot copy item. %1"
 msgstr ""
 
 #: kmreaderwin.cpp:124
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgid "New Message To…"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: kmreaderwin.cpp:130
 #, kde-format
@@ -5747,10 +5415,9 @@ msgid "Reply To…"
 msgstr ""
 
 #: kmreaderwin.cpp:136
-#, fuzzy, kde-format
-#| msgid "&Forward"
+#, kde-format
 msgid "Forward To…"
-msgstr "ئالدىغا(&F)"
+msgstr ""
 
 #: kmreaderwin.cpp:142
 #, kde-format
@@ -5758,10 +5425,9 @@ msgid "Add to Address Book"
 msgstr "ئادرېس دەپتىرىگە قوش"
 
 #: kmreaderwin.cpp:147
-#, fuzzy, kde-format
-#| msgid "Failed to store contact"
+#, kde-format
 msgid "Add to Existing Contact"
-msgstr "ئالاقەداشنى ساقلاش مەغلۇپ بولدى"
+msgstr ""
 
 #: kmreaderwin.cpp:153
 #, kde-format
@@ -5779,31 +5445,27 @@ msgid "Edit contact…"
 msgstr ""
 
 #: kmreaderwin.cpp:169
-#, fuzzy, kde-format
-#| msgid "Save &As..."
+#, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
-msgstr "باشقا ئاتتا ساقلا(&A)…"
+msgstr ""
 
 #: kmreaderwin.cpp:175
-#, fuzzy, kde-format
-#| msgid "&Find in Message..."
+#, kde-format
 msgid "&Find in Message…"
-msgstr "خەتتىن تاپ(&F)…"
+msgstr ""
 
 #: kmreaderwin.cpp:181
-#, fuzzy, kde-format
-#| msgid "Create..."
+#, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
-msgstr "قۇر…"
+msgstr ""
 
 #: kmreaderwin.cpp:187
-#, fuzzy, kde-format
-#| msgid "Create..."
+#, kde-format
 msgctxt "@action"
 msgid "Open Image…"
-msgstr "قۇر…"
+msgstr ""
 
 #: kmreaderwin.cpp:193
 #, kde-format
@@ -5823,11 +5485,10 @@ msgid "Load external reference when mail comes for this contact"
 msgstr ""
 
 #: kmreaderwin.cpp:206
-#, fuzzy, kde-format
-#| msgid "Create..."
+#, kde-format
 msgctxt "@action"
 msgid "Share image…"
-msgstr "قۇر…"
+msgstr ""
 
 #: kmreaderwin.cpp:269
 #, kde-format
@@ -5840,16 +5501,14 @@ msgid "Retrieving Folder Contents"
 msgstr ""
 
 #: kmreaderwin.cpp:278
-#, fuzzy, kde-format
-#| msgid "Please wait"
+#, kde-format
 msgid "Please wait . . ."
-msgstr "سەل ساقلاڭ"
+msgstr ""
 
 #: kmreaderwin.cpp:284 kmreaderwin.cpp:293
-#, fuzzy, kde-format
-#| msgid "offline"
+#, kde-format
 msgid "Offline"
-msgstr "توردا يوق"
+msgstr "تورسىز"
 
 #: kmreaderwin.cpp:286
 #, kde-format
@@ -5887,11 +5546,10 @@ msgid_plural "%1 unread messages"
 msgstr[0] "%1 ئۇقۇلمىغان ئۇچۇر"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
-#, fuzzy, kde-format
-#| msgid "Archive"
+#, kde-format
 msgctxt "@option:check"
 msgid "Show full path for folders"
-msgstr "ئارخىپلاش"
+msgstr ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:51
 #, kde-format
@@ -5909,11 +5567,10 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:44
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:50
 #, kde-format
@@ -5924,11 +5581,10 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/kmail/kmail_plugin.cpp:55
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
-msgstr "ئېلخەت تەكشۈر"
+msgstr ""
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
 #: kontactplugin/kmail/kmail_plugin.cpp:58
@@ -5938,10 +5594,9 @@ msgid "Choose this option to synchronize your groupware email."
 msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:50
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgid "New Messages"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr "يېڭى ئۇچۇرلار"
 
 #: kontactplugin/kmail/summarywidget.cpp:144
 #, kde-format
@@ -5952,7 +5607,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1: number of unread messages %2: total number of messages"
 msgid "%1 / %2"
-msgstr ""
+msgstr "%1 / %2"
 
 #: kontactplugin/kmail/summarywidget.cpp:199
 #, kde-format
@@ -5978,10 +5633,9 @@ msgid "Select the plugin summaries to show on the summary page."
 msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:47
-#, fuzzy, kde-format
-#| msgid "Chang&e..."
+#, kde-format
 msgid "&Configure Summary View…"
-msgstr "ئۆزگەرت(&E)…"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:49
 #: kontactplugin/summary/summaryview_plugin.cpp:102
@@ -6013,16 +5667,15 @@ msgid "What's next?"
 msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:30
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgid "Sync All"
-msgstr "ئېلخەت تەكشۈر"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:44
 #, kde-format
 msgctxt "@action:inmenu sync everything"
 msgid "All"
-msgstr ""
+msgstr "ھەممىسى"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:104
 #, kde-format
@@ -6044,13 +5697,13 @@ msgstr ""
 #, kde-format
 msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
-msgstr ""
+msgstr "Cornelius Schumacher"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:110
 #, kde-format
 msgctxt "@info:credit"
 msgid "Tobias Koenig"
-msgstr ""
+msgstr "Tobias Koenig"
 
 #: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
 #, kde-format
@@ -6066,7 +5719,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
-msgstr "قىسقۇچ ‹%1› نىڭ خاسلىقى"
+msgstr "قىسقۇچ «%1» نىڭ خاسلىقى"
 
 #: messageactions.cpp:63
 #, kde-format
@@ -6101,20 +5754,16 @@ msgid "Reply Without &Quote…"
 msgstr ""
 
 #: messageactions.cpp:69
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox Inline mail forwarding"
-#| msgid "Inline"
+#, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
-msgstr "سىڭدۈر"
+msgstr ""
 
 #: messageactions.cpp:70
-#, fuzzy, kde-format
-#| msgctxt "@action:inmenu Message->Forward->"
-#| msgid "As &Attachment..."
+#, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
-msgstr "قوشۇلما سۈپىتىدە(&A)…"
+msgstr ""
 
 #: messageactions.cpp:71
 #, kde-format
@@ -6123,11 +5772,10 @@ msgid "&Redirect…"
 msgstr ""
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "&New Message..."
+#, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr "يېڭى ئۇچۇر(&N)…"
+msgstr ""
 
 #: messageactions.cpp:73
 #, kde-format
@@ -6152,18 +5800,16 @@ msgid "&Edit As New"
 msgstr ""
 
 #: messageactions.cpp:77
-#, fuzzy, kde-format
-#| msgid "Filter %1"
+#, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
-msgstr "سۈزگۈچ %1"
+msgstr ""
 
 #: messageactions.cpp:78
-#, fuzzy, kde-format
-#| msgid "Delete Message"
+#, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr "ئۇچۇر ئۆچۈر"
+msgstr ""
 
 #: messageactions.cpp:80
 #, kde-format
@@ -6182,11 +5828,10 @@ msgid "Export to PDF…"
 msgstr ""
 
 #: messageactions.cpp:84
-#, fuzzy, kde-format
-#| msgid "New Message"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "يېڭى ئۇچۇر"
+msgstr ""
 
 #: messageactions.cpp:400
 #, kde-format
@@ -6235,20 +5880,19 @@ msgid "Unsubscribe from List"
 msgstr ""
 
 #: messageactions.cpp:466
-#, fuzzy, kde-format
-#| msgid "Filter %1"
+#, kde-format
 msgid "Filter on Mailing-List %1…"
-msgstr "سۈزگۈچ %1"
+msgstr ""
 
 #: messageactions.cpp:643
 #, kde-format
 msgid "email"
-msgstr "email"
+msgstr ""
 
 #: messageactions.cpp:646
 #, kde-format
 msgid "web"
-msgstr "web"
+msgstr ""
 
 #: messageactions.cpp:651
 #, kde-format
@@ -6275,30 +5919,27 @@ msgid "Reindex"
 msgstr ""
 
 #: searchdialog/incompleteindexdialog.cpp:136
-#, fuzzy, kde-format
-#| msgid "Search"
+#, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
-msgstr "ئىزدە"
+msgstr ""
 
 #: searchdialog/incompleteindexdialog.cpp:217
-#, fuzzy, kde-format
-#| msgid "Indexing"
+#, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "ئىندېكسلاۋاتىدۇ"
 
 #: searchdialog/incompleteindexdialog.cpp:220
-#, fuzzy, kde-format
-#| msgid "Configure Completion Order..."
+#, kde-format
 msgid "Indexing Collections…"
-msgstr "تولۇقلاش تەرتىپىنى سەپلەش"
+msgstr ""
 
 #: searchdialog/kmsearchmessagemodel.cpp:81
 #: searchdialog/kmsearchmessagemodel.cpp:94
 #, kde-format
 msgid "From"
-msgstr "يوللىغۇچى"
+msgstr "كىمدىن"
 
 #: searchdialog/kmsearchmessagemodel.cpp:84
 #: searchdialog/kmsearchmessagemodel.cpp:97
@@ -6331,11 +5972,10 @@ msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:79
-#, fuzzy, kde-format
-#| msgid "&Find in Message..."
+#, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
-msgstr "خەتتىن تاپ(&F)…"
+msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:95
 #, kde-format
@@ -6344,31 +5984,24 @@ msgid "&Search"
 msgstr "ئىزدە(&S)"
 
 #: searchdialog/searchwindowdialog.cpp:177
-#, fuzzy, kde-format
-#| msgctxt "@item:inlistbox Inline mail forwarding"
-#| msgid "Inline"
+#, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
-msgstr "سىڭدۈر"
+msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:181
-#, fuzzy, kde-format
-#| msgctxt "Message->Forward->"
-#| msgid "As &Attachment..."
+#, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
-msgstr "قوشۇلما سۈپىتىدە(&A)…"
+msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:195
-#, fuzzy, kde-format
-#| msgctxt "Config->Composer->Attachments"
-#| msgid "Attachments"
+#, kde-format
 msgid "Save Attachments…"
-msgstr "قوشۇلمىلار"
+msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:201
-#, fuzzy, kde-format
-#| msgid "Clear Selection"
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "تاللانمىنى تازىلا"
@@ -6423,8 +6056,7 @@ msgid ""
 msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:522
-#, fuzzy, kde-format
-#| msgid "Searching..."
+#, kde-format
 msgid "Searching…"
 msgstr "ئىزدەۋاتىدۇ…"
 
@@ -6434,15 +6066,14 @@ msgid "Cannot get search result. %1"
 msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:538
-#, fuzzy, kde-format
-#| msgid "Searching..."
+#, kde-format
 msgid "Search failed."
-msgstr "ئىزدەۋاتىدۇ…"
+msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:579
 #, kde-format
 msgid "Search complete."
-msgstr ""
+msgstr "ئىزدەش تاماملاندى."
 
 #: searchdialog/searchwindowdialog.cpp:617
 #, kde-format
@@ -6461,7 +6092,7 @@ msgstr ""
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
-msgstr[0] ""
+msgstr[0] "%1 ئۇچۇر كۆچۈر"
 
 #: searchdialog/searchwindowdialog.cpp:782
 #, kde-format
@@ -6478,7 +6109,7 @@ msgstr ""
 #, kde-format
 msgctxt "Document/application separator in titlebar"
 msgid " – "
-msgstr " – "
+msgstr ""
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
 #: settings/kmail.kcfg:54
@@ -6520,7 +6151,7 @@ msgstr ""
 #: settings/kmail.kcfg:91
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "سىستېما قونداق سىنبەلگىسىنى ئىناۋەتلىك قىل"
+msgstr "سىستېما قونداق سىنبەلگىسىنى قوزغىتىدۇ"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: settings/kmail.kcfg:95
@@ -6562,17 +6193,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
 #: settings/kmail.kcfg:121
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "Delete messages without confirmation"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr ""
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
 #: settings/kmail.kcfg:125
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Allow to start specific folder"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
 #: settings/kmail.kcfg:129
@@ -6632,10 +6261,9 @@ msgstr ""
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
 #: settings/kmail.kcfg:219
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgid "Check spelling before send"
-msgstr "ئېلخەت تەكشۈر"
+msgstr ""
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:223
@@ -6707,17 +6335,15 @@ msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:334
-#, fuzzy, kde-format
-#| msgid "Message List"
+#, kde-format
 msgid "Message preview pane:"
-msgstr "ئۇچۇر تىزىمى"
+msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:337
-#, fuzzy, kde-format
-#| msgid "Message List"
+#, kde-format
 msgid "Do not show a message preview pane"
-msgstr "ئۇچۇر تىزىمى"
+msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:340
@@ -6733,24 +6359,21 @@ msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg:350
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Folder list:"
-msgstr "قىسقۇچ تىزىملىكى"
+msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg:353
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Long folder list"
-msgstr "قىسقۇچ تىزىملىكى"
+msgstr ""
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
 #: settings/kmail.kcfg:356
-#, fuzzy, kde-format
-#| msgid "Folder List"
+#, kde-format
 msgid "Short folder list"
-msgstr "قىسقۇچ تىزىملىكى"
+msgstr ""
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
 #: settings/kmail.kcfg:365
@@ -6772,10 +6395,9 @@ msgstr "ھەممىگە جاۋاب قايتۇرۇش ئۇچۇرىنىڭ قېلىپ
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
 #: settings/kmail.kcfg:380
-#, fuzzy, kde-format
-#| msgid "Message template for reply"
+#, kde-format
 msgid "Message template for forward"
-msgstr "جاۋاب ئۇچۇرنىڭ قېلىپى"
+msgstr ""
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
 #: settings/kmail.kcfg:385
@@ -6790,22 +6412,20 @@ msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:203
-#, fuzzy, kde-format
-#| msgid "Message:"
+#, kde-format
 msgid "Message Tag: %1"
-msgstr "ئۇچۇرلار"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:154
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgid "Add new tag…"
-msgstr "يېڭى خەتكۈش قوش"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:167
 #, kde-format
 msgctxt "@action"
 msgid "More…"
-msgstr ""
+msgstr "تېخىمۇ كۆپ…"
 
 #: tag/tagactionmanager.cpp:196
 #, kde-format
@@ -6818,24 +6438,21 @@ msgid "Toggle Message Tag: %1"
 msgstr ""
 
 #: tag/tagselectdialog.cpp:42
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
-msgstr "خەت نۇسخا تاللا"
+msgstr ""
 
 #: tag/tagselectdialog.cpp:53
-#, fuzzy, kde-format
-#| msgid "Add new tag"
+#, kde-format
 msgid "Add New Tag…"
-msgstr "يېڭى خەتكۈش قوش"
+msgstr ""
 
 #: tag/tagselectdialog.cpp:67
-#, fuzzy, kde-format
-#| msgid "Searching..."
+#, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
-msgstr "ئىزدەۋاتىدۇ…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, customizeAccountOrder)
 #: ui/accountspagereceivingtab.ui:34
@@ -6869,17 +6486,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, openImageButton)
 #: ui/encodedimagepicker.ui:78
-#, fuzzy, kde-format
-#| msgid "Create..."
+#, kde-format
 msgid "Open Image…"
-msgstr "قۇر…"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, selectContactsButton)
 #: ui/encodedimagepicker.ui:85
-#, fuzzy, kde-format
-#| msgid "Add to Address Book"
+#, kde-format
 msgid "Set from Address Book"
-msgstr "ئادرېس دەپتىرىگە قوش"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, identitiesOnCurrentActivity)
 #: ui/identityngpage.ui:17
@@ -6897,7 +6512,7 @@ msgstr "يېڭى كىملىك قوشىدۇ"
 #: ui/identityngpage.ui:34
 #, kde-format
 msgid "&Add…"
-msgstr ""
+msgstr "قوش(&A)…"
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mModifyButton)
 #: ui/identityngpage.ui:44
@@ -6907,10 +6522,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mModifyButton)
 #: ui/identityngpage.ui:47
-#, fuzzy, kde-format
-#| msgid "&Modify..."
+#, kde-format
 msgid "&Modify…"
-msgstr "ئۆزگەرت(&M)..."
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QPushButton, mRenameButton)
 #: ui/identityngpage.ui:57
@@ -6954,17 +6568,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, selectAllBtn)
 #: ui/incompleteindexdialog.ui:52
-#, fuzzy, kde-format
-#| msgid "Select Font"
+#, kde-format
 msgid "&Select All"
-msgstr "خەت نۇسخا تاللا"
+msgstr "ھەممىنى تاللا(&S)"
 
 #. i18n: ectx: property (text), widget (QPushButton, unselectAllBtn)
 #: ui/incompleteindexdialog.ui:59
-#, fuzzy, kde-format
-#| msgid "Check Mail"
+#, kde-format
 msgid "Unselect All"
-msgstr "ئېلخەت تەكشۈر"
+msgstr "ھەممىنى تاللىما"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShowPopupAfterDnD)
 #: ui/miscpagemaintab.ui:19
@@ -6980,13 +6592,12 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, mLoopLabel)
 #: ui/miscpagemaintab.ui:39
-#, fuzzy, kde-format
-#| msgid "Go to the next unread message"
+#, kde-format
 msgctxt ""
 "to be continued with \"do not loop\", \"loop in current folder\", and \"loop "
 "in all folders\""
 msgid "When &trying to find unread messages:"
-msgstr "كېيىنكى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, mEnterFolderLabel)
 #: ui/miscpagemaintab.ui:58
@@ -7113,10 +6724,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DeleteMessageWithoutConfirmation)
 #: ui/miscpagemaintab.ui:180
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "Allow deleting messages without confirmation"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
@@ -7144,17 +6754,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkMultiFolders)
 #: ui/searchwindow.ui:53
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Select specific folders:"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
-#, fuzzy, kde-format
-#| msgid "Delete Folder"
+#, kde-format
 msgid "Select Folders…"
-msgstr "قىسقۇچ ئۆچۈر"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
@@ -7176,17 +6784,15 @@ msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, optionsGroup)
 #: ui/securitypageencryptiontab.ui:17
-#, fuzzy, kde-format
-#| msgid "Set as Default"
+#, kde-format
 msgid "Security defaults"
-msgstr "كۆڭۈلدىكى قىلىپ بەلگىلە"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AlwaysEncryptDrafts)
 #: ui/securitypageencryptiontab.ui:23
-#, fuzzy, kde-format
-#| msgid "Unread messages:"
+#, kde-format
 msgid "Encrypt draft messages"
-msgstr "ئوقۇلمىغان ئۇچۇر:"
+msgstr ""
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:33
@@ -7211,17 +6817,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:44
-#, fuzzy, kde-format
-#| msgid "Total messages:"
+#, kde-format
 msgid "Encry&pt sent messages"
-msgstr "جەمئىي ئۇچۇر سانى:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoSign)
 #: ui/securitypageencryptiontab.ui:54
-#, fuzzy, kde-format
-#| msgid "Full message"
+#, kde-format
 msgid "Sign all messages"
-msgstr "تولۇق ئۇچۇر"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutoEncrypt)
 #: ui/securitypageencryptiontab.ui:64
@@ -7255,17 +6859,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, mWarnUnsigned)
 #: ui/securitypageencryptiontab.ui:106
-#, fuzzy, kde-format
-#| msgid "Go to the next unread message"
+#, kde-format
 msgid "Warn when trying to send unsigned messages"
-msgstr "كېيىنكى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, warnUnencryptedCB)
 #: ui/securitypageencryptiontab.ui:113
-#, fuzzy, kde-format
-#| msgid "Go to the next unread message"
+#, kde-format
 msgid "Warn when trying to send unencrypted messages"
-msgstr "كېيىنكى ئوقۇلمىغان ئۇچۇرغا يۆتكىلىدۇ"
+msgstr ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, warnGroupBox)
 #: ui/securitypageencryptiontab.ui:120
@@ -7317,10 +6919,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel7)
 #: ui/securitypageencryptiontab.ui:214
-#, fuzzy, kde-format
-#| msgid "Do not check certificate policies"
+#, kde-format
 msgid "For own certificates:"
-msgstr "ئىسپاتنامە تۈزۈمىنى تەكشۈرمە"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrOwnKeyExpiresSB)
 #: ui/securitypageencryptiontab.ui:238
@@ -7337,10 +6938,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1_2_2)
 #: ui/securitypageencryptiontab.ui:254
-#, fuzzy, kde-format
-#| msgid "Do not check certificate policies"
+#, kde-format
 msgid "For &root certificates:"
-msgstr "ئىسپاتنامە تۈزۈمىنى تەكشۈرمە"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, mWarnEncrRootCertExpiresSB)
 #: ui/securitypageencryptiontab.ui:300
@@ -7363,10 +6963,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, gnupgButton)
 #: ui/securitypageencryptiontab.ui:347
-#, fuzzy, kde-format
-#| msgid "&Settings"
+#, kde-format
 msgid "GnuPG Settings…"
-msgstr "تەڭشەك(&S)"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, enableAllWarningsPB)
 #: ui/securitypageencryptiontab.ui:386
@@ -7437,10 +7036,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QPushButton, mConfigureExternalReference)
 #: ui/securitypagegeneraltab.ui:67
-#, fuzzy, kde-format
-#| msgid "&Options"
+#, kde-format
 msgid "Exceptions"
-msgstr "تاللانما(&O)"
+msgstr "مۇستەسنا"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: ui/securitypagegeneraltab.ui:98
@@ -7764,17 +7362,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
-#, fuzzy, kde-format
-#| msgid "Use system HTTP proxy:"
+#, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr "سىستېما HTTP ۋاكالەتچى ئىشلەت"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
-#, fuzzy, kde-format
-#| msgid "Use this proxy for HTTP requests: "
+#, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr "HTTP ئىلتىماسى ئۈچۈن بۇ ۋاكالەتچىنى ئىشلەت: "
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203
@@ -7865,10 +7461,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:42
-#, fuzzy, kde-format
-#| msgid "&Send Now"
+#, kde-format
 msgid "Send both"
-msgstr "ھازىر ئەۋەت(&S)"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: ui/xfaceconfigurator.ui:65
@@ -7888,13 +7483,12 @@ msgstr ""
 #: undosend/undosendcombobox.cpp:22
 #, kde-format
 msgid "%1 seconds"
-msgstr ""
+msgstr "%1 سېكۇنت"
 
 #: undosend/undosendcombobox.cpp:25
-#, fuzzy, kde-format
-#| msgid " min"
+#, kde-format
 msgid "5 minutes"
-msgstr " مىنۇت"
+msgstr "5 مىنۇت"
 
 #: undosend/undosendcreatejob.cpp:47
 #, kde-format
@@ -7912,17 +7506,15 @@ msgid "<b>Subject:</b> %1"
 msgstr ""
 
 #: undostack.cpp:42
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
+#, kde-format
 msgid "Move To Trash"
-msgstr "ئەخلەتخانىغا يۆتكە"
+msgstr ""
 
 #: undostack.cpp:42
-#, fuzzy, kde-format
-#| msgid "New Message"
+#, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
-msgstr[0] "يېڭى ئۇچۇر"
+msgstr[0] ""
 
 #: undostack.cpp:96
 #, kde-format
@@ -7935,10 +7527,9 @@ msgid "Cannot move message. %1"
 msgstr ""
 
 #: userfeedback/accountinfosource.cpp:24
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "Account information"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr "ھېسابات ئۇچۇرلىرى"
 
 #: userfeedback/accountinfosource.cpp:29
 #, kde-format
@@ -7946,10 +7537,9 @@ msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""
 
 #: userfeedback/plugininfosource.cpp:19
-#, fuzzy, kde-format
-#| msgid "Send Confirmation"
+#, kde-format
 msgid "Plugins Information"
-msgstr "ئەۋەتىشنى جەزملە"
+msgstr ""
 
 #: userfeedback/plugininfosource.cpp:24
 #, kde-format
@@ -7974,18 +7564,16 @@ msgstr ""
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr ""
+msgstr "يوللىما"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "email"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "email"
+msgstr ""
 
 #: util.cpp:190
-#, fuzzy, kde-format
-#| msgid "Delete"
+#, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "ئۆچۈر"
@@ -7996,25 +7584,22 @@ msgid "Move to Trash"
 msgstr "ئەخلەتخانىغا يۆتكە"
 
 #: util.cpp:199
-#, fuzzy, kde-format
-#| msgid "Could not start the account wizard. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
 "properly installed."
-msgstr "ھېسابات يېتەكچىسىنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
+msgstr ""
 
 #: util.cpp:201
-#, fuzzy, kde-format
-#| msgid "Unable to start account wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
-msgstr "ھېسابات يېتەكچىسىنى باشلىغىلى بولمىدى"
+msgstr ""
 
 #: whatsnew/whatsnewtranslations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Add a new identity"
+#, kde-format
 msgid "Add new whatsnew widget."
-msgstr "يېڭى كىملىك قوشىدۇ"
+msgstr "يېڭىلىق ئەپچە قوش."
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format
@@ -8040,10 +7625,9 @@ msgid ""
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:19
-#, fuzzy, kde-format
-#| msgid "Messages"
+#, kde-format
 msgid "Message Default Format"
-msgstr "ئۇچۇرلار"
+msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:26
 #, kde-format
@@ -8058,11 +7642,10 @@ msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
 #: widgets/displaymessageformatactionmenu.cpp:38
-#, fuzzy, kde-format
-#| msgid "Lose Formatting"
+#, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
-msgstr "پىچىمىنى يوق قىلىش"
+msgstr ""
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
 #, kde-format
@@ -8071,34 +7654,29 @@ msgid_plural "Out of office reply active on servers"
 msgstr[0] ""
 
 #: widgets/zoomlabelwidget.cpp:22
-#, fuzzy, kde-format
-#| msgid "Zoom"
+#, kde-format
 msgid "Zoom: %1%"
-msgstr "كېڭەيت-تارايت"
+msgstr ""
 
 #~ msgctxt "@item:inlistbox Inline mail forwarding"
 #~ msgid "Inline"
 #~ msgstr "سىڭدۈر"
 
-#, fuzzy
 #~| msgid "Unread Message"
 #~ msgid "Allow to reopen closed viewer"
 #~ msgstr "ئوقۇلمىغان ئۇچۇر"
 
-#, fuzzy
 #~| msgid "Could not start the account wizard. Please check your installation."
 #~ msgid ""
 #~ "Could not start the import wizard. Please make sure you have ImportWizard "
 #~ "properly installed."
 #~ msgstr "ھېسابات يېتەكچىسىنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
 
-#, fuzzy
 #~| msgid "Unable to start account wizard"
 #~ msgctxt "@title:window"
 #~ msgid "Unable to start import wizard"
 #~ msgstr "ھېسابات يېتەكچىسىنى باشلىغىلى بولمىدى"
 
-#, fuzzy
 #~| msgid "F&ormat:"
 #~ msgid "Form"
 #~ msgstr "پىچىمى(&O):"
@@ -8139,7 +7717,6 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "&New Message..."
 #~ msgstr "يېڭى ئۇچۇر(&N)…"
 
-#, fuzzy
 #~| msgid "&New Message..."
 #~ msgctxt "@action:inmenu"
 #~ msgid "New Message..."
@@ -8162,12 +7739,10 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Charset"
 #~ msgstr "بەلگە توپلىمى"
 
-#, fuzzy
 #~| msgid "Do you want to save the message for later or discard it?"
 #~ msgid "Do you want to remove this selected charset?"
 #~ msgstr "كېيىن ئىشلىتىش ئۈچۈن ئۇچۇرنى ساقلامسىز ياكى تاشلىۋېتەمسىز؟"
 
-#, fuzzy
 #~| msgid "Charset"
 #~ msgid "Add Charset:"
 #~ msgstr "بەلگە توپلىمى"
@@ -8183,7 +7758,6 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Miscellaneous"
 #~ msgstr "باشقىلار"
 
-#, fuzzy
 #~| msgid "Select Font"
 #~ msgid "Select from Contacts..."
 #~ msgstr "خەت نۇسخا تاللا"
@@ -8207,7 +7781,6 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Theme"
 #~ msgstr "ئۆرنەك"
 
-#, fuzzy
 #~| msgid "Lose Formatting"
 #~ msgid "Use Global Settings"
 #~ msgstr "پىچىمىنى يوق قىلىش"
@@ -8222,7 +7795,6 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "&Replace"
 #~ msgstr "ئالماشتۇر(&R)"
 
-#, fuzzy
 #~| msgid "Check Mail"
 #~ msgid "Check Mail Url Tracking"
 #~ msgstr "ئېلخەت تەكشۈر"
@@ -8233,12 +7805,10 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "GnuPG Log Viewer"
 #~ msgstr "GnuPG خاتىرە كۆرگۈ"
 
-#, fuzzy
 #~| msgid "Message Body"
 #~ msgid "Message (*.mbox)"
 #~ msgstr "ئۇچۇر گەۋدىسى"
 
-#, fuzzy
 #~| msgid ""
 #~| "*.mbox|email messages (*.mbox)\n"
 #~| "*|all files (*)"
@@ -8262,101 +7832,82 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Total messages:"
 #~ msgstr "جەمئىي ئۇچۇر سانى:"
 
-#, fuzzy
 #~| msgid "email"
 #~ msgid "kmail2"
 #~ msgstr "email"
 
-#, fuzzy
 #~| msgid "Archive Mail Agent"
 #~ msgid "Add Archive Mail"
 #~ msgstr "ئارخىپلاش مەغلۇپ بولدى"
 
-#, fuzzy
 #~| msgid "F&ormat:"
 #~ msgid "Format:"
 #~ msgstr "پىچىمى(&O):"
 
-#, fuzzy
 #~| msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 #~| msgid "unlimited"
 #~ msgid "unlimited"
 #~ msgstr "چەكسىز"
 
-#, fuzzy
 #~| msgid "Archive Mail Agent"
 #~ msgid "Archive Mail Agent"
 #~ msgstr "ئارخىپلاش مەغلۇپ بولدى"
 
-#, fuzzy
 #~| msgctxt "@title:column Name of the mime header."
 #~| msgid "Name"
 #~ msgid "Name"
 #~ msgstr "ئاتى"
 
-#, fuzzy
 #~| msgid "Messages"
 #~ msgid "Last archive"
 #~ msgstr "ئۇچۇرلار"
 
-#, fuzzy
 #~| msgid "Archive Mail Agent"
 #~ msgid "Next archive in"
 #~ msgstr "ئارخىپلاش مەغلۇپ بولدى"
 
-#, fuzzy
 #~| msgid "Archive Mail Agent"
 #~ msgid "Archive now"
 #~ msgstr "ئارخىپلاش مەغلۇپ بولدى"
 
-#, fuzzy
 #~| msgid "&Folder:"
 #~ msgid "Folder: %1"
 #~ msgstr "قىسقۇچ(&F):"
 
-#, fuzzy
 #~| msgid "Archive"
 #~ msgid "Archive will be done %1"
 #~ msgstr "ئارخىپلاش"
 
-#, fuzzy
 #~| msgid "Remove Identity"
 #~ msgid "Remove items"
 #~ msgstr "كىملىك چىقىرىۋېتىش"
 
-#, fuzzy
 #~| msgid "Delete Message"
 #~ msgid "Follow Up Reminder Agent"
 #~ msgstr "ئۇچۇر ئۆچۈر"
 
-#, fuzzy
 #~| msgctxt "Receiver of the email"
 #~| msgid "To"
 #~ msgid "To"
 #~ msgstr "تاپشۇرۇپ ئالغۇچى"
 
-#, fuzzy
 #~| msgctxt "@item:inlistbox Show receiver."
 #~| msgid "Receiver"
 #~ msgid "Received"
 #~ msgstr "قوبۇللىغۇچى"
 
-#, fuzzy
 #~| msgid "&New Message..."
 #~ msgid "Show Message"
 #~ msgstr "يېڭى ئۇچۇر(&N)…"
 
-#, fuzzy
 #~| msgid "Log filter actions"
 #~ msgid "Log pattern description"
 #~ msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
-#, fuzzy
 #~| msgid "Log filter actions"
 #~ msgid "Log filter &rule evaluation"
 #~ msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
-#, fuzzy
 #~| msgid "Log filter actions"
 #~ msgid "Log filter pattern evaluation"
 #~ msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
@@ -8364,12 +7915,10 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Log filter actions"
 #~ msgstr "سۈزگۈچ ھەرىكىتى خاتىرىسى"
 
-#, fuzzy
 #~| msgid "No limit"
 #~ msgid "Log size limit:"
 #~ msgstr "چەك يوق"
 
-#, fuzzy
 #~| msgctxt "spinbox suffix: unit for kilobyte"
 #~| msgid " kB"
 #~ msgid " KB"
@@ -8379,108 +7928,89 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "unlimited"
 #~ msgstr "چەكسىز"
 
-#, fuzzy
 #~| msgctxt "@info:status finished searching."
 #~| msgid "Ready."
 #~ msgid "Ready"
 #~ msgstr "تەييار."
 
-#, fuzzy
 #~| msgid "Send Later"
 #~ msgid "Send Later Agent"
 #~ msgstr "كېيىن ئەۋەتىش"
 
-#, fuzzy
 #~| msgid "Send Later"
 #~ msgid "Send around"
 #~ msgstr "كېيىن ئەۋەتىش"
 
-#, fuzzy
 #~| msgid "Message Body"
 #~ msgid "Message Id"
 #~ msgstr "ئۇچۇر گەۋدىسى"
 
-#, fuzzy
 #~| msgid "Message Body"
 #~ msgid "Not message found."
 #~ msgstr "ئۇچۇر گەۋدىسى"
 
-#, fuzzy
 #~| msgid "Message Body"
 #~ msgid "No message found."
 #~ msgstr "ئۇچۇر گەۋدىسى"
 
-#, fuzzy
 #~| msgid "Total messages:"
 #~ msgid "Cannot fetch message. %1"
 #~ msgstr "جەمئىي ئۇچۇر سانى:"
 
-#, fuzzy
 #~| msgid "Message template for new message"
 #~ msgid "Message is not a real message"
 #~ msgstr "يېڭى ئۇچۇرلارنىڭ قېلىپى"
 
-#, fuzzy
 #~| msgid "Message List"
 #~ msgid "Message sent"
 #~ msgstr "ئۇچۇر تىزىمى"
 
-#, fuzzy
 #~| msgid "KMail Error"
 #~ msgid "Error found"
 #~ msgstr "KMail  خاتالىقى"
 
-#, fuzzy
 #~| msgid "Save As..."
 #~ msgid "Save..."
 #~ msgstr "باشقا ئاتتا ساقلا…"
 
-#, fuzzy
 #~| msgctxt "@title:window"
 #~| msgid "Properties of Folder %1"
 #~ msgctxt "@title:window"
 #~ msgid "Properties for Attachment %1"
 #~ msgstr "قىسقۇچ ‹%1› نىڭ خاسلىقى"
 
-#, fuzzy
 #~| msgctxt "@title:tab View settings for a folder."
 #~| msgid "View"
 #~ msgctxt "@action:inmenu"
 #~ msgid "View"
 #~ msgstr "كۆرۈنۈش"
 
-#, fuzzy
 #~| msgctxt "@title:window"
 #~| msgid "Properties of Folder %1"
 #~ msgctxt "@action:inmenu"
 #~ msgid "Properties"
 #~ msgstr "قىسقۇچ ‹%1› نىڭ خاسلىقى"
 
-#, fuzzy
 #~| msgid "Message List"
 #~ msgctxt "@action:inmenu"
 #~ msgid "Message Properties"
 #~ msgstr "ئۇچۇر تىزىمى"
 
-#, fuzzy
 #~| msgid "&New Message..."
 #~ msgctxt "@action:inmenu"
 #~ msgid "Show Message Text"
 #~ msgstr "يېڭى ئۇچۇر(&N)…"
 
-#, fuzzy
 #~| msgid "Delete Message"
 #~ msgctxt "@action:inmenu"
 #~ msgid "Save Message Text As..."
 #~ msgstr "ئۇچۇر ئۆچۈر"
 
-#, fuzzy
 #~| msgid "Delete Folder"
 #~ msgctxt "@action:inmenu"
 #~ msgid "Default Folder..."
 #~ msgstr "قىسقۇچ ئۆچۈر"
 
-#, fuzzy
 #~| msgctxt "Config->Composer->Attachments"
 #~| msgid "Attachments"
 #~ msgctxt "@info:status"
@@ -8488,55 +8018,46 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid_plural "%1 attachments found"
 #~ msgstr[0] "قوشۇلمىلار"
 
-#, fuzzy
 #~| msgid "Save to File"
 #~ msgctxt "@title:window"
 #~ msgid "Open TNEF File"
 #~ msgstr "ھۆججەتكە ساقلاش"
 
-#, fuzzy
 #~| msgid "%"
 #~ msgctxt "@item:inmenu Open With, %1 is application name"
 #~ msgid "%1"
 #~ msgstr "%"
 
-#, fuzzy
 #~| msgid "&Dictionary"
 #~ msgid "&Action"
 #~ msgstr "لۇغەت(&D)"
 
-#, fuzzy
 #~| msgctxt "@title:column Name of the mime header."
 #~| msgid "Name"
 #~ msgctxt "@title:column file name"
 #~ msgid "File Name"
 #~ msgstr "ئاتى"
 
-#, fuzzy
 #~| msgid "Type"
 #~ msgctxt "@title:column file type"
 #~ msgid "File Type"
 #~ msgstr "تىپى"
 
-#, fuzzy
 #~| msgid "Size:"
 #~ msgctxt "@title:column file size"
 #~ msgid "Size"
 #~ msgstr "چوڭلۇقى:"
 
-#, fuzzy
 #~| msgid "Message List"
 #~ msgid "Message Properties"
 #~ msgstr "ئۇچۇر تىزىمى"
 
-#, fuzzy
 #~| msgctxt "@title:column Name of the mime header."
 #~| msgid "Name"
 #~ msgctxt "@title:column property name"
 #~ msgid "Name"
 #~ msgstr "ئاتى"
 
-#, fuzzy
 #~| msgctxt "@title:column Value of the mimeheader."
 #~| msgid "Value"
 #~ msgctxt "@title:column property value"
@@ -8546,22 +8067,18 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Description:"
 #~ msgstr "چۈشەندۈرۈش:"
 
-#, fuzzy
 #~| msgid "Indexing"
 #~ msgid "Index:"
 #~ msgstr "ئىندېكسلاۋاتىدۇ"
 
-#, fuzzy
 #~| msgid "Files"
 #~ msgid "File size:"
 #~ msgstr "ھۆججەتلەر"
 
-#, fuzzy
 #~| msgid "&Settings"
 #~ msgid "Plugins Settings"
 #~ msgstr "تەڭشەك(&S)"
 
-#, fuzzy
 #~| msgid "&Settings"
 #~ msgid "Plugins"
 #~ msgstr "تەڭشەك(&S)"
@@ -8572,19 +8089,16 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Chang&e..."
 #~ msgstr "ئۆزگەرت(&E)…"
 
-#, fuzzy
 #~| msgid "&View Source"
 #~ msgid "Source:"
 #~ msgstr "مەنبەنى كۆرۈش(&V)"
 
-#, fuzzy
 #~| msgid ""
 #~| "Could not start certificate manager; please check your installation."
 #~ msgid ""
 #~ "Could not start storage service manager; please check your installation."
 #~ msgstr "ئىسپاتنامە باشقۇرغۇچنى قوزغىتالمىدى. ئورنىتىشنى تەكشۈرۈپ كۆرۈڭ."
 
-#, fuzzy
 #~| msgid "KMail Error"
 #~ msgid "Error"
 #~ msgstr "KMail  خاتالىقى"
@@ -8593,12 +8107,10 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Sticky"
 #~ msgstr "يېپىشقاق"
 
-#, fuzzy
 #~| msgid "Zoom"
 #~ msgid "Zoom..."
 #~ msgstr "كېڭەيت-تارايت"
 
-#, fuzzy
 #~| msgid "Zoom"
 #~ msgid "&Zoom In"
 #~ msgstr "كېڭەيت-تارايت"
@@ -8630,7 +8142,6 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "<li>%1</li>\n"
 #~ msgstr "<li>%1</li>\n"
 
-#, fuzzy
 #~| msgid "email"
 #~ msgid "kmail"
 #~ msgstr "email"
@@ -8641,17 +8152,14 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Edit Recent Addresses..."
 #~ msgstr "يېقىندا ئىشلەتكەن ئادرېسلارنى تەھرىرلەش…"
 
-#, fuzzy
 #~| msgid "Edit Recent Addresses..."
 #~ msgid "Edit, add or remove recent addresses"
 #~ msgstr "يېقىندا ئىشلەتكەن ئادرېسلارنى تەھرىرلەش…"
 
-#, fuzzy
 #~| msgid "Configure &Notifications..."
 #~ msgid "Configure Email Blacklist..."
 #~ msgstr "ئۇقتۇرۇش سەپلىمە(&N)…"
 
-#, fuzzy
 #~| msgid "&Help"
 #~ msgid "Help"
 #~ msgstr "ياردەم(&H)"
@@ -8662,17 +8170,14 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "Lowercase"
 #~ msgstr "كىچىك يېزىلىش"
 
-#, fuzzy
 #~| msgid "Chang&e..."
 #~ msgid "Change Case"
 #~ msgstr "ئۆزگەرت(&E)…"
 
-#, fuzzy
 #~| msgid "Date"
 #~ msgid "Date:"
 #~ msgstr "چېسلا"
 
-#, fuzzy
 #~| msgid "Rename"
 #~ msgid "name"
 #~ msgstr "ئات ئۆزگەرت"
@@ -8700,12 +8205,10 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "R&emove"
 #~ msgstr "چىقىرىۋەت(&E)"
 
-#, fuzzy
 #~| msgid "Messages"
 #~ msgid "Message Delayed..."
 #~ msgstr "ئۇچۇرلار"
 
-#, fuzzy
 #~| msgid "&Use custom colors"
 #~ msgid "Use custom order"
 #~ msgstr "ئىختىيارى رەڭلەرنى ئىشلەت(&U)"
@@ -8721,19 +8224,16 @@ msgstr "كېڭەيت-تارايت"
 #~ msgid "online"
 #~ msgstr "توردا"
 
-#, fuzzy
 #~| msgctxt "spinbox suffix: unit for kilobyte"
 #~| msgid " kB"
 #~ msgctxt "mega bytes"
 #~ msgid " MB"
 #~ msgstr " كىلوبايت"
 
-#, fuzzy
 #~| msgid "Message Body"
 #~ msgid "No message found"
 #~ msgstr "ئۇچۇر گەۋدىسى"
 
-#, fuzzy
 #~| msgid "Send Later Agent"
 #~ msgid "Send Later Preferences..."
 #~ msgstr "كېيىن ئەۋەتىش"
