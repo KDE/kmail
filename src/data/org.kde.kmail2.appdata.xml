@@ -54,6 +54,7 @@
   <name xml:lang="sv">Kmail</name>
   <name xml:lang="ta">கேமெயில்</name>
   <name xml:lang="tr">K Posta</name>
+  <name xml:lang="ug">KMail  تور خەت</name>
   <name xml:lang="uk">KMail</name>
   <name xml:lang="zh-CN">KMail</name>
   <name xml:lang="zh-TW">KMail</name>
@@ -186,6 +187,7 @@
     <p xml:lang="sv">Funktioner:</p>
     <p xml:lang="ta">அம்சங்கள்:</p>
     <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="ug">ئىقتىدار:</p>
     <p xml:lang="uk">Можливості:</p>
     <p xml:lang="zh-CN">程序功能：</p>
     <p xml:lang="zh-TW">功能：</p>
