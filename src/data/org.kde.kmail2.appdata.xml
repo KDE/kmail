@@ -447,6 +447,7 @@
       <description>
         <ul>
           <li>HTML messages are shown with their intended colors by default. To override this, uncheck the \"Appearance-&gt;Colors-&gt;Do not change color from original HTML mail\" option</li>
+          <li xml:lang="ar">تُعرض رسائل HTML بألوانها المقصودة مبدئيًا. لتجاوز ذلك، قم بإلغاء تحديد خيار \"المظهر-&gt;الألوان-&gt;لا تغير اللون من البريد الإلكتروني HTML الأصلي\".</li>
           <li xml:lang="bg">HTML съобщения се показват с техните предназначени цветове по подразбиране. За да премахнете това поведение, премахнете опцията „Изглед → Цветове → Запазване на цвета от оригиналното HTML съобщение“</li>
           <li xml:lang="ca">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar això, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canviïs el color del correu HTML original»</li>
           <li xml:lang="ca-valencia">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar açò, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canvies el color del correu HTML original»</li>
@@ -472,6 +473,7 @@
       <description>
         <ul>
           <li>Allow to export text in autogenerate editor plugins.</li>
+          <li xml:lang="ar">اسمح بتصدير النص في ملحقات محرر التوليد الآلي.</li>
           <li xml:lang="bg">Разрешаване на експортирането на текст в автоматично генерирани редакционни плъгини.</li>
           <li xml:lang="ca">Permet exportar text en connectors d'editor de generació automàtica.</li>
           <li xml:lang="ca-valencia">Permet exportar text en connectors d'editor de generació automàtica.</li>
@@ -488,6 +490,7 @@
           <li xml:lang="tr">Düzenleyici eklentilerine metin dışa aktarmaya olanak tanı</li>
           <li xml:lang="uk">Уможливлено експортування тексту у додатках автоматичного породження до редактора.</li>
           <li>Fix text to speech support (enqueue messages)</li>
+          <li xml:lang="ar">إصلاح دعم تحويل النص إلى كلام (رسائل في قائمة الانتظار)</li>
           <li xml:lang="bg">Поправяне на поддръжката за текст към говор (редуване на съобщения)</li>
           <li xml:lang="ca">Corregeix la implementació del text a veu (cua de missatges)</li>
           <li xml:lang="ca-valencia">Corregix la implementació del text a veu (cua de missatges)</li>
@@ -513,6 +516,7 @@
       <description>
         <ul>
           <li>Add new whatsnew widget.</li>
+          <li xml:lang="ar">أضف منبثقة ما الجديد جديدة</li>
           <li xml:lang="bg">Добавяне на нов уиджет „Какво е ново“.</li>
           <li xml:lang="ca">Afegeix un giny nou «Què hi ha de nou».</li>
           <li xml:lang="ca-valencia">Afig un giny nou «Què hi ha de nou».</li>
@@ -529,6 +533,7 @@
           <li xml:lang="tr">“Neler Yeni” araç takımı</li>
           <li xml:lang="uk">Додано новий віджет зі списком можливостей нової версії.</li>
           <li>New plugin: show collection size.</li>
+          <li xml:lang="ar">ملحقة جديدة: عرض حجم التجميعة</li>
           <li xml:lang="bg">Нов плъгин: показване на размера на колекцията.</li>
           <li xml:lang="ca">Connector nou: mostra la mida de la col·lecció.</li>
           <li xml:lang="ca-valencia">Connector nou: mostra la mida de la col·lecció.</li>
