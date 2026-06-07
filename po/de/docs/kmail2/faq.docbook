@@ -102,7 +102,7 @@
 > <application
 >Firefox Web Browser</application
 > ein.</para>
-    
+
     <para
 >Möchten Sie als Systemverwalter diese Einstellung automatisch für alle Benutzer festlegen, müssen Sie folgendes ändern:</para>
     <itemizedlist>
@@ -395,18 +395,18 @@
 ><guimenu
 >&systemsettings;</guimenu
 ><guisubmenu
->Application 
+>Application
 Appearance</guisubmenu
 ><guimenuitem
 >Colors</guimenuitem
 ><guimenuitem
 >Colors</guimenuitem
 ></menuchoice
->, for each color 
+>, for each color
 set except <guilabel
 >Common Colors</guilabel
 > (which doesn't have it), change the <guilabel
->Alternate 
+>Alternate
 Background</guilabel
 > to be the same as the <guilabel
 >Normal Background</guilabel
@@ -417,16 +417,16 @@ Background</guilabel
 > and <emphasis
 >Mageia</emphasis
 > doesn't use the name <guilabel
->System 
+>System
 Settings</guilabel
 >.  As in <guilabel
 >KControl</guilabel
 >, the KDE 3 control centre, they name it <quote
->Configure your 
+>Configure your
 Desktop</quote
 > to distinguish it from <quote
 >Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control 
+>, a.k.a. the Mandriva/Mageia Control
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry
@@ -466,7 +466,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 > Sie richten einen neuen Rechner ein und möchten Ihre gesamten E-Mails darauf übertragen. Dazu kopieren Sie alle Dateien auf einen USB-Stick. Das Kopieren startet, bricht aber mit dieser Fehlermeldung ab:</para>
     <screen
 >Kopieren nicht möglich ............ Ungültiges Argument</screen>
-    
+
     <para
 ><emphasis
 >Lösung</emphasis
@@ -536,7 +536,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >GnuPG</application
 > angewiesen. Diese können sich aber von Version zu Version ändern.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >&kmail; verschlüsselt Nachrichten nicht mit nicht vertrauenswürdigen (unsignierten) Schlüsseln. Falls man einen solchen Schlüssel zur Verschlüsselung verwenden möchte, sollte man die Identität des Besitzers überprüfen und erste danach den Schlüssel mit dem eigenen geheimen Schlüssel signieren. Falls man die Identität nicht überprüfen kann, die Nachricht aber dennoch verschlüsseln will, sollte man sie lokal durch <userinput
@@ -549,12 +549,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></userinput
 > signieren.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Einem fremden öffentlichen Schlüssel ohne Überprüfung zu vertrauen ist keine gute Idee.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Seit GnuPG 1.0.7 muss man selbst dem eigenen Schlüssel das Attribut uneingeschränktes Vertrauen des Besitzers geben. Das wird nicht mehr automatisch durchgeführt.</para>
@@ -596,8 +596,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >PIM-Daten-Export</ulink
 >, um Ihre e-Mails und Einstellungen zu sichern.</para
 ><para
->&nbsp;</para
-> 
+>&nbsp;</para>
   </answer>
 </qandaentry>
 
