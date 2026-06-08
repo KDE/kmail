@@ -5,7 +5,8 @@
 >Agent zur E-Mail-Archivierung</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % German "INCLUDE">
+  <!ENTITY % German "INCLUDE"
+> 
 ]>
 
 <article id="archivemailagent" lang="&language;">
