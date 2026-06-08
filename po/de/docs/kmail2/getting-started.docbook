@@ -131,7 +131,7 @@
 > zu aktivieren, damit der Assistent die benötigten Informationen vom Server abholen kann. Sind Sie ein erfahrener Benutzer und müssen eine schwierigere Einrichtung vornehmen, deaktivieren Sie diese Option. Klicken Sie auf <guibutton
 >Weiter</guibutton
 >, wenn alle Felder ausgefüllt ist.</para>
-
+    
     <screenshot>
     <screeninfo
 >Zugangs-Assistent</screeninfo>
@@ -149,21 +149,21 @@
         </caption>
       </mediaobject>
     </screenshot>
-
+    
     <note
 ><para
 >Gmail-Konten müssen &IMAP; verwenden. Wenn Sie die Zwei-Faktor-Authentisierung für Ihr Gmail-Konto aktiviert haben  müssen Sie einen Authentisierungcode von Google bei der Einrichtung des Konto angeben. Sie müssen keine Zwei-Faktor-Authentisierung durchführen, nachdem das &kmail;-Konto erstellt wurde, da Google  Ihre &IMAP;-Verknüpfung als vollständig vertrauenswürdig markiert.</para
 ></note>
-
+    
     <para
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
   <step id="GPG-security">
-
+    
     <para
 >Auf der nächsten Seite können Sie die Verschlüsselung für E-Mails einrichten.</para>
-
+    
     <screenshot>
     <screeninfo
 >Zugangs-Assistent 2</screeninfo>
@@ -181,7 +181,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-
+    
     <para
 >Wenn Sie Ihre Kommunikation mit GnuPG absichern möchten, können Sie einen neuen Schlüssel generieren und den Schlüssel auf einem öffentlichen Schlüsselserver veröffentlichen oder Sie importieren einen vorhandenen Schlüssel. Wenn Sie ein neues Schlüsselpaar erzeugen, vergessen Sie nicht das Passwort, mit dem es erzeugt wurde. Sie benötigen dieses Passwort jedes Mal, wenn Sie den Schlüssel verwenden wollen. </para>
     <para
@@ -190,7 +190,7 @@
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
-
+  
   <step id="Select-account-type">
     <para
 >Wenn der Assistent den Kontotyp erfolgreich ermittelt hat, wird ein Dialog angezeigt. Klicken Sie auf <guibutton
@@ -198,7 +198,7 @@
 >, um die Einstellungen von &kmail; zu sehen. Klicken Sie auf  <guibutton
 >Fertigstellen</guibutton
 >, um das Konto einzurichten und den Assistenten und den Dialog zu schließen. </para>
-
+    
     <screenshot>
     <screeninfo
 >Zugangs-Assistent 3</screeninfo>
@@ -216,7 +216,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-
+    
     <para
 >Kann der Assistent die Art Ihres Kontos nicht selbständig ermitteln, wird als nächstes der Dialog <guilabel
 >Art des Konto auswählen</guilabel
@@ -231,14 +231,15 @@
 >&nbsp;</para
 > <!-- whitespace -->
   </step>
-
+  
   <step id="Personal-settings">
-
+      
     <para
 >Wenn der Assistent Ihren E-Mail-Server bei der Suche im Internet nicht finden kann, wird der Dialog <guibutton
 >Persönliche Einstellungen</guibutton
-> angezeigt.</para>
-
+> angezeigt.</para
+>  
+        
     <screenshot>
     <screeninfo
 >Zugangs-Assistent 4</screeninfo>
@@ -256,14 +257,14 @@
         </caption>
       </mediaobject>
     </screenshot>
-
+    
     <para
 >Überprüfen Sie, ob alle Angaben korrekt sind. Wählen Sie <guilabel
 >Alle Nachrichten zur Offline-Verwendung herunterladen</guilabel
 >, wenn Sie Ihre Nachrichten auch ohne Internetverbindung bearbeiten möchten. Diese Einstellung ist nur für &IMAP;-Konten verfügbar. Klicken Sie auf <guibutton
 >Weiter</guibutton
 >, wenn Sie fertig sind.</para>
-
+    
     <para
 >Ihr Konto wurde nun eingerichtet, klicken Sie den Knopf <guibutton
 >Fertigstellen</guibutton
@@ -275,7 +276,7 @@
 > <!-- whitespace -->
   </step>
 </procedure>
-
+  
   <para
 >Wenn Sie ein Konto manuell anlegen möchten, lesen Sie bitte das nächste Kapitel. Andernfalls gehen Sie zu <link linkend="testing-your-setup"
 >Testen der Einstellungen</link
@@ -306,7 +307,7 @@
   <para
 >&nbsp;</para
 > <!-- whitespace -->
-
+  
   <para
 >Der Dialog <menuchoice
 ><guimenu
@@ -356,7 +357,7 @@
 > der Seite <guilabel
 >Konten</guilabel
 >.</para>
-
+  
     <screenshot>
     <screeninfo
 >Der Dialog Neue Identität</screeninfo>
@@ -374,7 +375,7 @@
         </caption>
       </mediaobject>
     </screenshot>
-
+    
     <para
 >Geben Sie der neuen Identität einen Namen und wählen Sie eine der der verfügbaren Einstellungen „Mit leeren Feldern“, „Werte der Systemeinstellungen verwenden“ oder „Existierende Identität kopieren“. Klicken Sie dann auf <guilabel
 >OK</guilabel
@@ -382,7 +383,7 @@
     <para
 >&nbsp;</para
 > <!-- whitespace -->
-
+    
     <screenshot>
     <screeninfo
 >Der Dialog Neue Identität</screeninfo>
@@ -403,7 +404,7 @@
     <para
 >&nbsp;</para
 > <!-- whitespace -->
-
+    
     <para
 >Die Einstellungen auf der Seite <guilabel
 >Allgemein</guilabel
@@ -463,7 +464,7 @@
 >Versenden von Nachrichten</title>
   <para
 >Erstellen eines Versand-Konto.</para>
-
+  
   <screenshot>
     <screeninfo
 >Auswahl der Versandart für ausgehende E-Mails</screeninfo>
@@ -578,7 +579,7 @@
 > sein. Falls Sie ein lokales Postfach verwenden möchten, lesen Sie Informationen über <link linkend="faq-file-locking"
 >FAQ über das Sperren von Dateien</link
 >.</para>
-
+    
   <screenshot>
     <screeninfo
 >Der Einrichtungsdialog Empfang</screeninfo>
@@ -598,7 +599,7 @@
     </screenshot>
     <para
 >&nbsp;</para
-> <!-- whitespace -->
+> <!-- whitespace -->  
 
   <para
 >Wenn Sie &POP3; oder &IMAP; ausgewählt haben, erscheint der Dialog Konto-Einstellungen. Geben Sie zuerst einen Namen für das Konto im Feld <guilabel 
@@ -632,21 +633,22 @@
 > auf der Karteikarte <guilabel
 >Erweiterte Einstellungen</guilabel
 > aktivieren, entfernt &kmail; die entsprechenden Nachrichten vom Server, sobald der Benutzer den Ordner verlässt. Ansonsten bleiben die Nachrichten nur zur endgültigen Löschung markiert und Sie müssen die Ordner komprimieren.</para>
-
+    
   </sect3>
 
 
   <sect3 id="receiving-mail-pop3">
     <title
 >Einstellungen nur für POP3</title>
-
+      
     <para
 >Wählen Sie <guilabel
 >Abgerufene Nachrichten auf dem Server lassen</guilabel
 > auf der Karteikarte <guilabel
 >Erweiterte Einstellungen</guilabel
->, wenn Sie die Nachrichten nach dem Herunterladen auf dem Server behalten möchten. Es gibt sieben Möglichkeiten um festzulegen, wie lange alte Nachrichten nach dem Herunterladen aufbewahrt werden sollen: Unbegrenzt (alle Optionen nicht ausgewählt lassen), oder Anzahl der Tage / Anzahl der Nachrichten / maximale Größe des serverseitigen Posteingangs. Wählen Sie eine, zwei oder alle drei Einstellungen. Wenn dies nicht aktiviert ist, werden alle Nachrichten sofort nach dem Herunterladen vom entfernten Server gelöscht.</para>
-
+>, wenn Sie die Nachrichten nach dem Herunterladen auf dem Server behalten möchten. Es gibt sieben Möglichkeiten um festzulegen, wie lange alte Nachrichten nach dem Herunterladen aufbewahrt werden sollen: Unbegrenzt (alle Optionen nicht ausgewählt lassen), oder Anzahl der Tage / Anzahl der Nachrichten / maximale Größe des serverseitigen Posteingangs. Wählen Sie eine, zwei oder alle drei Einstellungen. Wenn dies nicht aktiviert ist, werden alle Nachrichten sofort nach dem Herunterladen vom entfernten Server gelöscht.</para
+>  
+  
     <para
 >Auf der Karteikarte <guilabel
 >Erweiterte Einstellungen</guilabel
@@ -677,7 +679,7 @@
 >Einstellungen für <acronym
 >IMAP</acronym
 > und POP3</title>
-
+    
     <para
 >Wählen Sie auf der Karteikarte <guilabel
 >Empfang</guilabel
@@ -698,7 +700,7 @@
 >Nach E-Mail sehen in &gt;</guimenuitem
 ></menuchoice
 > suchen lassen.</para>
-
+    
     <para
 >&kmail; unterstützt Verschlüsselung per <guilabel
 >SSL/TLS</guilabel
@@ -790,7 +792,7 @@
 > nicht. <guilabel
 >Gmail</guilabel
 >-Authentifizierung ist nur für &IMAP;-Konten verfügbar, die den Gmail-Dienst von Google verwenden.</para>
-
+  
     <para
 >benutzen Sie <guibutton
 >Automatisch erkennen</guibutton
