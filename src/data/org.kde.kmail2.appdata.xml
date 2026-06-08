@@ -457,6 +457,7 @@
           <li xml:lang="he">הודעות HTML מופיעות עם הצבע הייעודי שלהן כברירת מחדל. כדי לעקוף את זה, יש לבטל את הסימון של האפשרות „מראה-&gt;צבעים-&gt;לא לשנות את הצבע מהודעת ה־HTML המקורית”</li>
           <li xml:lang="it">I messaggi HTML sono mostrati, come impostazione predefinita, con i colori previsti. Per cambiare questo comportamento, disabilitare l'opzione in \"Aspetto-&gt;Colori-&gt;Non modificare il colore del messaggio di posta originale in HTML\".</li>
           <li xml:lang="ka">HTML შეტყობინებები ნაგულისხმევად მათთვის სასურველ ფერებშია ნაჩვენები. ამის გადასაფარად მოხსენით თოლია \"გარეგნობა-&gt;ფერები-&gt;HTML ელფოსტის ორიგინალი ფერების არშეცვლა\"</li>
+          <li xml:lang="ko">기본값으로 HTML 메시지는 원래 의도했던 색상대로 표시됩니다. 이 설정을 재정의하려면 \"모양-&gt;색상-&gt;원래 HTML 메일의 색상 변경하지 않기\" 옵션의 선택을 해제하십시오</li>
           <li xml:lang="nl">HTML-berichten worden standaard weergegeven met de bedoelde kleuren. Om dit te wijzigen, schakelt u de optie "Uiterlijk -&gt; Kleuren -&gt; Kleur niet wijzigen ten opzichte van originele HTML-mail" uit</li>
           <li xml:lang="pt-BR">As mensagens HTML são exibidas com suas cores originais por padrão. Para alterar isso, desmarque a opção \"Aparência -&gt; Cores -&gt; Não alterar a cor do e-mail HTML original\".</li>
           <li xml:lang="sk">HTML správy sa predvolene zobrazujú s ich zamýšľanými farbami. Ak to chcete prepísať, zrušte začiarknutie možnosti \"Vzhľad-&gt;Farby-&gt;Nemeniť farbu z pôvodnej HTML pošty\"</li>
@@ -483,6 +484,7 @@
           <li xml:lang="he">לאפשר לייצא טקסט בתוספי עורך ליצירה אוטומטית.</li>
           <li xml:lang="it">Permette di esportare del testo nelle estensioni dell'editor di generazione automatica.</li>
           <li xml:lang="ka">ტექსტის გატანის დაშვება რედაქტორის დამატებების ავტოგენერაციაში.</li>
+          <li xml:lang="ko">자동 생성 편집기 플러그인에서 텍스트 내보내기를 허용합니다.</li>
           <li xml:lang="nl">Toestaan tekst te exporteren in automatisch gegenereerde editor-plugins.</li>
           <li xml:lang="pt-BR">Permitir exportar texto em plugins de edição de geração automática.</li>
           <li xml:lang="sk">Umožnený export textu v zásuvných moduloch automatického generovania editora.</li>
@@ -500,6 +502,7 @@
           <li xml:lang="he">תוקנה התמיכה בהקראה (הוספת הודעות לתור)</li>
           <li xml:lang="it">Correzione del supporto di sintesi vocale (coda dei messaggi)</li>
           <li xml:lang="ka">გასწორდა ტექსტის წარმოთქმის მხარდაჭერა (შეტყობინებების რიგში ჩასმა)</li>
+          <li xml:lang="ko">텍스트 읽어주기 지원 수리(메시지 대기열에 추가)</li>
           <li xml:lang="nl">Ondersteuning van tekst naar spraak repareren (berichten in wachtrij zetten)</li>
           <li xml:lang="pt-BR">Corrige suporte para conversão de texto para fala (enfileirar mensagens)</li>
           <li xml:lang="sk">Opravená podpora prevodu textu na reč (zaraďovanie správ do frontu)</li>
@@ -526,6 +529,7 @@
           <li xml:lang="he">הוספת וידג׳ט חדש בשם מה חדש.</li>
           <li xml:lang="it">Aggiunto un nuovo oggetto Cosa c'è di nuovo.</li>
           <li xml:lang="ka">ახალი სიახლეების ვიჯეტის დამატება.</li>
+          <li xml:lang="ko">새 새로운 항목 위젯을 추가합니다.</li>
           <li xml:lang="nl">Nieuw widget Wat-is-nieuw toevoegen.</li>
           <li xml:lang="pt-BR">Adicionado novo elemento 'O que há de novo?'.</li>
           <li xml:lang="sk">Pridaný nový widget noviniek.</li>
@@ -543,6 +547,7 @@
           <li xml:lang="he">תוסף חדש: הצגת גודל אוסף.</li>
           <li xml:lang="it">Nuova estensione: mostra la dimensione della collezione.</li>
           <li xml:lang="ka">ახალი დამატება: კოლექციის ზომის ჩვენება.</li>
+          <li xml:lang="ko">새 플러그인: 모음집 크기 표시.</li>
           <li xml:lang="nl">Nieuwe plug-in: grootte van verzameling tonen.</li>
           <li xml:lang="pt-BR">Novo plugin: mostrar tamanho da coleção.</li>
           <li xml:lang="sk">Nový zásuvný modul: zobrazenie veľkosti kolekcie.</li>
