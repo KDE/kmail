@@ -244,7 +244,6 @@ int main(int argc, char *argv[])
     qputenv("XDG_CONFIG_HOME", config.path().toUtf8());
     QApplication app(argc, argv);
     app.setAttribute(Qt::AA_Use96Dpi, true);
-    QTEST_DISABLE_KEYPAD_NAVIGATION
     KMCommandsTest tc;
     return QTest::qExec(&tc, argc, argv);
 }
