@@ -1488,7 +1488,7 @@ msgstr "文本转换插件"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:285
 #, kde-format
 msgid "Misc"
-msgstr "杂项"
+msgstr "其他"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
@@ -2619,7 +2619,7 @@ msgid ""
 "This shortcut allows to send mail directly.\n"
 "Mail can be send accidentally.\n"
 "What do you want to do?"
-msgstr "这个快捷方式可以直接发送邮件。邮件可能被意外发送。您打算如何处理？"
+msgstr "此快捷键可以直接发送邮件。邮件可能被意外发送。您打算如何处理？"
 
 #: editor/validatesendmailshortcut.cpp:31
 #, kde-format
@@ -6482,7 +6482,7 @@ msgstr "显示加密标签指示"
 #: settings/kmail.kcfg:280
 #, kde-format
 msgid "Validate Send Default Shortcut"
-msgstr "验证发送默认快捷方式"
+msgstr "验证发送默认快捷键"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:334
