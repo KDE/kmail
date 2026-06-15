@@ -73,7 +73,7 @@ msgctxt "@info:whatsthis"
 msgid ""
 "You will be presented with a dialog where you can configure the application-"
 "wide shortcuts."
-msgstr "这将显示一个对话框，供您配置程序的快捷方式。"
+msgstr "这将显示一个对话框，用于配置应用程序内部快捷键。"
 
 #: ktnefmain.cpp:110
 #, kde-format
