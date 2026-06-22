@@ -11,7 +11,6 @@
 #include "widgets/unitcombobox.h"
 #include <KLineEdit>
 #include <KLocalizedString>
-#include <KSeparator>
 #include <KUrlRequester>
 #include <MailCommon/FolderRequester>
 #include <QCheckBox>

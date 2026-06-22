@@ -12,8 +12,6 @@ using namespace Qt::Literals::StringLiterals;
 #include <KLocalizedString>
 #include <QCheckBox>
 #include <QHBoxLayout>
-#include <QLabel>
-#include <QTime>
 
 ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     : QWidget{parent}
