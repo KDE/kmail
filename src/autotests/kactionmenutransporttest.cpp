@@ -1,5 +1,5 @@
 /*
-  SPDX-FileCopyrightText: 2015-2025 Laurent Montel <montel@kde.org>
+  SPDX-FileCopyrightText: 2015-2026 Laurent Montel <montel@kde.org>
 
   SPDX-License-Identifier: LGPL-2.0-or-later
 */
