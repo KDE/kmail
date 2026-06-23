@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-24 00:44+0000\n"
+"POT-Creation-Date: 2026-06-23 00:46+0000\n"
 "PO-Revision-Date: 2025-05-17 21:32+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -30,43 +30,43 @@ msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "E-Mail-Archivierung hinzufügen"
 
-#: addarchivemailwidget.cpp:28
+#: addarchivemailwidget.cpp:27
 #, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Alle Unterordner archivieren"
 
-#: addarchivemailwidget.cpp:38
+#: addarchivemailwidget.cpp:37
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Ordner:"
 
-#: addarchivemailwidget.cpp:48
+#: addarchivemailwidget.cpp:47
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Format:"
 
-#: addarchivemailwidget.cpp:56
+#: addarchivemailwidget.cpp:55
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Pfad:"
 
-#: addarchivemailwidget.cpp:63
+#: addarchivemailwidget.cpp:62
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Sichere alle:"
 
-#: addarchivemailwidget.cpp:75
+#: addarchivemailwidget.cpp:74
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Maximale Anzahl von Archiven:"
 
-#: addarchivemailwidget.cpp:78
+#: addarchivemailwidget.cpp:77
 #, kde-format
 msgid "unlimited"
 msgstr "unbegrenzt"
@@ -77,7 +77,7 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Archiv"
 
-#: archivemailrangewidget.cpp:22
+#: archivemailrangewidget.cpp:20
 #, kde-format
 msgctxt "@option:check"
 msgid "Use Range"

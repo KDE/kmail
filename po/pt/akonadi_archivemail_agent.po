@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-04-24 00:44+0000\n"
+"POT-Creation-Date: 2026-06-23 00:46+0000\n"
 "PO-Revision-Date: 2022-03-25 16:28+0000\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -31,49 +31,49 @@ msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Adicionar um Arquivo de Correio"
 
-#: addarchivemailwidget.cpp:28
+#: addarchivemailwidget.cpp:27
 #, fuzzy, kde-format
 #| msgid "Archive all subfolders"
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arquivar todas as sub-pastas"
 
-#: addarchivemailwidget.cpp:38
+#: addarchivemailwidget.cpp:37
 #, fuzzy, kde-format
 #| msgid "&Folder:"
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "&Pasta:"
 
-#: addarchivemailwidget.cpp:48
+#: addarchivemailwidget.cpp:47
 #, fuzzy, kde-format
 #| msgid "Format:"
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Formato:"
 
-#: addarchivemailwidget.cpp:56
+#: addarchivemailwidget.cpp:55
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Localização:"
 
-#: addarchivemailwidget.cpp:63
+#: addarchivemailwidget.cpp:62
 #, fuzzy, kde-format
 #| msgid "Backup each:"
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Salvaguardar a cada:"
 
-#: addarchivemailwidget.cpp:75
+#: addarchivemailwidget.cpp:74
 #, fuzzy, kde-format
 #| msgid "Maximum number of archive:"
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Número máximo de arquivos:"
 
-#: addarchivemailwidget.cpp:78
+#: addarchivemailwidget.cpp:77
 #, kde-format
 msgid "unlimited"
 msgstr "ilimitado"
@@ -84,7 +84,7 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arquivo"
 
-#: archivemailrangewidget.cpp:22
+#: archivemailrangewidget.cpp:20
 #, kde-format
 msgctxt "@option:check"
 msgid "Use Range"
