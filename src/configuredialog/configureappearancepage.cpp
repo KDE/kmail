@@ -536,12 +536,18 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
 
 void AppearancePageLayoutTab::doLoadOther()
 {
-    mFolderListGroup->buttons().at(KMailSettings::self()->folderListItem()->value())->setChecked(true);
-    mReaderWindowModeGroup->buttons().at(KMailSettings::self()->readerWindowModeItem()->value())->setChecked(true);
+    if (auto *button = mFolderListGroup->button(KMailSettings::self()->folderListItem()->value())) {
+        button->setChecked(true);
+    }
+    if (auto *button = mReaderWindowModeGroup->button(KMailSettings::self()->readerWindowModeItem()->value())) {
+        button->setChecked(true);
+    }
 
     if (KMKernel::self()) {
         const auto item = KMKernel::self()->mailCommonSettings()->favoriteCollectionViewModeItem();
-        mFavoriteFoldersViewGroup->buttons().at(item->value())->setChecked(true);
+        if (auto *button = mFavoriteFoldersViewGroup->button(item->value())) {
+            button->setChecked(true);
+        }
         if (item->isImmutable()) {
             for (int i = 0, count = mFavoriteFoldersViewGroup->buttons().count(); i < count; i++) {
                 checkLockDown(mFavoriteFoldersViewGroup->buttons().at(i), item);
@@ -551,7 +557,9 @@ void AppearancePageLayoutTab::doLoadOther()
     loadWidget(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
     const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy();
     if (checkedFolderToolTipsPolicy >= 0) {
-        mFolderToolTipsGroup->button(checkedFolderToolTipsPolicy)->setChecked(true);
+        if (auto *button = mFolderToolTipsGroup->button(checkedFolderToolTipsPolicy)) {
+            button->setChecked(true);
+        }
     }
 }
 

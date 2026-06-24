@@ -289,9 +289,17 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
 void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 {
     auto action = qobject_cast<QAction *>(sender());
+    if (!action) {
+        qCWarning(KMAIL_LOG) << "slotCheckOnStatupChanged called without QAction sender";
+        return;
+    }
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
+    if (!opts) {
+        qCWarning(KMAIL_LOG) << "No retrieval options found for resource" << ident;
+        return;
+    }
     opts->CheckOnStartup = checked;
     slotEmitChanged();
 }
@@ -299,9 +307,17 @@ void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
 void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 {
     auto action = qobject_cast<QAction *>(sender());
+    if (!action) {
+        qCWarning(KMAIL_LOG) << "slotIncludeInCheckChanged called without QAction sender";
+        return;
+    }
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
+    if (!opts) {
+        qCWarning(KMAIL_LOG) << "No retrieval options found for resource" << ident;
+        return;
+    }
     opts->IncludeInManualChecks = checked;
     slotEmitChanged();
 }
@@ -309,9 +325,17 @@ void AccountsPageReceivingTab::slotIncludeInCheckChanged(bool checked)
 void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 {
     auto action = qobject_cast<QAction *>(sender());
+    if (!action) {
+        qCWarning(KMAIL_LOG) << "slotOfflineOnShutdownChanged called without QAction sender";
+        return;
+    }
     const QString ident = action->data().toString();
 
     QSharedPointer<RetrievalOptions> opts = mRetrievalHash.value(ident);
+    if (!opts) {
+        qCWarning(KMAIL_LOG) << "No retrieval options found for resource" << ident;
+        return;
+    }
     opts->OfflineOnShutdown = checked;
     slotEmitChanged();
 }
