@@ -39,14 +39,14 @@ void ColorListBox::addColor(const QString &text, const QColor &color)
 
 void ColorListBox::setColorSilently(int index, const QColor &color)
 {
-    if (index < model()->rowCount()) {
+    if (index >= 0 && index < model()->rowCount()) {
         topLevelItem(index)->setData(0, Qt::DecorationRole, color);
     }
 }
 
 void ColorListBox::setColor(int index, const QColor &color)
 {
-    if (index < model()->rowCount()) {
+    if (index >= 0 && index < model()->rowCount()) {
         topLevelItem(index)->setData(0, Qt::DecorationRole, color);
         Q_EMIT changed();
     }
@@ -54,7 +54,7 @@ void ColorListBox::setColor(int index, const QColor &color)
 
 QColor ColorListBox::color(int index) const
 {
-    if (index < model()->rowCount()) {
+    if (index >= 0 && index < model()->rowCount()) {
         return topLevelItem(index)->data(0, Qt::DecorationRole).value<QColor>();
     } else {
         return Qt::black;
