@@ -127,6 +127,7 @@ ArchiveFolderDialog::ArchiveFolderDialog(QWidget *parent)
 
     // Make it a bit bigger, else the folder requester cuts off the text too early
     resize(500, minimumSize().height());
+    mOkButton->setEnabled(false);
 }
 
 static bool canRemoveFolder(const Akonadi::Collection &col)
@@ -144,6 +145,7 @@ void ArchiveFolderDialog::slotRecursiveCheckboxClicked()
 void ArchiveFolderDialog::slotFolderChanged(const Akonadi::Collection &folder)
 {
     mDeleteCheckBox->setEnabled(allowToDeleteFolders(folder));
+    updateOkButtonState(folder);
 }
 
 bool ArchiveFolderDialog::allowToDeleteFolders(const Akonadi::Collection &folder) const
@@ -156,9 +158,14 @@ void ArchiveFolderDialog::setFolder(const Akonadi::Collection &defaultCollection
     mFolderRequester->setCollection(defaultCollection);
     // TODO: what if the file already exists?
     mUrlRequester->setUrl(QUrl::fromLocalFile(standardArchivePath(defaultCollection.name())));
-    const QSharedPointer<FolderSettings> folder = FolderSettings::forCollection(defaultCollection, false);
     mDeleteCheckBox->setEnabled(allowToDeleteFolders(defaultCollection));
-    mOkButton->setEnabled(defaultCollection.isValid() && folder && !folder->isStructural());
+    updateOkButtonState(defaultCollection);
+}
+
+void ArchiveFolderDialog::updateOkButtonState(const Akonadi::Collection &folder)
+{
+    const QSharedPointer<FolderSettings> folderSettings = FolderSettings::forCollection(folder, false);
+    mOkButton->setEnabled(!mUrlRequester->url().isEmpty() && folder.isValid() && folderSettings && !folderSettings->isStructural());
 }
 
 void ArchiveFolderDialog::slotAccepted()
@@ -206,7 +213,9 @@ void ArchiveFolderDialog::slotFixFileExtension()
 
 void ArchiveFolderDialog::slotUrlChanged(const QString &url)
 {
-    mOkButton->setEnabled(!url.isEmpty());
+    Q_UNUSED(url)
+    const Akonadi::Collection folder = mFolderRequester->hasCollection() ? mFolderRequester->collection() : Akonadi::Collection();
+    updateOkButtonState(folder);
 }
 
 #include "moc_archivefolderdialog.cpp"

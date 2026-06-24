@@ -38,6 +38,7 @@ private:
     void slotRecursiveCheckboxClicked();
     void slotAccepted();
     void slotUrlChanged(const QString &);
+    void updateOkButtonState(const Akonadi::Collection &folder);
 
     [[nodiscard]] bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
     [[nodiscard]] QString standardArchivePath(const QString &folderName);
