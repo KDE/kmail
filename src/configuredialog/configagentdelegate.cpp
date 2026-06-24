@@ -89,6 +89,8 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
         textColor = option.palette.color(cg, QPalette::Text);
     }
 
+    const QString escapedName = name.toHtmlEscaped();
+    const QString escapedStatusMessage = statusMessage.toHtmlEscaped();
     const QString content = QStringLiteral(
                                 "<html style=\"color:%1\">"
                                 "<body>"
@@ -97,12 +99,12 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
                                 "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
                                 "<td><b>%2</b></td>"
                                 "</tr>")
-                                .arg(textColor.name().toUpper(), name)
+                                .arg(textColor.name().toUpper(), escapedName)
         + QStringLiteral(
               "<tr>"
               "<td><img src=\"status_icon\"/> %1 %2</td>"
               "</tr>")
-              .arg(statusMessage, status == 1 ? i18n("(%1%)", progress) : ""_L1)
+              .arg(escapedStatusMessage, status == AgentInstance::Running ? i18n("(%1%)", progress) : ""_L1)
         + "</table></body></html>"_L1;
 
     document->setHtml(content);
