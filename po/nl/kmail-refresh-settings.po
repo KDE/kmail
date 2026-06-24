@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# SPDX-FileCopyrightText: 2019, 2020, 2021, 2022, 2023, 2024, 2025 Freek de Kruijf <freekdekruijf@kde.nl>
+# SPDX-FileCopyrightText: 2019-2026 Freek de Kruijf <freekdekruijf@kde.nl>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-23 00:46+0000\n"
-"PO-Revision-Date: 2025-05-19 16:23+0200\n"
+"PO-Revision-Date: 2026-06-23 23:49+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -15,12 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.1\n"
+"X-Generator: Lokalize 26.04.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Freek de Kruijf - 2019 t/m 2025"
+msgstr "Freek de Kruijf - 2019 t/m 2026"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
@@ -33,10 +33,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Assistent van KMail voor vernieuwen van instellingen"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "© 2019-2025 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "© 2019-2026 Laurent Montel <montel@kde.org>"
-msgstr "© 2019-2025 Laurent Montel <montel@kde.org>"
+msgstr "© 2019-2026 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format
