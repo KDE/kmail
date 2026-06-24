@@ -68,6 +68,9 @@ void KMKnotify::slotConfigChanged(bool changed)
 
 void KMKnotify::slotComboChanged(int index)
 {
+    if (index < 0 || index >= m_comboNotify->count()) {
+        return;
+    }
     QString text(m_comboNotify->itemData(index).toString());
     if (m_changed) {
         m_notifyWidget->save();
