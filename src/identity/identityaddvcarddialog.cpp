@@ -76,6 +76,11 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
 
     // row 4: radio button
     auto duplicateExistingVCard = new QRadioButton(i18nc("@option:radio", "&Duplicate existing vCard"), this);
+    const bool hasShadowIdentities = !shadowIdentities.isEmpty();
+    duplicateExistingVCard->setEnabled(hasShadowIdentities);
+    if (!hasShadowIdentities) {
+        duplicateExistingVCard->setToolTip(i18nc("@info:tooltip", "No existing identity with a vCard is available."));
+    }
     vlay->addWidget(duplicateExistingVCard);
     mButtonGroup->addButton(duplicateExistingVCard, static_cast<int>(DuplicateMode::ExistingEntry));
 
@@ -100,6 +105,22 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     // button's state:
     connect(duplicateExistingVCard, &QRadioButton::toggled, label, &QLabel::setEnabled);
     connect(duplicateExistingVCard, &QRadioButton::toggled, mComboBox, &QComboBox::setEnabled);
+
+    auto updateOkButton = [this, okButton, fromExistingVCard, duplicateExistingVCard]() {
+        bool enabled = true;
+        if (fromExistingVCard->isChecked()) {
+            enabled = !mVCardPath->url().isEmpty();
+        } else if (duplicateExistingVCard->isChecked()) {
+            enabled = (mComboBox->count() > 0);
+        }
+        okButton->setEnabled(enabled);
+    };
+    connect(fromExistingVCard, &QRadioButton::toggled, this, updateOkButton);
+    connect(duplicateExistingVCard, &QRadioButton::toggled, this, updateOkButton);
+    connect(mVCardPath, &KUrlRequester::textChanged, this, updateOkButton);
+    connect(mComboBox, &QComboBox::currentIndexChanged, this, updateOkButton);
+    updateOkButton();
+
     resize(350, 130);
 }
 
