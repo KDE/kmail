@@ -117,7 +117,8 @@ bool MailServiceImpl::sendMessage(const QString &from,
     part->setBody(attachment); // TODO: check it!
     msg->appendContent(std::move(part));
 
-    KMail::makeComposer(msg, false, false);
+    KMail::Composer *cWin = KMail::makeComposer(msg, false, false);
+    cWin->slotSendNow();
     return true;
 }
 
