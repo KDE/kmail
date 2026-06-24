@@ -17,6 +17,7 @@ HistoryClosedReaderMenu::HistoryClosedReaderMenu(QObject *parent)
     auto subMenu = new QMenu;
     setMenu(subMenu);
     connect(HistoryClosedReaderManager::self(), &HistoryClosedReaderManager::historyClosedReaderChanged, this, &HistoryClosedReaderMenu::updateMenu);
+    updateMenu();
 }
 
 HistoryClosedReaderMenu::~HistoryClosedReaderMenu() = default;
@@ -36,6 +37,10 @@ void HistoryClosedReaderMenu::updateMenu()
     }
     menu()->clear();
     const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos();
+    setEnabled(!list.isEmpty());
+    if (mReopenAction) {
+        mReopenAction->setEnabled(!list.isEmpty());
+    }
     if (!list.isEmpty()) {
         addReOpenClosedAction();
         for (const auto &info : list) {
@@ -75,6 +80,7 @@ void HistoryClosedReaderMenu::createReOpenClosedAction()
     if (!mReopenAction) {
         mReopenAction = new QAction(i18nc("@action", "Reopen Closed Viewer"), this);
         connect(mReopenAction, &QAction::triggered, this, &HistoryClosedReaderMenu::slotReopenLastClosedViewer);
+        mReopenAction->setEnabled(!HistoryClosedReaderManager::self()->isEmpty());
 
         mSeparatorAction = new QAction(this);
         mSeparatorAction->setSeparator(true);
