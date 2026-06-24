@@ -28,16 +28,11 @@ IdentityExpireSpamFolderDialog::IdentityExpireSpamFolderDialog(QWidget *parent)
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     buttonBox->setObjectName("buttonBox"_L1);
     mainLayout->addWidget(buttonBox);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityExpireSpamFolderDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &IdentityExpireSpamFolderDialog::slotAccepted);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &IdentityExpireSpamFolderDialog::reject);
 }
 
-IdentityExpireSpamFolderDialog::~IdentityExpireSpamFolderDialog()
-{
-    if (mChanged) {
-        saveAndExpire(mCollection, true, false);
-    }
-}
+IdentityExpireSpamFolderDialog::~IdentityExpireSpamFolderDialog() = default;
 
 void IdentityExpireSpamFolderDialog::load(const Akonadi::Collection &collection)
 {
@@ -56,6 +51,14 @@ void IdentityExpireSpamFolderDialog::load(const Akonadi::Collection &collection)
 void IdentityExpireSpamFolderDialog::slotSaveAndExpire()
 {
     saveAndExpire(mCollection, true, true); // save and start expire job
+}
+
+void IdentityExpireSpamFolderDialog::slotAccepted()
+{
+    if (mChanged) {
+        saveAndExpire(mCollection, true, false);
+    }
+    accept();
 }
 
 void IdentityExpireSpamFolderDialog::slotChanged()

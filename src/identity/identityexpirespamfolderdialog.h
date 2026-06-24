@@ -21,6 +21,7 @@ public:
     void load(const Akonadi::Collection &collection);
 
 private:
+    void slotAccepted();
     void slotSaveAndExpire();
     void slotChanged();
     void slotConfigChanged(bool changed);
