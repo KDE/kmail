@@ -35,7 +35,7 @@ Q_SIGNALS:
 
 private:
     void slotCollectionPropertiesFinished(KJob *job);
-    void askForNextCheck(quint64 id, bool needToReindex = false);
+    void askForNextCheck(Akonadi::Collection::Id id, bool needToReindex = false);
     Akonadi::Collection mCollection;
     Akonadi::Search::PIM::IndexedItems *const mIndexedItems;
 };

@@ -20,7 +20,7 @@ CheckIndexingJob::CheckIndexingJob(Akonadi::Search::PIM::IndexedItems *indexedIt
 
 CheckIndexingJob::~CheckIndexingJob() = default;
 
-void CheckIndexingJob::askForNextCheck(quint64 id, bool needToReindex)
+void CheckIndexingJob::askForNextCheck(Akonadi::Collection::Id id, bool needToReindex)
 {
     Q_EMIT finished(id, needToReindex);
     deleteLater();
