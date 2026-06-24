@@ -358,7 +358,7 @@ void KMReaderMainWin::slotForwardInlineMsg()
     } else {
         command = new KMForwardCommand(this, mReaderWin->messageItem(), 0, QString(), mReaderWin->copyText());
     }
-    connect(command, &KMTrashMsgCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
+    connect(command, &KMCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
     command->start();
 }
 
