@@ -55,7 +55,7 @@ static QString toolTip(const Akonadi::Item &item)
                "</div>"
                "</td>"
                "</tr>")
-               .arg(txtColorName, bckColorName, subject.toHtmlEscaped(), textDirection);
+               .arg(bckColorName, txtColorName, subject.toHtmlEscaped(), textDirection);
 
     tip += QStringLiteral(
         "<tr>"
