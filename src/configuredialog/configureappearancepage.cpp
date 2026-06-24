@@ -512,7 +512,6 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     formLayout->addRow(nullptr, folderToolTipsNeverRadio);
 
     // "show reader window" radio buttons:
-    mReaderWindowModeGroup = new QButtonGroup(this);
     const auto readerWindowModeItem = KMailSettings::self()->readerWindowModeItem();
     const auto readerWindowModeLayout = new QVBoxLayout;
     mReaderWindowModeGroup = new QButtonGroup(this);
