@@ -237,6 +237,9 @@ void MessageActions::setCurrentMessage(const Akonadi::Item &msg, const Akonadi::
         } else {
             mVisibleItems.clear();
         }
+    } else if (msg.isValid()) {
+        // Avoid keeping a stale multi-selection from previous calls.
+        mVisibleItems.clear();
     }
 
     if (!msg.isValid()) {
