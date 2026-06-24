@@ -16,11 +16,13 @@ KMSieveImapPasswordProvider::~KMSieveImapPasswordProvider() = default;
 
 void KMSieveImapPasswordProvider::passwords(const QString &identifier)
 {
-    mIdentifier = identifier;
+    const uint requestId = ++mRequestId;
 
     auto readJob = new ReadPasswordJob(QStringLiteral("imap"), this);
     connect(readJob, &Job::finished, this, &KMSieveImapPasswordProvider::readSieveServerPasswordFinished);
-    readJob->setKey(mIdentifier + QStringLiteral("rc"));
+    mJobRequestIds.insert(readJob, requestId);
+    mJobIdentifiers.insert(readJob, identifier);
+    readJob->setKey(identifier + QStringLiteral("rc"));
     readJob->start();
 }
 
@@ -28,6 +30,12 @@ void KMSieveImapPasswordProvider::readSieveServerPasswordFinished(QKeychain::Job
 {
     auto job = qobject_cast<ReadPasswordJob *>(baseJob);
     Q_ASSERT(job);
+    const uint requestId = mJobRequestIds.take(job);
+    const QString identifier = mJobIdentifiers.take(job);
+    if (requestId != mRequestId) {
+        return;
+    }
+
     if (job->error()) {
         qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();
     } else {
@@ -36,7 +44,8 @@ void KMSieveImapPasswordProvider::readSieveServerPasswordFinished(QKeychain::Job
 
     auto readJob = new ReadPasswordJob(QStringLiteral("imap"), this);
     connect(readJob, &Job::finished, this, &KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished);
-    readJob->setKey(QStringLiteral("custom_sieve_") + mIdentifier + QStringLiteral("rc"));
+    mJobRequestIds.insert(readJob, requestId);
+    readJob->setKey(QStringLiteral("custom_sieve_") + identifier + QStringLiteral("rc"));
     readJob->start();
 }
 
@@ -44,6 +53,11 @@ void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychai
 {
     auto job = qobject_cast<ReadPasswordJob *>(baseJob);
     Q_ASSERT(job);
+    const uint requestId = mJobRequestIds.take(job);
+    if (requestId != mRequestId) {
+        return;
+    }
+
     if (job->error()) {
         if (job->error() != QKeychain::EntryNotFound) {
             qCWarning(KMAIL_LOG) << "An error occurred while reading password: " << job->errorString();

@@ -7,6 +7,7 @@
 #pragma once
 #include "kmail_private_export.h"
 #include <KSieveCore/SieveImapPasswordProvider>
+#include <QHash>
 #include <qt6keychain/keychain.h>
 class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveCore::SieveImapPasswordProvider
 {
@@ -20,7 +21,9 @@ public:
 private:
     KMAIL_NO_EXPORT void readSieveServerPasswordFinished(QKeychain::Job *baseJob);
     KMAIL_NO_EXPORT void readSieveServerCustomPasswordFinished(QKeychain::Job *baseJob);
-    QString mIdentifier;
     QString mSievePassword;
     QString mSieveCustomPassword;
+    uint mRequestId = 0;
+    QHash<QKeychain::Job *, uint> mJobRequestIds;
+    QHash<QKeychain::Job *, QString> mJobIdentifiers;
 };
