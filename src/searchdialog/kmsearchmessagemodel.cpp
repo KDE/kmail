@@ -79,32 +79,33 @@ static QString toolTip(const Akonadi::Item &item)
         "</tr>");
 
     QString content = MessageList::Util::contentSummary(item);
+    const QString contentHtml = content.toHtmlEscaped().replace(QLatin1Char('\n'), QStringLiteral("<br>"));
 
     if (textIsLeftToRight) {
         if (auto from = msg->from(KMime::CreatePolicy::DontCreate)) {
-            tip += htmlCodeForStandardRow.arg(i18n("From"), from->displayString());
+            tip += htmlCodeForStandardRow.arg(i18n("From"), from->displayString().toHtmlEscaped());
         }
         if (auto to = msg->to(KMime::CreatePolicy::DontCreate)) {
-            tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To"), to->displayString());
+            tip += htmlCodeForStandardRow.arg(i18nc("Receiver of the email", "To"), to->displayString().toHtmlEscaped());
         }
         if (auto date = msg->date(KMime::CreatePolicy::DontCreate)) {
             tip += htmlCodeForStandardRow.arg(i18n("Date"), QLocale().toString(date->dateTime()));
         }
         if (!content.isEmpty()) {
-            tip += htmlCodeForStandardRow.arg(i18n("Preview"), content.replace(QLatin1Char('\n'), QStringLiteral("<br>")));
+            tip += htmlCodeForStandardRow.arg(i18n("Preview"), contentHtml);
         }
     } else {
         if (auto from = msg->from(KMime::CreatePolicy::DontCreate)) {
-            tip += htmlCodeForStandardRow.arg(from->displayString(), i18n("From"));
+            tip += htmlCodeForStandardRow.arg(from->displayString().toHtmlEscaped(), i18n("From"));
         }
         if (auto to = msg->to(KMime::CreatePolicy::DontCreate)) {
-            tip += htmlCodeForStandardRow.arg(to->displayString(), i18nc("Receiver of the email", "To"));
+            tip += htmlCodeForStandardRow.arg(to->displayString().toHtmlEscaped(), i18nc("Receiver of the email", "To"));
         }
         if (auto date = msg->date(KMime::CreatePolicy::DontCreate)) {
             tip += htmlCodeForStandardRow.arg(QLocale().toString(date->dateTime()), i18n("Date"));
         }
         if (!content.isEmpty()) {
-            tip += htmlCodeForStandardRow.arg(content.replace(QLatin1Char('\n'), QStringLiteral("<br>")), i18n("Preview"));
+            tip += htmlCodeForStandardRow.arg(contentHtml, i18n("Preview"));
         }
     }
     tip += QLatin1StringView(
