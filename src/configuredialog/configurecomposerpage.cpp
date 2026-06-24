@@ -408,7 +408,8 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
     const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature() == "auto"_L1;
     const bool topQuoteCheck = MessageComposer::MessageComposerSettings::self()->prependSignature();
     const bool dashDashSignature = MessageComposer::MessageComposerSettings::self()->dashDashSignature();
-    const bool smartQuoteCheck = MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly();
+    const bool smartQuoteCheck = TemplateParser::TemplateParserSettings::self()->smartQuote();
+    const bool quoteSelectionOnly = MessageComposer::MessageComposerSettings::self()->quoteSelectionOnly();
     const bool wordWrap = MessageComposer::MessageComposerSettings::self()->wordWrap();
     const int wrapColumn = MessageComposer::MessageComposerSettings::self()->lineWrapWidth();
     const bool showRecentAddress = MessageComposer::MessageComposerSettings::self()->showRecentAddressesInComposer();
@@ -422,7 +423,8 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
     mAutoAppSignFileCheck->setChecked(autoAppSignFile);
     mTopQuoteCheck->setChecked(topQuoteCheck);
     mDashDashCheck->setChecked(dashDashSignature);
-    mQuoteSelectionOnlyCheck->setChecked(smartQuoteCheck);
+    mSmartQuoteCheck->setChecked(smartQuoteCheck);
+    mQuoteSelectionOnlyCheck->setChecked(quoteSelectionOnly);
     mWordWrapCheck->setChecked(wordWrap);
     mWrapColumnSpin->setValue(wrapColumn);
     mMaximumRecipients->setValue(maximumRecipient);
