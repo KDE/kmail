@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-02 00:44+0000\n"
+"POT-Creation-Date: 2026-06-25 00:45+0000\n"
 "PO-Revision-Date: 2026-04-26 12:21+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -388,7 +388,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Posta-zerrenda batera posta bidaltzeko URLa:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Harpidetu zerrendara"
@@ -514,12 +514,12 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "Irakurt&zeke:"
 
-#: configuredialog/configagentdelegate.cpp:105
+#: configuredialog/configagentdelegate.cpp:107
 #, kde-format
 msgid "(%1%)"
 msgstr "(%%1)"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:215
 #, kde-format
 msgid "Retrieval Options"
 msgstr "Berreskuratze aukerak"
@@ -641,7 +641,7 @@ msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Egiaztatu posta abiatzean"
 
-#: configuredialog/configureaccountpage.cpp:325
+#: configuredialog/configureaccountpage.cpp:349
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -836,36 +836,36 @@ msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "Karpetei buruzko argibideak:"
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:589
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Formatu e&standarra (%1)"
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:590
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Formatu it&zulia (%1)"
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:591
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "Formatu adi&menduna (%1)"
 
-#: configuredialog/configureappearancepage.cpp:585
+#: configuredialog/configureappearancepage.cpp:592
 msgid "C&ustom format:"
 msgstr "Ne&urrira ipinitako formatua:"
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:615
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Multzokatze lehenetsia:"
 
-#: configuredialog/configureappearancepage.cpp:626
+#: configuredialog/configureappearancepage.cpp:633
 #, kde-format
 msgid "Default theme:"
 msgstr "Gai lehenetsia:"
 
-#: configuredialog/configureappearancepage.cpp:663
+#: configuredialog/configureappearancepage.cpp:670
 #, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
@@ -873,7 +873,7 @@ msgstr ""
 "<qt><a href=\"whatsthis1\">Neurrira ipinitako formatuei buruzko informazioa…"
 "</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:669
+#: configuredialog/configureappearancepage.cpp:676
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -920,115 +920,115 @@ msgstr ""
 "li></ul><p><strong>Beste sarrerako karaktere guztiak baztertu egingo dira.</"
 "strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:706
+#: configuredialog/configureappearancepage.cpp:713
 #, kde-format
 msgid "Date Display:"
 msgstr "Data azaltzea:"
 
-#: configuredialog/configureappearancepage.cpp:811
+#: configuredialog/configureappearancepage.cpp:818
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
 msgstr "Erakutsi nortasun propioa"
 
-#: configuredialog/configureappearancepage.cpp:816
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgid "Message Window"
 msgstr "Mezuen leihoa"
 
-#: configuredialog/configureappearancepage.cpp:823
+#: configuredialog/configureappearancepage.cpp:830
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "Itxi mezu-leiho bereizia mezuari erantzun edo birbidali ondoren"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:842
 #, kde-format
 msgid "System Tray"
 msgstr "Sistemaren erretilua"
 
-#: configuredialog/configureappearancepage.cpp:841
+#: configuredialog/configureappearancepage.cpp:848
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Gaitu sistemaren erretiluko ikonoa"
 
-#: configuredialog/configureappearancepage.cpp:845
+#: configuredialog/configureappearancepage.cpp:852
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Hasi erretiluan ikonotuta"
 
-#: configuredialog/configureappearancepage.cpp:863
+#: configuredialog/configureappearancepage.cpp:870
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Erakutsi ataza-barran irakurri gabeko e-postak"
 
-#: configuredialog/configureappearancepage.cpp:868
+#: configuredialog/configureappearancepage.cpp:875
 #, kde-format
 msgid "Plasma activities"
 msgstr "Plasma jarduerak"
 
-#: configuredialog/configureappearancepage.cpp:873
+#: configuredialog/configureappearancepage.cpp:880
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Gaitu"
 
-#: configuredialog/configureappearancepage.cpp:945
+#: configuredialog/configureappearancepage.cpp:952
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Etiketa era&bilgarriak"
 
-#: configuredialog/configureappearancepage.cpp:958
+#: configuredialog/configureappearancepage.cpp:965
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Gehitu etiketa berria"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:970
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Kendu hautatutako etiketa"
 
-#: configuredialog/configureappearancepage.cpp:972
+#: configuredialog/configureappearancepage.cpp:979
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Handiagotu etiketaren lehentasuna"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:985
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Txikiagotu etiketaren lehentasuna"
 
-#: configuredialog/configureappearancepage.cpp:1002
+#: configuredialog/configureappearancepage.cpp:1009
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Eti&keta ezarpenak"
 
-#: configuredialog/configureappearancepage.cpp:1052
+#: configuredialog/configureappearancepage.cpp:1059
 #, kde-format
 msgid "Delete"
 msgstr "Ezabatuta"
 
-#: configuredialog/configureappearancepage.cpp:1183
+#: configuredialog/configureappearancepage.cpp:1190
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "«%1» etiketa kendu nahi duzu?"
 
-#: configuredialog/configureappearancepage.cpp:1184
+#: configuredialog/configureappearancepage.cpp:1191
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Kendu etiketa"
 
-#: configuredialog/configureappearancepage.cpp:1229
-#: configuredialog/configureappearancepage.cpp:1264
+#: configuredialog/configureappearancepage.cpp:1236
+#: configuredialog/configureappearancepage.cpp:1271
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Ezin dugu etiketa sortu. Izen bereko etiketa bat dago."
@@ -1256,13 +1256,13 @@ msgstr "Konposatzailea"
 msgid "Activate quick text format toolbar"
 msgstr "Aktibatu testu-formatu bizkorra tresna-barra"
 
-#: configuredialog/configurecomposerpage.cpp:580
+#: configuredialog/configurecomposerpage.cpp:582
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Erant&zunen gaiaren aurrizkia"
 
-#: configuredialog/configurecomposerpage.cpp:585
-#: configuredialog/configurecomposerpage.cpp:611
+#: configuredialog/configurecomposerpage.cpp:587
+#: configuredialog/configurecomposerpage.cpp:613
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1272,169 +1272,169 @@ msgstr ""
 "Ezagutu ondorengo aurrizkien edozein sekuentzia (sarrerak  maius./minus. "
 "nabarmentzen ez duten adierazpen erregularrak dira):"
 
-#: configuredialog/configurecomposerpage.cpp:593
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "A&dd…"
 msgstr "Ge&hitu…"
 
-#: configuredialog/configurecomposerpage.cpp:593
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "Re&move"
 msgstr "&Kendu"
 
-#: configuredialog/configurecomposerpage.cpp:593
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Al&datu…"
 
-#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:595
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Sartu erantzun-aurrizki berria:"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Erantzun aurrizkia kendu nahi duzu?"
 
-#: configuredialog/configurecomposerpage.cpp:596
+#: configuredialog/configurecomposerpage.cpp:598
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Erantzunaren aurrizkia:"
 
-#: configuredialog/configurecomposerpage.cpp:607
+#: configuredialog/configurecomposerpage.cpp:609
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Birbida&litako mezuen gaiaren aurrizkia"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:619 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Kendu"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Add…"
 msgstr "Gehitu…"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Modify…"
 msgstr "Aldatu…"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Sartu birbidalitako mezuen aurrizki berria:"
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Birbidaltzeko aurrizkia kendu nahi duzu?"
 
-#: configuredialog/configurecomposerpage.cpp:619
+#: configuredialog/configurecomposerpage.cpp:621
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Birbidaltzearen aurrizkia:"
 
-#: configuredialog/configurecomposerpage.cpp:667
+#: configuredialog/configurecomposerpage.cpp:669
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definitu neurrira ipinitako goiburuko MIME eremuak:"
 
-#: configuredialog/configurecomposerpage.cpp:675
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Izena"
 
-#: configuredialog/configurecomposerpage.cpp:676
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Balioa"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Berria"
 
-#: configuredialog/configurecomposerpage.cpp:688
+#: configuredialog/configurecomposerpage.cpp:690
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Ke&ndu"
 
-#: configuredialog/configurecomposerpage.cpp:697
+#: configuredialog/configurecomposerpage.cpp:699
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Izena:"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:709
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Balioa:"
 
-#: configuredialog/configurecomposerpage.cpp:839
+#: configuredialog/configurecomposerpage.cpp:841
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "«Content-Type» ez da baimendutako kate bat. Goiburu hau ez da gordeko."
 
-#: configuredialog/configurecomposerpage.cpp:840
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Goiburu baliogabea"
 
-#: configuredialog/configurecomposerpage.cpp:875
+#: configuredialog/configurecomposerpage.cpp:877
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&Gaitu falta diren eranskinak hautematea"
 
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:883
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Fitxategi bat eransteko, ondoko gako-hitzetako edozein ezagutzea:"
 
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Sartu gako-hitz berria:"
 
-#: configuredialog/configurecomposerpage.cpp:894
+#: configuredialog/configurecomposerpage.cpp:896
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Eranskin honetako hitz hau kendu nahi duzu?"
 
-#: configuredialog/configurecomposerpage.cpp:895
+#: configuredialog/configurecomposerpage.cpp:897
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Eranskinaren hitza:"
 
-#: configuredialog/configurecomposerpage.cpp:902
+#: configuredialog/configurecomposerpage.cpp:904
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Eranskinaren gehienezko neurria:"
 
-#: configuredialog/configurecomposerpage.cpp:909
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:913
 #, kde-format
 msgid "No limit"
 msgstr "Mugarik ez"
@@ -1701,12 +1701,12 @@ msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Artxibatu azpikarpeta guztiak"
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:178
 #, kde-format
 msgid "Please select the folder that should be archived."
 msgstr "Mesedez hautatu artxibatu beharko litzateen karpeta"
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:178
 #, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
@@ -2911,12 +2911,12 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Irakurlea itxi da"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:57
+#: historyclosedreader/historyclosedreadermenu.cpp:62
 #, kde-format
 msgid "Clear History"
 msgstr "Garbitu historia"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:76
+#: historyclosedreader/historyclosedreadermenu.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
@@ -2977,7 +2977,13 @@ msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "&Bikoiztu dagoen vCard bat"
 
-#: identity/identityaddvcarddialog.cpp:90 identity/newidentitydialog.cpp:91
+#: identity/identityaddvcarddialog.cpp:82
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "No existing identity with a vCard is available."
+msgstr ""
+
+#: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
@@ -6159,68 +6165,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Artxibatu mezua"
 
-#: messageactions.cpp:400
+#: messageactions.cpp:403
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Iragazi posta-zerrenda…"
 
-#: messageactions.cpp:436
+#: messageactions.cpp:439
 #, kde-format
 msgid "<unknown>"
 msgstr "<ezezaguna>"
 
-#: messageactions.cpp:436
+#: messageactions.cpp:439
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Posta-zerrendaren izena: %1"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:442
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Ireki Zerrenda-artxiboko mezua"
 
-#: messageactions.cpp:442
+#: messageactions.cpp:445
 #, kde-format
 msgid "Post New Message"
 msgstr "Bidali mezu berria"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:448
 #, kde-format
 msgid "Go to Archive"
 msgstr "Joan artxibora"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:451
 #, kde-format
 msgid "Request Help"
 msgstr "Eskatu laguntza"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:454
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Kontaktuaren jabea"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:460
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Kendu zerrendako harpidetza"
 
-#: messageactions.cpp:466
+#: messageactions.cpp:469
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Iragazi %1 posta-zerrenda…"
 
-#: messageactions.cpp:643
+#: messageactions.cpp:646
 #, kde-format
 msgid "email"
 msgstr "e-posta"
 
-#: messageactions.cpp:646
+#: messageactions.cpp:649
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:651
+#: messageactions.cpp:654
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6228,13 +6234,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:757
+#: messageactions.cpp:760
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Esportatu PDF gisa"
 
-#: messageactions.cpp:759
+#: messageactions.cpp:762
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF dokumentua (*.pdf)"
@@ -6261,32 +6267,32 @@ msgstr "Indexatzea"
 msgid "Indexing Collections…"
 msgstr "Bildumak indexatzen…"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:94
+#: searchdialog/kmsearchmessagemodel.cpp:86
+#: searchdialog/kmsearchmessagemodel.cpp:99
 #, kde-format
 msgid "From"
 msgstr "Nork"
 
-#: searchdialog/kmsearchmessagemodel.cpp:84
-#: searchdialog/kmsearchmessagemodel.cpp:97
+#: searchdialog/kmsearchmessagemodel.cpp:89
+#: searchdialog/kmsearchmessagemodel.cpp:102
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "Nori"
 
-#: searchdialog/kmsearchmessagemodel.cpp:87
-#: searchdialog/kmsearchmessagemodel.cpp:100
+#: searchdialog/kmsearchmessagemodel.cpp:92
+#: searchdialog/kmsearchmessagemodel.cpp:105
 #, kde-format
 msgid "Date"
 msgstr "Data"
 
-#: searchdialog/kmsearchmessagemodel.cpp:90
-#: searchdialog/kmsearchmessagemodel.cpp:103
+#: searchdialog/kmsearchmessagemodel.cpp:95
+#: searchdialog/kmsearchmessagemodel.cpp:108
 #, kde-format
 msgid "Preview"
 msgstr "Aurreikustea"
 
-#: searchdialog/kmsearchmessagemodel.cpp:161
+#: searchdialog/kmsearchmessagemodel.cpp:166
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"

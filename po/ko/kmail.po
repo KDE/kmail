@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-02 00:44+0000\n"
+"POT-Creation-Date: 2026-06-25 00:45+0000\n"
 "PO-Revision-Date: 2026-05-25 21:28+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -384,7 +384,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "메일링 리스트에 글을 쓰는 URL:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:454
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
 #, kde-format
 msgid "Subscribe to List"
 msgstr "메일링 리스트에 가입"
@@ -509,12 +509,12 @@ msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
 msgstr "읽지 않음(&U):"
 
-#: configuredialog/configagentdelegate.cpp:105
+#: configuredialog/configagentdelegate.cpp:107
 #, kde-format
 msgid "(%1%)"
 msgstr "(%1%)"
 
-#: configuredialog/configagentdelegate.cpp:213
+#: configuredialog/configagentdelegate.cpp:215
 #, kde-format
 msgid "Retrieval Options"
 msgstr "가져오기 옵션"
@@ -636,7 +636,7 @@ msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "시작할 때 메일 확인"
 
-#: configuredialog/configureaccountpage.cpp:325
+#: configuredialog/configureaccountpage.cpp:349
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -830,42 +830,42 @@ msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "폴더 풍선 도움말:"
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:589
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "표준 형식(&N) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:590
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "지역화된 형식(&Z) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:591
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "보기 좋은 형식(&M) (%1)"
 
-#: configuredialog/configureappearancepage.cpp:585
+#: configuredialog/configureappearancepage.cpp:592
 msgid "C&ustom format:"
 msgstr "사용자 정의 형식(&U):"
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:615
 #, kde-format
 msgid "Default aggregation:"
 msgstr "기본 분류법:"
 
-#: configuredialog/configureappearancepage.cpp:626
+#: configuredialog/configureappearancepage.cpp:633
 #, kde-format
 msgid "Default theme:"
 msgstr "기본 테마:"
 
-#: configuredialog/configureappearancepage.cpp:663
+#: configuredialog/configureappearancepage.cpp:670
 #, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">사용자 정의 형식 정보…</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:669
+#: configuredialog/configureappearancepage.cpp:676
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -906,115 +906,115 @@ msgstr ""
 "(예: +0900)</li></ul> <p><strong>다른 모든 입력 글자는 무시됩니다.</strong></"
 "p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:706
+#: configuredialog/configureappearancepage.cpp:713
 #, kde-format
 msgid "Date Display:"
 msgstr "날짜 표시:"
 
-#: configuredialog/configureappearancepage.cpp:811
+#: configuredialog/configureappearancepage.cpp:818
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
 msgstr "내 프로필 표시"
 
-#: configuredialog/configureappearancepage.cpp:816
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgid "Message Window"
 msgstr "메시지 창"
 
-#: configuredialog/configureappearancepage.cpp:823
+#: configuredialog/configureappearancepage.cpp:830
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr "메시지에 답장을 쓰거나 전달한 후 단독 메시지 창 닫기"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:842
 #, kde-format
 msgid "System Tray"
 msgstr "시스템 트레이"
 
-#: configuredialog/configureappearancepage.cpp:841
+#: configuredialog/configureappearancepage.cpp:848
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "시스템 트레이 아이콘 사용"
 
-#: configuredialog/configureappearancepage.cpp:845
+#: configuredialog/configureappearancepage.cpp:852
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "트레이에 최소화된 상태로 시작"
 
-#: configuredialog/configureappearancepage.cpp:863
+#: configuredialog/configureappearancepage.cpp:870
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "작업 표시줄에 읽지 않은 메일 개수 표시"
 
-#: configuredialog/configureappearancepage.cpp:868
+#: configuredialog/configureappearancepage.cpp:875
 #, kde-format
 msgid "Plasma activities"
 msgstr "Plasma 활동"
 
-#: configuredialog/configureappearancepage.cpp:873
+#: configuredialog/configureappearancepage.cpp:880
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "활성화"
 
-#: configuredialog/configureappearancepage.cpp:945
+#: configuredialog/configureappearancepage.cpp:952
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "사용 가능한 태그(&V)"
 
-#: configuredialog/configureappearancepage.cpp:958
+#: configuredialog/configureappearancepage.cpp:965
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "새 태그 추가"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:970
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "선택한 태그 삭제"
 
-#: configuredialog/configureappearancepage.cpp:972
+#: configuredialog/configureappearancepage.cpp:979
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "태그 중요도 증가"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:985
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "태그 중요도 감소"
 
-#: configuredialog/configureappearancepage.cpp:1002
+#: configuredialog/configureappearancepage.cpp:1009
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "태그 설정(&G)"
 
-#: configuredialog/configureappearancepage.cpp:1052
+#: configuredialog/configureappearancepage.cpp:1059
 #, kde-format
 msgid "Delete"
 msgstr "삭제"
 
-#: configuredialog/configureappearancepage.cpp:1183
+#: configuredialog/configureappearancepage.cpp:1190
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "'%1' 태그를 삭제하시겠습니까?"
 
-#: configuredialog/configureappearancepage.cpp:1184
+#: configuredialog/configureappearancepage.cpp:1191
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "태그 삭제"
 
-#: configuredialog/configureappearancepage.cpp:1229
-#: configuredialog/configureappearancepage.cpp:1264
+#: configuredialog/configureappearancepage.cpp:1236
+#: configuredialog/configureappearancepage.cpp:1271
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "태그를 만들 수 없습니다. 이름이 같은 태그가 이미 존재합니다."
@@ -1230,13 +1230,13 @@ msgstr "작성기"
 msgid "Activate quick text format toolbar"
 msgstr "빠른 텍스트 서식 도구 모음 활성화"
 
-#: configuredialog/configurecomposerpage.cpp:580
+#: configuredialog/configurecomposerpage.cpp:582
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "답장 제목 접두사(&Y)"
 
-#: configuredialog/configurecomposerpage.cpp:585
-#: configuredialog/configurecomposerpage.cpp:611
+#: configuredialog/configurecomposerpage.cpp:587
+#: configuredialog/configurecomposerpage.cpp:613
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1245,170 +1245,170 @@ msgid ""
 msgstr ""
 "다음 제목 접두사를 찾습니다 (대소문자 구분 없는 정규 표현식으로 처리합니다):"
 
-#: configuredialog/configurecomposerpage.cpp:593
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "A&dd…"
 msgstr "추가(&D)…"
 
-#: configuredialog/configurecomposerpage.cpp:593
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "Re&move"
 msgstr "삭제(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:593
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "Mod&ify…"
 msgstr "수정(&I)…"
 
-#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:595
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "새 답장 접두사 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "답장 접두사를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:596
+#: configuredialog/configurecomposerpage.cpp:598
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "답장 제목 접두사:"
 
-#: configuredialog/configurecomposerpage.cpp:607
+#: configuredialog/configurecomposerpage.cpp:609
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "전달 제목 접두사(&W)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:619 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "삭제(&V)"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Add…"
 msgstr "추가…"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Modify…"
 msgstr "수정…"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "새 전달 접두사 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:620
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "전달 접두사를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:619
+#: configuredialog/configurecomposerpage.cpp:621
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "전달 제목 접두사:"
 
-#: configuredialog/configurecomposerpage.cpp:667
+#: configuredialog/configurecomposerpage.cpp:669
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "사용자 정의 MIME 헤더 필드:"
 
-#: configuredialog/configurecomposerpage.cpp:675
+#: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "이름"
 
-#: configuredialog/configurecomposerpage.cpp:676
+#: configuredialog/configurecomposerpage.cpp:678
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "값"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "추가(&W)"
 
-#: configuredialog/configurecomposerpage.cpp:688
+#: configuredialog/configurecomposerpage.cpp:690
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "삭제(&M)"
 
-#: configuredialog/configurecomposerpage.cpp:697
+#: configuredialog/configurecomposerpage.cpp:699
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "이름(&N):"
 
-#: configuredialog/configurecomposerpage.cpp:707
+#: configuredialog/configurecomposerpage.cpp:709
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "값(&V):"
 
-#: configuredialog/configurecomposerpage.cpp:839
+#: configuredialog/configurecomposerpage.cpp:841
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "'Content-Type'은 허용된 문자열이 아닙니다. 이 헤더는 저장되지 않습니다."
 
-#: configuredialog/configurecomposerpage.cpp:840
+#: configuredialog/configurecomposerpage.cpp:842
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "잘못된 헤더"
 
-#: configuredialog/configurecomposerpage.cpp:875
+#: configuredialog/configurecomposerpage.cpp:877
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "빠진 첨부 감지 사용(&N)"
 
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:883
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "다음 단어가 들어 있으면 파일을 첨부하는 것으로 간주:"
 
-#: configuredialog/configurecomposerpage.cpp:892
+#: configuredialog/configurecomposerpage.cpp:894
 #, kde-format
 msgid "Enter new key word:"
 msgstr "새 단어 입력:"
 
-#: configuredialog/configurecomposerpage.cpp:894
+#: configuredialog/configurecomposerpage.cpp:896
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "선택한 첨부 파일 단어를 삭제하시겠습니까?"
 
-#: configuredialog/configurecomposerpage.cpp:895
+#: configuredialog/configurecomposerpage.cpp:897
 #, kde-format
 msgid "Attachment Word:"
 msgstr "첨부 파일 단어:"
 
-#: configuredialog/configurecomposerpage.cpp:902
+#: configuredialog/configurecomposerpage.cpp:904
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "최대 첨부 크기:"
 
-#: configuredialog/configurecomposerpage.cpp:909
+#: configuredialog/configurecomposerpage.cpp:911
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:911
+#: configuredialog/configurecomposerpage.cpp:913
 #, kde-format
 msgid "No limit"
 msgstr "무제한"
@@ -1673,12 +1673,12 @@ msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "모든 하위 폴더 압축"
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:178
 #, kde-format
 msgid "Please select the folder that should be archived."
 msgstr "파일로 압축할 폴더를 선택하십시오."
 
-#: dialog/archivefolderdialog.cpp:171
+#: dialog/archivefolderdialog.cpp:178
 #, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
@@ -2860,12 +2860,12 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "닫힌 리더"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:57
+#: historyclosedreader/historyclosedreadermenu.cpp:62
 #, kde-format
 msgid "Clear History"
 msgstr "과거 기록 비우기"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:76
+#: historyclosedreader/historyclosedreadermenu.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
@@ -2926,7 +2926,13 @@ msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
 msgstr "기존 vCard 복사(&D)"
 
-#: identity/identityaddvcarddialog.cpp:90 identity/newidentitydialog.cpp:91
+#: identity/identityaddvcarddialog.cpp:82
+#, kde-format
+msgctxt "@info:tooltip"
+msgid "No existing identity with a vCard is available."
+msgstr ""
+
+#: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Existing identities:"
@@ -6066,68 +6072,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "메시지 파일로 압축"
 
-#: messageactions.cpp:400
+#: messageactions.cpp:403
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "메일링 리스트에 필터 적용…"
 
-#: messageactions.cpp:436
+#: messageactions.cpp:439
 #, kde-format
 msgid "<unknown>"
 msgstr "<알 수 없음>"
 
-#: messageactions.cpp:436
+#: messageactions.cpp:439
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "메일링 리스트 이름: %1"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:442
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "리스트 보관함에서 메시지 열기"
 
-#: messageactions.cpp:442
+#: messageactions.cpp:445
 #, kde-format
 msgid "Post New Message"
 msgstr "새 메시지 쓰기"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:448
 #, kde-format
 msgid "Go to Archive"
 msgstr "보관함으로 이동"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:451
 #, kde-format
 msgid "Request Help"
 msgstr "도움 요청"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:454
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "소유자에게 연락"
 
-#: messageactions.cpp:457
+#: messageactions.cpp:460
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "메일링 리스트에서 탈퇴"
 
-#: messageactions.cpp:466
+#: messageactions.cpp:469
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "메일링 리스트 %1에 필터 적용…"
 
-#: messageactions.cpp:643
+#: messageactions.cpp:646
 #, kde-format
 msgid "email"
 msgstr "이메일"
 
-#: messageactions.cpp:646
+#: messageactions.cpp:649
 #, kde-format
 msgid "web"
 msgstr "웹"
 
-#: messageactions.cpp:651
+#: messageactions.cpp:654
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6135,13 +6141,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1(%2)"
 
-#: messageactions.cpp:757
+#: messageactions.cpp:760
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF로 내보내기"
 
-#: messageactions.cpp:759
+#: messageactions.cpp:762
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF 문서 (*.pdf)"
@@ -6168,32 +6174,32 @@ msgstr "색인 작업 중"
 msgid "Indexing Collections…"
 msgstr "모음집을 색인에 추가하는 중…"
 
-#: searchdialog/kmsearchmessagemodel.cpp:81
-#: searchdialog/kmsearchmessagemodel.cpp:94
+#: searchdialog/kmsearchmessagemodel.cpp:86
+#: searchdialog/kmsearchmessagemodel.cpp:99
 #, kde-format
 msgid "From"
 msgstr "보낸 사람"
 
-#: searchdialog/kmsearchmessagemodel.cpp:84
-#: searchdialog/kmsearchmessagemodel.cpp:97
+#: searchdialog/kmsearchmessagemodel.cpp:89
+#: searchdialog/kmsearchmessagemodel.cpp:102
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "받는 사람"
 
-#: searchdialog/kmsearchmessagemodel.cpp:87
-#: searchdialog/kmsearchmessagemodel.cpp:100
+#: searchdialog/kmsearchmessagemodel.cpp:92
+#: searchdialog/kmsearchmessagemodel.cpp:105
 #, kde-format
 msgid "Date"
 msgstr "날짜"
 
-#: searchdialog/kmsearchmessagemodel.cpp:90
-#: searchdialog/kmsearchmessagemodel.cpp:103
+#: searchdialog/kmsearchmessagemodel.cpp:95
+#: searchdialog/kmsearchmessagemodel.cpp:108
 #, kde-format
 msgid "Preview"
 msgstr "미리 보기"
 
-#: searchdialog/kmsearchmessagemodel.cpp:161
+#: searchdialog/kmsearchmessagemodel.cpp:166
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
