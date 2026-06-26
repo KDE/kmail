@@ -24,7 +24,7 @@ int CollectionSwitcherModel::rowCount(const QModelIndex &parent) const
 
 QVariant CollectionSwitcherModel::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= mCollectionsInfo.count()) {
+    if (!index.isValid() || index.column() != 0 || index.row() < 0 || index.row() >= mCollectionsInfo.count()) {
         return {};
     }
     const CollectionInfo collectionInfo = mCollectionsInfo.at(index.row());
@@ -46,12 +46,13 @@ void CollectionSwitcherModel::addHistory(const Akonadi::Collection &currentCol, 
             return;
         }
     }
-    if (mCollectionsInfo.count() > 10) {
-        mCollectionsInfo.takeFirst();
-    }
+    beginResetModel();
     mCollectionsInfo.removeAll(info);
     mCollectionsInfo.prepend(info);
-    Q_EMIT dataChanged(createIndex(0, 0), createIndex(mCollectionsInfo.count() - 1, 1), {});
+    while (mCollectionsInfo.count() > 10) {
+        mCollectionsInfo.takeLast();
+    }
+    endResetModel();
 }
 
 const Akonadi::Collection CollectionSwitcherModel::collection(int index)
