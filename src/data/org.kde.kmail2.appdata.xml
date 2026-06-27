@@ -460,6 +460,7 @@
           <li xml:lang="ko">기본값으로 HTML 메시지는 원래 의도했던 색상대로 표시됩니다. 이 설정을 재정의하려면 \"모양-&gt;색상-&gt;원래 HTML 메일의 색상 변경하지 않기\" 옵션의 선택을 해제하십시오</li>
           <li xml:lang="nl">HTML-berichten worden standaard weergegeven met de bedoelde kleuren. Om dit te wijzigen, schakelt u de optie "Uiterlijk -&gt; Kleuren -&gt; Kleur niet wijzigen ten opzichte van originele HTML-mail" uit</li>
           <li xml:lang="pt-BR">As mensagens HTML são exibidas com suas cores originais por padrão. Para alterar isso, desmarque a opção \"Aparência -&gt; Cores -&gt; Não alterar a cor do e-mail HTML original\".</li>
+          <li xml:lang="ru">HTML-сообщения по умолчанию отображаются с их исходными цветами. Чтобы это переопределить, снимите флажок в параметре «Внешний вид → Цвета → Не изменять цвета исходного сообщения в формате HTML»;</li>
           <li xml:lang="sk">HTML správy sa predvolene zobrazujú s ich zamýšľanými farbami. Ak to chcete prepísať, zrušte začiarknutie možnosti \"Vzhľad-&gt;Farby-&gt;Nemeniť farbu z pôvodnej HTML pošty\"</li>
           <li xml:lang="sl">Sporočila HTML so privzeto prikazana v predvidenih barvah. Če želite to preglasiti, počistite možnost "Videz-&gt;Barve-&gt;Ne spreminjaj barve iz izvirnega sporočila HTML".</li>
           <li xml:lang="tr">HTML iletileri artık olması gereken renklerle gösteriliyor. Bunu geçersiz kılmak için “Görünüş → Renkler → Özgün HTML iletisindeki renkleri değiştirme” seçeneğini işaretleyin.</li>
@@ -487,6 +488,7 @@
           <li xml:lang="ko">자동 생성 편집기 플러그인에서 텍스트 내보내기를 허용합니다.</li>
           <li xml:lang="nl">Toestaan tekst te exporteren in automatisch gegenereerde editor-plugins.</li>
           <li xml:lang="pt-BR">Permitir exportar texto em plugins de edição de geração automática.</li>
+          <li xml:lang="ru">Разрешён экспорт текста в автоматически создаваемых подключаемых модулях редактора;</li>
           <li xml:lang="sk">Umožnený export textu v zásuvných moduloch automatického generovania editora.</li>
           <li xml:lang="sl">Dovoli izvoz besedila v vtičnikih urejevalnika za samodejno generiranje.</li>
           <li xml:lang="tr">Düzenleyici eklentilerine metin dışa aktarmaya olanak tanı</li>
@@ -505,6 +507,7 @@
           <li xml:lang="ko">텍스트 읽어주기 지원 수리(메시지 대기열에 추가)</li>
           <li xml:lang="nl">Ondersteuning van tekst naar spraak repareren (berichten in wachtrij zetten)</li>
           <li xml:lang="pt-BR">Corrige suporte para conversão de texto para fala (enfileirar mensagens)</li>
+          <li xml:lang="ru">Исправления в подсистеме синтеза речи (добавление сообщений в очередь)</li>
           <li xml:lang="sk">Opravená podpora prevodu textu na reč (zaraďovanie správ do frontu)</li>
           <li xml:lang="sl">Popravljena podpora za pretvorbo besedila v govor (postavljanje sporočil v čakalno vrsto)</li>
           <li xml:lang="tr">Konuşma desteğini onar (iletileri kuyrukla)</li>
@@ -532,6 +535,7 @@
           <li xml:lang="ko">새 새로운 항목 위젯을 추가합니다.</li>
           <li xml:lang="nl">Nieuw widget Wat-is-nieuw toevoegen.</li>
           <li xml:lang="pt-BR">Adicionado novo elemento 'O que há de novo?'.</li>
+          <li xml:lang="ru">Добавление нового виджета «Что нового?».</li>
           <li xml:lang="sk">Pridaný nový widget noviniek.</li>
           <li xml:lang="sl">Doda nov gradnik za kaj je novega.</li>
           <li xml:lang="tr">“Neler Yeni” araç takımı</li>
@@ -550,6 +554,7 @@
           <li xml:lang="ko">새 플러그인: 모음집 크기 표시.</li>
           <li xml:lang="nl">Nieuwe plug-in: grootte van verzameling tonen.</li>
           <li xml:lang="pt-BR">Novo plugin: mostrar tamanho da coleção.</li>
+          <li xml:lang="ru">Новый модуль: просмотр размера коллекции</li>
           <li xml:lang="sk">Nový zásuvný modul: zobrazenie veľkosti kolekcie.</li>
           <li xml:lang="sl">Novi vtičnik: prikazuje velikost zbirke.</li>
           <li xml:lang="tr">Yeni eklenti: Koleksiyon boyutunu göster</li>
