@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-25 00:45+0000\n"
-"PO-Revision-Date: 2026-05-23 09:53+0200\n"
+"PO-Revision-Date: 2026-06-26 09:33+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 26.04.1\n"
+"X-Generator: Lokalize 26.04.2\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -3036,7 +3036,7 @@ msgstr "&Dupliquer un élément « vCard » existant"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Aucune identité existante avec un élément « vCard » n'est disponible."
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
