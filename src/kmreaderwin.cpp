@@ -365,13 +365,13 @@ QWidget *KMReaderWin::mainWindow() const
 
 void KMReaderWin::slotMailtoCompose()
 {
-    KMCommand *command = new KMMailtoComposeCommand(urlClicked(), messageItem());
+    auto command = new KMMailtoComposeCommand(urlClicked(), messageItem());
     command->start();
 }
 
 void KMReaderWin::slotMailtoForward()
 {
-    KMCommand *command = new KMMailtoForwardCommand(mMainWindow, urlClicked(), messageItem());
+    auto command = new KMMailtoForwardCommand(mMainWindow, urlClicked(), messageItem());
     command->start();
 }
 
@@ -427,7 +427,7 @@ void KMReaderWin::slotAddUrlToBookmark()
     if (url.isEmpty()) {
         return;
     }
-    KMCommand *command = new KMAddBookmarksCommand(url, this);
+    auto command = new KMAddBookmarksCommand(url, this);
     command->start();
 }
 
@@ -437,7 +437,7 @@ void KMReaderWin::slotUrlSave()
     if (url.isEmpty()) {
         return;
     }
-    KMCommand *command = new KMUrlSaveCommand(url, mMainWindow);
+    auto command = new KMUrlSaveCommand(url, mMainWindow);
     command->start();
 }
 
@@ -456,7 +456,7 @@ void KMReaderWin::slotSaveImageOnDisk()
     if (url.isEmpty()) {
         return;
     }
-    KMCommand *command = new KMUrlSaveCommand(url, mMainWindow);
+    auto command = new KMUrlSaveCommand(url, mMainWindow);
     command->start();
 }
 
@@ -895,7 +895,7 @@ QAction *KMReaderWin::addToExistingContactAction() const
 
 void KMReaderWin::slotShareImage()
 {
-    KMCommand *command = new KMShareImageCommand(imageUrlClicked(), this);
+    auto command = new KMShareImageCommand(imageUrlClicked(), this);
     command->start();
 }
 

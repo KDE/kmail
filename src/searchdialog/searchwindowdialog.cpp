@@ -799,32 +799,32 @@ void SearchWindowDialog::slotClearSelection()
 
 void SearchWindowDialog::slotReplyToMsg()
 {
-    KMCommand *command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplySmart);
+    auto command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplySmart);
 
     command->start();
 }
 
 void SearchWindowDialog::slotReplyAllToMsg()
 {
-    KMCommand *command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplyAll);
+    auto command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplyAll);
     command->start();
 }
 
 void SearchWindowDialog::slotReplyListToMsg()
 {
-    KMCommand *command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplyList);
+    auto command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplyList);
     command->start();
 }
 
 void SearchWindowDialog::slotForwardMsg()
 {
-    KMCommand *command = new KMForwardCommand(this, selectedMessages());
+    auto command = new KMForwardCommand(this, selectedMessages());
     command->start();
 }
 
 void SearchWindowDialog::slotForwardAttachedMsg()
 {
-    KMCommand *command = new KMForwardAttachedCommand(this, selectedMessages());
+    auto command = new KMForwardAttachedCommand(this, selectedMessages());
     command->start();
 }
 
@@ -844,7 +844,7 @@ void SearchWindowDialog::slotPrintMsg()
 {
     KMPrintCommandInfo info;
     info.mMsg = selectedMessage();
-    KMCommand *command = new KMPrintCommand(this, info);
+    auto command = new KMPrintCommand(this, info);
     command->start();
 }
 

@@ -297,7 +297,7 @@ void KMReaderMainWin::slotSelectMoreMessageTagList()
     dlg->setActionCollection(QList<KActionCollection *>{actionCollection()});
     if (dlg->exec()) {
         const Akonadi::Tag::List lst = dlg->selectedTag();
-        KMCommand *command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
+        auto command = new KMSetTagCommand(lst, selectedMessages, KMSetTagCommand::CleanExistingAndAddNew);
         command->start();
     }
     delete dlg;
@@ -318,7 +318,7 @@ void KMReaderMainWin::toggleMessageSetTag(const Akonadi::Item::List &select, con
     if (select.isEmpty()) {
         return;
     }
-    KMCommand *command = new KMSetTagCommand(Akonadi::Tag::List() << tag, select, KMSetTagCommand::Toggle);
+    auto command = new KMSetTagCommand(Akonadi::Tag::List() << tag, select, KMSetTagCommand::Toggle);
     command->start();
 }
 

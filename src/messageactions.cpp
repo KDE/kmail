@@ -218,7 +218,7 @@ void MessageActions::slotUseTemplate()
     if (!mCurrentItem.isValid()) {
         return;
     }
-    KMCommand *command = new KMUseTemplateCommand(mParent, mCurrentItem);
+    auto command = new KMUseTemplateCommand(mParent, mCurrentItem);
     command->start();
 }
 
@@ -572,7 +572,7 @@ void MessageActions::slotMailingListFilter()
         return;
     }
 
-    KMCommand *command = new KMMailingListFilterCommand(mParent, mCurrentItem);
+    auto command = new KMMailingListFilterCommand(mParent, mCurrentItem);
     command->start();
 }
 
@@ -718,7 +718,7 @@ void MessageActions::slotDebugAkonadiSearch()
 void MessageActions::slotResendMessage()
 {
     // mCurrentItem.isValid() may be false here if message was imported via 'File' -> 'Open…'
-    KMCommand *command = new KMResendMessageCommand(mParent, mCurrentItem);
+    auto command = new KMResendMessageCommand(mParent, mCurrentItem);
     command->start();
 }
 

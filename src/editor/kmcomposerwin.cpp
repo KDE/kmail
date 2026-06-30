@@ -2595,7 +2595,7 @@ void KMComposerWin::slotFetchJob(KJob *job)
                 }
             }
         }
-        KMCommand *command = new KMForwardAttachedCommand(this, items, identity, this);
+        auto command = new KMForwardAttachedCommand(this, items, identity, this);
         command->start();
     } else {
         for (const Akonadi::Item &item : items) {

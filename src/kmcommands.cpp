@@ -1353,7 +1353,7 @@ KMMetaFilterActionCommand::KMMetaFilterActionCommand(const QString &filterId, KM
 
 void KMMetaFilterActionCommand::start()
 {
-    KMCommand *filterCommand = new KMFilterActionCommand(mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId(), mFilterId);
+    auto filterCommand = new KMFilterActionCommand(mMainWidget, mMainWidget->messageListPane()->selectionAsMessageItemListId(), mFilterId);
     filterCommand->start();
 }
 
