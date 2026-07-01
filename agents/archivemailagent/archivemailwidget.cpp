@@ -129,8 +129,13 @@ void ArchiveMailWidget::needReloadConfig()
 
 void ArchiveMailWidget::load()
 {
-    const auto group = config()->group(QLatin1StringView(myConfigGroupName));
-    mWidget.treeWidget->header()->restoreState(group.readEntry("HeaderState", QByteArray()));
+    auto stateConfig = KSharedConfig::openStateConfig();
+    KConfigGroup stateGroup(stateConfig.get(), QLatin1StringView(myConfigGroupName));
+
+    auto group = config()->group(QLatin1StringView(myConfigGroupName));
+    group.moveValuesTo({"HeaderState"}, stateGroup);
+
+    mWidget.treeWidget->header()->restoreState(stateGroup.readEntry("HeaderState", QByteArray()));
 
     const QStringList collectionList = config()->groupList().filter(QRegularExpression(archiveMailCollectionPattern()));
     const int numberOfCollection = collectionList.count();
@@ -208,8 +213,9 @@ bool ArchiveMailWidget::save() const
         }
     }
 
-    auto group = config()->group(QLatin1StringView(myConfigGroupName));
-    group.writeEntry("HeaderState", mWidget.treeWidget->header()->saveState());
+    auto stateConfig = KSharedConfig::openStateConfig();
+    KConfigGroup stateGroup(stateConfig.get(), QLatin1StringView(myConfigGroupName));
+    stateGroup.writeEntry("HeaderState", mWidget.treeWidget->header()->saveState());
 
     return true;
 }
