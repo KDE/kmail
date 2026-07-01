@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-06-25 00:45+0000\n"
-"PO-Revision-Date: 2026-06-05 13:42+0400\n"
+"PO-Revision-Date: 2026-06-30 20:36+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2941,7 +2941,7 @@ msgstr "&كرّر vCard الموجودة"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "لا توجد هوية حالية مزودة ببطاقة vCard متاحة."
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
