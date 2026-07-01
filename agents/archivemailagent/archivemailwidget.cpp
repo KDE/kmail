@@ -149,6 +149,9 @@ void ArchiveMailWidget::load()
             delete info;
         }
     }
+
+    // clean up old config data
+    config()->group(QLatin1StringView(myConfigGroupName)).deleteEntry("Size");
 }
 
 void ArchiveMailWidget::createOrUpdateItem(ArchiveMailInfo *info, ArchiveMailItem *item)
