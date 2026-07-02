@@ -6,21 +6,21 @@
 # Mattias Newzella <newzella@linux.nu>, 2000, 2001, 2002,2003, 2004, 2005.
 # Anders Widell <awl@hem.passagen.se>, 2000.
 # Daniel Karlsson <chaotica@home.se>, 2001.
-# SPDX-FileCopyrightText: 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2024, 2025, 2026 Stefan Asserhäll <stefan.asserhall@gmail.com>
 # Stefan Asserhall <stefan.asserhall@gmail.com>, 2005, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-02-12 00:44+0000\n"
-"PO-Revision-Date: 2025-11-21 01:40+0100\n"
+"PO-Revision-Date: 2026-07-01 16:53+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 25.12.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1582,18 +1582,14 @@ msgid "GnuPG Settings"
 msgstr "GnuPG-inställningar"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
-"Modulen saknas. Kontrollera installationen. Modulen tillhandahålls av "
-"Kleopatra."
+"Modulen saknas. Kontrollera installationen. Modulen tillhandahålls av kdepim-"
+"addons."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -3984,10 +3980,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Skicka kopia till 'adress'. Det kan upprepas"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "Adressbok"
+msgstr "Adress"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4012,10 +4007,9 @@ msgid "Read message body from 'file'"
 msgstr "Läs brevtext från \"fil\""
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Arkiv"
+msgstr "Fil"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4024,10 +4018,9 @@ msgid "Set body of message"
 msgstr "Ställ in brevtext"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Rich text"
+msgstr "Text"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4036,10 +4029,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Lägg till en bilaga till brevet, detta kan upprepas"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Bilaga"
+msgstr "Bilagans webbadress"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4066,10 +4058,9 @@ msgid "Set identity name"
 msgstr "Ange identitetsnamn"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "Identitet:"
+msgstr "identitet"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4078,10 +4069,9 @@ msgid "View the given message file"
 msgstr "Visa angiven brevfil"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Brev"
+msgstr "Brevets webbadress"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4090,8 +4080,7 @@ msgid "Set body of message as html"
 msgstr "Ställ in brevtext som HTML"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Body of Message"
+#, kde-format
 msgid "Body Message"
 msgstr "Brevets text"
 
@@ -8093,6 +8082,9 @@ msgid ""
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
+"HTML-brev visas normalt med sina avsedda färger. Avmarkera alternativet "
+"\"Utseende -> Färger -> Ändra inte färg från HTML-originalbrevet\" för att "
+"överskrida det."
 
 #: whatsnew/whatsnewtranslations.cpp:27
 #, kde-format
