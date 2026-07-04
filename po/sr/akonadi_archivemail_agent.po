@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-23 00:46+0000\n"
+"POT-Creation-Date: 2026-07-04 00:45+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -27,7 +27,7 @@ msgid "Modify Archive Mail"
 msgstr "Измена архиве поште"
 
 # >> @title:window
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:264
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
@@ -138,12 +138,12 @@ msgctxt "@action"
 msgid "Delete"
 msgstr "Обриши"
 
-#: archivemailwidget.cpp:154
+#: archivemailwidget.cpp:162
 #, kde-format
 msgid "Folder: %1"
 msgstr "Фасцикла: %1"
 
-#: archivemailwidget.cpp:176
+#: archivemailwidget.cpp:184
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -152,25 +152,25 @@ msgstr[1] "%1 дана"
 msgstr[2] "%1 дана"
 msgstr[3] "сутра"
 
-#: archivemailwidget.cpp:185
+#: archivemailwidget.cpp:193
 #, kde-format
 msgid "Archive will be done %1"
 msgstr ""
 "Архивирање ће бити завршено %1|/|Архивирање ће бити завршено $[на-реч %1 ген]"
 
-#: archivemailwidget.cpp:221
+#: archivemailwidget.cpp:230
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Желите ли да обришете изабране ставке?"
 
-#: archivemailwidget.cpp:222
+#: archivemailwidget.cpp:231
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Обриши"
 
-#: archivemailwidget.cpp:263
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

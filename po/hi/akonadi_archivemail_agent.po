@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-23 00:46+0000\n"
+"POT-Creation-Date: 2026-07-04 00:45+0000\n"
 "PO-Revision-Date: 2024-12-15 15:58+0530\n"
 "Last-Translator: Kali <EMAIL@ADDRESS>\n"
 "Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
@@ -23,7 +23,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr ""
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:264
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -120,35 +120,35 @@ msgctxt "@action"
 msgid "Delete"
 msgstr ""
 
-#: archivemailwidget.cpp:154
+#: archivemailwidget.cpp:162
 #, kde-format
 msgid "Folder: %1"
 msgstr ""
 
-#: archivemailwidget.cpp:176
+#: archivemailwidget.cpp:184
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: archivemailwidget.cpp:185
+#: archivemailwidget.cpp:193
 #, kde-format
 msgid "Archive will be done %1"
 msgstr ""
 
-#: archivemailwidget.cpp:221
+#: archivemailwidget.cpp:230
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr ""
 
-#: archivemailwidget.cpp:222
+#: archivemailwidget.cpp:231
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr ""
 
-#: archivemailwidget.cpp:263
+#: archivemailwidget.cpp:272
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."
