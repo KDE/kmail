@@ -31,9 +31,7 @@ namespace KUserFeedback
 class NotificationPopup;
 }
 #endif
-#if HAVE_WHATSNEWSNGSUPPORT
 #include <KAboutData>
-#endif
 namespace MailTransport
 {
 class Transport;
@@ -673,7 +671,5 @@ private:
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
     QAction *mClearFolderCacheAction = nullptr;
     HistoryClosedReaderMenu *mRestoreClosedMessageMenu = nullptr;
-#if HAVE_WHATSNEWSNGSUPPORT
     QList<KAboutRelease> mReleasesInfo;
-#endif
 };
