@@ -7955,8 +7955,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Add a new identity"
-#~ msgid "Add new whatsnew widget."
-#~ msgstr "Legg til en ny identitet"

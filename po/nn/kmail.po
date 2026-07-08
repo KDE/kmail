@@ -7902,8 +7902,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Add a new identity"
-#~ msgid "Add new whatsnew widget."
-#~ msgstr "Legg til ny identitet"

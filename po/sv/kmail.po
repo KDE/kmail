@@ -6,21 +6,21 @@
 # Mattias Newzella <newzella@linux.nu>, 2000, 2001, 2002,2003, 2004, 2005.
 # Anders Widell <awl@hem.passagen.se>, 2000.
 # Daniel Karlsson <chaotica@home.se>, 2001.
-# SPDX-FileCopyrightText: 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2024, 2025 Stefan Asserhäll <stefan.asserhall@gmail.com>
+# SPDX-FileCopyrightText: 2004-2010, 2024-2026 Stefan Asserhäll <stefan.asserhall@gmail.com>
 # Stefan Asserhall <stefan.asserhall@gmail.com>, 2005, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-07 00:44+0000\n"
-"PO-Revision-Date: 2025-11-21 01:40+0100\n"
+"PO-Revision-Date: 2026-07-07 12:13+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 25.08.3\n"
+"X-Generator: Lokalize 26.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1582,18 +1582,14 @@ msgid "GnuPG Settings"
 msgstr "GnuPG-inställningar"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
-"Modulen saknas. Kontrollera installationen. Modulen tillhandahålls av "
-"Kleopatra."
+"Modulen saknas. Kontrollera installationen. Modulen tillhandahålls av kdepim-"
+"addons."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -2974,7 +2970,7 @@ msgstr "&Duplicera befintligt visitkort"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Ingen befintlig identitet med ett visitkort är tillgänglig."
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -3990,10 +3986,9 @@ msgid "Send CC: to 'address'. This can be repeated"
 msgstr "Skicka kopia till 'adress'. Det kan upprepas"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "Adressbok"
+msgstr "Adress"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4018,10 +4013,9 @@ msgid "Read message body from 'file'"
 msgstr "Läs brevtext från \"fil\""
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Arkiv"
+msgstr "Fil"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4030,10 +4024,9 @@ msgid "Set body of message"
 msgstr "Ställ in brevtext"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Rich text"
+msgstr "Text"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4042,10 +4035,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Lägg till en bilaga till brevet, detta kan upprepas"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Bilaga"
+msgstr "Bilagewebbadress"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4072,10 +4064,9 @@ msgid "Set identity name"
 msgstr "Ange identitetsnamn"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "Identitet:"
+msgstr "Identitet"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4084,10 +4075,9 @@ msgid "View the given message file"
 msgstr "Visa angiven brevfil"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Brev"
+msgstr "Brevwebbadress"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4096,8 +4086,7 @@ msgid "Set body of message as html"
 msgstr "Ställ in brevtext som HTML"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Body of Message"
+#, kde-format
 msgid "Body Message"
 msgstr "Brevets text"
 
@@ -4111,7 +4100,7 @@ msgstr "Lista tillgängliga alternativ för användaråterkoppling"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Aktivera felsökningsläge"
 
 #: kmail_options.h:44
 #, kde-format
@@ -7128,10 +7117,9 @@ msgstr "Tillåt att brev tas bort utan bekräftelse"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "Skicka &brev i utkorgen:"
+msgstr "Aktivera dra och släpp av brev in i kataloger"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8081,26 +8069,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Det verkar som att det här brevet från %1 inte övervakas. Vill du svara på "
+"brevet?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "E-post bevakas inte"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "Signera i&nte"
+msgstr "Skicka inte"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Skicka brev"
+msgstr "Skicka e-post"
 
 #: util.cpp:190
 #, kde-format
