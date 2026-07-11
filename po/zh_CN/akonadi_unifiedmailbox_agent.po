@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_unifiedmailbox_agent.pot\n"
-"X-Crowdin-File-ID: 45669\n"
+"X-Crowdin-File: /kf6-stable/messages/kmail/akonadi_unifiedmailbox_agent.pot\n"
+"X-Crowdin-File-ID: 51066\n"
 
 #: settingsdialog.cpp:53
 #, kde-format
