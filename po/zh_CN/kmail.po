@@ -7904,15 +7904,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "Add new whatsnew widget."
-#~ msgstr "添加新的“新增功能”小部件。"
-
-#~ msgid "New plugin: show collection size."
-#~ msgstr "新插件：显示集合大小。"
-
-#~ msgid "Allow to export text in autogenerate editor plugins."
-#~ msgstr "允许在自动生成编辑器插件中导出文本。"
-
-#~ msgid "Fix text to speech support (enqueue messages)"
-#~ msgstr "修复文本转语音支持（新增消息）"
