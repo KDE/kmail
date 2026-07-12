@@ -214,7 +214,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     mTopLayout = new QVBoxLayout(this);
     mTopLayout->setContentsMargins({});
     QString newFeaturesMD5;
-    const KAboutData aboutData = KAboutData::fromAppStreamForApplication();
+    const KAboutData aboutData = KAboutData::fromAppStreamId(u"org.kde.kmail2"_s);
     mReleasesInfo = aboutData.releases();
     if (!mReleasesInfo.isEmpty()) {
         newFeaturesMD5 = mReleasesInfo.constFirst().untranslatedDescription();
