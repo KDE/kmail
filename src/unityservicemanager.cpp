@@ -13,12 +13,6 @@
 #include <MailCommon/MailUtil>
 
 #include <QApplication>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#include <QDBusMessage>
-#include <QDBusPendingCallWatcher>
-#include <QDBusPendingReply>
-#include <QDBusServiceWatcher>
 #include <QTimer>
 
 #include <Akonadi/ChangeRecorder>
@@ -35,7 +29,6 @@ using namespace KMail;
 
 UnityServiceManager::UnityServiceManager(QObject *parent)
     : QObject(parent)
-    , mUnityServiceWatcher(new QDBusServiceWatcher(this))
 {
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &UnityServiceManager::slotCollectionStatisticsChanged);
 
@@ -44,7 +37,6 @@ UnityServiceManager::UnityServiceManager(QObject *parent)
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &UnityServiceManager::initListOfCollection);
     initListOfCollection();
-    initUnity();
 }
 
 UnityServiceManager::~UnityServiceManager()
@@ -136,17 +128,8 @@ void UnityServiceManager::updateCount()
         mSystemTray->updateCount(mCount);
     }
 
-    if (mUnityServiceAvailable) {
-        const QString launcherId = qApp->desktopFileName() + ".desktop"_L1;
-        const int unreadEmail = KMailSettings::self()->showUnreadInTaskbar() ? mCount : 0;
-        const QVariantMap properties{{QStringLiteral("count-visible"), unreadEmail > 0}, {QStringLiteral("count"), unreadEmail}};
-
-        QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/org/kmail2/UnityLauncher"),
-                                                          QStringLiteral("com.canonical.Unity.LauncherEntry"),
-                                                          QStringLiteral("Update"));
-        message.setArguments({launcherId, properties});
-        QDBusConnection::sessionBus().send(message);
-    }
+    const int unreadEmail = KMailSettings::self()->showUnreadInTaskbar() ? mCount : 0;
+    qGuiApp->setBadgeNumber(unreadEmail);
 }
 
 void UnityServiceManager::setSystemTryAssociatedWindow(QWindow *window)
@@ -155,41 +138,6 @@ void UnityServiceManager::setSystemTryAssociatedWindow(QWindow *window)
         return;
     }
     mSystemTray->setAssociatedWindow(window);
-}
-
-void UnityServiceManager::initUnity()
-{
-    mUnityServiceWatcher->setConnection(QDBusConnection::sessionBus());
-    mUnityServiceWatcher->setWatchMode(QDBusServiceWatcher::WatchForUnregistration | QDBusServiceWatcher::WatchForRegistration);
-    mUnityServiceWatcher->addWatchedService(QStringLiteral("com.canonical.Unity"));
-    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceRegistered, this, [this]([[maybe_unused]] const QString &service) {
-        mUnityServiceAvailable = true;
-        updateCount();
-    });
-
-    connect(mUnityServiceWatcher, &QDBusServiceWatcher::serviceUnregistered, this, [this]([[maybe_unused]] const QString &service) {
-        mUnityServiceAvailable = false;
-    });
-
-    // QDBusConnectionInterface::isServiceRegistered blocks
-    QDBusPendingCall listNamesCall = QDBusConnection::sessionBus().interface()->asyncCall(QStringLiteral("ListNames"));
-    auto callWatcher = new QDBusPendingCallWatcher(listNamesCall, this);
-    connect(callWatcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher *watcher) {
-        QDBusPendingReply<QStringList> reply = *watcher;
-        watcher->deleteLater();
-
-        if (reply.isError()) {
-            qCWarning(KMAIL_LOG) << "DBus reported an error " << reply.error().message();
-            return;
-        }
-
-        const QStringList &services = reply.value();
-
-        mUnityServiceAvailable = services.contains("com.canonical.Unity"_L1);
-        if (mUnityServiceAvailable) {
-            updateCount();
-        }
-    });
 }
 
 bool UnityServiceManager::ignoreNewMailInFolder(const Akonadi::Collection &collection)

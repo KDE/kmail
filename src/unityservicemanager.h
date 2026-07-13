@@ -11,7 +11,6 @@
 #include <QModelIndex>
 #include <QObject>
 #include <QPointer>
-class QDBusServiceWatcher;
 class QAbstractItemModel;
 class QWindow;
 namespace KMail
@@ -38,11 +37,8 @@ public:
 private:
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
-    void initUnity();
     [[nodiscard]] bool hasUnreadMail() const;
-    QDBusServiceWatcher *const mUnityServiceWatcher;
     QPointer<KMail::KMSystemTray> mSystemTray;
     int mCount = 0;
-    bool mUnityServiceAvailable = false;
 };
 }
