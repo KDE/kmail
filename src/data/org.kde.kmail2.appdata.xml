@@ -448,6 +448,18 @@
       <description>
         <ul>
           <li>HTML messages are shown with their intended colors by default. To override this, uncheck the "Appearance-&gt;Colors-&gt;Do not change color from original HTML mail" option</li>
+          <li xml:lang="ca">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar això, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canviïs el color del correu HTML original»</li>
+          <li xml:lang="ca-valencia">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar açò, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canvies el color del correu HTML original»</li>
+          <li xml:lang="cs">Zprávy ve formátu HTML se ve výchozím nastavení zobrazují v původních barvách. Chcete-li toto nastavení změnit, zrušte zaškrtnutí políčka Vzhled -&gt; Barvy -&gt; Nezměnit barvu původního e-mailu HTML</li>
+          <li xml:lang="es">Los mensajes HTML se muestran con sus colores de forma predeterminada. Para anular esto, desmarque la opción «Aspecto-&gt;Colores&gt;No cambiar los colores del mensaje HTML original».</li>
+          <li xml:lang="it">I messaggi HTML sono mostrati, come impostazione predefinita, con i colori previsti. Per cambiare questo comportamento, disabilitare l'opzione "Aspetto-&gt;Colori-&gt;Non modificare il colore del messaggio di posta originale in HTML".</li>
+          <li xml:lang="ka">HTML შეტყობინებები ნაგულისხმევად მათთვის სასურველ ფერებშია ნაჩვენები. ამის გადასაფარად მოხსენით თოლია "გარეგნობა-&gt;ფერები-&gt;HTML ელფოსტის ორიგინალი ფერების არშეცვლა"</li>
+          <li xml:lang="nl">HTML-berichten worden standaard weergegeven met de bedoelde kleuren. Om dit te wijzigen, schakelt u de optie "Uiterlijk-&gt;Kleuren-&gt;Kleur niet wijzigen ten opzichte van originele HTML-mail" uit</li>
+          <li xml:lang="pt-BR">As mensagens HTML são exibidas com suas cores originais por padrão. Para alterar isso, desmarque a opção "Aparência -&gt; Cores -&gt; Não alterar a cor do e-mail HTML original".</li>
+          <li xml:lang="sl">Sporočila HTML so privzeto prikazana v njihovih predvidenih barvah. Če želite to preglasiti, počistite možnost "Videz-&gt;Barve-&gt;Ne spreminjaj barve iz izvirnega sporočila HTML".</li>
+          <li xml:lang="sv">HTML-brev visas normalt med sina avsedda färger. Avmarkera alternativet "Utseende -&gt; Färger -&gt; Ändra inte färg från HTML-originalbrevet" för att överskrida det.</li>
+          <li xml:lang="tr">HTML iletileri artık olması gereken renklerle gösteriliyor. Bunu geçersiz kılmak için “Görünüş → Renkler → Özgün HTML iletisindeki renkleri değiştirme” seçeneğini işaretleyin.</li>
+          <li xml:lang="uk">Типово, повідомлення HTML буде показано із визначеними відправником кольорами. Щоб перевизначити ці кольори, зніміть позначення з пункту «Вигляд-&gt;Кольори-&gt;Не змінювати колір з початкового повідомлення HTML».</li>
         </ul>
       </description>
     </release>
