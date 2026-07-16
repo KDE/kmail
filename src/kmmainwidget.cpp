@@ -4024,7 +4024,8 @@ void KMMainWidget::updateMessageActionsDelayed()
     mMessageNewList->setEnabled(newPostToMailingList);
 
     slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(KMailSettings::self()->networkState()));
-    if (QAction *act = action(QStringLiteral("kmail_undo"))) {
+    QAction *act = action(QStringLiteral("kmail_undo"));
+    if (kmkernel && act) {
         act->setEnabled(kmkernel->undoStack() && !kmkernel->undoStack()->isEmpty());
     }
 
@@ -4272,12 +4273,14 @@ void KMMainWidget::slotUpdateUndo()
 {
     if (actionCollection()->action(QStringLiteral("kmail_undo"))) {
         QAction *act = actionCollection()->action(QStringLiteral("kmail_undo"));
-        act->setEnabled(!kmkernel->undoStack()->isEmpty());
-        const QString infoStr = kmkernel->undoStack()->undoInfo();
-        if (infoStr.isEmpty()) {
-            act->setText(i18n("&Undo"));
-        } else {
-            act->setText(i18n("&Undo: \"%1\"", kmkernel->undoStack()->undoInfo()));
+        if (act && kmkernel) {
+            act->setEnabled(!kmkernel->undoStack()->isEmpty());
+            const QString infoStr = kmkernel->undoStack()->undoInfo();
+            if (infoStr.isEmpty()) {
+                act->setText(i18n("&Undo"));
+            } else {
+                act->setText(i18n("&Undo: \"%1\"", kmkernel->undoStack()->undoInfo()));
+            }
         }
     }
 }
