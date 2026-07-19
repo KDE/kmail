@@ -455,6 +455,7 @@
           <li xml:lang="es">Los mensajes HTML se muestran con sus colores de forma predeterminada. Para anular esto, desmarque la opción «Aspecto-&gt;Colores&gt;No cambiar los colores del mensaje HTML original».</li>
           <li xml:lang="eu">HTML mezuak, era lehenetsian, jatorrizko koloreekin erakusten dira. Hori aldatzeko, kendu marka "Itxura-&gt;Koloreak-&gt;Ez aldatu jatorrizko HTML postaren koloreak" aukeran</li>
           <li xml:lang="fr">Les messages au format « HTML » sont affichés avec leurs couleurs prévue par défaut. Pour modifier cela, veuillez décocher l'option « Apparence / Couleurs / Ne pas modifier la couleur du courriel original en HTML ».</li>
+          <li xml:lang="he">הודעות HTML מופיעות עם הצבע הייעודי שלהן כברירת מחדל. כדי לעקוף את זה, יש לבטל את הסימון של האפשרות „מראה-&gt;צבעים-&gt;לא לשנות את הצבע מהודעת ה־HTML המקורית”</li>
           <li xml:lang="ia">Le messages HTML es monstrate con lor colores intendite per defecto.  Pro cambiar isto, dismarca le option "Apparentia-&gt;Colores-&gt;Non cambiar color del e-posta HTML original"</li>
           <li xml:lang="it">I messaggi HTML sono mostrati, come impostazione predefinita, con i colori previsti. Per cambiare questo comportamento, disabilitare l'opzione "Aspetto-&gt;Colori-&gt;Non modificare il colore del messaggio di posta originale in HTML".</li>
           <li xml:lang="ka">HTML შეტყობინებები ნაგულისხმევად მათთვის სასურველ ფერებშია ნაჩვენები. ამის გადასაფარად მოხსენით თოლია "გარეგნობა-&gt;ფერები-&gt;HTML ელფოსტის ორიგინალი ფერების არშეცვლა"</li>
