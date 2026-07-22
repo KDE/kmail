@@ -29,10 +29,10 @@ public:
 };
 
 /** A class for storing Undo information. */
-class UndoInfo
+class UndoInfoMoveItems
 {
 public:
-    UndoInfo() = default;
+    UndoInfoMoveItems() = default;
 
     int id = -1;
     Akonadi::Item::List items;
@@ -62,9 +62,9 @@ Q_SIGNALS:
 private:
     KMAIL_NO_EXPORT void clear();
     KMAIL_NO_EXPORT void slotMoveResult(KJob *);
-    QList<UndoInfo *> mStack;
+    QList<UndoInfoMoveItems *> mStack;
     const int mSize = 0;
     int mLastId = 0;
-    UndoInfo *mCachedInfo = nullptr;
+    UndoInfoMoveItems *mCachedInfo = nullptr;
 };
 }

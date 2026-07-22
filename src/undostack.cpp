@@ -38,7 +38,7 @@ void UndoStack::clear()
 QString UndoStack::undoInfo() const
 {
     if (!mStack.isEmpty()) {
-        UndoInfo *info = mStack.first();
+        UndoInfoMoveItems *info = mStack.first();
         return info->moveToTrash ? i18n("Move To Trash") : i18np("Move Message", "Move Messages", info->items.count());
     } else {
         return {};
@@ -47,7 +47,7 @@ QString UndoStack::undoInfo() const
 
 int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
-    auto info = new UndoInfo;
+    auto info = new UndoInfoMoveItems;
     info->id = ++mLastId;
     info->srcFolder = srcFolder;
     info->destFolder = destFolder;
@@ -64,7 +64,7 @@ int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi
 void UndoStack::addMsgToAction(int undoId, const Akonadi::Item &item)
 {
     if (!mCachedInfo || mCachedInfo->id != undoId) {
-        QList<UndoInfo *>::const_iterator itr = mStack.constBegin();
+        QList<UndoInfoMoveItems *>::const_iterator itr = mStack.constBegin();
         while (itr != mStack.constEnd()) {
             if ((*itr)->id == undoId) {
                 mCachedInfo = (*itr);
@@ -86,7 +86,7 @@ bool UndoStack::isEmpty() const
 void UndoStack::undo()
 {
     if (!mStack.isEmpty()) {
-        UndoInfo *info = mStack.takeFirst();
+        UndoInfoMoveItems *info = mStack.takeFirst();
         Q_EMIT undoStackChanged();
         auto job = new Akonadi::ItemMoveJob(info->items, info->srcFolder, this);
         connect(job, &Akonadi::ItemMoveJob::result, this, &UndoStack::slotMoveResult);
