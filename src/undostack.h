@@ -19,6 +19,15 @@ class KJob;
 
 namespace KMail
 {
+class UndoInfoBase
+{
+public:
+    UndoInfoBase() = default;
+    virtual ~UndoInfoBase() { };
+    virtual void undo() = 0;
+    [[nodiscard]] virtual QString undoInfo() const = 0;
+};
+
 /** A class for storing Undo information. */
 class UndoInfo
 {
