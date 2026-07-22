@@ -449,6 +449,7 @@
         <ul>
           <li>HTML messages are shown with their intended colors by default. To override this, uncheck the "Appearance-&gt;Colors-&gt;Do not change color from original HTML mail" option</li>
           <li xml:lang="ar">تُعرض رسائل HTML بألوانها المقصودة مبدئيًا. لتجاوز ذلك، قم بإلغاء تحديد خيار  "المظهر-&gt;الألوان-&gt;لا تغير اللون من البريد الإلكتروني HTML الأصلي ".</li>
+          <li xml:lang="bg">HTML съобщения се показват с техните предназначени цветове по подразбиране. За да премахнете това поведение, премахнете опцията „Изглед → Цветове → Запазване на цвета от оригиналното HTML съобщение“</li>
           <li xml:lang="ca">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar això, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canviïs el color del correu HTML original»</li>
           <li xml:lang="ca-valencia">Els missatges HTML es mostren de manera predeterminada amb els colors previstos. Per a anul·lar açò, desmarqueu l'opció «Aparença-&gt;Colors-&gt;No canvies el color del correu HTML original»</li>
           <li xml:lang="cs">Zprávy ve formátu HTML se ve výchozím nastavení zobrazují v původních barvách. Chcete-li toto nastavení změnit, zrušte zaškrtnutí políčka Vzhled -&gt; Barvy -&gt; Nezměnit barvu původního e-mailu HTML</li>
