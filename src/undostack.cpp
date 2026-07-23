@@ -38,14 +38,14 @@ void UndoStack::clear()
 QString UndoStack::undoInfo() const
 {
     if (!mStack.isEmpty()) {
-        UndoInfoMoveItems *info = mStack.first();
+        UndoInfoBase *info = mStack.first();
         return info->undoInfo();
     } else {
         return {};
     }
 }
 
-int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
+int UndoStack::newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
     auto info = new UndoInfoMoveItems;
     info->id = ++mLastId;
@@ -61,10 +61,10 @@ int UndoStack::newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi
     return info->id;
 }
 
-void UndoStack::addMsgToAction(int undoId, const Akonadi::Item &item)
+void UndoStack::addMsgToMoveAction(int undoId, const Akonadi::Item &item)
 {
     if (!mCachedInfo || mCachedInfo->id != undoId) {
-        QList<UndoInfoMoveItems *>::const_iterator itr = mStack.constBegin();
+        QList<UndoInfoBase *>::const_iterator itr = mStack.constBegin();
         while (itr != mStack.constEnd()) {
             if ((*itr)->id == undoId) {
                 mCachedInfo = (*itr);
@@ -75,7 +75,8 @@ void UndoStack::addMsgToAction(int undoId, const Akonadi::Item &item)
     }
 
     Q_ASSERT(mCachedInfo);
-    mCachedInfo->items.append(item);
+    UndoInfoMoveItems *moveItems = dynamic_cast<UndoInfoMoveItems *>(mCachedInfo);
+    moveItems->items.append(item);
 }
 
 bool UndoStack::isEmpty() const
@@ -86,7 +87,7 @@ bool UndoStack::isEmpty() const
 void UndoStack::undo()
 {
     if (!mStack.isEmpty()) {
-        UndoInfoMoveItems *info = mStack.takeFirst();
+        UndoInfoBase *info = mStack.takeFirst();
         info->undo();
         Q_EMIT undoStackChanged();
     } else {

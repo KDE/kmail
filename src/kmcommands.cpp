@@ -1523,9 +1523,9 @@ KMCommand::Result KMMoveCommand::execute()
                 }
                 if (parent.id() != item.storageCollectionId()) {
                     parent = Akonadi::Collection(item.storageCollectionId());
-                    undoId = kmkernel->undoStack()->newUndoAction(parent, mDestFolder);
+                    undoId = kmkernel->undoStack()->newUndoMoveAction(parent, mDestFolder);
                 }
-                kmkernel->undoStack()->addMsgToAction(undoId, item);
+                kmkernel->undoStack()->addMsgToMoveAction(undoId, item);
             }
         } else {
             auto job = new Akonadi::ItemDeleteJob(retrievedList, this);
@@ -1649,9 +1649,9 @@ KMCommand::Result KMTrashMsgCommand::execute()
                 }
                 if (parent.id() != item.storageCollectionId()) {
                     parent = Akonadi::Collection(item.storageCollectionId());
-                    undoId = kmkernel->undoStack()->newUndoAction(parent, trash);
+                    undoId = kmkernel->undoStack()->newUndoMoveAction(parent, trash);
                 }
-                kmkernel->undoStack()->addMsgToAction(undoId, item);
+                kmkernel->undoStack()->addMsgToMoveAction(undoId, item);
             }
         } else {
             auto job = new Akonadi::ItemDeleteJob(*trashIt, this);

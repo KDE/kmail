@@ -26,19 +26,19 @@ public:
     virtual ~UndoInfoBase() { };
     virtual void undo() = 0;
     [[nodiscard]] virtual QString undoInfo() const = 0;
+    int id = -1;
 };
 
 /** A class for storing Undo information. */
-class UndoInfoMoveItems : public QObject
+class UndoInfoMoveItems : public QObject, public UndoInfoBase
 {
     Q_OBJECT
 public:
     UndoInfoMoveItems();
     ~UndoInfoMoveItems() override;
-    [[nodiscard]] QString undoInfo() const;
+    [[nodiscard]] QString undoInfo() const override;
 
-    void undo();
-    int id = -1;
+    void undo() override;
     Akonadi::Item::List items;
     Akonadi::Collection srcFolder;
     Akonadi::Collection destFolder;
@@ -56,8 +56,8 @@ public:
     explicit UndoStack(int size);
     ~UndoStack() override;
 
-    [[nodiscard]] int newUndoAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
-    void addMsgToAction(int undoId, const Akonadi::Item &item);
+    [[nodiscard]] int newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
+    void addMsgToMoveAction(int undoId, const Akonadi::Item &item);
     [[nodiscard]] bool isEmpty() const;
     void undo();
 
@@ -68,9 +68,9 @@ Q_SIGNALS:
 
 private:
     KMAIL_NO_EXPORT void clear();
-    QList<UndoInfoMoveItems *> mStack;
+    QList<UndoInfoBase *> mStack;
     const int mSize = 0;
     int mLastId = 0;
-    UndoInfoMoveItems *mCachedInfo = nullptr;
+    UndoInfoBase *mCachedInfo = nullptr;
 };
 }
