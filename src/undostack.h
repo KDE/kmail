@@ -29,16 +29,22 @@ public:
 };
 
 /** A class for storing Undo information. */
-class UndoInfoMoveItems
+class UndoInfoMoveItems : public QObject
 {
+    Q_OBJECT
 public:
     UndoInfoMoveItems() = default;
+    [[nodiscard]] QString undoInfo() const;
 
+    void undo();
     int id = -1;
     Akonadi::Item::List items;
     Akonadi::Collection srcFolder;
     Akonadi::Collection destFolder;
     bool moveToTrash = false;
+
+private:
+    void slotMoveResult(KJob *);
 };
 
 class KMAILTESTS_TESTS_EXPORT UndoStack : public QObject
@@ -61,7 +67,6 @@ Q_SIGNALS:
 
 private:
     KMAIL_NO_EXPORT void clear();
-    KMAIL_NO_EXPORT void slotMoveResult(KJob *);
     QList<UndoInfoMoveItems *> mStack;
     const int mSize = 0;
     int mLastId = 0;

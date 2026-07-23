@@ -39,7 +39,7 @@ QString UndoStack::undoInfo() const
 {
     if (!mStack.isEmpty()) {
         UndoInfoMoveItems *info = mStack.first();
-        return info->moveToTrash ? i18n("Move To Trash") : i18np("Move Message", "Move Messages", info->items.count());
+        return info->undoInfo();
     } else {
         return {};
     }
@@ -87,21 +87,31 @@ void UndoStack::undo()
 {
     if (!mStack.isEmpty()) {
         UndoInfoMoveItems *info = mStack.takeFirst();
+        info->undo();
         Q_EMIT undoStackChanged();
-        auto job = new Akonadi::ItemMoveJob(info->items, info->srcFolder, this);
-        connect(job, &Akonadi::ItemMoveJob::result, this, &UndoStack::slotMoveResult);
-        delete info;
     } else {
         // Sorry.. stack is empty..
         KMessageBox::error(kmkernel->mainWin(), i18n("There is nothing to undo."));
     }
 }
 
-void UndoStack::slotMoveResult(KJob *job)
+void UndoInfoMoveItems::slotMoveResult(KJob *job)
 {
     if (job->error()) {
         KMessageBox::error(kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString()));
     }
+    deleteLater();
+}
+
+QString UndoInfoMoveItems::undoInfo() const
+{
+    return moveToTrash ? i18n("Move To Trash") : i18np("Move Message", "Move Messages", items.count());
+}
+
+void UndoInfoMoveItems::undo()
+{
+    auto job = new Akonadi::ItemMoveJob(items, srcFolder, this);
+    connect(job, &Akonadi::ItemMoveJob::result, this, &UndoInfoMoveItems::slotMoveResult);
 }
 
 #include "moc_undostack.cpp"
