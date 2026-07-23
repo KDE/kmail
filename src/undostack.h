@@ -3,6 +3,7 @@
 
     SPDX-FileCopyrightText: 1999 Waldo Bastian <bastian@kde.org>
     SPDX-FileCopyrightText: 2003 Zack Rusin <zack@kde.org>
+    SPDX-FileCopyrightText: 2026 Laurent Montel <montel@kde.org>
 
     SPDX-License-Identifier: GPL-2.0-only
 */
