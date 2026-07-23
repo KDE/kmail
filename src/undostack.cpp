@@ -97,6 +97,10 @@ void UndoStack::undo()
     }
 }
 
+UndoInfoMoveItems::UndoInfoMoveItems() = default;
+
+UndoInfoMoveItems::~UndoInfoMoveItems() = default;
+
 void UndoInfoMoveItems::slotMoveResult(KJob *job)
 {
     if (job->error()) {
@@ -104,10 +108,6 @@ void UndoInfoMoveItems::slotMoveResult(KJob *job)
     }
     deleteLater();
 }
-
-UndoInfoMoveItems::UndoInfoMoveItems() = default;
-
-UndoInfoMoveItems::~UndoInfoMoveItems() = default;
 
 QString UndoInfoMoveItems::undoInfo() const
 {
@@ -118,6 +118,21 @@ void UndoInfoMoveItems::undo()
 {
     auto job = new Akonadi::ItemMoveJob(items, srcFolder, this);
     connect(job, &Akonadi::ItemMoveJob::result, this, &UndoInfoMoveItems::slotMoveResult);
+}
+
+UndoInfoChangeStatusItems::UndoInfoChangeStatusItems() = default;
+
+UndoInfoChangeStatusItems::~UndoInfoChangeStatusItems() = default;
+
+QString UndoInfoChangeStatusItems::undoInfo() const
+{
+    // TODO
+    return {};
+}
+
+void UndoInfoChangeStatusItems::undo()
+{
+    // TODO
 }
 
 #include "moc_undostack.cpp"

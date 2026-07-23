@@ -30,6 +30,16 @@ public:
     int id = -1;
 };
 
+class UndoInfoChangeStatusItems : public QObject, public UndoInfoBase
+{
+    Q_OBJECT
+public:
+    UndoInfoChangeStatusItems();
+    ~UndoInfoChangeStatusItems() override;
+    [[nodiscard]] QString undoInfo() const override;
+    void undo() override;
+};
+
 /** A class for storing Undo information. */
 class UndoInfoMoveItems : public QObject, public UndoInfoBase
 {
