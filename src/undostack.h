@@ -33,7 +33,8 @@ class UndoInfoMoveItems : public QObject
 {
     Q_OBJECT
 public:
-    UndoInfoMoveItems() = default;
+    UndoInfoMoveItems();
+    ~UndoInfoMoveItems() override;
     [[nodiscard]] QString undoInfo() const;
 
     void undo();

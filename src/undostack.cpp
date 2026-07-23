@@ -103,6 +103,10 @@ void UndoInfoMoveItems::slotMoveResult(KJob *job)
     deleteLater();
 }
 
+UndoInfoMoveItems::UndoInfoMoveItems() = default;
+
+UndoInfoMoveItems::~UndoInfoMoveItems() = default;
+
 QString UndoInfoMoveItems::undoInfo() const
 {
     return moveToTrash ? i18n("Move To Trash") : i18np("Move Message", "Move Messages", items.count());
