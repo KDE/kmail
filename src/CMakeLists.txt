@@ -179,6 +179,8 @@ target_sources(
         kmsystemtray.cpp
         unityservicemanager.cpp
         undostack.cpp
+        kmundoredomanager.h
+        kmundoredomanager.cpp
         kmkernel.cpp
         commandlineinfo.h
         commandlineinfo.cpp
