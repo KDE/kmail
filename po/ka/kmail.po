@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 05:54+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -8033,27 +8033,27 @@ msgstr "<b>ვის:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>სათაური:</b> %1"
 
-#: undostack.cpp:42
-#, kde-format
-msgid "Move To Trash"
-msgstr "ნაგავში გადატანა"
-
-#: undostack.cpp:42
-#, kde-format
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] "შეტყობინების გადატანა"
-msgstr[1] "შეტყობინებების გადატანა"
-
 #: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "გასაუქმებელი არაფერია."
 
-#: undostack.cpp:103
+#: undostack.cpp:107
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "შეტყობინების გადატანის შეცდომა. %1"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move To Trash"
+msgstr "ნაგავში გადატანა"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move Message"
+msgid_plural "Move Messages"
+msgstr[0] "შეტყობინების გადატანა"
+msgstr[1] "შეტყობინებების გადატანა"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

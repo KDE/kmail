@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-05-25 21:28+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7899,26 +7899,26 @@ msgstr "<b>받는 사람:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>제목:</b> %1"
 
-#: undostack.cpp:42
-#, kde-format
-msgid "Move To Trash"
-msgstr "휴지통으로 이동"
-
-#: undostack.cpp:42
-#, kde-format
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] "메시지 이동"
-
 #: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "되돌릴 것이 없습니다."
 
-#: undostack.cpp:103
+#: undostack.cpp:107
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "메시지를 이동할 수 없음: %1"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move To Trash"
+msgstr "휴지통으로 이동"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move Message"
+msgid_plural "Move Messages"
+msgstr[0] "메시지 이동"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

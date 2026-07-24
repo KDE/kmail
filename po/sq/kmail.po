@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -7812,28 +7812,28 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr ""
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr ""
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Duke lëvizur mesazhet"
 msgstr[1] "Duke lëvizur mesazhet"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr ""
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr ""
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 13:38+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -8111,27 +8111,27 @@ msgstr "<b>Aan:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Onderwerp:</b> %1"
 
-#: undostack.cpp:42
-#, kde-format
-msgid "Move To Trash"
-msgstr "Naar prullenbak verplaatsen"
-
-#: undostack.cpp:42
-#, kde-format
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] "Bericht verplaatsen"
-msgstr[1] "Berichten verplaatsen"
-
 #: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Er is niets om ongedaan te maken."
 
-#: undostack.cpp:103
+#: undostack.cpp:107
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "Kan bericht niet verplaatsen. %1"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move To Trash"
+msgstr "Naar prullenbak verplaatsen"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move Message"
+msgid_plural "Move Messages"
+msgstr[0] "Bericht verplaatsen"
+msgstr[1] "Berichten verplaatsen"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

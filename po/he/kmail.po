@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-06-30 09:05+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -7961,12 +7961,22 @@ msgstr "<b>אל:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>נושא:</b> %1"
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "אין מה לבטל."
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "לא ניתן להעביר הודעה. %1"
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr "העברה לאשפה"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -7974,16 +7984,6 @@ msgstr[0] "העברת הודעה"
 msgstr[1] "העברת הודעות"
 msgstr[2] "העברת הודעות"
 msgstr[3] "העברת הודעות"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "אין מה לבטל."
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "לא ניתן להעביר הודעה. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

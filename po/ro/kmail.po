@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -8599,13 +8599,24 @@ msgstr "<b>Către:</b><br/>"
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Nu există nimic de des-făcut."
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Copy or Move Messages to %1"
+msgid "Cannot move message. %1"
+msgstr "Copiază sau mută mesajele la %1"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Mută în coșul de gunoi"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgid "Move Message"
@@ -8613,17 +8624,6 @@ msgid_plural "Move Messages"
 msgstr[0] "Mutare mesaj către..."
 msgstr[1] "Mutare mesaj către..."
 msgstr[2] "Mutare mesaj către..."
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Nu există nimic de des-făcut."
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-#| msgid "Copy or Move Messages to %1"
-msgid "Cannot move message. %1"
-msgstr "Copiază sau mută mesajele la %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

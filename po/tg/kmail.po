@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -8555,29 +8555,29 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Амалиёт барои барҳамдиҳӣ, мавҷуд нест."
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+msgid "Cannot move message. %1"
+msgstr "Гузаронидани иттилоот - интихоби папка"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Ба сабад ҷойгир кардан"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Иттилооти нав ба..."
 msgstr[1] "Иттилооти нав ба..."
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Амалиёт барои барҳамдиҳӣ, мавҷуд нест."
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-msgid "Cannot move message. %1"
-msgstr "Гузаронидани иттилоот - интихоби папка"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

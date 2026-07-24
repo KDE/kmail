@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -8027,28 +8027,28 @@ msgstr "<b>To:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Predmet:</b> %1"
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Nie je čo vrátiť späť."
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Nie je možné presunúť správu. %1"
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr "Presunúť do koša"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Presunúť správu"
 msgstr[1] "Presunúť správy"
 msgstr[2] "Presunúť správy"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Nie je čo vrátiť späť."
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Nie je možné presunúť správu. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

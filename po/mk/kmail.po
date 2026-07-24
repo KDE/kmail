@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -8670,13 +8670,24 @@ msgstr "<b>До:</b><br/>"
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr ""
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Move Messages to Folder"
+msgid "Cannot move message. %1"
+msgstr "Преместете ги пораките во папка"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Преместување во корпата"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message"
@@ -8684,17 +8695,6 @@ msgid_plural "Move Messages"
 msgstr[0] "Нова порака до..."
 msgstr[1] "Нова порака до..."
 msgstr[2] "Нова порака до..."
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr ""
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-#| msgid "Move Messages to Folder"
-msgid "Cannot move message. %1"
-msgstr "Преместете ги пораките во папка"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

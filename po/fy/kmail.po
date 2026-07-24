@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -8881,30 +8881,30 @@ msgstr "<b>Oan:</b><br/>"
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Der is neat om ûngedien te meitsjen."
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Move Messages to Folder"
+msgid "Cannot move message. %1"
+msgstr "Berjochten nei map ferpleatse"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Nei it Jiskefet"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Nij berjocht oan..."
 msgstr[1] "Nij berjocht oan..."
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Der is neat om ûngedien te meitsjen."
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-#| msgid "Move Messages to Folder"
-msgid "Cannot move message. %1"
-msgstr "Berjochten nei map ferpleatse"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

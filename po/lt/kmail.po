@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-05-08 01:22+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -8164,12 +8164,22 @@ msgstr "<b>Kam:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Tema:</b> %1"
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Nėra ko atšaukti."
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Nepavyksta perkelti laiško. %1"
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr "Perkelti į šiukšlinę"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -8177,16 +8187,6 @@ msgstr[0] "Perkelti laišką"
 msgstr[1] "Perkelti laiškus"
 msgstr[2] "Perkelti laiškus"
 msgstr[3] "Perkelti laiškus"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Nėra ko atšaukti."
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Nepavyksta perkelti laiško. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

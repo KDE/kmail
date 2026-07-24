@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -8169,13 +8169,23 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Nema nikakve akcije za poništiti"
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+msgid "Cannot move message. %1"
+msgstr "Premjesti poruku u mapu"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Pošalji u smeće"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgid "Move Message"
@@ -8183,16 +8193,6 @@ msgid_plural "Move Messages"
 msgstr[0] "Nova poruka za…"
 msgstr[1] "Nova poruka za…"
 msgstr[2] "Nova poruka za…"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Nema nikakve akcije za poništiti"
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-msgid "Cannot move message. %1"
-msgstr "Premjesti poruku u mapu"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

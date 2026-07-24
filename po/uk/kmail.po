@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 09:19+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -8148,12 +8148,22 @@ msgstr "<b>Кому:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Тема:</b> %1"
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Немає чого повертати."
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Не вдалося пересунути повідомлення. %1"
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr "Пересунути до смітника"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -8161,16 +8171,6 @@ msgstr[0] "Пересунути повідомлення"
 msgstr[1] "Пересунути повідомлення"
 msgstr[2] "Пересунути повідомлення"
 msgstr[3] "Пересунути повідомлення"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Немає чого повертати."
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Не вдалося пересунути повідомлення. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

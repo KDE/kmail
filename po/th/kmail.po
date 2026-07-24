@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -8347,29 +8347,29 @@ msgstr "<b>ถึง:</b><br/>"
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
-msgid "Move To Trash"
-msgstr "ทิ้งลงถังขยะ"
-
-#: undostack.cpp:42
-#, fuzzy, kde-format
-#| msgid "New Message To..."
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] "เขียนจดหมายใหม่ไปยัง..."
-
 #: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "ไม่มีรายการที่จะเลิกทำ"
 
-#: undostack.cpp:103
+#: undostack.cpp:107
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot move message. %1"
 msgstr "ย้ายจดหมายไปยังโฟลเดอร์"
+
+#: undostack.cpp:114
+#, fuzzy, kde-format
+#| msgid "Move to Trash"
+msgid "Move To Trash"
+msgstr "ทิ้งลงถังขยะ"
+
+#: undostack.cpp:114
+#, fuzzy, kde-format
+#| msgid "New Message To..."
+msgid "Move Message"
+msgid_plural "Move Messages"
+msgstr[0] "เขียนจดหมายใหม่ไปยัง..."
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

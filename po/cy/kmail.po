@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -8370,29 +8370,29 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, fuzzy, kde-format
+msgid "There is nothing to undo."
+msgstr "Nid oes dim byd i'w ddatwneud!"
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+msgid "Cannot move message. %1"
+msgstr "Symud Neges i Blygell"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Symud i Sbwriel"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Neges Newydd I..."
 msgstr[1] "Neges Newydd I..."
-
-#: undostack.cpp:96
-#, fuzzy, kde-format
-msgid "There is nothing to undo."
-msgstr "Nid oes dim byd i'w ddatwneud!"
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-msgid "Cannot move message. %1"
-msgstr "Symud Neges i Blygell"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

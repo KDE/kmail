@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -8385,30 +8385,30 @@ msgstr "<b>Po:</b><br/>"
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "I gn a rén a disfé."
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Can not move message. %1"
+msgid "Cannot move message. %1"
+msgstr "Dji n' sai bodjî l' messaedje. %1"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "Taper å batch"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Bodjî messaedje aviè..."
 msgstr[1] "Bodjî messaedje aviè..."
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "I gn a rén a disfé."
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-#| msgid "Can not move message. %1"
-msgid "Cannot move message. %1"
-msgstr "Dji n' sai bodjî l' messaedje. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

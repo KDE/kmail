@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -8642,28 +8642,28 @@ msgstr "<b>Кімге:</b><br/>"
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
-msgid "Move To Trash"
-msgstr "Өшірілгендерге жылжыту"
-
-#: undostack.cpp:42
-#, fuzzy, kde-format
-#| msgid "Move Message To..."
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] "Хатты мынаған жылжыту..."
-
 #: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Қайтатын әрекет жоқ."
 
-#: undostack.cpp:103
+#: undostack.cpp:107
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr "Хат жылжытылмады. %1"
+
+#: undostack.cpp:114
+#, fuzzy, kde-format
+#| msgid "Move to Trash"
+msgid "Move To Trash"
+msgstr "Өшірілгендерге жылжыту"
+
+#: undostack.cpp:114
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgid "Move Message"
+msgid_plural "Move Messages"
+msgstr[0] "Хатты мынаған жылжыту..."
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

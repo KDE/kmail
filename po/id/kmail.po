@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2024-10-01 19:54+0700\n"
 "Last-Translator: Wantoyèk <wantoyek@gmail.com>\n"
 "Language-Team: https://t.me/Localizations_KDE_Indonesia\n"
@@ -7729,27 +7729,27 @@ msgstr "<b>Ke:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Subyek:</b> %1"
 
-#: undostack.cpp:42
-#, kde-format
-msgid "Move To Trash"
-msgstr "Pindahkan Ke Tong Sampah"
-
-#: undostack.cpp:42
-#, kde-format
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] ""
-msgstr[1] ""
-
 #: undostack.cpp:96
 #, kde-format
 msgid "There is nothing to undo."
 msgstr ""
 
-#: undostack.cpp:103
+#: undostack.cpp:107
 #, kde-format
 msgid "Cannot move message. %1"
 msgstr ""
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move To Trash"
+msgstr "Pindahkan Ke Tong Sampah"
+
+#: undostack.cpp:114
+#, kde-format
+msgid "Move Message"
+msgid_plural "Move Messages"
+msgstr[0] ""
+msgstr[1] ""
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

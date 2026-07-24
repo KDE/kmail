@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-06-30 20:36+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -8003,12 +8003,22 @@ msgstr "<b>إلى:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>الموضوع:</b> %1"
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "لا شيء للتَّراجع عنه."
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "تعذّر نقل الرّسالة. %1"
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr "انقل إلى المهملات"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -8018,16 +8028,6 @@ msgstr[2] "اُنقل الرَّسالتين"
 msgstr[3] "اُنقل الرَّسائل"
 msgstr[4] "اُنقل الرَّسائل"
 msgstr[5] "اُنقل الرَّسائل"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "لا شيء للتَّراجع عنه."
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "تعذّر نقل الرّسالة. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

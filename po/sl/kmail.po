@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 17:17+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -8079,12 +8079,22 @@ msgstr "<b>Za:</b> %1"
 msgid "<b>Subject:</b> %1"
 msgstr "<b>Predmet:</b> %1"
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "Ničesar ni za razveljaviti."
+
+#: undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Sporočila ni mogoče premakniti. %1"
+
+#: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
 msgstr "Premakni v smeti"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, kde-format
 msgid "Move Message"
 msgid_plural "Move Messages"
@@ -8092,16 +8102,6 @@ msgstr[0] "Premakni sporočila"
 msgstr[1] "Premakni sporočilo"
 msgstr[2] "Premakni sporočili"
 msgstr[3] "Premakni sporočila"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "Ničesar ni za razveljaviti."
-
-#: undostack.cpp:103
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Sporočila ni mogoče premakniti. %1"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

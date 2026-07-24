@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-07 00:44+0000\n"
+"POT-Creation-Date: 2026-07-24 00:45+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -8266,30 +8266,30 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:42
+#: undostack.cpp:96
+#, kde-format
+msgid "There is nothing to undo."
+msgstr "ਕੁਝ ਵੀ ਵਾਪਿਸ ਕਰਨ ਲਈ ਨਹੀਂ ਹੈ"
+
+#: undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Copy or Move Messages to %1"
+msgid "Cannot move message. %1"
+msgstr "ਸੁਨੇਹੇ %1 ਵਿੱਚ ਕਾਪੀ ਕਰੋ ਜਾਂ ਭੇਜੋ"
+
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move to Trash"
 msgid "Move To Trash"
 msgstr "ਰੱਦੀ ਵਿੱਚ ਭੇਜੋ"
 
-#: undostack.cpp:42
+#: undostack.cpp:114
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "ਸੁਨੇਹਾ ਭੇਜੋ... ਵਿੱਚ"
 msgstr[1] "ਸੁਨੇਹਾ ਭੇਜੋ... ਵਿੱਚ"
-
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "ਕੁਝ ਵੀ ਵਾਪਿਸ ਕਰਨ ਲਈ ਨਹੀਂ ਹੈ"
-
-#: undostack.cpp:103
-#, fuzzy, kde-format
-#| msgid "Copy or Move Messages to %1"
-msgid "Cannot move message. %1"
-msgstr "ਸੁਨੇਹੇ %1 ਵਿੱਚ ਕਾਪੀ ਕਰੋ ਜਾਂ ਭੇਜੋ"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
