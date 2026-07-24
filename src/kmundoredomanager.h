@@ -6,6 +6,8 @@
 #pragma once
 
 #include <QObject>
+#include <QUndoCommand>
+class QUndoStack;
 namespace KMail
 {
 class KMUndoRedoManager : public QObject
@@ -14,5 +16,15 @@ class KMUndoRedoManager : public QObject
 public:
     explicit KMUndoRedoManager(QObject *parent = nullptr);
     ~KMUndoRedoManager() override;
+
+private:
+    QUndoStack *const mUndoStack;
+};
+
+class KMUndoInfoMoveItems : public QUndoCommand
+{
+public:
+    void undo() override;
+    void redo() override;
 };
 }
