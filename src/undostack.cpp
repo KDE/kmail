@@ -126,8 +126,7 @@ UndoInfoChangeStatusItems::~UndoInfoChangeStatusItems() = default;
 
 QString UndoInfoChangeStatusItems::undoInfo() const
 {
-    // TODO
-    return {};
+    return i18n("Change Message Status");
 }
 
 void UndoInfoChangeStatusItems::undo()

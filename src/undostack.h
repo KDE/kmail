@@ -38,6 +38,7 @@ public:
     ~UndoInfoChangeStatusItems() override;
     [[nodiscard]] QString undoInfo() const override;
     void undo() override;
+    Akonadi::Item::List items;
 };
 
 /** A class for storing Undo information. */
