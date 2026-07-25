@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-01-05 17:05+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -8043,6 +8043,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Siirrä viesti"
 msgstr[1] "Siirrä viestit"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "&Viestien luokittelu"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -11968,9 +11974,6 @@ msgstr "Lähennys: %1 %"
 
 #~ msgid "Age in Days"
 #~ msgstr "Ikä päivinä"
-
-#~ msgid "Message Status"
-#~ msgstr "&Viestien luokittelu"
 
 #~ msgid "Message Tag"
 #~ msgstr "Viestin tunniste"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2024-12-15 19:32+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -8344,6 +8344,11 @@ msgid_plural "Move Messages"
 msgstr[0] "को नया संदेश..."
 msgstr[1] "को नया संदेश..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+msgid "Change Message Status"
+msgstr "संदेश टैग्स (&M)"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -10993,10 +10998,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Age in Days"
 #~ msgstr "<उम्र दिनों में>"
-
-#, fuzzy
-#~ msgid "Message Status"
-#~ msgstr "संदेश टैग्स (&M)"
 
 #, fuzzy
 #~| msgid "&Message Tags"

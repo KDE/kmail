@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -8371,6 +8371,12 @@ msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "เขียนจดหมายใหม่ไปยัง..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "สถานะจดหมาย"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -11368,9 +11374,6 @@ msgstr ""
 
 #~ msgid "Age in Days"
 #~ msgstr "อายุ (เป็นวัน)"
-
-#~ msgid "Message Status"
-#~ msgstr "สถานะจดหมาย"
 
 #~ msgid "Message Tag"
 #~ msgstr "ป้ายกำกับจดหมาย"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-05-25 21:28+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -7919,6 +7919,12 @@ msgstr "휴지통으로 이동"
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "메시지 이동"
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Tags"
+msgid "Change Message Status"
+msgstr "메시지 태그"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

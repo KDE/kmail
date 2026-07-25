@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -8538,6 +8538,12 @@ msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Mover a Mensagem"
 msgstr[1] "Mover as Mensagens"
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Tags"
+msgid "Change Message Status"
+msgstr "Marcas da Mensagem"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

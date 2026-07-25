@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-04-10 12:00+0200\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -8049,6 +8049,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Presunúť správu"
 msgstr[1] "Presunúť správy"
 msgstr[2] "Presunúť správy"
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Tags"
+msgid "Change Message Status"
+msgstr "Značky správ"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

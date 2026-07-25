@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2012-01-17 01:38+0330\n"
 "Last-Translator: Mohammad Reza Mirdamadi <mohi@ubuntu.ir>\n"
 "Language-Team: Farsi (Persian) <>\n"
@@ -8779,6 +8779,12 @@ msgid_plural "Move Messages"
 msgstr[0] "پیام جدید به..."
 msgstr[1] ""
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "&Message Tags"
+msgid "Change Message Status"
+msgstr "برچسبهای &پیام‌"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -12454,11 +12460,6 @@ msgstr "بزرگ‌نمایی"
 #~| msgid "<age in days>"
 #~ msgid "Age in Days"
 #~ msgstr ">طول عمر بر حسب روز<"
-
-#, fuzzy
-#~| msgid "&Message Tags"
-#~ msgid "Message Status"
-#~ msgstr "برچسبهای &پیام‌"
 
 #, fuzzy
 #~| msgid "&Message Tags"

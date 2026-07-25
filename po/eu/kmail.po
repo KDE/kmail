@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-07-02 08:56+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -8057,6 +8057,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Eraman mezua"
 msgstr[1] "Eraman mezuak"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Change Message Status"
+msgstr "&Mezua"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -11815,11 +11821,6 @@ msgstr "Zoom: %%1"
 #~| msgid "<age in days>"
 #~ msgid "Age in Days"
 #~ msgstr "<adina egunetan>"
-
-#, fuzzy
-#~| msgid "&Message"
-#~ msgid "Message Status"
-#~ msgstr "&Mezua"
 
 #, fuzzy
 #~| msgid "&Message"

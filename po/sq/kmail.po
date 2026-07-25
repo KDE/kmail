@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -7834,6 +7834,12 @@ msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Duke lëvizur mesazhet"
 msgstr[1] "Duke lëvizur mesazhet"
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Moving messages"
+msgid "Change Message Status"
+msgstr "Duke lëvizur mesazhet"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

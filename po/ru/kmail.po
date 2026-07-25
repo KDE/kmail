@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 14:37+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -8160,6 +8160,12 @@ msgstr[0] "перемещение писем"
 msgstr[1] "перемещение писем"
 msgstr[2] "перемещение писем"
 msgstr[3] "перемещение письма"
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Tags"
+msgid "Change Message Status"
+msgstr "Метки"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

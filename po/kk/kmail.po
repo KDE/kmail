@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2013-11-01 04:27+0600\n"
 "Last-Translator: Sairan Kikkarin <sairan@computer.org>\n"
 "Language-Team: Kazakh <kde-i18n-doc@kde.org>\n"
@@ -8665,6 +8665,12 @@ msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "Хатты мынаған жылжыту..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Хаттың күй-жайы"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -12602,9 +12608,6 @@ msgstr "Масштаб"
 
 #~ msgid "Age in Days"
 #~ msgstr "Күн мерзімі"
-
-#~ msgid "Message Status"
-#~ msgstr "Хаттың күй-жайы"
 
 #~ msgid "Message Tag"
 #~ msgstr "Хаттың белгісі"

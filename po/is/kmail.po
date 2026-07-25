@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2009-11-18 11:24+0000\n"
 "Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
 "Language-Team: Icelandic <kde-isl@molar.is>\n"
@@ -8754,6 +8754,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Nýtt bréf til..."
 msgstr[1] "Nýtt bréf til..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Change Message Status"
+msgstr "&Bréf"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -12384,11 +12390,6 @@ msgstr ""
 #~| msgid "<age in days>"
 #~ msgid "Age in Days"
 #~ msgstr "<aldur í dögum>"
-
-#, fuzzy
-#~| msgid "&Message"
-#~ msgid "Message Status"
-#~ msgstr "&Bréf"
 
 #, fuzzy
 #~| msgid "&Message"

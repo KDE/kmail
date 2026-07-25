@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-05-31 19:00-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -7531,6 +7531,12 @@ msgstr ""
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] ""
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "New Messages"
+msgid "Change Message Status"
+msgstr "يېڭى ئۇچۇرلار"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

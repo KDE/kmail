@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -8437,6 +8437,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Μετακίνηση του μηνύματος"
 msgstr[1] "Μετακίνηση των μηνυμάτων"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Κατάσταση μηνύματος"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -12528,9 +12534,6 @@ msgstr "Εστίαση"
 
 #~ msgid "Age in Days"
 #~ msgstr "Ηλικία σε ημέρες"
-
-#~ msgid "Message Status"
-#~ msgstr "Κατάσταση μηνύματος"
 
 #, fuzzy
 #~| msgid "Message Tags"

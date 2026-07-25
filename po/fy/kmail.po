@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -8906,6 +8906,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Nij berjocht oan..."
 msgstr[1] "Nij berjocht oan..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Change Message Status"
+msgstr "Berjo&cht"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -12742,11 +12748,6 @@ msgstr ""
 #~| msgid "<age in days>"
 #~ msgid "Age in Days"
 #~ msgstr "<âldens yn dagen>"
-
-#, fuzzy
-#~| msgid "&Message"
-#~ msgid "Message Status"
-#~ msgstr "Berjo&cht"
 
 #, fuzzy
 #~| msgid "&Message"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -8546,6 +8546,12 @@ msgstr "ផ្លាស់​ទី​ទៅ​​ធុងសំរាម"
 msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "ផ្លាស់ទី​សារ​ទៅ..."
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Tags"
+msgid "Change Message Status"
+msgstr "ស្លាក​សារ"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2025-08-21 12:57+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -8064,6 +8064,12 @@ msgstr[0] "Pārvietot vēstuli"
 msgstr[1] "Pārvietot vēstules"
 msgstr[2] "Pārvietot vēstules"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Vēstules statuss"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -12381,9 +12387,6 @@ msgstr "Tālummaiņa: %1%"
 
 #~ msgid "Age in Days"
 #~ msgstr "Vecums dienās"
-
-#~ msgid "Message Status"
-#~ msgstr "Vēstules statuss"
 
 #~ msgid "Message Tag"
 #~ msgstr "Vēstules tags"

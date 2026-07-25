@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -8410,6 +8410,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Bodjî messaedje aviè..."
 msgstr[1] "Bodjî messaedje aviè..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Estat do messaedje"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -11529,9 +11535,6 @@ msgstr "Zoumer"
 
 #~ msgid "Age in Days"
 #~ msgstr "Ådje, e djoûs"
-
-#~ msgid "Message Status"
-#~ msgstr "Estat do messaedje"
 
 #~ msgid "Message Tag"
 #~ msgstr "Etikete des messaedjes"

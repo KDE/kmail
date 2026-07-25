@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -8071,6 +8071,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Üzenet áthelyezése"
 msgstr[1] "Üzenetek áthelyezése"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Üzenetállapot"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -12005,9 +12011,6 @@ msgstr "Nagyítás: %1%"
 
 #~ msgid "Age in Days"
 #~ msgstr "Életkor napban"
-
-#~ msgid "Message Status"
-#~ msgstr "Üzenetállapot"
 
 #~ msgid "Message Tag"
 #~ msgstr "Üzenetcímke"

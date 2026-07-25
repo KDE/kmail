@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -8619,6 +8619,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Flyt brev"
 msgstr[1] "Flyt breve"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Brevstatus"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -12603,9 +12609,6 @@ msgstr "Zoom: %1%"
 
 #~ msgid "Age in Days"
 #~ msgstr "Alder i dage"
-
-#~ msgid "Message Status"
-#~ msgstr "Brevstatus"
 
 #~ msgid "Message Tag"
 #~ msgstr "Brevmærke"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -8222,6 +8222,11 @@ msgstr[1] "Přesuwam powěsći"
 msgstr[2] "Přesuwam powěsće"
 msgstr[3] "Přesuwam powěsće"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+msgid "Change Message Status"
+msgstr "%1:  Dóstawam nowe powěsće"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -14488,10 +14493,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Error while querying the server status."
 #~ msgstr "Zmylk při pósłanju zapiska"
-
-#, fuzzy
-#~ msgid "Retrieving message status"
-#~ msgstr "%1:  Dóstawam nowe powěsće"
 
 #, fuzzy
 #~ msgid "Retrieving messages"

@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2026-04-12 18:49+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -7921,6 +7921,12 @@ msgid_plural "Move Messages"
 msgstr[0] "அஞ்சலை நகர்த்து"
 msgstr[1] "அஞ்சல்களை நகர்த்து"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Change Message Status"
+msgstr "&செய்தி"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -11216,11 +11222,6 @@ msgstr "உருப்பெருக்கம்: %1%"
 #~| msgid "<age in days>"
 #~ msgid "Age in Days"
 #~ msgstr "<வயது நாட்களில்>"
-
-#, fuzzy
-#~| msgid "&Message"
-#~ msgid "Message Status"
-#~ msgstr "&செய்தி"
 
 #, fuzzy
 #~| msgid "&Message"

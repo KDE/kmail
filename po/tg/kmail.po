@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -8579,6 +8579,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Иттилооти нав ба..."
 msgstr[1] "Иттилооти нав ба..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "&Message"
+msgid "Change Message Status"
+msgstr "&Иттилоот"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 msgid "Account information"
@@ -11856,11 +11862,6 @@ msgstr ""
 #~| msgid "<age in days>"
 #~ msgid "Age in Days"
 #~ msgstr "<мӯҳлат дар рӯзҳо>"
-
-#, fuzzy
-#~| msgid "&Message"
-#~ msgid "Message Status"
-#~ msgstr "&Иттилоот"
 
 #, fuzzy
 #~| msgid "&Message"

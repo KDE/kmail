@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -8625,6 +8625,12 @@ msgstr[0] "Mutare mesaj către..."
 msgstr[1] "Mutare mesaj către..."
 msgstr[2] "Mutare mesaj către..."
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Starea mesajului"
+
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Account Information"
@@ -11988,9 +11994,6 @@ msgstr "Panoramare"
 
 #~ msgid "Age in Days"
 #~ msgstr "Vechimea în zile"
-
-#~ msgid "Message Status"
-#~ msgstr "Starea mesajului"
 
 #~ msgid "Message Tag"
 #~ msgstr "Marcaj mesaj"

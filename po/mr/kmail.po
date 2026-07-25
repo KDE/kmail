@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -8590,6 +8590,12 @@ msgid "Move Message"
 msgid_plural "Move Messages"
 msgstr[0] "संदेश    कडे हलवा"
 msgstr[1] "संदेश    कडे हलवा"
+
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Tags"
+msgid "Change Message Status"
+msgstr "संदेश टॅग्स"
 
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format

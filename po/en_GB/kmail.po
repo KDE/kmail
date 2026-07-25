@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2024-11-23 12:08+0000\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -8061,6 +8061,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Move Message"
 msgstr[1] "Move Messages"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Message Status"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -11961,9 +11967,6 @@ msgstr "Zoom: %1%"
 
 #~ msgid "Age in Days"
 #~ msgstr "Age in Days"
-
-#~ msgid "Message Status"
-#~ msgstr "Message Status"
 
 #~ msgid "Message Tag"
 #~ msgstr "Message Tag"

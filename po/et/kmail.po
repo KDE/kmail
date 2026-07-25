@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-24 00:45+0000\n"
+"POT-Creation-Date: 2026-07-25 00:45+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -8601,6 +8601,12 @@ msgid_plural "Move Messages"
 msgstr[0] "Kirja liigutamine"
 msgstr[1] "Kirjade liigutamine"
 
+#: undostack.cpp:129
+#, fuzzy, kde-format
+#| msgid "Message Status"
+msgid "Change Message Status"
+msgstr "Kirja olek"
+
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
 msgid "Account information"
@@ -12523,9 +12529,6 @@ msgstr "Suurendus: %1%"
 
 #~ msgid "Age in Days"
 #~ msgstr "Vanus päevades"
-
-#~ msgid "Message Status"
-#~ msgstr "Kirja olek"
 
 #~ msgid "Message Tag"
 #~ msgstr "Kirja silt"
