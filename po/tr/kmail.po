@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-25 00:45+0000\n"
-"PO-Revision-Date: 2026-06-25 18:50+0300\n"
+"PO-Revision-Date: 2026-07-25 19:52+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -8050,10 +8050,9 @@ msgstr[0] "İletiyi Taşı"
 msgstr[1] "İletileri Taşı"
 
 #: undostack.cpp:129
-#, fuzzy, kde-format
-#| msgid "Message Tags"
+#, kde-format
 msgid "Change Message Status"
-msgstr "İleti Etiketleri"
+msgstr "İleti Durumunu Değiştir"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

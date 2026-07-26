@@ -7802,10 +7802,9 @@ msgid_plural "Move Messages"
 msgstr[0] "移动消息"
 
 #: undostack.cpp:129
-#, fuzzy, kde-format
-#| msgid "Message Tags"
+#, kde-format
 msgid "Change Message Status"
-msgstr "消息标签"
+msgstr ""
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format
