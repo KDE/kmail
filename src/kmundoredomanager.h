@@ -22,6 +22,9 @@ public:
     [[nodiscard]] int newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
     void addMsgToMoveAction(int undoId, const Akonadi::Item &item);
 
+    void moveItems();
+    void slotMoveResult(KJob *job);
+
 private:
     QUndoStack *const mUndoStack;
 };
@@ -29,11 +32,14 @@ private:
 class KMUndoInfoMoveItems : public QUndoCommand
 {
 public:
+    explicit KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoCommand *parent = nullptr);
+
     void undo() override;
     void redo() override;
 
     [[nodiscard]] Akonadi::Item::List items() const;
     void setItems(const Akonadi::Item::List &newItems);
+    void addItem(const Akonadi::Item &item);
 
     [[nodiscard]] Akonadi::Collection srcFolder() const;
     void setSrcFolder(const Akonadi::Collection &newSrcFolder);
@@ -45,6 +51,7 @@ public:
     void setMoveToTrash(bool newMoveToTrash);
 
 private:
+    KMUndoRedoManager *const mManager;
     Akonadi::Item::List mItems;
     Akonadi::Collection mSrcFolder;
     Akonadi::Collection mDestFolder;

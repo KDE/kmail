@@ -7,7 +7,10 @@
 #include "kmundoredomanager.h"
 #include "kmkernel.h"
 #include <Akonadi/ItemMoveJob>
+#include <KLocalizedString>
+#include <KMessageBox>
 #include <QUndoStack>
+
 using namespace KMail;
 KMUndoRedoManager::KMUndoRedoManager(QObject *parent)
     : QObject{parent}
@@ -17,9 +20,26 @@ KMUndoRedoManager::KMUndoRedoManager(QObject *parent)
 
 KMUndoRedoManager::~KMUndoRedoManager() = default;
 
+void KMUndoRedoManager::moveItems()
+{
+#if 0
+    auto job = new Akonadi::ItemMoveJob(mItems, mSrcFolder, nullptr);
+    connect(job, &Akonadi::ItemMoveJob::result, this, &KMUndoRedoManager::slotMoveResult);
+#endif
+    // TODO
+}
+
+void KMUndoRedoManager::slotMoveResult(KJob *job)
+{
+    if (job->error()) {
+        KMessageBox::error(kmkernel->mainWin(), i18n("Cannot move message. %1", job->errorString()));
+    }
+}
+
 int KMUndoRedoManager::newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
-    auto info = new KMUndoInfoMoveItems;
+    auto info = new KMUndoInfoMoveItems(this);
+    mUndoStack->push(info);
 #if 0
     info->id = ++mLastId;
     info->srcFolder = srcFolder;
@@ -43,8 +63,18 @@ void KMUndoRedoManager::addMsgToMoveAction(int undoId, const Akonadi::Item &item
     // TODO
 }
 
+KMUndoInfoMoveItems::KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , mManager(manager)
+{
+}
+
 void KMUndoInfoMoveItems::undo()
 {
+#if 0
+    auto job = new Akonadi::ItemMoveJob(mItems, mSrcFolder, nullptr);
+    connect(job, &Akonadi::ItemMoveJob::result, this, &KMUndoInfoMoveItems::slotMoveResult);
+#endif
     // TODO
 }
 
@@ -61,6 +91,11 @@ Akonadi::Item::List KMUndoInfoMoveItems::items() const
 void KMUndoInfoMoveItems::setItems(const Akonadi::Item::List &newItems)
 {
     mItems = newItems;
+}
+
+void KMUndoInfoMoveItems::addItem(const Akonadi::Item &item)
+{
+    mItems.append(item);
 }
 
 Akonadi::Collection KMUndoInfoMoveItems::srcFolder() const
