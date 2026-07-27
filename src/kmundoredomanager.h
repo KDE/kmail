@@ -19,10 +19,10 @@ public:
     explicit KMUndoRedoManager(QObject *parent = nullptr);
     ~KMUndoRedoManager() override;
 
-    [[nodiscard]] int newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
-    void addMsgToMoveAction(int undoId, const Akonadi::Item &item);
+    [[nodiscard]] QUndoCommand *newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder);
+    void addMsgToMoveAction(QUndoCommand *command, const Akonadi::Item &item);
 
-    void moveItems();
+    void moveItems(const Akonadi::Item::List &list, const Akonadi::Collection &collection);
     void slotMoveResult(KJob *job);
 
 private:

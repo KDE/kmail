@@ -20,13 +20,10 @@ KMUndoRedoManager::KMUndoRedoManager(QObject *parent)
 
 KMUndoRedoManager::~KMUndoRedoManager() = default;
 
-void KMUndoRedoManager::moveItems()
+void KMUndoRedoManager::moveItems(const Akonadi::Item::List &items, const Akonadi::Collection &collection)
 {
-#if 0
-    auto job = new Akonadi::ItemMoveJob(mItems, mSrcFolder, nullptr);
+    auto job = new Akonadi::ItemMoveJob(items, collection, nullptr);
     connect(job, &Akonadi::ItemMoveJob::result, this, &KMUndoRedoManager::slotMoveResult);
-#endif
-    // TODO
 }
 
 void KMUndoRedoManager::slotMoveResult(KJob *job)
@@ -36,28 +33,17 @@ void KMUndoRedoManager::slotMoveResult(KJob *job)
     }
 }
 
-int KMUndoRedoManager::newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
+QUndoCommand *KMUndoRedoManager::newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
     auto info = new KMUndoInfoMoveItems(this);
+    info->setSrcFolder(srcFolder);
+    info->setDestFolder(destFolder);
+    info->setMoveToTrash(destFolder == CommonKernel->trashCollectionFolder());
     mUndoStack->push(info);
-#if 0
-    info->id = ++mLastId;
-    info->srcFolder = srcFolder;
-    info->destFolder = destFolder;
-    info->moveToTrash = (destFolder == CommonKernel->trashCollectionFolder());
-    if (static_cast<int>(mStack.count()) == mSize) {
-        delete mStack.last();
-        mStack.removeLast();
-    }
-    mStack.prepend(info);
-    Q_EMIT undoStackChanged();
-    return info->id;
-#endif
-    // TODO
-    return -1;
+    return info;
 }
 
-void KMUndoRedoManager::addMsgToMoveAction(int undoId, const Akonadi::Item &item)
+void KMUndoRedoManager::addMsgToMoveAction(QUndoCommand *command, const Akonadi::Item &item)
 {
     // TODO push push()
     // TODO
@@ -71,16 +57,12 @@ KMUndoInfoMoveItems::KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoComman
 
 void KMUndoInfoMoveItems::undo()
 {
-#if 0
-    auto job = new Akonadi::ItemMoveJob(mItems, mSrcFolder, nullptr);
-    connect(job, &Akonadi::ItemMoveJob::result, this, &KMUndoInfoMoveItems::slotMoveResult);
-#endif
-    // TODO
+    mManager->moveItems(mItems, mDestFolder);
 }
 
 void KMUndoInfoMoveItems::redo()
 {
-    // TODO
+    mManager->moveItems(mItems, mSrcFolder);
 }
 
 Akonadi::Item::List KMUndoInfoMoveItems::items() const
