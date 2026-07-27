@@ -178,7 +178,6 @@ target_sources(
         kmreaderwin.cpp
         kmsystemtray.cpp
         unityservicemanager.cpp
-        undostack.cpp
         kmundoredomanager.h
         kmundoredomanager.cpp
         kmkernel.cpp
@@ -308,7 +307,6 @@ target_sources(
         kmreaderwin.h
         kmsystemtray.h
         unityservicemanager.h
-        undostack.h
         kmkernel.h
         kmcommands.h
         kmreadermainwin.h

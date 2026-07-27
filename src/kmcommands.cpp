@@ -34,6 +34,7 @@
 
 #include "kmail_debug.h"
 #include "kmreadermainwin.h"
+#include "kmundoredomanager.h"
 #include "secondarywindow.h"
 #include "util.h"
 #include "widgets/collectionpane.h"
@@ -43,7 +44,6 @@
 
 #include "editor/composer.h"
 #include "kmmainwidget.h"
-#include "undostack.h"
 
 #include <KIdentityManagementCore/IdentityManager>
 
@@ -1516,16 +1516,16 @@ KMCommand::Result KMMoveCommand::execute()
                 return lhs.storageCollectionId() < rhs.storageCollectionId();
             });
             Akonadi::Collection parent;
-            int undoId = -1;
+            QUndoCommand *command = nullptr;
             for (const Akonadi::Item &item : std::as_const(retrievedList)) {
                 if (!item.isValid() || item.storageCollectionId() == -1) {
                     continue;
                 }
                 if (parent.id() != item.storageCollectionId()) {
                     parent = Akonadi::Collection(item.storageCollectionId());
-                    undoId = kmkernel->undoStack()->newUndoMoveAction(parent, mDestFolder);
+                    command = kmkernel->undoRedoManager()->newUndoMoveAction(parent, mDestFolder);
                 }
-                kmkernel->undoStack()->addMsgToMoveAction(undoId, item);
+                kmkernel->undoRedoManager()->addMsgToMoveAction(command, item);
             }
         } else {
             auto job = new Akonadi::ItemDeleteJob(retrievedList, this);
@@ -1642,16 +1642,16 @@ KMCommand::Result KMTrashMsgCommand::execute()
                 return lhs.storageCollectionId() < rhs.storageCollectionId();
             });
             Akonadi::Collection parent;
-            int undoId = -1;
+            QUndoCommand *command = nullptr;
             for (const Akonadi::Item &item : std::as_const(*trashIt)) {
                 if (!item.isValid() || item.storageCollectionId() == -1) {
                     continue;
                 }
                 if (parent.id() != item.storageCollectionId()) {
                     parent = Akonadi::Collection(item.storageCollectionId());
-                    undoId = kmkernel->undoStack()->newUndoMoveAction(parent, trash);
+                    command = kmkernel->undoRedoManager()->newUndoMoveAction(parent, trash);
                 }
-                kmkernel->undoStack()->addMsgToMoveAction(undoId, item);
+                kmkernel->undoRedoManager()->addMsgToMoveAction(command, item);
             }
         } else {
             auto job = new Akonadi::ItemDeleteJob(*trashIt, this);

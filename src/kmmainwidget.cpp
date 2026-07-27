@@ -18,7 +18,6 @@
 #include "kmreadermainwin.h"
 #include "kmundoredomanager.h"
 #include "searchdialog/searchwindowdialog.h"
-#include "undostack.h"
 #include "util.h"
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
@@ -2245,7 +2244,7 @@ void KMMainWidget::slotCcFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUndo()
 {
-    kmkernel->undoStack()->undo();
+    // TODO kmkernel->undoStack()->undo();
     updateMessageActions();
     updateFolderMenu();
 }
@@ -3595,7 +3594,7 @@ void KMMainWidget::setupActions()
     menutimer->setObjectName(QLatin1StringView("menutimer"));
     menutimer->setSingleShot(true);
     connect(menutimer, &QTimer::timeout, this, &KMMainWidget::updateMessageActionsDelayed);
-    connect(kmkernel->undoStack(), &KMail::UndoStack::undoStackChanged, this, &KMMainWidget::slotUpdateUndo);
+    // TODO connect(kmkernel->undoStack(), &KMail::UndoStack::undoStackChanged, this, &KMMainWidget::slotUpdateUndo);
 
     updateMessageActions();
     updateFolderMenu();
@@ -4041,7 +4040,7 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     slotUpdateOnlineStatus(static_cast<GlobalSettingsBase::EnumNetworkState::type>(KMailSettings::self()->networkState()));
     if (QAction *act = action(QStringLiteral("kmail_undo"))) {
-        act->setEnabled(kmkernel->undoStack() && !kmkernel->undoStack()->isEmpty());
+        // TODO act->setEnabled(kmkernel->undoStack() && !kmkernel->undoStack()->isEmpty());
     }
 
     // Enable / disable all filters.
@@ -4286,6 +4285,7 @@ QList<KActionCollection *> KMMainWidget::actionCollections() const
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUpdateUndo()
 {
+#if 0 // TODO
     if (actionCollection()->action(QStringLiteral("kmail_undo"))) {
         QAction *act = actionCollection()->action(QStringLiteral("kmail_undo"));
         act->setEnabled(!kmkernel->undoStack()->isEmpty());
@@ -4296,6 +4296,7 @@ void KMMainWidget::slotUpdateUndo()
             act->setText(i18n("&Undo: \"%1\"", kmkernel->undoStack()->undoInfo()));
         }
     }
+#endif
 }
 
 //-----------------------------------------------------------------------------

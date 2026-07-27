@@ -14,7 +14,6 @@ using PimCommon::BroadcastStatus;
 #include "kmmainwin.h"
 #include "kmreadermainwin.h"
 #include "kmundoredomanager.h"
-#include "undostack.h"
 
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 #include "search/checkindexingmanager.h"
@@ -680,11 +679,6 @@ void KMKernel::setXmlGuiInstanceName(const QString &instance)
     mXmlGuiInstance = instance;
 }
 
-KMail::UndoStack *KMKernel::undoStack() const
-{
-    return the_undoStack;
-}
-
 void KMKernel::resumeNetworkJobs()
 {
     if (KMailSettings::self()->networkState() == KMailSettings::EnumNetworkState::Online) {
@@ -947,8 +941,6 @@ void KMKernel::init()
     // keep a reference on the key cache to avoid expensive reinitialization on each use
     mKeyCache = initKeyCache();
 
-    the_undoStack = new KMail::UndoStack(20);
-
     the_msgSender = new MessageComposer::AkonadiSender;
     // filterMgr->dump();
 
@@ -1032,8 +1024,6 @@ void KMKernel::cleanup()
     // Write the config while all other managers are alive
     delete the_msgSender;
     the_msgSender = nullptr;
-    delete the_undoStack;
-    the_undoStack = nullptr;
     delete mConfigureDialog;
     mConfigureDialog = nullptr;
 

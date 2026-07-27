@@ -62,7 +62,6 @@ class AutoCorrection;
 namespace KMail
 {
 class MailServiceImpl;
-class UndoStack;
 class UnityServiceManager;
 class KMUndoRedoManager;
 }
@@ -417,7 +416,6 @@ public:
     [[nodiscard]] const QString xmlGuiInstanceName() const;
     void setXmlGuiInstanceName(const QString &instance);
 
-    [[nodiscard]] KMail::UndoStack *undoStack() const;
     MessageComposer::MessageSender *msgSender() override;
 
     void openFilterDialog(bool createDummyFilter = true) override;
@@ -597,7 +595,6 @@ private:
     KMAIL_NO_EXPORT QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
     KMAIL_NO_EXPORT void saveConfig();
 
-    KMail::UndoStack *the_undoStack = nullptr;
     KMail::KMUndoRedoManager *const mUndoRedoManager;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;
     /** is this the first start?  read from config */
