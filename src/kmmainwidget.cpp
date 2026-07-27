@@ -3570,10 +3570,12 @@ void KMMainWidget::setupActions()
     }
 
     QAction *undoAct = actionCollection()->addAction(QStringLiteral("kmail_undo"), KMKernel::self()->undoRedoManager()->undoStack()->createUndoAction(this));
+    undoAct->setIcon(QIcon::fromTheme(u"edit-undo"_s));
     actionCollection()->setDefaultShortcuts(undoAct, KStandardShortcut::undo());
     connect(undoAct, &QAction::triggered, this, &KMMainWidget::slotUndo);
 
     QAction *redoAct = actionCollection()->addAction(QStringLiteral("kmail_redo"), KMKernel::self()->undoRedoManager()->undoStack()->createRedoAction(this));
+    redoAct->setIcon(QIcon::fromTheme(u"edit-redo"_s));
     actionCollection()->setDefaultShortcuts(redoAct, KStandardShortcut::redo());
     connect(redoAct, &QAction::triggered, this, &KMMainWidget::slotRedo);
 
