@@ -434,7 +434,8 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void slotNewFromTemplate(QAction *);
 
     /** Update the undo action */
-    KMAIL_NO_EXPORT void slotUpdateUndo();
+    KMAIL_NO_EXPORT void slotUpdateUndoText(const QString &text);
+    KMAIL_NO_EXPORT void slotUpdateRedoText(const QString &text);
 
     /** Update html and threaded messages preferences in Folder menu. */
     KMAIL_NO_EXPORT void updateFolderMenu();

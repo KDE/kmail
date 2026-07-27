@@ -2244,14 +2244,12 @@ void KMMainWidget::slotCcFilter()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUndo()
 {
-    // TODO kmkernel->undoStack()->undo();
     updateMessageActions();
     updateFolderMenu();
 }
 
 void KMMainWidget::slotRedo()
 {
-    // TODO
     updateMessageActions();
     updateFolderMenu();
 }
@@ -3571,16 +3569,13 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCreateAddressBookContact);
     }
 
-#if 0 // TODO
     QAction *undoAct = actionCollection()->addAction(QStringLiteral("kmail_undo"), KMKernel::self()->undoRedoManager()->undoStack()->createUndoAction(this));
+    actionCollection()->setDefaultShortcuts(undoAct, KStandardShortcut::undo());
     connect(undoAct, &QAction::triggered, this, &KMMainWidget::slotUndo);
 
     QAction *redoAct = actionCollection()->addAction(QStringLiteral("kmail_redo"), KMKernel::self()->undoRedoManager()->undoStack()->createRedoAction(this));
+    actionCollection()->setDefaultShortcuts(redoAct, KStandardShortcut::redo());
     connect(redoAct, &QAction::triggered, this, &KMMainWidget::slotRedo);
-#endif
-
-    QAction *act = actionCollection()->addAction(KStandardAction::Undo, QStringLiteral("kmail_undo"));
-    connect(act, &QAction::triggered, this, &KMMainWidget::slotUndo);
 
     mAccountSettings = new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("Account &Settings"), this);
     actionCollection()->addAction(QStringLiteral("resource_settings"), mAccountSettings);
@@ -3594,7 +3589,8 @@ void KMMainWidget::setupActions()
     menutimer->setObjectName(QLatin1StringView("menutimer"));
     menutimer->setSingleShot(true);
     connect(menutimer, &QTimer::timeout, this, &KMMainWidget::updateMessageActionsDelayed);
-    // TODO connect(kmkernel->undoStack(), &KMail::UndoStack::undoStackChanged, this, &KMMainWidget::slotUpdateUndo);
+    connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::undoTextChanged, this, &KMMainWidget::slotUpdateUndoText);
+    connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::redoTextChanged, this, &KMMainWidget::slotUpdateRedoText);
 
     updateMessageActions();
     updateFolderMenu();
@@ -4283,20 +4279,28 @@ QList<KActionCollection *> KMMainWidget::actionCollections() const
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotUpdateUndo()
+void KMMainWidget::slotUpdateUndoText(const QString &text)
 {
-#if 0 // TODO
     if (actionCollection()->action(QStringLiteral("kmail_undo"))) {
         QAction *act = actionCollection()->action(QStringLiteral("kmail_undo"));
-        act->setEnabled(!kmkernel->undoStack()->isEmpty());
-        const QString infoStr = kmkernel->undoStack()->undoInfo();
-        if (infoStr.isEmpty()) {
+        if (text.isEmpty()) {
             act->setText(i18n("&Undo"));
         } else {
-            act->setText(i18n("&Undo: \"%1\"", kmkernel->undoStack()->undoInfo()));
+            act->setText(i18n("&Undo: \"%1\"", text));
         }
     }
-#endif
+}
+
+void KMMainWidget::slotUpdateRedoText(const QString &text)
+{
+    if (actionCollection()->action(QStringLiteral("kmail_redo"))) {
+        QAction *act = actionCollection()->action(QStringLiteral("kmail_redo"));
+        if (text.isEmpty()) {
+            act->setText(i18n("&Redo"));
+        } else {
+            act->setText(i18n("&Redo: \"%1\"", text));
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------

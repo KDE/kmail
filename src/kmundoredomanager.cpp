@@ -116,3 +116,8 @@ void KMUndoInfoMoveItems::setMoveToTrash(bool newMoveToTrash)
 {
     mMoveToTrash = newMoveToTrash;
 }
+
+QString KMUndoInfoMoveItems::actionText() const
+{
+    return i18n("Move messages");
+}

@@ -38,6 +38,7 @@ public:
 
     void undo() override;
     void redo() override;
+    [[nodiscard]] QString actionText() const;
 
     [[nodiscard]] Akonadi::Item::List items() const;
     void setItems(const Akonadi::Item::List &newItems);
