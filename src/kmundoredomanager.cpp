@@ -45,8 +45,10 @@ QUndoCommand *KMUndoRedoManager::newUndoMoveAction(const Akonadi::Collection &sr
 
 void KMUndoRedoManager::addMsgToMoveAction(QUndoCommand *command, const Akonadi::Item &item)
 {
-    // TODO push push()
-    // TODO
+    KMUndoInfoMoveItems *commandUndoInfoMoveItems = dynamic_cast<KMUndoInfoMoveItems *>(command);
+    if (commandUndoInfoMoveItems) {
+        commandUndoInfoMoveItems->addItem(item);
+    }
 }
 
 KMUndoInfoMoveItems::KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoCommand *parent)
