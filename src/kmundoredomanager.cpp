@@ -44,7 +44,6 @@ QUndoCommand *KMUndoRedoManager::newUndoMoveAction(const Akonadi::Collection &sr
     info->setSrcFolder(srcFolder);
     info->setDestFolder(destFolder);
     info->setMoveToTrash(destFolder == CommonKernel->trashCollectionFolder());
-    mUndoStack->push(info);
     return info;
 }
 
@@ -64,12 +63,12 @@ KMUndoInfoMoveItems::KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoComman
 
 void KMUndoInfoMoveItems::undo()
 {
-    mManager->moveItems(mItems, mDestFolder);
+    mManager->moveItems(mItems, mSrcFolder);
 }
 
 void KMUndoInfoMoveItems::redo()
 {
-    mManager->moveItems(mItems, mSrcFolder);
+    mManager->moveItems(mItems, mDestFolder);
 }
 
 Akonadi::Item::List KMUndoInfoMoveItems::items() const
