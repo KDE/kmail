@@ -1510,7 +1510,6 @@ KMCommand::Result KMMoveCommand::execute()
         if (mDestFolder.isValid()) {
             auto job = new Akonadi::ItemMoveJob(retrievedList, mDestFolder, this);
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
-
             // group by source folder for undo
             std::sort(retrievedList.begin(), retrievedList.end(), [](const Akonadi::Item &lhs, const Akonadi::Item &rhs) {
                 return lhs.storageCollectionId() < rhs.storageCollectionId();
@@ -1523,9 +1522,15 @@ KMCommand::Result KMMoveCommand::execute()
                 }
                 if (parent.id() != item.storageCollectionId()) {
                     parent = Akonadi::Collection(item.storageCollectionId());
+                    if (command) {
+                        kmkernel->undoRedoManager()->undoStack()->push(command);
+                    }
                     command = kmkernel->undoRedoManager()->newUndoMoveAction(parent, mDestFolder);
                 }
                 kmkernel->undoRedoManager()->addMsgToMoveAction(command, item);
+            }
+            if (command) {
+                kmkernel->undoRedoManager()->undoStack()->push(command);
             }
         } else {
             auto job = new Akonadi::ItemDeleteJob(retrievedList, this);
