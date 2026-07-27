@@ -375,6 +375,7 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void slotTrashThread();
     KMAIL_NO_EXPORT void slotDeleteThread(bool confirmDelete); // completely delete thread
     KMAIL_NO_EXPORT void slotUndo();
+    KMAIL_NO_EXPORT void slotRedo();
     KMAIL_NO_EXPORT void slotReadOn();
     KMAIL_NO_EXPORT void slotSaveMsg();
     KMAIL_NO_EXPORT void slotOpenMsg();

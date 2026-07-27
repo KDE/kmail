@@ -2250,6 +2250,13 @@ void KMMainWidget::slotUndo()
     updateFolderMenu();
 }
 
+void KMMainWidget::slotRedo()
+{
+    // TODO
+    updateMessageActions();
+    updateFolderMenu();
+}
+
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotJumpToFolder()
 {
