@@ -64,6 +64,7 @@ namespace KMail
 class MailServiceImpl;
 class UndoStack;
 class UnityServiceManager;
+class KMUndoRedoManager;
 }
 namespace MessageComposer
 {
@@ -501,6 +502,8 @@ public:
 #if KMAIL_WITH_KUSERFEEDBACK
     KUserFeedback::Provider *userFeedbackProvider() const;
 #endif
+    [[nodiscard]] KMail::KMUndoRedoManager *undoRedoManager() const;
+
 protected:
     void agentInstanceBroken(const Akonadi::AgentInstance &instance);
 
@@ -595,6 +598,7 @@ private:
     KMAIL_NO_EXPORT void saveConfig();
 
     KMail::UndoStack *the_undoStack = nullptr;
+    KMail::KMUndoRedoManager *const mUndoRedoManager;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;
     /** is this the first start?  read from config */
     bool the_firstStart = false;

@@ -13,6 +13,7 @@ using PimCommon::BroadcastStatus;
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmreadermainwin.h"
+#include "kmundoredomanager.h"
 #include "undostack.h"
 
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
@@ -126,6 +127,7 @@ static bool s_askingToGoOnline = false;
 /********************************************************************/
 KMKernel::KMKernel(QObject *parent)
     : QObject(parent)
+    , mUndoRedoManager(new KMail::KMUndoRedoManager(this))
     , mJobScheduler(new JobScheduler(this))
     , mFolderArchiveManager(new FolderArchiveManager(this))
 {
@@ -1148,6 +1150,11 @@ void KMKernel::saveConfig()
     mMailCommonSettings->save();
     Gravatar::GravatarSettings::self()->save();
     KMailSettings::self()->save();
+}
+
+KMail::KMUndoRedoManager *KMKernel::undoRedoManager() const
+{
+    return mUndoRedoManager;
 }
 
 void KMKernel::updateConfig()
