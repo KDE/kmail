@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2018, 2020 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2011 Torbjörn Klatt <opensource@torbjoern-klatt.de>
-# SPDX-FileCopyrightText: 2011, 2012, 2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2011-2012, 2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2011-2014, 2018, 2020 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
+# SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
