@@ -119,6 +119,8 @@ install(
 
 install(FILES followupreminder.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/followupreminderagentsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+
 if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()

@@ -80,4 +80,10 @@ install(
         ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
 )
 
+install(
+    FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/settings.kcfg
+    DESTINATION ${KDE_INSTALL_KCFGDIR}
+    RENAME akonadi_unifiedmailbox.kcfg
+)
 install(FILES unifiedmailboxagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")

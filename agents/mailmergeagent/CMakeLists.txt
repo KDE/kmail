@@ -50,7 +50,6 @@ target_link_libraries(
     mailmergeagent
     KPim6::AkonadiCore
     KPim6::AkonadiMime
-    #KF6::Mime
     KPim6::MessageComposer
     KPim6::MessageCore
     KF6::DBusAddons
@@ -91,6 +90,8 @@ install(
 
 install(FILES mailmergeagent.desktop DESTINATION "${KDE_INSTALL_DATAROOTDIR}/akonadi/agents")
 install(FILES akonadi_mailmerge_agent.notifyrc DESTINATION ${KDE_INSTALL_KNOTIFYRCDIR})
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mailmergeagentsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
 
 #kcoreaddons_add_plugin(mailmergeagentconfig
 #    SOURCES ${mailmergeagentconfig_SRCS}

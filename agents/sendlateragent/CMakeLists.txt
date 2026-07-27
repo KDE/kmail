@@ -44,6 +44,8 @@ set_property(
             ON
 )
 
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/sendlateragentsettings.kcfg DESTINATION ${KDE_INSTALL_KCFGDIR})
+
 #if(COMPILE_WITH_UNITY_CMAKE_SUPPORT)
 #    set_target_properties(sendlateragent PROPERTIES UNITY_BUILD ON)
 #endif()
