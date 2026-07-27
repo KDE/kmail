@@ -16,6 +16,7 @@
 #include "job/composenewmessagejob.h"
 #include "kmcommands.h"
 #include "kmreadermainwin.h"
+#include "kmundoredomanager.h"
 #include "searchdialog/searchwindowdialog.h"
 #include "undostack.h"
 #include "util.h"
@@ -3563,6 +3564,14 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("kmail_new_addressbook_contact"), action);
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCreateAddressBookContact);
     }
+
+#if 0 // TODO
+    QAction *undoAct = actionCollection()->addAction(QStringLiteral("kmail_undo"), KMKernel::self()->undoRedoManager()->undoStack()->createUndoAction(this));
+    connect(undoAct, &QAction::triggered, this, &KMMainWidget::slotUndo);
+
+    QAction *redoAct = actionCollection()->addAction(QStringLiteral("kmail_redo"), KMKernel::self()->undoRedoManager()->undoStack()->createRedoAction(this));
+    connect(redoAct, &QAction::triggered, this, &KMMainWidget::slotRedo);
+#endif
 
     QAction *act = actionCollection()->addAction(KStandardAction::Undo, QStringLiteral("kmail_undo"));
     connect(act, &QAction::triggered, this, &KMMainWidget::slotUndo);

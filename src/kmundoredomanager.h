@@ -25,6 +25,8 @@ public:
     void moveItems(const Akonadi::Item::List &list, const Akonadi::Collection &collection);
     void slotMoveResult(KJob *job);
 
+    [[nodiscard]] QUndoStack *undoStack() const;
+
 private:
     QUndoStack *const mUndoStack;
 };

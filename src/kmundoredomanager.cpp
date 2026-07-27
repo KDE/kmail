@@ -33,6 +33,11 @@ void KMUndoRedoManager::slotMoveResult(KJob *job)
     }
 }
 
+QUndoStack *KMUndoRedoManager::undoStack() const
+{
+    return mUndoStack;
+}
+
 QUndoCommand *KMUndoRedoManager::newUndoMoveAction(const Akonadi::Collection &srcFolder, const Akonadi::Collection &destFolder)
 {
     auto info = new KMUndoInfoMoveItems(this);
