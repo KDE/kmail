@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2025-03-22 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -1739,7 +1739,7 @@ msgid "Show attachment list"
 msgstr "Montri kunsendaĵan liston"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -5883,6 +5883,11 @@ msgid_plural "%1 unread messages"
 msgstr[0] "1 nelegita mesaĝo"
 msgstr[1] "%1 nelegitaj mesaĝoj"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Ne povas movi mesaĝon. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
 msgctxt "@option:check"
@@ -5907,13 +5912,13 @@ msgstr ""
 "listigita en la resumo. Se ĉi tiu elekteblo ne estas ŝaltita, tiam nur la "
 "baza dosierujo estos montrita."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Nova Mesaĝo…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5922,14 +5927,14 @@ msgid ""
 msgstr ""
 "Vi estos prezentita kun dialogo kie vi povas krei kaj sendi novan retmesaĝon."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Sinkronigi Poŝton"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8047,11 +8052,6 @@ msgstr "<b>Temo:</b> %1"
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Estas nenio malfarebla."
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Ne povas movi mesaĝon. %1"
 
 #: undostack.cpp:114
 #, kde-format

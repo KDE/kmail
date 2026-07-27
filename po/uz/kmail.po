@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2006-12-17 13:32+0000\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -1816,7 +1816,7 @@ msgid "Show attachment list"
 msgstr "Ilovani saqlash"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -6038,6 +6038,12 @@ msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "Oʻqilmagan xabar"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Move Messages to Folder"
+msgid "Cannot move message. %1"
+msgstr "Xabarlarni jilga koʻchirish"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 msgctxt "@option:check"
@@ -6059,14 +6065,14 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Yangi xabar"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6074,7 +6080,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:inmenu"
@@ -6082,7 +6088,7 @@ msgid "Sync Mail"
 msgstr "Xatni &joʻnatish"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8119,12 +8125,6 @@ msgstr ""
 #, kde-format
 msgid "There is nothing to undo."
 msgstr ""
-
-#: undostack.cpp:107
-#, fuzzy, kde-format
-#| msgid "Move Messages to Folder"
-msgid "Cannot move message. %1"
-msgstr "Xabarlarni jilga koʻchirish"
 
 #: undostack.cpp:114
 #, fuzzy, kde-format

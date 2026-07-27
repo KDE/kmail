@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -1849,7 +1849,7 @@ msgid "Show attachment list"
 msgstr "Gcina Izincamatheliso Njenge"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -5978,6 +5978,11 @@ msgid_plural "%1 unread messages"
 msgstr[0] "Umyalezo ongafundwanga"
 msgstr[1] "Umyalezo ongafundwanga"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, fuzzy, kde-format
+msgid "Cannot move message. %1"
+msgstr "Hambisa Umyalezo Kwincwadi eneenkcukacha"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 msgctxt "@option:check"
@@ -5999,13 +6004,13 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Umyalezo omtsha"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6013,14 +6018,14 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "&Thumela iposi"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8100,11 +8105,6 @@ msgstr ""
 #, fuzzy, kde-format
 msgid "There is nothing to undo."
 msgstr "Akukho nto ezakungenziwa!"
-
-#: undostack.cpp:107
-#, fuzzy, kde-format
-msgid "Cannot move message. %1"
-msgstr "Hambisa Umyalezo Kwincwadi eneenkcukacha"
 
 #: undostack.cpp:114
 #, fuzzy, kde-format

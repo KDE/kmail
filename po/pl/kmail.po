@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2026-04-11 08:18+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
@@ -1746,7 +1746,7 @@ msgid "Show attachment list"
 msgstr "Pokaż wykaz załączników"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -5902,6 +5902,11 @@ msgstr[0] "1 nieprzeczytana wiadomość"
 msgstr[1] "%1  nieprzeczytane wiadomości"
 msgstr[2] "%1 nieprzeczytanych wiadomości"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Nie można przenieść wiadomości. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
 msgctxt "@option:check"
@@ -5926,13 +5931,13 @@ msgstr ""
 "pokazanego w podsumowaniu. Jeśli ta opcja jest wyłączona widoczna będzie "
 "tylko ścieżka do katalogu bazowego."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Nowa wiadomość…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5942,14 +5947,14 @@ msgstr ""
 "Pokazane zostanie okienko dialogowe, w którym można utworzyć nową wiadomość "
 "e-mail."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Synchronizuj pocztę"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8073,11 +8078,6 @@ msgstr "<b>Temat:</b> %1"
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Nie ma niczego do cofnięcia."
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Nie można przenieść wiadomości. %1"
 
 #: undostack.cpp:114
 #, kde-format

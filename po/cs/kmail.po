@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
-"PO-Revision-Date: 2026-06-25 12:17+0200\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
+"PO-Revision-Date: 2026-07-26 10:35+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 26.04.2\n"
+"X-Generator: Lokalize 26.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1732,7 +1732,7 @@ msgid "Show attachment list"
 msgstr "Zobrazit seznam příloh"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -5873,6 +5873,11 @@ msgstr[0] "1 nepřečtená zpráva"
 msgstr[1] "%1 nepřečtené zprávy"
 msgstr[2] "%1 nepřečtených zpráv"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Zprávu nelze přesunout. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
 msgctxt "@option:check"
@@ -5897,13 +5902,13 @@ msgstr ""
 "uvedené v souhrnu. Pokud tato možnost není povolena, zobrazí se pouze "
 "základní cesta ke složce."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Nová zpráva…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5913,14 +5918,14 @@ msgstr ""
 "Zobrazí se dialogové okno, ve kterém můžete vytvořit a odeslat novou e-"
 "mailovou zprávu."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Synchronizovat poštu"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8036,11 +8041,6 @@ msgstr "<b>Předmět:</b> %1"
 msgid "There is nothing to undo."
 msgstr "Neexistuje nic, co by šlo vrátit zpět."
 
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Zprávu nelze přesunout. %1"
-
 #: undostack.cpp:114
 #, kde-format
 msgid "Move To Trash"
@@ -8055,10 +8055,9 @@ msgstr[1] "Přesunout zprávy"
 msgstr[2] "Přesunout zprávy"
 
 #: undostack.cpp:129
-#, fuzzy, kde-format
-#| msgid "Message Tags"
+#, kde-format
 msgid "Change Message Status"
-msgstr "Značky zpráv"
+msgstr "Změnit stav zprávy"
 
 #: userfeedback/accountinfosource.cpp:24
 #, kde-format

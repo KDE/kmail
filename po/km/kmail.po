@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1845,7 +1845,7 @@ msgid "Show attachment list"
 msgstr "បង្ហាញ​បញ្ជី​ឯកសារ​​ភ្ជាប់"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -6226,6 +6226,12 @@ msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "សារ​មិន​ទាន់​អាន %1"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Can not move message. %1"
+msgid "Cannot move message. %1"
+msgstr "មិន​អាច​ផ្លាស់ទី​សារ ។ %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 #| msgid "Shortcut for Folder %1"
@@ -6248,14 +6254,14 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, fuzzy, kde-format
 #| msgid "New Messages In"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "សារ​ថ្មី​នៅក្នុង"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6263,7 +6269,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:inmenu"
@@ -6271,7 +6277,7 @@ msgid "Sync Mail"
 msgstr "ផ្ញើ​សំបុត្រ"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8527,12 +8533,6 @@ msgstr ""
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "គ្មាន​អ្វី​ដែល​មិនត្រូវ​ធ្វើ​វិញ​ទេ ។"
-
-#: undostack.cpp:107
-#, fuzzy, kde-format
-#| msgid "Can not move message. %1"
-msgid "Cannot move message. %1"
-msgstr "មិន​អាច​ផ្លាស់ទី​សារ ។ %1"
 
 #: undostack.cpp:114
 #, fuzzy, kde-format

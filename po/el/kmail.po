@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1826,7 +1826,7 @@ msgid "Show attachment list"
 msgstr "Εμφάνιση λίστας συνημμένων"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -6108,6 +6108,11 @@ msgid_plural "%1 unread messages"
 msgstr[0] "1 μη αναγνωσμένο μήνυμα"
 msgstr[1] "%1 μη αναγνωσμένα μηνύματα"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Αδυναμία μετακίνησης του μηνύματος. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 #| msgid "Shortcut for Folder %1"
@@ -6130,13 +6135,13 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Νέο μήνυμα…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6144,7 +6149,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:inmenu"
@@ -6152,7 +6157,7 @@ msgid "Sync Mail"
 msgstr "&Αποστολή αλληλογραφίας"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8419,11 +8424,6 @@ msgstr ""
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Δεν υπάρχει τίποτα για αναίρεση."
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Αδυναμία μετακίνησης του μηνύματος. %1"
 
 #: undostack.cpp:114
 #, kde-format

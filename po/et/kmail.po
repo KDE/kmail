@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1891,7 +1891,7 @@ msgid "Show attachment list"
 msgstr "Kaasatud failide nimekirja näitamine"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -6311,6 +6311,11 @@ msgid_plural "%1 unread messages"
 msgstr[0] "1 lugemata kiri"
 msgstr[1] "%1 lugemata kirja"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Kirja liigutamine nurjus. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 #| msgid "Show full path for folders"
@@ -6335,14 +6340,14 @@ msgstr ""
 "Sisselülitamisel näeb kokkuvõttes kõigi ära toodud kaustade täielikku "
 "asukohta, vastasel juhul näeb ainult baaskausta asukohta."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, fuzzy, kde-format
 #| msgid "New Messages"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Uued kirjad"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6350,14 +6355,14 @@ msgid ""
 "email message."
 msgstr "Ilmub dialoog, kus saab luua ja saata uue e-kirja."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Kirjade sünkroonimine"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8583,11 +8588,6 @@ msgstr ""
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Siin ei ole midagi tagasi võtta."
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Kirja liigutamine nurjus. %1"
 
 #: undostack.cpp:114
 #, kde-format

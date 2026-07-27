@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2026-05-25 21:28+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -1709,7 +1709,7 @@ msgid "Show attachment list"
 msgstr "첨부 파일 목록 표시"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -5780,6 +5780,11 @@ msgid "1 unread message"
 msgid_plural "%1 unread messages"
 msgstr[0] "읽지 않은 메시지 %1개"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "메시지를 이동할 수 없음: %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
 msgctxt "@option:check"
@@ -5803,13 +5808,13 @@ msgstr ""
 "이 옵션을 선택하면 요약 보기에 폴더의 전체 경로를 표시합니다. 선택하지 않으"
 "면 폴더 경로의 맨 끝 부분만 표시합니다."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "새 메시지…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5817,14 +5822,14 @@ msgid ""
 "email message."
 msgstr "새 이메일 메시지를 보낼 수 있는 대화 상자가 표시됩니다."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "메일 동기화"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -7903,11 +7908,6 @@ msgstr "<b>제목:</b> %1"
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "되돌릴 것이 없습니다."
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "메시지를 이동할 수 없음: %1"
 
 #: undostack.cpp:114
 #, kde-format

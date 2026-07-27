@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -1883,7 +1883,7 @@ msgid "Show attachment list"
 msgstr "Mostrer l' djivêye des ataetchmints"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -6262,6 +6262,12 @@ msgid_plural "%1 unread messages"
 msgstr[0] "1 messaedje nén léjhou"
 msgstr[1] "%1 messaedjes nén léjhous"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, fuzzy, kde-format
+#| msgid "Can not move message. %1"
+msgid "Cannot move message. %1"
+msgstr "Dji n' sai bodjî l' messaedje. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 #| msgid "Shortcut for Folder %1"
@@ -6284,14 +6290,14 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Novea messaedje"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6299,7 +6305,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:inmenu"
@@ -6307,7 +6313,7 @@ msgid "Sync Mail"
 msgstr "&Evoyî emile"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8389,12 +8395,6 @@ msgstr ""
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "I gn a rén a disfé."
-
-#: undostack.cpp:107
-#, fuzzy, kde-format
-#| msgid "Can not move message. %1"
-msgid "Cannot move message. %1"
-msgstr "Dji n' sai bodjî l' messaedje. %1"
 
 #: undostack.cpp:114
 #, fuzzy, kde-format

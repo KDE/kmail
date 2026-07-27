@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1717,7 +1717,7 @@ msgid "Show attachment list"
 msgstr "संलग्नकसूचीं दर्शयतु"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "केमेल२"
@@ -5821,6 +5821,11 @@ msgid_plural "%1 unread messages"
 msgstr[0] "१ अपठितसन्देशः"
 msgstr[1] "%1 अपठितसन्देशाः"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "सन्देशं चालयितुं न शक्नोति। %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
 msgctxt "@option:check"
@@ -5844,13 +5849,13 @@ msgstr ""
 "यदि भवान् सारांशे सूचीकृतस्य प्रत्येकस्य पुटस्य पूर्णमार्गं द्रष्टुम् इच्छति तर्हि एतत् विकल्पं सक्षमं "
 "कुर्वन्तु । यदि एषः विकल्पः सक्षमः नास्ति तर्हि केवलं आधारपुटमार्गः एव दर्शितः भविष्यति ।"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "नवीनः सन्देशः…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5860,14 +5865,14 @@ msgstr ""
 "भवद्भ्यः एकः संवादः प्रस्तुतः भविष्यति यत्र भवन्तः नूतनं ईमेल-सन्देशं निर्माय प्रेषयितुं शक्नुवन्ति "
 "।"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "मेल समन्वयन"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -7942,11 +7947,6 @@ msgstr "<b>विषयः</b> %1"
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "न किमपि निवर्तनीयम् अस्ति।"
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "सन्देशं चालयितुं न शक्नोति। %1"
 
 #: undostack.cpp:114
 #, kde-format

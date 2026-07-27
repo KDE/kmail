@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-25 00:45+0000\n"
+"POT-Creation-Date: 2026-07-27 00:45+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1816,7 +1816,7 @@ msgid "Show attachment list"
 msgstr "Qoşmalar siyahısını göstərmək"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:99
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:42
+#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -6230,6 +6230,11 @@ msgid_plural "%1 unread messages"
 msgstr[0] "1 oxunmamış məktub"
 msgstr[1] "%1 oxunmamış məktublar"
 
+#: kmundoredomanager.cpp:35 undostack.cpp:107
+#, kde-format
+msgid "Cannot move message. %1"
+msgstr "Məktub köçürülə bilmir. %1"
+
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
 #| msgid "Show full path for folders"
@@ -6255,14 +6260,14 @@ msgstr ""
 "edin. Əgər bu seçim aktiv edilməsə, o zaman yalnız əsas qovluğun yolu "
 "göstəriləcəkdir."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:44
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, fuzzy, kde-format
 #| msgid "New Messages"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Yeni məktublar"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:50
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6272,14 +6277,14 @@ msgstr ""
 "Sizə, yeni e-poçt məktubları yarada və onları göndərə biləcəyiniz bir dialoq "
 "təqdim olunacaq."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:55
+#: kontactplugin/kmail/kmail_plugin.cpp:59
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Poçtu eyniləşdirin"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:58
+#: kontactplugin/kmail/kmail_plugin.cpp:62
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8457,11 +8462,6 @@ msgstr "<b>Mövzu:</b> %1"
 #, kde-format
 msgid "There is nothing to undo."
 msgstr "Ləğv ediləcək heç nə yoxdur."
-
-#: undostack.cpp:107
-#, kde-format
-msgid "Cannot move message. %1"
-msgstr "Məktub köçürülə bilmir. %1"
 
 #: undostack.cpp:114
 #, kde-format
