@@ -214,15 +214,9 @@ QStyleOptionButton ConfigAgentDelegate::buttonOption(const QStyleOptionViewItem 
 {
     const QString label = i18n("Retrieval Options");
     QStyleOptionButton buttonOpt;
-    QRect buttonRect = option.rect;
     const int height = option.rect.height() / 2;
     const int width = 22 + option.fontMetrics.boundingRect(label).width() + 40; // icon size + label size + arrow and padding
-    buttonRect.setTop(0);
-    buttonRect.setHeight(height);
-    buttonRect.setLeft(option.rect.right() - width);
-    buttonRect.setWidth(width);
-
-    buttonOpt.rect = buttonRect;
+    buttonOpt.rect = QRect(option.rect.width() - width, 0, width, height);
     buttonOpt.state = option.state;
     buttonOpt.text = label;
     buttonOpt.palette = option.palette;
