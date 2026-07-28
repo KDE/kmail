@@ -31,7 +31,22 @@ private:
     QUndoStack *const mUndoStack;
 };
 
-class KMUndoInfoMoveItems : public QUndoCommand
+class KMUndoBase : public QUndoCommand
+{
+public:
+    explicit KMUndoBase(KMUndoRedoManager *manager, QUndoCommand *parent = nullptr);
+
+protected:
+    KMUndoRedoManager *const mManager;
+};
+
+class KMUndoInfoChangeStatusItems : public KMUndoBase
+{
+public:
+    explicit KMUndoInfoChangeStatusItems(KMUndoRedoManager *manager, QUndoCommand *parent = nullptr);
+};
+
+class KMUndoInfoMoveItems : public KMUndoBase
 {
 public:
     explicit KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoCommand *parent = nullptr);
@@ -54,7 +69,6 @@ public:
     void setMoveToTrash(bool newMoveToTrash);
 
 private:
-    KMUndoRedoManager *const mManager;
     Akonadi::Item::List mItems;
     Akonadi::Collection mSrcFolder;
     Akonadi::Collection mDestFolder;

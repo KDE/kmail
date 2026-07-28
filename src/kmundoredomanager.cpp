@@ -56,8 +56,7 @@ void KMUndoRedoManager::addMsgToMoveAction(QUndoCommand *command, const Akonadi:
 }
 
 KMUndoInfoMoveItems::KMUndoInfoMoveItems(KMUndoRedoManager *manager, QUndoCommand *parent)
-    : QUndoCommand(parent)
-    , mManager(manager)
+    : KMUndoBase(manager, parent)
 {
 }
 
@@ -119,4 +118,15 @@ void KMUndoInfoMoveItems::setMoveToTrash(bool newMoveToTrash)
 QString KMUndoInfoMoveItems::actionText() const
 {
     return i18n("Move messages");
+}
+
+KMUndoBase::KMUndoBase(KMUndoRedoManager *manager, QUndoCommand *parent)
+    : QUndoCommand(parent)
+    , mManager(manager)
+{
+}
+
+KMUndoInfoChangeStatusItems::KMUndoInfoChangeStatusItems(KMUndoRedoManager *manager, QUndoCommand *parent)
+    : KMUndoBase(manager, parent)
+{
 }
