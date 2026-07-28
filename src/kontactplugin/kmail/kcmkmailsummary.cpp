@@ -67,8 +67,8 @@ void KCMKMailSummary::initFolders()
 
 void KCMKMailSummary::loadFolders()
 {
-    KConfig _config(QStringLiteral("kcmkmailsummaryrc"));
-    KConfigGroup config(&_config, QStringLiteral("General"));
+    const KConfig _config(QStringLiteral("kcmkmailsummaryrc"));
+    const KConfigGroup config(&_config, QStringLiteral("General"));
     mModelState->restoreState();
     const bool showFolderPaths = config.readEntry("showFolderPaths", false);
     mFullPath->setChecked(showFolderPaths);
