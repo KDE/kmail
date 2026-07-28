@@ -44,6 +44,12 @@ class KMUndoInfoChangeStatusItems : public KMUndoBase
 {
 public:
     explicit KMUndoInfoChangeStatusItems(KMUndoRedoManager *manager, QUndoCommand *parent = nullptr);
+
+    [[nodiscard]] Akonadi::Item::List items() const;
+    void setItems(const Akonadi::Item::List &newItems);
+
+private:
+    Akonadi::Item::List mItems;
 };
 
 class KMUndoInfoMoveItems : public KMUndoBase

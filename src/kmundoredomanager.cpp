@@ -130,3 +130,13 @@ KMUndoInfoChangeStatusItems::KMUndoInfoChangeStatusItems(KMUndoRedoManager *mana
     : KMUndoBase(manager, parent)
 {
 }
+
+Akonadi::Item::List KMUndoInfoChangeStatusItems::items() const
+{
+    return mItems;
+}
+
+void KMUndoInfoChangeStatusItems::setItems(const Akonadi::Item::List &newItems)
+{
+    mItems = newItems;
+}
