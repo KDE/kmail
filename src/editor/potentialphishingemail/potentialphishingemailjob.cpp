@@ -18,7 +18,14 @@ PotentialPhishingEmailJob::~PotentialPhishingEmailJob() = default;
 
 void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
 {
-    mEmailWhiteList = emails;
+    mEmailWhiteList.clear();
+    mEmailWhiteList.reserve(emails.count());
+    for (const QString &email : emails) {
+        const QString normalizedEmail = email.trimmed().toCaseFolded();
+        if (!normalizedEmail.isEmpty()) {
+            mEmailWhiteList.append(normalizedEmail);
+        }
+    }
 }
 
 void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &list)
@@ -52,7 +59,7 @@ bool PotentialPhishingEmailJob::start()
         return false;
     }
     for (const QString &addr : std::as_const(mEmails)) {
-        if (!mEmailWhiteList.contains(addr.trimmed())) {
+        if (!mEmailWhiteList.contains(addr.trimmed().toCaseFolded())) {
             QString tname;
             QString temail;
             KEmailAddress::extractEmailAddressAndName(addr, temail, tname); // ignore return value
