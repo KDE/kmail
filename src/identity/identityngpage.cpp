@@ -247,7 +247,6 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
             menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
 
-        const QModelIndex index = mIPage.mIdentityList->selectionModel()->selectedRows().constFirst();
         const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(
             mIPage.mIdentityList->identityProxyModel()->index(index.row(), KIdentityManagementCore::IdentityTreeModel::DefaultRole));
         if (!newModelIndex.data().toBool()) {
