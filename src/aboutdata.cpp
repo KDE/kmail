@@ -211,7 +211,7 @@ AboutData::AboutData()
 
     const unsigned int numberCredits(sizeof credits / sizeof *credits);
     for (unsigned int i = 0; i < numberCredits; ++i) {
-        addAuthor(i18n(credits[i].name),
+        addCredit(i18n(credits[i].name),
                   credits[i].desc.untranslatedText() ? credits[i].desc.toString() : QString(),
                   QLatin1StringView(credits[i].email),
                   QLatin1StringView(credits[i].web));
