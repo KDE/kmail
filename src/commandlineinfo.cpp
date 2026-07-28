@@ -199,7 +199,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                         // Workaround: https://bugs.kde.org/show_bug.cgi?id=390939
                         // QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
                         // But if we have a "&" unknown key we lost it.
-                        if (previousKey == "mBody"_L1) {
+                        if (previousKey == "body"_L1) {
                             mBody += QLatin1Char('&') + key + QLatin1Char('=') + element.second;
                         }
                         // Don't clear previous key.

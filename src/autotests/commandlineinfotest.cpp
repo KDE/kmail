@@ -63,6 +63,16 @@ void CommandLineInfoTest::parseCommandLineInfo_data()
         info.setMailto(true);
         QTest::newRow("test1") << args << QString() << info;
     }
+    {
+        QStringList args;
+        args << QStringLiteral("kmail");
+        args << QStringLiteral("mailto:person@example.com?body=one&two=three");
+        CommandLineInfo info;
+        info.setTo(QStringLiteral("person@example.com"));
+        info.setBody(QStringLiteral("one&two=three"));
+        info.setMailto(true);
+        QTest::newRow("mailto body keeps unknown fragments") << args << QString() << info;
+    }
 }
 
 void CommandLineInfoTest::parseCommandLineInfo()
