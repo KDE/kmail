@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-27 00:45+0000\n"
+"POT-Creation-Date: 2026-07-28 00:46+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -336,7 +336,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4235 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4244 kmreaderwin.cpp:266 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1747,7 +1747,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "संग्रह संचयीका"
 
-#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3697
+#: dialog/archivefolderdialog.cpp:60 kmmainwidget.cpp:3710
 #, fuzzy, kde-format
 #| msgid "Archive"
 msgctxt "@action"
@@ -2009,7 +2009,7 @@ msgstr "मजकूर फाईल समाविष्ट करा (&I)..."
 msgid "&Insert Recent Text File"
 msgstr "अलिकडील मजकूर फाईल समाविष्ट करा (&I)"
 
-#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3023
+#: editor/kmcomposerwin.cpp:1326 kmmainwidget.cpp:3028
 #, kde-format
 msgid "&Address Book"
 msgstr "पत्ता पुस्तक (&A)"
@@ -3056,7 +3056,7 @@ msgid "Reopen Closed Viewer"
 msgstr "नवीन संदेश पाठवा"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1928
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4413,7 +4413,7 @@ msgid "F&older"
 msgstr "संचयीका (&O)"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3546 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3551 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
@@ -4446,7 +4446,7 @@ msgid "&Forward"
 msgstr "पुढे (&F)"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3370 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3375 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "गाळणी लावा (&P)"
@@ -4553,17 +4553,17 @@ msgstr "संदेशांना गाळणी"
 msgid "Filtering message %1 of %2"
 msgstr "संदेशाना गाळणी%1 of %2"
 
-#: kmcommands.cpp:1541 kmcommands.cpp:1672
+#: kmcommands.cpp:1546 kmcommands.cpp:1679
 #, kde-format
 msgid "Moving messages"
 msgstr "संदेश हलवत आहे"
 
-#: kmcommands.cpp:1541 kmcommands.cpp:1682
+#: kmcommands.cpp:1546 kmcommands.cpp:1689
 #, kde-format
 msgid "Deleting messages"
 msgstr "संदेश काढून टाकत आहे"
 
-#: kmcommands.cpp:1824
+#: kmcommands.cpp:1831
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@info:progress"
@@ -4600,72 +4600,72 @@ msgstr "HTML साधनपट्टी"
 msgid "Text Direction Toolbar"
 msgstr "मजकूर दिग्दर्शन/मार्गदर्शन"
 
-#: kmkernel.cpp:642
+#: kmkernel.cpp:643
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "के-मेल ऑफलाईन ठेवा. नेटवर्कमधील सर्व कामे निलंबित/अकार्यक्षम केली आहेत."
 
-#: kmkernel.cpp:662 kmmainwidget.cpp:2518 kmmainwidget.cpp:2533
+#: kmkernel.cpp:663 kmmainwidget.cpp:2523 kmmainwidget.cpp:2538
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgid "Send Email"
 msgstr "मेल पाठवा (&S)"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2519 kmmainwidget.cpp:2534
+#: kmkernel.cpp:664 kmmainwidget.cpp:2524 kmmainwidget.cpp:2539
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ईमेल पाठविण्याच्या बेतातच आहे..."
 
-#: kmkernel.cpp:694
+#: kmkernel.cpp:690
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "के-मेल ऑनलाईन ठेवा. नेटवर्कमधील सर्व कामे सुरु केली आहेत."
 
-#: kmkernel.cpp:696
+#: kmkernel.cpp:692
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr "के-मेल ओंनलाईन ठेवा. नेटवर्कमधील सर्व कामे नेटवर्कमधील जोडणी शोधल्यावर सुरु होतील."
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:763
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "के-मेल सध्या ऑफलाईन स्थितीत आहे. तुम्ही पुढे कसे जाऊ इच्छिता?"
 
-#: kmkernel.cpp:769
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "ऑनलाईन/ऑफलाईन"
 
-#: kmkernel.cpp:770
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "काम ऑनलाईनवर"
 
-#: kmkernel.cpp:771
+#: kmkernel.cpp:767
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "काम ऑफलाईनवर"
 
-#: kmkernel.cpp:795
+#: kmkernel.cpp:791
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "नेटवर्क जोडणी शोधली. नेटवर्कमधील सर्व कामे सुरु झाली."
 
-#: kmkernel.cpp:798
+#: kmkernel.cpp:794
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "नेटवर्कमधील कोणतीही जोडणी सापडली नाही. नेटवर्कमधील सर्व कामे निलंबित आहेत."
 
-#: kmkernel.cpp:893
+#: kmkernel.cpp:889
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4674,14 +4674,14 @@ msgstr ""
 "स्वयंचलित संग्रहणांची फाईल उघडण्याची क्रिया %1 येथे यशस्वी झाली नाही.\n"
 "कारण: %2"
 
-#: kmkernel.cpp:894
+#: kmkernel.cpp:890
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr " स्वयंचलित संग्रह करणारी फाईल उघडण्याची क्रिया यशस्वी झाली नाही"
 
-#: kmkernel.cpp:1455
+#: kmkernel.cpp:1452
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4689,7 +4689,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1477
+#: kmkernel.cpp:1474
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4697,18 +4697,18 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmkernel.cpp:1492
+#: kmkernel.cpp:1489
 #, kde-format
 msgid "Sending messages"
 msgstr "संदेश पाठवित आहे"
 
-#: kmkernel.cpp:1493
+#: kmkernel.cpp:1490
 #, fuzzy, kde-format
 #| msgid "Initiating sending process..."
 msgid "Initiating sending process…"
 msgstr "पाठविण्याची प्रक्रिया सुरु करीत आहे..."
 
-#: kmkernel.cpp:1572
+#: kmkernel.cpp:1569
 #, fuzzy, kde-format
 #| msgid "Resource %1 is broken. This resource is now %2"
 msgid ""
@@ -4716,7 +4716,7 @@ msgid ""
 "%2"
 msgstr "संसाधन %1 निकामी झाले आहे.हे संसाधन आता %2 आहे"
 
-#: kmkernel.cpp:1752 kmkernel.cpp:1758
+#: kmkernel.cpp:1749 kmkernel.cpp:1755
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4941,7 +4941,7 @@ msgstr ""
 "वाटेल आणि अशी शक्यता निर्माण होईल की तुमची प्रणाली सध्याच्या आणि अपेक्षित अशा सुरक्षेच्या "
 "साहसी उपयांशी तडजोड करेल."
 
-#: kmmainwidget.cpp:1625 kmmainwidget.cpp:4917
+#: kmmainwidget.cpp:1625 kmmainwidget.cpp:4936
 #, fuzzy, kde-format
 #| msgid "Security Warning"
 msgctxt "@title:window"
@@ -5102,14 +5102,14 @@ msgstr "संदेश कचरापेटीत हलविण्याच�
 msgid "Deleting or moving messages to trash canceled."
 msgstr "संदेश कचरापेटीत हलविण्याचे काम रद्द केले आहे."
 
-#: kmmainwidget.cpp:2256
+#: kmmainwidget.cpp:2261
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "संचयीका त्वरित निवडा/क्लिक करा/उघडा"
 
-#: kmmainwidget.cpp:2450
+#: kmmainwidget.cpp:2455
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -5120,7 +5120,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmmainwidget.cpp:2453
+#: kmmainwidget.cpp:2458
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -5128,7 +5128,7 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmmainwidget.cpp:2458
+#: kmmainwidget.cpp:2463
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -5139,154 +5139,154 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmmainwidget.cpp:2465
+#: kmmainwidget.cpp:2470
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
 "message will invalidate its signature.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2470
+#: kmmainwidget.cpp:2475
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
 
-#: kmmainwidget.cpp:2475
+#: kmmainwidget.cpp:2480
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "फॉन्ट निवडा"
 
-#: kmmainwidget.cpp:2504
+#: kmmainwidget.cpp:2509
 #, kde-format
 msgid "Work Offline"
 msgstr "काम ऑफलाईनवर"
 
-#: kmmainwidget.cpp:2507
+#: kmmainwidget.cpp:2512
 #, kde-format
 msgid "Work Online"
 msgstr "काम ऑनलाईनवर"
 
-#: kmmainwidget.cpp:2966
+#: kmmainwidget.cpp:2971
 #, fuzzy, kde-format
 #| msgid "Save &As..."
 msgid "Save &As…"
 msgstr "असे साठवा (&A)..."
 
-#: kmmainwidget.cpp:2977
+#: kmmainwidget.cpp:2982
 #, fuzzy, kde-format
 #| msgid "&Expire All Folders"
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "सर्व संचयीका कालबाह्य करा (&E)"
 
-#: kmmainwidget.cpp:2982
+#: kmmainwidget.cpp:2987
 #, kde-format
 msgid "Check &Mail"
 msgstr "मेल तपासा (&M)"
 
-#: kmmainwidget.cpp:2990
+#: kmmainwidget.cpp:2995
 #, kde-format
 msgid "Check Mail In"
 msgstr "आलेले मेल तपासा"
 
-#: kmmainwidget.cpp:2995
+#: kmmainwidget.cpp:3000
 #, kde-format
 msgid "Check Mail"
 msgstr "मेल तपासा"
 
-#: kmmainwidget.cpp:2996
+#: kmmainwidget.cpp:3001
 #, fuzzy, kde-format
 #| msgid "Check Mail"
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "मेल तपासा"
 
-#: kmmainwidget.cpp:3000
+#: kmmainwidget.cpp:3005
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "क्रमवारीतील मेल पाठवा (&S)"
 
-#: kmmainwidget.cpp:3008
+#: kmmainwidget.cpp:3013
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "ऑनलाईन स्थिती(माहित नाही)"
 
-#: kmmainwidget.cpp:3013
+#: kmmainwidget.cpp:3018
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "च्याद्वारे क्रमवारीतील संदेश पाठवा"
 
-#: kmmainwidget.cpp:3033
+#: kmmainwidget.cpp:3038
 #, kde-format
 msgid "Certificate Manager"
 msgstr "प्रमाणपत्र व्यवस्थापक"
 
-#: kmmainwidget.cpp:3044
+#: kmmainwidget.cpp:3049
 #, fuzzy, kde-format
 #| msgid "&Import Messages..."
 msgid "&Import Messages…"
 msgstr "संदेश आयात करा (&I)..."
 
-#: kmmainwidget.cpp:3055
+#: kmmainwidget.cpp:3060
 #, fuzzy, kde-format
 #| msgid "&Debug Sieve..."
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "दोषनिवारक गाळणी (&D)..."
 
-#: kmmainwidget.cpp:3062
+#: kmmainwidget.cpp:3067
 #, fuzzy, kde-format
 #| msgid "Filter &Log Viewer..."
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "गाळणी लॉग दर्शिका (&L)..."
 
-#: kmmainwidget.cpp:3067
+#: kmmainwidget.cpp:3072
 #, fuzzy, kde-format
 #| msgid "Notification"
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "सूचना"
 
-#: kmmainwidget.cpp:3072
+#: kmmainwidget.cpp:3077
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr ""
 
-#: kmmainwidget.cpp:3077
+#: kmmainwidget.cpp:3082
 #, fuzzy, kde-format
 #| msgid "Edit \"Out of Office\" Replies..."
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr " \"Out of Office\" उत्तरे संपादित करा..."
 
-#: kmmainwidget.cpp:3083
+#: kmmainwidget.cpp:3088
 #, fuzzy, kde-format
 #| msgid "&Configure Automatic Archiving..."
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "स्वयंचलीत माहितीसाठा तयार करण्याची यंत्रणेची मांडणी करा (&C)..."
 
-#: kmmainwidget.cpp:3089
+#: kmmainwidget.cpp:3094
 #, fuzzy, kde-format
 #| msgid "Deleting messages..."
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "संदेश काढून टाकत आहे..."
 
-#: kmmainwidget.cpp:3095
+#: kmmainwidget.cpp:3100
 #, fuzzy, kde-format
 #| msgid "&Find Messages..."
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "संदेश शोधा (&F)..."
 
-#: kmmainwidget.cpp:3100
+#: kmmainwidget.cpp:3105
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "Ex&pand All Threads"
@@ -5294,7 +5294,7 @@ msgctxt "@action"
 msgid "Expand All"
 msgstr "सर्व थ्रेडस् वाढवा"
 
-#: kmmainwidget.cpp:3105
+#: kmmainwidget.cpp:3110
 #, fuzzy, kde-format
 #| msgctxt "View->"
 #| msgid "C&ollapse All Threads"
@@ -5302,388 +5302,388 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "सर्व थ्रेडस् आकुंचित करा (&O)"
 
-#: kmmainwidget.cpp:3116 util.cpp:187
+#: kmmainwidget.cpp:3121 util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "काढून टाका (&D)"
 
-#: kmmainwidget.cpp:3121
+#: kmmainwidget.cpp:3126
 #, fuzzy, kde-format
 #| msgid "M&ove Thread to Trash"
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "थ्रेड कचरापेटीत हलवा (&O)"
 
-#: kmmainwidget.cpp:3125
+#: kmmainwidget.cpp:3130
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "थ्रेड कचरापेटीत हलवा "
 
-#: kmmainwidget.cpp:3128 kmmainwidget.cpp:4183
+#: kmmainwidget.cpp:3133 kmmainwidget.cpp:4192
 #, kde-format
 msgid "Delete T&hread"
 msgstr "थ्रेड हटवा (&H)"
 
-#: kmmainwidget.cpp:3135 kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:3140 kmmainwidget.cpp:4194
 #, fuzzy, kde-format
 #| msgid "Find Messages"
 msgid "&Find Messages…"
 msgstr "संदेश शोधा"
 
-#: kmmainwidget.cpp:3141
+#: kmmainwidget.cpp:3146
 #, fuzzy, kde-format
 #| msgid "Select &All Messages"
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "सर्व संदेश निवडा (&A)"
 
-#: kmmainwidget.cpp:3148
+#: kmmainwidget.cpp:3153
 #, fuzzy, kde-format
 #| msgid "&Mailing List Management..."
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "करावयाच्या/पाठवावयाच्या मेलच्या यादीचे व्यवस्थापन (&M)..."
 
-#: kmmainwidget.cpp:3156
+#: kmmainwidget.cpp:3161
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "पुन्हा सुरु करा"
 
-#: kmmainwidget.cpp:3161
+#: kmmainwidget.cpp:3166
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "संचयीकेवर सर्व गाळण्या लागू करा (&Y)"
 
-#: kmmainwidget.cpp:3166
+#: kmmainwidget.cpp:3171
 #, fuzzy, kde-format
 #| msgid "&Assign Shortcut..."
 msgid "&Assign Shortcut…"
 msgstr "जवळचा मार्ग/सोपा उपाय निश्चीत करा (&A)..."
 
-#: kmmainwidget.cpp:3184
+#: kmmainwidget.cpp:3189
 #, fuzzy, kde-format
 #| msgid "&Expiration Settings"
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "संपुष्टात आणण्यासाठी कालबाह्य करण्यासाठी संयोजना (&E)"
 
-#: kmmainwidget.cpp:3209
+#: kmmainwidget.cpp:3214
 #, fuzzy, kde-format
 #| msgid "Archive Folder"
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "संग्रह संचयीका"
 
-#: kmmainwidget.cpp:3217
+#: kmmainwidget.cpp:3222
 #, fuzzy, kde-format
 #| msgid "Load E&xternal References"
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "बाह्य संदर्भ दाखल करा (&X)"
 
-#: kmmainwidget.cpp:3240
+#: kmmainwidget.cpp:3245
 #, fuzzy, kde-format
 #| msgid "Copy Message To..."
 msgid "Copy Message To…"
 msgstr "संदेशाची प्रत याकडे पाठवा..."
 
-#: kmmainwidget.cpp:3242
+#: kmmainwidget.cpp:3247
 #, fuzzy, kde-format
 #| msgid "Move Message To..."
 msgid "Move Message To…"
 msgstr "संदेश    कडे हलवा"
 
-#: kmmainwidget.cpp:3247
+#: kmmainwidget.cpp:3252
 #, fuzzy, kde-format
 #| msgid "New Messages In"
 msgid "&New Message…"
 msgstr "नवीन संदेश येत आहे"
 
-#: kmmainwidget.cpp:3249
+#: kmmainwidget.cpp:3254
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "नवीन"
 
-#: kmmainwidget.cpp:3257
+#: kmmainwidget.cpp:3262
 #, kde-format
 msgid "Message From &Template"
 msgstr "प्रमाणित मजकुराकडून संदेश (&T)"
 
-#: kmmainwidget.cpp:3263
+#: kmmainwidget.cpp:3268
 #, fuzzy, kde-format
 #| msgid "New Message t&o Mailing-List..."
 msgid "New Message t&o Mailing-List…"
 msgstr "पाठवायच्या मेल-यादीसाठी नवा संदेश (&O)"
 
-#: kmmainwidget.cpp:3269
+#: kmmainwidget.cpp:3274
 #, kde-format
 msgid "&Create Filter"
 msgstr "गाळणी निर्माण करा (&C)"
 
-#: kmmainwidget.cpp:3273
+#: kmmainwidget.cpp:3278
 #, fuzzy, kde-format
 #| msgid "Filter on &Subject..."
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "या विषयाची गाळणी (&S)..."
 
-#: kmmainwidget.cpp:3280
+#: kmmainwidget.cpp:3285
 #, fuzzy, kde-format
 #| msgid "Filter on &From..."
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "याकडून वर गाळणी लावा (&F)..."
 
-#: kmmainwidget.cpp:3286
+#: kmmainwidget.cpp:3291
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "याकडे वर गाळणी लावा (&T)..."
 
-#: kmmainwidget.cpp:3292
+#: kmmainwidget.cpp:3297
 #, fuzzy, kde-format
 #| msgid "Filter on &To..."
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "याकडे वर गाळणी लावा (&T)..."
 
-#: kmmainwidget.cpp:3306
+#: kmmainwidget.cpp:3311
 #, kde-format
 msgid "Mark &Thread"
 msgstr "थ्रेडवर खुण करा (&T)"
 
-#: kmmainwidget.cpp:3309
+#: kmmainwidget.cpp:3314
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "थ्रेडवर वाचल्याची खुण करा (&R)"
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3317
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "निवडलेल्या थ्रेडमधील सर्व संदेशांवर वाचले म्हणून खुणा करा"
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3320
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "थ्रेडवर वाचले नाही अशा खुणा करा (&U)"
 
-#: kmmainwidget.cpp:3318
+#: kmmainwidget.cpp:3323
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "निवडलेल्या थ्रेडमधील सर्व संदेशांवर न वाचल्याच्या खुणा करा "
 
-#: kmmainwidget.cpp:3324
+#: kmmainwidget.cpp:3329
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "थ्रेडवर महत्वाचे अशी खुण करा (&I)"
 
-#: kmmainwidget.cpp:3327
+#: kmmainwidget.cpp:3332
 #, fuzzy, kde-format
 #| msgid "Remove &Important Thread Mark"
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "महत्वाचा थ्रेड म्हणून असलेली खुण काढून टाका (&I)"
 
-#: kmmainwidget.cpp:3330
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "कार्यवाही करण्याची बाब म्हणून थ्रेडवर खुण करा (&A)"
 
-#: kmmainwidget.cpp:3333
+#: kmmainwidget.cpp:3338
 #, fuzzy, kde-format
 #| msgid "Remove &Action Item Thread Mark"
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr " कार्यवाही करण्याची बाब म्हणून थ्रेडवर असलेली खुण काढून टाका (&A)"
 
-#: kmmainwidget.cpp:3337
+#: kmmainwidget.cpp:3342
 #, kde-format
 msgid "&Watch Thread"
 msgstr "थ्रेडवर लक्ष ठेवा (&W)"
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3346
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "थ्रेडकडे दुर्लक्ष करा (&I)"
 
-#: kmmainwidget.cpp:3349 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3354 kmreadermainwin.cpp:499
 #, fuzzy, kde-format
 #| msgid "Save A&ttachments..."
 msgid "Save A&ttachments…"
 msgstr "अटॅचमेंट साठवा (&T)..."
 
-#: kmmainwidget.cpp:3353
+#: kmmainwidget.cpp:3358
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "फॉन्ट निवडा"
 
-#: kmmainwidget.cpp:3361
+#: kmmainwidget.cpp:3366
 #, fuzzy, kde-format
 #| msgid "Copy Item To..."
 msgid "Copy Decrypted To…"
 msgstr "... कडे  बाब/कलम नक्कल करा"
 
-#: kmmainwidget.cpp:3365
+#: kmmainwidget.cpp:3370
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "सर्व गाळण्या लागू करा (&Y)"
 
-#: kmmainwidget.cpp:3374
+#: kmmainwidget.cpp:3379
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "थ्रेड/संच वाढवा (&E)"
 
-#: kmmainwidget.cpp:3377
+#: kmmainwidget.cpp:3382
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "सध्याचा/चालू थ्रेड संच वाढवा"
 
-#: kmmainwidget.cpp:3381
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "थ्रेड/संचाचे आकुंचन करा (&C)"
 
-#: kmmainwidget.cpp:3384
+#: kmmainwidget.cpp:3389
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "सध्याचा/चालू थ्रेड अथवा संच आकुंचित करा"
 
-#: kmmainwidget.cpp:3388
+#: kmmainwidget.cpp:3393
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "सर्व थ्रेडस् वाढवा"
 
-#: kmmainwidget.cpp:3391
+#: kmmainwidget.cpp:3396
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "सध्याच्या/चालू संचयीकेतील सर्व थ्रेडस् वाढवा"
 
-#: kmmainwidget.cpp:3395
+#: kmmainwidget.cpp:3400
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "सर्व थ्रेडस् आकुंचित करा (&O)"
 
-#: kmmainwidget.cpp:3398
+#: kmmainwidget.cpp:3403
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "सध्याच्या/चालू संचयीकेतील सर्व थ्रेडस् आकुंचित करा "
 
-#: kmmainwidget.cpp:3402
+#: kmmainwidget.cpp:3407
 #, fuzzy, kde-format
 #| msgid "&Display Message"
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "संदेश दाखवा (&D)"
 
-#: kmmainwidget.cpp:3409
+#: kmmainwidget.cpp:3414
 #, fuzzy, kde-format
 #| msgid "&Next Message"
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "पुढील संदेश (&N)"
 
-#: kmmainwidget.cpp:3412
+#: kmmainwidget.cpp:3417
 #, kde-format
 msgid "Go to the next message"
 msgstr "पुढील संदेशाकडे जा"
 
-#: kmmainwidget.cpp:3416
+#: kmmainwidget.cpp:3421
 #, fuzzy, kde-format
 #| msgid "Next &Unread Message"
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "पुढील न वाचलेला संदेश (&U)"
 
-#: kmmainwidget.cpp:3424
+#: kmmainwidget.cpp:3429
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "पुढील"
 
-#: kmmainwidget.cpp:3425
+#: kmmainwidget.cpp:3430
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "पुढील न वाचलेल्या संदेशाकडे जा"
 
-#: kmmainwidget.cpp:3429
+#: kmmainwidget.cpp:3434
 #, fuzzy, kde-format
 #| msgid "&Previous Message"
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "मागील संदेश (&P)"
 
-#: kmmainwidget.cpp:3431
+#: kmmainwidget.cpp:3436
 #, kde-format
 msgid "Go to the previous message"
 msgstr "मागील संदेशाकडे जा"
 
-#: kmmainwidget.cpp:3436
+#: kmmainwidget.cpp:3441
 #, fuzzy, kde-format
 #| msgid "Previous Unread &Message"
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "मागील न वाचलेला संदेश (&M)"
 
-#: kmmainwidget.cpp:3444
+#: kmmainwidget.cpp:3449
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "मागील"
 
-#: kmmainwidget.cpp:3445
+#: kmmainwidget.cpp:3450
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "मागील न वाचलेल्या संदेशाकडे जा"
 
-#: kmmainwidget.cpp:3449
+#: kmmainwidget.cpp:3454
 #, fuzzy, kde-format
 #| msgid "Next Unread &Folder"
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "पुढील न वाचलेली संचयीका (&F)"
 
-#: kmmainwidget.cpp:3455
+#: kmmainwidget.cpp:3460
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "न वाचलेले संदेश असलेल्या पुढील संचयीकेकडे जा"
 
-#: kmmainwidget.cpp:3458
+#: kmmainwidget.cpp:3463
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "मागील न वाचलेली संचयीका (&O)"
 
-#: kmmainwidget.cpp:3464
+#: kmmainwidget.cpp:3469
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr " न वाचलेले संदेश असलेल्या मागील संचयीकेकडे जा "
 
-#: kmmainwidget.cpp:3468
+#: kmmainwidget.cpp:3473
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "न वाचलेला पुढील मजकूर (&T)"
 
-#: kmmainwidget.cpp:3471
+#: kmmainwidget.cpp:3476
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "न वाचलेल्या पुढील मजकुराकडे जा"
 
-#: kmmainwidget.cpp:3473
+#: kmmainwidget.cpp:3478
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5691,300 +5691,310 @@ msgid ""
 msgstr ""
 "सध्याचा संदेश खाली सरकवा. सध्याच्या संदेशाच्या शेवटी असेल तर पुढील न वाचलेल्या संदेशाकडे जा"
 
-#: kmmainwidget.cpp:3481
+#: kmmainwidget.cpp:3486
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
 msgid "Configure &Filters…"
 msgstr "गाळण्यांची संयोजना करा (&F)..."
 
-#: kmmainwidget.cpp:3487
+#: kmmainwidget.cpp:3492
 #, fuzzy, kde-format
 #| msgid "Manage &Sieve Scripts..."
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "संहितांचे व्यवस्थापन करा (&S)..."
 
-#: kmmainwidget.cpp:3492
+#: kmmainwidget.cpp:3497
 #, fuzzy, kde-format
 #| msgid "Add Note..."
 msgid "&Add Account…"
 msgstr "सूचना/नोंद वाढवा..."
 
-#: kmmainwidget.cpp:3497
+#: kmmainwidget.cpp:3502
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr ""
 
-#: kmmainwidget.cpp:3504
+#: kmmainwidget.cpp:3509
 #, fuzzy, kde-format
 #| msgid "Configure &Notifications..."
 msgid "Configure &Notifications…"
 msgstr "सूचना संयोजीत करा (&N)..."
 
-#: kmmainwidget.cpp:3511
+#: kmmainwidget.cpp:3516
 #, fuzzy, kde-format
 #| msgid "&Configure KMail..."
 msgid "&Configure KMail…"
 msgstr "के-मेलची संयोजना करा (&C)..."
 
-#: kmmainwidget.cpp:3518
+#: kmmainwidget.cpp:3523
 #, fuzzy, kde-format
 #| msgid "Expire"
 msgctxt "@action"
 msgid "Expire…"
 msgstr "कालबाह्य"
 
-#: kmmainwidget.cpp:3524
+#: kmmainwidget.cpp:3529
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgid "Add Favorite Folder…"
 msgstr "आवडती संचयीका वाढवा"
 
-#: kmmainwidget.cpp:3530 kmmainwidget.cpp:3538
+#: kmmainwidget.cpp:3535 kmmainwidget.cpp:3543
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters"
 msgid "Apply All Filters"
 msgstr "सर्व गाळण्या लागू करा (&Y)"
 
-#: kmmainwidget.cpp:3551
+#: kmmainwidget.cpp:3556
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "संचयीकेवर सर्व गाळण्या लागू करा (&Y)"
 
-#: kmmainwidget.cpp:3556
+#: kmmainwidget.cpp:3561
 #, fuzzy, kde-format
 #| msgid "&Export KMail Data..."
 msgid "Import/Export KMail Data…"
 msgstr "के-मेल माहितीसाठा निर्यात करा (&E)..."
 
-#: kmmainwidget.cpp:3562
+#: kmmainwidget.cpp:3567
 #, fuzzy, kde-format
 #| msgid "New AddressBook Contact..."
 msgid "New AddressBook Contact…"
 msgstr "नवीन पत्ते नोंदवहीतील संपर्क..."
 
-#: kmmainwidget.cpp:3570 kmmainwidget.cpp:4219
+#: kmmainwidget.cpp:3582 kmmainwidget.cpp:4228
 #, fuzzy, kde-format
 #| msgid "&Settings"
 msgid "Account &Settings"
 msgstr "संयोजना (&S)"
 
-#: kmmainwidget.cpp:3574
+#: kmmainwidget.cpp:3586
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgid "Restart Account"
 msgstr "पुन्हा सुरु करा"
 
-#: kmmainwidget.cpp:3590
+#: kmmainwidget.cpp:3603
 #, fuzzy, kde-format
 #| msgid "Copy Message to Folder"
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "संचयीकेमध्ये संदेशांची नक्कल करा"
 
-#: kmmainwidget.cpp:3596
+#: kmmainwidget.cpp:3609
 #, fuzzy, kde-format
 #| msgid "Jump to Folder"
 msgid "Jump to Folder…"
 msgstr "संचयीका त्वरित निवडा/क्लिक करा/उघडा"
 
-#: kmmainwidget.cpp:3602
+#: kmmainwidget.cpp:3615
 #, fuzzy, kde-format
 #| msgid "Abort Current Operation"
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "सध्याची क्रिया निष्फळ करा"
 
-#: kmmainwidget.cpp:3608
+#: kmmainwidget.cpp:3621
 #, fuzzy, kde-format
 #| msgid "Focus on Next Folder"
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "पुढील संचयीकेवर फोकस /लक्ष केंद्रित करा"
 
-#: kmmainwidget.cpp:3614
+#: kmmainwidget.cpp:3627
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Folder"
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "मागील संचयीकेवर फोकस/लक्ष केंद्रित करा "
 
-#: kmmainwidget.cpp:3620
+#: kmmainwidget.cpp:3633
 #, fuzzy, kde-format
 #| msgid "Select Folder with Focus"
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "लक्ष केंद्रित असलेली संचयीका निवडा"
 
-#: kmmainwidget.cpp:3627
+#: kmmainwidget.cpp:3640
 #, fuzzy, kde-format
 #| msgid "Focus on First Folder"
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "पहिल्या संचयीकेवर लक्ष केंद्रित करा"
 
-#: kmmainwidget.cpp:3633
+#: kmmainwidget.cpp:3646
 #, fuzzy, kde-format
 #| msgid "Focus on Last Folder"
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "शेवटच्या संचयीकेवर लक्ष केंद्रित करा"
 
-#: kmmainwidget.cpp:3639
+#: kmmainwidget.cpp:3652
 #, fuzzy, kde-format
 #| msgid "Focus on Next Message"
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "पुढील संदेशावर लक्ष केंद्रित करा"
 
-#: kmmainwidget.cpp:3645
+#: kmmainwidget.cpp:3658
 #, fuzzy, kde-format
 #| msgid "Focus on Previous Message"
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "मागील संदेशावर लक्ष केंद्रित करा"
 
-#: kmmainwidget.cpp:3651
+#: kmmainwidget.cpp:3664
 #, fuzzy, kde-format
 #| msgid "Select First Message"
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "पहिला संदेश निवडा"
 
-#: kmmainwidget.cpp:3657
+#: kmmainwidget.cpp:3670
 #, fuzzy, kde-format
 #| msgid "Select Last Message"
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "शेवटचा संदेश निवडा"
 
-#: kmmainwidget.cpp:3663
+#: kmmainwidget.cpp:3676
 #, fuzzy, kde-format
 #| msgid "Select Message with Focus"
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "लक्ष केंद्रित करून संदेश निवडा"
 
-#: kmmainwidget.cpp:3670
+#: kmmainwidget.cpp:3683
 #, fuzzy, kde-format
 #| msgid "Set Focus to Quick Search"
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "जलदगती शोधावर लक्ष केंद्रित करा"
 
-#: kmmainwidget.cpp:3678
+#: kmmainwidget.cpp:3691
 #, fuzzy, kde-format
 #| msgid "Extend Selection to Previous Message"
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "मागील संदेशापर्यंत निवडप्रक्रिया वाढवा"
 
-#: kmmainwidget.cpp:3684
+#: kmmainwidget.cpp:3697
 #, fuzzy, kde-format
 #| msgid "Extend Selection to Next Message"
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "पुढील संदेशापर्यंत निवडप्रक्रिया वाढवा "
 
-#: kmmainwidget.cpp:3691
+#: kmmainwidget.cpp:3704
 #, fuzzy, kde-format
 #| msgid "Move Message to Folder"
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "संदेश संचयीकेत हलवा"
 
-#: kmmainwidget.cpp:3701
+#: kmmainwidget.cpp:3714
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "संचयीकेवर सर्व गाळण्या लागू करा (&Y)"
 
-#: kmmainwidget.cpp:3706
+#: kmmainwidget.cpp:3719
 #, fuzzy, kde-format
 #| msgid "Appl&y All Filters On Folder"
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "संचयीकेवर सर्व गाळण्या लागू करा (&Y)"
 
-#: kmmainwidget.cpp:3712
+#: kmmainwidget.cpp:3725
 #, fuzzy, kde-format
 #| msgid "Previous Unread F&older"
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "मागील न वाचलेली संचयीका (&O)"
 
-#: kmmainwidget.cpp:3719
+#: kmmainwidget.cpp:3732
 #, fuzzy, kde-format
 #| msgid "Delete Folder"
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "संचयीका काढून टाका"
 
-#: kmmainwidget.cpp:3748
+#: kmmainwidget.cpp:3761
 #, fuzzy, kde-format
 #| msgid "Add Favorite Folder"
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "आवडती संचयीका वाढवा"
 
-#: kmmainwidget.cpp:4171
+#: kmmainwidget.cpp:4180
 #, kde-format
 msgid "&Delete Search"
 msgstr "शोध वगळा (&D)"
 
-#: kmmainwidget.cpp:4183
+#: kmmainwidget.cpp:4192
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "थ्रेड कचरापेटीत हलवा (&O)"
 
-#: kmmainwidget.cpp:4185
+#: kmmainwidget.cpp:4194
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgid "Edit Search…"
 msgstr "सुरु करत आहे..."
 
-#: kmmainwidget.cpp:4217
+#: kmmainwidget.cpp:4226
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure Unified Mailbox"
 msgstr "के-मेल चे संयोजन करा"
 
-#: kmmainwidget.cpp:4228
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "कचरापेटी रिकामी करा (&M)"
 
-#: kmmainwidget.cpp:4228
+#: kmmainwidget.cpp:4237
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "सर्व संदेश कचऱ्यात हलवा (&M)"
 
-#: kmmainwidget.cpp:4278
+#: kmmainwidget.cpp:4285
 #, kde-format
 msgid "&Undo"
 msgstr ""
 
-#: kmmainwidget.cpp:4280
+#: kmmainwidget.cpp:4287
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr ""
 
-#: kmmainwidget.cpp:4337
+#: kmmainwidget.cpp:4297
+#, kde-format
+msgid "&Redo"
+msgstr ""
+
+#: kmmainwidget.cpp:4299
+#, kde-format
+msgid "&Redo: \"%1\""
+msgstr ""
+
+#: kmmainwidget.cpp:4356
 #, kde-format
 msgid "Filter %1"
 msgstr "गाळणी %1"
 
-#: kmmainwidget.cpp:4906
+#: kmmainwidget.cpp:4925
 #, fuzzy, kde-format
 #| msgid "Starting..."
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "सुरु करत आहे..."
 
-#: kmmainwidget.cpp:4914
+#: kmmainwidget.cpp:4933
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5995,14 +6005,14 @@ msgstr ""
 "निर्माण होईल की तुमची प्रणाली सध्याच्या आणि अपेक्षित अशा सुरक्षेच्या साहसी उपयांशी तडजोड "
 "करेल."
 
-#: kmmainwidget.cpp:4918
+#: kmmainwidget.cpp:4937
 #, fuzzy, kde-format
 #| msgid "Use HTML"
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "HTML वापरा"
 
-#: kmmainwidget.cpp:5064
+#: kmmainwidget.cpp:5083
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -6012,46 +6022,46 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 
-#: kmmainwidget.cpp:5067
+#: kmmainwidget.cpp:5086
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr ""
 
-#: kmmainwidget.cpp:5068
+#: kmmainwidget.cpp:5087
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "के-मेल चे संयोजन करा"
 
-#: kmmainwidget.cpp:5069
+#: kmmainwidget.cpp:5088
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "रचना/रूपरेषा गमवा"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5123
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to restart Akonadi?"
 msgstr "तुम्हाला '%1' हे खाते काढून टाकायचे आहे का?"
 
-#: kmmainwidget.cpp:5105
+#: kmmainwidget.cpp:5124
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "पुन्हा सुरु करा"
 
-#: kmmainwidget.cpp:5106
+#: kmmainwidget.cpp:5125
 #, fuzzy, kde-format
 #| msgid "Restart"
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "पुन्हा सुरु करा"
 
-#: kmmainwidget.cpp:5113
+#: kmmainwidget.cpp:5132
 #, kde-format
 msgid "Akonadi restarted."
 msgstr ""
@@ -6259,11 +6269,17 @@ msgid_plural "%1 unread messages"
 msgstr[0] "न वाचलेला संदेश"
 msgstr[1] "%1 न वाचलेले संदेश"
 
-#: kmundoredomanager.cpp:35 undostack.cpp:107
+#: kmundoredomanager.cpp:32
 #, fuzzy, kde-format
 #| msgid "Can not move message. %1"
 msgid "Cannot move message. %1"
 msgstr "संदेश हलवू शकत नाही.%1"
+
+#: kmundoredomanager.cpp:121
+#, fuzzy, kde-format
+#| msgid "Move Message To..."
+msgid "Move messages"
+msgstr "संदेश    कडे हलवा"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, fuzzy, kde-format
@@ -8572,31 +8588,6 @@ msgstr ""
 msgid "<b>Subject:</b> %1"
 msgstr ""
 
-#: undostack.cpp:96
-#, kde-format
-msgid "There is nothing to undo."
-msgstr "पूर्ववत करण्यासाठी काहीही नाही"
-
-#: undostack.cpp:114
-#, fuzzy, kde-format
-#| msgid "Move to Trash"
-msgid "Move To Trash"
-msgstr "कचरापेटीत टाका"
-
-#: undostack.cpp:114
-#, fuzzy, kde-format
-#| msgid "Move Message To..."
-msgid "Move Message"
-msgid_plural "Move Messages"
-msgstr[0] "संदेश    कडे हलवा"
-msgstr[1] "संदेश    कडे हलवा"
-
-#: undostack.cpp:129
-#, fuzzy, kde-format
-#| msgid "Message Tags"
-msgid "Change Message Status"
-msgstr "संदेश टॅग्स"
-
 #: userfeedback/accountinfosource.cpp:24
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
@@ -8714,6 +8705,19 @@ msgstr[1] "आउट ऑफ ऑफीस पद्धती कार्यर�
 #| msgid "Zoom"
 msgid "Zoom: %1%"
 msgstr "झूम"
+
+#~ msgid "There is nothing to undo."
+#~ msgstr "पूर्ववत करण्यासाठी काहीही नाही"
+
+#, fuzzy
+#~| msgid "Move to Trash"
+#~ msgid "Move To Trash"
+#~ msgstr "कचरापेटीत टाका"
+
+#, fuzzy
+#~| msgid "Message Tags"
+#~ msgid "Change Message Status"
+#~ msgstr "संदेश टॅग्स"
 
 #, fuzzy
 #~| msgid "Add a new identity"
