@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -3559,7 +3559,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "重新命名"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5702,7 +5702,7 @@ msgstr[0] "%1 封未讀信件"
 msgid "Cannot move message. %1"
 msgstr "無法移動信件。%1"
 
-#: kmundoredomanager.cpp:121
+#: kmundoredomanager.cpp:120
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"

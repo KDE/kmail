@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
 "PO-Revision-Date: 2025-03-22 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -3703,7 +3703,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Alinomi"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5899,7 +5899,7 @@ msgstr[1] "%1 nelegitaj mesaĝoj"
 msgid "Cannot move message. %1"
 msgstr "Ne povas movi mesaĝon. %1"
 
-#: kmundoredomanager.cpp:121
+#: kmundoredomanager.cpp:120
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"

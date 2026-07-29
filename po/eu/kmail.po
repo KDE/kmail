@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
 "PO-Revision-Date: 2026-07-27 05:23+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -3707,7 +3707,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Berrizendatu"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5886,7 +5886,7 @@ msgstr[1] "Irakurri gabeko %1 mezu"
 msgid "Cannot move message. %1"
 msgstr "Ezin du mezua eraman. %1"
 
-#: kmundoredomanager.cpp:121
+#: kmundoredomanager.cpp:120
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"

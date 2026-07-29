@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
-"PO-Revision-Date: 2026-07-25 09:10+0200\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"PO-Revision-Date: 2026-07-28 07:54+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -3695,7 +3695,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Byt namn"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5603,13 +5603,12 @@ msgstr "Å&ngra: \"%1\""
 #: kmmainwidget.cpp:4297
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&Gör om"
 
 #: kmmainwidget.cpp:4299
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "Å&ngra: \"%1\""
+msgstr "&Gör om: \"%1\""
 
 #: kmmainwidget.cpp:4356
 #, kde-format
@@ -5876,12 +5875,10 @@ msgstr[1] "%1 olästa brev"
 msgid "Cannot move message. %1"
 msgstr "Kan inte flytta brev. %1"
 
-#: kmundoredomanager.cpp:121
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#: kmundoredomanager.cpp:120
+#, kde-format
 msgid "Move messages"
-msgstr "Flytta brevet"
+msgstr "Flytta brev"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format

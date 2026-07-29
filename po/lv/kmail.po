@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
 "PO-Revision-Date: 2025-08-21 12:57+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -3695,7 +3695,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Pārdēvēt"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5897,7 +5897,7 @@ msgstr[2] "%1 neizlasītu vēstuļu"
 msgid "Cannot move message. %1"
 msgstr "Nevar pārvietot vēstuli. %1"
 
-#: kmundoredomanager.cpp:121
+#: kmundoredomanager.cpp:120
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"

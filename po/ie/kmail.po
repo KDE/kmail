@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -3584,7 +3584,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Renominar"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5700,7 +5700,7 @@ msgstr[1] "Ciffrat missages"
 msgid "Cannot move message. %1"
 msgstr "Proprietás de missage"
 
-#: kmundoredomanager.cpp:121
+#: kmundoredomanager.cpp:120
 #, fuzzy, kde-format
 msgid "Move messages"
 msgstr "Proprietás de missage"

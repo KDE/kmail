@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
-"PO-Revision-Date: 2026-07-25 07:15+0200\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"PO-Revision-Date: 2026-07-28 11:33+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -3701,7 +3701,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Preimenuj"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5645,18 +5645,17 @@ msgstr "Razveljavi"
 #: kmmainwidget.cpp:4287
 #, kde-format
 msgid "&Undo: \"%1\""
-msgstr "&Razveljavi: »%1«"
+msgstr "&Razveljavi: \"%1\""
 
 #: kmmainwidget.cpp:4297
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "Uveljavi"
 
 #: kmmainwidget.cpp:4299
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Razveljavi: »%1«"
+msgstr "Uveljavi: \"%1\""
 
 #: kmmainwidget.cpp:4356
 #, kde-format
@@ -5925,10 +5924,8 @@ msgstr[3] "%1 neprebrana sporočila"
 msgid "Cannot move message. %1"
 msgstr "Sporočila ni mogoče premakniti. %1"
 
-#: kmundoredomanager.cpp:121
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#: kmundoredomanager.cpp:120
+#, kde-format
 msgid "Move messages"
 msgstr "Premakni sporočila"
 

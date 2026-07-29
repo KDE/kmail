@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
-"PO-Revision-Date: 2026-07-25 12:39+0300\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"PO-Revision-Date: 2026-07-28 08:39+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3750,7 +3750,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "Перейменувати"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -5694,13 +5694,12 @@ msgstr "&Вернути: «%1»"
 #: kmmainwidget.cpp:4297
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&Повторити"
 
 #: kmmainwidget.cpp:4299
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Вернути: «%1»"
+msgstr "&Повторити: «%1»"
 
 #: kmmainwidget.cpp:4356
 #, kde-format
@@ -5972,10 +5971,8 @@ msgstr[3] "%1 непрочитане повідомлення"
 msgid "Cannot move message. %1"
 msgstr "Не вдалося пересунути повідомлення. %1"
 
-#: kmundoredomanager.cpp:121
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#: kmundoredomanager.cpp:120
+#, kde-format
 msgid "Move messages"
 msgstr "Пересунути повідомлення"
 

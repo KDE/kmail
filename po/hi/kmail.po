@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-28 00:46+0000\n"
+"POT-Creation-Date: 2026-07-29 00:46+0000\n"
 "PO-Revision-Date: 2024-12-15 19:32+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Hindi <kde-i18n-doc@kde.org>\n"
@@ -3858,7 +3858,7 @@ msgctxt "@action"
 msgid "Rename"
 msgstr "नाम बदलें (&R)"
 
-#: identity/identityngpage.cpp:255
+#: identity/identityngpage.cpp:254
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"
@@ -6211,7 +6211,7 @@ msgstr[1] "बिनपढ़ा संदेश"
 msgid "Cannot move message. %1"
 msgstr "संदेशों को फ़ोल्डर में खिसकाएँ"
 
-#: kmundoredomanager.cpp:121
+#: kmundoredomanager.cpp:120
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move messages"
