@@ -12,6 +12,7 @@
 #include "unifiedmailboxagent_debug.h"
 #include "unifiedmailboxagentadaptor.h"
 
+#include <Akonadi/CachePolicy>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/CollectionDeleteJob>
 #include <Akonadi/CollectionFetchJob>
@@ -31,11 +32,11 @@
 #include <KLocalizedString>
 #include <QDBusConnection>
 
+#include <QHash>
 #include <QPointer>
 #include <QTimer>
 
 #include <memory>
-#include <unordered_set>
 
 UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     : Akonadi::ResourceWidgetBase(id)
@@ -144,6 +145,13 @@ void UnifiedMailboxAgent::retrieveCollections()
         col.setContentMimeTypes({Common::MailMimeType});
         col.setRights(Akonadi::Collection::CanChangeItem | Akonadi::Collection::CanDeleteItem);
         col.setVirtual(true);
+        // Periodically re-sync as a fallback in case real-time change notifications
+        // are missed, so stale or missing links are eventually corrected.
+        Akonadi::CachePolicy cachePolicy;
+        cachePolicy.setInheritFromParent(false);
+        cachePolicy.setSyncOnDemand(true);
+        cachePolicy.setIntervalCheckTime(5); // minutes
+        col.setCachePolicy(cachePolicy);
         auto displayAttr = col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
         displayAttr->setDisplayName(box->name());
         displayAttr->setIconName(box->icon());
@@ -173,38 +181,107 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
     }
 
     const auto sources = unifiedBox->sourceCollections();
+
+    // We reconcile the unified collection in two phases:
+    //
+    // Phase 1: fetch all source collections to build a complete map of
+    //          source item IDs. Each source is tracked independently so
+    //          a fetch failure for one source does not affect the others.
+    //
+    // Phase 2: fetch the unified collection itself, then:
+    //   - unlink items whose source collection is no longer part of the box,
+    //     or whose item ID is absent from the (successfully fetched) source.
+    //   - link items that are present in a source but missing from the unified
+    //     collection.
+    //
+    // Doing both link and unlink in Phase 2 (rather than linking eagerly in
+    // Phase 1) ensures we never issue duplicate LinkJobs even when
+    // retrieveItems() is called concurrently by the periodic timer and a
+    // real-time notification.
+
+    struct SyncState {
+        QHash<qint64, QSet<Akonadi::Item::Id>> sourceItemIdsByCollection;
+        QSet<qint64> failedSources;
+        int pendingFetches = 0;
+    };
+
+    const auto startUnifiedSync = [this, c, unifiedBox](const std::shared_ptr<SyncState> &state) {
+        auto fetch = new Akonadi::ItemFetchJob(c, this);
+        fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
+        fetch->fetchScope().setCacheOnly(true);
+        fetch->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, [this, c, unifiedBox, state](const Akonadi::Item::List &unifiedItems) {
+            // Build set of item IDs already in the unified collection.
+            QSet<Akonadi::Item::Id> alreadyLinked;
+            alreadyLinked.reserve(unifiedItems.size());
+            for (const auto &item : unifiedItems) {
+                alreadyLinked.insert(item.id());
+            }
+
+            Akonadi::Item::List toUnlink;
+            for (const auto &item : unifiedItems) {
+                const auto srcColId = item.storageCollectionId();
+                if (!unifiedBox->sourceCollections().contains(srcColId)) {
+                    toUnlink.append(item); // source no longer part of this box
+                    continue;
+                }
+                if (state->failedSources.contains(srcColId)) {
+                    continue; // don't remove items whose source fetch failed
+                }
+                const auto idsIt = state->sourceItemIdsByCollection.constFind(srcColId);
+                if (idsIt != state->sourceItemIdsByCollection.cend() && !idsIt->contains(item.id())) {
+                    toUnlink.append(item); // item deleted from source
+                }
+            }
+            if (!toUnlink.isEmpty()) {
+                new Akonadi::UnlinkJob(c, toUnlink, this);
+            }
+
+            // Link items present in sources but not yet in the unified collection.
+            for (auto it = state->sourceItemIdsByCollection.cbegin(); it != state->sourceItemIdsByCollection.cend(); ++it) {
+                Akonadi::Item::List toLink;
+                for (const auto id : it.value()) {
+                    if (!alreadyLinked.contains(id)) {
+                        toLink.append(Akonadi::Item(id));
+                    }
+                }
+                if (!toLink.isEmpty()) {
+                    new Akonadi::LinkJob(c, toLink, this);
+                }
+            }
+        });
+        connect(fetch, &Akonadi::ItemFetchJob::result, this, [this]() {
+            itemsRetrievedIncremental({}, {}); // fake incremental retrieval
+        });
+    };
+
+    if (sources.isEmpty()) {
+        startUnifiedSync(std::make_shared<SyncState>());
+        return;
+    }
+
+    auto state = std::make_shared<SyncState>();
+    state->pendingFetches = sources.size();
+
     for (auto source : sources) {
         auto fetch = new Akonadi::ItemFetchJob(Akonadi::Collection(source), this);
         fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
-        fetch->fetchScope().setFetchVirtualReferences(true);
-        fetch->fetchScope().setCacheOnly(true);
-        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, [this, c](const Akonadi::Item::List &items) {
-            Akonadi::Item::List toLink;
-            std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toLink), [&c](const Akonadi::Item &item) {
-                return !item.virtualReferences().contains(c);
-            });
-            if (!toLink.isEmpty()) {
-                new Akonadi::LinkJob(c, toLink, this);
+        fetch->fetchScope().setCacheOnly(false);
+        connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, [state, source](const Akonadi::Item::List &items) {
+            auto &ids = state->sourceItemIdsByCollection[source];
+            for (const auto &item : items) {
+                ids.insert(item.id());
+            }
+        });
+        connect(fetch, &Akonadi::ItemFetchJob::result, this, [this, state, source, startUnifiedSync](KJob *job) {
+            if (job->error()) {
+                state->failedSources.insert(source);
+            }
+            if (--state->pendingFetches == 0) {
+                startUnifiedSync(state);
             }
         });
     }
-
-    auto fetch = new Akonadi::ItemFetchJob(c, this);
-    fetch->setDeliveryOption(Akonadi::ItemFetchJob::EmitItemsInBatches);
-    fetch->fetchScope().setCacheOnly(true);
-    fetch->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    connect(fetch, &Akonadi::ItemFetchJob::itemsReceived, this, [this, unifiedBox, c](const Akonadi::Item::List &items) {
-        Akonadi::Item::List toUnlink;
-        std::copy_if(items.cbegin(), items.cend(), std::back_inserter(toUnlink), [&unifiedBox](const Akonadi::Item &item) {
-            return !unifiedBox->sourceCollections().contains(item.storageCollectionId());
-        });
-        if (!toUnlink.isEmpty()) {
-            new Akonadi::UnlinkJob(c, toUnlink, this);
-        }
-    });
-    connect(fetch, &Akonadi::ItemFetchJob::result, this, [this]() {
-        itemsRetrievedIncremental({}, {}); // fake incremental retrieval
-    });
 }
 
 bool UnifiedMailboxAgent::retrieveItems([[maybe_unused]] const Akonadi::Item::List &items, [[maybe_unused]] const QSet<QByteArray> &parts)
