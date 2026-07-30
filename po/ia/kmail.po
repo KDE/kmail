@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-29 00:46+0000\n"
-"PO-Revision-Date: 2026-07-27 11:20+0200\n"
+"PO-Revision-Date: 2026-07-29 12:28+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -5637,13 +5637,12 @@ msgstr "&Annulla: \"%1\""
 #: kmmainwidget.cpp:4297
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&Reface"
 
 #: kmmainwidget.cpp:4299
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Annulla: \"%1\""
+msgstr "&Reface: \"%1\""
 
 #: kmmainwidget.cpp:4356
 #, kde-format
@@ -5914,11 +5913,9 @@ msgid "Cannot move message. %1"
 msgstr "Non pote mover message. %1"
 
 #: kmundoredomanager.cpp:120
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
-msgstr "Move message"
+msgstr "Move messages"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
