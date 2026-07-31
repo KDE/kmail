@@ -7901,11 +7901,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid "There is nothing to undo."
-#~ msgstr "Det finst ikkje noko å angra."
-
-#, fuzzy
-#~| msgid "Message Tags"
-#~ msgid "Change Message Status"
-#~ msgstr "Merkelappar"

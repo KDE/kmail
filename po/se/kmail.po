@@ -7733,8 +7733,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Message Tags"
-#~ msgid "Change Message Status"
-#~ msgstr "Reivegilkorat"
