@@ -108,4 +108,4 @@ msgstr "Einstellungen zur Dialoggröße in Datei „%1“ aufräumen: Abgeschlos
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
-msgstr "Schließen Sie bitte KMail/Kontact, ehe Sie das Programm benutzen."
+msgstr "Schließen Sie bitte KMail/Kontact, ehe Sie das Programm verwenden."
