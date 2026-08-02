@@ -48,6 +48,10 @@ public:
     [[nodiscard]] Akonadi::Item::List items() const;
     void setItems(const Akonadi::Item::List &newItems);
 
+    void undo() override;
+    void redo() override;
+    [[nodiscard]] QString actionText() const;
+
 private:
     Akonadi::Item::List mItems;
 };

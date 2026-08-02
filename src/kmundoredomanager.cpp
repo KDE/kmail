@@ -140,3 +140,19 @@ void KMUndoInfoChangeStatusItems::setItems(const Akonadi::Item::List &newItems)
 {
     mItems = newItems;
 }
+
+void KMUndoInfoChangeStatusItems::undo()
+{
+    // TODO
+}
+
+void KMUndoInfoChangeStatusItems::redo()
+{
+    // TODO
+}
+
+QString KMUndoInfoChangeStatusItems::actionText() const
+{
+    // TODO
+    return {};
+}
