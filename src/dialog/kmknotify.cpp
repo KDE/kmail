@@ -20,6 +20,7 @@
 #include <QStandardPaths>
 #include <QVBoxLayout>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 using namespace KMail;
 using namespace Qt::Literals::StringLiterals;
@@ -129,10 +130,7 @@ void KMKnotify::slotOk()
 void KMKnotify::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(600, 400));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QStringLiteral("KMKnotifyDialog"));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QStringLiteral("KMKnotifyDialog"), 600, 400);
 }
 
 void KMKnotify::writeConfig()

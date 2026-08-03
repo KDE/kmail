@@ -16,6 +16,7 @@
 #include <KSharedConfig>
 #include <KWindowConfig>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 SpellCheckerConfigDialog::SpellCheckerConfigDialog(QWidget *parent)
     : Sonnet::ConfigDialog(parent)
@@ -51,10 +52,7 @@ SpellCheckerConfigDialog::~SpellCheckerConfigDialog()
 void SpellCheckerConfigDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(600, 400));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QStringLiteral("SpellCheckerConfigDialog"));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QStringLiteral("SpellCheckerConfigDialog"), 600, 400);
 }
 
 void SpellCheckerConfigDialog::writeConfig()

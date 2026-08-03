@@ -18,6 +18,7 @@
 #include <Akonadi/EntityTreeModel>
 
 #include <PimCommonAkonadi/MailUtil>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 #include <KConfigGroup>
 #include <KSharedConfig>
@@ -147,10 +148,7 @@ IncompleteIndexDialog::~IncompleteIndexDialog()
 void IncompleteIndexDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(500, 400));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myIncompleteIndexDialogGroupName));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myIncompleteIndexDialogGroupName), 500, 400);
 }
 
 void IncompleteIndexDialog::writeConfig()

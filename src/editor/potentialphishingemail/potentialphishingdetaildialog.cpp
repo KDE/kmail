@@ -16,7 +16,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWindow>
-
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
@@ -57,10 +57,7 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 void PotentialPhishingDetailDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(800, 600));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myPotentialPhishingDetailDialogGroupName));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myPotentialPhishingDetailDialogGroupName), 800, 600);
 }
 
 void PotentialPhishingDetailDialog::writeConfig()

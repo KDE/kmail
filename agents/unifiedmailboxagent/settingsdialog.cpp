@@ -23,6 +23,7 @@
 #include <KWindowConfig>
 #include <QMenu>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 #include <memory>
 
@@ -156,10 +157,7 @@ SettingsDialog::~SettingsDialog()
 void SettingsDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(500, 500));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(DialogGroup), 500, 500);
 }
 
 void SettingsDialog::writeConfig()

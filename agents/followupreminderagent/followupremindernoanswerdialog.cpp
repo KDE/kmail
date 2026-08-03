@@ -12,6 +12,7 @@
 
 #include <KLocalizedString>
 #include <KSharedConfig>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 #include <KConfigGroup>
 #include <KWindowConfig>
@@ -110,10 +111,8 @@ void FollowUpReminderNoAnswerDialog::setInfo(const QList<FollowUpReminder::Follo
 void FollowUpReminderNoAnswerDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(800, 600));
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(DialogGroup), 800, 600);
     const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
     mWidget->restoreTreeWidgetHeader(group.readEntry("HeaderState", QByteArray()));
 }
 

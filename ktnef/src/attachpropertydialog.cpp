@@ -36,6 +36,7 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
@@ -74,10 +75,7 @@ AttachPropertyDialog::~AttachPropertyDialog()
 void AttachPropertyDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(600, 700));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myAttachPropertyDialogGroupName));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myAttachPropertyDialogGroupName), 600, 700);
 }
 
 void AttachPropertyDialog::writeConfig()

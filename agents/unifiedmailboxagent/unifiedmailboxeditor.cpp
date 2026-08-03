@@ -24,6 +24,7 @@
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/FolderTreeWidget>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 namespace
 {
@@ -168,10 +169,7 @@ UnifiedMailboxEditor::~UnifiedMailboxEditor()
 void UnifiedMailboxEditor::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(600, 700));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(EditorGroup));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(EditorGroup), 600, 700);
 }
 
 void UnifiedMailboxEditor::writeConfig()

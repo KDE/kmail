@@ -53,6 +53,7 @@ target_link_libraries(
     KF6::WidgetsAddons
     KF6::Service
     KF6::KIOWidgets
+    KF6::TextAddonsWidgets
 )
 
 install(

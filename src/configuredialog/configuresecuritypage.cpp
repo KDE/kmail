@@ -32,6 +32,7 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <QPointer>
 #include <QWhatsThis>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
 
 QString SecurityPage::helpAnchor() const
@@ -680,10 +681,7 @@ GpgSettingsDialog::~GpgSettingsDialog()
 void GpgSettingsDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(600, 400));
-    const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myGpgSettingsDialogGroupName));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myGpgSettingsDialogGroupName), 600, 400);
 }
 
 void GpgSettingsDialog::saveConfig()

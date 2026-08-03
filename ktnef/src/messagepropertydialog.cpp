@@ -28,6 +28,7 @@
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QWindow>
+#include <TextAddonsWidgets/LoadDialogSizeUtils>
 namespace
 {
 const char myMessagePropertyDialogGroupName[] = "MessagePropertyDialog";
@@ -77,10 +78,9 @@ void MessagePropertyDialog::slotSaveProperty()
 void MessagePropertyDialog::readConfig()
 {
     create(); // ensure a window is created
-    windowHandle()->resize(QSize(600, 400));
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myMessagePropertyDialogGroupName), 600, 400);
+
     const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myMessagePropertyDialogGroupName));
-    KWindowConfig::restoreWindowSize(windowHandle(), group);
-    resize(windowHandle()->size()); // workaround for QTBUG-40584
     const QByteArray headerState = group.readEntry("HeaderState", QByteArray());
     if (!headerState.isEmpty()) {
         mListView->header()->restoreState(headerState);
