@@ -5436,10 +5436,9 @@ msgid "&Redo"
 msgstr ""
 
 #: kmmainwidget.cpp:4299
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "撤销(&U): “%1”"
+msgstr ""
 
 #: kmmainwidget.cpp:4356
 #, kde-format
@@ -5703,11 +5702,9 @@ msgid "Cannot move message. %1"
 msgstr "无法移动消息。%1"
 
 #: kmundoredomanager.cpp:120
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
-msgstr "移动消息"
+msgstr ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
@@ -7906,9 +7903,3 @@ msgstr[0] "服务器上开启外出自动回复"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid "There is nothing to undo."
-#~ msgstr "没有操作可供撤销。"
-
-#~ msgid "Move To Trash"
-#~ msgstr "移动到回收站"
