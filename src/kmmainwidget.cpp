@@ -519,6 +519,11 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
 
 void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
 {
+    // mMessagePane may be null if this slot fires during createWidgets() before
+    // the CollectionPane constructor has returned and assigned mMessagePane.
+    if (!mMessagePane) {
+        return;
+    }
     if (mCurrentCollection == collection) {
         return;
     }
