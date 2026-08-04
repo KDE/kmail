@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 22:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,45 +18,45 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 25.08.0\n"
 
-#: mailmergeconfiguredialog.cpp:35
+#: mailmergeconfiguredialog.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "הגדרה"
 
-#: mailmergeconfiguredialog.cpp:52
+#: mailmergeconfiguredialog.cpp:53
 #, kde-format
 msgid "Mail Merge Agent"
 msgstr "סוכן מיזוג כתובות דוא״ל"
 
-#: mailmergeconfiguredialog.cpp:54
+#: mailmergeconfiguredialog.cpp:55
 #, kde-format
 msgid "Merge email addresses agent."
 msgstr "סוכן למיזוג כתובות דוא״ל."
 
-#: mailmergeconfiguredialog.cpp:56
+#: mailmergeconfiguredialog.cpp:57
 #, kde-format
 msgid "© 2021–%1 Laurent Montel"
 msgstr "© 2021–%1 לורנט מונטל"
 
-#: mailmergeconfiguredialog.cpp:58
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "לורנט מונטל"
 
-#: mailmergeconfiguredialog.cpp:58
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgid "Maintainer"
 msgstr "מתחזק"
 
-#: mailmergeconfiguredialog.cpp:61
+#: mailmergeconfiguredialog.cpp:62
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "צוות התרגום של KDE ישראל"
 
-#: mailmergeconfiguredialog.cpp:61
+#: mailmergeconfiguredialog.cpp:62
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 08:06+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -84,13 +84,13 @@ msgstr "ჩანაწერების წაშლა"
 msgid "Answer from %1 received"
 msgstr "%1-დან მიღებულია პასუხი"
 
-#: followupremindernoanswerdialog.cpp:39
+#: followupremindernoanswerdialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "შეხსენების მიყოლა"
 
-#: followupremindernoanswerdialog.cpp:45
+#: followupremindernoanswerdialog.cpp:46
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

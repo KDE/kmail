@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-16 06:51+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2024-12-24 20:39+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -29,41 +29,41 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "skkalwar999@gmail.com"
 
-#: attachpropertydialog.cpp:61
+#: attachpropertydialog.cpp:62
 #, kde-format
 msgid "Save…"
 msgstr "रक्ष्…"
 
-#: attachpropertydialog.cpp:94
+#: attachpropertydialog.cpp:92
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "संलग्नकस्य कृते गुणाः %1"
 
-#: attachpropertydialog.cpp:98
+#: attachpropertydialog.cpp:96
 #, kde-format
 msgid " bytes"
 msgstr " बाइट्"
 
-#: attachpropertydialog.cpp:158
+#: attachpropertydialog.cpp:156
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF विशेषताएँ"
 
-#: attachpropertydialog.cpp:167
+#: attachpropertydialog.cpp:165
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "प्रथमं एकं द्रव्यं अवश्यं चिनोतु।"
 
-#: attachpropertydialog.cpp:173
+#: attachpropertydialog.cpp:171
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "चयनितं द्रव्यं रक्षितुं न शक्यते यतः तस्य रिक्तं टैग् अस्ति ।"
 
-#: attachpropertydialog.cpp:194
+#: attachpropertydialog.cpp:192
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -305,19 +305,19 @@ msgstr "लेखकः, Qt4/KDE4 मध्ये पोर्ट् कृत�
 msgid "An optional argument 'file' "
 msgstr "एकः वैकल्पिकः तर्कः 'file'. "
 
-#: messagepropertydialog.cpp:42
+#: messagepropertydialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "सन्देशगुणाः"
 
-#: messagepropertydialog.cpp:55
+#: messagepropertydialog.cpp:56
 #, kde-format
 msgctxt "@title:column property name"
 msgid "Name"
 msgstr "नामः"
 
-#: messagepropertydialog.cpp:55
+#: messagepropertydialog.cpp:56
 #, kde-format
 msgctxt "@title:column property value"
 msgid "Value"

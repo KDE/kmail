@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -83,13 +83,13 @@ msgstr "删除项目"
 msgid "Answer from %1 received"
 msgstr "收到来自 %1 的回复"
 
-#: followupremindernoanswerdialog.cpp:39
+#: followupremindernoanswerdialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "后续提醒"
 
-#: followupremindernoanswerdialog.cpp:45
+#: followupremindernoanswerdialog.cpp:46
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

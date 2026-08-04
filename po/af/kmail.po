@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 3_3_branch\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2004-11-10 16:33+0200\n"
 "Last-Translator: Frikkie Thirion <frix@expertron.co.za>\n"
 "Language-Team: AFRIKAANS <AF@lia.org.za>\n"
@@ -1540,61 +1540,61 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:50
 #, fuzzy, kde-format
 msgid "Reading"
 msgstr "Ongelees"
 
-#: configuredialog/configuresecuritypage.cpp:51
+#: configuredialog/configuresecuritypage.cpp:52
 #, fuzzy, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Boodskap"
 
-#: configuredialog/configuresecuritypage.cpp:57
+#: configuredialog/configuresecuritypage.cpp:58
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgid "Encryption"
 msgstr "Enkripteer"
 
-#: configuredialog/configuresecuritypage.cpp:63
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:91
 #, fuzzy, kde-format
 #| msgid "&Email address:"
 msgid "Email Address:"
 msgstr "E-pos adres:"
 
-#: configuredialog/configuresecuritypage.cpp:91
+#: configuredialog/configuresecuritypage.cpp:92
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:126
+#: configuredialog/configuresecuritypage.cpp:127
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
+#: configuredialog/configuresecuritypage.cpp:290
 #, fuzzy, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] "in proses"
 msgstr[1] "in proses"
 
-#: configuredialog/configuresecuritypage.cpp:320
+#: configuredialog/configuresecuritypage.cpp:321
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Stel Enkodering"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:329
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1602,34 +1602,34 @@ msgid ""
 "provided by kdepim-addons."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:401
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:540 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:541
+#: configuredialog/configuresecuritypage.cpp:542
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
 
-#: dialog/addemailtoexistingcontactdialog.cpp:35
+#: dialog/addemailtoexistingcontactdialog.cpp:36
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Vee Gids uit"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:71
+#: dialog/addemailtoexistingcontactdialog.cpp:72
 #, fuzzy, kde-format
 msgid "Select"
 msgstr "Kies Alle Boodskappe"
@@ -1721,7 +1721,7 @@ msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Verwyder Opskrif"
 
-#: dialog/kmknotify.cpp:32
+#: dialog/kmknotify.cpp:33
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
 msgctxt "@title:window"
@@ -6270,25 +6270,25 @@ msgstr "Verstryk"
 msgid "PDF document (*.pdf)"
 msgstr ""
 
-#: searchdialog/incompleteindexdialog.cpp:135
+#: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
 msgstr ""
 
-#: searchdialog/incompleteindexdialog.cpp:136
+#: searchdialog/incompleteindexdialog.cpp:137
 #, fuzzy, kde-format
 #| msgid "&Send Now"
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Stuur Nou"
 
-#: searchdialog/incompleteindexdialog.cpp:217
+#: searchdialog/incompleteindexdialog.cpp:215
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "Stuurder"
 
-#: searchdialog/incompleteindexdialog.cpp:220
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Configure &Filters..."
 msgid "Indexing Collections…"
@@ -6815,18 +6815,18 @@ msgstr ""
 msgid "Toggle Message Tag: %1"
 msgstr "Redigeer Boodksap"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:43
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "Vee Gids uit"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:54
 #, fuzzy, kde-format
 msgid "Add New Tag…"
 msgstr "Intekening..."
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:68
 #, fuzzy, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"

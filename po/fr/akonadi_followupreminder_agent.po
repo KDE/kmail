@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2025-08-22 09:08+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -90,13 +90,13 @@ msgstr "Supprimer des éléments"
 msgid "Answer from %1 received"
 msgstr "Réponse de %1 reçue"
 
-#: followupremindernoanswerdialog.cpp:39
+#: followupremindernoanswerdialog.cpp:40
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Rappel de suivi"
 
-#: followupremindernoanswerdialog.cpp:45
+#: followupremindernoanswerdialog.cpp:46
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

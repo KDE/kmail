@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -99,14 +99,14 @@ msgstr "Obriši"
 msgid "Answer from %1 received"
 msgstr "Odgovor od %1 primljen"
 
-#: followupremindernoanswerdialog.cpp:39
+#: followupremindernoanswerdialog.cpp:40
 #, fuzzy, kde-format
 #| msgid "Follow Up Reminder"
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Podsetnik na odgovor"
 
-#: followupremindernoanswerdialog.cpp:45
+#: followupremindernoanswerdialog.cpp:46
 #, fuzzy, kde-format
 #| msgid "You still wait an answer about this mail:"
 msgctxt "@label:textbox"

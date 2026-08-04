@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2023-06-26 17:20+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -1597,37 +1597,37 @@ msgstr "E-poçt plaqinlərinin silinməsini təsdiq edin"
 msgid "Akonadi Agents"
 msgstr "Akonadi təmsilçiləri"
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "Oxuma"
 
-#: configuredialog/configuresecuritypage.cpp:51
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Məktubların hazırlanması bildirişləri"
 
-#: configuredialog/configuresecuritypage.cpp:57
+#: configuredialog/configuresecuritypage.cpp:58
 #, kde-format
 msgid "Encryption"
 msgstr "Şifrələmə"
 
-#: configuredialog/configuresecuritypage.cpp:63
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MİME doğrulaması"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:91
 #, kde-format
 msgid "Email Address:"
 msgstr "E-poçt ünvanı:"
 
-#: configuredialog/configuresecuritypage.cpp:91
+#: configuredialog/configuresecuritypage.cpp:92
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "Bu e -poçt ünvanını silmək istəyirsinz?"
 
-#: configuredialog/configuresecuritypage.cpp:126
+#: configuredialog/configuresecuritypage.cpp:127
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1635,10 +1635,10 @@ msgstr ""
 "Ümumi HTML ayarlarının dəyişdirilməsi bütün qovluğa məxsus dəyərləri "
 "əvəzləyəcəkdir."
 
-#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
+#: configuredialog/configuresecuritypage.cpp:290
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1647,13 +1647,13 @@ msgid_plural "%v days"
 msgstr[0] " gün"
 msgstr[1] " günlər"
 
-#: configuredialog/configuresecuritypage.cpp:320
+#: configuredialog/configuresecuritypage.cpp:321
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG ayarları"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:329
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1666,34 +1666,34 @@ msgstr ""
 "Modul çatışmır. Quraşdırmanızı yoxlayın. Bu modul Kleopatra proqram "
 "təminatına daxildir."
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG tənzimləmə modulu xətası"
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:401
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Bu seçim, dirmngr >= 0.9.0 paketini tələb edir"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:540 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "proksi yoxdur"
 
-#: configuredialog/configuresecuritypage.cpp:541
+#: configuredialog/configuresecuritypage.cpp:542
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Cari sistem ayarları: %1)"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:35
+#: dialog/addemailtoexistingcontactdialog.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Əlaqəni seçin"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:71
+#: dialog/addemailtoexistingcontactdialog.cpp:72
 #, kde-format
 msgid "Select"
 msgstr "Seçin"
@@ -1788,7 +1788,7 @@ msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Heç bir qovluq seçilmədi"
 
-#: dialog/kmknotify.cpp:32
+#: dialog/kmknotify.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Notification"
@@ -6656,25 +6656,25 @@ msgstr "PDF-ə ixrac edin"
 msgid "PDF document (*.pdf)"
 msgstr "PDF sənədi (*.pdf)"
 
-#: searchdialog/incompleteindexdialog.cpp:135
+#: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
 msgstr "Yenidən indeksləmək"
 
-#: searchdialog/incompleteindexdialog.cpp:136
+#: searchdialog/incompleteindexdialog.cpp:137
 #, fuzzy, kde-format
 #| msgid "Search Anyway"
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "İstənilən halda axtarmaq"
 
-#: searchdialog/incompleteindexdialog.cpp:217
+#: searchdialog/incompleteindexdialog.cpp:215
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "İndekslənir"
 
-#: searchdialog/incompleteindexdialog.cpp:220
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Indexing Collections..."
 msgid "Indexing Collections…"
@@ -7220,19 +7220,19 @@ msgstr "Yarlıq tapılmadı"
 msgid "Toggle Message Tag: %1"
 msgstr "Məktub yarlığı açarı: %1"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "Yarlığı seçin"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:54
 #, fuzzy, kde-format
 #| msgid "Add New Tag..."
 msgid "Add New Tag…"
 msgstr "Yeni yarlıq əlavə edin..."
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:68
 #, fuzzy, kde-format
 #| msgid "Search tag..."
 msgctxt "@info:placeholder"

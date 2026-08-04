@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -1605,48 +1605,48 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr "ਅਕੌਂਡੀ ਪੋਰਟਿੰਗ"
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "ਪੜ੍ਹਨਾ"
 
-#: configuredialog/configuresecuritypage.cpp:51
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "ਸੁਨੇਹਾ ਖਤਮ ਕਰਨ ਸੂਚਨਾ"
 
-#: configuredialog/configuresecuritypage.cpp:57
+#: configuredialog/configuresecuritypage.cpp:58
 #, kde-format
 msgid "Encryption"
 msgstr "ਇੰਕ੍ਰਿਪਸ਼ਨ"
 
-#: configuredialog/configuresecuritypage.cpp:63
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME ਵੈਧਤਾ"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "ਈ-ਮੇਲ ਐਡਰੈੱਸ"
 
-#: configuredialog/configuresecuritypage.cpp:91
+#: configuredialog/configuresecuritypage.cpp:92
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account: %1"
 msgid "Do you want to remove this email address?"
 msgstr "ਕੀ ਤੁਸੀਂ ਅਕਾਊਂਟ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ: %1"
 
-#: configuredialog/configuresecuritypage.cpp:126
+#: configuredialog/configuresecuritypage.cpp:127
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
+#: configuredialog/configuresecuritypage.cpp:290
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1655,14 +1655,14 @@ msgid_plural "%v days"
 msgstr[0] "  ਦਿਨ"
 msgstr[1] " ਦਿਨ"
 
-#: configuredialog/configuresecuritypage.cpp:320
+#: configuredialog/configuresecuritypage.cpp:321
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG ਸੈਟਿੰਗ..."
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:329
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1670,35 +1670,35 @@ msgid ""
 "provided by kdepim-addons."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:401
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "ਇਹ ਚੋਣ ਲਈ dirmngr >= 0.9.0 ਚਾਹੀਦਾ ਹੈ।"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:540 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ਪਰਾਕਸੀ ਨਹੀਂ"
 
-#: configuredialog/configuresecuritypage.cpp:541
+#: configuredialog/configuresecuritypage.cpp:542
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(ਮੌਜੂਦਾ ਸਿਸਟਮ ਸੈਟਿੰਗ: %1)"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:35
+#: dialog/addemailtoexistingcontactdialog.cpp:36
 #, fuzzy, kde-format
 #| msgid "Select Font"
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "ਫੋਂਟ ਚੁਣੋ"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:71
+#: dialog/addemailtoexistingcontactdialog.cpp:72
 #, fuzzy, kde-format
 #| msgid "Select All Text"
 msgid "Select"
@@ -1797,7 +1797,7 @@ msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "ਕੋਈ ਫੋਲਡਰ ਨਹੀਂ ਚੁਣਿਆ"
 
-#: dialog/kmknotify.cpp:32
+#: dialog/kmknotify.cpp:33
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
 msgctxt "@title:window"
@@ -6598,27 +6598,27 @@ msgstr "HTML ਲਈ ਐਕਸਪੋਰਟ..."
 msgid "PDF document (*.pdf)"
 msgstr ""
 
-#: searchdialog/incompleteindexdialog.cpp:135
+#: searchdialog/incompleteindexdialog.cpp:136
 #, fuzzy, kde-format
 #| msgid "Rebuild &index"
 msgid "Reindex"
 msgstr "ਇੰਡੈਕਸ ਮੁੜ-ਨਿਰਮਾਣ(&I)"
 
-#: searchdialog/incompleteindexdialog.cpp:136
+#: searchdialog/incompleteindexdialog.cpp:137
 #, fuzzy, kde-format
 #| msgid "Send Anyway"
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "ਕਿਵੇਂ ਵੀ ਭੇਜੋ"
 
-#: searchdialog/incompleteindexdialog.cpp:217
+#: searchdialog/incompleteindexdialog.cpp:215
 #, fuzzy, kde-format
 #| msgid "Indexing"
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "ਇੰਡੈਕਸਿੰਗ"
 
-#: searchdialog/incompleteindexdialog.cpp:220
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgid "Indexing Collections…"
@@ -7164,20 +7164,20 @@ msgstr ""
 msgid "Toggle Message Tag: %1"
 msgstr "ਸੁਨੇਹਾ ਟੈਗ %1 ਬਦਲੋ"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:43
 #, fuzzy, kde-format
 #| msgid "Set Transport To"
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "ਟਰਾਂਸਪੋਰਟ ਵੱਲ ਸੈੱਟ"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:54
 #, fuzzy, kde-format
 #| msgid "Add new tag"
 msgid "Add New Tag…"
 msgstr "ਨਵਾਂ ਟੈਗ ਸ਼ਾਮਲ"
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:68
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"

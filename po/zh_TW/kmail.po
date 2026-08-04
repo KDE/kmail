@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -1499,58 +1499,58 @@ msgstr "確認刪除郵件外掛程式"
 msgid "Akonadi Agents"
 msgstr "Akonadi 代理程式"
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "讀取中"
 
-#: configuredialog/configuresecuritypage.cpp:51
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "信件處理通知"
 
-#: configuredialog/configuresecuritypage.cpp:57
+#: configuredialog/configuresecuritypage.cpp:58
 #, kde-format
 msgid "Encryption"
 msgstr "加密"
 
-#: configuredialog/configuresecuritypage.cpp:63
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME 確認"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:91
 #, kde-format
 msgid "Email Address:"
 msgstr "電子郵件地址："
 
-#: configuredialog/configuresecuritypage.cpp:91
+#: configuredialog/configuresecuritypage.cpp:92
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "您確定要移除這個電子郵件地址嗎？"
 
-#: configuredialog/configuresecuritypage.cpp:126
+#: configuredialog/configuresecuritypage.cpp:127
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr "改變全域的 HTML 設定，將會覆蓋個別資料夾原先的 HTML 設定。"
 
-#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
+#: configuredialog/configuresecuritypage.cpp:290
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] "%v 天"
 
-#: configuredialog/configuresecuritypage.cpp:320
+#: configuredialog/configuresecuritypage.cpp:321
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG 設定"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:329
 #, fuzzy, kde-format
 #| msgctxt "@label:textbox"
 #| msgid ""
@@ -1562,34 +1562,34 @@ msgid ""
 "provided by kdepim-addons."
 msgstr "缺乏該模組。請確認您的安裝。該模組由 Kleopatra 所提供。"
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG 設定模組錯誤"
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:401
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "這個選項需要 dirmngr 版本 >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:540 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "沒有代理伺服器"
 
-#: configuredialog/configuresecuritypage.cpp:541
+#: configuredialog/configuresecuritypage.cpp:542
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(目前的系統設定: %1)"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:35
+#: dialog/addemailtoexistingcontactdialog.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "選取聯絡人"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:71
+#: dialog/addemailtoexistingcontactdialog.cpp:72
 #, kde-format
 msgid "Select"
 msgstr "選擇"
@@ -1678,7 +1678,7 @@ msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "沒有選擇任何資料夾"
 
-#: dialog/kmknotify.cpp:32
+#: dialog/kmknotify.cpp:33
 #, kde-format
 msgctxt "@title:window"
 msgid "Notification"
@@ -6079,24 +6079,24 @@ msgstr "匯出 PDF"
 msgid "PDF document (*.pdf)"
 msgstr "PDF 文件 (*.pdf)"
 
-#: searchdialog/incompleteindexdialog.cpp:135
+#: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
 msgstr "重新索引"
 
-#: searchdialog/incompleteindexdialog.cpp:136
+#: searchdialog/incompleteindexdialog.cpp:137
 #, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "還是要搜尋"
 
-#: searchdialog/incompleteindexdialog.cpp:217
+#: searchdialog/incompleteindexdialog.cpp:215
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "索引"
 
-#: searchdialog/incompleteindexdialog.cpp:220
+#: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
 msgid "Indexing Collections…"
 msgstr "正在索引收藏…"
@@ -6614,18 +6614,18 @@ msgstr "找不到標籤"
 msgid "Toggle Message Tag: %1"
 msgstr "切換信件標籤：%1"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "選擇標籤"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:54
 #, kde-format
 msgid "Add New Tag…"
 msgstr "新增標籤…"
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:68
 #, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"

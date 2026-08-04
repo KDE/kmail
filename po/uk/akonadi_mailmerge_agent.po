@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailmerge_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2025-08-20 11:34+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -20,45 +20,45 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
-#: mailmergeconfiguredialog.cpp:35
+#: mailmergeconfiguredialog.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "Налаштування"
 
-#: mailmergeconfiguredialog.cpp:52
+#: mailmergeconfiguredialog.cpp:53
 #, kde-format
 msgid "Mail Merge Agent"
 msgstr "Агент об'єднання пошти"
 
-#: mailmergeconfiguredialog.cpp:54
+#: mailmergeconfiguredialog.cpp:55
 #, kde-format
 msgid "Merge email addresses agent."
 msgstr "Агент об'єднання адрес електронної пошти."
 
-#: mailmergeconfiguredialog.cpp:56
+#: mailmergeconfiguredialog.cpp:57
 #, kde-format
 msgid "© 2021–%1 Laurent Montel"
 msgstr "© Laurent Montel, 2021–%1"
 
-#: mailmergeconfiguredialog.cpp:58
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: mailmergeconfiguredialog.cpp:58
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgid "Maintainer"
 msgstr "Супровідник"
 
-#: mailmergeconfiguredialog.cpp:61
+#: mailmergeconfiguredialog.cpp:62
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Юрій Чорноіван"
 
-#: mailmergeconfiguredialog.cpp:61
+#: mailmergeconfiguredialog.cpp:62
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

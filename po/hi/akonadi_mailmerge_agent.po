@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:52+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2024-12-15 15:58+0530\n"
 "Last-Translator: Kali <EMAIL@ADDRESS>\n"
 "Language-Team: Hindi <fedora-trans-hi@redhat.com>\n"
@@ -17,45 +17,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: mailmergeconfiguredialog.cpp:35
+#: mailmergeconfiguredialog.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:52
+#: mailmergeconfiguredialog.cpp:53
 #, kde-format
 msgid "Mail Merge Agent"
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:54
+#: mailmergeconfiguredialog.cpp:55
 #, kde-format
 msgid "Merge email addresses agent."
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:56
+#: mailmergeconfiguredialog.cpp:57
 #, kde-format
 msgid "© 2021–%1 Laurent Montel"
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:58
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:58
+#: mailmergeconfiguredialog.cpp:59
 #, kde-format
 msgid "Maintainer"
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:61
+#: mailmergeconfiguredialog.cpp:62
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:61
+#: mailmergeconfiguredialog.cpp:62
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

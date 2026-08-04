@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-29 00:46+0000\n"
+"POT-Creation-Date: 2026-08-04 00:45+0000\n"
 "PO-Revision-Date: 2002-11-04 10:19SAST\n"
 "Last-Translator: Lwandle Mgidlana <lwandle@translate.org.za>\n"
 "Language-Team: Xhosa <xhosa@translate.org.za>\n"
@@ -1633,39 +1633,39 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:49
+#: configuredialog/configuresecuritypage.cpp:50
 #, fuzzy, kde-format
 msgid "Reading"
 msgstr "&Funda"
 
-#: configuredialog/configuresecuritypage.cpp:51
+#: configuredialog/configuresecuritypage.cpp:52
 #, fuzzy, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Iposi Entsha Eqatshelweyo"
 
-#: configuredialog/configuresecuritypage.cpp:57
+#: configuredialog/configuresecuritypage.cpp:58
 #, fuzzy, kde-format
 msgid "Encryption"
 msgstr "Ufihlo"
 
-#: configuredialog/configuresecuritypage.cpp:63
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgid "Email Address:"
 msgstr "Idilesi ye Email"
 
-#: configuredialog/configuresecuritypage.cpp:91
+#: configuredialog/configuresecuritypage.cpp:92
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this email address?"
 msgstr "<qt>Ufuna ngenene ukususa uchazo olunegama <b>%1</b>?</qt>"
 
-#: configuredialog/configuresecuritypage.cpp:126
+#: configuredialog/configuresecuritypage.cpp:127
 #, fuzzy, kde-format
 #| msgid ""
 #| "Changing the global threading setting will override all folder specific "
@@ -1676,10 +1676,10 @@ msgstr ""
 "Ukutshintsha uthungelwano lwelizwe lonke izicwangciso zizakubhala ngaphezulu "
 "onke amaxabiso enwadi ekhankanyiweyo enenkcukacha."
 
-#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
 #: configuredialog/configuresecuritypage.cpp:288
 #: configuredialog/configuresecuritypage.cpp:289
+#: configuredialog/configuresecuritypage.cpp:290
 #, fuzzy, kde-format
 #| msgid " days"
 msgid "%v day"
@@ -1687,13 +1687,13 @@ msgid_plural "%v days"
 msgstr[0] " imihla"
 msgstr[1] " imihla"
 
-#: configuredialog/configuresecuritypage.cpp:320
+#: configuredialog/configuresecuritypage.cpp:321
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Ithumela"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:329
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1701,34 +1701,34 @@ msgid ""
 "provided by kdepim-addons."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:334
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:401
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:539 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:540 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:541
+#: configuredialog/configuresecuritypage.cpp:542
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr ""
 
-#: dialog/addemailtoexistingcontactdialog.cpp:35
+#: dialog/addemailtoexistingcontactdialog.cpp:36
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Cima Incwadi eneenkcukacha"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:71
+#: dialog/addemailtoexistingcontactdialog.cpp:72
 #, fuzzy, kde-format
 msgid "Select"
 msgstr "&Khetha Yonke Imiyalezo"
@@ -1820,7 +1820,7 @@ msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Uluhlu lwencwadi eneenkcukacha"
 
-#: dialog/kmknotify.cpp:32
+#: dialog/kmknotify.cpp:33
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
 msgctxt "@title:window"
@@ -6386,26 +6386,26 @@ msgstr "Phelisa"
 msgid "PDF document (*.pdf)"
 msgstr ""
 
-#: searchdialog/incompleteindexdialog.cpp:135
+#: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
 msgstr ""
 
-#: searchdialog/incompleteindexdialog.cpp:136
+#: searchdialog/incompleteindexdialog.cpp:137
 #, fuzzy, kde-format
 #| msgid "Send Now"
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Thumela Ngoku"
 
-#: searchdialog/incompleteindexdialog.cpp:217
+#: searchdialog/incompleteindexdialog.cpp:215
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "&Ithumela"
 
-#: searchdialog/incompleteindexdialog.cpp:220
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 msgid "Indexing Collections…"
 msgstr "Qi&nisekisa phambi kokwenza iincwadi ezineenkcukacha zingabi nanto"
@@ -6928,18 +6928,18 @@ msgstr ""
 msgid "Toggle Message Tag: %1"
 msgstr "&Hlela Umyalezo"
 
-#: tag/tagselectdialog.cpp:42
+#: tag/tagselectdialog.cpp:43
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "cwangcisa isithutho ku"
 
-#: tag/tagselectdialog.cpp:53
+#: tag/tagselectdialog.cpp:54
 #, fuzzy, kde-format
 msgid "Add New Tag…"
 msgstr "Ungeno olutsha:"
 
-#: tag/tagselectdialog.cpp:67
+#: tag/tagselectdialog.cpp:68
 #, fuzzy, kde-format
 msgctxt "@info:placeholder"
 msgid "Search tag…"
