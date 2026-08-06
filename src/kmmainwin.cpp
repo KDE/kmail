@@ -81,7 +81,6 @@ KMMainWin::KMMainWin(QWidget *)
         if (status != TextAddonsWidgets::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
             auto needUpdateVersionWidget = new TextAddonsWidgets::NeedUpdateVersionWidget(this);
             mainWidgetLayout->addWidget(needUpdateVersionWidget);
-            qCDebug(KMAIL_LOG) << " KAboutData::applicationData().version() " << KAboutData::applicationData().version();
             needUpdateVersionWidget->setObsoleteVersion(status);
         }
     }
