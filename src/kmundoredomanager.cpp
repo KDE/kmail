@@ -153,6 +153,5 @@ void KMUndoInfoChangeStatusItems::redo()
 
 QString KMUndoInfoChangeStatusItems::actionText() const
 {
-    // TODO
-    return {};
+    return i18n("Change Messages Status");
 }
