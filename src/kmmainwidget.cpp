@@ -1172,6 +1172,8 @@ void KMMainWidget::createWidgets()
         StandardActionManager::SynchronizeCollectionsRecursive,
     };
 
+    // TODO intercept StandardActionManager::MoveItemToMenu
+
     for (StandardActionManager::Type standardAction : standardActions) {
         mAkonadiStandardActionManager->createAction(standardAction);
     }
