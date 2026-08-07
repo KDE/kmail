@@ -142,11 +142,16 @@
 #include <PimCommon/CustomToolsPluginManager>
 #include <PimCommon/CustomToolsWidgetng>
 #include <PimCommon/KActionMenuChangeCase>
-#include <PimCommon/LineEditWithAutoCorrection>
 #include <PimCommon/PurposeMenuMessageWidget>
 
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
+
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 47)
+#include <TextAutoCorrectionWidgets/AutoCorrector>
+#else
+#include <PimCommon/LineEditWithAutoCorrection>
+#endif
 
 #include <QGpgME/Protocol>
 
@@ -391,7 +396,12 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
 
     mEdtSubject = new SubjectLineEditWithAutoCorrection(mHeadersArea, u"kmail2rc"_s);
     mEdtSubject->installEventFilter(this);
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 47)
+    mEdtSubjectCorrector = new TextAutoCorrectionWidgets::AutoCorrector(mEdtSubject);
+    mEdtSubjectCorrector->setAutocorrection(KMKernel::self()->composerAutoCorrection());
+#else
     mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
+#endif
     connect(mEdtSubject, &SubjectLineEditWithAutoCorrection::handleMimeData, this, [this](const QMimeData *mimeData) {
         insertFromMimeData(mimeData, false);
     });
@@ -533,7 +543,7 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
 
     updateSignatureAndEncryptionStateIndicators();
 
-    mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::LineEditWithAutoCorrection::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
+    mUpdateWindowTitleConnection = connect(mEdtSubject, &PimCommon::SpellCheckLineEdit::textChanged, this, &KMComposerWin::slotUpdateWindowTitle);
     mIdentityConnection = connect(identity, &KIdentityManagementWidgets::IdentityCombo::identityChanged, this, [this](uint val) {
         slotIdentityChanged(val);
     });
@@ -3400,7 +3410,11 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         applyTemplate(uoid, mId, ident, wasModified);
     } else {
         mComposerBase->identityChanged(ident, oldIdentity, false);
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 47)
+        mEdtSubjectCorrector->setAutocorrectionLanguage(ident.autocorrectionLanguage());
+#else
         mEdtSubject->setAutocorrectionLanguage(ident.autocorrectionLanguage());
+#endif
         updateComposerAfterIdentityChanged(ident, uoid, wasModified);
     }
 }

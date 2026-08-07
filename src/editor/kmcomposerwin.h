@@ -79,6 +79,10 @@ namespace Kleo
 class KeyCache;
 }
 
+namespace TextAutoCorrectionWidgets
+{
+class AutoCorrector;
+}
 namespace TextCustomEditor
 {
 class RichTextEditorWidget;
@@ -107,7 +111,6 @@ struct SnippetInfo;
 namespace PimCommon
 {
 class CustomToolsWidgetNg;
-class LineEditWithAutoCorrection;
 class PurposeMenuMessageWidget;
 }
 
@@ -602,6 +605,7 @@ private:
     QWidget *mMainWidget = nullptr;
     MessageComposer::ComposerLineEdit *mEdtFrom = nullptr;
     SubjectLineEditWithAutoCorrection *mEdtSubject = nullptr;
+    TextAutoCorrectionWidgets::AutoCorrector *mEdtSubjectCorrector = nullptr;
     QLabel *mLblIdentity = nullptr;
     QLabel *mLblTransport = nullptr;
     QLabel *mLblFcc = nullptr;

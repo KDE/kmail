@@ -7,8 +7,21 @@
 #pragma once
 
 #include "kmail_private_export.h"
+#include <qglobal.h>
+#include <textautocorrectionwidgets_version.h>
+
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 47)
+#include <PimCommon/SpellCheckLineEdit>
+#else
 #include <PimCommon/LineEditWithAutoCorrection>
-class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection : public PimCommon::LineEditWithAutoCorrection
+#endif
+
+class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 47)
+    : public PimCommon::SpellCheckLineEdit
+#else
+    : public PimCommon::LineEditWithAutoCorrection
+#endif
 {
     Q_OBJECT
 public:
