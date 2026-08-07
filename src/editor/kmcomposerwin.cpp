@@ -148,6 +148,10 @@
 #include <TemplateParser/TemplateParserJob>
 #include <TemplateParser/TemplatesConfiguration>
 
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 43)
+#include <TextAutoCorrectionWidgets/AutoCorrector>
+#endif
+
 #include <QGpgME/Protocol>
 
 // KDE Frameworks includes
@@ -392,7 +396,12 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
 
     mEdtSubject = new SubjectLineEditWithAutoCorrection(mHeadersArea, QStringLiteral("kmail2rc"));
     mEdtSubject->installEventFilter(this);
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 43)
+    mEdtSubjectCorrector = new TextAutoCorrectionWidgets::AutoCorrector(mEdtSubject);
+    mEdtSubjectCorrector->setAutocorrection(KMKernel::self()->composerAutoCorrection());
+#else
     mEdtSubject->setAutocorrection(KMKernel::self()->composerAutoCorrection());
+#endif
     connect(mEdtSubject, &SubjectLineEditWithAutoCorrection::handleMimeData, this, [this](const QMimeData *mimeData) {
         insertFromMimeData(mimeData, false);
     });
@@ -3434,7 +3443,11 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         applyTemplate(uoid, mId, ident, wasModified);
     } else {
         mComposerBase->identityChanged(ident, oldIdentity, false);
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 43)
+        mEdtSubjectCorrector->setAutocorrectionLanguage(ident.autocorrectionLanguage());
+#else
         mEdtSubject->setAutocorrectionLanguage(ident.autocorrectionLanguage());
+#endif
         updateComposerAfterIdentityChanged(ident, uoid, wasModified);
     }
 }

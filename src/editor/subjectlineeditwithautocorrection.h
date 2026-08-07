@@ -8,7 +8,14 @@
 
 #include "kmail_private_export.h"
 #include <PimCommon/LineEditWithAutoCorrection>
-class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection : public PimCommon::LineEditWithAutoCorrection
+#include <textautocorrectionwidgets_version.h>
+
+class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 43)
+    : public PimCommon::SpellCheckLineEdit
+#else
+    : public PimCommon::LineEditWithAutoCorrection
+#endif
 {
     Q_OBJECT
 public:

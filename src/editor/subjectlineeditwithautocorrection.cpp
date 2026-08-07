@@ -10,7 +10,11 @@
 #include <QMimeData>
 
 SubjectLineEditWithAutoCorrection::SubjectLineEditWithAutoCorrection(QWidget *parent, const QString &configFile)
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 43)
+    : PimCommon::SpellCheckLineEdit(parent, configFile)
+#else
     : PimCommon::LineEditWithAutoCorrection(parent, configFile)
+#endif
 {
     setActivateLanguageMenu(false);
     setToolTip(i18nc("@info:tooltip", "Set a subject for this message"));
@@ -26,7 +30,11 @@ void SubjectLineEditWithAutoCorrection::dropEvent(QDropEvent *event)
         event->accept();
         return;
     }
+#if TEXTAUTOCORRECTIONWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 43)
+    PimCommon::SpellCheckLineEdit::dropEvent(event);
+#else
     PimCommon::LineEditWithAutoCorrection::dropEvent(event);
+#endif
 }
 
 #include "moc_subjectlineeditwithautocorrection.cpp"
