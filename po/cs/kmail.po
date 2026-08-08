@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-07 00:47+0000\n"
-"PO-Revision-Date: 2026-07-28 12:11+0200\n"
+"PO-Revision-Date: 2026-08-07 21:31+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -5894,10 +5894,9 @@ msgid "Move messages"
 msgstr "Přesunout zprávy"
 
 #: kmundoredomanager.cpp:156
-#, fuzzy, kde-format
-#| msgid "Change Message Status"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "Změnit stav zprávy"
+msgstr "Změnit stav zpráv"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format

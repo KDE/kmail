@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-07 00:47+0000\n"
-"PO-Revision-Date: 2026-07-28 10:51+0200\n"
+"PO-Revision-Date: 2026-08-07 12:59+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -5943,8 +5943,7 @@ msgid "Move messages"
 msgstr "Berichten verplaatsen"
 
 #: kmundoredomanager.cpp:156
-#, fuzzy, kde-format
-#| msgid "Change Message Status"
+#, kde-format
 msgid "Change Messages Status"
 msgstr "Berichtstatus wijzigen"
 
