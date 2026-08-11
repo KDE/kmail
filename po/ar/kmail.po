@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-07 00:47+0000\n"
-"PO-Revision-Date: 2026-06-30 20:36+0400\n"
+"PO-Revision-Date: 2026-08-10 14:11+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -5597,13 +5597,12 @@ msgstr "ترا&جع عن: ”%1“"
 #: kmmainwidget.cpp:4304
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&كرّر"
 
 #: kmmainwidget.cpp:4306
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "ترا&جع عن: ”%1“"
+msgstr "&كرر : ”%1“"
 
 #: kmmainwidget.cpp:4363
 #, kde-format
@@ -5874,17 +5873,14 @@ msgid "Cannot move message. %1"
 msgstr "تعذّر نقل الرّسالة. %1"
 
 #: kmundoredomanager.cpp:120
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
-msgstr "اُنقل الرِّسالة"
+msgstr "اُنقل الرسائل"
 
 #: kmundoredomanager.cpp:156
-#, fuzzy, kde-format
-#| msgid "&Message"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "رسالة وسوم"
+msgstr "غيّر حالة الرسائل"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
@@ -6598,7 +6594,7 @@ msgstr ""
 #: settings/kmail.kcfg:178
 #, kde-format
 msgid "Show folder quick search line edit"
-msgstr "أعرض تحرير سطر مجلد البحث السريع"
+msgstr "اعرض تحرير سطر مجلد البحث السريع"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg:186
