@@ -945,10 +945,10 @@ void KMReaderWin::slotSendMdnResponse(MessageViewer::MDNWarningWidget::ResponseT
     job->setItem(mViewer->messageItem());
     job->setResponse(response);
     job->setSendingMode(sendingMode);
-    job->start();
     connect(job, &MDNWarningJob::finished, this, [this]() {
         mViewer->mdnWarningAnimatedHide();
     });
+    job->start();
 }
 
 void KMReaderWin::slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers)
