@@ -853,11 +853,9 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
         menu->addActions(interceptorUrlActions);
     }
 
-    if (menu) {
-        KAcceleratorManager::manage(menu);
-        menu->exec(aPoint, nullptr);
-        delete menu;
-    }
+    KAcceleratorManager::manage(menu);
+    menu->exec(aPoint, nullptr);
+    delete menu;
 }
 
 void KMReaderMainWin::showAndActivateWindow()
