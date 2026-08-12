@@ -374,8 +374,7 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
 
     if (ktmw) {
         auto win = static_cast<KMMainWin *>(ktmw);
-        bool activate = !onlyCheck; // existing window: only activate if not --check
-        if (activate) {
+        if (!onlyCheck) {
             win->showAndActivateWindow();
         }
     } else {
