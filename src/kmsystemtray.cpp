@@ -87,8 +87,7 @@ bool KMSystemTray::buildPopupMenu()
         contextMenu()->addAction(action);
     }
 
-    mSendQueued = mainWidget->sendQueuedAction();
-    contextMenu()->addAction(mSendQueued);
+    contextMenu()->addAction(mainWidget->sendQueuedAction());
     contextMenu()->addAction(mainWidget->sendQueueViaMenu());
 
     mNewMessagesPopup = new QMenu();

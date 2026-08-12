@@ -51,7 +51,6 @@ private:
     bool mHasUnreadMessage = false;
 
     QMenu *mNewMessagesPopup = nullptr;
-    QAction *mSendQueued = nullptr;
     KMail::UnityServiceManager *mUnityServiceManager = nullptr;
 };
 }
