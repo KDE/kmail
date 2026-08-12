@@ -867,7 +867,9 @@ void KMReaderMainWin::showAndActivateWindow()
 
 void KMReaderMainWin::slotEditToolbars()
 {
-    KConfigGroup grp(KMKernel::self()->config(), QStringLiteral("ReaderWindow"));
+    // The settings must be saved to the stateConfigGroup(), because
+    // slotUpdateToolbars() restores them from there.
+    KConfigGroup grp = stateConfigGroup();
     saveMainWindowSettings(grp);
     QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
     connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KMReaderMainWin::slotUpdateToolbars);
