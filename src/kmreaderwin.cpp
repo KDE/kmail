@@ -706,13 +706,17 @@ bool KMReaderWin::printSelectedText(bool preview)
     if (str.isEmpty()) {
         return false;
     }
-    auto composer = new ::MessageComposer::ComposerJob;
-    composer->textPart()->setCleanPlainText(str);
-    composer->textPart()->setWrappedPlainText(str);
-    auto messagePtr = messageItem().payload<std::shared_ptr<KMime::Message>>();
+    const Akonadi::Item item = messageItem();
+    if (!item.hasPayload<std::shared_ptr<KMime::Message>>()) {
+        return false;
+    }
+    const auto messagePtr = item.payload<std::shared_ptr<KMime::Message>>();
     if (!messagePtr) {
         return false;
     }
+    auto composer = new ::MessageComposer::ComposerJob;
+    composer->textPart()->setCleanPlainText(str);
+    composer->textPart()->setWrappedPlainText(str);
     composer->infoPart()->setFrom(messagePtr->from()->asUnicodeString());
     if (auto to = messagePtr->to(KMime::CreatePolicy::DontCreate)) {
         composer->infoPart()->setTo(QStringList() << to->asUnicodeString());
