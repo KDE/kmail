@@ -1351,11 +1351,12 @@ static Akonadi::Collection::List collect_collections(const QAbstractItemModel *m
     stack.push(parent);
     while (!stack.isEmpty()) {
         const QModelIndex idx = stack.pop();
+        // The (invalid) root index carries no collection, but its children must still be visited.
         if (idx.isValid()) {
             collections << model->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-            for (int i = model->rowCount(idx) - 1; i >= 0; --i) {
-                stack.push(model->index(i, 0, idx));
-            }
+        }
+        for (int i = model->rowCount(idx) - 1; i >= 0; --i) {
+            stack.push(model->index(i, 0, idx));
         }
     }
 
@@ -1369,9 +1370,9 @@ Akonadi::Collection::List KMKernel::allFolders() const
 
 Akonadi::Collection::List KMKernel::subfolders(const Akonadi::Collection &col) const
 {
-    const auto idx = collectionModel()->match({}, Akonadi::EntityTreeModel::CollectionRole, QVariant::fromValue(col), 1, Qt::MatchExactly);
-    if (!idx.isEmpty()) {
-        return collect_collections(collectionModel(), idx[0]);
+    const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(collectionModel(), col);
+    if (idx.isValid()) {
+        return collect_collections(collectionModel(), idx);
     }
 
     return {};
