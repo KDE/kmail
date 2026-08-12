@@ -2579,22 +2579,22 @@ void KMMainWidget::showResourceOfflinePage()
 
 void KMMainWidget::slotFocusOnNextMessage()
 {
-    mMessagePane->focusNextMessageItem(MessageList::Core::MessageTypeAny, true, false);
+    std::ignore = mMessagePane->focusNextMessageItem(MessageList::Core::MessageTypeAny, true, false);
 }
 
 void KMMainWidget::slotFocusOnPrevMessage()
 {
-    mMessagePane->focusPreviousMessageItem(MessageList::Core::MessageTypeAny, true, false);
+    std::ignore = mMessagePane->focusPreviousMessageItem(MessageList::Core::MessageTypeAny, true, false);
 }
 
 void KMMainWidget::slotSelectFirstMessage()
 {
-    mMessagePane->selectFirstMessageItem(MessageList::Core::MessageTypeAny, true);
+    std::ignore = mMessagePane->selectFirstMessageItem(MessageList::Core::MessageTypeAny, true);
 }
 
 void KMMainWidget::slotSelectLastMessage()
 {
-    mMessagePane->selectLastMessageItem(MessageList::Core::MessageTypeAny, true);
+    std::ignore = mMessagePane->selectLastMessageItem(MessageList::Core::MessageTypeAny, true);
 }
 
 void KMMainWidget::slotSelectFocusedMessage()
@@ -2604,15 +2604,15 @@ void KMMainWidget::slotSelectFocusedMessage()
 
 void KMMainWidget::slotSelectNextMessage()
 {
-    mMessagePane->selectNextMessageItem(MessageList::Core::MessageTypeAny, MessageList::Core::ClearExistingSelection, true, false);
+    std::ignore = mMessagePane->selectNextMessageItem(MessageList::Core::MessageTypeAny, MessageList::Core::ClearExistingSelection, true, false);
 }
 
 void KMMainWidget::slotExtendSelectionToNextMessage()
 {
-    mMessagePane->selectNextMessageItem(MessageList::Core::MessageTypeAny,
-                                        MessageList::Core::GrowOrShrinkExistingSelection,
-                                        true, // center item
-                                        false // don't loop in folder
+    std::ignore = mMessagePane->selectNextMessageItem(MessageList::Core::MessageTypeAny,
+                                                      MessageList::Core::GrowOrShrinkExistingSelection,
+                                                      true, // center item
+                                                      false // don't loop in folder
     );
 }
 
@@ -2643,15 +2643,15 @@ void KMMainWidget::slotSelectNextUnreadMessage()
 
 void KMMainWidget::slotSelectPreviousMessage()
 {
-    mMessagePane->selectPreviousMessageItem(MessageList::Core::MessageTypeAny, MessageList::Core::ClearExistingSelection, true, false);
+    std::ignore = mMessagePane->selectPreviousMessageItem(MessageList::Core::MessageTypeAny, MessageList::Core::ClearExistingSelection, true, false);
 }
 
 void KMMainWidget::slotExtendSelectionToPreviousMessage()
 {
-    mMessagePane->selectPreviousMessageItem(MessageList::Core::MessageTypeAny,
-                                            MessageList::Core::GrowOrShrinkExistingSelection,
-                                            true, // center item
-                                            false // don't loop in folder
+    std::ignore = mMessagePane->selectPreviousMessageItem(MessageList::Core::MessageTypeAny,
+                                                          MessageList::Core::GrowOrShrinkExistingSelection,
+                                                          true, // center item
+                                                          false // don't loop in folder
     );
 }
 
