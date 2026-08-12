@@ -239,10 +239,12 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
         }
         QString label = parentName.isEmpty() ? QString() : QString(parentName + "->"_L1);
         label += model->data(index).toString();
-        label.replace(QLatin1Char('&'), QStringLiteral("&&"));
         if (count > 0) {
-            // insert an item
-            QAction *action = menu->addAction(label);
+            // Insert an item. Escape the ampersands for display only: "label" is reused
+            // as parent name below, so escaping it would escape it again at each level.
+            QString actionText = label;
+            actionText.replace(QLatin1Char('&'), QStringLiteral("&&"));
+            QAction *action = menu->addAction(actionText);
             action->setData(collection.id());
         }
         if (model->rowCount(index) > 0) {
