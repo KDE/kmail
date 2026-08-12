@@ -731,7 +731,7 @@ void KMKernel::verifyAccounts()
 void KMKernel::slotCheckAccounts(Akonadi::ServerManager::State state)
 {
     if (state == Akonadi::ServerManager::Running) {
-        disconnect(Akonadi::ServerManager::self(), SIGNAL(stateChanged(Akonadi::ServerManager::State)));
+        disconnect(Akonadi::ServerManager::self(), &Akonadi::ServerManager::stateChanged, this, &KMKernel::slotCheckAccounts);
         verifyAccounts();
     }
 }
