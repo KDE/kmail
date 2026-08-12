@@ -754,7 +754,7 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         commandInfo.mHtmlLoadExtOverride = mViewer->htmlLoadExternal();
         commandInfo.mPrintPreview = preview;
         commandInfo.mUseFixedFont = useFixedFont;
-        commandInfo.mOverrideFont = overrideEncoding;
+        commandInfo.mEncoding = overrideEncoding;
         commandInfo.mShowSignatureDetails =
             mViewer->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
         commandInfo.mShowEncryptionDetails =
