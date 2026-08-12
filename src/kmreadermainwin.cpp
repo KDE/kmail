@@ -236,7 +236,6 @@ void KMReaderMainWin::showMessage(const QString &encoding, const QList<std::shar
     mCurrentMessageIndex = 0;
     initializeMessage(mListMessage.at(mCurrentMessageIndex));
     mReaderWin->hasMultiMessages(message.count() > 1);
-    mAkonadiStandardActionManager->setItems({});
     updateButtons();
 }
 
@@ -255,7 +254,9 @@ void KMReaderMainWin::initializeMessage(const std::shared_ptr<KMime::Message> &m
         setCaption(subject->asUnicodeString());
     }
     mTrashAction->setEnabled(false);
-    mAkonadiStandardActionManager->setItems({mMsg});
+    // The item is not stored in akonadi (it has a payload but no id), so there is
+    // nothing the standard action manager could act on.
+    mAkonadiStandardActionManager->setItems({});
     updateActions();
 }
 
@@ -288,10 +289,10 @@ void KMReaderMainWin::slotReplyOrForwardFinished()
 
 void KMReaderMainWin::slotSelectMoreMessageTagList()
 {
-    const Akonadi::Item::List selectedMessages = {mMsg};
-    if (selectedMessages.isEmpty()) {
+    if (!mMsg.isValid()) {
         return;
     }
+    const Akonadi::Item::List selectedMessages = {mMsg};
 
     QPointer<TagSelectDialog> dlg = new TagSelectDialog(this, selectedMessages.count(), selectedMessages.first());
     dlg->setActionCollection(QList<KActionCollection *>{actionCollection()});
@@ -305,11 +306,11 @@ void KMReaderMainWin::slotSelectMoreMessageTagList()
 
 void KMReaderMainWin::slotUpdateMessageTagList(const Akonadi::Tag &tag)
 {
-    // Create a persistent set from the current thread.
-    const Akonadi::Item::List selectedMessages = {mMsg};
-    if (selectedMessages.isEmpty()) {
+    if (!mMsg.isValid()) {
         return;
     }
+    // Create a persistent set from the current thread.
+    const Akonadi::Item::List selectedMessages = {mMsg};
     toggleMessageSetTag(selectedMessages, tag);
 }
 
@@ -534,7 +535,9 @@ void KMReaderMainWin::setupAccel()
 
 void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
 {
-    if (!mReaderWin->messageItem().isValid()) {
+    // A window which shows a message part only has no menu bar at all, but a
+    // message which is not stored in akonadi (and so has no valid id) has one.
+    if (!mMsg.isValid() && !mMsg.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
     if (menuBar()) {
@@ -659,12 +662,18 @@ void KMReaderMainWin::slotMessagePopup(const Akonadi::Item &aMsg, const WebEngin
 void KMReaderMainWin::slotContactSearchJobForMessagePopupDone(KJob *job)
 {
     const Akonadi::ContactSearchJob *searchJob = qobject_cast<Akonadi::ContactSearchJob *>(job);
-    const bool contactAlreadyExists = !searchJob->contacts().isEmpty();
+    if (!searchJob) {
+        return;
+    }
+    // Only the items which have an addressee payload are returned by contacts(),
+    // so items() can contain more elements than contacts().
+    const KContacts::Addressee::List contacts = searchJob->contacts();
+    const bool contactAlreadyExists = !contacts.isEmpty();
 
     const Akonadi::Item::List listContact = searchJob->items();
-    const bool uniqueContactFound = (listContact.count() == 1);
+    const bool uniqueContactFound = (contacts.count() == 1 && listContact.count() == 1);
     if (uniqueContactFound) {
-        mReaderWin->setContactItem(listContact.first(), searchJob->contacts().at(0));
+        mReaderWin->setContactItem(listContact.constFirst(), contacts.constFirst());
     } else {
         mReaderWin->clearContactItem();
     }
