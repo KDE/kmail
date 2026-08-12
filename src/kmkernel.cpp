@@ -1573,13 +1573,11 @@ void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 void KMKernel::slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item)
 {
     const QString identifier = item->property("AgentIdentifier").toString();
-    const Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(identifier);
-    if (agent.isValid()) {
-        mResourcesBeingChecked.removeAll(identifier);
-        if (mResourcesBeingChecked.isEmpty()) {
-            qCDebug(KMAIL_LOG) << "Last resource finished syncing, mail check done";
-            Q_EMIT endCheckMail();
-        }
+    // Don't check that the agent is still valid: a resource removed while being checked must be
+    // dropped from the list too, otherwise endCheckMail() would never be emitted again.
+    if (mResourcesBeingChecked.removeAll(identifier) > 0 && mResourcesBeingChecked.isEmpty()) {
+        qCDebug(KMAIL_LOG) << "Last resource finished syncing, mail check done";
+        Q_EMIT endCheckMail();
     }
 }
 
