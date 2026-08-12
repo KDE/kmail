@@ -45,14 +45,13 @@ using namespace MessageViewer;
 #include <MessageComposer/TextPart>
 #include <MessageViewer/AttachmentStrategy>
 
-#include <KIO/JobUiDelegate>
+#include <KJobUiDelegate>
 
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/ContactEditorDialog>
 
 #include "kmail_debug.h"
 #include <KActionCollection>
-#include <KIO/Job>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KToggleAction>
@@ -763,8 +762,8 @@ void KMReaderWin::slotPrintComposeResult(KJob *job)
         auto command = new KMPrintCommand(this, commandInfo);
         command->start();
     } else {
-        if (static_cast<KIO::Job *>(job)->uiDelegate()) {
-            static_cast<KIO::Job *>(job)->uiDelegate()->showErrorMessage();
+        if (job->uiDelegate()) {
+            job->uiDelegate()->showErrorMessage();
         } else {
             qCWarning(KMAIL_LOG) << "Composer for printing failed:" << composer->errorString();
         }
