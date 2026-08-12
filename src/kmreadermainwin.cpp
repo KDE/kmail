@@ -796,9 +796,15 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
                 menu->addSeparator();
             }
 
-            menu->addAction(copyActionMenu(menu));
+            // Both are null when there is no main widget (e.g. a reader window opened
+            // from a composer while no main window exists).
+            if (QAction *copyMenu = copyActionMenu(menu)) {
+                menu->addAction(copyMenu);
+            }
             if (col.isValid()) {
-                menu->addAction(moveActionMenu(menu));
+                if (QAction *moveMenu = moveActionMenu(menu)) {
+                    menu->addAction(moveMenu);
+                }
             }
             menu->addSeparator();
             menu->addAction(mMsgActions->mailingListActionMenu());
