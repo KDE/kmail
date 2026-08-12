@@ -948,7 +948,7 @@ msgstr "مكّن أيقونة صينيّة النّظام"
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
-msgstr "بدء مُصغّراً إلى الصينيّة"
+msgstr "بدء مُصغّرًا إلى الصينيّة"
 
 #: configuredialog/configureappearancepage.cpp:870
 #, kde-format
@@ -2708,7 +2708,7 @@ msgstr "أرسل بلا تأكيد"
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
-msgstr "هذا المرفق : <ul><li>%1</li></ul> أضيف خارجياً. أزله إِذَا كان خطأ."
+msgstr "هذا المرفق : <ul><li>%1</li></ul> أضيف خارجيًا. أزله إِذَا كان خطأ."
 
 #: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:43
 #, kde-format
@@ -2757,14 +2757,14 @@ msgstr "لم يُعرّف مجلد الإرسال. فضلًا  أعدَّه قب
 #, kde-format
 msgid ""
 "Identity was not found. Please verify that you will use a correct identity."
-msgstr "لم يعثر على الهويَّة. فضلاً تحقّق بأنّك ستستخدم الهويَّة الصحيحة."
+msgstr "لم يعثر على الهويَّة. فضلًا تحقّق بأنّك ستستخدم الهويَّة الصحيحة."
 
 #: editor/warningwidgets/incorrectidentityfolderwarning.cpp:78
 #, kde-format
 msgid ""
 "Dictionary was not found. Please verify that you will use a correct "
 "dictionary."
-msgstr "لم يعثر على القاموس. فضلاً تحقّق بأنّك ستستخدم القاموس الصحيح."
+msgstr "لم يعثر على القاموس. فضلًا تحقّق بأنّك ستستخدم القاموس الصحيح."
 
 #: editor/warningwidgets/toomanyrecipientswarning.cpp:19
 #, kde-format
@@ -4020,7 +4020,7 @@ msgstr "التمس البريد الجديد فقط"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Start minimized to tray"
-msgstr "بدء مُصغّراً إلى الصينيّة"
+msgstr "بدء مُصغّرًا إلى الصينيّة"
 
 #: kmail_options.h:33
 #, kde-format
@@ -6519,7 +6519,7 @@ msgstr "مكّن أيقونة صينيّة النّظام"
 #: settings/kmail.kcfg:95
 #, kde-format
 msgid "Start minimized to tray"
-msgstr "بدء مُصغّراً إلى الصينيّة"
+msgstr "بدء مُصغّرًا إلى الصينيّة"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
 #: settings/kmail.kcfg:99
@@ -6636,7 +6636,7 @@ msgstr "دقّق الهجاء قبل الإرسال"
 #: settings/kmail.kcfg:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "اطلُب إ&شعارات قُرأت الرسالة آليّاً"
+msgstr "اطلُب إ&شعارات قُرأت الرسالة آليًّا"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
@@ -6688,7 +6688,7 @@ msgstr "عند التفعيل، ستخزن الرّسائل المرسلة با�
 #: settings/kmail.kcfg:264
 #, kde-format
 msgid "A list of all the recently used URLs"
-msgstr "قائمة بجميع العناوين المستخدمة مؤخراً"
+msgstr "قائمة بجميع العناوين المستخدمة مؤخرًا"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
 #: settings/kmail.kcfg:270
@@ -7495,7 +7495,7 @@ msgstr ""
 "الويب &quot;). </p> <p> ليس هناك سبب وجيه لتحميل الصور من الإنترنت في هذه "
 "الحالة، حيث يمكن للمرسل دائمًا إرفاق الصور المطلوبة مباشرةً بالرسالة. </p> <p> "
 "للحماية من إساءة استخدام ميزة عرض HTML الخاصة ببريدك، هذا الخيار <em> معطل </"
-"em> مبدئياً. </p> <p> ومع ذلك، إذا كنت ترغب على سبيل المثال في عرض الصور في "
+"em> مبدئيًا. </p> <p> ومع ذلك، إذا كنت ترغب على سبيل المثال في عرض الصور في "
 "رسائل HTML التي لم ترفق؛ فيمكنك تمكين هذا الخيار، ولكن يجب عليك إدراك "
 "المشكلة المحتملة. </p> </qt>"
 
@@ -7632,7 +7632,7 @@ msgstr ""
 "توصيل رسالة آليّا (موصى به). </li> <li> <em> اسأل </em>: تجيب طلبات الإشعار "
 "بعد طلب الإذن من المستخدم. بهذه الطريقة، يمكنك إرسال إشعار قراءة للرسائل "
 "المحددة بينما ترفضها أو تتجاهلها للآخرين. </li> <li> <em> الرفض </em>: يرسل "
-"دائمًا إشعار <b> مرفوض </b>. هذا أفضل <em> قليلاً </em> من إرسال إشعارات "
+"دائمًا إشعار <b> مرفوض </b>. هذا أفضل <em> قليلًا </em> من إرسال إشعارات "
 "القراءة دائمًا. سيظل المؤلف يعرف أن إجراء قد أتخذ بشأن الرسائل، لكنه لا يعرف "
 "إذا ما حذفت أو قُرأت وما إلى ذلك. </li> <li> <em> إرسال دائمًا </em>: يرسل "
 "دائمًا إشعار الإرجاع المطلوب. هذا يعني أن كاتب الرسالة يعرف متى فتحت الرسالة، "

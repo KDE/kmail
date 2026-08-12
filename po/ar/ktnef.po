@@ -55,7 +55,7 @@ msgstr "خصائص TNEF"
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
-msgstr "يجب تحديد العنصر أَوَّلاً."
+msgstr "يجب تحديد العنصر أَوَّلًا."
 
 #: attachpropertydialog.cpp:171
 #, kde-format
@@ -154,11 +154,11 @@ msgstr "تعذّر فتح الملفّ \"%1\"."
 msgctxt "@info:status"
 msgid "%1 attachment found"
 msgid_plural "%1 attachments found"
-msgstr[0] "لم يجد مرفقاً"
-msgstr[1] "وجد مرفقاً"
+msgstr[0] "لم يجد مرفقًا"
+msgstr[1] "وجد مرفقًا"
 msgstr[2] "وجد مرفقين"
 msgstr[3] "وجد %1 مرافقات"
-msgstr[4] "وجد %1 مرفقاً"
+msgstr[4] "وجد %1 مرفقًا"
 msgstr[5] "وجد %1 مرفق"
 
 #: ktnefmain.cpp:210
@@ -171,7 +171,7 @@ msgstr "افتح ملفّ TNEF"
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
-msgstr "لا يوجد ملفّ محدَّد، فضلًا حدَّد ملفّاً وحاول مجدَّدًا."
+msgstr "لا يوجد ملفّ محدَّد، فضلًا حدَّد ملفًّا وحاول مجدَّدًا."
 
 #: ktnefmain.cpp:306 ktnefmain.cpp:382
 #, kde-format
