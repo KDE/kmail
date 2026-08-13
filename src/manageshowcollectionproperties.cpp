@@ -110,23 +110,25 @@ void ManageShowCollectionProperties::slotCollectionPropertiesContinued(KJob *job
     QPointer<KPIM::ProgressItem> progressItem;
 
     if (job) {
-        auto sync = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
-        if (!sync) {
-            return;
-        }
-        if (sync->property("collectionId") != mMainWidget->currentCollection().id()) {
-            return;
-        }
-        pageToShow = sync->property("pageToShow").toString();
-        progressItem = sync->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
-        if (progressItem) {
-            // clang-format off
-            disconnect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), sync, SLOT(kill()));
-            // clang-format on
-        } else {
+        progressItem = job->property("progressItem").value<QPointer<KPIM::ProgressItem>>();
+        if (!progressItem) {
             // progressItem does not exist anymore, operation has been canceled
             return;
         }
+        auto sync = qobject_cast<Akonadi::CollectionAttributesSynchronizationJob *>(job);
+        if (!sync) {
+            progressItem->setComplete();
+            return;
+        }
+        // clang-format off
+        disconnect(progressItem, SIGNAL(progressItemCanceled(KPIM::ProgressItem*)), sync, SLOT(kill()));
+        // clang-format on
+        if (sync->property("collectionId").toLongLong() != mMainWidget->currentCollection().id()) {
+            // Another folder was selected in the meantime: don't leave a stuck progress item behind.
+            progressItem->setComplete();
+            return;
+        }
+        pageToShow = sync->property("pageToShow").toString();
     }
 
     showCollectionPropertiesContinued(pageToShow, progressItem);
