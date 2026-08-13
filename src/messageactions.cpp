@@ -595,7 +595,7 @@ void MessageActions::printMessage(bool preview)
             commandInfo.mHtmlLoadExtOverride = mMessageView->viewer()->htmlLoadExternal();
             commandInfo.mPrintPreview = preview;
             commandInfo.mUseFixedFont = useFixedFont;
-            commandInfo.mOverrideFont = overrideEncoding;
+            commandInfo.mEncoding = overrideEncoding;
             commandInfo.mShowSignatureDetails =
                 mMessageView->viewer()->showSignatureDetails() || MessageViewer::MessageViewerSettings::self()->alwaysShowEncryptionSignatureDetails();
             commandInfo.mShowEncryptionDetails =
