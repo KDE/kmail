@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-06-26 09:33+0200\n"
+"PO-Revision-Date: 2026-08-08 10:47+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -2964,7 +2964,7 @@ msgstr "Raccourci du dossier %1"
 #, kde-format
 msgctxt "List of message viewer closed"
 msgid "Closed Reader"
-msgstr "Lecteur fermé"
+msgstr "Récemment fermés"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:62
 #, kde-format
@@ -2975,7 +2975,7 @@ msgstr "Effacer l'historique"
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "Ouvrir à nouveau l'afficheur venant d'être fermé"
+msgstr "Rouvrir le dernier message fermé"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1928
