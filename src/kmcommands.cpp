@@ -1676,6 +1676,10 @@ KMCommand::Result KMTrashMsgCommand::execute()
     for (auto trashIt = mTrashFolders.begin(), end = mTrashFolders.end(); trashIt != end; ++trashIt) {
         const auto trash = trashIt.key();
         if (trash.isValid()) {
+            auto job = new Akonadi::ItemMoveJob(*trashIt, trash, this);
+            connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotMoveResult);
+            mPendingMoves.push_back(job);
+
             // group by source folder for undo
             std::sort(trashIt->begin(), trashIt->end(), [](const Akonadi::Item &lhs, const Akonadi::Item &rhs) {
                 return lhs.storageCollectionId() < rhs.storageCollectionId();
