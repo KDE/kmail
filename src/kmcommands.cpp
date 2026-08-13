@@ -782,7 +782,6 @@ void KMOpenMsgCommand::slotResult(KJob *job)
         QList<std::shared_ptr<KMime::Message>> listMessages;
 
         // check for multiple messages in the file
-        bool multipleMessages = true;
         int endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         while (endOfMessage != -1) {
             auto msg = new KMime::Message;
@@ -796,30 +795,35 @@ void KMOpenMsgCommand::slotResult(KJob *job)
             }
             std::shared_ptr<KMime::Message> mMsg(msg);
             listMessages << mMsg;
-            startOfMessage = endOfMessage + 1;
+            // the next message starts after the mbox "From " separator line
+            const int endOfSeparatorLine = mMsgString.indexOf('\n', endOfMessage + 1);
+            if (endOfSeparatorLine == -1) {
+                startOfMessage = mMsgString.length();
+                break;
+            }
+            startOfMessage = endOfSeparatorLine + 1;
             endOfMessage = mMsgString.indexOf("\nFrom ", startOfMessage);
         }
-        endOfMessage = mMsgString.length();
-        multipleMessages = false;
-        auto msg = new KMime::Message;
-        msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage, endOfMessage - startOfMessage)));
-        msg->parse();
-        if (!msg->hasContent()) {
-            delete msg;
-            msg = nullptr;
+        if (startOfMessage < mMsgString.length()) {
+            auto msg = new KMime::Message;
+            msg->setContent(KMime::CRLFtoLF(mMsgString.mid(startOfMessage)));
+            msg->parse();
+            if (!msg->hasContent()) {
+                delete msg;
+                msg = nullptr;
+                doesNotContainMessage();
+                return;
+            }
+            std::shared_ptr<KMime::Message> mMsg(msg);
+            listMessages << mMsg;
+        }
+        if (listMessages.isEmpty()) {
             doesNotContainMessage();
             return;
         }
-        std::shared_ptr<KMime::Message> mMsg(msg);
-        listMessages << mMsg;
         auto win = new KMReaderMainWin();
         win->showMessage(mEncoding, listMessages);
         win->show();
-        if (multipleMessages) {
-            KMessageBox::information(win,
-                                     i18n("The file contains multiple messages. "
-                                          "Only the first message is shown."));
-        }
         setResult(OK);
     }
     Q_EMIT completed(this);
