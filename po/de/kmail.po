@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2025-10-20 20:21+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -329,7 +329,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Viele IMAP-Fehler beseitigt"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1756,7 +1756,7 @@ msgid "Show attachment list"
 msgstr "Liste der Anhänge anzeigen"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2113,7 +2113,7 @@ msgstr "Erinnerung an Folgenachricht erstellen …"
 msgid "Configure KMail…"
 msgstr "KMail einrichten …"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3910,12 +3910,12 @@ msgstr "Zum Adressbuch hinzufügen"
 msgid "Contact created successfully"
 msgstr "Der Kontakt wurde erfolgreich erstellt"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Der Kontakt kann nicht gespeichert werden: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4416,31 +4416,31 @@ msgstr "HTML-Werkzeugleiste"
 msgid "Text Direction Toolbar"
 msgstr "Textflussrichtung-Werkzeugleiste"
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail befindet sich im „Offline-Modus“. Alle Vorgänge, die eine "
 "Netzwerkverbindung erfordern, werden ausgesetzt."
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, kde-format
 msgid "Send Email"
 msgstr "E-Mail senden"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Nachrichten kann nicht versendet werden"
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail befindet sich im „Online-Modus“. Alle Vorgänge, die eine "
 "Netzwerkverbindung erfordern, werden wiederaufgenommen."
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4450,40 +4450,40 @@ msgstr ""
 "Netzwerkverbindung erfordern, werden wiederaufgenommen sobald eine "
 "Netzwerkverbindung erkannt wurde."
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail ist momentan im Offline-Modus. Wie möchten Sie fortfahren?"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Online/Offline"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Online arbeiten"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Offline arbeiten"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Netzwerkverbindung erkannt, alle Netzwerkaufgaben wiederaufgenommen"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Keine Netzwerkverbindung erkannt, alle Netzwerkaufgaben angehalten"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4492,7 +4492,7 @@ msgstr ""
 "Die Sicherungsdatei in %1 kann nicht geöffnet werden.\n"
 "Grund: %2"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
@@ -4541,7 +4541,7 @@ msgstr ""
 "Die Ressource „%1“ ist nicht funktionsfähig.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5305,7 +5305,7 @@ msgstr "Gruppe über&wachen"
 msgid "&Ignore Thread"
 msgstr "Gruppe &ignorieren"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "A&nhänge speichern …"
@@ -5820,139 +5820,139 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Startvorgang …"
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "In den &Papierkorb verschieben"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "In &Papierkorb verschieben"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Nachricht in den Papierkorb verschieben"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Menüleiste ausblenden"
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Die Nachricht kann nicht kopiert werden. %1"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, kde-format
 msgid "New Message To…"
 msgstr "Neue Nachricht an …"
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, kde-format
 msgid "Reply To…"
 msgstr "Antwort an …"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, kde-format
 msgid "Forward To…"
 msgstr "Weiterleiten an …"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Zum Adressbuch hinzufügen"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Zu vorhandenem Kontakt hinzufügen"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Im Adressbuch öffnen"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Lesezeichen für Verknüpfung"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, kde-format
 msgid "Edit contact…"
 msgstr "Kontakt bearbeiten …"
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Verknüpfung speichern unter …"
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, kde-format
 msgid "&Find in Message…"
 msgstr "In Na&chricht suchen …"
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Bild auf Datenträger speichern …"
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Bild öffnen …"
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML Format"
 msgstr "HTML-Format anzeigen"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "HTML-Format bei E-Mails von diesem Kontakt anzeigen"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "Externe Referenzen bei E-Mails von diesem Kontakt laden"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Bild freigeben …"
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "Das E-Mail-Programm von KDE"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Ordner-Inhalt wird bezogen"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Bitte warten …"
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, kde-format
 msgid "Offline"
 msgstr "Offline"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5961,7 +5961,7 @@ msgstr ""
 "KMail ist momentan im Offline-Modus. Klicken Sie <a href=\"kmail:goOnline"
 "\">hier</a>, um online zu gehen …</p>"
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5970,22 +5970,22 @@ msgstr ""
 "Das Postfach ist momentan im Offline-Modus. Klicken Sie <a href=\"kmail:"
 "goResourceOnline\">hier</a>, um online zu gehen …</p>"
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Der Kontakt wurde erfolgreich geändert"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, kde-format
 msgid "New Messages In"
 msgstr "Neue Nachrichten in"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Sie haben keine ungelesenen Nachrichten"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

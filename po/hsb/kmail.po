@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -330,7 +330,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1841,7 +1841,7 @@ msgid "Show attachment list"
 msgstr "Lisćinu přiwěškow pokazać"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2225,7 +2225,7 @@ msgstr "Dopomnjeńku stworić za dopósłanje..."
 msgid "Configure KMail…"
 msgstr "KMail &připrawić..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3961,12 +3961,12 @@ msgstr "Dodać do adresnika"
 msgid "Contact created successfully"
 msgstr "Powěsće wuspěšnje zničene."
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4468,27 +4468,27 @@ msgstr "Nastrojowy pas za HTML"
 msgid "Text Direction Toolbar"
 msgstr "Nastrojowy pas za směr teksta"
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail je offline; wšitke syćowe nadawki su zastajene"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, kde-format
 msgid "Send Email"
 msgstr "Mejlku pósłać"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Njemóžu mejlki pósłać"
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail je online; wšitke syćowe nadawki so pokročuja"
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4497,43 +4497,43 @@ msgstr ""
 "KMail je online; wšitke syćowe nadawki so pokročuja, hdyž so syćowy zwisk "
 "namaka"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail je tuchwilu offline. Kak chceće pokročować?"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Online/Offline"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Online dźěłać"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Offline dźěłać"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Syćowy zwisk je so namakał, wšitke syćowe nadawki so pokročuja"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Žadyn syćowy zwisk, wšitke syćowe nadawki so zastaja"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4542,7 +4542,7 @@ msgstr ""
 "Njemóžu awtomatisce zawěsćenu dataju %1 wočinić.\n"
 "Přičina: %2"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
@@ -4589,7 +4589,7 @@ msgstr ""
 "Resursa %1 je skóncowana.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5405,7 +5405,7 @@ msgstr "&Temu slědować"
 msgid "&Ignore Thread"
 msgstr "Temu &ignorować"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save A&ttachments…"
@@ -5961,147 +5961,147 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Startuju.."
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "Do papjernika &sunyć"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Papjernik"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Powěsć do papjernika sunyć"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Menijowy pas chować"
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Njemóžach element kopěrować. %1"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "New Message To…"
 msgstr "Nowa powěsć na..."
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, fuzzy, kde-format
 #| msgid "&Reply To"
 msgid "Reply To…"
 msgstr "&Adresa za wotmołwu"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, fuzzy, kde-format
 msgid "Forward To…"
 msgstr "Dopósłać na ..."
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Dodać do adresnika"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "K eksistowacemu kontaktej dodać"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Wočinić w adresniku"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Tutón wotkaz jako zapołožku zawěsćić"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, fuzzy, kde-format
 #| msgid "Edit contact..."
 msgid "Edit contact…"
 msgstr "Kontakt wobdźěłać..."
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Wotkaz zawěsćić jako..."
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, fuzzy, kde-format
 #| msgid "&Find in Message..."
 msgid "&Find in Message…"
 msgstr "W powěsći &pytać..."
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, fuzzy, kde-format
 #| msgid "Save Image On Disk..."
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Wobraz zawěsćić na tačeli ..."
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, fuzzy, kde-format
 #| msgid "Open Image..."
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Wobraz wočinić..."
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML Format"
 msgstr "HTML-format pokazać"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Powěsćam dowolić, e&ksterne linki z interneta začitać"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "Powěsćam dowolić, e&ksterne linki z interneta začitać"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Wotkaz zawěsćić jako..."
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE emailowy program"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Začitam wobsah zapiska"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Prošu dočakajće ..."
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, kde-format
 msgid "Offline"
 msgstr "Bjez zwiska"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -6110,7 +6110,7 @@ msgstr ""
 "Kmail je tuchwilu offline. Klikńće <a href=\"kmail:goResourceOnline\">tule</"
 "a>, zo byšće online šli...</p>"
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -6119,22 +6119,22 @@ msgstr ""
 "Konto je tuchwilu offline. Klikńće <a href=\"kmail:goResourceOnline\">tule</"
 "a>, zo byšće online šli...</p>"
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontakt wuspěšnje změnjeny"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, kde-format
 msgid "New Messages In"
 msgstr "Nowe powěsće w"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Žane nječitane powěsće"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

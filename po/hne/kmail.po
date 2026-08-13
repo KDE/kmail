@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -352,7 +352,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1850,7 +1850,7 @@ msgid "Show attachment list"
 msgstr "संलग्नक अइसन सहेजव"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2242,7 +2242,7 @@ msgstr "संदेस खोजव... (&F)"
 msgid "Configure KMail…"
 msgstr "के-मेल कान्फिगर करव..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3989,12 +3989,12 @@ msgstr "पता पुस्तिका मं जोड़व"
 msgid "Contact created successfully"
 msgstr "संदेस ल सफलतापूर्वक मेटाइस..."
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, fuzzy, kde-format
 #| msgid "Unable to edit attachment"
 msgctxt "@title:window"
@@ -4507,29 +4507,29 @@ msgstr "एचटीएमएल औजार-पट्टी"
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "केमेल ल आफलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम निलंबित हे"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "सेंडमेल"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "ई-मेल भेजे में..."
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "केमेल ल आनलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम फिर से चालू हे"
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid ""
@@ -4537,52 +4537,52 @@ msgid ""
 "connection is detected"
 msgstr "केमेल ल आनलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम फिर से चालू हे"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "केमेल अभी आफलाइन मोड मं हे. आप मन कऊन जइसन आगू बढ़ना चाहथो ?"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Online/Offline"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "आनलाइन/ओफलाइन"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgid "Work Online"
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "आनलाइन काम करव"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "आफलाइन काम करव"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, fuzzy, kde-format
 #| msgid "KMail is set to be online; all network jobs resumed"
 msgid "Network connection detected, all network jobs resumed"
 msgstr "केमेल ल आनलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम फिर से चालू हे"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, fuzzy, kde-format
 #| msgid "KMail is set to be offline; all network jobs are suspended"
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "केमेल ल आफलाइन के रूप मं सेट कर दे गे हे, सब्बो नेटवर्क काम निलंबित हे"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Autosaving Failed"
 msgctxt "@title:window"
@@ -4623,7 +4623,7 @@ msgid ""
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5422,7 +5422,7 @@ msgstr "लड़ी देखव (&W)"
 msgid "&Ignore Thread"
 msgstr "लड़ी देखव-मत (&I)"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save A&ttachments…"
@@ -5987,187 +5987,187 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "सुरू करत हे..."
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "घुरुवा मं डालव (&M)"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, fuzzy, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "घुरुवा"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "संदेस घुरुवा मं ले जाव"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, fuzzy, kde-format
 #| msgid "Copy or Move Messages to %1"
 msgid "Cannot copy item. %1"
 msgstr "संदेस मन ल %1 मं खिसकाव या नकल करव"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "New Message To…"
 msgstr "को नवा संदेस..."
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, fuzzy, kde-format
 #| msgid "&Reply To"
 msgid "Reply To…"
 msgstr "को जवाब भेजव (&R)"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, fuzzy, kde-format
 #| msgid "Forward To"
 msgid "Forward To…"
 msgstr "को आगू भेजव"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "पता पुस्तिका मं जोड़व"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, fuzzy, kde-format
 #| msgid "Unable to edit attachment"
 msgid "Add to Existing Contact"
 msgstr "संलग्नक ल संपादित करे मं अक्छम"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "पता पुस्तिका मं खोलव"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "ये संकली ल निसानी मं रखव"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, fuzzy, kde-format
 #| msgid "Edit With..."
 msgid "Edit contact…"
 msgstr "के साथ संपादन करव..."
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "संकली अइसन सहेजव..."
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, fuzzy, kde-format
 #| msgid "&Find in Message..."
 msgid "&Find in Message…"
 msgstr "संदेस मं खोजव... (&F)"
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "संकली अइसन सहेजव..."
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "संकली अइसन सहेजव..."
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, fuzzy, kde-format
 msgid "Show HTML Format"
 msgstr "एचटीएमएल उपयोग करव"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, fuzzy, kde-format
 #| msgid "Load external references from the Internet for this message."
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "ये संदेस बर इंटरनेट से बाहिरी संदर्भ मन ल लोड करव"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, fuzzy, kde-format
 #| msgid "Load external references from the Internet for this message."
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "ये संदेस बर इंटरनेट से बाहिरी संदर्भ मन ल लोड करव"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Share image…"
 msgstr "संकली अइसन सहेजव..."
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "केडीई ईमेल क्लायंट"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, fuzzy, kde-format
 #| msgid "Retrieving folderlist"
 msgid "Retrieving Folder Contents"
 msgstr "फोल्डर सूची फिर से प्राप्त करत हे"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "किरपा करके, अगोरव"
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, fuzzy, kde-format
 #| msgid "Work Offline"
 msgid "Offline"
 msgstr "आफलाइन काम करव"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, fuzzy, kde-format
 #| msgid "Messages moved successfully."
 msgid "Contact modified successfully"
 msgstr "संदेस मन ल सफलतापूर्वक खिसकाइस."
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, kde-format
 msgid "New Messages In"
 msgstr "में नवा संदेस"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, fuzzy, kde-format
 #| msgid "KMail - There are no unread messages"
 msgid "There are no unread messages"
 msgstr "केमेल - ओ तिर कोनो बिनपढ़े संदेस नइ हे"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

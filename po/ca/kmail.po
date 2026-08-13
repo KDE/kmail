@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2026-08-07 09:11+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -325,7 +325,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "S'han esmenat molts errors en l'IMAP"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1748,7 +1748,7 @@ msgid "Show attachment list"
 msgstr "Mostra la llista d'adjunts"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2102,7 +2102,7 @@ msgstr "Crea un recordatori de seguiment…"
 msgid "Configure KMail…"
 msgstr "Configura el KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3869,12 +3869,12 @@ msgstr "Afegeix a la llibreta d'adreces"
 msgid "Contact created successfully"
 msgstr "El contacte s'ha creat correctament"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "El contacte no s'ha pogut emmagatzemar: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4363,31 +4363,31 @@ msgstr "Barra d'eines HTML"
 msgid "Text Direction Toolbar"
 msgstr "Barra d'eines de direcció del text"
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "S'ha establert que el KMail estigui desconnectat; s'han suspès tots els "
 "treballs de xarxa"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, kde-format
 msgid "Send Email"
 msgstr "Envia el correu"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, kde-format
 msgid "Impossible to send email"
 msgstr "És impossible enviar el correu"
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "S'ha establert que el KMail estigui connectat; s'han reprès tots els "
 "treballs de xarxa"
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4396,43 +4396,43 @@ msgstr ""
 "S'ha establert que el KMail estigui connectat; es reprendran tots els "
 "treballs de xarxa en detectar-se una connexió de xarxa"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "El KMail està actualment en el mode desconnectat. Com voleu continuar?"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Connectat/desconnectat"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Treballa en línia"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Treballa desconnectat"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "S'ha detectat una connexió de xarxa, s'han reprès tots els treballs de xarxa"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "No s'ha detectat cap connexió de xarxa, s'han suspès tots els treballs de "
 "xarxa"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4441,7 +4441,7 @@ msgstr ""
 "Ha fallat en obrir el fitxer de desament automàtic a %1.\n"
 "Motiu: %2"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
@@ -4485,7 +4485,7 @@ msgstr ""
 "El recurs %1 està trencat.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5237,7 +5237,7 @@ msgstr "&Vigila la conversa"
 msgid "&Ignore Thread"
 msgstr "&Ignora la conversa"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Desa els ad&junts…"
@@ -5751,140 +5751,140 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "S'està iniciant…"
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Mou a la paperera"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Mou a la paperera"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Mou el missatge a la paperera"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Oculta la barra de menús"
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "No s'ha pogut copiar l'element. %1"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, kde-format
 msgid "New Message To…"
 msgstr "Missatge nou a…"
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, kde-format
 msgid "Reply To…"
 msgstr "Respon a…"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, kde-format
 msgid "Forward To…"
 msgstr "Reenvia a…"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Afegeix a la llibreta d'adreces"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Afegeix a un contacte existent"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Obre a la llibreta d'adreces"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Apunta aquest enllaç"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, kde-format
 msgid "Edit contact…"
 msgstr "Edita el contacte…"
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Desa l'enllaç com a…"
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, kde-format
 msgid "&Find in Message…"
 msgstr "&Cerca al missatge…"
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Desa la imatge al disc…"
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Obre una imatge…"
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML Format"
 msgstr "Mostra en format HTML"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Mostra el format HTML quan el correu provingui d'aquest contacte"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr ""
 "Carrega les referències externes quan el correu provingui d'aquest contacte"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Comparteix la imatge…"
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "El client de correu del KDE"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "S'està rebent el contingut de la carpeta"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Espereu un moment..."
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, kde-format
 msgid "Offline"
 msgstr "Desconnectat"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5893,7 +5893,7 @@ msgstr ""
 "El KMail ara està en mode desconnectat. Cliqueu <a href=\"kmail:goOnline"
 "\">aquí</a> per a connectar-vos…</p>"
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5902,22 +5902,22 @@ msgstr ""
 "El compte ara està en mode desconnectat. Cliqueu <a href=\"kmail:"
 "goResourceOnline\">aquí</a> per a connectar-vos…</p>"
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "El contacte s'ha modificat correctament"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, kde-format
 msgid "New Messages In"
 msgstr "Missatges nous a"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "There are no unread messages"
 msgstr "No hi ha missatges sense llegir"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2026-07-27 05:23+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -322,7 +322,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "IMAP akats asko konpontzea"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1738,7 +1738,7 @@ msgid "Show attachment list"
 msgstr "Erakutsi eranskinen zerrenda"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2090,7 +2090,7 @@ msgstr "Sortu jarraipena egiteko oroigarria…"
 msgid "Configure KMail…"
 msgstr "Konfiguratu KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3845,12 +3845,12 @@ msgstr "Gehitu helbide-liburuan"
 msgid "Contact created successfully"
 msgstr "Kontaktua ondo sortu da"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktua ezin da biltegiratu: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4336,27 +4336,27 @@ msgstr "HTML tresna-barra"
 msgid "Text Direction Toolbar"
 msgstr "Testuaren noranzkoaren tresna-barra"
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail lineaz kanpoko egoeran dago; sareko lan guztiak gelditu dira"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, kde-format
 msgid "Send Email"
 msgstr "Bidali e-posta"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Ezin da e-postarik bidali"
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail lineako egoeran dago. Sareko lan guztiak jarraituko dira"
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4365,40 +4365,40 @@ msgstr ""
 "KMail lineako egoeran dago; sareko lan guztiak berrekingo ditu sareko "
 "konexio bat antzematen duenean"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "Unean KMail lineaz kanpoko moduan dago. Nola jarraitu nahi duzu?"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Lerroan/Lerroz kanpo"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Lerroan lan egin"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Lerroz kanpo lan egin"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Sareko konexioa antzeman du, sareko lan guztiak berrekin ditu"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Ez da sareko konexiorik antzeman, sareko lan guztiak etenda daude"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4407,7 +4407,7 @@ msgstr ""
 "Huts egin du %1(e)an automatikoki gordetzeko fitxategia irekitzea.\n"
 "Arrazoia: %2"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
@@ -4448,7 +4448,7 @@ msgstr ""
 "%1 baliabidea hondatuta dago.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5196,7 +5196,7 @@ msgstr "&Ikusi haria"
 msgid "&Ignore Thread"
 msgstr "&Ez ikusi egin hariari"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Gorde e&ranskinak…"
@@ -5709,139 +5709,139 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Abiatzen…"
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Bota zakarrontzira"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Zakarrontzia"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Bota mezua zakarrontzira"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Ezkutatu menu-barra"
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Ezin du elementua kopiatu. %1"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, kde-format
 msgid "New Message To…"
 msgstr "Mezu berria honi…"
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, kde-format
 msgid "Reply To…"
 msgstr "Erantzun honi…"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, kde-format
 msgid "Forward To…"
 msgstr "Birbidali honi…"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Gehitu helbide-liburuan"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Gehitu dagoen kontaktu batean"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Ireki helbide-liburuan"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Sortu estekaren laster-marka"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, kde-format
 msgid "Edit contact…"
 msgstr "Editatu kontaktua…"
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Gorde esteka honela…"
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, kde-format
 msgid "&Find in Message…"
 msgstr "&Aurkitu mezuan…"
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Gorde irudia diskoan…"
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Ireki irudia…"
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML Format"
 msgstr "Erakutsi HTML formatua"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Erakutsi HTML formatua, posta kontaktu honek bidali duenean"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "Zamatu kanpoko erreferentzia posta kontaktu honek bidali duenean"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Partekatu irudia…"
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDEren posta bezeroa"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Karpetaren edukia eskuratzen"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Itxaron mesedez . . ."
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, kde-format
 msgid "Offline"
 msgstr "Lineaz kanpo"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5850,7 +5850,7 @@ msgstr ""
 "KMail une honetan lerroz kanpoko moduan dago. Egin klik <a href=\"kmail:"
 "goOnline\">hemen</a> lerroan jartzeko…</p>"
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5859,22 +5859,22 @@ msgstr ""
 "Kontua une honetan lerroz kanpoko moduan dago. Egin klik <a href=\"kmail:"
 "goResourceOnline\">hemen</a> lerroan jartzeko . . .</p>"
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Kontaktua ongi aldatu dira"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, kde-format
 msgid "New Messages In"
 msgstr "Mezu berria hemen"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Ez dago irakurri gabeko mezurik"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

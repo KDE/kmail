@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2026-05-25 21:28+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -318,7 +318,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "다양한 IMAP 버그 수정"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1709,7 +1709,7 @@ msgid "Show attachment list"
 msgstr "첨부 파일 목록 표시"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2060,7 +2060,7 @@ msgstr "후속 작업 알림 만들기…"
 msgid "Configure KMail…"
 msgstr "KMail 설정(&C)…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -3779,12 +3779,12 @@ msgstr "주소록에 추가"
 msgid "Contact created successfully"
 msgstr "연락처 생성 완료됨"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "연락처를 저장할 수 없음: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4267,27 +4267,27 @@ msgstr "HTML 도구 모음"
 msgid "Text Direction Toolbar"
 msgstr "텍스트 방향 도구 모음"
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr "KMail이 오프라인입니다. 모든 네트워크 작업이 중단되었습니다"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, kde-format
 msgid "Send Email"
 msgstr "이메일 보내기"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, kde-format
 msgid "Impossible to send email"
 msgstr "이메일을 보낼 수 없음"
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr "KMail이 온라인입니다. 모든 네트워크 작업이 다시 시작되었습니다"
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4296,42 +4296,42 @@ msgstr ""
 "KMail이 온라인입니다. 네트워크 연결이 감지된 후 모든 네트워크 작업을 다시 시"
 "작합니다"
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail이 현재 오프라인 모드입니다. 무엇을 하시겠습니까?"
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "온라인/오프라인"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "온라인으로 작업"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "오프라인으로 작업"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 "네트워크 연결이 감지되었습니다. 모든 네트워크 작업이 다시 시작되었습니다"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 "네트워크 연결이 감지되지 않았습니다. 모든 네트워크 작업이 중단되었습니다"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4340,7 +4340,7 @@ msgstr ""
 "%1에 자동 저장 파일을 열 수 없습니다.\n"
 "이유: %2"
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
@@ -4379,7 +4379,7 @@ msgstr ""
 "리소스 %1이(가) 깨졌습니다.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5109,7 +5109,7 @@ msgstr "스레드 주시(&W)"
 msgid "&Ignore Thread"
 msgstr "스레드 무시(&I)"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "첨부 파일 저장(&T)…"
@@ -5620,139 +5620,139 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "시작 중..."
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "휴지통으로 이동(&M)"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "휴지통"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "메시지를 휴지통으로 이동"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr "메뉴 표시줄 숨기기"
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "항목을 복사할 수 없습니다. %1"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, kde-format
 msgid "New Message To…"
 msgstr "새 메시지 작성…"
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, kde-format
 msgid "Reply To…"
 msgstr "답장…"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, kde-format
 msgid "Forward To…"
 msgstr "전달…"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "주소록에 추가"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "기존 연락처에 추가"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "주소록에서 열기"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "이 링크를 책갈피에 추가"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, kde-format
 msgid "Edit contact…"
 msgstr "연락처 편집…"
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "다음으로 링크 저장…"
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, kde-format
 msgid "&Find in Message…"
 msgstr "메시지에서 찾기(&F)…"
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "디스크에 그림 저장…"
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "그림 열기…"
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML Format"
 msgstr "HTML 형식으로 보기"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "이 사람이 보낸 메일을 HTML 형식으로 보기"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "이 사람이 보낸 메일의 외부 참조 불러오기"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "그림 공유…"
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE 메일 클라이언트"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "폴더 내용 가져오는 중"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Please wait . . ."
 msgstr "기다려 주십시오..."
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, kde-format
 msgid "Offline"
 msgstr "오프라인"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5761,7 +5761,7 @@ msgstr ""
 "KMail이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5770,22 +5770,22 @@ msgstr ""
 "계정이 현재 오프라인 모드입니다. 온라인으로 전환하려면 <a href=\"kmail:"
 "goResourceOnline\">여기를</a> 클릭하십시오 . . .</p>"
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "연락처를 성공적으로 수정함"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, kde-format
 msgid "New Messages In"
 msgstr "다음에 새 메일이 있음:"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "There are no unread messages"
 msgstr "읽지 않은 메시지 없음"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"

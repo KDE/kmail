@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
-"PO-Revision-Date: 2026-05-08 01:22+0300\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
+"PO-Revision-Date: 2026-08-12 15:01+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -331,7 +331,7 @@ msgid "Fixed many IMAP bugs"
 msgstr "Ištaisyta daugybė IMAP klaidų"
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1771,7 +1771,7 @@ msgid "Show attachment list"
 msgstr "Rodyti priedų sąrašą"
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -1905,7 +1905,7 @@ msgstr "Įrašyti kaip &failą"
 #: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "Save email as text or html file"
-msgstr "Įrašyti el. paštą kaip tekstą ar html failą"
+msgstr "Įrašyti el. laišką kaip tekstą ar html failą"
 
 #: editor/kmcomposerwin.cpp:1312
 #, kde-format
@@ -2135,7 +2135,7 @@ msgstr "&Ieškoti laiškų..."
 msgid "Configure KMail…"
 msgstr "Konfigūruoti KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2365,11 +2365,10 @@ msgid "No To: specified"
 msgstr "Lauke „Kam:“ nėra adresato"
 
 #: editor/kmcomposerwin.cpp:2869 editor/kmcomposerwin.cpp:2883
-#, fuzzy, kde-format
-#| msgid "S&end as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
-msgstr "Siųsti k&aip yra"
+msgstr "Siųs&ti esamu pavidalu"
 
 #: editor/kmcomposerwin.cpp:2870
 #, fuzzy, kde-format
@@ -2426,12 +2425,12 @@ msgid "Send &Later"
 msgstr "Siųsti &vėliau"
 
 #: editor/kmcomposerwin.cpp:3196
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
-"Jūs bandote išsiųsti laišką daugiau kaip %1 gavėjams. Ar vis tiek siųsti?"
+"Jūs bandote išsiųsti laišką daugiau kaip %1 gavėjams. Ar vis tiek išsiųsti?"
 
 #: editor/kmcomposerwin.cpp:3197
 #, kde-format
@@ -2440,11 +2439,10 @@ msgid "Too many recipients"
 msgstr "Per daug gavėjų"
 
 #: editor/kmcomposerwin.cpp:3198
-#, fuzzy, kde-format
-#| msgid "&Send as Is"
+#, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
-msgstr "Siųsti k&aip yra"
+msgstr "&Siųsti esamu pavidalu"
 
 #: editor/kmcomposerwin.cpp:3199
 #, kde-format
@@ -2453,11 +2451,13 @@ msgid "&Edit Recipients"
 msgstr "&Taisyti gavėjus"
 
 #: editor/kmcomposerwin.cpp:3236
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
-msgstr "Išjungus HTML režimą bus prarastas formatavimas. Ar tikrai išjungti?"
+msgstr ""
+"Išjungus HTML veikseną, tekstas praras formatavimą. Ar tikrai norite "
+"išjungti?"
 
 #: editor/kmcomposerwin.cpp:3238
 #, kde-format
@@ -2733,7 +2733,7 @@ msgid "Ask Before Sending"
 msgstr "Klausti prieš siunčiant"
 
 #: editor/validatesendmailshortcut.cpp:34
-#, fuzzy, kde-format
+#, kde-format
 msgid "Sending Without Confirmation"
 msgstr "Siuntimas be patvirtinimo"
 
@@ -2960,11 +2960,10 @@ msgid "&With empty fields"
 msgstr "&Su tuščiais laukais"
 
 #: identity/identityaddvcarddialog.cpp:55
-#, fuzzy, kde-format
-#| msgid "&From existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&From existing vCard"
-msgstr "&Iš esančios vCard"
+msgstr "&Iš esamos vCard"
 
 #: identity/identityaddvcarddialog.cpp:67
 #, kde-format
@@ -2973,11 +2972,10 @@ msgid "&vCard path:"
 msgstr "&vCard kelias:"
 
 #: identity/identityaddvcarddialog.cpp:78
-#, fuzzy, kde-format
-#| msgid "&Duplicate existing vCard"
+#, kde-format
 msgctxt "@option:radio"
 msgid "&Duplicate existing vCard"
-msgstr "&Dubliuoti esančią vCard"
+msgstr "&Dubliuoti esamą vCard"
 
 #: identity/identityaddvcarddialog.cpp:82
 #, kde-format
@@ -3023,11 +3021,10 @@ msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "Nepavyko sugeneruoti OpenPGP liudijimo: %1"
 
 #: identity/identitydialog.cpp:270
-#, fuzzy, kde-format
-#| msgid "Deleting messages canceled."
+#, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
-msgstr "Laiškų trynimas nutrauktas."
+msgstr "Raktų generavimo buvo atsisakyta."
 
 #: identity/identitydialog.cpp:310
 #, kde-format
@@ -3138,13 +3135,7 @@ msgid "Cryptography"
 msgstr "Kriptografija"
 
 #: identity/identitydialog.cpp:457
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
-#| "messages. You can also use GnuPG keys.</p><p>You can leave this blank, "
-#| "but KMail will not be able to digitally sign emails using OpenPGP; normal "
-#| "mail functions will not be affected.</p><p>You can find out more about "
-#| "keys at <a>http://www.gnupg.org</a></p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
 "messages. You can also use GnuPG keys.</p><p>You can leave this blank, but "
@@ -3152,11 +3143,12 @@ msgid ""
 "functions will not be affected.</p><p>You can find out more about keys at "
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Čia pasirinktas OpenPGP raktas bus naudojamas skaitmeniniu būdu "
-"pasirašyti laiškus. Taip pat galite naudoti GnuPG raktus.</p><p>Jei "
-"paliksite neužpildytą, KMail negalės skaitmeniniu būdu, naudojant OpenPGP, "
-"pasirašyti laiškų, tačiau įprastų pašto funkcijų tai nepalies.</p><p>Apie "
-"raktus daugiau sužinoti galite <a>http://www.gnupg.org</a></p></qt>"
+"<qt><p>Čia pasirinktas OpenPGP raktas bus naudojamas skaitmeniškai "
+"pasirašyti laiškus. Taip pat galite naudoti GnuPG raktus.</p><p>Galite tai "
+"palikti tuščią, bet tada programa KMail negalės skaitmeniškai pasirašyti el. "
+"laiškų naudodama OpenPGP; tai nepaveiks įprastų pašto funkcijų.</"
+"p><p>Daugiau sužinoti apie raktus galite adresu <a>https://www.gnupg.org</"
+"a></p></qt>"
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3211,17 +3203,17 @@ msgid "OpenPGP encryption key:"
 msgstr "OpenPGP šifravimo raktas:"
 
 #: identity/identitydialog.cpp:521
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
 "digitally sign messages.</p><p>You can leave this blank, but KMail will not "
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
-"<qt><p>S/MIME (X.509) liudijimas, kurį čia pasirinksite, bus naudojamas "
-"skaitmeniniu būdu pasirašyti laiškus.</p><p>Jei paliksite neužpildytą, KMail "
-"negalės skaitmeniniu būdu, naudojant S/MIME, pasirašyti laiškų, tačiau "
-"įprastų pašto funkcijų tai nepalies.</p></qt>"
+"<qt><p>Čia pasirinktas S/MIME (X.509) liudijimas bus naudojamas "
+"skaitmeniškai pasirašyti laiškus.</p><p>Galite tai palikti tuščią, bet tada "
+"programa KMail negalės skaitmeniškai pasirašyti el. laiškų naudodama S/MIME; "
+"tai nepaveiks įprastų pašto funkcijų.</p></qt>"
 
 #: identity/identitydialog.cpp:526
 #, kde-format
@@ -3548,48 +3540,48 @@ msgid "Invalid Email Address"
 msgstr "Neteisingas el. pašto adresas"
 
 #: identity/identitydialog.cpp:936
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
 "the configured email address for this identity (%1).\n"
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
-"Vienas iš konfigūruotų OpenPGP pasirašymo raktų neturi jokio naudotojo ID su "
-"šiai tapatybei konfigūruotu el. pašto adresu (%1).\n"
-"Dėl šio neatitikimo gavėjo pusėje gali būti rodomi perspėjimo pranešimai, "
-"nes bus bandoma patikrinti parašus, padarytus su šia konfigūracija."
+"Viename iš sukonfigūruotų OpenPGP pasirašymo raktų nėra jokio naudotojo ID "
+"su šiai tapatybei (%1) sukonfigūruotu el. pašto adresu.\n"
+"Dėl to, gavėjo pusėje, bandant patikrinti šios konfigūracijos atliktus "
+"parašus, gali būti rodomi įspėjimo pranešimai."
 
 #: identity/identitydialog.cpp:945
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
-"Vienas iš konfigūruotų OpenPGP šifravimo raktų neturi jokio naudotojo ID su "
-"šiai tapatybei konfigūruotu el. pašto adresu (%1)."
+"Viename iš sukonfigūruotų OpenPGP šifravimo raktų nėra jokio naudotojo ID su "
+"šiai tapatybei (%1) sukonfigūruotu el. pašto adresu."
 
 #: identity/identitydialog.cpp:952
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
 "configured email address for this identity (%1).\n"
 "This might result in warning messages on the receiving side when trying to "
 "verify signatures made with this configuration."
 msgstr ""
-"Vienas iš konfigūruotų S/MIME pasirašymo liudijimų neturi jokio šiai "
-"tapatybei konfigūruoto el. pašto adreso (%1).\n"
-" Dėl šio neatitikimo gavėjo pusėje gali būti rodomi perspėjimo pranešimai, "
-"nes bus bandoma patikrinti parašus, padarytus su šia konfigūracija."
+"Viename iš sukonfigūruotų S/MIME pasirašymo liudijimų nėra jokio šiai "
+"tapatybei (%1) sukonfigūruoto el. pašto adreso.\n"
+"Dėl to, gavėjo pusėje, bandant patikrinti šios konfigūracijos atliktus "
+"parašus, gali būti rodomi įspėjimo pranešimai."
 
 #: identity/identitydialog.cpp:961
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
-"Vienas iš konfigūruotų S/MIME šifravimo liudijimų neturi jokio šiai "
-"tapatybei konfigūruoto el. pašto adreso (%1)"
+"Viename iš sukonfigūruotų S/MIME šifravimo liudijimų nėra jokio šiai "
+"tapatybei (%1) sukonfigūruoto el. pašto adreso."
 
 #: identity/identitydialog.cpp:971
 #, kde-format
@@ -3598,9 +3590,9 @@ msgid "Email Address Not Found in Key/Certificates"
 msgstr "El. pašto adresas nerastas tarp raktų/liudijimų"
 
 #: identity/identitydialog.cpp:983
-#, fuzzy, kde-format
+#, kde-format
 msgid "The signature file is not valid"
-msgstr "Parašo failas neteisingas"
+msgstr "Parašo failas yra netinkamas"
 
 #: identity/identitydialog.cpp:998
 #, kde-format
@@ -3878,12 +3870,12 @@ msgstr "Pridėti į adresų knygą"
 msgid "Contact created successfully"
 msgstr "Adresatas sėkmingai sukurtas"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, fuzzy, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Kontaktas negali būti išsaugotas: %1"
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, fuzzy, kde-format
 #| msgid "Failed to store contact"
 msgctxt "@title:window"
@@ -4214,9 +4206,9 @@ msgstr "&Laiškas"
 
 #. i18n: ectx: Menu (reply_special)
 #: kmail_part.rc:163 kmmainwin.rc:163 kmreadermainwin.rc:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "Reply Special"
-msgstr "Specialus atsakymas"
+msgstr "Atsakyti tam tikru būdu"
 
 #. i18n: ectx: Menu (menubar_message_forward)
 #: kmail_part.rc:172 kmmainwin.rc:172 kmreadermainwin.rc:56
@@ -4376,79 +4368,81 @@ msgstr "HTML įrankių juosta"
 msgid "Text Direction Toolbar"
 msgstr "Teksto krypties įrankių juosta"
 
-#: kmkernel.cpp:643
-#, fuzzy, kde-format
+#: kmkernel.cpp:642
+#, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
-msgstr "KMail nustatytas dirbti atsijungus; visi darbai tinkle sustabdyti"
+msgstr ""
+"KMail nustatyta, kad veiktų neprisijungusi prie interneto; visi darbai "
+"tinkle pristabdyti"
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, fuzzy, kde-format
 msgid "Send Email"
 msgstr "Siųsti el. laišką"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, fuzzy, kde-format
 msgid "Impossible to send email"
 msgstr "Neįmanoma išsiųsti el. laišką"
 
-#: kmkernel.cpp:690
-#, fuzzy, kde-format
+#: kmkernel.cpp:689
+#, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
-msgstr "KMail nustatytas dirbti prisijungus; visi darbai tinkle atnaujinami"
+msgstr ""
+"KMail nustatyta, kad veiktų prisijungusi prie interneto; visi darbai tinkle "
+"pratęsiami"
 
-#: kmkernel.cpp:692
-#, fuzzy, kde-format
+#: kmkernel.cpp:691
+#, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
-"KMail nustatytas dirbti prisijungus; visi darbai bus pratęsti kai tik bus "
-"prisijungta prie tinklo"
+"KMail nustatyta, kad veiktų prisijungusi prie interneto; visi darbai bus "
+"pratęsti tada, kai bus aptiktas tinklo ryšys"
 
-#: kmkernel.cpp:763
-#, fuzzy, kde-format
+#: kmkernel.cpp:762
+#, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
-msgstr "KMail šiuo metu veikia neprisijungęs. Ar norite prisijungti?"
+msgstr ""
+"Šiuo metu KMail neprisijungusi prie interneto. Kaip norite tęsti darbą?"
 
-#: kmkernel.cpp:765
-#, fuzzy, kde-format
-#| msgid "Online/Offline"
+#: kmkernel.cpp:764
+#, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
-msgstr "Prisijungęs/atsijungęs"
+msgstr "Darbas prisijungus/atsijungus"
 
-#: kmkernel.cpp:766
-#, fuzzy, kde-format
-#| msgid "Work Online"
+#: kmkernel.cpp:765
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
-msgstr "Dirbti prisijungus"
+msgstr "Dirbti prisijungus prie interneto"
 
-#: kmkernel.cpp:767
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#: kmkernel.cpp:766
+#, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
-msgstr "Dirbti neprisijungus"
+msgstr "Dirbti neprisijungus prie interneto"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Aptiktas tinklo ryšys, visos tinklo užduotys pratęstos"
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Neaptikta jokio tinklo ryšio, visos tinklo užduotys pristabdytos"
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 #| msgid "Opening Autosave File Failed"
 msgctxt "@title:window"
@@ -4456,26 +4450,26 @@ msgid "Opening Autosave File Failed"
 msgstr "Nepavyko atidaryti automatinio saugojimo failo"
 
 #: kmkernel.cpp:1452
-#, fuzzy, kde-format
+#, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the default transport:"
-msgstr[0] "Ši tapatybė buvo pakeista ir naudos numatytą transportą:"
-msgstr[1] "Šios %1 tapatybės buvo pakeistos ir naudos numatytą transportą:"
-msgstr[2] "Šios %1 tapatybių buvo pakeistos ir naudos numatytą transportą:"
-msgstr[3] "%1 tapatybė buvo pakeista ir naudos numatytą transportą:"
+msgstr[0] "Ši tapatybė buvo pakeista, kad naudotų numatytąjį perdavimą:"
+msgstr[1] "Šios %1 tapatybės buvo pakeistos, kad naudotų numatytąjį perdavimą:"
+msgstr[2] "Šios %1 tapatybių buvo pakeistos, kad naudotų numatytąjį perdavimą:"
+msgstr[3] "Ši %1 tapatybė buvo pakeista, kad naudotų numatytąjį perdavimą:"
 
 #: kmkernel.cpp:1474
-#, fuzzy, kde-format
+#, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
 "These %1 identities have been changed to use the modified transport:"
-msgstr[0] "Ši tapatybė buvo pakeista ir turi naudoti modifikuotą transportą:"
+msgstr[0] "Ši tapatybė buvo pakeista, kad naudotų modifikuotą perdavimą:"
 msgstr[1] ""
-"Šios %1 tapatybės buvo pakeistos ir turi naudoti modifikuotą transportą:"
+"Šios %1 tapatybės buvo pakeistos, kad naudotų modifikuotą perdavimą:"
 msgstr[2] ""
-"Šios %1 tapatybių buvo pakeistos ir turi naudoti modifikuotą transportą:"
-msgstr[3] "%1 tapatybė buvo pakeista ir turi naudoti modifikuotą transportą:"
+"Šios %1 tapatybių buvo pakeistos, kad naudotų modifikuotą perdavimą:"
+msgstr[3] "Ši %1 tapatybė buvo pakeista, kad naudotų modifikuotą perdavimą:"
 
 #: kmkernel.cpp:1489
 #, fuzzy, kde-format
@@ -4496,7 +4490,7 @@ msgstr ""
 "Išteklius %1 yra sugadintas.\n"
 "%2"
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -4540,21 +4534,18 @@ msgid "KMail Error"
 msgstr "KMail klaida"
 
 #: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "Could not start \"PIM Setting Exporter\" program. Please check your "
-#| "installation."
+#, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr ""
-"Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
+"Nepavyko paleisti „Importavimo vediklio“ programos. Patikrinkite, ar ji "
+"tinkamai įdiegta."
 
 #: kmlaunchexternalcomponent.cpp:102 kmlaunchexternalcomponent.cpp:110
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
-msgstr "Nepavyksta paleisti importavimo vediklio"
+msgstr "Nepavyko paleisti „Importavimo vediklio“ programos"
 
 #: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, fuzzy, kde-format
@@ -4575,20 +4566,19 @@ msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Nepavyksta paleisti importavimo vediklio"
 
 #: kmlaunchexternalcomponent.cpp:165
-#, fuzzy, kde-format
-#| msgid "Could not start the import wizard. Please check your installation."
+#, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
 "properly installed."
 msgstr ""
-"Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
+"Nepavyko paleisti importavimo vediklio. Patikrinkite, ar importavimo "
+"vediklis tinkamai įdiegtas."
 
 #: kmlaunchexternalcomponent.cpp:167
-#, fuzzy, kde-format
-#| msgid "Unable to start import wizard"
+#, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
-msgstr "Nepavyksta paleisti importavimo vediklio"
+msgstr "Nepavyko paleisti importavimo vediklio"
 
 #: kmmainwidget.cpp:336
 #, kde-format
@@ -4608,15 +4598,16 @@ msgid "Do Not Import"
 msgstr "Neimportuoti"
 
 #: kmmainwidget.cpp:345
-#, fuzzy, kde-format
+#, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr ""
-"Nepavyko paleisti importavimo vediklio. Patikrinkite, ar tinkamai įdiegėte."
+"Nepavyko paleisti importavimo vediklio. Patikrinkite, ar jis tinkamai "
+"įdiegtas."
 
 #: kmmainwidget.cpp:347
-#, fuzzy, kde-format
+#, kde-format
 msgid "Unable to start import wizard"
-msgstr "Nepavyksta paleisti importavimo vediklio"
+msgstr "Nepavyko paleisti importavimo vediklio"
 
 #: kmmainwidget.cpp:1408
 #, kde-format
@@ -5283,7 +5274,7 @@ msgstr "&Stebėti giją"
 msgid "&Ignore Thread"
 msgstr "&Nepaisyti gijos"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Įrašyti p&riedus…"
@@ -5722,10 +5713,9 @@ msgid "&Redo"
 msgstr ""
 
 #: kmmainwidget.cpp:4306
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "Atša&ukti: „%1“"
+msgstr "&Grąžinti: „%1“"
 
 #: kmmainwidget.cpp:4363
 #, fuzzy, kde-format
@@ -5810,186 +5800,175 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Paleidžiama…"
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Perkelti į šiukšlinę"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Perkelti į šiukšlinę"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Perkelti laišką į šiukšlinę"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Slėpti meniu juostą"
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Nepavyksta nukopijuoti elemento. %1"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, kde-format
 msgid "New Message To…"
 msgstr "Naujas laiškas adresatui…"
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, kde-format
 msgid "Reply To…"
 msgstr "Atsakyti adresatui…"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, kde-format
 msgid "Forward To…"
 msgstr "Persiųsti adresatui…"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Pridėti į adresų knygą"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Pridėti į esamą adresatą"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Atverti adresų knygoje"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Įrašyti šią nuorodą į žymeles"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, kde-format
 msgid "Edit contact…"
 msgstr "Taisyti adresatą…"
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Įrašyti nuorodą kaip…"
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, fuzzy, kde-format
 #| msgid "&Find in Message..."
 msgid "&Find in Message…"
 msgstr "&Ieškoti laiške..."
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, fuzzy, kde-format
 #| msgid "Save Image On Disk..."
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Įrašyti paveikslą diske..."
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Atverti paveikslą…"
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, kde-format
 msgid "Show HTML Format"
 msgstr "Rodyti HTML formatą"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr ""
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr ""
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Bendrinti paveikslą…"
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE pašto kliento programa"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, fuzzy, kde-format
 #| msgid "Retrieving folder properties"
 msgid "Retrieving Folder Contents"
 msgstr "Gaunamos aplanko savybės"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Palaukite . . ."
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
-#, fuzzy, kde-format
-#| msgid "Work Offline"
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
+#, kde-format
 msgid "Offline"
-msgstr "Dirbti neprisijungus"
+msgstr "Atsijungta nuo interneto"
 
-#: kmreaderwin.cpp:286
-#, fuzzy, kde-format
-#| msgid ""
-#| "<h2 style='margin-top: 0px;'>Offline</h2><p>KMail is currently in offline "
-#| "mode. Click <a href=\"kmail:goOnline\">here</a> to go online . . .</"
-#| "p>&nbsp;"
+#: kmreaderwin.cpp:285
+#, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
-"<h2 style='margin-top: 0px;'>Neprisijungęs</h2><p>KMail šiuo metu veikia "
-"neprisijungęs. Spauskite <a href=\"kmail:goOnline\">čia</a> norėdami "
-"prisijungti . . .</p>&nbsp;"
+"Programa KMail šiuo metu veikia neprisijungusi prie interneto. Spustelėkite "
+"<a href=\"kmail:goOnline\">čia</a> norėdami prisijungti . . .</p>"
 
-#: kmreaderwin.cpp:295
-#, fuzzy, kde-format
-#| msgid ""
-#| "<h2 style='margin-top: 0px;'>Offline</h2><p>Account is currently in "
-#| "offline mode. Click <a href=\"kmail:goResourceOnline\">here</a> to go "
-#| "online . . .</p>&nbsp;"
+#: kmreaderwin.cpp:294
+#, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
-"<h2 style='margin-top: 0px;'>Neprisijungęs</h2><p>Paskyra šiuo metu veikia "
-"neprisijungęs. Spauskite <a href=\"kmail:goResourceOnline\">čia</a> norėdami "
-"prisijungti . . .</p>&nbsp;"
+"Paskyra šiuo metu veikia neprisijungusi prie interneto. Spustelėkite <a href="
+"\"kmail:goResourceOnline\">čia</a> norėdami prisijungti . . .</p>"
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Adresatas sėkmingai modifikuotas"
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, fuzzy, kde-format
 msgid "New Messages In"
 msgstr "Nauji laiškai aplanke"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Neskaitytų laiškų nėra"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
@@ -6130,10 +6109,9 @@ msgid ""
 msgstr ""
 
 #: kontactplugin/summary/summaryview_part.cpp:108
-#, fuzzy, kde-format
-#| msgid "Smart for&mat (%1)"
+#, kde-format
 msgid "Summary for %1"
-msgstr "Įma&ntrus formatas (%1)"
+msgstr "%1 santrauka"
 
 #: kontactplugin/summary/summaryview_part.cpp:366
 #, kde-format
@@ -7854,66 +7832,65 @@ msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:17
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "If this option is selected, S/MIME certificates are validated using "
 "Certificate Revocation Lists (CRLs)."
 msgstr ""
-"Įjungus šią parinktį, S/MIME liudijimai yra patikrinami naudojant "
-"Sertifikatų atšaukimo sąrašus (CRL)."
+"Jei ši parinktis pažymėta, S/MIME liudijimai yra patikrinami naudojant "
+"liudijimų panaikinimo sąrašus (CRL)."
 
 #. i18n: ectx: property (text), widget (QRadioButton, CRLRB)
 #: ui/smimeconfiguration.ui:20
-#, fuzzy, kde-format
-#| msgid "Validate certificates using CRLs"
+#, kde-format
 msgid "&Validate certificates using CRLs"
-msgstr "Pripažinti liudijimus naudojant CRL"
+msgstr "&Tikrinti liudijimus naudojant CRL"
 
 #. i18n: ectx: property (whatsThis), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:30
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "If this option is selected, S/MIME certificates are validated online using "
 "the Online Certificates Status Protocol (OCSP). Fill in the URL of the OCSP "
 "responder below."
 msgstr ""
-"Jei ši parinktis pažymėta, S/MIME liudijimai yra tikrinami pasinaudojant "
-"„Online Certificate Status Protocol“ protokolu (OCSP). Įrašykite OCSP "
-"respondento URL adresą žemiau."
+"Jei ši parinktis pažymėta, S/MIME liudijimai yra tikrinami internetu "
+"naudojant „Online Certificate Status Protocol“ (OCSP) protokolą. Žemiau "
+"įrašykite OCSP atsakiklio URL adresą."
 
 #. i18n: ectx: property (text), widget (QRadioButton, OCSPRB)
 #: ui/smimeconfiguration.ui:33
-#, fuzzy, kde-format
+#, kde-format
 msgid "Validate certificates online (OCSP)"
-msgstr "Pripažinti liudijimus Internete (OCSP)"
+msgstr "Tikrinti liudijimus internetu (OCSP)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, OCSPGroupBox)
 #: ui/smimeconfiguration.ui:40
-#, fuzzy, kde-format
+#, kde-format
 msgid "Online Certificate Validation"
-msgstr "Sertifikato validavimas Internete"
+msgstr "Liudijimų tikrinimas internetu"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/smimeconfiguration.ui:50
-#, fuzzy, kde-format
+#, kde-format
 msgid "OCSP responder URL:"
-msgstr "OCSP respondento URL:"
+msgstr "OCSP atsakiklio URL:"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel2)
 #: ui/smimeconfiguration.ui:60
-#, fuzzy, kde-format
+#, kde-format
 msgid "OCSP responder signature:"
-msgstr "OCSP atsakytojo parašas:"
+msgstr "OCSP atsakiklio parašas:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with http://."
 msgstr ""
-"Čia įrašykite serverio, naudojamo liudijimų tikrinimui (OCSP respondento), "
-"adresą. URL paprastai prasideda http://."
+"Įrašykite čia serverio, kuris bus naudojamas liudijimų tikrinimui internetu "
+"(OCSP atsakiklio), adresą. URL adresas įprastai prasideda http://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
@@ -8026,17 +8003,15 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QRadioButton, honorHTTPProxyRB)
 #: ui/smimeconfiguration.ui:179
-#, fuzzy, kde-format
-#| msgid "Use system HTTP proxy:"
+#, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr "Naudoti sistemos HTTP įgaliotasis serveris:"
+msgstr "Naudoti s&istemos HTTP įgaliotąjį serverį:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
-#, fuzzy, kde-format
-#| msgid "Use this proxy for HTTP requests: "
+#, kde-format
 msgid "Use &this proxy for HTTP requests: "
-msgstr "HTTP užklausoms naudoti šį įgaliotąjį serverį: "
+msgstr "Naudoti šį įgaliotąjį serverį HTTP užklausoms: "
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, customHTTPProxy)
 #: ui/smimeconfiguration.ui:203

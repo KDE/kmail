@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-07 00:47+0000\n"
+"POT-Creation-Date: 2026-08-13 00:51+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -360,7 +360,7 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:194 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4251 kmreaderwin.cpp:266 kmsystemtray.cpp:50
+#: kmmainwidget.cpp:4251 kmreaderwin.cpp:265 kmsystemtray.cpp:50
 #: kmsystemtray.cpp:81
 #, kde-format
 msgid "KMail"
@@ -1890,7 +1890,7 @@ msgid "Show attachment list"
 msgstr "Cadw Atodiad Fel..."
 
 #: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
-#: kmreadermainwin.cpp:488 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2271,7 +2271,7 @@ msgstr "&Canfod Negeseuon..."
 msgid "Configure KMail…"
 msgstr "&Furffweddu KMail..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:547
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -4035,12 +4035,12 @@ msgstr "Ychwanegu i'r Llyfr Cyfeiriadau"
 msgid "Contact created successfully"
 msgstr "Symudwyd y negeseuon yn llwyddiannus."
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr ""
 
-#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:848
+#: job/createnewcontactjob.cpp:136 kmreaderwin.cpp:851
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
@@ -4538,48 +4538,48 @@ msgstr ""
 msgid "Text Direction Toolbar"
 msgstr ""
 
-#: kmkernel.cpp:643
+#: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:663 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
+#: kmkernel.cpp:662 kmmainwidget.cpp:2530 kmmainwidget.cpp:2545
 #, fuzzy, kde-format
 #| msgid "Sendmail"
 msgid "Send Email"
 msgstr "Sendmail"
 
-#: kmkernel.cpp:664 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
+#: kmkernel.cpp:663 kmmainwidget.cpp:2531 kmmainwidget.cpp:2546
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "Impossible to send email"
 msgstr "Ar fin anfon ebost..."
 
-#: kmkernel.cpp:690
+#: kmkernel.cpp:689
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:692
+#: kmkernel.cpp:691
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
 
-#: kmkernel.cpp:763
+#: kmkernel.cpp:762
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
 
-#: kmkernel.cpp:765
+#: kmkernel.cpp:764
 #, fuzzy, kde-format
 #| msgid "Offline mode"
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Modd All-lein"
 
-#: kmkernel.cpp:766
+#: kmkernel.cpp:765
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&Inline"
@@ -4587,31 +4587,31 @@ msgctxt "@action:button"
 msgid "Work Online"
 msgstr "&Mewnlin"
 
-#: kmkernel.cpp:767
+#: kmkernel.cpp:766
 #, fuzzy, kde-format
 #| msgid "Offline mode"
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Modd All-lein"
 
-#: kmkernel.cpp:791
+#: kmkernel.cpp:790
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr ""
 
-#: kmkernel.cpp:794
+#: kmkernel.cpp:793
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr ""
 
-#: kmkernel.cpp:889
+#: kmkernel.cpp:888
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
 "Reason: %2"
 msgstr ""
 
-#: kmkernel.cpp:890
+#: kmkernel.cpp:889
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
@@ -4651,7 +4651,7 @@ msgid ""
 "%2"
 msgstr ""
 
-#: kmkernel.cpp:1749 kmkernel.cpp:1755
+#: kmkernel.cpp:1747 kmkernel.cpp:1753
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
@@ -5423,7 +5423,7 @@ msgstr "&Gwylio ar yr Edefyn"
 msgid "&Ignore Thread"
 msgstr "&Anwybyddu'r Edefyn"
 
-#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:499
+#: kmmainwidget.cpp:3361 kmreadermainwin.cpp:500
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgid "Save A&ttachments…"
@@ -5970,182 +5970,182 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Tanysgrifiad..."
 
-#: kmreadermainwin.cpp:502 util.cpp:187
+#: kmreadermainwin.cpp:503 util.cpp:187
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Symud i Sbwriel"
 
-#: kmreadermainwin.cpp:503
+#: kmreadermainwin.cpp:504
 #, fuzzy, kde-format
 #| msgid "trash"
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "sbwriel"
 
-#: kmreadermainwin.cpp:504
+#: kmreadermainwin.cpp:505
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Symud y neges i'r sbwriel"
 
-#: kmreadermainwin.cpp:550
+#: kmreadermainwin.cpp:553
 #, kde-format
 msgid "Hide menu bar"
 msgstr ""
 
-#: kmreadermainwin.cpp:633
+#: kmreadermainwin.cpp:636
 #, fuzzy, kde-format
 msgid "Cannot copy item. %1"
 msgstr "Symud Neges i Blygell"
 
-#: kmreaderwin.cpp:124
+#: kmreaderwin.cpp:123
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "New Message To…"
 msgstr "Neges Newydd I..."
 
-#: kmreaderwin.cpp:130
+#: kmreaderwin.cpp:129
 #, fuzzy, kde-format
 #| msgid "&Reply To"
 msgid "Reply To…"
 msgstr "&Ateb I"
 
-#: kmreaderwin.cpp:136
+#: kmreaderwin.cpp:135
 #, fuzzy, kde-format
 #| msgid "Forward To"
 msgid "Forward To…"
 msgstr "Blaenyrru I"
 
-#: kmreaderwin.cpp:142
+#: kmreaderwin.cpp:141
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Ychwanegu i'r Llyfr Cyfeiriadau"
 
-#: kmreaderwin.cpp:147
+#: kmreaderwin.cpp:146
 #, fuzzy, kde-format
 msgid "Add to Existing Contact"
 msgstr "atodiad"
 
-#: kmreaderwin.cpp:153
+#: kmreaderwin.cpp:152
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Agor yn y Lyfr Cyfeiriadau"
 
-#: kmreaderwin.cpp:158
+#: kmreaderwin.cpp:157
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Tudnodi'r Cyswllt Yma"
 
-#: kmreaderwin.cpp:163
+#: kmreaderwin.cpp:162
 #, fuzzy, kde-format
 msgid "Edit contact…"
 msgstr "Golygu..."
 
-#: kmreaderwin.cpp:169
+#: kmreaderwin.cpp:168
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Cadw'r Cyswllt Fel..."
 
-#: kmreaderwin.cpp:175
+#: kmreaderwin.cpp:174
 #, fuzzy, kde-format
 #| msgid "&Find in Message..."
 msgid "&Find in Message…"
 msgstr "&Canfod mewn Neges..."
 
-#: kmreaderwin.cpp:181
+#: kmreaderwin.cpp:180
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Cadw'r Cyswllt Fel..."
 
-#: kmreaderwin.cpp:187
+#: kmreaderwin.cpp:186
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Cadw'r Cyswllt Fel..."
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:192
 #, fuzzy, kde-format
 #| msgid "Show HTML stat&us bar"
 msgid "Show HTML Format"
 msgstr "Dangos b&ar cyflwr HTML"
 
-#: kmreaderwin.cpp:194
+#: kmreaderwin.cpp:193
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "&Caniatáu i negeseuon lwytho cyfeirnodau allanol o'r Ryngrwyd"
 
-#: kmreaderwin.cpp:200
+#: kmreaderwin.cpp:199
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "&Caniatáu i negeseuon lwytho cyfeirnodau allanol o'r Ryngrwyd"
 
-#: kmreaderwin.cpp:206
+#: kmreaderwin.cpp:205
 #, fuzzy, kde-format
 #| msgid "Save Link As..."
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Cadw'r Cyswllt Fel..."
 
-#: kmreaderwin.cpp:269
+#: kmreaderwin.cpp:268
 #, fuzzy, kde-format
 #| msgid "KDE Email Client"
 msgid "The KDE Mail Client"
 msgstr "Dibynnydd Ebost KDE"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, fuzzy, kde-format
 #| msgid "Retrieving folderlist"
 msgid "Retrieving Folder Contents"
 msgstr "Nôl rhestr plygyll"
 
-#: kmreaderwin.cpp:278
+#: kmreaderwin.cpp:277
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgid "Please wait . . ."
 msgstr "Disgwyliwch"
 
-#: kmreaderwin.cpp:284 kmreaderwin.cpp:293
+#: kmreaderwin.cpp:283 kmreaderwin.cpp:292
 #, fuzzy, kde-format
 #| msgid "Offline mode"
 msgid "Offline"
 msgstr "Modd All-lein"
 
-#: kmreaderwin.cpp:286
+#: kmreaderwin.cpp:285
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:295
+#: kmreaderwin.cpp:294
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
 
-#: kmreaderwin.cpp:858
+#: kmreaderwin.cpp:861
 #, fuzzy, kde-format
 msgid "Contact modified successfully"
 msgstr "Symudwyd y negeseuon yn llwyddiannus."
 
-#: kmsystemtray.cpp:95
+#: kmsystemtray.cpp:94
 #, fuzzy, kde-format
 msgid "New Messages In"
 msgstr "Negeseuon Newydd Yn..."
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, fuzzy, kde-format
 msgid "There are no unread messages"
 msgstr "Darfod negeseuon &heb eu darllen"
 
-#: kmsystemtray.cpp:275
+#: kmsystemtray.cpp:276
 #, fuzzy, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
