@@ -289,11 +289,10 @@ void SearchWindowDialog::setEnabledSearchButton(bool)
 
 void SearchWindowDialog::updateCollectionStatistic(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &statistic)
 {
-    QString genMsg;
-    if (id == mFolder.id()) {
-        genMsg = i18np("%1 match", "%1 matches", statistic.count());
+    if (id != mFolder.id()) {
+        return;
     }
-    mUi.mStatusLbl->setText(genMsg);
+    mUi.mStatusLbl->setText(i18np("%1 match", "%1 matches", statistic.count()));
 }
 
 void SearchWindowDialog::keyPressEvent(QKeyEvent *event)
