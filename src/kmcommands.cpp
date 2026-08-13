@@ -1433,6 +1433,7 @@ KMCopyCommand::KMCopyCommand(const Akonadi::Collection &destFolder, const Akonad
 KMCommand::Result KMCopyCommand::execute()
 {
     setDeletesItself(true);
+    setEmitsCompletedItself(true);
 
     Akonadi::Item::List listItem = retrievedMsgs();
     auto job = new Akonadi::ItemCopyJob(listItem, Akonadi::Collection(mDestFolder.id()), this);
@@ -1447,9 +1448,9 @@ void KMCopyCommand::slotCopyResult(KJob *job)
         // handle errors
         showJobError(job);
         setResult(Failed);
+    } else {
+        setResult(OK);
     }
-
-    qobject_cast<Akonadi::ItemCopyJob *>(job);
 
     Q_EMIT completed(this);
     deleteLater();
@@ -1471,6 +1472,7 @@ KMCopyDecryptedCommand::KMCopyDecryptedCommand(const Akonadi::Collection &destFo
 KMCommand::Result KMCopyDecryptedCommand::execute()
 {
     setDeletesItself(true);
+    setEmitsCompletedItself(true);
 
     const auto items = retrievedMsgs();
     for (const auto &item : items) {
@@ -1495,6 +1497,7 @@ KMCommand::Result KMCopyDecryptedCommand::execute()
     }
 
     if (mPendingJobs.isEmpty()) {
+        setResult(OK);
         Q_EMIT completed(this);
         deleteLater();
     }
@@ -1505,7 +1508,14 @@ KMCommand::Result KMCopyDecryptedCommand::execute()
 void KMCopyDecryptedCommand::slotAppendResult(KJob *job)
 {
     mPendingJobs.removeOne(job);
+    if (job->error()) {
+        showJobError(job);
+        setResult(Failed);
+    }
     if (mPendingJobs.isEmpty()) {
+        if (result() != Failed) {
+            setResult(OK);
+        }
         Q_EMIT completed(this);
         deleteLater();
     }
