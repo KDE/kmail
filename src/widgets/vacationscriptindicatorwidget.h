@@ -14,7 +14,7 @@ class ServerLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit ServerLabel(const QString &toolTip, QWidget *parent = nullptr);
+    explicit ServerLabel(const QString &serverName, QWidget *parent = nullptr);
     ~ServerLabel() override;
 
 Q_SIGNALS:
