@@ -70,8 +70,17 @@ void UndoSendCreateJob::slotNotificationClosed()
 void UndoSendCreateJob::undoSendEmail()
 {
     mTimer->stop();
-    auto job = new MessageComposer::SendLaterRemoveJob(mAkonadiIndex, this);
+    // Don't parent the job to "this": closing the notification deletes us, and the job
+    // would be destroyed before its asynchronous dbus call to the send later agent completes.
+    auto job = new MessageComposer::SendLaterRemoveJob(mAkonadiIndex, nullptr);
+    connect(job, &KJob::result, this, [](KJob *job) {
+        if (job->error()) {
+            qCWarning(KMAIL_UNDO_SEND_LOG) << "Impossible to undo send email:" << job->errorString();
+        }
+    });
     job->start();
+    // Make sure that we are cleaned up even if the notification backend doesn't close it for us.
+    mNotification->close();
 }
 
 QString UndoSendCreateJob::subject() const
