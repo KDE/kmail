@@ -116,6 +116,7 @@ private:
     void updateMailingListActions(const Akonadi::Item &messageItem);
     void printMessage(bool preview);
     void clearMailingListActions();
+    void clearListFilterAction();
 
 private Q_SLOTS:
     void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);

@@ -314,6 +314,8 @@ void MessageActions::slotItemRemoved(const Akonadi::Item &item)
 {
     if (item == mCurrentItem) {
         mCurrentItem = Akonadi::Item();
+        mVisibleItems.removeAll(item);
+        clearMailingListActions();
         updateActions();
     }
 }
@@ -396,11 +398,16 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
     }
 }
 
+void MessageActions::clearListFilterAction()
+{
+    mListFilterAction->setEnabled(false);
+    mListFilterAction->setText(i18n("Filter on Mailing-List…"));
+}
+
 void MessageActions::clearMailingListActions()
 {
     mMailingListActionMenu->setEnabled(false);
-    mListFilterAction->setEnabled(false);
-    mListFilterAction->setText(i18n("Filter on Mailing-List…"));
+    clearListFilterAction();
 }
 
 void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
@@ -465,7 +472,11 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         QByteArray name;
         QString value;
         const QString lname = MailingList::name(message, name, value);
-        if (!lname.isEmpty()) {
+        if (lname.isEmpty()) {
+            // detect() and name() don't look at the same headers: a message can advertise
+            // mailing list features without us being able to name the list.
+            clearListFilterAction();
+        } else {
             mListFilterAction->setEnabled(true);
             mListFilterAction->setText(i18n("Filter on Mailing-List %1…", lname));
         }
