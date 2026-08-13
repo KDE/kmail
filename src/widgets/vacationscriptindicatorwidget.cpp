@@ -7,7 +7,9 @@
 #include "vacationscriptindicatorwidget.h"
 
 #include <KLocalizedString>
+#include <QEvent>
 #include <QIcon>
+#include <QStyle>
 
 #include <QHBoxLayout>
 
@@ -18,12 +20,31 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
     , mServerName(serverName)
 {
     setToolTip(serverName);
-    setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(16, 16));
+    updateIcon();
     setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(2, 0, 4, 0);
 }
 
 ServerLabel::~ServerLabel() = default;
+
+void ServerLabel::updateIcon()
+{
+    const int iconSize = style()->pixelMetric(QStyle::PM_SmallIconSize);
+    setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(QSize(iconSize, iconSize), devicePixelRatioF()));
+}
+
+bool ServerLabel::event(QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::DevicePixelRatioChange: // moved to a screen with a different scale factor
+    case QEvent::StyleChange: // PM_SmallIconSize may have changed
+        updateIcon();
+        break;
+    default:
+        break;
+    }
+    return QLabel::event(e);
+}
 
 void ServerLabel::mouseReleaseEvent(QMouseEvent *event)
 {

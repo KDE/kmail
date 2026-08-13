@@ -22,8 +22,10 @@ Q_SIGNALS:
 
 protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
+    bool event(QEvent *e) override;
 
 private:
+    void updateIcon();
     const QString mServerName;
 };
 
