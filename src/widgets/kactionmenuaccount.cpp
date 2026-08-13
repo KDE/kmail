@@ -29,6 +29,9 @@ KActionMenuAccount::~KActionMenuAccount() = default;
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 void KActionMenuAccount::setAccountActivitiesAbstract(AccountActivities *activities)
 {
+    if (mAccountActivities) {
+        disconnect(mAccountActivities, &AccountActivities::activitiesChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
+    }
     mAccountActivities = activities;
     connect(mAccountActivities, &AccountActivities::activitiesChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
 }
