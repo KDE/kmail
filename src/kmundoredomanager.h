@@ -78,10 +78,16 @@ public:
     [[nodiscard]] bool moveToTrash() const;
     void setMoveToTrash(bool newMoveToTrash);
 
+    // QUndoStack::push() calls redo(). The move is already performed by the command
+    // which created this undo action, so the first redo() must not move the items again.
+    [[nodiscard]] bool skipFirstRedo() const;
+    void setSkipFirstRedo(bool newSkipFirstRedo);
+
 private:
     Akonadi::Item::List mItems;
     Akonadi::Collection mSrcFolder;
     Akonadi::Collection mDestFolder;
     bool mMoveToTrash = false;
+    bool mSkipFirstRedo = true;
 };
 }

@@ -67,6 +67,11 @@ void KMUndoInfoMoveItems::undo()
 
 void KMUndoInfoMoveItems::redo()
 {
+    if (mSkipFirstRedo) {
+        // The items were already moved by the command which pushed us on the undo stack.
+        mSkipFirstRedo = false;
+        return;
+    }
     mManager->moveItems(mItems, mDestFolder);
 }
 
@@ -113,6 +118,16 @@ bool KMUndoInfoMoveItems::moveToTrash() const
 void KMUndoInfoMoveItems::setMoveToTrash(bool newMoveToTrash)
 {
     mMoveToTrash = newMoveToTrash;
+}
+
+bool KMUndoInfoMoveItems::skipFirstRedo() const
+{
+    return mSkipFirstRedo;
+}
+
+void KMUndoInfoMoveItems::setSkipFirstRedo(bool newSkipFirstRedo)
+{
+    mSkipFirstRedo = newSkipFirstRedo;
 }
 
 QString KMUndoInfoMoveItems::actionText() const
