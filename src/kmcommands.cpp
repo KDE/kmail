@@ -923,6 +923,9 @@ KMCommand::Result KMForwardCommand::createComposer(const Akonadi::Item &item)
 KMCommand::Result KMForwardCommand::execute()
 {
     Akonadi::Item::List msgList = retrievedMsgs();
+    if (msgList.isEmpty()) {
+        return Failed;
+    }
 
     if (msgList.count() >= 2) {
         // ask if they want a mime digest forward
@@ -993,6 +996,9 @@ KMForwardAttachedCommand::KMForwardAttachedCommand(QWidget *parent, const Akonad
 KMCommand::Result KMForwardAttachedCommand::execute()
 {
     Akonadi::Item::List msgList = retrievedMsgs();
+    if (msgList.isEmpty()) {
+        return Failed;
+    }
     Akonadi::Item firstItem(msgList.first());
     MessageFactoryNG factory(std::shared_ptr<KMime::Message>(new KMime::Message),
                              firstItem.id(),
