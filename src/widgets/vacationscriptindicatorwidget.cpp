@@ -82,17 +82,32 @@ void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const Q
     }
 }
 
+void VacationScriptIndicatorWidget::clearIndicator()
+{
+    // Deleting the layout doesn't delete the widgets it manages: they would stay
+    // as (unmanaged) children of this widget and overlap the newly created ones.
+    if (mBoxLayout) {
+        while (QLayoutItem *item = mBoxLayout->takeAt(0)) {
+            delete item->widget();
+            delete item;
+        }
+        delete mBoxLayout;
+        mBoxLayout = nullptr;
+    }
+    mInfo = nullptr;
+}
+
 void VacationScriptIndicatorWidget::createIndicator()
 {
-    delete mBoxLayout;
+    clearIndicator();
     mBoxLayout = new QHBoxLayout(this);
     mBoxLayout->setContentsMargins({});
     mBoxLayout->setSpacing(0);
-    mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on servers", mServerActive.count()));
+    mInfo = new VacationLabel(i18np("Out of office reply active on server", "Out of office reply active on %1 servers", mServerActive.count()), this);
     connect(mInfo, &VacationLabel::vacationLabelClicked, this, &VacationScriptIndicatorWidget::slotVacationLabelClicked);
     mBoxLayout->addWidget(mInfo);
     for (const QString &server : std::as_const(mServerActive)) {
-        auto lab = new ServerLabel(server);
+        auto lab = new ServerLabel(server, this);
         connect(lab, &ServerLabel::clicked, this, &VacationScriptIndicatorWidget::clicked);
         mBoxLayout->addWidget(lab);
     }

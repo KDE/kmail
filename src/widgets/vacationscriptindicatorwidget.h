@@ -59,6 +59,7 @@ private:
     void updateIndicator();
     void slotVacationLabelClicked();
     void createIndicator();
+    void clearIndicator();
     QStringList mServerActive;
     QHBoxLayout *mBoxLayout = nullptr;
     VacationLabel *mInfo = nullptr;
