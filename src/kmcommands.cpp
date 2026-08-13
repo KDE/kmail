@@ -1240,19 +1240,37 @@ KMCommand::Result KMSetTagCommand::execute()
     for (const Akonadi::Tag &tag : std::as_const(mTags)) {
         if (!tag.isValid()) {
             auto createJob = new Akonadi::TagCreateJob(tag, this);
-            connect(createJob, &Akonadi::TagCreateJob::result, this, &KMSetTagCommand::slotModifyItemDone);
+            connect(createJob, &Akonadi::TagCreateJob::result, this, &KMSetTagCommand::slotTagCreateDone);
+            ++mPendingTagCreateJobs;
         } else {
             mCreatedTags << tag;
         }
     }
 
-    if (mCreatedTags.size() == mTags.size()) {
+    // Wait for the missing tags to be created before applying them, see slotTagCreateDone()
+    if (mPendingTagCreateJobs == 0) {
         setTags();
-    } else {
-        deleteLater();
     }
 
     return OK;
+}
+
+void KMSetTagCommand::slotTagCreateDone(KJob *job)
+{
+    --mPendingTagCreateJobs;
+    if (job->error()) {
+        qCWarning(KMAIL_LOG) << " Error trying to create tag:" << job->errorText();
+    } else if (auto createJob = qobject_cast<Akonadi::TagCreateJob *>(job)) {
+        mCreatedTags << createJob->tag();
+    }
+
+    if (mPendingTagCreateJobs == 0) {
+        if (mCreatedTags.isEmpty()) {
+            deleteLater();
+        } else {
+            setTags();
+        }
+    }
 }
 
 void KMSetTagCommand::setTags()

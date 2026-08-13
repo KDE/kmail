@@ -489,6 +489,7 @@ public:
 
 protected Q_SLOTS:
     void slotModifyItemDone(KJob *job);
+    void slotTagCreateDone(KJob *job);
 
 private:
     [[nodiscard]] KMAIL_NO_EXPORT Result execute() override;
@@ -498,6 +499,7 @@ private:
     Akonadi::Tag::List mCreatedTags;
     Akonadi::Item::List mItem;
     SetTagMode mMode;
+    int mPendingTagCreateJobs = 0;
 };
 
 /* This command is used to apply a single filter (AKA ad-hoc filter)
