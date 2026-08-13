@@ -111,7 +111,8 @@ static QString toolTip(const Akonadi::Item &item)
     tip += QLatin1StringView(
         "</table>"
         "</td>"
-        "</tr>");
+        "</tr>"
+        "</table>");
     return tip;
 }
 
