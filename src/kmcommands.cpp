@@ -1056,7 +1056,7 @@ KMCommand::Result KMRedirectCommand::execute()
         (dlg->sendMode() == MailCommon::RedirectDialog::SendNow) ? MessageComposer::MessageSender::SendImmediate : MessageComposer::MessageSender::SendLater;
 
     const int identity = dlg->identity();
-    int transportId = dlg->transportId();
+    const int dialogTransportId = dlg->transportId();
     const QString to = dlg->to();
     const QString cc = dlg->cc();
     const QString bcc = dlg->bcc();
@@ -1070,6 +1070,9 @@ KMCommand::Result KMRedirectCommand::execute()
         factory.setIdentityManager(KMKernel::self()->identityManager());
         factory.setFolderIdentity(MailCommon::Util::folderIdentity(item));
 
+        // Each message may define its own transport, so don't let one item's transport
+        // leak into the next iteration.
+        int transportId = dialogTransportId;
         if (transportId == -1) {
             const auto transportAttribute = item.attribute<Akonadi::TransportAttribute>();
             if (transportAttribute) {
