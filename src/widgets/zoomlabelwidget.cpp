@@ -34,6 +34,7 @@ void ZoomLabelWidget::wheelEvent(QWheelEvent *event)
     } else if (y > 0) {
         Q_EMIT changeZoom(mZoomFactor + 10);
     }
+    event->accept();
 }
 
 void ZoomLabelWidget::mousePressEvent([[maybe_unused]] QMouseEvent *event)
