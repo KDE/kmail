@@ -1164,11 +1164,20 @@ KMSetStatusCommand::KMSetStatusCommand(const MessageStatus &status, const Akonad
 
 KMCommand::Result KMSetStatusCommand::execute()
 {
+    const Akonadi::Item::List lstItems = retrievedMsgs();
+    const Akonadi::Item::Flags statusFlags = mStatus.statusFlags();
+    if (lstItems.isEmpty() || statusFlags.isEmpty()) {
+        qCWarning(KMAIL_LOG) << "KMSetStatusCommand: nothing to do. Items:" << lstItems.count() << "status flags:" << statusFlags.count();
+        deleteLater();
+        return Failed;
+    }
+    const Akonadi::Item::Flag flag = *(statusFlags.constBegin());
+
     bool parentStatus = false;
     // Toggle actions on threads toggle the whole thread
     // depending on the state of the parent.
     if (mInvertMark) {
-        const Akonadi::Item first = retrievedMsgs().first();
+        const Akonadi::Item first = lstItems.constFirst();
         MessageStatus pStatus;
         pStatus.setStatusFromFlags(first.flags());
         if (pStatus & mStatus) {
@@ -1179,7 +1188,6 @@ KMCommand::Result KMSetStatusCommand::execute()
     }
 
     Akonadi::Item::List itemsToModify;
-    const Akonadi::Item::List lstItems = retrievedMsgs();
     for (const Akonadi::Item &it : lstItems) {
         if (mInvertMark) {
             // qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
@@ -1198,7 +1206,6 @@ KMCommand::Result KMSetStatusCommand::execute()
             }
         }
         Akonadi::Item item(it);
-        const Akonadi::Item::Flag flag = *(mStatus.statusFlags().constBegin());
         if (mInvertMark) {
             if (item.hasFlag(flag)) {
                 item.clearFlag(flag);
