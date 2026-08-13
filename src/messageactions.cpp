@@ -423,7 +423,8 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
             listId = mailList.id();
             const int start = listId.indexOf(QLatin1Char('<'));
             if (start > 0) {
-                listId.truncate(start - 1);
+                // The description is not necessarily separated from '<' by a space.
+                listId = listId.left(start).trimmed();
             } else if (start == 0) {
                 const int end = listId.lastIndexOf(QLatin1Char('>'));
                 if (end < 1) { // shouldn't happen but account for it anyway
