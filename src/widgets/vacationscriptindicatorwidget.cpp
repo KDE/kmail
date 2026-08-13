@@ -58,6 +58,13 @@ VacationScriptIndicatorWidget::~VacationScriptIndicatorWidget() = default;
 
 void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const QString &serverName)
 {
+    if (!active && serverName.isEmpty()) { // reset global
+        if (!mServerActive.isEmpty()) {
+            mServerActive.clear();
+            updateIndicator();
+        }
+        return;
+    }
     if (serverName.isEmpty()) {
         return;
     }
