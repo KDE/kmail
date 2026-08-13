@@ -23,7 +23,6 @@
 #include <QStatusBar>
 #include <QTimer>
 
-#include <KAboutData>
 #include <KActionCollection>
 #include <KConfig>
 #include <KConfigGui>
@@ -33,7 +32,6 @@
 #include <KStandardAction>
 #include <KXMLGUIFactory>
 #include <QMenuBar>
-#include <QStandardPaths>
 #include <QWindow>
 
 #include <QLabel>
