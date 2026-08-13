@@ -741,7 +741,7 @@ void KMOpenMsgCommand::slotDataArrived(KIO::Job *, const QByteArray &data)
         return;
     }
 
-    mMsgString.append(data.data());
+    mMsgString.append(data);
 }
 
 void KMOpenMsgCommand::doesNotContainMessage()
