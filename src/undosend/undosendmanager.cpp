@@ -43,7 +43,7 @@ QString UndoSendManager::UndoSendManagerInfo::generateMessageInfoText() const
         str += i18n("<b>To:</b> %1", to);
     }
     if (!subject.isEmpty()) {
-        if (!str.isEmpty()) {
+        if (!to.isEmpty()) {
             str += QStringLiteral("<br />");
         }
         str += i18n("<b>Subject:</b> %1", subject);
