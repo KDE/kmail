@@ -234,7 +234,9 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
 
 void KMMainWin::slotEditToolbars()
 {
-    KConfigGroup grp = KMKernel::self()->config()->group(QStringLiteral("Main Window"));
+    // The settings must be saved to the stateConfigGroup(), because
+    // slotUpdateGui() restores them from there.
+    KConfigGroup grp = stateConfigGroup();
     saveMainWindowSettings(grp);
     QPointer<KEditToolBar> dlg = new KEditToolBar(guiFactory(), this);
     connect(dlg.data(), &KEditToolBar::newToolBarConfig, this, &KMMainWin::slotUpdateGui);
