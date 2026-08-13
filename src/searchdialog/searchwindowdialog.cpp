@@ -429,7 +429,7 @@ void SearchWindowDialog::doSearch()
     if (mUi.mChkbxSpecificFolders->isChecked()) {
         const Akonadi::Collection col = mUi.mCbxFolders->collection();
         if (!col.isValid()) {
-            mSearchPatternWidget->showWarningPattern(QStringList() << i18n("You did not selected a valid folder."));
+            mSearchPatternWidget->showWarningPattern(QStringList() << i18n("You did not select a valid folder."));
             mUi.mSearchFolderEdt->setEnabled(true);
             return;
         }
