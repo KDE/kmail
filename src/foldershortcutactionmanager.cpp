@@ -116,14 +116,14 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     auto command = new FolderShortcutCommand(mParent, col);
     mFolderShortcutCommands.insert(col.id(), command);
 
-    QIcon icon(QStringLiteral("folder"));
-    if (col.hasAttribute<Akonadi::EntityDisplayAttribute>() && !col.attribute<Akonadi::EntityDisplayAttribute>()->iconName().isEmpty()) {
-        icon = QIcon(col.attribute<Akonadi::EntityDisplayAttribute>()->iconName());
+    QIcon icon = QIcon::fromTheme(QStringLiteral("folder"));
+    if (const auto *attribute = col.attribute<Akonadi::EntityDisplayAttribute>(); attribute && !attribute->iconName().isEmpty()) {
+        icon = QIcon::fromTheme(attribute->iconName());
     }
 
     const QString actionLabel = i18n("Folder Shortcut %1", col.name());
-    QString actionName = i18n("Folder Shortcut %1", QString::number(col.id()));
-    actionName.replace(QLatin1Char(' '), QLatin1Char('_'));
+    // The action name is an internal identifier used as config key, it must not be translated.
+    const QString actionName = QStringLiteral("folder_shortcut_%1").arg(col.id());
     QAction *action = mActionCollection->addAction(actionName);
     // The folder shortcut is set in the folder shortcut dialog.
     // The shortcut set in the shortcut dialog would not be saved back to
