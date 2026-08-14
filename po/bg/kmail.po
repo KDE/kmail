@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-13 00:51+0000\n"
-"PO-Revision-Date: 2026-06-30 09:49+0200\n"
+"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"PO-Revision-Date: 2026-08-13 08:14+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.04.2\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 26.04.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -388,7 +388,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "URL адрес за публикуване в пощенски списък:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:465
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Абониране за списък"
@@ -1742,7 +1742,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Показване на списък с прикачени файлове"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
@@ -2100,7 +2100,7 @@ msgstr "Създаване на проследяващо напомняне…"
 msgid "Configure KMail…"
 msgstr "Настройване на KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:223 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2109,7 +2109,7 @@ msgstr ""
 "<qt>Това напълно ще скрие менюто. Можете да го накарате да се покаже отново "
 "като напишете: %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:226
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -2912,7 +2912,7 @@ msgstr "Не може да се върне списък с папки."
 msgid "Messages archived"
 msgstr "Съобщенията са архивирани"
 
-#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
+#: foldershortcutactionmanager.cpp:118
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr "Пряк път %1"
@@ -2935,7 +2935,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Възстановяване на затворено съобщение"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3853,7 +3853,7 @@ msgstr "Изчистване на кеш-паметта на Akonadi"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:170
+#: manageshowcollectionproperties.cpp:172
 #, kde-format
 msgid "Done"
 msgstr "Готово"
@@ -4280,12 +4280,7 @@ msgstr "Съобщение"
 msgid "The file does not contain a message."
 msgstr "Файлът не съдържа съобщение."
 
-#: kmcommands.cpp:820
-#, kde-format
-msgid "The file contains multiple messages. Only the first message is shown."
-msgstr "Файлът съдържа множество съобщения. Показано е само първото съобщение."
-
-#: kmcommands.cpp:931
+#: kmcommands.cpp:938
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4294,39 +4289,39 @@ msgstr ""
 "Искате ли да препратите избраните съобщения като прикачени файлове в едно "
 "съобщение (като MIME обобщение) или като отделни съобщения?"
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:942
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Изпращане като обобщение"
 
-#: kmcommands.cpp:936
+#: kmcommands.cpp:943
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Изпращане поотделно"
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1361
 #, kde-format
 msgid "Filtering messages"
 msgstr "Филтриране на съобщенията"
 
-#: kmcommands.cpp:1333
+#: kmcommands.cpp:1371
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Филтриране на съобщение %1 от %2"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1679
+#: kmcommands.cpp:1594 kmcommands.cpp:1731
 #, kde-format
 msgid "Moving messages"
 msgstr "Преместване на съобщенията"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1689
+#: kmcommands.cpp:1594 kmcommands.cpp:1741
 #, kde-format
 msgid "Deleting messages"
 msgstr "Изтриване на съобщенията"
 
-#: kmcommands.cpp:1831
+#: kmcommands.cpp:1883
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5645,13 +5640,12 @@ msgstr "&Отмяна: „%1“"
 #: kmmainwidget.cpp:4304
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&Повтаряне"
 
 #: kmmainwidget.cpp:4306
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Отмяна: „%1“"
+msgstr "&Повтаряне: \"%1\""
 
 #: kmmainwidget.cpp:4363
 #, kde-format
@@ -5735,7 +5729,7 @@ msgstr "Рестартиране"
 msgid "Akonadi restarted."
 msgstr "Akonadi е рестартиран."
 
-#: kmmainwin.cpp:55
+#: kmmainwin.cpp:53
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
@@ -5918,18 +5912,15 @@ msgstr[1] "%1 непрочетени съобщения"
 msgid "Cannot move message. %1"
 msgstr "Съобщението не може да се премести. %1"
 
-#: kmundoredomanager.cpp:120
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#: kmundoredomanager.cpp:135
+#, kde-format
 msgid "Move messages"
-msgstr "Преместване на съобщение"
+msgstr "Преместване на съобщенията"
 
-#: kmundoredomanager.cpp:156
-#, fuzzy, kde-format
-#| msgid "Message Tags"
+#: kmundoredomanager.cpp:171
+#, kde-format
 msgid "Change Messages Status"
-msgstr "Тагове на съобщения"
+msgstr "Промяна на статуса на съобщенията"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
@@ -6102,7 +6093,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:140
 #, kde-format
 msgid "Retrieving folder properties"
 msgstr "Извличане на свойства на папката"
@@ -6113,7 +6104,7 @@ msgid "Network is unconnected. Folder information cannot be updated."
 msgstr ""
 "Мрежата не е свързана. Информацията за папката не може да се актуализира."
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:186
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -6231,68 +6222,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Архивиране на съобщение"
 
-#: messageactions.cpp:403
+#: messageactions.cpp:404
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Филтриране на пощенски списък…"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "<unknown>"
 msgstr "<неизвестен>"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Име на пощенския списък: %1"
 
-#: messageactions.cpp:442
+#: messageactions.cpp:450
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Отваряне на съобщението в архива на списъка"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:453
 #, kde-format
 msgid "Post New Message"
 msgstr "Публикуване на ново съобщение"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:456
 #, kde-format
 msgid "Go to Archive"
 msgstr "Към архива"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:459
 #, kde-format
 msgid "Request Help"
 msgstr "Искане на помощ"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:462
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Свържете се със собственика"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:468
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Отписване от списък"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:481
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Филтриране на пощенски списък %1…"
 
-#: messageactions.cpp:646
+#: messageactions.cpp:658
 #, kde-format
 msgid "email"
 msgstr "е-поща"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:661
 #, kde-format
 msgid "web"
 msgstr "уеб"
 
-#: messageactions.cpp:654
+#: messageactions.cpp:666
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6300,13 +6291,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:772
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Експортиране в PDF"
 
-#: messageactions.cpp:762
+#: messageactions.cpp:774
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF документ (* .pdf)"
@@ -6358,7 +6349,7 @@ msgstr "Дата"
 msgid "Preview"
 msgstr "Преглед"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:167
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -6410,76 +6401,77 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Направо към оригиналната папка"
 
-#: searchdialog/searchwindowdialog.cpp:294
+#: searchdialog/searchwindowdialog.cpp:295
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 съвпадение"
 msgstr[1] "%1 съвпадения"
 
-#: searchdialog/searchwindowdialog.cpp:364
-#: searchdialog/searchwindowdialog.cpp:406
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Последно търсене"
 
-#: searchdialog/searchwindowdialog.cpp:432
-#, kde-format
-msgid "You did not selected a valid folder."
+#: searchdialog/searchwindowdialog.cpp:431
+#, fuzzy, kde-format
+#| msgid "You did not selected a valid folder."
+msgid "You did not select a valid folder."
 msgstr "Не сте избрали валидна папка."
 
-#: searchdialog/searchwindowdialog.cpp:446
+#: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Забравихте да изберете колекции."
 
-#: searchdialog/searchwindowdialog.cpp:464
+#: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Забравихте да дефинирате условие."
 
-#: searchdialog/searchwindowdialog.cpp:469
+#: searchdialog/searchwindowdialog.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Всички избрани папки са празни или не са индексирани."
 
-#: searchdialog/searchwindowdialog.cpp:475
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Забравихте да добавите условия."
 
-#: searchdialog/searchwindowdialog.cpp:479
+#: searchdialog/searchwindowdialog.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Съдържа условие не може да се използва с брой знаци, по-ниски от 4."
 
-#: searchdialog/searchwindowdialog.cpp:522
+#: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr "Търсене…"
 
-#: searchdialog/searchwindowdialog.cpp:535
+#: searchdialog/searchwindowdialog.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Не може да се получи резултат от търсенето. %1"
 
-#: searchdialog/searchwindowdialog.cpp:538
+#: searchdialog/searchwindowdialog.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "Търсенето е неуспешно."
 
-#: searchdialog/searchwindowdialog.cpp:579
+#: searchdialog/searchwindowdialog.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "Търсене завършено."
 
-#: searchdialog/searchwindowdialog.cpp:617
+#: searchdialog/searchwindowdialog.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "Търсенето спря."
 
-#: searchdialog/searchwindowdialog.cpp:675
+#: searchdialog/searchwindowdialog.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6490,21 +6482,21 @@ msgstr ""
 "причина за това е, че вече съществува друга папка за търсене със същото име. "
 "Върната грешка „%1“."
 
-#: searchdialog/searchwindowdialog.cpp:779
+#: searchdialog/searchwindowdialog.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Копиране на съобщение"
 msgstr[1] "Копиране на %1 съобщения"
 
-#: searchdialog/searchwindowdialog.cpp:782
+#: searchdialog/searchwindowdialog.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Изрязване на съобщението"
 msgstr[1] "Изрязване на %1 съобщения"
 
-#: searchdialog/searchwindowdialog.cpp:911
+#: searchdialog/searchwindowdialog.cpp:910
 #, kde-format
 msgid "Checking index status…"
 msgstr "Проверка на състоянието на индекса…"
@@ -8203,10 +8195,12 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Използване на глобална настройка"
 
-#: widgets/vacationscriptindicatorwidget.cpp:84
-#, kde-format
+#: widgets/vacationscriptindicatorwidget.cpp:127
+#, fuzzy, kde-format
+#| msgid "Out of office reply active on server"
+#| msgid_plural "Out of office reply active on servers"
 msgid "Out of office reply active on server"
-msgid_plural "Out of office reply active on servers"
+msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Отговор извън офиса активен на сървъра"
 msgstr[1] "Отговор извън офиса активен на сървъри"
 
@@ -8215,32 +8209,7 @@ msgstr[1] "Отговор извън офиса активен на сървър
 msgid "Zoom: %1%"
 msgstr "Мащабиране: %1%"
 
-#~ msgid "There is nothing to undo."
-#~ msgstr "Няма нищо за отмяна."
-
-#~ msgid "Move To Trash"
-#~ msgstr "Преместване в кошчето"
-
-#~ msgid "Add new whatsnew widget."
-#~ msgstr "Добавяне на нов уиджет \"Какво ново\"."
-
-#~ msgid "New plugin: show collection size."
-#~ msgstr "Нов плъгин: показване на размера на колекцията."
-
-#~ msgid "Allow to export text in autogenerate editor plugins."
-#~ msgstr ""
-#~ "Разрешава експортирането на текст в плъгини за автоматично генериране."
-
-#~ msgid "Fix text to speech support (enqueue messages)"
-#~ msgstr ""
-#~ "Поправка на поддръжката на преобразуване на текст в реч (поставяне на "
-#~ "съобщения в опашката)"
-
 #~ msgid ""
-#~ "HTML messages are shown with their intended colors by default. To "
-#~ "override this, uncheck the \"Appearance->Colors->Do not change color from "
-#~ "original HTML mail\" option"
+#~ "The file contains multiple messages. Only the first message is shown."
 #~ msgstr ""
-#~ "HTML съобщенията се показват с оригиналните цветове по подразбиране. За "
-#~ "да промените това, махнете отметката от опцията „Външен вид->Цветове-"
-#~ ">Запазване на цвета от оригиналното HTML съобщение“."
+#~ "Файлът съдържа множество съобщения. Показано е само първото съобщение."

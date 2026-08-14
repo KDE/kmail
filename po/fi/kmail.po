@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-13 00:51+0000\n"
+"POT-Creation-Date: 2026-08-14 00:46+0000\n"
 "PO-Revision-Date: 2026-01-05 17:05+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -404,7 +404,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Sähköpostilistalle lähettämisen verkko-osoite:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:465
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Liity listalle"
@@ -1747,7 +1747,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Näytä liiteluettelo"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
@@ -2100,7 +2100,7 @@ msgstr "Lisää vastaamisen seurannasta muistuttaja…"
 msgid "Configure KMail…"
 msgstr "KMailin asetukset…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:223 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2109,7 +2109,7 @@ msgstr ""
 "<qt>Tämä piilottaa valikkorivin kokonaan. Saat sen uudelleen näkyviin "
 "painamalla %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:226
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -2898,7 +2898,7 @@ msgstr "Kansioluettelon palauttaminen epäonnistui."
 msgid "Messages archived"
 msgstr "Viestit arkistoitiin"
 
-#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
+#: foldershortcutactionmanager.cpp:118
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr "Kansion pikanäppäin %1"
@@ -2921,7 +2921,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Avaa suljettu lukuikkuna uudelleen"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3828,7 +3828,7 @@ msgstr "Tyhjennä Akonadin välimuisti"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:170
+#: manageshowcollectionproperties.cpp:172
 #, kde-format
 msgid "Done"
 msgstr "Valmis"
@@ -4253,13 +4253,7 @@ msgstr "Viesti"
 msgid "The file does not contain a message."
 msgstr "Tiedosto ei sisällä viestiä."
 
-#: kmcommands.cpp:820
-#, kde-format
-msgid "The file contains multiple messages. Only the first message is shown."
-msgstr ""
-"Tiedosto sisältää useita viestejä, mutta vain ensimmäinen viesti näytetään."
-
-#: kmcommands.cpp:931
+#: kmcommands.cpp:938
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4268,39 +4262,39 @@ msgstr ""
 "Haluatko välittää valitut viestit liitteinä yhdessä viestissä (MIME-"
 "koosteena) vai yksittäisinä viesteinä?"
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:942
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Lähetä koosteena"
 
-#: kmcommands.cpp:936
+#: kmcommands.cpp:943
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Lähetä yksittäin"
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1361
 #, kde-format
 msgid "Filtering messages"
 msgstr "Suodatetaan viestejä"
 
-#: kmcommands.cpp:1333
+#: kmcommands.cpp:1371
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Suodatetaan %2:n viestiä %1"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1679
+#: kmcommands.cpp:1594 kmcommands.cpp:1731
 #, kde-format
 msgid "Moving messages"
 msgstr "Siirretään viestejä"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1689
+#: kmcommands.cpp:1594 kmcommands.cpp:1741
 #, kde-format
 msgid "Deleting messages"
 msgstr "Poistetaan viestejä"
 
-#: kmcommands.cpp:1831
+#: kmcommands.cpp:1883
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5698,7 +5692,7 @@ msgstr "Käynnistä uudelleen"
 msgid "Akonadi restarted."
 msgstr "Akonadi käynnistetty uudelleen."
 
-#: kmmainwin.cpp:55
+#: kmmainwin.cpp:53
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
@@ -5881,14 +5875,14 @@ msgstr[1] "%1 viestiä lukematta"
 msgid "Cannot move message. %1"
 msgstr "Viestiä ei voi siirtää. %1"
 
-#: kmundoredomanager.cpp:120
+#: kmundoredomanager.cpp:135
 #, fuzzy, kde-format
 #| msgid "Move Message"
 #| msgid_plural "Move Messages"
 msgid "Move messages"
 msgstr "Siirrä viesti"
 
-#: kmundoredomanager.cpp:156
+#: kmundoredomanager.cpp:171
 #, fuzzy, kde-format
 #| msgid "Message Status"
 msgid "Change Messages Status"
@@ -6061,7 +6055,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:140
 #, kde-format
 msgid "Retrieving folder properties"
 msgstr "Noudetaan kansion ominaisuuksia"
@@ -6071,7 +6065,7 @@ msgstr "Noudetaan kansion ominaisuuksia"
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr "Ei yhteyttä verkkoon. Kansion tietoja ei voi päivittää."
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:186
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -6189,68 +6183,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Arkistoi viesti"
 
-#: messageactions.cpp:403
+#: messageactions.cpp:404
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Suodata postituslistalla…"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "<unknown>"
 msgstr "<tuntematon>"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Postituslistan nimi: %1"
 
-#: messageactions.cpp:442
+#: messageactions.cpp:450
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Avaa viesti listan arkistosta"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:453
 #, kde-format
 msgid "Post New Message"
 msgstr "Lähetä uusi viesti"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:456
 #, kde-format
 msgid "Go to Archive"
 msgstr "Siirry arkistoon"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:459
 #, kde-format
 msgid "Request Help"
 msgstr "Pyydä ohjeita"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:462
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Yhteystiedon omistaja"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:468
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Poistu listalta"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:481
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Suodata postituslistalla %1…"
 
-#: messageactions.cpp:646
+#: messageactions.cpp:658
 #, kde-format
 msgid "email"
 msgstr "sähköposti"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:661
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:654
+#: messageactions.cpp:666
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6258,13 +6252,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:772
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Vie PDF:ksi"
 
-#: messageactions.cpp:762
+#: messageactions.cpp:774
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF-tiedosto (*.pdf)"
@@ -6316,7 +6310,7 @@ msgstr "Päivä"
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:167
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -6368,76 +6362,77 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Siirry alkuperäiseen kansioon"
 
-#: searchdialog/searchwindowdialog.cpp:294
+#: searchdialog/searchwindowdialog.cpp:295
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 osuma"
 msgstr[1] "%1 osumaa"
 
-#: searchdialog/searchwindowdialog.cpp:364
-#: searchdialog/searchwindowdialog.cpp:406
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Edellinen haku"
 
-#: searchdialog/searchwindowdialog.cpp:432
-#, kde-format
-msgid "You did not selected a valid folder."
+#: searchdialog/searchwindowdialog.cpp:431
+#, fuzzy, kde-format
+#| msgid "You did not selected a valid folder."
+msgid "You did not select a valid folder."
 msgstr "Et valinnut kelvollista kansiota."
 
-#: searchdialog/searchwindowdialog.cpp:446
+#: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Unohdit valita kokoelmat."
 
-#: searchdialog/searchwindowdialog.cpp:464
+#: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Unohdit määrittää ehdon."
 
-#: searchdialog/searchwindowdialog.cpp:469
+#: searchdialog/searchwindowdialog.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Kaikki valitut kansiot ovat tyhjiä tai niitä ei indeksoitu."
 
-#: searchdialog/searchwindowdialog.cpp:475
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Unohdit lisätä ehdot."
 
-#: searchdialog/searchwindowdialog.cpp:479
+#: searchdialog/searchwindowdialog.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Sisältää-ehtoa ei voi käyttää, jos merkkien määrä on pienempi kuin 4."
 
-#: searchdialog/searchwindowdialog.cpp:522
+#: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr "Etsitään…"
 
-#: searchdialog/searchwindowdialog.cpp:535
+#: searchdialog/searchwindowdialog.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Hakutuloksia ei saada. %1"
 
-#: searchdialog/searchwindowdialog.cpp:538
+#: searchdialog/searchwindowdialog.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "Haku epäonnistui."
 
-#: searchdialog/searchwindowdialog.cpp:579
+#: searchdialog/searchwindowdialog.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "Haku valmis."
 
-#: searchdialog/searchwindowdialog.cpp:617
+#: searchdialog/searchwindowdialog.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "Haku pysäytetty."
 
-#: searchdialog/searchwindowdialog.cpp:675
+#: searchdialog/searchwindowdialog.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6447,21 +6442,21 @@ msgstr ""
 "Hakukansiosi nimen muuttamisessa ilmeni ongelmia. Yleinen syy tähän on, että "
 "toinen saman niminen hakukansio on jo olemassa. Virhe oli: %1."
 
-#: searchdialog/searchwindowdialog.cpp:779
+#: searchdialog/searchwindowdialog.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Kopioi viesti"
 msgstr[1] "Kopioi %1 viestiä"
 
-#: searchdialog/searchwindowdialog.cpp:782
+#: searchdialog/searchwindowdialog.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Leikkaa viesti"
 msgstr[1] "Leikkaa %1 viestiä"
 
-#: searchdialog/searchwindowdialog.cpp:911
+#: searchdialog/searchwindowdialog.cpp:910
 #, kde-format
 msgid "Checking index status…"
 msgstr "Tarkistetaan indeksoinnin tilaa…"
@@ -8149,10 +8144,12 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Käytä järjestelmäasetusta"
 
-#: widgets/vacationscriptindicatorwidget.cpp:84
-#, kde-format
+#: widgets/vacationscriptindicatorwidget.cpp:127
+#, fuzzy, kde-format
+#| msgid "Out of office reply active on server"
+#| msgid_plural "Out of office reply active on servers"
 msgid "Out of office reply active on server"
-msgid_plural "Out of office reply active on servers"
+msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Poissaolovastaus on aktiivinen palvelimella"
 msgstr[1] "Poissaolovastaus on aktiivinen palvelimilla"
 
@@ -8160,6 +8157,12 @@ msgstr[1] "Poissaolovastaus on aktiivinen palvelimilla"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Lähennys: %1 %"
+
+#~ msgid ""
+#~ "The file contains multiple messages. Only the first message is shown."
+#~ msgstr ""
+#~ "Tiedosto sisältää useita viestejä, mutta vain ensimmäinen viesti "
+#~ "näytetään."
 
 #~ msgid "There is nothing to undo."
 #~ msgstr "Ei ole mitään kumottavaa."

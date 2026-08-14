@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-13 00:51+0000\n"
+"POT-Creation-Date: 2026-08-14 00:46+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -421,7 +421,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Huraian senarai mel:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:465
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Langgan dari Senarai"
@@ -1901,7 +1901,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "ada lampiran"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2292,14 +2292,14 @@ msgstr "&Cari Mesej"
 msgid "Configure KMail…"
 msgstr "&Konfigur KMail..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:223 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:226
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -3087,7 +3087,7 @@ msgstr "_n: 1 mesej lama telah dibuang dari folder%2."
 msgid "Messages archived"
 msgstr "Mesej OpenPGP - Tandatangan Rosak"
 
-#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
+#: foldershortcutactionmanager.cpp:118
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr ""
@@ -3112,7 +3112,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Mesej Baru"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4118,7 +4118,7 @@ msgstr "Nama Identiti"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:170
+#: manageshowcollectionproperties.cpp:172
 #, fuzzy, kde-format
 msgid "Done"
 msgstr "Selesai"
@@ -4579,51 +4579,46 @@ msgstr "&Mesej"
 msgid "The file does not contain a message."
 msgstr "Fail tidak mengandungi mesej."
 
-#: kmcommands.cpp:820
-#, kde-format
-msgid "The file contains multiple messages. Only the first message is shown."
-msgstr "Fail mengandungi berbilang mesej. Hanya mesej pertama dipaparkan."
-
-#: kmcommands.cpp:931
+#: kmcommands.cpp:938
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:942
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Hantar tanpa tandatangan?"
 
-#: kmcommands.cpp:936
+#: kmcommands.cpp:943
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1361
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Menghapuskan mesej"
 
-#: kmcommands.cpp:1333
+#: kmcommands.cpp:1371
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Mengalihkan mesej %3 daripada %2 dari %1."
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1679
+#: kmcommands.cpp:1594 kmcommands.cpp:1731
 #, kde-format
 msgid "Moving messages"
 msgstr "Mengalihkan mesej"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1689
+#: kmcommands.cpp:1594 kmcommands.cpp:1741
 #, kde-format
 msgid "Deleting messages"
 msgstr "Menghapuskan mesej"
 
-#: kmcommands.cpp:1831
+#: kmcommands.cpp:1883
 #, fuzzy, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -6132,7 +6127,7 @@ msgstr "Nama Identiti"
 msgid "Akonadi restarted."
 msgstr ""
 
-#: kmmainwin.cpp:55
+#: kmmainwin.cpp:53
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgctxt "@label:textbox"
@@ -6330,13 +6325,13 @@ msgstr[1] "Mesej Belum Baca"
 msgid "Cannot move message. %1"
 msgstr "_n: 1 mesej baru dalam %2"
 
-#: kmundoredomanager.cpp:120
+#: kmundoredomanager.cpp:135
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move messages"
 msgstr "Mesej Baru Kepada..."
 
-#: kmundoredomanager.cpp:156
+#: kmundoredomanager.cpp:171
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Change Messages Status"
@@ -6512,7 +6507,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr ""
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:140
 #, fuzzy, kde-format
 #| msgid "Mailinglist Folder Properties"
 msgid "Retrieving folder properties"
@@ -6523,7 +6518,7 @@ msgstr "Ciri Folder Senarai Mel"
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr ""
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:186
 #, fuzzy, kde-format
 #| msgid "Shortcut for Folder %1"
 msgctxt "@title:window"
@@ -6661,79 +6656,79 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Mesej Baru Kepada..."
 
-#: messageactions.cpp:403
+#: messageactions.cpp:404
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List..."
 msgid "Filter on Mailing-List…"
 msgstr "Tapis dalam Senarai Mel..."
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, fuzzy, kde-format
 #| msgctxt "name used for a virgin filter"
 #| msgid "unknown"
 msgid "<unknown>"
 msgstr "tidak diketahui"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "Jawab kepada &Senarai Mel..."
 
-#: messageactions.cpp:442
+#: messageactions.cpp:450
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "Mesej OpenPGP - Tandatangan Rosak"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:453
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "Mesej Baru"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:456
 #, fuzzy, kde-format
 msgid "Go to Archive"
 msgstr "Tampal pada Senarai"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:459
 #, fuzzy, kde-format
 #| msgid "List Help"
 msgid "Request Help"
 msgstr "Senaraikan Bantuan"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:462
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Orang hubungan"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:468
 #, fuzzy, kde-format
 #| msgid "Unsubscribe from List"
 msgid "Unsubscribe from List"
 msgstr "Nyahlanggan dari Senarai"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:481
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-List %1..."
 msgid "Filter on Mailing-List %1…"
 msgstr "Tapis dalam Senarai Mel %1..."
 
-#: messageactions.cpp:646
+#: messageactions.cpp:658
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "E-mel"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:661
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:654
+#: messageactions.cpp:666
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6742,14 +6737,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "Mel"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:772
 #, fuzzy, kde-format
 #| msgid "Export..."
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Export..."
 
-#: messageactions.cpp:762
+#: messageactions.cpp:774
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6809,7 +6804,7 @@ msgstr ""
 msgid "Preview"
 msgstr "Kad &Sebelumnya"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:167
 #, fuzzy, kde-format
 #| msgid "&Folders"
 msgctxt "@title:column, folder (e.g. email)"
@@ -6869,72 +6864,72 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Salin Ke Folder"
 
-#: searchdialog/searchwindowdialog.cpp:294
+#: searchdialog/searchwindowdialog.cpp:295
 #, fuzzy, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "_n: %1 padan"
 msgstr[1] "%1 padan"
 
-#: searchdialog/searchwindowdialog.cpp:364
-#: searchdialog/searchwindowdialog.cpp:406
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Carian Terakhir"
 
-#: searchdialog/searchwindowdialog.cpp:432
+#: searchdialog/searchwindowdialog.cpp:431
 #, kde-format
-msgid "You did not selected a valid folder."
+msgid "You did not select a valid folder."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:446
+#: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:464
+#: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:469
+#: searchdialog/searchwindowdialog.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:475
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:479
+#: searchdialog/searchwindowdialog.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:522
+#: searchdialog/searchwindowdialog.cpp:521
 #, fuzzy, kde-format
 #| msgid "Subscription..."
 msgid "Searching…"
 msgstr "Langganan..."
 
-#: searchdialog/searchwindowdialog.cpp:535
+#: searchdialog/searchwindowdialog.cpp:534
 #, fuzzy, kde-format
 msgid "Cannot get search result. %1"
 msgstr "_n: 1 mesej baru dalam %2"
 
-#: searchdialog/searchwindowdialog.cpp:538
+#: searchdialog/searchwindowdialog.cpp:537
 #, fuzzy, kde-format
 msgid "Search failed."
 msgstr "Carian dibatalkan"
 
-#: searchdialog/searchwindowdialog.cpp:579
+#: searchdialog/searchwindowdialog.cpp:578
 #, fuzzy, kde-format
 msgid "Search complete."
 msgstr "Carian dibatalkan"
 
-#: searchdialog/searchwindowdialog.cpp:617
+#: searchdialog/searchwindowdialog.cpp:616
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@info/plain Displayed grayed-out inside the textbox, verb to search"
@@ -6942,7 +6937,7 @@ msgstr "Carian dibatalkan"
 msgid "Search stopped."
 msgstr "Cari"
 
-#: searchdialog/searchwindowdialog.cpp:675
+#: searchdialog/searchwindowdialog.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6950,21 +6945,21 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:779
+#: searchdialog/searchwindowdialog.cpp:778
 #, fuzzy, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Mesej Tugasan"
 msgstr[1] "Mesej Tugasan"
 
-#: searchdialog/searchwindowdialog.cpp:782
+#: searchdialog/searchwindowdialog.cpp:781
 #, fuzzy, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Hapuskan Mesej"
 msgstr[1] "Hapuskan Mesej"
 
-#: searchdialog/searchwindowdialog.cpp:911
+#: searchdialog/searchwindowdialog.cpp:910
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Checking index status…"
@@ -8780,11 +8775,11 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Set Semula Seting Fon"
 
-#: widgets/vacationscriptindicatorwidget.cpp:84
+#: widgets/vacationscriptindicatorwidget.cpp:127
 #, fuzzy, kde-format
 #| msgid "Edit \"Out of Office\" Replies..."
 msgid "Out of office reply active on server"
-msgid_plural "Out of office reply active on servers"
+msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Edit Jawapan  \"Di Luar Pejabat\" ..."
 msgstr[1] "Edit Jawapan  \"Di Luar Pejabat\" ..."
 
@@ -8792,6 +8787,10 @@ msgstr[1] "Edit Jawapan  \"Di Luar Pejabat\" ..."
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid ""
+#~ "The file contains multiple messages. Only the first message is shown."
+#~ msgstr "Fail mengandungi berbilang mesej. Hanya mesej pertama dipaparkan."
 
 #~ msgid "There is nothing to undo."
 #~ msgstr "Tiada apa-apa hendak dibatalkan."

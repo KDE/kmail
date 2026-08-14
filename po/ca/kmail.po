@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-13 00:51+0000\n"
+"POT-Creation-Date: 2026-08-14 00:46+0000\n"
 "PO-Revision-Date: 2026-08-07 09:11+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -391,7 +391,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "URL per a enviar a la llista de correu:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:465
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Subscriu a la llista"
@@ -1747,7 +1747,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Mostra la llista d'adjunts"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
@@ -2102,7 +2102,7 @@ msgstr "Crea un recordatori de seguiment…"
 msgid "Configure KMail…"
 msgstr "Configura el KMail…"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:223 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2111,7 +2111,7 @@ msgstr ""
 "<qt>Això ocultarà completament la barra de menús. La podeu tornar a mostrar "
 "prement %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:226
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -2911,7 +2911,7 @@ msgstr "No s'ha pogut retornar la llista de carpetes."
 msgid "Messages archived"
 msgstr "Missatges arxivats"
 
-#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
+#: foldershortcutactionmanager.cpp:118
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr "Drecera de carpeta %1"
@@ -2934,7 +2934,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Torna a obrir el visualitzador tancat"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3853,7 +3853,7 @@ msgstr "Neteja la memòria cau de l'Akonadi"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:170
+#: manageshowcollectionproperties.cpp:172
 #, kde-format
 msgid "Done"
 msgstr "Fet"
@@ -4280,13 +4280,7 @@ msgstr "Missatge"
 msgid "The file does not contain a message."
 msgstr "El fitxer no conté cap missatge."
 
-#: kmcommands.cpp:820
-#, kde-format
-msgid "The file contains multiple messages. Only the first message is shown."
-msgstr ""
-"El fitxer conté múltiples missatges. Només es mostra el primer missatge."
-
-#: kmcommands.cpp:931
+#: kmcommands.cpp:938
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4295,39 +4289,39 @@ msgstr ""
 "Voleu reenviar els missatges seleccionats com a adjunts en un missatge (com "
 "a un resum MIME) o com a missatges individuals?"
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:942
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Envia com a un resum"
 
-#: kmcommands.cpp:936
+#: kmcommands.cpp:943
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Envia individualment"
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1361
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtratge de missatges"
 
-#: kmcommands.cpp:1333
+#: kmcommands.cpp:1371
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "S'està filtrant el missatge %1 de %2"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1679
+#: kmcommands.cpp:1594 kmcommands.cpp:1731
 #, kde-format
 msgid "Moving messages"
 msgstr "S'estan movent els missatges"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1689
+#: kmcommands.cpp:1594 kmcommands.cpp:1741
 #, kde-format
 msgid "Deleting messages"
 msgstr "S'estan suprimint els missatges"
 
-#: kmcommands.cpp:1831
+#: kmcommands.cpp:1883
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5745,7 +5739,7 @@ msgstr "Reinicia"
 msgid "Akonadi restarted."
 msgstr "S'ha reiniciat l'Akonadi."
 
-#: kmmainwin.cpp:55
+#: kmmainwin.cpp:53
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
@@ -5929,12 +5923,12 @@ msgstr[1] "%1 missatges sense llegir"
 msgid "Cannot move message. %1"
 msgstr "No s'ha pogut moure el missatge. %1"
 
-#: kmundoredomanager.cpp:120
+#: kmundoredomanager.cpp:135
 #, kde-format
 msgid "Move messages"
 msgstr "Mou els missatges"
 
-#: kmundoredomanager.cpp:156
+#: kmundoredomanager.cpp:171
 #, kde-format
 msgid "Change Messages Status"
 msgstr "Canvia l'estat dels missatges"
@@ -6108,7 +6102,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:140
 #, kde-format
 msgid "Retrieving folder properties"
 msgstr "S'estan rebent les propietats de la carpeta"
@@ -6120,7 +6114,7 @@ msgstr ""
 "La xarxa està desconnectada. La informació de la carpeta no s'ha pogut "
 "actualitzar."
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:186
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -6238,68 +6232,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Arxiva el missatge"
 
-#: messageactions.cpp:403
+#: messageactions.cpp:404
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Filtra per la Llista de correu…"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "<unknown>"
 msgstr "<desconeguda>"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Nom de la llista de correu: %1"
 
-#: messageactions.cpp:442
+#: messageactions.cpp:450
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Obre el missatge a l'arxiu de llista"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:453
 #, kde-format
 msgid "Post New Message"
 msgstr "Envia un missatge nou"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:456
 #, kde-format
 msgid "Go to Archive"
 msgstr "Ves a l'arxiu"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:459
 #, kde-format
 msgid "Request Help"
 msgstr "Sol·licita ajuda"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:462
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Propietari del contacte"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:468
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Cancel·la la subscripció de la llista"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:481
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Filtra per la Llista de correu %1…"
 
-#: messageactions.cpp:646
+#: messageactions.cpp:658
 #, kde-format
 msgid "email"
 msgstr "correu electrònic"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:661
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:654
+#: messageactions.cpp:666
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6307,13 +6301,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:772
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Exporta a PDF"
 
-#: messageactions.cpp:762
+#: messageactions.cpp:774
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "Document PDF (*.pdf)"
@@ -6365,7 +6359,7 @@ msgstr "Data"
 msgid "Preview"
 msgstr "Vista prèvia"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:167
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -6417,45 +6411,46 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Salta a la carpeta original"
 
-#: searchdialog/searchwindowdialog.cpp:294
+#: searchdialog/searchwindowdialog.cpp:295
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 coincidència"
 msgstr[1] "%1 coincidències"
 
-#: searchdialog/searchwindowdialog.cpp:364
-#: searchdialog/searchwindowdialog.cpp:406
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "Última cerca"
 
-#: searchdialog/searchwindowdialog.cpp:432
-#, kde-format
-msgid "You did not selected a valid folder."
+#: searchdialog/searchwindowdialog.cpp:431
+#, fuzzy, kde-format
+#| msgid "You did not selected a valid folder."
+msgid "You did not select a valid folder."
 msgstr "No heu seleccionat una carpeta vàlida."
 
-#: searchdialog/searchwindowdialog.cpp:446
+#: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Heu oblidat seleccionar les col·leccions."
 
-#: searchdialog/searchwindowdialog.cpp:464
+#: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Heu oblidat definir la condició."
 
-#: searchdialog/searchwindowdialog.cpp:469
+#: searchdialog/searchwindowdialog.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Totes les carpetes seleccionades estan buides o sense indexar."
 
-#: searchdialog/searchwindowdialog.cpp:475
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Heu oblidat afegir les condicions."
 
-#: searchdialog/searchwindowdialog.cpp:479
+#: searchdialog/searchwindowdialog.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
@@ -6463,32 +6458,32 @@ msgstr ""
 "Conté una condició que no es pot usar amb un nombre de caràcters inferior a "
 "4."
 
-#: searchdialog/searchwindowdialog.cpp:522
+#: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr "S'està cercant…"
 
-#: searchdialog/searchwindowdialog.cpp:535
+#: searchdialog/searchwindowdialog.cpp:534
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "La cerca no ha pogut obtenir cap resultat. %1"
 
-#: searchdialog/searchwindowdialog.cpp:538
+#: searchdialog/searchwindowdialog.cpp:537
 #, kde-format
 msgid "Search failed."
 msgstr "La cerca ha fallat."
 
-#: searchdialog/searchwindowdialog.cpp:579
+#: searchdialog/searchwindowdialog.cpp:578
 #, kde-format
 msgid "Search complete."
 msgstr "S'ha finalitzat la cerca."
 
-#: searchdialog/searchwindowdialog.cpp:617
+#: searchdialog/searchwindowdialog.cpp:616
 #, kde-format
 msgid "Search stopped."
 msgstr "S'ha aturat la cerca."
 
-#: searchdialog/searchwindowdialog.cpp:675
+#: searchdialog/searchwindowdialog.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6499,21 +6494,21 @@ msgstr ""
 "freqüent per a això, és que ja existeix una altra carpeta de cerca amb el "
 "mateix nom. Error retornat «%1»."
 
-#: searchdialog/searchwindowdialog.cpp:779
+#: searchdialog/searchwindowdialog.cpp:778
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Copia un missatge"
 msgstr[1] "Copia %1 missatges"
 
-#: searchdialog/searchwindowdialog.cpp:782
+#: searchdialog/searchwindowdialog.cpp:781
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Retalla un missatge"
 msgstr[1] "Retalla %1 missatges"
 
-#: searchdialog/searchwindowdialog.cpp:911
+#: searchdialog/searchwindowdialog.cpp:910
 #, kde-format
 msgid "Checking index status…"
 msgstr "S'està verificant l'estat de l'índex…"
@@ -8221,10 +8216,12 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Usa l'opció global"
 
-#: widgets/vacationscriptindicatorwidget.cpp:84
-#, kde-format
+#: widgets/vacationscriptindicatorwidget.cpp:127
+#, fuzzy, kde-format
+#| msgid "Out of office reply active on server"
+#| msgid_plural "Out of office reply active on servers"
 msgid "Out of office reply active on server"
-msgid_plural "Out of office reply active on servers"
+msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Resposta «fora de l'oficina» activa al servidor"
 msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 
@@ -8232,6 +8229,11 @@ msgstr[1] "Resposta «fora de l'oficina» activa als servidors"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Zoom: %1%"
+
+#~ msgid ""
+#~ "The file contains multiple messages. Only the first message is shown."
+#~ msgstr ""
+#~ "El fitxer conté múltiples missatges. Només es mostra el primer missatge."
 
 #~ msgid "There is nothing to undo."
 #~ msgstr "No hi ha res a desfer."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-13 00:51+0000\n"
+"POT-Creation-Date: 2026-08-14 00:46+0000\n"
 "PO-Revision-Date: 2024-08-01 21:54+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -442,7 +442,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Liste de fólderes:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:465
 #, fuzzy, kde-format
 msgid "Subscribe to List"
 msgstr "A"
@@ -1762,7 +1762,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Liste de fólderes:"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
@@ -2116,7 +2116,7 @@ msgstr "Crear..."
 msgid "Configure KMail…"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:223 kmreadermainwin.cpp:550
 #, fuzzy, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2125,7 +2125,7 @@ msgstr ""
 "Li archive <filename>%1</filename> va esser creat quande vu va adjunter un "
 "file."
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:226
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -2847,7 +2847,7 @@ msgstr "Fólderes"
 msgid "Messages archived"
 msgstr "Ciffrat missages"
 
-#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
+#: foldershortcutactionmanager.cpp:118
 #, fuzzy, kde-format
 msgid "Folder Shortcut %1"
 msgstr "Liste de fólderes:"
@@ -2870,7 +2870,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Pri li componente de visor"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3700,7 +3700,7 @@ msgstr "Vacuar li recent files"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:170
+#: manageshowcollectionproperties.cpp:172
 #, kde-format
 msgid "Done"
 msgstr ""
@@ -4119,51 +4119,46 @@ msgstr "Proprietás de missage"
 msgid "The file does not contain a message."
 msgstr "File"
 
-#: kmcommands.cpp:820
-#, fuzzy, kde-format
-msgid "The file contains multiple messages. Only the first message is shown."
-msgstr "Ciffrat missages"
-
-#: kmcommands.cpp:931
+#: kmcommands.cpp:938
 #, fuzzy, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:942
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Inviar p&lu tard"
 
-#: kmcommands.cpp:936
+#: kmcommands.cpp:943
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Inviar p&lu tard"
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1361
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:1333
+#: kmcommands.cpp:1371
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Proprietás de missage"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1679
+#: kmcommands.cpp:1594 kmcommands.cpp:1731
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1689
+#: kmcommands.cpp:1594 kmcommands.cpp:1741
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Ciffrat missages"
 
-#: kmcommands.cpp:1831
+#: kmcommands.cpp:1883
 #, fuzzy, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -5518,7 +5513,7 @@ msgstr "Reiniciar"
 msgid "Akonadi restarted."
 msgstr ""
 
-#: kmmainwin.cpp:55
+#: kmmainwin.cpp:53
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
@@ -5700,12 +5695,12 @@ msgstr[1] "Ciffrat missages"
 msgid "Cannot move message. %1"
 msgstr "Proprietás de missage"
 
-#: kmundoredomanager.cpp:120
+#: kmundoredomanager.cpp:135
 #, fuzzy, kde-format
 msgid "Move messages"
 msgstr "Proprietás de missage"
 
-#: kmundoredomanager.cpp:156
+#: kmundoredomanager.cpp:171
 #, fuzzy, kde-format
 msgid "Change Messages Status"
 msgstr "Proprietás de missage"
@@ -5870,7 +5865,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:140
 #, fuzzy, kde-format
 msgid "Retrieving folder properties"
 msgstr "Liste de fólderes:"
@@ -5880,7 +5875,7 @@ msgstr "Liste de fólderes:"
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr "Liste de fólderes:"
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:186
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
@@ -5998,68 +5993,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Archive"
 
-#: messageactions.cpp:403
+#: messageactions.cpp:404
 #, fuzzy, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Liste de fólderes:"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "<unknown>"
 msgstr ""
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, fuzzy, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Liste de fólderes:"
 
-#: messageactions.cpp:442
+#: messageactions.cpp:450
 #, fuzzy, kde-format
 msgid "Open Message in List Archive"
 msgstr "Archive"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:453
 #, fuzzy, kde-format
 msgid "Post New Message"
 msgstr "Proprietás de missage"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:456
 #, fuzzy, kde-format
 msgid "Go to Archive"
 msgstr "Archive"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:459
 #, fuzzy, kde-format
 msgid "Request Help"
 msgstr "Auxilie"
 
-#: messageactions.cpp:454
+#: messageactions.cpp:462
 #, fuzzy, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Possessor"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:468
 #, fuzzy, kde-format
 msgid "Unsubscribe from List"
 msgstr "De"
 
-#: messageactions.cpp:469
+#: messageactions.cpp:481
 #, fuzzy, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Liste de fólderes:"
 
-#: messageactions.cpp:646
+#: messageactions.cpp:658
 #, fuzzy, kde-format
 msgid "email"
 msgstr "Cliente de postage de KDE"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:661
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:654
+#: messageactions.cpp:666
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6067,13 +6062,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:772
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "A"
 
-#: messageactions.cpp:762
+#: messageactions.cpp:774
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "Document PDF (*.pdf)"
@@ -6125,7 +6120,7 @@ msgstr "Date"
 msgid "Preview"
 msgstr "Previder"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:167
 #, fuzzy, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -6177,76 +6172,76 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "A"
 
-#: searchdialog/searchwindowdialog.cpp:294
+#: searchdialog/searchwindowdialog.cpp:295
 #, fuzzy, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "Correspondentie exact"
 msgstr[1] "Null corespondenties"
 
-#: searchdialog/searchwindowdialog.cpp:364
-#: searchdialog/searchwindowdialog.cpp:406
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, fuzzy, kde-format
 msgid "Last Search"
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindowdialog.cpp:432
+#: searchdialog/searchwindowdialog.cpp:431
 #, fuzzy, kde-format
-msgid "You did not selected a valid folder."
+msgid "You did not select a valid folder."
 msgstr "Liste de fólderes:"
 
-#: searchdialog/searchwindowdialog.cpp:446
+#: searchdialog/searchwindowdialog.cpp:445
 #, fuzzy, kde-format
 msgid "You forgot to select collections."
 msgstr "Selecter"
 
-#: searchdialog/searchwindowdialog.cpp:464
+#: searchdialog/searchwindowdialog.cpp:463
 #, fuzzy, kde-format
 msgid "You forgot to define condition."
 msgstr "Definir un nov término"
 
-#: searchdialog/searchwindowdialog.cpp:469
+#: searchdialog/searchwindowdialog.cpp:468
 #, fuzzy, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Fólderes"
 
-#: searchdialog/searchwindowdialog.cpp:475
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:479
+#: searchdialog/searchwindowdialog.cpp:478
 #, fuzzy, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Files con li sequent rutes ja existe. Esque vu vole substituer les?"
 
-#: searchdialog/searchwindowdialog.cpp:522
+#: searchdialog/searchwindowdialog.cpp:521
 #, kde-format
 msgid "Searching…"
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:535
+#: searchdialog/searchwindowdialog.cpp:534
 #, fuzzy, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindowdialog.cpp:538
+#: searchdialog/searchwindowdialog.cpp:537
 #, fuzzy, kde-format
 msgid "Search failed."
 msgstr "Ne successat remover un element: %1"
 
-#: searchdialog/searchwindowdialog.cpp:579
+#: searchdialog/searchwindowdialog.cpp:578
 #, fuzzy, kde-format
 msgid "Search complete."
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindowdialog.cpp:617
+#: searchdialog/searchwindowdialog.cpp:616
 #, fuzzy, kde-format
 msgid "Search stopped."
 msgstr "Serchar por files"
 
-#: searchdialog/searchwindowdialog.cpp:675
+#: searchdialog/searchwindowdialog.cpp:674
 #, fuzzy, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6254,21 +6249,21 @@ msgid ""
 "\"%1\"."
 msgstr "mistresssilvara@hotmail.com"
 
-#: searchdialog/searchwindowdialog.cpp:779
+#: searchdialog/searchwindowdialog.cpp:778
 #, fuzzy, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Ciffrat missages"
 
-#: searchdialog/searchwindowdialog.cpp:782
+#: searchdialog/searchwindowdialog.cpp:781
 #, fuzzy, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Ciffrat missages"
 
-#: searchdialog/searchwindowdialog.cpp:911
+#: searchdialog/searchwindowdialog.cpp:910
 #, fuzzy, kde-format
 msgid "Checking index status…"
 msgstr "Índex"
@@ -7784,10 +7779,10 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Predefinit por li region"
 
-#: widgets/vacationscriptindicatorwidget.cpp:84
+#: widgets/vacationscriptindicatorwidget.cpp:127
 #, fuzzy, kde-format
 msgid "Out of office reply active on server"
-msgid_plural "Out of office reply active on servers"
+msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "&Responder"
 msgstr[1] "&Responder"
 
@@ -7795,6 +7790,11 @@ msgstr[1] "&Responder"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "Scale: %1%"
+
+#, fuzzy
+#~ msgid ""
+#~ "The file contains multiple messages. Only the first message is shown."
+#~ msgstr "Ciffrat missages"
 
 #, fuzzy
 #~ msgid "There is nothing to undo."

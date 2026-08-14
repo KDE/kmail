@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-13 00:51+0000\n"
+"POT-Creation-Date: 2026-08-14 00:46+0000\n"
 "PO-Revision-Date: 2006-02-06 01:01-0600\n"
 "Last-Translator: Deepayan Sarkar <deepayan@bengalinux.org>\n"
 "Language-Team: Bengali <kde-translation@bengalinux.org>\n"
@@ -425,7 +425,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr ""
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:457
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:465
 #, kde-format
 msgid "Subscribe to List"
 msgstr ""
@@ -1842,7 +1842,7 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "অ্যাটাচমেন্ট নতুন নামে সংরক্ষণ করো"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:98
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:96
 #: kmreadermainwin.cpp:489 kontactplugin/kmail/kmail_plugin.cpp:46
 #, fuzzy, kde-format
 #| msgid "KMail"
@@ -2231,14 +2231,14 @@ msgstr "বার্তা &সন্ধান করো"
 msgid "Configure KMail…"
 msgstr "কে-মেইল ক&নফিগার করো..."
 
-#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:225 kmreadermainwin.cpp:550
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:223 kmreadermainwin.cpp:550
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:228
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:226
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
@@ -3014,7 +3014,7 @@ msgstr "ফোল্ডারে বার্তা যোগ করা যা�
 msgid "Messages archived"
 msgstr "বার্তা স্বাক্ষর করেছেন %1।"
 
-#: foldershortcutactionmanager.cpp:124 foldershortcutactionmanager.cpp:125
+#: foldershortcutactionmanager.cpp:118
 #, kde-format
 msgid "Folder Shortcut %1"
 msgstr ""
@@ -3039,7 +3039,7 @@ msgid "Reopen Closed Viewer"
 msgstr "নতুন বার্তা"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1935
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3948,7 +3948,7 @@ msgstr "পরিচিতির নাম"
 #: job/clearcachejobinfolderandsubfolderjob.cpp:92
 #: job/removeduplicatemailjob.cpp:58
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:90
-#: manageshowcollectionproperties.cpp:170
+#: manageshowcollectionproperties.cpp:172
 #, fuzzy, kde-format
 msgid "Done"
 msgstr "হয়ে গেছে"
@@ -4394,51 +4394,46 @@ msgstr "&রচনা"
 msgid "The file does not contain a message."
 msgstr "ফাইলটিতে কোন বার্তা নেই।"
 
-#: kmcommands.cpp:820
-#, kde-format
-msgid "The file contains multiple messages. Only the first message is shown."
-msgstr "ফাইলটিতে একাধিক বার্তা রয়েছে। শুধু প্রথম বার্তাটি প্রদর্শিত হচ্ছে।"
-
-#: kmcommands.cpp:931
+#: kmcommands.cpp:938
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:935
+#: kmcommands.cpp:942
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "প্রের&ণ"
 
-#: kmcommands.cpp:936
+#: kmcommands.cpp:943
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1323
+#: kmcommands.cpp:1361
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "বার্তা মুছে ফেলা হচ্ছে"
 
-#: kmcommands.cpp:1333
+#: kmcommands.cpp:1371
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 থেকে %2-টি বার্তার %3 নম্বরটি স্থানান্তরিত করা হচ্ছে।"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1679
+#: kmcommands.cpp:1594 kmcommands.cpp:1731
 #, kde-format
 msgid "Moving messages"
 msgstr "বার্তা সরানো হচ্ছে"
 
-#: kmcommands.cpp:1546 kmcommands.cpp:1689
+#: kmcommands.cpp:1594 kmcommands.cpp:1741
 #, kde-format
 msgid "Deleting messages"
 msgstr "বার্তা মুছে ফেলা হচ্ছে"
 
-#: kmcommands.cpp:1831
+#: kmcommands.cpp:1883
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"
@@ -5920,7 +5915,7 @@ msgstr "পরিচিতির নাম"
 msgid "Akonadi restarted."
 msgstr ""
 
-#: kmmainwin.cpp:55
+#: kmmainwin.cpp:53
 #, fuzzy, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
@@ -6120,13 +6115,13 @@ msgstr[1] "অপঠিত বার্তা"
 msgid "Cannot move message. %1"
 msgstr "বার্তা ফোল্ডার-এ সরাও"
 
-#: kmundoredomanager.cpp:120
+#: kmundoredomanager.cpp:135
 #, fuzzy, kde-format
 #| msgid "New Message To..."
 msgid "Move messages"
 msgstr "একে নতুন বার্তা..."
 
-#: kmundoredomanager.cpp:156
+#: kmundoredomanager.cpp:171
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Change Messages Status"
@@ -6301,7 +6296,7 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr ""
 
-#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:138
+#: manageshowcollectionproperties.cpp:83 manageshowcollectionproperties.cpp:140
 #, fuzzy, kde-format
 #| msgid "Retrieving folderlist"
 msgid "Retrieving folder properties"
@@ -6312,7 +6307,7 @@ msgstr "ফোল্ডার তালিকা আনা হচ্ছে"
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr ""
 
-#: manageshowcollectionproperties.cpp:184
+#: manageshowcollectionproperties.cpp:186
 #, fuzzy, kde-format
 #| msgid "Properties of Folder %1"
 msgctxt "@title:window"
@@ -6448,76 +6443,76 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "একে নতুন বার্তা..."
 
-#: messageactions.cpp:403
+#: messageactions.cpp:404
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgid "Filter on Mailing-List…"
 msgstr "মে&ইলিং-লিস্ট দিয়ে ফিল্টার করো..."
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, kde-format
 msgid "<unknown>"
 msgstr "<অজানা>"
 
-#: messageactions.cpp:439
+#: messageactions.cpp:447
 #, fuzzy, kde-format
 #| msgid "Reply to Mailing-&List..."
 msgid "Mailing List Name: %1"
 msgstr "মে&ইলিং-লিস্ট-এ উত্তর দাও..."
 
-#: messageactions.cpp:442
+#: messageactions.cpp:450
 #, fuzzy, kde-format
 #| msgid "OpenPGP Message - Bad Signature"
 msgid "Open Message in List Archive"
 msgstr "ওপেন-পি-জি-পি বার্তা - ত্রুটিপূর্ণ স্বাক্ষর"
 
-#: messageactions.cpp:445
+#: messageactions.cpp:453
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgid "Post New Message"
 msgstr "নতুন বার্তা"
 
-#: messageactions.cpp:448
+#: messageactions.cpp:456
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgid "Go to Archive"
 msgstr "লিস্ট আর্কাইভ"
 
-#: messageactions.cpp:451
+#: messageactions.cpp:459
 #, kde-format
 msgid "Request Help"
 msgstr ""
 
-#: messageactions.cpp:454
+#: messageactions.cpp:462
 #, fuzzy, kde-format
 #| msgid "contains"
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "-এর মধ্যে রয়েছে"
 
-#: messageactions.cpp:460
+#: messageactions.cpp:468
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr ""
 
-#: messageactions.cpp:469
+#: messageactions.cpp:481
 #, fuzzy, kde-format
 #| msgid "Filter on Mailing-&List..."
 msgid "Filter on Mailing-List %1…"
 msgstr "মে&ইলিং-লিস্ট দিয়ে ফিল্টার করো..."
 
-#: messageactions.cpp:646
+#: messageactions.cpp:658
 #, fuzzy, kde-format
 #| msgid "Email"
 msgid "email"
 msgstr "ই-মেইল"
 
-#: messageactions.cpp:649
+#: messageactions.cpp:661
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:654
+#: messageactions.cpp:666
 #, fuzzy, kde-format
 #| msgid "Mail"
 msgctxt ""
@@ -6526,14 +6521,14 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "মেইল"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:772
 #, fuzzy, kde-format
 #| msgid "&Import"
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "&আমদানি"
 
-#: messageactions.cpp:762
+#: messageactions.cpp:774
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6592,7 +6587,7 @@ msgstr "তারিখ"
 msgid "Preview"
 msgstr "পূর্ব&বর্তী কার্ড"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:167
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgctxt "@title:column, folder (e.g. email)"
@@ -6651,79 +6646,79 @@ msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "এই ফোল্ডার-এ কপি করো"
 
-#: searchdialog/searchwindowdialog.cpp:294
+#: searchdialog/searchwindowdialog.cpp:295
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1-টি মিল"
 msgstr[1] "%1-টি মিল"
 
-#: searchdialog/searchwindowdialog.cpp:364
-#: searchdialog/searchwindowdialog.cpp:406
+#: searchdialog/searchwindowdialog.cpp:363
+#: searchdialog/searchwindowdialog.cpp:405
 #, kde-format
 msgid "Last Search"
 msgstr "শেষ সন্ধান"
 
-#: searchdialog/searchwindowdialog.cpp:432
+#: searchdialog/searchwindowdialog.cpp:431
 #, kde-format
-msgid "You did not selected a valid folder."
+msgid "You did not select a valid folder."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:446
+#: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
 msgid "You forgot to select collections."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:464
+#: searchdialog/searchwindowdialog.cpp:463
 #, kde-format
 msgid "You forgot to define condition."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:469
+#: searchdialog/searchwindowdialog.cpp:468
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:475
+#: searchdialog/searchwindowdialog.cpp:474
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:479
+#: searchdialog/searchwindowdialog.cpp:478
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:522
+#: searchdialog/searchwindowdialog.cpp:521
 #, fuzzy, kde-format
 msgid "Searching…"
 msgstr "প্রের&ণ"
 
-#: searchdialog/searchwindowdialog.cpp:535
+#: searchdialog/searchwindowdialog.cpp:534
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot get search result. %1"
 msgstr "বার্তা ফোল্ডার-এ সরাও"
 
-#: searchdialog/searchwindowdialog.cpp:538
+#: searchdialog/searchwindowdialog.cpp:537
 #, fuzzy, kde-format
 msgid "Search failed."
 msgstr "সন্ধান বাতিল"
 
-#: searchdialog/searchwindowdialog.cpp:579
+#: searchdialog/searchwindowdialog.cpp:578
 #, fuzzy, kde-format
 #| msgid " Spell check complete."
 msgid "Search complete."
 msgstr " বানান পরীক্ষা সম্পূর্ণ"
 
-#: searchdialog/searchwindowdialog.cpp:617
+#: searchdialog/searchwindowdialog.cpp:616
 #, fuzzy, kde-format
 #| msgid " Spell check stopped."
 msgid "Search stopped."
 msgstr " বানান পরীক্ষা স্থগিত"
 
-#: searchdialog/searchwindowdialog.cpp:675
+#: searchdialog/searchwindowdialog.cpp:674
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6731,21 +6726,21 @@ msgid ""
 "\"%1\"."
 msgstr ""
 
-#: searchdialog/searchwindowdialog.cpp:779
+#: searchdialog/searchwindowdialog.cpp:778
 #, fuzzy, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "বার্তা খোলো"
 msgstr[1] "বার্তা খোলো"
 
-#: searchdialog/searchwindowdialog.cpp:782
+#: searchdialog/searchwindowdialog.cpp:781
 #, fuzzy, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "বার্তা মুছে ফেলো"
 msgstr[1] "বার্তা মুছে ফেলো"
 
-#: searchdialog/searchwindowdialog.cpp:911
+#: searchdialog/searchwindowdialog.cpp:910
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgid "Checking index status…"
@@ -8335,11 +8330,11 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "ফন্ট সেটিংস পূর্বাবস্থায় ফেরাও"
 
-#: widgets/vacationscriptindicatorwidget.cpp:84
+#: widgets/vacationscriptindicatorwidget.cpp:127
 #, fuzzy, kde-format
 #| msgid "Configure \"Out of Office\" Replies"
 msgid "Out of office reply active on server"
-msgid_plural "Out of office reply active on servers"
+msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "\"অফিসে নেই\" উত্তর কনফিগার করো"
 msgstr[1] "\"অফিসে নেই\" উত্তর কনফিগার করো"
 
@@ -8347,6 +8342,10 @@ msgstr[1] "\"অফিসে নেই\" উত্তর কনফিগার �
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
+
+#~ msgid ""
+#~ "The file contains multiple messages. Only the first message is shown."
+#~ msgstr "ফাইলটিতে একাধিক বার্তা রয়েছে। শুধু প্রথম বার্তাটি প্রদর্শিত হচ্ছে।"
 
 #~ msgid "There is nothing to undo."
 #~ msgstr "বাতিল করার মত কিছু নেই।"
