@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-07 06:14+0200\n"
+"PO-Revision-Date: 2026-08-14 07:28+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -6375,8 +6375,7 @@ msgid "Last Search"
 msgstr "ბოლო ძებნა"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "არჩეული საქაღალდე სწორი არაა."
 
@@ -8153,13 +8152,11 @@ msgid "Use Global Setting"
 msgstr "გლობალური პარამეტრის გამოყენება"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "ოფისიდან-გასულობის პასუხი ჩართულია სერვერზე"
-msgstr[1] "ოფისიდან-გასულობის პასუხი ჩართულია სერვერზე"
+msgstr[1] "ოფისიდან-გასულობის პასუხი ჩართულია %1 სერვერზე"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format

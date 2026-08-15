@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-07 19:09+0300\n"
+"PO-Revision-Date: 2026-08-14 19:09+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -6375,8 +6375,7 @@ msgid "Last Search"
 msgstr "Son Arama"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "Geçerli bir klasör seçmediniz."
 
@@ -8148,13 +8147,11 @@ msgid "Use Global Setting"
 msgstr "Global Ayarı Kullan"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
-msgstr[0] "Ofis dışında yanıtlaması sunucuda etkin"
-msgstr[1] "Ofis dışında yanıtlaması sunucularda etkin"
+msgstr[0] "Ofis dışında yanıtı sunucuda etkin"
+msgstr[1] "Ofis dışında yanıtı %1 sunucuda etkin"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format

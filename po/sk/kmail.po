@@ -2975,7 +2975,7 @@ msgstr "&Duplikovať existujúcu vizitku"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Nie je dostupná žiadna existujúca identita s vizitkou vCard."
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -5611,13 +5611,12 @@ msgstr "&Späť: \"%1\""
 #: kmmainwidget.cpp:4304
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "Zn&ovu"
 
 #: kmmainwidget.cpp:4306
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Späť: \"%1\""
+msgstr "&Znovu: \"%1\""
 
 #: kmmainwidget.cpp:4363
 #, kde-format
@@ -5885,17 +5884,14 @@ msgid "Cannot move message. %1"
 msgstr "Nie je možné presunúť správu. %1"
 
 #: kmundoredomanager.cpp:135
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
-msgstr "Presunúť správu"
+msgstr "Presunúť správy"
 
 #: kmundoredomanager.cpp:171
-#, fuzzy, kde-format
-#| msgid "Message Tags"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "Značky správ"
+msgstr "Zmeniť stav správ"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
@@ -6385,8 +6381,7 @@ msgid "Last Search"
 msgstr "Posledné hľadanie"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "Nevybrali ste platný priečinok."
 
@@ -8149,14 +8144,12 @@ msgid "Use Global Setting"
 msgstr "Použiť globálne nastavenia"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Odpoveď mimo kancelárie aktívna na serveri"
-msgstr[1] "Odpoveď mimo kancelárie aktívna na serveroch"
-msgstr[2] "Odpoveď mimo kancelárie aktívna na serveroch"
+msgstr[1] "Odpoveď mimo kancelárie aktívna na %1 serveroch"
+msgstr[2] "Odpoveď mimo kancelárie aktívna na %1 serveroch"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format

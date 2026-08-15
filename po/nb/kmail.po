@@ -7959,8 +7959,3 @@ msgstr[1] "Fraværsmelding aktiv på tjenere"
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid ""
-#~ "The file contains multiple messages. Only the first message is shown."
-#~ msgstr ""
-#~ "Fila inneholder flere meldinger. Bare den første meldinga blir vist."

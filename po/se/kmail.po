@@ -7733,7 +7733,3 @@ msgstr[1] ""
 #, kde-format
 msgid "Zoom: %1%"
 msgstr ""
-
-#~ msgid ""
-#~ "The file contains multiple messages. Only the first message is shown."
-#~ msgstr "Fiila sisttisdoallá máŋga reivviid. Dušše vuosttáš reive čájehuvvo."

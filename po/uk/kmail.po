@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-07 18:56+0300\n"
+"PO-Revision-Date: 2026-08-14 08:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -6470,10 +6470,9 @@ msgid "Last Search"
 msgstr "Останній пошук"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
-msgstr "Вами не вказано чинної теки."
+msgstr "Вами не позначено коректної теки."
 
 #: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
@@ -8269,14 +8268,12 @@ msgid "Use Global Setting"
 msgstr "Використовувати загальні параметри"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
-msgstr[0] "На серверах задіяно відповідь щодо відсутності на місці"
-msgstr[1] "На серверах задіяно відповідь щодо відсутності на місці"
-msgstr[2] "На серверах задіяно відповідь щодо відсутності на місці"
+msgstr[0] "На %1 сервері задіяно відповідь щодо відсутності на місці"
+msgstr[1] "На %1 серверах задіяно відповідь щодо відсутності на місці"
+msgstr[2] "На %1 серверах задіяно відповідь щодо відсутності на місці"
 msgstr[3] "На сервері задіяно відповідь щодо відсутності на місці"
 
 #: widgets/zoomlabelwidget.cpp:22

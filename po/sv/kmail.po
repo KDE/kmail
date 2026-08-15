@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-07 17:52+0200\n"
+"PO-Revision-Date: 2026-08-14 18:23+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
@@ -6366,8 +6366,7 @@ msgid "Last Search"
 msgstr "Senaste sökning"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "En giltig korg har inte valts."
 
@@ -8139,13 +8138,11 @@ msgid "Use Global Setting"
 msgstr "Använd global inställning"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Frånvarosvar aktivt på server"
-msgstr[1] "Frånvarosvar aktivt på servrar"
+msgstr[1] "Frånvarosvar aktivt på %1 servrar"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
