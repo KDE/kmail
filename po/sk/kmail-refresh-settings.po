@@ -32,10 +32,9 @@ msgid "KMail Assistant for refreshing settings"
 msgstr "Asistent KMailu na obnovovanie nastavenia"
 
 #: main.cpp:32
-#, fuzzy, kde-format
-#| msgid "© 2019-2025 Laurent Montel <montel@kde.org>"
+#, kde-format
 msgid "© 2019-2026 Laurent Montel <montel@kde.org>"
-msgstr "(c) 2019-2021 Laurent Montel <montel@kde.org>"
+msgstr "© 2019 – 2026 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:33
 #, kde-format

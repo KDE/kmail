@@ -2975,7 +2975,7 @@ msgstr "&Duplikovať existujúcu vizitku"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Nie je dostupná žiadna existujúca identita s vizitkou vCard."
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
