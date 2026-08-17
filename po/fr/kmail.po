@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-08 10:47+0200\n"
+"PO-Revision-Date: 2026-08-15 09:08+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.07.90\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -6498,8 +6498,7 @@ msgid "Last Search"
 msgstr "Dernière recherche"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "Vous n'avez pas sélectionné un dossier valable."
 
@@ -8308,13 +8307,11 @@ msgid "Use Global Setting"
 msgstr "Utiliser la configuration globale"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Message d'absence actif sur le serveur"
-msgstr[1] "Message d'absence actif sur les serveurs"
+msgstr[1] "Message d'absence actif sur les %1 serveurs"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
