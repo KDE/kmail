@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-08-12 15:01+0300\n"
+"PO-Revision-Date: 2026-08-17 15:58+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -568,11 +568,10 @@ msgid "LDAP server"
 msgstr "LDAP serveris"
 
 #: configuredialog/configureaccountpage.cpp:89
-#, fuzzy, kde-format
-#| msgid "Outgoing accounts (add at least one):"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
-msgstr "Išsiunčiamų paskyros (įdėkite bent vieną):"
+msgstr "Išsiuntimo paskyros (pridėkite bent vieną):"
 
 #: configuredialog/configureaccountpage.cpp:100
 #, kde-format
@@ -1789,18 +1788,17 @@ msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 
 #: editor/kmcomposerwin.cpp:373
-#, fuzzy, kde-format
-#| msgid "Select the dictionary to use when spell-checking this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
-msgstr "Parinkite žodyną, naudojamą šio laiško rašybos tikrinimui"
+msgstr ""
+"Pasirinkti išsiuntimo paskyrą, kuri bus naudojama išsiųsti šį el. laišką"
 
 #: editor/kmcomposerwin.cpp:382
-#, fuzzy, kde-format
-#| msgid "Set the \"From:\" email address for this message"
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
-msgstr "Parinkti „From:“ (nuo) el. pašto adresą šiam laiškui"
+msgstr "Nustatyti šiam laiškui „Nuo:“ el. pašto adresą"
 
 #: editor/kmcomposerwin.cpp:411
 #, kde-format
@@ -1847,14 +1845,14 @@ msgid "Composer"
 msgstr "Rengyklė"
 
 #: editor/kmcomposerwin.cpp:1247 editor/kmcomposerwin.cpp:1281
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Send Mail"
-msgstr "Siųsti &paštą"
+msgstr "&Siųsti el. laišką"
 
 #: editor/kmcomposerwin.cpp:1254 editor/kmcomposerwin.cpp:1287
-#, fuzzy, kde-format
+#, kde-format
 msgid "&Send Mail Via"
-msgstr "Siųsti &paštą per"
+msgstr "&Siųsti el. laišką per"
 
 #: editor/kmcomposerwin.cpp:1256
 #, kde-format
@@ -1867,9 +1865,9 @@ msgid "Send &Later"
 msgstr "Siųsti &vėliau"
 
 #: editor/kmcomposerwin.cpp:1265 editor/kmcomposerwin.cpp:1278
-#, fuzzy, kde-format
+#, kde-format
 msgid "Send &Later Via"
-msgstr "Siųsti paštą &vėliau per"
+msgstr "Siųsti vė&liau per"
 
 #: editor/kmcomposerwin.cpp:1267
 #, kde-format
@@ -3437,8 +3435,7 @@ msgid "Configure Expire Folder..."
 msgstr "Trinti senus laiškus aplanke"
 
 #: identity/identitydialog.cpp:724
-#, fuzzy, kde-format
-#| msgid "Outgoing Account:"
+#, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Išsiuntimo paskyra:"
@@ -3456,11 +3453,10 @@ msgid "Create…"
 msgstr "Sukurti…"
 
 #: identity/identitydialog.cpp:736
-#, fuzzy, kde-format
-#| msgid "Autocorrection language:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
-msgstr "Automatinio taisymo kalba:"
+msgstr "Automatinio koregavimo kalba:"
 
 #: identity/identitydialog.cpp:748
 #, kde-format
@@ -4718,7 +4714,7 @@ msgid "Load External References"
 msgstr "Įkelti išorines nuorodas"
 
 #: kmmainwidget.cpp:1725
-#, fuzzy, kde-format
+#, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
 "cannot be restored.</qt>"
@@ -4726,17 +4722,17 @@ msgid_plural ""
 "<qt>Do you really want to delete the %1 selected messages?<br />Once "
 "deleted, they cannot be restored.</qt>"
 msgstr[0] ""
-"<qt>Ar tikrai norite ištrinti pasirinktą laišką?<br />Ištrynus, jis nebegali "
-"būti atstatytas.</qt>"
+"<qt>Ar tikrai norite ištrinti pažymėtą laišką?<br />Ištrynus, nebegalėsite "
+"jį atkurti.</qt>"
 msgstr[1] ""
-"<qt>Ar tikrai norite ištrinti %1 pasirinktus laiškus?<br />Ištrynus, jie "
-"nebegalės būti atstatyti.</qt>"
+"<qt>Ar tikrai norite ištrinti %1 pažymėtus laiškus?<br />Ištrynus, "
+"nebegalėsite juos atkurti.</qt>"
 msgstr[2] ""
-"<qt>Ar tikrai norite ištrinti %1 pasirinktų laiškų?<br />Ištrynus, jie "
-"nebegalės būti atstatyti.</qt>"
+"<qt>Ar tikrai norite ištrinti %1 pažymėtų laiškų?<br />Ištrynus, "
+"nebegalėsite juos atkurti.</qt>"
 msgstr[3] ""
-"<qt>Ar tikrai norite ištrinti %1 pasirinktą laišką?<br />Ištrynus, jis "
-"nebegali būti atstatytas.</qt>"
+"<qt>Ar tikrai norite ištrinti %1 pažymėtą laišką?<br />Ištrynus, "
+"nebegalėsite juos atkurti.</qt>"
 
 #: kmmainwidget.cpp:1730
 #, kde-format
@@ -4776,9 +4772,9 @@ msgid "Deleting messages failed."
 msgstr "Nepavyko ištrinti laiškų."
 
 #: kmmainwidget.cpp:1771 kmmainwidget.cpp:1997
-#, fuzzy, kde-format
+#, kde-format
 msgid "Deleting messages canceled."
-msgstr "Laiškų trynimas nutrauktas."
+msgstr "Laiškų ištrynimo atsisakyta."
 
 #: kmmainwidget.cpp:1775
 #, kde-format
@@ -4786,9 +4782,9 @@ msgid "Moving messages failed."
 msgstr "Nepavyko perkelti laiškų."
 
 #: kmmainwidget.cpp:1777
-#, fuzzy, kde-format
+#, kde-format
 msgid "Moving messages canceled."
-msgstr "Laiškų perkėlimas nutrauktas."
+msgstr "Laiškų perkėlimo atsisakyta."
 
 #: kmmainwidget.cpp:1849
 #, kde-format
@@ -4812,9 +4808,9 @@ msgid "Copying messages failed."
 msgstr "Nepavyko nukopijuoti laiškų."
 
 #: kmmainwidget.cpp:1889
-#, fuzzy, kde-format
+#, kde-format
 msgid "Copying messages canceled."
-msgstr "Laiškų kopijavimas nutrauktas."
+msgstr "Laiškų kopijavimo atsisakyta."
 
 #: kmmainwidget.cpp:1899
 #, kde-format
@@ -4853,15 +4849,14 @@ msgid "Deleting or moving messages to trash failed."
 msgstr "Nepavyko ištrinti ar perkelti laiškų į šiukšlinę."
 
 #: kmmainwidget.cpp:1994
-#, fuzzy, kde-format
+#, kde-format
 msgid "Moving messages to trash canceled."
-msgstr "Laiškų perkėlimas nutrauktas į šiukšlinę."
+msgstr "Laiškų perkėlimo į šiukšlinę atsisakyta."
 
 #: kmmainwidget.cpp:2001
-#, fuzzy, kde-format
-#| msgid "Moving messages to trash canceled."
+#, kde-format
 msgid "Deleting or moving messages to trash canceled."
-msgstr "Laiškų perkėlimas nutrauktas į šiukšlinę."
+msgstr "Ištrynimo ar laiškų perkėlimo į šiukšlinę atsisakyta."
 
 #: kmmainwidget.cpp:2282
 #, kde-format
@@ -4893,13 +4888,7 @@ msgstr[2] "Ištrinti priedus iš šifruotų laiškų"
 msgstr[3] "Ištrinti priedus iš šifruotų laiškų"
 
 #: kmmainwidget.cpp:2484
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt>Do you really want to delete the selected message?<br />Once deleted, "
-#| "it cannot be restored.</qt>"
-#| msgid_plural ""
-#| "<qt>Do you really want to delete the %1 selected messages?<br />Once "
-#| "deleted, they cannot be restored.</qt>"
+#, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
 "message?<br />Once deleted, they cannot be restored.</p></html>"
@@ -4907,17 +4896,17 @@ msgid_plural ""
 "<html>Do you really want to delete all attachments from the %1 selected "
 "messages?<br />Once deleted, they cannot be restored.</html>"
 msgstr[0] ""
-"<qt>Ar tikrai norite ištrinti pasirinktą laišką?<br />Ištrynus, jis nebegali "
-"būti atstatytas.</qt>"
+"<html><p>Ar tikrai norite ištrinti visus priedus iš pažymėto laiško?<br /"
+">Ištrynus, nebegalėsite juos atkurti.</p></html>"
 msgstr[1] ""
-"<qt>Ar tikrai norite ištrinti %1 pasirinktus laiškus?<br />Ištrynus, jie "
-"nebegalės būti atstatyti.</qt>"
+"<html><p>Ar tikrai norite ištrinti visus priedus iš %1 pažymėtų laiškų?<br /"
+">Ištrynus, nebegalėsite juos atkurti.</p></html>"
 msgstr[2] ""
-"<qt>Ar tikrai norite ištrinti %1 pasirinktų laiškų?<br />Ištrynus, jie "
-"nebegalės būti atstatyti.</qt>"
+"<html><p>Ar tikrai norite ištrinti visus priedus iš %1 pažymėtų laiškų?<br /"
+">Ištrynus, nebegalėsite juos atkurti.</p></html>"
 msgstr[3] ""
-"<qt>Ar tikrai norite ištrinti %1 pasirinktą laišką?<br />Ištrynus, jis "
-"nebegali būti atstatytas.</qt>"
+"<html><p>Ar tikrai norite ištrinti visus priedus iš %1 pažymėto laiško?<br /"
+">Ištrynus, nebegalėsite juos atkurti.</p></html>"
 
 #: kmmainwidget.cpp:2491
 #, kde-format
@@ -8206,10 +8195,10 @@ msgid "Do Not Send"
 msgstr "Nesiųsti"
 
 #: util.cpp:38
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "Siųsti &paštą"
+msgstr "Siųsti laišką"
 
 #: util.cpp:190
 #, kde-format
