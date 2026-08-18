@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-10 14:11+0400\n"
+"PO-Revision-Date: 2026-08-17 19:36+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -6366,8 +6366,7 @@ msgid "Last Search"
 msgstr "آخر بحث"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "لم تحدّد مجلّدًا صالحًا."
 
@@ -8121,17 +8120,15 @@ msgid "Use Global Setting"
 msgstr "استخدم الإعداد العموميّ"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
-msgstr[0] "ردود ”خارج المكتب“ نشطة على الخادم"
-msgstr[1] "ردود ”خارج المكتب“ نشطة على الخادمين"
-msgstr[2] "ردود ”خارج المكتب“ نشطة على الخوادم"
-msgstr[3] "ردود ”خارج المكتب“ نشطة على الخوادم"
-msgstr[4] "ردود ”خارج المكتب“ نشطة على الخوادم"
-msgstr[5] "ردود ”خارج المكتب“ نشطة على الخوادم"
+msgstr[0] "ردود ”خارج المكتب“ غير نشطة على أي خادم"
+msgstr[1] "ردود ”خارج المكتب“ نشطة على خادم واحد"
+msgstr[2] "ردود ”خارج المكتب“ نشطة على خادمين"
+msgstr[3] "ردود ”خارج المكتب“ نشطة على %1 خوادم"
+msgstr[4] "ردود ”خارج المكتب“ نشطة على %1 خادمًا"
+msgstr[5] "ردود ”خارج المكتب“ نشطة على %1 خادم"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
