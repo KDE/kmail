@@ -6188,10 +6188,9 @@ msgid "Last Search"
 msgstr "上次搜索"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
-msgstr "您没有选择一个有效的文件夹。"
+msgstr ""
 
 #: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
@@ -7895,18 +7894,12 @@ msgid "Use Global Setting"
 msgstr "使用全局设置"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
-msgstr[0] "服务器上开启外出自动回复"
+msgstr[0] "在 %1 个服务器上开启了外出自动回复"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
 msgid "Zoom: %1%"
 msgstr "缩放：%1%"
-
-#~ msgid ""
-#~ "The file contains multiple messages. Only the first message is shown."
-#~ msgstr "文件包含多封信。仅会显示第一封信。"
