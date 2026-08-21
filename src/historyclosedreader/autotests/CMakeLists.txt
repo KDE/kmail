@@ -10,7 +10,7 @@ macro(historyclosedreader_kmail _source)
         ${_name}.h
     )
     add_test(NAME ${_name} COMMAND ${_name})
-    ecm_mark_as_test(historyclosedreader-${_name})
+    ecm_mark_as_test(${_name})
 
     target_link_libraries(
         ${_name}

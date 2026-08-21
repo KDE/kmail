@@ -15,7 +15,7 @@ add_executable(
     displaymessageformatactionmenutest.h
 )
 add_test(NAME displaymessageformatactionmenutest COMMAND displaymessageformatactionmenutest)
-ecm_mark_as_test(kmail-displaymessageformatactionmenutest)
+ecm_mark_as_test(displaymessageformatactionmenutest)
 target_link_libraries(
     displaymessageformatactionmenutest
     Qt::Test
@@ -30,7 +30,7 @@ add_executable(
     identityaddvcarddialogtest.cpp
     identityaddvcarddialogtest.h
 )
-ecm_mark_as_test(kmail-identityaddvcarddialogtest)
+ecm_mark_as_test(identityaddvcarddialogtest)
 target_link_libraries(
     identityaddvcarddialogtest
     Qt::Test
@@ -47,7 +47,7 @@ add_executable(
     createfollowupreminderonexistingmessagejobtest.cpp
     createfollowupreminderonexistingmessagejobtest.h
 )
-ecm_mark_as_test(kmail_createfollowupreminderonexistingmessagejobtest)
+ecm_mark_as_test(createfollowupreminderonexistingmessagejobtest)
 target_link_libraries(
     createfollowupreminderonexistingmessagejobtest
     Qt::Test
