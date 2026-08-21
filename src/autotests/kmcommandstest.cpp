@@ -239,6 +239,7 @@ void KMCommandsTest::waitForMainWindowToClose()
 
 int main(int argc, char *argv[])
 {
+    QStandardPaths::setTestModeEnabled(true);
     QTemporaryDir config;
     qputenv("LC_ALL", "C");
     qputenv("XDG_CONFIG_HOME", config.path().toUtf8());

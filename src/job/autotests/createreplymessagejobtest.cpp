@@ -6,12 +6,14 @@
 
 #include "createreplymessagejobtest.h"
 #include "job/createreplymessagejob.h"
+#include <QStandardPaths>
 #include <QTest>
 QTEST_MAIN(CreateReplyMessageJobTest)
 
 CreateReplyMessageJobTest::CreateReplyMessageJobTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 void CreateReplyMessageJobTest::shouldHaveDefaultValue()

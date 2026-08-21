@@ -6,11 +6,13 @@
 
 #include "createforwardmessagejobtest.h"
 #include "job/createforwardmessagejob.h"
+#include <QStandardPaths>
 #include <QTest>
 QTEST_MAIN(CreateForwardMessageJobTest)
 CreateForwardMessageJobTest::CreateForwardMessageJobTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 void CreateForwardMessageJobTest::shouldHaveDefaultValues()

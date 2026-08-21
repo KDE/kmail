@@ -7,11 +7,13 @@
 #include "kactionmenutransporttest.h"
 #include "../widgets/kactionmenutransport.h"
 #include <QMenu>
+#include <QStandardPaths>
 #include <QTest>
 QTEST_MAIN(KActionMenuTransportTest)
 KActionMenuTransportTest::KActionMenuTransportTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 KActionMenuTransportTest::~KActionMenuTransportTest() = default;

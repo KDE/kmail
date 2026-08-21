@@ -9,11 +9,13 @@
 #include "../potentialphishingdetailwidget.h"
 #include <QLabel>
 #include <QListWidget>
+#include <QStandardPaths>
 #include <QTest>
 
 PotentialPhishingDetailWidgetTest::PotentialPhishingDetailWidgetTest(QObject *parent)
     : QObject(parent)
 {
+    QStandardPaths::setTestModeEnabled(true);
 }
 
 PotentialPhishingDetailWidgetTest::~PotentialPhishingDetailWidgetTest() = default;
