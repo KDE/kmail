@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-08 02:00+0200\n"
+"PO-Revision-Date: 2026-08-15 16:46+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.04.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -6441,8 +6441,7 @@ msgid "Last Search"
 msgstr "Ultima ricerca"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "Non hai selezionato una cartella valida."
 
@@ -8238,13 +8237,11 @@ msgid "Use Global Setting"
 msgstr "Usa le impostazioni globali"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Risposta fuori sede attiva sul server"
-msgstr[1] "Risposta fuori sede attiva sui server"
+msgstr[1] "Risposta fuori sede attiva su %1 server"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
