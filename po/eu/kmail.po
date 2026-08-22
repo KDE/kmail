@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-14 00:46+0000\n"
-"PO-Revision-Date: 2026-08-19 21:32+0200\n"
+"PO-Revision-Date: 2026-08-21 13:54+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3419,7 +3419,7 @@ msgstr "Hautatu Spam karpeta"
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Spam karpeta:"
+msgstr "Spam &karpeta:"
 
 #: identity/identitydialog.cpp:713
 #, kde-format
@@ -5609,13 +5609,12 @@ msgstr "&Desegin: «%1»"
 #: kmmainwidget.cpp:4304
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "Ber&regin"
 
 #: kmmainwidget.cpp:4306
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Desegin: «%1»"
+msgstr "Ber&regin: \"%1\""
 
 #: kmmainwidget.cpp:4363
 #, kde-format
@@ -5882,17 +5881,14 @@ msgid "Cannot move message. %1"
 msgstr "Ezin du mezua eraman. %1"
 
 #: kmundoredomanager.cpp:135
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
-msgstr "Eraman mezua"
+msgstr "Mezua mugitu"
 
 #: kmundoredomanager.cpp:171
-#, fuzzy, kde-format
-#| msgid "Change Message Status"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "Mezuaren egoera aldatu"
+msgstr "Mezuen egoera aldatu"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:30
 #, kde-format
@@ -6383,10 +6379,9 @@ msgid "Last Search"
 msgstr "Azken bilaketa"
 
 #: searchdialog/searchwindowdialog.cpp:431
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
-msgstr "Ez duzu hautatu baliodun karpeta bat."
+msgstr "Ez duzu karpeta baliodun bat hautatu."
 
 #: searchdialog/searchwindowdialog.cpp:445
 #, kde-format
@@ -6860,7 +6855,7 @@ msgstr "Karpeta bakoitzeko, erakutsi jasotako mezu berrien kopurua"
 #: ui/accountspagereceivingtab.ui:68
 #, kde-format
 msgid "Deta&iled new mail notification"
-msgstr "Posta berriaren jakinarazpen xehatua"
+msgstr "Posta berriaren jakinarazpen &xehatua"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
@@ -8159,13 +8154,11 @@ msgid "Use Global Setting"
 msgstr "Erabili ezarpen globala"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Bulegotik kanpo erantzuna zerbitzarian aktibo dago"
-msgstr[1] "Bulegotik kanpo erantzuna zerbitzarietan aktibo dago"
+msgstr[1] "Bulegotik kanpo erantzuna %1 zerbitzarietan aktibo dago"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
