@@ -402,7 +402,7 @@ void KMKernel::openComposer(const QString &to,
     const OpenComposerSettings
         settings(to, cc, bcc, subject, body, hidden, messageFile, attachmentPaths, customHeaders, replyTo, inReplyTo, identity, htmlBody);
     auto job = new OpenComposerJob(this);
-    job->setOpenComposerSettings(std::move(settings));
+    job->setOpenComposerSettings(settings);
     job->start();
 }
 
@@ -519,7 +519,7 @@ void KMKernel::fillComposer(bool hidden,
                                            forceShowWindow,
                                            htmlBody);
     auto job = new FillComposerJob(this);
-    job->setSettings(std::move(settings));
+    job->setSettings(settings);
     job->start();
 }
 

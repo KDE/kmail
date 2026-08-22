@@ -2166,7 +2166,7 @@ void KMComposerWin::slotSendSuccessful(Akonadi::Item::Id id)
         info.delay = KMailSettings::self()->undoSendDelay();
         info.to = MessageCore::StringUtil::quoteHtmlChars(mComposerBase->to());
 
-        UndoSendManager::self()->addItem(std::move(info));
+        UndoSendManager::self()->addItem(info);
     }
     setModified(false);
     mComposerBase->cleanupAutoSave();
@@ -2404,7 +2404,7 @@ void KMComposerWin::insertUrls(const QMimeData *source, const QList<QUrl> &urlLi
         }
         if (!urlAdded.contains(urlStr)) {
             mComposerBase->editor()->composerControler()->insertLink(urlStr);
-            urlAdded.append(urlStr);
+            urlAdded.append(std::move(urlStr));
         }
     }
 }

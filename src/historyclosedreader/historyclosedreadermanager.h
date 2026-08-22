@@ -17,7 +17,7 @@ public:
     explicit HistoryClosedReaderManager(QObject *parent = nullptr);
     ~HistoryClosedReaderManager() override;
 
-    void addInfo(const HistoryClosedReaderInfo &info);
+    void addInfo(HistoryClosedReaderInfo info);
 
     [[nodiscard]] HistoryClosedReaderInfo lastInfo();
 

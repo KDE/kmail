@@ -21,9 +21,9 @@ void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
     mEmailWhiteList.clear();
     mEmailWhiteList.reserve(emails.count());
     for (const QString &email : emails) {
-        const QString normalizedEmail = email.trimmed().toCaseFolded();
+        QString normalizedEmail = email.trimmed().toCaseFolded();
         if (!normalizedEmail.isEmpty()) {
-            mEmailWhiteList.append(normalizedEmail);
+            mEmailWhiteList.append(std::move(normalizedEmail));
         }
     }
 }

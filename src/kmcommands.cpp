@@ -1209,15 +1209,15 @@ KMCommand::Result KMSetStatusCommand::execute()
         if (mInvertMark) {
             if (item.hasFlag(flag)) {
                 item.clearFlag(flag);
-                itemsToModify.push_back(item);
+                itemsToModify.push_back(std::move(item));
             } else {
                 item.setFlag(flag);
-                itemsToModify.push_back(item);
+                itemsToModify.push_back(std::move(item));
             }
         } else {
             if (!item.hasFlag(flag)) {
                 item.setFlag(flag);
-                itemsToModify.push_back(item);
+                itemsToModify.push_back(std::move(item));
             }
         }
     }
@@ -1327,9 +1327,9 @@ void KMSetTagCommand::setTags()
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
         for (const Akonadi::Tag &createdTag : std::as_const(mCreatedTags)) {
-            const QString url = createdTag.url().url();
+            QString url = createdTag.url().url();
             if (!lst.contains(url)) {
-                lst.append(url);
+                lst.append(std::move(url));
             }
         }
         tag.writeEntry("TagSelected", lst);

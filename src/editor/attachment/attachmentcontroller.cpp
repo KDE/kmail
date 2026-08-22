@@ -100,7 +100,7 @@ void AttachmentController::selectionChanged()
     selectedParts.reserve(selectedRows.count());
     for (const QModelIndex &index : selectedRows) {
         auto part = mView->model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
-        selectedParts.append(part);
+        selectedParts.append(std::move(part));
     }
     setSelectedParts(selectedParts);
 }

@@ -209,7 +209,7 @@ void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
         insertBox(std::move(box));
     }
 
-    const auto cb = [this, finishedCb = std::move(finishedCb)]() {
+    auto cb = [this, finishedCb = std::move(finishedCb)]() {
         qCDebug(UNIFIEDMAILBOXAGENT_LOG) << "Finished callback: enabling change recorder";
         // Only now start processing changes from change recorder
         connect(&mMonitor, &Akonadi::ChangeRecorder::changesAdded, &mMonitor, &Akonadi::ChangeRecorder::replayNext, Qt::QueuedConnection);

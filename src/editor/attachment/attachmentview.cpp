@@ -111,7 +111,7 @@ void AttachmentView::keyPressEvent(QKeyEvent *event)
         toRemove.reserve(selectedIndexes.count());
         for (const QModelIndex &index : selectedIndexes) {
             auto part = model()->data(index, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
-            toRemove.append(part);
+            toRemove.append(std::move(part));
         }
         for (const AttachmentPart::Ptr &part : std::as_const(toRemove)) {
             if (!mModel->removeAttachment(part)) {

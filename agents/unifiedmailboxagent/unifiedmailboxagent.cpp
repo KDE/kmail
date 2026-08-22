@@ -158,7 +158,7 @@ void UnifiedMailboxAgent::retrieveCollections()
         collections.push_back(std::move(col));
     }
 
-    collectionsRetrieved(std::move(collections));
+    collectionsRetrieved(collections);
 
     // Add mapping between boxes and collections
     mBoxManager.discoverBoxCollections();

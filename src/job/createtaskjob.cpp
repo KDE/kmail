@@ -97,7 +97,7 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
             }
         } else {
             item.setFlag(flag);
-            itemsToModify.push_back(item);
+            itemsToModify.push_back(std::move(item));
             // TODO add TaskAttribute();
         }
     }

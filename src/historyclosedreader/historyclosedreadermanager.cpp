@@ -22,7 +22,7 @@ bool HistoryClosedReaderManager::isEmpty() const
     return mClosedReaderInfos.isEmpty();
 }
 
-void HistoryClosedReaderManager::addInfo(const HistoryClosedReaderInfo &info)
+void HistoryClosedReaderManager::addInfo(HistoryClosedReaderInfo info)
 {
     if (info.isValid()) {
         if (!mClosedReaderInfos.isEmpty()) {
@@ -37,7 +37,7 @@ void HistoryClosedReaderManager::addInfo(const HistoryClosedReaderInfo &info)
         if (mClosedReaderInfos.count() >= 10) {
             mClosedReaderInfos.takeFirst();
         }
-        mClosedReaderInfos.append(info);
+        mClosedReaderInfos.append(std::move(info));
         Q_EMIT historyClosedReaderChanged();
     }
 }

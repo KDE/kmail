@@ -1308,7 +1308,7 @@ void AppearancePageMessageTagTab::slotTagsFetched(KJob *job)
     msgTagList.reserve(tagList.count());
     for (const Akonadi::Tag &akonadiTag : tagList) {
         MailCommon::Tag::Ptr tag = MailCommon::Tag::fromAkonadi(akonadiTag);
-        msgTagList.append(tag);
+        msgTagList.append(std::move(tag));
     }
 
     std::sort(msgTagList.begin(), msgTagList.end(), MailCommon::Tag::compare);
