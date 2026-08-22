@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-08-19 21:32+0200\n"
+"PO-Revision-Date: 2026-08-21 13:52+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -3419,7 +3419,7 @@ msgstr "Hautatu Spam karpeta"
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
-msgstr "Spam karpeta:"
+msgstr "Spam &karpeta:"
 
 #: identity/identitydialog.cpp:713
 #, kde-format
@@ -6835,7 +6835,7 @@ msgstr "Karpeta bakoitzeko, erakutsi jasotako mezu berrien kopurua"
 #: ui/accountspagereceivingtab.ui:68
 #, kde-format
 msgid "Deta&iled new mail notification"
-msgstr "Posta berriaren jakinarazpen xehatua"
+msgstr "Posta berriaren jakinarazpen &xehatua"
 
 #. i18n: ectx: property (text), widget (QPushButton, mOtherNewMailActionsButton)
 #: ui/accountspagereceivingtab.ui:81
