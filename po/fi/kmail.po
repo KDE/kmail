@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-01-05 17:05+0200\n"
+"PO-Revision-Date: 2026-03-02 19:23+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1595,16 +1595,12 @@ msgid "GnuPG Settings"
 msgstr "GnuPG-asetukset"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
-msgstr "Moduuli puuttuu: tarkista asennus. Moduulin tarjoaa Kleopatra."
+msgstr "Moduuli puuttuu: tarkista asennus. Moduulin tarjoaa kdepim-addons."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -8146,6 +8142,9 @@ msgid ""
 "this, uncheck the \"Appearance->Colors->Do not change color from original "
 "HTML mail\" option"
 msgstr ""
+"HTML-viestit näytetään oletuksena pyydetyissä väreissään. Tämän voi ohittaa "
+"poistamalla valinnan ”Ulkoasu → Värit → Älä muuta HTML-viestin alkuperäisiä "
+"värejä”"
 
 #: widgets/displaymessageformatactionmenu.cpp:19
 #, kde-format
@@ -8171,7 +8170,9 @@ msgid "Use Global Setting"
 msgstr "Käytä järjestelmäasetusta"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Out of office reply active on server"
+#| msgid_plural "Out of office reply active on servers"
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "Poissaolovastaus on aktiivinen palvelimella"
