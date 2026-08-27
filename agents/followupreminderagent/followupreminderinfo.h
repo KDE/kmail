@@ -18,7 +18,6 @@ class FollowUpReminderInfo
 public:
     FollowUpReminderInfo();
     explicit FollowUpReminderInfo(const KConfigGroup &config);
-    explicit FollowUpReminderInfo(const FollowUpReminderInfo &info);
 
     // Can be invalid.
     [[nodiscard]] Akonadi::Item::Id originalMessageItemId() const;

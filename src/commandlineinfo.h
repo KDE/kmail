@@ -13,7 +13,6 @@ class KMAILTESTS_TESTS_EXPORT CommandLineInfo
 {
 public:
     CommandLineInfo();
-    ~CommandLineInfo();
 
     void parseCommandLine(const QStringList &args, const QString &workingDir);
     [[nodiscard]] QStringList customHeaders() const;

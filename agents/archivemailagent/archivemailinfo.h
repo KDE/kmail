@@ -17,12 +17,7 @@ class ArchiveMailInfo
     Q_GADGET
 public:
     explicit ArchiveMailInfo(const KConfigGroup &config);
-    ArchiveMailInfo(const ArchiveMailInfo &info);
     ArchiveMailInfo();
-
-    ~ArchiveMailInfo();
-
-    ArchiveMailInfo &operator=(const ArchiveMailInfo &old);
 
     enum class ArchiveUnit {
         ArchiveDays = 0,

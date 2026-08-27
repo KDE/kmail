@@ -15,7 +15,6 @@ class KMAILTESTS_TESTS_EXPORT FolderArchiveAccountInfo
 public:
     FolderArchiveAccountInfo();
     explicit FolderArchiveAccountInfo(const KConfigGroup &config);
-    ~FolderArchiveAccountInfo();
 
     enum class FolderArchiveType : uint8_t {
         UniqueFolder,

@@ -13,8 +13,6 @@ FolderArchiveAccountInfo::FolderArchiveAccountInfo(const KConfigGroup &config)
     readConfig(config);
 }
 
-FolderArchiveAccountInfo::~FolderArchiveAccountInfo() = default;
-
 bool FolderArchiveAccountInfo::isValid() const
 {
     return (mArchiveTopLevelCollectionId > -1) && (!mInstanceName.isEmpty());

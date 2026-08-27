@@ -13,7 +13,6 @@ class KMAILTESTS_TESTS_EXPORT HistoryClosedReaderInfo
 {
 public:
     HistoryClosedReaderInfo();
-    ~HistoryClosedReaderInfo();
 
     [[nodiscard]] QString subject() const;
     void setSubject(const QString &newSubject);

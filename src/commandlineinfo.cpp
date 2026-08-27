@@ -12,8 +12,6 @@
 using namespace Qt::Literals::StringLiterals;
 CommandLineInfo::CommandLineInfo() = default;
 
-CommandLineInfo::~CommandLineInfo() = default;
-
 QDebug operator<<(QDebug d, const CommandLineInfo &t)
 {
     d << "mCustomHeaders " << t.customHeaders();

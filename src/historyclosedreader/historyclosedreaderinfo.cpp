@@ -8,8 +8,6 @@
 
 HistoryClosedReaderInfo::HistoryClosedReaderInfo() = default;
 
-HistoryClosedReaderInfo::~HistoryClosedReaderInfo() = default;
-
 QString HistoryClosedReaderInfo::subject() const
 {
     return mSubject;

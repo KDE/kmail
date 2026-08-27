@@ -15,19 +15,6 @@ FollowUpReminderInfo::FollowUpReminderInfo(const KConfigGroup &config)
     readConfig(config);
 }
 
-FollowUpReminderInfo::FollowUpReminderInfo(const FollowUpReminderInfo &info)
-    : mOriginalMessageItemId(info.originalMessageItemId())
-    , mAnswerMessageItemId(info.answerMessageItemId())
-    , mTodoId(info.todoId())
-    , mMessageId(info.messageId())
-    , mFollowUpReminderDate(info.followUpReminderDate())
-    , mTo(info.to())
-    , mSubject(info.subject())
-    , mUniqueIdentifier(info.uniqueIdentifier())
-    , mAnswerWasReceived(info.answerWasReceived())
-{
-}
-
 void FollowUpReminderInfo::readConfig(const KConfigGroup &config)
 {
     if (config.hasKey(QStringLiteral("followUpReminderDate"))) {

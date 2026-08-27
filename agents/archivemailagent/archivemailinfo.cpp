@@ -17,39 +17,6 @@ ArchiveMailInfo::ArchiveMailInfo(const KConfigGroup &config)
     readConfig(config);
 }
 
-ArchiveMailInfo::ArchiveMailInfo(const ArchiveMailInfo &info)
-    : mLastDateSaved(info.lastDateSaved())
-    , mArchiveAge(info.archiveAge())
-    , mArchiveType(info.archiveType())
-    , mArchiveUnit(info.archiveUnit())
-    , mSaveCollectionId(info.saveCollectionId())
-    , mPath(info.url())
-    , mRanges(info.range())
-    , mMaximumArchiveCount(info.maximumArchiveCount())
-    , mSaveSubCollection(info.saveSubCollection())
-    , mIsEnabled(info.isEnabled())
-    , mUseRange(info.useRange())
-{
-}
-
-ArchiveMailInfo::~ArchiveMailInfo() = default;
-
-ArchiveMailInfo &ArchiveMailInfo::operator=(const ArchiveMailInfo &old)
-{
-    mLastDateSaved = old.lastDateSaved();
-    mArchiveAge = old.archiveAge();
-    mArchiveType = old.archiveType();
-    mArchiveUnit = old.archiveUnit();
-    mSaveCollectionId = old.saveCollectionId();
-    mMaximumArchiveCount = old.maximumArchiveCount();
-    mSaveSubCollection = old.saveSubCollection();
-    mPath = old.url();
-    mIsEnabled = old.isEnabled();
-    mUseRange = old.useRange();
-    mRanges = old.range();
-    return *this;
-}
-
 static QString normalizeFolderName(const QString &folderName)
 {
     QString adaptFolderName(folderName);
