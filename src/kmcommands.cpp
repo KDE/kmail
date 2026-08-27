@@ -45,8 +45,6 @@
 #include "editor/composer.h"
 #include "kmmainwidget.h"
 
-#include <KIdentityManagementCore/IdentityManager>
-
 #include <KMime/MDN>
 
 #include <Akonadi/ItemCopyJob>
@@ -63,30 +61,24 @@
 #include <MailCommon/FilterAction>
 #include <MailCommon/FilterManager>
 #include <MailCommon/FolderSettings>
-#include <MailCommon/MailFilter>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 #include <MailCommon/RedirectDialog>
 
 #include <MessageCore/MailingList>
 #include <MessageCore/MessageCoreSettings>
-#include <MessageCore/StringUtil>
 
 #include <MessageComposer/MessageComposerSettings>
 #include <MessageComposer/MessageHelper>
 #include <MessageComposer/MessageSender>
 #include <MessageComposer/Util>
 
-#include <MessageList/Pane>
-
 #include <MessageViewer/CSSHelper>
 #include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
 #include <MessageViewer/MessageViewerUtil>
-#include <MessageViewer/ObjectTreeEmptySource>
 
 #include <MimeTreeParser/NodeHelper>
-#include <MimeTreeParser/ObjectTreeParser>
 
 #include <Akonadi/SentBehaviourAttribute>
 #include <Akonadi/TransportAttribute>
@@ -96,8 +88,6 @@
 #include <PimCommon/BroadcastStatus>
 
 #include <KCursorSaver>
-
-#include <gpgme++/error.h>
 
 #include <KBookmarkManager>
 
@@ -110,7 +100,6 @@
 // KIO headers
 #include <KIO/FileCopyJob>
 #include <KIO/JobUiDelegate>
-#include <KIO/StatJob>
 #include <KIO/TransferJob>
 
 #include <QApplication>
