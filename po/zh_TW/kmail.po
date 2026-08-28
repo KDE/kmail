@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -2808,7 +2808,7 @@ msgid "Reopen Closed Viewer"
 msgstr "重新開啟已關閉的檢視器"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1976
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4075,41 +4075,41 @@ msgstr "說明(&H)"
 msgid "Main Toolbar"
 msgstr "主工具列"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:291
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "請稍候"
 
-#: kmcommands.cpp:305 kmcommands.cpp:378
+#: kmcommands.cpp:294 kmcommands.cpp:367
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "%1 封信件傳送中，請稍候…"
 
-#: kmcommands.cpp:531
+#: kmcommands.cpp:520
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "儲存到檔案"
 
-#: kmcommands.cpp:718
+#: kmcommands.cpp:707
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "開啟訊息"
 
-#: kmcommands.cpp:720
+#: kmcommands.cpp:709
 #, kde-format
 msgid "Message"
 msgstr "信件"
 
-#: kmcommands.cpp:749
+#: kmcommands.cpp:738
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "檔案中未含有任何信件。"
 
-#: kmcommands.cpp:938
+#: kmcommands.cpp:927
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4117,39 +4117,39 @@ msgid ""
 msgstr ""
 "您要在一封信件中以附加檔方式（MIME 摘要）轉寄選取的信件，還是要個別轉寄？"
 
-#: kmcommands.cpp:942
+#: kmcommands.cpp:931
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "傳送摘要"
 
-#: kmcommands.cpp:943
+#: kmcommands.cpp:932
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "個別傳送"
 
-#: kmcommands.cpp:1361
+#: kmcommands.cpp:1350
 #, kde-format
 msgid "Filtering messages"
 msgstr "過濾信件中"
 
-#: kmcommands.cpp:1371
+#: kmcommands.cpp:1360
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "過濾 %1 封信件（共 %2 封）"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1731
+#: kmcommands.cpp:1583 kmcommands.cpp:1720
 #, kde-format
 msgid "Moving messages"
 msgstr "移動信件中"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1741
+#: kmcommands.cpp:1583 kmcommands.cpp:1730
 #, kde-format
 msgid "Deleting messages"
 msgstr "刪除信件中"
 
-#: kmcommands.cpp:1883
+#: kmcommands.cpp:1872
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

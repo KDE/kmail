@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2026-08-14 23:30+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -2935,7 +2935,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Възстановяване на затворено съобщение"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1976
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4245,42 +4245,42 @@ msgstr "&Помощ"
 msgid "Main Toolbar"
 msgstr "Главна лента с инструменти"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:291
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Изчакайте"
 
-#: kmcommands.cpp:305 kmcommands.cpp:378
+#: kmcommands.cpp:294 kmcommands.cpp:367
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Моля, изчакайте докато съобщението се прехвърля"
 msgstr[1] "Моля, изчакайте докато се прехвърлят тези %1 съобщения"
 
-#: kmcommands.cpp:531
+#: kmcommands.cpp:520
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Запазване във файл"
 
-#: kmcommands.cpp:718
+#: kmcommands.cpp:707
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Отваряне на съобщение"
 
-#: kmcommands.cpp:720
+#: kmcommands.cpp:709
 #, kde-format
 msgid "Message"
 msgstr "Съобщение"
 
-#: kmcommands.cpp:749
+#: kmcommands.cpp:738
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Файлът не съдържа съобщение."
 
-#: kmcommands.cpp:938
+#: kmcommands.cpp:927
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4289,39 +4289,39 @@ msgstr ""
 "Искате ли да препратите избраните съобщения като прикачени файлове в едно "
 "съобщение (като MIME обобщение) или като отделни съобщения?"
 
-#: kmcommands.cpp:942
+#: kmcommands.cpp:931
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Изпращане като обобщение"
 
-#: kmcommands.cpp:943
+#: kmcommands.cpp:932
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Изпращане поотделно"
 
-#: kmcommands.cpp:1361
+#: kmcommands.cpp:1350
 #, kde-format
 msgid "Filtering messages"
 msgstr "Филтриране на съобщенията"
 
-#: kmcommands.cpp:1371
+#: kmcommands.cpp:1360
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Филтриране на съобщение %1 от %2"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1731
+#: kmcommands.cpp:1583 kmcommands.cpp:1720
 #, kde-format
 msgid "Moving messages"
 msgstr "Преместване на съобщенията"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1741
+#: kmcommands.cpp:1583 kmcommands.cpp:1730
 #, kde-format
 msgid "Deleting messages"
 msgstr "Изтриване на съобщенията"
 
-#: kmcommands.cpp:1883
+#: kmcommands.cpp:1872
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

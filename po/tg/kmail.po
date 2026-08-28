@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2019-09-29 12:44+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: English <kde-i18n-doc@kde.org>\n"
@@ -3106,7 +3106,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Иттилооти нав"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1976
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4519,85 +4519,85 @@ msgstr "&Садо"
 msgid "Main Toolbar"
 msgstr "Лавҳаи HTML"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:291
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Лутфан, интизор шавед"
 
-#: kmcommands.cpp:305 kmcommands.cpp:378
+#: kmcommands.cpp:294 kmcommands.cpp:367
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Хотимаи фиристониши иттилооти %1-ро интизор шавед"
 msgstr[1] "Хотимаи фиристониши иттилоотҳои %1-ро интизор шавед"
 
-#: kmcommands.cpp:531
+#: kmcommands.cpp:520
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Ба файл захира кардан"
 
-#: kmcommands.cpp:718
+#: kmcommands.cpp:707
 #, fuzzy, kde-format
 #| msgid "Open Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Боз кардани иттилоот"
 
-#: kmcommands.cpp:720
+#: kmcommands.cpp:709
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "&Иттилоот"
 
-#: kmcommands.cpp:749
+#: kmcommands.cpp:738
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "Файл дорои иттилоот намебошад."
 
-#: kmcommands.cpp:938
+#: kmcommands.cpp:927
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:942
+#: kmcommands.cpp:931
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Фиристодан &ғайри имзои рақамӣ"
 
-#: kmcommands.cpp:943
+#: kmcommands.cpp:932
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1361
+#: kmcommands.cpp:1350
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Ҳузфи иттилоот"
 
-#: kmcommands.cpp:1371
+#: kmcommands.cpp:1360
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Гузаронидани иттилооти %3 аз %2 аз %1."
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1731
+#: kmcommands.cpp:1583 kmcommands.cpp:1720
 #, kde-format
 msgid "Moving messages"
 msgstr "Гузаронидани иттилоот"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1741
+#: kmcommands.cpp:1583 kmcommands.cpp:1730
 #, kde-format
 msgid "Deleting messages"
 msgstr "Ҳузфи иттилоот"
 
-#: kmcommands.cpp:1883
+#: kmcommands.cpp:1872
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2025-05-17 21:32+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -71,7 +71,7 @@ msgstr "Maximale Anzahl von Archiven:"
 msgid "unlimited"
 msgstr "unbegrenzt"
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:68 archivemailinfo.cpp:84
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"

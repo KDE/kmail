@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -2765,7 +2765,7 @@ msgid "Reopen Closed Viewer"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1976
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -3969,81 +3969,81 @@ msgstr ""
 msgid "Main Toolbar"
 msgstr ""
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:291
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr ""
 
-#: kmcommands.cpp:305 kmcommands.cpp:378
+#: kmcommands.cpp:294 kmcommands.cpp:367
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] ""
 msgstr[1] ""
 
-#: kmcommands.cpp:531
+#: kmcommands.cpp:520
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr ""
 
-#: kmcommands.cpp:718
+#: kmcommands.cpp:707
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr ""
 
-#: kmcommands.cpp:720
+#: kmcommands.cpp:709
 #, kde-format
 msgid "Message"
 msgstr ""
 
-#: kmcommands.cpp:749
+#: kmcommands.cpp:738
 #, kde-format
 msgid "The file does not contain a message."
 msgstr ""
 
-#: kmcommands.cpp:938
+#: kmcommands.cpp:927
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:942
+#: kmcommands.cpp:931
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr ""
 
-#: kmcommands.cpp:943
+#: kmcommands.cpp:932
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1361
+#: kmcommands.cpp:1350
 #, kde-format
 msgid "Filtering messages"
 msgstr ""
 
-#: kmcommands.cpp:1371
+#: kmcommands.cpp:1360
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr ""
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1731
+#: kmcommands.cpp:1583 kmcommands.cpp:1720
 #, kde-format
 msgid "Moving messages"
 msgstr ""
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1741
+#: kmcommands.cpp:1583 kmcommands.cpp:1730
 #, kde-format
 msgid "Deleting messages"
 msgstr ""
 
-#: kmcommands.cpp:1883
+#: kmcommands.cpp:1872
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

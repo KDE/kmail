@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -2909,7 +2909,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Bezárt megjelenító újranyitása"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1976
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4215,42 +4215,42 @@ msgstr "&Súgó"
 msgid "Main Toolbar"
 msgstr "Alap eszköztár"
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:291
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Kis türelmet"
 
-#: kmcommands.cpp:305 kmcommands.cpp:378
+#: kmcommands.cpp:294 kmcommands.cpp:367
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Egy kis türelmet kérek - 1 üzenet letöltése van folyamatban"
 msgstr[1] "Egy kis türelmet kérek - %1 üzenet letöltése van folyamatban"
 
-#: kmcommands.cpp:531
+#: kmcommands.cpp:520
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Mentés fájlba"
 
-#: kmcommands.cpp:718
+#: kmcommands.cpp:707
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Üzenet megnyitása"
 
-#: kmcommands.cpp:720
+#: kmcommands.cpp:709
 #, kde-format
 msgid "Message"
 msgstr "Üzenet"
 
-#: kmcommands.cpp:749
+#: kmcommands.cpp:738
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "A fájl nem tartalmaz üzenetet."
 
-#: kmcommands.cpp:938
+#: kmcommands.cpp:927
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4259,39 +4259,39 @@ msgstr ""
 "A kijelölt üzeneteket egy üzenetben, mellékletként szeretné továbbítani vagy "
 "egyesével?"
 
-#: kmcommands.cpp:942
+#: kmcommands.cpp:931
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Elküldés egyben"
 
-#: kmcommands.cpp:943
+#: kmcommands.cpp:932
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Elküldés külön-külön"
 
-#: kmcommands.cpp:1361
+#: kmcommands.cpp:1350
 #, kde-format
 msgid "Filtering messages"
 msgstr "Üzenetszűrés"
 
-#: kmcommands.cpp:1371
+#: kmcommands.cpp:1360
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Üzenetszűrés - %2 / %1"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1731
+#: kmcommands.cpp:1583 kmcommands.cpp:1720
 #, kde-format
 msgid "Moving messages"
 msgstr "Üzenetek áthelyezése"
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1741
+#: kmcommands.cpp:1583 kmcommands.cpp:1730
 #, kde-format
 msgid "Deleting messages"
 msgstr "Üzenetek törlése"
 
-#: kmcommands.cpp:1883
+#: kmcommands.cpp:1872
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail 0\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-14 00:46+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2011-03-28 17:53+0200\n"
 "Last-Translator: Marko Dimjašević <marko@dimjasevic.net>\n"
 "Language-Team: Croatian <kde-croatia-list@lists.sourceforge.net>\n"
@@ -3023,7 +3023,7 @@ msgid "Reopen Closed Viewer"
 msgstr "Pošalji novu poruku"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1987
+#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1976
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
@@ -4321,14 +4321,14 @@ msgstr "&Beep"
 msgid "Main Toolbar"
 msgstr ""
 
-#: kmcommands.cpp:302
+#: kmcommands.cpp:291
 #, fuzzy, kde-format
 #| msgid "Please wait"
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Molim pričekajte"
 
-#: kmcommands.cpp:305 kmcommands.cpp:378
+#: kmcommands.cpp:294 kmcommands.cpp:367
 #, fuzzy, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
@@ -4336,71 +4336,71 @@ msgstr[0] "Pričekajte dok se prenese %1 poruka"
 msgstr[1] "Pričekajte dok se prenesu %1 poruke"
 msgstr[2] "Pričekajte dok se prenese %1 poruka"
 
-#: kmcommands.cpp:531
+#: kmcommands.cpp:520
 #, fuzzy, kde-format
 #| msgid "Save to File"
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Spremi u datoteku"
 
-#: kmcommands.cpp:718
+#: kmcommands.cpp:707
 #, fuzzy, kde-format
 #| msgid "Open &Message"
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Otvori poru&ku"
 
-#: kmcommands.cpp:720
+#: kmcommands.cpp:709
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message"
 msgstr "Poru&ka"
 
-#: kmcommands.cpp:749
+#: kmcommands.cpp:738
 #, fuzzy, kde-format
 msgid "The file does not contain a message."
 msgstr "Izbaci &nepročitane poruke"
 
-#: kmcommands.cpp:938
+#: kmcommands.cpp:927
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
 "(as a MIME digest) or as individual messages?"
 msgstr ""
 
-#: kmcommands.cpp:942
+#: kmcommands.cpp:931
 #, fuzzy, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Pošalji „o&dbijen“"
 
-#: kmcommands.cpp:943
+#: kmcommands.cpp:932
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr ""
 
-#: kmcommands.cpp:1361
+#: kmcommands.cpp:1350
 #, fuzzy, kde-format
 msgid "Filtering messages"
 msgstr "Obriši poruke"
 
-#: kmcommands.cpp:1371
+#: kmcommands.cpp:1360
 #, fuzzy, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Premještam poruku %3 od %2 iz %1."
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1731
+#: kmcommands.cpp:1583 kmcommands.cpp:1720
 #, fuzzy, kde-format
 msgid "Moving messages"
 msgstr "Premještanje poruka nije uspjelo."
 
-#: kmcommands.cpp:1594 kmcommands.cpp:1741
+#: kmcommands.cpp:1583 kmcommands.cpp:1730
 #, fuzzy, kde-format
 msgid "Deleting messages"
 msgstr "Obriši poruke"
 
-#: kmcommands.cpp:1883
+#: kmcommands.cpp:1872
 #, fuzzy, kde-format
 #| msgid "&Remove Attachment"
 msgctxt "@info:progress"

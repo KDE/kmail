@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-28 00:46+0000\n"
 "PO-Revision-Date: 2024-11-19 23:47+0300\n"
 "Last-Translator: Antikruk <nashtlumach@gmail.com>\n"
 "Language-Team: \n"
@@ -72,7 +72,7 @@ msgstr ""
 msgid "unlimited"
 msgstr ""
 
-#: archivemailinfo.cpp:101 archivemailinfo.cpp:117
+#: archivemailinfo.cpp:68 archivemailinfo.cpp:84
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
