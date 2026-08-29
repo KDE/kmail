@@ -106,8 +106,7 @@ void AddEmailToExistingContactDialog::writeConfig()
 Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const
 {
     Akonadi::Item item;
-    const Akonadi::EmailAddressSelection::List lst = mEmailSelectionWidget->selectedAddresses();
-    if (!lst.isEmpty()) {
+    if (const Akonadi::EmailAddressSelection::List lst = mEmailSelectionWidget->selectedAddresses(); !lst.isEmpty()) {
         item = lst.at(0).item();
     }
     return item;

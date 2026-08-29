@@ -28,8 +28,7 @@ void AddEmailToExistingContactJob::start()
 {
     if (mItem.hasPayload<KContacts::Addressee>()) {
         auto address = mItem.payload<KContacts::Addressee>();
-        QStringList emails = address.emails();
-        if (emails.contains(mEmail)) {
+        if (QStringList emails = address.emails(); emails.contains(mEmail)) {
             emitResult();
         } else {
             emails.append(mEmail);

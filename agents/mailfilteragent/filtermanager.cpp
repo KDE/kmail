@@ -76,8 +76,7 @@ void FilterManager::Private::slotItemsFetchedForFilter(const Akonadi::Item::List
     }
 
     QList<MailFilter *> listMailFilters;
-    const QVariant listFiltersProp = q->sender()->property("listFilters");
-    if (listFiltersProp.isValid()) {
+    if (const QVariant listFiltersProp = q->sender()->property("listFilters"); listFiltersProp.isValid()) {
         const QStringList listFilters = listFiltersProp.toStringList();
         for (const QString &filterId : listFilters) {
             for (MailCommon::MailFilter *filter : std::as_const(mFilters)) {
@@ -167,9 +166,8 @@ void FilterManager::Private::itemFetchJobForFilterDone(KJob *job)
             Q_EMIT q->filteringFailed(items.first());
         }
     } else {
-        const FilterManager::FilterSet set = static_cast<FilterManager::FilterSet>(job->property("filterSet").toInt());
-
-        if (!q->process(items.first(), needsFullPayload, set, !resourceId.isEmpty(), resourceId)) {
+        if (const FilterManager::FilterSet set = static_cast<FilterManager::FilterSet>(job->property("filterSet").toInt());
+            !q->process(items.first(), needsFullPayload, set, !resourceId.isEmpty(), resourceId)) {
             Q_EMIT q->filteringFailed(items.first());
         }
     }
@@ -178,8 +176,7 @@ void FilterManager::Private::itemFetchJobForFilterDone(KJob *job)
 void FilterManager::Private::moveJobResult(KJob *job)
 {
     if (job->error()) {
-        const Akonadi::ItemMoveJob *movejob = qobject_cast<Akonadi::ItemMoveJob *>(job);
-        if (movejob) {
+        if (const Akonadi::ItemMoveJob *movejob = qobject_cast<Akonadi::ItemMoveJob *>(job)) {
             qCCritical(MAILFILTERAGENT_LOG) << "Error while moving items. " << job->error() << job->errorString()
                                             << " to destinationCollection.id() :" << movejob->destinationCollection().id();
         } else {
@@ -362,8 +359,7 @@ void FilterManager::filter(const Akonadi::Item &item, FilterManager::FilterSet s
     auto job = new Akonadi::ItemFetchJob(item, this);
     job->setProperty("filterSet", static_cast<int>(set));
     job->setProperty("resourceId", resourceId);
-    SearchRule::RequiredPart requestedPart = requiredPart(resourceId);
-    if (requestedPart == SearchRule::CompleteMessage) {
+    if (SearchRule::RequiredPart requestedPart = requiredPart(resourceId); requestedPart == SearchRule::CompleteMessage) {
         job->fetchScope().fetchFullPayload(true);
     } else if (requestedPart == SearchRule::Header) {
         job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header, true);
@@ -382,8 +378,7 @@ void FilterManager::filter(const Akonadi::Item &item, const QString &filterId, c
     auto job = new Akonadi::ItemFetchJob(item, this);
     job->setProperty("filterId", filterId);
 
-    SearchRule::RequiredPart requestedPart = requiredPart(resourceId);
-    if (requestedPart == SearchRule::CompleteMessage) {
+    if (SearchRule::RequiredPart requestedPart = requiredPart(resourceId); requestedPart == SearchRule::CompleteMessage) {
         job->fetchScope().fetchFullPayload(true);
     } else if (requestedPart == SearchRule::Header) {
         job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header, true);

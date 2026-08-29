@@ -37,8 +37,7 @@ IdentityExpireSpamFolderDialog::~IdentityExpireSpamFolderDialog() = default;
 void IdentityExpireSpamFolderDialog::load(const Akonadi::Collection &collection)
 {
     mCollection = collection;
-    const auto *attr = collection.attribute<MailCommon::ExpireCollectionAttribute>();
-    if (attr) {
+    if (const auto *attr = collection.attribute<MailCommon::ExpireCollectionAttribute>()) {
         MailCommon::CollectionExpirySettings settings;
         settings.convertFromExpireCollectionAttribute(attr);
         mCollectionExpiryWidget->load(settings);

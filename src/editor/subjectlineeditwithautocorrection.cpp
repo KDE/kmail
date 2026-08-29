@@ -20,8 +20,7 @@ SubjectLineEditWithAutoCorrection::~SubjectLineEditWithAutoCorrection() = defaul
 
 void SubjectLineEditWithAutoCorrection::dropEvent(QDropEvent *event)
 {
-    const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasUrls()) {
+    if (const QMimeData *mimeData = event->mimeData(); mimeData->hasUrls()) {
         Q_EMIT handleMimeData(mimeData);
         event->accept();
         return;

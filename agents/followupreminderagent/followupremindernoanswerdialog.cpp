@@ -57,8 +57,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     mainLayout->addWidget(buttonBox);
 
     readConfig();
-    QDBusConnection dbusConn = QDBusConnection::sessionBus();
-    if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
+    if (QDBusConnection dbusConn = QDBusConnection::sessionBus(); dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
         auto propsIface = new OrgFreedesktopDBusPropertiesInterface(QString::fromLatin1(s_fdo_notifications_service),
                                                                     QString::fromLatin1(s_fdo_notifications_path),
                                                                     dbusConn,
@@ -79,10 +78,11 @@ void FollowUpReminderNoAnswerDialog::wakeUp()
 {
     // Check if notifications are inhibited (e.x. plasma "do not disturb" mode.
     // In that case, we'll wait until they are allowed again (see slotDBusNotificationsPropertiesChanged)
-    QDBusConnection dbusConn = QDBusConnection::sessionBus();
-    if (dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
-        OrgFreedesktopNotificationsInterface iface(QString::fromLatin1(s_fdo_notifications_service), QString::fromLatin1(s_fdo_notifications_path), dbusConn);
-        if (iface.inhibited()) {
+    if (QDBusConnection dbusConn = QDBusConnection::sessionBus(); dbusConn.interface()->isServiceRegistered(QString::fromLatin1(s_fdo_notifications_service))) {
+        if (OrgFreedesktopNotificationsInterface iface(QString::fromLatin1(s_fdo_notifications_service),
+                                                       QString::fromLatin1(s_fdo_notifications_path),
+                                                       dbusConn);
+            iface.inhibited()) {
             return;
         }
     }
@@ -93,8 +93,7 @@ void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged([[ma
                                                                             const QVariantMap &changedProperties,
                                                                             [[maybe_unused]] const QStringList &invalidatedProperties)
 {
-    const auto it = changedProperties.find(QStringLiteral("Inhibited"));
-    if (it != changedProperties.end()) {
+    if (const auto it = changedProperties.find(QStringLiteral("Inhibited")); it != changedProperties.end()) {
         const bool inhibited = it.value().toBool();
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "Notifications inhibited:" << inhibited;
         if (!inhibited) {

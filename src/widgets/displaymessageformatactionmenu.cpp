@@ -48,8 +48,8 @@ DisplayMessageFormatActionMenu::~DisplayMessageFormatActionMenu() = default;
 
 void DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat(QAction *act)
 {
-    MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
-    if (format != mDisplayMessageFormat) {
+    if (MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
+        format != mDisplayMessageFormat) {
         mDisplayMessageFormat = format;
         Q_EMIT changeDisplayMessageFormat(format);
     }
@@ -72,8 +72,8 @@ void DisplayMessageFormatActionMenu::updateMenu()
 {
     const QList<QAction *> actList = menu()->actions();
     for (QAction *act : actList) {
-        MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
-        if (format == mDisplayMessageFormat) {
+        if (MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
+            format == mDisplayMessageFormat) {
             act->setChecked(true);
             break;
         }

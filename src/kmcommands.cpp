@@ -126,8 +126,7 @@ static void showJobError(KJob *job)
     assert(job);
     // we can be called from the KJob::kill, where we are no longer a KIO::Job
     // so better safe than sorry
-    auto kiojob = qobject_cast<KIO::Job *>(job);
-    if (kiojob && kiojob->uiDelegate()) {
+    if (auto kiojob = qobject_cast<KIO::Job *>(job); kiojob && kiojob->uiDelegate()) {
         kiojob->uiDelegate()->showErrorMessage();
     } else {
         qCWarning(KMAIL_LOG) << "There is no GUI delegate set for a kjob, and it failed with error:" << job->errorString();
@@ -596,8 +595,7 @@ KMCommand::Result KMEditItemCommand::execute()
 
     win->setFolder(item.parentCollection());
 
-    const auto *transportAttribute = item.attribute<Akonadi::TransportAttribute>();
-    if (transportAttribute) {
+    if (const auto *transportAttribute = item.attribute<Akonadi::TransportAttribute>()) {
         win->setCurrentTransport(transportAttribute->transportId());
     } else {
         int transportId = -1;
@@ -609,8 +607,8 @@ KMCommand::Result KMEditItemCommand::execute()
         }
     }
 
-    const auto *sentAttribute = item.attribute<Akonadi::SentBehaviourAttribute>();
-    if (sentAttribute && (sentAttribute->sentBehaviour() == Akonadi::SentBehaviourAttribute::MoveToCollection)) {
+    if (const auto *sentAttribute = item.attribute<Akonadi::SentBehaviourAttribute>();
+        sentAttribute && (sentAttribute->sentBehaviour() == Akonadi::SentBehaviourAttribute::MoveToCollection)) {
         win->setFcc(QString::number(sentAttribute->moveToCollection().id()));
     }
     win->show();
@@ -961,8 +959,7 @@ KMCommand::Result KMForwardCommand::execute()
     }
 
     // forward a single message at most.
-    Akonadi::Item item = msgList.first();
-    if (createComposer(item) == Failed) {
+    if (Akonadi::Item item = msgList.first(); createComposer(item) == Failed) {
         return Failed;
     }
     return OK;
@@ -1067,11 +1064,9 @@ KMCommand::Result KMRedirectCommand::execute()
         // leak into the next iteration.
         int transportId = dialogTransportId;
         if (transportId == -1) {
-            const auto transportAttribute = item.attribute<Akonadi::TransportAttribute>();
-            if (transportAttribute) {
+            if (const auto transportAttribute = item.attribute<Akonadi::TransportAttribute>()) {
                 transportId = transportAttribute->transportId();
-                const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId);
-                if (!transport) {
+                if (const MailTransport::Transport *transport = MailTransport::TransportManager::self()->transportById(transportId); !transport) {
                     transportId = -1;
                 }
             }
@@ -1316,8 +1311,7 @@ void KMSetTagCommand::setTags()
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
         for (const Akonadi::Tag &createdTag : std::as_const(mCreatedTags)) {
-            QString url = createdTag.url().url();
-            if (!lst.contains(url)) {
+            if (QString url = createdTag.url().url(); !lst.contains(url)) {
                 lst.append(std::move(url));
             }
         }
@@ -1354,8 +1348,7 @@ KMCommand::Result KMFilterActionCommand::execute()
     progressItem->setTotalItems(msgCountToFilter);
 
     for (const qlonglong &id : std::as_const(mMsgListId)) {
-        int diff = msgCountToFilter - ++msgCount;
-        if (diff < 10 || !(msgCount % 10) || msgCount <= 10) {
+        if (int diff = msgCountToFilter - ++msgCount; diff < 10 || !(msgCount % 10) || msgCount <= 10) {
             progressItem->updateProgress();
             const QString statusMsg = i18n("Filtering message %1 of %2", msgCount, msgCountToFilter);
             PimCommon::BroadcastStatus::instance()->setStatusMsg(statusMsg);
@@ -1542,8 +1535,7 @@ KMCommand::Result KMMoveCommand::execute()
     KCursorSaver saver(Qt::WaitCursor);
     setEmitsCompletedItself(true);
     setDeletesItself(true);
-    Akonadi::Item::List retrievedList = retrievedMsgs();
-    if (!retrievedList.isEmpty()) {
+    if (Akonadi::Item::List retrievedList = retrievedMsgs(); !retrievedList.isEmpty()) {
         if (mDestFolder.isValid()) {
             auto job = new Akonadi::ItemMoveJob(retrievedList, mDestFolder, this);
             connect(job, &KIO::Job::result, this, &KMMoveCommand::slotMoveResult);
@@ -1673,8 +1665,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     setEmitsCompletedItself(true);
     setDeletesItself(true);
     for (auto trashIt = mTrashFolders.begin(), end = mTrashFolders.end(); trashIt != end; ++trashIt) {
-        const auto trash = trashIt.key();
-        if (trash.isValid()) {
+        if (const auto trash = trashIt.key(); trash.isValid()) {
             auto job = new Akonadi::ItemMoveJob(*trashIt, trash, this);
             connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotMoveResult);
             mPendingMoves.push_back(job);
@@ -1816,8 +1807,7 @@ KMCommand::Result KMSaveAttachmentsCommand::execute()
             qCWarning(KMAIL_LOG) << "Retrieved item has no payload? Ignoring for saving the attachments";
         }
     }
-    QList<QUrl> urlList;
-    if (MessageViewer::Util::saveAttachments(contentsToSave, parentWidget(), urlList)) {
+    if (QList<QUrl> urlList; MessageViewer::Util::saveAttachments(contentsToSave, parentWidget(), urlList)) {
         if (mViewer) {
             mViewer->showOpenAttachmentFolderWidget(urlList);
         }
@@ -1844,8 +1834,7 @@ KMCommand::Result KMDeleteAttachmentsCommand::execute()
         }
 
         auto message = item.payload<std::shared_ptr<KMime::Message>>();
-        const auto attachments = message->attachments();
-        if (!attachments.empty()) {
+        if (const auto attachments = message->attachments(); !attachments.empty()) {
             if (const auto actuallyDeleted = MessageViewer::Util::deleteAttachments(attachments); actuallyDeleted > 0) {
                 qCDebug(KMAIL_LOG) << "Deleted" << actuallyDeleted << "attachments from message" << item.id() << "(out of" << attachments.size()
                                    << "attachments found)";

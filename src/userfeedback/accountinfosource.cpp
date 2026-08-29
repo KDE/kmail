@@ -47,8 +47,7 @@ QVariant AccountInfoSource::data()
     int numberOfMaildir = 0;
     int numberOfMbox = 0;
     for (const Akonadi::AgentInstance &type : lst) {
-        const QString identifier = type.identifier();
-        if (identifier.startsWith("akonadi_pop3_resource"_L1)) {
+        if (const QString identifier = type.identifier(); identifier.startsWith("akonadi_pop3_resource"_L1)) {
             numberOfPop3++;
         } else if (identifier.startsWith("akonadi_imap_resource"_L1)) {
             numberOfImap++;

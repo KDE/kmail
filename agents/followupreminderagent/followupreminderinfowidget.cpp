@@ -85,8 +85,7 @@ bool FollowUpReminderInfoWidget::eventFilter(QObject *object, QEvent *event)
 {
     if (object == mTreeWidget) {
         if (event->type() == QEvent::KeyPress) {
-            auto keyEvent = static_cast<QKeyEvent *>(event);
-            if (keyEvent->key() == Qt::Key_Delete) {
+            if (auto keyEvent = static_cast<QKeyEvent *>(event); keyEvent->key() == Qt::Key_Delete) {
                 const auto listItems = mTreeWidget->selectedItems();
                 deleteItems(listItems);
             }
@@ -116,8 +115,7 @@ void FollowUpReminderInfoWidget::load()
     for (int i = 0; i < numberOfItem; ++i) {
         KConfigGroup group = config->group(filterGroups.at(i));
 
-        auto info = new FollowUpReminder::FollowUpReminderInfo(group);
-        if (info->isValid()) {
+        if (auto info = new FollowUpReminder::FollowUpReminderInfo(group); info->isValid()) {
             createOrUpdateItem(info);
         } else {
             delete info;
@@ -176,8 +174,7 @@ bool FollowUpReminderInfoWidget::save() const
     const int numberOfItem(mTreeWidget->topLevelItemCount());
     int i = 0;
     for (; i < numberOfItem; ++i) {
-        auto mailItem = static_cast<FollowUpReminderInfoItem *>(mTreeWidget->topLevelItem(i));
-        if (mailItem->info()) {
+        if (auto mailItem = static_cast<FollowUpReminderInfoItem *>(mTreeWidget->topLevelItem(i)); mailItem->info()) {
             KConfigGroup group = config->group(FollowUpReminder::FollowUpReminderUtil::followUpReminderPattern().arg(i));
             mailItem->info()->writeConfig(group, i);
         }
@@ -195,8 +192,7 @@ void FollowUpReminderInfoWidget::slotItemDoubleClicked(QTreeWidgetItem *item)
         return;
 
     const auto mailItem = static_cast<FollowUpReminderInfoItem *>(item);
-    const auto answerMessageItemId = mailItem->info()->answerMessageItemId();
-    if (answerMessageItemId >= 0) {
+    if (const auto answerMessageItemId = mailItem->info()->answerMessageItemId(); answerMessageItemId >= 0) {
         openShowMessage(answerMessageItemId);
     } else {
         openShowMessage(mailItem->info()->originalMessageItemId());
@@ -206,8 +202,7 @@ void FollowUpReminderInfoWidget::slotItemDoubleClicked(QTreeWidgetItem *item)
 void FollowUpReminderInfoWidget::slotCustomContextMenuRequested([[maybe_unused]] QPoint pos)
 {
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
-    const int nbElementSelected = listItems.count();
-    if (nbElementSelected > 0) {
+    if (const int nbElementSelected = listItems.count(); nbElementSelected > 0) {
         QMenu menu(this);
         QAction *showMessage = nullptr;
         QAction *showOriginalMessage = nullptr;

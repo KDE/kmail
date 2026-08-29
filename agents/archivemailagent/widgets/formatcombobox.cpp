@@ -22,8 +22,7 @@ FormatComboBox::~FormatComboBox() = default;
 
 void FormatComboBox::setFormat(MailCommon::BackupJob::ArchiveType type)
 {
-    const int index = findData(static_cast<int>(type));
-    if (index != -1) {
+    if (const int index = findData(static_cast<int>(type)); index != -1) {
         setCurrentIndex(index);
     } else {
         setCurrentIndex(0);

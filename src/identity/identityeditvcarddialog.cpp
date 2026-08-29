@@ -72,8 +72,7 @@ void IdentityEditVcardDialog::deleteCurrentVcard(bool deleteOnDisk)
 {
     if (!mVcardFileName.isEmpty()) {
         if (deleteOnDisk) {
-            QFile file(mVcardFileName);
-            if (file.exists()) {
+            if (QFile file(mVcardFileName); file.exists()) {
                 if (!file.remove()) {
                     KMessageBox::error(this, i18n("We cannot delete vCard file."), i18nc("@title:window", "Delete vCard"));
                 }
@@ -89,9 +88,7 @@ void IdentityEditVcardDialog::loadVcard(const QString &vcardFileName)
         return;
     }
     mVcardFileName = vcardFileName;
-    QFile file(vcardFileName);
-
-    if (file.open(QIODevice::ReadOnly)) {
+    if (QFile file(vcardFileName); file.open(QIODevice::ReadOnly)) {
         const QByteArray data = file.readAll();
         file.close();
         if (!data.isEmpty()) {

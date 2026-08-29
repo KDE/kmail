@@ -53,8 +53,7 @@ Attachment::Attachment(QTreeWidget *parent, KTNEFAttach *attach)
     const QMimeType mimeType = db.mimeTypeForName(mAttach->mimeTag());
     setText(1, mimeType.comment());
 
-    QPixmap pix = AttachPropertyDialog::loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
-    if (!pix.isNull()) {
+    if (QPixmap pix = AttachPropertyDialog::loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window)); !pix.isNull()) {
         setIcon(0, pix);
     } else {
         setIcon(0, QIcon::fromTheme(mimeType.iconName()));

@@ -45,9 +45,7 @@ void ArchiveMailManager::load()
     const int numberOfCollection = collectionList.count();
     for (int i = 0; i < numberOfCollection; ++i) {
         KConfigGroup group = mConfig->group(collectionList.at(i));
-        auto info = new ArchiveMailInfo(group);
-
-        if (ArchiveMailAgentUtil::needToArchive(info)) {
+        if (auto info = new ArchiveMailInfo(group); ArchiveMailAgentUtil::needToArchive(info)) {
             for (const ArchiveMailInfo *oldInfo : std::as_const(mListArchiveInfo)) {
                 if (oldInfo->saveCollectionId() == info->saveCollectionId()) {
                     // already in jobscheduler
@@ -75,8 +73,7 @@ void ArchiveMailManager::removeCollection(const Akonadi::Collection &collection)
 
 void ArchiveMailManager::removeCollectionId(Akonadi::Collection::Id id)
 {
-    const QString groupname = ArchiveMailAgentUtil::archivePattern.arg(id);
-    if (mConfig->hasGroup(groupname)) {
+    if (const QString groupname = ArchiveMailAgentUtil::archivePattern.arg(id); mConfig->hasGroup(groupname)) {
         KConfigGroup group = mConfig->group(groupname);
         group.deleteGroup();
         mConfig->sync();

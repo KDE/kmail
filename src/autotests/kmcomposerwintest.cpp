@@ -435,8 +435,7 @@ void KMComposerWinTest::testEncryption()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
 
     // We need to wait till KeyCache is populated, otherwise we will get wrong results
-    const auto instance = Kleo::KeyCache::instance();
-    if (!instance->initialized()) {
+    if (const auto instance = Kleo::KeyCache::instance(); !instance->initialized()) {
         QEventLoop loop;
         connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop]() {
             loop.quit();
@@ -732,8 +731,7 @@ void KMComposerWinTest::testRecipientExpiry()
     auto composer = KMail::makeComposer(msg);
     composer->show();
     // We need to wait till KeyCache is populated, otherwise we will get wrong results
-    const auto instance = Kleo::KeyCache::instance();
-    if (!instance->initialized()) {
+    if (const auto instance = Kleo::KeyCache::instance(); !instance->initialized()) {
         QEventLoop loop;
         connect(instance.get(), &Kleo::KeyCache::keyListingDone, this, [&loop]() {
             loop.quit();

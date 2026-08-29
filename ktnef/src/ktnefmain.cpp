@@ -207,8 +207,7 @@ void KTNEFMain::loadFile(const QString &filename)
 
 void KTNEFMain::openFile()
 {
-    const QString filename = QFileDialog::getOpenFileName(this, i18nc("@title:window", "Open TNEF File"));
-    if (!filename.isEmpty()) {
+    if (const QString filename = QFileDialog::getOpenFileName(this, i18nc("@title:window", "Open TNEF File")); !filename.isEmpty()) {
         loadFile(filename);
     }
 }
@@ -264,9 +263,7 @@ QString KTNEFMain::extractTemp(KTNEFAttach *att)
 void KTNEFMain::viewFileAs()
 {
     if (!mView->getSelection().isEmpty()) {
-        const QList<QUrl> list{QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0)))};
-
-        if (!list.isEmpty()) {
+        if (const QList<QUrl> list{QUrl::fromLocalFile(extractTemp(mView->getSelection().at(0)))}; !list.isEmpty()) {
             // Creating ApplicationLauncherJob without any args will invoke the open-with dialog
             auto job = new KIO::ApplicationLauncherJob();
             job->setUrls(list);
@@ -285,8 +282,7 @@ void KTNEFMain::extractFile()
 
 void KTNEFMain::extractFileTo()
 {
-    const QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
-    if (!dir.isEmpty()) {
+    if (const QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir); !dir.isEmpty()) {
         extractTo(dir);
         mLastDir = dir;
     }
@@ -294,8 +290,7 @@ void KTNEFMain::extractFileTo()
 
 void KTNEFMain::extractAllFiles()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir);
-    if (!dir.isEmpty()) {
+    if (QString dir = QFileDialog::getExistingDirectory(this, QString(), mLastDir); !dir.isEmpty()) {
         mLastDir = dir;
         dir.append(u'/');
         const QList<KTNEFAttach *> list = mParser->message()->attachmentList();
@@ -320,8 +315,7 @@ void KTNEFMain::propertiesFile()
 
 void KTNEFMain::optionDefaultDir()
 {
-    const QString dirname = QFileDialog::getExistingDirectory(this, QString(), mDefaultDir);
-    if (!dirname.isEmpty()) {
+    if (const QString dirname = QFileDialog::getExistingDirectory(this, QString(), mDefaultDir); !dirname.isEmpty()) {
         mDefaultDir = dirname;
 
         KConfigGroup config(KSharedConfig::openConfig(), QStringLiteral("Settings"));
@@ -470,8 +464,7 @@ void KTNEFMain::slotShowMessageText()
         return;
     }
 
-    const QString rtf = mParser->message()->rtfString();
-    if (!rtf.isEmpty()) {
+    if (const QString rtf = mParser->message()->rtfString(); !rtf.isEmpty()) {
         auto tmpFile = new QTemporaryFile(QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/ktnef/"_L1 + "ktnef_XXXXXX.rtf"_L1);
         if (!tmpFile->open()) {
             qCWarning(KTNEFAPPS_LOG) << "Impossible to open temporary file";
@@ -501,8 +494,7 @@ void KTNEFMain::slotSaveMessageText()
     const QString rtf = mParser->message()->rtfString();
     const QString filename = QFileDialog::getSaveFileName(this, QString(), QString(), QString());
     if (!filename.isEmpty()) {
-        QFile f(filename);
-        if (f.open(QIODevice::WriteOnly)) {
+        if (QFile f(filename); f.open(QIODevice::WriteOnly)) {
             QTextStream t(&f);
             t << rtf;
         } else {
@@ -548,8 +540,7 @@ void KTNEFMain::createOpenWithMenu(QMenu *topMenu)
     }
     KTNEFAttach *attach = mView->getSelection().at(0);
     const QString mimename(attach->mimeTag());
-    const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename);
-    if (!offers.isEmpty()) {
+    if (const KService::List offers = KFileItemActions::associatedApplications(QStringList() << mimename); !offers.isEmpty()) {
         QMenu *menu = topMenu;
         auto actionGroup = new QActionGroup(menu);
         connect(actionGroup, &QActionGroup::triggered, this, &KTNEFMain::slotOpenWithAction);

@@ -71,8 +71,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     v->addWidget(editButton);
 
     const auto modifyMailBox = [this, view]() {
-        const auto indexes = view->selectionModel()->selectedIndexes();
-        if (!indexes.isEmpty()) {
+        if (const auto indexes = view->selectionModel()->selectedIndexes(); !indexes.isEmpty()) {
             auto item = mBoxModel->itemFromIndex(indexes[0]);
             auto mailbox = item->data().value<UnifiedMailbox *>();
             auto editor = new UnifiedMailboxEditor(mailbox, mConfig, this);
@@ -96,8 +95,8 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
         const auto indexes = view->selectionModel()->selectedIndexes();
         if (!indexes.isEmpty()) {
             auto item = mBoxModel->itemFromIndex(indexes[0]);
-            const auto mailbox = item->data().value<UnifiedMailbox *>();
-            if (KMessageBox::warningTwoActions(this,
+            if (const auto mailbox = item->data().value<UnifiedMailbox *>();
+                KMessageBox::warningTwoActions(this,
                                                i18n("Do you really want to remove unified mailbox <b>%1</b>?", mailbox->name()),
                                                i18nc("@title:window", "Really Remove?"),
                                                KStandardGuiItem::remove(),

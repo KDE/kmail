@@ -784,9 +784,7 @@ void QWinMetaFile::extTextOut(long num, short *parm)
 void QWinMetaFile::dibBitBlt(long num, short *parm)
 {
     if (num > 9) { // DIB image
-        QImage bmpSrc;
-
-        if (dibToBmp(bmpSrc, (char *)&parm[8], (num - 8) * 2)) {
+        if (QImage bmpSrc; dibToBmp(bmpSrc, (char *)&parm[8], (num - 8) * 2)) {
             long raster = toDWord(parm);
 
             mPainter.setCompositionMode(winToQtComposition(raster));
@@ -812,9 +810,7 @@ void QWinMetaFile::dibBitBlt(long num, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::dibStretchBlt(long num, short *parm)
 {
-    QImage bmpSrc;
-
-    if (dibToBmp(bmpSrc, (char *)&parm[10], (num - 10) * 2)) {
+    if (QImage bmpSrc; dibToBmp(bmpSrc, (char *)&parm[10], (num - 10) * 2)) {
         long raster = toDWord(parm);
 
         mPainter.setCompositionMode(winToQtComposition(raster));
@@ -840,9 +836,7 @@ void QWinMetaFile::dibStretchBlt(long num, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::stretchDib(long num, short *parm)
 {
-    QImage bmpSrc;
-
-    if (dibToBmp(bmpSrc, (char *)&parm[11], (num - 11) * 2)) {
+    if (QImage bmpSrc; dibToBmp(bmpSrc, (char *)&parm[11], (num - 11) * 2)) {
         long raster = toDWord(parm);
 
         mPainter.setCompositionMode(winToQtComposition(raster));
@@ -870,9 +864,7 @@ void QWinMetaFile::dibCreatePatternBrush(long num, short *parm)
 {
     auto handle = new WinObjPatternBrushHandle;
     addHandle(handle);
-    QImage bmpSrc;
-
-    if (dibToBmp(bmpSrc, (char *)&parm[2], (num - 2) * 2)) {
+    if (QImage bmpSrc; dibToBmp(bmpSrc, (char *)&parm[2], (num - 2) * 2)) {
         handle->image = bmpSrc;
         handle->brush.setTextureImage(handle->image);
     }
@@ -883,8 +875,7 @@ void QWinMetaFile::dibCreatePatternBrush(long num, short *parm)
 //-----------------------------------------------------------------------------
 void QWinMetaFile::selectObject(long, short *parm)
 {
-    int idx = parm[0];
-    if (idx >= 0 && idx < MAX_OBJHANDLE && mObjHandleTab[idx]) {
+    if (int idx = parm[0]; idx >= 0 && idx < MAX_OBJHANDLE && mObjHandleTab[idx]) {
         mObjHandleTab[idx]->apply(mPainter);
     }
 }

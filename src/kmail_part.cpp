@@ -104,8 +104,7 @@ void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
         mainWidget->populateMessageListStatusFilterCombo();
         mainWidget->initializePluginActions();
 
-        const QString title = mainWidget->fullCollectionPath();
-        if (!title.isEmpty()) {
+        if (const QString title = mainWidget->fullCollectionPath(); !title.isEmpty()) {
             Q_EMIT setWindowCaption(title);
         }
     }

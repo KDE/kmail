@@ -106,10 +106,8 @@ MailFilterAgent::MailFilterAgent(const QString &id)
 
     QDBusConnection::sessionBus().registerService(service);
     // Enabled or not filterlogdialog
-    KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    if (config->hasGroup("FilterLog"_L1)) {
-        KConfigGroup group(config, QStringLiteral("FilterLog"));
-        if (group.readEntry("Enabled", false)) {
+    if (KSharedConfig::Ptr config = KSharedConfig::openConfig(); config->hasGroup("FilterLog"_L1)) {
+        if (KConfigGroup group(config, QStringLiteral("FilterLog")); group.readEntry("Enabled", false)) {
             auto notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
             notify->setComponentName(QApplication::applicationDisplayName());
             notify->setIconName(QStringLiteral("view-filter"));
@@ -265,8 +263,7 @@ void MailFilterAgent::itemsReceivedForFiltering(const Akonadi::Item::List &items
     }
 
     QString resource = sender()->property("resource").toString();
-    const Akonadi::Pop3ResourceAttribute *pop3ResourceAttribute = item.attribute<Akonadi::Pop3ResourceAttribute>();
-    if (pop3ResourceAttribute) {
+    if (const Akonadi::Pop3ResourceAttribute *pop3ResourceAttribute = item.attribute<Akonadi::Pop3ResourceAttribute>()) {
         resource = pop3ResourceAttribute->pop3AccountName();
     }
 
@@ -408,8 +405,7 @@ QString MailFilterAgent::printCollectionMonitored() const
 {
     QString printDebugCollection = QStringLiteral("Start print collection monitored\n");
 
-    const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored();
-    if (collections.isEmpty()) {
+    if (const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored(); collections.isEmpty()) {
         printDebugCollection = QStringLiteral("No collection is monitored!");
     } else {
         for (const Akonadi::Collection &collection : collections) {

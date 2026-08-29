@@ -43,8 +43,8 @@ public:
     {
         if (role == Qt::CheckStateRole) {
             // Make top-level collections uncheckable
-            const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-            if (col.parentCollection() == Akonadi::Collection::root()) {
+            if (const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+                col.parentCollection() == Akonadi::Collection::root()) {
                 return {};
             }
         }
@@ -55,8 +55,8 @@ public:
     [[nodiscard]] Qt::ItemFlags flags(const QModelIndex &index) const override
     {
         // Make top-level collections uncheckable
-        const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        if (col.parentCollection() == Akonadi::Collection::root()) {
+        if (const auto col = data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+            col.parentCollection() == Akonadi::Collection::root()) {
             return QSortFilterProxyModel::flags(index) & ~Qt::ItemIsUserCheckable;
         } else {
             return QSortFilterProxyModel::flags(index);
@@ -104,8 +104,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
         new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))), i18nc("@action:button", "Pick icon…"));
     f->addRow(i18n("Icon:"), iconButton);
     connect(iconButton, &QPushButton::clicked, this, [iconButton, this]() {
-        const auto iconName = KIconDialog::getIcon();
-        if (!iconName.isEmpty()) {
+        if (const auto iconName = KIconDialog::getIcon(); !iconName.isEmpty()) {
             mMailbox->setIcon(iconName);
             iconButton->setIcon(QIcon::fromTheme(iconName));
         }

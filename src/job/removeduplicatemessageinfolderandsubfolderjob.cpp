@@ -84,8 +84,7 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFetchCollectionDone(cons
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
 {
-    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
-    if (item) {
+    if (auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>()) {
         item->setComplete();
         item->setStatus(i18n("Done"));
         item = nullptr;
@@ -102,16 +101,14 @@ void RemoveDuplicateMessageInFolderAndSubFolderJob::slotFinished(KJob *job)
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
 {
-    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
-    if (item) {
+    if (auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>()) {
         item->setStatus(description);
     }
 }
 
 void RemoveDuplicateMessageInFolderAndSubFolderJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
 {
-    auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
-    if (job) {
+    if (auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>()) {
         job->kill(KJob::Quietly);
     }
 

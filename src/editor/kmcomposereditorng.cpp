@@ -110,8 +110,7 @@ QString KMComposerEditorNg::smartQuote(const QString &msg)
 void KMComposerEditorNg::showSpellConfigDialog([[maybe_unused]] const QString &configFileName)
 {
     QPointer<SpellCheckerConfigDialog> dialog = new SpellCheckerConfigDialog(this);
-    const QString language = spellCheckingLanguage();
-    if (!language.isEmpty()) {
+    if (const QString language = spellCheckingLanguage(); !language.isEmpty()) {
         dialog->setLanguage(language);
     }
 

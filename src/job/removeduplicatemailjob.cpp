@@ -36,8 +36,7 @@ void RemoveDuplicateMailJob::start()
     Akonadi::Collection::List collections;
 
     for (const QModelIndex &index : indexes) {
-        const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        if (collection.isValid()) {
+        if (const auto collection = index.data(Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>(); collection.isValid()) {
             collections << collection;
         }
     }
@@ -52,8 +51,7 @@ void RemoveDuplicateMailJob::start()
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 {
-    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
-    if (item) {
+    if (auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>()) {
         item->setComplete();
         item->setStatus(i18n("Done"));
         item = nullptr;
@@ -68,8 +66,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesDone(KJob *job)
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *item)
 {
-    auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>();
-    if (job) {
+    if (auto job = item->property("RemoveDuplicatesJob").value<Akonadi::Job *>()) {
         job->kill(KJob::Quietly);
     }
 
@@ -80,8 +77,7 @@ void RemoveDuplicateMailJob::slotRemoveDuplicatesCanceled(KPIM::ProgressItem *it
 
 void RemoveDuplicateMailJob::slotRemoveDuplicatesUpdate(KJob *job, const QString &description)
 {
-    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
-    if (item) {
+    if (auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>()) {
         item->setStatus(description);
     }
 }

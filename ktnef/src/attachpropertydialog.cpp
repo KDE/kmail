@@ -97,8 +97,7 @@ void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
     mUI.mSize->setText(s);
     QMimeDatabase db;
     const QMimeType mimetype = db.mimeTypeForName(attach->mimeTag());
-    const QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window));
-    if (!pix.isNull()) {
+    if (const QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window)); !pix.isNull()) {
         mUI.mIcon->setPixmap(pix);
     } else {
         mUI.mIcon->setPixmap(mimetype.iconName());
@@ -132,8 +131,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
             return;
         }
 
-        QVariant value = (*it)->value();
-        if (value.userType() == QMetaType::QVariantList) {
+        if (QVariant value = (*it)->value(); value.userType() == QMetaType::QVariantList) {
             newItem->setExpanded(true);
             newItem->setText(0, newItem->text(0) + " ["_L1 + QString::number(value.toList().count()) + u']');
             int i = 0;
@@ -166,8 +164,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
         return false;
     }
 
-    QTreeWidgetItem *item = list.constFirst();
-    if (item->text(2).isEmpty()) {
+    if (QTreeWidgetItem *item = list.constFirst(); item->text(2).isEmpty()) {
         KMessageBox::error(parent, i18nc("@info", "The selected item cannot be saved because it has an empty tag."));
     } else {
         QString tag = item->text(2);
@@ -175,8 +172,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
         const QVariant prop = (tag.startsWith("attr_"_L1) ? pSet->attribute(key) : pSet->property(key));
         QString filename = QFileDialog::getSaveFileName(parent, QString(), tag, QString());
         if (!filename.isEmpty()) {
-            QFile f(filename);
-            if (f.open(QIODevice::WriteOnly)) {
+            if (QFile f(filename); f.open(QIODevice::WriteOnly)) {
                 switch (prop.metaType().id()) {
                 case QMetaType::QByteArray:
                     f.write(prop.toByteArray().data(), prop.toByteArray().size());

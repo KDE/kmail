@@ -41,8 +41,7 @@ void FolderArchiveAgentJob::start()
         auto fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(mInfo->archiveTopLevel()), Akonadi::CollectionFetchJob::Base);
         connect(fetchCollection, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentJob::slotFetchCollection);
     } else {
-        const Akonadi::Collection::Id id = mManager->folderArchiveCache()->collectionId(mInfo);
-        if (id != -1) {
+        if (const Akonadi::Collection::Id id = mManager->folderArchiveCache()->collectionId(mInfo); id != -1) {
             auto fetchCollection = new Akonadi::CollectionFetchJob(Akonadi::Collection(id), Akonadi::CollectionFetchJob::Base);
             connect(fetchCollection, &Akonadi::CollectionFetchJob::result, this, &FolderArchiveAgentJob::slotFetchCollection);
         } else {

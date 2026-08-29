@@ -238,8 +238,7 @@ void IdentityNgPage::slotContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
     menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &IdentityNgPage::slotNewIdentity);
-    const QModelIndex index = mIPage.mIdentityList->indexAt(pos);
-    if (index.isValid()) {
+    if (const QModelIndex index = mIPage.mIdentityList->indexAt(pos); index.isValid()) {
         menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
         if (mIPage.mIdentityList->model()->rowCount() > 1) {

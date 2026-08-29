@@ -148,9 +148,7 @@ void XFaceConfigurator::updateFace()
 
 void XFaceConfigurator::updateXFace()
 {
-    const QString str = xface();
-
-    if (str.isEmpty()) {
+    if (const QString str = xface(); str.isEmpty()) {
         mUi->xFaceConfig->setImage(QImage());
     } else {
         KXFace xf;

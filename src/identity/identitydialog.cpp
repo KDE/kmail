@@ -477,8 +477,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
         const auto label = qobject_cast<QLabel *>(formLayout->labelForField(vbox));
         if (checked) {
             label->setText(i18n("OpenPGP key:"));
-            const auto key = mPGPSigningKeyRequester->currentKey();
-            if (!key.isBad()) {
+            if (const auto key = mPGPSigningKeyRequester->currentKey(); !key.isBad()) {
                 mPGPEncryptionKeyRequester->setCurrentKey(key);
             } else if (mPGPSigningKeyRequester->currentData() == "no-key"_L1) {
                 mPGPEncryptionKeyRequester->setCurrentIndex(mPGPSigningKeyRequester->currentIndex());
@@ -829,8 +828,7 @@ void IdentityDialog::slotHelp()
 
 void IdentityDialog::slotAboutToShow(int index)
 {
-    QWidget *w = mTabWidget->widget(index);
-    if (w == mCryptographyTab) {
+    if (QWidget *w = mTabWidget->widget(index); w == mCryptographyTab) {
         // set the configured email address as initial query of the key
         // requesters:
         const QString name = mNameEdit->text().trimmed();
@@ -978,8 +976,7 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
     }
 
     if (mSignatureConfigurator->isSignatureEnabled() && mSignatureConfigurator->signatureType() == Signature::FromFile) {
-        QFileInfo file(mSignatureConfigurator->filePath());
-        if (!file.isReadable()) {
+        if (QFileInfo file(mSignatureConfigurator->filePath()); !file.isReadable()) {
             KMessageBox::error(this, i18n("The signature file is not valid"));
             return;
         }
@@ -1088,8 +1085,8 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
         QDir().mkpath(fileInfo.absolutePath());
     } else {
         // Convert path.
-        const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
-        if (QFileInfo::exists(path) && (mVcardFilename != path)) {
+        if (const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
+            QFileInfo::exists(path) && (mVcardFilename != path)) {
             mVcardFilename = path;
         }
     }
@@ -1284,23 +1281,20 @@ void IdentityDialog::slotEditVcard()
 
         QPointer<IdentityAddVcardDialog> dlg = new IdentityAddVcardDialog(manager->shadowIdentities(), this);
         if (dlg->exec()) {
-            IdentityAddVcardDialog::DuplicateMode mode = dlg->duplicateMode();
-            switch (mode) {
+            switch (dlg->duplicateMode()) {
             case IdentityAddVcardDialog::DuplicateMode::Empty:
                 editVcard(mVcardFilename);
                 break;
             case IdentityAddVcardDialog::DuplicateMode::ExistingEntry: {
                 KIdentityManagementCore::Identity ident = manager->modifyIdentityForName(dlg->duplicateVcardFromIdentity());
-                const QString filename = ident.vCardFile();
-                if (!filename.isEmpty()) {
+                if (const QString filename = ident.vCardFile(); !filename.isEmpty()) {
                     QFile::copy(filename, mVcardFilename);
                 }
                 editVcard(mVcardFilename);
                 break;
             }
             case IdentityAddVcardDialog::DuplicateMode::FromExistingVCard: {
-                const QString filename = dlg->existingVCard().path();
-                if (!filename.isEmpty()) {
+                if (const QString filename = dlg->existingVCard().path(); !filename.isEmpty()) {
                     mVcardFilename = filename;
                 }
                 editVcard(mVcardFilename);

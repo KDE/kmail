@@ -61,9 +61,6 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
     const AliasesExpandJob *expandJob = qobject_cast<AliasesExpandJob *>(job);
     const QStringList emptyDistributionLists = expandJob->emptyDistributionLists();
 
-    QString brokenAddress;
-
-    const KEmailAddress::EmailParseResult errorCode = KEmailAddress::isValidAddressList(expandJob->addresses(), brokenAddress);
     if (!emptyDistributionLists.isEmpty()) {
         QString errorMsg;
         const int numberOfDistributionList(emptyDistributionLists.count());
@@ -81,6 +78,8 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
         KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));
         mIsValid = false;
     } else {
+        QString brokenAddress;
+        const KEmailAddress::EmailParseResult errorCode = KEmailAddress::isValidAddressList(expandJob->addresses(), brokenAddress);
         if (!(errorCode == KEmailAddress::AddressOk || errorCode == KEmailAddress::AddressEmpty)) {
             const QString errorMsg("<qt><p><b>"_L1 + brokenAddress + "</b></p><p>"_L1 + KEmailAddress::emailParseResultToString(errorCode) + "</p></qt>"_L1);
             KMessageBox::error(mParentWidget, errorMsg, i18nc("@title:window", "Invalid Email Address"));

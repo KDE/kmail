@@ -33,8 +33,7 @@ void SendLaterInfoConfigWidget::load()
 
 bool SendLaterInfoConfigWidget::save() const
 {
-    const QList<Akonadi::Item::Id> listMessage = mWidget->messagesToRemove();
-    if (!listMessage.isEmpty()) {
+    if (const QList<Akonadi::Item::Id> listMessage = mWidget->messagesToRemove(); !listMessage.isEmpty()) {
         // Will delete in specific job when done.
         auto sendlaterremovejob = new SendLaterRemoveMessageJob(listMessage);
         sendlaterremovejob->start();

@@ -372,8 +372,7 @@ void UnifiedMailboxManager::discoverBoxCollections(FinishedCallback &&finishedCb
             if (!isUnifiedMailbox(col) || col.parentCollection() == Akonadi::Collection::root()) {
                 continue;
             }
-            const auto it = mMailboxes.find(col.name());
-            if (it == mMailboxes.end()) {
+            if (const auto it = mMailboxes.find(col.name()); it == mMailboxes.end()) {
                 qCWarning(UNIFIEDMAILBOXAGENT_LOG) << "Failed to find an unified mailbox for source collection" << col.id();
             } else {
                 it->second->setCollectionId(col.id());

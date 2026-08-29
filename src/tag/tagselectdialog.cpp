@@ -162,8 +162,7 @@ Akonadi::Tag::List TagSelectDialog::selectedTag() const
     Akonadi::Tag::List lst;
     const int numberOfItems(mListTag->count());
     for (int i = 0; i < numberOfItems; ++i) {
-        QListWidgetItem *item = mListTag->item(i);
-        if (item->checkState() == Qt::Checked) {
+        if (QListWidgetItem *item = mListTag->item(i); item->checkState() == Qt::Checked) {
             lst.append(Akonadi::Tag::fromUrl(QUrl(item->data(UrlTag).toString())));
         }
     }

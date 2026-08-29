@@ -220,10 +220,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
         newFeaturesMD5 = mReleasesInfo.constFirst().untranslatedDescription();
     }
     if (!newFeaturesMD5.isEmpty()) {
-        const QString previousNewFeaturesMD5 = KMailSettings::self()->previousNewFeaturesMD5();
-        if (!previousNewFeaturesMD5.isEmpty()) {
-            const bool hasNewFeature = (previousNewFeaturesMD5 != newFeaturesMD5);
-            if (hasNewFeature) {
+        if (const QString previousNewFeaturesMD5 = KMailSettings::self()->previousNewFeaturesMD5(); !previousNewFeaturesMD5.isEmpty()) {
+            if (const bool hasNewFeature = (previousNewFeaturesMD5 != newFeaturesMD5)) {
                 auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageNgWidget(this);
                 whatsNewMessageWidget->setReleases(mReleasesInfo);
                 whatsNewMessageWidget->setObjectName(u"whatsNewMessageWidget"_s);
@@ -393,8 +391,7 @@ void KMMainWidget::restoreCollectionFolderViewConfig()
 
     if (id == -1) {
         if (KMailSettings::self()->startSpecificFolderAtStartup()) {
-            const Akonadi::Collection::Id startupFolder = KMailSettings::self()->startupFolder();
-            if (startupFolder > 0) {
+            if (const Akonadi::Collection::Id startupFolder = KMailSettings::self()->startupFolder(); startupFolder > 0) {
                 saver->restoreCurrentItem(QStringLiteral("c%1").arg(startupFolder));
             }
         }
@@ -595,8 +592,7 @@ void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection
 void KMMainWidget::slotShowSelectedFolderInPane()
 {
     if (mCurrentCollection.isValid()) {
-        const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->entityTreeModel(), mCurrentCollection);
-        if (idx.isValid()) {
+        if (const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->entityTreeModel(), mCurrentCollection); idx.isValid()) {
             mMessagePane->setCurrentFolder(mCurrentCollection, idx, mPreSelectionMode);
         }
     }
@@ -1286,8 +1282,7 @@ void KMMainWidget::slotCollectionChanged(const Akonadi::Collection &collection, 
             setCurrentCollection(collection);
         }
     } else if (set.contains("ENTITYDISPLAY") || set.contains("NAME")) {
-        const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->collectionModel(), collection);
-        if (idx.isValid()) {
+        if (const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(KMKernel::self()->collectionModel(), collection); idx.isValid()) {
             const QString text = idx.data().toString();
             const auto icon = idx.data(Qt::DecorationRole).value<QIcon>();
             mMessagePane->updateTabIconText(collection, text, icon);
@@ -1422,8 +1417,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
     const Akonadi::Item::List items = fetchJob->items();
     const int numberOfItems = items.count();
     for (int idx = 0; idx < numberOfItems; ++idx) {
-        std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(items.at(idx));
-        if (msg) {
+        if (std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(items.at(idx))) {
             QString subj;
             if (auto subject = msg->subject(KMime::CreatePolicy::DontCreate)) {
                 subj = subject->asUnicodeString();
@@ -1484,8 +1478,7 @@ void KMMainWidget::slotExpireFolder()
     if (!mCurrentFolderSettings) {
         return;
     }
-    const MailCommon::ExpireCollectionAttribute *attr = mCurrentCollection.attribute<MailCommon::ExpireCollectionAttribute>();
-    if (attr) {
+    if (const MailCommon::ExpireCollectionAttribute *attr = mCurrentCollection.attribute<MailCommon::ExpireCollectionAttribute>()) {
         bool canBeExpired = true;
         if (!attr->isAutoExpire()) {
             canBeExpired = false;
@@ -1501,8 +1494,8 @@ void KMMainWidget::slotExpireFolder()
         }
 
         if (KMailSettings::self()->warnBeforeExpire()) {
-            const QString message = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", mCurrentFolderSettings->name().toHtmlEscaped());
-            if (KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"), KGuiItem(i18nc("@action:button", "&Expire")))
+            if (const QString message = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>", mCurrentFolderSettings->name().toHtmlEscaped());
+                KMessageBox::warningContinueCancel(this, message, i18n("Expire Folder"), KGuiItem(i18nc("@action:button", "&Expire")))
                 != KMessageBox::Continue) {
                 return;
             }
@@ -1771,8 +1764,7 @@ void KMMainWidget::slotDeleteMessages()
 Akonadi::Item::List KMMainWidget::currentSelection() const
 {
     Akonadi::Item::List selectMsg;
-    MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
-    if (ref != -1) {
+    if (MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet(); ref != -1) {
         selectMsg = mMessagePane->itemListFromPersistentSet(ref);
     }
     return selectMsg;
@@ -1781,8 +1773,7 @@ Akonadi::Item::List KMMainWidget::currentSelection() const
 void KMMainWidget::deleteSelectedMessages(bool confirmDelete)
 {
     // Create a persistent message set from the current selection
-    MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
-    if (ref != -1) {
+    if (MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet(); ref != -1) {
         moveMessageSelected(ref, Akonadi::Collection(), confirmDelete);
     }
 }
@@ -1790,8 +1781,7 @@ void KMMainWidget::deleteSelectedMessages(bool confirmDelete)
 void KMMainWidget::slotDeleteThread(bool confirmDelete)
 {
     // Create a persistent set from the current thread.
-    MessageList::Core::MessageItemSetReference ref = mMessagePane->currentThreadAsPersistentSet();
-    if (ref != -1) {
+    if (MessageList::Core::MessageItemSetReference ref = mMessagePane->currentThreadAsPersistentSet(); ref != -1) {
         moveMessageSelected(ref, Akonadi::Collection(), confirmDelete);
     }
 }
@@ -1829,8 +1819,7 @@ void KMMainWidget::slotMoveSelectedMessageToFolder()
     QPointer<MailCommon::FolderSelectionDialog> dialog(moveOrCopyToDialog());
     dialog->setWindowTitle(i18nc("@title:window", "Move Messages to Folder"));
     if (dialog->exec() && dialog) {
-        const Akonadi::Collection dest = dialog->selectedCollection();
-        if (dest.isValid()) {
+        if (const Akonadi::Collection dest = dialog->selectedCollection(); dest.isValid()) {
             moveSelectedMessagesToFolder(dest);
         }
     }
@@ -1838,8 +1827,7 @@ void KMMainWidget::slotMoveSelectedMessageToFolder()
 
 void KMMainWidget::moveSelectedMessagesToFolder(const Akonadi::Collection &dest)
 {
-    MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
-    if (ref != -1) {
+    if (MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet(); ref != -1) {
         // Need to verify if dest == src ??? akonadi do it for us.
         moveMessageSelected(ref, dest, false);
     }
@@ -1880,8 +1868,7 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
     dialog->setWindowTitle(i18nc("@title:window", "Copy Messages to Folder"));
 
     if (dialog->exec() && dialog) {
-        const Akonadi::Collection dest = dialog->selectedCollection();
-        if (dest.isValid()) {
+        if (const Akonadi::Collection dest = dialog->selectedCollection(); dest.isValid()) {
             copySelectedMessagesToFolder(dest);
         }
     }
@@ -1889,8 +1876,7 @@ void KMMainWidget::slotCopySelectedMessagesToFolder()
 
 void KMMainWidget::copySelectedMessagesToFolder(const Akonadi::Collection &dest)
 {
-    const Akonadi::Item::List lstMsg = mMessagePane->selectionAsMessageItemList();
-    if (!lstMsg.isEmpty()) {
+    if (const Akonadi::Item::List lstMsg = mMessagePane->selectionAsMessageItemList(); !lstMsg.isEmpty()) {
         copyMessageSelected(lstMsg, dest);
     }
 }
@@ -1989,16 +1975,14 @@ void KMMainWidget::slotTrashMessagesCompleted(KMTrashMsgCommand *command)
 
 void KMMainWidget::slotTrashSelectedMessages()
 {
-    MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet();
-    if (ref != -1) {
+    if (MessageList::Core::MessageItemSetReference ref = mMessagePane->selectionAsPersistentSet(); ref != -1) {
         trashMessageSelected(ref);
     }
 }
 
 void KMMainWidget::slotTrashThread()
 {
-    MessageList::Core::MessageItemSetReference ref = mMessagePane->currentThreadAsPersistentSet();
-    if (ref != -1) {
+    if (MessageList::Core::MessageItemSetReference ref = mMessagePane->currentThreadAsPersistentSet(); ref != -1) {
         trashMessageSelected(ref);
     }
 }
@@ -2213,8 +2197,7 @@ void KMMainWidget::slotFromFilter()
         return;
     }
 
-    const auto al = MessageHelper::extractAddrSpecs(msg, "From");
-    if (al.empty()) {
+    if (const auto al = MessageHelper::extractAddrSpecs(msg, "From"); al.empty()) {
         openFilterDialog("From", msg->from()->asUnicodeString());
     } else {
         openFilterDialog("From", al.front().asString());
@@ -2267,8 +2250,7 @@ void KMMainWidget::slotJumpToFolder()
     QPointer<MailCommon::FolderSelectionDialog> dialog(selectFromAllFoldersDialog());
     dialog->setWindowTitle(i18nc("@title:window", "Jump to Folder"));
     if (dialog->exec() && dialog) {
-        Akonadi::Collection collection = dialog->selectedCollection();
-        if (collection.isValid()) {
+        if (Akonadi::Collection collection = dialog->selectedCollection(); collection.isValid()) {
             slotSelectCollectionFolder(collection);
         }
     }
@@ -2708,8 +2690,7 @@ void KMMainWidget::slotMessageActivated(const Akonadi::Item &msg)
 
 void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
 {
-    KMCommand::Result result = command->result();
-    if (result != KMCommand::OK) {
+    if (KMCommand::Result result = command->result(); result != KMCommand::OK) {
         qCDebug(KMAIL_LOG) << "slotItemsFetchedForActivation result:" << result;
         return;
     }
@@ -2724,8 +2705,7 @@ void KMMainWidget::slotItemsFetchedForActivation(KMCommand *command)
     const bool useFixedFont = mMsgView ? mMsgView->isFixedFont() : MessageViewer::MessageViewerSettings::self()->useFixedFont();
     win->setUseFixedFont(useFixedFont);
     if (mMsgView) {
-        auto viewer = mMsgView->viewer();
-        if (viewer) {
+        if (auto viewer = mMsgView->viewer()) {
             win->viewer()->setWebViewZoomFactor(viewer->webViewZoomFactor());
             win->viewer()->setHtmlLoadExtOverride(viewer->htmlLoadExtOverride());
             win->viewer()->setDisplayFormatMessageOverwrite(viewer->displayFormatMessageOverwrite());
@@ -2852,8 +2832,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         }
         qCDebug(KMAIL_LOG) << "URL is:" << url;
     }
-    const QString selectedText = mMsgView ? mMsgView->copyText() : QString();
-    if (mMsgView && !selectedText.isEmpty()) {
+    if (const QString selectedText = mMsgView ? mMsgView->copyText() : QString(); mMsgView && !selectedText.isEmpty()) {
         if (urlMenuAdded) {
             menu.addSeparator();
         }
@@ -2948,8 +2927,7 @@ void KMMainWidget::showMessagePopup(const Akonadi::Item &msg,
         }
     }
     if (mMsgView) {
-        const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result);
-        if (!interceptorUrlActions.isEmpty()) {
+        if (const QList<QAction *> interceptorUrlActions = mMsgView->interceptorUrlActions(result); !interceptorUrlActions.isEmpty()) {
             menu.addSeparator();
             menu.addActions(interceptorUrlActions);
         }
@@ -3035,8 +3013,7 @@ void KMMainWidget::setupActions()
         auto action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
         actionCollection()->addAction(QStringLiteral("addressbook"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotRunAddressBook);
-        const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook"));
-        if (exec.isEmpty()) {
+        if (const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook")); exec.isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -3046,8 +3023,7 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(QStringLiteral("tools_start_certman"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotStartCertManager);
         // disable action if no certman binary is around
-        const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
-        if (exec.isEmpty()) {
+        if (const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra")); exec.isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -3056,8 +3032,7 @@ void KMMainWidget::setupActions()
         auto action = new QAction(QIcon::fromTheme(QStringLiteral("document-import")), i18n("&Import Messages…"), this);
         actionCollection()->addAction(QStringLiteral("import"), action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotImport);
-        const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadiimportwizard"));
-        if (exec.isEmpty()) {
+        if (const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadiimportwizard")); exec.isEmpty()) {
             action->setEnabled(false);
         }
     }
@@ -3767,8 +3742,7 @@ void KMMainWidget::slotAddFavoriteFolder()
     QPointer<MailCommon::FolderSelectionDialog> dialog(selectFromAllFoldersDialog());
     dialog->setWindowTitle(i18nc("@title:window", "Add Favorite Folder"));
     if (dialog->exec() && dialog) {
-        const Akonadi::Collection collection = dialog->selectedCollection();
-        if (collection.isValid()) {
+        if (const Akonadi::Collection collection = dialog->selectedCollection(); collection.isValid()) {
             mFavoritesModel->addCollection(collection);
         }
     }
@@ -4085,9 +4059,8 @@ void KMMainWidget::slotAkonadiStandardActionUpdated()
         mGUIClient->plugActionList(QStringLiteral("akonadi_collection_collectionproperties_actionlist"), collectionProperties);
     }
 
-    const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();
-
     if (QAction *act = mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)) {
+        const bool folderWithContent = mCurrentFolderSettings && !mCurrentFolderSettings->isStructural();
         act->setEnabled(mCurrentFolderSettings && (mCurrentCollection.rights() & Collection::CanDeleteCollection) && !mCurrentFolderSettings->isSystemFolder()
                         && folderWithContent);
     }
@@ -4185,8 +4158,7 @@ void KMMainWidget::updateFolderMenu()
     mGUIClient->plugActionList(QStringLiteral("outbox_folder_actionlist"), actionlist);
     actionlist.clear();
 
-    const bool isASearchFolder = mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource");
-    if (isASearchFolder) {
+    if (const bool isASearchFolder = mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource")) {
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setText(i18n("&Delete Search"));
     }
 
@@ -4811,8 +4783,7 @@ void KMMainWidget::itemsFetchDone(KJob *job)
         qCDebug(KMAIL_LOG) << job->error() << job->errorString();
 
         const QString resource = job->property("_resource").toString();
-        const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(resource);
-        if (!agentInstance.isOnline()) {
+        if (const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(resource); !agentInstance.isOnline()) {
             // The resource is offline
             mMessagePane->show();
             if (mMsgView) {
@@ -5125,8 +5096,7 @@ void KMMainWidget::slotClearFolderAndSubFolders()
 
 void KMMainWidget::slotClearCacheDone()
 {
-    const QString akonadictlPath = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadictl"));
-    if (akonadictlPath.isEmpty()) {
+    if (const QString akonadictlPath = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadictl")); akonadictlPath.isEmpty()) {
         qCWarning(KMAIL_LOG) << "Impossible to find akonadictl apps";
     } else {
         if (KMessageBox::questionTwoActions(this,

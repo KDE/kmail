@@ -86,8 +86,7 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFetchCollectionDone(const Akonadi
 
 void ClearCacheJobInFolderAndSubFolderJob::slotFinished(Akonadi::ClearCacheFoldersJob *job)
 {
-    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
-    if (item) {
+    if (auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>()) {
         item->setComplete();
         item->setStatus(i18n("Done"));
         item = nullptr;
@@ -97,16 +96,14 @@ void ClearCacheJobInFolderAndSubFolderJob::slotFinished(Akonadi::ClearCacheFolde
 
 void ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheUpdate(Akonadi::ClearCacheFoldersJob *job, const QString &description)
 {
-    auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>();
-    if (item) {
+    if (auto item = job->property("ProgressItem").value<KPIM::ProgressItem *>()) {
         item->setStatus(description);
     }
 }
 
 void ClearCacheJobInFolderAndSubFolderJob::slotClearAkonadiCacheCanceled(KPIM::ProgressItem *item)
 {
-    auto job = item->property("ClearCacheFoldersJob").value<Akonadi::ClearCacheFoldersJob *>();
-    if (job) {
+    if (auto job = item->property("ClearCacheFoldersJob").value<Akonadi::ClearCacheFoldersJob *>()) {
         job->setCanceled(true);
     }
 

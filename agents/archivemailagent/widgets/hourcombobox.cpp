@@ -24,8 +24,7 @@ void HourComboBox::initializeList()
 
 void HourComboBox::setHour(int hour)
 {
-    const int index = findData(hour);
-    if (index != -1) {
+    if (const int index = findData(hour); index != -1) {
         setCurrentIndex(index);
     }
 }

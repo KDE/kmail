@@ -52,10 +52,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
     setIconByName(QStringLiteral("kmail-symbolic"));
 
 #ifdef HAVE_X11
-    KMMainWidget *mainWidget = kmkernel->getKMMainWidget();
-    if (mainWidget) {
-        QWidget *mainWin = mainWidget->window();
-        if (mainWin) {
+    if (KMMainWidget *mainWidget = kmkernel->getKMMainWidget()) {
+        if (QWidget *mainWin = mainWidget->window()) {
             mDesktopOfMainWin = KWindowInfo(mainWin->winId(), NET::WMDesktop).desktop();
         }
     }
@@ -293,8 +291,7 @@ void KMSystemTray::slotSelectCollection(QAction *act)
     if (!mainWidget) {
         return;
     }
-    QWidget *mainWin = mainWidget->window();
-    if (mainWin && !mainWin->isVisible()) {
+    if (QWidget *mainWin = mainWidget->window(); mainWin && !mainWin->isVisible()) {
         activate();
     }
 }

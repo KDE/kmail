@@ -28,9 +28,7 @@ void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &l
     QStringList attachments;
 
     for (const QString &item : lst) {
-        const QUrl url(item);
-
-        if (url.isLocalFile()) {
+        if (const QUrl url(item); url.isLocalFile()) {
             attachments << url.toLocalFile().toHtmlEscaped();
         } else {
             attachments << QString(item).toHtmlEscaped();

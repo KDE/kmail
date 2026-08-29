@@ -75,13 +75,11 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         if (it.isValid()) {
             Akonadi::MessageStatus itemStatus;
             itemStatus.setStatusFromFlags(it.flags());
-            const bool myStatus = (itemStatus & toActStatus);
-            if (myStatus != parentStatus) {
+            if (const bool myStatus = (itemStatus & toActStatus); myStatus != parentStatus) {
                 continue;
             }
         }
-        Akonadi::Item item(it);
-        if (item.hasFlag(toActFlag)) {
+        if (Akonadi::Item item(it); item.hasFlag(toActFlag)) {
             item.clearFlag(toActFlag);
             itemsToModify.push_back(item);
             if (item.hasAttribute<TaskAttribute>()) {

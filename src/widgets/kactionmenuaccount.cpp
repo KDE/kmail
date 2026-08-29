@@ -51,8 +51,7 @@ void KActionMenuAccount::slotSelectAccount(QAction *act)
         return;
     }
 
-    Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(act->data().toString());
-    if (agent.isValid()) {
+    if (Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(act->data().toString()); agent.isValid()) {
         if (!agent.isOnline()) {
             agent.setIsOnline(true);
         }

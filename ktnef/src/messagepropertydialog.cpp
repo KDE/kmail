@@ -81,8 +81,7 @@ void MessagePropertyDialog::readConfig()
     TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myMessagePropertyDialogGroupName), 600, 400);
 
     const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myMessagePropertyDialogGroupName));
-    const QByteArray headerState = group.readEntry("HeaderState", QByteArray());
-    if (!headerState.isEmpty()) {
+    if (const QByteArray headerState = group.readEntry("HeaderState", QByteArray()); !headerState.isEmpty()) {
         mListView->header()->restoreState(headerState);
     }
 }

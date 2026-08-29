@@ -64,8 +64,7 @@ void FolderShortcutActionManager::createActions()
             &FolderShortcutActionManager::slotCollectionRemoved,
             Qt::UniqueConnection);
 
-    const int rowCount(model->rowCount());
-    if (rowCount > 0) {
+    if (const int rowCount(model->rowCount()); rowCount > 0) {
         updateShortcutsForIndex(QModelIndex(), 0, rowCount - 1);
     }
 }
@@ -81,8 +80,7 @@ void FolderShortcutActionManager::updateShortcutsForIndex(const QModelIndex &par
     for (int i = start; i <= end; ++i) {
         if (model->hasIndex(i, 0, parent)) {
             const QModelIndex child = model->index(i, 0, parent);
-            auto collection = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-            if (collection.isValid()) {
+            if (auto collection = model->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>(); collection.isValid()) {
                 shortcutChanged(collection);
             }
             if (model->hasChildren(child)) {

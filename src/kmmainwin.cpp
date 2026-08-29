@@ -75,8 +75,9 @@ KMMainWin::KMMainWin(QWidget *)
     auto mainWidgetLayout = new QVBoxLayout(mainWidget);
     mainWidgetLayout->setContentsMargins({});
     if (TextAddonsWidgets::NeedUpdateVersionUtils::checkVersion()) {
-        const auto status = TextAddonsWidgets::NeedUpdateVersionUtils::obsoleteVersionStatus(QLatin1String(KMAIL_RELEASE_VERSION_DATE), QDate::currentDate());
-        if (status != TextAddonsWidgets::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
+        if (const auto status =
+                TextAddonsWidgets::NeedUpdateVersionUtils::obsoleteVersionStatus(QLatin1String(KMAIL_RELEASE_VERSION_DATE), QDate::currentDate());
+            status != TextAddonsWidgets::NeedUpdateVersionUtils::ObsoleteVersion::NotObsoleteYet) {
             auto needUpdateVersionWidget = new TextAddonsWidgets::NeedUpdateVersionWidget(this);
             mainWidgetLayout->addWidget(needUpdateVersionWidget);
             needUpdateVersionWidget->setObsoleteVersion(status);
@@ -158,8 +159,7 @@ void KMMainWin::slotFullScreen(bool t)
         b->setVisible(true);
         b->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     } else {
-        QWidget *w = mb->cornerWidget(Qt::TopRightCorner);
-        if (w) {
+        if (QWidget *w = mb->cornerWidget(Qt::TopRightCorner)) {
             w->deleteLater();
         }
     }

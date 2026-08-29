@@ -46,8 +46,7 @@ void SummaryView::fillSyncActionSubEntries()
     if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral("org.kde.kmail"))) {
         QStringList menuItems;
         org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
-        const QDBusReply<QStringList> reply = kmail.accounts();
-        if (reply.isValid()) {
+        if (const QDBusReply<QStringList> reply = kmail.accounts(); reply.isValid()) {
             menuItems << reply.value();
         }
 

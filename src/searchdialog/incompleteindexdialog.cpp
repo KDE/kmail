@@ -183,8 +183,7 @@ QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 
     QAbstractItemModel *model = mUi->collectionView->model();
     for (int i = 0, cnt = model->rowCount(); i < cnt; ++i) {
-        const QModelIndex idx = model->index(i, 0, QModelIndex());
-        if (model->data(idx, Qt::CheckStateRole).toInt() == Qt::Checked) {
+        if (const QModelIndex idx = model->index(i, 0, QModelIndex()); model->data(idx, Qt::CheckStateRole).toInt() == Qt::Checked) {
             res.push_back(model->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>().id());
         }
     }
@@ -232,8 +231,7 @@ void IncompleteIndexDialog::slotStopIndexing()
 
 void IncompleteIndexDialog::slotCurrentlyIndexingCollectionChanged(qlonglong colId)
 {
-    const int idx = mIndexingQueue.indexOf(colId);
-    if (idx > -1) {
+    if (const int idx = mIndexingQueue.indexOf(colId); idx > -1) {
         mIndexingQueue.removeAt(idx);
         mProgressDialog->setValue(mProgressDialog->maximum() - mIndexingQueue.size());
 

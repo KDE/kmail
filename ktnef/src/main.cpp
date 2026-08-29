@@ -53,9 +53,7 @@ int main(int argc, char *argv[])
 
     auto tnef = new KTNEFMain();
     tnef->show();
-    const QStringList &args = parser.positionalArguments();
-
-    if (!args.isEmpty()) {
+    if (const QStringList &args = parser.positionalArguments(); !args.isEmpty()) {
         tnef->loadFile(args.constFirst());
     }
 

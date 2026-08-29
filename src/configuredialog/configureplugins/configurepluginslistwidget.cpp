@@ -346,10 +346,8 @@ TextAddonsWidgets::PluginUtilData ConfigurePluginsListWidget::createAgentPluginD
 bool ConfigurePluginsListWidget::agentActivateState(const QString &agentIdentifier, const QString &pathName)
 {
     const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
-    QDBusInterface interface(service, pathName);
-    if (interface.isValid()) {
-        QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent"));
-        if (enabled.isValid()) {
+    if (QDBusInterface interface(service, pathName); interface.isValid()) {
+        if (QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent")); enabled.isValid()) {
             return enabled;
         } else {
             qCDebug(KMAIL_LOG) << agentIdentifier << "doesn't have enabledAgent function";
@@ -365,8 +363,7 @@ void ConfigurePluginsListWidget::changeAgentActiveState(const QString &agentIden
 {
     if (!agentIdentifier.isEmpty() && !path.isEmpty()) {
         const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
-        QDBusInterface interface(service, path);
-        if (interface.isValid()) {
+        if (QDBusInterface interface(service, path); interface.isValid()) {
             interface.call(QStringLiteral("setEnableAgent"), enable);
         } else {
             qCDebug(KMAIL_LOG) << agentIdentifier << "does not exist when trying to change the agent active state";
@@ -417,8 +414,7 @@ void ConfigurePluginsListWidget::slotConfigureClicked(const QString &groupName, 
         } else if (groupName == agentAkonadiGroupName()) {
             for (const TextAddonsWidgets::PluginUtilData &data : std::as_const(mPluginUtilDataList)) {
                 if (data.mIdentifier == identifier) {
-                    auto instance = Akonadi::AgentManager::self()->instance(identifier);
-                    if (instance.isValid()) {
+                    if (auto instance = Akonadi::AgentManager::self()->instance(identifier); instance.isValid()) {
                         QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(instance, this);
                         dlg->exec();
                         delete dlg;

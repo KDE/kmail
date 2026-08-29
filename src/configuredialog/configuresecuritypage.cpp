@@ -320,8 +320,8 @@ void SecurityPageEncryptionTab::slotConfigureGnupg()
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     dlg->setWindowTitle(i18nc("@title:window", "GnuPG Settings"));
     const KPageWidgetItem *page = nullptr;
-    const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim6/kcms/kleopatra")), QStringLiteral("kcm_kmail_gnupgsystem"));
-    if (plugin.isValid()) {
+    if (const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim6/kcms/kleopatra")), QStringLiteral("kcm_kmail_gnupgsystem"));
+        plugin.isValid()) {
         page = dlg->addModule(plugin);
     }
     if (!page) {
@@ -577,8 +577,7 @@ void SecurityPageSMimeTab::slotUpdateHTTPActions()
 
 static void saveCheckBoxToKleoEntry(QCheckBox *cb, QGpgME::CryptoConfigEntry *entry)
 {
-    const bool b = cb->isChecked();
-    if (entry && entry->boolValue() != b) {
+    if (const bool b = cb->isChecked(); entry && entry->boolValue() != b) {
         entry->setBoolValue(b);
     }
 }
@@ -623,13 +622,11 @@ void SecurityPageSMimeTab::save()
     saveCheckBoxToKleoEntry(mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry);
     saveCheckBoxToKleoEntry(mWidget->disableLDAPCB, e.mDisableLDAPEntry);
     if (e.mCustomHTTPProxy) {
-        const bool honor = mWidget->honorHTTPProxyRB->isChecked();
-        if (e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue() != honor) {
+        if (const bool honor = mWidget->honorHTTPProxyRB->isChecked(); e.mHonorHTTPProxy && e.mHonorHTTPProxy->boolValue() != honor) {
             e.mHonorHTTPProxy->setBoolValue(honor);
         }
 
-        QString chosenProxy = mWidget->customHTTPProxy->text();
-        if (chosenProxy != e.mCustomHTTPProxy->stringValue()) {
+        if (QString chosenProxy = mWidget->customHTTPProxy->text(); chosenProxy != e.mCustomHTTPProxy->stringValue()) {
             e.mCustomHTTPProxy->setStringValue(chosenProxy);
         }
     }

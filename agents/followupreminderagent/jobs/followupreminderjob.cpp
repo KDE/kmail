@@ -62,10 +62,8 @@ void FollowUpReminderJob::slotItemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    const auto msg = item.payload<std::shared_ptr<KMime::Message>>();
-    if (msg) {
-        KMime::Headers::InReplyTo *replyTo = msg->inReplyTo(KMime::CreatePolicy::DontCreate);
-        if (replyTo) {
+    if (const auto msg = item.payload<std::shared_ptr<KMime::Message>>()) {
+        if (KMime::Headers::InReplyTo *replyTo = msg->inReplyTo(KMime::CreatePolicy::DontCreate)) {
             const QString replyToIdStr = replyTo->asUnicodeString();
             Q_EMIT finished(replyToIdStr, item.id());
         }

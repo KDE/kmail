@@ -399,8 +399,7 @@ void KMReaderWin::slotMailToAddToExistingContact()
     const QString emailString = KEmailAddress::decodeMailtoUrl(url);
     QPointer<AddEmailToExistingContactDialog> dlg = new AddEmailToExistingContactDialog(this);
     if (dlg->exec()) {
-        Akonadi::Item item = dlg->selectedContact();
-        if (item.isValid()) {
+        if (Akonadi::Item item = dlg->selectedContact(); item.isValid()) {
             auto job = new AddEmailToExistingContactJob(item, emailString, this);
             job->start();
         }

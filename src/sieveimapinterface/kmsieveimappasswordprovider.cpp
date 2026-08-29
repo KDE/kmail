@@ -53,8 +53,7 @@ void KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished(QKeychai
 {
     auto job = qobject_cast<ReadPasswordJob *>(baseJob);
     Q_ASSERT(job);
-    const uint requestId = mJobRequestIds.take(job);
-    if (requestId != mRequestId) {
+    if (const uint requestId = mJobRequestIds.take(job); requestId != mRequestId) {
         return;
     }
 

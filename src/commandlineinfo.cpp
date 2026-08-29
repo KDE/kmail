@@ -83,14 +83,12 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         }
     }
 
-    const QStringList ccList = parser.values(QStringLiteral("cc"));
-    if (!ccList.isEmpty()) {
+    if (const QStringList ccList = parser.values(QStringLiteral("cc")); !ccList.isEmpty()) {
         mMailto = true;
         mCc = ccList.join(QStringLiteral(", "));
     }
 
-    const QStringList bccList = parser.values(QStringLiteral("bcc"));
-    if (!bccList.isEmpty()) {
+    if (const QStringList bccList = parser.values(QStringLiteral("bcc")); !bccList.isEmpty()) {
         mMailto = true;
         mBcc = bccList.join(QStringLiteral(", "));
     }
@@ -117,8 +115,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         mHtmlBody = true;
     }
 
-    const QStringList attachList = parser.values(QStringLiteral("attach"));
-    if (!attachList.isEmpty()) {
+    if (const QStringList attachList = parser.values(QStringLiteral("attach")); !attachList.isEmpty()) {
         mMailto = true;
         for (const QString &attach : attachList) {
             if (!attach.isEmpty()) {
@@ -162,8 +159,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                 QString previousKey;
                 for (int i = 0; i < values.count(); ++i) {
                     const QPair<QString, QString> element = values.at(i);
-                    const QString key = element.first.toLower();
-                    if (key == "to"_L1) {
+                    if (const QString key = element.first.toLower(); key == "to"_L1) {
                         if (!element.second.isEmpty()) {
                             mTo += element.second + QStringLiteral(", ");
                         }
@@ -204,8 +200,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                     }
                 }
             } else {
-                const QUrl url(arg);
-                if (url.isValid() && !url.scheme().isEmpty()) {
+                if (const QUrl url(arg); url.isValid() && !url.scheme().isEmpty()) {
                     mAttachURLs += url;
                 } else {
                     mTo += arg + QStringLiteral(", ");

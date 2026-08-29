@@ -37,8 +37,7 @@ bool FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled()
 
 void FollowUpReminder::FollowUpReminderUtil::reload()
 {
-    QDBusInterface interface(serviceName(), dbusPath());
-    if (interface.isValid()) {
+    if (QDBusInterface interface(serviceName(), dbusPath()); interface.isValid()) {
         interface.call(QStringLiteral("reload"));
     }
 }

@@ -36,8 +36,7 @@ using namespace Qt::Literals::StringLiterals;
 QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
 {
     QString currentPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    const QDir dir(currentPath);
-    if (!dir.exists()) {
+    if (const QDir dir(currentPath); !dir.exists()) {
         currentPath = QDir::homePath();
     }
     return currentPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_')
@@ -201,8 +200,7 @@ void ArchiveFolderDialog::slotFixFileExtension()
     }
 
     QMimeDatabase db;
-    const QString extension = db.suffixForFileName(fileName);
-    if (!extension.isEmpty()) {
+    if (const QString extension = db.suffixForFileName(fileName); !extension.isEmpty()) {
         fileName.truncate(fileName.length() - extension.length() - 1);
     }
 

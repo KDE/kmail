@@ -85,8 +85,7 @@ SendLaterWidget::~SendLaterWidget()
 
 void SendLaterWidget::slotCustomContextMenuRequested(QPoint)
 {
-    const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
-    if (!listItems.isEmpty()) {
+    if (const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems(); !listItems.isEmpty()) {
         QMenu menu(this);
         if (listItems.count() == 1) {
             menu.addAction(mWidget->modifyItem->text(), this, &SendLaterWidget::slotModifyItem);
@@ -101,8 +100,7 @@ void SendLaterWidget::slotCustomContextMenuRequested(QPoint)
 
 void SendLaterWidget::slotSendNow()
 {
-    const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
-    if (listItems.count() == 1) {
+    if (const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems(); listItems.count() == 1) {
         auto mailItem = static_cast<SendLaterItem *>(listItems.first());
         Q_EMIT sendNow(mailItem->info()->itemId());
     }
@@ -120,8 +118,7 @@ void SendLaterWidget::saveTreeWidgetHeader(KConfigGroup &group)
 
 void SendLaterWidget::updateButtons()
 {
-    const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
-    if (listItems.isEmpty()) {
+    if (const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems(); listItems.isEmpty()) {
         mWidget->deleteItem->setEnabled(false);
         mWidget->modifyItem->setEnabled(false);
     } else if (listItems.count() == 1) {
@@ -140,8 +137,7 @@ void SendLaterWidget::load()
     const int numberOfItem = filterGroups.count();
     for (int i = 0; i < numberOfItem; ++i) {
         KConfigGroup group = config->group(filterGroups.at(i));
-        auto info = SendLaterUtil::readSendLaterInfo(group);
-        if (info->isValid()) {
+        if (auto info = SendLaterUtil::readSendLaterInfo(group); info->isValid()) {
             createOrUpdateItem(info);
         } else {
             delete info;
@@ -187,8 +183,7 @@ bool SendLaterWidget::save()
 
     const int numberOfItem(mWidget->treeWidget->topLevelItemCount());
     for (int i = 0; i < numberOfItem; ++i) {
-        auto mailItem = static_cast<SendLaterItem *>(mWidget->treeWidget->topLevelItem(i));
-        if (mailItem->info()) {
+        if (auto mailItem = static_cast<SendLaterItem *>(mWidget->treeWidget->topLevelItem(i)); mailItem->info()) {
             SendLaterUtil::writeSendLaterInfo(config, mailItem->info());
         }
     }
@@ -223,10 +218,8 @@ void SendLaterWidget::slotDeleteItem()
 
     for (QTreeWidgetItem *item : listItems) {
         if (deleteMessage) {
-            auto mailItem = static_cast<SendLaterItem *>(item);
-            if (mailItem->info()) {
-                Akonadi::Item::Id id = mailItem->info()->itemId();
-                if (id != -1) {
+            if (auto mailItem = static_cast<SendLaterItem *>(item); mailItem->info()) {
+                if (Akonadi::Item::Id id = mailItem->info()->itemId(); id != -1) {
                     mListMessagesToRemove << id;
                 }
             }
@@ -240,8 +233,7 @@ void SendLaterWidget::slotDeleteItem()
 
 void SendLaterWidget::slotModifyItem()
 {
-    const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems();
-    if (listItems.count() == 1) {
+    if (const QList<QTreeWidgetItem *> listItems = mWidget->treeWidget->selectedItems(); listItems.count() == 1) {
         QTreeWidgetItem *item = listItems.at(0);
         if (!item) {
             return;

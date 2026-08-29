@@ -104,8 +104,7 @@ void DummyKernel::setLastSelectedFolder([[maybe_unused]] Akonadi::Collection::Id
 
 void DummyKernel::expunge(Akonadi::Collection::Id id, bool sync)
 {
-    Akonadi::Collection col(id);
-    if (col.isValid()) {
+    if (Akonadi::Collection col(id); col.isValid()) {
         mFolderCollectionMonitor->expunge(Akonadi::Collection(col), sync);
     }
 }

@@ -37,8 +37,7 @@ void SecondaryWindow::closeEvent(QCloseEvent *e)
         // position for the next window to be opened, see KMainWindow::closeEvent()
         // and KMainWindow::applyMainWindowSettings().  We are not going to pass
         // the event on to KMainWindow so this needs to be done here.
-        KConfigGroup grp = stateConfigGroup();
-        if (grp.isValid()) {
+        if (KConfigGroup grp = stateConfigGroup(); grp.isValid()) {
             grp.deleteEntry("RestorePositionForNextInstance");
         }
 

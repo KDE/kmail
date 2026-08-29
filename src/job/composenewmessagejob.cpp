@@ -53,8 +53,7 @@ void ComposeNewMessageJob::start()
 
     if (mRecipientsFrom.isValid()) {
         // Copy the recipient list from the original message
-        const std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(mRecipientsFrom);
-        if (msg) {
+        if (const std::shared_ptr<KMime::Message> msg = MessageComposer::Util::message(mRecipientsFrom)) {
             copyAddresses(msg->to(KMime::CreatePolicy::DontCreate), mMsg->to());
             copyAddresses(msg->cc(KMime::CreatePolicy::DontCreate), mMsg->cc());
             copyAddresses(msg->bcc(KMime::CreatePolicy::DontCreate), mMsg->bcc());

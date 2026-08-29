@@ -149,8 +149,7 @@ SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Coll
     connect(mUi.mButtonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SearchWindowDialog::slotClose);
 
     // give focus to the value field of the first search rule
-    auto r = mUi.mPatternEdit->findChild<KLineEdit *>(QStringLiteral("regExpLineEdit"));
-    if (r) {
+    if (auto r = mUi.mPatternEdit->findChild<KLineEdit *>(QStringLiteral("regExpLineEdit"))) {
         r->setFocus();
     } else {
         qCDebug(KMAIL_LOG) << "SearchWindow: regExpLineEdit not found";
@@ -328,16 +327,14 @@ void SearchWindowDialog::activateFolder(const Akonadi::Collection &collection)
             const auto searchDescription = collection.attribute<Akonadi::SearchDescriptionAttribute>();
             mSearchPattern.deserialize(searchDescription->description());
 
-            const QList<Akonadi::Collection::Id> lst = searchDescription->listCollection();
-            if (!lst.isEmpty()) {
+            if (const QList<Akonadi::Collection::Id> lst = searchDescription->listCollection(); !lst.isEmpty()) {
                 mUi.mChkMultiFolders->setChecked(true);
                 mCollectionId.clear();
                 for (Akonadi::Collection::Id col : lst) {
                     mCollectionId.append(Akonadi::Collection(col));
                 }
             } else {
-                const Akonadi::Collection col = searchDescription->baseCollection();
-                if (col.isValid()) {
+                if (const Akonadi::Collection col = searchDescription->baseCollection(); col.isValid()) {
                     mUi.mChkbxSpecificFolders->setChecked(true);
                     mUi.mCbxFolders->setCollection(col);
                     mUi.mChkSubFolders->setChecked(searchDescription->recursive());
@@ -454,8 +451,7 @@ void SearchWindowDialog::doSearch()
     SearchPattern searchPattern(mSearchPattern);
     searchPattern.purify();
 
-    MailCommon::SearchPattern::SparqlQueryError queryError = searchPattern.asAkonadiQuery(mQuery);
-    switch (queryError) {
+    switch (searchPattern.asAkonadiQuery(mQuery)) {
     case MailCommon::SearchPattern::NoError:
         break;
     case MailCommon::SearchPattern::MissingCheck:
@@ -483,15 +479,10 @@ void SearchWindowDialog::doSearch()
     qCDebug(KMAIL_LOG) << mQuery.toJSON();
     mUi.mSearchFolderOpenBtn->setEnabled(true);
 
-    const QList<qint64> unindexedCollections = checkIncompleteIndex(searchCollections, recursive);
-    if (!unindexedCollections.isEmpty()) {
+    if (const QList<qint64> unindexedCollections = checkIncompleteIndex(searchCollections, recursive); !unindexedCollections.isEmpty()) {
         IncompleteIndexDialog dlg(unindexedCollections);
         dlg.exec();
     }
-
-    auto config = KConfig(QStringLiteral("akonadi_indexing_agent"));
-    KConfigGroup cfg = config.group(QStringLiteral("General"));
-    const bool respectDiacriticAndAccents = cfg.readEntry("respectDiacriticAndAccents", true);
 
     if (mFolder.isValid()) {
         qCDebug(KMAIL_LOG) << " use existing folder " << mFolder.id();
@@ -504,6 +495,9 @@ void SearchWindowDialog::doSearch()
         mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob(mFolder, this);
     } else {
+        auto config = KConfig(QStringLiteral("akonadi_indexing_agent"));
+        KConfigGroup cfg = config.group(QStringLiteral("General"));
+        const bool respectDiacriticAndAccents = cfg.readEntry("respectDiacriticAndAccents", true);
         const QString searchString =
             respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : TextUtils::ConvertText::normalize(mUi.mSearchFolderEdt->text());
         qCDebug(KMAIL_LOG) << " create new folder " << searchString;
@@ -652,10 +646,9 @@ void SearchWindowDialog::scheduleRename(const QString &text)
 
 void SearchWindowDialog::renameSearchFolder()
 {
-    const QString name = mUi.mSearchFolderEdt->text();
     if (mFolder.isValid()) {
-        const QString oldFolderName = mFolder.name();
-        if (oldFolderName != name) {
+        const QString name = mUi.mSearchFolderEdt->text();
+        if (const QString oldFolderName = mFolder.name(); oldFolderName != name) {
             mFolder.setName(name);
             auto job = new Akonadi::CollectionModifyJob(mFolder, this);
             job->setProperty("oldfoldername", oldFolderName);
@@ -726,8 +719,7 @@ Akonadi::Item::List SearchWindowDialog::selectedMessages() const
     Akonadi::Item::List messages;
     messages.reserve(lst.size());
     for (const QModelIndex &index : lst) {
-        const auto item = index.data(Akonadi::EntityTreeModel::ItemRole).value<Akonadi::Item>();
-        if (item.isValid()) {
+        if (const auto item = index.data(Akonadi::EntityTreeModel::ItemRole).value<Akonadi::Item>(); item.isValid()) {
             messages.append(item);
         }
     }
@@ -912,8 +904,7 @@ QList<qint64> SearchWindowDialog::checkIncompleteIndex(const Akonadi::Collection
     // Fetch collection ?
     for (const Akonadi::Collection &col : std::as_const(cols)) {
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
-        const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id());
-        if (col.statistics().count() != num) {
+        if (const qlonglong num = KMKernel::self()->indexedItems()->indexedItems((qlonglong)col.id()); col.statistics().count() != num) {
             results.push_back(col.id());
         }
 #endif
@@ -933,20 +924,19 @@ Akonadi::Collection::List SearchWindowDialog::searchCollectionsRecursive(const A
                 result.push_back(col);
             }
         } else {
-            const auto collection = etm->data(colIdx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-            if (!collection.hasAttribute<Akonadi::EntityHiddenAttribute>() && collection.cachePolicy().localParts().contains("RFC822"_L1)) {
+            if (const auto collection = etm->data(colIdx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+                !collection.hasAttribute<Akonadi::EntityHiddenAttribute>() && collection.cachePolicy().localParts().contains("RFC822"_L1)) {
                 result.push_back(collection);
             }
         }
 
-        const int childrenCount = etm->rowCount(colIdx);
-        if (childrenCount > 0) {
+        if (const int childrenCount = etm->rowCount(colIdx); childrenCount > 0) {
             Akonadi::Collection::List subCols;
             subCols.reserve(childrenCount);
             for (int i = 0; i < childrenCount; ++i) {
                 const QModelIndex idx = etm->index(i, 0, colIdx);
-                const auto child = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-                if (child.cachePolicy().localParts().contains("RFC822"_L1)) {
+                if (const auto child = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+                    child.cachePolicy().localParts().contains("RFC822"_L1)) {
                     subCols.push_back(child);
                 }
             }

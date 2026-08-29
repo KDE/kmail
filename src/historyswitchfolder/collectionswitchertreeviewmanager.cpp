@@ -102,8 +102,7 @@ void CollectionSwitcherTreeViewManager::selectBackward()
 
 void CollectionSwitcherTreeViewManager::updateViewGeometry()
 {
-    QWidget *window = mParentWidget ? mParentWidget->window() : nullptr;
-    if (window) {
+    if (QWidget *window = mParentWidget ? mParentWidget->window() : nullptr) {
         const QSize centralSize = window->size();
 
         const QSize viewMaxSize(centralSize.width() * 3 / 4, centralSize.height() * 3 / 4);

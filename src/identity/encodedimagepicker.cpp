@@ -84,9 +84,7 @@ void EncodedImagePicker::selectFile()
     }
 
     filter = QStringLiteral("%1 (%2)").arg(i18n("Image"), filter);
-    const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), filter);
-
-    if (!url.isEmpty()) {
+    if (const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), filter); !url.isEmpty()) {
         setFromFile(url);
     }
 }
@@ -101,9 +99,7 @@ void EncodedImagePicker::setFromFile(const QUrl &url)
 
 void EncodedImagePicker::setFromFileDone(KJob *job)
 {
-    const KIO::StoredTransferJob *kioJob = qobject_cast<KIO::StoredTransferJob *>(job);
-
-    if (kioJob->error() == 0) {
+    if (const KIO::StoredTransferJob *kioJob = qobject_cast<KIO::StoredTransferJob *>(job); kioJob->error() == 0) {
         const QImage image = QImage::fromData(kioJob->data());
 
         Q_EMIT imageSelected(image);
@@ -135,20 +131,14 @@ void EncodedImagePicker::selectFromAddressBookDone(KJob *job)
         return;
     }
 
-    const Addressee contact = searchJob->contacts().constFirst();
-
-    if (contact.photo().isIntern()) {
-        const QImage photo = contact.photo().data();
-
-        if (photo.isNull()) {
+    if (const Addressee contact = searchJob->contacts().constFirst(); contact.photo().isIntern()) {
+        if (const QImage photo = contact.photo().data(); photo.isNull()) {
             KMessageBox::information(this, i18n("No picture set for your address book entry."), i18nc("@title:window", "No Picture"));
         } else {
             Q_EMIT imageSelected(photo);
         }
     } else {
-        const QUrl url(contact.photo().url());
-
-        if (url.isEmpty()) {
+        if (const QUrl url(contact.photo().url()); url.isEmpty()) {
             KMessageBox::information(this, i18n("No picture set for your address book entry."), i18nc("@title:window", "No Picture"));
         } else {
             setFromFile(url);

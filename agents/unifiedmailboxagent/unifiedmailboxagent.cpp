@@ -71,8 +71,7 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
 
 void UnifiedMailboxAgent::configure(WId windowId)
 {
-    QPointer<UnifiedMailboxAgent> agent(this);
-    if (agent) {
+    if (QPointer<UnifiedMailboxAgent> agent(this); agent) {
         SettingsDialog(config(), mBoxManager, windowId).exec();
         synchronize();
         Q_EMIT configurationDialogAccepted();
@@ -228,8 +227,8 @@ void UnifiedMailboxAgent::retrieveItems(const Akonadi::Collection &c)
                 if (state->failedSources.contains(srcColId)) {
                     continue; // don't remove items whose source fetch failed
                 }
-                const auto idsIt = state->sourceItemIdsByCollection.constFind(srcColId);
-                if (idsIt != state->sourceItemIdsByCollection.cend() && !idsIt->contains(item.id())) {
+                if (const auto idsIt = state->sourceItemIdsByCollection.constFind(srcColId);
+                    idsIt != state->sourceItemIdsByCollection.cend() && !idsIt->contains(item.id())) {
                     toUnlink.append(item); // item deleted from source
                 }
             }

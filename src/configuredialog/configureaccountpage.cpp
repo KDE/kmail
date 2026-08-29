@@ -180,8 +180,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.mAccountsReceiving->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
     mAccountsReceiving.mAccountsReceiving->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
 #endif
-    KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc"));
-    if (specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
+    if (KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc")); specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
         KConfigGroup grp = specialMailCollection.group(QStringLiteral("SpecialCollections"));
         mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QStringLiteral("DefaultResourceId")));
     }
@@ -342,8 +341,7 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 
 void AccountsPageReceivingTab::slotEditNotifications()
 {
-    const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent"));
-    if (instance.isValid()) {
+    if (const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent")); instance.isValid()) {
         std::make_unique<Akonadi::AgentConfigurationDialog>(instance, this)->exec();
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));

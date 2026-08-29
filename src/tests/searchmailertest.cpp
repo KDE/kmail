@@ -11,8 +11,7 @@
 int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
-    QStringList listOfMailerFound = MailCommon::Util::foundMailer();
-    if (!listOfMailerFound.isEmpty()) {
+    if (QStringList listOfMailerFound = MailCommon::Util::foundMailer(); !listOfMailerFound.isEmpty()) {
         if (KMessageBox::questionTwoActionsList(nullptr,
                                                 QStringLiteral("Another mailer was found on system. Do you want to import data from it?"),
                                                 listOfMailerFound,

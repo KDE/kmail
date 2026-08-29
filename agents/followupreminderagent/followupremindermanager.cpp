@@ -46,8 +46,7 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
     for (int i = 0; i < numberOfItems; ++i) {
         KConfigGroup group = mConfig->group(itemList.at(i));
 
-        auto info = new FollowUpReminderInfo(group);
-        if (info->isValid()) {
+        if (auto info = new FollowUpReminderInfo(group); info->isValid()) {
             if (!info->answerWasReceived()) {
                 if (mInitialize) {
                     delete info;
@@ -97,8 +96,7 @@ void FollowUpReminderManager::checkFollowUp(const Akonadi::Item &item, const Ako
         return;
     }
 
-    const Akonadi::SpecialMailCollections::Type type = Akonadi::SpecialMailCollections::self()->specialCollectionType(col);
-    switch (type) {
+    switch (Akonadi::SpecialMailCollections::self()->specialCollectionType(col)) {
     case Akonadi::SpecialMailCollections::Trash:
     case Akonadi::SpecialMailCollections::Outbox:
     case Akonadi::SpecialMailCollections::Drafts:

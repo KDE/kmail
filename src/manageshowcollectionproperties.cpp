@@ -65,8 +65,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
     }
     const Akonadi::Collection col = mMainWidget->currentCollection();
     const Akonadi::Collection::Id id = col.id();
-    QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id);
-    if (dlg) {
+    if (QPointer<Akonadi::CollectionPropertiesDialog> dlg = mHashDialogBox.value(id)) {
         if (!pageToShow.isEmpty()) {
             dlg->setCurrentPage(pageToShow);
         }
@@ -76,8 +75,7 @@ void ManageShowCollectionProperties::showCollectionProperties(const QString &pag
     }
     if (!KMKernel::self()->isOffline()) {
         const Akonadi::AgentInstance agentInstance = Akonadi::AgentManager::self()->instance(col.resource());
-        bool isOnline = agentInstance.isOnline();
-        if (!isOnline) {
+        if (bool isOnline = agentInstance.isOnline(); !isOnline) {
             showCollectionPropertiesContinued(pageToShow, QPointer<KPIM::ProgressItem>());
         } else {
             QPointer<KPIM::ProgressItem> progressItem(KPIM::ProgressManager::createProgressItem(i18n("Retrieving folder properties")));
@@ -186,8 +184,7 @@ void ManageShowCollectionProperties::slotCollectionPropertiesFinished(KJob *job)
     dlg->setWindowTitle(i18nc("@title:window", "Properties of Folder %1", collection.name()));
     connect(dlg.data(), &Akonadi::CollectionPropertiesDialog::settingsSaved, mMainWidget, &KMMainWidget::slotUpdateConfig);
 
-    const QString pageToShow = fetch->property("pageToShow").toString();
-    if (!pageToShow.isEmpty()) { // show a specific page
+    if (const QString pageToShow = fetch->property("pageToShow").toString(); !pageToShow.isEmpty()) { // show a specific page
         dlg->setCurrentPage(pageToShow);
     }
     dlg->show();

@@ -24,8 +24,10 @@ searchdbustest::searchdbustest(QWidget *parent)
 
 void searchdbustest::slotReindexCollections()
 {
-    QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), QStringLiteral("/"), QStringLiteral("org.freedesktop.Akonadi.Indexer"));
-    if (interfaceAkonadiIndexer.isValid()) {
+    if (QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(),
+                                               QStringLiteral("/"),
+                                               QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+        interfaceAkonadiIndexer.isValid()) {
         const QList<qlonglong> lst = {100, 300};
         qDebug() << "reindex " << lst;
         // qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;

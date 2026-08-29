@@ -46,8 +46,7 @@ void FollowUpReminderFinishTaskJob::slotItemFetchJobDone(KJob *job)
         return;
     }
 
-    const Akonadi::Item::List lst = qobject_cast<Akonadi::ItemFetchJob *>(job)->items();
-    if (lst.count() == 1) {
+    if (const Akonadi::Item::List lst = qobject_cast<Akonadi::ItemFetchJob *>(job)->items(); lst.count() == 1) {
         const Akonadi::Item item = lst.first();
         if (!item.hasPayload<KCalendarCore::Todo::Ptr>()) {
             qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "FollowUpReminderFinishTaskJob::slotItemFetchJobDone: item is not a todo.";

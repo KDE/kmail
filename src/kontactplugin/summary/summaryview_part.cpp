@@ -139,8 +139,7 @@ void SummaryViewPart::updateWidgets()
         if (!activeSummaries.contains(pluginIdentifier)) {
             continue;
         }
-        KontactInterface::Summary *summary = plugin->createSummaryWidget(mFrame);
-        if (summary) {
+        if (KontactInterface::Summary *summary = plugin->createSummaryWidget(mFrame)) {
             if (summary->summaryHeight() > 0) {
                 mSummaries.insert(pluginIdentifier, summary);
 
@@ -282,8 +281,7 @@ void SummaryViewPart::drawLtoR(QWidget *target, QWidget *widget, int alignment)
         return;
     }
 
-    int targetPos = mLeftColumn->indexOf(target);
-    if (targetPos != -1) {
+    if (int targetPos = mLeftColumn->indexOf(target); targetPos != -1) {
         if (alignment == Qt::AlignBottom) {
             targetPos++;
         }
@@ -340,8 +338,7 @@ void SummaryViewPart::drawRtoL(QWidget *target, QWidget *widget, int alignment)
         return;
     }
 
-    int targetPos = mRightColumn->indexOf(target);
-    if (targetPos != -1) {
+    if (int targetPos = mRightColumn->indexOf(target); targetPos != -1) {
         if (alignment == Qt::AlignBottom) {
             targetPos++;
         }

@@ -51,10 +51,8 @@ void PotentialPhishingDetailWidget::save()
     bool emailsAdded = false;
     const int numberOfItem(mListWidget->count());
     for (int i = 0; i < numberOfItem; ++i) {
-        QListWidgetItem *item = mListWidget->item(i);
-        if (item->checkState() == Qt::Checked) {
-            const QString email = item->text();
-            if (!potentialPhishing.contains(email)) {
+        if (QListWidgetItem *item = mListWidget->item(i); item->checkState() == Qt::Checked) {
+            if (const QString email = item->text(); !potentialPhishing.contains(email)) {
                 potentialPhishing << email;
                 emailsAdded = true;
             }

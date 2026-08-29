@@ -238,8 +238,7 @@ void TagActionManager::newTagActionClicked()
 void TagActionManager::checkTags(const QList<qint64> &tags)
 {
     for (const qint64 id : tags) {
-        KToggleAction *action = mTagActions.value(id);
-        if (action) {
+        if (KToggleAction *action = mTagActions.value(id)) {
             action->setChecked(true);
         }
     }

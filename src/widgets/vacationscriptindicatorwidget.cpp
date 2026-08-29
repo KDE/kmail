@@ -96,8 +96,7 @@ void VacationScriptIndicatorWidget::setVacationScriptActive(bool active, const Q
             updateIndicator();
         }
     } else {
-        int countRemoveServerName = mServerActive.removeAll(serverName);
-        if (countRemoveServerName > 0) {
+        if (int countRemoveServerName = mServerActive.removeAll(serverName); countRemoveServerName > 0) {
             updateIndicator();
         }
     }

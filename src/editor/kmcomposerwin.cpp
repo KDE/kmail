@@ -302,8 +302,7 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
                             const auto hasOverride = mEncryptionState.hasOverride();
                             const auto encrypt = mEncryptionState.encrypt();
 
-                            const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt;
-                            if (!showAllIcons) {
+                            if (const bool showAllIcons = showCryptoIndicator && hasOverride && encrypt; !showAllIcons) {
                                 recipientLine->setIcon(QIcon(), msg);
                                 return;
                             }
@@ -1326,8 +1325,7 @@ void KMComposerWin::setupActions()
     action = new QAction(QIcon::fromTheme(QStringLiteral("x-office-address-book")), i18n("&Address Book"), this);
     KMail::Util::addQActionHelpText(action, i18n("Open Address Book"));
     actionCollection()->addAction(QStringLiteral("addressbook"), action);
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook"));
-    if (path.isEmpty()) {
+    if (const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook")); path.isEmpty()) {
         action->setEnabled(false);
     } else {
         connect(action, &QAction::triggered, this, &KMComposerWin::slotAddressBook);
@@ -1545,8 +1543,7 @@ void KMComposerWin::setupActions()
 
     // In Kontact, this entry would read "Configure Kontact", but bring
     // up KMail's config dialog. That's sensible, though, so fix the label.
-    QAction *configureAction = actionCollection()->action(QStringLiteral("options_configure"));
-    if (configureAction) {
+    if (QAction *configureAction = actionCollection()->action(QStringLiteral("options_configure"))) {
         configureAction->setText(i18n("Configure KMail…"));
     }
 }
@@ -1597,8 +1594,7 @@ void KMComposerWin::initializePluginActions()
         QHashIterator<MessageComposer::PluginActionType::Type, QList<QAction *>> localEditorManagerActionsType(mPluginEditorManagerInterface->actionsType());
         while (localEditorManagerActionsType.hasNext()) {
             localEditorManagerActionsType.next();
-            QList<QAction *> lst = localEditorManagerActionsType.value();
-            if (!lst.isEmpty()) {
+            if (QList<QAction *> lst = localEditorManagerActionsType.value(); !lst.isEmpty()) {
                 const QString actionlistname = "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(localEditorManagerActionsType.key());
                 hashActions.insert(actionlistname, lst);
             }
@@ -1607,8 +1603,7 @@ void KMComposerWin::initializePluginActions()
             mPluginEditorConvertTextManagerInterface->actionsType());
         while (localEditorConvertTextManagerActionsType.hasNext()) {
             localEditorConvertTextManagerActionsType.next();
-            QList<QAction *> lst = localEditorConvertTextManagerActionsType.value();
-            if (!lst.isEmpty()) {
+            if (QList<QAction *> lst = localEditorConvertTextManagerActionsType.value(); !lst.isEmpty()) {
                 const QString actionlistname =
                     "kmaileditor"_L1 + MessageComposer::PluginActionType::actionXmlExtension(localEditorConvertTextManagerActionsType.key());
                 if (hashActions.contains(actionlistname)) {
@@ -1654,8 +1649,6 @@ void KMComposerWin::initializePluginActions()
 
 void KMComposerWin::changeCryptoAction()
 {
-    const auto ident = identity();
-
     if (!QGpgME::openpgp() && !QGpgME::smime()) {
         // no crypto whatsoever
         mEncryptAction->setEnabled(false);
@@ -1663,6 +1656,7 @@ void KMComposerWin::changeCryptoAction()
         mSignAction->setEnabled(false);
         setSigning(false);
     } else {
+        const auto ident = identity();
         const bool canOpenPGPSign = QGpgME::openpgp() && !ident.pgpSigningKey().isEmpty();
         const bool canSMIMESign = QGpgME::smime() && !ident.smimeSigningKey().isEmpty();
 
@@ -1757,8 +1751,7 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
     if (!ident.isXFaceEnabled() || ident.xface().isEmpty()) {
         msg->removeHeader("X-Face");
     } else {
-        QString xface = ident.xface();
-        if (!xface.isEmpty()) {
+        if (QString xface = ident.xface(); !xface.isEmpty()) {
             int numNL = (xface.length() - 1) / 70;
             for (int i = numNL; i > 0; --i) {
                 xface.insert(i * 70, QStringLiteral("\n\t"));
@@ -1772,8 +1765,7 @@ void KMComposerWin::addFaceHeaders(const KIdentityManagementCore::Identity &iden
     if (!ident.isFaceEnabled() || ident.face().isEmpty()) {
         msg->removeHeader("Face");
     } else {
-        QString face = ident.face();
-        if (!face.isEmpty()) {
+        if (QString face = ident.face(); !face.isEmpty()) {
             // The first line of data is 72 lines long to account for the
             // header name, the following lines are 76 lines long, like in
             // https://quimby.gnus.org/circus/face/
@@ -1817,14 +1809,11 @@ void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
     const auto im = KMKernel::self()->identityManager();
 
     if (auto hrd = newMsg->headerByType("X-KMail-Identity")) {
-        const QString identityStr = hrd->asUnicodeString();
-        if (!identityStr.isEmpty()) {
-            const auto ident = im->identityForUoid(identityStr.toUInt());
-            if (ident.isNull()) {
+        if (const QString identityStr = hrd->asUnicodeString(); !identityStr.isEmpty()) {
+            if (const auto ident = im->identityForUoid(identityStr.toUInt()); ident.isNull()) {
                 if (auto hrdIdentityName = newMsg->headerByType("X-KMail-Identity-Name")) {
                     const QString identityStrName = hrdIdentityName->asUnicodeString();
-                    const auto id = im->modifyIdentityForName(identityStrName);
-                    if (!id.isNull()) {
+                    if (const auto id = im->modifyIdentityForName(identityStrName); !id.isNull()) {
                         mId = id.uoid();
                     } else {
                         mId = 0;
@@ -1839,8 +1828,7 @@ void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
     } else {
         if (auto hrdIdentityName = newMsg->headerByType("X-KMail-Identity-Name")) {
             const QString identityStrName = hrdIdentityName->asUnicodeString();
-            const auto id = im->modifyIdentityForName(identityStrName);
-            if (!id.isNull()) {
+            if (const auto id = im->modifyIdentityForName(identityStrName); !id.isNull()) {
                 mId = id.uoid();
             } else {
                 mId = 0;
@@ -1917,16 +1905,13 @@ void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
     addFaceHeaders(ident, mMsg);
 
     // if these headers are present, the state of the message should be overruled
-    MessageComposer::DraftSignatureState signState(mMsg);
-    if (signState.isDefined()) {
+    if (MessageComposer::DraftSignatureState signState(mMsg); signState.isDefined()) {
         mLastSignActionState = signState.signState();
     }
-    MessageComposer::DraftEncryptionState encState(mMsg);
-    if (encState.isDefined()) {
+    if (MessageComposer::DraftEncryptionState encState(mMsg); encState.isDefined()) {
         mLastEncryptActionState = encState.encryptionState();
     }
-    MessageComposer::DraftCryptoMessageFormatState formatState(mMsg);
-    if (formatState.isDefined()) {
+    if (MessageComposer::DraftCryptoMessageFormatState formatState(mMsg); formatState.isDefined()) {
         mCryptoModuleAction->setCurrentItem(format2cb(formatState.cryptoMessageFormatState()));
     }
 
@@ -1957,8 +1942,7 @@ void KMComposerWin::setMessage(const std::shared_ptr<KMime::Message> &newMsg,
         setFcc(kmailFcc);
     }
     if (auto hdr = mMsg->headerByType("X-KMail-Dictionary")) {
-        const QString dictionary = hdr->asUnicodeString();
-        if (!dictionary.isEmpty()) {
+        if (const QString dictionary = hdr->asUnicodeString(); !dictionary.isEmpty()) {
             if (!mComposerBase->dictionary()->assignByDictionnary(dictionary)) {
                 mIncorrectIdentityFolderWarning->dictionaryInvalid();
             }
@@ -2113,9 +2097,8 @@ bool KMComposerWin::queryClose()
 
 MessageComposer::ComposerViewBase::MissingAttachment KMComposerWin::userForgotAttachment()
 {
-    const bool checkForForgottenAttachments = mCheckForForgottenAttachments && KMailSettings::self()->showForgottenAttachmentWarning();
-
-    if (!checkForForgottenAttachments) {
+    if (const bool checkForForgottenAttachments = mCheckForForgottenAttachments && KMailSettings::self()->showForgottenAttachmentWarning();
+        !checkForForgottenAttachments) {
         return MessageComposer::ComposerViewBase::NoMissingAttachmentFound;
     }
 
@@ -2181,8 +2164,7 @@ const KIdentityManagementCore::Identity &KMComposerWin::identity() const
 
 bool KMComposerWin::pgpAutoEncrypt() const
 {
-    const auto ident = identity();
-    if (ident.encryptionOverride()) {
+    if (const auto ident = identity(); ident.encryptionOverride()) {
         return ident.pgpAutoEncrypt();
     } else {
         return MessageComposer::MessageComposerSettings::self()->cryptoAutoEncrypt();
@@ -2191,8 +2173,7 @@ bool KMComposerWin::pgpAutoEncrypt() const
 
 bool KMComposerWin::pgpAutoSign() const
 {
-    const auto ident = identity();
-    if (ident.encryptionOverride()) {
+    if (const auto ident = identity(); ident.encryptionOverride()) {
         return ident.pgpAutoSign();
     } else {
         return MessageComposer::MessageComposerSettings::self()->cryptoAutoSign();
@@ -2352,8 +2333,7 @@ QUrl KMComposerWin::insertFile()
     if (url.isValid()) {
         std::optional<QStringConverter::Encoding> encoding;
 
-        QFile file(url.toLocalFile());
-        if (file.open(QIODeviceBase::ReadOnly)) {
+        if (QFile file(url.toLocalFile()); file.open(QIODeviceBase::ReadOnly)) {
             auto content = file.read(1024 * 1024); // only read the first 1MB
             if (content.isEmpty()) {
                 encoding = QStringConverter::System;
@@ -2472,8 +2452,7 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
 
     // If this is a URL list, add those files as attachments or text
     // but do not offer this if we are pasting plain text containing an url, e.g. from a browser
-    const QList<QUrl> urlList = source->urls();
-    if (!urlList.isEmpty()) {
+    if (const QList<QUrl> urlList = source->urls(); !urlList.isEmpty()) {
         // Search if it's message items.
         Akonadi::Item::List items;
         Akonadi::Collection::List collections;
@@ -2483,12 +2462,10 @@ bool KMComposerWin::insertFromMimeData(const QMimeData *source, bool forceAttach
             if (!url.isLocalFile()) {
                 allLocalURLs = false;
             }
-            const Akonadi::Item item = Akonadi::Item::fromUrl(url);
-            if (item.isValid()) {
+            if (const Akonadi::Item item = Akonadi::Item::fromUrl(url); item.isValid()) {
                 items << item;
             } else {
-                const Akonadi::Collection collection = Akonadi::Collection::fromUrl(url);
-                if (collection.isValid()) {
+                if (const Akonadi::Collection collection = Akonadi::Collection::fromUrl(url); collection.isValid()) {
                     collections << collection;
                 }
             }
@@ -2584,12 +2561,9 @@ void KMComposerWin::slotFetchJob(KJob *job)
     if (items.constFirst().mimeType() == KMime::Message::mimeType()) {
         uint identity = 0;
         if (items.at(0).isValid()) {
-            const Akonadi::Collection parentCollection = items.at(0).parentCollection();
-            if (parentCollection.isValid()) {
-                const QString resourceName = parentCollection.resource();
-                if (!resourceName.isEmpty()) {
-                    QSharedPointer<MailCommon::FolderSettings> fd(MailCommon::FolderSettings::forCollection(parentCollection, false));
-                    if (!fd.isNull()) {
+            if (const Akonadi::Collection parentCollection = items.at(0).parentCollection(); parentCollection.isValid()) {
+                if (const QString resourceName = parentCollection.resource(); !resourceName.isEmpty()) {
+                    if (QSharedPointer<MailCommon::FolderSettings> fd(MailCommon::FolderSettings::forCollection(parentCollection, false)); !fd.isNull()) {
                         identity = fd->identity();
                     }
                 }
@@ -2805,8 +2779,8 @@ void KMComposerWin::printComposeResult(KJob *job, bool preview)
 void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, MessageComposer::MessageSender::SaveIn saveIn, bool willSendItWithoutReediting)
 {
     if (saveIn == MessageComposer::MessageSender::SaveInNone) {
-        const MessageComposer::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
-        if ((forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment)
+        if (const MessageComposer::ComposerViewBase::MissingAttachment forgotAttachment = userForgotAttachment();
+            (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndAddedAttachment)
             || (forgotAttachment == MessageComposer::ComposerViewBase::FoundMissingAttachmentAndCancel)) {
             return;
         }
@@ -2826,8 +2800,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         }
         if (KMailSettings::self()->enabledUndoSend()) {
             mComposerBase->setSendLaterInfo(nullptr);
-            const bool wasRegistered = sendLaterRegistered();
-            if (wasRegistered) {
+            if (const bool wasRegistered = sendLaterRegistered()) {
                 auto info = new MessageComposer::SendLaterInfo;
                 info->setRecurrence(false);
                 info->setSubject(subject());
@@ -3014,14 +2987,12 @@ void KMComposerWin::slotSendLater()
     }
     mComposerBase->setSendLaterInfo(nullptr);
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
-        const bool wasRegistered = sendLaterRegistered();
-        if (wasRegistered) {
+        if (const bool wasRegistered = sendLaterRegistered()) {
             MessageComposer::SendLaterInfo *info = nullptr;
             QPointer<MessageComposer::SendLaterDialog> dlg = new MessageComposer::SendLaterDialog(info, this);
             if (dlg->exec() && !dlg.isNull()) {
                 info = dlg->info();
-                const MessageComposer::SendLaterDialog::SendLaterAction action = dlg->action();
-                switch (action) {
+                switch (dlg->action()) {
                 case MessageComposer::SendLaterDialog::Unknown:
                     qCDebug(KMAIL_LOG) << "Sendlater action \"Unknown\": Need to fix it.";
                     break;
@@ -3129,8 +3100,7 @@ void KMComposerWin::slotCheckSendNowStep2()
     } else {
         if (mSendNowByShortcutUsed) {
             if (!KMailSettings::self()->checkSendDefaultActionShortcut()) {
-                ValidateSendMailShortcut validateShortcut(actionCollection(), this);
-                if (!validateShortcut.validate()) {
+                if (ValidateSendMailShortcut validateShortcut(actionCollection(), this); !validateShortcut.validate()) {
                     return;
                 }
             }
@@ -3151,12 +3121,10 @@ void KMComposerWin::slotDelayedCheckSendNow()
 void KMComposerWin::slotCheckSendNow()
 {
     QStringList lst{mComposerBase->to()};
-    const QString ccStr = mComposerBase->cc();
-    if (!ccStr.isEmpty()) {
+    if (const QString ccStr = mComposerBase->cc(); !ccStr.isEmpty()) {
         lst << KEmailAddress::splitAddressList(ccStr);
     }
-    const QString bccStr = mComposerBase->bcc();
-    if (!bccStr.isEmpty()) {
+    if (const QString bccStr = mComposerBase->bcc(); !bccStr.isEmpty()) {
         lst << KEmailAddress::splitAddressList(bccStr);
     }
     if (lst.isEmpty()) {
@@ -3190,8 +3158,8 @@ void KMComposerWin::slotPotentialPhishingEmailsFound(const QStringList &list)
 
 bool KMComposerWin::checkRecipientNumber() const
 {
-    const int thresHold = KMailSettings::self()->recipientThreshold();
-    if (KMailSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
+    if (const int thresHold = KMailSettings::self()->recipientThreshold();
+        KMailSettings::self()->tooManyRecipients() && mComposerBase->recipientsEditor()->recipients().count() > thresHold) {
         if (KMessageBox::questionTwoActions(mMainWidget,
                                             i18n("You are trying to send the mail to more than %1 recipients. Send message anyway?", thresHold),
                                             i18nc("@title:window", "Too many recipients"),
@@ -3362,8 +3330,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
 
     if (initialChange) {
         if (auto hrd = mMsg->headerByType("X-KMail-Transport")) {
-            const QString mailtransportStr = hrd->asUnicodeString();
-            if (!mailtransportStr.isEmpty()) {
+            if (const QString mailtransportStr = hrd->asUnicodeString(); !mailtransportStr.isEmpty()) {
                 int transportId = mailtransportStr.toInt();
                 const Transport *transport = TransportManager::self()->transportById(transportId, false); /*don't return default transport */
                 if (transport) {
@@ -3374,8 +3341,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
                 } else {
                     if (auto hrdTransportName = mMsg->headerByType("X-KMail-Transport-Name")) {
                         const QString identityStrName = hrdTransportName->asUnicodeString();
-                        const Transport *transportFromStrName = TransportManager::self()->transportByName(identityStrName, true);
-                        if (transportFromStrName) {
+                        if (const Transport *transportFromStrName = TransportManager::self()->transportByName(identityStrName, true)) {
                             auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Transport"));
                             header->fromUnicodeString(QString::number(transportFromStrName->id()));
                             mMsg->setHeader(std::move(header));
@@ -3390,8 +3356,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
             }
         } else {
             const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
-            const Transport *transport = TransportManager::self()->transportById(transportId, true);
-            if (transport) {
+            if (const Transport *transport = TransportManager::self()->transportById(transportId, true)) {
                 auto header = std::unique_ptr<KMime::Headers::Generic>(new KMime::Headers::Generic("X-KMail-Transport"));
                 header->fromUnicodeString(QString::number(transport->id()));
                 mMsg->setHeader(std::move(header));
@@ -3402,8 +3367,7 @@ void KMComposerWin::slotIdentityChanged(uint uoid, bool initialChange)
         }
     } else {
         const int transportId = ident.transport().isEmpty() ? -1 : ident.transport().toInt();
-        const Transport *transport = TransportManager::self()->transportById(transportId, true);
-        if (!transport) {
+        if (const Transport *transport = TransportManager::self()->transportById(transportId, true); !transport) {
             mMsg->removeHeader("X-KMail-Transport");
             mComposerBase->transportComboBox()->setCurrentTransport(TransportManager::self()->defaultTransportId());
         } else {
@@ -3446,8 +3410,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
 
     if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
         if (!ident.pgpEncryptionKey().isEmpty()) {
-            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
-            if (key.isNull() || !key.canEncrypt()) {
+            if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData()); key.isNull() || !key.canEncrypt()) {
                 mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint",
                                                   "Your selected PGP key (%1) doesn't exist in your keyring or is not suitable for encryption.",
                                                   QString::fromLatin1(ident.pgpEncryptionKey())));
@@ -3459,8 +3422,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
         }
         if (!ident.pgpSigningKey().isEmpty()) {
             if (ident.pgpSigningKey() != ident.pgpEncryptionKey()) {
-                auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
-                if (key.isNull() || !key.canSign()) {
+                if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData()); key.isNull() || !key.canSign()) {
                     mNearExpiryWarning->addInfo(i18nc("The argument is as PGP fingerprint",
                                                       "Your selected PGP signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
                                                       QString::fromLatin1(ident.pgpSigningKey())));
@@ -3475,8 +3437,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
 
     if (cryptoMessageFormat() & Kleo::AnySMIME) {
         if (!ident.smimeEncryptionKey().isEmpty()) {
-            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
-            if (key.isNull() || !key.canEncrypt()) {
+            if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData()); key.isNull() || !key.canEncrypt()) {
                 mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint",
                                                   "Your selected SMIME key (%1) doesn't exist in your keyring or is not suitable for encryption.",
                                                   QString::fromLatin1(ident.smimeEncryptionKey())));
@@ -3488,8 +3449,7 @@ void KMComposerWin::checkOwnKeyExpiry(const KIdentityManagementCore::Identity &i
         }
         if (!ident.smimeSigningKey().isEmpty()) {
             if (ident.smimeSigningKey() != ident.smimeEncryptionKey()) {
-                auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
-                if (key.isNull() || !key.canSign()) {
+                if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData()); key.isNull() || !key.canSign()) {
                     mNearExpiryWarning->addInfo(i18nc("The argument is as SMIME fingerprint",
                                                       "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not suitable for signing.",
                                                       QString::fromLatin1(ident.smimeSigningKey())));
@@ -3513,14 +3473,12 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
     bool bSMIMESigningKey = !ident.smimeSigningKey().isEmpty();
     if (cryptoMessageFormat() & Kleo::AnyOpenPGP) {
         if (bPGPEncryptionKey) {
-            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData());
-            if (key.isNull() || !key.canEncrypt()) {
+            if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpEncryptionKey().constData()); key.isNull() || !key.canEncrypt()) {
                 bPGPEncryptionKey = false;
             }
         }
         if (bPGPSigningKey) {
-            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData());
-            if (key.isNull() || !key.canSign()) {
+            if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.pgpSigningKey().constData()); key.isNull() || !key.canSign()) {
                 bPGPSigningKey = false;
             }
         }
@@ -3531,14 +3489,12 @@ void KMComposerWin::updateComposerAfterIdentityChanged(const KIdentityManagement
 
     if (cryptoMessageFormat() & Kleo::AnySMIME) {
         if (bSMIMEEncryptionKey) {
-            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData());
-            if (key.isNull() || !key.canEncrypt()) {
+            if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeEncryptionKey().constData()); key.isNull() || !key.canEncrypt()) {
                 bSMIMEEncryptionKey = false;
             }
         }
         if (bSMIMESigningKey) {
-            auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData());
-            if (key.isNull() || !key.canSign()) {
+            if (auto const key = mKeyCache->findByKeyIDOrFingerprint(ident.smimeSigningKey().constData()); key.isNull() || !key.canSign()) {
                 bSMIMESigningKey = false;
             }
         }
@@ -3713,12 +3669,10 @@ void KMComposerWin::runKeyResolver()
                 const auto rec = storage->getRecipient(recipient.toUtf8());
                 GpgME::Key autocryptKey;
                 if (rec) {
-                    const auto gpgKey = rec->gpgKey();
-                    if (!gpgKey.isBad() && gpgKey.canEncrypt()) {
+                    if (const auto gpgKey = rec->gpgKey(); !gpgKey.isBad() && gpgKey.canEncrypt()) {
                         autocryptKey = gpgKey;
                     } else {
-                        const auto gossipKey = rec->gossipKey();
-                        if (!gossipKey.isBad() && gossipKey.canEncrypt()) {
+                        if (const auto gossipKey = rec->gossipKey(); !gossipKey.isBad() && gossipKey.canEncrypt()) {
                             gossipKeys.push_back(recipient);
                             autocryptKey = gossipKey;
                         }
@@ -3740,8 +3694,7 @@ void KMComposerWin::runKeyResolver()
     const auto lst = mComposerBase->recipientsEditor()->lines();
 
     if (lst.size() == 1) {
-        const auto line = qobject_cast<MessageComposer::RecipientLineNG *>(lst.first());
-        if (line->recipientsCount() == 0) {
+        if (const auto line = qobject_cast<MessageComposer::RecipientLineNG *>(lst.first()); line->recipientsCount() == 0) {
             mEncryptionState.setAcceptedSolution(false);
             return;
         }
@@ -4247,8 +4200,7 @@ void KMComposerWin::slotRecipientLineIconClicked(MessageComposer::RecipientLineN
     const auto recipient = line->data().dynamicCast<MessageComposer::Recipient>();
 
     if (!recipient->key().isNull()) {
-        const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
-        if (exec.isEmpty()
+        if (const QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra")); exec.isEmpty()
             || !QProcess::startDetached(exec,
                                         {QStringLiteral("--query"),
                                          QString::fromLatin1(recipient->key().primaryFingerprint()),

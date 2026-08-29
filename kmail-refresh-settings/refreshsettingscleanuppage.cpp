@@ -44,8 +44,7 @@ void RefreshSettingsCleanupPage::removeTipOfDay(const QString &configName)
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
-    const QString tipOfDayStr = QStringLiteral("TipOfDay");
-    if (settingsrc->hasGroup(tipOfDayStr)) {
+    if (const QString tipOfDayStr = QStringLiteral("TipOfDay"); settingsrc->hasGroup(tipOfDayStr)) {
         settingsrc->deleteGroup(tipOfDayStr);
     }
     settingsrc->sync();
@@ -94,34 +93,27 @@ void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &config
 
 void RefreshSettingsCleanupPage::cleanupFolderSettings(KConfigGroup &oldGroup)
 {
-    const bool mailingListEnabled = oldGroup.readEntry("MailingListEnabled", false);
-    if (!mailingListEnabled) {
+    if (const bool mailingListEnabled = oldGroup.readEntry("MailingListEnabled", false); !mailingListEnabled) {
         oldGroup.deleteEntry("MailingListEnabled");
     }
-    const int mailingListFeatures = oldGroup.readEntry("MailingListFeatures", 0);
-    if (mailingListFeatures == 0) {
+    if (const int mailingListFeatures = oldGroup.readEntry("MailingListFeatures", 0); mailingListFeatures == 0) {
         oldGroup.deleteEntry("MailingListFeatures");
     }
-    const int mailingListHandler = oldGroup.readEntry("MailingListHandler", 0);
-    if (mailingListHandler == 0) {
+    if (const int mailingListHandler = oldGroup.readEntry("MailingListHandler", 0); mailingListHandler == 0) {
         oldGroup.deleteEntry("MailingListHandler");
     }
-    const QString mailingListId = oldGroup.readEntry("MailingListId");
-    if (mailingListId.isEmpty()) {
+    if (const QString mailingListId = oldGroup.readEntry("MailingListId"); mailingListId.isEmpty()) {
         oldGroup.deleteEntry("MailingListId");
     }
 
-    const bool putRepliesInSameFolder = oldGroup.readEntry("PutRepliesInSameFolder", false);
-    if (!putRepliesInSameFolder) {
+    if (const bool putRepliesInSameFolder = oldGroup.readEntry("PutRepliesInSameFolder", false); !putRepliesInSameFolder) {
         oldGroup.deleteEntry("PutRepliesInSameFolder");
     }
 
-    const bool folderHtmlLoadExtPreference = oldGroup.readEntry("htmlLoadExternalOverride", false);
-    if (!folderHtmlLoadExtPreference) {
+    if (const bool folderHtmlLoadExtPreference = oldGroup.readEntry("htmlLoadExternalOverride", false); !folderHtmlLoadExtPreference) {
         oldGroup.deleteEntry("htmlLoadExternalOverride");
     }
-    const bool useDefaultIdentity = oldGroup.readEntry("UseDefaultIdentity", false);
-    if (useDefaultIdentity) {
+    if (const bool useDefaultIdentity = oldGroup.readEntry("UseDefaultIdentity", false)) {
         oldGroup.deleteEntry("UseDefaultIdentity");
     }
 }

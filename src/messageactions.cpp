@@ -326,8 +326,7 @@ void MessageActions::slotItemModified(const Akonadi::Item &item, [[maybe_unused]
         mCurrentItem = item;
         const int numberOfVisibleItems = mVisibleItems.count();
         for (int i = 0; i < numberOfVisibleItems; ++i) {
-            Akonadi::Item it = mVisibleItems.at(i);
-            if (item == it) {
+            if (Akonadi::Item it = mVisibleItems.at(i); item == it) {
                 mVisibleItems[i] = item;
             }
         }
@@ -391,8 +390,7 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
     if (!fetchJob || fetchJob->items().isEmpty()) {
         return;
     }
-    const Akonadi::Item messageItem = fetchJob->items().constFirst();
-    if (messageItem == mCurrentItem) {
+    if (const Akonadi::Item messageItem = fetchJob->items().constFirst(); messageItem == mCurrentItem) {
         mCurrentItem = messageItem;
         updateMailingListActions(messageItem);
     }
@@ -416,9 +414,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
         return;
     }
     auto message = messageItem.payload<std::shared_ptr<KMime::Message>>();
-    const MessageCore::MailingList mailList = MessageCore::MailingList::detect(message);
-
-    if (mailList.features() == MessageCore::MailingList::None) {
+    if (const MessageCore::MailingList mailList = MessageCore::MailingList::detect(message); mailList.features() == MessageCore::MailingList::None) {
         clearMailingListActions();
     } else {
         // A mailing list menu with only a title is pretty boring
@@ -428,13 +424,11 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
             // From a list-id in the form, "Birds of France <bof.yahoo.com>",
             // take "Birds of France" if it exists otherwise "bof.yahoo.com".
             listId = mailList.id();
-            const int start = listId.indexOf(QLatin1Char('<'));
-            if (start > 0) {
+            if (const int start = listId.indexOf(QLatin1Char('<')); start > 0) {
                 // The description is not necessarily separated from '<' by a space.
                 listId = listId.left(start).trimmed();
             } else if (start == 0) {
-                const int end = listId.lastIndexOf(QLatin1Char('>'));
-                if (end < 1) { // shouldn't happen but account for it anyway
+                if (const int end = listId.lastIndexOf(QLatin1Char('>')); end < 1) { // shouldn't happen but account for it anyway
                     listId.remove(0, 1);
                 } else {
                     listId = listId.mid(1, end - 1);
@@ -471,8 +465,7 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
 
         QByteArray name;
         QString value;
-        const QString lname = MailingList::name(message, name, value);
-        if (lname.isEmpty()) {
+        if (const QString lname = MailingList::name(message, name, value); lname.isEmpty()) {
             // detect() and name() don't look at the same headers: a message can advertise
             // mailing list features without us being able to name the list.
             clearListFilterAction();
@@ -570,8 +563,7 @@ void MessageActions::slotNoQuoteReplyToMsg()
 
 void MessageActions::slotRunUrl(QAction *urlAction)
 {
-    const QVariant q = urlAction->data();
-    if (q.userType() == QMetaType::QUrl) {
+    if (const QVariant q = urlAction->data(); q.userType() == QMetaType::QUrl) {
         auto job = new KIO::OpenUrlJob(q.toUrl());
         job->setUiDelegate(KIO::createDefaultJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParent));
         job->start();

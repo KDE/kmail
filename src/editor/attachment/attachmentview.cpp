@@ -176,8 +176,7 @@ void AttachmentView::selectNewAttachment()
 
 void AttachmentView::startDrag([[maybe_unused]] Qt::DropActions supportedActions)
 {
-    const QModelIndexList selection = selectionModel()->selectedRows();
-    if (!selection.isEmpty()) {
+    if (const QModelIndexList selection = selectionModel()->selectedRows(); !selection.isEmpty()) {
         QMimeData *mimeData = model()->mimeData(selection);
         auto drag = new QDrag(this);
         drag->setMimeData(mimeData);

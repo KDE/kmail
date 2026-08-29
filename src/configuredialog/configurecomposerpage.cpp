@@ -738,8 +738,7 @@ void ComposerPageHeadersTab::slotMimeHeaderNameChanged(const QString &text)
 {
     // is called on ::setup(), when clearing the line edits. So be
     // prepared to not find a selection:
-    QTreeWidgetItem *item = mHeaderList->currentItem();
-    if (item) {
+    if (QTreeWidgetItem *item = mHeaderList->currentItem()) {
         item->setText(0, text);
     }
     slotEmitChanged();
@@ -749,8 +748,7 @@ void ComposerPageHeadersTab::slotMimeHeaderValueChanged(const QString &text)
 {
     // is called on ::setup(), when clearing the line edits. So be
     // prepared to not find a selection:
-    QTreeWidgetItem *item = mHeaderList->currentItem();
-    if (item) {
+    if (QTreeWidgetItem *item = mHeaderList->currentItem()) {
         item->setText(1, text);
     }
     slotEmitChanged();
@@ -774,9 +772,7 @@ void ComposerPageHeadersTab::slotRemoveMimeHeader()
         return;
     }
 
-    QTreeWidgetItem *below = mHeaderList->itemBelow(item);
-
-    if (below) {
+    if (QTreeWidgetItem *below = mHeaderList->itemBelow(item)) {
         qCDebug(KMAIL_LOG) << "below";
         mHeaderList->setCurrentItem(below);
         delete item;
@@ -801,9 +797,8 @@ void ComposerPageHeadersTab::doLoadOther()
     const int count = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < count; ++i) {
         KConfigGroup config(KMKernel::self()->config(), "Mime #"_L1 + QString::number(i));
-        const QString name = config.readEntry("name");
-        const QString value = config.readEntry("value");
-        if (!name.isEmpty()) {
+        if (const QString name = config.readEntry("name"); !name.isEmpty()) {
+            const QString value = config.readEntry("value");
             item = new QTreeWidgetItem(mHeaderList, item);
             item->setText(0, name);
             item->setText(1, value);
@@ -822,8 +817,7 @@ void ComposerPageHeadersTab::save()
     // Clean config
     const int oldHeadersCount = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {
-        const QString groupMimeName = QStringLiteral("Mime #%1").arg(i);
-        if (KMKernel::self()->config()->hasGroup(groupMimeName)) {
+        if (const QString groupMimeName = QStringLiteral("Mime #%1").arg(i); KMKernel::self()->config()->hasGroup(groupMimeName)) {
             KConfigGroup config(KMKernel::self()->config(), groupMimeName);
             config.deleteGroup();
         }
@@ -834,8 +828,7 @@ void ComposerPageHeadersTab::save()
     const int numberOfEntry = mHeaderList->topLevelItemCount();
     for (int i = 0; i < numberOfEntry; ++i) {
         item = mHeaderList->topLevelItem(i);
-        const QString str = item->text(0).trimmed();
-        if (!str.isEmpty()) {
+        if (const QString str = item->text(0).trimmed(); !str.isEmpty()) {
             if (str == "Content-Type"_L1) {
                 KMessageBox::error(this,
                                    i18n("\'Content-Type\' is not an authorized string. This header will be not saved."),

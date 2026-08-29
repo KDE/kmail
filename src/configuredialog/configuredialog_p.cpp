@@ -52,8 +52,7 @@ void ConfigModuleWithTabs::load()
 {
     const int numberOfTab = mTabWidget->count();
     for (int i = 0; i < numberOfTab; ++i) {
-        auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
-        if (tab) {
+        if (auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i))) {
             tab->load();
         }
     }
@@ -67,8 +66,7 @@ void ConfigModuleWithTabs::save()
         KCModule::save();
         const int numberOfTab = mTabWidget->count();
         for (int i = 0; i < numberOfTab; ++i) {
-            auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i));
-            if (tab) {
+            if (auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->widget(i))) {
                 tab->save();
             }
         }
@@ -77,8 +75,7 @@ void ConfigModuleWithTabs::save()
 
 void ConfigModuleWithTabs::defaults()
 {
-    auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget());
-    if (tab) {
+    if (auto tab = qobject_cast<ConfigModuleTab *>(mTabWidget->currentWidget())) {
         tab->defaults();
     }
     KCModule::defaults();

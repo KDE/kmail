@@ -21,8 +21,7 @@ void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
     mEmailWhiteList.clear();
     mEmailWhiteList.reserve(emails.count());
     for (const QString &email : emails) {
-        QString normalizedEmail = email.trimmed().toCaseFolded();
-        if (!normalizedEmail.isEmpty()) {
+        if (QString normalizedEmail = email.trimmed().toCaseFolded(); !normalizedEmail.isEmpty()) {
             mEmailWhiteList.append(std::move(normalizedEmail));
         }
     }
@@ -75,10 +74,8 @@ bool PotentialPhishingEmailJob::start()
                     tname = tname.mid(1, tname.length() - 2);
                 }
                 if (temail.toLower() != tname.toLower()) {
-                    const QString str = QStringLiteral("(%1)").arg(temail);
-                    if (!tname.contains(str, Qt::CaseInsensitive)) {
-                        const QList<QStringView> lst = QStringView(tname.trimmed()).split(QLatin1Char(' '));
-                        if (lst.count() > 1) {
+                    if (const QString str = QStringLiteral("(%1)").arg(temail); !tname.contains(str, Qt::CaseInsensitive)) {
+                        if (const QList<QStringView> lst = QStringView(tname.trimmed()).split(QLatin1Char(' ')); lst.count() > 1) {
                             const QStringView firstName = lst.at(0);
 
                             // Usage

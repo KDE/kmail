@@ -32,8 +32,7 @@ KMLaunchExternalComponent::~KMLaunchExternalComponent() = default;
 
 void KMLaunchExternalComponent::createAgentConfigurationDialog(const QString &agentName, const QString &errorMessage)
 {
-    auto agent = Akonadi::AgentManager::self()->instance(agentName);
-    if (agent.isValid()) {
+    if (auto agent = Akonadi::AgentManager::self()->instance(agentName); agent.isValid()) {
         QPointer<Akonadi::AgentConfigurationDialog> dlg = new Akonadi::AgentConfigurationDialog(agent, mParentWidget);
         dlg->exec();
         delete dlg;
@@ -65,8 +64,7 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 void KMLaunchExternalComponent::slotStartCertManager()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.kleopatra"));
-    if (service) {
+    if (const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.kleopatra"))) {
         auto job = new KIO::ApplicationLauncherJob(service);
         job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
         job->start();
@@ -90,8 +88,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
 void KMLaunchExternalComponent::slotImportWizard()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.akonadiimportwizard"));
-    if (service) {
+    if (const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.akonadiimportwizard"))) {
         auto job = new KIO::ApplicationLauncherJob(service);
         job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
         job->start();
@@ -116,8 +113,7 @@ void KMLaunchExternalComponent::slotExportData()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
 
-    const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.pimdataexporter"));
-    if (service) {
+    if (const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.pimdataexporter"))) {
         auto job = new KIO::ApplicationLauncherJob(service);
         job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
         job->start();

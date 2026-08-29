@@ -20,8 +20,7 @@ UnitComboBox::~UnitComboBox() = default;
 
 void UnitComboBox::setUnit(ArchiveMailInfo::ArchiveUnit unit)
 {
-    const int index = findData(static_cast<int>(unit));
-    if (index != -1) {
+    if (const int index = findData(static_cast<int>(unit)); index != -1) {
         setCurrentIndex(index);
     } else {
         setCurrentIndex(0);

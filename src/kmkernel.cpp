@@ -310,8 +310,7 @@ void KMKernel::checkMail() // might create a new reader but won't show!!
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     for (Akonadi::AgentInstance &agent : lst) {
         const QString id = agent.identifier();
-        const KConfigGroup group = resourceConfigGroup(id);
-        if (group.readEntry("IncludeInManualChecks", true)) {
+        if (const KConfigGroup group = resourceConfigGroup(id); group.readEntry("IncludeInManualChecks", true)) {
             if (!agent.isOnline()) {
                 agent.setIsOnline(true);
             }
@@ -351,8 +350,7 @@ void KMKernel::checkAccount(const QString &account) // might create a new reader
     if (account.isEmpty()) {
         checkMail();
     } else {
-        Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(account);
-        if (agent.isValid()) {
+        if (Akonadi::AgentInstance agent = Akonadi::AgentManager::self()->instance(account); agent.isValid()) {
             agent.synchronize();
         } else {
             qCDebug(KMAIL_LOG) << "- account with name '" << account << "' not found";
@@ -373,8 +371,8 @@ void KMKernel::openReader(bool onlyCheck, bool startInTray)
     }
 
     if (ktmw) {
-        auto win = static_cast<KMMainWin *>(ktmw);
         if (!onlyCheck) {
+            auto win = static_cast<KMMainWin *>(ktmw);
             win->showAndActivateWindow();
         }
     } else {
@@ -593,8 +591,7 @@ bool KMKernel::showMail(qint64 serialNumber)
     const auto lst = KMainWindow::memberList();
     for (KMainWindow *window : lst) {
         // Then look for a KMMainWidget.
-        QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>();
-        if (!l.isEmpty() && l.first()) {
+        if (QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>(); !l.isEmpty() && l.first()) {
             mainWidget = l.first();
             if (window->isActiveWindow()) {
                 break;
@@ -647,16 +644,14 @@ void KMKernel::setAccountStatus(bool goOnline)
 {
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances(false);
     for (Akonadi::AgentInstance &agent : lst) {
-        const QString identifier(agent.identifier());
-        if (PimCommon::Util::isImapResource(identifier) || identifier.contains(POP3_RESOURCE_IDENTIFIER)
+        if (const QString identifier(agent.identifier()); PimCommon::Util::isImapResource(identifier) || identifier.contains(POP3_RESOURCE_IDENTIFIER)
             || identifier.contains("akonadi_maildispatcher_agent"_L1) || agent.type().capabilities().contains("NeedsNetwork"_L1)) {
             agent.setIsOnline(goOnline);
         }
     }
     if (goOnline && MessageComposer::MessageComposerSettings::self()->sendImmediate()) {
         const auto col = CommonKernel->collectionFromId(CommonKernel->outboxCollectionFolder().id());
-        const qint64 nbMsgOutboxCollection = col.statistics().count();
-        if (nbMsgOutboxCollection > 0) {
+        if (const qint64 nbMsgOutboxCollection = col.statistics().count(); nbMsgOutboxCollection > 0) {
             if (!kmkernel->msgSender()->sendQueued()) {
                 KNotification::event(QStringLiteral("sent-mail-error"),
                                      i18n("Send Email"),
@@ -692,8 +687,7 @@ void KMKernel::resumeNetworkJobs()
     }
     KMailSettings::setNetworkState(KMailSettings::EnumNetworkState::Online);
     Q_EMIT onlineStatusChanged((KMailSettings::EnumNetworkState::type)KMailSettings::networkState());
-    KMMainWidget *widget = getKMMainWidget();
-    if (widget) {
+    if (KMMainWidget *widget = getKMMainWidget()) {
         widget->refreshMessageListSelection();
     }
 }
@@ -870,8 +864,7 @@ void KMKernel::recoverDeadLetters()
             continue;
         }
         qCDebug(KMAIL_LOG) << "Opening autosave file:" << file.absoluteFilePath();
-        QFile autoSaveFile(file.absoluteFilePath());
-        if (autoSaveFile.open(QIODevice::ReadOnly)) {
+        if (QFile autoSaveFile(file.absoluteFilePath()); autoSaveFile.open(QIODevice::ReadOnly)) {
             const std::shared_ptr<KMime::Message> autoSaveMessage(new KMime::Message());
             const QByteArray msgData = autoSaveFile.readAll();
             autoSaveMessage->setContent(msgData);
@@ -1026,17 +1019,19 @@ void KMKernel::cleanup()
     delete mConfigureDialog;
     mConfigureDialog = nullptr;
 
-    KSharedConfig::Ptr config = KMKernel::config();
     if (RecentAddresses::exists()) {
+        KSharedConfig::Ptr config = KMKernel::config();
         RecentAddresses::self(config.data())->save(config.data());
     }
 
-    const Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder();
-    if (trashCollection.isValid()) {
+    if (const Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder(); trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
             const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
-            OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(service, QStringLiteral("/MailFilterAgent"), QDBusConnection::sessionBus(), this);
-            if (mailFilterInterface.isValid()) {
+            if (OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(service,
+                                                                                  QStringLiteral("/MailFilterAgent"),
+                                                                                  QDBusConnection::sessionBus(),
+                                                                                  this);
+                mailFilterInterface.isValid()) {
                 mailFilterInterface.expunge(static_cast<qlonglong>(trashCollection.id()));
             } else {
                 qCWarning(KMAIL_LOG) << "Mailfilter is not active";
@@ -1227,8 +1222,7 @@ KMainWindow *KMKernel::mainWin()
     // case we are running inside Kontact) because we anyway only need
     // it for modal message boxes and for KNotify events.
     if (!KMainWindow::memberList().isEmpty()) {
-        KMainWindow *kmWin = KMainWindow::memberList().constFirst();
-        if (kmWin) {
+        if (KMainWindow *kmWin = KMainWindow::memberList().constFirst()) {
             return kmWin;
         }
     }
@@ -1287,9 +1281,7 @@ void KMKernel::selectCollectionFromId(Akonadi::Collection::Id id)
         return;
     }
 
-    const Akonadi::Collection colFolder = CommonKernel->collectionFromId(id);
-
-    if (colFolder.isValid()) {
+    if (const Akonadi::Collection colFolder = CommonKernel->collectionFromId(id); colFolder.isValid()) {
         widget->slotSelectCollectionFolder(colFolder);
     }
 }
@@ -1302,9 +1294,7 @@ bool KMKernel::selectFolder(const QString &folder)
         return false;
     }
 
-    const Akonadi::Collection colFolder = CommonKernel->collectionFromId(folder.toLongLong());
-
-    if (colFolder.isValid()) {
+    if (const Akonadi::Collection colFolder = CommonKernel->collectionFromId(folder.toLongLong()); colFolder.isValid()) {
         widget->slotSelectCollectionFolder(colFolder);
         return true;
     }
@@ -1317,8 +1307,7 @@ KMMainWidget *KMKernel::getKMMainWidget() const
     const QWidgetList l = QApplication::topLevelWidgets();
 
     for (QWidget *wid : l) {
-        QList<KMMainWidget *> l2 = wid->window()->findChildren<KMMainWidget *>();
-        if (!l2.isEmpty() && l2.first()) {
+        if (QList<KMMainWidget *> l2 = wid->window()->findChildren<KMMainWidget *>(); !l2.isEmpty() && l2.first()) {
             return l2.first();
         }
     }
@@ -1370,8 +1359,7 @@ Akonadi::Collection::List KMKernel::allFolders() const
 
 Akonadi::Collection::List KMKernel::subfolders(const Akonadi::Collection &col) const
 {
-    const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(collectionModel(), col);
-    if (idx.isValid()) {
+    if (const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(collectionModel(), col); idx.isValid()) {
         return collect_collections(collectionModel(), idx);
     }
 
@@ -1443,8 +1431,7 @@ void KMKernel::transportRemoved([[maybe_unused]] int id, const QString &name)
     }
 
     // if the deleted transport is the currently used transport reset it to default
-    const QString &currentTransport = KMailSettings::self()->currentTransport();
-    if (name == currentTransport) {
+    if (const QString &currentTransport = KMailSettings::self()->currentTransport(); name == currentTransport) {
         KMailSettings::self()->setCurrentTransport(QString());
     }
 
@@ -1525,10 +1512,8 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
             } else {
                 if (PimCommon::Util::isImapResource(identifier)) {
                     MailCommon::ResourceReadConfigFile resourceFile(identifier);
-                    const KConfigGroup grp = resourceFile.group(QStringLiteral("network"));
-                    if (grp.isValid()) {
-                        const QString imapSafety = grp.readEntry(QStringLiteral("Safety"));
-                        if (imapSafety == "None"_L1) {
+                    if (const KConfigGroup grp = resourceFile.group(QStringLiteral("network")); grp.isValid()) {
+                        if (const QString imapSafety = grp.readEntry(QStringLiteral("Safety")); imapSafety == "None"_L1) {
                             cryptoStatus = KPIM::ProgressItem::Unencrypted;
                         } else {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
@@ -1538,8 +1523,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                     }
                 } else if (identifier.contains(POP3_RESOURCE_IDENTIFIER)) {
                     MailCommon::ResourceReadConfigFile resourceFile(identifier);
-                    const KConfigGroup grp = resourceFile.group(QStringLiteral("General"));
-                    if (grp.isValid()) {
+                    if (const KConfigGroup grp = resourceFile.group(QStringLiteral("General")); grp.isValid()) {
                         if (grp.readEntry(QStringLiteral("useSSL"), false) || grp.readEntry(QStringLiteral("useTLS"), false)) {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
                         }
@@ -1592,8 +1576,7 @@ void KMKernel::cleanupTemporaryFiles()
     const QStringList lst = dir.entryList(QStringList{QStringLiteral("messageviewer_*")}, QDir::Files);
     qCDebug(KMAIL_LOG) << " list file to delete " << lst;
     for (const QString &file : lst) {
-        QFile tempFile(QDir::tempPath() + QLatin1Char('/') + file);
-        if (!tempFile.remove()) {
+        if (QFile tempFile(QDir::tempPath() + QLatin1Char('/') + file); !tempFile.remove()) {
             fprintf(stderr, "%s was not removed .\n", qPrintable(tempFile.fileName()));
         } else {
             fprintf(stderr, "%s was removed .\n", qPrintable(tempFile.fileName()));
@@ -1602,8 +1585,7 @@ void KMKernel::cleanupTemporaryFiles()
     const QStringList lstRepo = dir.entryList(QStringList{QStringLiteral("messageviewer_*.index.*")}, QDir::Dirs);
     qCDebug(KMAIL_LOG) << " list repo to delete " << lstRepo;
     for (const QString &file : lstRepo) {
-        QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file);
-        if (!tempDir.removeRecursively()) {
+        if (QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file); !tempDir.removeRecursively()) {
             fprintf(stderr, "%s was not removed .\n", qPrintable(tempDir.path()));
         } else {
             fprintf(stderr, "%s was removed .\n", qPrintable(tempDir.path()));
@@ -1699,14 +1681,11 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
         if (type.status() == Akonadi::AgentInstance::Broken) {
             continue;
         }
-        const QString typeIdentifier(type.identifier());
-        if (PimCommon::Util::isImapResource(typeIdentifier)) {
-            OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(typeIdentifier);
-            if (iface && iface->isValid()) {
+        if (const QString typeIdentifier(type.identifier()); PimCommon::Util::isImapResource(typeIdentifier)) {
+            if (OrgKdeAkonadiImapSettingsInterface *iface = PimCommon::Util::createImapSettingsInterface(typeIdentifier); iface && iface->isValid()) {
                 const Akonadi::Collection::Id imapTrashId = iface->trashCollection();
                 for (const Akonadi::Collection &collection : collectionList) {
-                    const Akonadi::Collection::Id collectionId = collection.id();
-                    if (imapTrashId == collectionId) {
+                    if (const Akonadi::Collection::Id collectionId = collection.id(); imapTrashId == collectionId) {
                         // Use default trash
                         iface->setTrashCollection(CommonKernel->trashCollectionFolder().id());
                         iface->save();
@@ -1716,11 +1695,9 @@ void KMKernel::checkFolderFromResources(const Akonadi::Collection::List &collect
                 delete iface;
             }
         } else if (typeIdentifier.contains(POP3_RESOURCE_IDENTIFIER)) {
-            OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier);
-            if (iface && iface->isValid()) {
+            if (OrgKdeAkonadiPOP3SettingsInterface *iface = MailCommon::Util::createPop3SettingsInterface(typeIdentifier); iface && iface->isValid()) {
                 for (const Akonadi::Collection &collection : std::as_const(collectionList)) {
-                    const Akonadi::Collection::Id collectionId = collection.id();
-                    if (iface->targetCollection() == collectionId) {
+                    if (const Akonadi::Collection::Id collectionId = collection.id(); iface->targetCollection() == collectionId) {
                         // Use default inbox
                         iface->setTargetCollection(CommonKernel->inboxCollectionFolder().id());
                         iface->save();
@@ -1757,8 +1734,7 @@ void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const Q
 void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
 {
     const QString identifier(instance.identifier());
-    const QString resourceGroup = QStringLiteral("Resource %1").arg(identifier);
-    if (KMKernel::config()->hasGroup(resourceGroup)) {
+    if (const QString resourceGroup = QStringLiteral("Resource %1").arg(identifier); KMKernel::config()->hasGroup(resourceGroup)) {
         KConfigGroup group(KMKernel::config(), resourceGroup);
         group.deleteGroup();
         group.sync();
@@ -1782,24 +1758,21 @@ void KMKernel::slotInstanceAdded(const Akonadi::AgentInstance &instance)
 
 void KMKernel::savePaneSelection()
 {
-    KMMainWidget *widget = getKMMainWidget();
-    if (widget) {
+    if (KMMainWidget *widget = getKMMainWidget()) {
         widget->savePaneSelection();
     }
 }
 
 void KMKernel::updatePaneTagComboBox()
 {
-    KMMainWidget *widget = getKMMainWidget();
-    if (widget) {
+    if (KMMainWidget *widget = getKMMainWidget()) {
         widget->updatePaneTagComboBox();
     }
 }
 
 void KMKernel::resourceGoOnLine()
 {
-    KMMainWidget *widget = getKMMainWidget();
-    if (widget) {
+    if (KMMainWidget *widget = getKMMainWidget()) {
         if (widget->currentCollection().isValid()) {
             Akonadi::Collection collection = widget->currentCollection();
             Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance(collection.resource());
@@ -1827,8 +1800,7 @@ TextAutoCorrectionCore::AutoCorrection *KMKernel::composerAutoCorrection()
 
 void KMKernel::toggleSystemTray()
 {
-    KMMainWidget *widget = getKMMainWidget();
-    if (widget) {
+    if (KMMainWidget *widget = getKMMainWidget()) {
         mUnityServiceManager->toggleSystemTray(widget);
     }
 }
@@ -1854,8 +1826,7 @@ bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
     const auto lst = KMainWindow::memberList();
     for (KMainWindow *window : lst) {
         // Then look for a KMMainWidget.
-        QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>();
-        if (!l.isEmpty() && l.first()) {
+        if (QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>(); !l.isEmpty() && l.first()) {
             mainWidget = l.first();
             if (window->isActiveWindow()) {
                 break;

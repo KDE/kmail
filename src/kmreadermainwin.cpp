@@ -129,8 +129,7 @@ KMReaderMainWin::~KMReaderMainWin()
     if (mMsg.isValid()) {
         HistoryClosedReaderInfo info;
         info.setItem(mMsg.id());
-        std::shared_ptr<KMime::Message> message = MessageComposer::Util::message(mMsg);
-        if (message) {
+        if (std::shared_ptr<KMime::Message> message = MessageComposer::Util::message(mMsg)) {
             if (auto subject = message->subject(KMime::CreatePolicy::DontCreate)) {
                 info.setSubject(subject->asUnicodeString());
             }
@@ -348,10 +347,8 @@ void KMReaderMainWin::slotForwardInlineMsg()
         return;
     }
     KMCommand *command = nullptr;
-    const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
-    if (parentCol.isValid()) {
-        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (!fd.isNull()) {
+    if (const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection(); parentCol.isValid()) {
+        if (QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false); !fd.isNull()) {
             command = new KMForwardCommand(this, mReaderWin->messageItem(), fd->identity(), QString(), mReaderWin->copyText());
         } else {
             command = new KMForwardCommand(this, mReaderWin->messageItem(), 0, QString(), mReaderWin->copyText());
@@ -369,10 +366,8 @@ void KMReaderMainWin::slotForwardAttachedMessage()
         return;
     }
     KMCommand *command = nullptr;
-    const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
-    if (parentCol.isValid()) {
-        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (!fd.isNull()) {
+    if (const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection(); parentCol.isValid()) {
+        if (QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false); !fd.isNull()) {
             command = new KMForwardAttachedCommand(this, mReaderWin->messageItem(), fd->identity());
         } else {
             command = new KMForwardAttachedCommand(this, mReaderWin->messageItem());
@@ -389,12 +384,10 @@ void KMReaderMainWin::slotNewMessageToRecipients()
 {
     auto job = new ComposeNewMessageJob;
 
-    const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection();
-    if (parentCol.isValid()) {
+    if (const Akonadi::Collection parentCol = mReaderWin->messageItem().parentCollection(); parentCol.isValid()) {
         job->setCurrentCollection(parentCol);
 
-        QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false);
-        if (!fd.isNull()) {
+        if (QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCol, false); !fd.isNull()) {
             job->setFolderSettings(fd);
         }
     }
@@ -561,8 +554,7 @@ void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
 
 QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 {
-    KMMainWidget *mainwin = kmkernel->getKMMainWidget();
-    if (mainwin) {
+    if (KMMainWidget *mainwin = kmkernel->getKMMainWidget()) {
         Akonadi::StandardActionManager *manager = mainwin->standardMailActionManager()->standardActionManager();
         const auto mainWinAction = manager->action(Akonadi::StandardActionManager::CopyItemToMenu);
         auto action = new KActionMenu(menu);
@@ -577,8 +569,7 @@ QAction *KMReaderMainWin::copyActionMenu(QMenu *menu)
 
 QAction *KMReaderMainWin::moveActionMenu(QMenu *menu)
 {
-    KMMainWidget *mainwin = kmkernel->getKMMainWidget();
-    if (mainwin) {
+    if (KMMainWidget *mainwin = kmkernel->getKMMainWidget()) {
         Akonadi::StandardActionManager *manager = mainwin->standardMailActionManager()->standardActionManager();
         const auto mainWinAction = manager->action(Akonadi::StandardActionManager::MoveItemToMenu);
         auto action = new KActionMenu(menu);
@@ -615,8 +606,7 @@ void KMReaderMainWin::copyOrMoveItem(const Akonadi::Collection &collection, bool
         connect(job, &KJob::result, this, &KMReaderMainWin::slotCopyMoveResult);
     }
 
-    KMMainWidget *mainwin = kmkernel->getKMMainWidget();
-    if (mainwin) {
+    if (KMMainWidget *mainwin = kmkernel->getKMMainWidget()) {
         mainwin->standardMailActionManager()->standardActionManager()->addRecentCollection(collection.id());
     }
 }
@@ -745,8 +735,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             urlMenuAdded = true;
         }
     }
-    const QString selectedText(mReaderWin->copyText());
-    if (!selectedText.isEmpty()) {
+    if (const QString selectedText(mReaderWin->copyText()); !selectedText.isEmpty()) {
         if (!menu) {
             menu = new QMenu(this);
         }
@@ -862,8 +851,7 @@ void KMReaderMainWin::showMessagePopup(const Akonadi::Item &msg,
             menu->addAction(mReaderWin->developmentToolsAction());
         }
     }
-    const QList<QAction *> interceptorUrlActions = mReaderWin->interceptorUrlActions(result);
-    if (!interceptorUrlActions.isEmpty()) {
+    if (const QList<QAction *> interceptorUrlActions = mReaderWin->interceptorUrlActions(result); !interceptorUrlActions.isEmpty()) {
         menu->addSeparator();
         menu->addActions(interceptorUrlActions);
     }

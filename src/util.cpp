@@ -47,10 +47,9 @@ QList<KMime::Types::Mailbox> KMail::Util::mailingListsFromMessage(const Akonadi:
 {
     QList<KMime::Types::Mailbox> addresses;
     // determine the mailing list posting address
-    const Akonadi::Collection parentCollection = item.parentCollection();
-    if (parentCollection.isValid()) {
-        const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
-        if (fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty()) {
+    if (const Akonadi::Collection parentCollection = item.parentCollection(); parentCollection.isValid()) {
+        if (const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
+            fd->isMailingListEnabled() && !fd->mailingListPostAddress().isEmpty()) {
             KMime::Types::Mailbox mailbox;
             mailbox.fromUnicodeString(fd->mailingListPostAddress());
             addresses << mailbox;
@@ -62,10 +61,8 @@ QList<KMime::Types::Mailbox> KMail::Util::mailingListsFromMessage(const Akonadi:
 
 Akonadi::Item::Id KMail::Util::putRepliesInSameFolder(const Akonadi::Item &item)
 {
-    const Akonadi::Collection parentCollection = item.parentCollection();
-    if (parentCollection.isValid()) {
-        const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false);
-        if (fd->putRepliesInSameFolder()) {
+    if (const Akonadi::Collection parentCollection = item.parentCollection(); parentCollection.isValid()) {
+        if (const QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(parentCollection, false); fd->putRepliesInSameFolder()) {
             return parentCollection.id();
         }
     }
@@ -193,8 +190,8 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
 
 void KMail::Util::executeAccountWizard(QWidget *parentWidget)
 {
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("accountwizard"));
-    if (path.isEmpty() || !QProcess::startDetached(path, {})) {
+    if (const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("accountwizard"));
+        path.isEmpty() || !QProcess::startDetached(path, {})) {
         KMessageBox::error(parentWidget,
                            i18n("Could not start the account wizard. "
                                 "Please make sure you have AccountWizard properly installed."),

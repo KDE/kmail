@@ -45,14 +45,12 @@ bool CollectionStorageModel::isOutBoundFolder(const Akonadi::Collection &c) cons
     if (c.hasAttribute<Akonadi::MessageFolderAttribute>()) {
         return c.attribute<Akonadi::MessageFolderAttribute>()->isOutboundFolder();
     }
-    QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(c, false);
-    if (!fd.isNull()) {
+    if (QSharedPointer<FolderSettings> fd = FolderSettings::forCollection(c, false); !fd.isNull()) {
         const QString folderId(QString::number(c.id()));
         // default setting
         const KIdentityManagementCore::Identity &identity = kmkernel->identityManager()->identityForUoidOrDefault(fd->identity());
 
-        bool isOnline = false;
-        if (CommonKernel->isSystemFolderCollection(c) && !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
+        if (bool isOnline = false; CommonKernel->isSystemFolderCollection(c) && !PimCommon::MailUtil::isImapFolder(c, isOnline)) {
             // local system folders
             if (c == CommonKernel->inboxCollectionFolder() || c == CommonKernel->trashCollectionFolder()) {
                 return false;

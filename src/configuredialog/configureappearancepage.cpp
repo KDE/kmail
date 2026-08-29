@@ -231,8 +231,7 @@ void AppearancePageFontsTab::doLoadOther()
         QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
 
         for (int i = 0; i < numFontNames; ++i) {
-            const QString configName = QLatin1StringView(fontNames[i].configName);
-            if (configName == "MessageListFont"_L1) {
+            if (const QString configName = QLatin1StringView(fontNames[i].configName); configName == "MessageListFont"_L1) {
                 mFont[i] = MessageList::MessageListSettings::self()->messageListFont();
             } else if (configName == "UnreadMessageFont"_L1) {
                 mFont[i] = MessageList::MessageListSettings::self()->unreadMessageFont();
@@ -266,8 +265,7 @@ void AppearancePageFontsTab::save()
         MessageCore::MessageCoreSettings::self()->setUseDefaultFonts(!customFonts);
 
         for (int i = 0; i < numFontNames; ++i) {
-            const QString configName = QLatin1StringView(fontNames[i].configName);
-            if (customFonts && configName == "MessageListFont"_L1) {
+            if (const QString configName = QLatin1StringView(fontNames[i].configName); customFonts && configName == "MessageListFont"_L1) {
                 MessageList::MessageListSettings::self()->setMessageListFont(mFont[i]);
             } else if (customFonts && configName == "UnreadMessageFont"_L1) {
                 MessageList::MessageListSettings::self()->setUnreadMessageFont(mFont[i]);
@@ -391,8 +389,7 @@ void AppearancePageColorsTab::loadColor(bool loadFromConfig)
 
         for (int i = 0; i < numColorNames; ++i) {
             if (loadFromConfig) {
-                const QString configName = QLatin1StringView(colorNames[i].configName);
-                if (configName == "UnreadMessageColor"_L1) {
+                if (const QString configName = QLatin1StringView(colorNames[i].configName); configName == "UnreadMessageColor"_L1) {
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->unreadMessageColor());
                 } else if (configName == "ImportantMessageColor"_L1) {
                     mColorList->setColorSilently(i, MessageList::MessageListSettings::self()->importantMessageColor());
@@ -430,8 +427,7 @@ void AppearancePageColorsTab::save()
     MessageCore::MessageCoreSettings::self()->setUseRealHtmlMailColor(mUseInlineStyle->isChecked());
 
     for (int i = 0; i < numColorNames; ++i) {
-        const QString configName = QLatin1StringView(colorNames[i].configName);
-        if (customColors && configName == "UnreadMessageColor"_L1) {
+        if (const QString configName = QLatin1StringView(colorNames[i].configName); customColors && configName == "UnreadMessageColor"_L1) {
             MessageList::MessageListSettings::self()->setUnreadMessageColor(mColorList->color(i));
         } else if (customColors && configName == "ImportantMessageColor"_L1) {
             MessageList::MessageListSettings::self()->setImportantMessageColor(mColorList->color(i));
@@ -555,8 +551,7 @@ void AppearancePageLayoutTab::doLoadOther()
         }
     }
     loadWidget(mFolderQuickSearchCB, KMailSettings::self()->enableFolderQuickSearchItem());
-    const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy();
-    if (checkedFolderToolTipsPolicy >= 0) {
+    if (const int checkedFolderToolTipsPolicy = KMailSettings::self()->toolTipDisplayPolicy(); checkedFolderToolTipsPolicy >= 0) {
         if (auto *button = mFolderToolTipsGroup->button(checkedFolderToolTipsPolicy)) {
             button->setChecked(true);
         }
@@ -1053,8 +1048,7 @@ void AppearancePageMessageTagTab::slotEmitChangeCheck()
 
 void AppearancePageMessageTagTab::slotCustomMenuRequested(const QPoint &)
 {
-    const int currentIndex = mTagListBox->currentRow();
-    if (currentIndex >= 0) {
+    if (const int currentIndex = mTagListBox->currentRow(); currentIndex >= 0) {
         QMenu menu(this);
         menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &AppearancePageMessageTagTab::slotRemoveTag);
         menu.exec(QCursor::pos());
@@ -1183,8 +1177,7 @@ void AppearancePageMessageTagTab::slotSelectionChanged()
 
 void AppearancePageMessageTagTab::slotRemoveTag()
 {
-    const int tmp_index = mTagListBox->currentRow();
-    if (tmp_index >= 0) {
+    if (const int tmp_index = mTagListBox->currentRow(); tmp_index >= 0) {
         if (KMessageBox::ButtonCode::PrimaryAction
             == KMessageBox::questionTwoActions(this,
                                                i18n("Do you want to remove tag \'%1\'?", mTagListBox->item(mTagListBox->currentRow())->text()),
@@ -1193,8 +1186,7 @@ void AppearancePageMessageTagTab::slotRemoveTag()
                                                KStandardGuiItem::cancel())) {
             QListWidgetItem *item = mTagListBox->takeItem(mTagListBox->currentRow());
             auto tagItem = static_cast<TagListWidgetItem *>(item);
-            MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag();
-            if (tmp_desc->tag().isValid()) {
+            if (MailCommon::Tag::Ptr tmp_desc = tagItem->kmailTag(); tmp_desc->tag().isValid()) {
                 new Akonadi::TagDeleteJob(tmp_desc->tag());
             } else {
                 qCWarning(KMAIL_LOG) << "Can't remove tag with invalid akonadi tag";
@@ -1349,15 +1341,14 @@ void AppearancePageMessageTagTab::save()
         return;
     }
 
-    const QListWidgetItem *item = mTagListBox->currentItem();
-    if (!item) {
+    if (const QListWidgetItem *item = mTagListBox->currentItem(); !item) {
         return;
     }
     slotRecordTagSettings(currentRow);
     const int numberOfMsgTagList = count;
     for (int i = 0; i < numberOfMsgTagList; ++i) {
-        const auto tagItem = static_cast<TagListWidgetItem *>(mTagListBox->item(i));
-        if ((i >= mOriginalMsgTagList.count()) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i])) {
+        if (const auto tagItem = static_cast<TagListWidgetItem *>(mTagListBox->item(i));
+            (i >= mOriginalMsgTagList.count()) || *(tagItem->kmailTag()) != *(mOriginalMsgTagList[i])) {
             MailCommon::Tag::Ptr tag = tagItem->kmailTag();
             tag->priority = i;
             Akonadi::Tag akonadiTag = tag->saveToAkonadi();

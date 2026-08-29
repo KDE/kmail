@@ -37,8 +37,7 @@ void CreateFollowupReminderOnExistingMessageJob::doStart()
 
 void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
 {
-    auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
-    if (fetchJob->items().count() == 1) {
+    if (auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job); fetchJob->items().count() == 1) {
         mMessageItem = fetchJob->items().constFirst();
     } else {
         qCDebug(KMAIL_LOG) << " CreateFollowupReminderOnExistingMessageJob Error during fetch: " << job->errorString();
@@ -50,11 +49,9 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         deleteLater();
         return;
     }
-    auto msg = mMessageItem.payload<std::shared_ptr<KMime::Message>>();
-    if (msg) {
+    if (auto msg = mMessageItem.payload<std::shared_ptr<KMime::Message>>()) {
         auto reminderJob = new MessageComposer::FollowupReminderCreateJob(this);
-        KMime::Headers::MessageID *messageID = msg->messageID(KMime::CreatePolicy::DontCreate);
-        if (messageID) {
+        if (KMime::Headers::MessageID *messageID = msg->messageID(KMime::CreatePolicy::DontCreate)) {
             const QString messageIdStr = messageID->asUnicodeString();
             reminderJob->setMessageId(messageIdStr);
         } else {
@@ -67,12 +64,10 @@ void CreateFollowupReminderOnExistingMessageJob::itemFetchJobDone(KJob *job)
         reminderJob->setFollowUpReminderDate(mDate);
         reminderJob->setCollectionToDo(mCollection);
         reminderJob->setOriginalMessageItemId(mMessageItem.id());
-        KMime::Headers::To *to = msg->to(KMime::CreatePolicy::DontCreate);
-        if (to) {
+        if (KMime::Headers::To *to = msg->to(KMime::CreatePolicy::DontCreate)) {
             reminderJob->setTo(to->asUnicodeString());
         }
-        KMime::Headers::Subject *subject = msg->subject(KMime::CreatePolicy::DontCreate);
-        if (subject) {
+        if (KMime::Headers::Subject *subject = msg->subject(KMime::CreatePolicy::DontCreate)) {
             reminderJob->setSubject(subject->asUnicodeString());
         }
 

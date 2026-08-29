@@ -23,20 +23,17 @@ SpellCheckerConfigDialog::SpellCheckerConfigDialog(QWidget *parent)
 {
     // Hackish way to hide the "Enable spell check by default" checkbox
     // Our highlighter ignores this setting, so we should not expose its UI
-    auto enabledByDefaultCB = findChild<QCheckBox *>(QStringLiteral("kcfg_autodetectLanguage"));
-    if (enabledByDefaultCB) {
+    if (auto enabledByDefaultCB = findChild<QCheckBox *>(QStringLiteral("kcfg_autodetectLanguage"))) {
         enabledByDefaultCB->hide();
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any checkbox named 'm_checkerEnabledByDefaultCB'. Sonnet::ConfigDialog must have changed!";
     }
-    auto textLabel = findChild<QLabel *>(QStringLiteral("textLabel1"));
-    if (textLabel) {
+    if (auto textLabel = findChild<QLabel *>(QStringLiteral("textLabel1"))) {
         textLabel->hide();
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any label named 'textLabel'. Sonnet::ConfigDialog must have changed!";
     }
-    auto dictionaryComboBox = findChild<Sonnet::DictionaryComboBox *>(QStringLiteral("m_langCombo"));
-    if (dictionaryComboBox) {
+    if (auto dictionaryComboBox = findChild<Sonnet::DictionaryComboBox *>(QStringLiteral("m_langCombo"))) {
         dictionaryComboBox->hide();
     } else {
         qCWarning(KMAIL_LOG) << "Could not find any Sonnet::DictionaryComboBox named 'dictionaryComboBox'. Sonnet::ConfigDialog must have changed!";

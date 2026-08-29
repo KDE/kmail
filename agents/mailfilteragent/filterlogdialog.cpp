@@ -205,8 +205,7 @@ void FilterLogDialog::readConfig()
     }
 
     KConfigGroup geometryGroup(KSharedConfig::openStateConfig(), QStringLiteral("Geometry"));
-    const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400));
-    if (size.isValid()) {
+    if (const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400)); size.isValid()) {
         resize(size);
     } else {
         adjustSize();
@@ -261,8 +260,7 @@ void FilterLogDialog::slotLogStateChanged()
     mLogFilterActionBox->setChecked(FilterLog::instance()->isContentTypeEnabled(FilterLog::AppliedAction));
 
     // value in the QSpinBox is in KB while it's in Byte in the FilterLog
-    int newLogSize = FilterLog::instance()->maxLogSize() / 1024;
-    if (mLogMemLimitSpin->value() != newLogSize) {
+    if (int newLogSize = FilterLog::instance()->maxLogSize() / 1024; mLogMemLimitSpin->value() != newLogSize) {
         if (newLogSize <= 0) {
             mLogMemLimitSpin->setValue(1);
         } else {
@@ -320,9 +318,7 @@ void FilterLogDialog::slotUser2()
     fdlg->setFileMode(QFileDialog::AnyFile);
     fdlg->selectFile(QStringLiteral("kmail-filter.html"));
     if (fdlg->exec() == QDialog::Accepted) {
-        const QStringList fileName = fdlg->selectedFiles();
-
-        if (!fileName.isEmpty() && !FilterLog::instance()->saveToFile(fileName.at(0))) {
+        if (const QStringList fileName = fdlg->selectedFiles(); !fileName.isEmpty() && !FilterLog::instance()->saveToFile(fileName.at(0))) {
             KMessageBox::error(this,
                                i18n("Could not write the file %1:\n"
                                     "\"%2\" is the detailed error description.",

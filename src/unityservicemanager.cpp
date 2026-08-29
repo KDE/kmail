@@ -66,13 +66,9 @@ void UnityServiceManager::unreadMail(const QAbstractItemModel *model, const QMod
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        const auto collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-
-        if (!excludeFolder(collection)) {
+        if (const auto collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>(); !excludeFolder(collection)) {
             const Akonadi::CollectionStatistics statistics = collection.statistics();
-            const qint64 count = qMax(0LL, statistics.unreadCount());
-
-            if (count > 0) {
+            if (const qint64 count = qMax(0LL, statistics.unreadCount()); count > 0) {
                 if (!ignoreNewMailInFolder(collection)) {
                     mCount += count;
                 }

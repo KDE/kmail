@@ -121,8 +121,7 @@ void MailKernel::setLastSelectedFolder([[maybe_unused]] Akonadi::Collection::Id 
 
 void MailKernel::expunge(Akonadi::Collection::Id id, bool sync)
 {
-    Akonadi::Collection col(id);
-    if (col.isValid()) {
+    if (Akonadi::Collection col(id); col.isValid()) {
         mFolderCollectionMonitor->expunge(Akonadi::Collection(col), sync);
     }
 }

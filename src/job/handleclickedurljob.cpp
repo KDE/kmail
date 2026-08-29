@@ -41,28 +41,23 @@ void HandleClickedUrlJob::start()
             }
             mMsg->to()->fromUnicodeString(element.second);
         } else if (element.first == "subject"_L1) {
-            const QString subject = element.second;
-            if (!subject.isEmpty()) {
+            if (const QString subject = element.second; !subject.isEmpty()) {
                 mMsg->subject()->fromUnicodeString(subject);
             }
         } else if (element.first == "body"_L1) {
-            const QString body = element.second;
-            if (!body.isEmpty()) {
+            if (const QString body = element.second; !body.isEmpty()) {
                 mMsg->setBody(body.toUtf8());
             }
         } else if (element.first == "cc"_L1) {
-            const QString cc = element.second;
-            if (!cc.isEmpty()) {
+            if (const QString cc = element.second; !cc.isEmpty()) {
                 mMsg->cc()->fromUnicodeString(cc);
             }
         } else if (element.first == "bcc"_L1) {
-            const QString bcc = element.second;
-            if (!bcc.isEmpty()) {
+            if (const QString bcc = element.second; !bcc.isEmpty()) {
                 mMsg->bcc()->fromUnicodeString(bcc);
             }
         } else if (element.first == "attach"_L1) {
-            const QString attach = element.second;
-            if (!attach.isEmpty()) {
+            if (const QString attach = element.second; !attach.isEmpty()) {
                 qCDebug(KMAIL_LOG) << "Attachment not supported yet";
             }
         }

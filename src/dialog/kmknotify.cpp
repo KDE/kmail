@@ -82,8 +82,7 @@ void KMKnotify::slotComboChanged(int index)
 
 void KMKnotify::setCurrentNotification(const QString &name)
 {
-    const int index = m_comboNotify->findData(name);
-    if (index > -1) {
+    if (const int index = m_comboNotify->findData(name); index > -1) {
         m_comboNotify->setCurrentIndex(index);
         slotComboChanged(index);
     }
@@ -97,9 +96,7 @@ void KMKnotify::initCombobox()
                                                 << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
                                                 << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
     for (const QString &notify : lstNotify) {
-        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "knotifications6/"_L1 + notify);
-
-        if (!fullPath.isEmpty()) {
+        if (const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "knotifications6/"_L1 + notify); !fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
             QString appname = fullPath.right(fullPath.length() - slash - 1);
             appname.remove(".notifyrc"_L1);

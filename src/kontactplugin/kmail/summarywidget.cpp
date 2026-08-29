@@ -115,10 +115,8 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
     const int nbCol = mModelProxy->rowCount(parent);
     for (int i = 0; i < nbCol; ++i) {
         const QModelIndex child = mModelProxy->index(i, 0, parent);
-        const auto col = mModelProxy->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
-        const auto showCollection = static_cast<Qt::CheckState>(mModelProxy->data(child, Qt::CheckStateRole).toInt());
-
-        if (col.isValid()) {
+        if (const auto col = mModelProxy->data(child, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>(); col.isValid()) {
+            const auto showCollection = static_cast<Qt::CheckState>(mModelProxy->data(child, Qt::CheckStateRole).toInt());
             const Akonadi::CollectionStatistics stats = col.statistics();
             if (((stats.unreadCount()) != Q_INT64_C(0)) && showCollection == Qt::Checked) {
                 // Collection Name.
@@ -212,8 +210,8 @@ void SummaryWidget::slotUpdateFolderList()
 bool SummaryWidget::eventFilter(QObject *obj, QEvent *e)
 {
     if (obj->inherits("KUrlLabel")) {
-        auto label = static_cast<KUrlLabel *>(obj);
         if (e->type() == QEvent::Enter) {
+            auto label = static_cast<KUrlLabel *>(obj);
             Q_EMIT message(i18n("Open Folder: \"%1\"", label->text()));
         } else if (e->type() == QEvent::Leave) {
             Q_EMIT message(QString());

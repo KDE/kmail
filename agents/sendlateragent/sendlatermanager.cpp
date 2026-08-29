@@ -58,8 +58,7 @@ void SendLaterManager::load(bool forcereload)
     const int numberOfItems = itemList.count();
     for (int i = 0; i < numberOfItems; ++i) {
         KConfigGroup group = mConfig->group(itemList.at(i));
-        auto info = SendLaterUtil::readSendLaterInfo(group);
-        if (info->isValid()) {
+        if (auto info = SendLaterUtil::readSendLaterInfo(group); info->isValid()) {
             mListSendLaterInfo.append(info);
         } else {
             delete info;
@@ -78,8 +77,7 @@ void SendLaterManager::createSendInfoList()
         if (!mListSendLaterInfo.isEmpty()) {
             mCurrentInfo = mListSendLaterInfo.constFirst();
             const QDateTime now = QDateTime::currentDateTime();
-            const qint64 seconds = now.secsTo(mCurrentInfo->dateTime());
-            if (seconds > 0) {
+            if (const qint64 seconds = now.secsTo(mCurrentInfo->dateTime()); seconds > 0) {
                 // qCDebug(SENDLATERAGENT_LOG)<<" seconds"<<seconds;
                 mTimer->start(seconds * 1s);
             } else {
@@ -91,8 +89,7 @@ void SendLaterManager::createSendInfoList()
             mTimer->stop();
         }
     } else {
-        MessageComposer::SendLaterInfo *info = searchInfo(mSendLaterQueue.dequeue());
-        if (info) {
+        if (MessageComposer::SendLaterInfo *info = searchInfo(mSendLaterQueue.dequeue())) {
             mCurrentInfo = info;
             slotCreateJob();
         } else { // If removed.
@@ -121,8 +118,7 @@ MessageComposer::SendLaterInfo *SendLaterManager::searchInfo(Akonadi::Item::Id i
 void SendLaterManager::sendNow(Akonadi::Item::Id id)
 {
     if (!mCurrentJob) {
-        MessageComposer::SendLaterInfo *info = searchInfo(id);
-        if (info) {
+        if (MessageComposer::SendLaterInfo *info = searchInfo(id)) {
             mCurrentInfo = info;
             slotCreateJob();
         } else {

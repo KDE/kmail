@@ -78,8 +78,7 @@ bool KMailPlugin::canDecodeMimeData(const QMimeData *mimeData) const
 
 void KMailPlugin::shortcutChanged()
 {
-    KParts::Part *localPart = part();
-    if (localPart) {
+    if (KParts::Part *localPart = part()) {
         if (localPart->metaObject()->indexOfMethod("updateQuickSearchText()") == -1) {
             qCWarning(KMAILPLUGIN_LOG) << "KMailPart part is missing slot updateQuickSearchText()";
             return;
@@ -101,11 +100,9 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
 #else
     if (const auto cal = KCalendarCore::MimeData::decodeCalendar(md); cal) {
 #endif
-        QTemporaryFile tmp(QStringLiteral("incidences-kmail_XXXXXX.ics"));
-        if (tmp.open()) {
+        if (QTemporaryFile tmp(QStringLiteral("incidences-kmail_XXXXXX.ics")); tmp.open()) {
             tmp.setAutoRemove(false);
-            FileStorage storage(cal, tmp.fileName());
-            if (!storage.save()) {
+            if (FileStorage storage(cal, tmp.fileName()); !storage.save()) {
                 qCWarning(KMAILPLUGIN_LOG) << " Impossible to save data in filestorage";
                 return;
             }
@@ -212,11 +209,8 @@ int KMailUniqueAppHandler::activate(const QStringList &args, const QString &work
     // Ensure part is loaded
     (void)plugin()->part();
     org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
-    QDBusReply<bool> reply = kmail.handleCommandLine(false, args, workingDir);
-
-    if (reply.isValid()) {
-        bool handled = reply;
-        if (!handled) { // no args -> simply bring kmail plugin to front
+    if (QDBusReply<bool> reply = kmail.handleCommandLine(false, args, workingDir); reply.isValid()) {
+        if (bool handled = reply; !handled) { // no args -> simply bring kmail plugin to front
             return KontactInterface::UniqueAppHandler::activate(args, workingDir);
         }
     }

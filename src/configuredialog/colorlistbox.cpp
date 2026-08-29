@@ -68,8 +68,7 @@ void ColorListBox::newColor(const QModelIndex &index)
     }
 
     if (index.isValid()) {
-        const QColor c = QColorDialog::getColor(color(index.row()), this);
-        if (c.isValid()) {
+        if (const QColor c = QColorDialog::getColor(color(index.row()), this); c.isValid()) {
             setColor(index.row(), c);
         }
     }
@@ -97,8 +96,7 @@ void ColorListBox::dragLeaveEvent(QDragLeaveEvent *)
 void ColorListBox::dragMoveEvent(QDragMoveEvent *e)
 {
     if (KColorMimeData::canDecode(e->mimeData()) && isEnabled()) {
-        QTreeWidgetItem *item = itemAt(e->position().toPoint());
-        if (item) {
+        if (QTreeWidgetItem *item = itemAt(e->position().toPoint())) {
             setCurrentItem(item);
         }
     }
@@ -106,10 +104,8 @@ void ColorListBox::dragMoveEvent(QDragMoveEvent *e)
 
 void ColorListBox::dropEvent(QDropEvent *e)
 {
-    const QColor colorFromMimeData = KColorMimeData::fromMimeData(e->mimeData());
-    if (colorFromMimeData.isValid()) {
-        QTreeWidgetItem *item = currentItem();
-        if (item) {
+    if (const QColor colorFromMimeData = KColorMimeData::fromMimeData(e->mimeData()); colorFromMimeData.isValid()) {
+        if (QTreeWidgetItem *item = currentItem()) {
             item->setData(0, Qt::DecorationRole, colorFromMimeData);
             Q_EMIT changed();
         }

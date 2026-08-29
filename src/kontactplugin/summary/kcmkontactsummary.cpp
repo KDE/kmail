@@ -81,8 +81,7 @@ void KCMKontactSummary::load()
     QStringList activeSummaries;
 
     const KConfig config(QStringLiteral("kontact_summaryrc"));
-    const KConfigGroup grp(&config, QString());
-    if (grp.hasKey("ActiveSummaries")) {
+    if (const KConfigGroup grp(&config, QString()); grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     } else {
         activeSummaries << QStringLiteral("kontact_kaddressbookplugin");
@@ -96,8 +95,7 @@ void KCMKontactSummary::load()
     mPluginView->clear();
 
     for (const auto &plugin : std::as_const(pluginMetaDatas)) {
-        const QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false);
-        if (var.isValid() && var.toBool() == true) {
+        if (const QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false); var.isValid() && var.toBool() == true) {
             auto item = new PluginItem(plugin, mPluginView);
 
             if (activeSummaries.contains(plugin.pluginId())) {
@@ -116,8 +114,7 @@ void KCMKontactSummary::save()
 
     QTreeWidgetItemIterator it(mPluginView);
     while (*it) {
-        auto item = static_cast<PluginItem *>(*it);
-        if (item->checkState(0) == Qt::Checked) {
+        if (auto item = static_cast<PluginItem *>(*it); item->checkState(0) == Qt::Checked) {
             activeSummaries.append(item->pluginInfo().pluginId());
         }
         ++it;
