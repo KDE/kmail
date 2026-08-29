@@ -3978,17 +3978,20 @@ void KMMainWidget::updateMessageActionsDelayed()
 
     mExpireConfigAction->setEnabled(canDeleteMessages && !MailCommon::Util::isVirtualCollection(mCurrentCollection));
 
+    // folderIsTemplates() walks the whole identity list, so compute it once
+    const bool isTemplatesFolder = CommonKernel->folderIsTemplates(mCurrentCollection);
+
     if (mMsgView) {
-        mMsgView->findInMessageAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
+        mMsgView->findInMessageAction()->setEnabled(mass_actions && !isTemplatesFolder);
     }
-    mMsgActions->forwardInlineAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
-    mMsgActions->forwardAttachedAction()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
-    mMsgActions->forwardMenu()->setEnabled(mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
+    mMsgActions->forwardInlineAction()->setEnabled(mass_actions && !isTemplatesFolder);
+    mMsgActions->forwardAttachedAction()->setEnabled(mass_actions && !isTemplatesFolder);
+    mMsgActions->forwardMenu()->setEnabled(mass_actions && !isTemplatesFolder);
 
     mMsgActions->editAsNewAction()->setEnabled(single_actions);
-    mMsgActions->newMessageFromTemplateAction()->setEnabled(single_actions && CommonKernel->folderIsTemplates(mCurrentCollection));
+    mMsgActions->newMessageFromTemplateAction()->setEnabled(single_actions && isTemplatesFolder);
     filterMenu()->setEnabled(single_actions);
-    mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !CommonKernel->folderIsTemplates(mCurrentCollection));
+    mMsgActions->redirectAction()->setEnabled(/*single_actions &&*/ mass_actions && !isTemplatesFolder);
     mMsgActions->newToRecipientsAction()->setEnabled(single_actions);
 
     if (auto menuCustom = mMsgActions->customTemplatesMenu()) {
