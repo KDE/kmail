@@ -742,7 +742,7 @@ Akonadi::Item SearchWindowDialog::selectedMessage() const
 
 void SearchWindowDialog::updateContextMenuActions()
 {
-    const int count = selectedMessages().count();
+    const int count = mUi.mLbxMatches->selectionModel()->selectedRows().count();
     const bool singleActions = (count == 1);
     const bool notEmpty = (count > 0);
 
@@ -759,7 +759,7 @@ void SearchWindowDialog::updateContextMenuActions()
 
 void SearchWindowDialog::slotContextMenuRequested(const QPoint &)
 {
-    if (!selectedMessage().isValid() || selectedMessages().isEmpty()) {
+    if (!selectedMessage().isValid() || mUi.mLbxMatches->selectionModel()->selectedRows().isEmpty()) {
         return;
     }
 
