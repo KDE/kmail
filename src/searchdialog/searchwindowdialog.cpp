@@ -722,9 +722,9 @@ void SearchWindowDialog::enableGUI()
 
 Akonadi::Item::List SearchWindowDialog::selectedMessages() const
 {
-    Akonadi::Item::List messages;
-
     const QModelIndexList lst = mUi.mLbxMatches->selectionModel()->selectedRows();
+    Akonadi::Item::List messages;
+    messages.reserve(lst.size());
     for (const QModelIndex &index : lst) {
         const auto item = index.data(Akonadi::EntityTreeModel::ItemRole).value<Akonadi::Item>();
         if (item.isValid()) {
