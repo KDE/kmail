@@ -58,45 +58,38 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         return;
     }
 
-    bool parentStatus = false;
+    const Akonadi::MessageStatus toActStatus = Akonadi::MessageStatus::statusToAct();
+    const Akonadi::Item::Flag toActFlag = *toActStatus.statusFlags().cbegin();
+
     // Toggle actions on threads toggle the whole thread
     // depending on the state of the parent.
     const Akonadi::Item first = lst.at(0);
     Akonadi::MessageStatus pStatus;
     pStatus.setStatusFromFlags(first.flags());
-    if (pStatus & Akonadi::MessageStatus::statusToAct()) {
-        parentStatus = true;
-    } else {
-        parentStatus = false;
-    }
+    const bool parentStatus = (pStatus & toActStatus);
 
     Akonadi::Item::List itemsToModify;
+    itemsToModify.reserve(lst.size());
     for (const Akonadi::Item &it : lst) {
         // qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
         if (it.isValid()) {
-            bool myStatus;
             Akonadi::MessageStatus itemStatus;
             itemStatus.setStatusFromFlags(it.flags());
-            if (itemStatus & Akonadi::MessageStatus::statusToAct()) {
-                myStatus = true;
-            } else {
-                myStatus = false;
-            }
+            const bool myStatus = (itemStatus & toActStatus);
             if (myStatus != parentStatus) {
                 continue;
             }
         }
         Akonadi::Item item(it);
-        const Akonadi::Item::Flag flag = *(Akonadi::MessageStatus::statusToAct().statusFlags().begin());
-        if (item.hasFlag(flag)) {
-            item.clearFlag(flag);
+        if (item.hasFlag(toActFlag)) {
+            item.clearFlag(toActFlag);
             itemsToModify.push_back(item);
             if (item.hasAttribute<TaskAttribute>()) {
                 // Change todo as done.
                 item.removeAttribute<TaskAttribute>();
             }
         } else {
-            item.setFlag(flag);
+            item.setFlag(toActFlag);
             itemsToModify.push_back(std::move(item));
             // TODO add TaskAttribute();
         }

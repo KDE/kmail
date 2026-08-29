@@ -3699,9 +3699,12 @@ void KMComposerWin::runKeyResolver()
         if (result.flags & Kleo::KeyResolverCore::OpenPGPOnly && ident.autocryptEnabled()) {
             bool allResolved = true;
             const auto storage = MessageCore::AutocryptStorage::self();
-            for (const auto &recipient : result.solution.encryptionKeys.keys()) {
-                const auto key = result.solution.encryptionKeys[recipient];
-                if (!key.empty()) { // There are already keys found
+            // Iterate in place: keys() would allocate a temporary list and operator[]
+            // would detach and look the recipient up a second time on every iteration.
+            const auto keysEnd = result.solution.encryptionKeys.end();
+            for (auto keyIt = result.solution.encryptionKeys.begin(); keyIt != keysEnd; ++keyIt) {
+                const QString &recipient = keyIt.key();
+                if (!keyIt.value().empty()) { // There are already keys found
                     continue;
                 }
                 if (recipient == keyResolverCore->normalizedSender()) { // Don't care about own key as we show warnings in another way
@@ -3723,7 +3726,7 @@ void KMComposerWin::runKeyResolver()
                 }
                 if (!autocryptKey.isNull()) {
                     autocryptKeys.push_back(recipient);
-                    result.solution.encryptionKeys[recipient].push_back(autocryptKey);
+                    keyIt.value().push_back(autocryptKey);
                 } else {
                     allResolved = false;
                 }
@@ -3757,7 +3760,7 @@ void KMComposerWin::runKeyResolver()
             addrSpec = recipient->email();
         }
 
-        auto resolvedKeys = result.solution.encryptionKeys[addrSpec];
+        const auto resolvedKeys = result.solution.encryptionKeys.value(addrSpec);
         GpgME::Key key;
         if (resolvedKeys.size() == 0) { // no key found for recipient
             // Search for any key, also for not accepted ones, to at least give the user more info.
