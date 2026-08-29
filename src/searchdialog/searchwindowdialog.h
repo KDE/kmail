@@ -36,20 +36,16 @@ namespace Akonadi
 class StandardMailActionManager;
 }
 
-namespace KMime
-{
-class Message;
-}
-
 namespace KMail
 {
+class SearchPatternWarning;
+
 /**
  * The SearchWindow class provides a dialog for triggering a search on
  * folders and storing that search as a search folder. It shows the search
  * results in a listview and allows triggering of operations such as printing
  * or moving on them.
  */
-class SearchPatternWarning;
 class SearchWindowDialog : public QDialog, public KXMLGUIClient
 {
     Q_OBJECT
