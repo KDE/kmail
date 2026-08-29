@@ -892,8 +892,9 @@ QList<qint64> SearchWindowDialog::checkIncompleteIndex(const Akonadi::Collection
     if (recursive) {
         cols = searchCollectionsRecursive(searchCols);
     } else {
+        QAbstractItemModel *const etm = KMKernel::self()->collectionModel();
+        cols.reserve(searchCols.size());
         for (const Akonadi::Collection &col : searchCols) {
-            QAbstractItemModel *etm = KMKernel::self()->collectionModel();
             const QModelIndex idx = Akonadi::EntityTreeModel::modelIndexForCollection(etm, col);
             const auto modelCol = etm->data(idx, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
             // Only index offline IMAP collections
