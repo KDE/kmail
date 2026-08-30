@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
                          QStringLiteral(KTNEF_VERSION),
                          i18n("Viewer for mail attachments using TNEF format"),
                          KAboutLicense::GPL,
-                         i18n("Copyright 2000 Michael Goffioul \nCopyright 2012  Allen Winter"));
+                         i18n("© 2000 Michael Goffioul \n© 2012 Allen Winter"));
 
     aboutData.addAuthor(i18nc("@info:credit", "Michael Goffioul"), i18n("Author"), u"kdeprint@swing.be"_s);
 

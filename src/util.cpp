@@ -32,8 +32,8 @@ bool KMail::Util::checkNoReplyEmails(const QString &email, QWidget *parent)
     if (temail.startsWith("noreply@"_L1)) {
         const int answer = KMessageBox::questionTwoActions(
             parent,
-            i18nc("@info", "It appears that this email from %1 is not being monitored. Do you wish to reply to this email?", email),
-            i18nc("@title:window", "Email not monitored"),
+            i18nc("@info", "It appears that this email address from %1 is not being monitored. Do you wish to reply to this email?", email),
+            i18nc("@title:window", "Email Address not Monitored"),
             KGuiItem(i18nc("@action:button", "Do Not Send")),
             KGuiItem(i18nc("@action:button", "Send EMail")));
         if (answer == KMessageBox::ButtonCode::PrimaryAction) {
