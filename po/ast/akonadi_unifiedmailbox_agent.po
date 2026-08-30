@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2023-11-07 21:27+0100\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
@@ -29,46 +29,46 @@ msgctxt "@action:button"
 msgid "Modify"
 msgstr ""
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:90
 #, kde-format
 msgid "Remove"
 msgstr ""
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:101
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr ""
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:127
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr ""
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr ""
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:133
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr ""
 
-#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr ""
 
-#: unifiedmailboxagent.cpp:175
+#: unifiedmailboxagent.cpp:174
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr ""

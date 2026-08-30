@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-06-23 00:46+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -75,27 +75,27 @@ msgctxt "@action:button"
 msgid "Clean"
 msgstr "清理"
 
-#: refreshsettingscleanuppage.cpp:52
+#: refreshsettingscleanuppage.cpp:51
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "移除已废弃的“每日提示”设置：完成"
 
-#: refreshsettingscleanuppage.cpp:64
+#: refreshsettingscleanuppage.cpp:63
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "删除文件“%1”中的对话框设置：完成"
 
-#: refreshsettingscleanuppage.cpp:76
+#: refreshsettingscleanuppage.cpp:75
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "删除文件“%1”中的过滤器设置：完成"
 
-#: refreshsettingscleanuppage.cpp:92
+#: refreshsettingscleanuppage.cpp:91
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "清理设置文件“%1”中的文件夹设置：完成"
 
-#: refreshsettingscleanuppage.cpp:148
+#: refreshsettingscleanuppage.cpp:140
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "清理设置文件“%1”中的对话框设置：完成"

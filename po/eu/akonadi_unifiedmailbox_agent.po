@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2025-08-20 15:18+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -32,46 +32,46 @@ msgctxt "@action:button"
 msgid "Modify"
 msgstr "Aldatu"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:90
 #, kde-format
 msgid "Remove"
 msgstr "Kendu"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Benetan kendu nahi duzu bat egindako <b>%1</b> postontzia?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:101
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Benetan kendu?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:127
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Gehitu"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "Aldatu"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:133
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Kendu"
 
-#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr "Bat egindako postontziak"
 
-#: unifiedmailboxagent.cpp:175
+#: unifiedmailboxagent.cpp:174
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr "Bat egindako %1 postontzia sinkronizatzea"

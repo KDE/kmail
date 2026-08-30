@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-12-20 21:52+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -31,46 +31,46 @@ msgctxt "@action:button"
 msgid "Modify"
 msgstr "परिवर्तनं कुर्वन्तु"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:90
 #, kde-format
 msgid "Remove"
 msgstr "अपाकरोति"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:100
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "किं भवान् वास्तवमेव एकीकृतं मेलबॉक्स <b>%1</b> अपसारयितुम् इच्छति ?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:101
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "वास्तवं निष्कासयतु?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:127
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "संयोजयति"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "परिवर्तनं कुर्वन्तु"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:133
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "अपाकरोति"
 
-#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:135
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr "एकीकृत मेलबॉक्स"
 
-#: unifiedmailboxagent.cpp:175
+#: unifiedmailboxagent.cpp:174
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr "एकीकृत मेलबॉक्स %1 समन्वयनम्"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-07-14 08:14+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -46,25 +46,25 @@ msgstr "%1 eranskinaren propietateak"
 msgid " bytes"
 msgstr " byte"
 
-#: attachpropertydialog.cpp:156
+#: attachpropertydialog.cpp:154
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF atributuak"
 
-#: attachpropertydialog.cpp:165
+#: attachpropertydialog.cpp:163
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Aurrena elementu bat hautatu behar da."
 
-#: attachpropertydialog.cpp:171
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Hautatutako elementua ezin da gorde etiketa huts bat duelako."
 
-#: attachpropertydialog.cpp:192
+#: attachpropertydialog.cpp:188
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -92,13 +92,13 @@ msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Ikusi honekin..."
 
-#: ktnefmain.cpp:119 ktnefmain.cpp:401
+#: ktnefmain.cpp:119 ktnefmain.cpp:395
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Erauzi"
 
-#: ktnefmain.cpp:123 ktnefmain.cpp:402
+#: ktnefmain.cpp:123 ktnefmain.cpp:396
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
@@ -110,7 +110,7 @@ msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Atera dena hemen..."
 
-#: ktnefmain.cpp:133 ktnefmain.cpp:405
+#: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
@@ -166,7 +166,7 @@ msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "Ireki TNEF fitxategia"
 
-#: ktnefmain.cpp:246 ktnefmain.cpp:277
+#: ktnefmain.cpp:245 ktnefmain.cpp:274
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
@@ -174,48 +174,48 @@ msgstr ""
 "Ez dago fitxategirik hautatuta. Mesedez, hautatu fitxategi bat eta saiatu "
 "berriro."
 
-#: ktnefmain.cpp:306 ktnefmain.cpp:382
+#: ktnefmain.cpp:301 ktnefmain.cpp:376
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr "Ezin du «%1» fitxategia erauzi."
 
-#: ktnefmain.cpp:491
+#: ktnefmain.cpp:484
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr "Mezuak ez dauka testu aberastuko daturik."
 
-#: ktnefmain.cpp:509
+#: ktnefmain.cpp:501
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr "Ezin du «%1» fitxategia idazteko ireki, egiaztatu baimenak."
 
-#: ktnefmain.cpp:531
+#: ktnefmain.cpp:523
 #, kde-format
 msgid "Open &with %1"
 msgstr "Ireki %1(r)e&kin"
 
-#: ktnefmain.cpp:533
+#: ktnefmain.cpp:525
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr "%1"
 
-#: ktnefmain.cpp:558
+#: ktnefmain.cpp:549
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr "&Ireki honekin"
 
-#: ktnefmain.cpp:574
+#: ktnefmain.cpp:565
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "Bestelak&oa..."
 
-#: ktnefmain.cpp:576 ktnefmain.cpp:584
+#: ktnefmain.cpp:567 ktnefmain.cpp:575
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
@@ -245,19 +245,19 @@ msgstr "E&zarpenak"
 msgid "Main Toolbar"
 msgstr "Tresna-barra nagusia"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:70
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Fitxategi-izena"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Fitxategi mota"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"

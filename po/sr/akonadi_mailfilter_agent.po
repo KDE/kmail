@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2014-11-09 22:31+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -125,7 +125,7 @@ msgstr ""
 "количина података премаши задату вредност, најстарији подаци биће одбацивани "
 "док се не спадне испод ограничења."
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:323
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -134,51 +134,51 @@ msgstr ""
 "Не могу да пишем у фајл %1:\n"
 "Детаљни опис грешке: %2"
 
-#: filterlogdialog.cpp:331
+#: filterlogdialog.cpp:327
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Грешка К‑поште"
 
-#: filtermanager.cpp:102
+#: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Филтрирам поруку %1 од %2"
 
-#: filtermanager.cpp:189
+#: filtermanager.cpp:186
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Грешка при премештању поште током филтрирања"
 
-#: filtermanager.cpp:197
+#: filtermanager.cpp:194
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Грешка при брисању поште током филтрирања"
 
-#: filtermanager.cpp:205
+#: filtermanager.cpp:202
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Грешка при измени поште током филтрирања"
 
-#: filtermanager.cpp:222
+#: filtermanager.cpp:219
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Израчунавам филтерска правила:</b> "
 
-#: filtermanager.cpp:229
+#: filtermanager.cpp:226
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Филтерска правила су поклопила.</b>"
 
 # >> %1 subject, %2 sender, %3 date sent
-#: filtermanager.cpp:257
+#: filtermanager.cpp:254
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Филтрирање започето на поруци „%1“ — „%2“ — „%3“:</b>"
 
 # >> @title:window
-#: filtermanager.cpp:592 mailfilteragent.cpp:224
+#: filtermanager.cpp:587 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "Филтрирање порука"
@@ -188,29 +188,29 @@ msgstr "Филтрирање порука"
 msgid "Starting"
 msgstr ""
 
-#: mailfilteragent.cpp:116
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Дневник филтрирања поште укључен"
 
-#: mailfilteragent.cpp:118
+#: mailfilteragent.cpp:116
 #, kde-format
 msgid "Show Log"
 msgstr ""
 
-#: mailfilteragent.cpp:185
+#: mailfilteragent.cpp:183
 #, kde-format
 msgid "Ready"
 msgstr "Спреман"
 
-#: mailfilteragent.cpp:273
+#: mailfilteragent.cpp:270
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Филтрирам у %1"
 
 # >> @title:window
-#: mailfilteragent.cpp:396
+#: mailfilteragent.cpp:393
 #, fuzzy, kde-format
 #| msgid "Filtering messages"
 msgid "Finished filtering, %1 message processed"

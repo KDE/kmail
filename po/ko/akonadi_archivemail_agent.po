@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:46+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2025-10-09 00:56+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -23,7 +23,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "보관된 메일 수정"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -120,34 +120,34 @@ msgctxt "@action"
 msgid "Delete"
 msgstr "삭제"
 
-#: archivemailwidget.cpp:162
+#: archivemailwidget.cpp:160
 #, kde-format
 msgid "Folder: %1"
 msgstr "폴더: %1"
 
-#: archivemailwidget.cpp:184
+#: archivemailwidget.cpp:182
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "%1일"
 
-#: archivemailwidget.cpp:193
+#: archivemailwidget.cpp:191
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "%1 압축 예정"
 
-#: archivemailwidget.cpp:230
+#: archivemailwidget.cpp:227
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "선택한 항목을 삭제하시겠습니까?"
 
-#: archivemailwidget.cpp:231
+#: archivemailwidget.cpp:228
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "항목 삭제"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:267
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2025-10-18 01:10+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -121,7 +121,7 @@ msgstr ""
 "el tamaño de los datos de registro recopilados excede de este límite, los "
 "datos más antiguos se desechan para no exceder el límite."
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:323
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -130,49 +130,49 @@ msgstr ""
 "No se ha podido escribir el archivo %1:\n"
 "«%2» es la descripción detallada del error."
 
-#: filterlogdialog.cpp:331
+#: filterlogdialog.cpp:327
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Error de KMail"
 
-#: filtermanager.cpp:102
+#: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrando mensaje %1 de %2"
 
-#: filtermanager.cpp:189
+#: filtermanager.cpp:186
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Ha ocurrido un error al aplicar el movimiento del filtro de correo"
 
-#: filtermanager.cpp:197
+#: filtermanager.cpp:194
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Ha ocurrido un error al aplicar el borrado del filtro de correo"
 
-#: filtermanager.cpp:205
+#: filtermanager.cpp:202
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr ""
 "Ha ocurrido un error al aplicar las modificaciones del filtro de correo"
 
-#: filtermanager.cpp:222
+#: filtermanager.cpp:219
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Evaluación de reglas de filtrado:</b> "
 
-#: filtermanager.cpp:229
+#: filtermanager.cpp:226
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Las reglas de filtrado han coincidido.</b>"
 
-#: filtermanager.cpp:257
+#: filtermanager.cpp:254
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Filtrado iniciado en el mensaje «%1» de «%2» a las «%3»:</b>"
 
-#: filtermanager.cpp:592 mailfilteragent.cpp:224
+#: filtermanager.cpp:587 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrando mensajes"
@@ -182,28 +182,28 @@ msgstr "Filtrando mensajes"
 msgid "Starting"
 msgstr "Iniciando"
 
-#: mailfilteragent.cpp:116
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Registro de filtrado de correo activado"
 
-#: mailfilteragent.cpp:118
+#: mailfilteragent.cpp:116
 #, kde-format
 msgid "Show Log"
 msgstr "Mostrar registro"
 
-#: mailfilteragent.cpp:185
+#: mailfilteragent.cpp:183
 #, kde-format
 msgid "Ready"
 msgstr "Preparado"
 
-#: mailfilteragent.cpp:273
+#: mailfilteragent.cpp:270
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Filtrando en %1"
 
-#: mailfilteragent.cpp:396
+#: mailfilteragent.cpp:393
 #, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"

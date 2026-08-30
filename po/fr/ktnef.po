@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-06-26 20:28+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: French <French <kde-francophone@kde.org>>\n"
@@ -50,19 +50,19 @@ msgstr "Propriétés de la pièce jointe %1"
 msgid " bytes"
 msgstr " octets"
 
-#: attachpropertydialog.cpp:156
+#: attachpropertydialog.cpp:154
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "Attributs « TNEF »"
 
-#: attachpropertydialog.cpp:165
+#: attachpropertydialog.cpp:163
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Doit d'abord sélectionner un élément."
 
-#: attachpropertydialog.cpp:171
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
@@ -70,7 +70,7 @@ msgstr ""
 "Il est impossible d'enregistrer l'élément sélectionné car il comporte une "
 "étiquette vide."
 
-#: attachpropertydialog.cpp:192
+#: attachpropertydialog.cpp:188
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -100,13 +100,13 @@ msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Afficher avec..."
 
-#: ktnefmain.cpp:119 ktnefmain.cpp:401
+#: ktnefmain.cpp:119 ktnefmain.cpp:395
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Extraire"
 
-#: ktnefmain.cpp:123 ktnefmain.cpp:402
+#: ktnefmain.cpp:123 ktnefmain.cpp:396
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
@@ -118,7 +118,7 @@ msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Tout extraire vers..."
 
-#: ktnefmain.cpp:133 ktnefmain.cpp:405
+#: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
@@ -174,7 +174,7 @@ msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "Ouvrir un fichier « TNEF »"
 
-#: ktnefmain.cpp:246 ktnefmain.cpp:277
+#: ktnefmain.cpp:245 ktnefmain.cpp:274
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
@@ -182,19 +182,19 @@ msgstr ""
 "Il n'existe aucun fichier sélectionné. Veuillez en sélectionner un et ré-"
 "essayer."
 
-#: ktnefmain.cpp:306 ktnefmain.cpp:382
+#: ktnefmain.cpp:301 ktnefmain.cpp:376
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr "Impossible d'extraire le fichier « %1 »."
 
-#: ktnefmain.cpp:491
+#: ktnefmain.cpp:484
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr "Le message ne contient aucune donnée en texte enrichi."
 
-#: ktnefmain.cpp:509
+#: ktnefmain.cpp:501
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
@@ -202,30 +202,30 @@ msgstr ""
 "Impossible d'ouvrir le fichier « %1 » en écriture. Veuillez vérifier les "
 "droits d'accès sur les fichiers."
 
-#: ktnefmain.cpp:531
+#: ktnefmain.cpp:523
 #, kde-format
 msgid "Open &with %1"
 msgstr "Ouvrir &avec %1"
 
-#: ktnefmain.cpp:533
+#: ktnefmain.cpp:525
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr "%1"
 
-#: ktnefmain.cpp:558
+#: ktnefmain.cpp:549
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr "&Ouvrir avec"
 
-#: ktnefmain.cpp:574
+#: ktnefmain.cpp:565
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "&Autres..."
 
-#: ktnefmain.cpp:576 ktnefmain.cpp:584
+#: ktnefmain.cpp:567 ktnefmain.cpp:575
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
@@ -255,19 +255,19 @@ msgstr "&Configuration"
 msgid "Main Toolbar"
 msgstr "Barre principale d'outils"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:70
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Nom du fichier"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Type du fichier"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"

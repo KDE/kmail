@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:46+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2012-12-25 10:57+0700\n"
 "Last-Translator: sutha <sutha@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros>\n"
@@ -27,7 +27,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "កែសម្រួល​សំបុត្រ​ប័ណ្ណសារ"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
@@ -133,36 +133,36 @@ msgctxt "@action"
 msgid "Delete"
 msgstr "លុប"
 
-#: archivemailwidget.cpp:162
+#: archivemailwidget.cpp:160
 #, kde-format
 msgid "Folder: %1"
 msgstr "ថត ៖ %1"
 
-#: archivemailwidget.cpp:184
+#: archivemailwidget.cpp:182
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] ""
 
-#: archivemailwidget.cpp:193
+#: archivemailwidget.cpp:191
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "ប័ណ្ណសារ​នឹង​រួចរាល់ %1"
 
-#: archivemailwidget.cpp:230
+#: archivemailwidget.cpp:227
 #, fuzzy, kde-format
 #| msgid "Do you want to delete selected items? Do you want to continue?"
 msgid "Do you want to delete the selected items?"
 msgstr "តើ​អ្នក​ចង់​លុប​ធាតុ​ដែល​បាន​ជ្រើស ឬ​​ចង់​​បន្ត​ទៅ​ទៀត ?"
 
-#: archivemailwidget.cpp:231
+#: archivemailwidget.cpp:228
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "លុប"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:267
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

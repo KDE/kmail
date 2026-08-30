@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:46+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2020-09-20 09:02+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -26,7 +26,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Τροποποίηση αρχειοθήκης ηλ. αλληλογραφίας"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -123,36 +123,36 @@ msgctxt "@action"
 msgid "Delete"
 msgstr "Διαγραφή"
 
-#: archivemailwidget.cpp:162
+#: archivemailwidget.cpp:160
 #, kde-format
 msgid "Folder: %1"
 msgstr "Φάκελος: %1"
 
-#: archivemailwidget.cpp:184
+#: archivemailwidget.cpp:182
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Αύριο"
 msgstr[1] "%1 ημέρες"
 
-#: archivemailwidget.cpp:193
+#: archivemailwidget.cpp:191
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Η αρχειοθέτηση θα γίνει %1"
 
-#: archivemailwidget.cpp:230
+#: archivemailwidget.cpp:227
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Θέλετε να διαγραφούν τα επιλεγμένα αντικείμενα;"
 
-#: archivemailwidget.cpp:231
+#: archivemailwidget.cpp:228
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Διαγραφή"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:267
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

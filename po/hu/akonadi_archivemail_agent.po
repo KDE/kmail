@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:46+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -25,7 +25,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Archivált levél módosítása"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -122,35 +122,35 @@ msgctxt "@action"
 msgid "Delete"
 msgstr "Törlés"
 
-#: archivemailwidget.cpp:162
+#: archivemailwidget.cpp:160
 #, kde-format
 msgid "Folder: %1"
 msgstr "Mappa: %1"
 
-#: archivemailwidget.cpp:184
+#: archivemailwidget.cpp:182
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Holnap"
 msgstr[1] "%1 nap"
 
-#: archivemailwidget.cpp:193
+#: archivemailwidget.cpp:191
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Az archívum elkészül: %1"
 
-#: archivemailwidget.cpp:230
+#: archivemailwidget.cpp:227
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Szeretné törölni a kijelölt elemeket?"
 
-#: archivemailwidget.cpp:231
+#: archivemailwidget.cpp:228
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Elemek törlése"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:267
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

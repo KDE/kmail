@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2013-01-13 22:24+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -43,25 +43,25 @@ msgstr "Proprietăți pentru atașamentul %1"
 msgid " bytes"
 msgstr ""
 
-#: attachpropertydialog.cpp:156
+#: attachpropertydialog.cpp:154
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "Atribute TNEF"
 
-#: attachpropertydialog.cpp:165
+#: attachpropertydialog.cpp:163
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Trebuie să alegeți un element mai întâi."
 
-#: attachpropertydialog.cpp:171
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Elementul ales nu poate fi salvat deoarece are un marcaj gol."
 
-#: attachpropertydialog.cpp:192
+#: attachpropertydialog.cpp:188
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -90,13 +90,13 @@ msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Vizualizare cu..."
 
-#: ktnefmain.cpp:119 ktnefmain.cpp:401
+#: ktnefmain.cpp:119 ktnefmain.cpp:395
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Extrage"
 
-#: ktnefmain.cpp:123 ktnefmain.cpp:402
+#: ktnefmain.cpp:123 ktnefmain.cpp:396
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "Extract To..."
@@ -112,7 +112,7 @@ msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Extragere totală către..."
 
-#: ktnefmain.cpp:133 ktnefmain.cpp:405
+#: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
@@ -173,54 +173,54 @@ msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "Deschide fișier TNEF"
 
-#: ktnefmain.cpp:246 ktnefmain.cpp:277
+#: ktnefmain.cpp:245 ktnefmain.cpp:274
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
 msgstr ""
 
-#: ktnefmain.cpp:306 ktnefmain.cpp:382
+#: ktnefmain.cpp:301 ktnefmain.cpp:376
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr ""
 
-#: ktnefmain.cpp:491
+#: ktnefmain.cpp:484
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr ""
 
-#: ktnefmain.cpp:509
+#: ktnefmain.cpp:501
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr ""
 
-#: ktnefmain.cpp:531
+#: ktnefmain.cpp:523
 #, kde-format
 msgid "Open &with %1"
 msgstr ""
 
-#: ktnefmain.cpp:533
+#: ktnefmain.cpp:525
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr ""
 
-#: ktnefmain.cpp:558
+#: ktnefmain.cpp:549
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr ""
 
-#: ktnefmain.cpp:574
+#: ktnefmain.cpp:565
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr ""
 
-#: ktnefmain.cpp:576 ktnefmain.cpp:584
+#: ktnefmain.cpp:567 ktnefmain.cpp:575
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "View With..."
@@ -252,19 +252,19 @@ msgstr "&Configurări"
 msgid "Main Toolbar"
 msgstr "Bara de unelte principală"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:70
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Denumire fișier"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Tip fișier"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"

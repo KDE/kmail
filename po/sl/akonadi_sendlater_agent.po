@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2025-08-20 06:13+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -50,29 +50,29 @@ msgstr "ID sporočila"
 msgid "No messages waiting…"
 msgstr "Nobeno sporočilo ne čaka…"
 
-#: sendlaterconfigurewidget.cpp:94
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Pošlji zdaj"
 
-#: sendlaterconfigurewidget.cpp:97
+#: sendlaterconfigurewidget.cpp:96
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Izbriši"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:154
 #, kde-format
 msgid "Yes"
 msgstr "Da"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:154
 #, kde-format
 msgid "No"
 msgstr "Ne"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:204
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -81,13 +81,13 @@ msgstr[1] "Ali želite izbrisati izbrana predmeta?"
 msgstr[2] "Ali želite izbrisati izbrane predmete?"
 msgstr[3] "Ali želite izbrisati izbrane predmete?"
 
-#: sendlaterconfigurewidget.cpp:210
+#: sendlaterconfigurewidget.cpp:205
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Izbriši postavke"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:213
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -96,13 +96,13 @@ msgstr[1] "Ali želite zbrisati tudi sporočila?"
 msgstr[2] "Ali želite zbrisati tudi sporočila?"
 msgstr[3] "Ali želite zbrisati tudi sporočila?"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:214
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Zbriši sporočila"
 
-#: sendlaterconfigurewidget.cpp:221
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
@@ -148,18 +148,18 @@ msgstr "Ni mogoče poslati sporočila."
 msgid "Message sent"
 msgstr "Sporočilo poslano"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:189
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Najdena je bila napaka. Ali želite poslati znova?"
 
-#: sendlatermanager.cpp:194
+#: sendlatermanager.cpp:190
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Najdena napaka"
 
-#: sendlatermanager.cpp:195
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-01-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-10-03 21:50+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -119,7 +119,7 @@ msgstr ""
 "naplóadatok mérete túllépi ezt a korlátot, a legrégebbi adatok el lesznek "
 "dobva. "
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:323
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -128,48 +128,48 @@ msgstr ""
 "Nem sikerült írni a(z) %1 fájlt:\n"
 "Részletes hibaleírás: „%2”."
 
-#: filterlogdialog.cpp:331
+#: filterlogdialog.cpp:327
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail hiba"
 
-#: filtermanager.cpp:102
+#: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1 / %2 üzenet szűrése"
 
-#: filtermanager.cpp:189
+#: filtermanager.cpp:186
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Hiba az áthelyezés levélszűrő alkalmazásakor"
 
-#: filtermanager.cpp:197
+#: filtermanager.cpp:194
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Hiba a törlés levélszűrő alkalmazásakor"
 
-#: filtermanager.cpp:205
+#: filtermanager.cpp:202
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Hiba a módosítások levélszűrő alkalmazásakor"
 
-#: filtermanager.cpp:222
+#: filtermanager.cpp:219
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Szűrési szabályok kiértékelése:</b> "
 
-#: filtermanager.cpp:229
+#: filtermanager.cpp:226
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Szűrési szabályok illeszkedtek.</b>"
 
-#: filtermanager.cpp:257
+#: filtermanager.cpp:254
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Szűrés kezdése a(z) „%1” üzeneten ettől: „%2” eddig: „%3” :</b>"
 
-#: filtermanager.cpp:592 mailfilteragent.cpp:224
+#: filtermanager.cpp:587 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "Üzenetszűrés"
@@ -179,28 +179,28 @@ msgstr "Üzenetszűrés"
 msgid "Starting"
 msgstr ""
 
-#: mailfilteragent.cpp:116
+#: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
 msgstr "Levélszűrőnapló engedélyezve"
 
-#: mailfilteragent.cpp:118
+#: mailfilteragent.cpp:116
 #, kde-format
 msgid "Show Log"
 msgstr ""
 
-#: mailfilteragent.cpp:185
+#: mailfilteragent.cpp:183
 #, kde-format
 msgid "Ready"
 msgstr "Kész"
 
-#: mailfilteragent.cpp:273
+#: mailfilteragent.cpp:270
 #, kde-format
 msgid "Filtering in %1"
 msgstr "Szűrés ebben: %1"
 
-#: mailfilteragent.cpp:396
+#: mailfilteragent.cpp:393
 #, fuzzy, kde-format
 #| msgid "Filtering messages"
 msgid "Finished filtering, %1 message processed"

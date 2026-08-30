@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2025-01-09 16:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -44,25 +44,25 @@ msgstr "%1 Eki Özellikleri"
 msgid " bytes"
 msgstr " bayt"
 
-#: attachpropertydialog.cpp:156
+#: attachpropertydialog.cpp:154
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF Öznitelikleri"
 
-#: attachpropertydialog.cpp:165
+#: attachpropertydialog.cpp:163
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Önce bir öge seçmelisiniz."
 
-#: attachpropertydialog.cpp:171
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Seçili öge boş bir etiketi olduğundan kaydedilemedi."
 
-#: attachpropertydialog.cpp:192
+#: attachpropertydialog.cpp:188
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -90,13 +90,13 @@ msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Birlikte Görüntüle…"
 
-#: ktnefmain.cpp:119 ktnefmain.cpp:401
+#: ktnefmain.cpp:119 ktnefmain.cpp:395
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Çıkar"
 
-#: ktnefmain.cpp:123 ktnefmain.cpp:402
+#: ktnefmain.cpp:123 ktnefmain.cpp:396
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
@@ -108,7 +108,7 @@ msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Tümünü Şuraya Çıkar…"
 
-#: ktnefmain.cpp:133 ktnefmain.cpp:405
+#: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
@@ -164,54 +164,54 @@ msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "TNEF Dosyası Aç"
 
-#: ktnefmain.cpp:246 ktnefmain.cpp:277
+#: ktnefmain.cpp:245 ktnefmain.cpp:274
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
 msgstr "Dosya seçilmedi. Lütfen bir dosya seçip yeniden deneyin."
 
-#: ktnefmain.cpp:306 ktnefmain.cpp:382
+#: ktnefmain.cpp:301 ktnefmain.cpp:376
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr "“%1” dosyası çıkarılamadı."
 
-#: ktnefmain.cpp:491
+#: ktnefmain.cpp:484
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr "İleti hiç Zengin Metin verisi içermiyor."
 
-#: ktnefmain.cpp:509
+#: ktnefmain.cpp:501
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr "“%1” dosyası yazmak için açılamadı, dosya izinlerini denetleyin."
 
-#: ktnefmain.cpp:531
+#: ktnefmain.cpp:523
 #, kde-format
 msgid "Open &with %1"
 msgstr "%1 &ile Aç"
 
-#: ktnefmain.cpp:533
+#: ktnefmain.cpp:525
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr "%1"
 
-#: ktnefmain.cpp:558
+#: ktnefmain.cpp:549
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr "&Birlikte Aç"
 
-#: ktnefmain.cpp:574
+#: ktnefmain.cpp:565
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "Diğ&er…"
 
-#: ktnefmain.cpp:576 ktnefmain.cpp:584
+#: ktnefmain.cpp:567 ktnefmain.cpp:575
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
@@ -241,19 +241,19 @@ msgstr "Ayar&lar"
 msgid "Main Toolbar"
 msgstr "Ana Araç Çubuğu"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:70
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Dosya Adı"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Dosya Türü"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"

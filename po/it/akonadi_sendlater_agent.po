@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2025-08-20 13:22+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -47,55 +47,55 @@ msgstr "ID del messaggio"
 msgid "No messages waiting…"
 msgstr "Nessun messaggio in attesa…"
 
-#: sendlaterconfigurewidget.cpp:94
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Spedisci ora"
 
-#: sendlaterconfigurewidget.cpp:97
+#: sendlaterconfigurewidget.cpp:96
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Elimina"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:154
 #, kde-format
 msgid "Yes"
 msgstr "Sì"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:154
 #, kde-format
 msgid "No"
 msgstr "No"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:204
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "Vuoi eliminare l'elemento selezionato?"
 msgstr[1] "Vuoi eliminare gli elementi selezionati?"
 
-#: sendlaterconfigurewidget.cpp:210
+#: sendlaterconfigurewidget.cpp:205
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Elimina elementi"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:213
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "Vuoi eliminare anche il messaggio?"
 msgstr[1] "Vuoi eliminare anche i messaggi?"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:214
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Elimina messaggi"
 
-#: sendlaterconfigurewidget.cpp:221
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
@@ -141,18 +141,18 @@ msgstr "Impossibile inviare il messaggio."
 msgid "Message sent"
 msgstr "Messaggio inviato"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:189
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "È stato trovato un errore. Vuoi rispedire il messaggio?"
 
-#: sendlatermanager.cpp:194
+#: sendlatermanager.cpp:190
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Rilevato un errore"
 
-#: sendlatermanager.cpp:195
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

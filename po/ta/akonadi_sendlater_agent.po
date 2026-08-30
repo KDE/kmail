@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-12-15 00:43+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2024-08-18 17:33+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -47,55 +47,55 @@ msgstr ""
 msgid "No messages waiting…"
 msgstr "அனுப்புவதற்கு எந்த அஞ்சலும் இல்லை…"
 
-#: sendlaterconfigurewidget.cpp:94
+#: sendlaterconfigurewidget.cpp:93
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "இப்போது அனுப்பு"
 
-#: sendlaterconfigurewidget.cpp:97
+#: sendlaterconfigurewidget.cpp:96
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "நீக்கு"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:154
 #, kde-format
 msgid "Yes"
 msgstr "ஆம்"
 
-#: sendlaterconfigurewidget.cpp:158
+#: sendlaterconfigurewidget.cpp:154
 #, kde-format
 msgid "No"
 msgstr "இல்லை"
 
-#: sendlaterconfigurewidget.cpp:209
+#: sendlaterconfigurewidget.cpp:204
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "தேர்ந்தெடுக்கப்பட்டதை அனுப்பவேண்டியவற்றின் பட்டியலிலிருந்து நீக்க வேண்டுமா?"
 msgstr[1] "தேர்ந்தெடுக்கப்பட்டவற்றை அனுப்பவேண்டியவற்றின் பட்டியலிலிருந்து நீக்க வேண்டுமா?"
 
-#: sendlaterconfigurewidget.cpp:210
+#: sendlaterconfigurewidget.cpp:205
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "அனுப்ப வேண்டியதை நீக்குவது"
 
-#: sendlaterconfigurewidget.cpp:218
+#: sendlaterconfigurewidget.cpp:213
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "அஞ்சலையும் நீக்க வேண்டுமா?"
 msgstr[1] "அஞ்சல்களையும் நீக்க வேண்டுமா?"
 
-#: sendlaterconfigurewidget.cpp:219
+#: sendlaterconfigurewidget.cpp:214
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "அஞ்சல்களை நீக்குவது"
 
-#: sendlaterconfigurewidget.cpp:221
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
@@ -141,18 +141,18 @@ msgstr "அஞ்சலை அனுப்ப முடியவில்லை.
 msgid "Message sent"
 msgstr "அஞ்சல் அனுப்பப்பட்டது"
 
-#: sendlatermanager.cpp:193
+#: sendlatermanager.cpp:189
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "சிக்கல் நேர்ந்த‍து. அஞ்சலை மீண்டும் அனுப்ப வேண்டுமா?"
 
-#: sendlatermanager.cpp:194
+#: sendlatermanager.cpp:190
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "சிக்கல் நேர்ந்த‍து"
 
-#: sendlatermanager.cpp:195
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

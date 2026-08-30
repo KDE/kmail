@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-28 00:46+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2020-01-02 11:42+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -23,7 +23,7 @@ msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Kirjaarhiivi muutmine"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:273
+#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
@@ -128,36 +128,36 @@ msgctxt "@action"
 msgid "Delete"
 msgstr "Kustuta"
 
-#: archivemailwidget.cpp:162
+#: archivemailwidget.cpp:160
 #, kde-format
 msgid "Folder: %1"
 msgstr "Kaust: %1"
 
-#: archivemailwidget.cpp:184
+#: archivemailwidget.cpp:182
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "homme"
 msgstr[1] "%1 päeva pärast"
 
-#: archivemailwidget.cpp:193
+#: archivemailwidget.cpp:191
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Arhiveerimine sooritatakse %1"
 
-#: archivemailwidget.cpp:230
+#: archivemailwidget.cpp:227
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Kas kustutada valitud elemendid?"
 
-#: archivemailwidget.cpp:231
+#: archivemailwidget.cpp:228
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Kustuta"
 
-#: archivemailwidget.cpp:272
+#: archivemailwidget.cpp:267
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-08-30 00:47+0000\n"
 "PO-Revision-Date: 2020-07-27 22:46+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -43,25 +43,25 @@ msgstr "Egenskaber for bilag %1"
 msgid " bytes"
 msgstr " bytes"
 
-#: attachpropertydialog.cpp:156
+#: attachpropertydialog.cpp:154
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF-attributter"
 
-#: attachpropertydialog.cpp:165
+#: attachpropertydialog.cpp:163
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Du skal vælge et element først."
 
-#: attachpropertydialog.cpp:171
+#: attachpropertydialog.cpp:168
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Det valgte element kan ikke gemmes da det har et tomt mærke."
 
-#: attachpropertydialog.cpp:192
+#: attachpropertydialog.cpp:188
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -91,13 +91,13 @@ msgctxt "@action:inmenu"
 msgid "View With…"
 msgstr "Vis med..."
 
-#: ktnefmain.cpp:119 ktnefmain.cpp:401
+#: ktnefmain.cpp:119 ktnefmain.cpp:395
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract"
 msgstr "Pak ud"
 
-#: ktnefmain.cpp:123 ktnefmain.cpp:402
+#: ktnefmain.cpp:123 ktnefmain.cpp:396
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "Extract To..."
@@ -113,7 +113,7 @@ msgctxt "@action:inmenu"
 msgid "Extract All To…"
 msgstr "Pak alt ud til..."
 
-#: ktnefmain.cpp:133 ktnefmain.cpp:405
+#: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Properties"
@@ -173,48 +173,48 @@ msgctxt "@title:window"
 msgid "Open TNEF File"
 msgstr "Åbn TNEF-fil"
 
-#: ktnefmain.cpp:246 ktnefmain.cpp:277
+#: ktnefmain.cpp:245 ktnefmain.cpp:274
 #, kde-format
 msgctxt "@info"
 msgid "There is no file selected. Please select a file an try again."
 msgstr "Ingen fil er valgt. Vælg en fil og prøv igen."
 
-#: ktnefmain.cpp:306 ktnefmain.cpp:382
+#: ktnefmain.cpp:301 ktnefmain.cpp:376
 #, kde-format
 msgctxt "@info"
 msgid "Unable to extract file \"%1\"."
 msgstr "Kan ikke pakke filen \"%1\" ud."
 
-#: ktnefmain.cpp:491
+#: ktnefmain.cpp:484
 #, kde-format
 msgctxt "@info"
 msgid "The message does not contain any Rich Text data."
 msgstr "Brevet indeholder ikke nogen rigtekst-data."
 
-#: ktnefmain.cpp:509
+#: ktnefmain.cpp:501
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file \"%1\" for writing, check file permissions."
 msgstr "Kan ikke åbne filen \"%1\" til skrivning. Tjek filens rettigheder."
 
-#: ktnefmain.cpp:531
+#: ktnefmain.cpp:523
 #, kde-format
 msgid "Open &with %1"
 msgstr "Åbn &med %1"
 
-#: ktnefmain.cpp:533
+#: ktnefmain.cpp:525
 #, kde-format
 msgctxt "@item:inmenu Open With, %1 is application name"
 msgid "%1"
 msgstr "%1"
 
-#: ktnefmain.cpp:558
+#: ktnefmain.cpp:549
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With"
 msgstr "Å&bn med"
 
-#: ktnefmain.cpp:574
+#: ktnefmain.cpp:565
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu Open With"
 #| msgid "&Other..."
@@ -222,7 +222,7 @@ msgctxt "@action:inmenu Open With"
 msgid "&Other…"
 msgstr "&Andet..."
 
-#: ktnefmain.cpp:576 ktnefmain.cpp:584
+#: ktnefmain.cpp:567 ktnefmain.cpp:575
 #, fuzzy, kde-format
 #| msgctxt "@title:menu"
 #| msgid "&Open With"
@@ -254,19 +254,19 @@ msgstr "&Indstillinger"
 msgid "Main Toolbar"
 msgstr "Hovedværktøjslinje"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:70
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Filnavn"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Filtype"
 
-#: ktnefview.cpp:72
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"
