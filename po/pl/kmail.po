@@ -1,6 +1,6 @@
 # translation of kmail.po to Polish
 # translation of kmail.po to
-# SPDX-FileCopyrightText: 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
+# SPDX-FileCopyrightText: 2011-2026 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 # Early translations by Paweł Jabłoński <pawel.jablonski@mail.lze.lodz.pl>
 # Maintained by Jacek Stolarczyk <jacek@mer.chemia.polsl.gliwice.pl>
 # Michal Rudolf <mrudolf@kdewebdev.org>, 2002,2003, 2004, 2005, 2006, 2008, 2009, 2010.
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-04-11 08:18+0200\n"
+"PO-Revision-Date: 2026-08-29 21:10+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: pl\n"
 "Language: pl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -345,12 +345,10 @@ msgid "Mailing List"
 msgstr "Lista dyskusyjna"
 
 #: collectionpage/collectionmailinglistpage.cpp:63
-#, fuzzy, kde-format
-#| msgctxt "@option:check"
-#| msgid "Folder holds a mailing list"
+#, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
-msgstr "Katalog przechowuje listę dyskusyjną"
+msgstr "Katalog przechowuje pojedynczą listę dyskusyjną"
 
 #: collectionpage/collectionmailinglistpage.cpp:68
 #, kde-format
@@ -1245,11 +1243,10 @@ msgid "Automatically save the message at this specified interval"
 msgstr "Zapisuj wiadomość w podanych odstępach czasu"
 
 #: configuredialog/configurecomposerpage.cpp:385
-#, fuzzy, kde-format
-#| msgid "Composer"
+#, kde-format
 msgctxt "@title:group"
 msgid "Composer"
-msgstr "Tworzenie wiadomości"
+msgstr "Edytor"
 
 #: configuredialog/configurecomposerpage.cpp:389
 #, kde-format
@@ -1590,18 +1587,14 @@ msgid "GnuPG Settings"
 msgstr "Ustawienia GnuPG"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
 "Brak modułu. Sprawdź swoją instalację. Ten moduł jest dostarczany przez "
-"Kleopatrę."
+"kdepim-addons."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -2058,7 +2051,7 @@ msgstr "&Sprawdzanie pisowni…"
 #: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Spellchecker"
-msgstr "Sprawdźanie pisowni"
+msgstr "Sprawdzanie pisowni"
 
 #: editor/kmcomposerwin.cpp:1477
 #, kde-format
@@ -2141,12 +2134,12 @@ msgstr "WST"
 #: editor/kmcomposerwin.cpp:1701
 #, kde-format
 msgid "Spellcheck: on"
-msgstr "Sprawdźanie pisowni: włączone"
+msgstr "Sprawdzanie pisowni: włączone"
 
 #: editor/kmcomposerwin.cpp:1701
 #, kde-format
 msgid "Spellcheck: off"
-msgstr "Sprawdźanie pisowni: wyłączone"
+msgstr "Sprawdzanie pisowni: wyłączone"
 
 #: editor/kmcomposerwin.cpp:2079
 #, kde-format
@@ -2988,7 +2981,7 @@ msgstr "&Powiel istniejącą wizytówkę"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Nie jest dostępna wizytówka vCard dla obecnej tożsamości"
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -3444,7 +3437,7 @@ msgstr "Konto wychodzących:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
-msgstr "Dołącz moją wizytówkę do wiadomości"
+msgstr "Załącz moją wizytówkę do wiadomości"
 
 #: identity/identitydialog.cpp:732
 #, kde-format
@@ -4085,10 +4078,9 @@ msgid "Set identity name"
 msgstr "Nadaj nazwę tożsamości"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "Tożsamość:"
+msgstr "Tożsamość"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4097,10 +4089,9 @@ msgid "View the given message file"
 msgstr "Pokaż podaną wiadomość"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Wiadomość"
+msgstr "Adres URL wiadomości"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4109,8 +4100,7 @@ msgid "Set body of message as html"
 msgstr "Ustaw treść wiadomości jako HTML"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Body of Message"
+#, kde-format
 msgid "Body Message"
 msgstr "Treść wiadomości"
 
@@ -4124,7 +4114,7 @@ msgstr "Wymień dostępne możliwości informacji zwrotnej"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Włącz tryb diagnostyczny"
 
 #: kmail_options.h:44
 #, kde-format
@@ -4336,7 +4326,7 @@ msgstr "U&stawienia"
 #: kmcomposerui.rc:86
 #, kde-format
 msgid "&Attach"
-msgstr "&Dołącz"
+msgstr "Z&ałącz"
 
 #. i18n: ectx: ToolBar (htmlToolBar)
 #: kmcomposerui.rc:131
@@ -5021,18 +5011,16 @@ msgid "Followup Reminder Messages…"
 msgstr "Wiadomości przypominające o sobie…"
 
 #: kmmainwidget.cpp:3126
-#, fuzzy, kde-format
-#| msgid "Expand All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Expand All"
-msgstr "Rozwiń wszystkie grupy"
+msgstr "Rozwiń wszystkie"
 
 #: kmmainwidget.cpp:3131
-#, fuzzy, kde-format
-#| msgid "Collapse All Groups"
+#, kde-format
 msgctxt "@action"
 msgid "Collapse All"
-msgstr "Zwiń wszystkie grupy"
+msgstr "Zwiń wszystkie"
 
 #: kmmainwidget.cpp:3142 util.cpp:187
 #, kde-format
@@ -5411,11 +5399,10 @@ msgid "&Add Account…"
 msgstr "Dod&aj konto…"
 
 #: kmmainwidget.cpp:3523
-#, fuzzy, kde-format
-#| msgid "What's next?"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
-msgstr "Co dalej?"
+msgstr "Co nowego"
 
 #: kmmainwidget.cpp:3530
 #, kde-format
@@ -7168,10 +7155,9 @@ msgstr "Zezwól na usuwanie wiadomości bez potwierdzenia"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "Wyślij wiado&mości z katalogu 'do wysłania':"
+msgstr "Włącz przeciągnie i upuszczanie wiadomości do katalogów"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -7773,7 +7759,7 @@ msgstr "Sprawdź certyfikaty w sieci (OCSP)"
 #: ui/smimeconfiguration.ui:40
 #, kde-format
 msgid "Online Certificate Validation"
-msgstr "Sprawdźanie certyfikatów w sieci"
+msgstr "Sprawdzanie certyfikatów w sieci"
 
 #. i18n: ectx: property (text), widget (QLabel, textLabel1)
 #: ui/smimeconfiguration.ui:50
@@ -8119,26 +8105,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Wygląda na to, że ta wiadomość od %1 nie jest monitorowana. Czy chcesz "
+"odpowiedzieć na tę wiadomość?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Poczta nie jest monitorowana"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "&Nie podpisuj"
+msgstr "Nie wysyłaj"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Wyślij pocztę"
+msgstr "Wyślij pocztę"
 
 #: util.cpp:190
 #, kde-format
@@ -8167,10 +8153,9 @@ msgid "Unable to start account wizard"
 msgstr "Nie można wywołać pomocnika konta"
 
 #: whatsnew/whatsnewtranslations.cpp:25
-#, fuzzy, kde-format
-#| msgid "Add a new identity"
+#, kde-format
 msgid "Add new whatsnew widget."
-msgstr "Dodaj nową tożsamość"
+msgstr "Dodano nowy element interfejsu \"co nowego\""
 
 #: whatsnew/whatsnewtranslations.cpp:25
 #, kde-format
@@ -8223,9 +8208,9 @@ msgstr "Użyj ustawień globalnych"
 #, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
-msgstr[0] "Odpowiedź poza biurem aktywna na serwerze"
-msgstr[1] "Odpowiedź poza biurem aktywna na serwerach"
-msgstr[2] "Odpowiedź poza biurem aktywna na serwerach"
+msgstr[0] "Odpowiedzi poza biurem są możliwe na serwerze"
+msgstr[1] "Odpowiedzi poza biurem są możliwe na serwerach"
+msgstr[2] "Odpowiedzi poza biurem są możliwe na serwerach"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
