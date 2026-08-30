@@ -4108,10 +4108,9 @@ void KMMainWidget::updateHtmlMenuEntry()
 {
     if (mDisplayMessageFormatMenu && mPreferHtmlLoadExtAction) {
         // the visual ones only make sense if we are showing a message list
-        const bool enabledAction = (mFolderTreeWidget && mFolderTreeWidget->folderTreeView()->currentFolder().isValid());
-
-        mDisplayMessageFormatMenu->setEnabled(enabledAction);
         const bool isEnabled = (mFolderTreeWidget && mFolderTreeWidget->folderTreeView()->currentFolder().isValid());
+
+        mDisplayMessageFormatMenu->setEnabled(isEnabled);
         const bool useHtml = (mFolderDisplayFormatPreference == MessageViewer::Viewer::Html
                               || (mHtmlGlobalSetting && mFolderDisplayFormatPreference == MessageViewer::Viewer::UseGlobalSetting));
         mPreferHtmlLoadExtAction->setEnabled(isEnabled && useHtml);
@@ -4153,7 +4152,7 @@ void KMMainWidget::updateFolderMenu()
     mGUIClient->plugActionList(u"outbox_folder_actionlist"_s, actionlist);
     actionlist.clear();
 
-    if (const bool isASearchFolder = mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource")) {
+    if (mCurrentCollection.resource() == QLatin1StringView("akonadi_search_resource")) {
         mAkonadiStandardActionManager->action(Akonadi::StandardActionManager::DeleteCollections)->setText(i18n("&Delete Search"));
     }
 
@@ -4189,15 +4188,14 @@ void KMMainWidget::updateFolderMenu()
     mGUIClient->unplugActionList(u"collectionview_actionlist"_s);
     mGUIClient->plugActionList(u"collectionview_actionlist"_s, actionlist);
 
-    const bool folderIsValid = folderWithContent;
-    mApplyAllFiltersFolderAction->setEnabled(folderIsValid);
-    mApplyFilterFolderActionsMenu->setEnabled(folderIsValid);
-    mApplyFilterFolderRecursiveActionsMenu->setEnabled(folderIsValid);
+    mApplyAllFiltersFolderAction->setEnabled(folderWithContent);
+    mApplyFilterFolderActionsMenu->setEnabled(folderWithContent);
+    mApplyFilterFolderRecursiveActionsMenu->setEnabled(folderWithContent);
     for (auto a : std::as_const(mFilterFolderMenuActions)) {
-        a->setEnabled(folderIsValid);
+        a->setEnabled(folderWithContent);
     }
     for (auto a : std::as_const(mFilterFolderMenuRecursiveActions)) {
-        a->setEnabled(folderIsValid);
+        a->setEnabled(folderWithContent);
     }
     if (mCurrentCollection.resource() == QLatin1StringView("akonadi_unifiedmailbox_agent")) {
         mAccountSettings->setText(i18n("Configure Unified Mailbox"));

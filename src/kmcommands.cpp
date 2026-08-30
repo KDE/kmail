@@ -1169,6 +1169,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     }
 
     Akonadi::Item::List itemsToModify;
+    itemsToModify.reserve(lstItems.count());
     for (const Akonadi::Item &it : lstItems) {
         if (mInvertMark) {
             // qCDebug(KMAIL_LOG)<<" item ::"<<tmpItem;
