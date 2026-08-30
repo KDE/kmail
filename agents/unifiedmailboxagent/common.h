@@ -7,18 +7,19 @@
 #pragma once
 
 #include <QString>
+using namespace Qt::Literals::StringLiterals;
 
 namespace Common
 {
-static const auto MailMimeType = QStringLiteral("message/rfc822");
+static const auto MailMimeType = u"message/rfc822"_s;
 
-static const auto InboxBoxId = QStringLiteral("inbox");
-static const auto SentBoxId = QStringLiteral("sent-mail");
-static const auto DraftsBoxId = QStringLiteral("drafts");
+static const auto InboxBoxId = u"inbox"_s;
+static const auto SentBoxId = u"sent-mail"_s;
+static const auto DraftsBoxId = u"drafts"_s;
 
 static constexpr auto SpecialCollectionInbox = "inbox";
 static constexpr auto SpecialCollectionSentMail = "send-mail";
 static constexpr auto SpecialCollectionDrafts = "drafts";
 
-static const auto AgentIdentifier = QStringLiteral("akonadi_unifiedmailbox_agent");
+static const auto AgentIdentifier = u"akonadi_unifiedmailbox_agent"_s;
 }

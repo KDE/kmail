@@ -12,6 +12,7 @@
 #include <QStandardPaths>
 #include <QTest>
 #include <QTreeWidget>
+using namespace Qt::Literals::StringLiterals;
 
 FollowupReminderNoAnswerDialogTest::FollowupReminderNoAnswerDialogTest(QObject *parent)
     : QObject(parent)
@@ -28,10 +29,10 @@ void FollowupReminderNoAnswerDialogTest::initTestCase()
 void FollowupReminderNoAnswerDialogTest::shouldHaveDefaultValues()
 {
     FollowUpReminderNoAnswerDialog dlg;
-    auto infowidget = dlg.findChild<FollowUpReminderInfoWidget *>(QStringLiteral("FollowUpReminderInfoWidget"));
+    auto infowidget = dlg.findChild<FollowUpReminderInfoWidget *>(u"FollowUpReminderInfoWidget"_s);
     QVERIFY(infowidget);
 
-    auto treeWidget = infowidget->findChild<QTreeWidget *>(QStringLiteral("treewidget"));
+    auto treeWidget = infowidget->findChild<QTreeWidget *>(u"treewidget"_s);
     QVERIFY(treeWidget);
 
     QCOMPARE(treeWidget->topLevelItemCount(), 0);
@@ -40,8 +41,8 @@ void FollowupReminderNoAnswerDialogTest::shouldHaveDefaultValues()
 void FollowupReminderNoAnswerDialogTest::shouldAddItemInTreeList()
 {
     FollowUpReminderNoAnswerDialog dlg;
-    auto infowidget = dlg.findChild<FollowUpReminderInfoWidget *>(QStringLiteral("FollowUpReminderInfoWidget"));
-    auto treeWidget = infowidget->findChild<QTreeWidget *>(QStringLiteral("treewidget"));
+    auto infowidget = dlg.findChild<FollowUpReminderInfoWidget *>(u"FollowUpReminderInfoWidget"_s);
+    auto treeWidget = infowidget->findChild<QTreeWidget *>(u"treewidget"_s);
     QList<FollowUpReminder::FollowUpReminderInfo *> lstInfo;
     lstInfo.reserve(10);
     for (int i = 0; i < 10; ++i) {
@@ -57,9 +58,9 @@ void FollowupReminderNoAnswerDialogTest::shouldAddItemInTreeList()
     for (int i = 0; i < 10; ++i) {
         auto info = new FollowUpReminder::FollowUpReminderInfo();
         info->setOriginalMessageItemId(42);
-        info->setMessageId(QStringLiteral("foo"));
+        info->setMessageId(u"foo"_s);
         info->setFollowUpReminderDate(QDate::currentDate());
-        info->setTo(QStringLiteral("To"));
+        info->setTo(u"To"_s);
         lstInfo.append(info);
     }
 
@@ -70,17 +71,17 @@ void FollowupReminderNoAnswerDialogTest::shouldAddItemInTreeList()
 void FollowupReminderNoAnswerDialogTest::shouldItemHaveInfo()
 {
     FollowUpReminderNoAnswerDialog dlg;
-    auto infowidget = dlg.findChild<FollowUpReminderInfoWidget *>(QStringLiteral("FollowUpReminderInfoWidget"));
-    auto treeWidget = infowidget->findChild<QTreeWidget *>(QStringLiteral("treewidget"));
+    auto infowidget = dlg.findChild<FollowUpReminderInfoWidget *>(u"FollowUpReminderInfoWidget"_s);
+    auto treeWidget = infowidget->findChild<QTreeWidget *>(u"treewidget"_s);
     QList<FollowUpReminder::FollowUpReminderInfo *> lstInfo;
 
     // Load valid infos
     for (int i = 0; i < 10; ++i) {
         auto info = new FollowUpReminder::FollowUpReminderInfo();
         info->setOriginalMessageItemId(42);
-        info->setMessageId(QStringLiteral("foo"));
+        info->setMessageId(u"foo"_s);
         info->setFollowUpReminderDate(QDate::currentDate());
-        info->setTo(QStringLiteral("To"));
+        info->setTo(u"To"_s);
         lstInfo.append(info);
     }
 

@@ -8,9 +8,10 @@
 #include <KLocalizedString>
 #include <KUserFeedback/Provider>
 #include <QVariant>
+using namespace Qt::Literals::StringLiterals;
 
 PluginInfoSource::PluginInfoSource()
-    : KUserFeedback::AbstractDataSource(QStringLiteral("plugins"), KUserFeedback::Provider::DetailedSystemInformation)
+    : KUserFeedback::AbstractDataSource(u"plugins"_s, KUserFeedback::Provider::DetailedSystemInformation)
 {
 }
 

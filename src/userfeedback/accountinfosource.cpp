@@ -15,7 +15,7 @@
 
 using namespace Qt::Literals::StringLiterals;
 AccountInfoSource::AccountInfoSource()
-    : KUserFeedback::AbstractDataSource(QStringLiteral("accounts"), KUserFeedback::Provider::DetailedSystemInformation)
+    : KUserFeedback::AbstractDataSource(u"accounts"_s, KUserFeedback::Provider::DetailedSystemInformation)
 {
 }
 
@@ -32,8 +32,8 @@ QString AccountInfoSource::description() const
 void AccountInfoSource::updateAccountInfo(const QString &resourceName, int count, QVariantList &l)
 {
     QVariantMap m;
-    m.insert(QStringLiteral("name"), resourceName);
-    m.insert(QStringLiteral("number"), count);
+    m.insert(u"name"_s, resourceName);
+    m.insert(u"number"_s, count);
     l.push_back(m);
 }
 
@@ -63,28 +63,28 @@ QVariant AccountInfoSource::data()
     }
     QVariantList l;
     if (numberOfImap > 0) {
-        updateAccountInfo(QStringLiteral("imap"), numberOfImap, l);
+        updateAccountInfo(u"imap"_s, numberOfImap, l);
     }
     if (numberOfPop3 > 0) {
-        updateAccountInfo(QStringLiteral("pop3"), numberOfPop3, l);
+        updateAccountInfo(u"pop3"_s, numberOfPop3, l);
     }
     if (numberOfKolab > 0) {
-        updateAccountInfo(QStringLiteral("kolab"), numberOfKolab, l);
+        updateAccountInfo(u"kolab"_s, numberOfKolab, l);
     }
     if (numberOfEws > 0) {
-        updateAccountInfo(QStringLiteral("ews"), numberOfEws, l);
+        updateAccountInfo(u"ews"_s, numberOfEws, l);
     }
     if (numberOfMaildir > 0) {
-        updateAccountInfo(QStringLiteral("maildir"), numberOfMaildir, l);
+        updateAccountInfo(u"maildir"_s, numberOfMaildir, l);
     }
     if (numberOfMbox > 0) {
-        updateAccountInfo(QStringLiteral("mbox"), numberOfMbox, l);
+        updateAccountInfo(u"mbox"_s, numberOfMbox, l);
     }
 
     // Mail Transport
     QVariantMap m;
-    m.insert(QStringLiteral("name"), QStringLiteral("sender"));
-    m.insert(QStringLiteral("number"), MailTransport::TransportManager::self()->transports().count());
+    m.insert(u"name"_s, u"sender"_s);
+    m.insert(u"number"_s, MailTransport::TransportManager::self()->transports().count());
     l.push_back(m);
 
     return l;

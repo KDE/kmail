@@ -26,8 +26,7 @@ DndFromArkJob::DndFromArkJob(QObject *parent)
 
 bool DndFromArkJob::dndFromArk(const QMimeData *source)
 {
-    if (source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-service"))
-        && source->hasFormat(QStringLiteral("application/x-kde-ark-dndextract-path"))) {
+    if (source->hasFormat(u"application/x-kde-ark-dndextract-service"_s) && source->hasFormat(u"application/x-kde-ark-dndextract-path"_s)) {
         return true;
     }
     return false;
@@ -42,18 +41,15 @@ bool DndFromArkJob::extract(const QMimeData *source)
             deleteLater();
             return result;
         }
-        const QString remoteDBusClient = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-service")));
-        const QString remoteDBusPath = QString::fromLatin1(source->data(QStringLiteral("application/x-kde-ark-dndextract-path")));
+        const QString remoteDBusClient = QString::fromLatin1(source->data(u"application/x-kde-ark-dndextract-service"_s));
+        const QString remoteDBusPath = QString::fromLatin1(source->data(u"application/x-kde-ark-dndextract-path"_s));
 
         const QString tmpPath = QDir::tempPath() + "/attachments_ark"_L1;
         QDir().mkpath(tmpPath);
 
         auto linkDir = new QTemporaryDir(tmpPath);
         const QString arkPath = linkDir->path();
-        QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient,
-                                                              remoteDBusPath,
-                                                              QStringLiteral("org.kde.ark.DndExtract"),
-                                                              QStringLiteral("extractSelectedFilesTo"));
+        QDBusMessage message = QDBusMessage::createMethodCall(remoteDBusClient, remoteDBusPath, u"org.kde.ark.DndExtract"_s, u"extractSelectedFilesTo"_s);
         message.setArguments({arkPath});
         QDBusConnection::sessionBus().call(message);
         QDir dir(arkPath);

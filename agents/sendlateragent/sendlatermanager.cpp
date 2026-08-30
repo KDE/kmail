@@ -22,6 +22,7 @@
 #include <QTimer>
 #include <chrono>
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 
 SendLaterManager::SendLaterManager(QObject *parent)
     : QObject(parent)
@@ -54,7 +55,7 @@ void SendLaterManager::load(bool forcereload)
         mConfig->reparseConfiguration();
     }
 
-    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(QStringLiteral("SendLaterItem \\d+")));
+    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(u"SendLaterItem \\d+"_s));
     const int numberOfItems = itemList.count();
     for (int i = 0; i < numberOfItems; ++i) {
         KConfigGroup group = mConfig->group(itemList.at(i));
@@ -188,7 +189,7 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
             const int answer = KMessageBox::questionTwoActions(nullptr,
                                                                i18n("An error was found. Do you want to resend it?"),
                                                                i18nc("@title:window", "Error found"),
-                                                               KGuiItem(i18nc("@action:button", "Resend"), QStringLiteral("mail-send")),
+                                                               KGuiItem(i18nc("@action:button", "Resend"), u"mail-send"_s),
                                                                KStandardGuiItem::cancel());
             if (answer == KMessageBox::ButtonCode::SecondaryAction) {
                 removeLaterInfo(info);
@@ -231,7 +232,7 @@ QString SendLaterManager::printDebugInfo() const
 {
     QString infoStr;
     if (mListSendLaterInfo.isEmpty()) {
-        infoStr = QStringLiteral("No mail");
+        infoStr = u"No mail"_s;
     } else {
         for (MessageComposer::SendLaterInfo *info : std::as_const(mListSendLaterInfo)) {
             if (!infoStr.isEmpty()) {
@@ -245,7 +246,7 @@ QString SendLaterManager::printDebugInfo() const
 
 QString SendLaterManager::infoToStr(MessageComposer::SendLaterInfo *info) const
 {
-    QString infoStr = QLatin1StringView("Recursive ") + (info->isRecurrence() ? QStringLiteral("true") : QStringLiteral("false"));
+    QString infoStr = QLatin1StringView("Recursive ") + (info->isRecurrence() ? u"true"_s : u"false"_s);
     infoStr += QLatin1StringView("Item id :") + QString::number(info->itemId());
     infoStr += QLatin1StringView("Send date:") + info->dateTime().toString();
     infoStr += QLatin1StringView("Last saved date: ") + info->lastDateTimeSend().toString();

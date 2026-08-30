@@ -22,6 +22,7 @@
 #include <QCheckBox>
 #include <QTreeView>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 K_PLUGIN_CLASS_WITH_JSON(KCMKMailSummary, "kcmkmailsummary.json")
 KCMKMailSummary::KCMKMailSummary(QObject *parent, const KPluginMetaData &data)
@@ -59,16 +60,16 @@ void KCMKMailSummary::initGUI()
 
 void KCMKMailSummary::initFolders()
 {
-    KSharedConfigPtr _config = KSharedConfig::openConfig(QStringLiteral("kcmkmailsummaryrc"));
+    KSharedConfigPtr _config = KSharedConfig::openConfig(u"kcmkmailsummaryrc"_s);
 
-    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group(QStringLiteral("CheckState")), this);
+    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group(u"CheckState"_s), this);
     mModelState->setSelectionModel(mCheckedCollectionWidget->selectionModel());
 }
 
 void KCMKMailSummary::loadFolders()
 {
-    const KConfig _config(QStringLiteral("kcmkmailsummaryrc"));
-    const KConfigGroup config(&_config, QStringLiteral("General"));
+    const KConfig _config(u"kcmkmailsummaryrc"_s);
+    const KConfigGroup config(&_config, u"General"_s);
     mModelState->restoreState();
     const bool showFolderPaths = config.readEntry("showFolderPaths", false);
     mFullPath->setChecked(showFolderPaths);
@@ -76,8 +77,8 @@ void KCMKMailSummary::loadFolders()
 
 void KCMKMailSummary::storeFolders()
 {
-    KConfig _config(QStringLiteral("kcmkmailsummaryrc"));
-    KConfigGroup config(&_config, QStringLiteral("General"));
+    KConfig _config(u"kcmkmailsummaryrc"_s);
+    KConfigGroup config(&_config, u"General"_s);
     mModelState->saveState();
     config.writeEntry("showFolderPaths", mFullPath->isChecked());
     config.sync();

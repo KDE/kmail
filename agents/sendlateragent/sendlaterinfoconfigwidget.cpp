@@ -16,7 +16,7 @@ SendLaterInfoConfigWidget::SendLaterInfoConfigWidget(const KSharedConfigPtr &con
     , mWidget(new SendLaterWidget(parent))
 {
     parent->layout()->addWidget(mWidget);
-    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    QApplication::setWindowIcon(QIcon::fromTheme(u"kmail"_s));
 }
 
 SendLaterInfoConfigWidget::~SendLaterInfoConfigWidget() = default;

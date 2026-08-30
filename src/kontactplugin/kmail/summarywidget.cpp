@@ -37,6 +37,7 @@
 #include <QVBoxLayout>
 
 #include <ctime>
+using namespace Qt::Literals::StringLiterals;
 
 SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     : KontactInterface::Summary(parent)
@@ -47,7 +48,7 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     mainLayout->setSpacing(3);
     mainLayout->setContentsMargins(3, 3, 3, 3);
 
-    QWidget *header = createHeader(this, QStringLiteral("view-pim-mail"), i18n("New Messages"));
+    QWidget *header = createHeader(this, u"view-pim-mail"_s, i18n("New Messages"));
     mainLayout->addWidget(header);
 
     mLayout = new QGridLayout();
@@ -72,9 +73,9 @@ SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)
     mModelProxy->setSelectionModel(mSelectionModel);
     mModelProxy->setSourceModel(mModel);
 
-    KSharedConfigPtr _config = KSharedConfig::openConfig(QStringLiteral("kcmkmailsummaryrc"));
+    KSharedConfigPtr _config = KSharedConfig::openConfig(u"kcmkmailsummaryrc"_s);
 
-    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group(QStringLiteral("CheckState")), this);
+    mModelState = new KViewStateMaintainer<Akonadi::ETMViewStateSaver>(_config->group(u"CheckState"_s), this);
     mModelState->setSelectionModel(mSelectionModel);
 
     connect(mChangeRecorder, qOverload<const Akonadi::Collection &>(&Akonadi::ChangeRecorder::collectionChanged), this, &SummaryWidget::slotCollectionChanged);
@@ -106,7 +107,7 @@ void SummaryWidget::selectFolder(const QString &folder)
         mPlugin->core()->selectPlugin(mPlugin);
     }
 
-    org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+    org::kde::kmail::kmail kmail(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
     kmail.selectFolder(folder);
 }
 
@@ -187,9 +188,9 @@ void SummaryWidget::slotUpdateFolderList()
     mLabels.clear();
     mModelState->restoreState();
     int counter = 0;
-    qCDebug(KMAILPLUGIN_LOG) << QStringLiteral("Iterating over") << mModel->rowCount() << QStringLiteral("collections.");
-    KConfig _config(QStringLiteral("kcmkmailsummaryrc"));
-    KConfigGroup config(&_config, QStringLiteral("General"));
+    qCDebug(KMAILPLUGIN_LOG) << u"Iterating over"_s << mModel->rowCount() << u"collections."_s;
+    KConfig _config(u"kcmkmailsummaryrc"_s);
+    KConfigGroup config(&_config, u"General"_s);
     const bool showFolderPaths = config.readEntry("showFolderPaths", false);
     displayModel(QModelIndex(), counter, showFolderPaths, QStringList());
 

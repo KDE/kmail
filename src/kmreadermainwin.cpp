@@ -71,7 +71,7 @@ KMReaderMainWin::KMReaderMainWin(MessageViewer::Viewer::DisplayFormatMessage for
 }
 
 KMReaderMainWin::KMReaderMainWin(const QString &name)
-    : KMail::SecondaryWindow(!name.isEmpty() ? name : QStringLiteral("readerwindow#"))
+    : KMail::SecondaryWindow(!name.isEmpty() ? name : u"readerwindow#"_s)
     , mReaderWin(new KMReaderWin(this, this, actionCollection()))
 {
     initKMReaderMainWin();
@@ -98,10 +98,10 @@ void KMReaderMainWin::initKMReaderMainWin()
 {
     setCentralWidget(mReaderWin);
     setupAccel();
-    setupGUI(Keys | StatusBar | Create, QStringLiteral("kmreadermainwin.rc"));
+    setupGUI(Keys | StatusBar | Create, u"kmreadermainwin.rc"_s);
     mMsgActions->setupForwardingActionsList(this);
 
-    setStateConfigGroup(QStringLiteral("Separate Reader Window"));
+    setStateConfigGroup(u"Separate Reader Window"_s);
     setAutoSaveSettings(stateConfigGroup(), true);
 
     mZoomLabelIndicator = new ZoomLabelWidget(statusBar());
@@ -111,7 +111,7 @@ void KMReaderMainWin::initKMReaderMainWin()
     statusBar()->addPermanentWidget(mReaderWin->viewer()->dkimWidgetInfo());
     if (!mReaderWin->messageItem().isValid()) {
         menuBar()->hide();
-        toolBar(QStringLiteral("mainToolBar"))->hide();
+        toolBar(u"mainToolBar"_s)->hide();
     } else {
         slotToggleMenubar(true);
     }
@@ -124,7 +124,7 @@ void KMReaderMainWin::initKMReaderMainWin()
 
 KMReaderMainWin::~KMReaderMainWin()
 {
-    KConfigGroup grp(KSharedConfig::openConfig(QStringLiteral("kmail2rc"))->group(QStringLiteral("Separate Reader Window")));
+    KConfigGroup grp(KSharedConfig::openConfig(u"kmail2rc"_s)->group(u"Separate Reader Window"_s));
     saveMainWindowSettings(grp);
     if (mMsg.isValid()) {
         HistoryClosedReaderInfo info;
@@ -191,7 +191,7 @@ void KMReaderMainWin::showMessage(const QString &encoding, const Akonadi::Item &
     }
 
     const bool isInTrashFolder = mParentCollection.isValid() ? CommonKernel->folderIsTrash(mParentCollection) : false;
-    QAction *moveToTrash = actionCollection()->action(QStringLiteral("move_to_trash"));
+    QAction *moveToTrash = actionCollection()->action(u"move_to_trash"_s);
     KMail::Util::setActionTrashOrDelete(moveToTrash, isInTrashFolder);
     updateActions();
 }
@@ -273,7 +273,7 @@ void KMReaderMainWin::updateActions()
     if (mHideMenuBarAction->isChecked()) {
         menuBar()->show();
     }
-    toolBar(QStringLiteral("mainToolBar"))->show();
+    toolBar(u"mainToolBar"_s)->show();
     if (mMsg.isValid()) {
         mTagActionManager->updateActionStates(1, mMsg);
     }
@@ -490,13 +490,13 @@ void KMReaderMainWin::setupAccel()
 
     //----- File Menu
 
-    mSaveAtmAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save A&ttachments…"), actionCollection());
+    mSaveAtmAction = new QAction(QIcon::fromTheme(u"mail-attachment"_s), i18n("Save A&ttachments…"), actionCollection());
     connect(mSaveAtmAction, &QAction::triggered, mReaderWin->viewer(), &MessageViewer::Viewer::slotAttachmentSaveAll);
 
-    mTrashAction = new QAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("&Move to Trash"), this);
+    mTrashAction = new QAction(QIcon::fromTheme(u"edit-delete"_s), i18n("&Move to Trash"), this);
     mTrashAction->setIconText(i18nc("@action:intoolbar Move to Trash", "Trash"));
     KMail::Util::addQActionHelpText(mTrashAction, i18n("Move message to trashcan"));
-    actionCollection()->addAction(QStringLiteral("move_to_trash"), mTrashAction);
+    actionCollection()->addAction(u"move_to_trash"_s, mTrashAction);
     actionCollection()->setDefaultShortcut(mTrashAction, QKeySequence(Qt::Key_Delete));
     connect(mTrashAction, &QAction::triggered, this, &KMReaderMainWin::slotTrashMessage);
 
@@ -544,7 +544,7 @@ void KMReaderMainWin::slotToggleMenubar(bool dontShowWarning)
                                               " You can show it again by typing %1.</qt>",
                                               accel),
                                          i18n("Hide menu bar"),
-                                         QStringLiteral("HideMenuBarWarning"));
+                                         u"HideMenuBarWarning"_s);
             }
             menuBar()->hide();
         }
@@ -882,7 +882,7 @@ void KMReaderMainWin::slotEditToolbars()
 
 void KMReaderMainWin::slotUpdateToolbars()
 {
-    createGUI(QStringLiteral("kmreadermainwin.rc"));
+    createGUI(u"kmreadermainwin.rc"_s);
     applyMainWindowSettings(stateConfigGroup());
 }
 

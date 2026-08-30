@@ -8,6 +8,7 @@
 #include "../nearexpirywarning.h"
 #include <QHBoxLayout>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 QTEST_MAIN(NearExpiryWarningTest)
 
@@ -41,7 +42,7 @@ void NearExpiryWarningTest::clearInfo()
     NearExpiryWarning w;
     layout->addWidget(&w);
     wid.show();
-    w.addInfo(QStringLiteral("test"));
+    w.addInfo(u"test"_s);
     w.setWarning(true);
     w.clearInfo();
     QCOMPARE(w.messageType(), KMessageWidget::Information);
@@ -69,10 +70,10 @@ void NearExpiryWarningTest::addInfo()
     NearExpiryWarning w;
     layout->addWidget(&w);
     wid.show();
-    w.addInfo(QStringLiteral("test1"));
-    QCOMPARE(w.text(), QStringLiteral("<p>test1</p>"));
-    w.addInfo(QStringLiteral("test2"));
-    QCOMPARE(w.text(), QStringLiteral("<p>test1</p>\n<p>test2</p>"));
+    w.addInfo(u"test1"_s);
+    QCOMPARE(w.text(), u"<p>test1</p>"_s);
+    w.addInfo(u"test2"_s);
+    QCOMPARE(w.text(), u"<p>test1</p>\n<p>test2</p>"_s);
 }
 
 #include "moc_nearexpirywarningtest.cpp"

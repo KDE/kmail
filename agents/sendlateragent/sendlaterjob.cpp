@@ -23,6 +23,7 @@
 #include "sendlateragent_debug.h"
 #include <KLocalizedString>
 #include <KNotification>
+using namespace Qt::Literals::StringLiterals;
 
 SendLaterJob::SendLaterJob(SendLaterManager *manager, MessageComposer::SendLaterInfo *info, QObject *parent)
     : QObject(parent)
@@ -127,24 +128,14 @@ void SendLaterJob::slotDeleteItem(KJob *job)
 
 void SendLaterJob::sendDone()
 {
-    KNotification::event(QStringLiteral("mailsend"),
-                         QString(),
-                         i18n("Message sent"),
-                         QStringLiteral("kmail"),
-                         KNotification::CloseOnTimeout,
-                         QStringLiteral("akonadi_sendlater_agent"));
+    KNotification::event(u"mailsend"_s, QString(), i18n("Message sent"), u"kmail"_s, KNotification::CloseOnTimeout, u"akonadi_sendlater_agent"_s);
     mManager->sendDone(mInfo);
     deleteLater();
 }
 
 void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType type)
 {
-    KNotification::event(QStringLiteral("mailsendfailed"),
-                         QString(),
-                         error,
-                         QStringLiteral("kmail"),
-                         KNotification::CloseOnTimeout,
-                         QStringLiteral("akonadi_sendlater_agent"));
+    KNotification::event(u"mailsendfailed"_s, QString(), error, u"kmail"_s, KNotification::CloseOnTimeout, u"akonadi_sendlater_agent"_s);
     mManager->sendError(mInfo, type);
     deleteLater();
 }

@@ -8,6 +8,8 @@
 #include "src/editor/widgets/cryptostateindicatorwidget.h"
 #include <QLabel>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
+
 QTEST_MAIN(CryptoStateIndicatorWidgetTest)
 CryptoStateIndicatorWidgetTest::CryptoStateIndicatorWidgetTest(QObject *parent)
     : QObject(parent)
@@ -24,9 +26,9 @@ void CryptoStateIndicatorWidgetTest::shouldHaveDefaultValue()
     CryptoStateIndicatorWidget w;
     w.show();
     QVERIFY(QTest::qWaitForWindowExposed(&w));
-    auto signature = w.findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    auto signature = w.findChild<QLabel *>(u"signatureindicator"_s);
     QVERIFY(signature);
-    auto encryption = w.findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryption = w.findChild<QLabel *>(u"encryptionindicator"_s);
     QVERIFY(encryption);
     QVERIFY(signature->isVisible());
     QVERIFY(encryption->isVisible());
@@ -37,8 +39,8 @@ void CryptoStateIndicatorWidgetTest::shouldBeNotVisibleWhenShowAlwaysIsFalse()
     CryptoStateIndicatorWidget w;
     w.setShowAlwaysIndicator(false);
     w.show();
-    auto signature = w.findChild<QLabel *>(QStringLiteral("signatureindicator"));
-    auto encryption = w.findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto signature = w.findChild<QLabel *>(u"signatureindicator"_s);
+    auto encryption = w.findChild<QLabel *>(u"encryptionindicator"_s);
     QVERIFY(!signature->isVisible());
     QVERIFY(!encryption->isVisible());
     w.updateSignatureAndEncrypionStateIndicators(true, true);
@@ -53,8 +55,8 @@ void CryptoStateIndicatorWidgetTest::shouldVisibleWhenChangeStatus()
     w.setShowAlwaysIndicator(true);
     w.show();
     QVERIFY(QTest::qWaitForWindowExposed(&w));
-    auto signature = w.findChild<QLabel *>(QStringLiteral("signatureindicator"));
-    auto encryption = w.findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto signature = w.findChild<QLabel *>(u"signatureindicator"_s);
+    auto encryption = w.findChild<QLabel *>(u"encryptionindicator"_s);
     w.updateSignatureAndEncrypionStateIndicators(true, false);
     QVERIFY(signature->isVisible());
     QVERIFY(!encryption->isVisible());

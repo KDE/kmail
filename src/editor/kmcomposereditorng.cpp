@@ -19,12 +19,13 @@
 #include <QMimeData>
 #include <Sonnet/ConfigDialog>
 #include <sonnet/dictionarycombobox.h>
+using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
 inline QString textSnippetMimeType()
 {
-    return QStringLiteral("text/x-kmail-textsnippet");
+    return u"text/x-kmail-textsnippet"_s;
 }
 }
 
@@ -32,7 +33,7 @@ KMComposerEditorNg::KMComposerEditorNg(KMComposerWin *win, QWidget *parent)
     : MessageComposer::RichTextComposerNg(parent)
     , mComposerWin(win)
 {
-    setSpellCheckingConfigFileName(QStringLiteral("kmail2rc"));
+    setSpellCheckingConfigFileName(u"kmail2rc"_s);
     setAutocorrection(KMKernel::self()->composerAutoCorrection());
     createHighlighter();
     setEmojiSupport(true);
@@ -57,7 +58,7 @@ void KMComposerEditorNg::addExtraMenuEntry(QMenu *menu, [[maybe_unused]] QPoint 
 
 bool KMComposerEditorNg::canInsertFromMimeData(const QMimeData *source) const
 {
-    if (source->hasImage() && source->hasFormat(QStringLiteral("image/png"))) {
+    if (source->hasImage() && source->hasFormat(u"image/png"_s)) {
         return true;
     }
     if (source->hasFormat(textSnippetMimeType())) {

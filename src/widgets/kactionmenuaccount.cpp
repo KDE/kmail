@@ -13,6 +13,8 @@
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/accountactivities.h"
 #endif
+using namespace Qt::Literals::StringLiterals;
+
 KActionMenuAccount::KActionMenuAccount(QObject *parent)
     : KActionMenu(parent)
 {
@@ -108,7 +110,7 @@ void KActionMenuAccount::updateAccountMenu()
             // the local copy which is passed to action.
             const QString identifierName = type.identifier();
             const int index = mOrderedAccountIdentifiers.indexOf(identifierName);
-            const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), QStringLiteral("&&")), index);
+            const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), u"&&"_s), index);
             agentIdentifierList << id;
         }
         std::sort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);

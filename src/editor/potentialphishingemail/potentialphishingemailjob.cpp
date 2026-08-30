@@ -8,6 +8,7 @@
 #include "potentialphishingemailjob.h"
 #include <KEmailAddress>
 #include <PimCommon/PimUtil>
+using namespace Qt::Literals::StringLiterals;
 
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
@@ -74,7 +75,7 @@ bool PotentialPhishingEmailJob::start()
                     tname = tname.mid(1, tname.length() - 2);
                 }
                 if (temail.toLower() != tname.toLower()) {
-                    if (const QString str = QStringLiteral("(%1)").arg(temail); !tname.contains(str, Qt::CaseInsensitive)) {
+                    if (const QString str = u"(%1)"_s.arg(temail); !tname.contains(str, Qt::CaseInsensitive)) {
                         if (const QList<QStringView> lst = QStringView(tname.trimmed()).split(QLatin1Char(' ')); lst.count() > 1) {
                             const QStringView firstName = lst.at(0);
 

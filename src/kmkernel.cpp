@@ -140,7 +140,7 @@ KMKernel::KMKernel(QObject *parent)
     mSystemNetworkStatus = PimCommon::NetworkManager::self()->isOnline();
 
     Akonadi::AttributeFactory::registerAttribute<Akonadi::SearchDescriptionAttribute>();
-    QDBusConnection::sessionBus().registerService(QStringLiteral("org.kde.kmail"));
+    QDBusConnection::sessionBus().registerService(u"org.kde.kmail"_s);
     qCDebug(KMAIL_LOG) << "Starting up...";
 
     mySelf = this;
@@ -183,9 +183,9 @@ KMKernel::KMKernel(QObject *parent)
     connect(MailTransport::TransportManager::self(), &MailTransport::TransportManager::transportRenamed, this, &KMKernel::transportRenamed);
 
     QDBusConnection::sessionBus().connect(QString(),
-                                          QStringLiteral("/MailDispatcherAgent"),
-                                          QStringLiteral("org.freedesktop.Akonadi.MailDispatcherAgent"),
-                                          QStringLiteral("itemDispatchStarted"),
+                                          u"/MailDispatcherAgent"_s,
+                                          u"org.freedesktop.Akonadi.MailDispatcherAgent"_s,
+                                          u"itemDispatchStarted"_s,
                                           this,
                                           SLOT(itemDispatchStarted()));
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceStatusChanged, this, &KMKernel::instanceStatusChanged);
@@ -249,7 +249,7 @@ Akonadi::EntityMimeTypeFilterModel *KMKernel::collectionModel() const
 void KMKernel::setupDBus()
 {
     (void)new KmailAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMail"), this);
+    QDBusConnection::sessionBus().registerObject(u"/KMail"_s, this);
     mMailService = new MailServiceImpl();
 }
 
@@ -295,7 +295,7 @@ bool KMKernel::handleCommandLine(bool noArgsOpensReader, const QStringList &args
 // Move to KMail::Util instead?
 KConfigGroup KMKernel::resourceConfigGroup(const QString &id)
 {
-    return KConfigGroup(KMKernel::config(), QStringLiteral("Resource %1").arg(id));
+    return KConfigGroup(KMKernel::config(), u"Resource %1"_s.arg(id));
 }
 
 /********************************************************************/
@@ -571,12 +571,9 @@ int KMKernel::viewMessage(const QString &messageFile)
 
 void KMKernel::raise()
 {
-    QDBusInterface iface(QStringLiteral("org.kde.kmail"),
-                         QStringLiteral("/MainApplication"),
-                         QStringLiteral("org.kde.PIMUniqueApplication"),
-                         QDBusConnection::sessionBus());
+    QDBusInterface iface(u"org.kde.kmail"_s, u"/MainApplication"_s, u"org.kde.PIMUniqueApplication"_s, QDBusConnection::sessionBus());
     QDBusReply<int> reply;
-    if (!iface.isValid() || !(reply = iface.call(QStringLiteral("newInstance"))).isValid()) {
+    if (!iface.isValid() || !(reply = iface.call(u"newInstance"_s)).isValid()) {
         const QDBusError err = iface.lastError();
         qCritical() << "Communication problem with KMail. "
                     << "Error message was:" << err.name() << ": \"" << err.message() << "\"";
@@ -653,11 +650,7 @@ void KMKernel::setAccountStatus(bool goOnline)
         const auto col = CommonKernel->collectionFromId(CommonKernel->outboxCollectionFolder().id());
         if (const qint64 nbMsgOutboxCollection = col.statistics().count(); nbMsgOutboxCollection > 0) {
             if (!kmkernel->msgSender()->sendQueued()) {
-                KNotification::event(QStringLiteral("sent-mail-error"),
-                                     i18n("Send Email"),
-                                     i18n("Impossible to send email"),
-                                     QStringLiteral("kmail"),
-                                     KNotification::CloseOnTimeout);
+                KNotification::event(u"sent-mail-error"_s, i18n("Send Email"), i18n("Impossible to send email"), u"kmail"_s, KNotification::CloseOnTimeout);
             }
         }
     }
@@ -851,7 +844,7 @@ void KMKernel::recoverDeadLetters()
 {
     const QString pathName = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/kmail2/"_L1;
     QDir dir(pathName);
-    if (!dir.exists(QStringLiteral("autosave"))) {
+    if (!dir.exists(u"autosave"_s)) {
         return;
     }
 
@@ -1026,11 +1019,8 @@ void KMKernel::cleanup()
 
     if (const Akonadi::Collection trashCollection = CommonKernel->trashCollectionFolder(); trashCollection.isValid()) {
         if (KMailSettings::self()->emptyTrashOnExit()) {
-            const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
-            if (OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(service,
-                                                                                  QStringLiteral("/MailFilterAgent"),
-                                                                                  QDBusConnection::sessionBus(),
-                                                                                  this);
+            const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_mailfilter_agent"_s);
+            if (OrgFreedesktopAkonadiMailFilterAgentInterface mailFilterInterface(service, u"/MailFilterAgent"_s, QDBusConnection::sessionBus(), this);
                 mailFilterInterface.isValid()) {
                 mailFilterInterface.expunge(static_cast<qlonglong>(trashCollection.id()));
             } else {
@@ -1243,7 +1233,7 @@ KSharedConfig::Ptr KMKernel::config()
 {
     assert(mySelf);
     if (!mySelf->mConfig) {
-        mySelf->mConfig = KSharedConfig::openConfig(QStringLiteral("kmail2rc"));
+        mySelf->mConfig = KSharedConfig::openConfig(u"kmail2rc"_s);
         // Check that all updates have been run on the config file:
         MessageList::MessageListSettings::self()->setSharedConfig(mySelf->mConfig);
         MessageList::MessageListSettings::self()->load();
@@ -1472,7 +1462,7 @@ void KMKernel::itemDispatchStarted()
     // Watch progress of the MDA.
     PimCommon::ProgressManagerAkonadi::createProgressItem(nullptr,
                                                           Akonadi::DispatcherInterface().dispatcherInstance(),
-                                                          QStringLiteral("Sender"),
+                                                          u"Sender"_s,
                                                           i18n("Sending messages"),
                                                           i18n("Initiating sending process…"),
                                                           true,
@@ -1512,8 +1502,8 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
             } else {
                 if (PimCommon::Util::isImapResource(identifier)) {
                     MailCommon::ResourceReadConfigFile resourceFile(identifier);
-                    if (const KConfigGroup grp = resourceFile.group(QStringLiteral("network")); grp.isValid()) {
-                        if (const QString imapSafety = grp.readEntry(QStringLiteral("Safety")); imapSafety == "None"_L1) {
+                    if (const KConfigGroup grp = resourceFile.group(u"network"_s); grp.isValid()) {
+                        if (const QString imapSafety = grp.readEntry(u"Safety"_s); imapSafety == "None"_L1) {
                             cryptoStatus = KPIM::ProgressItem::Unencrypted;
                         } else {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
@@ -1523,8 +1513,8 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
                     }
                 } else if (identifier.contains(POP3_RESOURCE_IDENTIFIER)) {
                     MailCommon::ResourceReadConfigFile resourceFile(identifier);
-                    if (const KConfigGroup grp = resourceFile.group(QStringLiteral("General")); grp.isValid()) {
-                        if (grp.readEntry(QStringLiteral("useSSL"), false) || grp.readEntry(QStringLiteral("useTLS"), false)) {
+                    if (const KConfigGroup grp = resourceFile.group(u"General"_s); grp.isValid()) {
+                        if (grp.readEntry(u"useSSL"_s, false) || grp.readEntry(u"useTLS"_s, false)) {
                             cryptoStatus = KPIM::ProgressItem::Encrypted;
                         }
                         mResourceCryptoSettingCache.insert(identifier, cryptoStatus);
@@ -1551,7 +1541,7 @@ void KMKernel::instanceStatusChanged(const Akonadi::AgentInstance &instance)
 void KMKernel::agentInstanceBroken(const Akonadi::AgentInstance &instance)
 {
     const QString summary = i18n("Resource %1 is broken.\n%2", instance.name(), instance.statusMessage());
-    KNotification::event(QStringLiteral("akonadi-resource-broken"), QString(), summary, QStringLiteral("kmail"), KNotification::CloseOnTimeout);
+    KNotification::event(u"akonadi-resource-broken"_s, QString(), summary, u"kmail"_s, KNotification::CloseOnTimeout);
 }
 
 void KMKernel::slotProgressItemCompletedOrCanceled(KPIM::ProgressItem *item)
@@ -1573,7 +1563,7 @@ void KMKernel::updatedTemplates()
 void KMKernel::cleanupTemporaryFiles()
 {
     QDir dir(QDir::tempPath());
-    const QStringList lst = dir.entryList(QStringList{QStringLiteral("messageviewer_*")}, QDir::Files);
+    const QStringList lst = dir.entryList(QStringList{u"messageviewer_*"_s}, QDir::Files);
     qCDebug(KMAIL_LOG) << " list file to delete " << lst;
     for (const QString &file : lst) {
         if (QFile tempFile(QDir::tempPath() + QLatin1Char('/') + file); !tempFile.remove()) {
@@ -1582,7 +1572,7 @@ void KMKernel::cleanupTemporaryFiles()
             fprintf(stderr, "%s was removed .\n", qPrintable(tempFile.fileName()));
         }
     }
-    const QStringList lstRepo = dir.entryList(QStringList{QStringLiteral("messageviewer_*.index.*")}, QDir::Dirs);
+    const QStringList lstRepo = dir.entryList(QStringList{u"messageviewer_*.index.*"_s}, QDir::Dirs);
     qCDebug(KMAIL_LOG) << " list repo to delete " << lstRepo;
     for (const QString &file : lstRepo) {
         if (QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file); !tempDir.removeRecursively()) {
@@ -1619,7 +1609,7 @@ void KMKernel::slotCollectionRemoved(const Akonadi::Collection &col)
 
 void KMKernel::slotDeleteIdentity(uint identity)
 {
-    TemplateParser::Util::deleteTemplate(QStringLiteral("IDENTITY_%1").arg(identity));
+    TemplateParser::Util::deleteTemplate(u"IDENTITY_%1"_s.arg(identity));
 }
 
 bool KMKernel::showPopupAfterDnD()
@@ -1722,19 +1712,19 @@ const QAbstractItemModel *KMKernel::treeviewModelSelection()
 void KMKernel::slotInstanceWarning(const Akonadi::AgentInstance &instance, const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
-    KNotification::event(QStringLiteral("akonadi-instance-warning"), QString(), summary, QStringLiteral("kmail"), KNotification::CloseOnTimeout);
+    KNotification::event(u"akonadi-instance-warning"_s, QString(), summary, u"kmail"_s, KNotification::CloseOnTimeout);
 }
 
 void KMKernel::slotInstanceError(const Akonadi::AgentInstance &instance, const QString &message)
 {
     const QString summary = i18nc("<source>: <error message>", "%1: %2", instance.name(), message);
-    KNotification::event(QStringLiteral("akonadi-instance-error"), QString(), summary, QStringLiteral("kmail"), KNotification::CloseOnTimeout);
+    KNotification::event(u"akonadi-instance-error"_s, QString(), summary, u"kmail"_s, KNotification::CloseOnTimeout);
 }
 
 void KMKernel::slotInstanceRemoved(const Akonadi::AgentInstance &instance)
 {
     const QString identifier(instance.identifier());
-    if (const QString resourceGroup = QStringLiteral("Resource %1").arg(identifier); KMKernel::config()->hasGroup(resourceGroup)) {
+    if (const QString resourceGroup = u"Resource %1"_s.arg(identifier); KMKernel::config()->hasGroup(resourceGroup)) {
         KConfigGroup group(KMKernel::config(), resourceGroup);
         group.deleteGroup();
         group.sync();

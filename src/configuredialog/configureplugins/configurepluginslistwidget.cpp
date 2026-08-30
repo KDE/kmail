@@ -40,67 +40,68 @@
 #include <QDBusReply>
 #include <QPointer>
 #include <WebEngineViewer/NetworkPluginUrlInterceptor>
+using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
 QString pluginEditorCheckBeforeDeletingGroupName()
 {
-    return QStringLiteral("plugincheckbeforedeletinggroupname");
+    return u"plugincheckbeforedeletinggroupname"_s;
 }
 
 QString pluginEditorGroupName()
 {
-    return QStringLiteral("plugineditorgroupname");
+    return u"plugineditorgroupname"_s;
 }
 
 QString pluginEditorGrammarGroupName()
 {
-    return QStringLiteral("plugineditorgrammargroupname");
+    return u"plugineditorgrammargroupname"_s;
 }
 
 QString viewerPluginGroupName()
 {
-    return QStringLiteral("viewerplugingroupname");
+    return u"viewerplugingroupname"_s;
 }
 
 QString pluginEditorCheckBeforeGroupName()
 {
-    return QStringLiteral("plugineditorcheckbeforegroupname");
+    return u"plugineditorcheckbeforegroupname"_s;
 }
 
 QString pluginEditorInitGroupName()
 {
-    return QStringLiteral("plugineditorinitgroupname");
+    return u"plugineditorinitgroupname"_s;
 }
 
 QString pluginEditorConvertTextGroupName()
 {
-    return QStringLiteral("plugineditorconvertTextgroupname");
+    return u"plugineditorconvertTextgroupname"_s;
 }
 
 QString kmailPluginToolsGroupName()
 {
-    return QStringLiteral("kmailplugintoolsgroupname");
+    return u"kmailplugintoolsgroupname"_s;
 }
 
 QString networkUrlInterceptorGroupName()
 {
-    return QStringLiteral("networkurlinterceptorgroupname");
+    return u"networkurlinterceptorgroupname"_s;
 }
 
 QString headerStyleGroupName()
 {
-    return QStringLiteral("headerstylegroupname");
+    return u"headerstylegroupname"_s;
 }
 
 QString agentAkonadiGroupName()
 {
-    return QStringLiteral("agentakonadigroupname");
+    return u"agentakonadigroupname"_s;
 }
 
 QString configurePluginGroupName()
 {
-    return QStringLiteral("configuregroupname");
+    return u"configuregroupname"_s;
 }
 }
 
@@ -308,11 +309,11 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
 {
     mPluginUtilDataList.clear();
     mPluginUtilDataList.reserve(5);
-    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_sendlater_agent"), QStringLiteral("/SendLaterAgent"));
-    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_archivemail_agent"), QStringLiteral("/ArchiveMailAgent"));
-    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_newmailnotifier_agent"), QStringLiteral("/NewMailNotifierAgent"));
-    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_followupreminder_agent"), QStringLiteral("/FollowUpReminder"));
-    mPluginUtilDataList << createAgentPluginData(QStringLiteral("akonadi_unifiedmailbox_agent"), QStringLiteral("/UnifiedMailboxAgent"));
+    mPluginUtilDataList << createAgentPluginData(u"akonadi_sendlater_agent"_s, u"/SendLaterAgent"_s);
+    mPluginUtilDataList << createAgentPluginData(u"akonadi_archivemail_agent"_s, u"/ArchiveMailAgent"_s);
+    mPluginUtilDataList << createAgentPluginData(u"akonadi_newmailnotifier_agent"_s, u"/NewMailNotifierAgent"_s);
+    mPluginUtilDataList << createAgentPluginData(u"akonadi_followupreminder_agent"_s, u"/FollowUpReminder"_s);
+    mPluginUtilDataList << createAgentPluginData(u"akonadi_unifiedmailbox_agent"_s, u"/UnifiedMailboxAgent"_s);
 
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(mPluginUtilDataList,
                                                             i18n("Akonadi Agents"),
@@ -347,7 +348,7 @@ bool ConfigurePluginsListWidget::agentActivateState(const QString &agentIdentifi
 {
     const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
     if (QDBusInterface interface(service, pathName); interface.isValid()) {
-        if (QDBusReply<bool> enabled = interface.call(QStringLiteral("enabledAgent")); enabled.isValid()) {
+        if (QDBusReply<bool> enabled = interface.call(u"enabledAgent"_s); enabled.isValid()) {
             return enabled;
         } else {
             qCDebug(KMAIL_LOG) << agentIdentifier << "doesn't have enabledAgent function";
@@ -364,7 +365,7 @@ void ConfigurePluginsListWidget::changeAgentActiveState(const QString &agentIden
     if (!agentIdentifier.isEmpty() && !path.isEmpty()) {
         const QString service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, agentIdentifier);
         if (QDBusInterface interface(service, path); interface.isValid()) {
-            interface.call(QStringLiteral("setEnableAgent"), enable);
+            interface.call(u"setEnableAgent"_s, enable);
         } else {
             qCDebug(KMAIL_LOG) << agentIdentifier << "does not exist when trying to change the agent active state";
         }

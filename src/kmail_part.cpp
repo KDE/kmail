@@ -35,11 +35,11 @@ using namespace KMail;
 KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaData &data, const QVariantList &)
     : KParts::ReadOnlyPart(parent, data)
 {
-    setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
+    setComponentName(u"kmail2"_s, i18n("KMail2"));
     // local, do the init
     auto mKMailKernel = new KMKernel();
     mKMailKernel->init();
-    mKMailKernel->setXmlGuiInstanceName(QStringLiteral("kmail2"));
+    mKMailKernel->setXmlGuiInstanceName(u"kmail2"_s);
 
     // and session management
     mKMailKernel->doSessionManagement();
@@ -49,7 +49,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaDa
 
     kmkernel->setupDBus(); // Ok. We are ready for D-Bus requests.
     (void)new KmailpartAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/KMailPart"), this);
+    QDBusConnection::sessionBus().registerObject(u"/KMailPart"_s, this);
 
     // create a canvas to insert our widget
     auto canvas = new QWidget(parentWidget);
@@ -67,7 +67,7 @@ KMailPart::KMailPart(QWidget *parentWidget, QObject *parent, const KPluginMetaDa
     statusBar->addStatusBarItem(mainWidget->zoomLabelIndicator(), 3, false);
     statusBar->addStatusBarItem(mainWidget->dkimWidgetInfo(), 4, false);
 
-    setXMLFile(QStringLiteral("kmail_part.rc"), true);
+    setXMLFile(u"kmail_part.rc"_s, true);
     connect(mainWidget, &KMMainWidget::captionChangeRequest, this, &KMailPart::setWindowCaption);
 }
 

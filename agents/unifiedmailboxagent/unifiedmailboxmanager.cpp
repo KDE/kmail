@@ -64,7 +64,7 @@ bool UnifiedMailboxManager::isUnifiedMailbox(const Akonadi::Collection &col)
 
 UnifiedMailboxManager::UnifiedMailboxManager(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)
-    , mMonitorSettings(Akonadi::ServerManager::agentConfigFilePath(QStringLiteral("akonadi_unifiedmailbox")), QSettings::IniFormat)
+    , mMonitorSettings(Akonadi::ServerManager::agentConfigFilePath(u"akonadi_unifiedmailbox"_s), QSettings::IniFormat)
     , mConfig(config)
 {
     mMonitor.setObjectName("UnifiedMailboxChangeRecorder"_L1);
@@ -200,7 +200,7 @@ Akonadi::ChangeRecorder &UnifiedMailboxManager::changeRecorder()
 void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
 {
     qCDebug(UNIFIEDMAILBOXAGENT_LOG) << "loading boxes";
-    const auto group = mConfig->group(QStringLiteral("UnifiedMailboxes"));
+    const auto group = mConfig->group(u"UnifiedMailboxes"_s);
     const auto boxGroups = group.groupList();
     for (const auto &boxGroupName : boxGroups) {
         const auto boxGroup = group.group(boxGroupName);
@@ -232,7 +232,7 @@ void UnifiedMailboxManager::loadBoxes(FinishedCallback &&finishedCb)
 
 void UnifiedMailboxManager::saveBoxes()
 {
-    auto group = mConfig->group(QStringLiteral("UnifiedMailboxes"));
+    auto group = mConfig->group(u"UnifiedMailboxes"_s);
     const auto currentGroups = group.groupList();
     for (const auto &groupName : currentGroups) {
         group.deleteGroup(groupName);
@@ -296,26 +296,26 @@ void UnifiedMailboxManager::createDefaultBoxes(FinishedCallback &&finishedCb)
     inbox->attachManager(this);
     inbox->setId(Common::InboxBoxId);
     inbox->setName(i18n("Inbox"));
-    inbox->setIcon(QStringLiteral("mail-folder-inbox"));
+    inbox->setIcon(u"mail-folder-inbox"_s);
     insertBox(std::move(inbox));
 
     auto sent = std::make_unique<UnifiedMailbox>();
     sent->attachManager(this);
     sent->setId(Common::SentBoxId);
     sent->setName(i18n("Sent"));
-    sent->setIcon(QStringLiteral("mail-folder-sent"));
+    sent->setIcon(u"mail-folder-sent"_s);
     insertBox(std::move(sent));
 
     auto drafts = std::make_unique<UnifiedMailbox>();
     drafts->attachManager(this);
     drafts->setId(Common::DraftsBoxId);
     drafts->setName(i18n("Drafts"));
-    drafts->setIcon(QStringLiteral("document-properties"));
+    drafts->setIcon(u"document-properties"_s);
     insertBox(std::move(drafts));
 
     auto list = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::Recursive, this);
     list->fetchScope().fetchAttribute<Akonadi::SpecialCollectionAttribute>();
-    list->fetchScope().setContentMimeTypes({QStringLiteral("message/rfc822")});
+    list->fetchScope().setContentMimeTypes({u"message/rfc822"_s});
 #ifdef UNIT_TESTS
     list->fetchScope().setAncestorRetrieval(Akonadi::CollectionFetchScope::Parent);
 #else

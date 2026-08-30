@@ -10,6 +10,7 @@
 #include <QSignalSpy>
 #include <QStringList>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 PotentialPhishingEmailJobTest::PotentialPhishingEmailJobTest(QObject *parent)
     : QObject(parent)
@@ -30,34 +31,31 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
     QTest::addColumn<QStringList>("listEmails");
     QTest::addColumn<QStringList>("whiteListEmail");
     QTest::addColumn<bool>("hasPotentialPhishing");
-    QTest::newRow("NoPotentialPhishing") << (QStringList() << QStringLiteral("foo@kde.org")) << QStringList() << false;
-    QTest::newRow("HasPotentialPhishing") << (QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")) << QStringList() << true;
-    const QString email = QStringLiteral("\"bla@kde.org\" <foo@kde.org>");
+    QTest::newRow("NoPotentialPhishing") << (QStringList() << u"foo@kde.org"_s) << QStringList() << false;
+    QTest::newRow("HasPotentialPhishing") << (QStringList() << u"\"bla@kde.org\" <foo@kde.org>"_s) << QStringList() << true;
+    const QString email = u"\"bla@kde.org\" <foo@kde.org>"_s;
     QTest::newRow("EmailInWhiteList") << (QStringList() << email) << (QStringList() << email) << false;
-    QTest::newRow("EmailInWhiteListCaseInsensitive") << (QStringList() << QStringLiteral("\"BLA@kde.org\" <FOO@kde.org>"))
-                                                     << (QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")) << false;
-    QTest::newRow("NotAllEmailInWhiteList") << (QStringList() << email << QStringLiteral("\"c@kde.org\" <dd@kde.org>")) << (QStringList() << email) << true;
-    QTest::newRow("EmailInWhiteListWithSpace") << (QStringList() << QStringLiteral(" \"bla@kde.org\" <foo@kde.org> ")) << (QStringList() << email) << false;
-    QTest::newRow("EmailWithSameNameAndDisplayName") << (QStringList() << QStringLiteral("\"<foo@kde.com>\" <foo@kde.com>")) << (QStringList() << email)
-                                                     << false;
-    QTest::newRow("EmailWithSameNameAndDisplayNameWithSpace")
-        << (QStringList() << QStringLiteral(" \"<foo@kde.com>\" <foo@kde.com> ")) << (QStringList() << email) << false;
+    QTest::newRow("EmailInWhiteListCaseInsensitive") << (QStringList() << u"\"BLA@kde.org\" <FOO@kde.org>"_s)
+                                                     << (QStringList() << u"\"bla@kde.org\" <foo@kde.org>"_s) << false;
+    QTest::newRow("NotAllEmailInWhiteList") << (QStringList() << email << u"\"c@kde.org\" <dd@kde.org>"_s) << (QStringList() << email) << true;
+    QTest::newRow("EmailInWhiteListWithSpace") << (QStringList() << u" \"bla@kde.org\" <foo@kde.org> "_s) << (QStringList() << email) << false;
+    QTest::newRow("EmailWithSameNameAndDisplayName") << (QStringList() << u"\"<foo@kde.com>\" <foo@kde.com>"_s) << (QStringList() << email) << false;
+    QTest::newRow("EmailWithSameNameAndDisplayNameWithSpace") << (QStringList() << u" \"<foo@kde.com>\" <foo@kde.com> "_s) << (QStringList() << email) << false;
 
-    QTest::newRow("notsamecase") << (QStringList() << QStringLiteral("\"Foo@kde.org\" <foo@kde.org>")) << QStringList() << false;
-    QTest::newRow("notsamecaseaddress") << (QStringList() << QStringLiteral("\"Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << false;
+    QTest::newRow("notsamecase") << (QStringList() << u"\"Foo@kde.org\" <foo@kde.org>"_s) << QStringList() << false;
+    QTest::newRow("notsamecaseaddress") << (QStringList() << u"\"Foo@kde.org\" <FOO@kde.ORG>"_s) << QStringList() << false;
 
-    QTest::newRow("emailinparenthese") << (QStringList() << QStringLiteral("\"bla (Foo@kde.org)\" <FOO@kde.ORG>")) << QStringList() << false;
-    QTest::newRow("notemailinparenthese") << (QStringList() << QStringLiteral("\"bla (bli@kde.org)\" <FOO@kde.ORG>")) << QStringList() << true;
-    QTest::newRow("erroremailinparenthese") << (QStringList() << QStringLiteral("\"bla Foo@kde.org\" <FOO@kde.ORG>")) << QStringList() << true;
+    QTest::newRow("emailinparenthese") << (QStringList() << u"\"bla (Foo@kde.org)\" <FOO@kde.ORG>"_s) << QStringList() << false;
+    QTest::newRow("notemailinparenthese") << (QStringList() << u"\"bla (bli@kde.org)\" <FOO@kde.ORG>"_s) << QStringList() << true;
+    QTest::newRow("erroremailinparenthese") << (QStringList() << u"\"bla Foo@kde.org\" <FOO@kde.ORG>"_s) << QStringList() << true;
 
-    QTest::newRow("WithMultiSameEmail") << (QStringList() << QStringLiteral("\"foo@kde.org foo@kde.org\" <foo@kde.org>")) << QStringList() << false;
-    QTest::newRow("WithMultiSameEmailWithSpace") << (QStringList() << QStringLiteral("\"  foo@kde.org   foo@kde.org  \" <foo@kde.org>")) << QStringList()
-                                                 << false;
-    QTest::newRow("WithMultiNotSameEmail") << (QStringList() << QStringLiteral("\"  bla@kde.org   foo@kde.org  \" <foo@kde.org>")) << QStringList() << true;
+    QTest::newRow("WithMultiSameEmail") << (QStringList() << u"\"foo@kde.org foo@kde.org\" <foo@kde.org>"_s) << QStringList() << false;
+    QTest::newRow("WithMultiSameEmailWithSpace") << (QStringList() << u"\"  foo@kde.org   foo@kde.org  \" <foo@kde.org>"_s) << QStringList() << false;
+    QTest::newRow("WithMultiNotSameEmail") << (QStringList() << u"\"  bla@kde.org   foo@kde.org  \" <foo@kde.org>"_s) << QStringList() << true;
 
-    QTest::newRow("EmailWithSimpleQuote") << (QStringList() << QStringLiteral("\"\'foo@kde.org\'\" <foo@kde.org>")) << QStringList() << false;
+    QTest::newRow("EmailWithSimpleQuote") << (QStringList() << u"\"\'foo@kde.org\'\" <foo@kde.org>"_s) << QStringList() << false;
 
-    QTest::newRow("BadCompletion") << (QStringList() << QStringLiteral("@kde.org <foo@kde.org>")) << QStringList() << false;
+    QTest::newRow("BadCompletion") << (QStringList() << u"@kde.org <foo@kde.org>"_s) << QStringList() << false;
 }
 
 void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails()
@@ -77,7 +75,7 @@ void PotentialPhishingEmailJobTest::shouldEmitSignal()
 {
     auto job = new PotentialPhishingEmailJob;
     QSignalSpy spy(job, &PotentialPhishingEmailJob::potentialPhishingEmailsFound);
-    job->setPotentialPhishingEmails((QStringList() << QStringLiteral("\"bla@kde.org\" <foo@kde.org>")));
+    job->setPotentialPhishingEmails((QStringList() << u"\"bla@kde.org\" <foo@kde.org>"_s));
     QVERIFY(job->start());
     QCOMPARE(spy.count(), 1);
 }
@@ -87,17 +85,17 @@ void PotentialPhishingEmailJobTest::shouldCreateCorrectListOfEmails_data()
     QTest::addColumn<QStringList>("emails");
     QTest::addColumn<QStringList>("createdListOfEmails");
     QTest::newRow("emptylist") << QStringList() << QStringList();
-    QStringList emails{QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")};
-    QStringList createdList{QStringLiteral("foo@kde.org"), QStringLiteral("bla@kde.org")};
+    QStringList emails{u"foo@kde.org"_s, u"bla@kde.org"_s};
+    QStringList createdList{u"foo@kde.org"_s, u"bla@kde.org"_s};
     QTest::newRow("nonempty") << emails << createdList;
-    emails = QStringList{QStringLiteral("\"bla\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    emails = QStringList{u"\"bla\" <foo@kde.org>"_s, u"bla@kde.org"_s};
     QTest::newRow("potentialerrors") << emails << emails;
 
-    emails = QStringList{QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    emails = QStringList{u"\"bla, foo\" <foo@kde.org>"_s, u"bla@kde.org"_s};
     QTest::newRow("emailswithquote") << emails << emails;
 
-    emails = QStringList{QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org"), QStringLiteral(" ")};
-    createdList = QStringList{QStringLiteral("\"bla, foo\" <foo@kde.org>"), QStringLiteral("bla@kde.org")};
+    emails = QStringList{u"\"bla, foo\" <foo@kde.org>"_s, u"bla@kde.org"_s, u" "_s};
+    createdList = QStringList{u"\"bla, foo\" <foo@kde.org>"_s, u"bla@kde.org"_s};
     QTest::newRow("emailswithemptystr") << emails << createdList;
 }
 

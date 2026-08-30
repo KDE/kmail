@@ -90,11 +90,10 @@ void KMKnotify::setCurrentNotification(const QString &name)
 
 void KMKnotify::initCombobox()
 {
-    const QStringList lstNotify = QStringList() << QStringLiteral("kmail2.notifyrc") << QStringLiteral("akonadi_maildispatcher_agent.notifyrc")
-                                                << QStringLiteral("akonadi_mailfilter_agent.notifyrc") << QStringLiteral("akonadi_archivemail_agent.notifyrc")
-                                                << QStringLiteral("akonadi_sendlater_agent.notifyrc")
-                                                << QStringLiteral("akonadi_newmailnotifier_agent.notifyrc")
-                                                << QStringLiteral("akonadi_followupreminder_agent.notifyrc") << QStringLiteral("messageviewer.notifyrc");
+    const QStringList lstNotify = QStringList() << u"kmail2.notifyrc"_s << u"akonadi_maildispatcher_agent.notifyrc"_s << u"akonadi_mailfilter_agent.notifyrc"_s
+                                                << u"akonadi_archivemail_agent.notifyrc"_s << u"akonadi_sendlater_agent.notifyrc"_s
+                                                << u"akonadi_newmailnotifier_agent.notifyrc"_s << u"akonadi_followupreminder_agent.notifyrc"_s
+                                                << u"messageviewer.notifyrc"_s;
     for (const QString &notify : lstNotify) {
         if (const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "knotifications6/"_L1 + notify); !fullPath.isEmpty()) {
             const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
@@ -102,9 +101,9 @@ void KMKnotify::initCombobox()
             appname.remove(".notifyrc"_L1);
             if (!appname.isEmpty()) {
                 KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::AppLocalDataLocation);
-                KConfigGroup globalConfig(&config, QStringLiteral("Global"));
-                const QString icon = globalConfig.readEntry(QStringLiteral("IconName"), QStringLiteral("misc"));
-                const QString description = globalConfig.readEntry(QStringLiteral("Comment"), appname);
+                KConfigGroup globalConfig(&config, u"Global"_s);
+                const QString icon = globalConfig.readEntry(u"IconName"_s, u"misc"_s);
+                const QString description = globalConfig.readEntry(u"Comment"_s, appname);
                 m_comboNotify->addItem(QIcon::fromTheme(icon), description, appname);
             }
         }
@@ -127,12 +126,12 @@ void KMKnotify::slotOk()
 void KMKnotify::readConfig()
 {
     create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QStringLiteral("KMKnotifyDialog"), 600, 400);
+    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, u"KMKnotifyDialog"_s, 600, 400);
 }
 
 void KMKnotify::writeConfig()
 {
-    KConfigGroup notifyDialog(KSharedConfig::openStateConfig(), QStringLiteral("KMKnotifyDialog"));
+    KConfigGroup notifyDialog(KSharedConfig::openStateConfig(), u"KMKnotifyDialog"_s);
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
 }

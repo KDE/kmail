@@ -37,6 +37,7 @@
 #include <QTimer>
 
 #include <memory>
+using namespace Qt::Literals::StringLiterals;
 
 UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     : Akonadi::ResourceWidgetBase(id)
@@ -45,7 +46,7 @@ UnifiedMailboxAgent::UnifiedMailboxAgent(const QString &id)
     setAgentName(i18n("Unified Mailboxes"));
 
     new UnifiedMailboxAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/UnifiedMailboxAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(u"/UnifiedMailboxAgent"_s, this, QDBusConnection::ExportAdaptors);
     const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Resource, identifier());
     QDBusConnection::sessionBus().registerService(service);
 
@@ -132,7 +133,7 @@ void UnifiedMailboxAgent::retrieveCollections()
     topLevel.setRights(Akonadi::Collection::ReadOnly);
     auto topLevelDisplayAttr = topLevel.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
     topLevelDisplayAttr->setDisplayName(i18n("Unified Mailboxes"));
-    topLevelDisplayAttr->setActiveIconName(QStringLiteral("globe"));
+    topLevelDisplayAttr->setActiveIconName(u"globe"_s);
     collections.push_back(topLevel);
 
     for (const auto &boxIt : mBoxManager) {

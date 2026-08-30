@@ -34,7 +34,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     , mWidget(new MailMergeConfigureWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Configure"));
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    setWindowIcon(QIcon::fromTheme(u"kmail"_s));
     auto mainLayout = new QVBoxLayout(this);
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, this);
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
@@ -49,23 +49,23 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
 
     readConfig();
 
-    KAboutData aboutData = KAboutData(QStringLiteral("mailmergeagent"),
+    KAboutData aboutData = KAboutData(u"mailmergeagent"_s,
                                       i18n("Mail Merge Agent"),
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Merge email addresses agent."),
                                       KAboutLicense::GPL_V2,
-                                      i18n("© 2021–%1 Laurent Montel", QStringLiteral("2025")));
+                                      i18n("© 2021–%1 Laurent Montel", u"2025"_s));
 
-    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), u"montel@kde.org"_s);
     aboutData.setProductName("Akonadi/MailMergeAgent"_ba);
-    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    QApplication::setWindowIcon(QIcon::fromTheme(u"kmail"_s));
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 
     auto helpMenu = new KHelpMenu(this, aboutData);
     helpMenu->setShowWhatsThis(true);
     // Initialize menu
     QMenu *menu = helpMenu->menu();
-    helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(u"kmail"_s));
     buttonBox->button(QDialogButtonBox::Help)->setMenu(menu);
 }
 

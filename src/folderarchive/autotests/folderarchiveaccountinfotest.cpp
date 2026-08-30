@@ -10,6 +10,8 @@
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
+
 QTEST_MAIN(FolderArchiveAccountInfoTest)
 
 FolderArchiveAccountInfoTest::FolderArchiveAccountInfoTest(QObject *parent)
@@ -38,20 +40,20 @@ void FolderArchiveAccountInfoTest::shouldBeValid()
     QVERIFY(!info.isValid());
     info.setArchiveTopLevel(Akonadi::Collection(42).id());
     QVERIFY(!info.isValid());
-    info.setInstanceName(QStringLiteral("FOO"));
+    info.setInstanceName(u"FOO"_s);
     QVERIFY(info.isValid());
 }
 
 void FolderArchiveAccountInfoTest::shouldRestoreFromSettings()
 {
     FolderArchiveAccountInfo info;
-    info.setInstanceName(QStringLiteral("FOO1"));
+    info.setInstanceName(u"FOO1"_s);
     info.setArchiveTopLevel(Akonadi::Collection(42).id());
     info.setFolderArchiveType(FolderArchiveAccountInfo::FolderArchiveType::FolderByMonths);
     info.setEnabled(true);
     info.setKeepExistingStructure(true);
 
-    KConfigGroup grp(KSharedConfig::openConfig(), QStringLiteral("testsettings"));
+    KConfigGroup grp(KSharedConfig::openConfig(), u"testsettings"_s);
     info.writeConfig(grp);
 
     FolderArchiveAccountInfo restoreInfo(grp);

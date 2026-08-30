@@ -10,6 +10,8 @@
 #include <QListWidget>
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
+
 QTEST_MAIN(TagSelectDialogTest)
 
 TagSelectDialogTest::TagSelectDialogTest(QObject *parent)
@@ -27,10 +29,10 @@ void TagSelectDialogTest::initTestCase()
 void TagSelectDialogTest::shouldHaveDefaultValue()
 {
     TagSelectDialog dlg(nullptr, 1, Akonadi::Item());
-    auto listWidget = dlg.findChild<QListWidget *>(QStringLiteral("listtag"));
+    auto listWidget = dlg.findChild<QListWidget *>(u"listtag"_s);
     QVERIFY(listWidget);
 
-    auto listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(QStringLiteral("searchline"));
+    auto listWidgetSearchLine = dlg.findChild<KListWidgetSearchLine *>(u"searchline"_s);
     QVERIFY(listWidgetSearchLine);
     QVERIFY(listWidgetSearchLine->isClearButtonEnabled());
 }

@@ -10,6 +10,7 @@
 #include "utils.h"
 
 #include <KConfigGroup>
+using namespace Qt::Literals::StringLiterals;
 
 bool UnifiedMailbox::operator==(const UnifiedMailbox &other) const
 {
@@ -20,7 +21,7 @@ void UnifiedMailbox::load(const KConfigGroup &group)
 {
     mId = group.name();
     mName = group.readEntry("name");
-    mIcon = group.readEntry("icon", QStringLiteral("folder-mail"));
+    mIcon = group.readEntry("icon", u"folder-mail"_s);
     mSources = listToSet(group.readEntry("sources", QList<qint64>{}));
     // This is not authoritative, we will do collection discovery anyway
     mCollectionId = group.readEntry("collectionId", -1ll);

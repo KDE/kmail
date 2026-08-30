@@ -79,7 +79,7 @@ std::unique_ptr<UnifiedMailbox> createUnifiedMailbox(const QString &id, const QS
     auto mailbox = std::make_unique<UnifiedMailbox>();
     mailbox->setId(id);
     mailbox->setName(name);
-    mailbox->setIcon(QStringLiteral("dummy-icon"));
+    mailbox->setIcon(u"dummy-icon"_s);
     for (const auto &srcRid : sourceRids) {
         const auto srcCol = collectionForRid(srcRid);
         AKVERIFY_RET(srcCol.isValid(), {});
@@ -153,7 +153,7 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        const auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
+        const auto boxesGroup = kcfg->group(u"UnifiedMailboxes"_s);
         UnifiedMailboxManager manager(kcfg);
 
         // Make sure the config is empty
@@ -204,7 +204,7 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        const auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
+        const auto boxesGroup = kcfg->group(u"UnifiedMailboxes"_s);
         UnifiedMailboxManager manager(kcfg);
         Akonadi::ChangeRecorder &recorder = manager.changeRecorder();
 
@@ -212,7 +212,7 @@ private Q_SLOTS:
         QVERIFY(recorder.collectionsMonitored().isEmpty());
 
         // Create a new unified mailbox and passit to the manager
-        auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"), {QStringLiteral("res1_inbox")});
+        auto mailbox = createUnifiedMailbox(u"Test1"_s, u"Test 1"_s, {u"res1_inbox"_s});
         QVERIFY(mailbox);
         const auto sourceCol = mailbox->sourceCollections().values().first();
         manager.insertBox(std::move(mailbox));
@@ -237,8 +237,8 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
-        auto mailbox = createUnifiedMailbox(QStringLiteral("Test1"), QStringLiteral("Test 1"), {QStringLiteral("res1_foo"), QStringLiteral("res2_foo")});
+        auto boxesGroup = kcfg->group(u"UnifiedMailboxes"_s);
+        auto mailbox = createUnifiedMailbox(u"Test1"_s, u"Test 1"_s, {u"res1_foo"_s, u"res2_foo"_s});
         QVERIFY(mailbox);
         auto group = boxesGroup.group(mailbox->id());
         mailbox->save(group);
@@ -285,13 +285,13 @@ private Q_SLOTS:
     {
         // Setup
         auto kcfg = KSharedConfig::openConfig(QString::fromUtf8(QTest::currentTestFunction()));
-        auto boxesGroup = kcfg->group(QStringLiteral("UnifiedMailboxes"));
+        auto boxesGroup = kcfg->group(u"UnifiedMailboxes"_s);
         UnifiedMailboxManager manager(kcfg);
         EntityDeleter deleter;
-        const auto inbox = createUnifiedMailbox(Common::InboxBoxId, QStringLiteral("Inbox"), {QStringLiteral("res1_inbox"), QStringLiteral("res2_inbox")});
+        const auto inbox = createUnifiedMailbox(Common::InboxBoxId, u"Inbox"_s, {u"res1_inbox"_s, u"res2_inbox"_s});
         auto boxGroup = boxesGroup.group(inbox->id());
         inbox->save(boxGroup);
-        const auto sentBox = createUnifiedMailbox(Common::SentBoxId, QStringLiteral("Sent"), {QStringLiteral("res1_sent"), QStringLiteral("res2_sent")});
+        const auto sentBox = createUnifiedMailbox(Common::SentBoxId, u"Sent"_s, {u"res1_sent"_s, u"res2_sent"_s});
         boxGroup = boxesGroup.group(sentBox->id());
         sentBox->save(boxGroup);
 
@@ -352,7 +352,7 @@ private Q_SLOTS:
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
         // Get one of the source collections for Inbox
-        const auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
+        const auto inboxSourceCol = collectionForRid(u"res1_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
 
         // Setup up a monitor to to be notified when an item gets linked into
@@ -364,7 +364,7 @@ private Q_SLOTS:
 
         // Add a new Item into the source collection
         Akonadi::Item item;
-        item.setMimeType(QStringLiteral("application/octet-stream"));
+        item.setMimeType(u"application/octet-stream"_s);
         item.setParentCollection(inboxSourceCol);
         item.setPayload("Hello world!"_ba);
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
@@ -411,7 +411,7 @@ private Q_SLOTS:
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
         // Get one of the source collections for Inbox
-        const auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
+        const auto inboxSourceCol = collectionForRid(u"res1_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
 
         // Setup up a monitor to to be notified when an item gets linked into
@@ -424,7 +424,7 @@ private Q_SLOTS:
 
         // Add a new Item into the source collection
         Akonadi::Item item;
-        item.setMimeType(QStringLiteral("application/octet-stream"));
+        item.setMimeType(u"application/octet-stream"_s);
         item.setParentCollection(inboxSourceCol);
         item.setPayload("Hello world!"_ba);
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
@@ -435,7 +435,7 @@ private Q_SLOTS:
         // Waity for the item to be linked
         QTRY_COMPARE(itemLinkedSignalSpy.size(), 1);
 
-        const auto destinationCol = collectionForRid(QStringLiteral("res1_foo"));
+        const auto destinationCol = collectionForRid(u"res1_foo"_s);
         QVERIFY(destinationCol.isValid());
 
         // Now move the Item to an unmonitored collection
@@ -482,9 +482,9 @@ private Q_SLOTS:
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
         // Get one of the source collections for Inbox and Drafts
-        const auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
+        const auto inboxSourceCol = collectionForRid(u"res1_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
-        const auto draftsSourceCol = collectionForRid(QStringLiteral("res1_drafts"));
+        const auto draftsSourceCol = collectionForRid(u"res1_drafts"_s);
         QVERIFY(draftsSourceCol.isValid());
 
         // Setup up a monitor to to be notified when an item gets linked into
@@ -498,7 +498,7 @@ private Q_SLOTS:
 
         // Add a new Item into the source Inbox collection
         Akonadi::Item item;
-        item.setMimeType(QStringLiteral("application/octet-stream"));
+        item.setMimeType(u"application/octet-stream"_s);
         item.setParentCollection(inboxSourceCol);
         item.setPayload("Hello world!"_ba);
         auto createItem = new Akonadi::ItemCreateJob(item, inboxSourceCol, this);
@@ -559,7 +559,7 @@ private Q_SLOTS:
         });
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
-        auto inboxSourceCol = collectionForRid(QStringLiteral("res1_inbox"));
+        auto inboxSourceCol = collectionForRid(u"res1_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
         auto delJob = new Akonadi::CollectionDeleteJob(inboxSourceCol, this);
         AKVERIFYEXEC(delJob);
@@ -577,7 +577,7 @@ private Q_SLOTS:
         QVERIFY(!manager.unifiedMailboxForSource(inboxSourceCol.id()));
 
         // Lets removed the other source collection now, that should remove the unified box completely
-        inboxSourceCol = collectionForRid(QStringLiteral("res2_inbox"));
+        inboxSourceCol = collectionForRid(u"res2_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
         delJob = new Akonadi::CollectionDeleteJob(inboxSourceCol, this);
         AKVERIFYEXEC(delJob);
@@ -627,7 +627,7 @@ private Q_SLOTS:
         });
         QTRY_VERIFY_WITH_TIMEOUT(loadingDone, milliseconds(10s).count());
 
-        auto sentSourceCol = collectionForRid(QStringLiteral("res1_sent"));
+        auto sentSourceCol = collectionForRid(u"res1_sent"_s);
         QVERIFY(sentSourceCol.isValid());
         sentSourceCol.removeAttribute<Akonadi::SpecialCollectionAttribute>();
         auto modify = new Akonadi::CollectionModifyJob(sentSourceCol, this);
@@ -646,7 +646,7 @@ private Q_SLOTS:
         QVERIFY(!manager.unifiedMailboxForSource(sentSourceCol.id()));
 
         // Lets demote the other source collection now, that should remove the unified box completely
-        sentSourceCol = collectionForRid(QStringLiteral("res2_sent"));
+        sentSourceCol = collectionForRid(u"res2_sent"_s);
         QVERIFY(sentSourceCol.isValid());
         sentSourceCol.attribute<Akonadi::SpecialCollectionAttribute>()->setCollectionType("drafts");
         modify = new Akonadi::CollectionModifyJob(sentSourceCol, this);

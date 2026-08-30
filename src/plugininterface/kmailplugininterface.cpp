@@ -7,12 +7,13 @@
 #include "kmailplugininterface.h"
 #include "kmail_debug.h"
 #include "kmmainwidget.h"
+using namespace Qt::Literals::StringLiterals;
 
 KMailPluginInterface::KMailPluginInterface(QObject *parent)
     : PimCommon::PluginInterface(parent)
 {
-    setPluginName(QStringLiteral("kmail"));
-    setPluginDirectory(QStringLiteral("pim6/kmail/mainview"));
+    setPluginName(u"kmail"_s);
+    setPluginDirectory(u"pim6/kmail/mainview"_s);
 }
 
 KMailPluginInterface::~KMailPluginInterface() = default;

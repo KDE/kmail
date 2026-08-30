@@ -23,6 +23,7 @@
 #include <QPointer>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 static int s_numberMaxTag = 10;
 
@@ -48,7 +49,7 @@ void TagActionManager::clearActions()
     // Remove the tag actions from the toolbar
     if (!mToolbarActions.isEmpty()) {
         if (mGUIClient->factory()) {
-            mGUIClient->unplugActionList(QStringLiteral("toolbar_messagetag_actions"));
+            mGUIClient->unplugActionList(u"toolbar_messagetag_actions"_s);
         }
         mToolbarActions.clear();
     }
@@ -84,7 +85,7 @@ void TagActionManager::clearActions()
 void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu)
 {
     QString cleanName(i18n("Message Tag: %1", tag->tagName));
-    cleanName.replace(QLatin1Char('&'), QStringLiteral("&&"));
+    cleanName.replace(QLatin1Char('&'), u"&&"_s);
     auto const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName), cleanName, this);
     tagAction->setIconText(tag->name());
     tagAction->setChecked(tag->id() == mNewTagId);
@@ -151,7 +152,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     mMessageActions->messageStatusMenu()->menu()->addAction(mSeparatorNewTagAction);
 
     if (!mNewTagAction) {
-        mNewTagAction = new QAction(QIcon::fromTheme(QStringLiteral("tag-new")), i18n("Add new tag…"), this);
+        mNewTagAction = new QAction(QIcon::fromTheme(u"tag-new"_s), i18n("Add new tag…"), this);
         connect(mNewTagAction, &QAction::triggered, this, &TagActionManager::newTagActionClicked);
     }
     mMessageActions->messageStatusMenu()->menu()->addAction(mNewTagAction);
@@ -171,7 +172,7 @@ void TagActionManager::createTagActions(const QList<MailCommon::Tag::Ptr> &tags)
     }
 
     if (!mToolbarActions.isEmpty() && mGUIClient->factory()) {
-        mGUIClient->plugActionList(QStringLiteral("toolbar_messagetag_actions"), mToolbarActions);
+        mGUIClient->plugActionList(u"toolbar_messagetag_actions"_s, mToolbarActions);
     }
 }
 

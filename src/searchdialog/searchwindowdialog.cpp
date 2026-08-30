@@ -92,7 +92,7 @@ SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Coll
 
     lay->addWidget(searchWidget);
 
-    mStartSearchGuiItem = KGuiItem(i18nc("@action:button Search for messages", "&Search"), QStringLiteral("edit-find"));
+    mStartSearchGuiItem = KGuiItem(i18nc("@action:button Search for messages", "&Search"), u"edit-find"_s);
     mStopSearchGuiItem = KStandardGuiItem::stop();
     KGuiItem::assign(mSearchButton, mStartSearchGuiItem);
     mUi.mButtonBox->addButton(mSearchButton, QDialogButtonBox::ActionRole);
@@ -149,7 +149,7 @@ SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Coll
     connect(mUi.mButtonBox->button(QDialogButtonBox::Close), &QPushButton::clicked, this, &SearchWindowDialog::slotClose);
 
     // give focus to the value field of the first search rule
-    if (auto r = mUi.mPatternEdit->findChild<KLineEdit *>(QStringLiteral("regExpLineEdit"))) {
+    if (auto r = mUi.mPatternEdit->findChild<KLineEdit *>(u"regExpLineEdit"_s)) {
         r->setFocus();
     } else {
         qCDebug(KMAIL_LOG) << "SearchWindow: regExpLineEdit not found";
@@ -157,28 +157,28 @@ SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Coll
 
     // set up actions
     KActionCollection *ac = actionCollection();
-    mReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply…"), this);
-    actionCollection()->addAction(QStringLiteral("search_reply"), mReplyAction);
+    mReplyAction = new QAction(QIcon::fromTheme(u"mail-reply-sender"_s), i18n("&Reply…"), this);
+    actionCollection()->addAction(u"search_reply"_s, mReplyAction);
     connect(mReplyAction, &QAction::triggered, this, &SearchWindowDialog::slotReplyToMsg);
 
-    mReplyAllAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All…"), this);
-    actionCollection()->addAction(QStringLiteral("search_reply_all"), mReplyAllAction);
+    mReplyAllAction = new QAction(QIcon::fromTheme(u"mail-reply-all"_s), i18n("Reply to &All…"), this);
+    actionCollection()->addAction(u"search_reply_all"_s, mReplyAllAction);
     connect(mReplyAllAction, &QAction::triggered, this, &SearchWindowDialog::slotReplyAllToMsg);
 
-    mReplyListAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List…"), this);
-    actionCollection()->addAction(QStringLiteral("search_reply_list"), mReplyListAction);
+    mReplyListAction = new QAction(QIcon::fromTheme(u"mail-reply-list"_s), i18n("Reply to Mailing-&List…"), this);
+    actionCollection()->addAction(u"search_reply_list"_s, mReplyListAction);
     connect(mReplyListAction, &QAction::triggered, this, &SearchWindowDialog::slotReplyListToMsg);
 
-    mForwardActionMenu = new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this);
-    actionCollection()->addAction(QStringLiteral("search_message_forward"), mForwardActionMenu);
+    mForwardActionMenu = new KActionMenu(QIcon::fromTheme(u"mail-forward"_s), i18nc("Message->", "&Forward"), this);
+    actionCollection()->addAction(u"search_message_forward"_s, mForwardActionMenu);
     connect(mForwardActionMenu, &KActionMenu::triggered, this, &SearchWindowDialog::slotForwardMsg);
 
-    mForwardInlineAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Forward message inline.", "&Inline…"), this);
-    actionCollection()->addAction(QStringLiteral("search_message_forward_inline"), mForwardInlineAction);
+    mForwardInlineAction = new QAction(QIcon::fromTheme(u"mail-forward"_s), i18nc("@action:inmenu Forward message inline.", "&Inline…"), this);
+    actionCollection()->addAction(u"search_message_forward_inline"_s, mForwardInlineAction);
     connect(mForwardInlineAction, &QAction::triggered, this, &SearchWindowDialog::slotForwardMsg);
 
-    mForwardAttachedAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->Forward->", "As &Attachment…"), this);
-    actionCollection()->addAction(QStringLiteral("search_message_forward_as_attachment"), mForwardAttachedAction);
+    mForwardAttachedAction = new QAction(QIcon::fromTheme(u"mail-forward"_s), i18nc("Message->Forward->", "As &Attachment…"), this);
+    actionCollection()->addAction(u"search_message_forward_as_attachment"_s, mForwardAttachedAction);
     connect(mForwardAttachedAction, &QAction::triggered, this, &SearchWindowDialog::slotForwardAttachedMsg);
 
     if (KMailSettings::self()->forwardingInlineByDefault()) {
@@ -189,20 +189,20 @@ SearchWindowDialog::SearchWindowDialog(KMMainWidget *widget, const Akonadi::Coll
         mForwardActionMenu->addAction(mForwardInlineAction);
     }
 
-    mSaveAsAction = actionCollection()->addAction(KStandardActions::SaveAs, QStringLiteral("search_file_save_as"), this, &SearchWindowDialog::slotSaveMsg);
+    mSaveAsAction = actionCollection()->addAction(KStandardActions::SaveAs, u"search_file_save_as"_s, this, &SearchWindowDialog::slotSaveMsg);
 
-    mSaveAtchAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-attachment")), i18n("Save Attachments…"), this);
-    actionCollection()->addAction(QStringLiteral("search_save_attachments"), mSaveAtchAction);
+    mSaveAtchAction = new QAction(QIcon::fromTheme(u"mail-attachment"_s), i18n("Save Attachments…"), this);
+    actionCollection()->addAction(u"search_save_attachments"_s, mSaveAtchAction);
     connect(mSaveAtchAction, &QAction::triggered, this, &SearchWindowDialog::slotSaveAttachments);
 
-    mPrintAction = actionCollection()->addAction(KStandardActions::Print, QStringLiteral("search_print"), this, &SearchWindowDialog::slotPrintMsg);
+    mPrintAction = actionCollection()->addAction(KStandardActions::Print, u"search_print"_s, this, &SearchWindowDialog::slotPrintMsg);
 
     mClearAction = new QAction(i18nc("@action", "Clear Selection"), this);
-    actionCollection()->addAction(QStringLiteral("search_clear_selection"), mClearAction);
+    actionCollection()->addAction(u"search_clear_selection"_s, mClearAction);
     connect(mClearAction, &QAction::triggered, this, &SearchWindowDialog::slotClearSelection);
 
     mJumpToFolderAction = new QAction(i18nc("@action", "Jump to original folder"), this);
-    actionCollection()->addAction(QStringLiteral("search_jump_folder"), mJumpToFolderAction);
+    actionCollection()->addAction(u"search_jump_folder"_s, mJumpToFolderAction);
     connect(mJumpToFolderAction, &QAction::triggered, this, &SearchWindowDialog::slotJumpToFolder);
 
     connect(mUi.mCbxFolders, &MailCommon::FolderRequester::folderChanged, this, &SearchWindowDialog::slotFolderActivated);
@@ -487,7 +487,7 @@ void SearchWindowDialog::doSearch()
     if (mFolder.isValid()) {
         qCDebug(KMAIL_LOG) << " use existing folder " << mFolder.id();
         auto attribute = new Akonadi::PersistentSearchAttribute();
-        mFolder.setContentMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
+        mFolder.setContentMimeTypes(QStringList() << u"message/rfc822"_s);
         attribute->setQueryString(QString::fromLatin1(mQuery.toJSON()));
         attribute->setQueryCollections(searchCollections);
         attribute->setRecursive(recursive);
@@ -495,14 +495,14 @@ void SearchWindowDialog::doSearch()
         mFolder.addAttribute(attribute);
         mSearchJob = new Akonadi::CollectionModifyJob(mFolder, this);
     } else {
-        auto config = KConfig(QStringLiteral("akonadi_indexing_agent"));
-        KConfigGroup cfg = config.group(QStringLiteral("General"));
+        auto config = KConfig(u"akonadi_indexing_agent"_s);
+        KConfigGroup cfg = config.group(u"General"_s);
         const bool respectDiacriticAndAccents = cfg.readEntry("respectDiacriticAndAccents", true);
         const QString searchString =
             respectDiacriticAndAccents ? mUi.mSearchFolderEdt->text() : TextUtils::ConvertText::normalize(mUi.mSearchFolderEdt->text());
         qCDebug(KMAIL_LOG) << " create new folder " << searchString;
         auto searchJob = new Akonadi::SearchCreateJob(searchString, mQuery, this);
-        searchJob->setSearchMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
+        searchJob->setSearchMimeTypes(QStringList() << u"message/rfc822"_s);
         searchJob->setSearchCollections(searchCollections);
         searchJob->setRecursive(recursive);
         searchJob->setRemoteSearchEnabled(false);

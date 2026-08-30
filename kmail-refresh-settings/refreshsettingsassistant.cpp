@@ -14,6 +14,7 @@
 #include <KLocalizedString>
 #include <QMenu>
 #include <QPushButton>
+using namespace Qt::Literals::StringLiterals;
 
 RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     : KAssistantDialog(parent)
@@ -28,7 +29,7 @@ RefreshSettingsAssistant::RefreshSettingsAssistant(QWidget *parent)
     helpMenu->setShowWhatsThis(true);
     // Initialize menu
     QMenu *menu = helpMenu->menu();
-    helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    helpMenu->action(KHelpMenu::menuAboutApp)->setIcon(QIcon::fromTheme(u"kmail"_s));
     button(QDialogButtonBox::Help)->setMenu(menu);
 }
 

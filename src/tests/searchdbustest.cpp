@@ -12,26 +12,25 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 searchdbustest::searchdbustest(QWidget *parent)
     : QWidget(parent)
 {
     auto mainlayout = new QVBoxLayout(this);
-    auto button = new QPushButton(QStringLiteral("reindex collections"), this);
+    auto button = new QPushButton(u"reindex collections"_s, this);
     mainlayout->addWidget(button);
     connect(button, &QPushButton::clicked, this, &searchdbustest::slotReindexCollections);
 }
 
 void searchdbustest::slotReindexCollections()
 {
-    if (QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(),
-                                               QStringLiteral("/"),
-                                               QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+    if (QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), u"/"_s, u"org.freedesktop.Akonadi.Indexer"_s);
         interfaceAkonadiIndexer.isValid()) {
         const QList<qlonglong> lst = {100, 300};
         qDebug() << "reindex " << lst;
         // qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsIndexed;
-        interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(lst));
+        interfaceAkonadiIndexer.asyncCall(u"reindexCollections"_s, QVariant::fromValue(lst));
     } else {
         qDebug() << " interface is not valid";
     }

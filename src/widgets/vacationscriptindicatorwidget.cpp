@@ -14,6 +14,7 @@
 #include <QHBoxLayout>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
     : QLabel(parent)
@@ -21,7 +22,7 @@ ServerLabel::ServerLabel(const QString &serverName, QWidget *parent)
 {
     setToolTip(serverName);
     updateIcon();
-    setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
+    setStyleSheet(u"background-color: %1; color: %2;"_s.arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(2, 0, 4, 0);
 }
 
@@ -30,7 +31,7 @@ ServerLabel::~ServerLabel() = default;
 void ServerLabel::updateIcon()
 {
     const int iconSize = style()->pixelMetric(QStyle::PM_SmallIconSize);
-    setPixmap(QIcon::fromTheme(QStringLiteral("network-server")).pixmap(QSize(iconSize, iconSize), devicePixelRatioF()));
+    setPixmap(QIcon::fromTheme(u"network-server"_s).pixmap(QSize(iconSize, iconSize), devicePixelRatioF()));
 }
 
 bool ServerLabel::event(QEvent *e)
@@ -57,7 +58,7 @@ VacationLabel::VacationLabel(const QString &text, QWidget *parent)
 {
     // changing the palette doesn't work, seems to be overwritten by the
     // statusbar again, stylesheets seems to work though
-    setStyleSheet(QStringLiteral("background-color: %1; color: %2;").arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
+    setStyleSheet(u"background-color: %1; color: %2;"_s.arg(QColor(Qt::yellow).name(), QColor(Qt::black).name()));
     setContentsMargins(4, 0, 2, 0);
     setCursor(QCursor(Qt::PointingHandCursor));
 }

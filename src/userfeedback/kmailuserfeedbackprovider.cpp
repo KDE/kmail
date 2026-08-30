@@ -14,12 +14,13 @@
 #include <KUserFeedback/ScreenInfoSource>
 #include <KUserFeedback/StartCountSource>
 #include <KUserFeedback/UsageTimeSource>
+using namespace Qt::Literals::StringLiterals;
 
 KMailUserFeedbackProvider::KMailUserFeedbackProvider(QObject *parent)
     : KUserFeedback::Provider(parent)
 {
-    setProductIdentifier(QStringLiteral("org.kde.kmail"));
-    setFeedbackServer(QUrl(QStringLiteral("https://telemetry.kde.org/")));
+    setProductIdentifier(u"org.kde.kmail"_s);
+    setFeedbackServer(QUrl(u"https://telemetry.kde.org/"_s));
     setSubmissionInterval(7);
     setApplicationStartsUntilEncouragement(5);
     setEncouragementDelay(30);

@@ -20,7 +20,7 @@ ServerDbusWidget::ServerDbusWidget(QWidget *parent)
     : QWidget{parent}
     , mEdit(new QTextEdit(this))
 {
-    const QString path = QStringLiteral("/ServerDbusTest");
+    const QString path = u"/ServerDbusTest"_s;
     auto mainLayout = new QHBoxLayout(this);
 
     mainLayout->addWidget(mEdit);
@@ -30,7 +30,7 @@ ServerDbusWidget::ServerDbusWidget(QWidget *parent)
 
     QDBusConnection::sessionBus().registerObject(path, this, QDBusConnection::ExportAdaptors);
 
-    const QString service = QStringLiteral("org.kde.server_dbus_test");
+    const QString service = u"org.kde.server_dbus_test"_s;
 
     QDBusConnection::sessionBus().registerService(service);
 }
@@ -40,14 +40,14 @@ ServerDbusWidget::~ServerDbusWidget() = default;
 QString ServerDbusWidget::debug()
 {
     qDebug() << " DEBUG ***********";
-    return QStringLiteral("DEBUGGING");
+    return u"DEBUGGING"_s;
 }
 
 void ServerDbusWidget::sendElements(const QList<qint64> &items, int index)
 {
     qDebug() << " sendElements " << items << " index " << index;
-    QString str = QStringLiteral("index: %1").arg(QString::number(index));
-    str += QStringLiteral("items: ");
+    QString str = u"index: %1"_s.arg(QString::number(index));
+    str += u"items: "_s;
     for (qint64 i : items) {
         str += QString::number(i) + u' ';
     }
@@ -58,7 +58,7 @@ void ServerDbusWidget::sendElements(const QList<qint64> &items, int index)
 void ServerDbusWidget::showDialog([[maybe_unused]] qlonglong windowId)
 {
     qDebug() << " show dialog";
-    QMessageBox::warning(this, QStringLiteral("TITLE"), QStringLiteral("MESSAGE"));
+    QMessageBox::warning(this, u"TITLE"_s, u"MESSAGE"_s);
 }
 
 #include "moc_serverdbuswidget.cpp"

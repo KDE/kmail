@@ -7,6 +7,7 @@
 #include "nearexpirywarning.h"
 
 #include <QDebug>
+using namespace Qt::Literals::StringLiterals;
 
 NearExpiryWarning::NearExpiryWarning(QWidget *parent)
     : KMessageWidget(parent)
@@ -22,7 +23,7 @@ NearExpiryWarning::~NearExpiryWarning() = default;
 
 void NearExpiryWarning::addInfo(const QString &msg)
 {
-    setText(text() + (text().isEmpty() ? QString() : QStringLiteral("\n")) + QStringLiteral("<p>") + msg + QStringLiteral("</p>"));
+    setText(text() + (text().isEmpty() ? QString() : u"\n"_s) + u"<p>"_s + msg + u"</p>"_s);
 }
 
 void NearExpiryWarning::setWarning(bool warning)

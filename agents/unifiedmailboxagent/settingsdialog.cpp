@@ -26,6 +26,7 @@
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 #include <memory>
+using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
@@ -39,7 +40,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     , mKernel(new MailKernel(config, this))
     , mConfig(config)
 {
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    setWindowIcon(QIcon::fromTheme(u"kmail"_s));
     auto l = new QVBoxLayout(this);
 
     auto h = new QHBoxLayout;
@@ -51,7 +52,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
 
     auto v = new QVBoxLayout;
     h->addLayout(v);
-    auto addButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18nc("@action:button", "Add"), this);
+    auto addButton = new QPushButton(QIcon::fromTheme(u"list-add-symbolic"_s), i18nc("@action:button", "Add"), this);
     v->addWidget(addButton);
     const auto addMailBox = [this]() {
         auto mailbox = std::make_unique<UnifiedMailbox>();
@@ -66,7 +67,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     };
     connect(addButton, &QPushButton::clicked, this, addMailBox);
 
-    auto editButton = new QPushButton(QIcon::fromTheme(QStringLiteral("entry-edit")), i18nc("@action:button", "Modify"), this);
+    auto editButton = new QPushButton(QIcon::fromTheme(u"entry-edit"_s), i18nc("@action:button", "Modify"), this);
     editButton->setEnabled(false);
     v->addWidget(editButton);
 
@@ -87,7 +88,7 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     connect(view, &QListView::doubleClicked, this, modifyMailBox);
     connect(editButton, &QPushButton::clicked, this, modifyMailBox);
 
-    auto removeButton = new QPushButton(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18n("Remove"), this);
+    auto removeButton = new QPushButton(QIcon::fromTheme(u"list-remove-symbolic"_s), i18n("Remove"), this);
     removeButton->setEnabled(false);
     v->addWidget(removeButton);
 
@@ -124,13 +125,13 @@ SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxMan
     connect(view, &QListView::customContextMenuRequested, this, [this, view, addMailBox, removeMailBox, modifyMailBox]([[maybe_unused]] const QPoint &pos) {
         const auto mboxSelected = view->selectionModel()->selectedIndexes();
         QMenu menu(this);
-        const QAction *addAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-add-symbolic")), i18nc("@action", "Add"));
+        const QAction *addAction = menu.addAction(QIcon::fromTheme(u"list-add-symbolic"_s), i18nc("@action", "Add"));
         QAction *removeAction = nullptr;
         QAction *editAction = nullptr;
         if (!mboxSelected.isEmpty()) {
-            editAction = menu.addAction(QIcon::fromTheme(QStringLiteral("entry-edit")), i18nc("@action", "Modify"));
+            editAction = menu.addAction(QIcon::fromTheme(u"entry-edit"_s), i18nc("@action", "Modify"));
             menu.addSeparator();
-            removeAction = menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove-symbolic")), i18nc("@action", "Remove"));
+            removeAction = menu.addAction(QIcon::fromTheme(u"list-remove-symbolic"_s), i18nc("@action", "Remove"));
         }
         const QAction *result = menu.exec(QCursor::pos());
         if (result) {

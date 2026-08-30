@@ -67,7 +67,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mNormalIconButton->setIconSize(16);
         mNormalIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
-        mNormalIconButton->setIcon(QStringLiteral("folder"));
+        mNormalIconButton->setIcon(u"folder"_s);
         mNormalIconButton->setEnabled(false);
 
         mUnreadIconLabel = new QLabel(i18nc("Icon used for folders which do have unread messages.", "&Unread:"), this);
@@ -79,7 +79,7 @@ void CollectionViewPage::init(const Akonadi::Collection &col)
         mUnreadIconButton->setIconSize(16);
         mUnreadIconButton->setFixedSize(28, 28);
         // Can't use iconset here.
-        mUnreadIconButton->setIcon(QStringLiteral("folder-open"));
+        mUnreadIconButton->setIcon(u"folder-open"_s);
         mUnreadIconButton->setEnabled(false);
 
         auto iconHLayout = new QHBoxLayout();
@@ -119,7 +119,7 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
         }
 
         if (iconName.isEmpty()) {
-            iconName = QStringLiteral("folder");
+            iconName = u"folder"_s;
             iconWasEmpty = true;
         }
         mNormalIconButton->setIcon(iconName);

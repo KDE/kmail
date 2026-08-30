@@ -7,6 +7,8 @@
 #include "kmsieveimappasswordprovider.h"
 #include "kmail_debug.h"
 using namespace QKeychain;
+using namespace Qt::Literals::StringLiterals;
+
 KMSieveImapPasswordProvider::KMSieveImapPasswordProvider(QObject *parent)
     : KSieveCore::SieveImapPasswordProvider(parent)
 {
@@ -18,11 +20,11 @@ void KMSieveImapPasswordProvider::passwords(const QString &identifier)
 {
     const uint requestId = ++mRequestId;
 
-    auto readJob = new ReadPasswordJob(QStringLiteral("imap"), this);
+    auto readJob = new ReadPasswordJob(u"imap"_s, this);
     connect(readJob, &Job::finished, this, &KMSieveImapPasswordProvider::readSieveServerPasswordFinished);
     mJobRequestIds.insert(readJob, requestId);
     mJobIdentifiers.insert(readJob, identifier);
-    readJob->setKey(identifier + QStringLiteral("rc"));
+    readJob->setKey(identifier + u"rc"_s);
     readJob->start();
 }
 
@@ -42,10 +44,10 @@ void KMSieveImapPasswordProvider::readSieveServerPasswordFinished(QKeychain::Job
         mSievePassword = job->textData();
     }
 
-    auto readJob = new ReadPasswordJob(QStringLiteral("imap"), this);
+    auto readJob = new ReadPasswordJob(u"imap"_s, this);
     connect(readJob, &Job::finished, this, &KMSieveImapPasswordProvider::readSieveServerCustomPasswordFinished);
     mJobRequestIds.insert(readJob, requestId);
-    readJob->setKey(QStringLiteral("custom_sieve_") + identifier + QStringLiteral("rc"));
+    readJob->setKey(u"custom_sieve_"_s + identifier + u"rc"_s);
     readJob->start();
 }
 

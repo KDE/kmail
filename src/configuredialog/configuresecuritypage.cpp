@@ -37,7 +37,7 @@ using namespace Qt::Literals::StringLiterals;
 
 QString SecurityPage::helpAnchor() const
 {
-    return QStringLiteral("configure-security");
+    return u"configure-security"_s;
 }
 
 SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data)
@@ -66,7 +66,7 @@ SecurityPage::SecurityPage(QObject *parent, const KPluginMetaData &data)
 
 QString SecurityPageGeneralTab::helpAnchor() const
 {
-    return QStringLiteral("configure-security-reading");
+    return u"configure-security-reading"_s;
 }
 
 SecurityPageGeneralTab::SecurityPageGeneralTab(QWidget *parent)
@@ -129,7 +129,7 @@ void SecurityPageGeneralTab::save()
                                                QString(),
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
-                                               QStringLiteral("htmlMailOverride"))
+                                               u"htmlMailOverride"_s)
             == KMessageBox::Continue) {
             saveCheckBox(mSGTab.mHtmlMailCheck, MessageViewer::MessageViewerSettings::self()->htmlMailItem());
             if (kmkernel) {
@@ -159,7 +159,7 @@ void SecurityPageGeneralTab::save()
 
 QString SecurityPageMDNTab::helpAnchor() const
 {
-    return QStringLiteral("configure-security-mdn");
+    return u"configure-security-mdn"_s;
 }
 
 SecurityPageMDNTab::SecurityPageMDNTab(QWidget *parent)
@@ -217,7 +217,7 @@ void SecurityPageMDNTab::save()
 
 QString SecurityPageEncryptionTab::helpAnchor() const
 {
-    return QStringLiteral("configure-security-composing");
+    return u"configure-security-composing"_s;
 }
 
 SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
@@ -320,8 +320,7 @@ void SecurityPageEncryptionTab::slotConfigureGnupg()
     QPointer<GpgSettingsDialog> dlg(new GpgSettingsDialog(this));
     dlg->setWindowTitle(i18nc("@title:window", "GnuPG Settings"));
     const KPageWidgetItem *page = nullptr;
-    if (const auto plugin = KPluginMetaData::findPluginById((QStringLiteral("pim6/kcms/kleopatra")), QStringLiteral("kcm_kmail_gnupgsystem"));
-        plugin.isValid()) {
+    if (const auto plugin = KPluginMetaData::findPluginById((u"pim6/kcms/kleopatra"_s), u"kcm_kmail_gnupgsystem"_s); plugin.isValid()) {
         page = dlg->addModule(plugin);
     }
     if (!page) {
@@ -339,7 +338,7 @@ void SecurityPageEncryptionTab::slotConfigureGnupg()
 
 QString SecurityPageSMimeTab::helpAnchor() const
 {
-    return QStringLiteral("configure-security-smime-validation");
+    return u"configure-security-smime-validation"_s;
 }
 
 SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
@@ -387,7 +386,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     bgHTTPProxy->addButton(mWidget->honorHTTPProxyRB);
     bgHTTPProxy->addButton(mWidget->useCustomHTTPProxyRB);
 
-    QDBusConnection::sessionBus().connect(QString(), QString(), QStringLiteral("org.kde.kleo.CryptoConfig"), QStringLiteral("changed"), this, SLOT(load()));
+    QDBusConnection::sessionBus().connect(QString(), QString(), u"org.kde.kleo.CryptoConfig"_s, u"changed"_s, this, SLOT(load()));
 }
 
 SecurityPageSMimeTab::~SecurityPageSMimeTab()
@@ -415,51 +414,24 @@ struct SMIMECryptoConfigEntries {
         : mConfig(config)
     {
         // Checkboxes
-        mCheckUsingOCSPConfigEntry =
-            configEntry(QStringLiteral("gpgsm"), QStringLiteral("Security"), QStringLiteral("enable-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mEnableOCSPsendingConfigEntry =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("allow-ocsp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mDoNotCheckCertPolicyConfigEntry = configEntry(QStringLiteral("gpgsm"),
-                                                       QStringLiteral("Security"),
-                                                       QStringLiteral("disable-policy-checks"),
-                                                       QGpgME::CryptoConfigEntry::ArgType_None,
-                                                       false);
-        mNeverConsultConfigEntry = configEntry(QStringLiteral("gpgsm"),
-                                               QStringLiteral("Security"),
-                                               QStringLiteral("disable-crl-checks"),
-                                               QGpgME::CryptoConfigEntry::ArgType_None,
-                                               false);
-        mFetchMissingConfigEntry = configEntry(QStringLiteral("gpgsm"),
-                                               QStringLiteral("Security"),
-                                               QStringLiteral("auto-issuer-key-retrieve"),
-                                               QGpgME::CryptoConfigEntry::ArgType_None,
-                                               false);
+        mCheckUsingOCSPConfigEntry = configEntry(u"gpgsm"_s, u"Security"_s, u"enable-ocsp"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mEnableOCSPsendingConfigEntry = configEntry(u"dirmngr"_s, u"OCSP"_s, u"allow-ocsp"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDoNotCheckCertPolicyConfigEntry = configEntry(u"gpgsm"_s, u"Security"_s, u"disable-policy-checks"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mNeverConsultConfigEntry = configEntry(u"gpgsm"_s, u"Security"_s, u"disable-crl-checks"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mFetchMissingConfigEntry = configEntry(u"gpgsm"_s, u"Security"_s, u"auto-issuer-key-retrieve"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
         // dirmngr-0.9.0 options
-        mIgnoreServiceURLEntry = configEntry(QStringLiteral("dirmngr"),
-                                             QStringLiteral("OCSP"),
-                                             QStringLiteral("ignore-ocsp-service-url"),
-                                             QGpgME::CryptoConfigEntry::ArgType_None,
-                                             false);
-        mIgnoreHTTPDPEntry =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("ignore-http-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mDisableHTTPEntry =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("disable-http"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mHonorHTTPProxy =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("honor-http-proxy"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreServiceURLEntry = configEntry(u"dirmngr"_s, u"OCSP"_s, u"ignore-ocsp-service-url"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreHTTPDPEntry = configEntry(u"dirmngr"_s, u"HTTP"_s, u"ignore-http-dp"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDisableHTTPEntry = configEntry(u"dirmngr"_s, u"HTTP"_s, u"disable-http"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mHonorHTTPProxy = configEntry(u"dirmngr"_s, u"HTTP"_s, u"honor-http-proxy"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
 
-        mIgnoreLDAPDPEntry =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ignore-ldap-dp"), QGpgME::CryptoConfigEntry::ArgType_None, false);
-        mDisableLDAPEntry =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("disable-ldap"), QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mIgnoreLDAPDPEntry = configEntry(u"dirmngr"_s, u"LDAP"_s, u"ignore-ldap-dp"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
+        mDisableLDAPEntry = configEntry(u"dirmngr"_s, u"LDAP"_s, u"disable-ldap"_s, QGpgME::CryptoConfigEntry::ArgType_None, false);
         // Other widgets
-        mOCSPResponderURLConfigEntry =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-responder"), QGpgME::CryptoConfigEntry::ArgType_String, false);
-        mOCSPResponderSignature =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("OCSP"), QStringLiteral("ocsp-signer"), QGpgME::CryptoConfigEntry::ArgType_String, false);
-        mCustomHTTPProxy =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("HTTP"), QStringLiteral("http-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
-        mCustomLDAPProxy =
-            configEntry(QStringLiteral("dirmngr"), QStringLiteral("LDAP"), QStringLiteral("ldap-proxy"), QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mOCSPResponderURLConfigEntry = configEntry(u"dirmngr"_s, u"OCSP"_s, u"ocsp-responder"_s, QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mOCSPResponderSignature = configEntry(u"dirmngr"_s, u"OCSP"_s, u"ocsp-signer"_s, QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mCustomHTTPProxy = configEntry(u"dirmngr"_s, u"HTTP"_s, u"http-proxy"_s, QGpgME::CryptoConfigEntry::ArgType_String, false);
+        mCustomLDAPProxy = configEntry(u"dirmngr"_s, u"LDAP"_s, u"ldap-proxy"_s, QGpgME::CryptoConfigEntry::ArgType_String, false);
     }
 
     QGpgME::CryptoConfigEntry *configEntry(const QString &componentName, const QString &groupName, const QString &entryName, int argType, bool isList);
@@ -646,12 +618,11 @@ QGpgME::CryptoConfigEntry *SMIMECryptoConfigEntries::configEntry(const QString &
 {
     QGpgME::CryptoConfigEntry *entry = mConfig->entry(componentName, groupName, entryName);
     if (!entry) {
-        qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3").arg(componentName, groupName, entryName);
+        qCWarning(KMAIL_LOG) << u"Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3"_s.arg(componentName, groupName, entryName);
         return nullptr;
     }
     if (entry->argType() != argType || entry->isList() != isList) {
-        qCWarning(KMAIL_LOG) << QStringLiteral("Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5")
-                                    .arg(componentName, groupName, entryName)
+        qCWarning(KMAIL_LOG) << u"Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5"_s.arg(componentName, groupName, entryName)
                                     .arg(entry->argType())
                                     .arg(entry->isList());
         return nullptr;

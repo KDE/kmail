@@ -32,6 +32,8 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
+
 Q_DECLARE_METATYPE(Qt::CheckState)
 Q_DECLARE_METATYPE(QList<qint64>)
 
@@ -122,7 +124,7 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QList<qint64> &unindexedColle
 
     auto flatProxy = new KDescendantsProxyModel(this);
     flatProxy->setDisplayAncestorData(true);
-    flatProxy->setAncestorSeparator(QStringLiteral(" / "));
+    flatProxy->setAncestorSeparator(u" / "_s);
     flatProxy->setSourceModel(mimeProxy);
 
     auto proxy = new SearchCollectionProxyModel(unindexedCollections, this);
@@ -193,11 +195,7 @@ QList<qlonglong> IncompleteIndexDialog::collectionsToReindex() const
 
 void IncompleteIndexDialog::waitForIndexer()
 {
-    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(),
-                                  QStringLiteral("/"),
-                                  QStringLiteral("org.freedesktop.Akonadi.Indexer"),
-                                  QDBusConnection::sessionBus(),
-                                  this);
+    mIndexer = new QDBusInterface(PimCommon::MailUtil::indexerServiceName(), u"/"_s, u"org.freedesktop.Akonadi.Indexer"_s, QDBusConnection::sessionBus(), this);
 
     if (!mIndexer->isValid()) {
         qCWarning(KMAIL_LOG) << "Invalid indexer dbus interface ";
@@ -219,7 +217,7 @@ void IncompleteIndexDialog::waitForIndexer()
 
     connect(mIndexer, SIGNAL(collectionIndexingFinished(qlonglong)), this, SLOT(slotCurrentlyIndexingCollectionChanged(qlonglong)));
 
-    mIndexer->asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mIndexingQueue));
+    mIndexer->asyncCall(u"reindexCollections"_s, QVariant::fromValue(mIndexingQueue));
     mProgressDialog->show();
 }
 

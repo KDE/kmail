@@ -9,6 +9,7 @@
 #include "../potentialphishingemailwarning.h"
 #include <QAction>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 PotentialPhishingEmailWarningTest::PotentialPhishingEmailWarningTest(QObject *parent)
     : QObject(parent)
@@ -22,7 +23,7 @@ void PotentialPhishingEmailWarningTest::shouldHaveDefaultValue()
     PotentialPhishingEmailWarning w;
     QVERIFY(!w.isVisible());
     // Verify QVERIFY(w.isCloseButtonVisible());
-    auto act = w.findChild<QAction *>(QStringLiteral("sendnow"));
+    auto act = w.findChild<QAction *>(u"sendnow"_s);
     QVERIFY(act);
 }
 

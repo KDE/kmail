@@ -27,9 +27,9 @@ void SaveAsFileJob::start()
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     QStringList lst;
     if (mHtmlMode) {
-        lst << QStringLiteral("text/html") << QStringLiteral("text/plain") << QStringLiteral("application/vnd.oasis.opendocument.text");
+        lst << u"text/html"_s << u"text/plain"_s << u"application/vnd.oasis.opendocument.text"_s;
     } else {
-        lst << QStringLiteral("text/plain");
+        lst << u"text/plain"_s;
     }
     dlg->setMimeTypeFilters(lst);
 

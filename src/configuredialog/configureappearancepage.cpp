@@ -73,7 +73,7 @@ using namespace MailCommon;
 
 QString AppearancePage::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance");
+    return u"configure-appearance"_s;
 }
 
 AppearancePage::AppearancePage(QObject *parent, const KPluginMetaData &data)
@@ -119,7 +119,7 @@ AppearancePage::AppearancePage(QObject *parent, const KPluginMetaData &data)
 
 QString AppearancePageFontsTab::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance-fonts");
+    return u"configure-appearance-fonts"_s;
 }
 
 static const struct {
@@ -225,7 +225,7 @@ void AppearancePageFontsTab::slotFontSelectorChanged(int index)
 void AppearancePageFontsTab::doLoadOther()
 {
     if (KMKernel::self()) {
-        KConfigGroup fonts(KMKernel::self()->config(), QStringLiteral("Fonts"));
+        KConfigGroup fonts(KMKernel::self()->config(), u"Fonts"_s);
 
         mFont[0] = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
         QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
@@ -254,7 +254,7 @@ void AppearancePageFontsTab::doLoadOther()
 void AppearancePageFontsTab::save()
 {
     if (KMKernel::self()) {
-        KConfigGroup fonts(KMKernel::self()->config(), QStringLiteral("Fonts"));
+        KConfigGroup fonts(KMKernel::self()->config(), u"Fonts"_s);
 
         // read the current font (might have been modified)
         if (mActiveFontIndex >= 0) {
@@ -291,7 +291,7 @@ void AppearancePageFontsTab::doResetToDefaultsOther()
 
 QString AppearancePageColorsTab::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance-colors");
+    return u"configure-appearance-colors"_s;
 }
 
 static const struct {
@@ -371,7 +371,7 @@ void AppearancePageColorsTab::doLoadOther()
 void AppearancePageColorsTab::loadColor(bool loadFromConfig)
 {
     if (KMKernel::self()) {
-        KConfigGroup reader(KMKernel::self()->config(), QStringLiteral("Reader"));
+        KConfigGroup reader(KMKernel::self()->config(), u"Reader"_s);
 
         static const QColor defaultColor[numColorNames] = {
             MessageCore::ColorUtil::self()->quoteLevel1DefaultTextColor(),
@@ -421,7 +421,7 @@ void AppearancePageColorsTab::save()
     if (!KMKernel::self()) {
         return;
     }
-    KConfigGroup reader(KMKernel::self()->config(), QStringLiteral("Reader"));
+    KConfigGroup reader(KMKernel::self()->config(), u"Reader"_s);
     bool customColors = mCustomColorCheck->isChecked();
     MessageCore::MessageCoreSettings::self()->setUseDefaultColors(!customColors);
     MessageCore::MessageCoreSettings::self()->setUseRealHtmlMailColor(mUseInlineStyle->isChecked());
@@ -445,7 +445,7 @@ void AppearancePageColorsTab::save()
 
 QString AppearancePageLayoutTab::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance-layout");
+    return u"configure-appearance-layout"_s;
 }
 
 AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
@@ -575,7 +575,7 @@ void AppearancePageLayoutTab::save()
 
 QString AppearancePageHeadersTab::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance-headers");
+    return u"configure-appearance-headers"_s;
 }
 
 static const struct {
@@ -805,7 +805,7 @@ void AppearancePageHeadersTab::save()
 
 QString AppearancePageGeneralTab::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance-reader");
+    return u"configure-appearance-reader"_s;
 }
 
 AppearancePageGeneralTab::AppearancePageGeneralTab(QWidget *parent)
@@ -910,7 +910,7 @@ void AppearancePageGeneralTab::save()
 
 QString AppearancePageMessageTagTab::helpAnchor() const
 {
-    return QStringLiteral("configure-appearance-messagetag");
+    return u"configure-appearance-messagetag"_s;
 }
 
 TagListWidgetItem::TagListWidgetItem(QListWidget *parent)
@@ -958,12 +958,12 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 
     mTagAddButton = new QPushButton(mTagsGroupBox);
     mTagAddButton->setToolTip(i18nc("@info:tooltip", "Add new tag"));
-    mTagAddButton->setIcon(QIcon::fromTheme(QStringLiteral("list-add")));
+    mTagAddButton->setIcon(QIcon::fromTheme(u"list-add"_s));
     addremovegrid->addWidget(mTagAddButton);
 
     mTagRemoveButton = new QPushButton(mTagsGroupBox);
     mTagRemoveButton->setToolTip(i18nc("@info:tooltip", "Remove selected tag"));
-    mTagRemoveButton->setIcon(QIcon::fromTheme(QStringLiteral("list-remove")));
+    mTagRemoveButton->setIcon(QIcon::fromTheme(u"list-remove"_s));
     addremovegrid->addWidget(mTagRemoveButton);
 
     // Up and down buttons
@@ -972,13 +972,13 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
 
     mTagUpButton = new QPushButton(mTagsGroupBox);
     mTagUpButton->setToolTip(i18nc("@info:tooltip", "Increase tag priority"));
-    mTagUpButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-up")));
+    mTagUpButton->setIcon(QIcon::fromTheme(u"arrow-up"_s));
     mTagUpButton->setAutoRepeat(true);
     updowngrid->addWidget(mTagUpButton);
 
     mTagDownButton = new QPushButton(mTagsGroupBox);
     mTagDownButton->setToolTip(i18nc("@info:tooltip", "Decrease tag priority"));
-    mTagDownButton->setIcon(QIcon::fromTheme(QStringLiteral("arrow-down")));
+    mTagDownButton->setIcon(QIcon::fromTheme(u"arrow-down"_s));
     mTagDownButton->setAutoRepeat(true);
     updowngrid->addWidget(mTagDownButton);
 
@@ -1050,7 +1050,7 @@ void AppearancePageMessageTagTab::slotCustomMenuRequested(const QPoint &)
 {
     if (const int currentIndex = mTagListBox->currentRow(); currentIndex >= 0) {
         QMenu menu(this);
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18n("Delete"), this, &AppearancePageMessageTagTab::slotRemoveTag);
+        menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18n("Delete"), this, &AppearancePageMessageTagTab::slotRemoveTag);
         menu.exec(QCursor::pos());
     }
 }

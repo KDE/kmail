@@ -11,6 +11,7 @@
 
 #include <Akonadi/CollectionCreateJob>
 #include <Akonadi/CollectionFetchJob>
+using namespace Qt::Literals::StringLiterals;
 
 FolderArchiveAgentCheckCollection::FolderArchiveAgentCheckCollection(FolderArchiveAccountInfo *info, QObject *parent)
     : QObject(parent)
@@ -43,10 +44,10 @@ void FolderArchiveAgentCheckCollection::slotInitialCollectionFetchingFirstLevelD
         break;
     case FolderArchiveAccountInfo::FolderArchiveType::FolderByMonths:
         // TODO translate ?
-        folderName = QStringLiteral("%1-%2").arg(mCurrentDate.month()).arg(mCurrentDate.year());
+        folderName = u"%1-%2"_s.arg(mCurrentDate.month()).arg(mCurrentDate.year());
         break;
     case FolderArchiveAccountInfo::FolderArchiveType::FolderByYears:
-        folderName = QStringLiteral("%1").arg(mCurrentDate.year());
+        folderName = u"%1"_s.arg(mCurrentDate.year());
         break;
     }
 
@@ -73,7 +74,7 @@ void FolderArchiveAgentCheckCollection::createNewFolder(const QString &name)
     Akonadi::Collection collection;
     collection.setParentCollection(parentCollection);
     collection.setName(name);
-    collection.setContentMimeTypes(QStringList() << QStringLiteral("message/rfc822"));
+    collection.setContentMimeTypes(QStringList() << u"message/rfc822"_s);
 
     auto job = new Akonadi::CollectionCreateJob(collection);
     connect(job, &Akonadi::CollectionCreateJob::result, this, &FolderArchiveAgentCheckCollection::slotCreateNewFolder);

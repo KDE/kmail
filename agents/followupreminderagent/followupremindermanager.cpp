@@ -40,7 +40,7 @@ void FollowUpReminderManager::load(bool forceReloadConfig)
     if (forceReloadConfig) {
         mConfig->reparseConfiguration();
     }
-    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(QStringLiteral("FollowupReminderItem \\d+")));
+    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(u"FollowupReminderItem \\d+"_s));
     const int numberOfItems = itemList.count();
     QList<FollowUpReminder::FollowUpReminderInfo *> noAnswerList;
     for (int i = 0; i < numberOfItems; ++i) {
@@ -149,12 +149,12 @@ void FollowUpReminderManager::slotFinishTaskFailed()
 
 void FollowUpReminderManager::answerReceived(const QString &from)
 {
-    KNotification::event(QStringLiteral("mailreceived"),
+    KNotification::event(u"mailreceived"_s,
                          QString(),
                          i18n("Answer from %1 received", from),
-                         QStringLiteral("kmail"),
+                         u"kmail"_s,
                          KNotification::CloseOnTimeout,
-                         QStringLiteral("akonadi_followupreminder_agent"));
+                         u"akonadi_followupreminder_agent"_s);
 }
 
 QString FollowUpReminderManager::printDebugInfo() const
@@ -162,7 +162,7 @@ QString FollowUpReminderManager::printDebugInfo() const
     QString infoStr;
     if (mFollowUpReminderInfoList.isEmpty()) {
         // Don't translate it. => debug info.
-        infoStr = QStringLiteral("No mail");
+        infoStr = u"No mail"_s;
     } else {
         for (FollowUpReminder::FollowUpReminderInfo *info : std::as_const(mFollowUpReminderInfoList)) {
             if (!infoStr.isEmpty()) {
@@ -176,14 +176,14 @@ QString FollowUpReminderManager::printDebugInfo() const
 
 QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInfo *info) const
 {
-    QString infoStr = QStringLiteral("****************************************");
-    infoStr += QStringLiteral("Akonadi Item id :%1\n").arg(info->originalMessageItemId());
-    infoStr += QStringLiteral("MessageId :%1\n").arg(info->messageId());
-    infoStr += QStringLiteral("Subject :%1\n").arg(info->subject());
-    infoStr += QStringLiteral("To :%1\n").arg(info->to());
-    infoStr += QStringLiteral("Deadline :%1\n").arg(info->followUpReminderDate().toString());
-    infoStr += QStringLiteral("Answer received :%1\n").arg(info->answerWasReceived() ? QStringLiteral("true") : QStringLiteral("false"));
-    infoStr += QStringLiteral("****************************************\n");
+    QString infoStr = u"****************************************"_s;
+    infoStr += u"Akonadi Item id :%1\n"_s.arg(info->originalMessageItemId());
+    infoStr += u"MessageId :%1\n"_s.arg(info->messageId());
+    infoStr += u"Subject :%1\n"_s.arg(info->subject());
+    infoStr += u"To :%1\n"_s.arg(info->to());
+    infoStr += u"Deadline :%1\n"_s.arg(info->followUpReminderDate().toString());
+    infoStr += u"Answer received :%1\n"_s.arg(info->answerWasReceived() ? u"true"_s : u"false"_s);
+    infoStr += u"****************************************\n"_s;
     return infoStr;
 }
 

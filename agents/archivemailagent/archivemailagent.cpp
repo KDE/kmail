@@ -40,7 +40,7 @@ ArchiveMailAgent::ArchiveMailAgent(const QString &id)
     collectionMonitor->setMimeTypeMonitored(KMime::Message::mimeType());
 
     new ArchiveMailAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/ArchiveMailAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(u"/ArchiveMailAgent"_s, this, QDBusConnection::ExportAdaptors);
 
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, identifier());
 

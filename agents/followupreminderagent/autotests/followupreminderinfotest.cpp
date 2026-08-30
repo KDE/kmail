@@ -11,6 +11,7 @@
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 FollowUpReminderInfoTest::FollowUpReminderInfoTest(QObject *parent)
     : QObject(parent)
@@ -33,14 +34,14 @@ void FollowUpReminderInfoTest::shoudBeNotValid()
 {
     FollowUpReminder::FollowUpReminderInfo info;
     // We need a messageId not empty and a valid date and a "To" not empty
-    info.setMessageId(QStringLiteral("foo"));
+    info.setMessageId(u"foo"_s);
     QCOMPARE(info.isValid(), false);
 
     const QDate date(2014, 1, 1);
     info.setFollowUpReminderDate(QDate(date));
     QCOMPARE(info.isValid(), false);
 
-    const QString to = QStringLiteral("kde.org");
+    const QString to = u"kde.org"_s;
     info.setTo(to);
     QCOMPARE(info.isValid(), true);
 
@@ -52,10 +53,10 @@ void FollowUpReminderInfoTest::shoudBeValidEvenIfSubjectIsEmpty()
 {
     FollowUpReminder::FollowUpReminderInfo info;
     // We need a Akonadi::Id valid and a messageId not empty and a valid date and a "To" not empty
-    info.setMessageId(QStringLiteral("foo"));
+    info.setMessageId(u"foo"_s);
     const QDate date(2014, 1, 1);
     info.setFollowUpReminderDate(QDate(date));
-    const QString to = QStringLiteral("kde.org");
+    const QString to = u"kde.org"_s;
     info.setTo(to);
     info.setOriginalMessageItemId(Akonadi::Item::Id(42));
     QCOMPARE(info.isValid(), true);
@@ -64,17 +65,17 @@ void FollowUpReminderInfoTest::shoudBeValidEvenIfSubjectIsEmpty()
 void FollowUpReminderInfoTest::shouldRestoreFromSettings()
 {
     FollowUpReminder::FollowUpReminderInfo info;
-    info.setMessageId(QStringLiteral("foo"));
+    info.setMessageId(u"foo"_s);
     const QDate date(2014, 1, 1);
     info.setFollowUpReminderDate(QDate(date));
-    const QString to = QStringLiteral("kde.org");
+    const QString to = u"kde.org"_s;
     info.setTo(to);
     info.setOriginalMessageItemId(Akonadi::Item::Id(42));
-    info.setSubject(QStringLiteral("Subject"));
+    info.setSubject(u"Subject"_s);
     info.setUniqueIdentifier(42);
     info.setTodoId(52);
 
-    KConfigGroup grp(KSharedConfig::openConfig(), QStringLiteral("testsettings"));
+    KConfigGroup grp(KSharedConfig::openConfig(), u"testsettings"_s);
     info.writeConfig(grp, info.uniqueIdentifier());
 
     FollowUpReminder::FollowUpReminderInfo restoreInfo(grp);
@@ -84,13 +85,13 @@ void FollowUpReminderInfoTest::shouldRestoreFromSettings()
 void FollowUpReminderInfoTest::shouldCopyReminderInfo()
 {
     FollowUpReminder::FollowUpReminderInfo info;
-    info.setMessageId(QStringLiteral("foo"));
+    info.setMessageId(u"foo"_s);
     const QDate date(2014, 1, 1);
     info.setFollowUpReminderDate(QDate(date));
-    const QString to = QStringLiteral("kde.org");
+    const QString to = u"kde.org"_s;
     info.setTo(to);
     info.setOriginalMessageItemId(Akonadi::Item::Id(42));
-    info.setSubject(QStringLiteral("Subject"));
+    info.setSubject(u"Subject"_s);
     info.setUniqueIdentifier(42);
     info.setTodoId(52);
 

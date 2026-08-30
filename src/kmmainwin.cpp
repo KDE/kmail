@@ -117,10 +117,10 @@ KMMainWin::KMMainWin(QWidget *)
     }
 
     KStandardActions::quit(this, &KMMainWin::slotQuit, actionCollection());
-    createGUI(QStringLiteral("kmmainwin.rc"));
+    createGUI(u"kmmainwin.rc"_s);
 
     // must be after createGUI, otherwise e.g toolbar settings are not loaded
-    setStateConfigGroup(QStringLiteral("Main Window"));
+    setStateConfigGroup(u"Main Window"_s);
     // The next line implicitly calls applyMainWindowSettings(stateConfigGroup())
     setAutoSaveSettings(stateConfigGroup(), true);
 
@@ -173,14 +173,14 @@ void KMMainWin::updateHamburgerMenu()
     menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::SaveAs)));
     menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Print)));
     menu->addSeparator();
-    menu->addAction(actionCollection()->action(QStringLiteral("check_mail")));
-    menu->addAction(actionCollection()->action(QStringLiteral("check_mail_in")));
-    menu->addAction(actionCollection()->action(QStringLiteral("send_queued")));
-    menu->addAction(actionCollection()->action(QStringLiteral("send_queued_via")));
+    menu->addAction(actionCollection()->action(u"check_mail"_s));
+    menu->addAction(actionCollection()->action(u"check_mail_in"_s));
+    menu->addAction(actionCollection()->action(u"send_queued"_s));
+    menu->addAction(actionCollection()->action(u"send_queued_via"_s));
     menu->addSeparator();
 
-    menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_kmail")));
-    menu->addAction(actionCollection()->action(QStringLiteral("kmail_configure_notifications")));
+    menu->addAction(actionCollection()->action(u"kmail_configure_kmail"_s));
+    menu->addAction(actionCollection()->action(u"kmail_configure_notifications"_s));
     menu->addSeparator();
 
     menu->addAction(actionCollection()->action(KStandardActions::name(KStandardActions::Quit)));
@@ -224,7 +224,7 @@ void KMMainWin::slotToggleMenubar(bool dontShowWarning)
                                               " You can show it again by typing %1.</qt>",
                                               accel),
                                          i18nc("@title:window", "Hide menu bar"),
-                                         QStringLiteral("HideMenuBarWarning"));
+                                         u"HideMenuBarWarning"_s);
             }
             menuBar()->hide();
         }
@@ -252,7 +252,7 @@ void KMMainWin::slotUpdateGui()
     mKMMainWidget->tagActionManager()->clearActions();
     mKMMainWidget->clearPluginActions();
 
-    createGUI(QStringLiteral("kmmainwin.rc"));
+    createGUI(u"kmmainwin.rc"_s);
     applyMainWindowSettings(stateConfigGroup());
 
     // plug dynamically created actions again

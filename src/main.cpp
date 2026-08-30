@@ -138,8 +138,8 @@ int main(int argc, char *argv[])
 
     KMailApplication app(argc, &argv);
     KLocalizedString::setApplicationDomain("kmail"_ba);
-    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
-    app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
+    app.setWindowIcon(QIcon::fromTheme(u"kmail"_s));
+    app.setDesktopFileName(u"org.kde.kmail2"_s);
 
     KStyleManager::initStyle();
 
@@ -155,14 +155,14 @@ int main(int argc, char *argv[])
     about.processCommandLine(cmdArgs);
 
 #if KMAIL_WITH_KUSERFEEDBACK
-    if (cmdArgs->isSet(QStringLiteral("feedback"))) {
+    if (cmdArgs->isSet(u"feedback"_s)) {
         const KMailUserFeedbackProvider userFeedback(nullptr);
         QTextStream(stdout) << userFeedback.describeDataSources() << '\n';
         return 0;
     }
 #endif
     bool enableDebug = false;
-    if (cmdArgs->isSet(QStringLiteral("debug"))) {
+    if (cmdArgs->isSet(u"debug"_s)) {
         enableDebug = true;
     }
 

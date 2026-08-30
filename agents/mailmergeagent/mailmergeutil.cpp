@@ -6,6 +6,7 @@
 
 #include "mailmergeutil.h"
 #include "mailmergeagentsettings.h"
+using namespace Qt::Literals::StringLiterals;
 
 void MailMergeUtil::forceReparseConfiguration()
 {
@@ -20,5 +21,5 @@ bool MailMergeUtil::mailMergeAgentEnabled()
 
 QString MailMergeUtil::mailMergePattern()
 {
-    return QStringLiteral("MailMergeItem %1");
+    return u"MailMergeItem %1"_s;
 }

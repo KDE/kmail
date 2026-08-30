@@ -29,7 +29,7 @@ namespace
 {
 inline QString archiveMailCollectionPattern()
 {
-    return QStringLiteral("ArchiveMailCollection \\d+");
+    return u"ArchiveMailCollection \\d+"_s;
 }
 
 const char myConfigGroupName[] = "ArchiveMailDialog";
@@ -91,7 +91,7 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
 {
     const QList<QTreeWidgetItem *> listItems = mWidget.treeWidget->selectedItems();
     QMenu menu(mWidget.treeWidget);
-    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &ArchiveMailWidget::slotAddItem);
+    menu.addAction(QIcon::fromTheme(u"list-add"_s), i18nc("@action", "Add…"), this, &ArchiveMailWidget::slotAddItem);
     if (!listItems.isEmpty()) {
         if (listItems.count() == 1) {
             menu.addSeparator();
@@ -100,7 +100,7 @@ void ArchiveMailWidget::slotCustomContextMenuRequested(const QPoint &)
             menu.addAction(i18nc("@action", "Open Containing Folder…"), this, &ArchiveMailWidget::slotOpenFolder);
         }
         menu.addSeparator();
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action", "Delete"), this, &ArchiveMailWidget::slotDeleteItem);
+        menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Delete"), this, &ArchiveMailWidget::slotDeleteItem);
     }
     menu.exec(QCursor::pos());
 }

@@ -36,6 +36,7 @@
 #include <cerrno>
 
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 FilterLogDialog::FilterLogDialog(QWidget *parent)
     : QDialog(parent)
@@ -49,7 +50,7 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     buttonBox->addButton(mUser1Button, QDialogButtonBox::ActionRole);
     buttonBox->addButton(mUser2Button, QDialogButtonBox::ActionRole);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &FilterLogDialog::reject);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("view-filter")));
+    setWindowIcon(QIcon::fromTheme(u"view-filter"_s));
     setModal(false);
 
     buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
@@ -80,14 +81,14 @@ FilterLogDialog::FilterLogDialog(QWidget *parent)
     mTextEdit->setReadOnly(true);
     mTextEdit->editor()->setWordWrapMode(QTextOption::NoWrap);
     const QStringList logEntries = FilterLog::instance()->logEntries();
-    const QString log = logEntries.join(QStringLiteral("<br>"));
+    const QString log = logEntries.join(u"<br>"_s);
     mTextEdit->editor()->appendHtml(log);
 
     auto purposeMenu = new MailfilterPurposeMenuWidget(this, this);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareError, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareError);
     connect(purposeMenu, &MailfilterPurposeMenuWidget::shareSuccess, purposeMenuMessageWidget, &PimCommon::PurposeMenuMessageWidget::slotShareSuccess);
     mShareButton->setMenu(purposeMenu->menu());
-    mShareButton->setIcon(QIcon::fromTheme(QStringLiteral("document-share")));
+    mShareButton->setIcon(QIcon::fromTheme(u"document-share"_s));
     purposeMenu->setEditorWidget(mTextEdit->editor());
     buttonBox->addButton(mShareButton, QDialogButtonBox::ActionRole);
 
@@ -177,7 +178,7 @@ void FilterLogDialog::slotTextChanged()
 void FilterLogDialog::readConfig()
 {
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    KConfigGroup group(config, QStringLiteral("FilterLog"));
+    KConfigGroup group(config, u"FilterLog"_s);
     const bool isEnabled = group.readEntry("Enabled", false);
     const bool isLogPatternDescription = group.readEntry("LogPatternDescription", false);
     const bool isLogRuleResult = group.readEntry("LogRuleResult", false);
@@ -204,7 +205,7 @@ void FilterLogDialog::readConfig()
         FilterLog::instance()->setMaxLogSize(maxLogSize);
     }
 
-    KConfigGroup geometryGroup(KSharedConfig::openStateConfig(), QStringLiteral("Geometry"));
+    KConfigGroup geometryGroup(KSharedConfig::openStateConfig(), u"Geometry"_s);
     if (const QSize size = geometryGroup.readEntry("filterLogSize", QSize(600, 400)); size.isValid()) {
         resize(size);
     } else {
@@ -215,7 +216,7 @@ void FilterLogDialog::readConfig()
 FilterLogDialog::~FilterLogDialog()
 {
     disconnect(mTextEdit->editor(), &TextCustomEditor::PlainTextEditor::textChanged, this, &FilterLogDialog::slotTextChanged);
-    KConfigGroup myGroup(KSharedConfig::openStateConfig(), QStringLiteral("Geometry"));
+    KConfigGroup myGroup(KSharedConfig::openStateConfig(), u"Geometry"_s);
     myGroup.writeEntry("filterLogSize", size());
     myGroup.sync();
 }
@@ -227,7 +228,7 @@ void FilterLogDialog::writeConfig()
     }
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig();
-    KConfigGroup group(config, QStringLiteral("FilterLog"));
+    KConfigGroup group(config, u"FilterLog"_s);
     group.writeEntry("Enabled", FilterLog::instance()->isLogging());
     group.writeEntry("LogPatternDescription", FilterLog::instance()->isContentTypeEnabled(FilterLog::PatternDescription));
     group.writeEntry("LogRuleResult", FilterLog::instance()->isContentTypeEnabled(FilterLog::RuleResult));
@@ -316,7 +317,7 @@ void FilterLogDialog::slotUser2()
 
     fdlg->setAcceptMode(QFileDialog::AcceptSave);
     fdlg->setFileMode(QFileDialog::AnyFile);
-    fdlg->selectFile(QStringLiteral("kmail-filter.html"));
+    fdlg->selectFile(u"kmail-filter.html"_s);
     if (fdlg->exec() == QDialog::Accepted) {
         if (const QStringList fileName = fdlg->selectedFiles(); !fileName.isEmpty() && !FilterLog::instance()->saveToFile(fileName.at(0))) {
             KMessageBox::error(this,

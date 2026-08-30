@@ -10,6 +10,7 @@
 #include <KStatefulBrush>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 IdentityFolderRequester::IdentityFolderRequester(QWidget *parent)
     : MailCommon::FolderRequester(parent)
@@ -21,7 +22,7 @@ IdentityFolderRequester::~IdentityFolderRequester() = default;
 void IdentityFolderRequester::setIsInvalidFolder(const Akonadi::Collection &col)
 {
     const KStatefulBrush bgBrush(KColorScheme::View, KColorScheme::NegativeBackground);
-    setStyleSheet(QStringLiteral("QLineEdit{ background-color:%1 }").arg(bgBrush.brush(palette()).color().name()));
+    setStyleSheet(u"QLineEdit{ background-color:%1 }"_s.arg(bgBrush.brush(palette()).color().name()));
     setCollection(col);
     connect(this, &IdentityFolderRequester::folderChanged, this, &IdentityFolderRequester::slotFolderChanged, Qt::UniqueConnection);
 }

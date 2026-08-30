@@ -10,17 +10,18 @@
 
 #include "followupreminderagentsettings.h"
 #include <QDBusInterface>
+using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
 QString serviceName()
 {
-    return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));
+    return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_followupreminder_agent"_s);
 }
 
 QString dbusPath()
 {
-    return QStringLiteral("/FollowUpReminder");
+    return u"/FollowUpReminder"_s;
 }
 }
 
@@ -38,7 +39,7 @@ bool FollowUpReminder::FollowUpReminderUtil::followupReminderAgentEnabled()
 void FollowUpReminder::FollowUpReminderUtil::reload()
 {
     if (QDBusInterface interface(serviceName(), dbusPath()); interface.isValid()) {
-        interface.call(QStringLiteral("reload"));
+        interface.call(u"reload"_s);
     }
 }
 
@@ -50,7 +51,7 @@ void FollowUpReminder::FollowUpReminderUtil::forceReparseConfiguration()
 
 KSharedConfig::Ptr FollowUpReminder::FollowUpReminderUtil::defaultConfig()
 {
-    return KSharedConfig::openConfig(QStringLiteral("akonadi_followupreminder_agentrc"), KConfig::SimpleConfig);
+    return KSharedConfig::openConfig(u"akonadi_followupreminder_agentrc"_s, KConfig::SimpleConfig);
 }
 
 void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(const KSharedConfig::Ptr &config,
@@ -61,7 +62,7 @@ void FollowUpReminder::FollowUpReminderUtil::writeFollowupReminderInfo(const KSh
         return;
     }
 
-    KConfigGroup general = config->group(QStringLiteral("General"));
+    KConfigGroup general = config->group(u"General"_s);
     int value = general.readEntry("Number", 0);
     int identifier = info->uniqueIdentifier();
     if (identifier == -1) {
@@ -96,7 +97,7 @@ bool FollowUpReminder::FollowUpReminderUtil::removeFollowupReminderInfo(const KS
     }
 
     bool needSaveConfig = false;
-    KConfigGroup general = config->group(QStringLiteral("General"));
+    KConfigGroup general = config->group(u"General"_s);
     int value = general.readEntry("Number", 0);
 
     for (qint32 identifier : listRemove) {
@@ -124,5 +125,5 @@ bool FollowUpReminder::FollowUpReminderUtil::removeFollowupReminderInfo(const KS
 
 QString FollowUpReminder::FollowUpReminderUtil::followUpReminderPattern()
 {
-    return QStringLiteral("FollowupReminderItem %1");
+    return u"FollowupReminderItem %1"_s;
 }

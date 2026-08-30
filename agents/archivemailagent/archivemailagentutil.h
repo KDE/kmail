@@ -8,10 +8,11 @@
 
 #include "archivemailinfo.h"
 #include <QDate>
+using namespace Qt::Literals::StringLiterals;
 
 namespace ArchiveMailAgentUtil
 {
-static QString archivePattern = QStringLiteral("ArchiveMailCollection %1");
+static QString archivePattern = u"ArchiveMailCollection %1"_s;
 [[nodiscard]] QDate diffDate(const ArchiveMailInfo *info);
 [[nodiscard]] bool needToArchive(ArchiveMailInfo *info);
 [[nodiscard]] bool timeIsInRange(const QList<int> &range, QTime time);

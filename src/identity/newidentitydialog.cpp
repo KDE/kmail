@@ -30,6 +30,7 @@
 #include <cassert>
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 NewIdentityDialog::NewIdentityDialog(KIdentityManagementCore::IdentityManager *manager, QWidget *parent)
     : QDialog(parent)
@@ -109,7 +110,7 @@ NewIdentityDialog::NewIdentityDialog(KIdentityManagementCore::IdentityManager *m
 
 void NewIdentityDialog::slotHelp()
 {
-    PimCommon::Util::invokeHelp(QStringLiteral("kmail2/configure-identity.html"), QStringLiteral("configure-identity-newidentitydialog"));
+    PimCommon::Util::invokeHelp(u"kmail2/configure-identity.html"_s, u"configure-identity-newidentitydialog"_s);
 }
 
 NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const

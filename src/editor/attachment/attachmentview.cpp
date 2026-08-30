@@ -34,6 +34,7 @@
 using MessageCore::AttachmentPart;
 
 using namespace KMail;
+using namespace Qt::Literals::StringLiterals;
 
 AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget *parent)
     : QTreeView(parent)
@@ -41,12 +42,12 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     , mToolButton(new QToolButton(this))
     , mInfoAttachment(new QLabel(this))
     , mWidget(new QWidget())
-    , grp(KMKernel::self()->config()->group(QStringLiteral("AttachmentView")))
+    , grp(KMKernel::self()->config()->group(u"AttachmentView"_s))
 {
     auto lay = new QHBoxLayout(mWidget);
     lay->setContentsMargins({});
     connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
-    mToolButton->setIcon(QIcon::fromTheme(QStringLiteral("mail-attachment")));
+    mToolButton->setIcon(QIcon::fromTheme(u"mail-attachment"_s));
     mToolButton->setAutoRaise(true);
     mToolButton->setCheckable(true);
     lay->addWidget(mToolButton);

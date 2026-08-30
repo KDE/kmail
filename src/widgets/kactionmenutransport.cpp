@@ -10,6 +10,8 @@
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/transportactivities.h"
 #endif
+using namespace Qt::Literals::StringLiterals;
+
 KActionMenuTransport::KActionMenuTransport(QObject *parent)
     : KActionMenu(parent)
 {
@@ -60,7 +62,7 @@ void KActionMenuTransport::updateTransportMenu()
                 }
             }
 #endif
-            const QString name = transport->name().replace(QLatin1Char('&'), QStringLiteral("&&"));
+            const QString name = transport->name().replace(QLatin1Char('&'), u"&&"_s);
             menuTransportLst.insert(name, transport->id());
         }
         for (const auto &[key, value] : menuTransportLst.asKeyValueRange()) {

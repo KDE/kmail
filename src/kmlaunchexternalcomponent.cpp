@@ -21,6 +21,7 @@
 
 #include <QProcess>
 #include <QStandardPaths>
+using namespace Qt::Literals::StringLiterals;
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)
     : QObject(parent)
@@ -43,28 +44,28 @@ void KMLaunchExternalComponent::createAgentConfigurationDialog(const QString &ag
 
 void KMLaunchExternalComponent::slotConfigureAutomaticArchiving()
 {
-    createAgentConfigurationDialog(QStringLiteral("akonadi_archivemail_agent"), i18n("Archive Mail Agent was not registered."));
+    createAgentConfigurationDialog(u"akonadi_archivemail_agent"_s, i18n("Archive Mail Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotConfigureSendLater()
 {
-    createAgentConfigurationDialog(QStringLiteral("akonadi_sendlater_agent"), i18n("Send Later Agent was not registered."));
+    createAgentConfigurationDialog(u"akonadi_sendlater_agent"_s, i18n("Send Later Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotConfigureMailMerge()
 {
-    createAgentConfigurationDialog(QStringLiteral("akonadi_mailmerge_agent"), i18n("Mail Merge Agent was not registered."));
+    createAgentConfigurationDialog(u"akonadi_mailmerge_agent"_s, i18n("Mail Merge Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 {
-    createAgentConfigurationDialog(QStringLiteral("akonadi_followupreminder_agent"), i18n("Followup Reminder Agent was not registered."));
+    createAgentConfigurationDialog(u"akonadi_followupreminder_agent"_s, i18n("Followup Reminder Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotStartCertManager()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-    if (const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.kleopatra"))) {
+    if (const KService::Ptr service = KService::serviceByDesktopName(u"org.kde.kleopatra"_s)) {
         auto job = new KIO::ApplicationLauncherJob(service);
         job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
         job->start();
@@ -75,7 +76,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
                            i18nc("@title:window", "KMail Error"));
     }
 #else
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(u"kleopatra"_s);
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start certificate manager; "
@@ -88,7 +89,7 @@ void KMLaunchExternalComponent::slotStartCertManager()
 void KMLaunchExternalComponent::slotImportWizard()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-    if (const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.akonadiimportwizard"))) {
+    if (const KService::Ptr service = KService::serviceByDesktopName(u"org.kde.akonadiimportwizard"_s)) {
         auto job = new KIO::ApplicationLauncherJob(service);
         job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
         job->start();
@@ -99,7 +100,7 @@ void KMLaunchExternalComponent::slotImportWizard()
                            i18nc("@title:window", "Unable to start \"ImportWizard\" program"));
     }
 #else
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadiimportwizard"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(u"akonadiimportwizard"_s);
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"ImportWizard\" program. "
@@ -113,7 +114,7 @@ void KMLaunchExternalComponent::slotExportData()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
 
-    if (const KService::Ptr service = KService::serviceByDesktopName(QStringLiteral("org.kde.pimdataexporter"))) {
+    if (const KService::Ptr service = KService::serviceByDesktopName(u"org.kde.pimdataexporter"_s)) {
         auto job = new KIO::ApplicationLauncherJob(service);
         job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
         job->start();
@@ -124,7 +125,7 @@ void KMLaunchExternalComponent::slotExportData()
                            i18nc("@title:window", "Unable to start \"PIM Data Exporter\" program"));
     }
 #else
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("pimdataexporter"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(u"pimdataexporter"_s);
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"PIM Data Exporter\" program. "
@@ -137,12 +138,12 @@ void KMLaunchExternalComponent::slotExportData()
 void KMLaunchExternalComponent::slotRunAddressBook()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-    auto job = new KIO::CommandLauncherJob(QStringLiteral("kaddressbook"), {}, this);
-    job->setDesktopName(QStringLiteral("org.kde.kaddressbook"));
+    auto job = new KIO::CommandLauncherJob(u"kaddressbook"_s, {}, this);
+    job->setDesktopName(u"org.kde.kaddressbook"_s);
     job->setUiDelegate(new KDialogJobUiDelegate(KJobUiDelegate::AutoHandlingEnabled, mParentWidget->window()));
     job->start();
 #else
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kaddressbook"));
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(u"kaddressbook"_s);
     if (path.isEmpty() || !QProcess::startDetached(path)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start \"KAddressbook\" program. "
@@ -154,8 +155,8 @@ void KMLaunchExternalComponent::slotRunAddressBook()
 
 void KMLaunchExternalComponent::slotImport()
 {
-    const QStringList lst = {QStringLiteral("--mode"), QStringLiteral("manual")};
-    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("akonadiimportwizard"));
+    const QStringList lst = {u"--mode"_s, u"manual"_s};
+    const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(u"akonadiimportwizard"_s);
     if (path.isEmpty() || !QProcess::startDetached(path, lst)) {
         KMessageBox::error(mParentWidget,
                            i18n("Could not start the ImportWizard. "
@@ -176,9 +177,8 @@ void KMLaunchExternalComponent::slotFilterLogViewer()
 
 void KMLaunchExternalComponent::slotShowNotificationHistory()
 {
-    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_newmailnotifier_agent"));
-    auto newMailNotifierInterface =
-        new OrgFreedesktopAkonadiNewMailNotifierInterface(service, QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_newmailnotifier_agent"_s);
+    auto newMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(service, u"/NewMailNotifierAgent"_s, QDBusConnection::sessionBus(), this);
     if (!newMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
     } else {

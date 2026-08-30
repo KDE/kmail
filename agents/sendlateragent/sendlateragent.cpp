@@ -28,6 +28,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 
 // #define DEBUG_SENDLATERAGENT 1
 
@@ -40,9 +41,9 @@ SendLaterAgent::SendLaterAgent(const QString &id)
         mManager->load();
     });
     new SendLaterAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/SendLaterAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(u"/SendLaterAgent"_s, this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_sendlater_agent"));
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_sendlater_agent"_s);
 
     QDBusConnection::sessionBus().registerService(service);
 

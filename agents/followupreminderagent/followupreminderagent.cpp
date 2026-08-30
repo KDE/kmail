@@ -24,6 +24,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 
 FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     : Akonadi::AgentWidgetBase(id)
@@ -31,8 +32,8 @@ FollowUpReminderAgent::FollowUpReminderAgent(const QString &id)
     , mTimer(new QTimer(this))
 {
     new FollowUpReminderAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/FollowUpReminder"), this, QDBusConnection::ExportAdaptors);
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_followupreminder_agent"));
+    QDBusConnection::sessionBus().registerObject(u"/FollowUpReminder"_s, this, QDBusConnection::ExportAdaptors);
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_followupreminder_agent"_s);
     QDBusConnection::sessionBus().registerService(service);
     setNeedsNetwork(true);
 

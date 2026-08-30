@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QStandardPaths>
+using namespace Qt::Literals::StringLiterals;
 
 int main(int argc, char **argv)
 {
@@ -22,7 +23,7 @@ int main(int argc, char **argv)
     auto log = MailCommon::FilterLog::instance();
     log->setLogging(true);
     for (int i = 0; i < 50; ++i) {
-        log->add(QStringLiteral("Test %1").arg(i), MailCommon::FilterLog::AppliedAction);
+        log->add(u"Test %1"_s.arg(i), MailCommon::FilterLog::AppliedAction);
     }
 
     auto dialog = new FilterLogDialog(nullptr);

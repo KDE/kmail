@@ -11,6 +11,7 @@
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 ArchiveMailInfoTest::ArchiveMailInfoTest(QObject *parent)
     : QObject(parent)
@@ -40,7 +41,7 @@ void ArchiveMailInfoTest::shouldRestoreFromSettings()
 {
     ArchiveMailInfo info;
     info.setSaveCollectionId(Akonadi::Collection::Id(42));
-    info.setUrl(QUrl::fromLocalFile(QStringLiteral("/foo/foo")));
+    info.setUrl(QUrl::fromLocalFile(u"/foo/foo"_s));
     info.setArchiveType(MailCommon::BackupJob::TarBz2);
     info.setArchiveUnit(ArchiveMailInfo::ArchiveUnit::ArchiveMonths);
     info.setArchiveAge(5);
@@ -50,7 +51,7 @@ void ArchiveMailInfoTest::shouldRestoreFromSettings()
     info.setUseRange(true);
     info.setRange({8, 7});
 
-    KConfigGroup grp(KSharedConfig::openConfig(), QStringLiteral("testsettings"));
+    KConfigGroup grp(KSharedConfig::openConfig(), u"testsettings"_s);
     info.writeConfig(grp);
 
     const ArchiveMailInfo restoreInfo(grp);
@@ -61,7 +62,7 @@ void ArchiveMailInfoTest::shouldCopyArchiveInfo()
 {
     ArchiveMailInfo info;
     info.setSaveCollectionId(Akonadi::Collection::Id(42));
-    info.setUrl(QUrl::fromLocalFile(QStringLiteral("/foo/foo")));
+    info.setUrl(QUrl::fromLocalFile(u"/foo/foo"_s));
     info.setArchiveType(MailCommon::BackupJob::TarBz2);
     info.setArchiveUnit(ArchiveMailInfo::ArchiveUnit::ArchiveMonths);
     info.setArchiveAge(5);

@@ -60,93 +60,93 @@ using namespace Qt::Literals::StringLiterals;
 MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     : QObject(parent)
     , mParent(parent)
-    , mReplyActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18nc("Message->", "&Reply"), this))
-    , mReplyAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("&Reply…"), this))
-    , mReplyAllAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-all")), i18n("Reply to &All…"), this))
-    , mReplyAuthorAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply to A&uthor…"), this))
-    , mReplyListAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-list")), i18n("Reply to Mailing-&List…"), this))
+    , mReplyActionMenu(new KActionMenu(QIcon::fromTheme(u"mail-reply-sender"_s), i18nc("Message->", "&Reply"), this))
+    , mReplyAction(new QAction(QIcon::fromTheme(u"mail-reply-sender"_s), i18n("&Reply…"), this))
+    , mReplyAllAction(new QAction(QIcon::fromTheme(u"mail-reply-all"_s), i18n("Reply to &All…"), this))
+    , mReplyAuthorAction(new QAction(QIcon::fromTheme(u"mail-reply-sender"_s), i18n("Reply to A&uthor…"), this))
+    , mReplyListAction(new QAction(QIcon::fromTheme(u"mail-reply-list"_s), i18n("Reply to Mailing-&List…"), this))
     , mNoQuoteReplyAction(new QAction(i18nc("@action", "Reply Without &Quote…"), this))
-    , mForwardInlineAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "&Inline…"), this))
-    , mForwardAttachedAction(new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("@action:inmenu Message->Forward->", "As &Attachment…"), this))
+    , mForwardInlineAction(new QAction(QIcon::fromTheme(u"mail-forward"_s), i18nc("@action:inmenu Message->Forward->", "&Inline…"), this))
+    , mForwardAttachedAction(new QAction(QIcon::fromTheme(u"mail-forward"_s), i18nc("@action:inmenu Message->Forward->", "As &Attachment…"), this))
     , mRedirectAction(new QAction(i18nc("Message->Forward->", "&Redirect…"), this))
     , mNewToRecipientsAction(new QAction(i18nc("@action", "New Message to Recipients…"), this))
     , mStatusMenu(new KActionMenu(i18n("Mar&k Message"), this))
-    , mForwardActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-forward")), i18nc("Message->", "&Forward"), this))
-    , mMailingListActionMenu(new KActionMenu(QIcon::fromTheme(QStringLiteral("mail-message-new-list")), i18nc("Message->", "Mailing-&List"), this))
-    , mEditAsNewAction(new QAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18n("&Edit As New"), this))
+    , mForwardActionMenu(new KActionMenu(QIcon::fromTheme(u"mail-forward"_s), i18nc("Message->", "&Forward"), this))
+    , mMailingListActionMenu(new KActionMenu(QIcon::fromTheme(u"mail-message-new-list"_s), i18nc("Message->", "Mailing-&List"), this))
+    , mEditAsNewAction(new QAction(QIcon::fromTheme(u"document-edit"_s), i18n("&Edit As New"), this))
     , mListFilterAction(new QAction(i18nc("@action", "Filter on Mailing-&List…"), this))
     , mAddFollowupReminderAction(new QAction(i18nc("@action", "Add Followup Reminder…"), this))
-    , mDebugAkonadiSearchAction(new QAction(QStringLiteral("Debug Akonadi Search…"), this)) /* dont translate it*/
+    , mDebugAkonadiSearchAction(new QAction(u"Debug Akonadi Search…"_s, this)) /* dont translate it*/
     , mSendAgainAction(new QAction(i18nc("@action", "Send A&gain…"), this))
-    , mNewMessageFromTemplateAction(new QAction(QIcon::fromTheme(QStringLiteral("document-new")), i18n("New Message From &Template"), this))
+    , mNewMessageFromTemplateAction(new QAction(QIcon::fromTheme(u"document-new"_s), i18n("New Message From &Template"), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
-    , mExportToPdfAction(new QAction(QIcon::fromTheme(QStringLiteral("application-pdf")), i18n("Export to PDF…"), this))
+    , mExportToPdfAction(new QAction(QIcon::fromTheme(u"application-pdf"_s), i18n("Export to PDF…"), this))
     , mArchiveMessageAction(new QAction(i18nc("@action:inmenu", "Archive Message"), this))
 
 {
-    ac->addAction(QStringLiteral("message_reply_menu"), mReplyActionMenu);
+    ac->addAction(u"message_reply_menu"_s, mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
 
-    ac->addAction(QStringLiteral("reply"), mReplyAction);
+    ac->addAction(u"reply"_s, mReplyAction);
     ac->setDefaultShortcut(mReplyAction, Qt::Key_R);
     connect(mReplyAction, &QAction::triggered, this, &MessageActions::slotReplyToMsg);
     mReplyActionMenu->addAction(mReplyAction);
 
-    ac->addAction(QStringLiteral("reply_author"), mReplyAuthorAction);
+    ac->addAction(u"reply_author"_s, mReplyAuthorAction);
     ac->setDefaultShortcut(mReplyAuthorAction, Qt::SHIFT | Qt::Key_A);
     connect(mReplyAuthorAction, &QAction::triggered, this, &MessageActions::slotReplyAuthorToMsg);
     mReplyActionMenu->addAction(mReplyAuthorAction);
 
-    ac->addAction(QStringLiteral("reply_all"), mReplyAllAction);
+    ac->addAction(u"reply_all"_s, mReplyAllAction);
     ac->setDefaultShortcut(mReplyAllAction, Qt::Key_A);
     connect(mReplyAllAction, &QAction::triggered, this, &MessageActions::slotReplyAllToMsg);
     mReplyActionMenu->addAction(mReplyAllAction);
 
-    ac->addAction(QStringLiteral("reply_list"), mReplyListAction);
+    ac->addAction(u"reply_list"_s, mReplyListAction);
 
     ac->setDefaultShortcut(mReplyListAction, Qt::Key_L);
     connect(mReplyListAction, &QAction::triggered, this, &MessageActions::slotReplyListToMsg);
     mReplyActionMenu->addAction(mReplyListAction);
 
-    ac->addAction(QStringLiteral("noquotereply"), mNoQuoteReplyAction);
+    ac->addAction(u"noquotereply"_s, mNoQuoteReplyAction);
     ac->setDefaultShortcut(mNoQuoteReplyAction, Qt::SHIFT | Qt::Key_R);
     connect(mNoQuoteReplyAction, &QAction::triggered, this, &MessageActions::slotNoQuoteReplyToMsg);
 
-    ac->addAction(QStringLiteral("mlist_filter"), mListFilterAction);
+    ac->addAction(u"mlist_filter"_s, mListFilterAction);
     connect(mListFilterAction, &QAction::triggered, this, &MessageActions::slotMailingListFilter);
 
-    ac->addAction(QStringLiteral("set_status"), mStatusMenu);
+    ac->addAction(u"set_status"_s, mStatusMenu);
 
-    ac->addAction(QStringLiteral("editasnew"), mEditAsNewAction);
+    ac->addAction(u"editasnew"_s, mEditAsNewAction);
     connect(mEditAsNewAction, &QAction::triggered, this, &MessageActions::editCurrentMessage);
     ac->setDefaultShortcut(mEditAsNewAction, Qt::Key_T);
 
     mPrintAction = KStandardActions::print(this, &MessageActions::slotPrintMessage, ac);
     mPrintPreviewAction = KStandardActions::printPreview(this, &MessageActions::slotPrintPreviewMsg, ac);
 
-    ac->addAction(QStringLiteral("message_forward"), mForwardActionMenu);
+    ac->addAction(u"message_forward"_s, mForwardActionMenu);
 
     connect(mForwardAttachedAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardAttachedMessage()));
 
-    ac->addAction(QStringLiteral("message_forward_as_attachment"), mForwardAttachedAction);
+    ac->addAction(u"message_forward_as_attachment"_s, mForwardAttachedAction);
 
     connect(mForwardInlineAction, SIGNAL(triggered(bool)), parent, SLOT(slotForwardInlineMsg()));
 
-    ac->addAction(QStringLiteral("message_forward_inline"), mForwardInlineAction);
+    ac->addAction(u"message_forward_inline"_s, mForwardInlineAction);
 
     setupForwardActions(ac);
 
-    ac->addAction(QStringLiteral("new_to_recipients"), mNewToRecipientsAction);
+    ac->addAction(u"new_to_recipients"_s, mNewToRecipientsAction);
     connect(mNewToRecipientsAction, SIGNAL(triggered(bool)), parent, SLOT(slotNewMessageToRecipients()));
 
-    ac->addAction(QStringLiteral("message_forward_redirect"), mRedirectAction);
+    ac->addAction(u"message_forward_redirect"_s, mRedirectAction);
     connect(mRedirectAction, SIGNAL(triggered(bool)), parent, SLOT(slotRedirectMessage()));
 
     ac->setDefaultShortcut(mRedirectAction, QKeySequence(Qt::Key_E));
     mForwardActionMenu->addAction(mRedirectAction);
 
     connect(mMailingListActionMenu->menu(), &QMenu::triggered, this, &MessageActions::slotRunUrl);
-    ac->addAction(QStringLiteral("mailing_list"), mMailingListActionMenu);
+    ac->addAction(u"mailing_list"_s, mMailingListActionMenu);
     mMailingListActionMenu->setEnabled(false);
 
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::itemChanged, this, &MessageActions::slotItemModified);
@@ -168,20 +168,20 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     // Don't translate it. Shown only when we set env variable AKONADI_SEARCH_DEBUG
     connect(mDebugAkonadiSearchAction, &QAction::triggered, this, &MessageActions::slotDebugAkonadiSearch);
 
-    ac->addAction(QStringLiteral("message_followup_reminder"), mAddFollowupReminderAction);
+    ac->addAction(u"message_followup_reminder"_s, mAddFollowupReminderAction);
     connect(mAddFollowupReminderAction, &QAction::triggered, this, &MessageActions::slotAddFollowupReminder);
 
-    ac->addAction(QStringLiteral("send_again"), mSendAgainAction);
+    ac->addAction(u"send_again"_s, mSendAgainAction);
     connect(mSendAgainAction, &QAction::triggered, this, &MessageActions::slotResendMessage);
 
-    ac->addAction(QStringLiteral("use_template"), mNewMessageFromTemplateAction);
+    ac->addAction(u"use_template"_s, mNewMessageFromTemplateAction);
     connect(mNewMessageFromTemplateAction, &QAction::triggered, this, &MessageActions::slotUseTemplate);
     ac->setDefaultShortcut(mNewMessageFromTemplateAction, QKeySequence(Qt::SHIFT | Qt::Key_N));
 
-    ac->addAction(QStringLiteral("file_export_pdf"), mExportToPdfAction);
+    ac->addAction(u"file_export_pdf"_s, mExportToPdfAction);
     connect(mExportToPdfAction, &QAction::triggered, this, &MessageActions::slotExportToPdf);
 
-    ac->addAction(QStringLiteral("archive_message"), mArchiveMessageAction);
+    ac->addAction(u"archive_message"_s, mArchiveMessageAction);
     connect(mArchiveMessageAction, &QAction::triggered, this, &MessageActions::slotArchiveMessage);
 
     updateActions();
@@ -518,7 +518,7 @@ void MessageActions::setupForwardActions(KActionCollection *ac)
 void MessageActions::setupForwardingActionsList(KXMLGUIClient *guiClient)
 {
     QList<QAction *> forwardActionList;
-    guiClient->unplugActionList(QStringLiteral("forward_action_list"));
+    guiClient->unplugActionList(u"forward_action_list"_s);
     if (KMailSettings::self()->forwardingInlineByDefault()) {
         forwardActionList.append(mForwardInlineAction);
         forwardActionList.append(mForwardAttachedAction);
@@ -527,7 +527,7 @@ void MessageActions::setupForwardingActionsList(KXMLGUIClient *guiClient)
         forwardActionList.append(mForwardInlineAction);
     }
     forwardActionList.append(mRedirectAction);
-    guiClient->plugActionList(QStringLiteral("forward_action_list"), forwardActionList);
+    guiClient->plugActionList(u"forward_action_list"_s, forwardActionList);
 }
 
 void MessageActions::slotReplyToMsg()
@@ -759,7 +759,7 @@ void MessageActions::slotExportToPdf()
     if (!mMessageView) {
         return;
     }
-    QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, QStringLiteral(".pdf"));
+    QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, u".pdf"_s);
     fileName = QFileDialog::getSaveFileName(mParent,
                                             i18nc("@title:window", "Export to PDF"),
                                             QDir::homePath() + QLatin1Char('/') + fileName,

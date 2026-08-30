@@ -72,10 +72,10 @@ void FillComposerJob::slotOpenComposer()
         if (isICalInvitation && MessageViewer::MessageViewerSettings::self()->legacyBodyInvites()) {
             // KOrganizer invitation caught and to be sent as body instead
             mMsg->setBody(mSettings.mAttachData);
-            mMsg->contentType()->from7BitString(QStringLiteral("text/calendar; method=%1; "
-                                                               "charset=\"utf-8\"")
-                                                    .arg(mSettings.mAttachParamValue)
-                                                    .toLatin1());
+            mMsg->contentType()->from7BitString(
+                u"text/calendar; method=%1; "
+                "charset=\"utf-8\""_s.arg(mSettings.mAttachParamValue)
+                    .toLatin1());
 
             iCalAutoSend = true; // no point in editing raw ICAL
             noWordWrap = true; // we shouldn't word wrap inline invitations

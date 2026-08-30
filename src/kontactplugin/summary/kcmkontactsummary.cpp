@@ -18,6 +18,7 @@
 
 #include <QLabel>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 class PluginItem : public QTreeWidgetItem
 {
@@ -74,28 +75,28 @@ KCMKontactSummary::KCMKontactSummary(QObject *parent, const KPluginMetaData &dat
 
 void KCMKontactSummary::load()
 {
-    const QList<KPluginMetaData> pluginMetaDatas = KPluginMetaData::findPlugins(QStringLiteral("pim6/kontact"), [](const KPluginMetaData &data) {
-        return data.rawData().value(QStringLiteral("X-KDE-KontactPluginVersion")).toInt() == KONTACT_PLUGIN_VERSION;
+    const QList<KPluginMetaData> pluginMetaDatas = KPluginMetaData::findPlugins(u"pim6/kontact"_s, [](const KPluginMetaData &data) {
+        return data.rawData().value(u"X-KDE-KontactPluginVersion"_s).toInt() == KONTACT_PLUGIN_VERSION;
     });
 
     QStringList activeSummaries;
 
-    const KConfig config(QStringLiteral("kontact_summaryrc"));
+    const KConfig config(u"kontact_summaryrc"_s);
     if (const KConfigGroup grp(&config, QString()); grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     } else {
-        activeSummaries << QStringLiteral("kontact_kaddressbookplugin");
-        activeSummaries << QStringLiteral("kontact_specialdatesplugin");
-        activeSummaries << QStringLiteral("kontact_korganizerplugin");
-        activeSummaries << QStringLiteral("kontact_todoplugin");
-        activeSummaries << QStringLiteral("kontact_knotesplugin");
-        activeSummaries << QStringLiteral("kontact_kmailplugin");
+        activeSummaries << u"kontact_kaddressbookplugin"_s;
+        activeSummaries << u"kontact_specialdatesplugin"_s;
+        activeSummaries << u"kontact_korganizerplugin"_s;
+        activeSummaries << u"kontact_todoplugin"_s;
+        activeSummaries << u"kontact_knotesplugin"_s;
+        activeSummaries << u"kontact_kmailplugin"_s;
     }
 
     mPluginView->clear();
 
     for (const auto &plugin : std::as_const(pluginMetaDatas)) {
-        if (const QVariant var = plugin.value(QStringLiteral("X-KDE-KontactPluginHasSummary"), false); var.isValid() && var.toBool() == true) {
+        if (const QVariant var = plugin.value(u"X-KDE-KontactPluginHasSummary"_s, false); var.isValid() && var.toBool() == true) {
             auto item = new PluginItem(plugin, mPluginView);
 
             if (activeSummaries.contains(plugin.pluginId())) {
@@ -120,7 +121,7 @@ void KCMKontactSummary::save()
         ++it;
     }
 
-    KConfig config(QStringLiteral("kontact_summaryrc"));
+    KConfig config(u"kontact_summaryrc"_s);
     KConfigGroup grp(&config, QString());
     grp.writeEntry("ActiveSummaries", activeSummaries);
     setNeedsSave(false);

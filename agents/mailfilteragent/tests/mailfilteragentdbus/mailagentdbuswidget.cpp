@@ -11,31 +11,31 @@
 #include <QDebug>
 #include <QPushButton>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 MailAgentDbusWidget::MailAgentDbusWidget(QWidget *parent)
     : QWidget{parent}
 {
-    const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
-    mMailFilterAgentInterface =
-        new org::freedesktop::Akonadi::MailFilterAgent(service, QStringLiteral("/MailFilterAgent"), QDBusConnection::sessionBus(), this);
+    const auto service = Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_mailfilter_agent"_s);
+    mMailFilterAgentInterface = new org::freedesktop::Akonadi::MailFilterAgent(service, u"/MailFilterAgent"_s, QDBusConnection::sessionBus(), this);
 
     auto mainLayout = new QVBoxLayout(this);
 
-    auto openfilterLogViewer = new QPushButton(QStringLiteral("Open Filter Log Viewer"), this);
+    auto openfilterLogViewer = new QPushButton(u"Open Filter Log Viewer"_s, this);
     connect(openfilterLogViewer, &QPushButton::clicked, this, [this]() {
         qDebug() << " open filter log viewer";
         mMailFilterAgentInterface->showFilterLogDialog(0);
     });
     mainLayout->addWidget(openfilterLogViewer);
 
-    auto printCollectionMonitored = new QPushButton(QStringLiteral("Print Collection Monitored"), this);
+    auto printCollectionMonitored = new QPushButton(u"Print Collection Monitored"_s, this);
     connect(printCollectionMonitored, &QPushButton::clicked, this, [this]() {
         qDebug() << " print collection monitored";
         const QString str = mMailFilterAgentInterface->printCollectionMonitored();
         qDebug() << " result " << str;
     });
     mainLayout->addWidget(printCollectionMonitored);
-    auto testFilterItems = new QPushButton(QStringLiteral("Test Filter Items"), this);
+    auto testFilterItems = new QPushButton(u"Test Filter Items"_s, this);
     connect(testFilterItems, &QPushButton::clicked, this, [this]() {
         qDebug() << " Test Filter Items";
         QList<qint64> itemIds;
@@ -44,12 +44,12 @@ MailAgentDbusWidget::MailAgentDbusWidget(QWidget *parent)
     });
     mainLayout->addWidget(testFilterItems);
 
-    auto testFilterItem = new QPushButton(QStringLiteral("Test Filter Item"), this);
+    auto testFilterItem = new QPushButton(u"Test Filter Item"_s, this);
     connect(testFilterItem, &QPushButton::clicked, this, [this]() {
         qDebug() << " Test Filter Item";
         int set = 0;
         qlonglong item = 3;
-        mMailFilterAgentInterface->filterItem(item, set, QStringLiteral("foo"));
+        mMailFilterAgentInterface->filterItem(item, set, u"foo"_s);
     });
     mainLayout->addWidget(testFilterItem);
 }

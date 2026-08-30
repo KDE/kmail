@@ -121,8 +121,8 @@ void OpenComposerJob::slotOpenComposer()
             const int answer = KMessageBox::questionTwoActions(nullptr,
                                                                i18n("Do you want to attach this folder \"%1\"?", (*it).toDisplayString()),
                                                                i18nc("@title:window", "Attach Folder"),
-                                                               KGuiItem(i18nc("@action:button", "Attach"), QStringLiteral("dialog-ok")),
-                                                               KGuiItem(i18nc("@action:button", "Do Not Attach"), QStringLiteral("dialog-cancel")));
+                                                               KGuiItem(i18nc("@action:button", "Attach"), u"dialog-ok"_s),
+                                                               KGuiItem(i18nc("@action:button", "Do Not Attach"), u"dialog-cancel"_s));
             if (answer == KMessageBox::ButtonCode::SecondaryAction) {
                 continue;
             }

@@ -26,15 +26,15 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("kmail-refresh-settings"_ba);
     KCrash::initialize();
-    KAboutData aboutData(QStringLiteral("kmail-refresh-settings"),
+    KAboutData aboutData(u"kmail-refresh-settings"_s,
                          i18n("KMail Assistant for refreshing settings"),
-                         QStringLiteral("0.1"),
+                         u"0.1"_s,
                          i18n("KMail Assistant for refreshing settings"),
                          KAboutLicense::LGPL,
                          i18n("© 2019-2026 Laurent Montel <montel@kde.org>"));
-    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Author"), QStringLiteral("montel@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Author"), u"montel@kde.org"_s);
 
-    app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kontact")));
+    app.setWindowIcon(QIcon::fromTheme(u"kontact"_s));
     QCommandLineParser parser;
     KAboutData::setApplicationData(aboutData);
 

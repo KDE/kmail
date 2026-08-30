@@ -205,9 +205,9 @@ void FilterManager::Private::modifyJobResult(KJob *job)
 
 void FilterManager::Private::showNotification(const QString &errorMsg, const QString &jobErrorString)
 {
-    auto notify = new KNotification(QStringLiteral("mailfilterjoberror"));
-    notify->setComponentName(QStringLiteral("akonadi_mailfilter_agent"));
-    notify->setIconName(QStringLiteral("view-filter"));
+    auto notify = new KNotification(u"mailfilterjoberror"_s);
+    notify->setComponentName(u"akonadi_mailfilter_agent"_s);
+    notify->setIconName(u"view-filter"_s);
     notify->setText(errorMsg + u'\n' + jobErrorString);
     notify->sendEvent();
 }

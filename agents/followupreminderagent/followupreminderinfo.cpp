@@ -7,6 +7,7 @@
 
 #include <KConfigGroup>
 using namespace FollowUpReminder;
+using namespace Qt::Literals::StringLiterals;
 
 FollowUpReminderInfo::FollowUpReminderInfo() = default;
 
@@ -17,7 +18,7 @@ FollowUpReminderInfo::FollowUpReminderInfo(const KConfigGroup &config)
 
 void FollowUpReminderInfo::readConfig(const KConfigGroup &config)
 {
-    if (config.hasKey(QStringLiteral("followUpReminderDate"))) {
+    if (config.hasKey(u"followUpReminderDate"_s)) {
         mFollowUpReminderDate = QDate::fromString(config.readEntry("followUpReminderDate"), Qt::ISODate);
     }
     mOriginalMessageItemId = config.readEntry("itemId", -1);

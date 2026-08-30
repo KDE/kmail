@@ -20,6 +20,7 @@
 #include <QApplication>
 #include <QColor>
 #include <QPalette>
+using namespace Qt::Literals::StringLiterals;
 
 KMSearchMessageModel::KMSearchMessageModel(Akonadi::Monitor *monitor, QObject *parent)
     : Akonadi::MessageModel(monitor, parent)
@@ -44,30 +45,29 @@ static QString toolTip(const Akonadi::Item &item)
     const QString bckColorName = bckColor.name();
     const QString txtColorName = txtColor.name();
     const bool textIsLeftToRight = (QApplication::layoutDirection() == Qt::LeftToRight);
-    const QString textDirection = textIsLeftToRight ? QStringLiteral("left") : QStringLiteral("right");
+    const QString textDirection = textIsLeftToRight ? u"left"_s : u"right"_s;
 
-    QString tip = QStringLiteral("<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">");
+    QString tip = u"<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"_s;
     QString subject;
     if (auto msgSubject = msg->subject(KMime::CreatePolicy::DontCreate)) {
         subject = msgSubject->asUnicodeString();
     }
-    tip += QStringLiteral(
-               "<tr>"
-               "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"
-               "<div style=\"color: %2; font-weight: bold;\">"
-               "%3"
-               "</div>"
-               "</td>"
-               "</tr>")
-               .arg(bckColorName, txtColorName, subject.toHtmlEscaped(), textDirection);
+    tip +=
+        u"<tr>"
+        "<td bgcolor=\"%1\" align=\"%4\" valign=\"middle\">"
+        "<div style=\"color: %2; font-weight: bold;\">"
+        "%3"
+        "</div>"
+        "</td>"
+        "</tr>"_s.arg(bckColorName, txtColorName, subject.toHtmlEscaped(), textDirection);
 
-    tip += QStringLiteral(
-        "<tr>"
+    tip +=
+        u"<tr>"
         "<td align=\"center\" valign=\"middle\">"
-        "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">");
+        "<table width=\"100%\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\">"_s;
 
-    const QString htmlCodeForStandardRow = QStringLiteral(
-        "<tr>"
+    const QString htmlCodeForStandardRow =
+        u"<tr>"
         "<td align=\"right\" valign=\"top\" width=\"45\">"
         "<div style=\"font-weight: bold;\"><nobr>"
         "%1:"
@@ -76,10 +76,10 @@ static QString toolTip(const Akonadi::Item &item)
         "<td align=\"left\" valign=\"top\">"
         "%2"
         "</td>"
-        "</tr>");
+        "</tr>"_s;
 
     QString content = MessageList::Util::contentSummary(item);
-    const QString contentHtml = content.toHtmlEscaped().replace(QLatin1Char('\n'), QStringLiteral("<br>"));
+    const QString contentHtml = content.toHtmlEscaped().replace(QLatin1Char('\n'), u"<br>"_s);
 
     if (textIsLeftToRight) {
         if (auto from = msg->from(KMime::CreatePolicy::DontCreate)) {

@@ -4,6 +4,7 @@
 #include <QCoreApplication>
 
 #include "kmailinterface.h"
+using namespace Qt::Literals::StringLiterals;
 
 int main(int argc, char **argv)
 {
@@ -15,11 +16,10 @@ int main(int argc, char **argv)
     parser.addHelpOption();
     parser.process(app);
 
-    OrgKdeKmailKmailInterface kmailInterface(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
-    kmailInterface.openComposer(QStringLiteral("to 1"), QString(), QString(), QStringLiteral("First test"), QStringLiteral("simple openComp call"), false);
+    OrgKdeKmailKmailInterface kmailInterface(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
+    kmailInterface.openComposer(u"to 1"_s, QString(), QString(), u"First test"_s, u"simple openComp call"_s, false);
 
-    QDBusReply<QDBusObjectPath> composerDbusPath =
-        kmailInterface.openComposer(QStringLiteral("to 2"), QString(), QString(), QStringLiteral("Second test"), QStringLiteral("DBUS ref call"), false);
+    QDBusReply<QDBusObjectPath> composerDbusPath = kmailInterface.openComposer(u"to 2"_s, QString(), QString(), u"Second test"_s, u"DBUS ref call"_s, false);
 
     if (!composerDbusPath.isValid()) {
         qDebug() << "We can't connect to kmail";

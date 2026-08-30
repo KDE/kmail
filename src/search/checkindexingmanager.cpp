@@ -38,23 +38,23 @@ CheckIndexingManager::CheckIndexingManager(Akonadi::Search::PIM::IndexedItems *i
 CheckIndexingManager::~CheckIndexingManager()
 {
     callToReindexCollection();
-    const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
-    KConfigGroup grp = cfg->group(QStringLiteral("General"));
-    grp.writeEntry(QStringLiteral("collectionsIndexed"), mCollectionsIndexed);
+    const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(u"kmailsearchindexingrc"_s);
+    KConfigGroup grp = cfg->group(u"General"_s);
+    grp.writeEntry(u"collectionsIndexed"_s, mCollectionsIndexed);
 }
 
 void CheckIndexingManager::start(QAbstractItemModel *collectionModel)
 {
     if (mIsReady) {
-        const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
-        KConfigGroup grp = cfg->group(QStringLiteral("General"));
-        const QDateTime lastDateTime = grp.readEntry(QStringLiteral("lastCheck"), QDateTime());
+        const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(u"kmailsearchindexingrc"_s);
+        KConfigGroup grp = cfg->group(u"General"_s);
+        const QDateTime lastDateTime = grp.readEntry(u"lastCheck"_s, QDateTime());
         // Check each 7 days
         QDateTime today = QDateTime::currentDateTime();
         if (!lastDateTime.isValid() || today > lastDateTime.addDays(7)) {
             mIndex = 0;
             mListCollection.clear();
-            mCollectionsIndexed = grp.readEntry(QStringLiteral("collectionsIndexed"), QList<qint64>());
+            mCollectionsIndexed = grp.readEntry(u"collectionsIndexed"_s, QList<qint64>());
             if (collectionModel) {
                 initializeCollectionList(collectionModel);
                 if (!mListCollection.isEmpty()) {
@@ -85,12 +85,10 @@ void CheckIndexingManager::checkNextCollection()
 void CheckIndexingManager::callToReindexCollection()
 {
     if (!mCollectionsNeedToBeReIndexed.isEmpty()) {
-        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(),
-                                               QStringLiteral("/"),
-                                               QStringLiteral("org.freedesktop.Akonadi.Indexer"));
+        QDBusInterface interfaceAkonadiIndexer(PimCommon::MailUtil::indexerServiceName(), u"/"_s, u"org.freedesktop.Akonadi.Indexer"_s);
         if (interfaceAkonadiIndexer.isValid()) {
             qCDebug(KMAIL_LOG) << "Reindex collections :" << mCollectionsNeedToBeReIndexed;
-            interfaceAkonadiIndexer.asyncCall(QStringLiteral("reindexCollections"), QVariant::fromValue(mCollectionsNeedToBeReIndexed));
+            interfaceAkonadiIndexer.asyncCall(u"reindexCollections"_s, QVariant::fromValue(mCollectionsNeedToBeReIndexed));
         }
     }
 }
@@ -121,10 +119,10 @@ void CheckIndexingManager::indexingFinished(qint64 col, bool reindexCollection)
         mListCollection.clear();
         mCollectionsNeedToBeReIndexed.clear();
 
-        const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(QStringLiteral("kmailsearchindexingrc"));
-        KConfigGroup grp = cfg->group(QStringLiteral("General"));
-        grp.writeEntry(QStringLiteral("lastCheck"), QDateTime::currentDateTime());
-        grp.deleteEntry(QStringLiteral("collectionsIndexed"));
+        const KSharedConfig::Ptr cfg = KSharedConfig::openConfig(u"kmailsearchindexingrc"_s);
+        KConfigGroup grp = cfg->group(u"General"_s);
+        grp.writeEntry(u"lastCheck"_s, QDateTime::currentDateTime());
+        grp.deleteEntry(u"collectionsIndexed"_s);
         grp.sync();
     }
 }

@@ -12,6 +12,7 @@
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <QAction>
+using namespace Qt::Literals::StringLiterals;
 
 ValidateSendMailShortcut::ValidateSendMailShortcut(KActionCollection *actionCollection, QWidget *parent)
     : mParent(parent)
@@ -33,7 +34,7 @@ bool ValidateSendMailShortcut::validate()
                                      i18n("Ask Before Sending"),
                                      i18n("Sending Without Confirmation"));
     if (result == QDialogButtonBox::Yes) {
-        QAction *act = mActionCollection->action(QStringLiteral("send_mail"));
+        QAction *act = mActionCollection->action(u"send_mail"_s);
         if (act) {
             act->setShortcut(QKeySequence());
             mActionCollection->writeSettings();

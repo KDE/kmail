@@ -50,7 +50,7 @@ using namespace Qt::Literals::StringLiterals;
 
 QString ComposerPage::helpAnchor() const
 {
-    return QStringLiteral("configure-composer");
+    return u"configure-composer"_s;
 }
 ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data)
     : ConfigModuleWithTabs(parent, data)
@@ -108,7 +108,7 @@ ComposerPage::ComposerPage(QObject *parent, const KPluginMetaData &data)
 
 QString ComposerPageGeneralTab::helpAnchor() const
 {
-    return QStringLiteral("configure-composer-general");
+    return u"configure-composer-general"_s;
 }
 
 ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
@@ -473,8 +473,7 @@ void ComposerPageGeneralTab::save()
     saveCheckBox(mStripSignatureCheck, TemplateParser::TemplateParserSettings::self()->stripSignatureItem());
     saveCheckBox(mWordWrapCheck, MessageComposer::MessageComposerSettings::self()->wordWrapItem());
 
-    MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(mAutoAppSignFileCheck->isChecked() ? QStringLiteral("auto")
-                                                                                                              : QStringLiteral("manual"));
+    MessageComposer::MessageComposerSettings::self()->setAutoTextSignature(mAutoAppSignFileCheck->isChecked() ? u"auto"_s : u"manual"_s);
     saveSpinBox(mWrapColumnSpin, MessageComposer::MessageComposerSettings::self()->lineWrapWidthItem());
     saveSpinBox(mMaximumRecipients, MessageComposer::MessageComposerSettings::self()->maximumRecipientsItem());
     KMailSettings::self()->setAutosaveInterval(mAutoSave->value());
@@ -493,8 +492,8 @@ void ComposerPageGeneralTab::slotConfigureAddressCompletion()
     QPointer<PimCommon::CompletionConfigureDialog> dlg(new PimCommon::CompletionConfigureDialog(this));
     dlg->setRecentAddresses(PimCommon::RecentAddresses::self(MessageComposer::MessageComposerSettings::self()->config())->addresses());
     dlg->setLdapClientSearch(&search);
-    KSharedConfig::Ptr config = KSharedConfig::openConfig(QStringLiteral("kpimbalooblacklist"));
-    KConfigGroup group(config, QStringLiteral("AddressLineEdit"));
+    KSharedConfig::Ptr config = KSharedConfig::openConfig(u"kpimbalooblacklist"_s);
+    KConfigGroup group(config, u"AddressLineEdit"_s);
     const QStringList balooBlackList = group.readEntry("BalooBackList", QStringList());
 
     dlg->setEmailBlackList(balooBlackList);
@@ -510,7 +509,7 @@ void ComposerPageGeneralTab::slotConfigureAddressCompletion()
 
 QString ComposerPageTemplatesTab::helpAnchor() const
 {
-    return QStringLiteral("configure-composer-templates");
+    return u"configure-composer-templates"_s;
 }
 
 ComposerPageTemplatesTab::ComposerPageTemplatesTab(QWidget *parent)
@@ -541,7 +540,7 @@ void ComposerPageTemplatesTab::doResetToDefaultsOther()
 
 QString ComposerPageCustomTemplatesTab::helpAnchor() const
 {
-    return QStringLiteral("configure-composer-custom-templates");
+    return u"configure-composer-custom-templates"_s;
 }
 
 ComposerPageCustomTemplatesTab::ComposerPageCustomTemplatesTab(QWidget *parent)
@@ -571,7 +570,7 @@ void ComposerPageCustomTemplatesTab::save()
 
 QString ComposerPageSubjectTab::helpAnchor() const
 {
-    return QStringLiteral("configure-composer-subject");
+    return u"configure-composer-subject"_s;
 }
 
 ComposerPageSubjectTab::ComposerPageSubjectTab(QWidget *parent)
@@ -656,7 +655,7 @@ void ComposerPageSubjectTab::doResetToDefaultsOther()
 
 QString ComposerPageHeadersTab::helpAnchor() const
 {
-    return QStringLiteral("configure-composer-headers");
+    return u"configure-composer-headers"_s;
 }
 
 ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
@@ -817,7 +816,7 @@ void ComposerPageHeadersTab::save()
     // Clean config
     const int oldHeadersCount = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {
-        if (const QString groupMimeName = QStringLiteral("Mime #%1").arg(i); KMKernel::self()->config()->hasGroup(groupMimeName)) {
+        if (const QString groupMimeName = u"Mime #%1"_s.arg(i); KMKernel::self()->config()->hasGroup(groupMimeName)) {
             KConfigGroup config(KMKernel::self()->config(), groupMimeName);
             config.deleteGroup();
         }
@@ -835,7 +834,7 @@ void ComposerPageHeadersTab::save()
                                    i18nc("@title:window", "Invalid header"));
                 continue;
             }
-            KConfigGroup config(KMKernel::self()->config(), QStringLiteral("Mime #%1").arg(numValidEntries));
+            KConfigGroup config(KMKernel::self()->config(), u"Mime #%1"_s.arg(numValidEntries));
             config.writeEntry("name", str);
             config.writeEntry("value", item->text(1));
             numValidEntries++;
@@ -858,7 +857,7 @@ void ComposerPageHeadersTab::doResetToDefaultsOther()
 
 QString ComposerPageAttachmentsTab::helpAnchor() const
 {
-    return QStringLiteral("configure-composer-attachments");
+    return u"configure-composer-attachments"_s;
 }
 
 ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
@@ -936,7 +935,7 @@ ComposerPageAutoCorrectionTab::ComposerPageAutoCorrectionTab(QWidget *parent)
 
 QString ComposerPageAutoCorrectionTab::helpAnchor() const
 {
-    return QStringLiteral("configure-autocorrection");
+    return u"configure-autocorrection"_s;
 }
 
 void ComposerPageAutoCorrectionTab::save()
@@ -967,7 +966,7 @@ ComposerPageAutoImageResizeTab::ComposerPageAutoImageResizeTab(QWidget *parent)
 
 QString ComposerPageAutoImageResizeTab::helpAnchor() const
 {
-    return QStringLiteral("configure-image-resize");
+    return u"configure-image-resize"_s;
 }
 
 void ComposerPageAutoImageResizeTab::save()

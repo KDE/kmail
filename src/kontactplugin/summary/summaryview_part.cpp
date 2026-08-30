@@ -44,9 +44,9 @@ using namespace Qt::Literals::StringLiterals;
 SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, QObject *parent)
     : KParts::Part(parent)
     , mCore(core)
-    , mConfigAction(new QAction(QIcon::fromTheme(QStringLiteral("configure")), i18n("&Configure Summary View…"), this))
+    , mConfigAction(new QAction(QIcon::fromTheme(u"configure"_s), i18n("&Configure Summary View…"), this))
 {
-    setComponentName(QStringLiteral("kontactsummary"), i18n("Kontact Summary"));
+    setComponentName(u"kontactsummary"_s, i18n("Kontact Summary"));
 
     loadLayout();
 
@@ -55,7 +55,7 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, QObject *parent)
     setDate(QDate::currentDate());
     connect(mCore, &KontactInterface::Core::dayChanged, this, &SummaryViewPart::setDate);
 
-    actionCollection()->addAction(QStringLiteral("summaryview_configure"), mConfigAction);
+    actionCollection()->addAction(u"summaryview_configure"_s, mConfigAction);
     connect(mConfigAction, &QAction::triggered, this, &SummaryViewPart::slotConfigure);
     const QString str = i18n("Configure the summary view");
     mConfigAction->setStatusTip(str);
@@ -65,7 +65,7 @@ SummaryViewPart::SummaryViewPart(KontactInterface::Core *core, QObject *parent)
                                       "summaries you want to see and also allow you to configure "
                                       "the summaries to your liking."));
 
-    setXMLFile(QStringLiteral("kontactsummary_part.rc"));
+    setXMLFile(u"kontactsummary_part.rc"_s);
 
     qApp->installEventFilter(this);
 
@@ -106,7 +106,7 @@ void SummaryViewPart::updateWidgets()
     const KIdentityManagementCore::Identity &id = KIdentityManagementCore::IdentityManager::self()->defaultIdentity();
 
     const QString currentUser = i18n("Summary for %1", id.fullName());
-    mUsernameLabel->setText(QStringLiteral("<b>%1</b>").arg(currentUser));
+    mUsernameLabel->setText(u"<b>%1</b>"_s.arg(currentUser));
 
     mSummaries.clear();
 
@@ -115,17 +115,17 @@ void SummaryViewPart::updateWidgets()
 
     mMainLayout->insertWidget(2, mFrame);
 
-    const KConfig config(QStringLiteral("kontact_summaryrc"));
+    const KConfig config(u"kontact_summaryrc"_s);
     const KConfigGroup grp(&config, QString());
     QStringList activeSummaries;
     if (grp.hasKey("ActiveSummaries")) {
         activeSummaries = grp.readEntry("ActiveSummaries", QStringList());
     } else {
-        activeSummaries << QStringLiteral("kontact_korganizerplugin");
-        activeSummaries << QStringLiteral("kontact_todoplugin");
-        activeSummaries << QStringLiteral("kontact_specialdatesplugin");
-        activeSummaries << QStringLiteral("kontact_kmailplugin");
-        activeSummaries << QStringLiteral("kontact_knotesplugin");
+        activeSummaries << u"kontact_korganizerplugin"_s;
+        activeSummaries << u"kontact_todoplugin"_s;
+        activeSummaries << u"kontact_specialdatesplugin"_s;
+        activeSummaries << u"kontact_kmailplugin"_s;
+        activeSummaries << u"kontact_knotesplugin"_s;
     }
     // Collect all summary widgets with a summaryHeight > 0
     QStringList loadedSummaries;
@@ -367,34 +367,34 @@ void SummaryViewPart::slotAdjustPalette()
 {
     if (!QApplication::isRightToLeft()) {
         mMainWidget->setStyleSheet(
-            QStringLiteral("#mMainWidget { "
-                           " background: palette(base);"
-                           " color: palette(text);"
-                           " background-image: url(:/summaryview/kontact_bg.png);"
-                           " background-position: bottom right;"
-                           " background-repeat: no-repeat; }"
-                           "QLabel { "
-                           " color: palette(text); }"
-                           "KUrlLabel { "
-                           " color: palette(link); }"));
+            u"#mMainWidget { "
+            " background: palette(base);"
+            " color: palette(text);"
+            " background-image: url(:/summaryview/kontact_bg.png);"
+            " background-position: bottom right;"
+            " background-repeat: no-repeat; }"
+            "QLabel { "
+            " color: palette(text); }"
+            "KUrlLabel { "
+            " color: palette(link); }"_s);
     } else {
         mMainWidget->setStyleSheet(
-            QStringLiteral("#mMainWidget { "
-                           " background: palette(base);"
-                           " color: palette(text);"
-                           " background-image: url(:/summaryview/kontact_bg.png);"
-                           " background-position: bottom left;"
-                           " background-repeat: no-repeat; }"
-                           "QLabel { "
-                           " color: palette(text); }"
-                           "KUrlLabel { "
-                           " color: palette(link); }"));
+            u"#mMainWidget { "
+            " background: palette(base);"
+            " color: palette(text);"
+            " background-image: url(:/summaryview/kontact_bg.png);"
+            " background-position: bottom left;"
+            " background-repeat: no-repeat; }"
+            "QLabel { "
+            " color: palette(text); }"
+            "KUrlLabel { "
+            " color: palette(link); }"_s);
     }
 }
 
 void SummaryViewPart::setDate(QDate newDate)
 {
-    const QString date = QStringLiteral("<b>%1</b>").arg(QLocale().toString(newDate));
+    const QString date = u"<b>%1</b>"_s.arg(QLocale().toString(newDate));
     mDateLabel->setText(date);
 }
 
@@ -404,7 +404,7 @@ void SummaryViewPart::slotConfigure()
     dlg->setObjectName("ConfigDialog"_L1);
     dlg->setModal(true);
     connect(dlg.data(), &KCMultiDialog::configCommitted, this, &SummaryViewPart::updateWidgets);
-    const auto metaDataList = KPluginMetaData::findPlugins(QStringLiteral("pim6/kcms/summary/"));
+    const auto metaDataList = KPluginMetaData::findPlugins(u"pim6/kcms/summary/"_s);
     for (const auto &metaData : metaDataList) {
         dlg->addModule(metaData);
     }
@@ -461,28 +461,28 @@ void SummaryViewPart::initGUI(KontactInterface::Core *core)
 
 void SummaryViewPart::loadLayout()
 {
-    const KConfig config(QStringLiteral("kontact_summaryrc"));
+    const KConfig config(u"kontact_summaryrc"_s);
     const KConfigGroup grp(&config, QString());
 
     if (grp.hasKey("LeftColumnSummaries")) {
         mLeftColumnSummaries = grp.readEntry("LeftColumnSummaries", QStringList());
     } else {
-        mLeftColumnSummaries << QStringLiteral("kontact_korganizerplugin");
-        mLeftColumnSummaries << QStringLiteral("kontact_todoplugin");
-        mLeftColumnSummaries << QStringLiteral("kontact_specialdatesplugin");
+        mLeftColumnSummaries << u"kontact_korganizerplugin"_s;
+        mLeftColumnSummaries << u"kontact_todoplugin"_s;
+        mLeftColumnSummaries << u"kontact_specialdatesplugin"_s;
     }
 
     if (grp.hasKey("RightColumnSummaries")) {
         mRightColumnSummaries = grp.readEntry("RightColumnSummaries", QStringList());
     } else {
-        mRightColumnSummaries << QStringLiteral("kontact_kmailplugin");
-        mRightColumnSummaries << QStringLiteral("kontact_knotesplugin");
+        mRightColumnSummaries << u"kontact_kmailplugin"_s;
+        mRightColumnSummaries << u"kontact_knotesplugin"_s;
     }
 }
 
 void SummaryViewPart::saveLayout()
 {
-    KConfig config(QStringLiteral("kontact_summaryrc"));
+    KConfig config(u"kontact_summaryrc"_s);
     KConfigGroup grp(&config, QString());
 
     grp.writeEntry("LeftColumnSummaries", mLeftColumnSummaries);

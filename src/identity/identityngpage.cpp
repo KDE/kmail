@@ -41,7 +41,7 @@ using namespace KMail;
 
 QString IdentityNgPage::helpAnchor() const
 {
-    return QStringLiteral("configure-identity");
+    return u"configure-identity"_s;
 }
 
 IdentityNgPage::IdentityNgPage(QWidget *parent)
@@ -206,7 +206,7 @@ void IdentityNgPage::slotRemoveIdentity()
     if (KMessageBox::warningContinueCancel(this,
                                            msg,
                                            i18np("Remove Identity", "Remove Identities", numberOfIdentity),
-                                           KGuiItem(i18nc("@action:button", "&Remove"), QStringLiteral("edit-delete")))
+                                           KGuiItem(i18nc("@action:button", "&Remove"), u"edit-delete"_s))
         == KMessageBox::Continue) {
         QStringList listIdentityNames;
         for (const auto &index : mIPage.mIdentityList->selectionModel()->selectedRows()) {
@@ -237,13 +237,13 @@ void IdentityNgPage::slotRenameIdentity()
 void IdentityNgPage::slotContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
-    menu.addAction(QIcon::fromTheme(QStringLiteral("list-add")), i18nc("@action", "Add…"), this, &IdentityNgPage::slotNewIdentity);
+    menu.addAction(QIcon::fromTheme(u"list-add"_s), i18nc("@action", "Add…"), this, &IdentityNgPage::slotNewIdentity);
     if (const QModelIndex index = mIPage.mIdentityList->indexAt(pos); index.isValid()) {
-        menu.addAction(QIcon::fromTheme(QStringLiteral("document-edit")), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-rename")), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
+        menu.addAction(QIcon::fromTheme(u"document-edit"_s), i18nc("@action", "Modify…"), this, &IdentityNgPage::slotModifyIdentity);
+        menu.addAction(QIcon::fromTheme(u"edit-rename"_s), i18nc("@action", "Rename"), this, &IdentityNgPage::slotRenameIdentity);
         if (mIPage.mIdentityList->model()->rowCount() > 1) {
             menu.addSeparator();
-            menu.addAction(QIcon::fromTheme(QStringLiteral("list-remove")), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
+            menu.addAction(QIcon::fromTheme(u"list-remove"_s), i18nc("@action", "Remove"), this, &IdentityNgPage::slotRemoveIdentity);
         }
 
         const QModelIndex newModelIndex = mIPage.mIdentityList->identityProxyModel()->mapToSource(

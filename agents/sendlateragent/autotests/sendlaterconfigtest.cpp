@@ -11,6 +11,7 @@
 
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 SendLaterConfigTest::SendLaterConfigTest(QObject *parent)
     : QObject(parent)
@@ -22,8 +23,8 @@ SendLaterConfigTest::~SendLaterConfigTest() = default;
 
 void SendLaterConfigTest::init()
 {
-    mConfig = KSharedConfig::openConfig(QStringLiteral("test-sendlateragent.rc"), KConfig::SimpleConfig);
-    mSendlaterRegExpFilter = QRegularExpression(QStringLiteral("SendLaterItem \\d+"));
+    mConfig = KSharedConfig::openConfig(u"test-sendlateragent.rc"_s, KConfig::SimpleConfig);
+    mSendlaterRegExpFilter = QRegularExpression(u"SendLaterItem \\d+"_s);
     cleanup();
 }
 
@@ -52,10 +53,10 @@ void SendLaterConfigTest::shouldConfigBeEmpty()
 void SendLaterConfigTest::shouldAddAnItem()
 {
     MessageComposer::SendLaterInfo info;
-    const QString to = QStringLiteral("kde.org");
+    const QString to = u"kde.org"_s;
     info.setTo(to);
     info.setItemId(Akonadi::Item::Id(42));
-    info.setSubject(QStringLiteral("Subject"));
+    info.setSubject(u"Subject"_s);
     info.setRecurrence(true);
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(MessageComposer::SendLaterInfo::Years);

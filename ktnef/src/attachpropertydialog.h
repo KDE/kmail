@@ -19,6 +19,7 @@
 
 #include <QMap>
 #include <QPixmap>
+using namespace Qt::Literals::StringLiterals;
 
 namespace KTnef
 {
@@ -41,7 +42,7 @@ public:
     void setAttachment(KTNEFAttach *attach);
 
     static QPixmap loadRenderingPixmap(KTNEFPropertySet *, const QColor &);
-    static void formatProperties(const QMap<int, KTNEFProperty *> &, QTreeWidget *, QTreeWidgetItem *, const QString & = QStringLiteral("prop"));
+    static void formatProperties(const QMap<int, KTNEFProperty *> &, QTreeWidget *, QTreeWidgetItem *, const QString & = u"prop"_s);
     static void formatPropertySet(KTNEFPropertySet *, QTreeWidget *);
     static bool saveProperty(QTreeWidget *, KTNEFPropertySet *, QWidget *);
 

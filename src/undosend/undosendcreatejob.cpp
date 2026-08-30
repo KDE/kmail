@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <chrono>
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 
 UndoSendCreateJob::UndoSendCreateJob(QObject *parent)
     : QObject(parent)
@@ -41,7 +42,7 @@ bool UndoSendCreateJob::start()
     connect(mTimer, &QTimer::timeout, this, &UndoSendCreateJob::slotTimeOut);
     mTimer->setSingleShot(true);
     mTimer->start(mDelay * 1s);
-    mNotification = new KNotification(QStringLiteral("undosend"), KNotification::Persistent, this);
+    mNotification = new KNotification(u"undosend"_s, KNotification::Persistent, this);
     mNotification->setText(mSubject);
 
     auto undoSendAction = mNotification->addAction(i18n("Undo send"));

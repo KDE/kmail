@@ -13,6 +13,7 @@
 
 #include <KLazyLocalizedString>
 #include <KLocalizedString>
+using namespace Qt::Literals::StringLiterals;
 
 namespace KMail
 {
@@ -190,14 +191,14 @@ static const about_data credits[] = {
     {"Thomas Zander", kli18n("Fixed many IMAP bugs"), "zander@kde.org", nullptr}};
 
 AboutData::AboutData()
-    : KAboutData(QStringLiteral("kmail2"),
+    : KAboutData(u"kmail2"_s,
                  i18n("KMail"),
                  QStringLiteral(KDEPIM_VERSION),
                  i18n("KDE Email Client"),
                  KAboutLicense::GPL,
-                 i18n("Copyright © %1, KMail authors", QStringLiteral("2026")),
+                 i18n("Copyright © %1, KMail authors", u"2026"_s),
                  QString(),
-                 QStringLiteral("https://apps.kde.org/kmail2/"))
+                 u"https://apps.kde.org/kmail2/"_s)
 {
     using KMail::authors;
     using KMail::credits;

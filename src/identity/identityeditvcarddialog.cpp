@@ -17,6 +17,7 @@
 #include <QFileInfo>
 #include <QPushButton>
 #include <QVBoxLayout>
+using namespace Qt::Literals::StringLiterals;
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
     : QDialog(parent)
@@ -120,8 +121,8 @@ void IdentityEditVcardDialog::reject()
     const int answer = KMessageBox::questionTwoActions(this,
                                                        i18nc("@info", "Do you really want to cancel?"),
                                                        i18nc("@title:window", "Confirmation"),
-                                                       KGuiItem(i18nc("@action:button", "Cancel Editing"), QStringLiteral("dialog-ok")),
-                                                       KGuiItem(i18nc("@action:button", "Do Not Cancel"), QStringLiteral("dialog-cancel")));
+                                                       KGuiItem(i18nc("@action:button", "Cancel Editing"), u"dialog-ok"_s),
+                                                       KGuiItem(i18nc("@action:button", "Do Not Cancel"), u"dialog-cancel"_s));
     if (answer == KMessageBox::ButtonCode::PrimaryAction) {
         QDialog::reject(); // Discard current changes
     }

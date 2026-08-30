@@ -61,7 +61,7 @@ IdentityAddVcardDialog::IdentityAddVcardDialog(const QStringList &shadowIdentiti
     vlay->addLayout(hlay);
 
     mVCardPath->setObjectName("kurlrequester_vcardpath"_L1);
-    mVCardPath->setMimeTypeFilters({QStringLiteral("text/vcard"), QStringLiteral("all/allfiles")});
+    mVCardPath->setMimeTypeFilters({u"text/vcard"_s, u"all/allfiles"_s});
 
     mVCardPath->setMode(KFile::LocalOnly | KFile::File);
     auto label = new QLabel(i18nc("@label:textbox", "&vCard path:"), this);

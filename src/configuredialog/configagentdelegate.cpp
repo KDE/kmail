@@ -29,11 +29,11 @@ static const int s_delegatePaddingSize = 7;
 
 struct Icons {
     Icons()
-        : readyPixmap(QIcon::fromTheme(QStringLiteral("user-online")).pixmap(QSize(16, 16)))
-        , syncPixmap(QIcon::fromTheme(QStringLiteral("network-connect")).pixmap(QSize(16, 16)))
-        , errorPixmap(QIcon::fromTheme(QStringLiteral("dialog-error")).pixmap(QSize(16, 16)))
-        , offlinePixmap(QIcon::fromTheme(QStringLiteral("network-disconnect")).pixmap(QSize(16, 16)))
-        , checkMailIcon(QIcon::fromTheme(QStringLiteral("mail-receive")))
+        : readyPixmap(QIcon::fromTheme(u"user-online"_s).pixmap(QSize(16, 16)))
+        , syncPixmap(QIcon::fromTheme(u"network-connect"_s).pixmap(QSize(16, 16)))
+        , errorPixmap(QIcon::fromTheme(u"dialog-error"_s).pixmap(QSize(16, 16)))
+        , offlinePixmap(QIcon::fromTheme(u"network-disconnect"_s).pixmap(QSize(16, 16)))
+        , checkMailIcon(QIcon::fromTheme(u"mail-receive"_s))
     {
     }
 
@@ -64,17 +64,17 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
     const QSize decorationSize(KIconLoader::global()->currentSize(KIconLoader::Desktop), KIconLoader::global()->currentSize(KIconLoader::Desktop));
     const QVariant data = index.model()->data(index, Qt::DecorationRole);
     if (data.isValid() && data.userType() == QMetaType::QIcon) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("agent_icon")), qvariant_cast<QIcon>(data).pixmap(decorationSize));
+        document->addResource(QTextDocument::ImageResource, QUrl(u"agent_icon"_s), qvariant_cast<QIcon>(data).pixmap(decorationSize));
     }
 
     if (!index.data(AgentInstanceModel::OnlineRole).toBool()) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->offlinePixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(u"status_icon"_s), s_icons->offlinePixmap);
     } else if (status == AgentInstance::Idle) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->readyPixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(u"status_icon"_s), s_icons->readyPixmap);
     } else if (status == AgentInstance::Running) {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->syncPixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(u"status_icon"_s), s_icons->syncPixmap);
     } else {
-        document->addResource(QTextDocument::ImageResource, QUrl(QStringLiteral("status_icon")), s_icons->errorPixmap);
+        document->addResource(QTextDocument::ImageResource, QUrl(u"status_icon"_s), s_icons->errorPixmap);
     }
 
     QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? QPalette::Normal : QPalette::Disabled;
@@ -91,19 +91,9 @@ QTextDocument *ConfigAgentDelegate::document(const QStyleOptionViewItem &option,
 
     const QString escapedName = name.toHtmlEscaped();
     const QString escapedStatusMessage = statusMessage.toHtmlEscaped();
-    const QString content = QStringLiteral(
-                                "<html style=\"color:%1\">"
-                                "<body>"
-                                "<table>"
-                                "<tr>"
-                                "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>"
-                                "<td><b>%2</b></td>"
-                                "</tr>")
+    const QString content = u"<html style=\"color:%1\">" "<body>" "<table>" "<tr>" "<td rowspan=\"2\"><img src=\"agent_icon\">&nbsp;&nbsp;</td>" "<td><b>%2</b></td>" "</tr>"_s
                                 .arg(textColor.name().toUpper(), escapedName)
-        + QStringLiteral(
-              "<tr>"
-              "<td><img src=\"status_icon\"/> %1 %2</td>"
-              "</tr>")
+        + u"<tr>" "<td><img src=\"status_icon\"/> %1 %2</td>" "</tr>"_s
               .arg(escapedStatusMessage, status == AgentInstance::Running ? i18n("(%1%)", progress) : ""_L1)
         + "</table></body></html>"_L1;
 

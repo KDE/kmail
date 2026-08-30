@@ -83,7 +83,7 @@ void EncodedImagePicker::selectFile()
         filter += "*."_L1 + QString::fromLatin1(ba);
     }
 
-    filter = QStringLiteral("%1 (%2)").arg(i18n("Image"), filter);
+    filter = u"%1 (%2)"_s.arg(i18n("Image"), filter);
     if (const QUrl url = QFileDialog::getOpenFileUrl(this, QString(), QUrl(), filter); !url.isEmpty()) {
         setFromFile(url);
     }

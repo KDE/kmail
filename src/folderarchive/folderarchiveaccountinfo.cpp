@@ -5,6 +5,7 @@
 */
 
 #include "folderarchiveaccountinfo.h"
+using namespace Qt::Literals::StringLiterals;
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo() = default;
 
@@ -70,8 +71,8 @@ bool FolderArchiveAccountInfo::keepExistingStructure() const
 
 void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 {
-    mInstanceName = config.readEntry(QStringLiteral("instanceName"));
-    mArchiveTopLevelCollectionId = config.readEntry(QStringLiteral("topLevelCollectionId"), -1);
+    mInstanceName = config.readEntry(u"instanceName"_s);
+    mArchiveTopLevelCollectionId = config.readEntry(u"topLevelCollectionId"_s, -1);
     mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder));
     mEnabled = config.readEntry("enabled", false);
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);
@@ -80,15 +81,15 @@ void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 
 void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
 {
-    config.writeEntry(QStringLiteral("instanceName"), mInstanceName);
+    config.writeEntry(u"instanceName"_s, mInstanceName);
     if (mArchiveTopLevelCollectionId > -1) {
-        config.writeEntry(QStringLiteral("topLevelCollectionId"), mArchiveTopLevelCollectionId);
+        config.writeEntry(u"topLevelCollectionId"_s, mArchiveTopLevelCollectionId);
     } else {
-        config.deleteEntry(QStringLiteral("topLevelCollectionId"));
+        config.deleteEntry(u"topLevelCollectionId"_s);
     }
 
-    config.writeEntry(QStringLiteral("folderArchiveType"), (int)mArchiveType);
-    config.writeEntry(QStringLiteral("enabled"), mEnabled);
+    config.writeEntry(u"folderArchiveType"_s, (int)mArchiveType);
+    config.writeEntry(u"enabled"_s, mEnabled);
     config.writeEntry("keepExistingStructure", mKeepExistingStructure);
     config.writeEntry("useDateFromMessage", mUseDateFromMessage);
 }

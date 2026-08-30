@@ -43,10 +43,10 @@ EXPORT_KONTACT_PLUGIN_WITH_JSON(KMailPlugin, "kmailplugin.json")
 KMailPlugin::KMailPlugin(KontactInterface::Core *core, const KPluginMetaData &data, const QVariantList &)
     : KontactInterface::Plugin(core, core, data, "kmail2")
 {
-    setComponentName(QStringLiteral("kmail2"), i18n("KMail2"));
+    setComponentName(u"kmail2"_s, i18n("KMail2"));
 
-    auto action = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18nc("@action:inmenu", "New Message…"), this);
-    actionCollection()->addAction(QStringLiteral("new_mail"), action);
+    auto action = new QAction(QIcon::fromTheme(u"mail-message-new"_s), i18nc("@action:inmenu", "New Message…"), this);
+    actionCollection()->addAction(u"new_mail"_s, action);
     actionCollection()->setDefaultShortcut(action, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_M));
     // action->setHelpText(
     //            i18nc( "@info:status", "Create a new mail message" ) );
@@ -56,12 +56,12 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const KPluginMetaData &da
     connect(action, &QAction::triggered, this, &KMailPlugin::slotNewMail);
     insertNewAction(action);
 
-    auto syncAction = new QAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18nc("@action:inmenu", "Sync Mail"), this);
+    auto syncAction = new QAction(QIcon::fromTheme(u"view-refresh"_s), i18nc("@action:inmenu", "Sync Mail"), this);
     // syncAction->setHelpText(
     //            i18nc( "@info:status", "Synchronize groupware mail" ) );
     syncAction->setWhatsThis(i18nc("@info:whatsthis", "Choose this option to synchronize your groupware email."));
     connect(syncAction, &QAction::triggered, this, &KMailPlugin::slotSyncFolders);
-    actionCollection()->addAction(QStringLiteral("sync_mail"), syncAction);
+    actionCollection()->addAction(u"sync_mail"_s, syncAction);
     insertSyncAction(syncAction);
 
     mUniqueAppWatcher = new KontactInterface::UniqueAppWatcher(new KontactInterface::UniqueAppHandlerFactory<KMailUniqueAppHandler>(), this);
@@ -100,7 +100,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
 #else
     if (const auto cal = KCalendarCore::MimeData::decodeCalendar(md); cal) {
 #endif
-        if (QTemporaryFile tmp(QStringLiteral("incidences-kmail_XXXXXX.ics")); tmp.open()) {
+        if (QTemporaryFile tmp(u"incidences-kmail_XXXXXX.ics"_s); tmp.open()) {
             tmp.setAutoRemove(false);
             if (FileStorage storage(cal, tmp.fileName()); !storage.save()) {
                 qCWarning(KMAILPLUGIN_LOG) << " Impossible to save data in filestorage";
@@ -119,7 +119,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
         openComposer(to.join(", "_L1));
     }
 
-    qCWarning(KMAILPLUGIN_LOG) << QStringLiteral("Cannot handle drop events of type '%1'.").arg(de->mimeData()->formats().join(QLatin1Char(';')));
+    qCWarning(KMAILPLUGIN_LOG) << u"Cannot handle drop events of type '%1'."_s.arg(de->mimeData()->formats().join(QLatin1Char(';')));
 }
 
 void KMailPlugin::openComposer(const QUrl &attach)
@@ -151,10 +151,7 @@ void KMailPlugin::slotNewMail()
 
 void KMailPlugin::slotSyncFolders()
 {
-    QDBusMessage message = QDBusMessage::createMethodCall(QStringLiteral("org.kde.kmail"),
-                                                          QStringLiteral("/KMail"),
-                                                          QStringLiteral("org.kde.kmail.kmail"),
-                                                          QStringLiteral("checkMail"));
+    QDBusMessage message = QDBusMessage::createMethodCall(u"org.kde.kmail"_s, u"/KMail"_s, u"org.kde.kmail.kmail"_s, u"checkMail"_s);
     QDBusConnection::sessionBus().send(message);
 }
 
@@ -171,14 +168,14 @@ KParts::Part *KMailPlugin::createPart()
         return nullptr;
     }
 
-    mInstance = new OrgKdeKmailKmailInterface(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+    mInstance = new OrgKdeKmailKmailInterface(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
 
     return part;
 }
 
 QStringList KMailPlugin::invisibleToolbarActions() const
 {
-    return QStringList() << QStringLiteral("new_message");
+    return QStringList() << u"new_message"_s;
 }
 
 bool KMailPlugin::isRunningStandalone() const
@@ -208,7 +205,7 @@ int KMailUniqueAppHandler::activate(const QStringList &args, const QString &work
 {
     // Ensure part is loaded
     (void)plugin()->part();
-    org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+    org::kde::kmail::kmail kmail(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
     if (QDBusReply<bool> reply = kmail.handleCommandLine(false, args, workingDir); reply.isValid()) {
         if (bool handled = reply; !handled) { // no args -> simply bring kmail plugin to front
             return KontactInterface::UniqueAppHandler::activate(args, workingDir);
@@ -219,7 +216,7 @@ int KMailUniqueAppHandler::activate(const QStringList &args, const QString &work
 
 bool KMailPlugin::queryClose() const
 {
-    org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+    org::kde::kmail::kmail kmail(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
     QDBusReply<bool> canClose = kmail.canQueryClose();
     return canClose;
 }

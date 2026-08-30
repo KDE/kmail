@@ -20,6 +20,7 @@
 
 using namespace KMail;
 using namespace MailCommon;
+using namespace Qt::Literals::StringLiterals;
 
 FolderShortcutCommand::FolderShortcutCommand(QWidget *mainwidget, const Akonadi::Collection &col)
     : QObject(mainwidget)
@@ -108,14 +109,14 @@ void FolderShortcutActionManager::shortcutChanged(const Akonadi::Collection &col
     auto command = new FolderShortcutCommand(mParent, col);
     mFolderShortcutCommands.insert(col.id(), command);
 
-    QIcon icon = QIcon::fromTheme(QStringLiteral("folder"));
+    QIcon icon = QIcon::fromTheme(u"folder"_s);
     if (const auto *attribute = col.attribute<Akonadi::EntityDisplayAttribute>(); attribute && !attribute->iconName().isEmpty()) {
         icon = QIcon::fromTheme(attribute->iconName());
     }
 
     const QString actionLabel = i18n("Folder Shortcut %1", col.name());
     // The action name is an internal identifier used as config key, it must not be translated.
-    const QString actionName = QStringLiteral("folder_shortcut_%1").arg(col.id());
+    const QString actionName = u"folder_shortcut_%1"_s.arg(col.id());
     QAction *action = mActionCollection->addAction(actionName);
     // The folder shortcut is set in the folder shortcut dialog.
     // The shortcut set in the shortcut dialog would not be saved back to

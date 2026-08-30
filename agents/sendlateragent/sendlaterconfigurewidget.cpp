@@ -22,7 +22,7 @@ namespace
 {
 inline QString sendLaterItemPattern()
 {
-    return QStringLiteral("SendLaterItem \\d+");
+    return u"SendLaterItem \\d+"_s;
 }
 }
 
@@ -93,7 +93,7 @@ void SendLaterWidget::slotCustomContextMenuRequested(QPoint)
             menu.addAction(i18nc("@action", "Send now"), this, &SendLaterWidget::slotSendNow);
         }
         menu.addSeparator();
-        menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action", "Delete"), this, &SendLaterWidget::slotDeleteItem);
+        menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Delete"), this, &SendLaterWidget::slotDeleteItem);
         menu.exec(QCursor::pos());
     }
 }
@@ -213,7 +213,7 @@ void SendLaterWidget::slotDeleteItem()
                                             i18np("Do you want to delete the message as well?", "Do you want to delete the messages as well?", numberOfItems),
                                             i18nc("@title:window", "Delete Messages"),
                                             KStandardGuiItem::del(),
-                                            KGuiItem(i18nc("@action:button", "Do Not Delete"), QStringLiteral("dialog-cancel")));
+                                            KGuiItem(i18nc("@action:button", "Do Not Delete"), u"dialog-cancel"_s));
     const bool deleteMessage = (answer == KMessageBox::ButtonCode::PrimaryAction);
 
     for (QTreeWidgetItem *item : listItems) {

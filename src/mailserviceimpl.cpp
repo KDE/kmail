@@ -26,7 +26,7 @@ MailServiceImpl::MailServiceImpl(QObject *parent)
     : QObject(parent)
 {
     new ServiceAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailTransportService"), this);
+    QDBusConnection::sessionBus().registerObject(u"/MailTransportService"_s, this);
 }
 
 bool MailServiceImpl::sendMessage(const QString &from,

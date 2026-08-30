@@ -25,6 +25,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QPointer>
+using namespace Qt::Literals::StringLiterals;
 
 CreateNewContactJob::CreateNewContactJob(QWidget *parentWidget, QObject *parent)
     : KJob(parent)
@@ -66,7 +67,7 @@ void CreateNewContactJob::slotCollectionsFetched(KJob *job)
         dlg->setWindowTitle(i18nc("@title:window", "Add to Address Book"));
         dlg->agentFilterProxyModel()->addMimeTypeFilter(KContacts::Addressee::mimeType());
         dlg->agentFilterProxyModel()->addMimeTypeFilter(KContacts::ContactGroup::mimeType());
-        dlg->agentFilterProxyModel()->addCapabilityFilter(QStringLiteral("Resource"));
+        dlg->agentFilterProxyModel()->addCapabilityFilter(u"Resource"_s);
 
         if (dlg->exec()) {
             const Akonadi::AgentType agentType = dlg->agentType();

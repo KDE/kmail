@@ -84,10 +84,10 @@ bool KMail::Util::handleClickedURL(const QUrl &url,
     } else if (url.scheme() == "certificate"_L1) {
         QStringList lst;
         if (parentWidget) {
-            lst << QStringLiteral("--parent-windowid") << QString::number(static_cast<qlonglong>(parentWidget->winId()));
+            lst << u"--parent-windowid"_s << QString::number(static_cast<qlonglong>(parentWidget->winId()));
         }
-        lst << QStringLiteral("--query") << url.path();
-        QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("kleopatra"));
+        lst << u"--query"_s << url.path();
+        QString exec = TextAddonsWidgets::ExecutableUtils::findExecutable(u"kleopatra"_s);
         if (exec.isEmpty()) {
             qCWarning(KMAIL_LOG) << "Could not find kleopatra executable in PATH";
             return false;
@@ -101,7 +101,7 @@ bool KMail::Util::handleClickedURL(const QUrl &url,
 
 bool KMail::Util::mailingListsHandleURL(const QList<QUrl> &lst, const QSharedPointer<MailCommon::FolderSettings> &folder, const Akonadi::Collection &collection)
 {
-    const QString handler = (folder->mailingList().handler() == MailingList::KMail) ? QStringLiteral("mailto") : QStringLiteral("https");
+    const QString handler = (folder->mailingList().handler() == MailingList::KMail) ? u"mailto"_s : u"https"_s;
 
     QUrl urlToHandle;
     QList<QUrl>::ConstIterator end(lst.constEnd());
@@ -182,7 +182,7 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
 {
     if (action) {
         action->setText(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "&Delete") : i18n("&Move to Trash"));
-        action->setIcon(isInTrashFolder ? QIcon::fromTheme(QStringLiteral("edit-delete-shred")) : QIcon::fromTheme(QStringLiteral("edit-delete")));
+        action->setIcon(isInTrashFolder ? QIcon::fromTheme(u"edit-delete-shred"_s) : QIcon::fromTheme(u"edit-delete"_s));
         // Use same text as in Text property. Change it in kf5
         action->setToolTip(isInTrashFolder ? i18nc("@action Hard delete, bypassing trash", "Delete") : i18n("Move to Trash"));
     }
@@ -190,8 +190,7 @@ void KMail::Util::setActionTrashOrDelete(QAction *action, bool isInTrashFolder)
 
 void KMail::Util::executeAccountWizard(QWidget *parentWidget)
 {
-    if (const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(QStringLiteral("accountwizard"));
-        path.isEmpty() || !QProcess::startDetached(path, {})) {
+    if (const QString path = TextAddonsWidgets::ExecutableUtils::findExecutable(u"accountwizard"_s); path.isEmpty() || !QProcess::startDetached(path, {})) {
         KMessageBox::error(parentWidget,
                            i18n("Could not start the account wizard. "
                                 "Please make sure you have AccountWizard properly installed."),

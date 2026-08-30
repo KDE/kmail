@@ -307,9 +307,9 @@ void KeySelectionCombo::init()
         keyFilter->setCanEncrypt(Kleo::DefaultKeyFilter::Set);
     }
     setKeyFilter(keyFilter);
-    prependCustomItem(QIcon(), i18n("No key"), QStringLiteral("no-key"));
+    prependCustomItem(QIcon(), i18n("No key"), u"no-key"_s);
     if (mProtocol == GpgME::OpenPGP) {
-        appendCustomItem(QIcon::fromTheme(QStringLiteral("password-generate")), i18n("Generate a new OpenPGP certificate"), QStringLiteral("generate-new-key"));
+        appendCustomItem(QIcon::fromTheme(u"password-generate"_s), i18n("Generate a new OpenPGP certificate"), u"generate-new-key"_s);
     }
 
     connect(this, &KeySelectionCombo::customItemSelected, this, &KeySelectionCombo::onCustomItemSelected);
@@ -743,7 +743,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
     auto restoreDefaultDomainName = new QToolButton;
-    restoreDefaultDomainName->setIcon(QIcon::fromTheme(QStringLiteral("view-refresh")));
+    restoreDefaultDomainName->setIcon(QIcon::fromTheme(u"view-refresh"_s));
     restoreDefaultDomainName->setToolTip(i18nc("@info:tooltip", "Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
@@ -773,7 +773,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     mCustom = new QCheckBox(i18nc("@option:check", "&Use custom message templates for this identity"), tab);
     tlay->addWidget(mCustom, Qt::AlignLeft);
 
-    mWidget = new TemplateParser::TemplatesConfiguration(tab, QStringLiteral("identity-templates"));
+    mWidget = new TemplateParser::TemplatesConfiguration(tab, u"identity-templates"_s);
     mWidget->setEnabled(false);
 
     // Move the help label outside of the templates configuration widget,
@@ -823,7 +823,7 @@ IdentityDialog::~IdentityDialog()
 
 void IdentityDialog::slotHelp()
 {
-    PimCommon::Util::invokeHelp(QStringLiteral("kmail2/configure-identity.html"));
+    PimCommon::Util::invokeHelp(u"kmail2/configure-identity.html"_s);
 }
 
 void IdentityDialog::slotAboutToShow(int index)
@@ -969,7 +969,7 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
                                                i18nc("@title:window", "Email Address Not Found in Key/Certificates"),
                                                KStandardGuiItem::cont(),
                                                KStandardGuiItem::cancel(),
-                                               QStringLiteral("warn_email_not_in_certificate"))
+                                               u"warn_email_not_in_certificate"_s)
             != KMessageBox::Continue) {
             return;
         }
@@ -1181,7 +1181,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     if (collection.isValid()) {
         ident.setFcc(QString::number(collection.id()));
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-        attribute->setIconName(QStringLiteral("mail-folder-sent"));
+        attribute->setIconName(u"mail-folder-sent"_s);
         // It will also start a CollectionModifyJob
         if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::SentMail, collection)) {
             qCWarning(KMAIL_LOG) << "Impossible to change special sent mail folder";
@@ -1197,7 +1197,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     if (collection.isValid()) {
         ident.setDrafts(QString::number(collection.id()));
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-        attribute->setIconName(QStringLiteral("document-properties"));
+        attribute->setIconName(u"document-properties"_s);
         // It will also start a CollectionModifyJob
         if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Drafts, collection)) {
             qCWarning(KMAIL_LOG) << "Impossible to change special draft mail folder";
@@ -1213,7 +1213,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     if (collection.isValid()) {
         ident.setSpam(QString::number(collection.id()));
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-        attribute->setIconName(QStringLiteral("mail-mark-junk"));
+        attribute->setIconName(u"mail-mark-junk"_s);
         // It will also start a CollectionModifyJob
         if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Spam, collection)) {
             qCWarning(KMAIL_LOG) << "Impossible to change special spam mail folder";
@@ -1230,7 +1230,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     if (collection.isValid()) {
         ident.setTemplates(QString::number(collection.id()));
         auto attribute = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
-        attribute->setIconName(QStringLiteral("document-new"));
+        attribute->setIconName(u"document-new"_s);
         // It will also start a CollectionModifyJob
         if (!Akonadi::SpecialMailCollections::self()->registerCollection(Akonadi::SpecialMailCollections::Templates, collection)) {
             qCWarning(KMAIL_LOG) << "Impossible to change special template mail folder";

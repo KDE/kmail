@@ -27,9 +27,9 @@ EXPORT_KONTACT_PLUGIN_WITH_JSON(SummaryView, "summaryplugin.json")
 
 SummaryView::SummaryView(KontactInterface::Core *core, const KPluginMetaData &data, const QVariantList &)
     : KontactInterface::Plugin(core, core, data, nullptr)
-    , mSyncAction(new KSelectAction(QIcon::fromTheme(QStringLiteral("view-refresh")), i18n("Sync All"), this))
+    , mSyncAction(new KSelectAction(QIcon::fromTheme(u"view-refresh"_s), i18n("Sync All"), this))
 {
-    actionCollection()->addAction(QStringLiteral("kontact_summary_sync"), mSyncAction);
+    actionCollection()->addAction(u"kontact_summary_sync"_s, mSyncAction);
     connect(mSyncAction, &KSelectAction::actionTriggered, this, &SummaryView::syncAccount);
     connect(mSyncAction->menu(), &QMenu::aboutToShow, this, &SummaryView::fillSyncActionSubEntries);
 
@@ -43,9 +43,9 @@ void SummaryView::fillSyncActionSubEntries()
 
     mAllSync = mSyncAction->addAction(i18nc("@action:inmenu sync everything", "All"));
 
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral("org.kde.kmail"))) {
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(u"org.kde.kmail"_s)) {
         QStringList menuItems;
-        org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+        org::kde::kmail::kmail kmail(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
         if (const QDBusReply<QStringList> reply = kmail.accounts(); reply.isValid()) {
             menuItems << reply.value();
         }
@@ -61,7 +61,7 @@ void SummaryView::syncAccount(QAction *act)
     if (act == mAllSync) {
         doSync();
     } else {
-        org::kde::kmail::kmail kmail(QStringLiteral("org.kde.kmail"), QStringLiteral("/KMail"), QDBusConnection::sessionBus());
+        org::kde::kmail::kmail kmail(u"org.kde.kmail"_s, u"/KMail"_s, QDBusConnection::sessionBus());
         kmail.checkAccount(act->text());
     }
     fillSyncActionSubEntries();
@@ -97,16 +97,16 @@ KParts::Part *SummaryView::createPart()
 
 const KAboutData SummaryView::aboutData()
 {
-    KAboutData aboutData = KAboutData(QStringLiteral("kontactsummary"),
+    KAboutData aboutData = KAboutData(u"kontactsummary"_s,
                                       i18n("Kontact Summary"),
                                       QStringLiteral(KDEPIM_VERSION),
                                       i18n("Kontact Summary View"),
                                       KAboutLicense::LGPL,
                                       i18n("© 2003-2025 The Kontact developers"));
 
-    aboutData.addAuthor(i18nc("@info:credit", "Sven Lueppken"), QString(), QStringLiteral("sven@kde.org"));
-    aboutData.addAuthor(i18nc("@info:credit", "Cornelius Schumacher"), QString(), QStringLiteral("schumacher@kde.org"));
-    aboutData.addAuthor(i18nc("@info:credit", "Tobias Koenig"), QString(), QStringLiteral("tokoe@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Sven Lueppken"), QString(), u"sven@kde.org"_s);
+    aboutData.addAuthor(i18nc("@info:credit", "Cornelius Schumacher"), QString(), u"schumacher@kde.org"_s);
+    aboutData.addAuthor(i18nc("@info:credit", "Tobias Koenig"), QString(), u"tokoe@kde.org"_s);
     aboutData.setProductName("kontact/summary"_ba);
     return aboutData;
 }

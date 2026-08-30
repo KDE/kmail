@@ -41,7 +41,7 @@ void ArchiveMailManager::load()
     qDeleteAll(mListArchiveInfo);
     mListArchiveInfo.clear();
 
-    const QStringList collectionList = mConfig->groupList().filter(QRegularExpression(QStringLiteral("ArchiveMailCollection \\d+")));
+    const QStringList collectionList = mConfig->groupList().filter(QRegularExpression(u"ArchiveMailCollection \\d+"_s));
     const int numberOfCollection = collectionList.count();
     for (int i = 0; i < numberOfCollection; ++i) {
         KConfigGroup group = mConfig->group(collectionList.at(i));
@@ -138,7 +138,7 @@ QString ArchiveMailManager::printCurrentListInfo() const
 {
     QString infoStr;
     if (mListArchiveInfo.isEmpty()) {
-        infoStr = QStringLiteral("No archive in queue");
+        infoStr = u"No archive in queue"_s;
     } else {
         for (ArchiveMailInfo *info : std::as_const(mListArchiveInfo)) {
             if (!infoStr.isEmpty()) {
@@ -153,18 +153,18 @@ QString ArchiveMailManager::printCurrentListInfo() const
 QString ArchiveMailManager::infoToStr(ArchiveMailInfo *info) const
 {
     QString infoStr = QLatin1StringView("collectionId: ") + QString::number(info->saveCollectionId()) + u'\n';
-    infoStr += QLatin1StringView("save sub collection: ") + (info->saveSubCollection() ? QStringLiteral("true") : QStringLiteral("false")) + u'\n';
+    infoStr += QLatin1StringView("save sub collection: ") + (info->saveSubCollection() ? u"true"_s : u"false"_s) + u'\n';
     infoStr += QLatin1StringView("last Date Saved: ") + info->lastDateSaved().toString() + u'\n';
     infoStr += QLatin1StringView("maximum archive number: ") + QString::number(info->maximumArchiveCount()) + u'\n';
     infoStr += QLatin1StringView("directory: ") + info->url().toDisplayString() + u'\n';
-    infoStr += QLatin1StringView("Enabled: ") + (info->isEnabled() ? QStringLiteral("true") : QStringLiteral("false"));
+    infoStr += QLatin1StringView("Enabled: ") + (info->isEnabled() ? u"true"_s : u"false"_s);
     return infoStr;
 }
 
 QString ArchiveMailManager::printArchiveListInfo() const
 {
     QString infoStr;
-    const QStringList collectionList = mConfig->groupList().filter(QRegularExpression(QStringLiteral("ArchiveMailCollection \\d+")));
+    const QStringList collectionList = mConfig->groupList().filter(QRegularExpression(u"ArchiveMailCollection \\d+"_s));
     const int numberOfCollection = collectionList.count();
     for (int i = 0; i < numberOfCollection; ++i) {
         KConfigGroup group = mConfig->group(collectionList.at(i));

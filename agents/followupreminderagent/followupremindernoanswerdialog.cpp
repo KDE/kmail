@@ -38,7 +38,7 @@ FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)
     , mWidget(new FollowUpReminderInfoWidget(this))
 {
     setWindowTitle(i18nc("@title:window", "Follow Up Reminder"));
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    setWindowIcon(QIcon::fromTheme(u"kmail"_s));
     setAttribute(Qt::WA_DeleteOnClose);
 
     auto mainLayout = new QVBoxLayout(this);
@@ -93,7 +93,7 @@ void FollowUpReminderNoAnswerDialog::slotDBusNotificationsPropertiesChanged([[ma
                                                                             const QVariantMap &changedProperties,
                                                                             [[maybe_unused]] const QStringList &invalidatedProperties)
 {
-    if (const auto it = changedProperties.find(QStringLiteral("Inhibited")); it != changedProperties.end()) {
+    if (const auto it = changedProperties.find(u"Inhibited"_s); it != changedProperties.end()) {
         const bool inhibited = it.value().toBool();
         qCDebug(FOLLOWUPREMINDERAGENT_LOG) << "Notifications inhibited:" << inhibited;
         if (!inhibited) {

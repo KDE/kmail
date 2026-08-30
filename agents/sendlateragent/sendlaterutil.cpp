@@ -14,6 +14,7 @@
 #include <KConfigGroup>
 
 #include <QStringList>
+using namespace Qt::Literals::StringLiterals;
 
 bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left, MessageComposer::SendLaterInfo *right)
 {
@@ -64,13 +65,13 @@ void SendLaterUtil::changeRecurrentDate(MessageComposer::SendLaterInfo *info)
 
 KSharedConfig::Ptr SendLaterUtil::defaultConfig()
 {
-    return KSharedConfig::openConfig(QStringLiteral("akonadi_sendlater_agentrc"), KConfig::SimpleConfig);
+    return KSharedConfig::openConfig(u"akonadi_sendlater_agentrc"_s, KConfig::SimpleConfig);
 }
 
 MessageComposer::SendLaterInfo *SendLaterUtil::readSendLaterInfo(KConfigGroup &config)
 {
     auto info = new MessageComposer::SendLaterInfo;
-    if (config.hasKey(QStringLiteral("lastDateTimeSend"))) {
+    if (config.hasKey(u"lastDateTimeSend"_s)) {
         info->setLastDateTimeSend(QDateTime::fromString(config.readEntry("lastDateTimeSend"), Qt::ISODate));
     }
     info->setDateTime(config.readEntry("date", QDateTime::currentDateTime()));
@@ -128,5 +129,5 @@ bool SendLaterUtil::sentLaterAgentEnabled()
 
 QString SendLaterUtil::sendLaterPattern()
 {
-    return QStringLiteral("SendLaterItem %1");
+    return u"SendLaterItem %1"_s;
 }

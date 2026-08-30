@@ -108,7 +108,7 @@ GpgME::Key createTestKey(QByteArray uid,
 void killAgent()
 {
     QProcess proc;
-    proc.setProgram(QStringLiteral("gpg-connect-agent"));
+    proc.setProgram(u"gpg-connect-agent"_s);
     proc.start();
     proc.waitForStarted();
     proc.write("KILLAGENT\n");
@@ -146,9 +146,9 @@ KMComposerWinTest::KMComposerWinTest(QObject *parent)
     qputenv("KDEHOME", QFile::encodeName(QDir::homePath() + "/.qttest"_L1).constData());
 
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
-    QDir gnupgHomeData(QLatin1StringView(TEST_DATA_DIR) + QStringLiteral("/gnupg"));
+    QDir gnupgHomeData(QLatin1StringView(TEST_DATA_DIR) + u"/gnupg"_s);
     for (const auto &fileInfo : gnupgHomeData.entryInfoList(QDir::Files)) {
-        QVERIFY(QFile(fileInfo.filePath()).copy(gnupgDir.path() + QStringLiteral("/") + fileInfo.fileName()));
+        QVERIFY(QFile(fileInfo.filePath()).copy(gnupgDir.path() + u"/"_s + fileInfo.fileName()));
     }
     qputenv("GNUPGHOME", gnupgDir.path().toUtf8());
 
@@ -163,7 +163,7 @@ KMComposerWinTest::~KMComposerWinTest()
 
 void KMComposerWinTest::init()
 {
-    autocryptDir.mkpath(QStringLiteral("."));
+    autocryptDir.mkpath(u"."_s);
 }
 
 void KMComposerWinTest::cleanup()
@@ -180,7 +180,7 @@ void KMComposerWinTest::cleanup()
 void KMComposerWinTest::initTestCase()
 {
     const QDir genericDataLocation(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
-    autocryptDir = QDir(genericDataLocation.filePath(QStringLiteral("autocrypt")));
+    autocryptDir = QDir(genericDataLocation.filePath(u"autocrypt"_s));
 
     resetIdentities();
 
@@ -233,15 +233,15 @@ void KMComposerWinTest::initTestCase()
 
 void KMComposerWinTest::cleanupTestCase()
 {
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("nearexpiry")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("expired")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("wrongkeysign")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("wrongkey")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("autocrypt")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("signonly")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("encryptonly")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("signandencrypt")));
-    QVERIFY(mKernel->identityManager()->removeIdentity(QStringLiteral("nothing")));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"nearexpiry"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"expired"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"wrongkeysign"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"wrongkey"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"autocrypt"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"signonly"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"encryptonly"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"signandencrypt"_s));
+    QVERIFY(mKernel->identityManager()->removeIdentity(u"nothing"_s));
     mKernel->identityManager()->commit();
     killAgent();
 }
@@ -249,40 +249,40 @@ void KMComposerWinTest::cleanupTestCase()
 void KMComposerWinTest::resetIdentities()
 {
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("nothing"));
-        i.setPrimaryEmailAddress(QStringLiteral("nothing@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"nothing"_s);
+        i.setPrimaryEmailAddress(u"nothing@test.example"_s);
         i.setPGPSigningKey("345678901");
         i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(false);
         i.setPgpAutoEncrypt(false);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("signonly"));
-        i.setPrimaryEmailAddress(QStringLiteral("signonly@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"signonly"_s);
+        i.setPrimaryEmailAddress(u"signonly@test.example"_s);
         i.setPGPSigningKey("345678901");
         i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(false);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("encryptonly"));
-        i.setPrimaryEmailAddress(QStringLiteral("encryptonly@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"encryptonly"_s);
+        i.setPrimaryEmailAddress(u"encryptonly@test.example"_s);
         i.setPGPSigningKey("345678901");
         i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(false);
         i.setPgpAutoEncrypt(true);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("signandencrypt"));
-        i.setPrimaryEmailAddress(QStringLiteral("signandencrypt@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"signandencrypt"_s);
+        i.setPrimaryEmailAddress(u"signandencrypt@test.example"_s);
         i.setPGPSigningKey("345678901");
         i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(true);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("autocrypt"));
-        i.setPrimaryEmailAddress(QStringLiteral("autocrypt@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"autocrypt"_s);
+        i.setPrimaryEmailAddress(u"autocrypt@test.example"_s);
         i.setPGPSigningKey("345678901");
         i.setPGPEncryptionKey("345678901");
         i.setPgpAutoSign(true);
@@ -290,32 +290,32 @@ void KMComposerWinTest::resetIdentities()
         i.setAutocryptEnabled(true);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("wrongkey"));
-        i.setPrimaryEmailAddress(QStringLiteral("wrongkey@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"wrongkey"_s);
+        i.setPrimaryEmailAddress(u"wrongkey@test.example"_s);
         i.setPGPSigningKey("1111111");
         i.setPGPEncryptionKey("1111111");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(true);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("wrongkeysign"));
-        i.setPrimaryEmailAddress(QStringLiteral("wrongkeysign@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"wrongkeysign"_s);
+        i.setPrimaryEmailAddress(u"wrongkeysign@test.example"_s);
         i.setPGPSigningKey("1111111");
         i.setPGPEncryptionKey("22222222");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(true);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("nearexpiry"));
-        i.setPrimaryEmailAddress(QStringLiteral("nearexpiry@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"nearexpiry"_s);
+        i.setPrimaryEmailAddress(u"nearexpiry@test.example"_s);
         i.setPGPSigningKey("2");
         i.setPGPEncryptionKey("2");
         i.setPgpAutoSign(true);
         i.setPgpAutoEncrypt(true);
     }
     {
-        auto &i = mKernel->identityManager()->modifyIdentityForName(QStringLiteral("expired"));
-        i.setPrimaryEmailAddress(QStringLiteral("expired@test.example"));
+        auto &i = mKernel->identityManager()->modifyIdentityForName(u"expired"_s);
+        i.setPrimaryEmailAddress(u"expired@test.example"_s);
         i.setPGPSigningKey("3");
         i.setPGPEncryptionKey("3");
         i.setPgpAutoSign(true);
@@ -332,13 +332,13 @@ void KMComposerWinTest::testSigning_data()
     QTest::addColumn<bool>("sign");
     QTest::addColumn<bool>("sign_possible");
 
-    QTest::newRow("nothing") << im->identityForAddress(QStringLiteral("nothing@test.example")).uoid() << false << true;
-    QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << true << true;
-    QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << false << true;
-    QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << true << true;
-    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << true << true;
-    QTest::newRow("wrongkey") << im->identityForAddress(QStringLiteral("wrongkey@test.example")).uoid() << false << false;
-    QTest::newRow("wrongkeysign") << im->identityForAddress(QStringLiteral("wrongkeysign@test.example")).uoid() << false << false;
+    QTest::newRow("nothing") << im->identityForAddress(u"nothing@test.example"_s).uoid() << false << true;
+    QTest::newRow("signonly") << im->identityForAddress(u"signonly@test.example"_s).uoid() << true << true;
+    QTest::newRow("encryptonly") << im->identityForAddress(u"encryptonly@test.example"_s).uoid() << false << true;
+    QTest::newRow("signandencrypt") << im->identityForAddress(u"signandencrypt@test.example"_s).uoid() << true << true;
+    QTest::newRow("autocrypt") << im->identityForAddress(u"autocrypt@test.example"_s).uoid() << true << true;
+    QTest::newRow("wrongkey") << im->identityForAddress(u"wrongkey@test.example"_s).uoid() << false << false;
+    QTest::newRow("wrongkeysign") << im->identityForAddress(u"wrongkeysign@test.example"_s).uoid() << false << false;
 }
 
 void KMComposerWinTest::testSigning()
@@ -353,7 +353,7 @@ void KMComposerWinTest::testSigning()
     composer->show();
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
-    auto signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    auto signature = composer->findChild<QLabel *>(u"signatureindicator"_s);
     QVERIFY(signature);
     QCOMPARE(signature->isVisible(), sign);
     toggleSigning(composer);
@@ -364,8 +364,8 @@ void KMComposerWinTest::toggleSigning(KMail::Composer *composer)
     QFETCH(bool, sign);
     QFETCH(bool, sign_possible);
 
-    auto signAction = composer->findChild<KToggleAction *>(QStringLiteral("sign_message"));
-    auto signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
+    auto signAction = composer->findChild<KToggleAction *>(u"sign_message"_s);
+    auto signature = composer->findChild<QLabel *>(u"signatureindicator"_s);
     QVERIFY(signature);
     QVERIFY(signAction);
 
@@ -395,21 +395,20 @@ void KMComposerWinTest::toggleSigning(KMail::Composer *composer)
 void KMComposerWinTest::testEncryption_data()
 {
     const auto im = mKernel->identityManager();
-    const QString recipient(QStringLiteral("Friends <friends@kde.example>"));
+    const QString recipient(u"Friends <friends@kde.example>"_s);
 
     QTest::addColumn<uint>("uoid");
     QTest::addColumn<QString>("recipient");
     QTest::addColumn<bool>("encrypt");
     QTest::addColumn<bool>("encrypt_possible");
 
-    QTest::newRow("nothing") << im->identityForAddress(QStringLiteral("nothing@test.example")).uoid() << recipient << false << true;
-    QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << recipient << false << true;
-    QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << recipient << true << true;
-    QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << recipient << true << true;
-    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << "Autocrypt <friends@autocrypt.example>" << true
-                               << true;
-    QTest::newRow("wrongkey") << im->identityForAddress(QStringLiteral("wrongkey@test.example")).uoid() << recipient << false << false;
-    QTest::newRow("wrongkeysign") << im->identityForAddress(QStringLiteral("wrongkeysign@test.example")).uoid() << recipient << true << true;
+    QTest::newRow("nothing") << im->identityForAddress(u"nothing@test.example"_s).uoid() << recipient << false << true;
+    QTest::newRow("signonly") << im->identityForAddress(u"signonly@test.example"_s).uoid() << recipient << false << true;
+    QTest::newRow("encryptonly") << im->identityForAddress(u"encryptonly@test.example"_s).uoid() << recipient << true << true;
+    QTest::newRow("signandencrypt") << im->identityForAddress(u"signandencrypt@test.example"_s).uoid() << recipient << true << true;
+    QTest::newRow("autocrypt") << im->identityForAddress(u"autocrypt@test.example"_s).uoid() << "Autocrypt <friends@autocrypt.example>" << true << true;
+    QTest::newRow("wrongkey") << im->identityForAddress(u"wrongkey@test.example"_s).uoid() << recipient << false << false;
+    QTest::newRow("wrongkeysign") << im->identityForAddress(u"wrongkeysign@test.example"_s).uoid() << recipient << true << true;
 }
 
 void KMComposerWinTest::testEncryption()
@@ -424,8 +423,8 @@ void KMComposerWinTest::testEncryption()
         addrSpec = recipient;
     }
 
-    QFile file1(QLatin1StringView(TEST_DATA_DIR) + QStringLiteral("/autocrypt/friends%40kde.org.json"));
-    QVERIFY(file1.copy(autocryptDir.filePath(addrSpec.replace(QStringLiteral("@"), QStringLiteral("%40")) + QStringLiteral(".json"))));
+    QFile file1(QLatin1StringView(TEST_DATA_DIR) + u"/autocrypt/friends%40kde.org.json"_s);
+    QVERIFY(file1.copy(autocryptDir.filePath(addrSpec.replace(u"@"_s, u"%40"_s) + u".json"_s)));
 
     const auto ident = mKernel->identityManager()->identityForUoid(uoid);
     const auto msg(createItem(ident, recipient.toUtf8()));
@@ -443,7 +442,7 @@ void KMComposerWinTest::testEncryption()
         loop.exec();
     }
     QCoreApplication::processEvents(QEventLoop::AllEvents);
-    auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryption = composer->findChild<QLabel *>(u"encryptionindicator"_s);
     QVERIFY(encryption);
     QCOMPARE(encryption->isVisible(), encrypt);
     toggleEncryption(composer);
@@ -454,8 +453,8 @@ void KMComposerWinTest::toggleEncryption(KMail::Composer *composer)
     QFETCH(bool, encrypt);
     QFETCH(bool, encrypt_possible);
 
-    auto encryptAction = composer->findChild<KToggleAction *>(QStringLiteral("encrypt_message"));
-    auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryptAction = composer->findChild<KToggleAction *>(u"encrypt_message"_s);
+    auto encryption = composer->findChild<QLabel *>(u"encryptionindicator"_s);
     QVERIFY(encryption);
     QVERIFY(encryptAction);
 
@@ -490,16 +489,16 @@ void KMComposerWinTest::testNearExpiryWarningIdentity_data()
     QTest::addColumn<bool>("visible");
     QTest::addColumn<QString>("searchpattern");
 
-    QTest::newRow("nothing") << im->identityForAddress(QStringLiteral("nothing@test.example")).uoid() << false << QString();
-    QTest::newRow("signonly") << im->identityForAddress(QStringLiteral("signonly@test.example")).uoid() << false << QString();
-    QTest::newRow("encryptonly") << im->identityForAddress(QStringLiteral("encryptonly@test.example")).uoid() << false << QString();
-    QTest::newRow("signandencrypt") << im->identityForAddress(QStringLiteral("signandencrypt@test.example")).uoid() << false << QString();
-    QTest::newRow("autocrypt") << im->identityForAddress(QStringLiteral("autocrypt@test.example")).uoid() << false << QString();
+    QTest::newRow("nothing") << im->identityForAddress(u"nothing@test.example"_s).uoid() << false << QString();
+    QTest::newRow("signonly") << im->identityForAddress(u"signonly@test.example"_s).uoid() << false << QString();
+    QTest::newRow("encryptonly") << im->identityForAddress(u"encryptonly@test.example"_s).uoid() << false << QString();
+    QTest::newRow("signandencrypt") << im->identityForAddress(u"signandencrypt@test.example"_s).uoid() << false << QString();
+    QTest::newRow("autocrypt") << im->identityForAddress(u"autocrypt@test.example"_s).uoid() << false << QString();
 
-    auto ident = im->identityForAddress(QStringLiteral("wrongkey@test.example"));
+    auto ident = im->identityForAddress(u"wrongkey@test.example"_s);
     QTest::newRow("wrongkey") << ident.uoid() << true << QString::fromUtf8(ident.pgpEncryptionKey());
 
-    ident = im->identityForAddress(QStringLiteral("wrongkeysign@test.example"));
+    ident = im->identityForAddress(u"wrongkeysign@test.example"_s);
     QTest::newRow("wrongkeysign") << ident.uoid() << true << QString::fromUtf8(ident.pgpSigningKey());
 }
 
@@ -522,7 +521,7 @@ void KMComposerWinTest::testNearExpiryWarningIdentity()
     QCOMPARE(nearExpiryWarning->isVisible(), visible);
 
     if (visible) {
-        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QCOMPARE(nearExpiryWarning->text().count(u"<p>"_s), 1);
         QVERIFY(nearExpiryWarning->text().contains(searchpattern));
     }
 }
@@ -531,18 +530,18 @@ void KMComposerWinTest::testChangeIdentity()
 {
     const auto im = mKernel->identityManager();
 
-    auto ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
+    auto ident = im->identityForAddress(u"signonly@test.example"_s);
     const auto msg(createItem(ident));
 
     auto composer = KMail::makeComposer(msg);
     composer->show();
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
-    auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
-    auto signature = composer->findChild<QLabel *>(QStringLiteral("signatureindicator"));
-    auto encryptAction = composer->findChild<KToggleAction *>(QStringLiteral("encrypt_message"));
-    auto signAction = composer->findChild<KToggleAction *>(QStringLiteral("sign_message"));
-    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto encryption = composer->findChild<QLabel *>(u"encryptionindicator"_s);
+    auto signature = composer->findChild<QLabel *>(u"signatureindicator"_s);
+    auto encryptAction = composer->findChild<KToggleAction *>(u"encrypt_message"_s);
+    auto signAction = composer->findChild<KToggleAction *>(u"sign_message"_s);
+    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(u"identitycombo"_s);
     QVERIFY(encryption);
     QVERIFY(signature);
     QVERIFY(identCombo);
@@ -554,7 +553,7 @@ void KMComposerWinTest::testChangeIdentity()
     QCOMPARE(encryptAction->isEnabled(), true);
 
     {
-        ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+        ident = im->identityForAddress(u"signandencrypt@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -568,7 +567,7 @@ void KMComposerWinTest::testChangeIdentity()
     }
 
     {
-        ident = im->identityForAddress(QStringLiteral("nothing@test.example"));
+        ident = im->identityForAddress(u"nothing@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -582,7 +581,7 @@ void KMComposerWinTest::testChangeIdentity()
     }
 
     {
-        ident = im->identityForAddress(QStringLiteral("wrongkey@test.example"));
+        ident = im->identityForAddress(u"wrongkey@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -596,7 +595,7 @@ void KMComposerWinTest::testChangeIdentity()
     }
 
     {
-        ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
+        ident = im->identityForAddress(u"signonly@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -613,7 +612,7 @@ void KMComposerWinTest::testChangeIdentity()
 void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
 {
     const auto im = mKernel->identityManager();
-    auto ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
+    auto ident = im->identityForAddress(u"signonly@test.example"_s);
     const auto msg(createItem(ident));
 
     auto composer = KMail::makeComposer(msg);
@@ -621,14 +620,14 @@ void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(u"identitycombo"_s);
     auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
     QVERIFY(nearExpiryWarning);
     QVERIFY(identCombo);
     QCOMPARE(nearExpiryWarning->isVisible(), false);
 
     {
-        ident = im->identityForAddress(QStringLiteral("wrongkey@test.example"));
+        ident = im->identityForAddress(u"wrongkey@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -636,11 +635,11 @@ void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), true);
-        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QCOMPARE(nearExpiryWarning->text().count(u"<p>"_s), 1);
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8(ident.pgpEncryptionKey())));
     }
     {
-        ident = im->identityForAddress(QStringLiteral("wrongkeysign@test.example"));
+        ident = im->identityForAddress(u"wrongkeysign@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -648,12 +647,12 @@ void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), true);
-        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QCOMPARE(nearExpiryWarning->text().count(u"<p>"_s), 1);
         QVERIFY(!nearExpiryWarning->text().contains(QString::fromUtf8(ident.pgpEncryptionKey())));
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8(ident.pgpSigningKey())));
     }
     {
-        ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+        ident = im->identityForAddress(u"signandencrypt@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -667,7 +666,7 @@ void KMComposerWinTest::testChangeIdentityNearExpiryWarning()
 void KMComposerWinTest::testOwnExpiry()
 {
     const auto im = mKernel->identityManager();
-    auto ident = im->identityForAddress(QStringLiteral("nearexpiry@test.example"));
+    auto ident = im->identityForAddress(u"nearexpiry@test.example"_s);
     const auto msg(createItem(ident));
 
     auto composer = KMail::makeComposer(msg);
@@ -675,17 +674,17 @@ void KMComposerWinTest::testOwnExpiry()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(QStringLiteral("identitycombo"));
+    auto identCombo = composer->findChild<KIdentityManagementWidgets::IdentityCombo *>(u"identitycombo"_s);
     auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
     QVERIFY(nearExpiryWarning);
     QVERIFY(identCombo);
     QCOMPARE(nearExpiryWarning->isVisible(), true);
-    QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+    QCOMPARE(nearExpiryWarning->text().count(u"<p>"_s), 1);
     QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x" + ident.pgpEncryptionKey())));
     QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expires in 2 days.")));
 
     {
-        ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+        ident = im->identityForAddress(u"signandencrypt@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -695,7 +694,7 @@ void KMComposerWinTest::testOwnExpiry()
         QCOMPARE(nearExpiryWarning->isVisible(), false);
     }
     {
-        ident = im->identityForAddress(QStringLiteral("expired@test.example"));
+        ident = im->identityForAddress(u"expired@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -703,12 +702,12 @@ void KMComposerWinTest::testOwnExpiry()
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), true);
-        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QCOMPARE(nearExpiryWarning->text().count(u"<p>"_s), 1);
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x" + ident.pgpEncryptionKey())));
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expired 2 days ago.")));
     }
     {
-        ident = im->identityForAddress(QStringLiteral("nearexpiry@test.example"));
+        ident = im->identityForAddress(u"nearexpiry@test.example"_s);
         identCombo->setCurrentIdentity(ident);
         // We need a small sleep so that identity change can take place
         QEventLoop loop;
@@ -716,7 +715,7 @@ void KMComposerWinTest::testOwnExpiry()
         loop.exec();
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(nearExpiryWarning->isVisible(), true);
-        QCOMPARE(nearExpiryWarning->text().count(QStringLiteral("<p>")), 1);
+        QCOMPARE(nearExpiryWarning->text().count(u"<p>"_s), 1);
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("0x" + ident.pgpEncryptionKey())));
         QVERIFY(nearExpiryWarning->text().contains(QString::fromUtf8("expires in 2 days.")));
     }
@@ -725,7 +724,7 @@ void KMComposerWinTest::testOwnExpiry()
 void KMComposerWinTest::testRecipientExpiry()
 {
     const auto im = mKernel->identityManager();
-    auto ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+    auto ident = im->identityForAddress(u"signandencrypt@test.example"_s);
     const auto msg(createItem(ident, "nearexpiry@test.example"));
 
     auto composer = KMail::makeComposer(msg);
@@ -742,7 +741,7 @@ void KMComposerWinTest::testRecipientExpiry()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryption = composer->findChild<QLabel *>(u"encryptionindicator"_s);
     auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
     auto recipientsEditor = composer->findChild<MessageComposer::RecipientsEditor *>();
     QVERIFY(encryption);
@@ -762,7 +761,7 @@ void KMComposerWinTest::testRecipientExpiry()
         const auto key = Kleo::KeyCache::instance()->findByEMailAddress("nearexpiry@test.example").at(0);
         QCOMPARE(recipient->key().primaryFingerprint(), key.primaryFingerprint());
         QVERIFY(toolButton->toolTip().contains(QString::fromUtf8("expires in 2 days.")));
-        QCOMPARE(toolButton->icon().name(), QStringLiteral("emblem-warning"));
+        QCOMPARE(toolButton->icon().name(), u"emblem-warning"_s);
         QCOMPARE(encryption->isVisible(), true);
         QCOMPARE(nearExpiryWarning->isVisible(), false);
     }
@@ -770,7 +769,7 @@ void KMComposerWinTest::testRecipientExpiry()
         lineEdit->clear();
         lineEdit->setFocus();
         // Simulate typing email address
-        QTest::keyClicks(lineEdit, QStringLiteral("Friends <friends@kde.example>"), Qt::NoModifier, 10);
+        QTest::keyClicks(lineEdit, u"Friends <friends@kde.example>"_s, Qt::NoModifier, 10);
 
         // We need a small sleep, we need to  wait till the KeyResolver is run.
         QEventLoop loop;
@@ -780,8 +779,8 @@ void KMComposerWinTest::testRecipientExpiry()
 
         composer->setModified(false);
         const auto key = Kleo::KeyCache::instance()->findByEMailAddress("friends@kde.example").at(0);
-        QVERIFY(toolButton->toolTip().contains(QStringLiteral("The encryption key is fully trusted.")));
-        QCOMPARE(toolButton->icon().name(), QStringLiteral("emblem-success"));
+        QVERIFY(toolButton->toolTip().contains(u"The encryption key is fully trusted."_s));
+        QCOMPARE(toolButton->icon().name(), u"emblem-success"_s);
         QCOMPARE(recipient->key().primaryFingerprint(), key.primaryFingerprint());
         QCOMPARE(nearExpiryWarning->isVisible(), false);
         QCOMPARE(encryption->isVisible(), true);
@@ -790,7 +789,7 @@ void KMComposerWinTest::testRecipientExpiry()
         lineEdit->clear();
         lineEdit->setFocus();
         // Simulate typing email address
-        QTest::keyClicks(lineEdit, QStringLiteral("\"Expired Key\" <expired@test.example>"), Qt::NoModifier, 10);
+        QTest::keyClicks(lineEdit, u"\"Expired Key\" <expired@test.example>"_s, Qt::NoModifier, 10);
 
         // We need a small sleep, we need to  wait till the KeyResolver is run.
         QEventLoop loop;
@@ -808,7 +807,7 @@ void KMComposerWinTest::testRecipientExpiry()
     }
 
     {
-        auto encryptAction = composer->findChild<KToggleAction *>(QStringLiteral("encrypt_message"));
+        auto encryptAction = composer->findChild<KToggleAction *>(u"encrypt_message"_s);
         QVERIFY(encryptAction);
 
         QCOMPARE(encryptAction->isChecked(), false);
@@ -818,7 +817,7 @@ void KMComposerWinTest::testRecipientExpiry()
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QCOMPARE(encryption->isVisible(), true);
         QCOMPARE(toolButton->isVisible(), true);
-        QCOMPARE(toolButton->icon().name(), QStringLiteral("emblem-error"));
+        QCOMPARE(toolButton->icon().name(), u"emblem-error"_s);
         QVERIFY(toolButton->toolTip().contains(QString::fromUtf8("expired 2 days ago.")));
         QEventLoop loop;
         QTimer::singleShot(1550ms, &loop, SLOT(quit()));
@@ -834,27 +833,23 @@ void KMComposerWinTest::testRecipientAnnotation_data()
     QTest::addColumn<QString>("iconname");
     QTest::addColumn<bool>("encrypt");
 
-    QTest::newRow("friends@kde.example") << QStringLiteral("friends@kde.example") << Kleo::Level3 << QString() << QStringLiteral("emblem-success") << true;
-    QTest::newRow("validity0@kde.example") << QStringLiteral("validity0@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.")
-                                           << QStringLiteral("emblem-error") << false;
-    QTest::newRow("validity1@kde.example") << QStringLiteral("validity1@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.")
-                                           << QStringLiteral("emblem-error") << false;
-    QTest::newRow("validity2@kde.example") << QStringLiteral("validity2@kde.example") << Kleo::Level0 << QStringLiteral("It hasn't enough validity.")
-                                           << QStringLiteral("emblem-error") << false;
-    QTest::newRow("validity3@kde.example") << QStringLiteral("validity3@kde.example") << Kleo::Level2
-                                           << QStringLiteral("You can sign the key, if you communicated") << QStringLiteral("emblem-success") << true;
-    QTest::newRow("validity4@kde.example") << QStringLiteral("validity4@kde.example") << Kleo::Level3 << QString() << QStringLiteral("emblem-success") << true;
-    QTest::newRow("validity5@kde.example") << QStringLiteral("validity5@kde.example") << Kleo::Level4 << QString() << QStringLiteral("emblem-success") << true;
-    QTest::newRow("level0@tofu.example") << QStringLiteral("level0@tofu.example") << Kleo::Level0 << QStringLiteral("By using the key will be trusted more.")
-                                         << QStringLiteral("emblem-warning") << true;
-    QTest::newRow("level1@tofu.example") << QStringLiteral("level1@tofu.example") << Kleo::Level1 << QStringLiteral("By using the key will be trusted more.")
-                                         << QStringLiteral("emblem-success") << true;
-    QTest::newRow("level2@tofu.example") << QStringLiteral("level2@tofu.example") << Kleo::Level2 << QStringLiteral("By using the key will be trusted more.")
-                                         << QStringLiteral("emblem-success") << true;
-    QTest::newRow("level3@tofu.example") << QStringLiteral("level3@tofu.example") << Kleo::Level2 << QStringLiteral("By using the key will be trusted more.")
-                                         << QStringLiteral("emblem-success") << true;
-    QTest::newRow("bad@tofu.example") << QStringLiteral("bad@tofu.example") << Kleo::Level0 << QStringLiteral("The key is marked as bad.")
-                                      << QStringLiteral("emblem-error") << false;
+    QTest::newRow("friends@kde.example") << u"friends@kde.example"_s << Kleo::Level3 << QString() << u"emblem-success"_s << true;
+    QTest::newRow("validity0@kde.example") << u"validity0@kde.example"_s << Kleo::Level0 << u"It hasn't enough validity."_s << u"emblem-error"_s << false;
+    QTest::newRow("validity1@kde.example") << u"validity1@kde.example"_s << Kleo::Level0 << u"It hasn't enough validity."_s << u"emblem-error"_s << false;
+    QTest::newRow("validity2@kde.example") << u"validity2@kde.example"_s << Kleo::Level0 << u"It hasn't enough validity."_s << u"emblem-error"_s << false;
+    QTest::newRow("validity3@kde.example") << u"validity3@kde.example"_s << Kleo::Level2 << u"You can sign the key, if you communicated"_s
+                                           << u"emblem-success"_s << true;
+    QTest::newRow("validity4@kde.example") << u"validity4@kde.example"_s << Kleo::Level3 << QString() << u"emblem-success"_s << true;
+    QTest::newRow("validity5@kde.example") << u"validity5@kde.example"_s << Kleo::Level4 << QString() << u"emblem-success"_s << true;
+    QTest::newRow("level0@tofu.example") << u"level0@tofu.example"_s << Kleo::Level0 << u"By using the key will be trusted more."_s << u"emblem-warning"_s
+                                         << true;
+    QTest::newRow("level1@tofu.example") << u"level1@tofu.example"_s << Kleo::Level1 << u"By using the key will be trusted more."_s << u"emblem-success"_s
+                                         << true;
+    QTest::newRow("level2@tofu.example") << u"level2@tofu.example"_s << Kleo::Level2 << u"By using the key will be trusted more."_s << u"emblem-success"_s
+                                         << true;
+    QTest::newRow("level3@tofu.example") << u"level3@tofu.example"_s << Kleo::Level2 << u"By using the key will be trusted more."_s << u"emblem-success"_s
+                                         << true;
+    QTest::newRow("bad@tofu.example") << u"bad@tofu.example"_s << Kleo::Level0 << u"The key is marked as bad."_s << u"emblem-error"_s << false;
 }
 
 void KMComposerWinTest::testRecipientAnnotation()
@@ -866,7 +861,7 @@ void KMComposerWinTest::testRecipientAnnotation()
     QFETCH(bool, encrypt);
 
     const auto im = mKernel->identityManager();
-    auto ident = im->identityForAddress(QStringLiteral("signandencrypt@test.example"));
+    auto ident = im->identityForAddress(u"signandencrypt@test.example"_s);
     const auto msg(createItem(ident, mailaddress.toUtf8()));
 
     auto composer = KMail::makeComposer(msg);
@@ -874,7 +869,7 @@ void KMComposerWinTest::testRecipientAnnotation()
     QVERIFY(QTest::qWaitForWindowExposed(composer));
     QCoreApplication::processEvents(QEventLoop::AllEvents);
 
-    auto encryption = composer->findChild<QLabel *>(QStringLiteral("encryptionindicator"));
+    auto encryption = composer->findChild<QLabel *>(u"encryptionindicator"_s);
     auto nearExpiryWarning = composer->findChild<NearExpiryWarning *>();
     auto recipientsEditor = composer->findChild<MessageComposer::RecipientsEditor *>();
     QVERIFY(encryption);
@@ -899,7 +894,7 @@ void KMComposerWinTest::testRecipientAnnotation()
 
     // Enable encryption to check if we see error text/icons
     if (!encrypt) {
-        auto encryptAction = composer->findChild<KToggleAction *>(QStringLiteral("encrypt_message"));
+        auto encryptAction = composer->findChild<KToggleAction *>(u"encrypt_message"_s);
         QVERIFY(encryptAction);
 
         QCOMPARE(encryptAction->isChecked(), encrypt);
@@ -915,17 +910,17 @@ void KMComposerWinTest::testRecipientAnnotation()
     qDebug() << toolButton->toolTip();
     switch (trustlevel) {
     case Kleo::Level0:
-        QVERIFY(toolButton->toolTip().contains(QStringLiteral("The encryption key is not trusted")));
+        QVERIFY(toolButton->toolTip().contains(u"The encryption key is not trusted"_s));
         break;
     case Kleo::Level1:
     case Kleo::Level2:
-        QVERIFY(toolButton->toolTip().contains(QStringLiteral("The encryption key is only marginally trusted")));
+        QVERIFY(toolButton->toolTip().contains(u"The encryption key is only marginally trusted"_s));
         break;
     case Kleo::Level3:
-        QVERIFY(toolButton->toolTip().contains(QStringLiteral("The encryption key is fully trusted")));
+        QVERIFY(toolButton->toolTip().contains(u"The encryption key is fully trusted"_s));
         break;
     case Kleo::Level4:
-        QVERIFY(toolButton->toolTip().contains(QStringLiteral("The encryption key is ultimately trusted")));
+        QVERIFY(toolButton->toolTip().contains(u"The encryption key is ultimately trusted"_s));
         break;
     default:
         Q_UNREACHABLE();
@@ -941,7 +936,7 @@ void KMComposerWinTest::checkKeys()
         // Somehow the composer triggers something inside gnupg to be able to pass the for tofu info successfully.
         const auto im = mKernel->identityManager();
 
-        auto ident = im->identityForAddress(QStringLiteral("signonly@test.example"));
+        auto ident = im->identityForAddress(u"signonly@test.example"_s);
         const auto msg(createItem(ident));
 
         auto composer = KMail::makeComposer(msg);

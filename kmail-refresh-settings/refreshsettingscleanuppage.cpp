@@ -29,7 +29,7 @@ RefreshSettingsCleanupPage::~RefreshSettingsCleanupPage() = default;
 
 void RefreshSettingsCleanupPage::cleanSettings()
 {
-    const QStringList configNameFiles{QStringLiteral("kmail2rc"), QStringLiteral("kontactrc")};
+    const QStringList configNameFiles{u"kmail2rc"_s, u"kontactrc"_s};
     for (const QString &configName : configNameFiles) {
         initCleanupFolderSettings(configName);
         initCleanupFiltersSettings(configName);
@@ -44,7 +44,7 @@ void RefreshSettingsCleanupPage::removeTipOfDay(const QString &configName)
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
-    if (const QString tipOfDayStr = QStringLiteral("TipOfDay"); settingsrc->hasGroup(tipOfDayStr)) {
+    if (const QString tipOfDayStr = u"TipOfDay"_s; settingsrc->hasGroup(tipOfDayStr)) {
         settingsrc->deleteGroup(tipOfDayStr);
     }
     settingsrc->sync();
@@ -55,7 +55,7 @@ void RefreshSettingsCleanupPage::initCleanDialogSettings(const QString &configNa
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
-    const QStringList dialogList = settingsrc->groupList().filter(QRegularExpression(QStringLiteral(".*Dialog$")));
+    const QStringList dialogList = settingsrc->groupList().filter(QRegularExpression(u".*Dialog$"_s));
     for (const QString &str : dialogList) {
         settingsrc->deleteGroup(str);
     }
@@ -67,7 +67,7 @@ void RefreshSettingsCleanupPage::initCleanupFiltersSettings(const QString &confi
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
-    const QStringList filterList = settingsrc->groupList().filter(QRegularExpression(QStringLiteral("Filter #\\d+")));
+    const QStringList filterList = settingsrc->groupList().filter(QRegularExpression(u"Filter #\\d+"_s));
     for (const QString &str : filterList) {
         settingsrc->deleteGroup(str);
     }
@@ -79,7 +79,7 @@ void RefreshSettingsCleanupPage::initCleanupFolderSettings(const QString &config
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
-    const QStringList folderList = settingsrc->groupList().filter(QRegularExpression(QStringLiteral("Folder-\\d+")));
+    const QStringList folderList = settingsrc->groupList().filter(QRegularExpression(u"Folder-\\d+"_s));
     for (const QString &str : folderList) {
         KConfigGroup oldGroup = settingsrc->group(str);
         cleanupFolderSettings(oldGroup);
@@ -122,16 +122,16 @@ void RefreshSettingsCleanupPage::initCleanupDialogSettings(const QString &config
 {
     KSharedConfigPtr settingsrc = KSharedConfig::openConfig(configName);
 
-    const QStringList dialogListName{QStringLiteral("AddHostDialog"),
-                                     QStringLiteral("AuditLogViewer"),
-                                     QStringLiteral("CollectionPropertiesDialog"),
-                                     QStringLiteral("MailSourceWebEngineViewer"),
-                                     QStringLiteral("SelectAddressBookDialog"),
-                                     QStringLiteral("VCardViewer"),
-                                     QStringLiteral("MailSourceWebEngineViewer"),
-                                     QStringLiteral("ConfigurePluginsWidget"),
-                                     QStringLiteral("ConfigureAgentsWidget"),
-                                     QStringLiteral("AuditLogViewer")};
+    const QStringList dialogListName{u"AddHostDialog"_s,
+                                     u"AuditLogViewer"_s,
+                                     u"CollectionPropertiesDialog"_s,
+                                     u"MailSourceWebEngineViewer"_s,
+                                     u"SelectAddressBookDialog"_s,
+                                     u"VCardViewer"_s,
+                                     u"MailSourceWebEngineViewer"_s,
+                                     u"ConfigurePluginsWidget"_s,
+                                     u"ConfigureAgentsWidget"_s,
+                                     u"AuditLogViewer"_s};
     for (const QString &str : dialogListName) {
         KConfigGroup oldGroup = settingsrc->group(str);
         cleanupFolderSettings(oldGroup);

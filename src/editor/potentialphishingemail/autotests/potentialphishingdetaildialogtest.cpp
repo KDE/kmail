@@ -10,6 +10,8 @@
 #include "../potentialphishingdetailwidget.h"
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
+
 PotentialPhishingDetailDialogTest::PotentialPhishingDetailDialogTest(QObject *parent)
     : QObject(parent)
 {
@@ -25,7 +27,7 @@ void PotentialPhishingDetailDialogTest::initTestCase()
 void PotentialPhishingDetailDialogTest::shouldHaveDefaultValue()
 {
     PotentialPhishingDetailDialog dlg;
-    auto w = dlg.findChild<PotentialPhishingDetailWidget *>(QStringLiteral("potentialphising_widget"));
+    auto w = dlg.findChild<PotentialPhishingDetailWidget *>(u"potentialphising_widget"_s);
     QVERIFY(w);
 }
 

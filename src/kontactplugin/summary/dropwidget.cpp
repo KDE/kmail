@@ -11,6 +11,8 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QMimeData>
+using namespace Qt::Literals::StringLiterals;
+
 DropWidget::DropWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -19,7 +21,7 @@ DropWidget::DropWidget(QWidget *parent)
 
 void DropWidget::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat(QStringLiteral("application/x-kontact-summary"))) {
+    if (event->mimeData()->hasFormat(u"application/x-kontact-summary"_s)) {
         event->acceptProposedAction();
     }
 }

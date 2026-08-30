@@ -136,7 +136,7 @@ void ArchiveMailInfo::readConfig(const KConfigGroup &config)
 {
     mPath = QUrl::fromUserInput(config.readEntry("storePath"));
 
-    if (config.hasKey(QStringLiteral("lastDateSaved"))) {
+    if (config.hasKey(u"lastDateSaved"_s)) {
         mLastDateSaved = QDate::fromString(config.readEntry("lastDateSaved"), Qt::ISODate);
     }
     mSaveSubCollection = config.readEntry("saveSubCollection", false);

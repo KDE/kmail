@@ -84,10 +84,10 @@ MailFilterAgent::MailFilterAgent(const QString &id)
 
     new MailFilterAgentAdaptor(this);
 
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailFilterAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(u"/MailFilterAgent"_s, this, QDBusConnection::ExportAdaptors);
 
     Akonadi::ServerManager *const serverManager = Akonadi::ServerManager::self();
-    const QString service = serverManager->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mailfilter_agent"));
+    const QString service = serverManager->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_mailfilter_agent"_s);
 
     Q_EMIT status(AgentBase::Running, i18n("Starting"));
 
@@ -107,10 +107,10 @@ MailFilterAgent::MailFilterAgent(const QString &id)
     QDBusConnection::sessionBus().registerService(service);
     // Enabled or not filterlogdialog
     if (KSharedConfig::Ptr config = KSharedConfig::openConfig(); config->hasGroup("FilterLog"_L1)) {
-        if (KConfigGroup group(config, QStringLiteral("FilterLog")); group.readEntry("Enabled", false)) {
-            auto notify = new KNotification(QStringLiteral("mailfilterlogenabled"));
+        if (KConfigGroup group(config, u"FilterLog"_s); group.readEntry("Enabled", false)) {
+            auto notify = new KNotification(u"mailfilterlogenabled"_s);
             notify->setComponentName(QApplication::applicationDisplayName());
-            notify->setIconName(QStringLiteral("view-filter"));
+            notify->setIconName(u"view-filter"_s);
             notify->setText(i18nc("Notification when the filter log was enabled", "Mail Filter Log Enabled"));
 
             KNotificationAction *action = notify->addAction(i18n("Show Log"));
@@ -403,20 +403,20 @@ void MailFilterAgent::emitProgressMessage(const QString &message)
 
 QString MailFilterAgent::printCollectionMonitored() const
 {
-    QString printDebugCollection = QStringLiteral("Start print collection monitored\n");
+    QString printDebugCollection = u"Start print collection monitored\n"_s;
 
     if (const Akonadi::Collection::List collections = changeRecorder()->collectionsMonitored(); collections.isEmpty()) {
-        printDebugCollection = QStringLiteral("No collection is monitored!");
+        printDebugCollection = u"No collection is monitored!"_s;
     } else {
         for (const Akonadi::Collection &collection : collections) {
             if (!printDebugCollection.isEmpty()) {
                 printDebugCollection += u'\n';
             }
-            printDebugCollection += QStringLiteral("Collection name: %1\n").arg(collection.name());
-            printDebugCollection += QStringLiteral("Collection id: %1\n").arg(collection.id());
+            printDebugCollection += u"Collection name: %1\n"_s.arg(collection.name());
+            printDebugCollection += u"Collection id: %1\n"_s.arg(collection.id());
         }
     }
-    printDebugCollection += QStringLiteral("End print collection monitored\n");
+    printDebugCollection += u"End print collection monitored\n"_s;
     return printDebugCollection;
 }
 

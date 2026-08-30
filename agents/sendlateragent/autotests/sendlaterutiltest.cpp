@@ -14,6 +14,7 @@
 #include <QDateTime>
 #include <QStandardPaths>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 SendLaterUtilTest::SendLaterUtilTest(QObject *parent)
     : QObject(parent)
@@ -24,10 +25,10 @@ SendLaterUtilTest::SendLaterUtilTest(QObject *parent)
 void SendLaterUtilTest::shouldRestoreFromSettings()
 {
     MessageComposer::SendLaterInfo info;
-    const QString to = QStringLiteral("kde.org");
+    const QString to = u"kde.org"_s;
     info.setTo(to);
     info.setItemId(Akonadi::Item::Id(42));
-    info.setSubject(QStringLiteral("Subject"));
+    info.setSubject(u"Subject"_s);
     info.setRecurrence(true);
     info.setRecurrenceEachValue(5);
     info.setRecurrenceUnit(MessageComposer::SendLaterInfo::Years);

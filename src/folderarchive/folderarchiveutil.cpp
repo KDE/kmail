@@ -9,15 +9,16 @@
 #include <KConfigGroup>
 
 using namespace FolderArchive;
+using namespace Qt::Literals::StringLiterals;
 
 QString FolderArchiveUtil::groupConfigPattern()
 {
-    return QStringLiteral("FolderArchiveAccount ");
+    return u"FolderArchiveAccount "_s;
 }
 
 QString FolderArchiveUtil::configFileName()
 {
-    return QStringLiteral("foldermailarchiverc");
+    return u"foldermailarchiverc"_s;
 }
 
 bool FolderArchiveUtil::resourceSupportArchiving(const QString &resource)

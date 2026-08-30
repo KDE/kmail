@@ -29,6 +29,7 @@
 #include <chrono>
 
 using namespace std::chrono_literals;
+using namespace Qt::Literals::StringLiterals;
 
 // #define DEBUG_MAILMERGEAGENT 1
 
@@ -38,9 +39,9 @@ MailMergeAgent::MailMergeAgent(const QString &id)
 {
     connect(mManager, &MailMergeManager::needUpdateConfigDialogBox, this, &MailMergeAgent::needUpdateConfigDialogBox);
     new MailMergeAgentAdaptor(this);
-    QDBusConnection::sessionBus().registerObject(QStringLiteral("/MailMergeAgent"), this, QDBusConnection::ExportAdaptors);
+    QDBusConnection::sessionBus().registerObject(u"/MailMergeAgent"_s, this, QDBusConnection::ExportAdaptors);
 
-    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_mergemail_agent"));
+    const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_mergemail_agent"_s);
 
     QDBusConnection::sessionBus().registerService(service);
 

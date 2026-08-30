@@ -7,6 +7,8 @@
 #include "historyclosedreader/historyclosedreadermanager.h"
 #include <QSignalSpy>
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
+
 QTEST_GUILESS_MAIN(HistoryClosedReaderManagerTest)
 HistoryClosedReaderManagerTest::HistoryClosedReaderManagerTest(QObject *parent)
     : QObject{parent}
@@ -26,7 +28,7 @@ void HistoryClosedReaderManagerTest::shouldAddValues()
     {
         HistoryClosedReaderInfo info;
         info.setItem(2);
-        info.setSubject(QStringLiteral("sub"));
+        info.setSubject(u"sub"_s);
         w.addInfo(std::move(info));
     }
     QVERIFY(!w.isEmpty());
@@ -34,7 +36,7 @@ void HistoryClosedReaderManagerTest::shouldAddValues()
     {
         HistoryClosedReaderInfo info;
         info.setItem(5);
-        info.setSubject(QStringLiteral("sub2"));
+        info.setSubject(u"sub2"_s);
         w.addInfo(std::move(info));
     }
     QCOMPARE(w.count(), 2);
@@ -46,14 +48,14 @@ void HistoryClosedReaderManagerTest::shouldClear()
     {
         HistoryClosedReaderInfo info;
         info.setItem(2);
-        info.setSubject(QStringLiteral("sub"));
+        info.setSubject(u"sub"_s);
         w.addInfo(std::move(info));
     }
     QVERIFY(!w.isEmpty());
     {
         HistoryClosedReaderInfo info;
         info.setItem(5);
-        info.setSubject(QStringLiteral("sub2"));
+        info.setSubject(u"sub2"_s);
         w.addInfo(std::move(info));
     }
     QCOMPARE(w.count(), 2);
@@ -67,14 +69,14 @@ void HistoryClosedReaderManagerTest::shouldRemoveValue()
     {
         HistoryClosedReaderInfo info;
         info.setItem(2);
-        info.setSubject(QStringLiteral("sub"));
+        info.setSubject(u"sub"_s);
         w.addInfo(std::move(info));
     }
     QVERIFY(!w.isEmpty());
     {
         HistoryClosedReaderInfo info;
         info.setItem(5);
-        info.setSubject(QStringLiteral("sub2"));
+        info.setSubject(u"sub2"_s);
         w.addInfo(std::move(info));
     }
     QCOMPARE(w.count(), 2);
@@ -97,7 +99,7 @@ void HistoryClosedReaderManagerTest::shouldEmitSignal()
     {
         HistoryClosedReaderInfo info;
         info.setItem(2);
-        info.setSubject(QStringLiteral("sub"));
+        info.setSubject(u"sub"_s);
         w.addInfo(std::move(info));
         QCOMPARE(spyHistoryClosedReaderChanged.count(), 1);
         w.clear();
@@ -109,12 +111,12 @@ void HistoryClosedReaderManagerTest::shouldEmitSignal()
     {
         HistoryClosedReaderInfo info;
         info.setItem(2);
-        info.setSubject(QStringLiteral("sub"));
+        info.setSubject(u"sub"_s);
         w.addInfo(std::move(info));
 
         HistoryClosedReaderInfo info2;
         info2.setItem(3);
-        info2.setSubject(QStringLiteral("sub2"));
+        info2.setSubject(u"sub2"_s);
         w.addInfo(std::move(info2));
         spyHistoryClosedReaderChanged.clear();
 
@@ -133,7 +135,7 @@ void HistoryClosedReaderManagerTest::shouldAssignMaxValues()
     for (int i = 0; i < 15; i++) {
         HistoryClosedReaderInfo info;
         info.setItem(2 + i);
-        info.setSubject(QStringLiteral("sub"));
+        info.setSubject(u"sub"_s);
         w.addInfo(std::move(info));
     }
     QCOMPARE(w.count(), 10);

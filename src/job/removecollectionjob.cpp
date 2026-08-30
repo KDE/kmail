@@ -102,7 +102,7 @@ void RemoveCollectionJob::slotDelayedRemoveFolder(KJob *job)
     if (KMessageBox::warningContinueCancel(mMainWidget,
                                            str,
                                            title,
-                                           KGuiItem(buttonLabel, QStringLiteral("edit-delete")),
+                                           KGuiItem(buttonLabel, u"edit-delete"_s),
                                            KStandardGuiItem::cancel(),
                                            QString(),
                                            KMessageBox::Notify | KMessageBox::Dangerous)

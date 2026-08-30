@@ -27,7 +27,7 @@ namespace
 {
 inline QString followUpItemPattern()
 {
-    return QStringLiteral("FollowupReminderItem \\d+");
+    return u"FollowupReminderItem \\d+"_s;
 }
 }
 
@@ -62,7 +62,7 @@ FollowUpReminderInfoWidget::FollowUpReminderInfoWidget(QWidget *parent)
     QStringList headers;
     headers << i18n("To") << i18n("Subject") << i18n("Deadline") << i18n("Answer")
 #ifdef DEBUG_MESSAGE_ID
-            << QStringLiteral("Message Id") << QStringLiteral("Answer Message Id")
+            << u"Message Id"_s << u"Answer Message Id"_s
 #endif
         ;
 
@@ -180,7 +180,7 @@ bool FollowUpReminderInfoWidget::save() const
         }
     }
     ++i;
-    KConfigGroup general = config->group(QStringLiteral("General"));
+    KConfigGroup general = config->group(u"General"_s);
     general.writeEntry("Number", i);
     config->sync();
     return true;
@@ -213,10 +213,10 @@ void FollowUpReminderInfoWidget::slotCustomContextMenuRequested([[maybe_unused]]
                 showMessage = menu.addAction(i18nc("@action", "Show Message"));
                 menu.addSeparator();
             }
-            showOriginalMessage = menu.addAction(QIcon::fromTheme(QStringLiteral("mail-message")), i18nc("@action", "Show Original Message"));
+            showOriginalMessage = menu.addAction(QIcon::fromTheme(u"mail-message"_s), i18nc("@action", "Show Original Message"));
             menu.addSeparator();
         }
-        const QAction *deleteItem = menu.addAction(QIcon::fromTheme(QStringLiteral("edit-delete")), i18nc("@action", "Delete"));
+        const QAction *deleteItem = menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Delete"));
         const QAction *result = menu.exec(QCursor::pos());
         if (result) {
             if (result == showMessage) {

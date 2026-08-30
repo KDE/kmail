@@ -28,28 +28,28 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     KLocalizedString::setApplicationDomain("ktnef"_ba);
 
-    KAboutData aboutData(QStringLiteral("ktnef"),
+    KAboutData aboutData(u"ktnef"_s,
                          i18n("KTnef"),
                          QStringLiteral(KTNEF_VERSION),
                          i18n("Viewer for mail attachments using TNEF format"),
                          KAboutLicense::GPL,
                          i18n("Copyright 2000 Michael Goffioul \nCopyright 2012  Allen Winter"));
 
-    aboutData.addAuthor(i18nc("@info:credit", "Michael Goffioul"), i18n("Author"), QStringLiteral("kdeprint@swing.be"));
+    aboutData.addAuthor(i18nc("@info:credit", "Michael Goffioul"), i18n("Author"), u"kdeprint@swing.be"_s);
 
-    aboutData.addAuthor(i18nc("@info:credit", "Allen Winter"), i18n("Author, Ported to Qt4/KDE4"), QStringLiteral("winter@kde.org"));
+    aboutData.addAuthor(i18nc("@info:credit", "Allen Winter"), i18n("Author, Ported to Qt4/KDE4"), u"winter@kde.org"_s);
 
     KAboutData::setApplicationData(aboutData);
     KCrash::initialize();
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QApplication::applicationDisplayName());
-    parser.addPositionalArgument(QStringLiteral("file"), i18n("An optional argument 'file' "), QStringLiteral("[file]"));
+    parser.addPositionalArgument(u"file"_s, i18n("An optional argument 'file' "), u"[file]"_s);
 
     aboutData.setupCommandLine(&parser);
     parser.process(app);
     aboutData.processCommandLine(&parser);
-    QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    QApplication::setWindowIcon(QIcon::fromTheme(u"kmail"_s));
 
     KDBusService service;
 

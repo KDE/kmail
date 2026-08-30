@@ -25,6 +25,7 @@
 #include <MailCommon/FolderTreeWidget>
 #include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
+using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
@@ -84,7 +85,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     , mConfig(config)
 {
     setWindowTitle(i18nc("@title:window", "Configure Unified Mailbox"));
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    setWindowIcon(QIcon::fromTheme(u"kmail"_s));
     auto l = new QVBoxLayout(this);
 
     auto f = new QFormLayout;
@@ -100,8 +101,7 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
         mMailbox->setName(name.trimmed());
     });
 
-    auto iconButton =
-        new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(QStringLiteral("folder-mail"))), i18nc("@action:button", "Pick icon…"));
+    auto iconButton = new QPushButton(QIcon::fromTheme(mMailbox->icon(), QIcon::fromTheme(u"folder-mail"_s)), i18nc("@action:button", "Pick icon…"));
     f->addRow(i18n("Icon:"), iconButton);
     connect(iconButton, &QPushButton::clicked, this, [iconButton, this]() {
         if (const auto iconName = KIconDialog::getIcon(); !iconName.isEmpty()) {

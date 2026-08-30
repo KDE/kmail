@@ -69,7 +69,7 @@ void AddressValidationJob::slotAliasExpansionDone(KJob *job)
             if (i != 0) {
                 listOfDistributionList.append(", "_L1);
             }
-            listOfDistributionList.append(QStringLiteral("\"%1\"").arg(emptyDistributionLists.at(i)));
+            listOfDistributionList.append(u"\"%1\""_s.arg(emptyDistributionLists.at(i)));
         }
         errorMsg = i18np("Distribution list %2 is empty, it cannot be used.",
                          "Distribution lists %2 are empty, they cannot be used.",

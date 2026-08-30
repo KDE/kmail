@@ -20,6 +20,7 @@
 #include <KSharedConfig>
 
 #include <QRegularExpression>
+using namespace Qt::Literals::StringLiterals;
 
 FolderArchiveManager::FolderArchiveManager(QObject *parent)
     : QObject(parent)
@@ -158,23 +159,13 @@ void FolderArchiveManager::load()
 
 void FolderArchiveManager::moveDone()
 {
-    KNotification::event(QStringLiteral("folderarchivedone"),
-                         QString(),
-                         i18n("Messages archived"),
-                         QStringLiteral("kmail"),
-                         KNotification::CloseOnTimeout,
-                         QStringLiteral("kmail2"));
+    KNotification::event(u"folderarchivedone"_s, QString(), i18n("Messages archived"), u"kmail"_s, KNotification::CloseOnTimeout, u"kmail2"_s);
     nextJob();
 }
 
 void FolderArchiveManager::moveFailed(const QString &msg)
 {
-    KNotification::event(QStringLiteral("folderarchiveerror"),
-                         QString(),
-                         msg,
-                         QStringLiteral("kmail"),
-                         KNotification::CloseOnTimeout,
-                         QStringLiteral("kmail2"));
+    KNotification::event(u"folderarchiveerror"_s, QString(), msg, u"kmail"_s, KNotification::CloseOnTimeout, u"kmail2"_s);
     nextJob();
 }
 

@@ -10,6 +10,7 @@
 #include <QStandardPaths>
 #include <QTest>
 #include <QTreeWidget>
+using namespace Qt::Literals::StringLiterals;
 
 ArchiveMailWidgetTest::ArchiveMailWidgetTest(QObject *parent)
     : QObject(parent)
@@ -23,9 +24,9 @@ void ArchiveMailWidgetTest::shouldHaveDefaultValue()
 {
     QWidget parent;
     new QHBoxLayout(&parent);
-    ArchiveMailWidget mailwidget({}, &parent, {QStringLiteral("akonadi_archivemail_agent")});
+    ArchiveMailWidget mailwidget({}, &parent, {u"akonadi_archivemail_agent"_s});
 
-    auto treeWidget = parent.findChild<QTreeWidget *>(QStringLiteral("treewidget"));
+    auto treeWidget = parent.findChild<QTreeWidget *>(u"treewidget"_s);
     QVERIFY(treeWidget);
 
     QCOMPARE(treeWidget->topLevelItemCount(), 0);

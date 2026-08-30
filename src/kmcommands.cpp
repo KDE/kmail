@@ -514,7 +514,7 @@ KMCommand::Result KMUrlSaveCommand::execute()
         return OK;
     }
     QString recentDirClass;
-    QUrl startUrl = KFileWidget::getStartUrl(QUrl(QStringLiteral("kfiledialog:///OpenMessage")), recentDirClass);
+    QUrl startUrl = KFileWidget::getStartUrl(QUrl(u"kfiledialog:///OpenMessage"_s), recentDirClass);
     startUrl.setPath(startUrl.path() + QLatin1Char('/') + mUrl.fileName());
     const QUrl saveUrl = QFileDialog::getSaveFileUrl(parentWidget(), i18nc("@title:window", "Save To File"), startUrl);
     if (saveUrl.isEmpty()) {
@@ -701,10 +701,7 @@ KMOpenMsgCommand::KMOpenMsgCommand(QWidget *parent, const QUrl &url, const QStri
 KMCommand::Result KMOpenMsgCommand::execute()
 {
     if (mUrl.isEmpty()) {
-        mUrl = QFileDialog::getOpenFileUrl(parentWidget(),
-                                           i18nc("@title:window", "Open Message"),
-                                           QUrl(),
-                                           QStringLiteral("%1 (*.mbox *.eml)").arg(i18n("Message")));
+        mUrl = QFileDialog::getOpenFileUrl(parentWidget(), i18nc("@title:window", "Open Message"), QUrl(), u"%1 (*.mbox *.eml)"_s.arg(i18n("Message")));
     }
     if (mUrl.isEmpty()) {
         return Canceled;
@@ -1307,7 +1304,7 @@ void KMSetTagCommand::setTags()
     connect(modifyJob, &Akonadi::ItemModifyJob::result, this, &KMSetTagCommand::slotModifyItemDone);
 
     if (!mCreatedTags.isEmpty()) {
-        KConfigGroup tag(KMKernel::self()->config(), QStringLiteral("MessageListView"));
+        KConfigGroup tag(KMKernel::self()->config(), u"MessageListView"_s);
         const QString oldTagList = tag.readEntry("TagSelected");
         QStringList lst = oldTagList.split(QLatin1Char(','));
         for (const Akonadi::Tag &createdTag : std::as_const(mCreatedTags)) {

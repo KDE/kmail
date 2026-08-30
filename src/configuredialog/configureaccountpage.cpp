@@ -45,7 +45,7 @@ using MailTransport::TransportManagementWidgetNg;
 using namespace Qt::Literals::StringLiterals;
 QString AccountsPage::helpAnchor() const
 {
-    return QStringLiteral("configure-accounts");
+    return u"configure-accounts"_s;
 }
 
 AccountsPage::AccountsPage(QObject *parent, const KPluginMetaData &data)
@@ -79,7 +79,7 @@ AccountsPageSendingTab::~AccountsPageSendingTab() = default;
 
 QString AccountsPageSendingTab::helpAnchor() const
 {
-    return QStringLiteral("configure-accounts-sending");
+    return u"configure-accounts-sending"_s;
 }
 
 AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
@@ -156,15 +156,14 @@ void AccountsPageSendingTab::save()
 
 QString AccountsPageReceivingTab::helpAnchor() const
 {
-    return QStringLiteral("configure-accounts-receiving");
+    return u"configure-accounts-receiving"_s;
 }
 
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
 {
-    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, QStringLiteral("akonadi_newmailnotifier_agent"));
-    mNewMailNotifierInterface =
-        new OrgFreedesktopAkonadiNewMailNotifierInterface(service, QStringLiteral("/NewMailNotifierAgent"), QDBusConnection::sessionBus(), this);
+    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_newmailnotifier_agent"_s);
+    mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(service, u"/NewMailNotifierAgent"_s, QDBusConnection::sessionBus(), this);
     if (!mNewMailNotifierInterface->isValid()) {
         qCDebug(KMAIL_LOG) << " org.freedesktop.Akonadi.NewMailNotifierAgent not found. Please verify your installation";
         delete mNewMailNotifierInterface;
@@ -173,16 +172,15 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     mAccountsReceiving.setupUi(this);
 
     mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
-    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << QStringLiteral("Resource"));
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList()
-                                                                  << QStringLiteral("MailTransport") << QStringLiteral("Notes") << QStringLiteral("Autostart"));
+    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << u"Resource"_s);
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << u"MailTransport"_s << u"Notes"_s << u"Autostart"_s);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     mAccountsReceiving.mAccountsReceiving->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
     mAccountsReceiving.mAccountsReceiving->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
 #endif
-    if (KConfig specialMailCollection(QStringLiteral("specialmailcollectionsrc")); specialMailCollection.hasGroup(QStringLiteral("SpecialCollections"))) {
-        KConfigGroup grp = specialMailCollection.group(QStringLiteral("SpecialCollections"));
-        mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(QStringLiteral("DefaultResourceId")));
+    if (KConfig specialMailCollection(u"specialmailcollectionsrc"_s); specialMailCollection.hasGroup(u"SpecialCollections"_s)) {
+        KConfigGroup grp = specialMailCollection.group(u"SpecialCollections"_s);
+        mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(u"DefaultResourceId"_s));
     }
     auto configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
     mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
@@ -231,14 +229,14 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
     bool OfflineOnShutdown;
     bool CheckOnStartup;
     if (!mRetrievalHash.contains(ident)) {
-        const QString resourceGroupPattern(QStringLiteral("Resource %1"));
+        const QString resourceGroupPattern(u"Resource %1"_s);
 
         KConfigGroup group;
         KConfig *conf = nullptr;
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(ident));
         } else {
-            conf = new KConfig(QStringLiteral("kmail2rc"));
+            conf = new KConfig(u"kmail2rc"_s);
             group = KConfigGroup(conf, resourceGroupPattern.arg(ident));
         }
 
@@ -341,7 +339,7 @@ void AccountsPageReceivingTab::slotOfflineOnShutdownChanged(bool checked)
 
 void AccountsPageReceivingTab::slotEditNotifications()
 {
-    if (const auto instance = Akonadi::AgentManager::self()->instance(QStringLiteral("akonadi_newmailnotifier_agent")); instance.isValid()) {
+    if (const auto instance = Akonadi::AgentManager::self()->instance(u"akonadi_newmailnotifier_agent"_s); instance.isValid()) {
         std::make_unique<Akonadi::AgentConfigurationDialog>(instance, this)->exec();
     } else {
         KMessageBox::error(this, i18n("New Mail Notifier Agent not registered. Please contact your administrator."));
@@ -362,7 +360,7 @@ void AccountsPageReceivingTab::save()
         mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving.mVerboseNotificationCheck->isChecked());
     }
 
-    const QString resourceGroupPattern(QStringLiteral("Resource %1"));
+    const QString resourceGroupPattern(u"Resource %1"_s);
     QHash<QString, QSharedPointer<RetrievalOptions>>::const_iterator it = mRetrievalHash.cbegin();
     const QHash<QString, QSharedPointer<RetrievalOptions>>::const_iterator itEnd = mRetrievalHash.cend();
     for (; it != itEnd; ++it) {
@@ -371,7 +369,7 @@ void AccountsPageReceivingTab::save()
         if (KMKernel::self()) {
             group = KConfigGroup(KMKernel::self()->config(), resourceGroupPattern.arg(it.key()));
         } else {
-            conf = new KConfig(QStringLiteral("kmail2rc"));
+            conf = new KConfig(u"kmail2rc"_s);
             group = KConfigGroup(conf, resourceGroupPattern.arg(it.key()));
         }
         QSharedPointer<RetrievalOptions> opts = it.value();

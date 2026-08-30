@@ -57,7 +57,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                 addAttachmentAttribute = false;
             }
             if (addAttachmentAttribute) {
-                newargs.append(QStringLiteral("--attach"));
+                newargs.append(u"--attach"_s);
                 newargs.append(argument);
             } else {
                 newargs.append(argument);
@@ -66,8 +66,8 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
     }
 
     parser.process(newargs);
-    if (parser.isSet(QStringLiteral("subject"))) {
-        mSubject = parser.value(QStringLiteral("subject"));
+    if (parser.isSet(u"subject"_s)) {
+        mSubject = parser.value(u"subject"_s);
         // if kmail is called with 'kmail -session abc' then this doesn't mean
         // that the user wants to send a message with subject "ession" but
         // (most likely) that the user clicked on KMail's system tray applet
@@ -83,39 +83,39 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         }
     }
 
-    if (const QStringList ccList = parser.values(QStringLiteral("cc")); !ccList.isEmpty()) {
+    if (const QStringList ccList = parser.values(u"cc"_s); !ccList.isEmpty()) {
         mMailto = true;
-        mCc = ccList.join(QStringLiteral(", "));
+        mCc = ccList.join(u", "_s);
     }
 
-    if (const QStringList bccList = parser.values(QStringLiteral("bcc")); !bccList.isEmpty()) {
+    if (const QStringList bccList = parser.values(u"bcc"_s); !bccList.isEmpty()) {
         mMailto = true;
-        mBcc = bccList.join(QStringLiteral(", "));
+        mBcc = bccList.join(u", "_s);
     }
 
-    if (parser.isSet(QStringLiteral("replyTo"))) {
+    if (parser.isSet(u"replyTo"_s)) {
         mMailto = true;
-        mReplyTo = parser.value(QStringLiteral("replyTo"));
+        mReplyTo = parser.value(u"replyTo"_s);
     }
 
-    if (parser.isSet(QStringLiteral("msg"))) {
+    if (parser.isSet(u"msg"_s)) {
         mMailto = true;
-        const QString file = parser.value(QStringLiteral("msg"));
+        const QString file = parser.value(u"msg"_s);
         mMessageFile = makeAbsoluteUrl(file, workingDir);
     }
 
-    if (parser.isSet(QStringLiteral("body"))) {
+    if (parser.isSet(u"body"_s)) {
         mMailto = true;
-        mBody = parser.value(QStringLiteral("body"));
+        mBody = parser.value(u"body"_s);
     }
 
-    if (parser.isSet(QStringLiteral("html"))) {
+    if (parser.isSet(u"html"_s)) {
         mMailto = true;
-        mBody = parser.value(QStringLiteral("html"));
+        mBody = parser.value(u"html"_s);
         mHtmlBody = true;
     }
 
-    if (const QStringList attachList = parser.values(QStringLiteral("attach")); !attachList.isEmpty()) {
+    if (const QStringList attachList = parser.values(u"attach"_s); !attachList.isEmpty()) {
         mMailto = true;
         for (const QString &attach : attachList) {
             if (!attach.isEmpty()) {
@@ -124,27 +124,27 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
         }
     }
 
-    mCustomHeaders = parser.values(QStringLiteral("header"));
+    mCustomHeaders = parser.values(u"header"_s);
 
-    if (parser.isSet(QStringLiteral("composer"))) {
+    if (parser.isSet(u"composer"_s)) {
         mMailto = true;
     }
 
-    if (parser.isSet(QStringLiteral("check"))) {
+    if (parser.isSet(u"check"_s)) {
         mCheckMail = true;
     }
 
-    if (parser.isSet(QStringLiteral("startintray"))) {
+    if (parser.isSet(u"startintray"_s)) {
         mStartInTray = true;
     }
 
-    if (parser.isSet(QStringLiteral("identity"))) {
-        mIdentity = parser.value(QStringLiteral("identity"));
+    if (parser.isSet(u"identity"_s)) {
+        mIdentity = parser.value(u"identity"_s);
     }
 
-    if (parser.isSet(QStringLiteral("view"))) {
+    if (parser.isSet(u"view"_s)) {
         mViewOnly = true;
-        const QString filename = parser.value(QStringLiteral("view"));
+        const QString filename = parser.value(u"view"_s);
         mMessageFile = QUrl::fromUserInput(filename, workingDir);
     }
 
@@ -161,17 +161,17 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                     const QPair<QString, QString> element = values.at(i);
                     if (const QString key = element.first.toLower(); key == "to"_L1) {
                         if (!element.second.isEmpty()) {
-                            mTo += element.second + QStringLiteral(", ");
+                            mTo += element.second + u", "_s;
                         }
                         previousKey.clear();
                     } else if (key == "cc"_L1) {
                         if (!element.second.isEmpty()) {
-                            mCc += element.second + QStringLiteral(", ");
+                            mCc += element.second + u", "_s;
                         }
                         previousKey.clear();
                     } else if (key == "bcc"_L1) {
                         if (!element.second.isEmpty()) {
-                            mBcc += element.second + QStringLiteral(", ");
+                            mBcc += element.second + u", "_s;
                         }
                         previousKey.clear();
                     } else if (key == "subject"_L1) {
@@ -203,7 +203,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                 if (const QUrl url(arg); url.isValid() && !url.scheme().isEmpty()) {
                     mAttachURLs += url;
                 } else {
-                    mTo += arg + QStringLiteral(", ");
+                    mTo += arg + u", "_s;
                 }
             }
             mMailto = true;

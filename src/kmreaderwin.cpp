@@ -120,71 +120,71 @@ void KMReaderWin::createActions()
     // Message Menu
     //
     // new message to
-    mMailToComposeAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-message-new")), i18n("New Message To…"), this);
-    ac->addAction(QStringLiteral("mail_new"), mMailToComposeAction);
+    mMailToComposeAction = new QAction(QIcon::fromTheme(u"mail-message-new"_s), i18n("New Message To…"), this);
+    ac->addAction(u"mail_new"_s, mMailToComposeAction);
     ac->setShortcutsConfigurable(mMailToComposeAction, false);
     connect(mMailToComposeAction, &QAction::triggered, this, &KMReaderWin::slotMailtoCompose);
 
     // reply to
-    mMailToReplyAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-reply-sender")), i18n("Reply To…"), this);
-    ac->addAction(QStringLiteral("mailto_reply"), mMailToReplyAction);
+    mMailToReplyAction = new QAction(QIcon::fromTheme(u"mail-reply-sender"_s), i18n("Reply To…"), this);
+    ac->addAction(u"mailto_reply"_s, mMailToReplyAction);
     ac->setShortcutsConfigurable(mMailToReplyAction, false);
     connect(mMailToReplyAction, &QAction::triggered, this, &KMReaderWin::slotMailtoReply);
 
     // forward to
-    mMailToForwardAction = new QAction(QIcon::fromTheme(QStringLiteral("mail-forward")), i18n("Forward To…"), this);
+    mMailToForwardAction = new QAction(QIcon::fromTheme(u"mail-forward"_s), i18n("Forward To…"), this);
     ac->setShortcutsConfigurable(mMailToForwardAction, false);
-    ac->addAction(QStringLiteral("mailto_forward"), mMailToForwardAction);
+    ac->addAction(u"mailto_forward"_s, mMailToForwardAction);
     connect(mMailToForwardAction, &QAction::triggered, this, &KMReaderWin::slotMailtoForward);
 
     // add to addressbook
-    mAddAddrBookAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("Add to Address Book"), this);
+    mAddAddrBookAction = new QAction(QIcon::fromTheme(u"contact-new"_s), i18n("Add to Address Book"), this);
     ac->setShortcutsConfigurable(mAddAddrBookAction, false);
-    ac->addAction(QStringLiteral("add_addr_book"), mAddAddrBookAction);
+    ac->addAction(u"add_addr_book"_s, mAddAddrBookAction);
     connect(mAddAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoAddAddrBook);
 
-    mAddEmailToExistingContactAction = new QAction(QIcon::fromTheme(QStringLiteral("contact-new")), i18n("Add to Existing Contact"), this);
+    mAddEmailToExistingContactAction = new QAction(QIcon::fromTheme(u"contact-new"_s), i18n("Add to Existing Contact"), this);
     ac->setShortcutsConfigurable(mAddEmailToExistingContactAction, false);
-    ac->addAction(QStringLiteral("add_to_existing_contact"), mAddEmailToExistingContactAction);
+    ac->addAction(u"add_to_existing_contact"_s, mAddEmailToExistingContactAction);
     connect(mAddEmailToExistingContactAction, &QAction::triggered, this, &KMReaderWin::slotMailToAddToExistingContact);
 
     // open in addressbook
-    mOpenAddrBookAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Open in Address Book"), this);
+    mOpenAddrBookAction = new QAction(QIcon::fromTheme(u"view-pim-contacts"_s), i18n("Open in Address Book"), this);
     ac->setShortcutsConfigurable(mOpenAddrBookAction, false);
-    ac->addAction(QStringLiteral("openin_addr_book"), mOpenAddrBookAction);
+    ac->addAction(u"openin_addr_book"_s, mOpenAddrBookAction);
     connect(mOpenAddrBookAction, &QAction::triggered, this, &KMReaderWin::slotMailtoOpenAddrBook);
     // bookmark message
-    mAddUrlToBookmarkAction = new QAction(QIcon::fromTheme(QStringLiteral("bookmark-new")), i18n("Bookmark This Link"), this);
+    mAddUrlToBookmarkAction = new QAction(QIcon::fromTheme(u"bookmark-new"_s), i18n("Bookmark This Link"), this);
     ac->setShortcutsConfigurable(mAddUrlToBookmarkAction, false);
-    ac->addAction(QStringLiteral("add_bookmarks"), mAddUrlToBookmarkAction);
+    ac->addAction(u"add_bookmarks"_s, mAddUrlToBookmarkAction);
     connect(mAddUrlToBookmarkAction, &QAction::triggered, this, &KMReaderWin::slotAddUrlToBookmark);
 
-    mEditContactAction = new QAction(QIcon::fromTheme(QStringLiteral("view-pim-contacts")), i18n("Edit contact…"), this);
+    mEditContactAction = new QAction(QIcon::fromTheme(u"view-pim-contacts"_s), i18n("Edit contact…"), this);
     ac->setShortcutsConfigurable(mEditContactAction, false);
-    ac->addAction(QStringLiteral("edit_contact"), mEditContactAction);
+    ac->addAction(u"edit_contact"_s, mEditContactAction);
     connect(mEditContactAction, &QAction::triggered, this, &KMReaderWin::slotEditContact);
 
     // save URL as
     mUrlSaveAsAction = new QAction(i18nc("@action", "Save Link As…"), this);
-    ac->addAction(QStringLiteral("saveas_url"), mUrlSaveAsAction);
+    ac->addAction(u"saveas_url"_s, mUrlSaveAsAction);
     ac->setShortcutsConfigurable(mUrlSaveAsAction, false);
     connect(mUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotUrlSave);
 
     // find text
-    auto action = new QAction(QIcon::fromTheme(QStringLiteral("edit-find")), i18n("&Find in Message…"), this);
-    ac->addAction(QStringLiteral("find_in_messages"), action);
+    auto action = new QAction(QIcon::fromTheme(u"edit-find"_s), i18n("&Find in Message…"), this);
+    ac->addAction(u"find_in_messages"_s, action);
     connect(action, &QAction::triggered, this, &KMReaderWin::slotFind);
     ac->setDefaultShortcut(action, KStandardShortcut::find().first());
 
     // save Image On Disk
     mImageUrlSaveAsAction = new QAction(i18nc("@action", "Save Image On Disk…"), this);
-    ac->addAction(QStringLiteral("saveas_imageurl"), mImageUrlSaveAsAction);
+    ac->addAction(u"saveas_imageurl"_s, mImageUrlSaveAsAction);
     ac->setShortcutsConfigurable(mImageUrlSaveAsAction, false);
     connect(mImageUrlSaveAsAction, &QAction::triggered, this, &KMReaderWin::slotSaveImageOnDisk);
 
     // save Image On Disk
     mOpenImageAction = new QAction(i18nc("@action", "Open Image…"), this);
-    ac->addAction(QStringLiteral("open_image"), mOpenImageAction);
+    ac->addAction(u"open_image"_s, mOpenImageAction);
     ac->setShortcutsConfigurable(mOpenImageAction, false);
     connect(mOpenImageAction, &QAction::triggered, this, &KMReaderWin::slotOpenImage);
 
@@ -203,7 +203,7 @@ void KMReaderWin::createActions()
     mViewHtmlOptions->addAction(mLoadExternalReference);
 
     mShareImage = new QAction(i18nc("@action", "Share image…"), this);
-    ac->addAction(QStringLiteral("share_imageurl"), mShareImage);
+    ac->addAction(u"share_imageurl"_s, mShareImage);
     ac->setShortcutsConfigurable(mShareImage, false);
     connect(mShareImage, &QAction::triggered, this, &KMReaderWin::slotShareImage);
 }
@@ -258,14 +258,14 @@ void KMReaderWin::hasMultiMessages(bool multi)
 void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantHash &_data)
 {
     QVariantHash data = _data;
-    if (!data.contains(QStringLiteral("icon"))) {
-        data.insert(QStringLiteral("icon"), QStringLiteral("kmail"));
+    if (!data.contains(u"icon"_s)) {
+        data.insert(u"icon"_s, u"kmail"_s);
     }
-    if (!data.contains(QStringLiteral("name"))) {
-        data.insert(QStringLiteral("name"), i18n("KMail"));
+    if (!data.contains(u"name"_s)) {
+        data.insert(u"name"_s, i18n("KMail"));
     }
-    if (!data.contains(QStringLiteral("subtitle"))) {
-        data.insert(QStringLiteral("subtitle"), i18n("The KDE Mail Client"));
+    if (!data.contains(u"subtitle"_s)) {
+        data.insert(u"subtitle"_s, i18n("The KDE Mail Client"));
     }
 
     mViewer->displaySplashPage(templateName, data, "kmail"_ba);
@@ -273,24 +273,23 @@ void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantH
 
 void KMReaderWin::displayBusyPage()
 {
-    displaySplashPage(QStringLiteral("status.html"),
-                      {{QStringLiteral("title"), i18n("Retrieving Folder Contents")}, {QStringLiteral("subtext"), i18n("Please wait . . .")}});
+    displaySplashPage(u"status.html"_s, {{u"title"_s, i18n("Retrieving Folder Contents")}, {u"subtext"_s, i18n("Please wait . . .")}});
 }
 
 void KMReaderWin::displayOfflinePage()
 {
-    displaySplashPage(QStringLiteral("status.html"),
-                      {{QStringLiteral("title"), i18n("Offline")},
-                       {QStringLiteral("subtext"),
+    displaySplashPage(u"status.html"_s,
+                      {{u"title"_s, i18n("Offline")},
+                       {u"subtext"_s,
                         i18n("KMail is currently in offline mode. "
                              "Click <a href=\"kmail:goOnline\">here</a> to go online . . .</p>")}});
 }
 
 void KMReaderWin::displayResourceOfflinePage()
 {
-    displaySplashPage(QStringLiteral("status.html"),
-                      {{QStringLiteral("title"), i18n("Offline")},
-                       {QStringLiteral("subtext"),
+    displaySplashPage(u"status.html"_s,
+                      {{u"title"_s, i18n("Offline")},
+                       {u"subtext"_s,
                         i18n("Account is currently in offline mode. "
                              "Click <a href=\"kmail:goResourceOnline\">here</a> to go online . . .</p>")}});
 }
@@ -799,10 +798,10 @@ void KMReaderWin::updateHtmlActions()
         const QStringList customs = mSearchedAddress.customs();
         for (const QString &custom : customs) {
             if (custom.contains("MailPreferedFormatting"_L1)) {
-                const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailPreferedFormatting"));
+                const QString value = mSearchedAddress.custom(u"KADDRESSBOOK"_s, u"MailPreferedFormatting"_s);
                 mViewAsHtml->setChecked(value == "HTML"_L1);
             } else if (custom.contains("MailAllowToRemoteContent"_L1)) {
-                const QString value = mSearchedAddress.custom(QStringLiteral("KADDRESSBOOK"), QStringLiteral("MailAllowToRemoteContent"));
+                const QString value = mSearchedAddress.custom(u"KADDRESSBOOK"_s, u"MailAllowToRemoteContent"_s);
                 mLoadExternalReference->setChecked((value == "TRUE"_L1));
             }
         }

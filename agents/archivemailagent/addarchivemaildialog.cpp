@@ -23,7 +23,7 @@ AddArchiveMailDialog::AddArchiveMailDialog(ArchiveMailInfo *info, QWidget *paren
         setWindowTitle(i18nc("@title:window", "Add Archive Mail"));
     }
     setModal(true);
-    setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
+    setWindowIcon(QIcon::fromTheme(u"kmail"_s));
 
     auto topLayout = new QVBoxLayout(this);
     topLayout->setObjectName("topLayout"_L1);

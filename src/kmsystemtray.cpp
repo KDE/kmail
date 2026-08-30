@@ -48,8 +48,8 @@ KMSystemTray::KMSystemTray(QObject *parent)
     : KStatusNotifierItem(parent)
 {
     setToolTipTitle(i18n("KMail"));
-    setToolTipIconByName(QStringLiteral("kmail"));
-    setIconByName(QStringLiteral("kmail-symbolic"));
+    setToolTipIconByName(u"kmail"_s);
+    setIconByName(u"kmail-symbolic"_s);
 
 #ifdef HAVE_X11
     if (KMMainWidget *mainWidget = kmkernel->getKMMainWidget()) {
@@ -78,10 +78,10 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->setIcon(qApp->windowIcon());
     contextMenu()->setTitle(i18n("KMail"));
     QAction *action = nullptr;
-    if ((action = mainWidget->action(QStringLiteral("check_mail")))) {
+    if ((action = mainWidget->action(u"check_mail"_s))) {
         contextMenu()->addAction(action);
     }
-    if ((action = mainWidget->action(QStringLiteral("check_mail_in")))) {
+    if ((action = mainWidget->action(u"check_mail_in"_s))) {
         contextMenu()->addAction(action);
     }
 
@@ -95,19 +95,19 @@ bool KMSystemTray::buildPopupMenu()
     contextMenu()->addAction(mNewMessagesPopup->menuAction());
 
     contextMenu()->addSeparator();
-    if ((action = mainWidget->action(QStringLiteral("new_message")))) {
+    if ((action = mainWidget->action(u"new_message"_s))) {
         contextMenu()->addAction(action);
     }
-    if ((action = mainWidget->action(QStringLiteral("kmail_configure_kmail")))) {
+    if ((action = mainWidget->action(u"kmail_configure_kmail"_s))) {
         contextMenu()->addAction(action);
     }
     contextMenu()->addSeparator();
-    if ((action = mainWidget->action(QStringLiteral("akonadi_work_offline")))) {
+    if ((action = mainWidget->action(u"akonadi_work_offline"_s))) {
         contextMenu()->addAction(action);
         contextMenu()->addSeparator();
     }
 
-    if ((action = mainWidget->action(QStringLiteral("file_quit")))) {
+    if ((action = mainWidget->action(u"file_quit"_s))) {
         contextMenu()->addAction(action);
     }
 
@@ -135,9 +135,9 @@ void KMSystemTray::initialize(int count)
 void KMSystemTray::updateCount(int count)
 {
     if (count == 0) {
-        setIconByName(QStringLiteral("kmail-symbolic"));
+        setIconByName(u"kmail-symbolic"_s);
     } else {
-        setIconByName(QStringLiteral("mail-mark-unread-new"));
+        setIconByName(u"mail-mark-unread-new"_s);
     }
 }
 
@@ -189,9 +189,9 @@ void KMSystemTray::slotActivated()
     KWindowSystem::activateWindow(mainWin->windowHandle());
 #endif
 
-    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral("org.kde.kontact"))) {
-        QDBusInterface kontactIface(QStringLiteral("org.kde.kontact"), QStringLiteral("/KontactInterface"), QStringLiteral("org.kde.kontact.KontactInterface"));
-        kontactIface.asyncCall(QStringLiteral("selectPlugin"), QStringLiteral("kontact_kmailplugin"));
+    if (QDBusConnection::sessionBus().interface()->isServiceRegistered(u"org.kde.kontact"_s)) {
+        QDBusInterface kontactIface(u"org.kde.kontact"_s, u"/KontactInterface"_s, u"org.kde.kontact.KontactInterface"_s);
+        kontactIface.asyncCall(u"selectPlugin"_s, u"kontact_kmailplugin"_s);
     }
 }
 
@@ -241,7 +241,7 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
             // Insert an item. Escape the ampersands for display only: "label" is reused
             // as parent name below, so escaping it would escape it again at each level.
             QString actionText = label;
-            actionText.replace(QLatin1Char('&'), QStringLiteral("&&"));
+            actionText.replace(QLatin1Char('&'), u"&&"_s);
             QAction *action = menu->addAction(actionText);
             action->setData(collection.id());
         }

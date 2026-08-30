@@ -7,6 +7,7 @@
 #include "commandlineinfotest.h"
 #include "commandlineinfo.h"
 #include <QTest>
+using namespace Qt::Literals::StringLiterals;
 
 QTEST_GUILESS_MAIN(CommandLineInfoTest)
 CommandLineInfoTest::CommandLineInfoTest(QObject *parent)
@@ -43,33 +44,34 @@ void CommandLineInfoTest::parseCommandLineInfo_data()
     QTest::addColumn<CommandLineInfo>("output");
     {
         QStringList args;
-        args << QStringLiteral("kmail");
+        args << u"kmail"_s;
         QTest::newRow("empty") << args << QString() << CommandLineInfo();
     }
     {
         QStringList args;
-        args << QStringLiteral("kmail");
-        args << QStringLiteral(
-            "mailto:rostedt@goodmis.org?In-Reply-To=%3C20231105160139.660634360@goodmis.org%3E&Cc=akaher%40vmware.com%2Cakpm%40linux-foundation.org%2Cgregkh%"
-            "40linuxfoundation.org%2Clinux-kernel%40vger.kernel.org%2Cmark.rutland%40arm.com%2Cmhiramat%40kernel.org%2Cstable%40vger.kernel.org&Subject=Re%3A%"
-            "20%5Bv6.6%5D%5BPATCH%203%2F5%5D%20eventfs%3A%20Save%20ownership%20and%20mode");
+        args << u"kmail"_s;
+        args << u"mailto:rostedt@goodmis.org?In-Reply-To=%3C20231105160139.660634360@goodmis.org%3E&Cc=akaher%40vmware.com%2Cakpm%40linux-foundation.org%"
+                u"2Cgregkh%"
+                "40linuxfoundation.org%2Clinux-kernel%40vger.kernel.org%2Cmark.rutland%40arm.com%2Cmhiramat%40kernel.org%2Cstable%40vger.kernel.org&Subject=Re%"
+                "3A%"
+                "20%5Bv6.6%5D%5BPATCH%203%2F5%5D%20eventfs%3A%20Save%20ownership%20and%20mode"_s;
         CommandLineInfo info;
-        info.setSubject(QStringLiteral("Re: [v6.6][PATCH 3/5] eventfs: Save ownership and mode"));
-        info.setTo(QStringLiteral("rostedt@goodmis.org"));
+        info.setSubject(u"Re: [v6.6][PATCH 3/5] eventfs: Save ownership and mode"_s);
+        info.setTo(u"rostedt@goodmis.org"_s);
         info.setCc(
-            QStringLiteral("akaher@vmware.com,akpm@linux-foundation.org,gregkh@linuxfoundation.org,linux-kernel@vger.kernel.org,mark.rutland@arm.com,mhiramat@"
-                           "kernel.org,stable@vger.kernel.org, "));
-        info.setInReplyTo(QStringLiteral("<20231105160139.660634360@goodmis.org>"));
+            u"akaher@vmware.com,akpm@linux-foundation.org,gregkh@linuxfoundation.org,linux-kernel@vger.kernel.org,mark.rutland@arm.com,mhiramat@"
+            "kernel.org,stable@vger.kernel.org, "_s);
+        info.setInReplyTo(u"<20231105160139.660634360@goodmis.org>"_s);
         info.setMailto(true);
         QTest::newRow("test1") << args << QString() << info;
     }
     {
         QStringList args;
-        args << QStringLiteral("kmail");
-        args << QStringLiteral("mailto:person@example.com?body=one&two=three");
+        args << u"kmail"_s;
+        args << u"mailto:person@example.com?body=one&two=three"_s;
         CommandLineInfo info;
-        info.setTo(QStringLiteral("person@example.com"));
-        info.setBody(QStringLiteral("one&two=three"));
+        info.setTo(u"person@example.com"_s);
+        info.setBody(u"one&two=three"_s);
         info.setMailto(true);
         QTest::newRow("mailto body keeps unknown fragments") << args << QString() << info;
     }

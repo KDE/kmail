@@ -9,6 +9,7 @@
 
 #include "undosendcreatejob.h"
 #include <KLocalizedString>
+using namespace Qt::Literals::StringLiterals;
 
 UndoSendManager::UndoSendManager(QObject *parent)
     : QObject(parent)
@@ -38,17 +39,17 @@ void UndoSendManager::addItem(const UndoSendManagerInfo &info)
 
 QString UndoSendManager::UndoSendManagerInfo::generateMessageInfoText() const
 {
-    QString str = QStringLiteral("<qt>");
+    QString str = u"<qt>"_s;
     if (!to.isEmpty()) {
         str += i18n("<b>To:</b> %1", to);
     }
     if (!subject.isEmpty()) {
         if (!to.isEmpty()) {
-            str += QStringLiteral("<br />");
+            str += u"<br />"_s;
         }
         str += i18n("<b>Subject:</b> %1", subject);
     }
-    str += QStringLiteral("</qt>");
+    str += u"</qt>"_s;
     return str;
 }
 
