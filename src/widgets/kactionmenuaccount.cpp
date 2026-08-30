@@ -110,7 +110,7 @@ void KActionMenuAccount::updateAccountMenu()
             // the local copy which is passed to action.
             const QString identifierName = type.identifier();
             const int index = mOrderedAccountIdentifiers.indexOf(identifierName);
-            const AgentIdentifier id(identifierName, QString(type.name()).replace(QLatin1Char('&'), u"&&"_s), index);
+            const AgentIdentifier id(identifierName, QString(type.name()).replace(u'&', u"&&"_s), index);
             agentIdentifierList << id;
         }
         std::sort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);

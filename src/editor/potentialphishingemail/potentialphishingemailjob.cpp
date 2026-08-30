@@ -64,19 +64,19 @@ bool PotentialPhishingEmailJob::start()
             QString temail;
             KEmailAddress::extractEmailAddressAndName(addr, temail, tname); // ignore return value
             // which is always false
-            if (tname.startsWith(QLatin1Char('@'))) { // Special case when name is just @foo <…> it mustn't recognize as a valid email
+            if (tname.startsWith(u'@')) { // Special case when name is just @foo <…> it mustn't recognize as a valid email
                 continue;
             }
-            if (tname.contains(QLatin1Char('@'))) { // Potential address
-                if (tname.startsWith(QLatin1Char('<')) && tname.endsWith(QLatin1Char('>'))) {
+            if (tname.contains(u'@')) { // Potential address
+                if (tname.startsWith(u'<') && tname.endsWith(u'>')) {
                     tname = tname.mid(1, tname.length() - 2);
                 }
-                if (tname.startsWith(QLatin1Char('\'')) && tname.endsWith(QLatin1Char('\''))) {
+                if (tname.startsWith(u'\'') && tname.endsWith(u'\'')) {
                     tname = tname.mid(1, tname.length() - 2);
                 }
                 if (temail.toLower() != tname.toLower()) {
                     if (const QString str = u"(%1)"_s.arg(temail); !tname.contains(str, Qt::CaseInsensitive)) {
-                        if (const QList<QStringView> lst = QStringView(tname.trimmed()).split(QLatin1Char(' ')); lst.count() > 1) {
+                        if (const QList<QStringView> lst = QStringView(tname.trimmed()).split(u' '); lst.count() > 1) {
                             const QStringView firstName = lst.at(0);
 
                             // Usage

@@ -79,7 +79,7 @@ static QString toolTip(const Akonadi::Item &item)
         "</tr>"_s;
 
     QString content = MessageList::Util::contentSummary(item);
-    const QString contentHtml = content.toHtmlEscaped().replace(QLatin1Char('\n'), u"<br>"_s);
+    const QString contentHtml = content.toHtmlEscaped().replace(u'\n', u"<br>"_s);
 
     if (textIsLeftToRight) {
         if (auto from = msg->from(KMime::CreatePolicy::DontCreate)) {

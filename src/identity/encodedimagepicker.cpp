@@ -78,7 +78,7 @@ void EncodedImagePicker::selectFile()
     const QList<QByteArray> supportedImage = QImageReader::supportedImageFormats();
     for (const QByteArray &ba : supportedImage) {
         if (!filter.isEmpty()) {
-            filter += QLatin1Char(' ');
+            filter += u' ';
         }
         filter += "*."_L1 + QString::fromLatin1(ba);
     }

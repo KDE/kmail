@@ -424,11 +424,11 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
             // From a list-id in the form, "Birds of France <bof.yahoo.com>",
             // take "Birds of France" if it exists otherwise "bof.yahoo.com".
             listId = mailList.id();
-            if (const int start = listId.indexOf(QLatin1Char('<')); start > 0) {
+            if (const int start = listId.indexOf(u'<'); start > 0) {
                 // The description is not necessarily separated from '<' by a space.
                 listId = listId.left(start).trimmed();
             } else if (start == 0) {
-                if (const int end = listId.lastIndexOf(QLatin1Char('>')); end < 1) { // shouldn't happen but account for it anyway
+                if (const int end = listId.lastIndexOf(u'>'); end < 1) { // shouldn't happen but account for it anyway
                     listId.remove(0, 1);
                 } else {
                     listId = listId.mid(1, end - 1);
@@ -760,10 +760,7 @@ void MessageActions::slotExportToPdf()
         return;
     }
     QString fileName = MessageViewer::Util::generateFileNameForExtension(mCurrentItem, u".pdf"_s);
-    fileName = QFileDialog::getSaveFileName(mParent,
-                                            i18nc("@title:window", "Export to PDF"),
-                                            QDir::homePath() + QLatin1Char('/') + fileName,
-                                            i18n("PDF document (*.pdf)"));
+    fileName = QFileDialog::getSaveFileName(mParent, i18nc("@title:window", "Export to PDF"), QDir::homePath() + u'/' + fileName, i18n("PDF document (*.pdf)"));
     if (!fileName.isEmpty()) {
         mMessageView->viewer()->exportToPdf(fileName);
     }

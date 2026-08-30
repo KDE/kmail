@@ -137,7 +137,7 @@ void AttachPropertyDialog::formatProperties(const QMap<int, KTNEFProperty *> &pr
             int i = 0;
             QList<QVariant>::ConstIterator litEnd = value.toList().constEnd();
             for (QList<QVariant>::ConstIterator lit = value.toList().constBegin(); lit != litEnd; ++lit, ++i) {
-                new QTreeWidgetItem(newItem, QStringList() << QLatin1Char('[') + QString::number(i) + u']' << QString(KTNEFProperty::formatValue(*lit)));
+                new QTreeWidgetItem(newItem, QStringList() << u'[' + QString::number(i) + u']' << QString(KTNEFProperty::formatValue(*lit)));
             }
         } else if (value.userType() == QMetaType::QDateTime) {
             newItem->setText(1, value.toDateTime().toString());

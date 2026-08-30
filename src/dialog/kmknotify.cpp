@@ -96,7 +96,7 @@ void KMKnotify::initCombobox()
                                                 << u"messageviewer.notifyrc"_s;
     for (const QString &notify : lstNotify) {
         if (const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "knotifications6/"_L1 + notify); !fullPath.isEmpty()) {
-            const int slash = fullPath.lastIndexOf(QLatin1Char('/'));
+            const int slash = fullPath.lastIndexOf(u'/');
             QString appname = fullPath.right(fullPath.length() - slash - 1);
             appname.remove(".notifyrc"_L1);
             if (!appname.isEmpty()) {

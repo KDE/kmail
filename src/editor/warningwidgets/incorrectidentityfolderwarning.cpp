@@ -55,7 +55,7 @@ void IncorrectIdentityFolderWarning::clearFccInvalid()
 void IncorrectIdentityFolderWarning::addNewLine(QString &str)
 {
     if (!str.isEmpty()) {
-        str += QLatin1Char('\n');
+        str += u'\n';
     }
 }
 

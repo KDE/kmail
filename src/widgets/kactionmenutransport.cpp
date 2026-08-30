@@ -62,7 +62,7 @@ void KActionMenuTransport::updateTransportMenu()
                 }
             }
 #endif
-            const QString name = transport->name().replace(QLatin1Char('&'), u"&&"_s);
+            const QString name = transport->name().replace(u'&', u"&&"_s);
             menuTransportLst.insert(name, transport->id());
         }
         for (const auto &[key, value] : menuTransportLst.asKeyValueRange()) {

@@ -853,7 +853,7 @@ void KMKernel::recoverDeadLetters()
     for (const QFileInfo &file : autoSaveFiles) {
         // Disregard the '.' and '..' folders
         const QString filename = file.fileName();
-        if (filename == QLatin1Char('.') || filename == ".."_L1 || file.isDir()) {
+        if (filename == u'.' || filename == ".."_L1 || file.isDir()) {
             continue;
         }
         qCDebug(KMAIL_LOG) << "Opening autosave file:" << file.absoluteFilePath();
@@ -1566,7 +1566,7 @@ void KMKernel::cleanupTemporaryFiles()
     const QStringList lst = dir.entryList(QStringList{u"messageviewer_*"_s}, QDir::Files);
     qCDebug(KMAIL_LOG) << " list file to delete " << lst;
     for (const QString &file : lst) {
-        if (QFile tempFile(QDir::tempPath() + QLatin1Char('/') + file); !tempFile.remove()) {
+        if (QFile tempFile(QDir::tempPath() + u'/' + file); !tempFile.remove()) {
             fprintf(stderr, "%s was not removed .\n", qPrintable(tempFile.fileName()));
         } else {
             fprintf(stderr, "%s was removed .\n", qPrintable(tempFile.fileName()));
@@ -1575,7 +1575,7 @@ void KMKernel::cleanupTemporaryFiles()
     const QStringList lstRepo = dir.entryList(QStringList{u"messageviewer_*.index.*"_s}, QDir::Dirs);
     qCDebug(KMAIL_LOG) << " list repo to delete " << lstRepo;
     for (const QString &file : lstRepo) {
-        if (QDir tempDir(QDir::tempPath() + QLatin1Char('/') + file); !tempDir.removeRecursively()) {
+        if (QDir tempDir(QDir::tempPath() + u'/' + file); !tempDir.removeRecursively()) {
             fprintf(stderr, "%s was not removed .\n", qPrintable(tempDir.path()));
         } else {
             fprintf(stderr, "%s was removed .\n", qPrintable(tempDir.path()));

@@ -199,7 +199,7 @@ void KMMainWin::displayStatusMessage(const QString &aText)
     }
     const int statusWidth = statusBar()->width() - mProgressBar->littleProgress()->width() - fontMetrics().maxWidth();
 
-    const QString text = fontMetrics().elidedText(QLatin1Char(' ') + aText, Qt::ElideRight, statusWidth);
+    const QString text = fontMetrics().elidedText(u' ' + aText, Qt::ElideRight, statusWidth);
 
     // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
     // but this code would double the size of the status bar if the user hovers

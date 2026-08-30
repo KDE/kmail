@@ -302,7 +302,7 @@ void KMReaderWin::slotFind()
 void KMReaderWin::slotCopySelectedText()
 {
     QString selection = mViewer->selectedText();
-    selection.replace(QChar::Nbsp, QLatin1Char(' '));
+    selection.replace(QChar::Nbsp, u' ');
     QApplication::clipboard()->setText(selection);
 }
 

@@ -1430,7 +1430,7 @@ void KMMainWidget::slotDelayedShowNewFromTemplate(KJob *job)
                 subj = i18n("No Subject");
             }
 
-            QAction *templateAction = mTemplateMenu->menu()->addAction(KStringHandler::rsqueeze(subj.replace(QLatin1Char('&'), u"&&"_s)));
+            QAction *templateAction = mTemplateMenu->menu()->addAction(KStringHandler::rsqueeze(subj.replace(u'&', u"&&"_s)));
             QVariant var;
             var.setValue(items.at(idx));
             templateAction->setData(var);
@@ -4363,7 +4363,7 @@ void KMMainWidget::initializeFilterActions(bool clearFilter)
     for (MailFilter *filter : lstFilters) {
         if (!filter->isEmpty() && filter->configureShortcut() && filter->isEnabled()) {
             QString filterName = u"Filter %1"_s.arg(filter->name());
-            filterName.replace(QLatin1Char(' '), QLatin1Char('_'));
+            filterName.replace(u' ', u'_');
             if (action(filterName)) {
                 continue;
             }

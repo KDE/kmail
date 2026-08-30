@@ -85,7 +85,7 @@ void TagActionManager::clearActions()
 void TagActionManager::createTagAction(const MailCommon::Tag::Ptr &tag, bool addToMenu)
 {
     QString cleanName(i18n("Message Tag: %1", tag->tagName));
-    cleanName.replace(QLatin1Char('&'), u"&&"_s);
+    cleanName.replace(u'&', u"&&"_s);
     auto const tagAction = new KToggleAction(QIcon::fromTheme(tag->iconName), cleanName, this);
     tagAction->setIconText(tag->name());
     tagAction->setChecked(tag->id() == mNewTagId);

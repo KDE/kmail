@@ -39,7 +39,7 @@ QString ArchiveFolderDialog::standardArchivePath(const QString &folderName)
     if (const QDir dir(currentPath); !dir.exists()) {
         currentPath = QDir::homePath();
     }
-    return currentPath + QLatin1Char('/') + i18nc("Start of the filename for a mail archive file", "Archive") + QLatin1Char('_') + folderName + QLatin1Char('_')
+    return currentPath + u'/' + i18nc("Start of the filename for a mail archive file", "Archive") + u'_' + folderName + u'_'
         + QDate::currentDate().toString(Qt::ISODate) + ".tar.bz2"_L1;
 }
 

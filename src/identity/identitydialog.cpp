@@ -900,7 +900,7 @@ bool IdentityDialog::keyMatchesEmailAddress(const GpgME::Key &key, const QString
         if (em.isEmpty()) {
             continue;
         }
-        if (em[0] == QLatin1Char('<')) {
+        if (em[0] == u'<') {
             em = em.mid(1, em.length() - 2);
         }
         if (em.toLower() == email) {
@@ -1080,12 +1080,12 @@ void IdentityDialog::setIdentity(KIdentityManagementCore::Identity &ident)
     mAutoCorrectionLanguage->setLanguage(ident.autocorrectionLanguage());
     updateVcardButton();
     if (mVcardFilename.isEmpty()) {
-        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
+        mVcardFilename = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + u'/' + ident.identityName() + ".vcf"_L1;
         const QFileInfo fileInfo(mVcardFilename);
         QDir().mkpath(fileInfo.absolutePath());
     } else {
         // Convert path.
-        if (const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + QLatin1Char('/') + ident.identityName() + ".vcf"_L1;
+        if (const QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + u'/' + ident.identityName() + ".vcf"_L1;
             QFileInfo::exists(path) && (mVcardFilename != path)) {
             mVcardFilename = path;
         }

@@ -139,7 +139,7 @@ void OpenComposerJob::slotOpenComposer()
         QStringList::ConstIterator end = mOpenComposerSettings.mCustomHeaders.constEnd();
         for (QStringList::ConstIterator it = mOpenComposerSettings.mCustomHeaders.constBegin(); it != end; ++it) {
             if (!(*it).isEmpty()) {
-                if (const int pos = (*it).indexOf(QLatin1Char(':')); pos > 0) {
+                if (const int pos = (*it).indexOf(u':'); pos > 0) {
                     const QString header = (*it).left(pos).trimmed();
                     const QString value = (*it).mid(pos + 1).trimmed();
                     if (!header.isEmpty() && !value.isEmpty()) {

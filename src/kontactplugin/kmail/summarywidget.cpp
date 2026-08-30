@@ -126,7 +126,7 @@ void SummaryWidget::displayModel(const QModelIndex &parent, int &counter, const 
                 if (showFolderPaths) {
                     // Construct the full path string.
                     parentTreeNames.insert(parentTreeNames.size(), col.name());
-                    urlLabel = new KUrlLabel(QString::number(col.id()), parentTreeNames.join(QLatin1Char('/')), this);
+                    urlLabel = new KUrlLabel(QString::number(col.id()), parentTreeNames.join(u'/'), this);
                     parentTreeNames.removeLast();
                 } else {
                     urlLabel = new KUrlLabel(QString::number(col.id()), col.name(), this);

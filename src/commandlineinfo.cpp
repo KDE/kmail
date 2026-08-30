@@ -53,7 +53,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
             if (argument.startsWith("--"_L1)) {
                 addAttachmentAttribute = false;
             }
-            if (argument.contains(QLatin1Char('@')) || argument.startsWith("mailto:"_L1)) { // address mustn't be trade as a attachment
+            if (argument.contains(u'@') || argument.startsWith("mailto:"_L1)) { // address mustn't be trade as a attachment
                 addAttachmentAttribute = false;
             }
             if (addAttachmentAttribute) {
@@ -194,7 +194,7 @@ void CommandLineInfo::parseCommandLine(const QStringList &args, const QString &w
                         // QMap<QString, QString> parseMailtoUrl(const QUrl &url) parses correctly url
                         // But if we have a "&" unknown key we lost it.
                         if (previousKey == "body"_L1) {
-                            mBody += QLatin1Char('&') + key + QLatin1Char('=') + element.second;
+                            mBody += u'&' + key + u'=' + element.second;
                         }
                         // Don't clear previous key.
                     }

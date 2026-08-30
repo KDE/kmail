@@ -697,7 +697,7 @@ void KMComposerWin::insertSnippetInfo(const MailCommon::SnippetInfo &info)
     }
     {
         if (!info.attachment.isEmpty()) {
-            const QStringList lst = info.attachment.split(QLatin1Char(','));
+            const QStringList lst = info.attachment.split(u',');
             for (const QString &attach : lst) {
                 auto job = new MessageComposer::ConvertSnippetVariablesJob(this);
                 job->setText(attach);
@@ -1168,7 +1168,7 @@ void KMComposerWin::applyTemplate(uint uoid, uint uOldId, const KIdentityManagem
     } else {
         if (auto hrd = mMsg->headerByType("X-KMail-Link-Message")) {
             Akonadi::Item::List items;
-            const QStringList serNums = hrd->asUnicodeString().split(QLatin1Char(','));
+            const QStringList serNums = hrd->asUnicodeString().split(u',');
             items.reserve(serNums.count());
             for (const QString &serNumStr : serNums) {
                 items << Akonadi::Item(serNumStr.toLongLong());
@@ -1703,7 +1703,7 @@ void KMComposerWin::setupStatusBar(QWidget *w)
 void KMComposerWin::setupEditor()
 {
     QFontMetrics fm(mBodyFont);
-    mComposerBase->editor()->setTabStopDistance(fm.boundingRect(QLatin1Char(' ')).width() * 8);
+    mComposerBase->editor()->setTabStopDistance(fm.boundingRect(u' ').width() * 8);
 
     slotWordWrapToggled(MessageComposer::MessageComposerSettings::self()->wordWrap());
 
@@ -2624,9 +2624,9 @@ void KMComposerWin::slotUpdateWindowTitle()
     // Remove characters that show badly in most window decorations:
     // newlines tend to become boxes.
     if (s.isEmpty()) {
-        setWindowTitle(QLatin1Char('(') + i18n("unnamed") + QLatin1Char(')'));
+        setWindowTitle(u'(' + i18n("unnamed") + u')');
     } else {
-        setWindowTitle(s.replace(QLatin1Char('\n'), QLatin1Char(' ')));
+        setWindowTitle(s.replace(u'\n', u' '));
     }
 }
 

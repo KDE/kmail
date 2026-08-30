@@ -241,7 +241,7 @@ void KMSystemTray::fillFoldersMenu(QMenu *menu, const QAbstractItemModel *model,
             // Insert an item. Escape the ampersands for display only: "label" is reused
             // as parent name below, so escaping it would escape it again at each level.
             QString actionText = label;
-            actionText.replace(QLatin1Char('&'), u"&&"_s);
+            actionText.replace(u'&', u"&&"_s);
             QAction *action = menu->addAction(actionText);
             action->setData(collection.id());
         }
