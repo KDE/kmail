@@ -26,6 +26,9 @@
 #include <QVBoxLayout>
 #include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
+
+using namespace Qt::Literals::StringLiterals;
+
 namespace
 {
 const char myAddEmailToExistingContactDialogGroupName[] = "AddEmailToExistingContactDialog";
@@ -36,7 +39,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     setWindowTitle(i18nc("@title:window", "Select Contact"));
     setModal(true);
 
-    auto session = new Akonadi::Session("AddEmailToExistingContactDialog", this);
+    auto session = new Akonadi::Session("AddEmailToExistingContactDialog"_ba, this);
 
     Akonadi::ItemFetchScope scope;
     scope.fetchFullPayload(true);

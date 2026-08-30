@@ -196,6 +196,9 @@ using namespace KMime;
 using namespace Akonadi;
 using namespace MailCommon;
 using namespace KMail;
+
+using namespace Qt::Literals::StringLiterals;
+
 using KPIM::ProgressManager;
 using PimCommon::BroadcastStatus;
 
@@ -4526,31 +4529,31 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         case MessageList::Core::SearchLineCommand::SearchLineType::HasStateOrAttachment:
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Literal:
-            searchStringVal = QByteArrayLiteral("<message>");
+            searchStringVal = "<message>"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::To:
-            searchStringVal = QByteArrayLiteral("to");
+            searchStringVal = "to"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Bcc:
-            searchStringVal = QByteArrayLiteral("bcc");
+            searchStringVal = "bcc"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Cc:
-            searchStringVal = QByteArrayLiteral("cc");
+            searchStringVal = "cc"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::From:
-            searchStringVal = QByteArrayLiteral("from");
+            searchStringVal = "from"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Subject:
-            searchStringVal = QByteArrayLiteral("subject");
+            searchStringVal = "subject"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Body:
-            searchStringVal = QByteArrayLiteral("<body>");
+            searchStringVal = "<body>"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncContains, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::Date:
@@ -4558,11 +4561,11 @@ void KMMainWidget::slotRequestFullSearchFromQuickSearch()
         case MessageList::Core::SearchLineCommand::SearchLineType::Size:
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasAttachment:
-            searchStringVal = QByteArrayLiteral("<attachment>");
+            searchStringVal = "<attachment>"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasAttachment, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::HasInvitation:
-            searchStringVal = QByteArrayLiteral("<invitation>");
+            searchStringVal = "<invitation>"_ba;
             patternNew.append(SearchRule::createInstance(searchStringVal, SearchRule::FuncHasInvitation, info.argument));
             break;
         case MessageList::Core::SearchLineCommand::SearchLineType::IsImportant: {

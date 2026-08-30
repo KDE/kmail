@@ -21,6 +21,8 @@
 #include <QTemporaryDir>
 #include <QTest>
 
+using namespace Qt::Literals::StringLiterals;
+
 Akonadi::Item createItem(const KIdentityManagementCore::Identity &ident)
 {
     QByteArray data
@@ -29,7 +31,7 @@ Akonadi::Item createItem(const KIdentityManagementCore::Identity &ident)
           "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
           "Subject: Sample message\n"
           "MIME-Version: 1.0\n"
-          "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
+          "X-KMail-Identity: "_ba + QByteArray::number(ident.uoid()) + "\n"
                                                                     "Content-type: text/plain; charset=us-ascii\n"
                                                                     "\n"
                                                                     "\n"

@@ -268,7 +268,7 @@ void KMReaderWin::displaySplashPage(const QString &templateName, const QVariantH
         data.insert(QStringLiteral("subtitle"), i18n("The KDE Mail Client"));
     }
 
-    mViewer->displaySplashPage(templateName, data, QByteArrayLiteral("kmail"));
+    mViewer->displaySplashPage(templateName, data, "kmail"_ba);
 }
 
 void KMReaderWin::displayBusyPage()

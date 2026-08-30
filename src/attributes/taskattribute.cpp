@@ -10,6 +10,8 @@
 #include <QDataStream>
 #include <QIODevice>
 
+using namespace Qt::Literals::StringLiterals;
+
 TaskAttribute::TaskAttribute() = default;
 
 TaskAttribute::TaskAttribute(Akonadi::Item::Id id)
@@ -50,6 +52,5 @@ QByteArray TaskAttribute::serialized() const
 
 QByteArray TaskAttribute::type() const
 {
-    static const QByteArray sType("TaskAttribute");
-    return sType;
+    return "TaskAttribute"_ba;
 }

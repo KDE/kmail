@@ -15,11 +15,13 @@
 #include <MailCommon/FolderCollectionMonitor>
 #include <MailCommon/JobScheduler>
 
+using namespace Qt::Literals::StringLiterals;
+
 ArchiveMailKernel::ArchiveMailKernel(QObject *parent)
     : QObject(parent)
 {
     mIdentityManager = new KIdentityManagementCore::IdentityManager(true, this);
-    auto session = new Akonadi::Session("Archive Mail Kernel ETM", this);
+    auto session = new Akonadi::Session("Archive Mail Kernel ETM"_ba, this);
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 
     mFolderCollectionMonitor->monitor()->setChangeRecordingEnabled(false);

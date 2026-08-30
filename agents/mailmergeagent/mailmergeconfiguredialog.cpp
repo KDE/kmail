@@ -57,7 +57,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
                                       i18n("© 2021–%1 Laurent Montel", QStringLiteral("2025")));
 
     aboutData.addAuthor(i18nc("@info:credit", "Laurent Montel"), i18n("Maintainer"), QStringLiteral("montel@kde.org"));
-    aboutData.setProductName(QByteArrayLiteral("Akonadi/MailMergeAgent"));
+    aboutData.setProductName("Akonadi/MailMergeAgent"_ba);
     QApplication::setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
 

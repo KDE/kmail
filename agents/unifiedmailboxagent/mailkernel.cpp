@@ -16,13 +16,15 @@
 #include <MailCommon/MailKernel>
 #include <MessageComposer/AkonadiSender>
 
+using namespace Qt::Literals::StringLiterals;
+
 MailKernel::MailKernel(const KSharedConfigPtr &config, QObject *parent)
     : QObject(parent)
     , mConfig(config)
     , mIdentityManager(new KIdentityManagementCore::IdentityManager(true, this))
     , mMessageSender(new MessageComposer::AkonadiSender(this))
 {
-    auto session = new Akonadi::Session("UnifiedMailbox Kernel ETM", this);
+    auto session = new Akonadi::Session("UnifiedMailbox Kernel ETM"_ba, this);
 
     mFolderCollectionMonitor = new MailCommon::FolderCollectionMonitor(session, this);
 

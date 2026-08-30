@@ -117,15 +117,15 @@ void killAgent()
     proc.waitForFinished();
 }
 
-std::shared_ptr<KMime::Message> createItem(const KIdentityManagementCore::Identity &ident, const QByteArray &recipient = "Friends <friends@kde.example>")
+std::shared_ptr<KMime::Message> createItem(const KIdentityManagementCore::Identity &ident, const QByteArray &recipient = "Friends <friends@kde.example>"_ba)
 {
     QByteArray data
         = "From: Konqui <konqui@kde.example>\n"
-          "To: " + recipient +"\n"
+          "To: "_ba + recipient +"\n"
           "Date: Sun, 21 Mar 1993 23:56:48 -0800 (PST)\n"
           "Subject: Sample message\n"
           "MIME-Version: 1.0\n"
-          "X-KMail-Identity: " + QByteArray::number(ident.uoid()) + "\n"
+          "X-KMail-Identity: "_ba + QByteArray::number(ident.uoid()) + "\n"
                                                                     "Content-type: text/plain; charset=us-ascii\n"
                                                                     "\n"
                                                                     "\n"

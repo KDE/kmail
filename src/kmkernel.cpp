@@ -155,7 +155,7 @@ KMKernel::KMKernel(QObject *parent)
     KMailSettings::self();
     mAutoCorrection = new TextAutoCorrectionCore::AutoCorrection();
 
-    auto session = new Akonadi::Session("KMail Kernel ETM", this);
+    auto session = new Akonadi::Session("KMail Kernel ETM"_ba, this);
 
     mFolderCollectionMonitor = new FolderCollectionMonitor(session, this);
 

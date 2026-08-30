@@ -11,12 +11,13 @@
 
 using namespace Akonadi;
 
+using namespace Qt::Literals::StringLiterals;
+
 SearchDescriptionAttribute::SearchDescriptionAttribute() = default;
 
 QByteArray SearchDescriptionAttribute::type() const
 {
-    static const QByteArray sType("kmailsearchdescription");
-    return sType;
+    return "kmailsearchdescription"_ba;
 }
 
 Akonadi::Attribute *SearchDescriptionAttribute::clone() const

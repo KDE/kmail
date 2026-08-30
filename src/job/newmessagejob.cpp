@@ -12,6 +12,8 @@
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
+using namespace Qt::Literals::StringLiterals;
+
 NewMessageJob::NewMessageJob(QObject *parent)
     : QObject(parent)
 {
@@ -25,7 +27,7 @@ void NewMessageJob::start()
     mMsg = std::shared_ptr<KMime::Message>(new KMime::Message);
     MessageHelper::initHeader(mMsg, KMKernel::self()->identityManager(), mNewMessageJobSettings.mIdentity);
     // Already defined in MessageHelper::initHeader
-    mMsg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
+    mMsg->contentType(KMime::CreatePolicy::DontCreate)->setCharset("utf-8"_ba);
     // set basic headers
     if (!mNewMessageJobSettings.mCc.isEmpty()) {
         mMsg->cc()->fromUnicodeString(mNewMessageJobSettings.mCc);

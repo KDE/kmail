@@ -19,6 +19,9 @@
 #include <QDBusConnection>
 
 using namespace KMail;
+
+using namespace Qt::Literals::StringLiterals;
+
 MailServiceImpl::MailServiceImpl(QObject *parent)
     : QObject(parent)
 {
@@ -42,7 +45,7 @@ bool MailServiceImpl::sendMessage(const QString &from,
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
 
     // Already defined in MessageHelper::initHeader
-    msg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
+    msg->contentType(KMime::CreatePolicy::DontCreate)->setCharset("utf-8"_ba);
 
     if (!from.isEmpty()) {
         msg->from()->fromUnicodeString(from);
@@ -91,7 +94,7 @@ bool MailServiceImpl::sendMessage(const QString &from,
     std::shared_ptr<KMime::Message> msg(new KMime::Message);
     MessageHelper::initHeader(msg, KMKernel::self()->identityManager());
     // Already defined in MessageHelper::initHeader
-    msg->contentType(KMime::CreatePolicy::DontCreate)->setCharset(QByteArrayLiteral("utf-8"));
+    msg->contentType(KMime::CreatePolicy::DontCreate)->setCharset("utf-8"_ba);
 
     if (!from.isEmpty()) {
         msg->from()->fromUnicodeString(from);

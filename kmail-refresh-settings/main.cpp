@@ -18,11 +18,13 @@
 #include <QCommandLineParser>
 #include <QIcon>
 
+using namespace Qt::Literals::StringLiterals;
+
 int main(int argc, char **argv)
 {
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QApplication app(argc, argv);
-    KLocalizedString::setApplicationDomain(QByteArrayLiteral("kmail-refresh-settings"));
+    KLocalizedString::setApplicationDomain("kmail-refresh-settings"_ba);
     KCrash::initialize();
     KAboutData aboutData(QStringLiteral("kmail-refresh-settings"),
                          i18n("KMail Assistant for refreshing settings"),

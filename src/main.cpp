@@ -35,6 +35,8 @@
 
 #include <KStyleManager>
 
+using namespace Qt::Literals::StringLiterals;
+
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KontactInterface::PimUniqueApplication
@@ -135,7 +137,7 @@ int main(int argc, char *argv[])
     QWebEngineUrlScheme::registerScheme(cidScheme);
 
     KMailApplication app(argc, &argv);
-    KLocalizedString::setApplicationDomain(QByteArrayLiteral("kmail"));
+    KLocalizedString::setApplicationDomain("kmail"_ba);
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("kmail")));
     app.setDesktopFileName(QStringLiteral("org.kde.kmail2"));
 
