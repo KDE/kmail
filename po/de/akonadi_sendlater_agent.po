@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2024-08-19 22:34+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -100,58 +100,58 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Nicht löschen"
 
-#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
 #, kde-format
 msgid "Not message found."
 msgstr "Es wurde keine Nachricht gefunden."
 
-#: sendlaterjob.cpp:67
+#: sendlaterjob.cpp:68
 #, kde-format
 msgid "No message found."
 msgstr "Es wurde keine Nachricht gefunden."
 
-#: sendlaterjob.cpp:76
+#: sendlaterjob.cpp:77
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Fehler beim Abholen der Nachricht."
 
-#: sendlaterjob.cpp:82
+#: sendlaterjob.cpp:83
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Die Nachricht kann nicht abgeholt werden. %1"
 
-#: sendlaterjob.cpp:87
+#: sendlaterjob.cpp:88
 #, kde-format
 msgid "We can't create transport"
 msgstr "Der Versandweg kann nicht erstellt werden"
 
-#: sendlaterjob.cpp:94
+#: sendlaterjob.cpp:95
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Die Nachricht ist keine richtige E-Mail"
 
-#: sendlaterjob.cpp:101
+#: sendlaterjob.cpp:102
 #, kde-format
 msgid "Cannot send message."
 msgstr "Die Nachricht kann nicht gesendet werden."
 
-#: sendlaterjob.cpp:132
+#: sendlaterjob.cpp:131
 #, kde-format
 msgid "Message sent"
 msgstr "Nachricht wurde versendet"
 
-#: sendlatermanager.cpp:189
+#: sendlatermanager.cpp:190
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "Es ist ein Fehler aufgetreten. Möchten Sie es erneut versuchen?"
 
-#: sendlatermanager.cpp:190
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Es wurde ein Fehler gefunden"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:192
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2020-09-20 09:30+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -19,25 +19,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 20.04.2\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Διαμοιρασμός…"
 
-#: filterlogdialog.cpp:46
+#: filterlogdialog.cpp:47
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Προβολέας καταγραφών φίλτρου"
 
-#: filterlogdialog.cpp:68
+#: filterlogdialog.cpp:69
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Καταγραφές δραστηριοτήτων φίλτρου"
 
-#: filterlogdialog.cpp:73
+#: filterlogdialog.cpp:74
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -47,24 +47,24 @@ msgstr ""
 "καταγραφή δεδομένων συλλέγεται και εμφανίζεται μόνο όταν η καταγραφή είναι "
 "ενεργή. "
 
-#: filterlogdialog.cpp:94
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "Λεπτομέρειες καταγραφής"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:102
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Περιγραφή μοτίβου καταγραφής"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:107
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Αξιολόγηση κανόνων φίλτ&ρου καταγραφής"
 
-#: filterlogdialog.cpp:111
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -79,36 +79,36 @@ msgstr ""
 "θα δοθεί μόνο ανάδραση για το αποτέλεσμα της αξιολόγησης όλων των κανόνων "
 "ενός φίλτρου."
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:119
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Αξιολόγηση μοτίβου φίλτρου καταγραφής"
 
-#: filterlogdialog.cpp:123
+#: filterlogdialog.cpp:124
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Ενέργειες φίλτρου καταγραφής"
 
-#: filterlogdialog.cpp:133
+#: filterlogdialog.cpp:134
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Όριο μεγέθους καταγραφής:"
 
-#: filterlogdialog.cpp:141
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "απεριόριστο"
 
-#: filterlogdialog.cpp:145
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -122,7 +122,7 @@ msgstr ""
 "καταγραφής υπερβαίνει το όριο αυτό τότε τα παλαιότερα δεδομένα θα "
 "απορριφθούν μέχρι την παύση της υπέρβασης του ορίου. "
 
-#: filterlogdialog.cpp:323
+#: filterlogdialog.cpp:324
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -131,7 +131,7 @@ msgstr ""
 "Αδυναμία εγγραφής του αρχείου %1:\n"
 "\"%2\" είναι η λεπτομερής περιγραφή σφάλματος."
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

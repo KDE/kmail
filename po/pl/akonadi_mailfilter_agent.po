@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2024-08-03 11:23+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -18,25 +18,25 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Udostępnij…"
 
-#: filterlogdialog.cpp:46
+#: filterlogdialog.cpp:47
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Filtrowanie przeglądarki dzienników"
 
-#: filterlogdialog.cpp:68
+#: filterlogdialog.cpp:69
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Zapisuj działania fi&ltrów"
 
-#: filterlogdialog.cpp:73
+#: filterlogdialog.cpp:74
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -46,24 +46,24 @@ msgstr ""
 "Oczywiście, dane są zbierane i wyświetlane tylko wtedy, gdy zapisywanie jest "
 "włączone. "
 
-#: filterlogdialog.cpp:94
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "Szczegóły dziennika"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:102
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Zapisuj opis wzorca"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:107
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Zapisuj wynik stosowania warunków filt&rów"
 
-#: filterlogdialog.cpp:111
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -77,36 +77,36 @@ msgstr ""
 "filtrowania. W przeciwnym razie zapisany będzie jedynie łączny wynik "
 "zastosowania wszystkich reguł danego filtra."
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:119
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Zapisuj wynik stosowania wzorców"
 
-#: filterlogdialog.cpp:123
+#: filterlogdialog.cpp:124
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Zapisuj działania filtrów"
 
-#: filterlogdialog.cpp:133
+#: filterlogdialog.cpp:134
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Ograniczenie rozmiaru dziennika:"
 
-#: filterlogdialog.cpp:141
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "nieograniczony"
 
-#: filterlogdialog.cpp:145
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -119,7 +119,7 @@ msgstr ""
 "Jeśli rozmiar dziennika przekroczy tę wielkość, najstarsze dane zostaną "
 "usunięte. "
 
-#: filterlogdialog.cpp:323
+#: filterlogdialog.cpp:324
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -128,7 +128,7 @@ msgstr ""
 "Nie można zapisać pliku %1:\n"
 "\"%2\" jest szczegółowym opisem błędu."
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:328
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"

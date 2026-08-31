@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2025-08-22 12:30-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -159,13 +159,13 @@ msgstr ""
 "Não é possível adicionar um segundo arquivo nesta pasta. Como alternativa, "
 "modifique a existente."
 
-#: job/archivejob.cpp:58
+#: job/archivejob.cpp:59
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr ""
 "A pasta não existe. Verifique as configurações. O arquivamento foi adiado."
 
-#: job/archivejob.cpp:75
+#: job/archivejob.cpp:76
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Iniciar o arquivo de %1"

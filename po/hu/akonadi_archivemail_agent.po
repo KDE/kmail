@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -158,14 +158,14 @@ msgstr ""
 "Nem adható hozzá egy második archívum ehhez a mappához. Inkább módosítsa a "
 "meglévőt."
 
-#: job/archivejob.cpp:58
+#: job/archivejob.cpp:59
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr ""
 "A könyvtár nem létezik. Ellenőrizze a beállításokat. Az archiválás "
 "elhalasztva."
 
-#: job/archivejob.cpp:75
+#: job/archivejob.cpp:76
 #, kde-format
 msgid "Start to archive %1"
 msgstr "%1 archiválásának elkezdése"

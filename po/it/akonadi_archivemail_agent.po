@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: archivemailagent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2025-08-20 13:22+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -156,13 +156,13 @@ msgstr ""
 "Impossibile aggiungere un secondo archivio per questa cartella. Modificare "
 "invece quello esistente."
 
-#: job/archivejob.cpp:58
+#: job/archivejob.cpp:59
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr ""
 "La cartella non esiste. Verifica le impostazioni; archiviazione rimandata."
 
-#: job/archivejob.cpp:75
+#: job/archivejob.cpp:76
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Inizio archiviazione in %1"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2020-07-27 22:47+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -165,12 +165,12 @@ msgstr ""
 "Kan ikke tilføje endnu et arkiv for denne mappe. Ændr i stedet det "
 "eksisterende arkiv."
 
-#: job/archivejob.cpp:58
+#: job/archivejob.cpp:59
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr "Mappen findes ikke. Kontrollér indstillinger. Arkiv udsat."
 
-#: job/archivejob.cpp:75
+#: job/archivejob.cpp:76
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Start arkivering af %1"

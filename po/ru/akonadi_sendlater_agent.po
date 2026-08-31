@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2024-11-22 15:43+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -113,58 +113,58 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Не удалять"
 
-#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
 #, kde-format
 msgid "Not message found."
 msgstr "Письмо не найдено."
 
-#: sendlaterjob.cpp:67
+#: sendlaterjob.cpp:68
 #, kde-format
 msgid "No message found."
 msgstr "Письмо не найдено."
 
-#: sendlaterjob.cpp:76
+#: sendlaterjob.cpp:77
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Ошибка при извлечении сообщения."
 
-#: sendlaterjob.cpp:82
+#: sendlaterjob.cpp:83
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Получить сообщение для отправки не удалось. %1"
 
-#: sendlaterjob.cpp:87
+#: sendlaterjob.cpp:88
 #, kde-format
 msgid "We can't create transport"
 msgstr "Создать транспорт не удалось."
 
-#: sendlaterjob.cpp:94
+#: sendlaterjob.cpp:95
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Отправляемое сообщение фактически сообщением не является"
 
-#: sendlaterjob.cpp:101
+#: sendlaterjob.cpp:102
 #, kde-format
 msgid "Cannot send message."
 msgstr "Отправить сообщение не удалось."
 
-#: sendlaterjob.cpp:132
+#: sendlaterjob.cpp:131
 #, kde-format
 msgid "Message sent"
 msgstr "Сообщение отправлено"
 
-#: sendlatermanager.cpp:189
+#: sendlatermanager.cpp:190
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "При отправке сообщения произошла ошибка. Хотите повторить отправку?"
 
-#: sendlatermanager.cpp:190
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "Ошибка при отправке"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:192
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2025-10-09 00:56+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -99,58 +99,58 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "삭제 안 함"
 
-#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
 #, kde-format
 msgid "Not message found."
 msgstr "메시지를 찾지 못했습니다."
 
-#: sendlaterjob.cpp:67
+#: sendlaterjob.cpp:68
 #, kde-format
 msgid "No message found."
 msgstr "메시지를 찾지 못했습니다."
 
-#: sendlaterjob.cpp:76
+#: sendlaterjob.cpp:77
 #, kde-format
 msgid "Error during fetching message."
 msgstr "메시지를 가져오는 중 오류가 발생했습니다."
 
-#: sendlaterjob.cpp:82
+#: sendlaterjob.cpp:83
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "메시지를 가져올 수 없습니다. %1"
 
-#: sendlaterjob.cpp:87
+#: sendlaterjob.cpp:88
 #, kde-format
 msgid "We can't create transport"
 msgstr "전송을 만들 수 없음"
 
-#: sendlaterjob.cpp:94
+#: sendlaterjob.cpp:95
 #, kde-format
 msgid "Message is not a real message"
 msgstr "메시지가 실제 메시지가 아님"
 
-#: sendlaterjob.cpp:101
+#: sendlaterjob.cpp:102
 #, kde-format
 msgid "Cannot send message."
 msgstr "메시지를 보낼 수 없습니다."
 
-#: sendlaterjob.cpp:132
+#: sendlaterjob.cpp:131
 #, kde-format
 msgid "Message sent"
 msgstr "메시지 보냄"
 
-#: sendlatermanager.cpp:189
+#: sendlatermanager.cpp:190
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "오류가 발생했습니다. 메시지를 다시 보내시겠습니까?"
 
-#: sendlatermanager.cpp:190
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "오류 발생"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:192
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

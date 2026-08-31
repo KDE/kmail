@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2024-08-18 17:33+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -101,58 +101,58 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "நீக்காதே"
 
-#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
 #, kde-format
 msgid "Not message found."
 msgstr "அஞ்சல் கண்டுபிடிக்கப்படவில்லை."
 
-#: sendlaterjob.cpp:67
+#: sendlaterjob.cpp:68
 #, kde-format
 msgid "No message found."
 msgstr "அஞ்சல் கண்டுபிடிக்கப்படவில்லை."
 
-#: sendlaterjob.cpp:76
+#: sendlaterjob.cpp:77
 #, kde-format
 msgid "Error during fetching message."
 msgstr "அஞ்சலை மீட்டெடுப்பதில் சிக்கல்"
 
-#: sendlaterjob.cpp:82
+#: sendlaterjob.cpp:83
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "அஞ்சலை மீட்டெடுக்க முடியவில்லை. %1"
 
-#: sendlaterjob.cpp:87
+#: sendlaterjob.cpp:88
 #, kde-format
 msgid "We can't create transport"
 msgstr "பரிமாற்றநிரலை (transport-ஐ) உருவாக்க முடியவில்லை"
 
-#: sendlaterjob.cpp:94
+#: sendlaterjob.cpp:95
 #, kde-format
 msgid "Message is not a real message"
 msgstr "மீட்டெடுத்த உருப்படி அஞ்சல‍ல்ல"
 
-#: sendlaterjob.cpp:101
+#: sendlaterjob.cpp:102
 #, kde-format
 msgid "Cannot send message."
 msgstr "அஞ்சலை அனுப்ப முடியவில்லை."
 
-#: sendlaterjob.cpp:132
+#: sendlaterjob.cpp:131
 #, kde-format
 msgid "Message sent"
 msgstr "அஞ்சல் அனுப்பப்பட்டது"
 
-#: sendlatermanager.cpp:189
+#: sendlatermanager.cpp:190
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "சிக்கல் நேர்ந்த‍து. அஞ்சலை மீண்டும் அனுப்ப வேண்டுமா?"
 
-#: sendlatermanager.cpp:190
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "சிக்கல் நேர்ந்த‍து"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:192
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

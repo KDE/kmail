@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2024-06-20 22:00+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -27,44 +27,44 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Kde-l10n-ta@kde.org"
 
-#: main.cpp:28 main.cpp:30
+#: main.cpp:30 main.cpp:32
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
 msgstr "கேமெயில் அமைப்புகளை புதுப்பிக்கும் உதவிநிரல்"
 
-#: main.cpp:32
+#: main.cpp:34
 #, kde-format
 msgid "© 2019-2026 Laurent Montel <montel@kde.org>"
 msgstr ""
 
-#: main.cpp:33
+#: main.cpp:35
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "லாரெண்டு மாண்டெல்"
 
-#: main.cpp:33
+#: main.cpp:35
 #, kde-format
 msgid "Author"
 msgstr "இயற்றியவர்"
 
-#: refreshsettingsassistant.cpp:22
+#: refreshsettingsassistant.cpp:23
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Refresh Settings"
 msgstr "கேமெயில் அமைப்புகளை புதுப்பிப்பது"
 
-#: refreshsettingsassistant.cpp:40
+#: refreshsettingsassistant.cpp:41
 #, kde-format
 msgid "Warning"
 msgstr "எச்சரிக்கை"
 
-#: refreshsettingsassistant.cpp:44
+#: refreshsettingsassistant.cpp:45
 #, kde-format
 msgid "Clean up Settings"
 msgstr "சுத்தம் செய்வதற்கான அமைப்புகள்"
 
-#: refreshsettingsassistant.cpp:48
+#: refreshsettingsassistant.cpp:49
 #, kde-format
 msgid "Finish"
 msgstr "முடி"

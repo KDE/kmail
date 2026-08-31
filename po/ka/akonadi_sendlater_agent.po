@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2025-08-20 08:06+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -102,58 +102,58 @@ msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "არ წაშალო"
 
-#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
+#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
 #, kde-format
 msgid "Not message found."
 msgstr "შეტყობინებების გარეშე."
 
-#: sendlaterjob.cpp:67
+#: sendlaterjob.cpp:68
 #, kde-format
 msgid "No message found."
 msgstr "შეტყობინებების გარეშე."
 
-#: sendlaterjob.cpp:76
+#: sendlaterjob.cpp:77
 #, kde-format
 msgid "Error during fetching message."
 msgstr "შეცდომა შეტყობინების გამოთხოვისას."
 
-#: sendlaterjob.cpp:82
+#: sendlaterjob.cpp:83
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "შეტყობინების გამოთხოვის შეცდომა. %1"
 
-#: sendlaterjob.cpp:87
+#: sendlaterjob.cpp:88
 #, kde-format
 msgid "We can't create transport"
 msgstr "ტრანსპორტის შექმნის შეცდომა"
 
-#: sendlaterjob.cpp:94
+#: sendlaterjob.cpp:95
 #, kde-format
 msgid "Message is not a real message"
 msgstr "შეტყობინება ნამდვილ შეტყობინებას არ წარმოადგენს"
 
-#: sendlaterjob.cpp:101
+#: sendlaterjob.cpp:102
 #, kde-format
 msgid "Cannot send message."
 msgstr "შეტყობინების გაგზავნა შეუძლებელია."
 
-#: sendlaterjob.cpp:132
+#: sendlaterjob.cpp:131
 #, kde-format
 msgid "Message sent"
 msgstr "შეტყობინება გაგზავნილია"
 
-#: sendlatermanager.cpp:189
+#: sendlatermanager.cpp:190
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
 msgstr "ნაპოვნია შეცდომა. მაინც გნებავთ მისი თავიდან გაგზავნა?"
 
-#: sendlatermanager.cpp:190
+#: sendlatermanager.cpp:191
 #, kde-format
 msgctxt "@title:window"
 msgid "Error found"
 msgstr "ნაპოვნია შეცდომა"
 
-#: sendlatermanager.cpp:191
+#: sendlatermanager.cpp:192
 #, kde-format
 msgctxt "@action:button"
 msgid "Resend"

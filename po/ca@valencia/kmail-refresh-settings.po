@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2026-06-23 08:42+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -30,44 +30,44 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "antonibella5@yahoo.com"
 
-#: main.cpp:28 main.cpp:30
+#: main.cpp:30 main.cpp:32
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
 msgstr "Assistent de KMail per a actualitzar la configuració"
 
-#: main.cpp:32
+#: main.cpp:34
 #, kde-format
 msgid "© 2019-2026 Laurent Montel <montel@kde.org>"
 msgstr "© 2019-2026 Laurent Montel <montel@kde.org>"
 
-#: main.cpp:33
+#: main.cpp:35
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "Laurent Montel"
 
-#: main.cpp:33
+#: main.cpp:35
 #, kde-format
 msgid "Author"
 msgstr "Autoria"
 
-#: refreshsettingsassistant.cpp:22
+#: refreshsettingsassistant.cpp:23
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Refresh Settings"
 msgstr "Actualització de la configuració de KMail"
 
-#: refreshsettingsassistant.cpp:40
+#: refreshsettingsassistant.cpp:41
 #, kde-format
 msgid "Warning"
 msgstr "Avís"
 
-#: refreshsettingsassistant.cpp:44
+#: refreshsettingsassistant.cpp:45
 #, kde-format
 msgid "Clean up Settings"
 msgstr "Neteja la configuració"
 
-#: refreshsettingsassistant.cpp:48
+#: refreshsettingsassistant.cpp:49
 #, kde-format
 msgid "Finish"
 msgstr "Finalitza"

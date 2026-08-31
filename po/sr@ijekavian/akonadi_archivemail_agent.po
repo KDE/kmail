@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_archivemail_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2018-01-06 09:21+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -178,12 +178,12 @@ msgid ""
 msgstr ""
 "Не могу да додам другу архиву за ову фасциклу. Уместо тога мењам постојећу."
 
-#: job/archivejob.cpp:58
+#: job/archivejob.cpp:59
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr "Фасцикла не постоји. Проверите поставке. Архивирање одложено."
 
-#: job/archivejob.cpp:75
+#: job/archivejob.cpp:76
 #, kde-format
 msgid "Start to archive %1"
 msgstr "Почело архивирање %1"

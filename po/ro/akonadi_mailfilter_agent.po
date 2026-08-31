@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2013-01-13 21:56+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr ""
 
-#: filterlogdialog.cpp:46
+#: filterlogdialog.cpp:47
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Vizualizor jurnal filtre"
 
-#: filterlogdialog.cpp:68
+#: filterlogdialog.cpp:69
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Jurna&lizează activitățile filtrelor"
 
-#: filterlogdialog.cpp:73
+#: filterlogdialog.cpp:74
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -47,26 +47,26 @@ msgstr ""
 "filtrelor. Desigur, datele jurnalului sunt colectate și afișate numai când "
 "jurnalizarea e activată. "
 
-#: filterlogdialog.cpp:94
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "Detalii jurnalizare"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:102
 #, fuzzy, kde-format
 #| msgid "Log pattern description"
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Descrierea modelului de jurnalizare"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:107
 #, fuzzy, kde-format
 #| msgid "Log filter &rule evaluation"
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Evaluare &reguli de jurnalizare a filtrelor"
 
-#: filterlogdialog.cpp:111
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -81,39 +81,39 @@ msgstr ""
 "furnizat numai feedback-ul despre rezultatul evaluării tuturor regulilor "
 "unui singur filtru."
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:119
 #, fuzzy, kde-format
 #| msgid "Log filter pattern evaluation"
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Evaluare model de jurnalizare a filtrelor"
 
-#: filterlogdialog.cpp:123
+#: filterlogdialog.cpp:124
 #, fuzzy, kde-format
 #| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Jurnalizează acțiunile filtrelor"
 
-#: filterlogdialog.cpp:133
+#: filterlogdialog.cpp:134
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Limită de dimensiune jurnal:"
 
-#: filterlogdialog.cpp:141
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr ""
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "nelimitat"
 
-#: filterlogdialog.cpp:145
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -126,7 +126,7 @@ msgstr ""
 "dimensiunea datelor de jurnal colectate depășește această limită, atunci "
 "cele mai vechi date vor fi aruncate până nu se mai depășește limita. "
 
-#: filterlogdialog.cpp:323
+#: filterlogdialog.cpp:324
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -135,7 +135,7 @@ msgstr ""
 "Nu s-a putut scrie în fișierul %1:\n"
 "„%2” este descrierea detaliată a erorii."
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:328
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

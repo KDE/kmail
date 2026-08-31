@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2025-01-09 16:15+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -259,17 +259,17 @@ msgctxt "@title:column file size"
 msgid "Size"
 msgstr "Boyut"
 
-#: main.cpp:30
+#: main.cpp:32
 #, kde-format
 msgid "KTnef"
 msgstr "KTnef"
 
-#: main.cpp:32
+#: main.cpp:34
 #, kde-format
 msgid "Viewer for mail attachments using TNEF format"
 msgstr "TNEF biçimi kullanan posta ekleri için görüntüleyici"
 
-#: main.cpp:34
+#: main.cpp:36
 #, kde-format
 msgid ""
 "Copyright 2000 Michael Goffioul \n"
@@ -278,29 +278,29 @@ msgstr ""
 "Telif hakkı 2000 Michael Goffioul \n"
 "Telif hakkı 2012 Allen Winter"
 
-#: main.cpp:36
+#: main.cpp:38
 #, kde-format
 msgctxt "@info:credit"
 msgid "Michael Goffioul"
 msgstr "Michael Goffioul"
 
-#: main.cpp:36
+#: main.cpp:38
 #, kde-format
 msgid "Author"
 msgstr "Yazar"
 
-#: main.cpp:38
+#: main.cpp:40
 #, kde-format
 msgctxt "@info:credit"
 msgid "Allen Winter"
 msgstr "Allen Winter"
 
-#: main.cpp:38
+#: main.cpp:40
 #, kde-format
 msgid "Author, Ported to Qt4/KDE4"
 msgstr "Yazar, Qt4/KDE4’e geçiş"
 
-#: main.cpp:45
+#: main.cpp:47
 #, kde-format
 msgid "An optional argument 'file' "
 msgstr "“file” isteğe bağlı argümanı"

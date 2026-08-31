@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2014-03-17 20:32+0200\n"
 "Last-Translator: Liudas Ališauskas <liudas@aksioma.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -21,53 +21,53 @@ msgstr ""
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 "X-Generator: Lokalize 1.5\n"
 
-#: filterlogdialog.cpp:44
+#: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr ""
 
-#: filterlogdialog.cpp:46
+#: filterlogdialog.cpp:47
 #, fuzzy, kde-format
 #| msgid "Filter Log Viewer"
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Filtrų žurnalo žiūryklė..."
 
-#: filterlogdialog.cpp:68
+#: filterlogdialog.cpp:69
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Registruoti filtro veiklas"
 
-#: filterlogdialog.cpp:73
+#: filterlogdialog.cpp:74
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
 "data is collected and shown only when logging is turned on. "
 msgstr ""
 
-#: filterlogdialog.cpp:94
+#: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
 msgstr "Registravimo informacija"
 
-#: filterlogdialog.cpp:101
+#: filterlogdialog.cpp:102
 #, fuzzy, kde-format
 #| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Registruoti filtro veiksmus"
 
-#: filterlogdialog.cpp:106
+#: filterlogdialog.cpp:107
 #, fuzzy, kde-format
 #| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Registruoti filtro veiksmus"
 
-#: filterlogdialog.cpp:111
+#: filterlogdialog.cpp:112
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -77,39 +77,39 @@ msgid ""
 "given."
 msgstr ""
 
-#: filterlogdialog.cpp:118
+#: filterlogdialog.cpp:119
 #, fuzzy, kde-format
 #| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Registruoti filtro veiksmus"
 
-#: filterlogdialog.cpp:123
+#: filterlogdialog.cpp:124
 #, fuzzy, kde-format
 #| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Registruoti filtro veiksmus"
 
-#: filterlogdialog.cpp:133
+#: filterlogdialog.cpp:134
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Registro dydžio riba:"
 
-#: filterlogdialog.cpp:141
+#: filterlogdialog.cpp:142
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:143
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "neribotas"
 
-#: filterlogdialog.cpp:145
+#: filterlogdialog.cpp:146
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -118,14 +118,14 @@ msgid ""
 "until the limit is no longer exceeded. "
 msgstr ""
 
-#: filterlogdialog.cpp:323
+#: filterlogdialog.cpp:324
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
 "\"%2\" is the detailed error description."
 msgstr ""
 
-#: filterlogdialog.cpp:327
+#: filterlogdialog.cpp:328
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"

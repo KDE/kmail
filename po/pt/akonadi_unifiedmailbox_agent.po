@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-08-31 00:44+0000\n"
 "PO-Revision-Date: 2021-06-25 10:31+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -12,75 +12,75 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: settingsdialog.cpp:54
+#: settingsdialog.cpp:55
 #, fuzzy, kde-format
 #| msgid "Add"
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Adicionar"
 
-#: settingsdialog.cpp:69
+#: settingsdialog.cpp:70
 #, fuzzy, kde-format
 #| msgid "Modify"
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Modificar"
 
-#: settingsdialog.cpp:90
+#: settingsdialog.cpp:91
 #, kde-format
 msgid "Remove"
 msgstr "Remover"
 
-#: settingsdialog.cpp:100
+#: settingsdialog.cpp:101
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Deseja realmente remover a caixa de correio unificada <b>%1</b>?"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:102
 #, fuzzy, kde-format
 #| msgid "Really Remove?"
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Deseja Realmente Remover?"
 
-#: settingsdialog.cpp:127
+#: settingsdialog.cpp:128
 #, fuzzy, kde-format
 #| msgid "Add"
 msgctxt "@action"
 msgid "Add"
 msgstr "Adicionar"
 
-#: settingsdialog.cpp:131
+#: settingsdialog.cpp:132
 #, fuzzy, kde-format
 #| msgid "Modify"
 msgctxt "@action"
 msgid "Modify"
 msgstr "Modificar"
 
-#: settingsdialog.cpp:133
+#: settingsdialog.cpp:134
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
 msgid "Remove"
 msgstr "Remover"
 
-#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:134
+#: unifiedmailboxagent.cpp:46 unifiedmailboxagent.cpp:135
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr "Caixas de Correio Unificadas"
 
-#: unifiedmailboxagent.cpp:174
+#: unifiedmailboxagent.cpp:175
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr "A sincronizar a caixa de correio unificada %1"
 
-#: unifiedmailboxeditor.cpp:86
+#: unifiedmailboxeditor.cpp:87
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "Configurar a Caixa de Correio Unificada"
 
-#: unifiedmailboxeditor.cpp:98
+#: unifiedmailboxeditor.cpp:99
 #, kde-format
 msgid "Name:"
 msgstr "Nome:"
