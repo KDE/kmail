@@ -387,10 +387,15 @@ void MessageActions::slotUpdateActionsFetchDone(KJob *job)
     }
 
     auto fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
-    if (!fetchJob || fetchJob->items().isEmpty()) {
+    if (!fetchJob) {
         return;
     }
-    if (const Akonadi::Item messageItem = fetchJob->items().constFirst(); messageItem == mCurrentItem) {
+    const auto items = fetchJob->items();
+    if (items.isEmpty()) {
+        return;
+    }
+
+    if (const Akonadi::Item messageItem = items.constFirst(); messageItem == mCurrentItem) {
         mCurrentItem = messageItem;
         updateMailingListActions(messageItem);
     }
