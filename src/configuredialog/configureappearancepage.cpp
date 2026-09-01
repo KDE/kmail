@@ -297,18 +297,18 @@ QString AppearancePageColorsTab::helpAnchor() const
 static const struct {
     const char *configName;
     const KLazyLocalizedString displayName;
-} colorNames[] = { // adjust doLoadOther if you change this:
-    {"QuotedText1", kli18n("Quoted Text - First Level")},
-    {"QuotedText2", kli18n("Quoted Text - Second Level")},
-    {"QuotedText3", kli18n("Quoted Text - Third Level")},
-    {"LinkColor", kli18n("Link")},
-    {"UnreadMessageColor", kli18n("Unread Message")},
-    {"ImportantMessageColor", kli18n("Important Message")},
-    {"TodoMessageColor", kli18n("Action Item Message")},
-    {"ColorbarBackgroundPlain", kli18n("HTML Status Bar Background - No HTML Message")},
-    {"ColorbarForegroundPlain", kli18n("HTML Status Bar Foreground - No HTML Message")},
-    {"ColorbarBackgroundHTML", kli18n("HTML Status Bar Background - HTML Message")},
-    {"ColorbarForegroundHTML", kli18n("HTML Status Bar Foreground - HTML Message")}};
+} colorNames[] = {// adjust doLoadOther if you change this:
+                  {"QuotedText1", kli18n("Quoted Text - First Level")},
+                  {"QuotedText2", kli18n("Quoted Text - Second Level")},
+                  {"QuotedText3", kli18n("Quoted Text - Third Level")},
+                  {"LinkColor", kli18n("Link")},
+                  {"UnreadMessageColor", kli18n("Unread Message")},
+                  {"ImportantMessageColor", kli18n("Important Message")},
+                  {"TodoMessageColor", kli18n("Action Item Message")},
+                  {"ColorbarBackgroundPlain", kli18n("HTML Status Bar Background - No HTML Message")},
+                  {"ColorbarForegroundPlain", kli18n("HTML Status Bar Foreground - No HTML Message")},
+                  {"ColorbarBackgroundHTML", kli18n("HTML Status Bar Background - HTML Message")},
+                  {"ColorbarForegroundHTML", kli18n("HTML Status Bar Foreground - HTML Message")}};
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
 AppearancePageColorsTab::AppearancePageColorsTab(QWidget *parent)
