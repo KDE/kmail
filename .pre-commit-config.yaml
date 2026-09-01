@@ -54,3 +54,11 @@ repos:
    rev: v3.13.1-1
    hooks:
     - id: shfmt
+ - repo: https://github.com/efrecon/pre-commit-hook-lxml
+   rev: v0.1.4
+   hooks:
+    - id: format-xml
+      args: [--declaration=double-quotes,--self-closing=nospace,--indent=2,--write]
+      exclude: (/autotests/)
+      files: \.(xml|kcfg)$
+      types: []

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
-      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
   <include>QFontDatabase</include>
   <include>kcolorscheme.h</include>
   <include>editor/composer.h</include>
@@ -10,432 +7,406 @@
   <include>KCompletion</include>
   <kcfgfile name="kmail2rc"/>
   <group name="Behaviour">
-      <entry name="ActionEnterFolder"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="SelectFirstUnread"/>
-          <choice name="SelectLastSelected"/>
-          <choice name="SelectNewest"/>
-          <choice name="SelectOldest"/>
-        </choices>
-        <default>SelectLastSelected</default>
-      </entry>
-      <entry name="NetworkState"  type="Enum">
-        <choices>
-          <choice name="Online"/>
-          <choice name="Offline"/>
-        </choices>
-        <default>Online</default>
-      </entry>
-      <entry name="LoopOnGotoUnread"  type="Enum">
-        <label></label>
-        <whatsthis></whatsthis>
-        <choices>
-          <choice name="DontLoop"/>
-          <choice name="LoopInCurrentFolder"/>
-          <choice name="LoopInAllFolders"/>
-          <choice name="LoopInAllMarkedFolders"/>
-        </choices>
-        <default>DontLoop</default>
-      </entry>
-      <entry name="EnableFolderDnD"  type="Bool">
-        <label></label>
-        <whatsthis></whatsthis>
-        <default>true</default>
-      </entry>
-      <entry name="ShowPopupAfterDnD"  type="Bool">
-        <label></label>
-        <whatsthis></whatsthis>
-        <default>true</default>
-      </entry>
-      <entry name="ExcludeImportantMailFromExpiry"  type="Bool">
-        <label></label>
-        <whatsthis>This prevents the automatic expiry of old messages in a folder from deleting (or moving to an archive folder) the messages that are marked 'Important' or 'Action Item'</whatsthis>
-        <default>true</default>
-      </entry>
-      <entry name="AllowLocalFlags" type="Bool">
-        <label>Allow local flags in read-only folders</label>
-        <default>false</default>
-      </entry>
-
-
-      <entry name="SendOnCheck"  type="Enum">
-        <label>Send queued mail on mail check</label>
-        <whatsthis>&lt;qt&gt;&lt;p&gt;Select whether you want KMail to send all messages in the outbox on manual or all mail checks, or whether you do not want messages to be sent automatically at all. &lt;/p&gt;&lt;/qt&gt;</whatsthis>
-        <choices>
-          <choice name="DontSendOnCheck"/>
-          <choice name="SendOnManualChecks"/>
-          <choice name="SendOnAllChecks"/>
-        </choices>
-        <default>DontSendOnCheck</default>
-      </entry>
-    </group>
-
-    <group name="FolderSelectionDialog">
-      <entry name="LastSelectedFolder" type="LongLong">
-        <whatsthis>The most recently selected folder in the folder selection dialog.</whatsthis>
-        <default>-1</default>
-      </entry>
-
-    </group>
-
-    <group name="General">
-      <entry key="PlasmaActivitySupport" type="Bool">
-         <default>false</default>
-      </entry>
-      <entry name="WarnBeforeExpire" type="Bool" key="warn-before-expire">
-        <default>true</default>
-      </entry>
-      <entry name="SystemTrayEnabled" type="Bool">
-        <label>Enable system tray icon</label>
-        <default>false</default>
-      </entry>
-      <entry name="StartInTray" type="Bool">
-        <label>Start minimized to tray</label>
-        <default>false</default>
-      </entry>
-      <entry name="ShowUnreadInTaskbar" type="Bool">
+    <entry name="ActionEnterFolder" type="Enum">
+      <label/>
+      <whatsthis/>
+      <choices>
+        <choice name="SelectFirstUnread"/>
+        <choice name="SelectLastSelected"/>
+        <choice name="SelectNewest"/>
+        <choice name="SelectOldest"/>
+      </choices>
+      <default>SelectLastSelected</default>
+    </entry>
+    <entry name="NetworkState" type="Enum">
+      <choices>
+        <choice name="Online"/>
+        <choice name="Offline"/>
+      </choices>
+      <default>Online</default>
+    </entry>
+    <entry name="LoopOnGotoUnread" type="Enum">
+      <label/>
+      <whatsthis/>
+      <choices>
+        <choice name="DontLoop"/>
+        <choice name="LoopInCurrentFolder"/>
+        <choice name="LoopInAllFolders"/>
+        <choice name="LoopInAllMarkedFolders"/>
+      </choices>
+      <default>DontLoop</default>
+    </entry>
+    <entry name="EnableFolderDnD" type="Bool">
+      <label/>
+      <whatsthis/>
+      <default>true</default>
+    </entry>
+    <entry name="ShowPopupAfterDnD" type="Bool">
+      <label/>
+      <whatsthis/>
+      <default>true</default>
+    </entry>
+    <entry name="ExcludeImportantMailFromExpiry" type="Bool">
+      <label/>
+      <whatsthis>This prevents the automatic expiry of old messages in a folder from deleting (or moving to an archive folder) the messages that are marked 'Important' or 'Action Item'</whatsthis>
+      <default>true</default>
+    </entry>
+    <entry name="AllowLocalFlags" type="Bool">
+      <label>Allow local flags in read-only folders</label>
+      <default>false</default>
+    </entry>
+    <entry name="SendOnCheck" type="Enum">
+      <label>Send queued mail on mail check</label>
+      <whatsthis>&lt;qt&gt;&lt;p&gt;Select whether you want KMail to send all messages in the outbox on manual or all mail checks, or whether you do not want messages to be sent automatically at all. &lt;/p&gt;&lt;/qt&gt;</whatsthis>
+      <choices>
+        <choice name="DontSendOnCheck"/>
+        <choice name="SendOnManualChecks"/>
+        <choice name="SendOnAllChecks"/>
+      </choices>
+      <default>DontSendOnCheck</default>
+    </entry>
+  </group>
+  <group name="FolderSelectionDialog">
+    <entry name="LastSelectedFolder" type="LongLong">
+      <whatsthis>The most recently selected folder in the folder selection dialog.</whatsthis>
+      <default>-1</default>
+    </entry>
+  </group>
+  <group name="General">
+    <entry key="PlasmaActivitySupport" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="WarnBeforeExpire" type="Bool" key="warn-before-expire">
+      <default>true</default>
+    </entry>
+    <entry name="SystemTrayEnabled" type="Bool">
+      <label>Enable system tray icon</label>
+      <default>false</default>
+    </entry>
+    <entry name="StartInTray" type="Bool">
+      <label>Start minimized to tray</label>
+      <default>false</default>
+    </entry>
+    <entry name="ShowUnreadInTaskbar" type="Bool">
       <label>Show Unread Email in TaskBar</label>
-        <default>true</default>
+      <default>true</default>
+    </entry>
+    <entry name="ExternalEditor" type="String" key="external-editor">
+      <label>Specify e&amp;ditor:</label>
+      <default>kwrite %f</default>
+    </entry>
+    <entry name="UseExternalEditor" type="Bool" key="use-external-editor">
+      <label>Use e&amp;xternal editor instead of composer</label>
+      <default>false</default>
+    </entry>
+    <entry name="CustomMessageHeadersCount" type="Int" key="mime-header-count">
       </entry>
-      <entry name="ExternalEditor" type="String" key="external-editor">
-        <label>Specify e&amp;ditor:</label>
-        <default>kwrite %f</default>
-      </entry>
-      <entry name="UseExternalEditor" type="Bool" key="use-external-editor">
-        <label>Use e&amp;xternal editor instead of composer</label>
-        <default>false</default>
-      </entry>
-      <entry name="CustomMessageHeadersCount" type="Int" key="mime-header-count">
-      </entry>
-      <entry name="CloseToQuotaThreshold" type="Int">
-        <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
-         <default>80</default>
-      </entry>
-      <entry name="EmptyTrashOnExit" type="Bool" key="empty-trash-on-exit">
-        <label>Empty the local trash folder on program exit</label>
-        <default>false</default>
-      </entry>
-      <entry name="DeleteMessageWithoutConfirmation" type="Bool" key="delete-messages-without-confirmation">
-        <label>Delete messages without confirmation</label>
-        <default>false</default>
-      </entry>
-      <entry name="StartSpecificFolderAtStartup" type="Bool" key="startSpecificFolderAtStatup">
-        <label>Allow to start specific folder</label>
-        <default>true</default>
-      </entry>
-      <entry name="StartupFolder" type="LongLong" key="startupFolder">
-        <label>Specify the folder to open when the program is started</label>
-        <default>-1</default>
-      </entry>
-      <entry name="CheckCollectionsIndexing" type="Bool" key="check-collections-indexing">
-        <default>true</default>
-      </entry>
-      <entry name="AutoExpiring" type="Bool" key="auto-expiring">
-        <default>true</default>
-      </entry>
-      <entry name="FirstStart" type="Bool" key="first-start">
-        <default>true</default>
-      </entry>
-      <entry key="ShowMenuBar" type="Bool">
-        <default>true</default>
-         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
-        <label></label>
-        <whatsthis></whatsthis>
-      </entry>
-
-      <entry key="ReaderShowMenuBar" type="Bool">
-        <default>true</default>
-         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
-        <label></label>
-        <whatsthis></whatsthis>
-      </entry>
-
-      <entry key="ComposerShowMenuBar" type="Bool">
-        <default>true</default>
-         <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
-        <label></label>
-        <whatsthis></whatsthis>
-      </entry>
-      <entry key="AskEnableUnifiedMailboxes" type="Bool">
-        <default>true</default>
-        <label>Whether to ask if users wants to enable Unified Mailboxes if more than one email accounts are detected. We only ever ask once.</label>
-      </entry>
-    </group>
-<!-- General -->
-
-
-    <group name="Internal">
-      <entry name="PreviousNewFeaturesMD5" type="String" hidden="true">
-        <whatsthis>This value is used to decide whether the KMail Introduction should be displayed.</whatsthis>
-        <default></default>
-      </entry>
-    </group>
-
-    <group name="UserInterface">
-      <entry name="EnableFolderQuickSearch" type="Bool">
-        <label>Show folder quick search line edit</label>
-        <default>false</default>
-      </entry>
-    </group>
-
-    <group name="Composer">
-      <entry name="ForwardingInlineByDefault" type="Bool">
-        <default>false</default>
-        <label>Forward Inline As Default.</label>
-      </entry>
-       <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
-        <label>Warn if the number of recipients is more than:</label>
-        <default>false</default>
-        <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
-      </entry>
-      <entry name="RecipientThreshold" type="Int" key="recipient-threshold">
-        <label></label>
-        <default>5</default>
-        <min>1</min>
-        <max>100</max>
-        <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
-     </entry>
-     <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
-      <entry name="PreviousFcc" type="String" key="previous-fcc" />
-      <entry name="PreviousDictionary" type="String" />
-      <entry name="CurrentTransport" type="String" key="current-transport" />
-      <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
-        <default>false</default>
-      </entry>
-      <entry name="AlwaysEncryptDrafts" type="Bool" key="always-encrypt-drafts">
-        <default>true</default>
-      </entry>
-
-      <entry name="ConfirmBeforeSend" type="Bool" key="confirm-before-send">
-        <label>Confirm &amp;before send</label>
-        <default>false</default>
-      </entry>
-      <entry name="ConfirmBeforeSendWhenUseShortcut" type="Bool" key="confirm-before-send-when-use-shortcut">
-         <default>false</default>
-      </entry>
-      <entry name="CheckSpellingBeforeSend" type="Bool" key="check-spelling-before-send">
+    <entry name="CloseToQuotaThreshold" type="Int">
+      <label>The threshold for when to warn the user that a folder is nearing its quota limit.</label>
+      <default>80</default>
+    </entry>
+    <entry name="EmptyTrashOnExit" type="Bool" key="empty-trash-on-exit">
+      <label>Empty the local trash folder on program exit</label>
+      <default>false</default>
+    </entry>
+    <entry name="DeleteMessageWithoutConfirmation" type="Bool" key="delete-messages-without-confirmation">
+      <label>Delete messages without confirmation</label>
+      <default>false</default>
+    </entry>
+    <entry name="StartSpecificFolderAtStartup" type="Bool" key="startSpecificFolderAtStatup">
+      <label>Allow to start specific folder</label>
+      <default>true</default>
+    </entry>
+    <entry name="StartupFolder" type="LongLong" key="startupFolder">
+      <label>Specify the folder to open when the program is started</label>
+      <default>-1</default>
+    </entry>
+    <entry name="CheckCollectionsIndexing" type="Bool" key="check-collections-indexing">
+      <default>true</default>
+    </entry>
+    <entry name="AutoExpiring" type="Bool" key="auto-expiring">
+      <default>true</default>
+    </entry>
+    <entry name="FirstStart" type="Bool" key="first-start">
+      <default>true</default>
+    </entry>
+    <entry key="ShowMenuBar" type="Bool">
+      <default>true</default>
+      <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+      <label/>
+      <whatsthis/>
+    </entry>
+    <entry key="ReaderShowMenuBar" type="Bool">
+      <default>true</default>
+      <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+      <label/>
+      <whatsthis/>
+    </entry>
+    <entry key="ComposerShowMenuBar" type="Bool">
+      <default>true</default>
+      <!-- label and whatsthis are already provided by KStandardAction::showMenubar -->
+      <label/>
+      <whatsthis/>
+    </entry>
+    <entry key="AskEnableUnifiedMailboxes" type="Bool">
+      <default>true</default>
+      <label>Whether to ask if users wants to enable Unified Mailboxes if more than one email accounts are detected. We only ever ask once.</label>
+    </entry>
+  </group>
+  <!-- General -->
+  <group name="Internal">
+    <entry name="PreviousNewFeaturesMD5" type="String" hidden="true">
+      <whatsthis>This value is used to decide whether the KMail Introduction should be displayed.</whatsthis>
+      <default/>
+    </entry>
+  </group>
+  <group name="UserInterface">
+    <entry name="EnableFolderQuickSearch" type="Bool">
+      <label>Show folder quick search line edit</label>
+      <default>false</default>
+    </entry>
+  </group>
+  <group name="Composer">
+    <entry name="ForwardingInlineByDefault" type="Bool">
+      <default>false</default>
+      <label>Forward Inline As Default.</label>
+    </entry>
+    <entry name="TooManyRecipients" type="Bool" key="too-many-recipients">
+      <label>Warn if the number of recipients is more than:</label>
+      <default>false</default>
+      <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
+    </entry>
+    <entry name="RecipientThreshold" type="Int" key="recipient-threshold">
+      <label/>
+      <default>5</default>
+      <min>1</min>
+      <max>100</max>
+      <whatsthis>If the number of recipients is larger than this value, KMail will warn and ask for a confirmation before sending the mail. The warning can be turned off.</whatsthis>
+    </entry>
+    <entry name="PreviousIdentity" type="UInt" key="previous-identity"/>
+    <entry name="PreviousFcc" type="String" key="previous-fcc"/>
+    <entry name="PreviousDictionary" type="String"/>
+    <entry name="CurrentTransport" type="String" key="current-transport"/>
+    <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
+      <default>false</default>
+    </entry>
+    <entry name="AlwaysEncryptDrafts" type="Bool" key="always-encrypt-drafts">
+      <default>true</default>
+    </entry>
+    <entry name="ConfirmBeforeSend" type="Bool" key="confirm-before-send">
+      <label>Confirm &amp;before send</label>
+      <default>false</default>
+    </entry>
+    <entry name="ConfirmBeforeSendWhenUseShortcut" type="Bool" key="confirm-before-send-when-use-shortcut">
+      <default>false</default>
+    </entry>
+    <entry name="CheckSpellingBeforeSend" type="Bool" key="check-spelling-before-send">
       <label>Check spelling before send</label>
-        <default>false</default>
-      </entry>
-      <entry name="RequestMDN" type="Bool" key="request-mdn">
-        <label>Automatically request &amp;message disposition notifications</label>
-        <whatsthis>&lt;qt&gt;&lt;p&gt;Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.&lt;/p&gt;&lt;p&gt;This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item &lt;em&gt;Options&lt;/em&gt;→&lt;em&gt;Request Disposition Notification&lt;/em&gt;.&lt;/p&gt;&lt;/qt&gt;</whatsthis>
-        <default>false</default>
-      </entry>
-      <entry name="Headers" type="Int" key="headers">
-        <default>KMail::Composer::HDR_SUBJECT|KMail::Composer::HDR_FROM</default>
-      </entry>
-      <entry name="CompletionMode" type="Int" key="Completion Mode">
-        <default code="true">KCompletion::CompletionPopup</default>
-      </entry>
-      <entry name="AutoSpellChecking" type="Bool" key="autoSpellChecking">
-        <default>true</default>
-      </entry>
-      <entry name="ShowForgottenAttachmentWarning" type="Bool" key="showForgottenAttachmentWarning">
-        <default>true</default>
-      </entry>
-      <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
-        <default code="true">
+      <default>false</default>
+    </entry>
+    <entry name="RequestMDN" type="Bool" key="request-mdn">
+      <label>Automatically request &amp;message disposition notifications</label>
+      <whatsthis>&lt;qt&gt;&lt;p&gt;Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.&lt;/p&gt;&lt;p&gt;This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item &lt;em&gt;Options&lt;/em&gt;→&lt;em&gt;Request Disposition Notification&lt;/em&gt;.&lt;/p&gt;&lt;/qt&gt;</whatsthis>
+      <default>false</default>
+    </entry>
+    <entry name="Headers" type="Int" key="headers">
+      <default>KMail::Composer::HDR_SUBJECT|KMail::Composer::HDR_FROM</default>
+    </entry>
+    <entry name="CompletionMode" type="Int" key="Completion Mode">
+      <default code="true">KCompletion::CompletionPopup</default>
+    </entry>
+    <entry name="AutoSpellChecking" type="Bool" key="autoSpellChecking">
+      <default>true</default>
+    </entry>
+    <entry name="ShowForgottenAttachmentWarning" type="Bool" key="showForgottenAttachmentWarning">
+      <default>true</default>
+    </entry>
+    <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
+      <default code="true">
         MessageComposer::Util::AttachmentKeywords()
         </default>
-      </entry>
-
-      <entry name="AutosaveInterval" type="Int" key="autosave">
-        <label>Autosave interval:</label>
-        <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
-        <default>2</default>
-      </entry>
-
-      <entry name="CustomTemplates" type="StringList" key="CustomTemplates" />
-
-      <entry name="ShowSnippetManager" type="Bool">
-          <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
-          <default>false</default>
-      </entry>
-      <entry name="SnippetSplitterPosition" type="IntList"/>
-
-      <entry name="CryptoStoreEncrypted" type="Bool" key="crypto-store-encrypted">
-        <label>When check, sent messages will be stored in the encrypted form</label>
-        <default>true</default>
-      </entry>
-      <entry name="RecentUrls" type="StringList" key="recent-urls">
-        <label>A list of all the recently used URLs</label>
-        <default code="true">
+    </entry>
+    <entry name="AutosaveInterval" type="Int" key="autosave">
+      <label>Autosave interval:</label>
+      <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
+      <default>2</default>
+    </entry>
+    <entry name="CustomTemplates" type="StringList" key="CustomTemplates"/>
+    <entry name="ShowSnippetManager" type="Bool">
+      <label>Show the Text Snippet Management and Insertion Panel in the composer.</label>
+      <default>false</default>
+    </entry>
+    <entry name="SnippetSplitterPosition" type="IntList"/>
+    <entry name="CryptoStoreEncrypted" type="Bool" key="crypto-store-encrypted">
+      <label>When check, sent messages will be stored in the encrypted form</label>
+      <default>true</default>
+    </entry>
+    <entry name="RecentUrls" type="StringList" key="recent-urls">
+      <label>A list of all the recently used URLs</label>
+      <default code="true">
         QStringList()
         </default>
-      </entry>
-      <entry name="RecentEncodings" type="StringList" key="recent-encoding">
-        <label>A list of all the recently used encodings</label>
-        <default code="true">
+    </entry>
+    <entry name="RecentEncodings" type="StringList" key="recent-encoding">
+      <label>A list of all the recently used encodings</label>
+      <default code="true">
         QStringList()
         </default>
-      </entry>
-      <entry name="ShowCryptoLabelIndicator" type="Bool">
-       <label>Show crypto label indicator</label>
-       <default>true</default>
-      </entry>
-      <entry name="CheckSendDefaultActionShortcut" type="Bool">
-       <label>Validate Send Default Shortcut</label>
-       <default>false</default>
-      </entry>
-    </group>
-<!-- Composer -->
-
-    <group name="Fonts">
-      <entry name="ComposerFont" type="Font" key="composer-font">
-        <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
-      </entry>
-    </group>
-
-    <group name="Geometry">
-      <entry name="ComposerSize" type="Size" key="composer">
-        <default>QSize(800,600)</default>
-      </entry>
-      <entry name="IdentityDialogSize" type="Size" key="Identity Dialog size">
-        <default>QSize()</default>
-      </entry>
-      <entry name="SearchWidgetWidth" type="Int">
-        <default>0</default>
-      </entry>
-      <entry name="SearchWidgetHeight" type="Int">
-        <default>0</default>
-      </entry>
-      <entry name="ConfigureDialogWidth" type="Int">
-        <default>800</default>
-      </entry>
-      <entry name="ConfigureDialogHeight" type="Int">
-        <default>600</default>
-      </entry>
-      <entry name="FolderViewWidth" type="Int">
-        <default>250</default>
-      </entry>
-      <entry name="FolderViewHeight" type="Int">
-        <default>500</default>
-      </entry>
-      <entry name="FolderTreeHeight" type="Int">
-        <default>400</default>
-      </entry>
-      <entry name="SearchAndHeaderHeight" type="Int">
-        <default>180</default>
-      </entry>
-      <entry name="SearchAndHeaderWidth" type="Int">
-        <default>450</default>
-      </entry>
-      <entry name="ReaderWindowWidth" type="Int">
-        <default>200</default>
-      </entry>
-      <entry name="ReaderWindowHeight" type="Int">
-        <default>320</default>
-      </entry>
-
-      <entry name="readerWindowMode" type="Enum">
-       <label>Message preview pane:</label>
-       <choices>
-         <choice name="hide">
-           <label>Do not show a message preview pane</label>
-         </choice>
-         <choice name="below">
-           <label>Show the message preview pane below the message list</label>
-         </choice>
-         <choice name="right">
-           <label>Show the message preview pane next to the message list</label>
-         </choice>
-       </choices>
-       <default>below</default>
-      </entry>
-
-      <entry name="FolderList" type="Enum">
-       <label>Folder list:</label>
-       <choices>
-         <choice name="longlist">
-           <label>Long folder list</label>
-         </choice>
-         <choice name="shortlist">
-           <label>Short folder list</label>
-         </choice>
-       </choices>
-       <default>longlist</default>
-      </entry>
-    </group>
-
+    </entry>
+    <entry name="ShowCryptoLabelIndicator" type="Bool">
+      <label>Show crypto label indicator</label>
+      <default>true</default>
+    </entry>
+    <entry name="CheckSendDefaultActionShortcut" type="Bool">
+      <label>Validate Send Default Shortcut</label>
+      <default>false</default>
+    </entry>
+  </group>
+  <!-- Composer -->
+  <group name="Fonts">
+    <entry name="ComposerFont" type="Font" key="composer-font">
+      <default code="true">QFontDatabase::systemFont(QFontDatabase::GeneralFont)</default>
+    </entry>
+  </group>
+  <group name="Geometry">
+    <entry name="ComposerSize" type="Size" key="composer">
+      <default>QSize(800,600)</default>
+    </entry>
+    <entry name="IdentityDialogSize" type="Size" key="Identity Dialog size">
+      <default>QSize()</default>
+    </entry>
+    <entry name="SearchWidgetWidth" type="Int">
+      <default>0</default>
+    </entry>
+    <entry name="SearchWidgetHeight" type="Int">
+      <default>0</default>
+    </entry>
+    <entry name="ConfigureDialogWidth" type="Int">
+      <default>800</default>
+    </entry>
+    <entry name="ConfigureDialogHeight" type="Int">
+      <default>600</default>
+    </entry>
+    <entry name="FolderViewWidth" type="Int">
+      <default>250</default>
+    </entry>
+    <entry name="FolderViewHeight" type="Int">
+      <default>500</default>
+    </entry>
+    <entry name="FolderTreeHeight" type="Int">
+      <default>400</default>
+    </entry>
+    <entry name="SearchAndHeaderHeight" type="Int">
+      <default>180</default>
+    </entry>
+    <entry name="SearchAndHeaderWidth" type="Int">
+      <default>450</default>
+    </entry>
+    <entry name="ReaderWindowWidth" type="Int">
+      <default>200</default>
+    </entry>
+    <entry name="ReaderWindowHeight" type="Int">
+      <default>320</default>
+    </entry>
+    <entry name="readerWindowMode" type="Enum">
+      <label>Message preview pane:</label>
+      <choices>
+        <choice name="hide">
+          <label>Do not show a message preview pane</label>
+        </choice>
+        <choice name="below">
+          <label>Show the message preview pane below the message list</label>
+        </choice>
+        <choice name="right">
+          <label>Show the message preview pane next to the message list</label>
+        </choice>
+      </choices>
+      <default>below</default>
+    </entry>
+    <entry name="FolderList" type="Enum">
+      <label>Folder list:</label>
+      <choices>
+        <choice name="longlist">
+          <label>Long folder list</label>
+        </choice>
+        <choice name="shortlist">
+          <label>Short folder list</label>
+        </choice>
+      </choices>
+      <default>longlist</default>
+    </entry>
+  </group>
   <group name="GlobalTemplates">
     <entry name="TemplateNewMessage" type="String" key="TemplateNewMessage">
       <label>Message template for new message</label>
-      <whatsthis></whatsthis>
+      <whatsthis/>
       <default code="true">TemplateParser::DefaultTemplates::defaultNewMessage()</default>
     </entry>
     <entry name="TemplateReply" type="String" key="TemplateReply">
       <label>Message template for reply</label>
-      <whatsthis></whatsthis>
+      <whatsthis/>
       <default code="true">TemplateParser::DefaultTemplates::defaultReply()</default>
     </entry>
     <entry name="TemplateReplyAll" type="String" key="TemplateReplyAll">
       <label>Message template for reply to all</label>
-      <whatsthis></whatsthis>
+      <whatsthis/>
       <default code="true">TemplateParser::DefaultTemplates::defaultReplyAll()</default>
     </entry>
     <entry name="TemplateForward" type="String" key="TemplateForward">
       <label>Message template for forward</label>
-      <whatsthis></whatsthis>
+      <whatsthis/>
       <default code="true">TemplateParser::DefaultTemplates::defaultForward()</default>
     </entry>
     <entry name="QuoteString" type="String" key="QuoteString">
       <label>Quote characters</label>
-      <whatsthis></whatsthis>
+      <whatsthis/>
       <default code="true">TemplateParser::DefaultTemplates::defaultQuoteString()</default>
     </entry>
   </group>
-
- <group name="Search">
-   <entry name="LastSearchCollectionId" type="LongLong">
-     <default>-1</default>
-   </entry>
- </group>
-
- <!-- Main Folder View settings -->
- <group name="MainFolderView">
+  <group name="Search">
+    <entry name="LastSearchCollectionId" type="LongLong">
+      <default>-1</default>
+    </entry>
+  </group>
+  <!-- Main Folder View settings -->
+  <group name="MainFolderView">
     <entry name="ToolTipDisplayPolicy" type="Int">
       <label>Specifies the policy used when displaying policy</label>
       <default>0</default>
     </entry>
- </group>
-
- <!-- Search Dialog settings -->
- <group name="SearchDialog">
-   <entry name="CollectionWidth" type="Int">
-     <default>150</default>
-   </entry>
-   <entry name="SubjectWidth" type="Int">
-     <default>150</default>
-   </entry>
-   <entry name="SenderWidth" type="Int">
-     <default>120</default>
-   </entry>
-   <entry name="ReceiverWidth" type="Int">
-     <default>120</default>
-   </entry>
-   <entry name="DateWidth" type="Int">
-     <default>120</default>
-   </entry>
-   <entry name="FolderWidth" type="Int">
-     <default>100</default>
-   </entry>
- </group>
-
- <group name="UndoSend">
-   <entry name="EnabledUndoSend" type="Bool">
-     <default>false</default>
-   </entry>
-   <entry name="UndoSendDelay" type="Int">
-     <default>10</default>
-   </entry>
- </group>
-
- <group name="Activities">
-   <entry name="EnabledActivities" type="Bool">
-     <default>false</default>
-   </entry>
- </group>
+  </group>
+  <!-- Search Dialog settings -->
+  <group name="SearchDialog">
+    <entry name="CollectionWidth" type="Int">
+      <default>150</default>
+    </entry>
+    <entry name="SubjectWidth" type="Int">
+      <default>150</default>
+    </entry>
+    <entry name="SenderWidth" type="Int">
+      <default>120</default>
+    </entry>
+    <entry name="ReceiverWidth" type="Int">
+      <default>120</default>
+    </entry>
+    <entry name="DateWidth" type="Int">
+      <default>120</default>
+    </entry>
+    <entry name="FolderWidth" type="Int">
+      <default>100</default>
+    </entry>
+  </group>
+  <group name="UndoSend">
+    <entry name="EnabledUndoSend" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="UndoSendDelay" type="Int">
+      <default>10</default>
+    </entry>
+  </group>
+  <group name="Activities">
+    <entry name="EnabledActivities" type="Bool">
+      <default>false</default>
+    </entry>
+  </group>
 </kcfg>
