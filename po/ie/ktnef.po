@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-01 00:46+0000\n"
 "PO-Revision-Date: 2024-08-01 21:41+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -271,8 +271,8 @@ msgstr "Complet supporte por archives del formate RAR"
 #: main.cpp:36
 #, fuzzy, kde-format
 msgid ""
-"Copyright 2000 Michael Goffioul \n"
-"Copyright 2012  Allen Winter"
+"© 2000 Michael Goffioul \n"
+"© 2012 Allen Winter"
 msgstr "Michael Goffioul"
 
 #: main.cpp:38

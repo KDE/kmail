@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-01 00:46+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -382,7 +382,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "मेलसूची-पोस्टिंग् कृते URL:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:459
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:464
 #, kde-format
 msgid "Subscribe to List"
 msgstr "सूची सदस्यता लें"
@@ -2082,7 +2082,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "मेनू-पट्टिकां गोपयन्तु"
 
-#: editor/kmcomposerwin.cpp:1679 editor/kmcomposerwin.cpp:4000
+#: editor/kmcomposerwin.cpp:1679 editor/kmcomposerwin.cpp:4002
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2343,56 +2343,63 @@ msgid "Send &Later"
 msgstr "प्रेषयतु &पश्चात्"
 
 #: editor/kmcomposerwin.cpp:3164
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "You are trying to send the mail to more than %1 recipients. Send message "
+#| "anyway?"
 msgid ""
+"You are trying to send the mail to more than %1 recipient. Send message "
+"anyway?"
+msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
-msgstr "भवान् %1 तः अधिकग्राहिभ्यः मेल प्रेषयितुं प्रयतते । तथापि सन्देशं प्रेषयन्तु?"
+msgstr[0] "भवान् %1 तः अधिकग्राहिभ्यः मेल प्रेषयितुं प्रयतते । तथापि सन्देशं प्रेषयन्तु?"
+msgstr[1] "भवान् %1 तः अधिकग्राहिभ्यः मेल प्रेषयितुं प्रयतते । तथापि सन्देशं प्रेषयन्तु?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3167
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "अत्यधिकं प्राप्तकर्ताः"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3168
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Is इति प्रेषयतु"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3169
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&सम्पादन प्राप्तकर्ता"
 
-#: editor/kmcomposerwin.cpp:3204
+#: editor/kmcomposerwin.cpp:3206
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "HTML मोड् निष्क्रियं कृत्वा पाठस्य स्वरूपणं नष्टं भविष्यति । किं त्वं निश्चिन्तः असि ?"
 
-#: editor/kmcomposerwin.cpp:3206
+#: editor/kmcomposerwin.cpp:3208
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "प्रारूपणं नष्टं करोति वा ?"
 
-#: editor/kmcomposerwin.cpp:3207
+#: editor/kmcomposerwin.cpp:3209
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "स्वरूपणं हारयतु"
 
-#: editor/kmcomposerwin.cpp:3208
+#: editor/kmcomposerwin.cpp:3210
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "मार्कअप सादा पाठं योजयन्तु"
 
-#: editor/kmcomposerwin.cpp:3415
+#: editor/kmcomposerwin.cpp:3417
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2401,7 +2408,7 @@ msgid ""
 msgstr ""
 "भवतः चयनितं PGP कीलम् (%1) भवतः कील-सङ्केते नास्ति अथवा गोपनार्थं उपयुक्तं नास्ति ।"
 
-#: editor/kmcomposerwin.cpp:3427
+#: editor/kmcomposerwin.cpp:3429
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2411,7 +2418,7 @@ msgstr ""
 "भवतां चयनितं PGP हस्ताक्षरकुंजी (%1) भवतः कीलमण्डले नास्ति अथवा हस्ताक्षरार्थं उपयुक्तं "
 "नास्ति ।"
 
-#: editor/kmcomposerwin.cpp:3442
+#: editor/kmcomposerwin.cpp:3444
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2420,7 +2427,7 @@ msgid ""
 msgstr ""
 "भवतः चयनितं SMIME कीलम् (%1) भवतः कील-सङ्केते नास्ति अथवा गोपनार्थं उपयुक्तं नास्ति ।"
 
-#: editor/kmcomposerwin.cpp:3454
+#: editor/kmcomposerwin.cpp:3456
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2430,25 +2437,25 @@ msgstr ""
 "भवतां चयनितं SMIME हस्ताक्षरकुंजी (%1) भवतः कीलबद्धे नास्ति अथवा हस्ताक्षरार्थं उपयुक्तं "
 "नास्ति ।"
 
-#: editor/kmcomposerwin.cpp:3623
+#: editor/kmcomposerwin.cpp:3625
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "एन्क्रिप्ट् कुर्वन्तु"
 
-#: editor/kmcomposerwin.cpp:3625
+#: editor/kmcomposerwin.cpp:3627
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "न एन्क्रिप्ट्"
 
-#: editor/kmcomposerwin.cpp:3765
+#: editor/kmcomposerwin.cpp:3767
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "प्राप्तकर्तुः कृते कोऽपि कुञ्जी न प्राप्यते।"
 
-#: editor/kmcomposerwin.cpp:3787
+#: editor/kmcomposerwin.cpp:3789
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2458,7 +2465,7 @@ msgstr ""
 "अस्य प्राप्तकर्तायाः कृते Autocrypt gossip key इत्यस्य उपयोगः भवति । अस्माभिः एतत् "
 "कुञ्जी तृतीयपक्षस्य प्राप्तिभ्यः प्राप्तम्। एतत् कुञ्जी सत्यापितं न भवति।"
 
-#: editor/kmcomposerwin.cpp:3791
+#: editor/kmcomposerwin.cpp:3793
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2468,7 +2475,7 @@ msgstr ""
 "अस्य प्राप्तकर्तायाः कृते Autocrypt कीलस्य उपयोगः भवति । एतत् कुञ्जी सत्यापितं न भवति। "
 "ग्राहकः एन्क्रिप्टेड् उत्तराणि प्राधान्यं ददाति ।"
 
-#: editor/kmcomposerwin.cpp:3795
+#: editor/kmcomposerwin.cpp:3797
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2478,7 +2485,7 @@ msgstr ""
 "अस्य प्राप्तकर्तायाः कृते Autocrypt कीलस्य उपयोगः भवति । एतत् कुञ्जी सत्यापितं न भवति। "
 "ग्राहकः एन्क्रिप्टेड् उत्तराणि न प्राधान्यं ददाति ।"
 
-#: editor/kmcomposerwin.cpp:3822
+#: editor/kmcomposerwin.cpp:3824
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2489,7 +2496,7 @@ msgstr ""
 "एन्क्रिप्शन-कुंजी न विश्वसिति । अस्य पर्याप्तं वैधता नास्ति। भवान् कीलस्य हस्ताक्षरं कर्तुं "
 "शक्नोति, यदि भवान् अन्येन चैनलेन अङ्गुलिचिह्नं संप्रेषितवान् । विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3830
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2502,7 +2509,7 @@ msgstr ""
 "कीलस्य उपयोगेन अधिकं विश्वासः भविष्यति। अथवा भवान् कीलस्य हस्ताक्षरं कर्तुं शक्नोति, यदि "
 "भवान् अन्येन चैनलेन अङ्गुलिचिह्नं संप्रेषितवान् । विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3838
+#: editor/kmcomposerwin.cpp:3840
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2512,7 +2519,7 @@ msgstr ""
 "एन्क्रिप्शन-कुंजी न विश्वसिति । अस्य परस्परविरोधी TOFU-दत्तांशः अस्ति । विवरणार्थं चिह्नं "
 "नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3844
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2522,7 +2529,7 @@ msgstr ""
 "एन्क्रिप्शन-कुंजी न विश्वसिति । TOFU दत्तांशेषु अस्य अज्ञातवैधता अस्ति । विवरणार्थं चिह्नं "
 "नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3852
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2531,7 +2538,7 @@ msgid ""
 msgstr ""
 "एन्क्रिप्शन-कुंजी न विश्वसिति । कीलः दुष्टः इति चिह्नितः अस्ति। विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3860
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2545,7 +2552,7 @@ msgstr ""
 "हस्ताक्षरं कर्तुं शक्नोति, यदि भवान् अन्येन चैनलेन अङ्गुलिचिह्नं संप्रेषितवान् । विवरणार्थं चिह्नं "
 "नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2555,7 +2562,7 @@ msgstr ""
 "एन्क्रिप्शन कुञ्जी केवलं सीमान्तरूपेण विश्वसिति । भवान् कीलस्य हस्ताक्षरं कर्तुं शक्नोति, यदि "
 "भवान् अन्येन चैनलेन अङ्गुलिचिह्नं संप्रेषितवान् । विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2569,7 +2576,7 @@ msgstr ""
 "भवान् कीलस्य हस्ताक्षरं कर्तुं शक्नोति, यदि भवान् अन्येन चैनलेन अङ्गुलिचिह्नं संप्रेषितवान् । "
 "विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3880
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2579,7 +2586,7 @@ msgstr ""
 "एन्क्रिप्शन कुञ्जी पूर्णतया विश्वसनीयः अस्ति । भवान् सुरक्षास्तरं उन्नतुं शक्नोति, कीलस्य "
 "हस्ताक्षरं कृत्वा । विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:3885
+#: editor/kmcomposerwin.cpp:3887
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2589,12 +2596,12 @@ msgstr ""
 "एन्क्रिप्शन-कुंजी अन्ततः विश्वसनीयं भवति अथवा अन्येन अन्ततः विश्वसनीयेन कीलेन हस्ताक्षरितम् "
 "अस्ति । विवरणार्थं चिह्नं नुदन्तु ।"
 
-#: editor/kmcomposerwin.cpp:4002
+#: editor/kmcomposerwin.cpp:4004
 #, kde-format
 msgid " Column: %1 "
 msgstr " स्तम्भः %1 "
 
-#: editor/kmcomposerwin.cpp:4217
+#: editor/kmcomposerwin.cpp:4219
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2611,12 +2618,12 @@ msgstr ""
 "उपयुक्तं प्रमाणपत्रं नास्ति तर्हि भवान् बाह्यप्रमाणपत्राणि अपि अन्वेष्टुं शक्नोति बटनं नुत्वा: "
 "बाह्यप्रमाणपत्राणि अन्वेष्टुम् ।</qt>"
 
-#: editor/kmcomposerwin.cpp:4229
+#: editor/kmcomposerwin.cpp:4231
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "एन्क्रिप्शन कुञ्जी चयनम्"
 
-#: editor/kmcomposerwin.cpp:4313
+#: editor/kmcomposerwin.cpp:4315
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -6140,68 +6147,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "संग्रह सन्देश"
 
-#: messageactions.cpp:402
+#: messageactions.cpp:407
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "मेल-सूचिकायां फ़िल्टर…"
 
-#: messageactions.cpp:441
+#: messageactions.cpp:446
 #, kde-format
 msgid "<unknown>"
 msgstr "<अज्ञात>"
 
-#: messageactions.cpp:441
+#: messageactions.cpp:446
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "मेलसूचीनाम: %1"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:449
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "List Archive इत्यत्र Message उद्घाटयन्तु"
 
-#: messageactions.cpp:447
+#: messageactions.cpp:452
 #, kde-format
 msgid "Post New Message"
 msgstr "नया सन्देश पोस्ट करें"
 
-#: messageactions.cpp:450
+#: messageactions.cpp:455
 #, kde-format
 msgid "Go to Archive"
 msgstr "Archive इत्यत्र गच्छन्तु"
 
-#: messageactions.cpp:453
+#: messageactions.cpp:458
 #, kde-format
 msgid "Request Help"
 msgstr "सहायता याचना"
 
-#: messageactions.cpp:456
+#: messageactions.cpp:461
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "स्वामी से सम्पर्क करें"
 
-#: messageactions.cpp:462
+#: messageactions.cpp:467
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "सूचीतः सदस्यतां रद्दं कुर्वन्तु"
 
-#: messageactions.cpp:474
+#: messageactions.cpp:479
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "मेल-सूची %1 इत्यत्र फ़िल्टर कुर्वन्तु…"
 
-#: messageactions.cpp:650
+#: messageactions.cpp:655
 #, kde-format
 msgid "email"
 msgstr "ईमेल"
 
-#: messageactions.cpp:653
+#: messageactions.cpp:658
 #, kde-format
 msgid "web"
 msgstr "जालम्"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:663
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6209,13 +6216,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:763
+#: messageactions.cpp:768
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF मध्ये निर्यातं कुर्वन्तु"
 
-#: messageactions.cpp:763
+#: messageactions.cpp:768
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF दस्तावेज (*.pdf)"
@@ -6596,12 +6603,18 @@ msgstr "स्वचालितरूपेण &सन्देशप्रव�
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt><p>Enable this option if you want KMail to request Message "
+#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#| "p><p>This option only affects the default; you can still enable or "
+#| "disable MDN requesting on a per-message basis in the composer, menu item "
+#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
 "only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"a per-message basis in the composer, menu item <em>Options</em>→<em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
 "<qt><p>यदि भवान् इच्छति यत् KMail भवतः प्रत्येकस्य बहिर्गच्छन्तं सन्देशस्य कृते "
@@ -7987,15 +8000,16 @@ msgstr "KMail इत्यस्मिन् प्रयुक्ताः प�
 #, kde-format
 msgctxt "@info"
 msgid ""
-"It appears that this email from %1 is not being monitored. Do you wish to "
-"reply to this email?"
+"It appears that this email address from %1 is not being monitored. Do you "
+"wish to reply to this email?"
 msgstr ""
 
 #: util.cpp:36
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Email Address:"
 msgctxt "@title:window"
-msgid "Email not monitored"
-msgstr ""
+msgid "Email Address not Monitored"
+msgstr "ईमेल-सङ्केतः :"
 
 #: util.cpp:37
 #, fuzzy, kde-format

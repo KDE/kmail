@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-01 00:46+0000\n"
 "PO-Revision-Date: 2013-03-11 16:13+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -269,8 +269,8 @@ msgstr ""
 #: main.cpp:36
 #, kde-format
 msgid ""
-"Copyright 2000 Michael Goffioul \n"
-"Copyright 2012  Allen Winter"
+"© 2000 Michael Goffioul \n"
+"© 2012 Allen Winter"
 msgstr ""
 
 #: main.cpp:38

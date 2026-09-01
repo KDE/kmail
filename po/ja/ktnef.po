@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-01 00:46+0000\n"
 "PO-Revision-Date: 2012-04-12 22:43-0700\n"
 "Last-Translator: Japanese KDE translation team <kde-jp@kde.org>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
@@ -265,8 +265,8 @@ msgstr ""
 #: main.cpp:36
 #, kde-format
 msgid ""
-"Copyright 2000 Michael Goffioul \n"
-"Copyright 2012  Allen Winter"
+"© 2000 Michael Goffioul \n"
+"© 2012 Allen Winter"
 msgstr ""
 
 #: main.cpp:38

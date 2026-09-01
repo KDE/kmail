@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-01 00:46+0000\n"
 "PO-Revision-Date: 2026-08-14 10:46+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
@@ -399,7 +399,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "URL voor zender naar discussiegroep:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:459
+#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:464
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Voor discussiegroep inschrijven"
@@ -2128,7 +2128,7 @@ msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Menubalk verbergen"
 
-#: editor/kmcomposerwin.cpp:1679 editor/kmcomposerwin.cpp:4000
+#: editor/kmcomposerwin.cpp:1679 editor/kmcomposerwin.cpp:4002
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
@@ -2398,33 +2398,42 @@ msgid "Send &Later"
 msgstr "&Later verzenden"
 
 #: editor/kmcomposerwin.cpp:3164
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "You are trying to send the mail to more than %1 recipients. Send message "
+#| "anyway?"
 msgid ""
+"You are trying to send the mail to more than %1 recipient. Send message "
+"anyway?"
+msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
-msgstr ""
+msgstr[0] ""
+"U probeert een bericht toe te sturen aan meer dan %1 geadresseerden. Moet "
+"het bericht wel worden verstuurd?"
+msgstr[1] ""
 "U probeert een bericht toe te sturen aan meer dan %1 geadresseerden. Moet "
 "het bericht wel worden verstuurd?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3167
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Te veel geadresseerden"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3168
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Zo &verzenden"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3169
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "Geadresseerden b&ewerken"
 
-#: editor/kmcomposerwin.cpp:3204
+#: editor/kmcomposerwin.cpp:3206
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2433,25 +2442,25 @@ msgstr ""
 "HTML-modus uitschakelen veroorzaakt dat de tekst alle opmaak verliest. Echt "
 "doen?"
 
-#: editor/kmcomposerwin.cpp:3206
+#: editor/kmcomposerwin.cpp:3208
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Opmaak verliezen?"
 
-#: editor/kmcomposerwin.cpp:3207
+#: editor/kmcomposerwin.cpp:3209
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Losse opmaak"
 
-#: editor/kmcomposerwin.cpp:3208
+#: editor/kmcomposerwin.cpp:3210
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Markering als platte tekst toevoegen"
 
-#: editor/kmcomposerwin.cpp:3415
+#: editor/kmcomposerwin.cpp:3417
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2461,7 +2470,7 @@ msgstr ""
 "Uw geselecteerde PGP-sleutel (%1) bestaat niet in uw sleutelring of is niet "
 "geschikt voor versleutelen."
 
-#: editor/kmcomposerwin.cpp:3427
+#: editor/kmcomposerwin.cpp:3429
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2471,7 +2480,7 @@ msgstr ""
 "Uw geselecteerde PGP-sleutel (%1) bestaat niet in uw sleutelring of is niet "
 "geschikt voor ondertekenen."
 
-#: editor/kmcomposerwin.cpp:3442
+#: editor/kmcomposerwin.cpp:3444
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2481,7 +2490,7 @@ msgstr ""
 "Uw geselecteerde SMIME-sleutel (%1) bestaat niet in uw sleutelring of is "
 "niet geschikt voor versleutelen."
 
-#: editor/kmcomposerwin.cpp:3454
+#: editor/kmcomposerwin.cpp:3456
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2491,25 +2500,25 @@ msgstr ""
 "Uw geselecteerde SMIME-sleutel (%1) bestaat niet in uw sleutelring of is "
 "niet geschikt voor ondertekenen."
 
-#: editor/kmcomposerwin.cpp:3623
+#: editor/kmcomposerwin.cpp:3625
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Versleutelen"
 
-#: editor/kmcomposerwin.cpp:3625
+#: editor/kmcomposerwin.cpp:3627
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Niet versleutelen"
 
-#: editor/kmcomposerwin.cpp:3765
+#: editor/kmcomposerwin.cpp:3767
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Geen sleutel gevonden voor de ontvanger."
 
-#: editor/kmcomposerwin.cpp:3787
+#: editor/kmcomposerwin.cpp:3789
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2519,7 +2528,7 @@ msgstr ""
 "Roddelsleutel autocrypt is voor deze ontvanger gebruikt. We kregen deze "
 "sleutel van derden. Deze sleutel is niet geverifieerd."
 
-#: editor/kmcomposerwin.cpp:3791
+#: editor/kmcomposerwin.cpp:3793
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2529,7 +2538,7 @@ msgstr ""
 "Sleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is niet "
 "geverifieerd. De ontvanger heeft voorkeur voor versleutelde antwoorden."
 
-#: editor/kmcomposerwin.cpp:3795
+#: editor/kmcomposerwin.cpp:3797
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2539,7 +2548,7 @@ msgstr ""
 "Sleutel autocrypt is voor deze ontvanger gebruikt. Deze sleutel is niet "
 "geverifieerd. De ontvanger heeft geen voorkeur voor versleutelde antwoorden."
 
-#: editor/kmcomposerwin.cpp:3822
+#: editor/kmcomposerwin.cpp:3824
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2551,7 +2560,7 @@ msgstr ""
 "geldigheid. U kunt de sleutel ondertekenen, als u de vingerafdruk "
 "communiceert via een ander kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3830
+#: editor/kmcomposerwin.cpp:3832
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2566,7 +2575,7 @@ msgstr ""
 "sleutel ondertekenen, als u de vingerafdruk communiceert via een ander "
 "kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3838
+#: editor/kmcomposerwin.cpp:3840
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2576,7 +2585,7 @@ msgstr ""
 "De sleutel voor versleuteling is niet vertrouwd. Deze heeft TOFU-gegevens "
 "die in conflict zijn. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3844
+#: editor/kmcomposerwin.cpp:3846
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2586,7 +2595,7 @@ msgstr ""
 "De sleutel voor versleuteling is niet vertrouwd. Deze heeft TOFU-gegevens "
 "waarvan de geldigheid niet bekend is. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3850
+#: editor/kmcomposerwin.cpp:3852
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2596,7 +2605,7 @@ msgstr ""
 "De sleutel voor versleuteling is niet vertrouwd. De sleutel is als slecht "
 "gemarkeerd. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3858
+#: editor/kmcomposerwin.cpp:3860
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2611,7 +2620,7 @@ msgstr ""
 "de sleutel ondertekenen, als u de vingerafdruk communiceert via een ander "
 "kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3866
+#: editor/kmcomposerwin.cpp:3868
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2622,7 +2631,7 @@ msgstr ""
 "sleutel ondertekenen, als u de vingerafdruk communiceert via een ander "
 "kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3872
+#: editor/kmcomposerwin.cpp:3874
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2637,7 +2646,7 @@ msgstr ""
 "Of u kunt de sleutel ondertekenen, als u de vingerafdruk communiceert via "
 "een ander kanaal. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3880
+#: editor/kmcomposerwin.cpp:3882
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2648,7 +2657,7 @@ msgstr ""
 "beveiligingsniveau verhogen door de sleutel te ondertekenen. Klik op het "
 "pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:3885
+#: editor/kmcomposerwin.cpp:3887
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2658,12 +2667,12 @@ msgstr ""
 "De sleutel voor versleuteling is volledig vertrouwd of is ondertekend door "
 "een ander die volledig wordt vertrouwd. Klik op het pictogram voor details."
 
-#: editor/kmcomposerwin.cpp:4002
+#: editor/kmcomposerwin.cpp:4004
 #, kde-format
 msgid " Column: %1 "
 msgstr " Kolom: %1 "
 
-#: editor/kmcomposerwin.cpp:4217
+#: editor/kmcomposerwin.cpp:4219
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2680,12 +2689,12 @@ msgstr ""
 "voor deze geadresseerde. Indien er geen geschikt certificaat in de lijst is "
 "kunt u ook zoeken naar externe certificaten door op de knop te drukken.</qt>"
 
-#: editor/kmcomposerwin.cpp:4229
+#: editor/kmcomposerwin.cpp:4231
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Sleutelselectie voor versleuteling"
 
-#: editor/kmcomposerwin.cpp:4313
+#: editor/kmcomposerwin.cpp:4315
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -6238,68 +6247,68 @@ msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Bericht archiveren"
 
-#: messageactions.cpp:402
+#: messageactions.cpp:407
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Filteren op discussiegroep…"
 
-#: messageactions.cpp:441
+#: messageactions.cpp:446
 #, kde-format
 msgid "<unknown>"
 msgstr "<onbekend>"
 
-#: messageactions.cpp:441
+#: messageactions.cpp:446
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Naam e-maillijst: %1"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:449
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Bericht openen in lijstarchief"
 
-#: messageactions.cpp:447
+#: messageactions.cpp:452
 #, kde-format
 msgid "Post New Message"
 msgstr "Nieuw bericht posten"
 
-#: messageactions.cpp:450
+#: messageactions.cpp:455
 #, kde-format
 msgid "Go to Archive"
 msgstr "Ga naar archief"
 
-#: messageactions.cpp:453
+#: messageactions.cpp:458
 #, kde-format
 msgid "Request Help"
 msgstr "Hulp vragen"
 
-#: messageactions.cpp:456
+#: messageactions.cpp:461
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Eigenaar van contact"
 
-#: messageactions.cpp:462
+#: messageactions.cpp:467
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Van discussielijst uitschrijven"
 
-#: messageactions.cpp:474
+#: messageactions.cpp:479
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Filteren op discussiegroep %1…"
 
-#: messageactions.cpp:650
+#: messageactions.cpp:655
 #, kde-format
 msgid "email"
 msgstr "e-mail"
 
-#: messageactions.cpp:653
+#: messageactions.cpp:658
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:663
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6307,13 +6316,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:763
+#: messageactions.cpp:768
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Naar PDF exporteren"
 
-#: messageactions.cpp:763
+#: messageactions.cpp:768
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF document (*.pdf)"
@@ -6705,12 +6714,18 @@ msgstr "Auto&matisch ontvangstbevestigingen vragen"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<qt><p>Enable this option if you want KMail to request Message "
+#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
+#| "p><p>This option only affects the default; you can still enable or "
+#| "disable MDN requesting on a per-message basis in the composer, menu item "
+#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
 "only affects the default; you can still enable or disable MDN requesting on "
-"a per-message basis in the composer, menu item <em>Options</em>-><em>Request "
+"a per-message basis in the composer, menu item <em>Options</em>→<em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
 "<qt><p>Selecteer deze optie als u wilt dat KMail bevestigingen voor "
@@ -8151,19 +8166,25 @@ msgid "Plugins used in KMail."
 msgstr "In KMail gebruikte plug-ins."
 
 #: util.cpp:35
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@info"
+#| msgid ""
+#| "It appears that this email from %1 is not being monitored. Do you wish to "
+#| "reply to this email?"
 msgctxt "@info"
 msgid ""
-"It appears that this email from %1 is not being monitored. Do you wish to "
-"reply to this email?"
+"It appears that this email address from %1 is not being monitored. Do you "
+"wish to reply to this email?"
 msgstr ""
 "Het lijkt erop dat deze e-mail van %1 niet wordt gecontroleerd. Wilt u op "
 "deze e-mail reageren?"
 
 #: util.cpp:36
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:window"
+#| msgid "Email not monitored"
 msgctxt "@title:window"
-msgid "Email not monitored"
+msgid "Email Address not Monitored"
 msgstr "E-mail wordt niet gemonitord"
 
 #: util.cpp:37
