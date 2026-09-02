@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kmail package.
 #
-# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2026 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2024-06-22 08:06+0300\n"
+"PO-Revision-Date: 2026-09-01 09:08+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.02.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -270,16 +270,13 @@ msgid "Viewer for mail attachments using TNEF format"
 msgstr "מציג קבצים מצורפים לדוא״ל מסוג TNEF"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid ""
-#| "Copyright 2000 Michael Goffioul \n"
-#| "Copyright 2012  Allen Winter"
+#, kde-format
 msgid ""
 "© 2000 Michael Goffioul \n"
 "© 2012 Allen Winter"
 msgstr ""
-"כל הזכויות שמורות 2000 מייקל גופיול \n"
-"כל הזכויות שמורות 2012 אלן וינטר"
+"© 2000 מייקל גופיול \n"
+"© 2012 אלן וינטר"
 
 #: main.cpp:38
 #, kde-format

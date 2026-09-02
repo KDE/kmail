@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-17 19:36+0400\n"
+"PO-Revision-Date: 2026-09-01 17:54+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -2359,10 +2359,7 @@ msgid "Send &Later"
 msgstr "أرسل لا&حقًا"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2372,15 +2369,12 @@ msgid_plural ""
 msgstr[0] ""
 "أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
 msgstr[1] ""
-"أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
-msgstr[2] ""
-"أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
+"أنت تحاول إرسال البريد إلى أكثر من مستلم واحد. أأرسل البريد بأيّ حال؟"
+msgstr[2] "أنت تحاول إرسال البريد إلى أكثر من مستلمين. أأرسل البريد بأيّ حال؟"
 msgstr[3] ""
-"أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
-msgstr[4] ""
-"أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
-msgstr[5] ""
-"أنت تحاول إرسال البريد إلى أكثر من %1 من المستلمين. أأرسل البريد بأيّ حال؟"
+"أنت تحاول إرسال البريد إلى أكثر من %1 مستلمين. أأرسل البريد بأيّ حال؟"
+msgstr[4] "أنت تحاول إرسال البريد إلى أكثر من %1 مستلمًا. أأرسل البريد بأيّ حال؟"
+msgstr[5] "أنت تحاول إرسال البريد إلى أكثر من %1 مستلم. أأرسل البريد بأيّ حال؟"
 
 #: editor/kmcomposerwin.cpp:3167
 #, kde-format
@@ -6651,13 +6645,7 @@ msgstr "اطلُب إ&شعارات قُرأت الرسالة آليًّا"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6668,7 +6656,7 @@ msgstr ""
 "<qt> <p> مكّن هذا الخيار إذا كنت تريد من بريدك أن يطلب إشعارات قراءة الرسائل "
 "لكل رسالة من رسائلك الصادرة. </p> <p> يؤثر هذا الخيار على الإعداد المبدئي "
 "فقط  لا يزال بإمكانك تمكين أو تعطيل طلب إشعار قراءة الرسالة على أساس كل "
-"رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ثم <em> طلب إشعار قراءة "
+"رسالة في المؤلف، عنصر القائمة <em> خيارات </em> ⟵ <em> طلب إشعار قراءة "
 "الرسالة </em>. </p> </qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
@@ -8066,26 +8054,20 @@ msgid "Plugins used in KMail."
 msgstr "الملحقات المستخدمة في بريدك."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"يبدو أن هذه الرسالة الإلكترونية الواردة من %1 لا تخضع للمراقبة. هل ترغب في "
-"الرد على هذه الرسالة؟"
+"يبدو أن عنوان البريد الإلكتروني هذا من %1 لم يخضع للمراقبة. هل ترغب في الرد "
+"على هذه الرسالة؟"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "البريد الإلكتروني غير مراقَب"
+msgstr "عنوان البريد الإلكتروني غير مراقَب"
 
 #: util.cpp:37
 #, kde-format

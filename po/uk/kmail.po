@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-14 08:48+0300\n"
+"PO-Revision-Date: 2026-09-01 21:05+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2396,10 +2396,7 @@ msgid "Send &Later"
 msgstr "Надіслати &пізніше"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2407,7 +2404,7 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Ви намагаєтеся надіслати повідомлення більше, ніж %1 адресатам. Продовжити "
+"Ви намагаєтеся надіслати повідомлення більше, ніж %1 адресату. Продовжити "
 "процедуру надсилання повідомлення?"
 msgstr[1] ""
 "Ви намагаєтеся надіслати повідомлення більше, ніж %1 адресатам. Продовжити "
@@ -2416,7 +2413,7 @@ msgstr[2] ""
 "Ви намагаєтеся надіслати повідомлення більше, ніж %1 адресатам. Продовжити "
 "процедуру надсилання повідомлення?"
 msgstr[3] ""
-"Ви намагаєтеся надіслати повідомлення більше, ніж %1 адресатам. Продовжити "
+"Ви намагаєтеся надіслати повідомлення більше, ніж %1 адресату. Продовжити "
 "процедуру надсилання повідомлення?"
 
 #: editor/kmcomposerwin.cpp:3167
@@ -6760,13 +6757,7 @@ msgstr "&Автоматично запитувати щодо сповіщенн
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6779,8 +6770,7 @@ msgstr ""
 "p><p>Вказане тут значення впливає тільки на типову поведінку програми, ви "
 "завжди матимете можливість ввімкнути чи вимкнути запит сповіщення для "
 "кожного окремого повідомлення у редакторі за допомогою пункту меню "
-"<em>Налаштування</em>->&gt;<em>Запитати сповіщення про долю листа</em>.</p></"
-"qt>"
+"<em>Налаштування</em>→<em>Запитати сповіщення про долю листа</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:246
@@ -8212,26 +8202,20 @@ msgid "Plugins used in KMail."
 msgstr "Додатки, які використано у KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"Здається, це повідомлення електронної пошти від %1 перебуває поза "
-"спостереженням. Хочете відповісти на це повідомлення електронної пошти?"
+"Здається, ця адреса електронної пошти від %1 перебуває поза спостереженням. "
+"Хочете відповісти на це повідомлення електронної пошти?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "Адреса ел. пошти без спостереження"
+msgstr "Немає спостереження за адресою ел. пошти"
 
 #: util.cpp:37
 #, kde-format

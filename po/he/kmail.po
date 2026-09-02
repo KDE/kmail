@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-14 09:57+0300\n"
+"PO-Revision-Date: 2026-09-01 09:08+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -30,7 +30,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2359,18 +2359,16 @@ msgid "Send &Later"
 msgstr "לשלוח &אחר כך"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
 msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
-msgstr[0] "ניסית לשלוח את ההודעה ליותר מ־%1 נמענים. לשלוח את ההודעה בכל זאת?"
-msgstr[1] "ניסית לשלוח את ההודעה ליותר מ־%1 נמענים. לשלוח את ההודעה בכל זאת?"
+msgstr[0] ""
+"ניסית לשלוח את ההודעה ליותר מנמען אחד או נמענת אחת. לשלוח את ההודעה בכל זאת?"
+msgstr[1] "ניסית לשלוח את ההודעה ליותר משני נמענים. לשלוח את ההודעה בכל זאת?"
 msgstr[2] "ניסית לשלוח את ההודעה ליותר מ־%1 נמענים. לשלוח את ההודעה בכל זאת?"
 msgstr[3] "ניסית לשלוח את ההודעה ליותר מ־%1 נמענים. לשלוח את ההודעה בכל זאת?"
 
@@ -6608,13 +6606,7 @@ msgstr "לשלוח &דיווחי מצב הודעה אוטומטית"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6625,7 +6617,7 @@ msgstr ""
 "<qt><p>יש להפעיל אפשרות זו כדי ש־KMail יבקש דיווחי מצב הודעה (MDN) עבור כל "
 "הודעה יוצאת.</p><p>אפשרות זו משפיעה רק על ברירת המחדל, עדיין ניתן להפעיל או "
 "לכבות בקשת דיווח מצב הודעה עבור כל הודעה בנפרד בחלונית כתיבת ההודעות, בתפריט "
-"<em>אפשרויות</em>-><em>בקשת דיווח מצב הודעה</em>.</p></qt>"
+"<em>אפשרויות</em>←<em>בקשת דיווח מצב הודעה</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:246
@@ -8017,24 +8009,18 @@ msgid "Plugins used in KMail."
 msgstr "תוספים בשימוש ב־KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
-msgstr "נראה שתיבת הדוא״ל של %1 לא מושגחת. להגיב להודעה הזאת?"
+msgstr "נראה שכתובת הדוא״ל של %1 לא מושגחת. להגיב להודעה הזאת?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "תיבת הדוא״ל לא מושגחת"
+msgstr "כתובת הדוא״ל לא מושגחת"
 
 #: util.cpp:37
 #, kde-format

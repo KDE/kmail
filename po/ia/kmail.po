@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-31 17:26+0200\n"
+"PO-Revision-Date: 2026-09-01 12:23+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -2378,10 +2378,7 @@ msgid "Send &Later"
 msgstr "Invia p&lus tarde"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -6687,13 +6684,7 @@ msgstr "Require automaticamente notificationes de disposition de &message"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6705,7 +6696,7 @@ msgstr ""
 "Disposition de Message (MDNs) pro cata de tu messages de partita.</p><p> "
 "Iste option solo influentia lo que es predefinite; tu pote anque habilitar o "
 "dis-habilitar requestas de MDNs per cata message in le compositor, elemento "
-"de menu <em>Optiones</em>-><em>Require Notification de Disposition </em>.</"
+"de menu <em>Optiones</em>→<em>Require Notification de Disposition </em>.</"
 "p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
@@ -8134,26 +8125,20 @@ msgid "Plugins used in KMail."
 msgstr "Plugins usate in KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"Il semblaque iste eposta ex %1 non es surveliate. Tu vole responder a iste "
-"eposta?"
+"Il sembla que iste adresse de eposta ex %1 non es surveliate. Tu vole "
+"responder a iste eposta?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "Eposta non surveliate"
+msgstr "Adresse de Eposta non surveliate"
 
 #: util.cpp:37
 #, kde-format

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2024-06-18 09:30+0200\n"
+"PO-Revision-Date: 2026-09-01 06:46+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -107,13 +107,13 @@ msgstr "Izvleček"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "Izvleci v..."
+msgstr "Izvleci v…"
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "Izvleci vse v..."
+msgstr "Izvleci vse v…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
@@ -281,16 +281,13 @@ msgid "Viewer for mail attachments using TNEF format"
 msgstr "Pregledovalnik za priloge e-pošti, ki uporabljajo zapis TNEF"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid ""
-#| "Copyright 2000 Michael Goffioul \n"
-#| "Copyright 2012  Allen Winter"
+#, kde-format
 msgid ""
 "© 2000 Michael Goffioul \n"
 "© 2012 Allen Winter"
 msgstr ""
-"Copyright 2000 Michael Goffioul\n"
-"Copyright 2012 Allen Winter"
+"© 2000 Michael Goffioul\n"
+"© 2012 Allen Winter"
 
 #: main.cpp:38
 #, kde-format

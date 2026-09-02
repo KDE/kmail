@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-14 07:12+0200\n"
+"PO-Revision-Date: 2026-09-01 06:35+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -2374,10 +2374,7 @@ msgid "Send &Later"
 msgstr "Pošlji kasneje"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2387,9 +2384,10 @@ msgid_plural ""
 msgstr[0] ""
 "Pošto poskušate poslati več kot %1 prejemnikom. Ali vseeno pošljem sporočilo?"
 msgstr[1] ""
-"Pošto poskušate poslati več kot %1 prejemnikom. Ali vseeno pošljem sporočilo?"
+"Pošto poskušate poslati več kot %1 prejemniku. Ali vseeno pošljem sporočilo?"
 msgstr[2] ""
-"Pošto poskušate poslati več kot %1 prejemnikom. Ali vseeno pošljem sporočilo?"
+"Pošto poskušate poslati več kot %1 prejemnikoma. Ali vseeno pošljem "
+"sporočilo?"
 msgstr[3] ""
 "Pošto poskušate poslati več kot %1 prejemnikom. Ali vseeno pošljem sporočilo?"
 
@@ -6697,17 +6695,11 @@ msgstr "Pred pošiljanjem preveri črkovanje"
 #: settings/kmail.kcfg:223
 #, kde-format
 msgid "Automatically request &message disposition notifications"
-msgstr "Samodejno zahtevaj obvestila o uso&di sporočil"
+msgstr "Samodejno zahtevaj obvestila o usodi sporočil"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6716,8 +6708,8 @@ msgid ""
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
 "<qt><p>Omogočite to možnost, če želite da KMail zahteva obvestilo o usodi "
-"sporočila (MDN) za vsako poslano sporočilo.</p><p>Ta možnost vpliva le na "
-"privzeto. Še vedno lahko omogočite ali onemogočite MDN za vsako sporočilo "
+"sporočila (MDN) za vsako vaše poslano sporočilo.</p><p>Ta možnost vpliva le "
+"na privzeto. Še vedno lahko omogočite ali onemogočite MDN za vsako sporočilo "
 "posebej v sestavljalniku, predmetu menija <em>Možnosti</em>→<em>Zahtevaj "
 "obvestilo o usodi</em>.</p></qt>"
 
@@ -8139,26 +8131,20 @@ msgid "Plugins used in KMail."
 msgstr "Vtičniki uporabljeni v KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"Videti je, da to e-poštno sporočilo od %1 ni nadzorovano. Ali želite "
+"Videti je, da ta naslov e-poštnega sporočila od %1 ni nadzorovan. Ali želite "
 "odgovoriti na to e-poštno sporočilo?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "E-pošta ni nadzorovana"
+msgstr "Naslov e-pošte ni nadzorovan"
 
 #: util.cpp:37
 #, kde-format

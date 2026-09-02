@@ -1,15 +1,15 @@
-# Copyright (C) YEAR This_file_is_part_of_KDE
-# This file is distributed under the same license as the PACKAGE package.
+# Spanish translations for ktnef.po package.
+# Copyright (C) 2012-2026 This file is copyright:
+# This file is distributed under the same license as the kmail package.
 #
-# Javier Vinal <fjvinalgmail.com>, 2012.
-# Javier Viñal <fjvinal@gmail.com>, 2012, 2013, 2015, 2016.
-# SPDX-FileCopyrightText: 2019, 2020, 2021, 2023, 2024 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2012-2013, 2015-2016 Javier Viñal <fjvinal@gmail.com>
+# SPDX-FileCopyrightText: 2019-2021, 2023-2024, 2026 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2024-06-18 03:51+0200\n"
+"PO-Revision-Date: 2026-09-01 23:49+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -32,7 +32,7 @@ msgstr "ecuadra@eloihr.net,fjvinal@gmail.com"
 #: attachpropertydialog.cpp:62
 #, kde-format
 msgid "Save…"
-msgstr "Guardar..."
+msgstr "Guardar…"
 
 #: attachpropertydialog.cpp:92
 #, kde-format
@@ -92,7 +92,7 @@ msgstr "Ver"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "View With…"
-msgstr "Ver con..."
+msgstr "Ver con…"
 
 #: ktnefmain.cpp:119 ktnefmain.cpp:395
 #, kde-format
@@ -104,13 +104,13 @@ msgstr "Extraer"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract To…"
-msgstr "Extraer en..."
+msgstr "Extraer en…"
 
 #: ktnefmain.cpp:128
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Extract All To…"
-msgstr "Extraer todo en..."
+msgstr "Extraer todo en…"
 
 #: ktnefmain.cpp:133 ktnefmain.cpp:399
 #, kde-format
@@ -134,13 +134,13 @@ msgstr "Mostrar texto del mensaje"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Save Message Text As…"
-msgstr "Guardar texto del mensaje como..."
+msgstr "Guardar texto del mensaje como…"
 
 #: ktnefmain.cpp:160
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Default Folder…"
-msgstr "Carpeta predeterminada..."
+msgstr "Carpeta predeterminada…"
 
 #: ktnefmain.cpp:172
 #, kde-format
@@ -217,13 +217,13 @@ msgstr "&Abrir con"
 #, kde-format
 msgctxt "@action:inmenu Open With"
 msgid "&Other…"
-msgstr "&Otro..."
+msgstr "&Otro…"
 
 #: ktnefmain.cpp:567 ktnefmain.cpp:575
 #, kde-format
 msgctxt "@title:menu"
 msgid "&Open With…"
-msgstr "&Abrir con..."
+msgstr "&Abrir con…"
 
 #. i18n: ectx: Menu (file)
 #: ktnefui.rc:6
@@ -278,16 +278,13 @@ msgid "Viewer for mail attachments using TNEF format"
 msgstr "Visor para adjuntos de correo que usan el formato TNEF"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid ""
-#| "Copyright 2000 Michael Goffioul \n"
-#| "Copyright 2012  Allen Winter"
+#, kde-format
 msgid ""
 "© 2000 Michael Goffioul \n"
 "© 2012 Allen Winter"
 msgstr ""
-"Derechos de autor 2000 Michael Goffioul \n"
-"Derechos de autor 2012  Allen Winter"
+"© 2000 Michael Goffioul \n"
+"© 2012 Allen Winter"
 
 #: main.cpp:38
 #, kde-format
@@ -363,10 +360,3 @@ msgstr "Tamaño de archivo:"
 #, kde-format
 msgid "MIME type:"
 msgstr "Tipo MIME:"
-
-#~ msgid "Save..."
-#~ msgstr "Guardar..."
-
-#~ msgctxt "@title:menu"
-#~ msgid "&Open With..."
-#~ msgstr "&Abrir con..."

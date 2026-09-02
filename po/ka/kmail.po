@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-14 07:28+0200\n"
+"PO-Revision-Date: 2026-09-01 04:44+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -2359,10 +2359,7 @@ msgid "Send &Later"
 msgstr "&მოგვიანებით გაგზავნა"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2370,9 +2367,9 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"ცდილობთ, ელფოსტა, %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
+"ცდილობთ, ელფოსტა %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
 msgstr[1] ""
-"ცდილობთ, ელფოსტა, %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
+"ცდილობთ, ელფოსტა %1-ზე მეტ მიმღებს გაუგზავნოთ. მაინც გავაგზავნო შეტყობინება?"
 
 #: editor/kmcomposerwin.cpp:3167
 #, kde-format
@@ -6651,13 +6648,7 @@ msgstr "შეტყობინების ჩაბარების გა�
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -8089,26 +8080,20 @@ msgid "Plugins used in KMail."
 msgstr "KMail-ში გამოყენებული დამატებები."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"როგორც ჩანს, %1-ისგან ელფოსტის მონიტორინგი არ ხდება. გნებავთ ამ ელფოსტაზე "
-"პასუხის გაცემა?"
+"როგორც ჩანს, %1-ისგან ელფოსტის მისამართის მონიტორინგი არ ხდება. გნებავთ ამ "
+"ელფოსტაზე პასუხის გაცემა?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "ელფოსტის მონიტორინგი არ ხდება"
+msgstr "ელფოსტის მისამართის მონიტორინგი არ ხდება"
 
 #: util.cpp:37
 #, kde-format
