@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-01 00:46+0000\n"
+"POT-Creation-Date: 2026-09-03 00:44+0000\n"
 "PO-Revision-Date: 2026-09-01 10:13+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -6525,7 +6525,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg:54
+#: settings/kmail.kcfg:51
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6537,19 +6537,19 @@ msgstr ""
 "marcats com a «Important» o «Element d'acció»"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg:58
+#: settings/kmail.kcfg:55
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "Permet indicadors locals a les carpetes de només lectura"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg:64
+#: settings/kmail.kcfg:59
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "Envia els correu en la cua en comprovar el correu"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg:65
+#: settings/kmail.kcfg:60
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6561,44 +6561,44 @@ msgstr ""
 "correu, o si no voleu que els missatges s'envien automàticament. </p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg:77
+#: settings/kmail.kcfg:71
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr ""
 "La carpeta seleccionada més recentment en el diàleg de selecció de carpetes."
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg:91
+#: settings/kmail.kcfg:83
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Activa la icona en la safata del sistema"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg:95
+#: settings/kmail.kcfg:87
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Inicia minimitzat a la safata"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg:99
+#: settings/kmail.kcfg:91
 #, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Mostra els correus sense llegir en la barra de tasques"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg:103
+#: settings/kmail.kcfg:95
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "Especifiqueu l'e&ditor:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg:107
+#: settings/kmail.kcfg:99
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Utilitza un editor e&xtern en comptes de l'editor predeterminat"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg:113
+#: settings/kmail.kcfg:105
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6608,31 +6608,31 @@ msgstr ""
 "al seu límit de quota."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg:117
+#: settings/kmail.kcfg:109
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Buida la paperera local en eixir del programa"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg:121
+#: settings/kmail.kcfg:113
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Suprimix els missatges sense confirmació"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg:125
+#: settings/kmail.kcfg:117
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Permet iniciar una carpeta específica"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg:129
+#: settings/kmail.kcfg:121
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Especifica la carpeta que s'ha d'obrir quan s'inicia el programa"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg:163
+#: settings/kmail.kcfg:153
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6642,7 +6642,7 @@ msgstr ""
 "es detecta més d'un compte de correu electrònic. Només ho demanem una vegada."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg:171
+#: settings/kmail.kcfg:159
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6652,26 +6652,26 @@ msgstr ""
 "KMail."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg:178
+#: settings/kmail.kcfg:165
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Mostra la línia d'edició de busca ràpida de carpeta"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg:186
+#: settings/kmail.kcfg:172
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Reenvia inclòs de manera predeterminada."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg:189
+#: settings/kmail.kcfg:175
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Avisa si el nombre de destinataris supera:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg:191 settings/kmail.kcfg:198
+#: settings/kmail.kcfg:177 settings/kmail.kcfg:184
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6682,25 +6682,25 @@ msgstr ""
 "demanarà una confirmació abans d'enviar el correu. L'avís es pot desactivar."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg:212
+#: settings/kmail.kcfg:197
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Confirma a&bans d'enviar"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg:219
+#: settings/kmail.kcfg:204
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Verifica l'ortografia abans d'enviar"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:223
+#: settings/kmail.kcfg:208
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Petició automàtica de notificacions de processament dels &missatges"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:224
+#: settings/kmail.kcfg:209
 #, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6717,13 +6717,13 @@ msgstr ""
 "p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:246
+#: settings/kmail.kcfg:230
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Interval de guardada automàtica:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:247
+#: settings/kmail.kcfg:231
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6735,13 +6735,13 @@ msgstr ""
 "seguretat. Podeu desactivar la guardada automàtica establint el valor 0."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg:254
+#: settings/kmail.kcfg:236
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "Mostra el quadro de gestió i inserció de fragments de text a l'editor."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg:260
+#: settings/kmail.kcfg:241
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
@@ -6749,43 +6749,43 @@ msgstr ""
 "encriptada"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg:264
+#: settings/kmail.kcfg:245
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Una llista de tots els URL utilitzats recentment"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg:270
+#: settings/kmail.kcfg:251
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Una llista de totes les codificacions utilitzades recentment"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg:276
+#: settings/kmail.kcfg:257
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Mostra l'indicador criptogràfic d'etiqueta"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg:280
+#: settings/kmail.kcfg:261
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Drecera predeterminada de validació de l'enviament"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:334
+#: settings/kmail.kcfg:312
 #, kde-format
 msgid "Message preview pane:"
 msgstr "Subfinestra de vista prèvia de missatges:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:337
+#: settings/kmail.kcfg:315
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "No mostres cap subfinestra de vista prèvia de missatges"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:340
+#: settings/kmail.kcfg:318
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr ""
@@ -6793,7 +6793,7 @@ msgstr ""
 "missatges"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:343
+#: settings/kmail.kcfg:321
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr ""
@@ -6801,55 +6801,55 @@ msgstr ""
 "missatges"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:350
+#: settings/kmail.kcfg:327
 #, kde-format
 msgid "Folder list:"
 msgstr "Llista de carpetes:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:353
+#: settings/kmail.kcfg:330
 #, kde-format
 msgid "Long folder list"
 msgstr "Llista llarga de carpetes"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:356
+#: settings/kmail.kcfg:333
 #, kde-format
 msgid "Short folder list"
 msgstr "Llista curta de carpetes"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg:365
+#: settings/kmail.kcfg:341
 #, kde-format
 msgid "Message template for new message"
 msgstr "Plantilla de missatges per als missatges nous"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg:370
+#: settings/kmail.kcfg:346
 #, kde-format
 msgid "Message template for reply"
 msgstr "Plantilla de missatges per a les respostes"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg:375
+#: settings/kmail.kcfg:351
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Plantilla de missatges per a les respostes a tots"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg:380
+#: settings/kmail.kcfg:356
 #, kde-format
 msgid "Message template for forward"
 msgstr "Plantilla de missatges per als reenviaments"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg:385
+#: settings/kmail.kcfg:361
 #, kde-format
 msgid "Quote characters"
 msgstr "Caràcters de citació"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg:400
+#: settings/kmail.kcfg:374
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Especifica la política utilitzada quan es mostra la política"

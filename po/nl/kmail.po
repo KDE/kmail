@@ -17,15 +17,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-01 00:46+0000\n"
-"PO-Revision-Date: 2026-08-14 10:46+0200\n"
+"POT-Creation-Date: 2026-09-03 00:44+0000\n"
+"PO-Revision-Date: 2026-09-01 11:39+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -2398,10 +2398,7 @@ msgid "Send &Later"
 msgstr "&Later verzenden"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2409,8 +2406,8 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"U probeert een bericht toe te sturen aan meer dan %1 geadresseerden. Moet "
-"het bericht wel worden verstuurd?"
+"U probeert een bericht toe te sturen aan meer dan %1 geadresseerde. Moet het "
+"bericht wel worden verstuurd?"
 msgstr[1] ""
 "U probeert een bericht toe te sturen aan meer dan %1 geadresseerden. Moet "
 "het bericht wel worden verstuurd?"
@@ -6535,7 +6532,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg:54
+#: settings/kmail.kcfg:51
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6547,19 +6544,19 @@ msgstr ""
 "'Belangrijk' of 'Taak'"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg:58
+#: settings/kmail.kcfg:55
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "Lokale vlaggen toestaan in alleen-lezen-mappen"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg:64
+#: settings/kmail.kcfg:59
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "Berichten in wachtrij verzenden bij berichtencontrole"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg:65
+#: settings/kmail.kcfg:60
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6571,7 +6568,7 @@ msgstr ""
 "automatisch worden verzonden. </p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg:77
+#: settings/kmail.kcfg:71
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr ""
@@ -6579,37 +6576,37 @@ msgstr ""
 "mappen."
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg:91
+#: settings/kmail.kcfg:83
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Systeemvakpictogram inschakelen"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg:95
+#: settings/kmail.kcfg:87
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Geminimaliseerd starten in systeemvak"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg:99
+#: settings/kmail.kcfg:91
 #, kde-format
 msgid "Show Unread Email in TaskBar"
 msgstr "Ongelezen e-mail in takenbalk tonen"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg:103
+#: settings/kmail.kcfg:95
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "Editor spe&cificeren:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg:107
+#: settings/kmail.kcfg:99
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Externe editor gebr&uiken"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg:113
+#: settings/kmail.kcfg:105
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6619,31 +6616,31 @@ msgstr ""
 "map het quotum bijna is bereikt."
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg:117
+#: settings/kmail.kcfg:109
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Lokale prullenbak legen bij afsluiten van toepassing"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg:121
+#: settings/kmail.kcfg:113
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Berichten zonder bevestiging verwijderen"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg:125
+#: settings/kmail.kcfg:117
 #, kde-format
 msgid "Allow to start specific folder"
 msgstr "Sta toe om een specifieke map te beginnen"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg:129
+#: settings/kmail.kcfg:121
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "De te openen map specificeren wanneer de toepassing is gestart"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg:163
+#: settings/kmail.kcfg:153
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6654,7 +6651,7 @@ msgstr ""
 "naar."
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg:171
+#: settings/kmail.kcfg:159
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6664,26 +6661,26 @@ msgstr ""
 "moet worden."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg:178
+#: settings/kmail.kcfg:165
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "Snelzoeken voor mappen tonen"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg:186
+#: settings/kmail.kcfg:172
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "Standaard opgenomen in de tekst doorsturen."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg:189
+#: settings/kmail.kcfg:175
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Waarschuwen wanneer het aantal geadresseerden meer is dan:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg:191 settings/kmail.kcfg:198
+#: settings/kmail.kcfg:177 settings/kmail.kcfg:184
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6695,32 +6692,26 @@ msgstr ""
 "gestuurd. Deze waarschuwing kan worden uitgezet."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg:212
+#: settings/kmail.kcfg:197
 #, kde-format
 msgid "Confirm &before send"
 msgstr "Ver&zending bevestigen"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg:219
+#: settings/kmail.kcfg:204
 #, kde-format
 msgid "Check spelling before send"
 msgstr "Spellingcontrole uitvoeren voor verzenden"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:223
+#: settings/kmail.kcfg:208
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Auto&matisch ontvangstbevestigingen vragen"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:224
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#: settings/kmail.kcfg:209
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6732,16 +6723,16 @@ msgstr ""
 "ontvangst en gelezen (MDNs) vraagt voor alle berichten die u verzendt.</p> "
 "<p> Deze optie heeft alleen effect op de standaardinstelling, u kunt het MDN-"
 "verzoek per bericht regelen in de opsteller via de menuoptie <em>Opties</"
-"em>&gt;<em>Ontvangstbevestiging vragen</em>.</p></qt>"
+"em>→<em>Ontvangstbevestiging vragen</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:246
+#: settings/kmail.kcfg:230
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Automatisch opslaan iedere:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:247
+#: settings/kmail.kcfg:231
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6753,115 +6744,115 @@ msgstr ""
 "Automatisch opslaan kunt u uitschakelen door hier 0 in te vullen."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg:254
+#: settings/kmail.kcfg:236
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "Fragmentbeheer en invoegpaneel tonen in opsteller."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg:260
+#: settings/kmail.kcfg:241
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "Indien geactiveerd worden verzonden berichten versleuteld opgeslagen"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg:264
+#: settings/kmail.kcfg:245
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Een lijst met alle recent gebruikte URL's"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg:270
+#: settings/kmail.kcfg:251
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Een lijst met alle recent gebruikte coderingen"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg:276
+#: settings/kmail.kcfg:257
 #, kde-format
 msgid "Show crypto label indicator"
 msgstr "Indicator voor cryptolabel tonen"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg:280
+#: settings/kmail.kcfg:261
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr "Valideer standaard sneltoets voor verzenden"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:334
+#: settings/kmail.kcfg:312
 #, kde-format
 msgid "Message preview pane:"
 msgstr "Berichtvoorbeeldvak:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:337
+#: settings/kmail.kcfg:315
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Geen berichtvoorbeeldvak tonen"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:340
+#: settings/kmail.kcfg:318
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Berichtvoorbeeldvak tonen onder de berichtenlijst"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:343
+#: settings/kmail.kcfg:321
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Berichtvoorbeeldvak naast de berichtenlijst tonen"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:350
+#: settings/kmail.kcfg:327
 #, kde-format
 msgid "Folder list:"
 msgstr "Mappenlijst:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:353
+#: settings/kmail.kcfg:330
 #, kde-format
 msgid "Long folder list"
 msgstr "Lange mappenlijst"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:356
+#: settings/kmail.kcfg:333
 #, kde-format
 msgid "Short folder list"
 msgstr "Korte mappenlijst"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg:365
+#: settings/kmail.kcfg:341
 #, kde-format
 msgid "Message template for new message"
 msgstr "Berichtsjabloon voor nieuw bericht"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg:370
+#: settings/kmail.kcfg:346
 #, kde-format
 msgid "Message template for reply"
 msgstr "Berichtsjabloon voor antwoorden"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg:375
+#: settings/kmail.kcfg:351
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "Berichtsjabloon voor allen beantwoorden"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg:380
+#: settings/kmail.kcfg:356
 #, kde-format
 msgid "Message template for forward"
 msgstr "Berichtsjabloon voor doorsturen"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg:385
+#: settings/kmail.kcfg:361
 #, kde-format
 msgid "Quote characters"
 msgstr "Aanhaaltekens"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg:400
+#: settings/kmail.kcfg:374
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Specificeert het gebruikte beleid bij het weergeven van het beleid"
@@ -8166,26 +8157,20 @@ msgid "Plugins used in KMail."
 msgstr "In KMail gebruikte plug-ins."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"Het lijkt erop dat deze e-mail van %1 niet wordt gecontroleerd. Wilt u op "
+"Het lijkt erop dat dit e-mailadres van %1 niet wordt gemonitord. Wilt u op "
 "deze e-mail reageren?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "E-mail wordt niet gemonitord"
+msgstr "E-mailadres wordt niet gemonitord"
 
 #: util.cpp:37
 #, kde-format

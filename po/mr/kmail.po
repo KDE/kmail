@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-01 00:46+0000\n"
+"POT-Creation-Date: 2026-09-03 00:44+0000\n"
 "PO-Revision-Date: 2013-04-15 11:18+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -6913,7 +6913,7 @@ msgid " – "
 msgstr " – "
 
 #. i18n: ectx: whatsthis, entry (ExcludeImportantMailFromExpiry), group (Behaviour)
-#: settings/kmail.kcfg:54
+#: settings/kmail.kcfg:51
 #, kde-format
 msgid ""
 "This prevents the automatic expiry of old messages in a folder from deleting "
@@ -6924,19 +6924,19 @@ msgstr ""
 "संदेशआपोआप बाद होणे किंवा (अर्काईव्ह संचयीकेत हलविणे) ही कृती हे थांबविते"
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
-#: settings/kmail.kcfg:58
+#: settings/kmail.kcfg:55
 #, kde-format
 msgid "Allow local flags in read-only folders"
 msgstr "फक्त वाचण्यासाठी ह्या संचयीकेत स्थानिक खुणा/बाबींना परवानगी द्या"
 
 #. i18n: ectx: label, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg:64
+#: settings/kmail.kcfg:59
 #, kde-format
 msgid "Send queued mail on mail check"
 msgstr "मेल तपासताना रांगेतील मेल पाठवा"
 
 #. i18n: ectx: whatsthis, entry (SendOnCheck), group (Behaviour)
-#: settings/kmail.kcfg:65
+#: settings/kmail.kcfg:60
 #, kde-format
 msgid ""
 "<qt><p>Select whether you want KMail to send all messages in the outbox on "
@@ -6947,44 +6947,44 @@ msgstr ""
 "पाठवायचे आहेत का किंवा तुम्ही संदेश आपोआप अजिबात पाठवू इच्छित नाही.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
-#: settings/kmail.kcfg:77
+#: settings/kmail.kcfg:71
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr "संचयीका निवड संवादातील आताच निवडलेल्या संचयीका"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg:91
+#: settings/kmail.kcfg:83
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "प्रणाली ट्रे चिन्ह कार्यान्वित करा"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg:95
+#: settings/kmail.kcfg:87
 #, kde-format
 msgid "Start minimized to tray"
 msgstr ""
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg:99
+#: settings/kmail.kcfg:91
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgid "Show Unread Email in TaskBar"
 msgstr "न वाचलेले मेल प्रणाली ट्रे मध्ये दर्शवा"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg:103
+#: settings/kmail.kcfg:95
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "संपादक निर्देशीत करा (&D):"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg:107
+#: settings/kmail.kcfg:99
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "कंपोझर ऐवजी बाहेरील संपादकाचा वापर करा (&X)"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg:113
+#: settings/kmail.kcfg:105
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6992,33 +6992,33 @@ msgid ""
 msgstr "प्रयोगकर्त्याला संचयीकेतील जागा संपत आल्याचा इशारा देणारी मर्यादा सूचना"
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg:117
+#: settings/kmail.kcfg:109
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "कार्यक्रमातून बाहेर पडताना स्थानिक कचरापेटी रिकामी करा"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg:121
+#: settings/kmail.kcfg:113
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgid "Delete messages without confirmation"
 msgstr "मंजूरी पाठवा"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg:125
+#: settings/kmail.kcfg:117
 #, fuzzy, kde-format
 #| msgid "Select Shortcut for Folder"
 msgid "Allow to start specific folder"
 msgstr "संचयीकेसाठी जवळचा मार्ग शोधा"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg:129
+#: settings/kmail.kcfg:121
 #, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "प्रणाली सुरु झाल्यावर कोणती संचयीका उघडायची ते विनिर्दिष्ट करा"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg:163
+#: settings/kmail.kcfg:153
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -7026,7 +7026,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg:171
+#: settings/kmail.kcfg:159
 #, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -7036,19 +7036,19 @@ msgstr ""
 "केला जातो"
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg:178
+#: settings/kmail.kcfg:165
 #, kde-format
 msgid "Show folder quick search line edit"
 msgstr "संचयीका जलद शोध घेणारी संपादित पद्धती "
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg:186
+#: settings/kmail.kcfg:172
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr "मूलभूतसारखे इनलाइन फॉर्वर्ड करा."
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg:189
+#: settings/kmail.kcfg:175
 #, fuzzy, kde-format
 #| msgid "Warn if the number of recipients is larger than"
 msgid "Warn if the number of recipients is more than:"
@@ -7056,7 +7056,7 @@ msgstr "प्राप्तकर्त्यांची संख्या  
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg:191 settings/kmail.kcfg:198
+#: settings/kmail.kcfg:177 settings/kmail.kcfg:184
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -7067,25 +7067,25 @@ msgstr ""
 "पुष्टीसाठी विचारणा करेल. इशारा इशाऱ्याकडे दुर्लक्ष करा/इशारा बंद करा."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg:212
+#: settings/kmail.kcfg:197
 #, kde-format
 msgid "Confirm &before send"
 msgstr "पाठविण्यापूर्वी खात्री करा (&B)"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg:219
+#: settings/kmail.kcfg:204
 #, kde-format
 msgid "Check spelling before send"
 msgstr "पाठविण्यापूर्वी वर्णलेखन तपासा"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:223
+#: settings/kmail.kcfg:208
 #, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "विनंती आणि संदेशाच्या मांडणीची स्वयंचलीत सूचना (&M)"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:224
+#: settings/kmail.kcfg:209
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p>Enable this option if you want KMail to request Message "
@@ -7106,13 +7106,13 @@ msgstr ""
 "अधिसूचनेसाठी विनंती</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:246
+#: settings/kmail.kcfg:230
 #, kde-format
 msgid "Autosave interval:"
 msgstr "स्वयंचलित साठवणे मध्यांतर :"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:247
+#: settings/kmail.kcfg:231
 #, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -7124,118 +7124,118 @@ msgstr ""
 "० ह्या मूल्यावर निश्चीत करून असमर्थ करू शकता."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg:254
+#: settings/kmail.kcfg:236
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr "मांडणीतील मजकुराच्या तुकड्याचे/छोट्या भागाचे व्यवस्थापन आणि समावेशन चौकोन दाखवा."
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg:260
+#: settings/kmail.kcfg:241
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr "तपासणी झाल्यानंतर पाठविलेले संदेश संकेतन स्वरूपात साठविले जातील"
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg:264
+#: settings/kmail.kcfg:245
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "नुकत्याच वापरलेल्या वैश्विक/एकात्म साधन शोधकांची (URLs) यादी"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg:270
+#: settings/kmail.kcfg:251
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "नुकत्याच वापरलेल्या सर्व संकेतनांची यादी"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg:276
+#: settings/kmail.kcfg:257
 #, fuzzy, kde-format
 #| msgid "Show signed/encrypted text after composing"
 msgid "Show crypto label indicator"
 msgstr "संकेत चिन्हे दिलेला/संकेतीकरण केलेला मजकूर जुळणी /मांडणी केल्यानंतर दाखवा"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg:280
+#: settings/kmail.kcfg:261
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:334
+#: settings/kmail.kcfg:312
 #, fuzzy, kde-format
 #| msgid "Message Preview Pane"
 msgid "Message preview pane:"
 msgstr "संदेश पूर्वावलोकन उपखंड"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:337
+#: settings/kmail.kcfg:315
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "संदेश पूर्वावलोकन उपखंड दाखवू नका"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:340
+#: settings/kmail.kcfg:318
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "संदेशांच्या यादीखाली पूर्वावलोकन उपखंड दाखवा"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:343
+#: settings/kmail.kcfg:321
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr " संदेश पूर्ववलोकन उपखंड संदेशांच्या यादीखाली दाखवा"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:350
+#: settings/kmail.kcfg:327
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgid "Folder list:"
 msgstr "संचयीका यादी"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:353
+#: settings/kmail.kcfg:330
 #, kde-format
 msgid "Long folder list"
 msgstr "लांब/नोठ्या संचयीकांची यादी"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:356
+#: settings/kmail.kcfg:333
 #, kde-format
 msgid "Short folder list"
 msgstr "लहान संचयीकांची यादी"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg:365
+#: settings/kmail.kcfg:341
 #, kde-format
 msgid "Message template for new message"
 msgstr "नवीन संदेशासाठी प्रमाणित संदेश मजकूर"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg:370
+#: settings/kmail.kcfg:346
 #, kde-format
 msgid "Message template for reply"
 msgstr "उत्तरासाठी प्रमाणित संदेश मजकूर"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg:375
+#: settings/kmail.kcfg:351
 #, kde-format
 msgid "Message template for reply to all"
 msgstr "सर्वाना उत्तर पाठविण्यासाठी प्रमाणित संदेश मजकूर"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg:380
+#: settings/kmail.kcfg:356
 #, kde-format
 msgid "Message template for forward"
 msgstr "फॉर्वर्ड करिता संदेश नमूना"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg:385
+#: settings/kmail.kcfg:361
 #, kde-format
 msgid "Quote characters"
 msgstr "अक्षर समूह उधृत करा"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg:400
+#: settings/kmail.kcfg:374
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "नीति प्रदर्शित करताना उपयोगात आणलेली नीति दाखवते"
