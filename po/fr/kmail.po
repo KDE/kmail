@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-03 00:44+0000\n"
-"PO-Revision-Date: 2026-08-15 09:08+0200\n"
+"PO-Revision-Date: 2026-09-02 18:34+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -40,7 +40,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Accelerator-Marker: &\n"
 "X-Environment: kde\n"
-"X-Generator: Lokalize 26.07.90\n"
+"X-Generator: Lokalize 26.08.0\n"
 "X-Text-Markup: kde4\n"
 
 #, kde-format
@@ -2419,10 +2419,7 @@ msgid "Send &Later"
 msgstr "Envoyer p&lus tard"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2430,8 +2427,8 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Vous tentez d'envoyer ce message à plus de %1 destinataires. Voulez-vous "
-"tout de même envoyer ce courrier électronique ?"
+"Vous tentez d'envoyer un courriel à plus de %1 destinataires. Voulez-vous "
+"vraiment envoyer ce courriel ?"
 msgstr[1] ""
 "Vous tentez d'envoyer ce message à plus de %1 destinataires. Voulez-vous "
 "tout de même envoyer ce courrier électronique ?"
@@ -6776,13 +6773,7 @@ msgstr "Automatiquement demander un accusé de réception du &message"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:209
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6791,11 +6782,11 @@ msgid ""
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
 "<qt><p>Activez cette option si vous voulez que KMail demande un accusé de "
-"réception (MDN) pour chaque message que vous envoyez.</p><p>Le choix de "
-"cette option affecte tous les messages. Vous pouvez activer ou désactiver "
-"individuellement les accusés de réception dans l'éditeur de courriels en "
-"utilisant le menu « <em>Options</em> / <em>Accusés de réception</em> ».</p></"
-"qt>"
+"réception (MDN, Message Disposition Notifications) pour chaque message que "
+"vous envoyez.</p><p>Le choix de cette option affecte tous les messages. Vous "
+"pouvez activer ou désactiver individuellement les accusés de réception dans "
+"l'éditeur de courriels par message en utilisant l'élément de menu "
+"« <em>Options</em> / <em>Accusés de réception</em> ».</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:230
@@ -8245,11 +8236,7 @@ msgid "Plugins used in KMail."
 msgstr "Modules externes utilisés dans KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
@@ -8259,9 +8246,7 @@ msgstr ""
 "répondre à ce courriel ?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Courriel non surveillé"

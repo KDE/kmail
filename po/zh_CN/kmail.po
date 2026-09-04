@@ -2322,17 +2322,14 @@ msgid "Send &Later"
 msgstr "稍后发送(&L)"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
 msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
-msgstr[0] "您正尝试一次向多于 %1 名收件人发送邮件，确认要发送吗？"
+msgstr[0] ""
 
 #: editor/kmcomposerwin.cpp:3167
 #, kde-format
@@ -6451,13 +6448,7 @@ msgstr "自动请求消息处理通知(&M)"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:209
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6465,9 +6456,6 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>→<em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
-"<qt><p>如果您想要 KMail 为您每条发出的消息请求消息处理通知 (MDN)，则应启用此"
-"选项。</p><p>此选项只会影响默认值；您仍然可以在每封信的撰写器中启用或禁用 "
-"MDN 请求，只需选择菜单项<em>选项</em>->&gt;<em>请求投递通知</em>。</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:230
@@ -7841,11 +7829,10 @@ msgid ""
 msgstr ""
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgid "Email Address:"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "邮件地址："
+msgstr ""
 
 #: util.cpp:37
 #, kde-format

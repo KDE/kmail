@@ -266,16 +266,11 @@ msgid "Viewer for mail attachments using TNEF format"
 msgstr "用 TNEF 格式查看邮件附件"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid ""
-#| "Copyright 2000 Michael Goffioul \n"
-#| "Copyright 2012  Allen Winter"
+#, kde-format
 msgid ""
 "© 2000 Michael Goffioul \n"
 "© 2012 Allen Winter"
 msgstr ""
-"Copyright 2000 Michael Goffioul \n"
-"Copyright 2012 Allen Winter"
 
 #: main.cpp:38
 #, kde-format
