@@ -209,9 +209,8 @@ void ArchiveFolderDialog::slotFixFileExtension()
     mUrlRequester->setUrl(QUrl::fromLocalFile(fileName));
 }
 
-void ArchiveFolderDialog::slotUrlChanged(const QString &url)
+void ArchiveFolderDialog::slotUrlChanged([[maybe_unused]] const QString &url)
 {
-    Q_UNUSED(url)
     const Akonadi::Collection folder = mFolderRequester->hasCollection() ? mFolderRequester->collection() : Akonadi::Collection();
     updateOkButtonState(folder);
 }
