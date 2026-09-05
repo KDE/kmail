@@ -69,6 +69,7 @@
 #include <TextAddonsWidgets/WhatsNewMessageNgWidget>
 #include <TextAddonsWidgets/WhatsNewNgDialog>
 
+#include <kmime/content.h>
 #include <mailcommon/mailcommonsettings_base.h>
 
 #include <MessageViewer/HeaderStyle>
@@ -2201,7 +2202,8 @@ void KMMainWidget::slotFromFilter()
     }
 
     if (const auto al = MessageHelper::extractAddrSpecs(msg, "From"); al.empty()) {
-        openFilterDialog("From", msg->from()->asUnicodeString());
+        const auto from = msg->from(KMime::DontCreate);
+        openFilterDialog("From", from ? from->asUnicodeString() : QString());
     } else {
         openFilterDialog("From", al.front().asString());
     }
@@ -2215,7 +2217,7 @@ void KMMainWidget::slotToFilter()
         return;
     }
     QString str;
-    if (auto to = msg->to()) {
+    if (auto to = msg->to(KMime::CreatePolicy::DontCreate)) {
         str = to->asUnicodeString();
     }
     openFilterDialog("To", str);
