@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-03 00:44+0000\n"
-"PO-Revision-Date: 2026-08-15 16:46+0200\n"
+"PO-Revision-Date: 2026-09-01 15:19+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -2385,10 +2385,7 @@ msgid "Send &Later"
 msgstr "Spedisci &più tardi"
 
 #: editor/kmcomposerwin.cpp:3164
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2396,7 +2393,7 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Stai cercando di inviare un messaggio di posta a più di %1 destinatari. "
+"Stai cercando di inviare un messaggio di posta a più di %1 destinatario. "
 "Inviare comunque il messaggio?"
 msgstr[1] ""
 "Stai cercando di inviare un messaggio di posta a più di %1 destinatari. "
@@ -6724,13 +6721,7 @@ msgstr ""
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:209
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -8175,11 +8166,7 @@ msgid "Plugins used in KMail."
 msgstr "Estensioni usate in KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
@@ -8189,9 +8176,7 @@ msgstr ""
 "questo messaggio di posta elettronica?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Indirizzo di posta elettronica non monitorato"
