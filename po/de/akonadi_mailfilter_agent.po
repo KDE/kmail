@@ -3,26 +3,27 @@
 # SPDX-FileCopyrightText: 2011-2014, 2018, 2020 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2024 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
+# SPDX-FileCopyrightText: 2026 Philipp Kiemle <l10n.daphipz@fastmail.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-31 00:44+0000\n"
-"PO-Revision-Date: 2024-08-19 22:34+0200\n"
-"Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
+"PO-Revision-Date: 2026-08-31 00:04+0200\n"
+"Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.05.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr "Freigeben …"
+msgstr "Teilen …"
 
 #: filterlogdialog.cpp:47
 #, kde-format
@@ -177,7 +178,7 @@ msgstr "Nachrichten werden gefiltert"
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Wird gestartet"
 
 #: mailfilteragent.cpp:114
 #, kde-format
@@ -188,7 +189,7 @@ msgstr "E-Mail-Filter-Protokoll aktiviert"
 #: mailfilteragent.cpp:116
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Protokoll anzeigen"
 
 #: mailfilteragent.cpp:183
 #, kde-format
@@ -201,9 +202,8 @@ msgid "Filtering in %1"
 msgstr "%1 wird gefiltert"
 
 #: mailfilteragent.cpp:393
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Nachrichten werden gefiltert"
-msgstr[1] "Nachrichten werden gefiltert"
+msgstr[0] "Filtern abgeschlossen, %1 Nachricht verarbeitet"
+msgstr[1] "Filtern abgeschlossen, %1 Nachrichten verarbeitet"
