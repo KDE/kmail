@@ -17,22 +17,22 @@
 # SPDX-FileCopyrightText: 2023-2024 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2024 aheinecke <aheinecke@gnupg.org>
 # SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>
-# SPDX-FileCopyrightText: 2025 Philipp Kiemle <l10n.daphipz@fastmail.de>
+# SPDX-FileCopyrightText: 2025-2026 Philipp Kiemle <l10n.daphipz@fastmail.de>
 # Intevation GmbH, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2025-10-20 20:21+0200\n"
-"Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
+"PO-Revision-Date: 2026-09-03 16:30+0200\n"
+"Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1099,8 +1099,8 @@ msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
-"Automatisch die eingerichtete Signatur einfügen wenn das Schreiben einer "
-"neuen Nachricht begonnen wird"
+"Die voreingestellte Signatur automatisch einfügen, wenn eine neue Nachricht "
+"begonnen wird"
 
 #: configuredialog/configurecomposerpage.cpp:143
 #, kde-format
@@ -1601,18 +1601,14 @@ msgid "GnuPG Settings"
 msgstr "GnuPG-Einstellungen"
 
 #: configuredialog/configuresecuritypage.cpp:328
-#, fuzzy, kde-format
-#| msgctxt "@label:textbox"
-#| msgid ""
-#| "The module is missing. Please verify your installation. This module is "
-#| "provided by Kleopatra."
+#, kde-format
 msgctxt "@label:textbox"
 msgid ""
 "The module is missing. Please verify your installation. This module is "
 "provided by kdepim-addons."
 msgstr ""
 "Das Modul fehlt. Bitte überprüfen Sie Ihre Installation. Dieses Modul wird "
-"von Kleopatra bereitgestellt."
+"von „kdepim-addons“ bereitgestellt."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -2407,8 +2403,8 @@ msgid ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr ""
-"Sie versenden diese Nachricht an mehr als %1 Empfänger. Soll die Nachricht "
-"trotzdem gesendet werden?"
+"Sie versuchen, diese Nachricht an mehr als %1 Empfänger zu versenden. Soll "
+"die Nachricht trotzdem gesendet werden?"
 
 #: editor/kmcomposerwin.cpp:3197
 #, kde-format
@@ -2434,7 +2430,7 @@ msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr ""
-"Durch das Abschalten des HTML-Modus wird der Text seine Formatierungen "
+"Durch das Deaktivieren des HTML-Modus wird der Text seine Formatierungen "
 "verlieren. Sind Sie sicher?"
 
 #: editor/kmcomposerwin.cpp:3238
@@ -3336,7 +3332,7 @@ msgstr "Nachrichten signieren"
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
-msgstr "Nachrichten verschlüsseln wenn möglich"
+msgstr "Nachrichten wenn möglich verschlüsseln"
 
 #: identity/identitydialog.cpp:594
 #, kde-format
@@ -4055,21 +4051,19 @@ msgid "Set subject of message"
 msgstr "Betreff der Nachricht setzen"
 
 #: kmail_options.h:17
-#, fuzzy, kde-format
-#| msgid "Subject"
+#, kde-format
 msgid "Subject"
 msgstr "Betreff"
 
 #: kmail_options.h:19
 #, kde-format
 msgid "Send CC: to 'address'. This can be repeated"
-msgstr "Eine Kopie an „address“ schicken. Kann mehrfach angegeben werden"
+msgstr "Eine Kopie an „Adresse“ schicken. Kann mehrfach angegeben werden"
 
 #: kmail_options.h:20 kmail_options.h:23 kmail_options.h:24
-#, fuzzy, kde-format
-#| msgid "Address Book"
+#, kde-format
 msgid "Address"
-msgstr "Adressbuch"
+msgstr "Adresse"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4095,10 +4089,9 @@ msgid "Read message body from 'file'"
 msgstr "Nachrichtentext aus Datei „file“ lesen"
 
 #: kmail_options.h:28
-#, fuzzy, kde-format
-#| msgid "&File"
+#, kde-format
 msgid "File"
-msgstr "&Datei"
+msgstr "Datei"
 
 #: kmail_options.h:29
 #, kde-format
@@ -4107,10 +4100,9 @@ msgid "Set body of message"
 msgstr "Text der Nachricht festlegen"
 
 #: kmail_options.h:29
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Text"
-msgstr "Rich-Text"
+msgstr "Text"
 
 #: kmail_options.h:30
 #, kde-format
@@ -4119,10 +4111,9 @@ msgid "Add an attachment to the mail. This can be repeated"
 msgstr "Der E-Mail einen Anhang hinzufügen. Kann mehrfach angegeben werden"
 
 #: kmail_options.h:30
-#, fuzzy, kde-format
-#| msgid "Attachment"
+#, kde-format
 msgid "Attachment Url"
-msgstr "Anhang"
+msgstr "Adresse des Anhangs"
 
 #: kmail_options.h:31
 #, kde-format
@@ -4149,10 +4140,9 @@ msgid "Set identity name"
 msgstr "Identitätsname festlegen"
 
 #: kmail_options.h:34
-#, fuzzy, kde-format
-#| msgid "Identity:"
+#, kde-format
 msgid "Identity"
-msgstr "Identität:"
+msgstr "Identität"
 
 #: kmail_options.h:35
 #, kde-format
@@ -4161,10 +4151,9 @@ msgid "View the given message file"
 msgstr "Die angegebene Nachrichtendatei anzeigen"
 
 #: kmail_options.h:35
-#, fuzzy, kde-format
-#| msgid "Message"
+#, kde-format
 msgid "Message Url"
-msgstr "Nachricht"
+msgstr "Adresse der Nachricht"
 
 #: kmail_options.h:36
 #, kde-format
@@ -4173,8 +4162,7 @@ msgid "Set body of message as html"
 msgstr "Text der Nachricht als HTML festlegen"
 
 #: kmail_options.h:36
-#, fuzzy, kde-format
-#| msgid "Body of Message"
+#, kde-format
 msgid "Body Message"
 msgstr "Nachrichteninhalt"
 
@@ -4188,7 +4176,7 @@ msgstr "Zeigt Möglichkeiten zum Benutzer-Feedback an"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Fehlersuchmodus aktivieren"
 
 #: kmail_options.h:44
 #, kde-format
@@ -6600,8 +6588,8 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
-"<qt><p>Wählen Sie, ob KMail die Nachrichten im Postausgang versenden soll, "
-"wenn ein manueller oder automatischer Mailabruf erfolgt oder ob überhaupt "
+"<qt><p>Wählen Sie, ob KMail alle Nachrichten im Postausgang versenden soll, "
+"wenn ein manueller oder automatischer Mailabruf erfolgt, oder ob überhaupt "
 "kein automatisches Versenden durchgeführt werden soll.</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
@@ -6722,7 +6710,7 @@ msgid ""
 msgstr ""
 "Wenn die Anzahl der Empfänger größer ist als dieser Wert, wird KMail Sie "
 "warnen und um Bestätigung bitten, bevor die E-Mail gesendet wird. Die "
-"Warnung kann abgeschaltet werden."
+"Warnung kann deaktiviert werden."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
 #: settings/kmail.kcfg:212
@@ -6756,7 +6744,7 @@ msgstr ""
 "Lesebestätigung (MDN) für jede versendete Nachricht aktiviert.</p><p>Dies "
 "gibt die Standardeinstellung vor. MDNs können immer noch auf "
 "Nachrichtenebene im Fenster „Nachricht erstellen“ über das Menü "
-"<em>Einstellungen</em> -> <em>Empfangs- und Lesebestätigung anfordern</em> "
+"<em>Einstellungen</em> → <em>Empfangs- und Lesebestätigung anfordern</em> "
 "eingestellt werden.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
@@ -6773,9 +6761,9 @@ msgid ""
 "The interval used to create the backups is set here. You can disable "
 "autosaving by setting it to the value 0."
 msgstr ""
-"Der Text im Editor kann regelmäßig gesichert werden. Der Abstand zwischen "
-"den Speichervorgängen kann hier festgelegt werden. Sie können das "
-"automatische Speichern auch abschalten, indem Sie hier den Wert 0 angeben."
+"Der Text im Editor kann regelmäßig gesichert werden. Das Speicherintervall "
+"kann hier festgelegt werden. Sie können das automatische Speichern auch "
+"deaktivieren, indem Sie hier den Wert 0 angeben."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
 #: settings/kmail.kcfg:254
@@ -7208,7 +7196,7 @@ msgstr ""
 "weight:600;\">In allen markierten Ordnern zyklisch suchen: </span>Dies "
 "funktioniert genauso wie die Option „In allen Ordnern zyklisch suchen“, "
 "jedoch werden dabei nur die Ordner durchsucht, für die die Einstellung "
-"„Aktion bei ungelesenen Nachrichten“ eingeschaltet ist.</p></body></html>"
+"„Aktion bei ungelesenen Nachrichten“ aktiviert ist.</p></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_LoopOnGotoUnread)
 #: ui/miscpagemaintab.ui:131
@@ -7254,10 +7242,9 @@ msgstr "Löschen von Nachrichten ohne Bestätigung erlauben"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "N&achrichten im Postausgang senden:"
+msgstr "Ziehen und Ablegen von Nachrichten in Ordner aktivieren"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -7342,7 +7329,7 @@ msgid ""
 msgstr ""
 "<qt>\n"
 "<h1>Nachrichten verschlüsselt speichern</h1>\n"
-"Wenn dieses Ankreuzfeld markiert ist, werden versendete Nachrichten "
+"Wenn dieses Ankreuzfeld aktiviert ist, werden versendete Nachrichten "
 "verschlüsselt gespeichert so wie sie versendet wurden. Das wird nicht "
 "empfohlen, da Sie die Nachrichten nicht mehr lesen können, sobald eines der "
 "Zertifikate abgelaufen ist.\n"
@@ -8225,26 +8212,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Es scheint, als würde diese E-Mail von %1 nicht überwacht werden. Möchten "
+"Sie auf diese E-Mail antworten?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "E-Mail nicht überwacht"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "&Nicht signieren"
+msgstr "Nicht senden"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "E-Mail ver&senden"
+msgstr "E-Mail senden"
 
 #: util.cpp:190
 #, kde-format
@@ -8325,9 +8312,7 @@ msgid "Use Global Setting"
 msgstr "Globale Einstellung verwenden"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "Abwesenheitsbenachrichtigung aktiv auf Server"
