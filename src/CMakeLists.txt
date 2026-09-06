@@ -506,6 +506,7 @@ target_link_libraries(
         KF6::SyntaxHighlighting
         KF6::GuiAddons
         KF6::TextUtils
+        KF6::TextAutoCorrectionWidgets
         KF6::StatusNotifierItem
         LibGpgError::LibGpgError
         ${kmail_userfeedback_LIB}
