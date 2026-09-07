@@ -10,7 +10,6 @@
 class QWidget;
 namespace KIdentityManagementCore
 {
-class Identity;
 class IdentityManager;
 }
 

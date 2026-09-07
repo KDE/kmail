@@ -37,7 +37,6 @@ class KMReaderMainWin;
 
 namespace MessageViewer
 {
-class HeaderStyle;
 class AttachmentStrategy;
 }
 

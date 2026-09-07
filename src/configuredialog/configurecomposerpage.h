@@ -11,7 +11,6 @@
 class QCheckBox;
 class QSpinBox;
 class QSpinBox;
-class QComboBox;
 class QLineEdit;
 class ListView;
 class QPushButton;

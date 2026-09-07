@@ -26,10 +26,6 @@ namespace MessageViewer
 {
 class CSSHelper;
 class DKIMViewerMenu;
-}
-
-namespace MimeTreeParser
-{
 class AttachmentStrategy;
 }
 

@@ -12,7 +12,6 @@
 class QCheckBox;
 class QLabel;
 class KIconButton;
-class CollectionViewWidget;
 template<typename T>
 class QSharedPointer;
 

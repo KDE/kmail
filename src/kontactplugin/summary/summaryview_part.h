@@ -22,7 +22,6 @@ class Core;
 class Summary;
 }
 
-class KAboutData;
 class QAction;
 
 class QFrame;
