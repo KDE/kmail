@@ -17,24 +17,20 @@ LdapActivities::~LdapActivities() = default;
 
 bool LdapActivities::filterAcceptsRow(const QStringList &activities) const
 {
-    if (mActivitiesManager && mActivitiesManager->enabled()) {
-        if (!activities.isEmpty()) {
-            return mActivitiesManager->isInCurrentActivity(activities);
-        } else {
-            return false;
-        }
+    if (!hasActivitySupport()) {
+        return true;
     }
-    return true;
+    return !activities.isEmpty() && mActivitiesManager->isInCurrentActivity(activities);
 }
 
 bool LdapActivities::hasActivitySupport() const
 {
-    return mActivitiesManager->enabled();
+    return mActivitiesManager ? mActivitiesManager->enabled() : false;
 }
 
 QString LdapActivities::currentActivity() const
 {
-    return mActivitiesManager->currentActivity();
+    return mActivitiesManager ? mActivitiesManager->currentActivity() : QString();
 }
 
 #include "moc_ldapactivities.cpp"

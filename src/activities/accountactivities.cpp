@@ -29,12 +29,12 @@ bool AccountActivities::filterAcceptsRow(const QStringList &activities) const
 
 bool AccountActivities::hasActivitySupport() const
 {
-    return mActivitiesManager->enabled();
+    return mActivitiesManager ? mActivitiesManager->enabled() : false;
 }
 
 QString AccountActivities::currentActivity() const
 {
-    return mActivitiesManager->currentActivity();
+    return mActivitiesManager ? mActivitiesManager->currentActivity() : QString{};
 }
 
 #include "moc_accountactivities.cpp"

@@ -17,24 +17,20 @@ IdentityActivities::~IdentityActivities() = default;
 
 bool IdentityActivities::filterAcceptsRow(const QStringList &activities) const
 {
-    if (mActivitiesManager && mActivitiesManager->enabled()) {
-        if (!activities.isEmpty()) {
-            return mActivitiesManager->isInCurrentActivity(activities);
-        } else {
-            return false;
-        }
+    if (!hasActivitySupport()) {
+        return true;
     }
-    return true;
+    return !activities.isEmpty() && mActivitiesManager->isInCurrentActivity(activities);
 }
 
 bool IdentityActivities::hasActivitySupport() const
 {
-    return mActivitiesManager->enabled();
+    return mActivitiesManager ? mActivitiesManager->enabled() : false;
 }
 
 QString IdentityActivities::currentActivity() const
 {
-    return mActivitiesManager->currentActivity();
+    return mActivitiesManager ? mActivitiesManager->currentActivity() : QString();
 }
 
 #include "moc_identityactivities.cpp"

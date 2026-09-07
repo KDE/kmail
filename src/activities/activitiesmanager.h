@@ -7,7 +7,6 @@
 #pragma once
 #include "kmail_private_export.h"
 #include <PimCommonActivities/ActivitiesBaseManager>
-class QObject;
 class TransportActivities;
 class IdentityActivities;
 class LdapActivities;
