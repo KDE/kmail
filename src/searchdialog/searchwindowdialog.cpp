@@ -593,7 +593,7 @@ void SearchWindowDialog::slotCollectionStatisticsRetrieved(KJob *job)
         return;
     }
 
-    const Akonadi::Collection col = cols.at(0);
+    const Akonadi::Collection &col = cols.at(0);
     updateCollectionStatistic(col.id(), col.statistics());
 }
 

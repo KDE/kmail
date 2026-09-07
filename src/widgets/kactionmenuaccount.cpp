@@ -116,7 +116,7 @@ void KActionMenuAccount::updateAccountMenu()
         std::sort(agentIdentifierList.begin(), agentIdentifierList.end(), orderAgentIdentifier);
         const int numberOfAccounts(agentIdentifierList.size());
         for (int i = 0; i < numberOfAccounts; ++i) {
-            const AgentIdentifier id = agentIdentifierList.at(i);
+            const AgentIdentifier &id = agentIdentifierList.at(i);
             QAction *action = menu()->addAction(id.mName);
             action->setData(id.mIdentifier);
         }

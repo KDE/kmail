@@ -1158,7 +1158,7 @@ KMCommand::Result KMSetStatusCommand::execute()
     // Toggle actions on threads toggle the whole thread
     // depending on the state of the parent.
     if (mInvertMark) {
-        const Akonadi::Item first = lstItems.constFirst();
+        const Akonadi::Item &first = lstItems.constFirst();
         MessageStatus pStatus;
         pStatus.setStatusFromFlags(first.flags());
         if (pStatus & mStatus) {
@@ -1663,7 +1663,7 @@ KMCommand::Result KMTrashMsgCommand::execute()
     setEmitsCompletedItself(true);
     setDeletesItself(true);
     for (auto trashIt = mTrashFolders.begin(), end = mTrashFolders.end(); trashIt != end; ++trashIt) {
-        if (const auto trash = trashIt.key(); trash.isValid()) {
+        if (const auto &trash = trashIt.key(); trash.isValid()) {
             auto job = new Akonadi::ItemMoveJob(*trashIt, trash, this);
             connect(job, &KIO::Job::result, this, &KMTrashMsgCommand::slotMoveResult);
             mPendingMoves.push_back(job);
