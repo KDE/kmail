@@ -149,7 +149,7 @@ QHash<MessageComposer::PluginActionType::Type, QList<QAction *>> KMailPluginEdit
         for (MessageComposer::PluginEditorInterface *interface : std::as_const(mListPluginInterface)) {
             const MessageComposer::PluginActionType actionType = interface->actionType();
             MessageComposer::PluginActionType::Type type = actionType.type();
-            if (const bool needSelectedText = interface->needSelectedText()) {
+            if (interface->needSelectedText()) {
                 // Disable by default as we don't have selection by default.
                 actionType.action()->setEnabled(false);
                 connect(this, &KMailPluginEditorManagerInterface::textSelectionChanged, actionType.action(), &QAction::setEnabled);
