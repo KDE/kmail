@@ -134,7 +134,6 @@ public:
     [[nodiscard]] Akonadi::Collection currentCollection() const;
     [[nodiscard]] QSharedPointer<MailCommon::FolderSettings> currentFolder() const;
 
-    static void cleanup();
     QAction *action(const QString &name);
 
     QAction *sendQueuedAction() const;
@@ -279,12 +278,6 @@ private:
     KMAIL_NO_EXPORT void moveSelectedMessagesToFolder(const Akonadi::Collection &dest);
     KMAIL_NO_EXPORT void copySelectedMessagesToFolder(const Akonadi::Collection &dest);
     KMAIL_NO_EXPORT KActionCollection *actionCollection() const;
-    /**
-      @return the correct config dialog depending on whether the parent of
-      the mainWidget is a KPart or a KMMainWindow.
-      When dealing with geometries, use this pointer
-    */
-    [[nodiscard]] KMAIL_NO_EXPORT KSharedConfig::Ptr config();
 
     KMAIL_NO_EXPORT void updateHtmlMenuEntry();
 
