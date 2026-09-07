@@ -146,14 +146,11 @@
 #include <KConfigGroup>
 #include <KNotification>
 #include <KRecentFilesMenu>
-#include <KStandardAction>
 #include <KStringHandler>
 #include <KToggleAction>
-#include <KXMLGUIFactory>
 
 #include <QAction>
 #include <QByteArray>
-#include <QHeaderView>
 #include <QKeyCombination>
 #include <QList>
 #include <QMenu>
@@ -171,7 +168,6 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
-#include <QStandardPaths>
 
 #include "historyclosedreader/historyclosedreadermanager.h"
 #include "historyclosedreader/historyclosedreadermenu.h"

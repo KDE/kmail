@@ -44,7 +44,6 @@
 #include <KActionMenu>
 #include <KMessageBox>
 #include <KMime/Message>
-#include <KStandardAction>
 #include <KStandardGuiItem>
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
 #include <PIM/indexeditems.h>
@@ -52,11 +51,9 @@
 #include <QIcon>
 #include <QSortFilterProxyModel>
 
-#include <QCheckBox>
 #include <QCloseEvent>
 #include <QCursor>
 #include <QDialogButtonBox>
-#include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QPushButton>

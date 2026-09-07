@@ -157,7 +157,6 @@
 
 // KDE Frameworks includes
 #include <KActionCollection>
-#include <KActionMenu>
 #include <KConfigGroup>
 #include <KEditToolBar>
 #include <KEmailAddress>
@@ -179,7 +178,6 @@
 // Qt includes
 #include <QAction>
 #include <QApplication>
-#include <QCheckBox>
 #include <QClipboard>
 #include <QFontDatabase>
 #include <QInputDialog>
@@ -187,9 +185,7 @@
 #include <QMenuBar>
 #include <QMimeData>
 #include <QPointer>
-#include <QShortcut>
 #include <QSplitter>
-#include <QStandardPaths>
 #include <QStatusBar>
 #include <QUrlQuery>
 

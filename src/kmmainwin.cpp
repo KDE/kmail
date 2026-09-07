@@ -19,12 +19,10 @@
 
 #include <KConfigGroup>
 #include <KToolBar>
-#include <QApplication>
 #include <QStatusBar>
 #include <QTimer>
 
 #include <KActionCollection>
-#include <KConfig>
 #include <KConfigGui>
 #include <KEditToolBar>
 #include <KLocalizedString>
@@ -32,7 +30,6 @@
 #include <KStandardAction>
 #include <KXMLGUIFactory>
 #include <QMenuBar>
-#include <QWindow>
 
 #include <QLabel>
 #include <QVBoxLayout>
