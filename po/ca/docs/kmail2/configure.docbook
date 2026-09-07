@@ -1586,7 +1586,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Llista de carpetes</guilabel
 > podreu triar entre <guilabel
 >Llista de carpetes llarga</guilabel
-> (opció predeterminada), la qual utilitza tota l'alçada de la finestra i <guilabel
+> (opció predeterminada), la qual utilitza tota l'altura de la finestra i <guilabel
 >Llista de carpetes curta</guilabel
 >. Amb l'opció curta si heu seleccionat <guilabel
 >Mostra la subfinestra de vista prèvia del missatge a sota de la llista de missatges</guilabel
@@ -2733,7 +2733,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Destinataris</guilabel
 > es debat en més detall al final d'aquesta secció). Si necessiteu una mida personalitzada, escolliu l'última opció <guilabel
 >Personalitzada</guilabel
-> des de les llistes desplegables amplada i alçada, i introduïu el nombre de píxels en el quadre de text. També podreu ampliar les imatges seleccionant <guilabel
+> des de les llistes desplegables amplada i altura, i introduïu el nombre de píxels en el quadre de text. També podreu ampliar les imatges seleccionant <guilabel
 >Augmenta les imatges a la dimensió mínima</guilabel
 >. L'última opció permet ometre el canvi de mida de les imatges que són més petites que la mida de fitxer especificada. </para>
        </listitem>
