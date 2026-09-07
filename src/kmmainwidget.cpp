@@ -516,11 +516,6 @@ void KMMainWidget::slotFolderChanged(const Akonadi::Collection &collection)
 
 void KMMainWidget::slotHistorySwitchFolder(const Akonadi::Collection &collection)
 {
-    // mMessagePane may be null if this slot fires during createWidgets() before
-    // the CollectionPane constructor has returned and assigned mMessagePane.
-    if (!mMessagePane) {
-        return;
-    }
     if (mCurrentCollection == collection) {
         return;
     }
@@ -1050,11 +1045,6 @@ void KMMainWidget::createWidgets()
 #endif
     mFolderTreeWidget->folderTreeView()->setEnableDragDrop(KMailSettings::self()->enableFolderDnD());
 
-    connect(mFolderTreeWidget->folderTreeView(),
-            qOverload<const Akonadi::Collection &>(&EntityTreeView::currentChanged),
-            this,
-            &KMMainWidget::slotFolderChanged);
-
     connect(mFolderTreeWidget->folderTreeView()->selectionModel(), &QItemSelectionModel::selectionChanged, this, &KMMainWidget::updateFolderMenu);
 
     connect(mFolderTreeWidget->folderTreeView(), &FolderTreeView::newTabRequested, this, &KMMainWidget::slotCreateNewTab);
@@ -1066,6 +1056,16 @@ void KMMainWidget::createWidgets()
                                       KMKernel::self()->entityTreeModel(),
                                       mFolderTreeWidget->folderTreeView()->selectionModel(),
                                       this);
+
+    // Connect this only once mMessagePane exists: the CollectionPane constructor restores the
+    // session by setting the current index on the folder tree's selection model, which would
+    // re-enter slotFolderChanged() while this widget is still being built. Both mMessagePane and
+    // mMsgActions (created later, in setupActions()) are null at that point. See BUG: 523845.
+    connect(mFolderTreeWidget->folderTreeView(),
+            qOverload<const Akonadi::Collection &>(&EntityTreeView::currentChanged),
+            this,
+            &KMMainWidget::slotFolderChanged);
+
     connect(KMKernel::self()->entityTreeModel(), &Akonadi::EntityTreeModel::collectionFetched, this, &KMMainWidget::slotCollectionFetched);
 
     mMessagePane->setXmlGuiClient(mGUIClient);
