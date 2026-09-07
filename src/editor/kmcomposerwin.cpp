@@ -3814,7 +3814,6 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
         }
 
     } else {
-        QIcon icon;
         QString tooltip;
 
         const auto uids = key.userIDs();
