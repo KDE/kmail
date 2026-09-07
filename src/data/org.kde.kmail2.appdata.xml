@@ -200,7 +200,7 @@
       <li xml:lang="ca-valencia">Segur: KMail té la configuració predeterminada segura per a protegir la vostra privadesa, una implementació d'encriptació extrem a extrem i detecció del correu brossa.</li>
       <li xml:lang="cs">Bezpečný - KMail má bezpečná výchozí nastavení pro ochranu vašeho soukromí, skvělou podporu šifrování great end-to-end a detekci spamu.</li>
       <li xml:lang="da">Sikker - KMail har sikre standardindstillinger til at beskytte dit privatliv, glimrende understøttelse af ende-til-ende-kryptering og spam-detektion.</li>
-      <li xml:lang="de">Sicherheit - KMail hat sichere Standardeinstellungen zum Schutz Ihrer Privatsphäre, großartige Unterstützung für Ende-zu-Ende-Verschlüsselung und Spam-Erkennung.</li>
+      <li xml:lang="de">Sicher – KMail hat sichere Standardeinstellungen zum Schutz Ihrer Privatsphäre, großartige Unterstützung für Ende-zu-Ende-Verschlüsselung und Spam-Erkennung.</li>
       <li xml:lang="el">Ασφαλές - Το KMail έχει προκαθορισμένες ρυθμίσεις ασφαλείας για την προστασία του ιδιωτικού σας απορρήτου, πολύ καλή υποστήριξη κρυπτογράφησης στα άκρα και εντοπισμό ανεπιθύμητων μηνυμάτων.</li>
       <li xml:lang="en-GB">Secure - KMail has secure default settings to protect your privacy, great end-to-end encryption support, and spam detection.</li>
       <li xml:lang="eo">Sekura - KMail havas sekurajn defaŭltajn agordojn por protekti vian privatecon, bonegan ĉifradan subtenon de fino-al-fina kaj detekto de spamado.</li>
@@ -239,7 +239,7 @@
       <li xml:lang="ca-valencia">Potent: les característiques inclouen compatibilitat amb fora de línia, múltiples identitats dels remitents, suport multilingüe, filtratge potent, funcionalitat de busca i etiquetatge, gestió de les llistes de correu i una configuració molt flexible.</li>
       <li xml:lang="cs">Výkonný – mezi funkce patří podpora offline, více identit odesílatele, podpora více jazyků, výkonné filtrování, vyhledávání a označování funkcí, správa mailing listů a velmi flexibilní konfigurace.</li>
       <li xml:lang="da">Kraftfuld - Funktionerne omfatter offline-understøttelse, flere afsenderidentiteter, understøttelse af flere sprog, kraftfuld filtrering, søgnings- og mærkningsfunktionalitet, mailingliste-håndtering og meget fleksibel konfiguration.</li>
-      <li xml:lang="de">Leistungsstark - Zu den Funktionen gehören Offline-Unterstützung, mehrere Absenderidentitäten, Unterstützung mehrerer Sprachen, leistungsstarke Filter-, Such- und Markierungs-Funktionen, Mailinglistenverwaltung und eine sehr flexible Einrichtung.</li>
+      <li xml:lang="de">Leistungsstark – Zu den Funktionen gehören Offline-Unterstützung, mehrere Absenderidentitäten, Unterstützung mehrerer Sprachen, leistungsstarke Filter-, Such- und Markierungs-Funktionen, Mailinglistenverwaltung und eine sehr flexible Einrichtung.</li>
       <li xml:lang="el">Ισχυρό - Οι λειτουργίες περιλαμβάνουν υποστήριξη εκτός σύνδεσης, πολλαπλές ταυτότητες αποστολέα, πολυγλωσσική υποστήριξη, ισχυρό φιλτράρισμα, λειτουργικότητα αναζήτησης και απόδοσης ετικετών, διαχείριση λίστας αλληλογραφίας και πολύ ευέλικτη διαμόρφωση.</li>
       <li xml:lang="en-GB">Powerful - Features include offline support, multiple sender identities, multi-language support, powerful filtering, searching and tagging functionality, mailing list management and very flexible configuration.</li>
       <li xml:lang="eo">Potenca - Trajtoj inkluzivas eksterrete subtenon, multoblajn sendintecojn, plurlingvan subtenon, potencan filtradon, serĉadon kaj etikedan funkcion, dissendolistadministradon kaj tre flekseblan agordon.</li>
@@ -278,7 +278,7 @@
       <li xml:lang="ca-valencia">Integrat: les invitacions a reunions es poden afegir amb facilitat com a esdeveniments a KOrganizer, la compleció automàtica de l'adreça, els avatars i les preferències de la criptografia es carreguen des de la llibreta d'adreces.</li>
       <li xml:lang="cs">Integrovaný – pozvánky na schůzky lze snadno přidat jako události do KOrganizeru, automatické doplňování adres, avatary a preference šifrování se načítají z KAddressBooku.</li>
       <li xml:lang="da">Integreret - Mødeinvitationer kan nemt tilføjes som begivenheder til KOrganizer, adressefuldførelse, avatarer og krypto-indstillinger indlæses fra KAddressBook.</li>
-      <li xml:lang="de">Integration - Einladungen zu Besprechungen können einfach als Termine in KOrganizer hinzugefügt werden, automatische Vervollständigung von Adressen, Avatare und Krypto-Einstellungen werden aus KAddressBook geladen.</li>
+      <li xml:lang="de">Integriert – Einladungen zu Besprechungen können einfach als Termine in KOrganizer hinzugefügt werden, automatische Vervollständigung von Adressen, Avatare und Krypto-Einstellungen werden aus KAddressBook geladen.</li>
       <li xml:lang="el">Ενσωματωμένο - Προσκλήσεις σε συναντήσεις μπορούν αν προστεθούν εύκολα ως γεγονότα στο KOrganizer, αυτόματη συμπλήρωση διευθύνσεων, προσωπικοί βοηθοί και προτιμήσεις κρυπτογράφησης φορτώνονται από το KAddressBook.</li>
       <li xml:lang="en-GB">Integrated - Meeting invitations can be easily added as events into KOrganizer, address auto-completion, avatars and crypto preferences are loaded from KAddressBook.</li>
       <li xml:lang="eo">Integrita - Renkontinvitoj povas esti facile aldonitaj kiel eventoj en KOrganizer, adresaŭtomata kompletigo, avataroj kaj kriptaj preferoj estas ŝargitaj de KAddressBook.</li>
@@ -317,7 +317,7 @@
       <li xml:lang="ca-valencia">Compatible amb els estàndards: admet els protocols estàndards de correu, correu electrònic per a enviament, filtre de servidor i OpenPGP, PGP/MIME i S/MIME inclòs.</li>
       <li xml:lang="cs">Podporující standardy - Podporuje standardní e-mailové protokoly, push email, filtrování na straně serveru a vložené OpenPGP, PGP/MIME a S/MIME.</li>
       <li xml:lang="da">Standardoverholdelse - Understøtter standard mailprotokoller, push-e-mail, filtrering på serversiden og indlejret OpenPGP, PGP/MIME og S/MIME.</li>
-      <li xml:lang="de">Standardkonform - Unterstützt Standard-Mail-Protokolle, Push-E-Mail, serverseitige Filterung und Inline OpenPGP, PGP/MIME und S/MIME.</li>
+      <li xml:lang="de">Standardkonform – Unterstützt Standard-Mail-Protokolle, Push-E-Mail, serverseitige Filterung und Inline OpenPGP, PGP/MIME und S/MIME.</li>
       <li xml:lang="el">Σε συμμόρφωση με τα πρότυπα - Υποστηρίζει πρότυπα πρωτόκολλα αλληλογραφίας, ώθηση αλληλογραφίας, φιλτράρισμα διακομιστή και εμβόλιμα OpenPGP, PGP/MIME και S/MIME.</li>
       <li xml:lang="en-GB">Standard Compliant - Supports standard mail protocols, push email, server-side filtering and inline OpenPGP, PGP/MIME and S/MIME.</li>
       <li xml:lang="eo">Normkonforma - Subtenas normajn poŝtajn protokolojn, puŝan retpoŝton, servilflankan filtradon kaj enlinian OpenPGP, PGP/MIME kaj S/MIME.</li>
