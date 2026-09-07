@@ -8,29 +8,10 @@
 #include "activitiesmanager.h"
 
 IdentityActivities::IdentityActivities(ActivitiesManager *manager)
-    : KIdentityManagementCore::IdentityActivitiesAbstract{manager}
-    , mActivitiesManager(manager)
+    : PimCommonActivities::ActivitiesFilter<KIdentityManagementCore::IdentityActivitiesAbstract>{manager}
 {
 }
 
 IdentityActivities::~IdentityActivities() = default;
-
-bool IdentityActivities::filterAcceptsRow(const QStringList &activities) const
-{
-    if (!hasActivitySupport()) {
-        return true;
-    }
-    return !activities.isEmpty() && mActivitiesManager->isInCurrentActivity(activities);
-}
-
-bool IdentityActivities::hasActivitySupport() const
-{
-    return mActivitiesManager ? mActivitiesManager->enabled() : false;
-}
-
-QString IdentityActivities::currentActivity() const
-{
-    return mActivitiesManager ? mActivitiesManager->currentActivity() : QString();
-}
 
 #include "moc_identityactivities.cpp"

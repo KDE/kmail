@@ -8,29 +8,10 @@
 #include "activitiesmanager.h"
 
 TransportActivities::TransportActivities(ActivitiesManager *manager)
-    : MailTransport::TransportActivitiesAbstract{manager}
-    , mActivitiesManager(manager)
+    : PimCommonActivities::ActivitiesFilter<MailTransport::TransportActivitiesAbstract>{manager}
 {
 }
 
 TransportActivities::~TransportActivities() = default;
-
-bool TransportActivities::filterAcceptsRow(const QStringList &activities) const
-{
-    if (!hasActivitySupport()) {
-        return true;
-    }
-    return !activities.isEmpty() && mActivitiesManager->isInCurrentActivity(activities);
-}
-
-bool TransportActivities::hasActivitySupport() const
-{
-    return mActivitiesManager ? mActivitiesManager->enabled() : false;
-}
-
-QString TransportActivities::currentActivity() const
-{
-    return mActivitiesManager ? mActivitiesManager->currentActivity() : QString();
-}
 
 #include "moc_transportactivities.cpp"

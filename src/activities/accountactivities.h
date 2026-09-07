@@ -7,18 +7,12 @@
 #pragma once
 
 #include <Akonadi/AccountActivitiesAbstract>
+#include <PimCommonActivities/ActivitiesBaseManager>
 class ActivitiesManager;
-class AccountActivities : public Akonadi::AccountActivitiesAbstract
+class AccountActivities : public PimCommonActivities::ActivitiesFilter<Akonadi::AccountActivitiesAbstract>
 {
     Q_OBJECT
 public:
     explicit AccountActivities(ActivitiesManager *manager);
     ~AccountActivities() override;
-
-    [[nodiscard]] bool filterAcceptsRow(const QStringList &activities) const override;
-    [[nodiscard]] bool hasActivitySupport() const override;
-    [[nodiscard]] QString currentActivity() const override;
-
-private:
-    ActivitiesManager *const mActivitiesManager;
 };

@@ -7,18 +7,12 @@
 #pragma once
 
 #include <KLDAPCore/LdapActivitiesAbstract>
+#include <PimCommonActivities/ActivitiesBaseManager>
 class ActivitiesManager;
-class LdapActivities : public KLDAPCore::LdapActivitiesAbstract
+class LdapActivities : public PimCommonActivities::ActivitiesFilter<KLDAPCore::LdapActivitiesAbstract>
 {
     Q_OBJECT
 public:
     explicit LdapActivities(ActivitiesManager *manager);
     ~LdapActivities() override;
-
-    [[nodiscard]] bool filterAcceptsRow(const QStringList &activities) const override;
-    [[nodiscard]] bool hasActivitySupport() const override;
-    [[nodiscard]] QString currentActivity() const override;
-
-private:
-    ActivitiesManager *const mActivitiesManager;
 };

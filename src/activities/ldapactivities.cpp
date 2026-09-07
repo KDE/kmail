@@ -8,29 +8,10 @@
 #include "activitiesmanager.h"
 
 LdapActivities::LdapActivities(ActivitiesManager *manager)
-    : KLDAPCore::LdapActivitiesAbstract{manager}
-    , mActivitiesManager(manager)
+    : PimCommonActivities::ActivitiesFilter<KLDAPCore::LdapActivitiesAbstract>{manager}
 {
 }
 
 LdapActivities::~LdapActivities() = default;
-
-bool LdapActivities::filterAcceptsRow(const QStringList &activities) const
-{
-    if (!hasActivitySupport()) {
-        return true;
-    }
-    return !activities.isEmpty() && mActivitiesManager->isInCurrentActivity(activities);
-}
-
-bool LdapActivities::hasActivitySupport() const
-{
-    return mActivitiesManager ? mActivitiesManager->enabled() : false;
-}
-
-QString LdapActivities::currentActivity() const
-{
-    return mActivitiesManager ? mActivitiesManager->currentActivity() : QString();
-}
 
 #include "moc_ldapactivities.cpp"
