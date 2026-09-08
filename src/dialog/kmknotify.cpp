@@ -125,15 +125,21 @@ void KMKnotify::slotOk()
 
 void KMKnotify::readConfig()
 {
+#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
+    TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, u"KMKnotifyDialog"_s, QSize(600, 400));
+#else
     create(); // ensure a window is created
     TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, u"KMKnotifyDialog"_s, 600, 400);
+#endif
 }
 
 void KMKnotify::writeConfig()
 {
+#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
     KConfigGroup notifyDialog(KSharedConfig::openStateConfig(), u"KMKnotifyDialog"_s);
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
+#endif
 }
 
 #include "moc_kmknotify.cpp"

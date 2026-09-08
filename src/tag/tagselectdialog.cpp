@@ -84,14 +84,20 @@ TagSelectDialog::~TagSelectDialog()
 
 void TagSelectDialog::readConfig()
 {
+#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
+    TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myTagSelectDialogGroupName), QSize(500, 300));
+#else
     create(); // ensure a window is created
     TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myTagSelectDialogGroupName), 500, 300);
+#endif
 }
 
 void TagSelectDialog::writeConfig()
 {
+#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
     KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myTagSelectDialogGroupName));
     KWindowConfig::saveWindowSize(windowHandle(), group);
+#endif
 }
 
 void TagSelectDialog::slotAddNewTag()

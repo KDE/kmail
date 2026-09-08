@@ -49,15 +49,21 @@ SpellCheckerConfigDialog::~SpellCheckerConfigDialog()
 
 void SpellCheckerConfigDialog::readConfig()
 {
+#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
+    TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, u"SpellCheckerConfigDialog"_s, QSize(600, 400));
+#else
     create(); // ensure a window is created
     TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, u"SpellCheckerConfigDialog"_s, 600, 400);
+#endif
 }
 
 void SpellCheckerConfigDialog::writeConfig()
 {
+#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
     KConfigGroup notifyDialog(KSharedConfig::openStateConfig(), u"SpellCheckerConfigDialog"_s);
     KWindowConfig::saveWindowSize(windowHandle(), notifyDialog);
     notifyDialog.sync();
+#endif
 }
 
 #include "moc_spellcheckerconfigdialog.cpp"
