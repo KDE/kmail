@@ -67,7 +67,7 @@ msgstr "Supprimer"
 #: unifiedmailboxagent.cpp:44 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
-msgstr "Boîtes aux lettres unifiées"
+msgstr "Boites aux lettres unifiées"
 
 #: unifiedmailboxagent.cpp:167
 #, kde-format
@@ -99,7 +99,7 @@ msgstr "Icône :"
 #: unifiedmailboxmanager.cpp:298
 #, kde-format
 msgid "Inbox"
-msgstr "Boîte de réception"
+msgstr "Boite de réception"
 
 #: unifiedmailboxmanager.cpp:305
 #, kde-format

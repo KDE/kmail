@@ -30,7 +30,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-08-15 09:08+0200\n"
+"PO-Revision-Date: 2026-09-02 18:34+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -975,7 +975,7 @@ msgstr "Fermer la fenêtre de message après y avoir répondu ou l'avoir transmi
 #: configuredialog/configureappearancepage.cpp:842
 #, kde-format
 msgid "System Tray"
-msgstr "Boîte à miniatures"
+msgstr "Boite à miniatures"
 
 #: configuredialog/configureappearancepage.cpp:848
 #, kde-format
@@ -5753,8 +5753,8 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 "Vous avez défini plusieurs comptes de courriel.\n"
-"Voulez-vous activer la fonctionnalité « Boîte aux lettres unifiée » afin "
-"d'afficher de manière unifiée le contenu de vos dossiers « Boîte de "
+"Voulez-vous activer la fonctionnalité « Boite aux lettres unifiée » afin "
+"d'afficher de manière unifiée le contenu de vos dossiers « Boite de "
 "réception », « Envoyés » et « Brouillons » ?\n"
 "Vous pouvez configurer les boites aux lettres unifiées, créer des boites aux "
 "lettres personnalisées\n"
