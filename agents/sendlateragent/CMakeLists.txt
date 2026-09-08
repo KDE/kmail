@@ -36,6 +36,26 @@ qt_add_dbus_adaptor(sendlateragent_SRCS org.freedesktop.Akonadi.SendLaterAgent.x
 ki18n_wrap_ui(libsendlateragent_SRCS ui/sendlaterconfigurewidget.ui)
 kconfig_add_kcfg_files(libsendlateragent_SRCS sendlateragentsettings.kcfgc)
 add_library(sendlateragent STATIC ${libsendlateragent_SRCS})
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        sendlateragent
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QTimer>
+            <QWidget>
+            <QVBoxLayout>
+            <QDialogButtonBox>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 set_property(
     TARGET
         sendlateragent

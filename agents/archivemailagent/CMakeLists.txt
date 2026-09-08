@@ -3,6 +3,26 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_archivemail_agent\")
 
 add_library(archivemailagent STATIC)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        archivemailagent
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QTimer>
+            <QWidget>
+            <QVBoxLayout>
+            <QDialogButtonBox>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 set_property(
     TARGET
         archivemailagent

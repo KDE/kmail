@@ -5,6 +5,26 @@ add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_mailfilter_agent\")
 
 add_library(mailfilteragentprivate)
 
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        mailfilteragentprivate
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QTimer>
+            <QWidget>
+            <QVBoxLayout>
+            <QDialogButtonBox>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
+
 target_sources(
     mailfilteragentprivate
     PRIVATE

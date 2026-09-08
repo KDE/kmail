@@ -40,6 +40,32 @@ ecm_qt_declare_logging_category(kmail_debugcategory_SRCS HEADER kmail_activities
 )
 
 add_library(kmailprivate)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kmailprivate
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QUrl>
+            <QPointer>
+            <QTimer>
+            <QWidget>
+            <QAction>
+            <QIcon>
+            <QMenu>
+            <QLabel>
+            <QVBoxLayout>
+            <QHBoxLayout>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 if(TARGET KF6::UserFeedbackWidgets)
     target_sources(
         kmailprivate
@@ -520,6 +546,20 @@ set_target_properties(
 
 ########### kcm_kmail ###############
 add_library(kcm_kmail_static STATIC)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kcm_kmail_static
+        PRIVATE
+            <QObject>
+            <QString>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
 target_sources(kcm_kmail_static PRIVATE kcm_kmail.cpp)
 target_link_libraries(
     kcm_kmail_static
@@ -585,6 +625,20 @@ qt_add_dbus_adaptor(kmailpart_PART_SRCS
 qt_add_dbus_interfaces(kmailpart_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmailpart.xml)
 add_library(kmailpart MODULE ${kmailpart_PART_SRCS})
 
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kmailpart
+        PRIVATE
+            <QObject>
+            <QString>
+            <QWidget>
+            <QAction>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
+
 target_link_libraries(
     kmailpart
     kmailprivate
@@ -606,6 +660,19 @@ set(kmail_SRCS
 file(GLOB ICONS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/icons/*-apps-kmail.png")
 ecm_add_app_icon(kmail_SRCS ICONS ${ICONS_SRCS})
 add_executable(kmail ${kmail_SRCS})
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kmail
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
 target_link_libraries(
     kmail
     KPim6::KontactInterface

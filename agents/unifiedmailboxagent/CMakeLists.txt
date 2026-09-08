@@ -7,6 +7,26 @@ if(BUILD_TESTING)
 endif()
 
 add_executable(akonadi_unifiedmailbox_agent)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        akonadi_unifiedmailbox_agent
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QTimer>
+            <QWidget>
+            <QVBoxLayout>
+            <QDialogButtonBox>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 ecm_qt_declare_logging_category(akonadi_unifiedmailbox_agent HEADER unifiedmailboxagent_debug.h IDENTIFIER UNIFIEDMAILBOXAGENT_LOG CATEGORY_NAME org.kde.pim.unifiedmailboxagent
         DESCRIPTION "kmail (unifiedmailboxagent)"
         EXPORT KMAIL

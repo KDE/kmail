@@ -367,6 +367,8 @@ if(USE_UNITY_CMAKE_SUPPORT)
     set(COMPILE_WITH_UNITY_CMAKE_SUPPORT ON)
 endif()
 
+option(ENABLE_PCH "Enable Precompiled Headers support" ON)
+
 if(TARGET KPim6::PimCommonActivities)
     option(OPTION_USE_PLASMA_ACTIVITIES "Activate plasma activities (experimental)" ON)
     if(OPTION_USE_PLASMA_ACTIVITIES)

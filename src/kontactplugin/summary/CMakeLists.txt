@@ -15,6 +15,21 @@ set(kontact_summaryplugin_PART_SRCS
 qt_add_dbus_interfaces(kontact_summaryplugin_PART_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
 
 add_library(kontact_summaryplugin MODULE ${kontact_summaryplugin_PART_SRCS})
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kontact_summaryplugin
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
 add_dependencies(kontact_summaryplugin kmail_xml)
 
 target_link_libraries(
@@ -35,6 +50,21 @@ add_library(
     kcmkontactsummary.cpp
     kcmkontactsummary.h
 )
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kcmkontactsummary
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
 
 target_link_libraries(
     kcmkontactsummary

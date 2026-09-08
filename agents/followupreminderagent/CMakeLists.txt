@@ -3,6 +3,26 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_followupreminder_agent\")
 
 add_library(followupreminderagent STATIC)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        followupreminderagent
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QTimer>
+            <QWidget>
+            <QVBoxLayout>
+            <QDialogButtonBox>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 set_property(
     TARGET
         followupreminderagent

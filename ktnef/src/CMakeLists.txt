@@ -6,6 +6,23 @@ configure_file(ktnef-version.h.in ${CMAKE_CURRENT_BINARY_DIR}/ktnef-version.h @O
 add_subdirectory(pics)
 add_executable(ktnef)
 
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        ktnef
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
+
 target_sources(
     ktnef
     PRIVATE

@@ -1,6 +1,23 @@
 # SPDX-FileCopyrightText: 2019-2026 Laurent Montel <montel@kde.org>
 # SPDX-License-Identifier: BSD-3-Clause
 add_executable(kmail-refresh-settings)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kmail-refresh-settings
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 target_sources(
     kmail-refresh-settings
     PRIVATE

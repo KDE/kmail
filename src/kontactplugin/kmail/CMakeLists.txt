@@ -13,6 +13,21 @@ ecm_qt_declare_logging_category(kontact_kmail_plugins_interface_common_SRCS HEAD
 set(kontact_kmail_plugins_interface_SRCS)
 qt_add_dbus_interfaces(kontact_kmail_plugins_interface_SRCS ${kmail_BINARY_DIR}/src/org.kde.kmail.kmail.xml)
 add_library(kontact_kmailplugin MODULE)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kontact_kmailplugin
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
 target_sources(
     kontact_kmailplugin
     PRIVATE
@@ -41,6 +56,21 @@ target_link_libraries(
 ########### next target ###############
 
 add_library(kcmkmailsummary MODULE)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        kcmkmailsummary
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QWidget>
+            <QVBoxLayout>
+            <KLocalizedString>
+            <memory>
+    )
+endif()
 target_sources(
     kcmkmailsummary
     PRIVATE

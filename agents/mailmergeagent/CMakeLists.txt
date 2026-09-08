@@ -7,6 +7,26 @@ if(BUILD_TESTING)
     add_subdirectory(autotests)
 endif()
 add_library(mailmergeagent STATIC)
+
+# precompiled headers support
+if(ENABLE_PCH)
+    target_precompile_headers(
+        mailmergeagent
+        PRIVATE
+            <QObject>
+            <QString>
+            <QStringList>
+            <QList>
+            <QTimer>
+            <QWidget>
+            <QVBoxLayout>
+            <QDialogButtonBox>
+            <KLocalizedString>
+            <KConfigGroup>
+            <KSharedConfig>
+            <memory>
+    )
+endif()
 set_property(
     TARGET
         mailmergeagent
