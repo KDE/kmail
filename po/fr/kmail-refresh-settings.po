@@ -29,7 +29,7 @@ msgstr "sdepiets@gmail.com"
 #: main.cpp:28 main.cpp:30
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
-msgstr "Assistant KMail de rafraîchissement des paramètres"
+msgstr "Assistant KMail de rafraichissement des paramètres"
 
 #: main.cpp:32
 #, kde-format
@@ -51,7 +51,7 @@ msgstr "Auteur"
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Refresh Settings"
-msgstr "Rafraîchissement des paramètres de KMail"
+msgstr "Rafraichissement des paramètres de KMail"
 
 #: refreshsettingsassistant.cpp:40
 #, kde-format
