@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-01 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2020-07-27 22:46+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -32,36 +32,36 @@ msgstr "mschlander@opensuse.org"
 msgid "Save…"
 msgstr ""
 
-#: attachpropertydialog.cpp:92
+#: attachpropertydialog.cpp:98
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "Egenskaber for bilag %1"
 
-#: attachpropertydialog.cpp:96
+#: attachpropertydialog.cpp:102
 #, kde-format
 msgid " bytes"
 msgstr " bytes"
 
-#: attachpropertydialog.cpp:154
+#: attachpropertydialog.cpp:160
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF-attributter"
 
-#: attachpropertydialog.cpp:163
+#: attachpropertydialog.cpp:169
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Du skal vælge et element først."
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Det valgte element kan ikke gemmes da det har et tomt mærke."
 
-#: attachpropertydialog.cpp:188
+#: attachpropertydialog.cpp:194
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

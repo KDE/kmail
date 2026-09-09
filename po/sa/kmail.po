@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -6238,13 +6238,13 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "तथापि अन्वेषणं कुर्वन्तु"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "अनुक्रमणिका"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, kde-format
 msgid "Indexing Collections…"
 msgstr "संग्रहाणां अनुक्रमणिका…"

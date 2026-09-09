@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2025-06-22 11:37+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -6328,13 +6328,13 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Buscar de todos os xeitos"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "Indexación"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, kde-format
 msgid "Indexing Collections…"
 msgstr "Indexando as coleccións…"

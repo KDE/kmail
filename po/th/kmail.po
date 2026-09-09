@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -6643,7 +6643,7 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "ส่งทันที"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "@title:tab Tab page where the user configures accounts to send mail"
@@ -6652,7 +6652,7 @@ msgctxt "@title:window"
 msgid "Indexing"
 msgstr "การส่งจดหมาย"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgid "Indexing Collections…"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -6862,14 +6862,14 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "अहिले पठाउनुहोस्"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "प्रेषण"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgid "Indexing Collections…"

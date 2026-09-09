@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2004-02-25 13:47+0000\n"
 "Last-Translator: KD at KGyfieithu <kyfieithu@dotmon.com>\n"
 "Language-Team: Cymraeg <cy@li.org>\n"
@@ -6586,14 +6586,14 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Anfon Rwan "
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "&Anfon"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 msgid "Indexing Collections…"
 msgstr "Ffurfweddu Cylchwedd"

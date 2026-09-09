@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -6618,14 +6618,14 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "अभी भेजव"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "Sending"
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "भेजत हे"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgid "Indexing Collections…"

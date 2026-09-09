@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-01 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2024-10-16 18:03+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -35,36 +35,36 @@ msgstr "translator@legisign.org"
 msgid "Save…"
 msgstr "Tallenna…"
 
-#: attachpropertydialog.cpp:92
+#: attachpropertydialog.cpp:98
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "Liitteen %1 ominaisuudet"
 
-#: attachpropertydialog.cpp:96
+#: attachpropertydialog.cpp:102
 #, kde-format
 msgid " bytes"
 msgstr " tavua"
 
-#: attachpropertydialog.cpp:154
+#: attachpropertydialog.cpp:160
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNET-määritteet"
 
-#: attachpropertydialog.cpp:163
+#: attachpropertydialog.cpp:169
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Tietue on valittava ensin."
 
-#: attachpropertydialog.cpp:168
+#: attachpropertydialog.cpp:174
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Valittua tietuetta ei voi tallentaa, koska sen tunniste on tyhjä."
 
-#: attachpropertydialog.cpp:188
+#: attachpropertydialog.cpp:194
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."

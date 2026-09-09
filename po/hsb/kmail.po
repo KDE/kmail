@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
 "PO-Revision-Date: 2021-11-27 17:44+0100\n"
 "Last-Translator: Eduard Werner/Edward Wornar <edi.werner@gmx.de>\n"
 "Language-Team: <hsb@li.org>\n"
@@ -6573,14 +6573,14 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Přiwšěm pytać"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "&Pósłanje"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 msgid "Indexing Collections…"
 msgstr "Konto konfigurować"

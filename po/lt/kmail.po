@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-08 00:46+0000\n"
-"PO-Revision-Date: 2026-08-17 15:58+0300\n"
+"POT-Creation-Date: 2026-09-09 00:51+0000\n"
+"PO-Revision-Date: 2026-09-08 22:53+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -50,9 +50,8 @@ msgid "Original author"
 msgstr "Pradinis autorius"
 
 #: aboutdata.cpp:39
-#, fuzzy
 msgid "Former co-maintainer"
-msgstr "Buvęs prižiūrėtojas"
+msgstr "Buvęs vienas iš prižiūrėtojų"
 
 #: aboutdata.cpp:40 aboutdata.cpp:42 aboutdata.cpp:43 aboutdata.cpp:44
 msgid "Former core developer"
@@ -1118,6 +1117,7 @@ msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
+"Automatiškai įterpti sukonfigūruotą parašą, kai pradedama rašyti laišką"
 
 #: configuredialog/configurecomposerpage.cpp:143
 #, fuzzy, kde-format
@@ -1130,6 +1130,8 @@ msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
+"Prieš parašą įterpti su RFC suderinamą parašo skirtuką (eilutėje du "
+"brūkšnius ir tarpą)"
 
 #: configuredialog/configurecomposerpage.cpp:165
 #, fuzzy, kde-format
@@ -2926,11 +2928,10 @@ msgid "Clear History"
 msgstr "Išvalyti istoriją"
 
 #: historyclosedreader/historyclosedreadermenu.cpp:81
-#, fuzzy, kde-format
-#| msgid "Post New Message"
+#, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
-msgstr "Siųsti naują laišką"
+msgstr "Iš naujo atverti užvertą žiūryklę"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
 #: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1963
@@ -4145,7 +4146,7 @@ msgstr "Išvardija prieinamas naudotojo grįžtamojo ryšio parinktis"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Aktyvuoti derinimo veikseną"
 
 #: kmail_options.h:37
 #, fuzzy, kde-format
@@ -4587,6 +4588,8 @@ msgstr "Nepavyko paleisti importavimo vediklio"
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
+"Sistemoje buvo rasta kita pašto programa. Ar norite iš jos importuoti "
+"duomenis?"
 
 #: kmmainwidget.cpp:337
 #, kde-format
@@ -4880,9 +4883,17 @@ msgid_plural ""
 "The selection contains only encrypted messages, from which it's currently "
 "not possible to delete attachments."
 msgstr[0] ""
+"Pažymėtas laiškas yra šifruotas. Šiuo metu neįmanoma ištrinti priedų iš "
+"šifruotų laiškų."
 msgstr[1] ""
+"Žymėjime yra tik šifruoti laiškai, iš kurių šiuo metu neįmanoma ištrinti "
+"priedų."
 msgstr[2] ""
+"Žymėjime yra tik šifruoti laiškai, iš kurių šiuo metu neįmanoma ištrinti "
+"priedų."
 msgstr[3] ""
+"Žymėjime yra tik šifruoti laiškai, iš kurių šiuo metu neįmanoma ištrinti "
+"priedų."
 
 #: kmmainwidget.cpp:2448
 #, kde-format
@@ -4928,6 +4939,8 @@ msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
 "messages.<br />Encrypted messages will be ignored.</p></html>"
 msgstr ""
+"<html><p>Šiuo metu neįmanoma ištrinti priedų iš šifruotų laiškų.<br /"
+">Šifruotų laiškų bus nepaisoma.</p></html>"
 
 #: kmmainwidget.cpp:2470
 #, kde-format
@@ -4936,14 +4949,14 @@ msgid "Delete Attachments"
 msgstr "Ištrinti priedus"
 
 #: kmmainwidget.cpp:2499
-#, fuzzy, kde-format
+#, kde-format
 msgid "Work Offline"
-msgstr "Dirbti neprisijungus"
+msgstr "Dirbti neprisijungus prie interneto"
 
 #: kmmainwidget.cpp:2502
-#, fuzzy, kde-format
+#, kde-format
 msgid "Work Online"
-msgstr "Dirbti prisijungus"
+msgstr "Dirbti prisijungus prie interneto"
 
 #: kmmainwidget.cpp:2949
 #, kde-format
@@ -5489,10 +5502,9 @@ msgid "Apply All Filters"
 msgstr "Taikyti visus filtrus"
 
 #: kmmainwidget.cpp:3531
-#, fuzzy, kde-format
-#| msgid "Appl&y All Filters On Folder"
+#, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
-msgstr "Pritaikyti &visus filtrus aplankams"
+msgstr "Taikyti filtrus aplankui ir visiems jo poaplankiams"
 
 #: kmmainwidget.cpp:3536
 #, kde-format
@@ -5706,7 +5718,7 @@ msgstr "Atša&ukti: „%1“"
 #: kmmainwidget.cpp:4270
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&Grąžinti"
 
 #: kmmainwidget.cpp:4272
 #, kde-format
@@ -6223,11 +6235,10 @@ msgid "&Redirect…"
 msgstr "Pe&radresuoti…"
 
 #: messageactions.cpp:72
-#, fuzzy, kde-format
-#| msgid "New Message t&o Mailing-List..."
+#, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
-msgstr "Naujas laiškas pašto s&ąrašui..."
+msgstr "Naujas laiškas gavėjams…"
 
 #: messageactions.cpp:73
 #, kde-format
@@ -6282,12 +6293,10 @@ msgid "Export to PDF…"
 msgstr "Eksportuoti į PDF…"
 
 #: messageactions.cpp:84
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
-msgstr "Perkelti laišką"
+msgstr "Archyvuoti laišką"
 
 #: messageactions.cpp:407
 #, fuzzy, kde-format
@@ -6384,13 +6393,13 @@ msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Vis tiek ieškoti"
 
-#: searchdialog/incompleteindexdialog.cpp:212
+#: searchdialog/incompleteindexdialog.cpp:218
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "Indeksavimas"
 
-#: searchdialog/incompleteindexdialog.cpp:215
+#: searchdialog/incompleteindexdialog.cpp:221
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order..."
 msgid "Indexing Collections…"
@@ -6435,8 +6444,7 @@ msgstr ""
 "ul>"
 
 #: searchdialog/searchwindowdialog.cpp:76
-#, fuzzy, kde-format
-#| msgid "Find Messages"
+#, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Rasti laiškus"
@@ -6465,11 +6473,10 @@ msgid "Save Attachments…"
 msgstr "Įrašyti priedus…"
 
 #: searchdialog/searchwindowdialog.cpp:197
-#, fuzzy, kde-format
-#| msgid "Clear Selection"
+#, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
-msgstr "Išvalyti pažymėjimą"
+msgstr "Išvalyti žymėjimą"
 
 #: searchdialog/searchwindowdialog.cpp:201
 #, kde-format
@@ -7658,19 +7665,19 @@ msgstr "Patikimųjų sąrašas:"
 #: ui/securitypagegeneraltab.ui:134
 #, kde-format
 msgid "Safe Browsing"
-msgstr ""
+msgstr "Saugus naršymas"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckUrl)
 #: ui/securitypagegeneraltab.ui:140
 #, kde-format
 msgid "Check URL With Phishing Google System"
-msgstr ""
+msgstr "Tikrinti URL adresus naudojant „Google“ sistemą kovai su sukčiavimu"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mCheckMailUrlTracking)
 #: ui/securitypagegeneraltab.ui:147
 #, kde-format
 msgid "Scan emails for tracking URLs"
-msgstr ""
+msgstr "Peržiūrinėti, ar laiškuose yra URL seklių"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: ui/securitypagegeneraltab.ui:163
@@ -8172,6 +8179,8 @@ msgstr "Informacija apie paskyrą"
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""
+"KMail programoje sukonfigūruotų paskyrų skaičius ir tipas (gavėjas ir "
+"siuntėjas)."
 
 #: userfeedback/plugininfosource.cpp:20
 #, fuzzy, kde-format
