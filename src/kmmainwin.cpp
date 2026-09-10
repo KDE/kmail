@@ -157,6 +157,8 @@ void KMMainWin::slotFullScreen(bool t)
         b->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     } else {
         if (QWidget *w = mb->cornerWidget(Qt::TopRightCorner)) {
+            mb->setCornerWidget(nullptr, Qt::TopRightCorner);
+            w->hide();
             w->deleteLater();
         }
     }
