@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-09 00:51+0000\n"
-"PO-Revision-Date: 2026-08-14 23:30+0200\n"
+"PO-Revision-Date: 2026-09-09 21:30+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 26.04.3\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2385,10 +2385,7 @@ msgid "Send &Later"
 msgstr "Изпращане &по-късно"
 
 #: editor/kmcomposerwin.cpp:3170
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2396,11 +2393,11 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Опитвате се да изпратите пощата до повече от %1 получатели. Все пак да "
-"изпратите съобщение?"
+"Опитвате се да изпратите пощата до повече от %1 получател. Да се изпрати ли "
+"все пак съобщението?"
 msgstr[1] ""
-"Опитвате се да изпратите пощата до повече от %1 получатели. Все пак да "
-"изпратите съобщение?"
+"Опитвате се да изпратите пощата до повече от %1 получателя. Да се изпрати ли "
+"все пак съобщението?"
 
 #: editor/kmcomposerwin.cpp:3173
 #, kde-format
@@ -6692,13 +6689,7 @@ msgstr "Автоматично и&скане на известие за дост
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:209
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -8133,11 +8124,7 @@ msgid "Plugins used in KMail."
 msgstr "Приставки, използвани в KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
@@ -8147,12 +8134,10 @@ msgstr ""
 "имейл?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "Имейлът не се следи"
+msgstr "Имейл адресът не се наблюдава"
 
 #: util.cpp:37
 #, kde-format
