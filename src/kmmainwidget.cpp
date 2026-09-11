@@ -870,8 +870,14 @@ void KMMainWidget::readConfig()
             || (oldFavoriteFolderView != mEnableFavoriteFolderView);
 
         if (layoutChanged) {
+            // The plugin interfaces keep pointers to actions owned by the widgets recreated below
+            // (the reader window provides "toggle_mimeparttree" for instance). Unplug them from the
+            // GUI while they are still valid, then rebuild them around the new widgets.
+            clearPluginActions();
             deleteWidgets();
             createWidgets();
+            KMailPluginInterface::self()->setParentWidget(this);
+            KMailPluginInterface::self()->createPluginInterface();
             restoreCollectionFolderViewConfig();
             slotShowSelectedFolderInPane();
             Q_EMIT recreateGui();

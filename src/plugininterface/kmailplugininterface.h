@@ -7,6 +7,7 @@
 #pragma once
 
 #include <PimCommonAkonadi/PluginInterface>
+#include <QPointer>
 class QObject;
 class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
@@ -21,5 +22,5 @@ public:
 
 private:
     explicit KMailPluginInterface(QObject *parent = nullptr);
-    KMMainWidget *mMainWindow = nullptr;
+    QPointer<KMMainWidget> mMainWindow;
 };
