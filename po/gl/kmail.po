@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:51+0000\n"
+"POT-Creation-Date: 2026-09-11 00:47+0000\n"
 "PO-Revision-Date: 2025-06-22 11:37+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.gal>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -2105,7 +2105,7 @@ msgstr "Crear unha lembranza de seguimento…"
 msgid "Configure KMail…"
 msgstr "Configurar KMail…"
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:220 kmreadermainwin.cpp:543
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:222 kmreadermainwin.cpp:543
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2114,7 +2114,7 @@ msgstr ""
 "<qt>Isto agocha a barra de menú por completo. Pódese amosar de novo "
 "escribindo %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1587 kmmainwin.cpp:223
+#: editor/kmcomposerwin.cpp:1587 kmmainwin.cpp:225
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
