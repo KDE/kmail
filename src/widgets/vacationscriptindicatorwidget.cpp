@@ -142,6 +142,7 @@ void VacationScriptIndicatorWidget::slotVacationLabelClicked()
 void VacationScriptIndicatorWidget::updateIndicator()
 {
     if (mServerActive.isEmpty()) {
+        clearIndicator();
         hide();
     } else {
         createIndicator();
