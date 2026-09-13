@@ -60,11 +60,6 @@ void IdentityExpireSpamFolderDialog::slotAccepted()
     accept();
 }
 
-void IdentityExpireSpamFolderDialog::slotChanged()
-{
-    mChanged = true;
-}
-
 void IdentityExpireSpamFolderDialog::saveAndExpire(Akonadi::Collection &collection, bool saveSettings, bool expireNow)
 {
     mCollectionExpiryWidget->save(collection, saveSettings, expireNow);

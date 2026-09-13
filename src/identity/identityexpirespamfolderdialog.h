@@ -23,7 +23,6 @@ public:
 private:
     void slotAccepted();
     void slotSaveAndExpire();
-    void slotChanged();
     void slotConfigChanged(bool changed);
     void saveAndExpire(Akonadi::Collection &collection, bool saveSettings, bool expireNow);
     MailCommon::CollectionExpiryWidget *const mCollectionExpiryWidget;
