@@ -1165,7 +1165,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     ident.setPgpAutoSign(mAutoSign->isChecked());
     ident.setPgpAutoEncrypt(mAutoEncrypt->isChecked());
     ident.setWarnNotEncrypt(mWarnNotEncrypt->isChecked());
-    ident.setWarnNotEncrypt(mWarnNotEncrypt->isChecked());
+    ident.setWarnNotSign(mWarnNotSign->isChecked());
     // "Advanced" tab:
     ident.setReplyToAddr(mReplyToEdit->text());
     ident.setBcc(mBccEdit->text());
