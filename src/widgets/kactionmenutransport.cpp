@@ -57,8 +57,12 @@ void KActionMenuTransport::updateTransportMenu()
     if (mInitialized) {
         menu()->clear();
         const QList<MailTransport::Transport *> transports = MailTransport::TransportManager::self()->transports();
-        QMap<QString, int> menuTransportLst;
-
+        struct MenuInfo {
+            QString displayName;
+            int identifier = 0;
+        };
+        QList<MenuInfo> menuTransportLst;
+        menuTransportLst.reserve(transports.count());
         for (MailTransport::Transport *transport : transports) {
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
             if (mTransportActivities) {
@@ -67,13 +71,15 @@ void KActionMenuTransport::updateTransportMenu()
                 }
             }
 #endif
-            const QString name = transport->name().replace(u'&', u"&&"_s);
-            menuTransportLst.insert(name, transport->id());
+            MenuInfo pair{transport->name().replace(u'&', u"&&"_s), transport->id()};
+            menuTransportLst.append(std::move(pair));
         }
-        for (const auto &[key, value] : menuTransportLst.asKeyValueRange()) {
-            QAction *action = menu()->addAction(key);
-            action->setData(value);
-            menu()->addAction(action);
+        std::sort(menuTransportLst.begin(), menuTransportLst.end(), [](const MenuInfo &lhs, const MenuInfo &rhs) {
+            return QString::localeAwareCompare(lhs.displayName, rhs.displayName) < 0;
+        });
+        for (const auto &info : menuTransportLst) {
+            QAction *action = menu()->addAction(info.displayName);
+            action->setData(info.identifier);
         }
     }
 }
