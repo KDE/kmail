@@ -99,7 +99,7 @@ void EncodedImagePicker::setFromFile(const QUrl &url)
 
 void EncodedImagePicker::setFromFileDone(KJob *job)
 {
-    if (const KIO::StoredTransferJob *kioJob = qobject_cast<KIO::StoredTransferJob *>(job); kioJob->error() == 0) {
+    if (const KIO::StoredTransferJob *kioJob = qobject_cast<KIO::StoredTransferJob *>(job); kioJob && kioJob->error() == 0) {
         const QImage image = QImage::fromData(kioJob->data());
 
         Q_EMIT imageSelected(image);
