@@ -51,3 +51,4 @@ private:
     AccountActivities *mAccountActivities = nullptr;
 #endif
 };
+Q_DECLARE_TYPEINFO(AgentIdentifier, Q_RELOCATABLE_TYPE);
