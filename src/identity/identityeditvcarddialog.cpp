@@ -17,6 +17,7 @@
 #include <QFileInfo>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <qdialog.h>
 using namespace Qt::Literals::StringLiterals;
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)
@@ -65,7 +66,7 @@ void IdentityEditVcardDialog::slotDeleteCurrentVCard()
         } else {
             deleteCurrentVcard(false);
         }
-        reject();
+        QDialog::reject();
     }
 }
 
