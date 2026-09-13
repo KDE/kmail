@@ -18,7 +18,7 @@ ZoomLabelWidget::~ZoomLabelWidget() = default;
 void ZoomLabelWidget::setZoom(qreal zoomFactor)
 {
     mZoomFactor = zoomFactor;
-    if (zoomFactor != 100.0) {
+    if (!qFuzzyCompare(zoomFactor, 100.0)) {
         setText(i18n("Zoom: %1%", zoomFactor));
         show();
     } else {
