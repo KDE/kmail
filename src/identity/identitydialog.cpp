@@ -1207,7 +1207,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     }
 
     collection = mSpamFolderRequester->collection();
-    if (ident.spam().isEmpty()) {
+    if (!ident.spam().isEmpty()) {
         unregisterSpecialCollection(ident.spam().toLongLong());
     }
     if (collection.isValid()) {
@@ -1224,7 +1224,7 @@ void IdentityDialog::updateIdentity(KIdentityManagementCore::Identity &ident)
     }
 
     collection = mTemplatesFolderRequester->collection();
-    if (ident.templates().isEmpty()) {
+    if (!ident.templates().isEmpty()) {
         unregisterSpecialCollection(ident.templates().toLongLong());
     }
     if (collection.isValid()) {
