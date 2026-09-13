@@ -717,7 +717,7 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     });
     expirePushButton->setEnabled(false);
     connect(mSpamFolderCheck, &QCheckBox::toggled, expirePushButton, &QPushButton::setEnabled);
-    formLayout->addWidget(expirePushButton);
+    formLayout->addRow(expirePushButton);
 
     // "Special transport" combobox and label:
     mTransportCheck = new QCheckBox(i18nc("@option:check", "Outgoing Account:"), tab);
