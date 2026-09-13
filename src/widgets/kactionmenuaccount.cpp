@@ -35,7 +35,9 @@ void KActionMenuAccount::setAccountActivitiesAbstract(AccountActivities *activit
         disconnect(mAccountActivities, &AccountActivities::activitiesChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
     }
     mAccountActivities = activities;
-    connect(mAccountActivities, &AccountActivities::activitiesChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
+    if (mAccountActivities) {
+        connect(mAccountActivities, &AccountActivities::activitiesChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
+    }
 }
 #endif
 

@@ -37,8 +37,13 @@ void KActionMenuTransport::slotCheckTransportMenu()
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 void KActionMenuTransport::setTransportActivitiesAbstract(TransportActivities *activities)
 {
+    if (mTransportActivities) {
+        disconnect(mTransportActivities, &TransportActivities::activitiesChanged, this, &KActionMenuTransport::forceUpdateTransportMenu);
+    }
     mTransportActivities = activities;
-    connect(mTransportActivities, &TransportActivities::activitiesChanged, this, &KActionMenuTransport::forceUpdateTransportMenu);
+    if (mTransportActivities) {
+        connect(mTransportActivities, &TransportActivities::activitiesChanged, this, &KActionMenuTransport::forceUpdateTransportMenu);
+    }
 }
 #endif
 
