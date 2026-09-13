@@ -916,7 +916,7 @@ void IdentityDialog::slotDelayedButtonClicked(KJob *job)
     const AddressValidationJob *validationJob = qobject_cast<AddressValidationJob *>(job);
 
     // Abort if one of the recipient addresses is invalid
-    if (!validationJob->isValid()) {
+    if (!validationJob || !validationJob->isValid()) {
         return;
     }
 
