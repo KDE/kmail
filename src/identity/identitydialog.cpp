@@ -742,14 +742,14 @@ IdentityDialog::IdentityDialog(QWidget *parent)
     KLineEditEventHandler::catchReturnKey(mDefaultDomainEdit);
     mDefaultDomainEdit->setClearButtonEnabled(true);
     hbox->addWidget(mDefaultDomainEdit);
-    auto restoreDefaultDomainName = new QToolButton;
+    auto restoreDefaultDomainName = new QToolButton(tab);
     restoreDefaultDomainName->setIcon(QIcon::fromTheme(u"view-refresh"_s));
     restoreDefaultDomainName->setToolTip(i18nc("@info:tooltip", "Restore default domain name"));
     hbox->addWidget(restoreDefaultDomainName);
     connect(restoreDefaultDomainName, &QToolButton::clicked, this, &IdentityDialog::slotRefreshDefaultDomainName);
     label = new QLabel(i18nc("@label:textbox", "Defaul&t domain:"), tab);
     label->setBuddy(mDefaultDomainEdit);
-    formLayout->addRow(label, mDefaultDomainEdit);
+    formLayout->addRow(label, hbox);
 
     // and now: add QWhatsThis:
     msg = i18n(
