@@ -66,7 +66,7 @@ void KActionMenuTransport::updateTransportMenu()
             menuTransportLst.insert(name, transport->id());
         }
         for (const auto &[key, value] : menuTransportLst.asKeyValueRange()) {
-            auto action = new QAction(key, this);
+            QAction *action = menu()->addAction(key);
             action->setData(value);
             menu()->addAction(action);
         }
