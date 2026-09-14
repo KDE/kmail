@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-12 00:45+0000\n"
+"POT-Creation-Date: 2026-09-14 00:44+0000\n"
 "PO-Revision-Date: 2020-07-29 21:12+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -3180,7 +3180,7 @@ msgid "No picture set for your address book entry."
 msgstr "Intet billede sat for din adressebogsindgang."
 
 #: identity/identityaddvcarddialog.cpp:29
-#: identity/identityeditvcarddialog.cpp:42
+#: identity/identityeditvcarddialog.cpp:43
 #, kde-format
 msgctxt "@title:window"
 msgid "Create own vCard"
@@ -3890,55 +3890,55 @@ msgstr "Opret..."
 msgid "Edit…"
 msgstr "Redigér"
 
-#: identity/identityeditvcarddialog.cpp:36
+#: identity/identityeditvcarddialog.cpp:37
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit own vCard"
 msgstr "Redigér eget vCard"
 
-#: identity/identityeditvcarddialog.cpp:39
+#: identity/identityeditvcarddialog.cpp:40
 #, kde-format
 msgid "Delete current vCard"
 msgstr "Slet aktuelt vCard"
 
-#: identity/identityeditvcarddialog.cpp:58
+#: identity/identityeditvcarddialog.cpp:59
 #, kde-format
 msgid "Are you sure you want to delete this vCard?"
 msgstr "Vil du virkelig slette dette vCard?"
 
-#: identity/identityeditvcarddialog.cpp:59
-#: identity/identityeditvcarddialog.cpp:78
+#: identity/identityeditvcarddialog.cpp:60
+#: identity/identityeditvcarddialog.cpp:79
 #, fuzzy, kde-format
 #| msgid "Delete vCard"
 msgctxt "@title:window"
 msgid "Delete vCard"
 msgstr "Slet vCard"
 
-#: identity/identityeditvcarddialog.cpp:78
+#: identity/identityeditvcarddialog.cpp:79
 #, kde-format
 msgid "We cannot delete vCard file."
 msgstr "Vi kan ikke slette vCard-filen."
 
-#: identity/identityeditvcarddialog.cpp:122
+#: identity/identityeditvcarddialog.cpp:123
 #, kde-format
 msgctxt "@info"
 msgid "Do you really want to cancel?"
 msgstr "Vil du virkelig annullere?"
 
-#: identity/identityeditvcarddialog.cpp:123
+#: identity/identityeditvcarddialog.cpp:124
 #, kde-format
 msgctxt "@title:window"
 msgid "Confirmation"
 msgstr "Bekræftelse"
 
-#: identity/identityeditvcarddialog.cpp:124
+#: identity/identityeditvcarddialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Rich Text Editing"
 msgctxt "@action:button"
 msgid "Cancel Editing"
 msgstr "Redigering af formateret tekst"
 
-#: identity/identityeditvcarddialog.cpp:125
+#: identity/identityeditvcarddialog.cpp:126
 #, fuzzy, kde-format
 #| msgid "Do Not Enable"
 msgctxt "@action:button"
