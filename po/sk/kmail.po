@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-14 00:44+0000\n"
-"PO-Revision-Date: 2026-04-10 12:00+0200\n"
-"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"PO-Revision-Date: 2026-09-14 20:10+0200\n"
+"Last-Translator: Roman Paholík <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -2375,10 +2375,7 @@ msgid "Send &Later"
 msgstr "Po&slať neskôr"
 
 #: editor/kmcomposerwin.cpp:3170
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2386,11 +2383,11 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Snažíte sa poslať správu pre viac ako %1 prijímateľov. Poslať správu aj tak?"
+"Snažíte sa poslať správu viac ako %1 príjemcovi. Poslať správu aj tak?"
 msgstr[1] ""
-"Snažíte sa poslať správu pre viac ako %1 prijímateľov. Poslať správu aj tak?"
+"Snažíte sa poslať správu viac ako %1 príjemcom. Poslať správu aj tak?"
 msgstr[2] ""
-"Snažíte sa poslať správu pre viac ako %1 prijímateľov. Poslať správu aj tak?"
+"Snažíte sa poslať správu viac ako %1 príjemcom. Poslať správu aj tak?"
 
 #: editor/kmcomposerwin.cpp:3173
 #, kde-format
@@ -6656,13 +6653,7 @@ msgstr "Automaticky poslať požiadavku potvrdenia o doručení"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:209
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6670,11 +6661,11 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>→<em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
-"<qt><p>Povoľte túto možnosť, ak vyžadujete potvrdenie o prijatí správy (MDN) "
-"pre všetky vaše správy.</p><p>Táto možnosť ovplyvňuje iba predvolené; stále "
-"môžete povoliť alebo zakázať vyžiadanie MDN pre každú správu v composeri, "
-"položka ponuky <em>Možnosti</em>-><em>Vyžiadať potvrdenie o prijatí</em>.</"
-"p></qt>"
+"<qt><p>Povoľte túto možnosť, ak chcete, aby KMail vyžadoval potvrdenie o "
+"prijatí správy (MDN) pre každú vašu odchádzajúcu správu.</p><p>Táto možnosť "
+"ovplyvňuje iba predvolené správanie; vyžiadanie MDN stále môžete povoliť "
+"alebo zakázať pre každú správu zvlášť v editore správ, položka ponuky "
+"<em>Možnosti</em>→<em>Vyžiadať potvrdenie o prijatí</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:230
@@ -8084,26 +8075,20 @@ msgid "Plugins used in KMail."
 msgstr "Doplnky použité v KMail."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"Zdá sa, že tento e-mail od %1 nie je monitorovaný. Chcete odpovedať na tento "
-"e-mail?"
+"Zdá sa, že táto e-mailová adresa od %1 nie je monitorovaná. Chcete na tento "
+"e-mail odpovedať?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "E-mail nie je monitorovaný"
+msgstr "E-mailová adresa nie je monitorovaná"
 
 #: util.cpp:37
 #, kde-format

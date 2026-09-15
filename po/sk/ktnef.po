@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-09 00:51+0000\n"
-"PO-Revision-Date: 2021-07-20 17:52+0200\n"
-"Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
+"PO-Revision-Date: 2026-09-14 20:10+0200\n"
+"Last-Translator: Roman Paholík <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -267,16 +267,13 @@ msgid "Viewer for mail attachments using TNEF format"
 msgstr "Prehliadač pre prílohy správ pomocou formátu TNEF"
 
 #: main.cpp:36
-#, fuzzy, kde-format
-#| msgid ""
-#| "Copyright 2000 Michael Goffioul \n"
-#| "Copyright 2012  Allen Winter"
+#, kde-format
 msgid ""
 "© 2000 Michael Goffioul \n"
 "© 2012 Allen Winter"
 msgstr ""
-"Copyright 2000 Michael Goffioul \n"
-"Copyright 2012  Allen Winter"
+"© 2000 Michael Goffioul \n"
+"© 2012 Allen Winter"
 
 #: main.cpp:38
 #, kde-format
