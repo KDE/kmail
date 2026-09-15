@@ -17,7 +17,7 @@
 #include "aboutdata.h"
 
 #include <KCrash>
-#if !defined(Q_OS_WIN)
+#if defined(Q_OS_LINUX)
 #include <KStartupInfo>
 #endif
 #include <KWindowSystem>
@@ -73,7 +73,7 @@ void KMailApplication::setEventLoopReached()
 
 int KMailApplication::newInstance(const QByteArray &startupId, const QStringList &arguments, const QString &workingDirectory)
 {
-#if !defined(Q_OS_WIN)
+#if defined(Q_OS_LINUX)
     if (KWindowSystem::isPlatformX11()) {
         KStartupInfo::setNewStartupId(kmkernel->mainWin()->windowHandle(), startupId);
     } else if (KWindowSystem::isPlatformWayland()) {
