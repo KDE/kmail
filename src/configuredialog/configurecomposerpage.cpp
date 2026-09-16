@@ -673,8 +673,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     glay->setRowStretch(2, 1);
     glay->setColumnStretch(1, 1);
     mHeaderList = new ListView(this);
-    mHeaderList->setHeaderLabels(QStringList() << i18nc("@title:column Name of the mime header.", "Name")
-                                               << i18nc("@title:column Value of the mimeheader.", "Value"));
+    mHeaderList->setHeaderLabels({i18nc("@title:column Name of the mime header.", "Name"), i18nc("@title:column Value of the mimeheader.", "Value")});
     mHeaderList->setSortingEnabled(false);
     connect(mHeaderList, &QTreeWidget::currentItemChanged, this, &ComposerPageHeadersTab::slotMimeHeaderSelectionChanged);
     connect(mHeaderList, &ListView::addHeader, this, &ComposerPageHeadersTab::slotNewMimeHeader);

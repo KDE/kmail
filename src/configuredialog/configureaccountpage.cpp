@@ -108,7 +108,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // "send on check" combo:
     mSendOnCheckCombo = new QComboBox(this);
     mSendOnCheckCombo->setEditable(false);
-    mSendOnCheckCombo->addItems(QStringList() << i18n("Never Automatically") << i18n("On Manual Mail Checks") << i18n("On All Mail Checks"));
+    mSendOnCheckCombo->addItems({i18n("Never Automatically"), i18n("On Manual Mail Checks"), i18n("On All Mail Checks")});
     mSendOnCheckCombo->setWhatsThis(i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData()));
     formLayout->addRow(i18n("Send &messages in outbox folder:"), mSendOnCheckCombo);
     connect(mSendOnCheckCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
@@ -116,7 +116,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     // "default send method" combo:
     mSendMethodCombo = new QComboBox(this);
     mSendMethodCombo->setEditable(false);
-    mSendMethodCombo->addItems(QStringList() << i18n("Send Now") << i18n("Send Later"));
+    mSendMethodCombo->addItems({i18n("Send Now"), i18n("Send Later")});
     formLayout->addRow(i18n("Defa&ult send method:"), mSendMethodCombo);
     connect(mSendMethodCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
@@ -171,9 +171,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     }
     mAccountsReceiving.setupUi(this);
 
-    mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter(QStringList() << KMime::Message::mimeType());
-    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter(QStringList() << u"Resource"_s);
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities(QStringList() << u"MailTransport"_s << u"Notes"_s << u"Autostart"_s);
+    mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter({KMime::Message::mimeType()});
+    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter({u"Resource"_s});
+    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities({u"MailTransport"_s, u"Notes"_s, u"Autostart"_s});
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
     mAccountsReceiving.mAccountsReceiving->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
     mAccountsReceiving.mAccountsReceiving->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
