@@ -64,8 +64,11 @@ void FolderArchiveAgentJob::slotFetchCollection(KJob *job)
         sendError(i18n("Cannot fetch collection. %1", job->errorString()));
         return;
     }
-    auto fetchCollectionJob = static_cast<Akonadi::CollectionFetchJob *>(job);
-    Akonadi::Collection::List collections = fetchCollectionJob->collections();
+    auto fetchCollectionJob = qobject_cast<Akonadi::CollectionFetchJob *>(job);
+    if (!fetchCollectionJob) {
+        return;
+    }
+    const Akonadi::Collection::List collections = fetchCollectionJob->collections();
     if (collections.isEmpty()) {
         sendError(i18n("List of collections is empty. %1", job->errorString()));
         return;
