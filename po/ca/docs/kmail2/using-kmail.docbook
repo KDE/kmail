@@ -2127,7 +2127,7 @@
 >.</para>
 
 <para
->El segon mètode és construir un filtre manualment cridant el diàleg de filtratge amb <menuchoice
+>El segon mètode és construir un filtre manualment invocant el diàleg de filtratge mitjançant <menuchoice
 ><guimenu
 >Arranjament</guimenu
 ><guimenuitem

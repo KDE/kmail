@@ -2547,7 +2547,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >Marqueu la casella de selecció <guilabel
 >Habilita la detecció de la falta d'adjunts</guilabel
-> si voleu que el &kmail; us avisi si procediu a enviar un missatge sense adjunts tot i que el text del missatge conté certes paraules que indiquen que n'hi volíeu incloure un. La llista de paraules clau es pot modificar. </para>
+> si voleu que el &kmail; us avisi si envieu un missatge sense adjunts tot i que el text del missatge conté certes paraules que indiquen que n'hi volíeu incloure un. La llista de paraules clau es pot modificar. </para>
 
     <para
 >Utilitzeu el botó de selecció de valors <guilabel
@@ -4208,7 +4208,7 @@ modifying it by hand.</para>
 ></term>
         <listitem>
           <para
->Seleccioneu aquesta opció per a habilitar les notificacions noves per correu electrònic. Podreu adaptar els camps perquè es mostrin en el missatge de notificació «estàndard». També podreu seleccionar senyals d'àudio (text parlat, sons preenregistars), crear entrades a fitxers de registre, &etc; De manera predeterminada, aquest connector està habilitat. </para>
+>Seleccioneu aquesta opció per a habilitar les notificacions noves per correu electrònic. Podreu adaptar els camps perquè es mostrin en el missatge de notificació «estàndard». També podreu seleccionar senyals d'àudio (text parlat, sons preenregistrats), crear entrades a fitxers de registre, &etc; De manera predeterminada, aquest connector està habilitat. </para>
         </listitem>
       </varlistentry>
 
