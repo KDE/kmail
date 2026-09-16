@@ -644,7 +644,6 @@ void ComposerPageSubjectTab::save()
 
 void ComposerPageSubjectTab::doResetToDefaultsOther()
 {
-    qDebug() << " void ComposerPageSubjectTab::doResetToDefaultsOther()";
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
     doLoadFromGlobalSettings();
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
