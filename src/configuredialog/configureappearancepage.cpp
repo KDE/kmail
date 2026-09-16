@@ -1269,7 +1269,6 @@ void AppearancePageMessageTagTab::slotAddNewTag()
     slotEmitChangeCheck();
     auto newItem = new TagListWidgetItem(QIcon::fromTheme(tag->iconName), newTagName, mTagListBox);
     newItem->setKMailTag(tag);
-    mTagListBox->addItem(newItem);
     mTagListBox->setCurrentItem(newItem);
     mTagAddLineEdit->clear();
 }
