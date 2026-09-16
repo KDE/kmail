@@ -74,7 +74,7 @@ bool FolderArchiveAccountInfo::keepExistingStructure() const
 void FolderArchiveAccountInfo::readConfig(const KConfigGroup &config)
 {
     mInstanceName = config.readEntry(u"instanceName"_s);
-    mArchiveTopLevelCollectionId = config.readEntry(u"topLevelCollectionId"_s, -1);
+    mArchiveTopLevelCollectionId = config.readEntry(u"topLevelCollectionId"_s, static_cast<Akonadi::Collection::Id>(-1));
     mArchiveType = static_cast<FolderArchiveType>(config.readEntry("folderArchiveType", (int)FolderArchiveAccountInfo::FolderArchiveType::UniqueFolder));
     mEnabled = config.readEntry("enabled", false);
     mKeepExistingStructure = config.readEntry("keepExistingStructure", false);

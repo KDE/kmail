@@ -26,7 +26,7 @@ bool FolderArchiveUtil::resourceSupportArchiving(const QString &resource)
 {
     if (KConfig config(FolderArchiveUtil::configFileName()); config.hasGroup(groupConfigPattern() + resource)) {
         if (KConfigGroup grp = config.group(groupConfigPattern() + resource);
-            grp.readEntry("enabled", false) && (grp.readEntry("topLevelCollectionId", -1) > 0)) {
+            grp.readEntry("enabled", false) && (grp.readEntry("topLevelCollectionId", static_cast<Akonadi::Collection::Id>(-1)) > 0)) {
             return true;
         }
     }
