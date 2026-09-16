@@ -34,13 +34,14 @@ PotentialPhishingDetailWidget::~PotentialPhishingDetailWidget() = default;
 void PotentialPhishingDetailWidget::fillList(const QStringList &lst)
 {
     mListWidget->clear();
-    QStringList emailsAdded;
+    QSet<QString> emailsAdded;
+    emailsAdded.reserve(lst.count());
     for (const QString &mail : lst) {
         if (!emailsAdded.contains(mail)) {
             auto item = new QListWidgetItem(mListWidget);
             item->setCheckState(Qt::Unchecked);
             item->setText(mail);
-            emailsAdded << mail;
+            emailsAdded.insert(mail);
         }
     }
 }

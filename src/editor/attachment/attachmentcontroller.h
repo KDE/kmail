@@ -12,8 +12,15 @@
 
 #include <Akonadi/Item>
 #include <MessageComposer/AttachmentControllerBase>
+
+#include <memory>
+
 class KMComposerWin;
 class QModelIndex;
+namespace KMime
+{
+class Content;
+}
 namespace MessageComposer
 {
 class AttachmentModel;

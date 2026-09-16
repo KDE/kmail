@@ -8,7 +8,19 @@
 #include "potentialphishingemailjob.h"
 #include <KEmailAddress>
 #include <PimCommon/PimUtil>
+#include <algorithm>
+#include <utility>
 using namespace Qt::Literals::StringLiterals;
+
+namespace
+{
+[[nodiscard]] bool containsDifferentName(const QList<QStringView> &lst, QStringView firstName)
+{
+    return std::any_of(lst.cbegin(), lst.cend(), [firstName](QStringView n) {
+        return n != firstName;
+    });
+}
+}
 
 PotentialPhishingEmailJob::PotentialPhishingEmailJob(QObject *parent)
     : QObject(parent)
@@ -28,9 +40,9 @@ void PotentialPhishingEmailJob::setEmailWhiteList(const QStringList &emails)
     }
 }
 
-void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &list)
+void PotentialPhishingEmailJob::setPotentialPhishingEmails(const QStringList &emails)
 {
-    mEmails = PimCommon::Util::generateEmailList(list);
+    mEmails = PimCommon::Util::generateEmailList(emails);
 }
 
 QStringList PotentialPhishingEmailJob::checkEmails() const
@@ -43,13 +55,6 @@ QStringList PotentialPhishingEmailJob::potentialPhisingEmails() const
     return mPotentialPhisingEmails;
 }
 
-bool PotentialPhishingEmailJob::containsDifferentName(const QList<QStringView> &lst, QStringView firstName) const
-{
-    return std::any_of(lst.constBegin(), lst.constEnd(), [firstName](QStringView n) {
-        return n != firstName;
-    });
-}
-
 bool PotentialPhishingEmailJob::start()
 {
     mPotentialPhisingEmails.clear();
@@ -59,7 +64,7 @@ bool PotentialPhishingEmailJob::start()
         return false;
     }
     for (const QString &addr : std::as_const(mEmails)) {
-        if (!mEmailWhiteList.contains(addr.trimmed().toCaseFolded())) {
+        if (mEmailWhiteList.isEmpty() || !mEmailWhiteList.contains(addr.trimmed().toCaseFolded())) {
             QString tname;
             QString temail;
             KEmailAddress::extractEmailAddressAndName(addr, temail, tname); // ignore return value
@@ -74,13 +79,12 @@ bool PotentialPhishingEmailJob::start()
                 if (tname.startsWith(u'\'') && tname.endsWith(u'\'')) {
                     tname = tname.mid(1, tname.length() - 2);
                 }
-                if (temail.toLower() != tname.toLower()) {
+                if (temail.compare(tname, Qt::CaseInsensitive) != 0) {
                     if (const QString str = u"(%1)"_s.arg(temail); !tname.contains(str, Qt::CaseInsensitive)) {
-                        if (const QList<QStringView> lst = QStringView(tname.trimmed()).split(u' '); lst.count() > 1) {
-                            const QStringView firstName = lst.at(0);
-
-                            // Usage
-                            if (containsDifferentName(lst, firstName)) {
+                        // Keep the trimmed string alive: the QStringViews below point into it.
+                        const QString trimmedName = tname.trimmed();
+                        if (const QList<QStringView> lst = QStringView(trimmedName).split(u' '); lst.count() > 1) {
+                            if (containsDifferentName(lst, lst.constFirst())) {
                                 mPotentialPhisingEmails.append(addr);
                             }
                         } else {

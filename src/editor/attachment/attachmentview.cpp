@@ -32,6 +32,8 @@
 
 #include <KIO/Global>
 #include <MessageCore/AttachmentPart>
+
+#include <numeric>
 using MessageCore::AttachmentPart;
 
 using namespace KMail;
@@ -162,10 +164,9 @@ void AttachmentView::hideIfEmpty()
 void AttachmentView::updateAttachmentLabel()
 {
     const MessageCore::AttachmentPart::List list = mModel->attachments();
-    qint64 size = 0;
-    for (const MessageCore::AttachmentPart::Ptr &part : list) {
-        size += part->size();
-    }
+    const qint64 size = std::accumulate(list.cbegin(), list.cend(), qint64{0}, [](qint64 total, const MessageCore::AttachmentPart::Ptr &part) {
+        return total + part->size();
+    });
     mInfoAttachment->setText(i18np("1 attachment (%2)", "%1 attachments (%2)", model()->rowCount(), KIO::convertSize(qMax(0LL, size))));
 }
 
@@ -180,6 +181,9 @@ void AttachmentView::startDrag([[maybe_unused]] Qt::DropActions supportedActions
 {
     if (const QModelIndexList selection = selectionModel()->selectedRows(); !selection.isEmpty()) {
         QMimeData *mimeData = model()->mimeData(selection);
+        if (!mimeData) {
+            return;
+        }
         auto drag = new QDrag(this);
         drag->setMimeData(mimeData);
         drag->exec(Qt::CopyAction);

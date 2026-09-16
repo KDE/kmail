@@ -124,8 +124,12 @@ void AttachmentController::doubleClicked(const QModelIndex &itemClicked)
     }
     // The itemClicked index will contain the column information. But we want to retrieve
     // the AttachmentPart, so we must recreate the QModelIndex without the column information
-    const QModelIndex &properItemClickedIndex = mView->model()->index(itemClicked.row(), 0);
-    auto part = mView->model()->data(properItemClickedIndex, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+    const QModelIndex properItemClickedIndex = mView->model()->index(itemClicked.row(), 0);
+    const auto part = mView->model()->data(properItemClickedIndex, MessageComposer::AttachmentModel::AttachmentPartRole).value<AttachmentPart::Ptr>();
+    if (!part) {
+        qCWarning(KMAIL_LOG) << "Unable to find an attachment part for index" << itemClicked;
+        return;
+    }
 
     // We can't edit encapsulated messages, but we can view them.
     if (part->isMessageOrMessageCollection()) {
