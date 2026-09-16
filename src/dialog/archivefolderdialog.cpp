@@ -7,9 +7,9 @@
 
 #include "archivefolderdialog.h"
 
-#include "kmmainwidget.h"
 #include <MailCommon/BackupJob>
 #include <MailCommon/FolderRequester>
+#include <MailCommon/FolderSettings>
 #include <MessageViewer/MessageViewerUtil>
 
 #include <Akonadi/Collection>
@@ -21,13 +21,17 @@
 #include <QComboBox>
 
 #include <QCheckBox>
+#include <QDate>
 #include <QDialogButtonBox>
+#include <QDir>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMimeDatabase>
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QVBoxLayout>
+
+#include <array>
 
 using namespace KMail;
 using namespace MailCommon;

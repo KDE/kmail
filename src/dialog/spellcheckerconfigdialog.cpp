@@ -6,7 +6,6 @@
 
 #include "spellcheckerconfigdialog.h"
 #include "kmail_debug.h"
-#include "kmkernel.h"
 #include <QCheckBox>
 #include <QLabel>
 

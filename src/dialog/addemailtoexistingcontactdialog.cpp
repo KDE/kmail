@@ -5,8 +5,6 @@
 */
 
 #include "addemailtoexistingcontactdialog.h"
-#include "kmkernel.h"
-
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/ContactsTreeModel>
 #include <Akonadi/EmailAddressSelectionWidget>
@@ -19,6 +17,7 @@
 #include <KLocalizedString>
 
 #include <KConfigGroup>
+#include <KSharedConfig>
 #include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QPushButton>

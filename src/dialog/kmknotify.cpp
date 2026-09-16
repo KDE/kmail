@@ -6,21 +6,22 @@
 
 #include "kmknotify.h"
 
-#include "kmkernel.h"
-
 #include <KConfig>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KNotifyConfigWidget>
 #include <KSeparator>
+#include <KSharedConfig>
 #include <KWindowConfig>
 #include <QComboBox>
 #include <QDialogButtonBox>
+#include <QIcon>
 #include <QPushButton>
 #include <QStandardPaths>
 #include <QVBoxLayout>
 #include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
+#include <array>
 
 using namespace KMail;
 using namespace Qt::Literals::StringLiterals;
