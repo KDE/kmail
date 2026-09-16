@@ -194,9 +194,8 @@ void ArchiveFolderDialog::slotAccepted()
 
 void ArchiveFolderDialog::slotFixFileExtension()
 {
-    const int numExtensions = 4;
     // The extensions here are also sorted, like the enum order of BackupJob::ArchiveType
-    const char *extensions[numExtensions] = {".zip", ".tar", ".tar.bz2", ".tar.gz"};
+    static constexpr std::array<QLatin1StringView, 4> extensions = {".zip"_L1, ".tar"_L1, ".tar.bz2"_L1, ".tar.gz"_L1};
 
     QString fileName = mUrlRequester->url().path();
     if (fileName.isEmpty()) {
@@ -209,11 +208,11 @@ void ArchiveFolderDialog::slotFixFileExtension()
     }
 
     // Now, we've got a filename without an extension, simply append the correct one
-    fileName += QLatin1StringView(extensions[mFormatComboBox->currentIndex()]);
+    fileName += extensions[mFormatComboBox->currentIndex()];
     mUrlRequester->setUrl(QUrl::fromLocalFile(fileName));
 }
 
-void ArchiveFolderDialog::slotUrlChanged([[maybe_unused]] const QString &url)
+void ArchiveFolderDialog::slotUrlChanged(const QString &)
 {
     const Akonadi::Collection folder = mFolderRequester->hasCollection() ? mFolderRequester->collection() : Akonadi::Collection();
     updateOkButtonState(folder);

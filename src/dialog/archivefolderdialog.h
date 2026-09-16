@@ -41,7 +41,7 @@ private:
     void updateOkButtonState(const Akonadi::Collection &folder);
 
     [[nodiscard]] bool allowToDeleteFolders(const Akonadi::Collection &folder) const;
-    [[nodiscard]] QString standardArchivePath(const QString &folderName);
+    [[nodiscard]] static QString standardArchivePath(const QString &folderName);
 
     QWidget *const mParentWidget;
     QCheckBox *mDeleteCheckBox = nullptr;

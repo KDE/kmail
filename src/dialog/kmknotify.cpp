@@ -73,7 +73,7 @@ void KMKnotify::slotComboChanged(int index)
     if (index < 0 || index >= m_comboNotify->count()) {
         return;
     }
-    QString text(m_comboNotify->itemData(index).toString());
+    const QString text = m_comboNotify->itemData(index).toString();
     if (m_changed) {
         m_notifyWidget->save();
         m_changed = false;
@@ -91,23 +91,27 @@ void KMKnotify::setCurrentNotification(const QString &name)
 
 void KMKnotify::initCombobox()
 {
-    const QStringList lstNotify = QStringList() << u"kmail2.notifyrc"_s << u"akonadi_maildispatcher_agent.notifyrc"_s << u"akonadi_mailfilter_agent.notifyrc"_s
-                                                << u"akonadi_archivemail_agent.notifyrc"_s << u"akonadi_sendlater_agent.notifyrc"_s
-                                                << u"akonadi_newmailnotifier_agent.notifyrc"_s << u"akonadi_followupreminder_agent.notifyrc"_s
-                                                << u"messageviewer.notifyrc"_s;
-    for (const QString &notify : lstNotify) {
-        if (const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, "knotifications6/"_L1 + notify); !fullPath.isEmpty()) {
-            const int slash = fullPath.lastIndexOf(u'/');
-            QString appname = fullPath.right(fullPath.length() - slash - 1);
-            appname.remove(".notifyrc"_L1);
-            if (!appname.isEmpty()) {
-                KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::AppLocalDataLocation);
-                KConfigGroup globalConfig(&config, u"Global"_s);
-                const QString icon = globalConfig.readEntry(u"IconName"_s, u"misc"_s);
-                const QString description = globalConfig.readEntry(u"Comment"_s, appname);
-                m_comboNotify->addItem(QIcon::fromTheme(icon), description, appname);
-            }
+    static constexpr std::array<QLatin1StringView, 8> lstNotify = {
+        "kmail2"_L1,
+        "akonadi_maildispatcher_agent"_L1,
+        "akonadi_mailfilter_agent"_L1,
+        "akonadi_archivemail_agent"_L1,
+        "akonadi_sendlater_agent"_L1,
+        "akonadi_newmailnotifier_agent"_L1,
+        "akonadi_followupreminder_agent"_L1,
+        "messageviewer"_L1,
+    };
+    for (const QLatin1StringView notify : lstNotify) {
+        const QString appname = notify;
+        const QString fullPath = QStandardPaths::locate(QStandardPaths::GenericDataLocation, u"knotifications6/"_s + appname + ".notifyrc"_L1);
+        if (fullPath.isEmpty()) {
+            continue;
         }
+        KConfig config(fullPath, KConfig::NoGlobals, QStandardPaths::AppLocalDataLocation);
+        KConfigGroup globalConfig(&config, u"Global"_s);
+        const QString icon = globalConfig.readEntry(u"IconName"_s, u"misc"_s);
+        const QString description = globalConfig.readEntry(u"Comment"_s, appname);
+        m_comboNotify->addItem(QIcon::fromTheme(icon), description, appname);
     }
 
     m_comboNotify->model()->sort(0);
