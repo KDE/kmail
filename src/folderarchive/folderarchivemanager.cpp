@@ -49,6 +49,7 @@ void FolderArchiveManager::slotCollectionRemoved(const Akonadi::Collection &coll
             info->writeConfig(group);
         }
     }
+    config.sync();
     load();
 }
 
