@@ -905,7 +905,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab(QWidget *parent)
 void ComposerPageAttachmentsTab::doLoadFromGlobalSettings()
 {
     const int maximumAttachmentSize(MessageCore::MessageCoreSettings::self()->maximumAttachmentSize());
-    mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : MessageCore::MessageCoreSettings::self()->maximumAttachmentSize() / 1024);
+    mMaximumAttachmentSize->setValue(maximumAttachmentSize == -1 ? -1 : maximumAttachmentSize / 1024);
 }
 
 void ComposerPageAttachmentsTab::save()

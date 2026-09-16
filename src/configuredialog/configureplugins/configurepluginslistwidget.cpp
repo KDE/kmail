@@ -115,46 +115,47 @@ ConfigurePluginsListWidget::~ConfigurePluginsListWidget() = default;
 
 void ConfigurePluginsListWidget::save()
 {
+    const QString pluginConfigFile = PimCommon::PluginUtil::pluginConfigFile();
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageComposer::PluginEditorManager::self()->configGroupName(),
                                                            MessageComposer::PluginEditorManager::self()->configPrefixSettingKey(),
                                                            mPluginEditorItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageViewer::ViewerPluginManager::self()->configGroupName(),
                                                            MessageViewer::ViewerPluginManager::self()->configPrefixSettingKey(),
                                                            mPluginMessageViewerItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageComposer::PluginEditorInitManager::self()->configGroupName(),
                                                            MessageComposer::PluginEditorInitManager::self()->configPrefixSettingKey(),
                                                            mPluginEditorInitItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageComposer::PluginEditorCheckBeforeSendManager::self()->configGroupName(),
                                                            MessageComposer::PluginEditorCheckBeforeSendManager::self()->configPrefixSettingKey(),
                                                            mPluginCheckBeforeSendItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageComposer::PluginEditorGrammarManager::self()->configGroupName(),
                                                            MessageComposer::PluginEditorGrammarManager::self()->configPrefixSettingKey(),
                                                            mPluginEditorGrammarItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(KMailPluginInterface::self()->configGroupName(),
                                                            KMailPluginInterface::self()->configPrefixSettingKey(),
                                                            mPluginGenericItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configGroupName(),
                                                            WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->configPrefixSettingKey(),
                                                            mPluginWebEngineItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageViewer::HeaderStylePluginManager::self()->configGroupName(),
                                                            MessageViewer::HeaderStylePluginManager::self()->configPrefixSettingKey(),
                                                            mPluginHeaderStyleItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageComposer::PluginEditorConvertTextManager::self()->configGroupName(),
                                                            MessageComposer::PluginEditorConvertTextManager::self()->configPrefixSettingKey(),
                                                            mPluginConvertTextItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::savePlugins(MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configGroupName(),
                                                            MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->configPrefixSettingKey(),
                                                            mPluginCheckBeforeDeletingItems,
-                                                           PimCommon::PluginUtil::pluginConfigFile());
+                                                           pluginConfigFile);
     saveAkonadiAgent();
 }
 
@@ -194,7 +195,7 @@ void ConfigurePluginsListWidget::doResetToDefaultsOther()
 void ConfigurePluginsListWidget::initialize()
 {
     mTreePluginWidget->clear();
-
+    const QString pluginConfigFile = PimCommon::PluginUtil::pluginConfigFile();
     // Load CheckBeforeSend
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageComposer::PluginEditorCheckBeforeSendManager::self()->pluginsDataList(),
                                                             i18n("Check Before Send Plugins"),
@@ -203,7 +204,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginCheckBeforeSendItems,
                                                             pluginEditorCheckBeforeGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageComposer::PluginEditorInitManager::self()->pluginsDataList(),
                                                             i18n("Composer Plugins"),
@@ -212,7 +213,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginEditorInitItems,
                                                             pluginEditorInitGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageComposer::PluginEditorGrammarManager::self()->pluginsDataList(),
                                                             i18n("Grammar Checker Plugins"),
                                                             MessageComposer::PluginEditorGrammarManager::self()->configGroupName(),
@@ -220,7 +221,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginEditorGrammarItems,
                                                             pluginEditorGrammarGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     // Load generic plugins
     // Necessary to initialize plugin when we load it outside kmail
@@ -232,7 +233,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginGenericItems,
                                                             kmailPluginToolsGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
     // Load plugin editor
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageComposer::PluginEditorManager::self()->pluginsDataList(),
                                                             i18n("Editor Plugins"),
@@ -241,7 +242,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginEditorItems,
                                                             pluginEditorGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     // Load messageviewer plugin
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageViewer::ViewerPluginManager::self()->pluginsDataList(),
@@ -251,7 +252,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginMessageViewerItems,
                                                             viewerPluginGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     // Load webengineplugin
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(WebEngineViewer::NetworkUrlInterceptorPluginManager::self()->pluginsDataList(),
@@ -261,7 +262,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginWebEngineItems,
                                                             networkUrlInterceptorGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     // Load headerstyle
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageViewer::HeaderStylePluginManager::self()->pluginsDataList(),
@@ -271,7 +272,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginHeaderStyleItems,
                                                             headerStyleGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
     // Load Converter plugin
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageComposer::PluginEditorConvertTextManager::self()->pluginsDataList(),
                                                             i18n("Text Conversion Plugins"),
@@ -280,7 +281,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginConvertTextItems,
                                                             pluginEditorConvertTextGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageViewer::MessageViewerConfigureSettingsPluginManager::self()->pluginsDataList(),
                                                             i18n("Misc"),
@@ -289,7 +290,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginConfigureItems,
                                                             configurePluginGroupName(),
                                                             false,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(MessageViewer::MessageViewerCheckBeforeDeletingPluginManager::self()->pluginsDataList(),
                                                             i18n("Confirm Deleting Emails Plugins"),
@@ -298,7 +299,7 @@ void ConfigurePluginsListWidget::initialize()
                                                             mPluginCheckBeforeDeletingItems,
                                                             pluginEditorCheckBeforeDeletingGroupName(),
                                                             true,
-                                                            PimCommon::PluginUtil::pluginConfigFile());
+                                                            pluginConfigFile);
 
     // Load Agent Plugin
     initializeAgentPlugins();
