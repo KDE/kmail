@@ -14,6 +14,7 @@
 #include "ui_smimeconfiguration.h"
 
 #include <KCMultiDialog>
+#include <memory>
 
 namespace QGpgME
 {
@@ -75,7 +76,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::SecurityPageEncryptionTab *const mWidget;
+    std::unique_ptr<Ui::SecurityPageEncryptionTab> mWidget;
 };
 
 class SecurityPageSMimeTab : public ConfigModuleTab
@@ -94,7 +95,7 @@ private:
     void doLoadOther() override;
 
 private:
-    Ui::SMimeConfiguration *const mWidget;
+    std::unique_ptr<Ui::SMimeConfiguration> mWidget;
     QGpgME::CryptoConfig *mConfig = nullptr;
 };
 

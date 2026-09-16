@@ -246,10 +246,7 @@ SecurityPageEncryptionTab::SecurityPageEncryptionTab(QWidget *parent)
     connect(mWidget->enableAllWarningsPB, &QPushButton::clicked, this, &SecurityPageEncryptionTab::slotReenableAllWarningsClicked);
 }
 
-SecurityPageEncryptionTab::~SecurityPageEncryptionTab()
-{
-    delete mWidget;
-}
+SecurityPageEncryptionTab::~SecurityPageEncryptionTab() = default;
 
 void SecurityPageEncryptionTab::doLoadFromGlobalSettings()
 {
@@ -389,10 +386,7 @@ SecurityPageSMimeTab::SecurityPageSMimeTab(QWidget *parent)
     QDBusConnection::sessionBus().connect(QString(), QString(), u"org.kde.kleo.CryptoConfig"_s, u"changed"_s, this, SLOT(load()));
 }
 
-SecurityPageSMimeTab::~SecurityPageSMimeTab()
-{
-    delete mWidget;
-}
+SecurityPageSMimeTab::~SecurityPageSMimeTab() = default;
 
 static void disableDirmngrWidget(QWidget *w)
 {
