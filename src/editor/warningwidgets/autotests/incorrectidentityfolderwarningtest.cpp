@@ -17,11 +17,11 @@ IncorrectIdentityFolderWarningTest::IncorrectIdentityFolderWarningTest(QObject *
 
 void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()
 {
-    auto wid = new QWidget;
-    auto layout = new QHBoxLayout(wid);
+    QWidget wid;
+    auto layout = new QHBoxLayout(&wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
-    wid->show();
+    wid.show();
     QVERIFY(!w.isVisible());
     // QVERIFY(w.isCloseButtonVisible());
     QCOMPARE(w.messageType(), KMessageWidget::Warning);
@@ -30,11 +30,11 @@ void IncorrectIdentityFolderWarningTest::shouldHaveDefaultValues()
 
 void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidIdentity()
 {
-    auto wid = new QWidget;
-    auto layout = new QHBoxLayout(wid);
+    QWidget wid;
+    auto layout = new QHBoxLayout(&wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
-    wid->show();
+    wid.show();
     QVERIFY(!w.isVisible());
     w.identityInvalid();
     QVERIFY(w.isVisible());
@@ -43,11 +43,11 @@ void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidIdentity()
 
 void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidMailTransport()
 {
-    auto wid = new QWidget;
-    auto layout = new QHBoxLayout(wid);
+    QWidget wid;
+    auto layout = new QHBoxLayout(&wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
-    wid->show();
+    wid.show();
     QVERIFY(!w.isVisible());
     w.mailTransportIsInvalid();
     QVERIFY(w.isVisible());
@@ -56,11 +56,11 @@ void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidMailTransport()
 
 void IncorrectIdentityFolderWarningTest::shouldShowWarningInvalidFcc()
 {
-    auto wid = new QWidget;
-    auto layout = new QHBoxLayout(wid);
+    QWidget wid;
+    auto layout = new QHBoxLayout(&wid);
     IncorrectIdentityFolderWarning w;
     layout->addWidget(&w);
-    wid->show();
+    wid.show();
     QVERIFY(!w.isVisible());
     w.fccIsInvalid();
     QVERIFY(w.isVisible());
