@@ -26,12 +26,13 @@ AttachmentAddedFromExternalWarning::~AttachmentAddedFromExternalWarning() = defa
 void AttachmentAddedFromExternalWarning::setAttachmentNames(const QStringList &lst)
 {
     QStringList attachments;
+    attachments.reserve(lst.size());
 
     for (const QString &item : lst) {
         if (const QUrl url(item); url.isLocalFile()) {
             attachments << url.toLocalFile().toHtmlEscaped();
         } else {
-            attachments << QString(item).toHtmlEscaped();
+            attachments << item.toHtmlEscaped();
         }
     }
 
