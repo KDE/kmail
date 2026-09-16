@@ -7,6 +7,13 @@
 #include "incorrectidentityfolderwarning.h"
 #include <KLocalizedString>
 
+static void addNewLine(QString &str)
+{
+    if (!str.isEmpty()) {
+        str += u'\n';
+    }
+}
+
 IncorrectIdentityFolderWarning::IncorrectIdentityFolderWarning(QWidget *parent)
     : KMessageWidget(parent)
 {
@@ -49,13 +56,6 @@ void IncorrectIdentityFolderWarning::clearFccInvalid()
     if (mFccIsInvalid) {
         mFccIsInvalid = false;
         updateText();
-    }
-}
-
-void IncorrectIdentityFolderWarning::addNewLine(QString &str)
-{
-    if (!str.isEmpty()) {
-        str += u'\n';
     }
 }
 
