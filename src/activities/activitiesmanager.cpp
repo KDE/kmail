@@ -17,12 +17,10 @@ ActivitiesManager::ActivitiesManager(QObject *parent)
     , mLdapActivities(new LdapActivities(this))
     , mAccountActivities(new AccountActivities(this))
 {
-    connect(this, &ActivitiesManager::activitiesChanged, this, [this]() {
-        Q_EMIT mIdentityActivities->activitiesChanged();
-        Q_EMIT mTransportActivities->activitiesChanged();
-        Q_EMIT mLdapActivities->activitiesChanged();
-        Q_EMIT mAccountActivities->activitiesChanged();
-    });
+    connect(this, &ActivitiesManager::activitiesChanged, mTransportActivities, &MailTransport::TransportActivitiesAbstract::activitiesChanged);
+    connect(this, &ActivitiesManager::activitiesChanged, mIdentityActivities, &KIdentityManagementCore::IdentityActivitiesAbstract::activitiesChanged);
+    connect(this, &ActivitiesManager::activitiesChanged, mLdapActivities, &KLDAPCore::LdapActivitiesAbstract::activitiesChanged);
+    connect(this, &ActivitiesManager::activitiesChanged, mAccountActivities, &Akonadi::AccountActivitiesAbstract::activitiesChanged);
 }
 
 ActivitiesManager::~ActivitiesManager() = default;
