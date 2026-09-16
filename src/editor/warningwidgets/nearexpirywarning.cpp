@@ -23,7 +23,8 @@ NearExpiryWarning::~NearExpiryWarning() = default;
 
 void NearExpiryWarning::addInfo(const QString &msg)
 {
-    setText(text() + (text().isEmpty() ? QString() : u"\n"_s) + u"<p>"_s + msg + u"</p>"_s);
+    const QString currentText = text();
+    setText(currentText + (currentText.isEmpty() ? QString() : u"\n"_s) + u"<p>"_s + msg + u"</p>"_s);
 }
 
 void NearExpiryWarning::setWarning(bool warning)
