@@ -7,7 +7,7 @@
 #pragma once
 
 #include <KMessageWidget>
-class QWidget;
+#include <QStringList>
 
 class AttachmentAddedFromExternalWarning : public KMessageWidget
 {

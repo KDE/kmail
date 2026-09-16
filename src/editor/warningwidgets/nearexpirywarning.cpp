@@ -6,7 +6,6 @@
 
 #include "nearexpirywarning.h"
 
-#include <QDebug>
 using namespace Qt::Literals::StringLiterals;
 
 NearExpiryWarning::NearExpiryWarning(QWidget *parent)
