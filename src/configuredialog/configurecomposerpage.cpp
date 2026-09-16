@@ -39,10 +39,7 @@ using PimCommon::RecentAddresses;
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLabel>
-#include <QRegularExpression>
-#include <QRegularExpressionValidator>
 #include <QScrollArea>
-#include <QStringEncoder>
 #include <QVBoxLayout>
 
 #include <PimCommonAkonadi/CompletionConfigureDialog>

@@ -27,7 +27,7 @@
 
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentInstance>
-#include <Akonadi/AgentManager>
+
 #include <MessageComposer/PluginEditor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
 #include <MessageComposer/PluginEditorInit>

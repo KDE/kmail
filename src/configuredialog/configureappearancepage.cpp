@@ -32,8 +32,6 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <MessageCore/MessageCoreSettings>
 #include <MessageList/MessageListUtil>
 
-#include <MailCommon/MailUtil>
-
 #include <Akonadi/Tag>
 #include <Akonadi/TagAttribute>
 #include <Akonadi/TagCreateJob>

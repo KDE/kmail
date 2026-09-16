@@ -32,7 +32,6 @@ using MailTransport::TransportManagementWidgetNg;
 #include <QFormLayout>
 #include <QLabel>
 #include <QMenu>
-#include <QProcess>
 
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/accountactivities.h"

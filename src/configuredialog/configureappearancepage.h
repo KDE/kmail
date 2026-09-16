@@ -40,10 +40,6 @@ namespace MailCommon
 {
 class Tag;
 using TagPtr = QSharedPointer<Tag>;
-}
-
-namespace MailCommon
-{
 class TagWidget;
 }
 

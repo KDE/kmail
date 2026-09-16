@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <Akonadi/AgentManager>
 #include <PimCommon/ConfigurePluginsWidget>
 #include <PimCommon/PluginUtil>
 #include <QList>

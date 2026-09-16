@@ -9,8 +9,6 @@
 #include "configuredialog_p.h"
 #include "kmail_export.h"
 class QCheckBox;
-class QSpinBox;
-class QSpinBox;
 class QLineEdit;
 class ListView;
 class QPushButton;
