@@ -130,7 +130,6 @@ private: // data
     MessageList::Utils::AggregationComboBox *mAggregationComboBox = nullptr;
     MessageList::Utils::ThemeComboBox *mThemeComboBox = nullptr;
     QButtonGroup *mDateDisplay = nullptr;
-    QGroupBox *mDateDisplayBox = nullptr;
     QLineEdit *mCustomDateFormatEdit = nullptr;
     QString mCustomDateWhatsThis;
 };

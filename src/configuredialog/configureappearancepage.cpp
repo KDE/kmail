@@ -455,9 +455,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     const auto folderListItem = KMailSettings::self()->folderListItem();
     mFolderListGroup = new QButtonGroup(this);
     {
-        const int numberChoices(folderListItem->choices().size());
+        const auto choices = folderListItem->choices();
+        const int numberChoices(choices.size());
         for (int i = 0; i < numberChoices; ++i) {
-            auto button = new QRadioButton(folderListItem->choices().at(i).label, this);
+            auto button = new QRadioButton(choices.at(i).label, this);
             mFolderListGroup->addButton(button, i);
             checkLockDown(button, folderListItem);
             if (i == 0) {
@@ -699,7 +700,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab(QWidget *parent)
             radio->setWhatsThis(mCustomDateWhatsThis);
             formLayout->addRow(QString(), hbox);
         } else {
-            auto radio = new QRadioButton(buttonLabel, mDateDisplayBox);
+            auto radio = new QRadioButton(buttonLabel, this);
             if (i == 0) {
                 formLayout->addRow(i18n("Date Display:"), radio);
             } else {
