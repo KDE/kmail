@@ -26,7 +26,7 @@ public:
 private:
     void slotConfigureClicked(const QString &configureGroupName, const QString &identifier);
     void initializeAgentPlugins();
-    [[nodiscard]] TextAddonsWidgets::PluginUtilData createAgentPluginData(const QString &agentIdentifier, const QString &path);
+    void createAgentPluginData(const QString &agentIdentifier, const QString &path, const Akonadi::AgentType::List &lstAgent);
     [[nodiscard]] bool agentActivateState(const QString &agentIdentifier, const QString &pathName);
     void changeAgentActiveState(const QString &agentIdentifier, const QString &path, bool enable);
     void saveAkonadiAgent();

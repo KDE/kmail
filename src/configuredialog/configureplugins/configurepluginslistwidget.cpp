@@ -310,11 +310,12 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
 {
     mPluginUtilDataList.clear();
     mPluginUtilDataList.reserve(5);
-    mPluginUtilDataList << createAgentPluginData(u"akonadi_sendlater_agent"_s, u"/SendLaterAgent"_s);
-    mPluginUtilDataList << createAgentPluginData(u"akonadi_archivemail_agent"_s, u"/ArchiveMailAgent"_s);
-    mPluginUtilDataList << createAgentPluginData(u"akonadi_newmailnotifier_agent"_s, u"/NewMailNotifierAgent"_s);
-    mPluginUtilDataList << createAgentPluginData(u"akonadi_followupreminder_agent"_s, u"/FollowUpReminder"_s);
-    mPluginUtilDataList << createAgentPluginData(u"akonadi_unifiedmailbox_agent"_s, u"/UnifiedMailboxAgent"_s);
+    const Akonadi::AgentType::List lstAgent = Akonadi::AgentManager::self()->types();
+    createAgentPluginData(u"akonadi_sendlater_agent"_s, u"/SendLaterAgent"_s, lstAgent);
+    createAgentPluginData(u"akonadi_archivemail_agent"_s, u"/ArchiveMailAgent"_s, lstAgent);
+    createAgentPluginData(u"akonadi_newmailnotifier_agent"_s, u"/NewMailNotifierAgent"_s, lstAgent);
+    createAgentPluginData(u"akonadi_followupreminder_agent"_s, u"/FollowUpReminder"_s, lstAgent);
+    createAgentPluginData(u"akonadi_unifiedmailbox_agent"_s, u"/UnifiedMailboxAgent"_s, lstAgent);
 
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(mPluginUtilDataList,
                                                             i18n("Akonadi Agents"),
@@ -324,12 +325,11 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
                                                             agentAkonadiGroupName());
 }
 
-TextAddonsWidgets::PluginUtilData ConfigurePluginsListWidget::createAgentPluginData(const QString &agentIdentifier, const QString &path)
+void ConfigurePluginsListWidget::createAgentPluginData(const QString &agentIdentifier, const QString &path, const Akonadi::AgentType::List &lstAgent)
 {
     TextAddonsWidgets::PluginUtilData data;
     data.mEnableByDefault = true;
     data.mHasConfigureDialog = true;
-    const Akonadi::AgentType::List lstAgent = Akonadi::AgentManager::self()->types();
     for (const Akonadi::AgentType &type : lstAgent) {
         if (type.identifier() == agentIdentifier) {
             data.mExtraInfo << agentIdentifier;
@@ -342,7 +342,9 @@ TextAddonsWidgets::PluginUtilData ConfigurePluginsListWidget::createAgentPluginD
             break;
         }
     }
-    return data;
+    if (!data.mIdentifier.isEmpty()) {
+        mPluginUtilDataList << data;
+    }
 }
 
 bool ConfigurePluginsListWidget::agentActivateState(const QString &agentIdentifier, const QString &pathName)
