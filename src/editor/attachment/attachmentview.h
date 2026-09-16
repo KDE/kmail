@@ -48,7 +48,7 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
 
 private:
-    void slotShowHideAttchementList(bool);
+    void slotShowHideAttachmentList(bool show);
     void saveHeaderState();
     void restoreHeaderState();
     /// model sets these
@@ -67,6 +67,6 @@ private:
     QToolButton *const mToolButton;
     QLabel *const mInfoAttachment;
     QWidget *const mWidget;
-    KConfigGroup grp;
+    KConfigGroup mGroup;
 };
 } // namespace KMail

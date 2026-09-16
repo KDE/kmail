@@ -43,11 +43,11 @@ AttachmentView::AttachmentView(MessageComposer::AttachmentModel *model, QWidget 
     , mToolButton(new QToolButton(this))
     , mInfoAttachment(new QLabel(this))
     , mWidget(new QWidget())
-    , grp(KMKernel::self()->config()->group(u"AttachmentView"_s))
+    , mGroup(KMKernel::self()->config()->group(u"AttachmentView"_s))
 {
     auto lay = new QHBoxLayout(mWidget);
     lay->setContentsMargins({});
-    connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttchementList);
+    connect(mToolButton, &QAbstractButton::toggled, this, &AttachmentView::slotShowHideAttachmentList);
     mToolButton->setIcon(QIcon::fromTheme(u"mail-attachment"_s));
     mToolButton->setAutoRaise(true);
     mToolButton->setCheckable(true);
@@ -89,13 +89,13 @@ AttachmentView::~AttachmentView()
 
 void AttachmentView::restoreHeaderState()
 {
-    header()->restoreState(grp.readEntry("State", QByteArray()));
+    header()->restoreState(mGroup.readEntry("State", QByteArray()));
 }
 
 void AttachmentView::saveHeaderState()
 {
-    grp.writeEntry("State", header()->saveState());
-    grp.sync();
+    mGroup.writeEntry("State", header()->saveState());
+    mGroup.sync();
 }
 
 void AttachmentView::contextMenuEvent([[maybe_unused]] QContextMenuEvent *event)
@@ -191,7 +191,7 @@ QWidget *AttachmentView::widget() const
     return mWidget;
 }
 
-void AttachmentView::slotShowHideAttchementList(bool show)
+void AttachmentView::slotShowHideAttachmentList(bool show)
 {
     setVisible(show);
     if (show) {
