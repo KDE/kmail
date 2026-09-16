@@ -2806,7 +2806,7 @@ void KMComposerWin::doSend(MessageComposer::MessageSender::SendMethod method, Me
         }
         if (KMailSettings::self()->enabledUndoSend()) {
             mComposerBase->setSendLaterInfo(nullptr);
-            if (const bool wasRegistered = sendLaterRegistered()) {
+            if (sendLaterRegistered()) {
                 auto info = new MessageComposer::SendLaterInfo;
                 info->setRecurrence(false);
                 info->setSubject(subject());
@@ -2993,7 +2993,7 @@ void KMComposerWin::slotSendLater()
     }
     mComposerBase->setSendLaterInfo(nullptr);
     if (mComposerBase->editor()->checkExternalEditorFinished()) {
-        if (const bool wasRegistered = sendLaterRegistered()) {
+        if (sendLaterRegistered()) {
             MessageComposer::SendLaterInfo *info = nullptr;
             QPointer<MessageComposer::SendLaterDialog> dlg = new MessageComposer::SendLaterDialog(info, this);
             if (dlg->exec() && !dlg.isNull()) {

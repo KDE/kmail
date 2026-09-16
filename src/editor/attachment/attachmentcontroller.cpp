@@ -103,9 +103,9 @@ void AttachmentController::selectionChanged()
 void AttachmentController::onShowAttachment(const std::shared_ptr<KMime::Content> &content, const QByteArray &charset)
 {
     const QString charsetStr = QString::fromLatin1(charset);
-    if (content->bodyAsMessage()) {
-        std::shared_ptr<KMime::Message> m(new KMime::Message);
-        m->setContent(content->bodyAsMessage()->encodedContent());
+    if (const auto bodyMessage = content->bodyAsMessage()) {
+        auto m = std::make_shared<KMime::Message>();
+        m->setContent(bodyMessage->encodedContent());
         m->parse();
         auto win = new KMReaderMainWin();
         win->showMessage(charsetStr, m);
