@@ -683,7 +683,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab(QWidget *parent)
     glay->addWidget(button, 0, 2);
     mRemoveHeaderButton = new QPushButton(i18nc("@action:button", "Re&move"), this);
     connect(mRemoveHeaderButton, &QAbstractButton::clicked, this, &ComposerPageHeadersTab::slotRemoveMimeHeader);
-    button->setAutoDefault(false);
+    mRemoveHeaderButton->setAutoDefault(false);
     glay->addWidget(mRemoveHeaderButton, 1, 2);
 
     // "name" and "value" line edits and labels:
