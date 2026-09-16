@@ -13,6 +13,7 @@
 
 #include "attachmentview.h"
 
+#include "kmail_debug.h"
 #include "kmkernel.h"
 
 #include <MessageComposer/AttachmentModel>

@@ -11,6 +11,7 @@
 #include <KSharedConfig>
 #include <QLabel>
 #include <QListWidget>
+#include <QSet>
 #include <QVBoxLayout>
 
 using namespace Qt::Literals::StringLiterals;

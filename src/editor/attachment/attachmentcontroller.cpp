@@ -16,10 +16,7 @@
 #include "kmreadermainwin.h"
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
-#include <KContacts/Addressee>
 #include <KIdentityManagementCore/Identity>
-#include <MailCommon/FolderSettings>
-#include <MailCommon/MailUtil>
 
 #include <QGpgME/Protocol>
 
@@ -27,8 +24,6 @@
 #include <MessageCore/AttachmentPart>
 
 using namespace KMail;
-using namespace KPIM;
-using namespace MailCommon;
 using namespace MessageCore;
 
 AttachmentController::AttachmentController(MessageComposer::AttachmentModel *model, AttachmentView *view, KMComposerWin *composer)

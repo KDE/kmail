@@ -8,6 +8,7 @@
 #pragma once
 
 #include "kmail_private_export.h"
+#include <QStringList>
 #include <QWidget>
 class QListWidget;
 class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailWidget : public QWidget

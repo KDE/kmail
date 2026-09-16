@@ -9,6 +9,7 @@
 
 #include "kmail_private_export.h"
 #include <QDialog>
+#include <QStringList>
 class PotentialPhishingDetailWidget;
 class KMAILTESTS_TESTS_EXPORT PotentialPhishingDetailDialog : public QDialog
 {

@@ -9,6 +9,7 @@
 
 #include "kmail_private_export.h"
 #include <KMessageWidget>
+#include <QStringList>
 class KMAILTESTS_TESTS_EXPORT PotentialPhishingEmailWarning : public KMessageWidget
 {
     Q_OBJECT

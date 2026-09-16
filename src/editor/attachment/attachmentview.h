@@ -16,8 +16,10 @@
 #include <QTreeView>
 
 class QContextMenuEvent;
-class QToolButton;
+class QDragEnterEvent;
+class QKeyEvent;
 class QLabel;
+class QToolButton;
 namespace MessageComposer
 {
 class AttachmentModel;
