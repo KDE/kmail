@@ -5,6 +5,8 @@
 */
 
 #include "folderarchiveaccountinfo.h"
+#include <KConfigGroup>
+
 using namespace Qt::Literals::StringLiterals;
 
 FolderArchiveAccountInfo::FolderArchiveAccountInfo() = default;

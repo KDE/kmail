@@ -15,6 +15,7 @@
 #include <Akonadi/ItemFetchScope>
 
 #include "kmail_debug.h"
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KNotification>
 #include <KSharedConfig>

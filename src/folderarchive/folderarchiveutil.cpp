@@ -5,6 +5,7 @@
 */
 #include "folderarchiveutil.h"
 
+#include <Akonadi/Collection>
 #include <KConfig>
 #include <KConfigGroup>
 

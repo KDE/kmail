@@ -6,7 +6,7 @@
 #pragma once
 
 #include <Akonadi/Collection>
-#include <QDateTime>
+#include <QDate>
 #include <QHash>
 #include <QObject>
 

@@ -7,6 +7,7 @@
 #include "folderarchiveaccountinfotest.h"
 #include "../folderarchiveaccountinfo.h"
 #include <Akonadi/Collection>
+#include <KConfigGroup>
 #include <KSharedConfig>
 #include <QStandardPaths>
 #include <QTest>

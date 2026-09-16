@@ -8,8 +8,7 @@
 
 #include "kmail_private_export.h"
 #include <Akonadi/Collection>
-#include <KConfigGroup>
-
+class KConfigGroup;
 class KMAILTESTS_TESTS_EXPORT FolderArchiveAccountInfo
 {
 public:
