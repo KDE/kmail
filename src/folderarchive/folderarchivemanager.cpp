@@ -62,14 +62,6 @@ FolderArchiveAccountInfo *FolderArchiveManager::infoFromInstanceName(const QStri
     return nullptr;
 }
 
-void FolderArchiveManager::setArchiveItem(qlonglong itemId)
-{
-    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(itemId), this);
-    job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-    job->fetchScope().setFetchRemoteIdentification(true);
-    connect(job, &Akonadi::ItemFetchJob::result, this, &FolderArchiveManager::slotFetchParentCollection);
-}
-
 void FolderArchiveManager::slotFetchParentCollection(KJob *job)
 {
     if (job->error()) {

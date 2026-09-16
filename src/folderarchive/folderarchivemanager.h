@@ -27,7 +27,6 @@ public:
 
     void load();
     void setArchiveItems(const Akonadi::Item::List &items, const QString &instanceName);
-    void setArchiveItem(qlonglong itemId);
 
     void moveFailed(const QString &msg);
     void moveDone();
