@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-14 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:45+0000\n"
 "PO-Revision-Date: 2026-09-01 10:13+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -527,124 +527,124 @@ msgstr "(%1%)"
 msgid "Retrieval Options"
 msgstr "Opcions de recuperació"
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:55
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Identitats"
 
-#: configuredialog/configureaccountpage.cpp:62
+#: configuredialog/configureaccountpage.cpp:61
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Recepció"
 
-#: configuredialog/configureaccountpage.cpp:69
+#: configuredialog/configureaccountpage.cpp:68
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Enviament"
 
-#: configuredialog/configureaccountpage.cpp:75
+#: configuredialog/configureaccountpage.cpp:74
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "Servidor LDAP"
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:88
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Comptes d'eixida (afegiu-ne un com a mínim):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:99
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Confirma l'acció"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:101
 #, kde-format
 msgid "Before sending:"
 msgstr "Abans d'enviar:"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:103
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Verifica l'ortografia"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Never Automatically"
 msgstr "Mai automàticament"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "En les comprovacions manuals de correu"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "En totes les comprovacions de correu"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Envia els &missatges que hi ha en la carpeta eixida:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send Now"
 msgstr "Envia ara"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send Later"
 msgstr "Envia més tard"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Mètode d'enviament &predeterminat:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:123
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Activa «Desfés l'enviament»"
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:194
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "Afig un compte de correu…"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:195
 #, kde-format
 msgid "Custom Account…"
 msgstr "Compte personalitzat…"
 
-#: configuredialog/configureaccountpage.cpp:260
+#: configuredialog/configureaccountpage.cpp:259
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Inclou en la comprovació manual del correu"
 
-#: configuredialog/configureaccountpage.cpp:268
+#: configuredialog/configureaccountpage.cpp:267
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Canvia a fora de línia en parar KMail"
 
-#: configuredialog/configureaccountpage.cpp:275
+#: configuredialog/configureaccountpage.cpp:274
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Comprova el correu en iniciar"
 
-#: configuredialog/configureaccountpage.cpp:345
+#: configuredialog/configureaccountpage.cpp:344
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -652,223 +652,223 @@ msgstr ""
 "Hi ha un nou agent notificador de correu sense registrar. Contacteu amb "
 "l'administrador."
 
-#: configuredialog/configureappearancepage.cpp:86
+#: configuredialog/configureappearancepage.cpp:84
 #, kde-format
 msgid "General"
 msgstr "General"
 
-#: configuredialog/configureappearancepage.cpp:93
+#: configuredialog/configureappearancepage.cpp:91
 #, kde-format
 msgid "Fonts"
 msgstr "Lletres"
 
-#: configuredialog/configureappearancepage.cpp:99
+#: configuredialog/configureappearancepage.cpp:97
 #, kde-format
 msgid "Colors"
 msgstr "Colors"
 
-#: configuredialog/configureappearancepage.cpp:105
+#: configuredialog/configureappearancepage.cpp:103
 #, kde-format
 msgid "Layout"
 msgstr "Disposició"
 
-#: configuredialog/configureappearancepage.cpp:111
-#: configuredialog/configureappearancepage.cpp:132
+#: configuredialog/configureappearancepage.cpp:109
+#: configuredialog/configureappearancepage.cpp:130
 #, kde-format
 msgid "Message List"
 msgstr "Llista de missatges"
 
-#: configuredialog/configureappearancepage.cpp:117
+#: configuredialog/configureappearancepage.cpp:115
 #, kde-format
 msgid "Message Tags"
 msgstr "Etiquetes del missatge"
 
-#: configuredialog/configureappearancepage.cpp:131
+#: configuredialog/configureappearancepage.cpp:129
 msgid "Message Body"
 msgstr "Cos del missatge"
 
-#: configuredialog/configureappearancepage.cpp:133
+#: configuredialog/configureappearancepage.cpp:131
 msgid "Message List - Unread Messages"
 msgstr "Llista de missatges – Missatges sense llegir"
 
-#: configuredialog/configureappearancepage.cpp:134
+#: configuredialog/configureappearancepage.cpp:132
 msgid "Message List - Important Messages"
 msgstr "Llista de missatges – Missatges importants"
 
-#: configuredialog/configureappearancepage.cpp:135
+#: configuredialog/configureappearancepage.cpp:133
 msgid "Message List - Action Item Messages"
 msgstr "Llista de missatges – Missatges amb un element d'acció"
 
-#: configuredialog/configureappearancepage.cpp:136
+#: configuredialog/configureappearancepage.cpp:134
 msgid "Fixed Width Font"
 msgstr "Lletra d'amplària fixa"
 
-#: configuredialog/configureappearancepage.cpp:137
+#: configuredialog/configureappearancepage.cpp:135
 msgid "Composer"
 msgstr "Editor"
 
-#: configuredialog/configureappearancepage.cpp:138
+#: configuredialog/configureappearancepage.cpp:136
 msgid "Printing Output"
 msgstr "Eixida de la impressió"
 
-#: configuredialog/configureappearancepage.cpp:144
+#: configuredialog/configureappearancepage.cpp:142
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "&Utilitza lletres personalitzades"
 
-#: configuredialog/configureappearancepage.cpp:168
+#: configuredialog/configureappearancepage.cpp:166
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "A&plica a:"
 
-#: configuredialog/configureappearancepage.cpp:301
+#: configuredialog/configureappearancepage.cpp:299
 msgid "Quoted Text - First Level"
 msgstr "Text citat – Primer nivell"
 
-#: configuredialog/configureappearancepage.cpp:302
+#: configuredialog/configureappearancepage.cpp:300
 msgid "Quoted Text - Second Level"
 msgstr "Text citat – Segon nivell"
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:301
 msgid "Quoted Text - Third Level"
 msgstr "Text citat – Tercer nivell"
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:302
 msgid "Link"
 msgstr "Enllaç"
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Unread Message"
 msgstr "Missatge sense llegir"
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Important Message"
 msgstr "Missatge important"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:305
 msgid "Action Item Message"
 msgstr "Missatge amb un element d'acció"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:306
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "Fons de la barra d'estat HTML – Missatge no HTML"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:307
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "Primer pla de la barra d'estat HTML – Missatge no HTML"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:308
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "Fons de la barra d'estat HTML – Missatge HTML"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:309
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Primer pla de la barra d'estat HTML – Missatge HTML"
 
-#: configuredialog/configureappearancepage.cpp:316
+#: configuredialog/configureappearancepage.cpp:314
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "&Utilitza colors personalitzats"
 
-#: configuredialog/configureappearancepage.cpp:318
+#: configuredialog/configureappearancepage.cpp:316
 #, kde-format
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "Recicla els colors en te&xts molt citats"
 
-#: configuredialog/configureappearancepage.cpp:320
+#: configuredialog/configureappearancepage.cpp:318
 #, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr "&No canvies el color del correu HTML original"
 
-#: configuredialog/configureappearancepage.cpp:345
+#: configuredialog/configureappearancepage.cpp:343
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr "Llindar d'apropament a la quota:"
 
-#: configuredialog/configureappearancepage.cpp:350
+#: configuredialog/configureappearancepage.cpp:348
 #, kde-format
 msgid "%"
 msgstr "%"
 
-#: configuredialog/configureappearancepage.cpp:475
+#: configuredialog/configureappearancepage.cpp:474
 #, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "Mostra el camp de busca ràpida de carpeta"
 
-#: configuredialog/configureappearancepage.cpp:483
-#: configuredialog/configureappearancepage.cpp:506
+#: configuredialog/configureappearancepage.cpp:482
+#: configuredialog/configureappearancepage.cpp:505
 #, kde-format
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Mai"
 
-#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:485
 #, kde-format
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "Mostra la vista de carpetes preferides:"
 
-#: configuredialog/configureappearancepage.cpp:488
+#: configuredialog/configureappearancepage.cpp:487
 #, kde-format
 msgctxt "@option:radio"
 msgid "As icons"
 msgstr "Com a icones"
 
-#: configuredialog/configureappearancepage.cpp:493
+#: configuredialog/configureappearancepage.cpp:492
 #, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr "Com a llista"
 
-#: configuredialog/configureappearancepage.cpp:502
+#: configuredialog/configureappearancepage.cpp:501
 #, kde-format
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Sempre"
 
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:503
 #, kde-format
 msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "Consells d'eina de les carpetes:"
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Format està&ndard (%1)"
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Format l&ocalitzat (%1)"
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "For&mat intel·ligent (%1)"
 
-#: configuredialog/configureappearancepage.cpp:585
+#: configuredialog/configureappearancepage.cpp:584
 msgid "C&ustom format:"
 msgstr "F&ormat personalitzat:"
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:607
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Agregació predeterminada:"
 
-#: configuredialog/configureappearancepage.cpp:626
+#: configuredialog/configureappearancepage.cpp:625
 #, kde-format
 msgid "Default theme:"
 msgstr "Tema predeterminat:"
 
-#: configuredialog/configureappearancepage.cpp:663
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
@@ -876,7 +876,7 @@ msgstr ""
 "<qt><a href=\"whatsthis\">Informació sobre els formats personalitzats…</a></"
 "qt>"
 
-#: configuredialog/configureappearancepage.cpp:669
+#: configuredialog/configureappearancepage.cpp:668
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -924,23 +924,23 @@ msgstr ""
 "ul><p><strong>Tots els altres caràcters introduïts s'ometran.</strong></p></"
 "qt>"
 
-#: configuredialog/configureappearancepage.cpp:706
+#: configuredialog/configureappearancepage.cpp:705
 #, kde-format
 msgid "Date Display:"
 msgstr "Mostra la data:"
 
-#: configuredialog/configureappearancepage.cpp:811
+#: configuredialog/configureappearancepage.cpp:810
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
 msgstr "Mostra la identitat pròpia"
 
-#: configuredialog/configureappearancepage.cpp:816
+#: configuredialog/configureappearancepage.cpp:815
 #, kde-format
 msgid "Message Window"
 msgstr "Finestra de missatge"
 
-#: configuredialog/configureappearancepage.cpp:823
+#: configuredialog/configureappearancepage.cpp:822
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -949,146 +949,146 @@ msgstr ""
 "Tanca la finestra individual de missatge després de contestar o reenviar el "
 "missatge"
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:834
 #, kde-format
 msgid "System Tray"
 msgstr "Safata del sistema"
 
-#: configuredialog/configureappearancepage.cpp:841
+#: configuredialog/configureappearancepage.cpp:840
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Activa la icona en la safata del sistema"
 
-#: configuredialog/configureappearancepage.cpp:845
+#: configuredialog/configureappearancepage.cpp:844
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Inicia minimitzat a la safata"
 
-#: configuredialog/configureappearancepage.cpp:863
+#: configuredialog/configureappearancepage.cpp:862
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Mostra els correus sense llegir en la barra de tasques"
 
-#: configuredialog/configureappearancepage.cpp:868
+#: configuredialog/configureappearancepage.cpp:867
 #, kde-format
 msgid "Plasma activities"
 msgstr "Activitats de Plasma"
 
-#: configuredialog/configureappearancepage.cpp:873
+#: configuredialog/configureappearancepage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Activa"
 
-#: configuredialog/configureappearancepage.cpp:945
+#: configuredialog/configureappearancepage.cpp:944
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Eti&quetes disponibles"
 
-#: configuredialog/configureappearancepage.cpp:958
+#: configuredialog/configureappearancepage.cpp:957
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Afig una etiqueta nova"
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:962
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Elimina l'etiqueta seleccionada"
 
-#: configuredialog/configureappearancepage.cpp:972
+#: configuredialog/configureappearancepage.cpp:971
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Augmenta la prioritat de l'etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:977
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Disminuïx la prioritat de l'etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:1002
+#: configuredialog/configureappearancepage.cpp:1001
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "Paràmetres de l'eti&queta"
 
-#: configuredialog/configureappearancepage.cpp:1051
+#: configuredialog/configureappearancepage.cpp:1050
 #, kde-format
 msgid "Delete"
 msgstr "Suprimix"
 
-#: configuredialog/configureappearancepage.cpp:1181
+#: configuredialog/configureappearancepage.cpp:1180
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Voleu eliminar l'etiqueta «%1»?"
 
-#: configuredialog/configureappearancepage.cpp:1182
+#: configuredialog/configureappearancepage.cpp:1181
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Elimina l'etiqueta"
 
-#: configuredialog/configureappearancepage.cpp:1226
-#: configuredialog/configureappearancepage.cpp:1261
+#: configuredialog/configureappearancepage.cpp:1225
+#: configuredialog/configureappearancepage.cpp:1260
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "No s'ha pogut crear l'etiqueta. Ja n'existix una amb el mateix nom."
 
-#: configuredialog/configurecomposerpage.cpp:62
+#: configuredialog/configurecomposerpage.cpp:59
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "General"
 
-#: configuredialog/configurecomposerpage.cpp:69
+#: configuredialog/configurecomposerpage.cpp:66
 #, kde-format
 msgid "Standard Templates"
 msgstr "Plantilles estàndard"
 
-#: configuredialog/configurecomposerpage.cpp:75
+#: configuredialog/configurecomposerpage.cpp:72
 #, kde-format
 msgid "Custom Templates"
 msgstr "Plantilles personalitzades"
 
-#: configuredialog/configurecomposerpage.cpp:81
+#: configuredialog/configurecomposerpage.cpp:78
 #, kde-format
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "Assumpte"
 
-#: configuredialog/configurecomposerpage.cpp:88
+#: configuredialog/configurecomposerpage.cpp:85
 #, kde-format
 msgid "Headers"
 msgstr "Capçaleres"
 
-#: configuredialog/configurecomposerpage.cpp:94
+#: configuredialog/configurecomposerpage.cpp:91
 #, kde-format
 msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "Adjunts"
 
-#: configuredialog/configurecomposerpage.cpp:100
+#: configuredialog/configurecomposerpage.cpp:97
 #, kde-format
 msgid "Autocorrection"
 msgstr "Correcció automàtica"
 
-#: configuredialog/configurecomposerpage.cpp:106
+#: configuredialog/configurecomposerpage.cpp:103
 #, kde-format
 msgid "Auto Resize Image"
 msgstr "Redimensiona automàticament les imatges"
 
-#: configuredialog/configurecomposerpage.cpp:128
+#: configuredialog/configurecomposerpage.cpp:125
 #, kde-format
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Signatura"
 
-#: configuredialog/configurecomposerpage.cpp:133
+#: configuredialog/configurecomposerpage.cpp:130
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
@@ -1097,12 +1097,12 @@ msgstr ""
 "Inserix automàticament la signatura configurada quan es comença a escriure "
 "un missatge"
 
-#: configuredialog/configurecomposerpage.cpp:143
+#: configuredialog/configurecomposerpage.cpp:140
 #, kde-format
 msgid "Insert the signature above any quoted text"
 msgstr "Inserix la signatura dalt de qualsevol text citat"
 
-#: configuredialog/configurecomposerpage.cpp:154
+#: configuredialog/configurecomposerpage.cpp:151
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
@@ -1111,18 +1111,18 @@ msgstr ""
 "Inserix el separador de la signatura compatible amb RFC (dos guions i un "
 "espai en una línia) abans de la signatura"
 
-#: configuredialog/configurecomposerpage.cpp:165
+#: configuredialog/configurecomposerpage.cpp:162
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr "En respondre, no citar cap signatura existent"
 
-#: configuredialog/configurecomposerpage.cpp:177
+#: configuredialog/configurecomposerpage.cpp:174
 #, kde-format
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Format"
 
-#: configuredialog/configurecomposerpage.cpp:182
+#: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
@@ -1131,7 +1131,7 @@ msgstr ""
 "En contestar, cita només el text seleccionat (en lloc del missatge sencer), "
 "si hi ha text seleccionat en la finestra de missatge."
 
-#: configuredialog/configurecomposerpage.cpp:192
+#: configuredialog/configurecomposerpage.cpp:189
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1142,17 +1142,17 @@ msgstr ""
 "text citat, encara que la línia s'haja creat afegint un salt de línia "
 "addicional quan el text s'haja ajustat per paraules."
 
-#: configuredialog/configurecomposerpage.cpp:203
+#: configuredialog/configurecomposerpage.cpp:200
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr "Activa l'ajust de línia automàtic a l'amplària especificada"
 
-#: configuredialog/configurecomposerpage.cpp:214
+#: configuredialog/configurecomposerpage.cpp:211
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr "Establix l'amplària del text per a l'ajust de línia automàtic"
 
-#: configuredialog/configurecomposerpage.cpp:234
+#: configuredialog/configurecomposerpage.cpp:231
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
@@ -1162,7 +1162,7 @@ msgstr ""
 "qual es va rebre. Si no està marcada, de manera predeterminada es respondrà "
 "com a text net."
 
-#: configuredialog/configurecomposerpage.cpp:246
+#: configuredialog/configurecomposerpage.cpp:243
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
@@ -1172,13 +1172,13 @@ msgstr ""
 "HTML. Està admés per al text en negreta, cursiva i subratllat, així com les "
 "llistes i les referències externes."
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:255
 #, kde-format
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Destinataris"
 
-#: configuredialog/configurecomposerpage.cpp:295
+#: configuredialog/configurecomposerpage.cpp:292
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1194,7 +1194,7 @@ msgstr ""
 "però, que açò no es té en compte per a les llistes de distribució o llistes "
 "de correu."
 
-#: configuredialog/configurecomposerpage.cpp:318
+#: configuredialog/configurecomposerpage.cpp:315
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
@@ -1202,19 +1202,19 @@ msgstr ""
 "Recorda les últimes adreces introduïdes, i les oferix per a la compleció del "
 "destinatari"
 
-#: configuredialog/configurecomposerpage.cpp:330
+#: configuredialog/configurecomposerpage.cpp:327
 #, kde-format
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "No guardes"
 
-#: configuredialog/configurecomposerpage.cpp:333
+#: configuredialog/configurecomposerpage.cpp:330
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Nombre màxim d'adreces recents retingudes:"
 
-#: configuredialog/configurecomposerpage.cpp:337
+#: configuredialog/configurecomposerpage.cpp:334
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
@@ -1223,24 +1223,24 @@ msgstr ""
 "El nombre màxim d'adreces introduïdes recentment que serà recordat per a la "
 "compleció"
 
-#: configuredialog/configurecomposerpage.cpp:350
+#: configuredialog/configurecomposerpage.cpp:347
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Configura la compleció…"
 
-#: configuredialog/configurecomposerpage.cpp:358
+#: configuredialog/configurecomposerpage.cpp:355
 #, kde-format
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Guardada automàtica"
 
-#: configuredialog/configurecomposerpage.cpp:368
+#: configuredialog/configurecomposerpage.cpp:365
 #, kde-format
 msgid "No autosave"
 msgstr "No guardes automàticament"
 
-#: configuredialog/configurecomposerpage.cpp:369
+#: configuredialog/configurecomposerpage.cpp:366
 #, kde-format
 msgctxt "Interval suffix"
 msgid "%v minute"
@@ -1248,29 +1248,29 @@ msgid_plural "%v minutes"
 msgstr[0] "%v minut"
 msgstr[1] "%v minuts"
 
-#: configuredialog/configurecomposerpage.cpp:371
+#: configuredialog/configurecomposerpage.cpp:368
 #, kde-format
 msgid "Automatically save the message at this specified interval"
 msgstr "Guarda automàticament el missatge en este interval especificat"
 
-#: configuredialog/configurecomposerpage.cpp:385
+#: configuredialog/configurecomposerpage.cpp:382
 #, kde-format
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Editor"
 
-#: configuredialog/configurecomposerpage.cpp:389
+#: configuredialog/configurecomposerpage.cpp:386
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr "Activa la barra d'eines de format de text ràpid"
 
-#: configuredialog/configurecomposerpage.cpp:581
+#: configuredialog/configurecomposerpage.cpp:578
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "P&refixos de l'assumpte de la resposta"
 
-#: configuredialog/configurecomposerpage.cpp:586
-#: configuredialog/configurecomposerpage.cpp:612
+#: configuredialog/configurecomposerpage.cpp:583
+#: configuredialog/configurecomposerpage.cpp:609
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1280,137 +1280,137 @@ msgstr ""
 "Reconeix qualsevol seqüència dels següents prefixos (les entrades són "
 "expressions regulars sense distingir majúscules/minúscules):"
 
-#: configuredialog/configurecomposerpage.cpp:594
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "A&dd…"
 msgstr "Afi&g…"
 
-#: configuredialog/configurecomposerpage.cpp:594
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "Re&move"
 msgstr "&Elimina"
 
-#: configuredialog/configurecomposerpage.cpp:594
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Mod&ifica…"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:591
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Introduïu un nou prefix de resposta:"
 
-#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:592
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Voleu eliminar el prefix de resposta?"
 
-#: configuredialog/configurecomposerpage.cpp:597
+#: configuredialog/configurecomposerpage.cpp:594
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Prefix en respondre:"
 
-#: configuredialog/configurecomposerpage.cpp:608
+#: configuredialog/configurecomposerpage.cpp:605
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "&Prefixos per a l'assumpte en reenviar"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:618 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Elimina"
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Add…"
 msgstr "Afig…"
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Modify…"
 msgstr "Modifica…"
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Introduïu un prefix nou per a reenviar:"
 
-#: configuredialog/configurecomposerpage.cpp:619
+#: configuredialog/configurecomposerpage.cpp:616
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Voleu eliminar el prefix per a reenviar?"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Prefix en reenviar:"
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:664
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definix els camps personalitzats per a la capçalera MIME:"
 
-#: configuredialog/configurecomposerpage.cpp:676
+#: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nom"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:672
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Valor"
 
-#: configuredialog/configurecomposerpage.cpp:685
+#: configuredialog/configurecomposerpage.cpp:680
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "No&u"
 
-#: configuredialog/configurecomposerpage.cpp:689
+#: configuredialog/configurecomposerpage.cpp:684
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Eli&mina"
 
-#: configuredialog/configurecomposerpage.cpp:698
+#: configuredialog/configurecomposerpage.cpp:693
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Nom:"
 
-#: configuredialog/configurecomposerpage.cpp:708
+#: configuredialog/configurecomposerpage.cpp:703
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Valor:"
 
-#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:828
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "«Content-Type» no és cap cadena autoritzada. Esta capçalera no es guardarà."
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:829
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Capçalera no vàlida"
 
-#: configuredialog/configurecomposerpage.cpp:869
+#: configuredialog/configurecomposerpage.cpp:864
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Ha&bilita la detecció de la falta d'adjunts"
 
-#: configuredialog/configurecomposerpage.cpp:875
+#: configuredialog/configurecomposerpage.cpp:870
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1418,34 +1418,34 @@ msgstr ""
 "Reconeix qualsevol de les paraules clau següents com a intenció d'afegir un "
 "adjunt:"
 
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Introduïu una paraula clau nova:"
 
-#: configuredialog/configurecomposerpage.cpp:888
+#: configuredialog/configurecomposerpage.cpp:883
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Voleu eliminar esta paraula d'adjunció?"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:884
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Paraula d'adjunció:"
 
-#: configuredialog/configurecomposerpage.cpp:896
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Mida màxima de l'adjunt:"
 
-#: configuredialog/configurecomposerpage.cpp:903
+#: configuredialog/configurecomposerpage.cpp:898
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:905
+#: configuredialog/configurecomposerpage.cpp:900
 #, kde-format
 msgid "No limit"
 msgstr "Sense límit"
@@ -1483,62 +1483,62 @@ msgstr "Imprimix"
 msgid "User Feedback"
 msgstr "Comentaris de l'usuari"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:200
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:201
 #, kde-format
 msgid "Check Before Send Plugins"
 msgstr "Connectors de comprovacions abans d'enviar"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:209
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:210
 #, kde-format
 msgid "Composer Plugins"
 msgstr "Connectors de l'editor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:217
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:218
 #, kde-format
 msgid "Grammar Checker Plugins"
 msgstr "Connectors de comprovació de la gramàtica"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:229
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:230
 #, kde-format
 msgid "Tools Plugins"
 msgstr "Connectors d'eines"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:238
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:239
 #, kde-format
 msgid "Editor Plugins"
 msgstr "Connectors de l'editor"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:248
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:249
 #, kde-format
 msgid "Message Viewer"
 msgstr "Visor de missatges"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:258
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:259
 #, kde-format
 msgid "Webengine Plugins"
 msgstr "Connectors del motor web"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:268
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:269
 #, kde-format
 msgid "Header Style Plugins"
 msgstr "Connector d'estil de la capçalera"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:277
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:278
 #, kde-format
 msgid "Text Conversion Plugins"
 msgstr "Connectors de conversió de text"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:286
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
 #, kde-format
 msgid "Misc"
 msgstr "Miscel·lània"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:295
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:296
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Connectors «Confirma la supressió dels correus electrònics»"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:319
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:321
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Agents d'Akonadi"
@@ -1581,23 +1581,23 @@ msgstr ""
 "Canviar la configuració global de l'HTML sobreescriurà els valors específics "
 "de les carpetes."
 
+#: configuredialog/configuresecuritypage.cpp:284
+#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#: configuredialog/configuresecuritypage.cpp:288
-#: configuredialog/configuresecuritypage.cpp:289
-#: configuredialog/configuresecuritypage.cpp:290
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] "%v dia"
 msgstr[1] "%v dies"
 
-#: configuredialog/configuresecuritypage.cpp:321
+#: configuredialog/configuresecuritypage.cpp:318
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "Configureu GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:325
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1607,142 +1607,142 @@ msgstr ""
 "Falta el mòdul. Verifiqueu esta instal·lació. Este mòdul és proporcionat pel "
 "«kdepim-addons»."
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:330
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "S'ha produït un error del mòdul de configuració de GnuPG"
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:394
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Esta opció necessita dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:512 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:506 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "sense intermediari"
 
-#: configuredialog/configuresecuritypage.cpp:514
+#: configuredialog/configuresecuritypage.cpp:508
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Opció actual del sistema: %1)"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:39
+#: dialog/addemailtoexistingcontactdialog.cpp:38
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Trieu el contacte"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:75
+#: dialog/addemailtoexistingcontactdialog.cpp:74
 #, kde-format
 msgid "Select"
 msgstr "Tria"
 
-#: dialog/archivefolderdialog.cpp:42
+#: dialog/archivefolderdialog.cpp:46
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Arxiu"
 
-#: dialog/archivefolderdialog.cpp:51
+#: dialog/archivefolderdialog.cpp:55
 #, kde-format
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Arxiva la carpeta"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3691
+#: dialog/archivefolderdialog.cpp:63 kmmainwidget.cpp:3691
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
 msgstr "Arxiva"
 
-#: dialog/archivefolderdialog.cpp:71
+#: dialog/archivefolderdialog.cpp:75
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "&Carpeta:"
 
-#: dialog/archivefolderdialog.cpp:81
+#: dialog/archivefolderdialog.cpp:85
 #, kde-format
 msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "F&ormat:"
 
-#: dialog/archivefolderdialog.cpp:87
+#: dialog/archivefolderdialog.cpp:91
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
 msgstr "Arxiu comprimit amb ZIP (.zip)"
 
-#: dialog/archivefolderdialog.cpp:88
+#: dialog/archivefolderdialog.cpp:92
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
 msgstr "Arxiu sense comprimir (.tar)"
 
-#: dialog/archivefolderdialog.cpp:89
+#: dialog/archivefolderdialog.cpp:93
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
 msgstr "Arxiu TAR comprimit amb BZ2 (.tar.bz2)"
 
-#: dialog/archivefolderdialog.cpp:90
+#: dialog/archivefolderdialog.cpp:94
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr "Arxiu TAR comprimit amb GZ (.tar.gz)"
 
-#: dialog/archivefolderdialog.cpp:96
+#: dialog/archivefolderdialog.cpp:100
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "Fitxer d'&arxiu:"
 
-#: dialog/archivefolderdialog.cpp:100
+#: dialog/archivefolderdialog.cpp:104
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr "Fitxer d'arxiu (*.tar *.zip *.tar.gz *.tar.bz2)"
 
-#: dialog/archivefolderdialog.cpp:108
+#: dialog/archivefolderdialog.cpp:112
 #, kde-format
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "Sup&rimix les carpetes i subcarpetes després de finalitzar"
 
-#: dialog/archivefolderdialog.cpp:112
+#: dialog/archivefolderdialog.cpp:116
 #, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arxiva totes les subcarpetes"
 
-#: dialog/archivefolderdialog.cpp:177
+#: dialog/archivefolderdialog.cpp:181
 #, kde-format
 msgid "Please select the folder that should be archived."
 msgstr "Trieu la carpeta que s'ha d'arxivar."
 
-#: dialog/archivefolderdialog.cpp:177
+#: dialog/archivefolderdialog.cpp:181
 #, kde-format
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Cap carpeta seleccionada"
 
-#: dialog/kmknotify.cpp:33
+#: dialog/kmknotify.cpp:34
 #, kde-format
 msgctxt "@title:window"
 msgid "Notification"
 msgstr "Notificació"
 
-#: editor/attachment/attachmentview.cpp:168
+#: editor/attachment/attachmentview.cpp:170
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
 msgstr[0] "1 adjunt (%2)"
 msgstr[1] "%1 adjunts (%2)"
 
-#: editor/attachment/attachmentview.cpp:197
+#: editor/attachment/attachmentview.cpp:202
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Oculta la llista d'adjunts"
 
-#: editor/attachment/attachmentview.cpp:199
+#: editor/attachment/attachmentview.cpp:204
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
@@ -2692,7 +2692,7 @@ msgctxt "@title:window"
 msgid "Details"
 msgstr "Detalls"
 
-#: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
+#: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:24
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
@@ -2750,7 +2750,7 @@ msgstr "Demana abans d'enviar"
 msgid "Sending Without Confirmation"
 msgstr "Envia sense confirmació"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
@@ -2759,7 +2759,7 @@ msgstr ""
 "Este adjunt: <ul><li>%1</li></ul> s'ha afegit externament. Elimineu-lo si és "
 "un error."
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:41
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -2876,44 +2876,44 @@ msgstr ""
 msgid "No messages selected."
 msgstr "Cap missatge seleccionat."
 
-#: folderarchive/folderarchiveagentjob.cpp:70
+#: folderarchive/folderarchiveagentjob.cpp:73
 #, kde-format
 msgid "List of collections is empty. %1"
 msgstr "La llista de col·leccions està buida. %1"
 
-#: folderarchive/folderarchiveagentjob.cpp:89
+#: folderarchive/folderarchiveagentjob.cpp:92
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr ""
 "Esta carpeta %1 només és de lectura. Verifiqueu la configuració del compte %2"
 
-#: folderarchive/folderarchiveagentjob.cpp:101
+#: folderarchive/folderarchiveagentjob.cpp:104
 #, kde-format
 msgid "Cannot move messages."
 msgstr "No s'han pogut moure els missatges."
 
-#: folderarchive/folderarchivemanager.cpp:75
+#: folderarchive/folderarchivemanager.cpp:69
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
 msgstr "No s'ha pogut recuperar la carpeta. Error notificat: %1"
 
-#: folderarchive/folderarchivemanager.cpp:81
+#: folderarchive/folderarchivemanager.cpp:75
 #, kde-format
 msgid "No folder returned."
 msgstr "No s'ha retornat la carpeta."
 
-#: folderarchive/folderarchivemanager.cpp:93
+#: folderarchive/folderarchivemanager.cpp:87
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr "No s'ha pogut recuperar la carpeta pare. Error notificat: %1"
 
-#: folderarchive/folderarchivemanager.cpp:99
+#: folderarchive/folderarchivemanager.cpp:93
 #, kde-format
 msgid "Unable to return list of folders."
 msgstr "No s'ha pogut retornar la llista de carpetes."
 
-#: folderarchive/folderarchivemanager.cpp:162
+#: folderarchive/folderarchivemanager.cpp:156
 #, kde-format
 msgid "Messages archived"
 msgstr "Missatges arxivats"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-14 00:44+0000\n"
+"POT-Creation-Date: 2026-09-17 00:45+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -597,14 +597,14 @@ msgstr ""
 msgid "Retrieval Options"
 msgstr "Општи опции"
 
-#: configuredialog/configureaccountpage.cpp:56
+#: configuredialog/configureaccountpage.cpp:55
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "&Идентитет"
 
-#: configuredialog/configureaccountpage.cpp:62
+#: configuredialog/configureaccountpage.cpp:61
 #, fuzzy, kde-format
 #| msgid "&Receiving"
 msgctxt ""
@@ -612,305 +612,305 @@ msgctxt ""
 msgid "Receiving"
 msgstr "&Примање"
 
-#: configuredialog/configureaccountpage.cpp:69
+#: configuredialog/configureaccountpage.cpp:68
 #, fuzzy, kde-format
 #| msgid "&Sending"
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "&Испраќање"
 
-#: configuredialog/configureaccountpage.cpp:75
+#: configuredialog/configureaccountpage.cpp:74
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:89
+#: configuredialog/configureaccountpage.cpp:88
 #, fuzzy, kde-format
 #| msgid "Outgoing accounts (add at least one):"
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Излезни сметки (додајте барем една):"
 
-#: configuredialog/configureaccountpage.cpp:100
+#: configuredialog/configureaccountpage.cpp:99
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "Потврда за испраќање"
 
-#: configuredialog/configureaccountpage.cpp:102
+#: configuredialog/configureaccountpage.cpp:101
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Before sending:"
 msgstr "Прекини со испр&аќање"
 
-#: configuredialog/configureaccountpage.cpp:104
+#: configuredialog/configureaccountpage.cpp:103
 #, fuzzy, kde-format
 #| msgid "Confirm &before send"
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Потврди пред &испраќање"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "Never Automatically"
 msgstr "Никогаш автоматски"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "При рачни проверки на пошта"
 
-#: configuredialog/configureaccountpage.cpp:111
+#: configuredialog/configureaccountpage.cpp:110
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "При сите проверки на пошта"
 
-#: configuredialog/configureaccountpage.cpp:113
+#: configuredialog/configureaccountpage.cpp:112
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "Испрати ги пораките во и&злезното сандаче:"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send Now"
 msgstr "Испрати сега"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:118
 #, kde-format
 msgid "Send Later"
 msgstr "Испрати подоцна"
 
-#: configuredialog/configureaccountpage.cpp:120
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Стандарден &метод на испраќање:"
 
-#: configuredialog/configureaccountpage.cpp:124
+#: configuredialog/configureaccountpage.cpp:123
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:194
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Add Mail Account…"
 msgstr "Додајте сметка"
 
-#: configuredialog/configureaccountpage.cpp:196
+#: configuredialog/configureaccountpage.cpp:195
 #, fuzzy, kde-format
 #| msgid "Add Account"
 msgid "Custom Account…"
 msgstr "Додајте сметка"
 
-#: configuredialog/configureaccountpage.cpp:260
+#: configuredialog/configureaccountpage.cpp:259
 #, fuzzy, kde-format
 #| msgid "Include in manual mail chec&k"
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Вклучи при р&ачни проверки на пошта"
 
-#: configuredialog/configureaccountpage.cpp:268
+#: configuredialog/configureaccountpage.cpp:267
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:275
+#: configuredialog/configureaccountpage.cpp:274
 #, fuzzy, kde-format
 #| msgid "Chec&k mail on startup"
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Про&вери пошта на старт"
 
-#: configuredialog/configureaccountpage.cpp:345
+#: configuredialog/configureaccountpage.cpp:344
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:86
+#: configuredialog/configureappearancepage.cpp:84
 #, fuzzy, kde-format
 #| msgid "General"
 msgid "General"
 msgstr "Општо"
 
-#: configuredialog/configureappearancepage.cpp:93
+#: configuredialog/configureappearancepage.cpp:91
 #, fuzzy, kde-format
 #| msgid "Contacts"
 msgid "Fonts"
 msgstr "Контакти"
 
-#: configuredialog/configureappearancepage.cpp:99
+#: configuredialog/configureappearancepage.cpp:97
 #, fuzzy, kde-format
 #| msgid "Color&s"
 msgid "Colors"
 msgstr "&Бои"
 
-#: configuredialog/configureappearancepage.cpp:105
+#: configuredialog/configureappearancepage.cpp:103
 #, fuzzy, kde-format
 #| msgid "La&yout"
 msgid "Layout"
 msgstr "&Распоред"
 
-#: configuredialog/configureappearancepage.cpp:111
-#: configuredialog/configureappearancepage.cpp:132
+#: configuredialog/configureappearancepage.cpp:109
+#: configuredialog/configureappearancepage.cpp:130
 #, kde-format
 msgid "Message List"
 msgstr "Листа со пораки"
 
-#: configuredialog/configureappearancepage.cpp:117
+#: configuredialog/configureappearancepage.cpp:115
 #, fuzzy, kde-format
 #| msgid "&Message"
 msgid "Message Tags"
 msgstr "&Порака"
 
-#: configuredialog/configureappearancepage.cpp:131
+#: configuredialog/configureappearancepage.cpp:129
 msgid "Message Body"
 msgstr "Тело на пораката"
 
-#: configuredialog/configureappearancepage.cpp:133
+#: configuredialog/configureappearancepage.cpp:131
 msgid "Message List - Unread Messages"
 msgstr "Листа со пораки - непрочитани пораки"
 
-#: configuredialog/configureappearancepage.cpp:134
+#: configuredialog/configureappearancepage.cpp:132
 msgid "Message List - Important Messages"
 msgstr "Листа со пораки - важни пораки"
 
-#: configuredialog/configureappearancepage.cpp:135
+#: configuredialog/configureappearancepage.cpp:133
 #, fuzzy
 #| msgid "Message List - New Messages"
 msgid "Message List - Action Item Messages"
 msgstr "Листа со пораки - нови пораки"
 
-#: configuredialog/configureappearancepage.cpp:136
+#: configuredialog/configureappearancepage.cpp:134
 msgid "Fixed Width Font"
 msgstr "Фонт со фиксна ширина"
 
-#: configuredialog/configureappearancepage.cpp:137
+#: configuredialog/configureappearancepage.cpp:135
 msgid "Composer"
 msgstr "Составувач"
 
-#: configuredialog/configureappearancepage.cpp:138
+#: configuredialog/configureappearancepage.cpp:136
 msgid "Printing Output"
 msgstr "Излез за печатење"
 
-#: configuredialog/configureappearancepage.cpp:144
+#: configuredialog/configureappearancepage.cpp:142
 #, fuzzy, kde-format
 #| msgid "&Use custom fonts"
 msgctxt "@option:check"
 msgid "&Use custom fonts"
 msgstr "Користи &сопствени фонтови"
 
-#: configuredialog/configureappearancepage.cpp:168
+#: configuredialog/configureappearancepage.cpp:166
 #, fuzzy, kde-format
 #| msgid "Apply &to:"
 msgctxt "@label:textbox"
 msgid "Apply &to:"
 msgstr "Примени &на:"
 
-#: configuredialog/configureappearancepage.cpp:301
+#: configuredialog/configureappearancepage.cpp:299
 msgid "Quoted Text - First Level"
 msgstr "Цитиран текст - прво ниво"
 
-#: configuredialog/configureappearancepage.cpp:302
+#: configuredialog/configureappearancepage.cpp:300
 msgid "Quoted Text - Second Level"
 msgstr "Цитиран текст - второ ниво"
 
-#: configuredialog/configureappearancepage.cpp:303
+#: configuredialog/configureappearancepage.cpp:301
 msgid "Quoted Text - Third Level"
 msgstr "Цитиран текст - трето ниво"
 
-#: configuredialog/configureappearancepage.cpp:304
+#: configuredialog/configureappearancepage.cpp:302
 msgid "Link"
 msgstr "Врска"
 
-#: configuredialog/configureappearancepage.cpp:305
+#: configuredialog/configureappearancepage.cpp:303
 msgid "Unread Message"
 msgstr "Непрочитана порака"
 
-#: configuredialog/configureappearancepage.cpp:306
+#: configuredialog/configureappearancepage.cpp:304
 msgid "Important Message"
 msgstr "Важна порака"
 
-#: configuredialog/configureappearancepage.cpp:307
+#: configuredialog/configureappearancepage.cpp:305
 #, fuzzy
 #| msgid "Remove &Important Message Mark"
 msgid "Action Item Message"
 msgstr "Отстрани ја ознаката за &важна порака"
 
-#: configuredialog/configureappearancepage.cpp:308
+#: configuredialog/configureappearancepage.cpp:306
 msgid "HTML Status Bar Background - No HTML Message"
 msgstr "Подлога на статусната линија за HTML - порака без HTML"
 
-#: configuredialog/configureappearancepage.cpp:309
+#: configuredialog/configureappearancepage.cpp:307
 msgid "HTML Status Bar Foreground - No HTML Message"
 msgstr "Текст на статусната линија за HTML - порака без HTML"
 
-#: configuredialog/configureappearancepage.cpp:310
+#: configuredialog/configureappearancepage.cpp:308
 msgid "HTML Status Bar Background - HTML Message"
 msgstr "Подлога на статусната линија за HTML - HTML-порака"
 
-#: configuredialog/configureappearancepage.cpp:311
+#: configuredialog/configureappearancepage.cpp:309
 msgid "HTML Status Bar Foreground - HTML Message"
 msgstr "Текст на статусната линија за HTML - HTML-порака"
 
-#: configuredialog/configureappearancepage.cpp:316
+#: configuredialog/configureappearancepage.cpp:314
 #, fuzzy, kde-format
 #| msgid "&Use custom colors"
 msgctxt "@option:check"
 msgid "&Use custom colors"
 msgstr "Користи &сопствени бои"
 
-#: configuredialog/configureappearancepage.cpp:318
+#: configuredialog/configureappearancepage.cpp:316
 #, fuzzy, kde-format
 #| msgid "Recycle colors on deep &quoting"
 msgctxt "@option:check"
 msgid "Recycle colors on deep &quoting"
 msgstr "Рециклирај ги боите при повеќекратно &цитирање"
 
-#: configuredialog/configureappearancepage.cpp:320
+#: configuredialog/configureappearancepage.cpp:318
 #, kde-format
 msgctxt "@option:check"
 msgid "&Do not change color from original HTML mail"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:345
+#: configuredialog/configureappearancepage.cpp:343
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Close to quota threshold:"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:350
+#: configuredialog/configureappearancepage.cpp:348
 #, kde-format
 msgid "%"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:475
+#: configuredialog/configureappearancepage.cpp:474
 #, fuzzy, kde-format
 #| msgid "Show Quick Search"
 msgctxt "@option:check"
 msgid "Show folder quick search field"
 msgstr "Покажи го брзото пребарување"
 
-#: configuredialog/configureappearancepage.cpp:483
-#: configuredialog/configureappearancepage.cpp:506
+#: configuredialog/configureappearancepage.cpp:482
+#: configuredialog/configureappearancepage.cpp:505
 #, fuzzy, kde-format
 #| msgid "Receiver"
 msgctxt "@option:radio"
 msgid "Never"
 msgstr "Примач"
 
-#: configuredialog/configureappearancepage.cpp:486
+#: configuredialog/configureappearancepage.cpp:485
 #, fuzzy, kde-format
 #| msgid "Shor&t folder list"
 msgctxt "@label"
 msgid "Show favorite folders view:"
 msgstr "Кратка лис&та со папки"
 
-#: configuredialog/configureappearancepage.cpp:488
+#: configuredialog/configureappearancepage.cpp:487
 #, fuzzy, kde-format
 #| msgctxt "View->attachments->"
 #| msgid "&As Icons"
@@ -918,67 +918,67 @@ msgctxt "@option:radio"
 msgid "As icons"
 msgstr "К&ако икони"
 
-#: configuredialog/configureappearancepage.cpp:493
+#: configuredialog/configureappearancepage.cpp:492
 #, kde-format
 msgctxt "@option:radio"
 msgid "As list"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:502
+#: configuredialog/configureappearancepage.cpp:501
 #, fuzzy, kde-format
 #| msgid "Al&ways send"
 msgctxt "@option:radio"
 msgid "Always"
 msgstr "Испрати &секогаш"
 
-#: configuredialog/configureappearancepage.cpp:504
+#: configuredialog/configureappearancepage.cpp:503
 #, fuzzy, kde-format
 #| msgid "Folder List"
 msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "Листа со папки"
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:581
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Ста&ндарден формат (%1)"
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Локали&зиран формат (%1)"
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:583
 #, fuzzy, kde-format
 #| msgid "Fancy for&mat (%1)"
 msgid "Smart for&mat (%1)"
 msgstr "Стилизиран фор&мат (%1)"
 
-#: configuredialog/configureappearancepage.cpp:585
+#: configuredialog/configureappearancepage.cpp:584
 #, fuzzy
 #| msgid "&Storage format:"
 msgid "C&ustom format:"
 msgstr "Формат на &чување:"
 
-#: configuredialog/configureappearancepage.cpp:608
+#: configuredialog/configureappearancepage.cpp:607
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Default aggregation:"
 msgstr "Избриши ја &нишката"
 
-#: configuredialog/configureappearancepage.cpp:626
+#: configuredialog/configureappearancepage.cpp:625
 #, fuzzy, kde-format
 #| msgid "Delete T&hread"
 msgid "Default theme:"
 msgstr "Избриши ја &нишката"
 
-#: configuredialog/configureappearancepage.cpp:663
+#: configuredialog/configureappearancepage.cpp:662
 #, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:669
+#: configuredialog/configureappearancepage.cpp:668
 #, fuzzy, kde-format
 #| msgid ""
 #| "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -1047,160 +1047,160 @@ msgstr ""
 "фомат (-0500)</li></ul><p><strong>Сите други влезни знаци ќе бидат "
 "игнорирани.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:706
+#: configuredialog/configureappearancepage.cpp:705
 #, fuzzy, kde-format
 #| msgid "Date Display"
 msgid "Date Display:"
 msgstr "Приказ на датум"
 
-#: configuredialog/configureappearancepage.cpp:811
+#: configuredialog/configureappearancepage.cpp:810
 #, fuzzy, kde-format
 #| msgid "New Identity"
 msgctxt "@option:check"
 msgid "Display Own Identity"
 msgstr "Нов идентитет"
 
-#: configuredialog/configureappearancepage.cpp:816
+#: configuredialog/configureappearancepage.cpp:815
 #, fuzzy, kde-format
 #| msgid "Message W&indow"
 msgid "Message Window"
 msgstr "&Прозорец со пораки"
 
-#: configuredialog/configureappearancepage.cpp:823
+#: configuredialog/configureappearancepage.cpp:822
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:835
+#: configuredialog/configureappearancepage.cpp:834
 #, fuzzy, kde-format
 #| msgid "System &Tray"
 msgid "System Tray"
 msgstr "Сис. лен&та"
 
-#: configuredialog/configureappearancepage.cpp:841
+#: configuredialog/configureappearancepage.cpp:840
 #, fuzzy, kde-format
 #| msgid "Enable system tray icon"
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Овозможи икона во сис. лента"
 
-#: configuredialog/configureappearancepage.cpp:845
+#: configuredialog/configureappearancepage.cpp:844
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:863
+#: configuredialog/configureappearancepage.cpp:862
 #, fuzzy, kde-format
 #| msgid "Always show KMail in system tray"
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Секогаш покажи го КПошта во сис. лента"
 
-#: configuredialog/configureappearancepage.cpp:868
+#: configuredialog/configureappearancepage.cpp:867
 #, kde-format
 msgid "Plasma activities"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:873
+#: configuredialog/configureappearancepage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:945
+#: configuredialog/configureappearancepage.cpp:944
 #, fuzzy, kde-format
 #| msgid "Available Filters"
 msgid "A&vailable Tags"
 msgstr "Достапни филтри"
 
-#: configuredialog/configureappearancepage.cpp:958
+#: configuredialog/configureappearancepage.cpp:957
 #, fuzzy, kde-format
 #| msgid "Add Entry..."
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Додај елемент..."
 
-#: configuredialog/configureappearancepage.cpp:963
+#: configuredialog/configureappearancepage.cpp:962
 #, fuzzy, kde-format
 #| msgid "Remove Duplicate Messages"
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Отстрани ги дупликатите на пораки"
 
-#: configuredialog/configureappearancepage.cpp:972
+#: configuredialog/configureappearancepage.cpp:971
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:978
+#: configuredialog/configureappearancepage.cpp:977
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr ""
 
-#: configuredialog/configureappearancepage.cpp:1002
+#: configuredialog/configureappearancepage.cpp:1001
 #, fuzzy, kde-format
 msgid "Ta&g Settings"
 msgstr "&Испраќање"
 
-#: configuredialog/configureappearancepage.cpp:1051
+#: configuredialog/configureappearancepage.cpp:1050
 #, fuzzy, kde-format
 msgid "Delete"
 msgstr "Избришана"
 
-#: configuredialog/configureappearancepage.cpp:1181
+#: configuredialog/configureappearancepage.cpp:1180
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove tag '%1'?"
 msgstr "<qt>Дали навистина сакате да го отстраните идентитетот <b>%1</b>?</qt>"
 
-#: configuredialog/configureappearancepage.cpp:1182
+#: configuredialog/configureappearancepage.cpp:1181
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "&Отстрани"
 
-#: configuredialog/configureappearancepage.cpp:1226
-#: configuredialog/configureappearancepage.cpp:1261
+#: configuredialog/configureappearancepage.cpp:1225
+#: configuredialog/configureappearancepage.cpp:1260
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:62
+#: configuredialog/configurecomposerpage.cpp:59
 #, fuzzy, kde-format
 #| msgid "General"
 msgctxt "General settings for the composer."
 msgid "General"
 msgstr "Општо"
 
-#: configuredialog/configurecomposerpage.cpp:69
+#: configuredialog/configurecomposerpage.cpp:66
 #, fuzzy, kde-format
 msgid "Standard Templates"
 msgstr "За&мени"
 
-#: configuredialog/configurecomposerpage.cpp:75
+#: configuredialog/configurecomposerpage.cpp:72
 #, fuzzy, kde-format
 msgid "Custom Templates"
 msgstr "За&мени"
 
-#: configuredialog/configurecomposerpage.cpp:81
+#: configuredialog/configurecomposerpage.cpp:78
 #, fuzzy, kde-format
 #| msgid "Subject"
 msgctxt "Settings regarding the subject when composing a message."
 msgid "Subject"
 msgstr "Тема"
 
-#: configuredialog/configurecomposerpage.cpp:88
+#: configuredialog/configurecomposerpage.cpp:85
 #, fuzzy, kde-format
 #| msgid "H&eaders"
 msgid "Headers"
 msgstr "Заглав&ија"
 
-#: configuredialog/configurecomposerpage.cpp:94
+#: configuredialog/configurecomposerpage.cpp:91
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
@@ -1208,63 +1208,63 @@ msgctxt "Config->Composer->Attachments"
 msgid "Attachments"
 msgstr "П&рилози"
 
-#: configuredialog/configurecomposerpage.cpp:100
+#: configuredialog/configurecomposerpage.cpp:97
 #, kde-format
 msgid "Autocorrection"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:106
+#: configuredialog/configurecomposerpage.cpp:103
 #, kde-format
 msgid "Auto Resize Image"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:128
+#: configuredialog/configurecomposerpage.cpp:125
 #, fuzzy, kde-format
 #| msgid "Signature"
 msgctxt "@title:group"
 msgid "Signature"
 msgstr "Потпис"
 
-#: configuredialog/configurecomposerpage.cpp:133
+#: configuredialog/configurecomposerpage.cpp:130
 #, kde-format
 msgid ""
 "Automatically insert the configured signature when starting to compose a "
 "message"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:143
+#: configuredialog/configurecomposerpage.cpp:140
 #, fuzzy, kde-format
 #| msgid "Use smaller font for quoted text"
 msgid "Insert the signature above any quoted text"
 msgstr "Користи помал фонт за цитираниот текст"
 
-#: configuredialog/configurecomposerpage.cpp:154
+#: configuredialog/configurecomposerpage.cpp:151
 #, kde-format
 msgid ""
 "Insert the RFC-compliant signature separator (two dashes and a space on a "
 "line) before the signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:165
+#: configuredialog/configurecomposerpage.cpp:162
 #, kde-format
 msgid "When replying, do not quote any existing signature"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:177
+#: configuredialog/configurecomposerpage.cpp:174
 #, fuzzy, kde-format
 #| msgid "N&ormal:"
 msgctxt "@title:group"
 msgid "Format"
 msgstr "Н&ормално:"
 
-#: configuredialog/configurecomposerpage.cpp:182
+#: configuredialog/configurecomposerpage.cpp:179
 #, kde-format
 msgid ""
 "When replying, only quote the selected text (instead of the complete "
 "message), if there is text selected in the message window."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:192
+#: configuredialog/configurecomposerpage.cpp:189
 #, kde-format
 msgid ""
 "When replying, add quote signs in front of all lines of the quoted text, "
@@ -1272,38 +1272,38 @@ msgid ""
 "wrapping the text."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:203
+#: configuredialog/configurecomposerpage.cpp:200
 #, kde-format
 msgid "Enable automatic word wrapping at the specified width"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:214
+#: configuredialog/configurecomposerpage.cpp:211
 #, kde-format
 msgid "Set the text width for automatic word wrapping"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:234
+#: configuredialog/configurecomposerpage.cpp:231
 #, kde-format
 msgid ""
 "When replying or forwarding, quote the message in the original format it was "
 "received. If unchecked, the reply will be as plain text by default."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:246
+#: configuredialog/configurecomposerpage.cpp:243
 #, kde-format
 msgid ""
 "Format the plain text part of a message from the HTML markup. Bold, italic "
 "and underlined text, lists, and external references are supported."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:258
+#: configuredialog/configurecomposerpage.cpp:255
 #, fuzzy, kde-format
 #| msgid "Additional Recipients"
 msgctxt "@title:group"
 msgid "Recipients"
 msgstr "Додатни приматели"
 
-#: configuredialog/configurecomposerpage.cpp:295
+#: configuredialog/configurecomposerpage.cpp:292
 #, kde-format
 msgid ""
 "Only allow this many recipients to be specified for the message. This "
@@ -1313,53 +1313,53 @@ msgid ""
 "account of distribution lists or mailing lists."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:318
+#: configuredialog/configurecomposerpage.cpp:315
 #, kde-format
 msgid ""
 "Remember recent addresses entered, and offer them for recipient completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:330
+#: configuredialog/configurecomposerpage.cpp:327
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "No addresses are retained"
 msgid "No save"
 msgstr "Без автом. зачувување"
 
-#: configuredialog/configurecomposerpage.cpp:333
+#: configuredialog/configurecomposerpage.cpp:330
 #, fuzzy, kde-format
 #| msgid "Edit Recent Addresses"
 msgctxt "@label:textbox"
 msgid "Maximum recent addresses retained:"
 msgstr "Уреди ги неодамнешните адреси"
 
-#: configuredialog/configurecomposerpage.cpp:337
+#: configuredialog/configurecomposerpage.cpp:334
 #, kde-format
 msgid ""
 "The maximum number of recently entered addresses that will be remembered for "
 "completion"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:350
+#: configuredialog/configurecomposerpage.cpp:347
 #, fuzzy, kde-format
 #| msgid "Configure Completion Order"
 msgctxt "@action:button"
 msgid "Configure Completion…"
 msgstr "Конфигурирај редослед на довршување"
 
-#: configuredialog/configurecomposerpage.cpp:358
+#: configuredialog/configurecomposerpage.cpp:355
 #, fuzzy, kde-format
 #| msgid "No autosave"
 msgctxt "@title:group"
 msgid "Autosave"
 msgstr "Без автом. зачувување"
 
-#: configuredialog/configurecomposerpage.cpp:368
+#: configuredialog/configurecomposerpage.cpp:365
 #, kde-format
 msgid "No autosave"
 msgstr "Без автом. зачувување"
 
-#: configuredialog/configurecomposerpage.cpp:369
+#: configuredialog/configurecomposerpage.cpp:366
 #, fuzzy, kde-format
 #| msgid " min"
 msgctxt "Interval suffix"
@@ -1369,31 +1369,31 @@ msgstr[0] " мин"
 msgstr[1] " мин"
 msgstr[2] " мин"
 
-#: configuredialog/configurecomposerpage.cpp:371
+#: configuredialog/configurecomposerpage.cpp:368
 #, fuzzy, kde-format
 #| msgid "Automatically request &message disposition notifications"
 msgid "Automatically save the message at this specified interval"
 msgstr "Авто&матски барај известувања за статусот на пораките"
 
-#: configuredialog/configurecomposerpage.cpp:385
+#: configuredialog/configurecomposerpage.cpp:382
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgctxt "@title:group"
 msgid "Composer"
 msgstr "Составувач"
 
-#: configuredialog/configurecomposerpage.cpp:389
+#: configuredialog/configurecomposerpage.cpp:386
 #, kde-format
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:581
+#: configuredialog/configurecomposerpage.cpp:578
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Префикси за тема при &одговор"
 
-#: configuredialog/configurecomposerpage.cpp:586
-#: configuredialog/configurecomposerpage.cpp:612
+#: configuredialog/configurecomposerpage.cpp:583
+#: configuredialog/configurecomposerpage.cpp:609
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1406,151 +1406,151 @@ msgstr ""
 "Препознај било кој редослед на следниве префикси\n"
 "(ставките се регуларни изрази неосетливи на големината на букви):"
 
-#: configuredialog/configurecomposerpage.cpp:594
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:594
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "Re&move"
 msgstr "О&тстрани"
 
-#: configuredialog/configurecomposerpage.cpp:594
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:881
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "Измени..."
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:591
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Внесете нов префикс за одговор:"
 
-#: configuredialog/configurecomposerpage.cpp:595
+#: configuredialog/configurecomposerpage.cpp:592
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove reply prefix?"
 msgstr "<qt>Дали навистина сакате да го отстраните идентитетот <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:597
+#: configuredialog/configurecomposerpage.cpp:594
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "Префикси за тема при &одговор"
 
-#: configuredialog/configurecomposerpage.cpp:608
+#: configuredialog/configurecomposerpage.cpp:605
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Префикси за тема при &препраќање"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:618 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Отстрани"
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:615
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "Измени..."
 
-#: configuredialog/configurecomposerpage.cpp:618
+#: configuredialog/configurecomposerpage.cpp:615
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Внесете нов префикс за препраќање:"
 
-#: configuredialog/configurecomposerpage.cpp:619
+#: configuredialog/configurecomposerpage.cpp:616
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove forward prefix?"
 msgstr "<qt>Дали навистина сакате да го отстраните идентитетот <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:620
+#: configuredialog/configurecomposerpage.cpp:617
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "Префикси за тема при &препраќање"
 
-#: configuredialog/configurecomposerpage.cpp:668
+#: configuredialog/configurecomposerpage.cpp:664
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Дефинирајте сопствени полиња за mime-заглавијата:"
 
-#: configuredialog/configurecomposerpage.cpp:676
+#: configuredialog/configurecomposerpage.cpp:672
 #, fuzzy, kde-format
 #| msgid "Name"
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Име"
 
-#: configuredialog/configurecomposerpage.cpp:677
+#: configuredialog/configurecomposerpage.cpp:672
 #, fuzzy, kde-format
 #| msgid "Value"
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Вредност"
 
-#: configuredialog/configurecomposerpage.cpp:685
+#: configuredialog/configurecomposerpage.cpp:680
 #, fuzzy, kde-format
 #| msgid "Ne&w"
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Но&во"
 
-#: configuredialog/configurecomposerpage.cpp:689
+#: configuredialog/configurecomposerpage.cpp:684
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "О&тстрани"
 
-#: configuredialog/configurecomposerpage.cpp:698
+#: configuredialog/configurecomposerpage.cpp:693
 #, fuzzy, kde-format
 #| msgid "&Name:"
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Име:"
 
-#: configuredialog/configurecomposerpage.cpp:708
+#: configuredialog/configurecomposerpage.cpp:703
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Вредност:"
 
-#: configuredialog/configurecomposerpage.cpp:833
+#: configuredialog/configurecomposerpage.cpp:828
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:829
 #, fuzzy, kde-format
 #| msgid "&Enable signature"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Овозможи &потпис"
 
-#: configuredialog/configurecomposerpage.cpp:869
+#: configuredialog/configurecomposerpage.cpp:864
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Овозможи детекција на прилози што &недостасуваат"
 
-#: configuredialog/configurecomposerpage.cpp:875
+#: configuredialog/configurecomposerpage.cpp:870
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1560,39 +1560,39 @@ msgstr ""
 "Препознава кој било од следниве клучни зборови како намера да се приложи "
 "датотека:"
 
-#: configuredialog/configurecomposerpage.cpp:886
+#: configuredialog/configurecomposerpage.cpp:881
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Внесете нов клучен збор:"
 
-#: configuredialog/configurecomposerpage.cpp:888
+#: configuredialog/configurecomposerpage.cpp:883
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you want to remove this attachment word?"
 msgstr "<qt>Дали навистина сакате да го отстраните идентитетот <b>%1</b>?</qt>"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:884
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "A&ttachments"
 msgid "Attachment Word:"
 msgstr "П&рилози"
 
-#: configuredialog/configurecomposerpage.cpp:896
+#: configuredialog/configurecomposerpage.cpp:891
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Има прилог"
 
-#: configuredialog/configurecomposerpage.cpp:903
+#: configuredialog/configurecomposerpage.cpp:898
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " MB"
 
-#: configuredialog/configurecomposerpage.cpp:905
+#: configuredialog/configurecomposerpage.cpp:900
 #, kde-format
 msgid "No limit"
 msgstr ""
@@ -1635,70 +1635,70 @@ msgstr "Излез за печатење"
 msgid "User Feedback"
 msgstr "Ид. на корисник"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:200
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:201
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Check Before Send Plugins"
 msgstr "Прекини со испр&аќање"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:209
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:210
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Composer Plugins"
 msgstr "Составувач"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:217
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:218
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Grammar Checker Plugins"
 msgstr "Прекини со испр&аќање"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:229
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:230
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Tools Plugins"
 msgstr "Составувач"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:238
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:239
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Editor Plugins"
 msgstr "Составувач"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:248
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:249
 #, fuzzy, kde-format
 #| msgid "Message Structure Viewer"
 msgid "Message Viewer"
 msgstr "Преглед на структурата на пораката"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:258
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:259
 #, kde-format
 msgid "Webengine Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:268
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:269
 #, fuzzy, kde-format
 #| msgid "&Abort Sending"
 msgid "Header Style Plugins"
 msgstr "Прекини со испр&аќање"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:277
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:278
 #, fuzzy, kde-format
 #| msgid "Composer"
 msgid "Text Conversion Plugins"
 msgstr "Составувач"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:286
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:287
 #, kde-format
 msgid "Misc"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:295
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:296
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
 msgstr ""
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:319
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:321
 #, kde-format
 msgid "Akonadi Agents"
 msgstr ""
@@ -1748,10 +1748,10 @@ msgstr ""
 "Менувањето на глобалните поставувања за нишките ќе ги пребрише сите "
 "вредности специфични за папките."
 
+#: configuredialog/configuresecuritypage.cpp:284
+#: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
 #: configuredialog/configuresecuritypage.cpp:287
-#: configuredialog/configuresecuritypage.cpp:288
-#: configuredialog/configuresecuritypage.cpp:289
-#: configuredialog/configuresecuritypage.cpp:290
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1761,13 +1761,13 @@ msgstr[0] " ден"
 msgstr[1] " дена"
 msgstr[2] " дена"
 
-#: configuredialog/configuresecuritypage.cpp:321
+#: configuredialog/configuresecuritypage.cpp:318
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "&Испраќање"
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:325
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1775,141 +1775,141 @@ msgid ""
 "provided by kdepim-addons."
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:333
+#: configuredialog/configuresecuritypage.cpp:330
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr ""
 
-#: configuredialog/configuresecuritypage.cpp:400
+#: configuredialog/configuresecuritypage.cpp:394
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Оваа опција побарува dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:512 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:506 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "без прокси"
 
-#: configuredialog/configuresecuritypage.cpp:514
+#: configuredialog/configuresecuritypage.cpp:508
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Тековно поставување на системот: %1)"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:39
+#: dialog/addemailtoexistingcontactdialog.cpp:38
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Изберете папка"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:75
+#: dialog/addemailtoexistingcontactdialog.cpp:74
 #, fuzzy, kde-format
 #| msgid "Select All Text"
 msgid "Select"
 msgstr "Избери го целиот текст"
 
-#: dialog/archivefolderdialog.cpp:42
+#: dialog/archivefolderdialog.cpp:46
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "Прелистај ги архивите"
 
-#: dialog/archivefolderdialog.cpp:51
+#: dialog/archivefolderdialog.cpp:55
 #, fuzzy, kde-format
 #| msgid "New Folder"
 msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Нова папка"
 
-#: dialog/archivefolderdialog.cpp:59 kmmainwidget.cpp:3691
+#: dialog/archivefolderdialog.cpp:63 kmmainwidget.cpp:3691
 #, fuzzy, kde-format
 #| msgid "List Archives"
 msgctxt "@action"
 msgid "Archive"
 msgstr "Прелистај ги архивите"
 
-#: dialog/archivefolderdialog.cpp:71
+#: dialog/archivefolderdialog.cpp:75
 #, fuzzy, kde-format
 #| msgid "Folder"
 msgctxt "@label:textbox"
 msgid "&Folder:"
 msgstr "Папка"
 
-#: dialog/archivefolderdialog.cpp:81
+#: dialog/archivefolderdialog.cpp:85
 #, fuzzy, kde-format
 #| msgid "N&ormal:"
 msgctxt "@label:textbox"
 msgid "F&ormat:"
 msgstr "Н&ормално:"
 
-#: dialog/archivefolderdialog.cpp:87
+#: dialog/archivefolderdialog.cpp:91
 #, kde-format
 msgid "Compressed Zip Archive (.zip)"
 msgstr ""
 
-#: dialog/archivefolderdialog.cpp:88
+#: dialog/archivefolderdialog.cpp:92
 #, kde-format
 msgid "Uncompressed Archive (.tar)"
 msgstr ""
 
-#: dialog/archivefolderdialog.cpp:89
+#: dialog/archivefolderdialog.cpp:93
 #, kde-format
 msgid "BZ2-Compressed Tar Archive (.tar.bz2)"
 msgstr ""
 
-#: dialog/archivefolderdialog.cpp:90
+#: dialog/archivefolderdialog.cpp:94
 #, kde-format
 msgid "GZ-Compressed Tar Archive (.tar.gz)"
 msgstr ""
 
-#: dialog/archivefolderdialog.cpp:96
+#: dialog/archivefolderdialog.cpp:100
 #, fuzzy, kde-format
 #| msgid "Attach File"
 msgctxt "@label:textbox"
 msgid "&Archive File:"
 msgstr "Приложете датотека"
 
-#: dialog/archivefolderdialog.cpp:100
+#: dialog/archivefolderdialog.cpp:104
 #, kde-format
 msgid "Archive file (*.tar *.zip *.tar.gz *.tar.bz2)"
 msgstr ""
 
-#: dialog/archivefolderdialog.cpp:108
+#: dialog/archivefolderdialog.cpp:112
 #, fuzzy, kde-format
 #| msgid "Deleting folders from server"
 msgctxt "@option:check"
 msgid "&Delete folder and subfolders after completion"
 msgstr "Ги бришам папките од серверот"
 
-#: dialog/archivefolderdialog.cpp:112
+#: dialog/archivefolderdialog.cpp:116
 #, fuzzy, kde-format
 #| msgid "New Folder"
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Нова папка"
 
-#: dialog/archivefolderdialog.cpp:177
+#: dialog/archivefolderdialog.cpp:181
 #, fuzzy, kde-format
 #| msgid "Select the public key which should be attached."
 msgid "Please select the folder that should be archived."
 msgstr "Изберете го јавниот клуч што треба да се приложи."
 
-#: dialog/archivefolderdialog.cpp:177
+#: dialog/archivefolderdialog.cpp:181
 #, fuzzy, kde-format
 #| msgid "Lon&g folder list"
 msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Дол&га листа со папки"
 
-#: dialog/kmknotify.cpp:33
+#: dialog/kmknotify.cpp:34
 #, fuzzy, kde-format
 #| msgid "New Mail Notification"
 msgctxt "@title:window"
 msgid "Notification"
 msgstr "Известување за нова пошта"
 
-#: editor/attachment/attachmentview.cpp:168
+#: editor/attachment/attachmentview.cpp:170
 #, fuzzy, kde-format
 #| msgid "Attachment: %1"
 msgid "1 attachment (%2)"
@@ -1918,14 +1918,14 @@ msgstr[0] "Прилог: %1"
 msgstr[1] "Прилог: %1"
 msgstr[2] "Прилог: %1"
 
-#: editor/attachment/attachmentview.cpp:197
+#: editor/attachment/attachmentview.cpp:202
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Зачувајте прилог како"
 
-#: editor/attachment/attachmentview.cpp:199
+#: editor/attachment/attachmentview.cpp:204
 #, fuzzy, kde-format
 #| msgid "Save Attachment As"
 msgctxt "@info:tooltip"
@@ -2910,7 +2910,7 @@ msgctxt "@title:window"
 msgid "Details"
 msgstr "[детали]"
 
-#: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:23
+#: editor/potentialphishingemail/potentialphishingdetailwidget.cpp:24
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Select email to put in whitelist:"
@@ -2969,14 +2969,14 @@ msgstr "Прекини со испр&аќање"
 msgid "Sending Without Confirmation"
 msgstr "Потврда за испраќање"
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:39
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:40
 #, kde-format
 msgid ""
 "This attachment: <ul><li>%1</li></ul> was added externally. Remove it if "
 "it's an error."
 msgstr ""
 
-#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:41
+#: editor/warningwidgets/attachmentaddedfromexternalwarning.cpp:42
 #, kde-format
 msgid ""
 "These attachments: <ul><li>%1</li></ul> were added externally. Remove them "
@@ -3101,49 +3101,49 @@ msgstr ""
 msgid "No messages selected."
 msgstr "Нема пораки за бришење..."
 
-#: folderarchive/folderarchiveagentjob.cpp:70
+#: folderarchive/folderarchiveagentjob.cpp:73
 #, kde-format
 msgid "List of collections is empty. %1"
 msgstr ""
 
-#: folderarchive/folderarchiveagentjob.cpp:89
+#: folderarchive/folderarchiveagentjob.cpp:92
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr ""
 
-#: folderarchive/folderarchiveagentjob.cpp:101
+#: folderarchive/folderarchiveagentjob.cpp:104
 #, fuzzy, kde-format
 #| msgid "Move Messages to Folder"
 msgid "Cannot move messages."
 msgstr "Преместете ги пораките во папка"
 
-#: folderarchive/folderarchivemanager.cpp:75
+#: folderarchive/folderarchivemanager.cpp:69
 #, fuzzy, kde-format
 #| msgid "Failed to create folder"
 msgid "Unable to fetch folder. Error reported: %1"
 msgstr "Не успеав да создадам папка"
 
-#: folderarchive/folderarchivemanager.cpp:81
+#: folderarchive/folderarchivemanager.cpp:75
 #, fuzzy, kde-format
 #| msgid "Lon&g folder list"
 msgid "No folder returned."
 msgstr "Дол&га листа со папки"
 
-#: folderarchive/folderarchivemanager.cpp:93
+#: folderarchive/folderarchivemanager.cpp:87
 #, fuzzy, kde-format
 #| msgid "Failed to create folder"
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr "Не успеав да создадам папка"
 
-#: folderarchive/folderarchivemanager.cpp:99
+#: folderarchive/folderarchivemanager.cpp:93
 #, fuzzy, kde-format
 #| msgid "Removed 1 old message from folder %2."
 #| msgid_plural "Removed %1 old messages from folder %2."
 msgid "Unable to return list of folders."
 msgstr "Отстранета е %1 стара порака од папката %2."
 
-#: folderarchive/folderarchivemanager.cpp:162
+#: folderarchive/folderarchivemanager.cpp:156
 #, fuzzy, kde-format
 #| msgid "Message was signed by %1."
 msgid "Messages archived"
