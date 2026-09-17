@@ -145,9 +145,9 @@ void FollowUpReminderInfo::setFollowUpReminderDate(QDate followUpReminderDate)
 
 bool FollowUpReminderInfo::operator==(const FollowUpReminderInfo &other) const
 {
-    return mOriginalMessageItemId == other.originalMessageItemId() && mMessageId == other.messageId() && mTo == other.to()
-        && mFollowUpReminderDate == other.followUpReminderDate() && mSubject == other.subject() && mAnswerWasReceived == other.answerWasReceived()
-        && mAnswerMessageItemId == other.answerMessageItemId() && mUniqueIdentifier == other.uniqueIdentifier() && mTodoId == other.todoId();
+    return mOriginalMessageItemId == other.mOriginalMessageItemId && mMessageId == other.mMessageId && mTo == other.mTo
+        && mFollowUpReminderDate == other.mFollowUpReminderDate && mSubject == other.mSubject && mAnswerWasReceived == other.mAnswerWasReceived
+        && mAnswerMessageItemId == other.mAnswerMessageItemId && mUniqueIdentifier == other.mUniqueIdentifier && mTodoId == other.mTodoId;
 }
 
 QDebug operator<<(QDebug d, const FollowUpReminderInfo &other)
