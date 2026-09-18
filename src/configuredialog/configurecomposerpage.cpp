@@ -782,6 +782,9 @@ void ComposerPageHeadersTab::slotRemoveMimeHeader()
 
 void ComposerPageHeadersTab::doLoadOther()
 {
+    if (!KMKernel::self()) {
+        return;
+    }
     mHeaderList->clear();
     mTagNameEdit->clear();
     mTagValueEdit->clear();
@@ -808,6 +811,9 @@ void ComposerPageHeadersTab::doLoadOther()
 
 void ComposerPageHeadersTab::save()
 {
+    if (!KMKernel::self()) {
+        return;
+    }
     // Clean config
     const int oldHeadersCount = KMailSettings::self()->customMessageHeadersCount();
     for (int i = 0; i < oldHeadersCount; ++i) {

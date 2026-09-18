@@ -1001,7 +1001,7 @@ AppearancePageMessageTagTab::AppearancePageMessageTagTab(QWidget *parent)
     mTagSettingGroupBox = new QGroupBox(i18n("Ta&g Settings"), this);
     tagsettinggrid->addWidget(mTagSettingGroupBox);
     QList<KActionCollection *> actionCollections;
-    if (kmkernel->getKMMainWidget()) {
+    if (KMKernel::self() && kmkernel->getKMMainWidget()) {
         actionCollections = kmkernel->getKMMainWidget()->actionCollections();
     }
 
