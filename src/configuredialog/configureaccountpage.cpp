@@ -199,7 +199,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
 {
     delete mNewMailNotifierInterface;
-    mRetrievalHash.clear();
 }
 
 void AccountsPageReceivingTab::slotAddCustomAccount()

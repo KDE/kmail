@@ -510,9 +510,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab(QWidget *parent)
     const auto readerWindowModeItem = KMailSettings::self()->readerWindowModeItem();
     mReaderWindowModeGroup = new QButtonGroup(this);
     {
-        const int numberChoices(readerWindowModeItem->choices().size());
+        const auto choices = readerWindowModeItem->choices();
+        const int numberChoices(choices.size());
         for (int i = 0; i < numberChoices; ++i) {
-            auto button = new QRadioButton(readerWindowModeItem->choices().at(i).label, this);
+            auto button = new QRadioButton(choices.at(i).label, this);
             mReaderWindowModeGroup->addButton(button, i);
             checkLockDown(button, readerWindowModeItem);
 
