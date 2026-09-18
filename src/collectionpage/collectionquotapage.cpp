@@ -26,13 +26,13 @@ CollectionQuotaPage::CollectionQuotaPage(QWidget *parent)
 
 bool CollectionQuotaPage::canHandle(const Akonadi::Collection &collection) const
 {
-    const bool hasQuotaAttribute = collection.hasAttribute<Akonadi::CollectionQuotaAttribute>();
-    if (hasQuotaAttribute) {
-        if (collection.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue() <= 0) {
+    if (const auto att = collection.attribute<Akonadi::CollectionQuotaAttribute>(); att) {
+        if (att->maximumValue() <= 0) {
             return false;
         }
+        return true;
     }
-    return hasQuotaAttribute;
+    return false;
 }
 
 void CollectionQuotaPage::init()
@@ -43,10 +43,10 @@ void CollectionQuotaPage::init()
 
 void CollectionQuotaPage::load(const Akonadi::Collection &col)
 {
-    if (col.hasAttribute<Akonadi::CollectionQuotaAttribute>()) {
-        const qint64 currentValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->currentValue();
+    if (const auto att = col.attribute<Akonadi::CollectionQuotaAttribute>(); att) {
+        const qint64 currentValue = att->currentValue();
 
-        const qint64 maximumValue = col.attribute<Akonadi::CollectionQuotaAttribute>()->maximumValue();
+        const qint64 maximumValue = att->maximumValue();
         // Test over quota.
         mQuotaWidget->setQuotaInfo(qMin(currentValue, maximumValue), maximumValue);
     }

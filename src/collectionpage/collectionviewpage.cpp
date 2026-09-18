@@ -113,9 +113,9 @@ void CollectionViewPage::load(const Akonadi::Collection &col)
         QString iconName;
         QString unreadIconName;
         bool iconWasEmpty = false;
-        if (col.hasAttribute<Akonadi::EntityDisplayAttribute>()) {
-            iconName = col.attribute<Akonadi::EntityDisplayAttribute>()->iconName();
-            unreadIconName = col.attribute<Akonadi::EntityDisplayAttribute>()->activeIconName();
+        if (const auto att = col.attribute<Akonadi::EntityDisplayAttribute>(); att) {
+            iconName = att->iconName();
+            unreadIconName = att->activeIconName();
         }
 
         if (iconName.isEmpty()) {
@@ -139,11 +139,12 @@ void CollectionViewPage::save(Akonadi::Collection &col)
 {
     if (!mIsLocalSystemFolder) {
         if (mIconsCheckBox->isChecked()) {
-            col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing)->setIconName(mNormalIconButton->icon());
-            col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing)->setActiveIconName(mUnreadIconButton->icon());
-        } else if (col.hasAttribute<Akonadi::EntityDisplayAttribute>()) {
-            col.attribute<Akonadi::EntityDisplayAttribute>()->setIconName(QString());
-            col.attribute<Akonadi::EntityDisplayAttribute>()->setActiveIconName(QString());
+            auto att = col.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+            att->setIconName(mNormalIconButton->icon());
+            att->setActiveIconName(mUnreadIconButton->icon());
+        } else if (auto att = col.attribute<Akonadi::EntityDisplayAttribute>(); att) {
+            att->setIconName(QString());
+            att->setActiveIconName(QString());
         }
     }
     mCollectionViewWidget->save(col);
