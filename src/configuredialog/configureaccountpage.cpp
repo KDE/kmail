@@ -108,7 +108,7 @@ AccountsPageSendingTab::AccountsPageSendingTab(QWidget *parent)
     mSendOnCheckCombo = new QComboBox(this);
     mSendOnCheckCombo->setEditable(false);
     mSendOnCheckCombo->addItems({i18n("Never Automatically"), i18n("On Manual Mail Checks"), i18n("On All Mail Checks")});
-    mSendOnCheckCombo->setWhatsThis(i18n(KMailSettings::self()->sendOnCheckItem()->whatsThis().toUtf8().constData()));
+    mSendOnCheckCombo->setWhatsThis(KMailSettings::self()->sendOnCheckItem()->whatsThis());
     formLayout->addRow(i18n("Send &messages in outbox folder:"), mSendOnCheckCombo);
     connect(mSendOnCheckCombo, &QComboBox::activated, this, &AccountsPageSendingTab::slotEmitChanged);
 
