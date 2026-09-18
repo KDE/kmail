@@ -117,6 +117,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
             to.append(s.fullEmail());
         }
         openComposer(to.join(", "_L1));
+        return;
     }
 
     qCWarning(KMAILPLUGIN_LOG) << u"Cannot handle drop events of type '%1'."_s.arg(de->mimeData()->formats().join(u';'));
