@@ -46,13 +46,12 @@ KMKnotify::KMKnotify(QWidget *parent)
     QPushButton *okButton = buttonBox->button(QDialogButtonBox::Ok);
     okButton->setDefault(true);
     okButton->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &KMKnotify::accept);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &KMKnotify::slotOk);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &KMKnotify::reject);
 
     mainLayout->addWidget(buttonBox);
 
     connect(m_comboNotify, &QComboBox::activated, this, &KMKnotify::slotComboChanged);
-    connect(okButton, &QPushButton::clicked, this, &KMKnotify::slotOk);
     connect(m_notifyWidget, &KNotifyConfigWidget::changed, this, &KMKnotify::slotConfigChanged);
     initCombobox();
     readConfig();
@@ -126,6 +125,7 @@ void KMKnotify::slotOk()
     if (m_changed) {
         m_notifyWidget->save();
     }
+    QDialog::accept();
 }
 
 void KMKnotify::readConfig()
