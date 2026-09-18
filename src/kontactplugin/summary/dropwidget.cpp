@@ -28,8 +28,9 @@ void DropWidget::dragEnterEvent(QDragEnterEvent *event)
 
 void DropWidget::dropEvent(QDropEvent *event)
 {
-    int alignment = (event->position().toPoint().x() < (width() / 2) ? Qt::AlignLeft : Qt::AlignRight);
-    alignment |= (event->position().toPoint().y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
+    const auto position = event->position().toPoint();
+    int alignment = (position.x() < (width() / 2) ? Qt::AlignLeft : Qt::AlignRight);
+    alignment |= (position.y() < (height() / 2) ? Qt::AlignTop : Qt::AlignBottom);
     Q_EMIT summaryWidgetDropped(this, event->source(), alignment);
 }
 
