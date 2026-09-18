@@ -9,12 +9,10 @@
 #include <MailCommon/CollectionTemplatesWidget>
 
 #include <Akonadi/Collection>
-#include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
-#include <TemplateParser/TemplatesConfiguration>
-#include <templateparser/templatesconfiguration_kfg.h>
 
 #include <KLocalizedString>
+#include <QVBoxLayout>
 
 using namespace Akonadi;
 using namespace MailCommon;

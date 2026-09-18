@@ -22,7 +22,6 @@ template<typename T>
 class QSharedPointer;
 
 class QComboBox;
-class QPushButton;
 class KJob;
 class KEditListWidget;
 class KSqueezedTextLabel;
