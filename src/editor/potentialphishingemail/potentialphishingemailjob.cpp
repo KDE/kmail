@@ -14,10 +14,10 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
-[[nodiscard]] bool containsDifferentName(const QList<QStringView> &lst, QStringView firstName)
+[[nodiscard]] bool containsDifferentName(const QList<QStringView> &lst, QStringView email)
 {
-    return std::any_of(lst.cbegin(), lst.cend(), [firstName](QStringView n) {
-        return n != firstName;
+    return std::any_of(lst.cbegin(), lst.cend(), [email](QStringView n) {
+        return n.compare(email, Qt::CaseInsensitive) != 0;
     });
 }
 }
@@ -84,7 +84,7 @@ bool PotentialPhishingEmailJob::start()
                         // Keep the trimmed string alive: the QStringViews below point into it.
                         const QString trimmedName = tname.trimmed();
                         if (const QList<QStringView> lst = QStringView(trimmedName).split(u' '); lst.count() > 1) {
-                            if (containsDifferentName(lst, lst.constFirst())) {
+                            if (containsDifferentName(lst, temail)) {
                                 mPotentialPhisingEmails.append(addr);
                             }
                         } else {

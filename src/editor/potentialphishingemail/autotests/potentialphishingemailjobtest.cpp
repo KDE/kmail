@@ -55,6 +55,11 @@ void PotentialPhishingEmailJobTest::shouldReturnPotentialPhishingEmails_data()
 
     QTest::newRow("EmailWithSimpleQuote") << (QStringList() << u"\"\'foo@kde.org\'\" <foo@kde.org>"_s) << QStringList() << false;
 
+    // A repeated fake address in the display name must not bypass the detection.
+    QTest::newRow("RepeatedFakeEmailInDisplayName") << (QStringList() << u"\"evil@bad.com evil@bad.com\" <foo@kde.org>"_s) << QStringList() << true;
+    QTest::newRow("TripledFakeEmailInDisplayName") << (QStringList() << u"\"a@b.com a@b.com a@b.com\" <foo@kde.org>"_s) << QStringList() << true;
+    QTest::newRow("RepeatedRealEmailDifferentCase") << (QStringList() << u"\"FOO@kde.org foo@KDE.org\" <foo@kde.org>"_s) << QStringList() << false;
+
     QTest::newRow("BadCompletion") << (QStringList() << u"@kde.org <foo@kde.org>"_s) << QStringList() << false;
 }
 
