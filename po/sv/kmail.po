@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-17 00:45+0000\n"
+"POT-Creation-Date: 2026-09-19 00:46+0000\n"
 "PO-Revision-Date: 2026-09-01 21:41+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
@@ -480,7 +480,7 @@ msgstr ""
 "korg, klicka på knappen nedan och tryck därefter på tangenten eller "
 "tangenterna som du vill ska höra ihop med korgen.</qt>"
 
-#: collectionpage/collectiontemplatespage.cpp:28
+#: collectionpage/collectiontemplatespage.cpp:26
 #, kde-format
 msgctxt "@title:tab Templates settings page."
 msgid "Templates"
@@ -619,25 +619,25 @@ msgstr "Lägg till e-postkonto…"
 msgid "Custom Account…"
 msgstr "Eget konto…"
 
-#: configuredialog/configureaccountpage.cpp:259
+#: configuredialog/configureaccountpage.cpp:258
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Inkludera i manuell brevkontroll"
 
-#: configuredialog/configureaccountpage.cpp:267
+#: configuredialog/configureaccountpage.cpp:266
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Koppla ner när Kmail stängs av"
 
-#: configuredialog/configureaccountpage.cpp:274
+#: configuredialog/configureaccountpage.cpp:273
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Titta efter nya brev vid start"
 
-#: configuredialog/configureaccountpage.cpp:344
+#: configuredialog/configureaccountpage.cpp:343
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -832,42 +832,42 @@ msgctxt "@label"
 msgid "Folder tooltips:"
 msgstr "Korgverktygstips:"
 
-#: configuredialog/configureappearancepage.cpp:581
+#: configuredialog/configureappearancepage.cpp:582
 #, kde-format
 msgid "Sta&ndard format (%1)"
 msgstr "Sta&ndardformat (%1)"
 
-#: configuredialog/configureappearancepage.cpp:582
+#: configuredialog/configureappearancepage.cpp:583
 #, kde-format
 msgid "Locali&zed format (%1)"
 msgstr "Lokalt &format (%1)"
 
-#: configuredialog/configureappearancepage.cpp:583
+#: configuredialog/configureappearancepage.cpp:584
 #, kde-format
 msgid "Smart for&mat (%1)"
 msgstr "Smart for&mat (%1)"
 
-#: configuredialog/configureappearancepage.cpp:584
+#: configuredialog/configureappearancepage.cpp:585
 msgid "C&ustom format:"
 msgstr "E&get format:"
 
-#: configuredialog/configureappearancepage.cpp:607
+#: configuredialog/configureappearancepage.cpp:608
 #, kde-format
 msgid "Default aggregation:"
 msgstr "Standardsammanställning:"
 
-#: configuredialog/configureappearancepage.cpp:625
+#: configuredialog/configureappearancepage.cpp:626
 #, kde-format
 msgid "Default theme:"
 msgstr "Standardtema:"
 
-#: configuredialog/configureappearancepage.cpp:662
+#: configuredialog/configureappearancepage.cpp:663
 #, kde-format
 msgctxt "@label:textbox"
 msgid "<qt><a href=\"whatsthis1\">Custom format information…</a></qt>"
 msgstr "<qt><a href=\"whatsthis1\">Information om eget format…</a></qt>"
 
-#: configuredialog/configureappearancepage.cpp:668
+#: configuredialog/configureappearancepage.cpp:669
 #, kde-format
 msgid ""
 "<qt><p><strong>These expressions may be used for the date:</strong></"
@@ -914,23 +914,23 @@ msgstr ""
 "zon på numerisk form ( -0500 )</li></ul><p><strong>Alla andra tecken som "
 "matas in ignoreras.</strong></p></qt>"
 
-#: configuredialog/configureappearancepage.cpp:705
+#: configuredialog/configureappearancepage.cpp:706
 #, kde-format
 msgid "Date Display:"
 msgstr "Datumvisning:"
 
-#: configuredialog/configureappearancepage.cpp:810
+#: configuredialog/configureappearancepage.cpp:811
 #, kde-format
 msgctxt "@option:check"
 msgid "Display Own Identity"
 msgstr "Visa egen identitet"
 
-#: configuredialog/configureappearancepage.cpp:815
+#: configuredialog/configureappearancepage.cpp:816
 #, kde-format
 msgid "Message Window"
 msgstr "Brevfönster"
 
-#: configuredialog/configureappearancepage.cpp:822
+#: configuredialog/configureappearancepage.cpp:823
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -939,92 +939,92 @@ msgstr ""
 "Stäng det fristående brevfönstret efter att ha svarat på eller "
 "vidarebefordrat brevet"
 
-#: configuredialog/configureappearancepage.cpp:834
+#: configuredialog/configureappearancepage.cpp:835
 #, kde-format
 msgid "System Tray"
 msgstr "Systembricka"
 
-#: configuredialog/configureappearancepage.cpp:840
+#: configuredialog/configureappearancepage.cpp:841
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
 msgstr "Aktivera ikon i systembrickan"
 
-#: configuredialog/configureappearancepage.cpp:844
+#: configuredialog/configureappearancepage.cpp:845
 #, kde-format
 msgctxt "@option:check"
 msgid "Start minimized to tray"
 msgstr "Starta minimerad i systembrickan"
 
-#: configuredialog/configureappearancepage.cpp:862
+#: configuredialog/configureappearancepage.cpp:863
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
 msgstr "Visa olästa brev i aktivitetsraden"
 
-#: configuredialog/configureappearancepage.cpp:867
+#: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
 msgstr "Plasma-aktiviteter"
 
-#: configuredialog/configureappearancepage.cpp:872
+#: configuredialog/configureappearancepage.cpp:873
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable"
 msgstr "Aktivera"
 
-#: configuredialog/configureappearancepage.cpp:944
+#: configuredialog/configureappearancepage.cpp:945
 #, kde-format
 msgid "A&vailable Tags"
 msgstr "Till&gängliga etiketter"
 
-#: configuredialog/configureappearancepage.cpp:957
+#: configuredialog/configureappearancepage.cpp:958
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Add new tag"
 msgstr "Lägg till ny etikett"
 
-#: configuredialog/configureappearancepage.cpp:962
+#: configuredialog/configureappearancepage.cpp:963
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Remove selected tag"
 msgstr "Ta bort markerad etikett"
 
-#: configuredialog/configureappearancepage.cpp:971
+#: configuredialog/configureappearancepage.cpp:972
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Increase tag priority"
 msgstr "Öka etikettens prioritet"
 
-#: configuredialog/configureappearancepage.cpp:977
+#: configuredialog/configureappearancepage.cpp:978
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Decrease tag priority"
 msgstr "Minska etikettens prioritet"
 
-#: configuredialog/configureappearancepage.cpp:1001
+#: configuredialog/configureappearancepage.cpp:1002
 #, kde-format
 msgid "Ta&g Settings"
 msgstr "&Etikettinställningar"
 
-#: configuredialog/configureappearancepage.cpp:1050
+#: configuredialog/configureappearancepage.cpp:1051
 #, kde-format
 msgid "Delete"
 msgstr "Ta bort"
 
-#: configuredialog/configureappearancepage.cpp:1180
+#: configuredialog/configureappearancepage.cpp:1181
 #, kde-format
 msgid "Do you want to remove tag '%1'?"
 msgstr "Vill du ta bort etiketten '%1'?"
 
-#: configuredialog/configureappearancepage.cpp:1181
+#: configuredialog/configureappearancepage.cpp:1182
 #, kde-format
 msgctxt "@title:window"
 msgid "Remove Tag"
 msgstr "Ta bort etikett"
 
-#: configuredialog/configureappearancepage.cpp:1225
-#: configuredialog/configureappearancepage.cpp:1260
+#: configuredialog/configureappearancepage.cpp:1226
+#: configuredialog/configureappearancepage.cpp:1261
 #, kde-format
 msgid "We cannot create tag. A tag with same name already exists."
 msgstr "Etiketten kan inte skapas. En etikett med samma namn finns redan."
@@ -1267,19 +1267,19 @@ msgstr ""
 "skiftlägeskänsliga reguljära uttryck):"
 
 #: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:887
 #, kde-format
 msgid "A&dd…"
 msgstr "Lägg &till…"
 
 #: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:887
 #, kde-format
 msgid "Re&move"
 msgstr "Ta &bort"
 
 #: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:887
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Ä&ndra…"
@@ -1377,59 +1377,59 @@ msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Värde:"
 
-#: configuredialog/configurecomposerpage.cpp:828
+#: configuredialog/configurecomposerpage.cpp:834
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "'Content-Type' är inte en godkänd sträng. Huvudet kommer inte att sparas."
 
-#: configuredialog/configurecomposerpage.cpp:829
+#: configuredialog/configurecomposerpage.cpp:835
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Ogiltigt huvud"
 
-#: configuredialog/configurecomposerpage.cpp:864
+#: configuredialog/configurecomposerpage.cpp:870
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Aktivera ide&ntifiering av saknade bilagor"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:876
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Känn igen något av följande nyckelord som avsikt att bilägga en fil:"
 
-#: configuredialog/configurecomposerpage.cpp:881
+#: configuredialog/configurecomposerpage.cpp:887
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Ange nytt nyckelord:"
 
-#: configuredialog/configurecomposerpage.cpp:883
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Vill du ta bort bilageordet?"
 
-#: configuredialog/configurecomposerpage.cpp:884
+#: configuredialog/configurecomposerpage.cpp:890
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Ord för bilaga:"
 
-#: configuredialog/configurecomposerpage.cpp:891
+#: configuredialog/configurecomposerpage.cpp:897
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Maximal storlek på bilaga:"
 
-#: configuredialog/configurecomposerpage.cpp:898
+#: configuredialog/configurecomposerpage.cpp:904
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " Kibyte"
 
-#: configuredialog/configurecomposerpage.cpp:900
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgid "No limit"
 msgstr "Ingen gräns"
