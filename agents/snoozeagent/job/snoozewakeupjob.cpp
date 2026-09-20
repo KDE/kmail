@@ -5,6 +5,7 @@
 */
 
 #include "snoozewakeupjob.h"
+#include "snoozeagent_debug.h"
 #include "snoozeinfo.h"
 
 using namespace Snooze;
@@ -24,11 +25,12 @@ bool SnoozeWakeUpJob::canStart() const
 
 void SnoozeWakeUpJob::start()
 {
-    if (canStart()) {
-        doStart();
-    } else {
+    if (!canStart()) {
+        qCWarning(SNOOZEAGENT_LOG) << "Impossible to start SnoozeWakeUpJob";
         deleteLater();
+        return;
     }
+    doStart();
 }
 
 void SnoozeWakeUpJob::doStart()
