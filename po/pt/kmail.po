@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-19 00:46+0000\n"
+"POT-Creation-Date: 2026-09-20 12:54+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -8276,10 +8276,13 @@ msgstr "Assinatura da resposta do OCSP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Enter here the address of the server for online validation of "
+#| "certificates (OCSP responder). The URL is usually starting with http://."
 msgid ""
 "Enter here the address of the server for online validation of certificates "
-"(OCSP responder). The URL is usually starting with http://."
+"(OCSP responder). The URL is usually starting with https://."
 msgstr ""
 "Indique aqui o endereço do servidor para a validação 'online' dos "
 "certificados (o atendedor do OCSP). O URL começa normalmente por http://."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-19 00:46+0000\n"
+"POT-Creation-Date: 2026-09-20 12:54+0000\n"
 "PO-Revision-Date: 2025-03-22 22:36+0100\n"
 "Last-Translator: Oliver Kellogg <olivermkellogg@gmail.com>\n"
 "Language-Team: Esperanto <kde-i18n-eo@kde.org>\n"
@@ -7803,10 +7803,13 @@ msgstr "RASPa resondilsubskribo:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Enter here the address of the server for online validation of "
+#| "certificates (OCSP responder). The URL is usually starting with http://."
 msgid ""
 "Enter here the address of the server for online validation of certificates "
-"(OCSP responder). The URL is usually starting with http://."
+"(OCSP responder). The URL is usually starting with https://."
 msgstr ""
 "Enigu la serviladreson por reta konfirmo de atestiloj (RASPa respondilo). La "
 "URLo kutime komenciĝas kun http://."

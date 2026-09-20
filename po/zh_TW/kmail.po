@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-19 00:46+0000\n"
+"POT-Creation-Date: 2026-09-20 12:54+0000\n"
 "PO-Revision-Date: 2025-09-25 02:53+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
@@ -7543,10 +7543,13 @@ msgstr "OSCP 簽章："
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Enter here the address of the server for online validation of "
+#| "certificates (OCSP responder). The URL is usually starting with http://."
 msgid ""
 "Enter here the address of the server for online validation of certificates "
-"(OCSP responder). The URL is usually starting with http://."
+"(OCSP responder). The URL is usually starting with https://."
 msgstr "請在此輸入 OSCP 伺服器的位址。通常是用 http://。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
