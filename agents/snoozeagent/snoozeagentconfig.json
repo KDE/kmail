@@ -1,0 +1,5 @@
+{
+    "X-Akonadi-PluginType": "AgentConfig",
+    "X-Akonadi-Library": "snoozeagentconfig",
+    "X-Akonadi-AgentConfig-Type": "akonadi_snooze_agent"
+}

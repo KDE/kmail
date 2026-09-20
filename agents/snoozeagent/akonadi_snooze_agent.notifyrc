@@ -1,0 +1,8 @@
+[Global]
+IconName=kmail
+Comment=Snooze Agent
+
+[Event/snoozemessagewokeup]
+Name=Snoozed message is back
+Comment=A snoozed message came back to your inbox
+Action=Popup

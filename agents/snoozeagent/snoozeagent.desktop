@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Snooze Agent
+Comment=Snooze Agent
+Type=AkonadiAgent
+Exec=akonadi_snooze_agent
+Icon=kmail
+X-Akonadi-MimeTypes=message/rfc822
+X-Akonadi-Capabilities=Unique,Autostart
+X-Akonadi-Identifier=akonadi_snooze_agent

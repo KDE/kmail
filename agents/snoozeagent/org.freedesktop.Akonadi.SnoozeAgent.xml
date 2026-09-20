@@ -1,0 +1,28 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.freedesktop.Akonadi.SnoozeAgent">
+    <method name="setEnableAgent">
+      <arg type="b" direction="in"/>
+    </method>
+    <method name="enabledAgent">
+      <arg type="b" direction="out"/>
+    </method>
+    <method name="printDebugInfo">
+      <arg type="s" direction="out"/>
+    </method>
+    <method name="reload"/>
+    <method name="snoozeItem">
+      <arg name="itemId" type="x" direction="in"/>
+      <arg name="wakeUpDateTime" type="x" direction="in"/>
+      <arg name="subject" type="s" direction="in"/>
+      <arg name="from" type="s" direction="in"/>
+      <arg name="markAsUnread" type="b" direction="in"/>
+    </method>
+    <method name="cancelSnooze">
+      <arg name="itemId" type="x" direction="in"/>
+    </method>
+    <method name="wakeUpNow">
+      <arg name="itemId" type="x" direction="in"/>
+    </method>
+  </interface>
+</node>
