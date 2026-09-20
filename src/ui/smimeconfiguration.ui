@@ -71,7 +71,7 @@
           <item>
            <widget class="KLineEdit" name="OCSPResponderURL">
             <property name="whatsThis">
-             <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with http://.</string>
+             <string>Enter here the address of the server for online validation of certificates (OCSP responder). The URL is usually starting with https://.</string>
             </property>
             <property name="trapEnterKeyEvent" stdset="0">
              <bool>true</bool>
