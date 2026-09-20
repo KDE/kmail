@@ -76,7 +76,7 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mEditAsNewAction(new QAction(QIcon::fromTheme(u"document-edit"_s), i18n("&Edit As New"), this))
     , mListFilterAction(new QAction(i18nc("@action", "Filter on Mailing-&List…"), this))
     , mAddFollowupReminderAction(new QAction(i18nc("@action", "Add Followup Reminder…"), this))
-    , mDebugAkonadiSearchAction(new QAction(u"Debug Akonadi Search…"_s, this)) /* dont translate it*/
+    , mDebugAkonadiSearchAction(new QAction(u"Debug Akonadi Search…"_s, this)) /* don't translate it*/
     , mSendAgainAction(new QAction(i18nc("@action", "Send A&gain…"), this))
     , mNewMessageFromTemplateAction(new QAction(QIcon::fromTheme(u"document-new"_s), i18n("New Message From &Template"), this))
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))

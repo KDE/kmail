@@ -4898,7 +4898,7 @@ void KMMainWidget::slotArchiveMails()
 
 void KMMainWidget::updateQuickSearchLineText()
 {
-    // If change change shortcut
+    // If change shortcut
     mMessagePane->setQuickSearchClickMessage(
         i18nc("Show shortcut for focus quick search. Don't change it", "Search… <%1>", mQuickSearchAction->shortcut().toString(QKeySequence::NativeText)));
 }

@@ -355,7 +355,7 @@ private Q_SLOTS:
         const auto inboxSourceCol = collectionForRid(u"res1_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
 
-        // Setup up a monitor to to be notified when an item gets linked into
+        // Setup up a monitor to be notified when an item gets linked into
         // the unified mailbox collection
         Akonadi::Monitor monitor;
         monitor.setCollectionMonitored(inboxBoxCol);
@@ -414,7 +414,7 @@ private Q_SLOTS:
         const auto inboxSourceCol = collectionForRid(u"res1_inbox"_s);
         QVERIFY(inboxSourceCol.isValid());
 
-        // Setup up a monitor to to be notified when an item gets linked into
+        // Setup up a monitor to be notified when an item gets linked into
         // the unified mailbox collection
         Akonadi::Monitor monitor;
         monitor.setCollectionMonitored(inboxBoxCol);
@@ -487,7 +487,7 @@ private Q_SLOTS:
         const auto draftsSourceCol = collectionForRid(u"res1_drafts"_s);
         QVERIFY(draftsSourceCol.isValid());
 
-        // Setup up a monitor to to be notified when an item gets linked into
+        // Setup up a monitor to be notified when an item gets linked into
         // the unified mailbox collection
         Akonadi::Monitor monitor;
         monitor.setCollectionMonitored(inboxBoxCol);

@@ -3189,7 +3189,7 @@ void KMComposerWin::enableHtml()
 
     mComposerBase->editor()->activateRichText();
     if (!toolBar(u"htmlToolBar"_s)->isVisible()) {
-        // Use singleshot, as we we might actually be called from a slot that wanted to disable the
+        // Use singleshot, as we might actually be called from a slot that wanted to disable the
         // toolbar (but the messagebox in disableHtml() prevented that and called us).
         // The toolbar can't correctly deal with being enabled right in a slot called from the "disabled"
         // signal, so wait one event loop run for that.
