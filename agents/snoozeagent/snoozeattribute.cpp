@@ -5,6 +5,9 @@
 */
 
 #include "snoozeattribute.h"
+#include <QByteArray>
+#include <QDataStream>
+#include <QIODevice>
 
 SnoozeAttribute::SnoozeAttribute() = default;
 
@@ -18,20 +21,29 @@ QByteArray SnoozeAttribute::type() const
 
 SnoozeAttribute *SnoozeAttribute::clone() const
 {
-    // TODO copy all members over.
-    return new SnoozeAttribute();
+    auto expireAttr = new SnoozeAttribute();
+    expireAttr->setWakeUpDateTime(mWakeUpDateTime);
+    expireAttr->setOriginalCollection(mOriginalCollection);
+    expireAttr->setMarkAsUnread(mMarkAsUnread);
+    return expireAttr;
 }
 
 QByteArray SnoozeAttribute::serialized() const
 {
-    // TODO serialize wake-up date (UTC, ISO 8601), original collection and flags.
-    return {};
+    QByteArray result;
+    QDataStream s(&result, QIODevice::WriteOnly);
+    s << mWakeUpDateTime;
+    s << mOriginalCollection;
+    s << mMarkAsUnread;
+    return result;
 }
 
 void SnoozeAttribute::deserialize(const QByteArray &data)
 {
-    // TODO parse what serialized() wrote.
-    Q_UNUSED(data)
+    QDataStream s(data);
+    s >> mWakeUpDateTime;
+    s >> mOriginalCollection;
+    s >> mMarkAsUnread;
 }
 
 QDateTime SnoozeAttribute::wakeUpDateTime() const
