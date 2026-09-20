@@ -20,8 +20,9 @@ SnoozeInfo::SnoozeInfo(const KConfigGroup &config)
 
 void SnoozeInfo::readConfig(const KConfigGroup &config)
 {
-    // TODO read every entry writeConfig() produces.
-    Q_UNUSED(config)
+    mSubject = config.readEntry("Subject");
+    mUniqueIdentifier = config.readEntry("identifier", -1);
+    // TODO add more
 }
 
 void SnoozeInfo::writeConfig(KConfigGroup &config, qint32 identifier)
