@@ -3826,7 +3826,7 @@ void KMComposerWin::annotateRecipientEditorLineWithCryptoInfo(MessageComposer::R
         const auto storage = MessageCore::AutocryptStorage::self();
         const auto rec = storage->getRecipient(addrSpec.toUtf8());
         if (gossipKey) { // We found an Autocrypt gossip key for recipient
-            icon = QIcon::fromTheme(QStringLiteral("emblem-informations"));
+            icon = QIcon::fromTheme(QStringLiteral("emblem-information"));
             tooltip = i18nc("@info:tooltip",
                             "Autocrypt gossip key is used for this recipient. We got this key from 3rd party recipients. "
                             "This key is not verified.");
