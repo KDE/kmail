@@ -38,6 +38,8 @@ public:
     [[nodiscard]] QDateTime wakeUpDateTime() const;
     void setWakeUpDateTime(const QDateTime &dateTime);
 
+    [[nodiscard]] bool operator==(const SnoozeAttribute &other) const;
+
 private:
     QDateTime mWakeUpDateTime;
 };

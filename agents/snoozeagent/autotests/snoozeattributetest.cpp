@@ -18,4 +18,15 @@ void SnoozeAttributeTest::shouldHaveDefaultValues()
     const SnoozeAttribute attr;
     QVERIFY(!attr.wakeUpDateTime().isValid());
 }
+
+void SnoozeAttributeTest::shouldCloneAttributes()
+{
+    SnoozeAttribute attr;
+    attr.setWakeUpDateTime(QDateTime(QDate(2026, 9, 9), QTime(8, 8, 8)));
+
+    SnoozeAttribute *result = attr.clone();
+    QCOMPARE(attr, *result);
+    delete result;
+}
+
 #include "moc_snoozeattributetest.cpp"

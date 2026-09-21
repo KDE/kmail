@@ -50,3 +50,8 @@ void SnoozeAttribute::setWakeUpDateTime(const QDateTime &dateTime)
 {
     mWakeUpDateTime = dateTime;
 }
+
+bool SnoozeAttribute::operator==(const SnoozeAttribute &other) const
+{
+    return mWakeUpDateTime == other.mWakeUpDateTime;
+}
