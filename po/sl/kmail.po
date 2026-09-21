@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-20 12:54+0000\n"
-"PO-Revision-Date: 2026-09-01 06:35+0200\n"
+"PO-Revision-Date: 2026-09-20 20:22+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -7829,16 +7829,13 @@ msgstr "Podpis odzivnika OSCP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
 msgstr ""
-"Sem vnesite naslov strežnika za potrjevanje veljavnosti potrdil preko spleta "
-"(odzivnik OCSP). URL se običajno začne s http://."
+"Tu vnesite naslov strežnika za spletno preverjanje potrdil (odzivnik OCSP). "
+"URL se običajno začne s https://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
