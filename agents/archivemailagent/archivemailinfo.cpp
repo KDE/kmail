@@ -249,3 +249,5 @@ QDebug operator<<(QDebug d, const ArchiveMailInfo &t)
     d.space() << "mUseRange" << t.useRange();
     return d;
 }
+
+#include "moc_archivemailinfo.cpp"
