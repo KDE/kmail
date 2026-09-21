@@ -11,3 +11,4 @@ macro(add_snooze_agent_test _source)
 endmacro()
 
 add_snooze_agent_test(snoozeinfotest.cpp)
+add_snooze_agent_test(snoozeattributetest.cpp)
