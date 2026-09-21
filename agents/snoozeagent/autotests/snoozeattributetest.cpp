@@ -8,6 +8,7 @@
 #include "snoozeattribute.h"
 #include <QTest>
 QTEST_GUILESS_MAIN(SnoozeAttributeTest)
+using namespace Qt::Literals::StringLiterals;
 SnoozeAttributeTest::SnoozeAttributeTest(QObject *parent)
     : QObject{parent}
 {
@@ -17,6 +18,7 @@ void SnoozeAttributeTest::shouldHaveDefaultValues()
 {
     const SnoozeAttribute attr;
     QVERIFY(!attr.wakeUpDateTime().isValid());
+    QCOMPARE(attr.type(), "SnoozeAttribute"_ba);
 }
 
 void SnoozeAttributeTest::shouldCloneAttributes()
