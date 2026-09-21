@@ -8,5 +8,8 @@
     <entry name="snoozeCollectionId" key="snoozeCollectionId" type="LongLong">
       <default>-1</default>
     </entry>
+    <entry name="markAsUnreadOnWakeUp" key="markAsUnreadOnWakeUp" type="Bool">
+      <default>true</default>
+    </entry>
   </group>
 </kcfg>
