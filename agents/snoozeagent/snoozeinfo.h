@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <Akonadi/Collection>
 #include <Akonadi/Item>
 #include <QDateTime>
 #include <QString>
@@ -28,9 +27,6 @@ public:
     [[nodiscard]] Akonadi::Item::Id itemId() const;
     void setItemId(Akonadi::Item::Id id);
 
-    [[nodiscard]] Akonadi::Collection::Id originalCollection() const;
-    void setOriginalCollection(Akonadi::Collection::Id id);
-
     /** Always UTC. */
     [[nodiscard]] QDateTime wakeUpDateTime() const;
     void setWakeUpDateTime(const QDateTime &dateTime);
@@ -40,9 +36,6 @@ public:
 
     [[nodiscard]] QString from() const;
     void setFrom(const QString &from);
-
-    [[nodiscard]] bool markAsUnread() const;
-    void setMarkAsUnread(bool markAsUnread);
 
     [[nodiscard]] qint32 uniqueIdentifier() const;
     void setUniqueIdentifier(qint32 uniqueIdentifier);
@@ -58,9 +51,7 @@ private:
     QString mSubject;
     QString mFrom;
     Akonadi::Item::Id mItemId = -1;
-    Akonadi::Collection::Id mOriginalCollection = -1;
     qint32 mUniqueIdentifier = -1;
-    bool mMarkAsUnread = true;
 };
 }
 

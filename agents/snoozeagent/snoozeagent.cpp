@@ -81,14 +81,13 @@ void SnoozeAgent::reload()
     }
 }
 
-void SnoozeAgent::snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString &subject, const QString &from, bool markAsUnread)
+void SnoozeAgent::snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString &subject, const QString &from)
 {
     // TODO build a SnoozeInfo and hand it to the manager.
     Q_UNUSED(itemId)
     Q_UNUSED(wakeUpDateTime)
     Q_UNUSED(subject)
     Q_UNUSED(from)
-    Q_UNUSED(markAsUnread)
 }
 
 void SnoozeAgent::cancelSnooze(qint64 itemId)

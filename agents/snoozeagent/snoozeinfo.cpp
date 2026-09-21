@@ -47,16 +47,6 @@ void SnoozeInfo::setItemId(Akonadi::Item::Id id)
     mItemId = id;
 }
 
-Akonadi::Collection::Id SnoozeInfo::originalCollection() const
-{
-    return mOriginalCollection;
-}
-
-void SnoozeInfo::setOriginalCollection(Akonadi::Collection::Id id)
-{
-    mOriginalCollection = id;
-}
-
 QDateTime SnoozeInfo::wakeUpDateTime() const
 {
     return mWakeUpDateTime;
@@ -87,16 +77,6 @@ void SnoozeInfo::setFrom(const QString &from)
     mFrom = from;
 }
 
-bool SnoozeInfo::markAsUnread() const
-{
-    return mMarkAsUnread;
-}
-
-void SnoozeInfo::setMarkAsUnread(bool markAsUnread)
-{
-    mMarkAsUnread = markAsUnread;
-}
-
 qint32 SnoozeInfo::uniqueIdentifier() const
 {
     return mUniqueIdentifier;
@@ -109,18 +89,16 @@ void SnoozeInfo::setUniqueIdentifier(qint32 uniqueIdentifier)
 
 bool SnoozeInfo::operator==(const SnoozeInfo &other) const
 {
-    return mItemId == other.mItemId && mOriginalCollection == other.mOriginalCollection && mWakeUpDateTime == other.mWakeUpDateTime
-        && mSubject == other.mSubject && mFrom == other.mFrom && mMarkAsUnread == other.mMarkAsUnread && mUniqueIdentifier == other.mUniqueIdentifier;
+    return mItemId == other.mItemId && mWakeUpDateTime == other.mWakeUpDateTime && mSubject == other.mSubject && mFrom == other.mFrom
+        && mUniqueIdentifier == other.mUniqueIdentifier;
 }
 
 QDebug operator<<(QDebug debug, const Snooze::SnoozeInfo &info)
 {
     debug.space() << "Item id:" << info.itemId();
-    debug.space() << "Original collection:" << info.originalCollection();
     debug.space() << "Wake up:" << info.wakeUpDateTime();
     debug.space() << "Subject:" << info.subject();
     debug.space() << "From:" << info.from();
-    debug.space() << "Mark as unread:" << info.markAsUnread();
     debug.space() << "Unique identifier:" << info.uniqueIdentifier();
     return debug;
 }

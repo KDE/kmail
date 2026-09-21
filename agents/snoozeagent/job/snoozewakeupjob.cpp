@@ -46,7 +46,7 @@ void SnoozeWakeUpJob::slotItemFetchDone(KJob *job)
 
 void SnoozeWakeUpJob::slotUnlinkDone(KJob *job)
 {
-    // TODO remove SnoozeAttribute, apply markAsUnread, Akonadi::ItemModifyJob.
+    // TODO remove SnoozeAttribute, honour SnoozeAgentSettings::markAsUnreadOnWakeUp(), Akonadi::ItemModifyJob.
     Q_UNUSED(job)
 }
 

@@ -18,12 +18,10 @@ void SnoozeInfoTest::shouldHaveDefaultValue()
 {
     Snooze::SnoozeInfo info;
     QCOMPARE(info.itemId(), -1);
-    QCOMPARE(info.originalCollection(), -1);
     QCOMPARE(info.uniqueIdentifier(), -1);
     QVERIFY(!info.wakeUpDateTime().isValid());
     QVERIFY(info.subject().isEmpty());
     QVERIFY(info.from().isEmpty());
-    QVERIFY(info.markAsUnread());
     QVERIFY(!info.isValid());
 }
 

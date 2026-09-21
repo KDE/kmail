@@ -21,20 +21,17 @@ QByteArray SnoozeAttribute::type() const
 
 SnoozeAttribute *SnoozeAttribute::clone() const
 {
-    auto expireAttr = new SnoozeAttribute();
-    expireAttr->setWakeUpDateTime(mWakeUpDateTime);
-    expireAttr->setOriginalCollection(mOriginalCollection);
-    expireAttr->setMarkAsUnread(mMarkAsUnread);
-    return expireAttr;
+    auto snoozeAttr = new SnoozeAttribute();
+    snoozeAttr->setWakeUpDateTime(mWakeUpDateTime);
+    return snoozeAttr;
 }
 
 QByteArray SnoozeAttribute::serialized() const
 {
     QByteArray result;
     QDataStream s(&result, QIODevice::WriteOnly);
+    s.setVersion(QDataStream::Qt_6_0);
     s << mWakeUpDateTime;
-    s << mOriginalCollection;
-    s << mMarkAsUnread;
     return result;
 }
 
@@ -42,8 +39,6 @@ void SnoozeAttribute::deserialize(const QByteArray &data)
 {
     QDataStream s(data);
     s >> mWakeUpDateTime;
-    s >> mOriginalCollection;
-    s >> mMarkAsUnread;
 }
 
 QDateTime SnoozeAttribute::wakeUpDateTime() const
@@ -54,24 +49,4 @@ QDateTime SnoozeAttribute::wakeUpDateTime() const
 void SnoozeAttribute::setWakeUpDateTime(const QDateTime &dateTime)
 {
     mWakeUpDateTime = dateTime;
-}
-
-Akonadi::Collection::Id SnoozeAttribute::originalCollection() const
-{
-    return mOriginalCollection;
-}
-
-void SnoozeAttribute::setOriginalCollection(Akonadi::Collection::Id id)
-{
-    mOriginalCollection = id;
-}
-
-bool SnoozeAttribute::markAsUnread() const
-{
-    return mMarkAsUnread;
-}
-
-void SnoozeAttribute::setMarkAsUnread(bool markAsUnread)
-{
-    mMarkAsUnread = markAsUnread;
 }

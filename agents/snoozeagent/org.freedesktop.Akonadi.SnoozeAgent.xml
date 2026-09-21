@@ -16,7 +16,6 @@
       <arg name="wakeUpDateTime" type="x" direction="in"/>
       <arg name="subject" type="s" direction="in"/>
       <arg name="from" type="s" direction="in"/>
-      <arg name="markAsUnread" type="b" direction="in"/>
     </method>
     <method name="cancelSnooze">
       <arg name="itemId" type="x" direction="in"/>

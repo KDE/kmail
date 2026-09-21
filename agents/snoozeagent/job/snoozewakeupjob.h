@@ -18,7 +18,7 @@ class SnoozeInfo;
 
 /**
  * Wakes one snoozed message up: unlink it from the virtual Snooze collection,
- * drop its SnoozeAttribute, optionally mark it unread and notify.
+ * drop its SnoozeAttribute, mark it unread if the setting says so, and notify.
  *
  * Nothing here is needed for the message to become visible again -- the
  * message list proxy already shows it once the deadline has passed. This job

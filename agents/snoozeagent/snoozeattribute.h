@@ -7,7 +7,6 @@
 #pragma once
 
 #include <Akonadi/Attribute>
-#include <Akonadi/Collection>
 #include <QDateTime>
 
 /**
@@ -18,6 +17,11 @@
  * the predicate (rather than a plain boolean) means a snoozed message
  * reappears on its own once the deadline has passed, even if the agent is
  * disabled or was never started.
+ *
+ * The date is all there is to store. The folder the message sits in is never
+ * changed by snoozing, so it stays readable from the item itself, and whether
+ * to mark the message unread on wake-up is a global preference
+ * (SnoozeAgentSettings::markAsUnreadOnWakeUp), not a per-message one.
  */
 class SnoozeAttribute : public Akonadi::Attribute
 {
@@ -34,16 +38,6 @@ public:
     [[nodiscard]] QDateTime wakeUpDateTime() const;
     void setWakeUpDateTime(const QDateTime &dateTime);
 
-    /** Collection the message was in when it was snoozed. */
-    [[nodiscard]] Akonadi::Collection::Id originalCollection() const;
-    void setOriginalCollection(Akonadi::Collection::Id id);
-
-    /** Whether the message should be marked unread when it wakes up. */
-    [[nodiscard]] bool markAsUnread() const;
-    void setMarkAsUnread(bool markAsUnread);
-
 private:
     QDateTime mWakeUpDateTime;
-    Akonadi::Collection::Id mOriginalCollection = -1;
-    bool mMarkAsUnread = true;
 };

@@ -28,7 +28,7 @@ public Q_SLOTS:
     void reload();
 
     /** @p wakeUpDateTime is a UTC seconds-since-epoch timestamp. */
-    void snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString &subject, const QString &from, bool markAsUnread);
+    void snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString &subject, const QString &from);
     void cancelSnooze(qint64 itemId);
     void wakeUpNow(qint64 itemId);
 
