@@ -357,6 +357,8 @@ target_sources(
         historyclosedreader/historyclosedreadermanager.cpp
         historyclosedreader/historyclosedreadermenu.h
         historyclosedreader/historyclosedreadermenu.cpp
+        snooze/snoozefilterproxymodel.h
+        snooze/snoozefilterproxymodel.cpp
 )
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
