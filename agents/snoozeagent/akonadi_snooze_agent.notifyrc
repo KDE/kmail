@@ -1,8 +1,20 @@
 [Global]
 IconName=kmail
 Comment=Snooze Agent
+Comment[cs]=Agent pro odložení
+Comment[es]=Agente para posponer
+Comment[sl]=Agent za dremež
+Comment[tr]=Erteleme aracısı
 
 [Event/snoozemessagewokeup]
 Name=Snoozed message is back
+Name[cs]=Odložená zpráva se vrátila
+Name[es]=Mensaje pospuesto de vuelta
+Name[sl]=Predremano sporočilo je nazaj
+Name[tr]=Ertelenen İleti Geri Geldi
 Comment=A snoozed message came back to your inbox
+Comment[cs]=Odložená zpráva se vrátila do vaší doručené pošty
+Comment[es]=Un mensaje pospuesto ha vuelto a su bandeja de entrada
+Comment[sl]=Predremano sporočilo je prišlo nazaj v vaš vhodni predal
+Comment[tr]=Ertelenmiş bir ileti, gelen kutunuza geri geldi
 Action=Popup

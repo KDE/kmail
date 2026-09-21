@@ -1,6 +1,14 @@
 [Desktop Entry]
 Name=Snooze Agent
+Name[cs]=Agent pro odložení
+Name[es]=Agente para posponer
+Name[sl]=Agent za dremež
+Name[tr]=Erteleme Aracısı
 Comment=Snooze Agent
+Comment[cs]=Agent pro odložení
+Comment[es]=Agente para posponer
+Comment[sl]=Agent za dremež
+Comment[tr]=Erteleme aracısı
 Type=AkonadiAgent
 Exec=akonadi_snooze_agent
 Icon=kmail
