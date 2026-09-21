@@ -15,8 +15,6 @@ ecm_qt_declare_logging_category(snooze_common_SRCS HEADER snoozeagent_debug.h ID
 set(libsnoozeagent_SRCS
     job/snoozewakeupjob.cpp
     job/snoozewakeupjob.h
-    snoozeattribute.cpp
-    snoozeattribute.h
     snoozeconfigurewidget.cpp
     snoozeconfigurewidget.h
     snoozeinfo.cpp
@@ -77,6 +75,7 @@ target_link_libraries(
     snoozeagent
     KPim6::AkonadiCore
     KPim6::AkonadiMime
+    KPim6::MailCommon
     KF6::Mime
     KF6::ConfigCore
     KF6::ConfigGui

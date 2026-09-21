@@ -7,8 +7,9 @@
 #include "snoozeagent.h"
 #include "snoozeagentadaptor.h"
 #include "snoozeagentsettings.h"
-#include "snoozeattribute.h"
 #include "snoozemanager.h"
+
+#include <MailCommon/SnoozeAttribute>
 
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
@@ -26,7 +27,7 @@ SnoozeAgent::SnoozeAgent(const QString &id)
     : Akonadi::AgentWidgetBase(id)
     , mManager(new SnoozeManager(this))
 {
-    Akonadi::AttributeFactory::registerAttribute<SnoozeAttribute>();
+    Akonadi::AttributeFactory::registerAttribute<MailCommon::SnoozeAttribute>();
 
     new SnoozeAgentAdaptor(this);
     QDBusConnection::sessionBus().registerObject(u"/SnoozeAgent"_s, this, QDBusConnection::ExportAdaptors);
