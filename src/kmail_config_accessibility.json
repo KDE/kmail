@@ -1,0 +1,11 @@
+{
+    "KPlugin": {
+        "Description": "Accessibility settings",
+        "Icon": "preferences-desktop-accessibility",
+        "Name": "Accessibility",
+        "ServiceTypes": [
+            "KCModule"
+        ]
+    },
+    "X-KDE-Weight": 400
+}

@@ -8,6 +8,7 @@
  *
  */
 
+#include "configuredialog/configureaccessibilitypage.h"
 #include "configuredialog/configureaccountpage.h"
 #include "configuredialog/configureappearancepage.h"
 #include "configuredialog/configurecomposerpage.h"
