@@ -12,15 +12,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:54+0000\n"
-"PO-Revision-Date: 2026-09-01 21:41+0200\n"
+"POT-Creation-Date: 2026-09-22 00:45+0000\n"
+"PO-Revision-Date: 2026-09-21 17:46+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@gmail.com>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.08.0\n"
+"X-Generator: Lokalize 26.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -1522,7 +1522,7 @@ msgstr "Diverse"
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Insticksprogram för bekräfta borttagning av brev"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:321
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:322
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi-moduler"
@@ -7766,16 +7766,13 @@ msgstr "Signatur för OCSP-besvarare:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
 msgstr ""
 "Skriv in adressen till servern för direktvalidering av certifikat (OCSP-"
-"besvarare). Webbadressen börjar oftast med http://."
+"svarare). Webbadressen börjar oftast med https://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91

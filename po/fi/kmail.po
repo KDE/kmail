@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:54+0000\n"
+"POT-Creation-Date: 2026-09-22 00:45+0000\n"
 "PO-Revision-Date: 2026-03-02 19:23+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -1536,7 +1536,7 @@ msgstr "Sekalaista"
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Vahvista sähköpostiliitännäisten poistaminen"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:321
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:322
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Akonadi-agentit"

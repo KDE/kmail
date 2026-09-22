@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:54+0000\n"
+"POT-Creation-Date: 2026-09-22 00:45+0000\n"
 "PO-Revision-Date: 2026-09-01 10:13+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1538,7 +1538,7 @@ msgstr "Miscel·lània"
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Connectors «Confirma la supressió dels correus electrònics»"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:321
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:322
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Agents d'Akonadi"

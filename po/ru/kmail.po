@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-20 12:54+0000\n"
+"POT-Creation-Date: 2026-09-22 00:45+0000\n"
 "PO-Revision-Date: 2026-06-25 14:37+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -1561,7 +1561,7 @@ msgstr "Прочие"
 msgid "Confirm Deleting Emails Plugins"
 msgstr "Подтверждение удаления модулей электронных писем"
 
-#: configuredialog/configureplugins/configurepluginslistwidget.cpp:321
+#: configuredialog/configureplugins/configurepluginslistwidget.cpp:322
 #, kde-format
 msgid "Akonadi Agents"
 msgstr "Агенты Akonadi"
