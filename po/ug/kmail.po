@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 00:45+0000\n"
-"PO-Revision-Date: 2026-05-31 19:00-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
-"Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
+"Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -775,7 +775,7 @@ msgstr ""
 #: configuredialog/configureappearancepage.cpp:348
 #, kde-format
 msgid "%"
-msgstr "%"
+msgstr ""
 
 #: configuredialog/configureappearancepage.cpp:474
 #, kde-format
@@ -1367,7 +1367,7 @@ msgstr ""
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
-msgstr " kB"
+msgstr ""
 
 #: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
@@ -2024,8 +2024,6 @@ msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
 "%1.</qt>"
 msgstr ""
-"<qt>بۇ مەشغۇلات تىزىملىك بالداقنى پۈتۈنلەي يوشۇرىدۇ. %1 نى بېسىپ قايتا "
-"كۆرسىتەلەيسىز.</qt>"
 
 #: editor/kmcomposerwin.cpp:1587 kmmainwin.cpp:225
 #, kde-format
@@ -2116,7 +2114,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr ""
+msgstr "Could not start \"KAddressbook\" program. ئورناتمىڭىزنى تەكشۈرۈڭ."
 
 #: editor/kmcomposerwin.cpp:2216 kmlaunchexternalcomponent.cpp:151
 #, kde-format
@@ -2319,7 +2317,7 @@ msgstr ""
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
-msgstr "HTML ھالىتى تاقالسا تېكىستنىڭ پىچىمى يوقىلىدۇ. شۇنداق بولسا بولامدۇ؟"
+msgstr ""
 
 #: editor/kmcomposerwin.cpp:3214
 #, kde-format
@@ -4106,7 +4104,7 @@ msgstr ""
 #: kmkernel.cpp:749
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
-msgstr "KMail  ھازىر تورسىز ھالەتتە. قانداق قىلىسىز؟"
+msgstr ""
 
 #: kmkernel.cpp:751
 #, kde-format
@@ -4184,7 +4182,7 @@ msgstr ""
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
-msgstr "%1: %2"
+msgstr ""
 
 #: kmlaunchexternalcomponent.cpp:47
 #, kde-format
@@ -4223,7 +4221,7 @@ msgstr "KMail  خاتالىقى"
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
-msgstr ""
+msgstr "Could not start \"ImportWizard\" program. ئورناتمىڭىزنى تەكشۈرۈڭ."
 
 #: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
 #, kde-format
@@ -4236,7 +4234,7 @@ msgstr ""
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
-msgstr ""
+msgstr "Could not start \"PIM Data Exporter\" program. ئورناتمىڭىزنى تەكشۈرۈڭ."
 
 #: kmlaunchexternalcomponent.cpp:125 kmlaunchexternalcomponent.cpp:133
 #, kde-format
@@ -4277,7 +4275,7 @@ msgstr "ئىمپورت قىلماق"
 #: kmmainwidget.cpp:343
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
-msgstr ""
+msgstr "Could not start the import wizard. ئورناتمىڭىزنى تەكشۈرۈڭ."
 
 #: kmmainwidget.cpp:345
 #, kde-format
@@ -5305,7 +5303,7 @@ msgstr ""
 #: kmmainwidget.cpp:4276
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "قايتىلا(&R)"
 
 #: kmmainwidget.cpp:4278
 #, kde-format
@@ -5565,16 +5563,14 @@ msgid "Cannot move message. %1"
 msgstr ""
 
 #: kmundoredomanager.cpp:134
-#, fuzzy, kde-format
-#| msgid "Moving messages"
+#, kde-format
 msgid "Move messages"
-msgstr "ئۇچۇر يۆتكەۋاتىدۇ"
+msgstr ""
 
 #: kmundoredomanager.cpp:170
-#, fuzzy, kde-format
-#| msgid "New Messages"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "يېڭى ئۇچۇرلار"
+msgstr ""
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:31
 #, kde-format
@@ -5638,7 +5634,7 @@ msgstr ""
 #, kde-format
 msgctxt "%1: number of unread messages %2: total number of messages"
 msgid "%1 / %2"
-msgstr "%1 / %2"
+msgstr ""
 
 #: kontactplugin/kmail/summarywidget.cpp:198
 #, kde-format
@@ -5728,13 +5724,13 @@ msgstr ""
 #, kde-format
 msgctxt "@info:credit"
 msgid "Cornelius Schumacher"
-msgstr "Cornelius Schumacher"
+msgstr ""
 
 #: kontactplugin/summary/summaryview_plugin.cpp:109
 #, kde-format
 msgctxt "@info:credit"
 msgid "Tobias Koenig"
-msgstr "Tobias Koenig"
+msgstr ""
 
 #: manageshowcollectionproperties.cpp:82 manageshowcollectionproperties.cpp:139
 #, kde-format
@@ -5931,7 +5927,7 @@ msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
 "email though could be irc/ftp or other url variant"
 msgid "%1 (%2)"
-msgstr "%1 (%2)"
+msgstr ""
 
 #: messageactions.cpp:768
 #, kde-format
@@ -7565,11 +7561,10 @@ msgid ""
 msgstr ""
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgid "Email Address"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "ئېلخەت ئادرېسلىرى"
+msgstr ""
 
 #: util.cpp:37
 #, kde-format
