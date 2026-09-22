@@ -617,12 +617,14 @@ target_link_libraries(
     KPim6::AkonadiCore
 )
 
-kcoreaddons_add_plugin(kcm_kmail_accessibility SOURCES configuredialog/kcm_kmail_accessibility.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-target_link_libraries(
-    kcm_kmail_accessibility
-    kcm_kmail_static
-    KPim6::AkonadiCore
-)
+if(TARGET KF6::TextEditTextToSpeech)
+    kcoreaddons_add_plugin(kcm_kmail_accessibility SOURCES configuredialog/kcm_kmail_accessibility.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
+    target_link_libraries(
+        kcm_kmail_accessibility
+        kcm_kmail_static
+        KPim6::AkonadiCore
+    )
+endif()
 
 ########### kmailpart ###############
 

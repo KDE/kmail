@@ -18,13 +18,10 @@ ConfigureAccessibilityPage::ConfigureAccessibilityPage(QObject *parent, const KP
     l->setContentsMargins({});
     l->addWidget(mTextToSpeechWidget);
 
-    mTextToSpeechWidget->readConfig();
     mTextToSpeechWidget->initializeSettings();
-    /*
-    connect(mConfigurePlugins, &PimCommon::ConfigurePluginsWidget::wasChanged, this, [this](bool state) {
+    connect(mTextToSpeechWidget, &TextEditTextToSpeech::TextToSpeechConfigWidget::configChanged, this, [this](bool state) {
         setNeedsSave(state);
     });
-    */
 }
 
 ConfigureAccessibilityPage::~ConfigureAccessibilityPage() = default;
