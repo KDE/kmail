@@ -1,7 +1,9 @@
 [Global]
 IconName=kmail
 Comment=Snooze Agent
+Comment[bg]=Агент за отлагане
 Comment[ca]=Agent de posposament
+Comment[ca@valencia]=Agent de posposament
 Comment[cs]=Agent pro odložení
 Comment[es]=Agente para posponer
 Comment[fr]=Agent de répétition
@@ -17,7 +19,9 @@ Comment[uk]=Агент відкладення
 
 [Event/snoozemessagewokeup]
 Name=Snoozed message is back
+Name[bg]=Отложено съобщение се върна
 Name[ca]=El missatge posposat ha tornat
+Name[ca@valencia]=El missatge posposat ha tornat
 Name[cs]=Odložená zpráva se vrátila
 Name[es]=Mensaje pospuesto de vuelta
 Name[fr]=Le message de répétition est de retour
@@ -31,7 +35,9 @@ Name[sv]=Uppskjutet brev är tillbaka
 Name[tr]=Ertelenen İleti Geri Geldi
 Name[uk]=Повернулося відкладене повідомлення
 Comment=A snoozed message came back to your inbox
+Comment[bg]=Отложено съобщение се върна в кутията ви с входящи съобщения.
 Comment[ca]=Un missatge posposat ha tornat a la vostra bústia d'entrada
+Comment[ca@valencia]=Un missatge posposat ha tornat a la vostra bústia d'entrada
 Comment[cs]=Odložená zpráva se vrátila do vaší doručené pošty
 Comment[es]=Un mensaje pospuesto ha vuelto a su bandeja de entrada
 Comment[fr]=Un message de répétition est de retour dans votre boîte de réception

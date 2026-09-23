@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=Snooze Agent
+Name[bg]=Агент за отлагане
 Name[ca]=Agent de posposament
+Name[ca@valencia]=Agent de posposament
 Name[cs]=Agent pro odložení
 Name[es]=Agente para posponer
 Name[fr]=Agent de répétition
@@ -14,7 +16,9 @@ Name[sv]=Uppskjutningsmodul
 Name[tr]=Erteleme Aracısı
 Name[uk]=Агент відкладення
 Comment=Snooze Agent
+Comment[bg]=Агент за отлагане
 Comment[ca]=Agent de posposament
+Comment[ca@valencia]=Agent de posposament
 Comment[cs]=Agent pro odložení
 Comment[es]=Agente para posponer
 Comment[fr]=Agent de répétition
