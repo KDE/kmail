@@ -5,8 +5,7 @@
 >Агент архивирования почты</application
 >">
   <!ENTITY % addindex "IGNORE">
-  <!ENTITY % Russian "INCLUDE"
-> 
+  <!ENTITY % Russian "INCLUDE">
 ]>
 
 <article id="archivemailagent" lang="&language;">

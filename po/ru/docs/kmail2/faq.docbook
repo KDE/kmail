@@ -78,7 +78,7 @@
 >Mozilla Firefox</guimenuitem
 ></menuchoice
 >.</para>
-    
+
     <para
 >Администраторы, желающие автоматически настроить этот параметр для своих пользователей, могут сделать следующее:</para>
     <itemizedlist>
@@ -399,18 +399,18 @@
 ><guimenu
 >&systemsettings;</guimenu
 ><guisubmenu
->Application 
+>Application
 Appearance</guisubmenu
 ><guimenuitem
 >Colors</guimenuitem
 ><guimenuitem
 >Colors</guimenuitem
 ></menuchoice
->, for each color 
+>, for each color
 set except <guilabel
 >Common Colors</guilabel
 > (which doesn't have it), change the <guilabel
->Alternate 
+>Alternate
 Background</guilabel
 > to be the same as the <guilabel
 >Normal Background</guilabel
@@ -421,16 +421,16 @@ Background</guilabel
 > and <emphasis
 >Mageia</emphasis
 > doesn't use the name <guilabel
->System 
+>System
 Settings</guilabel
 >.  As in <guilabel
 >KControl</guilabel
 >, the KDE 3 control centre, they name it <quote
->Configure your 
+>Configure your
 Desktop</quote
 > to distinguish it from <quote
 >Configure your Computer</quote
->, a.k.a. the Mandriva/Mageia Control 
+>, a.k.a. the Mandriva/Mageia Control
 Center (MCC). Other than this name change, the method is as described above.</para>
 </answer>
 </qandaentry
@@ -470,7 +470,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 > Производится настройка нового компьютера, и на него требуется перенести всю электронную почту. Принимается решение скопировать всё на USB-накопитель. Процесс копирования завершается с ошибкой:</para>
     <screen
 >Не удалось скопировать ............ Недопустимый параметр</screen>
-    
+
     <para
 ><emphasis
 >Решение:</emphasis
@@ -542,7 +542,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >GnuPG</application
 >, которые меняются в различных версиях.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >&kmail; не будет шифровать письма с неподписанным открытым ключом. Если требуется зашифровать таким ключом письмо, рекомендуется проверить владельца ключа и только тогда подписывать его своим закрытым ключом. Если идентифицировать владельца ключа не удаётся, а письмо зашифровать необходимо, подпишите ключ локально командой <userinput
@@ -555,12 +555,12 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></userinput
 >.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Мы бы не рекомендовали доверять чужому открытому ключу, не проверив его.</para>
       </listitem>
-      
+
       <listitem>
         <para
 >Начиная с GnuPG версии 1.0.7 требуется вручную указать, что собственный ключ является окончательно проверенным. Это больше не делается автоматически.</para>
@@ -602,8 +602,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 >экспорт данных PIM</ulink
 >.</para
 ><para
->&nbsp;</para
-> 
+>&nbsp;</para>
   </answer>
 </qandaentry>
 
@@ -615,7 +614,7 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ></question>
   <answer>
     <para
->&kmail; создаёт заново индекс папки, если он устаревает, то есть когда содержимое папки новее индекса. &kmail;  делает это для того чтобы избежать потерю или повреждение писем.</para>
+>&kmail; создаёт заново индекс папки, если он устаревает, то есть когда содержимое папки новее индекса. &kmail; делает это для того чтобы избежать потерю или повреждение писем.</para>
     <para
 >Устаревание индекса может происходить по разным причинам. Ниже представлены наиболее распространённые причины: <itemizedlist>
         <listitem

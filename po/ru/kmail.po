@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 00:45+0000\n"
-"PO-Revision-Date: 2026-06-25 14:37+0200\n"
+"PO-Revision-Date: 2026-09-23 19:40+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -572,7 +572,7 @@ msgstr "Исходящие (должна быть хотя бы одна учё�
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
-msgstr "&Подтвердить действие"
+msgstr "&Подтверждать действие"
 
 #: configuredialog/configureaccountpage.cpp:101
 #, kde-format
@@ -583,7 +583,7 @@ msgstr "Перед отправкой:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
-msgstr "Проверить орфографию"
+msgstr "Проверять орфографию"
 
 #: configuredialog/configureaccountpage.cpp:110
 #, kde-format
@@ -2421,10 +2421,7 @@ msgid "Send &Later"
 msgstr "Отправить &позже"
 
 #: editor/kmcomposerwin.cpp:3170
-#, fuzzy, kde-format
-#| msgid ""
-#| "You are trying to send the mail to more than %1 recipients. Send message "
-#| "anyway?"
+#, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
 "anyway?"
@@ -2432,17 +2429,13 @@ msgid_plural ""
 "You are trying to send the mail to more than %1 recipients. Send message "
 "anyway?"
 msgstr[0] ""
-"Попытка отправить письмо более, чем %1 получателям.\n"
-" Отправить письмо, несмотря на это?"
+"Письмо будет отправлено более чем %1 получателю. Всё равно отправить?"
 msgstr[1] ""
-"Попытка отправить письмо более, чем %1 получателям.\n"
-" Отправить письмо, несмотря на это?"
+"Письмо будет отправлено более чем %1 получателям. Всё равно отправить?"
 msgstr[2] ""
-"Попытка отправить письмо более, чем %1 получателям.\n"
-" Отправить письмо, несмотря на это?"
+"Письмо будет отправлено более чем %1 получателям. Всё равно отправить?"
 msgstr[3] ""
-"Попытка отправить письмо более, чем %1 получателям.\n"
-" Отправить письмо, несмотря на это?"
+"Письмо будет отправлено более чем одному получателю. Всё равно отправить?"
 
 #: editor/kmcomposerwin.cpp:3173
 #, kde-format
@@ -2657,9 +2650,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
-" шифрования является ограниченно доверенным . Ключ может быть подписан, если "
-"его отпечаток был передан по другому каналу связи. Нажмите на значок для "
-"просмотра более подробных сведений."
+"Ключ шифрования является ограниченно доверенным. Ключ может быть подписан, "
+"если его отпечаток был передан по другому каналу связи. Нажмите на значок "
+"для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3883
 #, kde-format
@@ -4003,9 +3996,9 @@ msgid ""
 "discarding its contents? <p><b>Beware</b> that discarded messages are not "
 "saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
-"<qt>Удалить папку <b>%1</b> со всем её содержимым? <p><b>Внимание!</b> "
-"Удалённые таким образом письма будет невозможно восстановить, так как они не "
-"сохраняются в корзине.</p></qt>"
+"<qt>Удалить папку <resource>%1</resource> со всем её содержимым? "
+"<p><b>Внимание!</b> Удалённые таким образом письма будет невозможно "
+"восстановить, так как они не сохраняются в корзине.</p></qt>"
 
 #: job/removecollectionjob.cpp:92
 #, kde-format
@@ -5721,13 +5714,12 @@ msgstr "О&тменить %1"
 #: kmmainwidget.cpp:4276
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "&Повторить действие"
 
 #: kmmainwidget.cpp:4278
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "О&тменить %1"
+msgstr "&Повторить %1"
 
 #: kmmainwidget.cpp:4335
 #, kde-format
@@ -6002,17 +5994,14 @@ msgstr "Не удалось переместить письмо. %1"
 
 # This message goes only in menu item Edit->"Undo %1" --aspotashev
 #: kmundoredomanager.cpp:134
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
 msgstr "перемещение писем"
 
 #: kmundoredomanager.cpp:170
-#, fuzzy, kde-format
-#| msgid "Message Tags"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "Метки"
+msgstr "изменение состояния писем"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:31
 #, kde-format
@@ -6504,8 +6493,7 @@ msgid "Last Search"
 msgstr "Последний поиск"
 
 #: searchdialog/searchwindowdialog.cpp:425
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "Выбрана недопустимая папка."
 
@@ -6761,7 +6749,7 @@ msgstr "Подтвер&ждать перед отправкой"
 #: settings/kmail.kcfg:204
 #, kde-format
 msgid "Check spelling before send"
-msgstr "Проверить орфографию перед отправкой"
+msgstr "Проверять орфографию перед отправкой"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:208
@@ -6771,13 +6759,7 @@ msgstr "Запрашивать уведомления об &обработке �
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:209
-#, fuzzy, kde-format
-#| msgid ""
-#| "<qt><p>Enable this option if you want KMail to request Message "
-#| "Disposition Notifications (MDNs) for each of your outgoing messages.</"
-#| "p><p>This option only affects the default; you can still enable or "
-#| "disable MDN requesting on a per-message basis in the composer, menu item "
-#| "<em>Options</em>-><em>Request Disposition Notification</em>.</p></qt>"
+#, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
 "Notifications (MDNs) for each of your outgoing messages.</p><p>This option "
@@ -6786,9 +6768,10 @@ msgid ""
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
 "<qt><p>Запрашивать уведомление об обработке письма (Message Disposition "
-"Notification, MDN) с каждым отправляемым письмом.</p><p>Чтобы изменить это "
-"значение по умолчанию, выберите пункт меню <em>Параметры</em>-><em>Запросить "
-"уведомление об обработке</em>.</p></qt>"
+"Notification, MDN) с каждым отправляемым письмом.</p><p>Этот параметр влияет "
+"только на значение по умолчанию; включать или отключать запрос уведомлений "
+"можно для каждого письма отдельно в редакторе, пункт меню <em>Параметры</"
+"em>→<em>Запросить уведомление об обработке</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:230
@@ -7904,16 +7887,13 @@ msgstr "Подпись службы OCSP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
 msgstr ""
-"Адрес сервера для проверки сертификата (служба OCSP). Обычно этот адрес "
-"начинается с http://."
+"Введите здесь адрес сервера для онлайн-проверки сертификатов (служба OCSP). "
+"Обычно этот адрес начинается с https://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
@@ -8208,25 +8188,20 @@ msgid "Plugins used in KMail."
 msgstr "Используемые в KMail подключаемые модули."
 
 #: util.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@info"
-#| msgid ""
-#| "It appears that this email from %1 is not being monitored. Do you wish to "
-#| "reply to this email?"
+#, kde-format
 msgctxt "@info"
 msgid ""
 "It appears that this email address from %1 is not being monitored. Do you "
 "wish to reply to this email?"
 msgstr ""
-"Похоже, что письмо от %1 не отслеживается. Вы хотите ответить на это письмо?"
+"Похоже, что этот адрес электронной почты от %1 не отслеживается. Ответить на "
+"это письмо?"
 
 #: util.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@title:window"
-#| msgid "Email not monitored"
+#, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
-msgstr "Письмо не отслеживается"
+msgstr "Адрес электронной почты не отслеживается"
 
 #: util.cpp:37
 #, kde-format
@@ -8290,15 +8265,13 @@ msgid "Use Global Setting"
 msgstr "Использовать глобальные параметры"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
-msgstr[0] "На серверах включены ответы об отсутствии"
-msgstr[1] "На серверах включены ответы об отсутствии"
-msgstr[2] "На серверах включены ответы об отсутствии"
-msgstr[3] "На сервере включены ответы об отсутствии"
+msgstr[0] "Ответ об отсутствии включён на %1 сервере"
+msgstr[1] "Ответ об отсутствии включён на %1 серверах"
+msgstr[2] "Ответ об отсутствии включён на %1 серверах"
+msgstr[3] "Ответ об отсутствии включён на сервере"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format

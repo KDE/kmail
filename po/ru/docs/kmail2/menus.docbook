@@ -283,8 +283,8 @@
   <listitem
 ><para
 >Запускает <application
->KMailCVT</application
-> (мастер импорта электронных писем). Это приложение позволяет импортировать письма из некоторых почтовых клиентов в &kmail;.</para
+>Средство импорта данных PIM</application
+>. Это приложение позволяет импортировать письма из нескольких почтовых клиентов в &kmail;.</para
 ></listitem>
 </varlistentry>
 
@@ -520,7 +520,7 @@
 ></term>
   <listitem
 ><para
->Закрывает  &kmail;.</para
+>Закрывает &kmail;.</para
 ></listitem>
 </varlistentry>
 </variablelist>
@@ -560,7 +560,7 @@
 > Основ &kde;. Описанные в этом руководстве пункты меню имеются только в &kmail;.</para>
 
 <variablelist>
-    
+
 <varlistentry id="reader-edit-copy-folder">
   <term
 ><menuchoice
@@ -813,7 +813,7 @@
   <listitem
 ><para
 >Это вложенное меню содержит следующие варианты для изменения внешнего вида списка писем.</para>
-    
+
     <variablelist>
     <varlistentry id="reader-view-messagelist-sorting">
       <term
@@ -838,7 +838,7 @@
 >По отправителю или получателю</guilabel
 > отобразит адрес получателя при просмотре письма в папке отправленных писем и адрес отправителя при просмотре письма в папке полученных писем.</para
 ></listitem>
-    
+
             <listitem
 ><para
 ><guilabel
@@ -851,7 +851,7 @@
 ></listitem>
           </itemizedlist>
         </listitem>
-        
+
         <listitem
 ><para
 ><guilabel
@@ -869,7 +869,7 @@
         </itemizedlist>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-aggregation">
       <term
 ><menuchoice
@@ -879,7 +879,7 @@
 ></term>
       <listitem
 ><para
->Позволяет выбрать способ группировки. Более подробная информация о группировке содержится на вкладке внешнего вида  <link linkend="configure-appearance-message-list"
+>Позволяет выбрать способ группировки. Более подробная информация о группировке содержится на вкладке внешнего вида <link linkend="configure-appearance-message-list"
 >«Список писем»</link
 > (меню <menuchoice
 > <guimenu
@@ -890,7 +890,7 @@
 >).</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-theme">
       <term
 ><menuchoice
@@ -911,7 +911,7 @@
 >).</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-create-new-tab">
       <term
 ><menuchoice
@@ -930,7 +930,7 @@
 >Создаёт новую вкладку на панели инструментов с вкладками. Эта вкладка будет указывать на просматриваемую папку, если включена соответствующая функция. Если панель инструментов с вкладками до сих пор не отображается, эта функция её создаст. Панель инструментов с вкладками может быть полезна в случае, когда есть множество папок, но работа производится только в небольшом количестве из их списка.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-next-tab">
       <term
 ><menuchoice
@@ -947,7 +947,7 @@
 >Открывает папку, связанную со следующей вкладкой на панели инструментов с вкладками.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-activate-previous-tab">
       <term
 ><menuchoice
@@ -964,7 +964,7 @@
 >Открывает папку, связанную с предыдущей вкладкой на панели инструментов с вкладками.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-left">
       <term
 ><menuchoice
@@ -977,7 +977,7 @@
 >Изменяет порядок вкладок на панели инструментов, перемещая активную вкладку влево. Если эта вкладка уже находится в крайнем левом положении, она будет перемещена в крайнее правое положение.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-move-tab-right">
       <term
 ><menuchoice
@@ -990,7 +990,7 @@
 >Изменяет порядок вкладок на панели инструментов, перемещая активную вкладку вправо. Если эта вкладка уже находится в крайнем правом положении, она будет перемещена в крайнее левое положение.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry id="reader-view-messagelist-close-tab">
       <term
 ><menuchoice
@@ -1734,7 +1734,7 @@
 ><para
 >Эта функция доступна только если выбран вариант <guilabel
 >Обрабатывать &HTML;-код в письмах</guilabel
->.  Если используется эта опция, но позже потребуется изменить <guimenuitem
+>. Если используется эта опция, но позже потребуется изменить <guimenuitem
 >Формат письма по умолчанию</guimenuitem
 >, обязательно снимите этот флажок перед переключением. В &kmail; есть ошибка: если этот флажок не снят, а параметр неактивен, результаты будут непредсказуемы.</para
 ></warning>
@@ -2168,7 +2168,7 @@
 >Название списка рассылки: &gt;</guimenuitem
 ></menuchoice
 ></term>
-  
+
   <listitem
 ><para
 >Предлагает несколько параметров для писем списка рассылки.</para>
@@ -2183,7 +2183,7 @@
 ><!-- add whitespace -->
   <para
 >Для каталогов списка рассылки доступны следующие опции:</para>
-  
+
   <itemizedlist>
     <listitem
 ><para
@@ -2242,7 +2242,7 @@
 >.</para
 ></listitem>
   </itemizedlist>
-  
+
   <para
 >&nbsp;</para
 ><!-- add whitespace --></listitem>
@@ -2366,7 +2366,7 @@
     <entry
 >Этот статус автоматически не устанавливается &kmail;. Используйте его для отметки важных писем.</entry
 ></row>
- 
+
     <row>
     <entry
 ><guimenuitem
@@ -2444,7 +2444,7 @@
 >Значение</entry
 ></row
 ></thead>
-    
+
     <tbody>
     <row>
     <entry
@@ -2490,7 +2490,7 @@
     <entry
 >&kmail; не устанавливает этот статус автоматически. Используйте его для отметки важных дискуссий.</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2520,7 +2520,7 @@
     <entry
 >&kmail; не устанавливает этот статус автоматически. Используйте его для пометки дискуссий, являющихся элементами действия (например, списком дел).</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2556,7 +2556,7 @@
 ></inlinemediaobject
 >).</entry
 ></row>
-    
+
     <row>
     <entry
 ><guimenuitem
@@ -2572,7 +2572,7 @@
 >Позволяет игнорировать целые дискуссии.</entry
 ></row>
     </tbody>
-    
+
   </tgroup
 ></informaltable>
   <para
@@ -2718,8 +2718,7 @@
 >&nbsp;</para
 ></listitem>
 </varlistentry>
-</variablelist
-> 
+</variablelist>
 
 </sect2>
 
@@ -3300,7 +3299,7 @@
 > to add a new contact your addressbook.</para
 ></listitem>
 </varlistentry
-> Thes options not available in 5.14.2 @dcb2021088. -->
+> These options not available in 5.14.2 @dcb2021088. -->
 
 <varlistentry id="composer-message-send-mail">
   <term
@@ -3748,7 +3747,7 @@
 >Convert the selected text to lowercase.</para
 ></listitem>
 </varlistentry
-> These optons have been consolidated in the "Change Case" plugin. @dcb2021089. -->
+> These options have been consolidated in the "Change Case" plugin. @dcb2021089. -->
 
 <varlistentry id="composer-edit-insert-special-character">
   <term
@@ -3764,7 +3763,7 @@
 >Позволяет вставить особый символ в положении курсора. Доступно большое количество символов в формате Unicode. Эта функция доступна только если включён модуль <guimenuitem
 >Вставка специальных символов</guimenuitem
 >.</para>
-  
+
   <para
 >Этот пункт меню был перемещён в меню <guimenu
 >Вставка</guimenu
@@ -3952,7 +3951,7 @@
 >. Более подробная информация о заголовках письма содержится в разделе <link linkend="composer-headers"
 >«Заголовки редактора»</link
 >.</para>
-  
+
 <para
 >&nbsp;</para>
 
@@ -3992,7 +3991,7 @@
 >&nbsp;</para
 ></listitem>
   </varlistentry>
-  
+
 </variablelist>
 
 </sect2>
@@ -4056,7 +4055,7 @@
 ><para
 >При выборе этой функции &kmail; вставит в письмо строку заголовка Disposition-Notification-To:, которая является запросом на получение уведомления о прочтении письма. Эту функцию должен поддерживать и использовать почтовый клиент получателя, в противном случае она не будет работать.</para>
   <para
->Подробнее о справочной информации и нескольких способов для настройки отчётов о прочтении писем, которые &kmail;  посылает в ответ на полученную строку Disposition-Notification-To: <xref linkend="configure-security-reading-mdns"/>.</para
+>Подробнее о справочной информации и нескольких способов для настройки отчётов о прочтении писем, которые &kmail; посылает в ответ на полученную строку Disposition-Notification-To: <xref linkend="configure-security-reading-mdns"/>.</para
 ></listitem>
 </varlistentry>
 
@@ -4508,7 +4507,7 @@
 >Если описание какого-либо пункта меню отсутствует в этом руководстве, обратитесь к разделу <ulink url="help:/fundamentals/menus.html#menus-tools"
 >«Меню «Сервис»</ulink
 > Основ &kde;. Описанные в этом руководстве пункты меню имеются только в &kmail;.</para>
-  
+
 <variablelist>
   <varlistentry id="composer-tools-select-recipients">
   <term
@@ -4652,7 +4651,7 @@
 >Если описание какого-либо пункта меню отсутствует в этом руководстве, обратитесь к разделу <ulink url="help:/fundamentals/menus.html#menus-settings"
 >«Меню «Параметры»</ulink
 > Основ &kde;. Описанные в этом руководстве пункты меню имеются только в &kmail;.</para>
-  
+
 <variablelist>
 <varlistentry id="composer-settings-toolbars">
   <term
@@ -4665,7 +4664,7 @@
 ></term>
   <listitem
 ><para
->Позволяет настроить отображение панелей инструментов. Возможно выбрать любую комбинацию из следующих трёх функций: Основная панель инструментов (<guilabel
+>Позволяет настроить показ панелей инструментов. Можно выбрать любую комбинацию из следующих трёх функций: Основная панель инструментов (<guilabel
 >Отправить</guilabel
 >, <guilabel
 >В очередь</guilabel
@@ -4675,7 +4674,7 @@
 >Стиль</guilabel
 >, <guilabel
 >Шрифт / Размер</guilabel
-> и так далее) и «Направление текста» (возможно, для написания письма на иврите). Обратите внимание, что панель HTML возможно легко переключить с помощью кнопки <guibutton
+> и так далее) и «Направление текста» (если используется письменность с направлением справа налево). Обратите внимание, что панель HTML легко включается и отключается кнопкой <guibutton
 >Текст с форматированием</guibutton
 > на основной панели инструментов.</para
 ></listitem>
