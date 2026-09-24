@@ -1053,10 +1053,10 @@ void AppearancePageMessageTagTab::slotCustomMenuRequested(const QPoint &)
     }
 }
 
-void AppearancePageMessageTagTab::slotRowsMoved([[maybe_unused]] const QModelIndex &,
+void AppearancePageMessageTagTab::slotRowsMoved(const QModelIndex &,
                                                 [[maybe_unused]] int sourcestart,
                                                 [[maybe_unused]] int sourceEnd,
-                                                [[maybe_unused]] const QModelIndex &,
+                                                const QModelIndex &,
                                                 [[maybe_unused]] int destinationRow)
 {
     updateButtons();
