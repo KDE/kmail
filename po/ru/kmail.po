@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-06-25 14:37+0200\n"
+"PO-Revision-Date: 2026-09-23 19:40+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -572,7 +572,7 @@ msgstr "Исходящие (должна быть хотя бы одна учё�
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
-msgstr "&Подтвердить действие"
+msgstr "&Подтверждать действие"
 
 #: configuredialog/configureaccountpage.cpp:102
 #, kde-format
@@ -583,7 +583,7 @@ msgstr "Перед отправкой:"
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
-msgstr "Проверить орфографию"
+msgstr "Проверять орфографию"
 
 #: configuredialog/configureaccountpage.cpp:111
 #, kde-format
@@ -2642,9 +2642,9 @@ msgid ""
 "The encryption key is only marginally trusted. You can sign the key, if you "
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
-" шифрования является ограниченно доверенным . Ключ может быть подписан, если "
-"его отпечаток был передан по другому каналу связи. Нажмите на значок для "
-"просмотра более подробных сведений."
+"Ключ шифрования является ограниченно доверенным. Ключ может быть подписан, "
+"если его отпечаток был передан по другому каналу связи. Нажмите на значок "
+"для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3916
 #, kde-format
@@ -3988,9 +3988,9 @@ msgid ""
 "discarding its contents? <p><b>Beware</b> that discarded messages are not "
 "saved into your Trash folder and are permanently deleted.</p></qt>"
 msgstr ""
-"<qt>Удалить папку <b>%1</b> со всем её содержимым? <p><b>Внимание!</b> "
-"Удалённые таким образом письма будет невозможно восстановить, так как они не "
-"сохраняются в корзине.</p></qt>"
+"<qt>Удалить папку <resource>%1</resource> со всем её содержимым? "
+"<p><b>Внимание!</b> Удалённые таким образом письма будет невозможно "
+"восстановить, так как они не сохраняются в корзине.</p></qt>"
 
 #: job/removecollectionjob.cpp:92
 #, kde-format
@@ -6720,7 +6720,7 @@ msgstr "Подтвер&ждать перед отправкой"
 #: settings/kmail.kcfg:219
 #, kde-format
 msgid "Check spelling before send"
-msgstr "Проверить орфографию перед отправкой"
+msgstr "Проверять орфографию перед отправкой"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
 #: settings/kmail.kcfg:223

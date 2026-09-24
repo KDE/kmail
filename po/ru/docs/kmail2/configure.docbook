@@ -255,8 +255,7 @@ format="PNG"/></imageobject
 
 <sect2 id="configure-identities-tab">
 <title
->Вкладка «Профили»</title
->    
+>Вкладка «Профили»</title>
 
 <para
 >Быстрое введение в использование вкладки <guilabel
@@ -719,7 +718,7 @@ format="PNG"/></imageobject
 >.</para>
 </listitem>
 </varlistentry>
- 
+
 <varlistentry>
 <term
 ><guilabel
@@ -775,8 +774,7 @@ format="PNG"/></imageobject
 ><para
 >Этот параметр открывает диалогов обзора каталогов, в котором возможно выбрать файл .vcf (Подсказка: Используйте &kaddressbook; для экспорта файла vCard, который возможно использовать здесь).</para
 ></listitem>
-        </varlistentry
->        
+        </varlistentry>
         <varlistentry>
         <term
 ><guilabel
@@ -885,7 +883,7 @@ format="PNG"/></imageobject
 >Эти команды извлекают информацию из письма, на которое производится ответ или которое пересылается, и вставляют эту информацию в окно редактора писем.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -896,7 +894,7 @@ format="PNG"/></imageobject
 >Эти команды передадут письмо, на которое производится ответ, через внешнюю программу, а затем вставят вывод в окно композиции &kmail;.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -1094,8 +1092,7 @@ format="PNG"/></imageobject
 >Возможно использовать эту кнопку для создания уменьшенной версии изображения, установленное в собственной записи адресной книги.</para>
 </listitem>
 </varlistentry>
-</variablelist
->  
+</variablelist>
 </listitem>
 </varlistentry>
 
@@ -1116,7 +1113,7 @@ format="PNG"/></imageobject
 >&nbsp;</para
 ><!-- add whitespace -->
 </sect2>
- 
+
 </sect1>
 
 <sect1 id="configure-accounts">
@@ -1251,7 +1248,7 @@ format="PNG"/></imageobject
 >Создание учётной записи для отправки почты</guilabel
 > или <guilabel
 >Настройка учётной записи</guilabel
->. Чтобы использовать &Sendmail; или подобные программы, укажите имя и расположение программы  &Sendmail;. Для &SMTP; укажите <guilabel
+>. Чтобы использовать &Sendmail; или подобные программы, укажите имя и расположение программы &Sendmail;. Для &SMTP; укажите <guilabel
 >Имя</guilabel
 >, <guilabel
 >Сервер исходящей почты</guilabel
@@ -1270,11 +1267,13 @@ format="PNG"/></imageobject
 >.</para>
 
 <para
->При установленном флажке <guilabel
->Подтверждение перед отправкой</guilabel
+>В разделе <guilabel
+>Перед отправкой</guilabel
+> при установленном флажке <guilabel
+>Подтверждать действие</guilabel
 > каждый раз перед отправкой письма будет запрашиваться подтверждение. При установленном флажке <guilabel
->Проверить орфографию перед отправкой</guilabel
-> каждый раз перед отправкой письма будет производиться проверка орфографии.</para>
+>Проверять орфографию</guilabel
+> каждый раз перед отправкой письма будет выполняться проверка орфографии.</para>
 
 <para
 >Поле <guilabel
@@ -1455,14 +1454,14 @@ pane that tells you if a message is &HTML; or not. This is important because
 &HTML; messages might imitate the look of a signed and encrypted message, so
 you should be aware of the fact that you are reading an &HTML; message. The &HTML;
 status bar itself cannot be influenced by the &HTML; code of the message.</para>
- 
+
 <para
 >Enable <guilabel
 >Replace smileys by emoticons</guilabel
-> if you want smileys 
+> if you want smileys
 like <userinput
 >:-)</userinput
-> appearing in the message text to be 
+> appearing in the message text to be
 replaced by emoticons (small pictures) such as
 <inlinemediaobject
 ><imageobject>
@@ -1481,11 +1480,11 @@ replaced by emoticons (small pictures) such as
 <!-- <para
 ><guilabel
 >Fallback character encoding</guilabel
->: 
-Some emails, especially those generated automatically, do not specify the 
-character encoding which needs to be used to properly display them. In such 
-cases a fallback character encoding will be used, which you can configure 
-here. Set it to the character encoding most commonly used in your part of 
+>:
+Some emails, especially those generated automatically, do not specify the
+character encoding which needs to be used to properly display them. In such
+cases a fallback character encoding will be used, which you can configure
+here. Set it to the character encoding most commonly used in your part of
 the world. As a default the encoding configured for the whole system is used.</para
 > -->
 
@@ -1841,7 +1840,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-   
+
 <para
 >Чтобы создать собственную тему группировки, нажмите кнопку <guibutton
 >Настроить...</guibutton
@@ -1961,7 +1960,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     </mediaobject>
     </screenshot
 > -->
-  
+
 <para
 >Чтобы создать собственную тему списка писем, нажмите кнопку <guibutton
 >Настроить...</guibutton
@@ -1995,8 +1994,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Дополнительно</guilabel
 > позволяет отображать заголовки и изменять размер значков.</para>
 </listitem
-></varlistentry
-> 
+></varlistentry>
 </variablelist>
 </listitem
 ></varlistentry>
@@ -2028,7 +2026,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect2 id="configure-message-tags">
     <title
 >Метки</title>
-    
+
 <screenshot>
 <screeninfo
 >Внешний вид — Метки</screeninfo>
@@ -2083,7 +2081,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Этот параметр позволяет отобразить отмеченные записи списка писем другим цветом. При выборе этой опции будет представлена цветовая палитра. Выберите один из предустановленных цветов или нажмите кнопку «Другой...» для более точного выбора оттенка.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2094,7 +2092,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Выберите этот параметр, чтобы изменить цвет фона списка отмеченных писем.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2107,7 +2105,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2118,7 +2116,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Нажмите эту кнопку, чтобы открыть диалог выбора значка. Значок будет отображаться в отмеченных записях списка сообщений.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2129,7 +2127,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Воспользуйтесь этой кнопкой, чтобы создать комбинацию клавиш для присваивания метки выделенным письмам.</para
 ></listitem>
     </varlistentry>
-    
+
     <varlistentry>
         <term
 ><guilabel
@@ -2151,13 +2149,13 @@ the world. As a default the encoding configured for the whole system is used.</p
 ></menuchoice
 >.</para>
 </sect2>
- 
+
 </sect1>
 
 <sect1 id="configure-composer">
     <title
 >Редактор писем </title>
-    
+
     <para
 >Более подробная информация об использовании <guilabel
 >Редактора писем</guilabel
@@ -2170,7 +2168,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <sect2 id="configure-composer-general">
       <title
 >Главное </title>
-    
+
     <screenshot>
     <screeninfo
 >Редактор писем — Главное</screeninfo>
@@ -2191,10 +2189,10 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Этот диалог позволяет настроить способ, которым &kmail; обрабатывает подписи. Он также позволяет управлять некоторыми функциями форматирования, настраивать некоторые параметры автодополнения и настраивать функцию автосохранения &kmail;. </para>
-    
+
     <variablelist>
 	<varlistentry id="configure-composer-general-append-signature">
 	  <term>
@@ -2425,12 +2423,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >+</guiicon
 >. Возможно привязать комбинацию клавиш к шаблону для более быстрых операций. </para>
     <!-- To and CC field--><!-- I tested this, and I can't get it to work. David Bryant -->
-    
+
     <para
 >Шаблоны писем поддерживают команды подстановки, которые возможно ввести вручную или выбрать в меню <guimenu
 >Вставить команду</guimenu
 >. </para>
-    
+
     <para
 >Существует четыре типа пользовательских шаблонов: <guilabel
 >Ответить</guilabel
@@ -2443,7 +2441,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >, который возможно использовать для всех типов действий. Шаблону <guilabel
 >Универсальный</guilabel
 > нельзя присвоить комбинацию клавиш. </para>
-    
+
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2603,7 +2601,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >&Microsoft; Outlook Express</application
 > вложения с именами файлов, которые содержат не английские символы, установите флажок <guilabel
 >Имена вложений, совместимые с Outlook</guilabel
->. &kmail;  будет кодировать имена файлов нестандартным способом, который понимает <application
+>. &kmail; будет кодировать имена файлов нестандартным способом, который понимает <application
 >&Microsoft; Outlook</application
 >. </para>
 
@@ -2614,12 +2612,12 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Установите флажок <guilabel
 >Включить определение забытых вложений</guilabel
 >, чтобы &kmail; выдавал предупреждение перед отправкой письма без вложения, если оно будет содержать определённые слова, указывающие на то, что к письму должно было быть добавлено вложение. Список слов возможно редактировать. </para>
-    
+
     <para
 >Поле <guilabel
 >Максимальный размер вложения:</guilabel
 > позволяет ограничить размер любых отправляемых вложений. При попытке добавить файл размером больше указанного появится сообщение об ошибке, и файл не будет добавлен. Обратите внимание, что это индивидуальное ограничение. Размер файла также проверяется перед преобразованием самого файла в кодировку base 64, если это необходимо. </para>
-    
+
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
@@ -2648,7 +2646,7 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-   
+
     <para
 >Чтобы включить автоматическую коррекцию наиболее распространённых опечаток, выберите функцию <guilabel
 >Включить автоматическое исправление текста</guilabel
@@ -2663,7 +2661,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Если требуется сохранить параметры для другой установки или приложения, воспользуйтесь кнопкой <guibutton
 >Экспорт...</guibutton
 >. </para>
-    
+
     <para>
       <variablelist
 ><title
@@ -2701,7 +2699,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Заменить</guilabel
 >, затем нажмите кнопку <guibutton
 >Добавить</guibutton
->.  Чтобы убрать слово из списка, выделите нужную запись и нажмите <guibutton
+>. Чтобы убрать слово из списка, выделите нужную запись и нажмите <guibutton
 >Удалить</guibutton
 >. </para>
              </listitem>
@@ -2722,7 +2720,7 @@ the world. As a default the encoding configured for the whole system is used.</p
            </varlistentry>
         </variablelist>
     </para>
-      
+
     <para
 >После выбора всех необходимых вариантов автозамены нажмите <guibutton
 >Применить</guibutton
@@ -2731,7 +2729,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. </para>
     <para
 >&nbsp;</para
-><!-- add whitespace --> 
+><!-- add whitespace -->
     </sect2>
 
     <sect2 id="configure-resize-image">
@@ -2757,12 +2755,12 @@ the world. As a default the encoding configured for the whole system is used.</p
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-   
+
     <para
 >Иногда нужно, чтобы в исходящих письмах &kmail; автоматически изменял размер изображения (например, из-за ограничений сервера). Чтобы сделать это, выберите функцию <guilabel
 >Автоматически изменять размер изображений</guilabel
 >. У этой функции есть несколько опций. </para>
-      
+
     <variablelist>
      <varlistentry
 ><term
@@ -2804,14 +2802,14 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Последний параметр позволяет пропустить изменение размера изображений, размер которых меньше указанного размера файла. </para>
        </listitem>
      </varlistentry>
-     
+
      <varlistentry
 ><term
 ><guilabel
 >Имя файла</guilabel
 ></term>
        <listitem>
-         
+
            <variablelist>
            <varlistentry
 ><term
@@ -2874,10 +2872,10 @@ the world. As a default the encoding configured for the whole system is used.</p
              </listitem>
            </varlistentry>
          </variablelist>
-         
+
          </listitem>
        </varlistentry>
-     
+
        <varlistentry
 ><term
 ><guilabel
@@ -2901,18 +2899,18 @@ the world. As a default the encoding configured for the whole system is used.</p
 <sect1 id="configure-security">
   <title
 >Безопасность</title>
-  
+
   <para
 >Диалог настройки безопасности позволяет точно настроить некоторые параметры форматированного текста (&HTML;). Он также позволяет настраивать функции шифрования и расшифровки, настраивать некоторую встроенную логику защиты от фишинга и указывать способ обработки запросов уведомлений об отправке писем. Обратите внимание, что этот диалог <emphasis
 >не</emphasis
 > относится к настройке защиты от вирусов. Подробная информация о защите от вирусов содержится в разделе <link linkend="the-anti-virus-wizard"
 >«Использование &kmail;: Мастер антивируса»</link
 >. </para>
-  
+
   <sect2 id="configure-security-reading">
     <title
 >Чтение</title>
-    
+
     <screenshot>
     <screeninfo
 >Безопасность — Чтение</screeninfo>
@@ -2932,8 +2930,8 @@ the world. As a default the encoding configured for the whole system is used.</p
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->    
-    
+><!-- add whitespace -->
+
     <para
 >Эта вкладка позволяет настроить параметры,относящиеся к безопасности при чтении писем.</para>
 
@@ -2963,7 +2961,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Добавляя внешние ссылки к своим письмам, люди, отправляющие спам, могут определить, когда их сообщение было просмотрено, местоположение открывшего ссылку из письма и множество другой информации, которая может быть прочитана с веб-серверов. Обратите внимание, что эта функция не работает с форматами &Java; или JavaScript, так как они полностью не поддерживаются &kmail;. </para>
 	  </listitem>
 	</varlistentry>
-    
+
 	<!--http://www.aegiap.eu/kdeblog/2013/04/news-in-kdepim-4-11-scam-detection/-->
     <varlistentry id="configure-security-email-scams">
       <term
@@ -2983,7 +2981,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > и ввода адресов в появившемся диалоге. Обратите внимание, что в текущей версии приложения в белый список возможно добавить только полные адреса. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -2994,7 +2992,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Этот параметр заставляет &kmail; просматривать базу данных Google о подозрительных фишинговых веб-сайтах, когда в письмо встроены URL-адреса, и предупреждать пользователя при обнаружении совпадения. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -3005,7 +3003,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >По умолчанию &kmail; автоматически проверяет URL-адреса, встроенные в письма в формате &HTML;, и предупреждает, если какое-то из них пытается отследить данные пользователя. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
           <term
 ><guilabel
@@ -3016,7 +3014,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >По умолчанию &kmail; автоматически попытается расшифровать зашифрованные письма при их просмотре. Чтобы сделать это вручную, снимите флажок. </para>
           </listitem>
         </varlistentry>
-        
+
         <varlistentry>
 	      <term
 ><guilabel
@@ -3038,7 +3036,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-message-disposition-notifications">
         <title
 >Уведомления об обработке писем</title>
@@ -3062,7 +3060,7 @@ the world. As a default the encoding configured for the whole system is used.</p
           <para
 >&nbsp;</para
 ><!-- add whitespace -->
-        
+
         <variablelist>
           <varlistentry id="configure-security-reading-mdns">
 	      <term>
@@ -3097,7 +3095,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Игнорировать любые запросы об отправке уведомлений. Никакие уведомления не будут отправляться автоматически. </para>
 		    </listitem>
           </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3108,7 +3106,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Запрашивать у пользователя разрешение на отправку уведомлений. Таким образом можно будет отправлять уведомления на выбранные письма и отклонять или игнорировать их для всех остальных писем. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3123,7 +3121,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > лучше, чем всегда отправлять уведомления об обработке писем. Автор письма тем самым узнает, что письмо было обработано, но он не сможет узнать было оно удалено или прочитано, и так далее. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
 		    <term>
 		      <guilabel
@@ -3135,7 +3133,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 		    </listitem>
 	      </varlistentry>
 	    </variablelist>
-        
+
 	    <para
 >Если трудно определиться, какой параметр выбрать, поэкспериментируйте, выбрав вариант <guilabel
 >Спрашивать</guilabel
@@ -3145,14 +3143,14 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-        
+
 	    <para
 >Следующие параметры (перечисленные в группе <guilabel
 >Цитировать исходное письмо</guilabel
 >) позволяют регулировать <emphasis
 >объём</emphasis
 > оригинального письма, посылаемого &kmail; в уведомлении. </para>
-        
+
 	    <variablelist>
 	      <varlistentry>
 		    <term>
@@ -3164,7 +3162,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Не включать в уведомление ничего кроме обязательного идентификатора письма и исходных получателей. Этого достаточно, чтобы отправитель смог определить, на какое письмо пришло это уведомление. </para>
 		    </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
             <term>
               <guilabel
@@ -3175,7 +3173,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >Вставить полный текст письма в уведомление. Обычно это излишне. Это не добавит никакой значимой информации к той информации, которую возможно получить из заголовков сообщения , но иногда люди настаивают на этом, так как это значительно упрощает процесс вспоминания человеком содержимого письма, в отличии от заголовков отправленного им письма. </para>
             </listitem>
 	      </varlistentry>
-          
+
 	      <varlistentry>
             <term>
               <guilabel
@@ -3187,7 +3185,7 @@ the world. As a default the encoding configured for the whole system is used.</p
               </listitem>
 	      </varlistentry>
 	    </variablelist>
-        
+
 	    <para
 >Если не уверены, оставьте значения по умолчанию. </para>
 	  </listitem>
@@ -3238,7 +3236,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-      
+
       <para
 >Эта вкладка позволяет настроить параметры безопасности и конфиденциальности связанные с созданием писем. </para>
 
@@ -3381,7 +3379,7 @@ the world. As a default the encoding configured for the whole system is used.</p
         <para
 >&nbsp;</para
 ><!-- add whitespace -->
-      
+
 
       <para
 >Эта вкладка позволяет включать и выключать предупреждения, относящиеся к безопасности. </para>
@@ -3455,7 +3453,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 > и корневых сертификатов. </para>
 	  </listitem>
 	</varlistentry>
-	
+
     <varlistentry>
 	  <term>
 	    <guibutton
@@ -3468,7 +3466,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 >. Пользователям, не являющимся экспертами по шифрованию, рекомендуется принять параметры по умолчанию. </para>
 	  </listitem>
 	</varlistentry>
-    
+
 	<varlistentry id="configure-security-warnings-reenable-all-warnings">
 	  <term>
 	    <guilabel
@@ -3532,7 +3530,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 	  </term>
 	  <listitem>
 	    <para
->Если флажок установлен, сертификаты &smime; будут проверяться с помощью  Certificate Revocation Lists (<acronym
+>Если флажок установлен, сертификаты &smime; будут проверяться с помощью Certificate Revocation Lists (<acronym
 >CRLs</acronym
 >). Это значение по умолчанию. </para>
 	  </listitem>
@@ -3730,7 +3728,7 @@ the world. As a default the encoding configured for the whole system is used.</p
 	    <para
 >При указании сервера <acronym
 >LDAP</acronym
-> все запросы будут направляться на него.  Этот параметр будет использован, если невозможно определить адрес сервера и порт из ссылки на сервер <acronym
+> все запросы будут направляться на него. Этот параметр будет использован, если невозможно определить адрес сервера и порт из ссылки на сервер <acronym
 >LDAP</acronym
 >. Другие сервера <acronym
 >LDAP</acronym
@@ -3947,7 +3945,7 @@ that is used when you create a new folder.</para>
 >Если установлен этот флажок, то при выходе из &kmail; письма из корзины будут удалены. </para>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry>
       <term
 ><guilabel
@@ -3997,7 +3995,7 @@ that is used when you create a new folder.</para>
     </screenshot>
     <para
 >&nbsp;</para
-><!-- add whitespace -->    
+><!-- add whitespace -->
 
     <variablelist>
 
@@ -4013,7 +4011,7 @@ that is used when you create a new folder.</para>
 > понимал ответы на приглашения. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4026,7 +4024,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4041,7 +4039,7 @@ that is used when you create a new folder.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
 <!--varlistentry>
 <term
 ><guilabel
@@ -4080,13 +4078,13 @@ This is the default. The user can turn this option off if they want to see the i
 <listitem>
 <para
 >When this is checked, you will not see the mail composer window. Instead,
-all invitation mails are sent automatically. If you want to see the mail 
-before sending it, you can uncheck this option. However, be aware that the 
-text in the composer window is in iCalendar syntax, and you should not try 
+all invitation mails are sent automatically. If you want to see the mail
+before sending it, you can uncheck this option. However, be aware that the
+text in the composer window is in iCalendar syntax, and you should not try
 modifying it by hand.</para>
 </listitem>
 </varlistentry--><!-- These options are no longer available. @dcb2020342-->
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4126,7 +4124,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Этот диалог позволяет точно настроить способ работы функции <menuchoice
 > <guimenu
@@ -4134,9 +4132,8 @@ modifying it by hand.</para>
 ><guimenuitem
 >Печать</guimenuitem
 > </menuchoice
->. </para
-> 
-    
+>. </para>
+
     <variablelist>
 
       <varlistentry>
@@ -4149,7 +4146,7 @@ modifying it by hand.</para>
 >Эта функция позволяет напечатать только выбранную часть письма. Значение по умолчанию отключает эту функцию, поэтому по умолчанию печатается всё письмо. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4164,7 +4161,7 @@ modifying it by hand.</para>
 >, но в данный момент он работает неправильно. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4175,7 +4172,7 @@ modifying it by hand.</para>
 >Как и в предыдущем варианте, этот параметр содержит ошибку, поэтому &kmail; всегда печатает изображения, независимо от того, как установлен этот флажок. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4186,7 +4183,7 @@ modifying it by hand.</para>
 >Эта функция позволяет &kmail; печатать сведения о шифровании для зашифрованных и/или подписанных цифровой подписью писем. </para>
         </listitem>
       </varlistentry>
-      
+
   </variablelist>
   </sect2>
 
@@ -4195,22 +4192,22 @@ modifying it by hand.</para>
 <sect1 id="configure-plugins">
     <title
 >Модули</title>
-    
+
     <para
 >&kmail; содержит большое количество специальных функций, которые могут быть полезны для некоторых пользователей. Возможно выбрать одну или несколько функций на странице настройки «Модули». Если определённая функция не нужна, возможно сэкономить время и место в хранилище, сняв флажок с соответствующего модуля. </para>
-    
+
     <para
 >Во многих дистрибутивах Linux большинство этих модулей не включены в базовый пакет &kmail;. Чтобы получить весь набор модулей, обязательно установите пакет с именем «kdepim-addons» (или что-то подобное). </para>
-    
+
     <para
 >Чтобы получить приблизительное представление о том, за что отвечает определённый модуль, просто выделите имя модуля на странице конфигурации &kmail;. Краткое описание функции этого модуля появится в правой части диалога. </para>
-    
+
     <para
 >Ниже перечислены различные модули, доступные в настоящее время в &kmail; (2021). Обратите внимание, что набор стандартных модулей основан на версии &kmail; для openSUSE (5.14.2), используемой в качестве основы для этой документации. Фактические значения по умолчанию в установленной системе могут отличаться; они зависят от дистрибутива. </para>
-    
+
     <para
 >Поскольку время от времени добавляются новые функции, этот список может со временем увеличиваться. Есть два общих правила, регулирующих структуру модулей, на которые возможно ссылаться, даже если конкретный модуль не указан ниже. </para>
-    
+
     <para
 >1. Если модуль содержит настраиваемые переменные, возможно открыть диалог настройки с помощью кнопки <guibutton
 >&nbsp;<inlinemediaobject
@@ -4219,13 +4216,13 @@ modifying it by hand.</para>
 > </inlinemediaobject
 >&nbsp;</guibutton
 >, которая появляется рядом с названием модуля. </para>
-    
+
     <para
 >2. При установке или снятии флажка с модуля, &kmail; следует перезапустить, чтоб изменения вступили в силу. </para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <sect2 id="configure-plugins-akonadi">
     <title
 >Akonadi и проверка перед отправкой</title>
@@ -4249,9 +4246,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4266,7 +4263,7 @@ modifying it by hand.</para>
 >. По умолчанию этот модуль включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4279,7 +4276,7 @@ modifying it by hand.</para>
 >. По умолчанию этот модуль включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4290,7 +4287,7 @@ modifying it by hand.</para>
 >Этот модуль включает уведомления о новых электронных письмах. Отображаемые в стандартном уведомлении поля возможно настроить. Также возможно выбирать звуковые сигналы (произносимый текст, предварительно записанные звуки), создавать записи в файле журнала и так далее. По умолчанию этот модуль включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4303,7 +4300,7 @@ modifying it by hand.</para>
 >. По умолчанию этот модуль включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4314,7 +4311,7 @@ modifying it by hand.</para>
 >С помощью этого модуля возможно создать набор «унифицированных» почтовых ящиков. &kmail; автоматически создаст три из них, которые будут называться «Входящие», «Черновики» и «Отправленные». Если была определена как папка «Входящие» для локальных папок, так и одно или несколько мест назначения входящих писем &IMAP;, &kmail; отобразит все файлы входящих писем в виде одной объединённой виртуальной папки «Входящие». Возможно использовать диалог настройки для создания дополнительных виртуальных почтовых ящиков, настраивая каждый из них по своему усмотрению. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4325,7 +4322,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет добавлять новые адреса в одну из адресных книг каждый раз при отправке электронного письма новому контакту. Используйте диалоговое окно параметров, чтобы связать адресные книги с профилями. Этот модуль по умолчанию отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4336,7 +4333,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет применить несколько правил перед фактической отправкой сообщения. Этот модуль включён по умолчанию и автоматически отправит уведомление при попытке отправить более одной копии письма одному и тому же человеку. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4347,13 +4344,13 @@ modifying it by hand.</para>
 >Этот модуль включает проверку адресов в исходящих сообщениях. Используйте диалог настройки, чтобы определить белый список и/или черный список для каждого профиля. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-composer">
     <title
 >Редактор писем</title>
@@ -4377,9 +4374,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4390,7 +4387,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет редактору писем открывать внешний текстовый редактор при запуске. Используйте диалог настройки для этого модуля, чтобы указать редактор для открытия. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4407,7 +4404,7 @@ modifying it by hand.</para>
 >. По умолчанию этот модуль отключён и пока находится в стадии разработки. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4415,7 +4412,7 @@ modifying it by hand.</para>
 ></term>
         <listitem>
           <para
->Этот модуль позволяет добавить функцию  <menuchoice
+>Этот модуль позволяет добавить функцию <menuchoice
 ><guimenu
 >Правка</guimenu
 > <guimenuitem
@@ -4424,7 +4421,7 @@ modifying it by hand.</para>
 > в редактор писем. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4441,7 +4438,7 @@ modifying it by hand.</para>
 >. Это позволяет вставить выбранный адрес электронной почты из адресной книги в текст письма простым щелчком левой кнопкой мыши. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4458,7 +4455,7 @@ modifying it by hand.</para>
 > в редактор писем. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4469,7 +4466,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет добавить немного не совсем функционального кода. Этот модуль всё ещё находится в стадии разработки и также отключён по умолчанию. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4486,7 +4483,7 @@ modifying it by hand.</para>
 > в меню редактора писем. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4503,7 +4500,7 @@ modifying it by hand.</para>
 > в редактор писем. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4520,7 +4517,7 @@ modifying it by hand.</para>
 >. Доступны четыре варианта: Nextcloud, Pastebin, Bluetooth и электронная почта (открывается второе окно редактора). По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4537,14 +4534,13 @@ modifying it by hand.</para>
 > в редактор писем. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-        
+
     <sect2 id="configure-plugins-grammar">
     <title
 >Проверка грамматики / Стили заголовков</title>
@@ -4568,9 +4564,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-        
+
       <varlistentry>
         <term
 ><guilabel
@@ -4587,7 +4583,7 @@ modifying it by hand.</para>
 >. Эта функция доступна только для французского языка. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4607,17 +4603,17 @@ modifying it by hand.</para>
     </variablelist>
     <para
 >&nbsp;</para
-><!-- add whitespace -->  
-    
+><!-- add whitespace -->
+
     <para
 >Следующие шесть модулей позволяют указать, какие стили заголовков возможно выбрать из меню <guimenu
 >Вид</guimenu
 >. Более подробное <link linkend="the-preview-pane-headers"
 >описание различных видов заголовков</link
 > доступно в главе «Использование &kmail;». </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4628,7 +4624,7 @@ modifying it by hand.</para>
 >Этот модуль включает отображение «кратких» заголовков. Этот модуль по умолчанию включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4639,7 +4635,7 @@ modifying it by hand.</para>
 >Этот модуль включает отображение заголовков «KMail 5.2». По умолчанию этот модуль включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4650,7 +4646,7 @@ modifying it by hand.</para>
 >Этот модуль включает отображение «изящных» заголовков. Этот модуль по умолчанию включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4661,7 +4657,7 @@ modifying it by hand.</para>
 >Этот модуль включает отображение «милых» заголовков. Этот модуль по умолчанию включён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4672,7 +4668,7 @@ modifying it by hand.</para>
 >Этот модуль включает отображение «длинных» заголовков. По умолчанию этот модуль отключён (длинные заголовки похожи на стандартные заголовки, но при наличии таких заголовков будут отображаться некоторые менее распространённые сведения заголовка, такие как «Reply-to»). </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4683,14 +4679,13 @@ modifying it by hand.</para>
 >Этот модуль позволяет включить отображение «стандартных» заголовков. По умолчанию этот модуль отключён (стандартные заголовки аналогичны изящным заголовкам, но без затенённого фона). </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-misc">
     <title
 >Просмотр писем / Прочее</title>
@@ -4714,7 +4709,7 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Следующие шесть модулей предоставляют специальные функции, которые возможно выбрать только с помощью кнопки на панели инструментов. Диалог <menuchoice
 ><guimenu
@@ -4727,9 +4722,9 @@ modifying it by hand.</para>
 >Панели инструментов...</guimenuitem
 > </menuchoice
 > позволяет добавлять или удалять кнопки для этих функций на панель инструментов после включения или отключения одного из этих модулей. </para>
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4740,7 +4735,7 @@ modifying it by hand.</para>
 >Этот модуль разрешает создание события календаря во время просмотра письма в &kmail;. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4751,7 +4746,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет создавать заметки в &kontact; во время просмотра письма в &kmail;. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4762,7 +4757,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет создавать список дел в &korganizer; при просмотре письма &kmail;. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4773,7 +4768,7 @@ modifying it by hand.</para>
 >Этот модуль позволяет включить функцию «Раскрыть URL». По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4784,7 +4779,7 @@ modifying it by hand.</para>
 >Этот модуль разрешает вызов исполняемой команды с панели инструментов. В соответствующем диалоге конфигурации выберите исполняемый файл и дайте ему имя. Выбранное имя позже возможно добавить на панель инструментов в виде кнопки, чтобы можно было вызывать сценарий в любое время. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4797,13 +4792,12 @@ modifying it by hand.</para>
 > доступна в редакторе писем по умолчанию. Используйте этот модуль (с помощью панели инструментов), чтобы сделать переводчик доступным в окне предварительного просмотра писем. По умолчанию этот модуль включён. </para>
         </listitem>
       </varlistentry>
-      
-    </variablelist
-> 
+
+    </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Следующие четыре элемента — это не совсем модули, это встроенные в &kmail; функции. Эти элементы настраиваются каждый отдельно с помощью кнопки <guibutton
 >&nbsp;<inlinemediaobject
@@ -4811,10 +4805,10 @@ modifying it by hand.</para>
 > <imagedata fileref="configurebutton.png" format="PNG"/></imageobject
 > </inlinemediaobject
 >&nbsp;</guibutton
->, располагающейся рядом с названием функции. Чтобы изменения вступили в силу, перезапуск &kmail;  не требуется. </para>
-    
+>, располагающейся рядом с названием функции. Чтобы изменения вступили в силу, перезапуск &kmail; не требуется. </para>
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4832,7 +4826,7 @@ modifying it by hand.</para>
 ><!-- add whitespace -->
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4845,7 +4839,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4858,7 +4852,7 @@ modifying it by hand.</para>
 >. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4869,13 +4863,13 @@ modifying it by hand.</para>
 >Используйте этот диалог настройки, чтобы включить или выключить поддержку Gravatar (Globally Recognized Avatar). </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="configure-plugins-tools">
         <title
 >Инструменты</title>
@@ -4900,9 +4894,9 @@ modifying it by hand.</para>
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <variablelist>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4917,7 +4911,7 @@ modifying it by hand.</para>
 >. По умолчанию этот модуль отключён. Обратите внимание, что после установки программного обеспечения для обнаружения спама этот модуль может быть безопасно отключён; модуль необходим только для установки программного обеспечения для обнаружения спама, а не для его запуска. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4932,7 +4926,7 @@ modifying it by hand.</para>
 >. По умолчанию этот модуль отключён. Обратите внимание, что после установки антивирусного программного обеспечения этот модуль может быть безопасно отключён; модуль необходим только для установки антивирусного программного обеспечения, а не для его запуска. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4949,7 +4943,7 @@ modifying it by hand.</para>
 > в окно предварительного просмотра писем. Этот модуль по умолчанию отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4964,7 +4958,7 @@ modifying it by hand.</para>
 >. В первую очередь для использования разработчиками программ — функция журнала по умолчанию представляет много информации (только временная метка и «Готово» для большинства «событий»). </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4977,7 +4971,7 @@ modifying it by hand.</para>
 >. При включении этого модуля приготовьтесь потратить много времени на настройку файла конфигурации, чтобы получить фильтры, которые действительно нужны. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
       <varlistentry>
         <term
 ><guilabel
@@ -4987,15 +4981,15 @@ modifying it by hand.</para>
           <para
 >Этот модуль заставляет &kmail; отправлять запрос «Не отслеживать» на удалённый сервер, когда письмо в формате &HTML; запрашивает загрузку удалённого содержимого. Эффект запроса «Не отслеживать» зависит от политики, принятой веб-сервером, получающим запрос. Некоторые сайты учитывают это. Другие этого не делают. </para>
           <para
->Рекламодатели повсюду. Письма в формате &HTML; часто содержат «изображение» размером 0x0 или 1x1 пиксел  (он же «пиксел слежения»), которое на самом деле является замаскированным отслеживающим &URL;-адресом. Когда &kmail; извлекает данные изображения с веб-сервера, он должен использовать &URL;, встроенные в письмо; сервер может использовать информацию, встроенную в &URL;, чтобы сделать вывод, что письмо было прочитано и так далее. </para>
+>Рекламодатели повсюду. Письма в формате &HTML; часто содержат «изображение» размером 0x0 или 1x1 пиксел (он же «пиксел слежения»), которое на самом деле является замаскированным отслеживающим &URL;-адресом. Когда &kmail; извлекает данные изображения с веб-сервера, он должен использовать &URL;, встроенные в письмо; сервер может использовать информацию, встроенную в &URL;, чтобы сделать вывод, что письмо было прочитано и так далее. </para>
           <para
 >Отправка запроса «Не отслеживать» может немного улучшить конфиденциальность. Единственный верный способ избежать пикселов слежения — никогда не загружать удалённые изображения, закодированные в письмах в формате &HTML;. По умолчанию этот модуль отключён. </para>
         </listitem>
       </varlistentry>
-      
+
     </variablelist>
     </sect2>
-    
+
 </sect1>
 
 <sect1 id="configure-non-gui-options">
@@ -5025,7 +5019,7 @@ modifying it by hand.</para>
 
 <warning
 ><para
->Перед изменением конфигурационного файла необходимо завершить работу  &kmail;. Запускайте &kmail; только после <emphasis
+>Перед изменением конфигурационного файла необходимо завершить работу &kmail;. Запускайте &kmail; только после <emphasis
 >сохранения</emphasis
 > внесённых изменений в файл. </para
 ></warning>
@@ -5339,50 +5333,6 @@ modifying it by hand.</para>
 >--file <replaceable
 >/путь/к/kmail2rc</replaceable
 > --group OutOfOffice --key OutOfOfficeReactToSpam true</option
-></userinput
-> </para
-></listitem>
-</itemizedlist>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term
-><guilabel
->ShowUserAgent</guilabel
-></term>
-<listitem>
-<para
->Начиная с версии 1.9, &kmail; может показывать значения полей User-Agent или X-Mailer из заголовка письма при использовании режима вывода заголовков «Изящные» (меню <menuchoice
-><guimenu
->Вид</guimenu
-> <guisubmenu
->Заголовки</guisubmenu
-></menuchoice
->). Чтобы включить эту функцию, добавьте в раздел <quote
->[Reader]</quote
-> следующую строку:</para>
-<itemizedlist>
-<listitem
-><para
->Файл конфигурации:</para>
-<programlisting
->ShowUserAgent=true</programlisting
-></listitem>
-<listitem
-><para
-><command
->kwriteconfig</command
-></para>
-<para
-><prompt
->&percnt;</prompt
-> <userinput
-><command
->kwriteconfig</command
-> <option
->--file <replaceable
->/путь/к/kmail2rc</replaceable
-> --group Reader --key ShowUserAgent true</option
 ></userinput
 > </para
 ></listitem>

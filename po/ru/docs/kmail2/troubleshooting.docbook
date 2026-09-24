@@ -40,17 +40,17 @@
 <sect1 id="introduction-to-akonadi">
 <title
 >Введение в &akonadi;</title>
-    
+
   <para
 >&kmail; активно развивается с 1997 года. За эти годы появилось множество ошибок, и большинство из них уже решено. Информация о старых ошибках содержится на странице пользовательской базы данных &kde; <ulink url="https://userbase.kde.org/Special:MyLanguage/KMail/FAQs_Hints_and_Tips"
 >«KMail/FAQ, подсказки и советы»</ulink
 >. Также посетите <ulink url="https://bugs.kde.org"
 >главную страницу отслеживания ошибок &kde;</ulink
 >, чтобы узнать историю более свежих ошибок.</para>
-  
+
   <para
->В настоящий момент (2021) многие из проблем, с которыми сталкиваются пользователи &kmail;, связаны с сервером &akonadi;. &akonadi; — это вспомогательное приложение, работающее как промежуточное звено между &kmail; (и другими приложениями для управления личными данными) и фоновой службой базы данных общего назначения (наиболее распространённый вариант — это «mysqld»). Оно также упрощает обмен данными между процессами различных частей программ для управления личными данными. В зависимости от параметров системы &akonadi; может запускаться во время процедуры загрузки или входа в систему. Также программа может запускаться только после программы для управления личными данными (например, &kmail;, &kaddressbook; или &kontact;).</para>
-  
+>В настоящий момент (2021) многие из проблем, с которыми сталкиваются пользователи &kmail;, связаны с сервером &akonadi;. &akonadi; — это вспомогательное приложение, работающее как промежуточное звено между &kmail; (и другими &PIM;-приложениями) и фоновой службой базы данных общего назначения (наиболее распространённый вариант — это «mysqld»). Оно также обеспечивает обмен данными между процессами различных частей &PIM;-приложений. В зависимости от параметров системы &akonadi; может запускаться во время загрузки или входа в систему. Либо оно может не запускаться до тех пор, пока не будет запущено &PIM;-приложение (например, &kmail;, &kaddressbook; или &kontact;).</para>
+
   <para
 >Предусмотрены две программы, позволяющие взаимодействовать с сервером &akonadi; напрямую: <code
 >akonadictl</code
@@ -60,7 +60,7 @@
   <para
 >&nbsp;</para
 ><!-- add whitespace -->
-  
+
     <sect2 id="intro-to-akonadictl">
     <title
 >Программа управления Akonadictl</title>
@@ -84,14 +84,14 @@
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >На снимке экрана изображена одна из команд, которой возможно воспользоваться в программе <code
 >akonadictl</code
 >. Далее представлены все команды, которые распознаёт <code
 >akonadictl</code
 >.</para>
-    
+
     <para
 ><screen
 >~$ akonadictl start</screen
@@ -121,7 +121,7 @@
 >~$ akonadictl fsck</screen
 >Выполняет проверку целостности файла. Выводимые этой командой данные могут быть достаточно объёмными, особенно если в &kmail; были добавлены собственные папки. Воспользуйтесь этой версией команды (передав выведенные данные к конвейеру grep) для проверки целостности базы данных &akonadi; без генерации лишних данных.</para>
     <para>
-        
+
 <screen
 >~ $ akonadictl fsck 2
 >&amp;1 | grep ^Found
@@ -144,7 +144,7 @@ Found 0 dirty items.</screen
 >&nbsp;</para
 ><!-- add whitespace -->
     </sect2>
-    
+
     <sect2 id="intro-to-akonadiconsole">
     <title
 >Программа Akonadiconsole</title>
@@ -168,12 +168,12 @@ Found 0 dirty items.</screen
     <para
 >&nbsp;</para
 ><!-- add whitespace -->
-    
+
     <para
 >Программа <code
 >akonadiconsole</code
 > предлагает двенадцать различных «окон» внутренней части программ для управления личными данными. Ниже приведено краткое описание для каждой панелей просмотра.</para>
-    
+
     <variablelist>
       <varlistentry id="ak-console-agents">
         <term
@@ -185,7 +185,7 @@ Found 0 dirty items.</screen
 >Здесь представлен список агентов пользователя (обработчиков).</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-browser">
         <term
 >Вкладка <guilabel
@@ -196,7 +196,7 @@ Found 0 dirty items.</screen
 >На этой вкладке представлено описание различных коллекций данных, которые сопровождает &akonadi;, организованное в древовидную иерархию, где показано, сколько записей хранится в каждой коллекции.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-debugger">
         <term
 >Вкладка <guilabel
@@ -207,7 +207,7 @@ Found 0 dirty items.</screen
 >Здесь возможно включить или выключить режим отладчика и просмотреть журнал отладочных сообщений.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-logging">
         <term
 >Вкладка <guilabel
@@ -218,7 +218,7 @@ Found 0 dirty items.</screen
 >Эта вкладка позволяет просмотреть сообщения, отправляемые разными компонентами &akonadi;.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-db-browser">
         <term
 >Вкладка <guilabel
@@ -229,7 +229,7 @@ Found 0 dirty items.</screen
 >Эта вкладка позволяет просматривать базы данных mysql. В базе данных представлено множество разных таблиц.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-db-console">
         <term
 >Вкладка <guilabel
@@ -240,7 +240,7 @@ Found 0 dirty items.</screen
 >Здесь возможно послать запрос базе данных mysql.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-query">
         <term
 >Вкладка <guilabel
@@ -251,7 +251,7 @@ Found 0 dirty items.</screen
 >На этой вкладке возможно включить или отключить отладочные запросы к базе данных. &kmail; отправляет запросы в базу данных mysql много раз всего за несколько секунд; выходные данные могут занимать большой объём.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-tracker">
         <term
 >Вкладка <guilabel
@@ -262,7 +262,7 @@ Found 0 dirty items.</screen
 >Программы для управления личными данными выполняют различные функции, инициируя «задачи». Эта вкладка позволяет включить или выключить слежение за этими задачами.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-scheduler">
         <term
 >Вкладка <guilabel
@@ -275,7 +275,7 @@ Found 0 dirty items.</screen
 >.</para
 ></listitem>
       </varlistentry>
-  
+
       <varlistentry id="ak-console-notif-monitor">
         <term
 >Вкладка <guilabel
@@ -286,7 +286,7 @@ Found 0 dirty items.</screen
 >Эта вкладка позволяет просматривать уведомления, отправленные разными ресурсами &akonadi;.</para
 ></listitem>
       </varlistentry>
-      
+
       <varlistentry id="ak-console-search">
         <term
 >Вкладка <guilabel
@@ -297,7 +297,7 @@ Found 0 dirty items.</screen
 >Эта вкладка позволяет осуществлять общий поиск. Этот поиск возможно ограничить календарём, контактами, письмом электронной почты или заметкой.</para
 ></listitem>
       </varlistentry>
-      
+
       <varlistentry id="ak-console-monitors">
         <term
 >Вкладка <guilabel
@@ -309,9 +309,9 @@ Found 0 dirty items.</screen
 ></listitem>
       </varlistentry>
     </variablelist>
-    
+
     </sect2>
-    
+
 </sect1>
 
 <!-- <sect1 id="kmail2-doesnt-send-mail">
@@ -749,7 +749,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 
   <para
 >Для этого есть как минимум две возможные причины. Далее представлены некоторые обходные пути.</para>
-  
+
   <variablelist>
     <varlistentry>
       <term
@@ -775,7 +775,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 >Если это не помогает, попробуйте второй обходной путь:</para>
       </listitem>
     </varlistentry>
-    
+
     <varlistentry>
       <term
 >Обходной путь 2</term>
@@ -870,7 +870,7 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 > или перезагрузить элементы, о которых описано в обходном пути 2 в <link linkend="unable-to-fetch-item-from-backend"
 >проблеме, рассмотренной ранее</link
 >.</para>
-    
+
   <para
 ><note
 ><para
@@ -879,12 +879,12 @@ DefaultResourceId=akonadi_maildir_resource_0</userinput>
 >, отдельные компоненты серверной части &kmail;. Возможно останавливать и запускать их, переводить в автономный режим, прерывать текущие действия и так далее. Это может быть очень полезно, когда появляются проблемы при работе с &kmail;.</para
 ></note
 ></para>
-    
+
   <para
 >Иногда <guilabel
 >Агент диспетчера почты</guilabel
 > перестаёт функционировать, потому что демон dbus (средство системного уровня для межпроцессных коммуникаций) неправильно работает. Наилучшим выходом из этой ситуации будет перезапуск системы. Демон dbus запускается одним из первых при запуске рабочей среды &kde;, поэтому его нельзя просто закрыть и перезапустить, от него зависит вся среда &plasma;.</para>
-    
+
 </sect1>
 
 <sect1 id="resource-conflict-error">
@@ -932,10 +932,10 @@ Found 0 dirty items.</screen
 >grep</code
 >. <screen
 >~ $ ps ux | grep mysql
-david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld 
+david     8788  0.2  0.9 3736292 153936 ?      Sl   06:45   0:16 /usr/sbin/mysqld
 --defaults-file=/home/david/.local/share/akonadi/mysql.conf
---datadir=/home/david/.local/share/akonadi/db_data/ 
---socket=/run/user/1000/akonadi/mysql.socket 
+--datadir=/home/david/.local/share/akonadi/db_data/
+--socket=/run/user/1000/akonadi/mysql.socket
 --pid-file=/run/user/1000/akonadi/mysql.pid
 david    24275  0.0  0.0   8056  2144 pts/1    S+   08:24   0:00 grep --colour=auto mysql</screen
 ></para>
@@ -967,9 +967,9 @@ MariaDB [akonadi]> \q                                                  &lt;==
 Bye</screen
 > Этими тремя командами mysql являются «use akonadi;», «delete from pimitemtable where remoteid is NULL;» и «\q». После команды «mysql --socket= ...» откроется диалог с сервером mysql (или «MariaDB»), который покажет запрос относительно команды — &gt;. Здесь представлен весь диалог. Введённые пользователем строки обозначены символами «&lt;==».</para
 ></step>
-  
+
 </procedure>
-  
+
   <para
 >После перезапуска &kmail; эти сообщения-дубликаты исчезнут. Они были лишь фантомами, вызванными NULL-указателями в таблицах базы данных mysql.</para>
 
@@ -978,7 +978,7 @@ Bye</screen
 <sect1 id="cleaning-aux-storage">
 <title
 >Поддержание чистоты областей вспомогательного хранилища данных &kmail;</title>
-    
+
   <para
 >&kmail; хранит данные в нескольких разных местах на используемом устройстве. Большинство этих мест расположены где-то в каталоге <filename
 >~/.local/share/</filename
@@ -1010,7 +1010,7 @@ Akonadi.error.old  db_misc  file_lost+found  search_db
 >, содержат данные самих таблиц базы данных mysql. В каталоге <filename
 >db_data</filename
 > также содержится несколько файлов журнала mysql, которые могут быть полезны при возникновении проблем с &akonadi;.</para>
-  
+
   <para
 >В двух каталогах, <filename
 >file_db_data</filename
@@ -1050,7 +1050,7 @@ Found 0 items without RID.
 Found 750 dirty items.</screen
 > <!-- Can't indent here ... messes up the output.  -->
   </para>
-  
+
   <para
 >Флажок «в обработке» для элементов в pimitemtable (одна из таблиц базы данных &akonadi;) используется для управления некоторыми аспектами асинхронной обработки. Для него устанавливается значение «true», когда есть операции для определённого письма. Чаще всего флажок «в обработке» удаляется через одну-две секунды после того, как заканчивается соответствующая операция.</para>
 
@@ -1067,7 +1067,7 @@ Found 750 dirty items.</screen
 >akonadictl stop</code
 > .</para
 ></step>
-    
+
     <step
 ><para
 >Создайте резервную копию всех своих электронных писем, для этого рекомендуется воспользоваться <ulink url="help:/pimdataexporter"
@@ -1078,7 +1078,7 @@ Found 750 dirty items.</screen
 >local-mail-save</filename
 > . Убедитесь в наличии резервной копии своих писем перед тем, как продолжить.</para
 ></step>
-      
+
     <step
 ><para
 >Рекомендуется также создать резервную копию всех созданных фильтров и убедиться в возможности восстановить созданные вручную <guilabel
@@ -1089,7 +1089,7 @@ Found 750 dirty items.</screen
 >папки шаблонов</guilabel
 >, связанных с профилями &kmail;. На следующем шаге все пользовательские папки почты будут удалены. поэтому придётся кое-что исправлять после того, как &akonadi; перестроит свои таблиц базы данных.</para
 ></step>
-      
+
     <step
 ><para
 >Теперь удалите все папки в каталоге <filename
@@ -1098,14 +1098,14 @@ Found 750 dirty items.</screen
 >local-mail-save</filename
 >. Запустите &kmail;. Это заставит &akonadi; удалить все записи базы данных, связанные с электронной почтой. Отобразятся другие названия папок, но они исчезнут, когда &akonadi; закончит удалять все элементы «в обработке» (и вообще все элементы).</para
 ></step>
-      
+
     <step
 ><para
 >Закройте &kmail; и остановите работу сервера &akonadi;, как показано в шаге 1, затем восстановите резервную копию писем, созданную в шаге 2 в каталоге <filename
 >~/.local/share/local-mail/</filename
 >.</para
 ></step>
-      
+
     <step
 ><para
 >Снова запустите &kmail; и принудите &akonadi; повторно синхронизировать базу данных. Наиболее простой способ сделать это — это воспользоваться пунктом меню <menuchoice
@@ -1122,14 +1122,14 @@ Found 750 dirty items.</screen
 ></menuchoice
 >; &akonadi; автоматически повторно синхронизирует все папки при получении писем. Это займёт несколько минут в зависимости от того, сколько писем было сохранено в папках &kmail;. Когда процесс обновления будет завершён, все элементы «в обработке» исчезнут.</para
 ></step>
-      
+
     <step
 ><para
 >Последний этап — восстановление правил фильтрации почты, резервная копия которых была создана на шаге 3, а также проверка, правильно ли установлены параметры всех собственных папок (<guilabel
 >Папка отправленных писем</guilabel
 > и так далее) для используемых профилей. Потребуется сбросить все свойства вручную созданных папок. Кроме того, возможно появление уведомления о непрочитанных письмах, которые тоже нужно будет убрать. Зато таблицы базы данных &akonadi; снова будут чистыми.</para
 ></step>
-    
+
   </procedure>
 
 
