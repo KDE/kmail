@@ -1,8 +1,12 @@
 {
     "KPlugin": {
         "Description": "Accessibility settings",
+        "Description[bg]": "Настройки за достъпност",
+        "Description[es]": "Preferencias de accesibilidad",
         "Icon": "preferences-desktop-accessibility",
         "Name": "Accessibility",
+        "Name[bg]": "Достъпност",
+        "Name[es]": "Accesibilidad",
         "ServiceTypes": [
             "KCModule"
         ]

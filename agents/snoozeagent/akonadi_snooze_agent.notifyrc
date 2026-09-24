@@ -1,6 +1,7 @@
 [Global]
 IconName=kmail
 Comment=Snooze Agent
+Comment[ar]=وكيل التأجيل
 Comment[bg]=Агент за отлагане
 Comment[ca]=Agent de posposament
 Comment[ca@valencia]=Agent de posposament
@@ -12,6 +13,7 @@ Comment[ia]=Agente de Postponer  (dormettar)
 Comment[ka]=ჩაჩუმების აგენტი
 Comment[nl]=Agent voor indutten
 Comment[pt_BR]=Agente de Adiamento
+Comment[ru]=Агент отложенных писем
 Comment[sl]=Agent za dremež
 Comment[sv]=Uppskjutningsmodul
 Comment[tr]=Erteleme aracısı
@@ -19,6 +21,7 @@ Comment[uk]=Агент відкладення
 
 [Event/snoozemessagewokeup]
 Name=Snoozed message is back
+Name[ar]=عادت الرسالة المؤجلة
 Name[bg]=Отложено съобщение се върна
 Name[ca]=El missatge posposat ha tornat
 Name[ca@valencia]=El missatge posposat ha tornat
@@ -30,11 +33,13 @@ Name[ia]=Le message postponite es de retorno.
 Name[ka]=ჩაჩუმებული შეტყობინება დაბრუნდა
 Name[nl]=Ingedut bericht is terug
 Name[pt_BR]=A mensagem adiada está de volta
+Name[ru]=Отложенное письмо вернулось
 Name[sl]=Predremano sporočilo je nazaj
 Name[sv]=Uppskjutet brev är tillbaka
 Name[tr]=Ertelenen İleti Geri Geldi
 Name[uk]=Повернулося відкладене повідомлення
 Comment=A snoozed message came back to your inbox
+Comment[ar]=عادت رسالة مؤجلة إلى صندوق واردك
 Comment[bg]=Отложено съобщение се върна в кутията ви с входящи съобщения.
 Comment[ca]=Un missatge posposat ha tornat a la vostra bústia d'entrada
 Comment[ca@valencia]=Un missatge posposat ha tornat a la vostra bústia d'entrada
@@ -46,6 +51,7 @@ Comment[ia]=Un message postponite es de retorno a tu cassa de e-posta de entrata
 Comment[ka]=ჩაჩუმებული შეტყობინება დაბრუნდა თქვენს საფოსტო ყუთში
 Comment[nl]=Een ingedut bericht is terug gekomen in uw postvak in
 Comment[pt_BR]=Uma mensagem adiada retornou à sua caixa de entrada
+Comment[ru]=Отложенное письмо вернулось в папку «Входящие»
 Comment[sl]=Predremano sporočilo je prišlo nazaj v vaš vhodni predal
 Comment[sv]=Ett Uppskjutet brev kom tillbaka till inkorgen
 Comment[tr]=Ertelenmiş bir ileti, gelen kutunuza geri geldi
