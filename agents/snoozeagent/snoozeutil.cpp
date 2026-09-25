@@ -5,23 +5,38 @@
 */
 
 #include "snoozeutil.h"
+#include "snoozeagentsettings.h"
 #include "snoozeinfo.h"
-
+#include <Akonadi/ServerManager>
 #include <KConfigGroup>
-
+#include <QDBusInterface>
 using namespace Qt::Literals::StringLiterals;
 using namespace Snooze;
 
+namespace
+{
+QString serviceName()
+{
+    // TODO verify
+    return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_snooze_agent"_s);
+}
+
+QString dbusPath()
+{
+    // TODO verify
+    return u"/Snooze"_s;
+}
+}
+
 bool SnoozeUtil::snoozeAgentWasRegistered()
 {
-    // TODO query the D-Bus interface, as FollowUpReminderUtil does.
-    return false;
+    QDBusInterface interface(serviceName(), dbusPath());
+    return interface.isValid();
 }
 
 bool SnoozeUtil::snoozeAgentEnabled()
 {
-    // TODO read SnoozeAgentSettings::enabled() through D-Bus.
-    return false;
+    return SnoozeAgentSettings::self()->enabled();
 }
 
 void SnoozeUtil::reload()

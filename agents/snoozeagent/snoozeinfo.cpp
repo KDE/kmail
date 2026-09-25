@@ -20,16 +20,21 @@ SnoozeInfo::SnoozeInfo(const KConfigGroup &config)
 
 void SnoozeInfo::readConfig(const KConfigGroup &config)
 {
-    mSubject = config.readEntry("Subject");
+    mSubject = config.readEntry("subject");
     mUniqueIdentifier = config.readEntry("identifier", -1);
-    // TODO add more
+    mItemId = config.readEntry("messageId", -1LL);
+    mFrom = config.readEntry("from");
+    mWakeUpDateTime = QDateTime::fromString(config.readEntry("wakeUpDateTime"), Qt::ISODate);
 }
 
 void SnoozeInfo::writeConfig(KConfigGroup &config, qint32 identifier)
 {
-    // TODO persist the info under "SnoozeItem <identifier>".
-    Q_UNUSED(config)
     setUniqueIdentifier(identifier);
+    config.writeEntry("subject", mSubject);
+    config.writeEntry("identifier", identifier);
+    config.writeEntry("messageId", mItemId);
+    config.writeEntry("from", mFrom);
+    config.writeEntry("wakeUpDateTime", mWakeUpDateTime.toString(Qt::ISODate));
 }
 
 bool SnoozeInfo::isValid() const
