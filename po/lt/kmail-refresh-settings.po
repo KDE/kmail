@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-31 00:44+0000\n"
-"PO-Revision-Date: 2019-08-09 03:21+0200\n"
+"PO-Revision-Date: 2026-09-25 01:33+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "Language: lt\n"
@@ -17,92 +17,93 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Poedit 3.9\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Moo"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "<>"
 
 #: main.cpp:30 main.cpp:32
 #, kde-format
 msgid "KMail Assistant for refreshing settings"
-msgstr ""
+msgstr "Kmail pagelbiklis, skirtas atnaujinti nuostatas"
 
 #: main.cpp:34
 #, kde-format
 msgid "© 2019-2026 Laurent Montel <montel@kde.org>"
-msgstr ""
+msgstr "© 2019–2026 Laurent Montel <montel@kde.org>"
 
 #: main.cpp:35
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
-msgstr ""
+msgstr "Laurent Montel"
 
 #: main.cpp:35
 #, kde-format
 msgid "Author"
-msgstr ""
+msgstr "Autorius"
 
 #: refreshsettingsassistant.cpp:23
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Refresh Settings"
-msgstr ""
+msgstr "Kmail nuostatų atnaujinimas"
 
 #: refreshsettingsassistant.cpp:41
 #, kde-format
 msgid "Warning"
-msgstr ""
+msgstr "Įspėjimas"
 
 #: refreshsettingsassistant.cpp:45
 #, kde-format
 msgid "Clean up Settings"
-msgstr ""
+msgstr "Išvalyti nuostatas"
 
 #: refreshsettingsassistant.cpp:49
 #, kde-format
 msgid "Finish"
-msgstr ""
+msgstr "Užbaigti"
 
 #: refreshsettingscleanuppage.cpp:22
 #, kde-format
 msgctxt "@action:button"
 msgid "Clean"
-msgstr ""
+msgstr "Išvalyti"
 
 #: refreshsettingscleanuppage.cpp:51
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
-msgstr ""
+msgstr "Pašalinti pasenusias „Dienos patarimo“ nuostatas: Atlikta"
 
 #: refreshsettingscleanuppage.cpp:63
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
-msgstr ""
+msgstr "Ištrinti dialogo nuostatas, esančias faile „%1“: Atlikta"
 
 #: refreshsettingscleanuppage.cpp:75
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
-msgstr ""
+msgstr "Ištrinti filtrų nuostatas, esančias faile „%1“: Atlikta"
 
 #: refreshsettingscleanuppage.cpp:91
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
-msgstr ""
+msgstr "Išvalyti aplankų nuostatas, esančias nuostatų faile „%1“: Atlikta"
 
 #: refreshsettingscleanuppage.cpp:140
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
-msgstr ""
+msgstr "Išvalyti dialogo dydį nuostatų faile „%1“: Atlikta"
 
 #: refreshsettingsfirstpage.cpp:20
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
-msgstr ""
+msgstr "Prieš naudodami, užverkite Kmail/Kontact."
