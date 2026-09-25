@@ -132,7 +132,7 @@
     <p xml:lang="pl">KMail jest pełnowartościowym klientem pocztowym, który współgra z powszechnie wykorzystywanymi dostawcami pocztowymi takimi jak GMail. Zapewnia wiele narzędzi i daje wiele możliwości do maksymalizacji produktywności przez co czyni zarządzanie dużymi kontami pocztowymi łatwym i szybkim. KMail obsługuje różne protokoły pocztowe - POP3, IMAP, Microsoft Exchange (EWS) i więcej.</p>
     <p xml:lang="pt">O KMail é um cliente de e-mail do estado-da-arte que se integra bem com os fornecedores de e-mail largamente usados, como o GMail. Ele oferece várias ferramentas e funcionalidades para maximizar a sua produtividade e torna simples e rápido o tratamento de contas de correio grandes. O KMail suporta uma grande variedade de protocolos de e-mail - POP3, IMAP, Microsoft Exchange (EWS), entre outros.</p>
     <p xml:lang="pt-BR">KMail é um cliente de e-mail que se integra muito bem com os provedores de e-mail amplamente utilizados, como o GMail. Ele oferece várias ferramentas e funcionalidades para maximizar a sua produtividade e torna simples e rápido o tratamento de contas de e-mail grandes. O KMail tem suporte a uma grande variedade de protocolos de e-mail - POP3, IMAP, Microsoft Exchange (EWS), entre outros.</p>
-    <p xml:lang="ru">KMail — это современный почтовый клиент, который хорошо интегрируется с широко используемыми службами электронной почты, такими как GMail.  Он предоставляет множество инструментов и функций для обеспечения максимальной производительности, а также упрощает и ускоряет работу с объёмными архивами электронной почты. KMail поддерживает большое количество протоколов электронной почты: POP3, IMAP, Microsoft Exchange (EWS) и многие другие.</p>
+    <p xml:lang="ru">KMail — это современный почтовый клиент, который хорошо интегрируется с широко используемыми службами электронной почты, такими как GMail. Он предоставляет множество инструментов и функций для обеспечения максимальной производительности, а также упрощает и ускоряет работу с объёмными архивами электронной почты. KMail поддерживает большое количество протоколов электронной почты: POP3, IMAP, Microsoft Exchange (EWS) и многие другие.</p>
     <p xml:lang="sa">KMail एकः अत्याधुनिकः ईमेलग्राहकः अस्ति यः GMail इत्यादिभिः व्यापकरूपेण प्रयुक्तैः ईमेलप्रदातृभिः सह सम्यक् एकीकृतः भवति । एतत् भवतः उत्पादकताम् अधिकतमं कर्तुं अनेकानि साधनानि विशेषताश्च प्रदाति तथा च बृहत् ईमेल-खातैः सह कार्यं सुलभं द्रुतं च करोति । KMail इत्यनेन ईमेल-प्रोटोकॉल-विविधतायाः समर्थनं भवति - POP3, IMAP, Microsoft Exchange (EWS) इत्यादीनि ।</p>
     <p xml:lang="sk">KMail je najmodernejší e-mailový klient, ktorý sa dobre integruje s bežne používanými poskytovateľmi e-mailov, ako je GMail. Poskytuje mnoho nástrojov a funkcií na maximalizáciu vašej produktivity, uľahčuje a zrýchľuje prácu s veľkými e-mailovými účtami. KMail podporuje veľké množstvo e-mailových protokolov - POP3, IMAP, Microsoft Exchange (EWS) a ďalšie.</p>
     <p xml:lang="sl">KMail je najsodobnejši odjemalec e-pošte, ki je dobro integriran s širokim uporabljeni ponudniki e-pošte, kot je GMail. Ponuja veliko orodij in funkcij za maksimiziranje vaše produktivnosti ter za lahko in hitro delo z veliko e-poštnimi računi. KMail podpira veliko različnih e-poštnih protokolov - POP3, IMAP, Microsoft Exchange (EWS) in druge.</p>
@@ -518,7 +518,7 @@
           <li xml:lang="ko">텍스트 읽어주기 지원 수리(메시지 대기열에 추가)</li>
           <li xml:lang="nl">Ondersteuning van tekst naar spraak repareren (berichten in wachtrij zetten)</li>
           <li xml:lang="pt-BR">Corrige suporte para conversão de texto para fala (enfileirar mensagens)</li>
-          <li xml:lang="ru">Исправления в подсистеме синтеза речи (добавление сообщений в очередь)</li>
+          <li xml:lang="ru">Исправлена поддержка синтеза речи (постановка сообщений в очередь).</li>
           <li xml:lang="sk">Opravená podpora prevodu textu na reč (zaraďovanie správ do frontu)</li>
           <li xml:lang="sl">Popravljena podpora za pretvorbo besedila v govor (postavljanje sporočil v čakalno vrsto)</li>
           <li xml:lang="sv">Rätta stöd för text till tal (köade brev)</li>
@@ -549,7 +549,7 @@
           <li xml:lang="ko">새 새로운 항목 위젯을 추가합니다.</li>
           <li xml:lang="nl">Nieuw widget Wat-is-nieuw toevoegen.</li>
           <li xml:lang="pt-BR">Adicionado novo elemento 'O que há de novo?'.</li>
-          <li xml:lang="ru">Добавление нового виджета «Что нового?».</li>
+          <li xml:lang="ru">Добавлен виджет «Что нового?»;</li>
           <li xml:lang="sk">Pridaný nový widget noviniek.</li>
           <li xml:lang="sl">Doda nov gradnik za kaj je novega.</li>
           <li xml:lang="sv">Lägg till ny vad-är-nytt grafisk komponent.</li>
@@ -571,7 +571,7 @@
           <li xml:lang="ko">새 플러그인: 모음집 크기 표시.</li>
           <li xml:lang="nl">Nieuwe plug-in: grootte van verzameling tonen.</li>
           <li xml:lang="pt-BR">Novo plugin: mostrar tamanho da coleção.</li>
-          <li xml:lang="ru">Новый модуль: просмотр размера коллекции</li>
+          <li xml:lang="ru">Новый модуль: просмотр размера коллекции.</li>
           <li xml:lang="sk">Nový zásuvný modul: zobrazenie veľkosti kolekcie.</li>
           <li xml:lang="sl">Novi vtičnik: prikazuje velikost zbirke.</li>
           <li xml:lang="sv">Nytt insticksprogram: Visa samlingsstorlek.</li>
