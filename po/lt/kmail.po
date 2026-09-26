@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-22 00:45+0000\n"
-"PO-Revision-Date: 2026-09-08 22:53+0300\n"
+"PO-Revision-Date: 2026-09-25 18:10+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -4501,26 +4501,24 @@ msgid "%1: %2"
 msgstr "%1: %2"
 
 #: kmlaunchexternalcomponent.cpp:47
-#, fuzzy, kde-format
+#, kde-format
 msgid "Archive Mail Agent was not registered."
-msgstr "Pašto archyvavimo agentas nebuvo užregistruotas."
+msgstr "Laiškų archyvavimo agentas nebuvo registruotas."
 
 #: kmlaunchexternalcomponent.cpp:52
-#, fuzzy, kde-format
+#, kde-format
 msgid "Send Later Agent was not registered."
-msgstr "Siuntimo vėliau agentas nebuvo užregistruotas."
+msgstr "Siuntimo vėliau agentas nebuvo registruotas."
 
 #: kmlaunchexternalcomponent.cpp:57
-#, fuzzy, kde-format
-#| msgid "Archive Mail Agent was not registered."
+#, kde-format
 msgid "Mail Merge Agent was not registered."
-msgstr "Pašto archyvavimo agentas nebuvo užregistruotas."
+msgstr "Pašto sujungimo agentas nebuvo registruotas."
 
 #: kmlaunchexternalcomponent.cpp:62
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Followup Reminder Agent was not registered."
-msgstr "Siuntimo vėliau agentas nebuvo užregistruotas."
+msgstr "Priminimo apie tolesnius veiksmus agentas nebuvo registruotas"
 
 #: kmlaunchexternalcomponent.cpp:74 kmlaunchexternalcomponent.cpp:82
 #, kde-format
@@ -7248,9 +7246,9 @@ msgstr "Ieškoti visuose &aplankuose"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxSpecificFolders)
 #: ui/searchwindow.ui:26
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search &only in:"
-msgstr "Ieškoti &tik:"
+msgstr "Ieškoti &tik čia:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mChkSubFolders)
 #: ui/searchwindow.ui:39
@@ -7260,26 +7258,25 @@ msgstr "Į&traukti poaplankius"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkMultiFolders)
 #: ui/searchwindow.ui:53
-#, fuzzy, kde-format
+#, kde-format
 msgid "Select specific folders:"
-msgstr "Pasirinkite specifinius aplankus:"
+msgstr "Pasirinkti tam tikrus aplankus:"
 
 #. i18n: ectx: property (text), widget (QPushButton, selectMultipleFolders)
 #: ui/searchwindow.ui:60
-#, fuzzy, kde-format
-#| msgid "Select folders..."
+#, kde-format
 msgid "Select Folders…"
-msgstr "Pasirinkite aplankus..."
+msgstr "Pasirinkti aplankus…"
 
 #. i18n: ectx: property (text), widget (QLabel, mSearchFolderLbl)
 #: ui/searchwindow.ui:113
-#, fuzzy, kde-format
+#, kde-format
 msgid "Search folder &name:"
-msgstr "Ieškoti aplanko &vardo:"
+msgstr "Paieškos aplanko pavadi&nimas:"
 
 #. i18n: ectx: property (text), widget (QPushButton, mSearchFolderOpenBtn)
 #: ui/searchwindow.ui:133
-#, fuzzy, kde-format
+#, kde-format
 msgid "Open &Search Folder"
 msgstr "Atv&erti paieškos aplanką"
 

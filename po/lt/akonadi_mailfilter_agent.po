@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: mailfilteragent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-31 00:44+0000\n"
-"PO-Revision-Date: 2014-03-17 20:32+0200\n"
+"PO-Revision-Date: 2026-09-25 18:07+0300\n"
 "Last-Translator: Liudas Ališauskas <liudas@aksioma.lt>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -19,27 +19,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Poedit 3.9\n"
 
 #: filterlogdialog.cpp:45
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
-msgstr ""
+msgstr "Bendrinti…"
 
 #: filterlogdialog.cpp:47
-#, fuzzy, kde-format
-#| msgid "Filter Log Viewer"
+#, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
-msgstr "Filtrų žurnalo žiūryklė..."
+msgstr "Filtrų žurnalo žiūryklė"
 
 #: filterlogdialog.cpp:69
-#, fuzzy, kde-format
-#| msgid "&Log filter activities"
+#, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
-msgstr "&Registruoti filtro veiklas"
+msgstr "Registruoti fi&ltro veiklą"
 
 #: filterlogdialog.cpp:74
 #, kde-format
@@ -47,25 +45,26 @@ msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
 "data is collected and shown only when logging is turned on. "
 msgstr ""
+"Čia galite įjungti ir išjungti filtravimo veiklos registravimą. Žinoma, "
+"žurnalo duomenys yra renkami ir rodomi tik tada, kai registravimas yra "
+"įjungtas. "
 
 #: filterlogdialog.cpp:95
 #, kde-format
 msgid "Logging Details"
-msgstr "Registravimo informacija"
+msgstr "Išsamesnė informacija apie registravimą"
 
 #: filterlogdialog.cpp:102
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
-msgstr "Registruoti filtro veiksmus"
+msgstr "Registruoti šablono aprašą"
 
 #: filterlogdialog.cpp:107
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
-msgstr "Registruoti filtro veiksmus"
+msgstr "Registruoti filt&ro taisyklių įvertinimą"
 
 #: filterlogdialog.cpp:112
 #, kde-format
@@ -76,27 +75,28 @@ msgid ""
 "about the result of the evaluation of all rules of a single filter will be "
 "given."
 msgstr ""
+"Galite valdyti grįžtamąjį ryšį žurnale, susijusį su taikomų filtrų taisyklių "
+"įvertinimu: kai ši parinktis pažymėta, bus suteikiamas grįžtamasis ryšys "
+"apie kiekvieną filtro taisyklę; priešingu atveju, bus suteikiamas tik "
+"grįžtamasis ryšys apie vieno filtro visų taisyklių įvertinimo rezultatą."
 
 #: filterlogdialog.cpp:119
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
-msgstr "Registruoti filtro veiksmus"
+msgstr "Registruoti filtro šablono įvertinimą"
 
 #: filterlogdialog.cpp:124
-#, fuzzy, kde-format
-#| msgid "Log filter actions"
+#, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Registruoti filtro veiksmus"
 
 #: filterlogdialog.cpp:134
-#, fuzzy, kde-format
-#| msgid "Log size limit:"
+#, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
-msgstr "Registro dydžio riba:"
+msgstr "Žurnalo dydžio riba:"
 
 #: filterlogdialog.cpp:142
 #, kde-format
@@ -117,6 +117,10 @@ msgid ""
 "collected log data exceeds this limit then the oldest data will be discarded "
 "until the limit is no longer exceeded. "
 msgstr ""
+"Renkant žurnalo duomenis yra naudojama atmintis, skirta laikinai saugoti "
+"žurnalo duomenis; čia galite nustatyti didžiausią naudojamos atminties ribą: "
+"jei surinktų žurnalo duomenų dydis viršys šią ribą, tada seniausi duomenys "
+"bus atmetami tol, kol daugiau nebebus viršijama riba. "
 
 #: filterlogdialog.cpp:324
 #, kde-format
@@ -124,10 +128,11 @@ msgid ""
 "Could not write the file %1:\n"
 "\"%2\" is the detailed error description."
 msgstr ""
+"Nepavyko rašyti failo %1:\n"
+"„%2“ yra išsamus klaidos aprašas."
 
 #: filterlogdialog.cpp:328
-#, fuzzy, kde-format
-#| msgid "KMail Error"
+#, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail klaida"
@@ -135,75 +140,74 @@ msgstr "KMail klaida"
 #: filtermanager.cpp:101
 #, kde-format
 msgid "Filtering message %1 of %2"
-msgstr "Filtruojami laiškai: %1 iš %2"
+msgstr "Filtruojami laiškai %1 iš %2"
 
 #: filtermanager.cpp:186
 #, kde-format
 msgid "Error applying mail filter move"
-msgstr ""
+msgstr "Klaida taikant laiškų filtravimo perkėlimą"
 
 #: filtermanager.cpp:194
 #, kde-format
 msgid "Error applying mail filter delete"
-msgstr ""
+msgstr "Klaida taikant laiškų filtravimo ištrynimą"
 
 #: filtermanager.cpp:202
 #, kde-format
 msgid "Error applying mail filter modifications"
-msgstr ""
+msgstr "Klaida taikant laiškų filtravimo modifikacijas"
 
 #: filtermanager.cpp:219
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
-msgstr "<b>Vertinamos filtro taisyklės:</b> "
+msgstr "<b>Įvertinamos filtro taisyklės:</b> "
 
 #: filtermanager.cpp:226
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
-msgstr ""
+msgstr "<b>Filtro taisyklės atitiko.</b>"
 
 #: filtermanager.cpp:254
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
-msgstr ""
+msgstr "<b>Pradedamas filtravimas, susijęs su laišku „%1“ nuo „%2“, „%3“ :</b>"
 
 #: filtermanager.cpp:587 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
-msgstr "Laiškai filtruojami"
+msgstr "Laiškų filtravimas"
 
 #: mailfilteragent.cpp:92
 #, kde-format
 msgid "Starting"
-msgstr ""
+msgstr "Pradedama"
 
 #: mailfilteragent.cpp:114
 #, kde-format
 msgctxt "Notification when the filter log was enabled"
 msgid "Mail Filter Log Enabled"
-msgstr "El. pašto filtravimo registras įjungtas"
+msgstr "Laiškų filtravimo žurnalas įjungtas"
 
 #: mailfilteragent.cpp:116
 #, kde-format
 msgid "Show Log"
-msgstr ""
+msgstr "Rodyti žurnalą"
 
 #: mailfilteragent.cpp:183
 #, kde-format
 msgid "Ready"
-msgstr "Pasiruošęs"
+msgstr "Pasiruošę"
 
 #: mailfilteragent.cpp:270
 #, kde-format
 msgid "Filtering in %1"
-msgstr ""
+msgstr "Filtruojama ties %1"
 
 #: mailfilteragent.cpp:393
-#, fuzzy, kde-format
-#| msgid "Filtering messages"
+#, kde-format
 msgid "Finished filtering, %1 message processed"
 msgid_plural "Finished filtering, %1 messages processed"
-msgstr[0] "Laiškai filtruojami"
-msgstr[1] "Laiškai filtruojami"
-msgstr[2] "Laiškai filtruojami"
-msgstr[3] "Laiškai filtruojami"
+msgstr[0] "Filtravimas užbaigtas, apdorotas %1 laiškas"
+msgstr[1] "Filtravimas užbaigtas, apdoroti %1 laiškai"
+msgstr[2] "Filtravimas užbaigtas, apdorota %1 laiškų"
+msgstr[3] "Filtravimas užbaigtas, apdorotas %1 laiškas"
