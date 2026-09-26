@@ -1,5 +1,4 @@
 # translation of kmail.po to Italian
-# SPDX-FileCopyrightText: 2009-2026 Luigi Toscano <luigi.toscano@tiscali.it>
 # Alessandro Astarita <aleast@capri.it>, 2002, 2003, 2004, 2005, 2006, 2007.
 # Andrea Rizzi <rizzi@kde.org>, 2004.
 # Federico Zenith <federico.zenith@member.fsf.org>, 2004, 2005, 2009.
@@ -7,6 +6,7 @@
 # Alessandro Pasotti <ale.pas@tiscalinet.it>, 2006.
 # Vincenzo Reale <smart2128vr@gmail.com>, 2007, 2008, 2010, 2022.
 # Nicola Ruggero <nicola@nxnt.org>, 2007.
+# SPDX-FileCopyrightText: 2009-2026 Luigi Toscano <luigi.toscano@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
