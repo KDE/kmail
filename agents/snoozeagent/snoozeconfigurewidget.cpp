@@ -12,6 +12,7 @@
 
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QMenu>
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -131,8 +132,35 @@ void SnoozeWidget::slotWakeUpNow()
 
 void SnoozeWidget::slotCustomContextMenuRequested(QPoint pos)
 {
-    // TODO context menu mirroring the buttons.
-    Q_UNUSED(pos)
+    const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
+    if (const int nbElementSelected = listItems.count(); nbElementSelected > 0) {
+        QMenu menu(this);
+        QAction *showMessage = nullptr;
+        QAction *showOriginalMessage = nullptr;
+        SnoozeItem *mailItem = nullptr;
+        if ((nbElementSelected == 1)) {
+            mailItem = static_cast<SnoozeItem *>(listItems.at(0));
+            // if (mailItem->data(0, AnswerItemFound).toBool()) {
+            //     showMessage = menu.addAction(i18nc("@action", "Show Message"));
+            //     menu.addSeparator();
+            // }
+            showOriginalMessage = menu.addAction(QIcon::fromTheme(u"mail-message"_s), i18nc("@action", "Show Original Message"));
+            menu.addSeparator();
+        }
+        const QAction *deleteItem = menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Delete"));
+        const QAction *result = menu.exec(QCursor::pos());
+        if (result) {
+            /*
+            if (result == showMessage) {
+                openShowMessage(mailItem->info()->answerMessageItemId());
+            } else if (result == deleteItem) {
+                deleteItems(listItems);
+            } else if (result == showOriginalMessage) {
+                openShowMessage(mailItem->info()->originalMessageItemId());
+            }
+            */
+        }
+    }
 }
 
 void SnoozeWidget::updateButtons()
@@ -144,9 +172,10 @@ void SnoozeWidget::updateButtons()
 
 void SnoozeWidget::createOrUpdateItem(Snooze::SnoozeInfo *info, SnoozeItem *item)
 {
-    // TODO fill the columns from info.
-    Q_UNUSED(info)
-    Q_UNUSED(item)
+    if (!item) {
+        item = new SnoozeItem(mTreeWidget);
+    }
+    item->setInfo(info);
 }
 
 #include "moc_snoozeconfigurewidget.cpp"
