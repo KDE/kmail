@@ -7,6 +7,7 @@
 #include "snoozewakeupjob.h"
 #include "snoozeagent_debug.h"
 #include "snoozeinfo.h"
+#include <KNotification>
 
 using namespace Snooze;
 
@@ -55,11 +56,53 @@ void SnoozeWakeUpJob::slotItemModifyDone(KJob *job)
     Q_UNUSED(job)
     notifyUser();
     Q_EMIT wakeUpDone();
-    deleteLater();
 }
 
 void SnoozeWakeUpJob::notifyUser()
 {
+    auto notification = new KNotification(QStringLiteral("snoozemessagewokeup"), KNotification::CloseOnTimeout);
+#if 0
+    notification->setText(result.join(QLatin1Char('\n')));
+    if (pixmap.isNull()) {
+        notification->setIconName(mSpecialNotificationInfo.defaultIconName);
+    } else {
+        notification->setPixmap(pixmap);
+    }
+
+    auto showMailAction = notification->addAction(i18n("Show mail…"));
+    connect(showMailAction, &KNotificationAction::activated, this, &SpecialNotifierJob::slotOpenMail);
+
+    auto markAsReadAction = notification->addAction(i18n("Mark As Read"));
+    connect(markAsReadAction, &KNotificationAction::activated, this, &SpecialNotifierJob::slotMarkAsRead);
+
+    auto deleteAction = notification->addAction(i18n("Delete"));
+    connect(deleteAction, &KNotificationAction::activated, this, &SpecialNotifierJob::slotDeleteMessage);
+
+    if (NewMailNotifierAgentSettings::replyMail()) {
+        QString replyLabel;
+        switch (NewMailNotifierAgentSettings::replyMailType()) {
+        case 0:
+            replyLabel = i18n("Reply to Author");
+            break;
+        case 1:
+            replyLabel = i18n("Reply to All");
+            break;
+        default:
+            qCWarning(NEWMAILNOTIFIER_LOG) << " Problem with NewMailNotifierAgentSettings::replyMailType() value: "
+                                           << NewMailNotifierAgentSettings::replyMailType();
+            break;
+        }
+
+        if (!replyLabel.isEmpty()) {
+            auto replyAction = notification->addAction(replyLabel);
+            connect(replyAction, &KNotificationAction::activated, this, &SpecialNotifierJob::slotReplyMessage);
+        }
+    }
+#endif
+    connect(notification, &KNotification::closed, this, &SnoozeWakeUpJob::deleteLater);
+
+    notification->sendEvent();
+
     // TODO KNotification "snoozemessagewokeup", with an "Open" action.
 }
 
