@@ -6,10 +6,12 @@
 
 #include "snoozeconfigurewidget.h"
 #include "snoozeinfo.h"
+#include "snoozeutil.h"
 
 #include <KLocalizedString>
 
 #include <QHBoxLayout>
+#include <QHeaderView>
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
@@ -76,7 +78,19 @@ SnoozeWidget::~SnoozeWidget() = default;
 
 void SnoozeWidget::load()
 {
-    // TODO fill the tree from the "SnoozeItem <n>" config groups.
+    auto config = SnoozeUtil::defaultConfig();
+    static const QRegularExpression reg(SnoozeUtil::snoozePattern());
+    const QStringList filterGroups = config->groupList().filter(reg);
+    const int numberOfItem = filterGroups.count();
+    for (int i = 0; i < numberOfItem; ++i) {
+        KConfigGroup group = config->group(filterGroups.at(i));
+
+        if (auto info = new SnoozeInfo(group); info->isValid()) {
+            createOrUpdateItem(info);
+        } else {
+            delete info;
+        }
+    }
 }
 
 bool SnoozeWidget::save()
@@ -92,14 +106,12 @@ void SnoozeWidget::needToReload()
 
 void SnoozeWidget::saveTreeWidgetHeader(KConfigGroup &group)
 {
-    // TODO persist the header state.
-    Q_UNUSED(group)
+    group.writeEntry("HeaderState", mTreeWidget->header()->saveState());
 }
 
-void SnoozeWidget::restoreTreeWidgetHeader(const QByteArray &group)
+void SnoozeWidget::restoreTreeWidgetHeader(const QByteArray &data)
 {
-    // TODO restore the header state.
-    Q_UNUSED(group)
+    mTreeWidget->header()->restoreState(data);
 }
 
 QList<Akonadi::Item::Id> SnoozeWidget::messagesToUnsnooze() const
