@@ -9,18 +9,14 @@
 #include "kmail-version.h"
 #include "mailmergeconfigurewidget.h"
 #include <KAboutData>
-#include <KConfigGroup>
 #include <KHelpMenu>
 #include <KLocalizedString>
-#include <KSharedConfig>
-#include <KWindowConfig>
 #include <QApplication>
 #include <QDialogButtonBox>
 #include <QIcon>
 #include <QMenu>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 using namespace Qt::Literals::StringLiterals;
@@ -69,10 +65,7 @@ MailMergeConfigureDialog::MailMergeConfigureDialog(QWidget *parent)
     buttonBox->button(QDialogButtonBox::Help)->setMenu(menu);
 }
 
-MailMergeConfigureDialog::~MailMergeConfigureDialog()
-{
-    writeConfig();
-}
+MailMergeConfigureDialog::~MailMergeConfigureDialog() = default;
 
 void MailMergeConfigureDialog::slotSave()
 {
@@ -81,21 +74,7 @@ void MailMergeConfigureDialog::slotSave()
 
 void MailMergeConfigureDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myConfigureMailMergeConfigureDialogGroupName), QSize(800, 600));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myConfigureMailMergeConfigureDialogGroupName), 800, 600);
-#endif
-}
-
-void MailMergeConfigureDialog::writeConfig()
-{
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myConfigureMailMergeConfigureDialogGroupName));
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-    group.sync();
-#endif
 }
 
 #include "moc_mailmergeconfiguredialog.cpp"

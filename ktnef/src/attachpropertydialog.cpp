@@ -23,9 +23,6 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
-#include <KConfigGroup>
-#include <KSharedConfig>
-#include <KWindowConfig>
 #include <QBuffer>
 #include <QDataStream>
 #include <QDialogButtonBox>
@@ -35,7 +32,6 @@
 #include <QPushButton>
 #include <QTreeWidget>
 #include <QVBoxLayout>
-#include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
 namespace
@@ -67,28 +63,11 @@ AttachPropertyDialog::AttachPropertyDialog(QWidget *parent)
     readConfig();
 }
 
-AttachPropertyDialog::~AttachPropertyDialog()
-{
-    writeConfig();
-}
+AttachPropertyDialog::~AttachPropertyDialog() = default;
 
 void AttachPropertyDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myAttachPropertyDialogGroupName), QSize(600, 700));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myAttachPropertyDialogGroupName), 600, 700);
-#endif
-}
-
-void AttachPropertyDialog::writeConfig()
-{
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myAttachPropertyDialogGroupName));
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-    group.sync();
-#endif
 }
 
 void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)

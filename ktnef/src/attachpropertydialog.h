@@ -52,6 +52,5 @@ protected:
 private:
     void slotSave();
     void readConfig();
-    void writeConfig();
     KTNEFAttach *mAttach = nullptr;
 };

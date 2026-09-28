@@ -108,7 +108,6 @@ public:
 
 private:
     void readConfig();
-    void saveConfig();
 };
 
 class KMAIL_EXPORT SecurityPage : public ConfigModuleWithTabs

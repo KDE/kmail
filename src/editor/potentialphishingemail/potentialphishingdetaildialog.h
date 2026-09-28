@@ -23,6 +23,5 @@ public:
 private:
     KMAIL_NO_EXPORT void slotSave();
     KMAIL_NO_EXPORT void readConfig();
-    KMAIL_NO_EXPORT void writeConfig();
     PotentialPhishingDetailWidget *const mPotentialPhishingDetailWidget;
 };

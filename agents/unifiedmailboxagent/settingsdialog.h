@@ -26,7 +26,6 @@ private:
     void loadBoxes();
     void addBox(UnifiedMailbox *box);
     void readConfig();
-    void writeConfig();
     QStandardItemModel *const mBoxModel;
     UnifiedMailboxManager &mBoxManager;
     MailKernel *const mKernel;

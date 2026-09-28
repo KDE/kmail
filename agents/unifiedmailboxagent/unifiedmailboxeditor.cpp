@@ -16,14 +16,11 @@
 #include <QVBoxLayout>
 
 #include <KCheckableProxyModel>
-#include <KConfigGroup>
 #include <KIconDialog>
 #include <KLocalizedString>
 
-#include <KWindowConfig>
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/FolderTreeWidget>
-#include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
 
@@ -160,28 +157,11 @@ UnifiedMailboxEditor::UnifiedMailboxEditor(UnifiedMailbox *mailbox, const KShare
     readConfig();
 }
 
-UnifiedMailboxEditor::~UnifiedMailboxEditor()
-{
-    writeConfig();
-}
+UnifiedMailboxEditor::~UnifiedMailboxEditor() = default;
 
 void UnifiedMailboxEditor::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(EditorGroup), QSize(600, 700));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(EditorGroup), 600, 700);
-#endif
-}
-
-void UnifiedMailboxEditor::writeConfig()
-{
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    auto editorGrp = mConfig->group(QLatin1StringView(EditorGroup));
-    KWindowConfig::saveWindowSize(windowHandle(), editorGrp);
-    editorGrp.sync();
-#endif
 }
 
 #include "unifiedmailboxeditor.moc"

@@ -27,7 +27,6 @@ private:
 
     void slotDoubleClicked();
     void readConfig();
-    void writeConfig();
     Akonadi::EmailAddressSelectionWidget *mEmailSelectionWidget = nullptr;
     QPushButton *mOkButton = nullptr;
 };

@@ -22,12 +22,10 @@
 #include <KConfigGroup>
 #include <KGuiItem>
 #include <KSharedConfig>
-#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeWidget>
-#include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 namespace
 {
@@ -77,12 +75,7 @@ void MessagePropertyDialog::slotSaveProperty()
 
 void MessagePropertyDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myMessagePropertyDialogGroupName), QSize(600, 400));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myMessagePropertyDialogGroupName), 600, 400);
-#endif
 
     const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myMessagePropertyDialogGroupName));
     if (const QByteArray headerState = group.readEntry("HeaderState", QByteArray()); !headerState.isEmpty()) {
@@ -93,9 +86,6 @@ void MessagePropertyDialog::readConfig()
 void MessagePropertyDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myMessagePropertyDialogGroupName));
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-#endif
     group.writeEntry("HeaderState", mListView->header()->saveState());
     group.sync();
 }

@@ -16,14 +16,10 @@
 
 #include <KLocalizedString>
 
-#include <KConfigGroup>
-#include <KSharedConfig>
-#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QTreeView>
 #include <QVBoxLayout>
-#include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 using namespace Qt::Literals::StringLiterals;
@@ -75,10 +71,7 @@ AddEmailToExistingContactDialog::AddEmailToExistingContactDialog(QWidget *parent
     mOkButton->setEnabled(false);
 }
 
-AddEmailToExistingContactDialog::~AddEmailToExistingContactDialog()
-{
-    writeConfig();
-}
+AddEmailToExistingContactDialog::~AddEmailToExistingContactDialog() = default;
 
 void AddEmailToExistingContactDialog::slotDoubleClicked()
 {
@@ -94,21 +87,7 @@ void AddEmailToExistingContactDialog::slotSelectionChanged()
 
 void AddEmailToExistingContactDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myAddEmailToExistingContactDialogGroupName), QSize(600, 400));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myAddEmailToExistingContactDialogGroupName), 600, 400);
-#endif
-}
-
-void AddEmailToExistingContactDialog::writeConfig()
-{
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myAddEmailToExistingContactDialogGroupName));
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-    group.sync();
-#endif
 }
 
 Akonadi::Item AddEmailToExistingContactDialog::selectedContact() const

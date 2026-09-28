@@ -28,7 +28,6 @@ public:
 private:
     KMAIL_NO_EXPORT void slotAddNewTag();
     KMAIL_NO_EXPORT void slotTagsFetched(KJob *);
-    KMAIL_NO_EXPORT void writeConfig();
     KMAIL_NO_EXPORT void readConfig();
     KMAIL_NO_EXPORT void createTagList(bool updateList);
     enum ItemType {

@@ -20,15 +20,11 @@
 #include <PimCommonAkonadi/MailUtil>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 
-#include <KConfigGroup>
-#include <KSharedConfig>
-#include <KWindowConfig>
 #include <QDBusInterface>
 #include <QDBusMetaType>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QTimer>
-#include <QWindow>
 #include <chrono>
 
 using namespace std::chrono_literals;
@@ -142,28 +138,11 @@ IncompleteIndexDialog::IncompleteIndexDialog(const QList<qint64> &unindexedColle
     readConfig();
 }
 
-IncompleteIndexDialog::~IncompleteIndexDialog()
-{
-    writeConfig();
-}
+IncompleteIndexDialog::~IncompleteIndexDialog() = default;
 
 void IncompleteIndexDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myIncompleteIndexDialogGroupName), QSize(500, 400));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myIncompleteIndexDialogGroupName), 500, 400);
-#endif
-}
-
-void IncompleteIndexDialog::writeConfig()
-{
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myIncompleteIndexDialogGroupName));
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-    group.sync();
-#endif
 }
 
 void IncompleteIndexDialog::selectAll()

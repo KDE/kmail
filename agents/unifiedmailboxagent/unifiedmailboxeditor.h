@@ -20,7 +20,6 @@ public:
     ~UnifiedMailboxEditor() override;
 
 private:
-    void writeConfig();
     void readConfig();
     UnifiedMailbox *const mMailbox;
     KSharedConfigPtr mConfig;

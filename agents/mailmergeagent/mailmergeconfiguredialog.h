@@ -17,7 +17,6 @@ public:
 
 private:
     void slotSave();
-    void writeConfig();
     void readConfig();
     MailMergeConfigureWidget *const mWidget;
 };

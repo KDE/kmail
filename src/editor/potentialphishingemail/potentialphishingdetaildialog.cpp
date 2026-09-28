@@ -8,14 +8,10 @@
 #include "potentialphishingdetaildialog.h"
 
 #include "potentialphishingdetailwidget.h"
-#include <KConfigGroup>
 #include <KLocalizedString>
-#include <KSharedConfig>
-#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QWindow>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
 namespace
@@ -44,10 +40,7 @@ PotentialPhishingDetailDialog::PotentialPhishingDetailDialog(QWidget *parent)
     readConfig();
 }
 
-PotentialPhishingDetailDialog::~PotentialPhishingDetailDialog()
-{
-    writeConfig();
-}
+PotentialPhishingDetailDialog::~PotentialPhishingDetailDialog() = default;
 
 void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 {
@@ -56,20 +49,7 @@ void PotentialPhishingDetailDialog::fillList(const QStringList &lst)
 
 void PotentialPhishingDetailDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(myPotentialPhishingDetailDialogGroupName), QSize(800, 600));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(myPotentialPhishingDetailDialogGroupName), 800, 600);
-#endif
-}
-
-void PotentialPhishingDetailDialog::writeConfig()
-{
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(myPotentialPhishingDetailDialogGroupName));
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-#endif
 }
 
 void PotentialPhishingDetailDialog::slotSave()

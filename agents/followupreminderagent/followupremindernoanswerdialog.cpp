@@ -15,12 +15,10 @@
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 
 #include <KConfigGroup>
-#include <KWindowConfig>
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QWindow>
 
 #include "dbusproperties.h" // DBUS-generated
 #include "notifications_interface.h" // DBUS-generated
@@ -109,12 +107,7 @@ void FollowUpReminderNoAnswerDialog::setInfo(const QList<FollowUpReminder::Follo
 
 void FollowUpReminderNoAnswerDialog::readConfig()
 {
-#if TEXTADDONSWIDGETS_VERSION >= QT_VERSION_CHECK(2, 1, 49)
     TextAddonsWidgets::LoadDialogSizeUtils::manageDialogSize(this, QLatin1StringView(DialogGroup), QSize(800, 600));
-#else
-    create(); // ensure a window is created
-    TextAddonsWidgets::LoadDialogSizeUtils::loadDialogSizeScaled(this, QLatin1StringView(DialogGroup), 800, 600);
-#endif
     const KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
     mWidget->restoreTreeWidgetHeader(group.readEntry("HeaderState", QByteArray()));
 }
@@ -122,9 +115,6 @@ void FollowUpReminderNoAnswerDialog::readConfig()
 void FollowUpReminderNoAnswerDialog::writeConfig()
 {
     KConfigGroup group(KSharedConfig::openStateConfig(), QLatin1StringView(DialogGroup));
-#if TEXTADDONSWIDGETS_VERSION < QT_VERSION_CHECK(2, 1, 49)
-    KWindowConfig::saveWindowSize(windowHandle(), group);
-#endif
     mWidget->saveTreeWidgetHeader(group);
 }
 

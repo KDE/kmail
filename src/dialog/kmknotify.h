@@ -27,7 +27,6 @@ private:
     void slotConfigChanged(bool changed);
 
     void initCombobox();
-    void writeConfig();
     void readConfig();
     QComboBox *const m_comboNotify;
     KNotifyConfigWidget *const m_notifyWidget;
