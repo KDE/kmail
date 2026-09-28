@@ -8,6 +8,7 @@
 #include "snoozeinfo.h"
 #include "snoozeutil.h"
 
+#include <KConfigGroup>
 #include <KLocalizedString>
 
 #include <QHBoxLayout>
