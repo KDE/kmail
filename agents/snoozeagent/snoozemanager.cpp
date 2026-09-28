@@ -12,7 +12,7 @@
 #include <QTimer>
 
 using namespace Snooze;
-
+using namespace Qt::Literals::StringLiterals;
 SnoozeManager::SnoozeManager(QObject *parent)
     : QObject(parent)
     , mConfig(SnoozeUtil::defaultConfig())
@@ -111,15 +111,26 @@ SnoozeInfo *SnoozeManager::searchInfo(Akonadi::Item::Id id) const
 
 QString SnoozeManager::printDebugInfo() const
 {
-    // TODO join infoToStr() over the list.
-    return {};
+    QString infoStr;
+    if (mListSnoozeInfo.isEmpty()) {
+        infoStr = u"No mail"_s;
+    } else {
+        for (SnoozeInfo *info : std::as_const(mListSnoozeInfo)) {
+            if (!infoStr.isEmpty()) {
+                infoStr += u'\n';
+            }
+            infoStr += infoToStr(info);
+        }
+    }
+    return infoStr;
 }
 
 QString SnoozeManager::infoToStr(Snooze::SnoozeInfo *info) const
 {
     // Don't translate it. => debug info.
-    Q_UNUSED(info)
-    return {};
+    QString infoStr = u"From "_s + info->from();
+    // TODO
+    return infoStr;
 }
 
 #include "moc_snoozemanager.cpp"
