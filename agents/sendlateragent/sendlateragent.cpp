@@ -132,16 +132,16 @@ void SendLaterAgent::addItem(qint64 timestamp,
                              const QString &subject,
                              const QString &to)
 {
-    auto info = new MessageComposer::SendLaterInfo;
-    info->setDateTime(QDateTime::fromSecsSinceEpoch(timestamp));
-    info->setRecurrence(recurrence);
-    info->setRecurrenceEachValue(recurrenceValue);
-    info->setRecurrenceUnit(static_cast<MessageComposer::SendLaterInfo::RecurrenceUnit>(recurrenceUnit));
-    info->setItemId(id);
-    info->setSubject(subject);
-    info->setTo(to);
+    MessageComposer::SendLaterInfo info;
+    info.setDateTime(QDateTime::fromSecsSinceEpoch(timestamp));
+    info.setRecurrence(recurrence);
+    info.setRecurrenceEachValue(recurrenceValue);
+    info.setRecurrenceUnit(static_cast<MessageComposer::SendLaterInfo::RecurrenceUnit>(recurrenceUnit));
+    info.setItemId(id);
+    info.setSubject(subject);
+    info.setTo(to);
 
-    SendLaterUtil::writeSendLaterInfo(SendLaterUtil::defaultConfig(), info);
+    SendLaterUtil::writeSendLaterInfo(SendLaterUtil::defaultConfig(), &info);
     reload();
 }
 
