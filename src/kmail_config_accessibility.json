@@ -16,6 +16,7 @@
         "Description[pt_BR]": "Configurações de acessibilidade",
         "Description[ru]": "Настройка специальных возможностей",
         "Description[sl]": "Nastavitve dostopnosti",
+        "Description[sv]": "Inställningar av handikappstöd",
         "Description[tr]": "Erişilebilirlik ayarları",
         "Description[uk]": "Параметри доступності",
         "Icon": "preferences-desktop-accessibility",
@@ -35,6 +36,7 @@
         "Name[pt_BR]": "Acessibilidade",
         "Name[ru]": "Специальные возможности",
         "Name[sl]": "Dostopnost",
+        "Name[sv]": "Handikappstöd",
         "Name[tr]": "Erişilebilirlik",
         "Name[uk]": "Доступність",
         "ServiceTypes": [
