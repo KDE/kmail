@@ -69,7 +69,7 @@ void HistoryClosedReaderMenu::updateMenu()
 void HistoryClosedReaderMenu::slotReopenLastClosedViewer()
 {
     if (const QList<HistoryClosedReaderInfo> list = HistoryClosedReaderManager::self()->closedReaderInfos(); !list.isEmpty()) {
-        const auto identifier = list.constFirst().item();
+        const auto identifier = list.constLast().item();
         Q_EMIT openMessage(identifier);
         HistoryClosedReaderManager::self()->removeItem(identifier);
     }
