@@ -44,8 +44,9 @@ bool KMailPluginInterface::initializeInterfaceRequires(PimCommon::AbstractGeneri
         qCDebug(KMAIL_LOG) << "PimCommon::GenericPluginInterface::Items not implemented";
     }
     if (requiresFeatures & PimCommon::GenericPluginInterface::CurrentCollection) {
-        if (mMainWindow->currentCollection().isValid()) {
-            interface->setCurrentCollection(mMainWindow->currentCollection());
+        const auto currentCollection = mMainWindow->currentCollection();
+        if (currentCollection.isValid()) {
+            interface->setCurrentCollection(currentCollection);
         } else {
             qCDebug(KMAIL_LOG) << "Current Collection not defined";
         }
