@@ -987,16 +987,12 @@ void KMKernel::closeAllKMailWindows()
 
 void KMKernel::cleanup()
 {
-    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceStatusChanged(Akonadi::AgentInstance)));
-    // clang-format off
-    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceError(Akonadi::AgentInstance,QString)));
-    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceWarning(Akonadi::AgentInstance,QString)));
-    // clang-format on
-    disconnect(Akonadi::AgentManager::self(), SIGNAL(instanceRemoved(Akonadi::AgentInstance)));
-    // clang-format off
-    disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCompleted(KPIM::ProgressItem*)));
-    disconnect(KPIM::ProgressManager::instance(), SIGNAL(progressItemCanceled(KPIM::ProgressItem*)));
-    // clang-format on
+    disconnect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceStatusChanged, this, &KMKernel::instanceStatusChanged);
+    disconnect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceError, this, &KMKernel::slotInstanceError);
+    disconnect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceWarning, this, &KMKernel::slotInstanceWarning);
+    disconnect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KMKernel::slotInstanceRemoved);
+    disconnect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCompleted, this, &KMKernel::slotProgressItemCompletedOrCanceled);
+    disconnect(KPIM::ProgressManager::instance(), &KPIM::ProgressManager::progressItemCanceled, this, &KMKernel::slotProgressItemCompletedOrCanceled);
 
     dumpDeadLetters();
     the_shuttingDown = true;
