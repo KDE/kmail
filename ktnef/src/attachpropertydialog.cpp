@@ -85,7 +85,7 @@ void AttachPropertyDialog::setAttachment(KTNEFAttach *attach)
     if (const QPixmap pix = loadRenderingPixmap(attach, qApp->palette().color(QPalette::Window)); !pix.isNull()) {
         mUI.mIcon->setPixmap(pix);
     } else {
-        mUI.mIcon->setPixmap(mimetype.iconName());
+        mUI.mIcon->setPixmap(QIcon::fromTheme(mimetype.iconName()).pixmap(48));
     }
     mUI.mDescription->setText(mimetype.comment());
     s.setNum(attach->index());
