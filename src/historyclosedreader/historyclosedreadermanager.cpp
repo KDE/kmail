@@ -25,15 +25,8 @@ bool HistoryClosedReaderManager::isEmpty() const
 void HistoryClosedReaderManager::addInfo(HistoryClosedReaderInfo info)
 {
     if (info.isValid()) {
-        if (!mClosedReaderInfos.isEmpty()) {
-            auto infoIt = std::find_if(mClosedReaderInfos.cbegin(), mClosedReaderInfos.cend(), [&info](const HistoryClosedReaderInfo &i) {
-                return i == info;
-            });
-            // Remove same element.
-            if (infoIt != mClosedReaderInfos.cend()) {
-                mClosedReaderInfos.removeAll(*infoIt);
-            }
-        }
+        // Remove same element.
+        mClosedReaderInfos.removeAll(info);
         if (mClosedReaderInfos.count() >= 10) {
             mClosedReaderInfos.takeFirst();
         }
