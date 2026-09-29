@@ -3114,7 +3114,9 @@ void KMMainWidget::setupActions()
     mDeleteThreadAction = new QAction(QIcon::fromTheme(u"edit-delete-shred"_s), i18n("Delete T&hread"), this);
     actionCollection()->addAction(u"delete_thread"_s, mDeleteThreadAction);
     // Don't use new connect api.
-    connect(mDeleteThreadAction, &QAction::triggered, this, &KMMainWidget::slotDeleteThread);
+    connect(mDeleteThreadAction, &QAction::triggered, this, [this]() {
+        slotDeleteThread(!KMailSettings::self()->deleteMessageWithoutConfirmation());
+    });
     actionCollection()->setDefaultShortcut(mDeleteThreadAction, QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_Delete));
 
 #ifndef Q_OS_WIN
