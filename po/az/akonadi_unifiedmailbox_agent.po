@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2021-07-13 16:37+0400\n"
 "Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
@@ -17,52 +17,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 21.04.1\n"
 
-#: settingsdialog.cpp:55
+#: settingsdialog.cpp:52
 #, fuzzy, kde-format
 #| msgid "Add"
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Əlavə edin"
 
-#: settingsdialog.cpp:70
+#: settingsdialog.cpp:67
 #, fuzzy, kde-format
 #| msgid "Modify"
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Dəyişdirmək"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:88
 #, kde-format
 msgid "Remove"
 msgstr "Silmək"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:98
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Doğrudan <b>%1</b> birləşmiş poçt qutularını silmək istəyirsiniz?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:99
 #, fuzzy, kde-format
 #| msgid "Really Remove?"
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Doğrudan silinsin?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:125
 #, fuzzy, kde-format
 #| msgid "Add"
 msgctxt "@action"
 msgid "Add"
 msgstr "Əlavə edin"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:129
 #, fuzzy, kde-format
 #| msgid "Modify"
 msgctxt "@action"
 msgid "Modify"
 msgstr "Dəyişdirmək"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:131
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -79,25 +79,25 @@ msgstr "Birləşmiş poçt qutuları"
 msgid "Synchronizing unified mailbox %1"
 msgstr "%1 birləşmiş poçt qutularının eyniləşdirilməsi"
 
-#: unifiedmailboxeditor.cpp:87
+#: unifiedmailboxeditor.cpp:84
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "Birləşmiş poçt qutularını tənzimləmək"
 
-#: unifiedmailboxeditor.cpp:99
+#: unifiedmailboxeditor.cpp:96
 #, kde-format
 msgid "Name:"
 msgstr "Adı:"
 
-#: unifiedmailboxeditor.cpp:104
+#: unifiedmailboxeditor.cpp:101
 #, fuzzy, kde-format
 #| msgid "Pick icon..."
 msgctxt "@action:button"
 msgid "Pick icon…"
 msgstr "Nişanı seçin..."
 
-#: unifiedmailboxeditor.cpp:105
+#: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Icon:"
 msgstr "Nişan:"

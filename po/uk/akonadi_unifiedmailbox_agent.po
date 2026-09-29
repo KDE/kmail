@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_unifiedmailbox_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2025-08-20 11:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -20,47 +20,47 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
-#: settingsdialog.cpp:55
+#: settingsdialog.cpp:52
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Додати"
 
-#: settingsdialog.cpp:70
+#: settingsdialog.cpp:67
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Змінити"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:88
 #, kde-format
 msgid "Remove"
 msgstr "Вилучити"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:98
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Ви справді хочете вилучити уніфіковану поштову скриньку <b>%1</b>?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:99
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Справді вилучити?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:125
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Додати"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:129
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "Змінити"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -76,24 +76,24 @@ msgstr "Уніфіковані поштові скриньки"
 msgid "Synchronizing unified mailbox %1"
 msgstr "Синхронізуємо уніфіковану поштову скриньку %1"
 
-#: unifiedmailboxeditor.cpp:87
+#: unifiedmailboxeditor.cpp:84
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "Налаштовування уніфікованої поштової скриньки"
 
-#: unifiedmailboxeditor.cpp:99
+#: unifiedmailboxeditor.cpp:96
 #, kde-format
 msgid "Name:"
 msgstr "Назва:"
 
-#: unifiedmailboxeditor.cpp:104
+#: unifiedmailboxeditor.cpp:101
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
 msgstr "Вибрати піктограму…"
 
-#: unifiedmailboxeditor.cpp:105
+#: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Icon:"
 msgstr "Піктограма:"

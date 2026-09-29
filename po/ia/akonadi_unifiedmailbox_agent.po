@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2025-09-02 17:54+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -17,47 +17,47 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 23.08.5\n"
 
-#: settingsdialog.cpp:55
+#: settingsdialog.cpp:52
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Adde"
 
-#: settingsdialog.cpp:70
+#: settingsdialog.cpp:67
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Modifica"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:88
 #, kde-format
 msgid "Remove"
 msgstr "Remove"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:98
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Tu vermente vole remover cassa de posta unificate <b>%1</b>?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:99
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Vermente remove?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:125
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Adde"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:129
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "Modifica"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -73,24 +73,24 @@ msgstr "Cassas de posta unificate"
 msgid "Synchronizing unified mailbox %1"
 msgstr "Synchronisante cassa  de e-posta unificate %1"
 
-#: unifiedmailboxeditor.cpp:87
+#: unifiedmailboxeditor.cpp:84
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "Configura cassa de posta unificate"
 
-#: unifiedmailboxeditor.cpp:99
+#: unifiedmailboxeditor.cpp:96
 #, kde-format
 msgid "Name:"
 msgstr "Nomine:"
 
-#: unifiedmailboxeditor.cpp:104
+#: unifiedmailboxeditor.cpp:101
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
 msgstr "Selige icone…"
 
-#: unifiedmailboxeditor.cpp:105
+#: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Icon:"
 msgstr "Icone:"

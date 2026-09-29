@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2025-10-09 00:56+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -17,49 +17,49 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Lokalize 24.12.3\n"
 
-#: settingsdialog.cpp:55
+#: settingsdialog.cpp:52
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "추가"
 
-#: settingsdialog.cpp:70
+#: settingsdialog.cpp:67
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "수정"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:88
 #, kde-format
 msgid "Remove"
 msgstr "삭제"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:98
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr ""
 "통합 편지함 <b>%1</b>을(를) 삭제하시겠습니까?|/|통합 편지함 <b>%1</b>$[을를 "
 "%1] 삭제하시겠습니까?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:99
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "정말 삭제하시겠습니까?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:125
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "추가"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:129
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "수정"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -75,24 +75,24 @@ msgstr "통합 편지함"
 msgid "Synchronizing unified mailbox %1"
 msgstr "통합 편지함 %1 동기화 중"
 
-#: unifiedmailboxeditor.cpp:87
+#: unifiedmailboxeditor.cpp:84
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "통합 편지함 설정"
 
-#: unifiedmailboxeditor.cpp:99
+#: unifiedmailboxeditor.cpp:96
 #, kde-format
 msgid "Name:"
 msgstr "이름:"
 
-#: unifiedmailboxeditor.cpp:104
+#: unifiedmailboxeditor.cpp:101
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
 msgstr "아이콘 선택…"
 
-#: unifiedmailboxeditor.cpp:105
+#: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Icon:"
 msgstr "아이콘:"

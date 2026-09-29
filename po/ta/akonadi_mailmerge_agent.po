@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-04 00:45+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2024-09-08 13:18+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@kde.org>\n"
@@ -17,46 +17,46 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 24.08.0\n"
 
-#: mailmergeconfiguredialog.cpp:36
+#: mailmergeconfiguredialog.cpp:32
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure"
 msgstr "அமை"
 
-#: mailmergeconfiguredialog.cpp:53
+#: mailmergeconfiguredialog.cpp:49
 #, kde-format
 msgid "Mail Merge Agent"
 msgstr "அஞ்சல் ஒன்றிணைப்பு சேவை"
 
-#: mailmergeconfiguredialog.cpp:55
+#: mailmergeconfiguredialog.cpp:51
 #, kde-format
 msgid "Merge email addresses agent."
 msgstr ""
 
-#: mailmergeconfiguredialog.cpp:57
+#: mailmergeconfiguredialog.cpp:53
 #, fuzzy, kde-format
 #| msgid "Copyright (C) 2021-%1 Laurent Montel"
 msgid "© 2021–%1 Laurent Montel"
 msgstr "பதிப்புரிமை (C) 2021-%1 லாரென்டு மான்டெல்"
 
-#: mailmergeconfiguredialog.cpp:59
+#: mailmergeconfiguredialog.cpp:55
 #, kde-format
 msgctxt "@info:credit"
 msgid "Laurent Montel"
 msgstr "லாரெண்டு மாண்டெல்"
 
-#: mailmergeconfiguredialog.cpp:59
+#: mailmergeconfiguredialog.cpp:55
 #, kde-format
 msgid "Maintainer"
 msgstr "பராமரிப்பாளர்"
 
-#: mailmergeconfiguredialog.cpp:62
+#: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "கோ. கிஷோர்"
 
-#: mailmergeconfiguredialog.cpp:62
+#: mailmergeconfiguredialog.cpp:58
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"

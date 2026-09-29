@@ -621,6 +621,8 @@ Center (MCC). Other than this name change, the method is as described above.</pa
 ><para
 >Содержимое папки было изменено другим приложением. Если требуется использовать &kmail; совместно с procmail, прочтите <link linkend="faq-procmail"
 >этот документ</link
+>. Если требуется использовать &kmail; совместно с другим почтовым клиентом, прочтите <link linkend="faq-other-muas"
+>этот документ</link
 >.</para
 ></listitem>
         <listitem

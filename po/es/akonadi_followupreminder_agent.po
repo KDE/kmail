@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2025-08-20 12:16+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -85,13 +85,13 @@ msgstr "Borrar elementos"
 msgid "Answer from %1 received"
 msgstr "Respuesta de %1 recibida"
 
-#: followupremindernoanswerdialog.cpp:40
+#: followupremindernoanswerdialog.cpp:38
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Recordatorio de seguimiento"
 
-#: followupremindernoanswerdialog.cpp:46
+#: followupremindernoanswerdialog.cpp:44
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

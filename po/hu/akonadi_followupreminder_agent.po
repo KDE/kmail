@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2024-10-03 21:49+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -86,13 +86,13 @@ msgstr "Elemek törlése"
 msgid "Answer from %1 received"
 msgstr "Válasz érkezett tőle: %1"
 
-#: followupremindernoanswerdialog.cpp:40
+#: followupremindernoanswerdialog.cpp:38
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Nyomkövető emlékeztető"
 
-#: followupremindernoanswerdialog.cpp:46
+#: followupremindernoanswerdialog.cpp:44
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

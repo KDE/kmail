@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-30 00:47+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2025-08-20 22:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -86,13 +86,13 @@ msgstr "מחיקת פריטים"
 msgid "Answer from %1 received"
 msgstr "התקבל מענה מאת %1"
 
-#: followupremindernoanswerdialog.cpp:40
+#: followupremindernoanswerdialog.cpp:38
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "תזכורת לביצוע"
 
-#: followupremindernoanswerdialog.cpp:46
+#: followupremindernoanswerdialog.cpp:44
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

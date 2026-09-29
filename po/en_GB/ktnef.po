@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-09 00:51+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2024-06-22 12:49+0100\n"
 "Last-Translator: Steve Allewell <steve.allewell@gmail.com>\n"
 "Language-Team: British English\n"
@@ -27,41 +27,41 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "steve.allewell@gmail.com"
 
-#: attachpropertydialog.cpp:62
+#: attachpropertydialog.cpp:58
 #, kde-format
 msgid "Save…"
 msgstr "Save…"
 
-#: attachpropertydialog.cpp:98
+#: attachpropertydialog.cpp:77
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "Properties for Attachment %1"
 
-#: attachpropertydialog.cpp:102
+#: attachpropertydialog.cpp:81
 #, kde-format
 msgid " bytes"
 msgstr " bytes"
 
-#: attachpropertydialog.cpp:160
+#: attachpropertydialog.cpp:139
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF Attributes"
 
-#: attachpropertydialog.cpp:169
+#: attachpropertydialog.cpp:148
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Must select an item first."
 
-#: attachpropertydialog.cpp:174
+#: attachpropertydialog.cpp:153
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "The selected item cannot be saved because it has an empty tag."
 
-#: attachpropertydialog.cpp:194
+#: attachpropertydialog.cpp:173
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -307,19 +307,19 @@ msgstr "Author, Ported to Qt4/KDE4"
 msgid "An optional argument 'file' "
 msgstr "An optional argument 'file' "
 
-#: messagepropertydialog.cpp:43
+#: messagepropertydialog.cpp:41
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "Message Properties"
 
-#: messagepropertydialog.cpp:56
+#: messagepropertydialog.cpp:54
 #, kde-format
 msgctxt "@title:column property name"
 msgid "Name"
 msgstr "Name"
 
-#: messagepropertydialog.cpp:56
+#: messagepropertydialog.cpp:54
 #, kde-format
 msgctxt "@title:column property value"
 msgid "Value"

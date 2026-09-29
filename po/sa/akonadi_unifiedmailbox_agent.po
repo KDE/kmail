@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2024-12-20 21:52+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -19,47 +19,47 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n>2);\n"
 "X-Generator: Lokalize 24.08.2\n"
 
-#: settingsdialog.cpp:55
+#: settingsdialog.cpp:52
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "संयोजयति"
 
-#: settingsdialog.cpp:70
+#: settingsdialog.cpp:67
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "परिवर्तनं कुर्वन्तु"
 
-#: settingsdialog.cpp:91
+#: settingsdialog.cpp:88
 #, kde-format
 msgid "Remove"
 msgstr "अपाकरोति"
 
-#: settingsdialog.cpp:101
+#: settingsdialog.cpp:98
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "किं भवान् वास्तवमेव एकीकृतं मेलबॉक्स <b>%1</b> अपसारयितुम् इच्छति ?"
 
-#: settingsdialog.cpp:102
+#: settingsdialog.cpp:99
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "वास्तवं निष्कासयतु?"
 
-#: settingsdialog.cpp:128
+#: settingsdialog.cpp:125
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "संयोजयति"
 
-#: settingsdialog.cpp:132
+#: settingsdialog.cpp:129
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "परिवर्तनं कुर्वन्तु"
 
-#: settingsdialog.cpp:134
+#: settingsdialog.cpp:131
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -75,18 +75,18 @@ msgstr "एकीकृत मेलबॉक्स"
 msgid "Synchronizing unified mailbox %1"
 msgstr "एकीकृत मेलबॉक्स %1 समन्वयनम्"
 
-#: unifiedmailboxeditor.cpp:87
+#: unifiedmailboxeditor.cpp:84
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "एकीकृत मेलबॉक्स विन्यस्तं कुर्वन्तु"
 
-#: unifiedmailboxeditor.cpp:99
+#: unifiedmailboxeditor.cpp:96
 #, kde-format
 msgid "Name:"
 msgstr "नामः:"
 
-#: unifiedmailboxeditor.cpp:104
+#: unifiedmailboxeditor.cpp:101
 #, fuzzy, kde-format
 #| msgctxt "@action:button"
 #| msgid "Pick icon..."
@@ -94,7 +94,7 @@ msgctxt "@action:button"
 msgid "Pick icon…"
 msgstr "चिह्नं चिनुत..."
 
-#: unifiedmailboxeditor.cpp:105
+#: unifiedmailboxeditor.cpp:102
 #, kde-format
 msgid "Icon:"
 msgstr "चिह्नम् :"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-22 00:45+0000\n"
+"POT-Creation-Date: 2026-09-29 00:46+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -1671,38 +1671,38 @@ msgstr ""
 msgid "Akonadi Agents"
 msgstr "Akonadi agendid"
 
-#: configuredialog/configuresecuritypage.cpp:50
+#: configuredialog/configuresecuritypage.cpp:48
 #, kde-format
 msgid "Reading"
 msgstr "Lugemine"
 
-#: configuredialog/configuresecuritypage.cpp:52
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Kirja kättesaamise/lugemise kinnitused"
 
-#: configuredialog/configuresecuritypage.cpp:58
+#: configuredialog/configuresecuritypage.cpp:56
 #, kde-format
 msgid "Encryption"
 msgstr "Krüptimine"
 
-#: configuredialog/configuresecuritypage.cpp:64
+#: configuredialog/configuresecuritypage.cpp:62
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME kontrollimine"
 
-#: configuredialog/configuresecuritypage.cpp:91
+#: configuredialog/configuresecuritypage.cpp:89
 #, kde-format
 msgid "Email Address:"
 msgstr "E-posti aadress:"
 
-#: configuredialog/configuresecuritypage.cpp:92
+#: configuredialog/configuresecuritypage.cpp:90
 #, fuzzy, kde-format
 #| msgid "Do you want to remove selected item?"
 msgid "Do you want to remove this email address?"
 msgstr "Kas eemaldada valitud element?"
 
-#: configuredialog/configuresecuritypage.cpp:127
+#: configuredialog/configuresecuritypage.cpp:125
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
@@ -1710,10 +1710,10 @@ msgstr ""
 "Globaalsete HTML-seadete muutmine tühistab konkreetsetele kaustadele "
 "rakendatud seaded."
 
+#: configuredialog/configuresecuritypage.cpp:282
+#: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
-#: configuredialog/configuresecuritypage.cpp:286
-#: configuredialog/configuresecuritypage.cpp:287
 #, fuzzy, kde-format
 #| msgid " day"
 #| msgid_plural " days"
@@ -1722,14 +1722,14 @@ msgid_plural "%v days"
 msgstr[0] " päev"
 msgstr[1] " päeva"
 
-#: configuredialog/configuresecuritypage.cpp:318
+#: configuredialog/configuresecuritypage.cpp:316
 #, fuzzy, kde-format
 #| msgid "GnuPG Settings..."
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG seadistused..."
 
-#: configuredialog/configuresecuritypage.cpp:325
+#: configuredialog/configuresecuritypage.cpp:323
 #, fuzzy, kde-format
 #| msgid ""
 #| "The module is missing. Please verify your installation. This module is "
@@ -1741,34 +1741,34 @@ msgid ""
 msgstr ""
 "Moodul puudub. Palun kontrolli paigaldust. Seda moodulit pakub Kleopatra."
 
-#: configuredialog/configuresecuritypage.cpp:330
+#: configuredialog/configuresecuritypage.cpp:328
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG seadistamise mooduli tõrge"
 
-#: configuredialog/configuresecuritypage.cpp:394
+#: configuredialog/configuresecuritypage.cpp:392
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Selle valiku korral on vajalik dirmngr >= 0.9.0"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:506 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:504 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "puhverserver puudub"
 
-#: configuredialog/configuresecuritypage.cpp:508
+#: configuredialog/configuresecuritypage.cpp:506
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Süsteemi aktiivne seadistus: %1)"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:38
+#: dialog/addemailtoexistingcontactdialog.cpp:34
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Contact"
 msgstr "Kontakti valimine"
 
-#: dialog/addemailtoexistingcontactdialog.cpp:74
+#: dialog/addemailtoexistingcontactdialog.cpp:70
 #, kde-format
 msgid "Select"
 msgstr "Vali"
@@ -1863,7 +1863,7 @@ msgctxt "@title:window"
 msgid "No folder selected"
 msgstr "Kaust on valimata"
 
-#: dialog/kmknotify.cpp:34
+#: dialog/kmknotify.cpp:31
 #, kde-format
 msgctxt "@title:window"
 msgid "Notification"
@@ -1890,20 +1890,20 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Kaasatud failide nimekirja näitamine"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:38 kmmainwin.cpp:94
+#: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
 #: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:357
+#: editor/kmcomposerwin.cpp:353
 #, fuzzy, kde-format
 #| msgid "Select the dictionary to use when spell-checking this message"
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Sõnaraamatu valimine kirja õigekirja kontrollimiseks"
 
-#: editor/kmcomposerwin.cpp:364
+#: editor/kmcomposerwin.cpp:360
 #, fuzzy, kde-format
 #| msgid ""
 #| "Select the sent-mail folder where a copy of this message will be saved"
@@ -1911,161 +1911,161 @@ msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Saadetud kirjade kausta valimine selle kirja koopia salvestamiseks"
 
-#: editor/kmcomposerwin.cpp:373
+#: editor/kmcomposerwin.cpp:369
 #, fuzzy, kde-format
 #| msgid "Select the outgoing account to use for sending this message"
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Väljuvate kirjade konto valimine selle kirja saatmiseks"
 
-#: editor/kmcomposerwin.cpp:382
+#: editor/kmcomposerwin.cpp:378
 #, fuzzy, kde-format
 #| msgid "Set the \"From:\" email address for this message"
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Selle kirja saatja e-posti aadressi määramine"
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:408
 #, fuzzy, kde-format
 #| msgid "&Identity:"
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identiteet:"
 
-#: editor/kmcomposerwin.cpp:417
+#: editor/kmcomposerwin.cpp:409
 #, fuzzy, kde-format
 #| msgid "&Dictionary:"
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Sõnaraamat:"
 
-#: editor/kmcomposerwin.cpp:418
+#: editor/kmcomposerwin.cpp:410
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail folder:"
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Saa&detud kirjade kaust:"
 
-#: editor/kmcomposerwin.cpp:419
+#: editor/kmcomposerwin.cpp:411
 #, fuzzy, kde-format
 #| msgid "&Mail transport:"
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Kirja saat&mise viis:"
 
-#: editor/kmcomposerwin.cpp:420
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&Kellelt:"
 
-#: editor/kmcomposerwin.cpp:421
+#: editor/kmcomposerwin.cpp:413
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Teema:"
 
-#: editor/kmcomposerwin.cpp:490
+#: editor/kmcomposerwin.cpp:482
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Kirja koostaja"
 
-#: editor/kmcomposerwin.cpp:1252 editor/kmcomposerwin.cpp:1286
+#: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1278
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Saada kiri"
 
-#: editor/kmcomposerwin.cpp:1259 editor/kmcomposerwin.cpp:1292
+#: editor/kmcomposerwin.cpp:1251 editor/kmcomposerwin.cpp:1284
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "&Saada kiri kasutades"
 
-#: editor/kmcomposerwin.cpp:1261
+#: editor/kmcomposerwin.cpp:1253
 #, kde-format
 msgid "Send"
 msgstr "Saada"
 
-#: editor/kmcomposerwin.cpp:1264 editor/kmcomposerwin.cpp:1276
+#: editor/kmcomposerwin.cpp:1256 editor/kmcomposerwin.cpp:1268
 #, kde-format
 msgid "Send &Later"
 msgstr "Saada &hiljem"
 
-#: editor/kmcomposerwin.cpp:1270 editor/kmcomposerwin.cpp:1283
+#: editor/kmcomposerwin.cpp:1262 editor/kmcomposerwin.cpp:1275
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Saada &hiljem kasutades"
 
-#: editor/kmcomposerwin.cpp:1272
+#: editor/kmcomposerwin.cpp:1264
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "Pane järjekorda"
 
-#: editor/kmcomposerwin.cpp:1301
+#: editor/kmcomposerwin.cpp:1293
 #, kde-format
 msgid "Save as &Draft"
 msgstr "&Salvesta mustandina"
 
-#: editor/kmcomposerwin.cpp:1303
+#: editor/kmcomposerwin.cpp:1295
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "Kirja salvestamine mustandite kausta"
 
-#: editor/kmcomposerwin.cpp:1307
+#: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgid "Save as &Template"
 msgstr "Salvesta &mallina"
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1300
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "Kirja salvestamine mallide kausta"
 
-#: editor/kmcomposerwin.cpp:1312
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "Save as &File"
 msgstr "Salvesta &faili"
 
-#: editor/kmcomposerwin.cpp:1313
+#: editor/kmcomposerwin.cpp:1305
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "Kirja salvestamine teksti- või HTML-failina"
 
-#: editor/kmcomposerwin.cpp:1317
+#: editor/kmcomposerwin.cpp:1309
 #, fuzzy, kde-format
 #| msgid "&Insert Text File..."
 msgid "&Insert Text File…"
 msgstr "L&isa tekstifail..."
 
-#: editor/kmcomposerwin.cpp:1321
+#: editor/kmcomposerwin.cpp:1313
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "L&isa viimati kasutatud tekstifail"
 
-#: editor/kmcomposerwin.cpp:1331 kmmainwidget.cpp:3012
+#: editor/kmcomposerwin.cpp:1323 kmmainwidget.cpp:3012
 #, kde-format
 msgid "&Address Book"
 msgstr "&Aadressiraamat"
 
-#: editor/kmcomposerwin.cpp:1332
+#: editor/kmcomposerwin.cpp:1324
 #, kde-format
 msgid "Open Address Book"
 msgstr "Ava aadressiraamat"
 
-#: editor/kmcomposerwin.cpp:1339
+#: editor/kmcomposerwin.cpp:1331
 #, kde-format
 msgid "&New Composer"
 msgstr "Uus &redaktor"
 
-#: editor/kmcomposerwin.cpp:1345
+#: editor/kmcomposerwin.cpp:1337
 #, fuzzy, kde-format
 #| msgid "Select Recipient"
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Saaja valimine"
 
-#: editor/kmcomposerwin.cpp:1348
+#: editor/kmcomposerwin.cpp:1340
 #, fuzzy, kde-format
 #| msgctxt "@title:window"
 #| msgid "Save Distribution List"
@@ -2073,212 +2073,212 @@ msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Postiloendi salvestamine"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1364
 #, fuzzy, kde-format
 #| msgid "Paste as Attac&hment"
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Aseta kaasatud &failina"
 
-#: editor/kmcomposerwin.cpp:1376
+#: editor/kmcomposerwin.cpp:1368
 #, fuzzy, kde-format
 #| msgid "Cl&ean Spaces"
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Pu&hasta tühikutest"
 
-#: editor/kmcomposerwin.cpp:1380
+#: editor/kmcomposerwin.cpp:1372
 #, fuzzy, kde-format
 #| msgid "Use Fi&xed Font"
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Fikseeri&tud fondi kasutamine"
 
-#: editor/kmcomposerwin.cpp:1386
+#: editor/kmcomposerwin.cpp:1378
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Kiire"
 
-#: editor/kmcomposerwin.cpp:1388
+#: editor/kmcomposerwin.cpp:1380
 #, fuzzy, kde-format
 #| msgid "&Request Disposition Notification"
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Lugemise kinnituse &soov"
 
-#: editor/kmcomposerwin.cpp:1392
+#: editor/kmcomposerwin.cpp:1384
 #, fuzzy, kde-format
 #| msgid "&Request Delivery Confirmation"
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Kättesaamise kinnituse &soov"
 
-#: editor/kmcomposerwin.cpp:1397
+#: editor/kmcomposerwin.cpp:1389
 #, fuzzy, kde-format
 #| msgid "&Wordwrap"
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Reamurdmine"
 
-#: editor/kmcomposerwin.cpp:1402
+#: editor/kmcomposerwin.cpp:1394
 #, fuzzy, kde-format
 #| msgid "&Snippets"
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "Teksti&jupid"
 
-#: editor/kmcomposerwin.cpp:1407
+#: editor/kmcomposerwin.cpp:1399
 #, fuzzy, kde-format
 #| msgid "&Automatic Spellchecking"
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "A&utomaatne õigekirja kontroll"
 
-#: editor/kmcomposerwin.cpp:1423
+#: editor/kmcomposerwin.cpp:1415
 #, fuzzy, kde-format
 #| msgid "Rich Text Editing"
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Vormindatud teksti redigeerimine"
 
-#: editor/kmcomposerwin.cpp:1425
+#: editor/kmcomposerwin.cpp:1417
 #, kde-format
 msgid "Rich Text"
 msgstr "Vormindatud tekst"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1418
 #, fuzzy, kde-format
 #| msgid "Toggle rich text editing mode"
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Vormindatud teksti redigeerimise režiimi lülitamine"
 
-#: editor/kmcomposerwin.cpp:1430
+#: editor/kmcomposerwin.cpp:1422
 #, fuzzy, kde-format
 #| msgid "&All Fields"
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "Kõik &väljad"
 
-#: editor/kmcomposerwin.cpp:1433
+#: editor/kmcomposerwin.cpp:1425
 #, fuzzy, kde-format
 #| msgid "&Identity"
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identiteet"
 
-#: editor/kmcomposerwin.cpp:1436
+#: editor/kmcomposerwin.cpp:1428
 #, fuzzy, kde-format
 #| msgid "&Dictionary"
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Sõnaraamat"
 
-#: editor/kmcomposerwin.cpp:1439
+#: editor/kmcomposerwin.cpp:1431
 #, fuzzy, kde-format
 #| msgid "&Sent-Mail Folder"
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Saadetud kirjade ka&ust"
 
-#: editor/kmcomposerwin.cpp:1442
+#: editor/kmcomposerwin.cpp:1434
 #, fuzzy, kde-format
 #| msgid "&Mail Transport"
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "&Kirja saatmise viis"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1437
 #, fuzzy, kde-format
 #| msgid "&From"
 msgctxt "@action"
 msgid "&From"
 msgstr "&Kellelt"
 
-#: editor/kmcomposerwin.cpp:1448
+#: editor/kmcomposerwin.cpp:1440
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Teema"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1445
 #, fuzzy, kde-format
 #| msgid "Append S&ignature"
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Lisa allk&iri järele"
 
-#: editor/kmcomposerwin.cpp:1457
+#: editor/kmcomposerwin.cpp:1449
 #, fuzzy, kde-format
 #| msgid "Pr&epend Signature"
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Lisa all&kiri ette"
 
-#: editor/kmcomposerwin.cpp:1461
+#: editor/kmcomposerwin.cpp:1453
 #, fuzzy, kde-format
 #| msgid "Insert Signature At C&ursor Position"
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Lisa allkiri k&ursori asukohta"
 
-#: editor/kmcomposerwin.cpp:1476
+#: editor/kmcomposerwin.cpp:1468
 #, fuzzy, kde-format
 #| msgid "Spellchecker"
 msgid "&Spellchecker…"
 msgstr "Õigekirja kontroll"
 
-#: editor/kmcomposerwin.cpp:1477
+#: editor/kmcomposerwin.cpp:1469
 #, kde-format
 msgid "Spellchecker"
 msgstr "Õigekirja kontroll"
 
-#: editor/kmcomposerwin.cpp:1481
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "&Krüpti kiri"
 
-#: editor/kmcomposerwin.cpp:1482
+#: editor/kmcomposerwin.cpp:1474
 #, kde-format
 msgid "Encrypt"
 msgstr "Krüptimine"
 
-#: editor/kmcomposerwin.cpp:1484
+#: editor/kmcomposerwin.cpp:1476
 #, kde-format
 msgid "&Sign Message"
 msgstr "Allkir&jasta kiri"
 
-#: editor/kmcomposerwin.cpp:1485
+#: editor/kmcomposerwin.cpp:1477
 #, kde-format
 msgid "Sign"
 msgstr "Allkirjastamine"
 
-#: editor/kmcomposerwin.cpp:1512
+#: editor/kmcomposerwin.cpp:1504
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "Krüptitud kir&ja vorming"
 
-#: editor/kmcomposerwin.cpp:1515
+#: editor/kmcomposerwin.cpp:1507
 #, fuzzy, kde-format
 #| msgid "Select a cryptographic format for this message"
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Selle kirja krüptovormingu valimine"
 
-#: editor/kmcomposerwin.cpp:1520
+#: editor/kmcomposerwin.cpp:1512
 #, fuzzy, kde-format
 #| msgid "Create Follow Up Reminder..."
 msgid "Create Follow Up Reminder…"
 msgstr "Loo vastamise meeldetuletus..."
 
-#: editor/kmcomposerwin.cpp:1553
+#: editor/kmcomposerwin.cpp:1545
 #, fuzzy, kde-format
 #| msgid "Configure KMail..."
 msgid "Configure KMail…"
 msgstr "KMaili seadistamine..."
 
-#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:222 kmreadermainwin.cpp:543
+#: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:222 kmreadermainwin.cpp:543
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2286,57 +2286,57 @@ msgid ""
 msgstr ""
 "<qt>See peidab üldse menüüriba. Seda saab näha uuesti, kui kirjutada %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1587 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:225
 #, fuzzy, kde-format
 #| msgid "Hide menu bar"
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Peida menüüriba"
 
-#: editor/kmcomposerwin.cpp:1685 editor/kmcomposerwin.cpp:4011
+#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3999
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Rida: %1 "
 
-#: editor/kmcomposerwin.cpp:1688
+#: editor/kmcomposerwin.cpp:1680
 #, fuzzy, kde-format
 #| msgid " Column: %1 "
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Veerg: %1 "
 
-#: editor/kmcomposerwin.cpp:1693
+#: editor/kmcomposerwin.cpp:1685
 #, kde-format
 msgid "OVR"
 msgstr "ÜLEKIRJ"
 
-#: editor/kmcomposerwin.cpp:1693
+#: editor/kmcomposerwin.cpp:1685
 #, kde-format
 msgid "INS"
 msgstr "LISAMINE"
 
-#: editor/kmcomposerwin.cpp:1701
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Õigekirja kontroll: sees"
 
-#: editor/kmcomposerwin.cpp:1701
+#: editor/kmcomposerwin.cpp:1693
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Õigekirja kontroll: väljas"
 
-#: editor/kmcomposerwin.cpp:2069
+#: editor/kmcomposerwin.cpp:2061
 #, kde-format
 msgid "Re&save as Template"
 msgstr "&Salvesta uuesti mallina"
 
-#: editor/kmcomposerwin.cpp:2069
+#: editor/kmcomposerwin.cpp:2061
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Salvesta mustan&dina"
 
-#: editor/kmcomposerwin.cpp:2070
+#: editor/kmcomposerwin.cpp:2062
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2344,7 +2344,7 @@ msgid ""
 msgstr ""
 "Salvestab kirja uuesti mallide kausta. Nii saab seda ka edaspidi kasutada."
 
-#: editor/kmcomposerwin.cpp:2072
+#: editor/kmcomposerwin.cpp:2064
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2353,35 +2353,35 @@ msgstr ""
 "Salvestab kirja mustandite kausta. Nii saab seda edasi redigeerida ning "
 "soovi korral hiljem ära saata."
 
-#: editor/kmcomposerwin.cpp:2076
+#: editor/kmcomposerwin.cpp:2068
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr ""
 "Kas salvestada kiri mustandite kausta hilisemaks kasutamiseks või unustada "
 "see?"
 
-#: editor/kmcomposerwin.cpp:2077
+#: editor/kmcomposerwin.cpp:2069
 #, fuzzy, kde-format
 #| msgid "Close Composer"
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Redaktori sulgemine"
 
-#: editor/kmcomposerwin.cpp:2144
+#: editor/kmcomposerwin.cpp:2136
 #, fuzzy, kde-format
 #| msgid "Autosave Message Failed"
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Kirja automaatne salvestamine nurjus"
 
-#: editor/kmcomposerwin.cpp:2145
+#: editor/kmcomposerwin.cpp:2137
 #, fuzzy, kde-format
 #| msgid "Sending Message Failed"
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Kirja saatmine nurjus"
 
-#: editor/kmcomposerwin.cpp:2214 kmlaunchexternalcomponent.cpp:149
+#: editor/kmcomposerwin.cpp:2206 kmlaunchexternalcomponent.cpp:149
 #, fuzzy, kde-format
 #| msgid ""
 #| "Could not start \"PIM Data Exporter\" program. Please check your "
@@ -2392,84 +2392,84 @@ msgstr ""
 "PIM-i andmete eksportimise programmi käivitamine nurjus. Palun kontrolli "
 "paigaldust."
 
-#: editor/kmcomposerwin.cpp:2216 kmlaunchexternalcomponent.cpp:151
+#: editor/kmcomposerwin.cpp:2208 kmlaunchexternalcomponent.cpp:151
 #, fuzzy, kde-format
 #| msgid "Unable to start \"PIM Data Exporter\" program"
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "PIM-i andmete eksportimise programmi käivitamine nurjus"
 
-#: editor/kmcomposerwin.cpp:2338
+#: editor/kmcomposerwin.cpp:2330
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Faili lisamine"
 
-#: editor/kmcomposerwin.cpp:2423
+#: editor/kmcomposerwin.cpp:2415
 #, fuzzy, kde-format
 #| msgid "Add as &Inline Image"
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "L&isa kirjasisese pildina"
 
-#: editor/kmcomposerwin.cpp:2424
+#: editor/kmcomposerwin.cpp:2416
 #, fuzzy, kde-format
 #| msgid "Add as &Attachment"
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Lis&a kaasatud failina"
 
-#: editor/kmcomposerwin.cpp:2439
+#: editor/kmcomposerwin.cpp:2431
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2439 editor/kmcomposerwin.cpp:2541
+#: editor/kmcomposerwin.cpp:2431 editor/kmcomposerwin.cpp:2533
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Kaasatud faili nimi:"
 
-#: editor/kmcomposerwin.cpp:2445
+#: editor/kmcomposerwin.cpp:2437
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Manusel peab nimi olema"
 
-#: editor/kmcomposerwin.cpp:2445
+#: editor/kmcomposerwin.cpp:2437
 #, fuzzy, kde-format
 #| msgid "Invalid Attachment Name"
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Vigane manuse nimi"
 
-#: editor/kmcomposerwin.cpp:2493
+#: editor/kmcomposerwin.cpp:2485
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Lisa kirja URL"
 msgstr[1] "Lisa kirja URL-id"
 
-#: editor/kmcomposerwin.cpp:2494
+#: editor/kmcomposerwin.cpp:2486
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Lis&a fail manusena"
 msgstr[1] "Lis&a failid manusena"
 
-#: editor/kmcomposerwin.cpp:2540
+#: editor/kmcomposerwin.cpp:2532
 #, fuzzy, kde-format
 #| msgid "Insert clipboard text as attachment"
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Lisa lõikepuhvri tekst kaasatud failina"
 
-#: editor/kmcomposerwin.cpp:2633
+#: editor/kmcomposerwin.cpp:2625
 #, kde-format
 msgid "unnamed"
 msgstr "nimetu"
 
-#: editor/kmcomposerwin.cpp:2659
+#: editor/kmcomposerwin.cpp:2651
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2480,14 +2480,14 @@ msgstr ""
 "OpenPGP või S/MIME allkirjastamisvõti.</p><p>Palun vali kasutatav võti "
 "identiteedi seadistustes.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2666
+#: editor/kmcomposerwin.cpp:2658
 #, fuzzy, kde-format
 #| msgid "Undefined Signing Key"
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Määramata allkirjastamisvõti"
 
-#: editor/kmcomposerwin.cpp:2830
+#: editor/kmcomposerwin.cpp:2822
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2498,7 +2498,7 @@ msgstr ""
 "posti aadressi kehtestada kõigile identiteetidele, et sa ei peaks seda iga "
 "kirja korral aina uuesti sisestama."
 
-#: editor/kmcomposerwin.cpp:2839
+#: editor/kmcomposerwin.cpp:2831
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2507,86 +2507,86 @@ msgstr ""
 "Vaja on sisestada vähemalt üks saaja kas väljale Kellele: või koopia või "
 "pimekoopia väljale."
 
-#: editor/kmcomposerwin.cpp:2845
+#: editor/kmcomposerwin.cpp:2837
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Sa ei sisestanud saajat. Kas saata kiri ikkagi teele?"
 
-#: editor/kmcomposerwin.cpp:2847
+#: editor/kmcomposerwin.cpp:2839
 #, fuzzy, kde-format
 #| msgid "No To: specified"
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Saaja on määramata"
 
-#: editor/kmcomposerwin.cpp:2848 editor/kmcomposerwin.cpp:2862
+#: editor/kmcomposerwin.cpp:2840 editor/kmcomposerwin.cpp:2854
 #, fuzzy, kde-format
 #| msgid "S&end as Is"
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "S&aada nagu on"
 
-#: editor/kmcomposerwin.cpp:2849
+#: editor/kmcomposerwin.cpp:2841
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Ei, ma sisestan teema"
 
-#: editor/kmcomposerwin.cpp:2859
+#: editor/kmcomposerwin.cpp:2851
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Sa ei sisestanud teemat. Kas saata kiri ilma teemata?"
 
-#: editor/kmcomposerwin.cpp:2861
+#: editor/kmcomposerwin.cpp:2853
 #, fuzzy, kde-format
 #| msgid "No Subject Specified"
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Teema sisestamata"
 
-#: editor/kmcomposerwin.cpp:2863
+#: editor/kmcomposerwin.cpp:2855
 #, fuzzy, kde-format
 #| msgid "&Specify the Subject"
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Ei, ma sisestan teema"
 
-#: editor/kmcomposerwin.cpp:2908
+#: editor/kmcomposerwin.cpp:2900
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
 "draft."
 msgstr "Mustandi krüptimiseks on vaja määrata vähemalt üks saaja."
 
-#: editor/kmcomposerwin.cpp:3090
+#: editor/kmcomposerwin.cpp:3082
 #, fuzzy, kde-format
 #| msgid "About to send email..."
 msgid "About to send email…"
 msgstr "Kirja saatmine..."
 
-#: editor/kmcomposerwin.cpp:3091
+#: editor/kmcomposerwin.cpp:3083
 #, fuzzy, kde-format
 #| msgid "Send Confirmation"
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Saada kinnitus"
 
-#: editor/kmcomposerwin.cpp:3092
+#: editor/kmcomposerwin.cpp:3084
 #, fuzzy, kde-format
 #| msgid "&Send Now"
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "Saada k&ohe"
 
-#: editor/kmcomposerwin.cpp:3093
+#: editor/kmcomposerwin.cpp:3085
 #, fuzzy, kde-format
 #| msgid "Send &Later"
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Saada &hiljem"
 
-#: editor/kmcomposerwin.cpp:3170
+#: editor/kmcomposerwin.cpp:3162
 #, fuzzy, kde-format
 #| msgid ""
 #| "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2604,28 +2604,28 @@ msgstr[1] ""
 "Proovid saata kirja rohkem kui %1 saajale. Kas sellest hoolimata saata kiri "
 "ära?"
 
-#: editor/kmcomposerwin.cpp:3173
+#: editor/kmcomposerwin.cpp:3165
 #, fuzzy, kde-format
 #| msgid "Too many recipients"
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Liiga palju saajaid"
 
-#: editor/kmcomposerwin.cpp:3174
+#: editor/kmcomposerwin.cpp:3166
 #, fuzzy, kde-format
 #| msgid "&Send as Is"
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Saada nagu on"
 
-#: editor/kmcomposerwin.cpp:3175
+#: editor/kmcomposerwin.cpp:3167
 #, fuzzy, kde-format
 #| msgid "&Edit Recipients"
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Muuda saajaid"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3204
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2633,28 +2633,28 @@ msgid ""
 msgstr ""
 "HTML-režiimi väljalülitamisel läheb vormindus kaotsi. Kas tõesti jätkata?"
 
-#: editor/kmcomposerwin.cpp:3214
+#: editor/kmcomposerwin.cpp:3206
 #, fuzzy, kde-format
 #| msgid "Lose the formatting?"
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Kas kaotada vormindus?"
 
-#: editor/kmcomposerwin.cpp:3215
+#: editor/kmcomposerwin.cpp:3207
 #, fuzzy, kde-format
 #| msgid "Lose Formatting"
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Kaota vorming"
 
-#: editor/kmcomposerwin.cpp:3216
+#: editor/kmcomposerwin.cpp:3208
 #, fuzzy, kde-format
 #| msgid "Add Markup Plain Text"
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Lisa märkekeele lihttekst"
 
-#: editor/kmcomposerwin.cpp:3427
+#: editor/kmcomposerwin.cpp:3415
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2662,7 +2662,7 @@ msgid ""
 "for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3439
+#: editor/kmcomposerwin.cpp:3427
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2670,7 +2670,7 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3454
+#: editor/kmcomposerwin.cpp:3442
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2678,7 +2678,7 @@ msgid ""
 "suitable for encryption."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3466
+#: editor/kmcomposerwin.cpp:3454
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2686,27 +2686,27 @@ msgid ""
 "suitable for signing."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3635
+#: editor/kmcomposerwin.cpp:3623
 #, fuzzy, kde-format
 #| msgid "Encrypt"
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Krüptimine"
 
-#: editor/kmcomposerwin.cpp:3637
+#: editor/kmcomposerwin.cpp:3625
 #, fuzzy, kde-format
 #| msgid "Do &Not Encrypt"
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Ä&ra krüpti"
 
-#: editor/kmcomposerwin.cpp:3777
+#: editor/kmcomposerwin.cpp:3765
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3799
+#: editor/kmcomposerwin.cpp:3787
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2714,7 +2714,7 @@ msgid ""
 "party recipients. This key is not verified."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3803
+#: editor/kmcomposerwin.cpp:3791
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2722,7 +2722,7 @@ msgid ""
 "recipient prefers encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3807
+#: editor/kmcomposerwin.cpp:3795
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2730,7 +2730,7 @@ msgid ""
 "recipient does not prefer encrypted replies."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3833
+#: editor/kmcomposerwin.cpp:3821
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2739,7 +2739,7 @@ msgid ""
 "icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3841
+#: editor/kmcomposerwin.cpp:3829
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2749,7 +2749,7 @@ msgid ""
 "channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3849
+#: editor/kmcomposerwin.cpp:3837
 #, fuzzy, kde-format
 #| msgid ""
 #| "Low security encryption will be used for this recipient (the encryption "
@@ -2762,7 +2762,7 @@ msgstr ""
 "Selle saaja puhul kasutatakse vähese turvalisusega krüptimist (krüptovõti ei "
 "ole usaldusväärne) Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:3855
+#: editor/kmcomposerwin.cpp:3843
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2770,7 +2770,7 @@ msgid ""
 "Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3861
+#: editor/kmcomposerwin.cpp:3849
 #, fuzzy, kde-format
 #| msgid ""
 #| "Low security encryption will be used for this recipient (the encryption "
@@ -2783,7 +2783,7 @@ msgstr ""
 "Selle saaja puhul kasutatakse vähese turvalisusega krüptimist (krüptovõti ei "
 "ole usaldusväärne) Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:3869
+#: editor/kmcomposerwin.cpp:3857
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2793,7 +2793,7 @@ msgid ""
 "by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3877
+#: editor/kmcomposerwin.cpp:3865
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2801,7 +2801,7 @@ msgid ""
 "communicated the fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3883
+#: editor/kmcomposerwin.cpp:3871
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2811,7 +2811,7 @@ msgid ""
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
 
-#: editor/kmcomposerwin.cpp:3891
+#: editor/kmcomposerwin.cpp:3879
 #, fuzzy, kde-format
 #| msgid ""
 #| "High security encryption will be used for this recipient (the encryption "
@@ -2824,7 +2824,7 @@ msgstr ""
 "Selle saaja puhul kasutatakse üliturvalist krüptimist (krüptovõti on "
 "täielikult usaldusväärne). Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:3896
+#: editor/kmcomposerwin.cpp:3884
 #, fuzzy, kde-format
 #| msgid ""
 #| "High security encryption will be used for this recipient (the encryption "
@@ -2837,12 +2837,12 @@ msgstr ""
 "Selle saaja puhul kasutatakse üliturvalist krüptimist (krüptovõti on "
 "täielikult usaldusväärne). Üksikasjade nägemiseks klõpsa ikoonile."
 
-#: editor/kmcomposerwin.cpp:4013
+#: editor/kmcomposerwin.cpp:4001
 #, kde-format
 msgid " Column: %1 "
 msgstr " Veerg: %1 "
 
-#: editor/kmcomposerwin.cpp:4228
+#: editor/kmcomposerwin.cpp:4216
 #, fuzzy, kde-format
 #| msgctxt ""
 #| "if in your language something like 'key(s)' is not possible please use "
@@ -2866,19 +2866,19 @@ msgstr ""
 ">Palun vali võti/võtmed, mida selle saaja jaoks kasutada. Kui nimekirjas "
 "pole sobivat võtit, võid ka <a href=\"%2\">otsida väliseid võtmeid</a>.</qt>"
 
-#: editor/kmcomposerwin.cpp:4240
+#: editor/kmcomposerwin.cpp:4228
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Krüptovõtme valik"
 
-#: editor/kmcomposerwin.cpp:4324
+#: editor/kmcomposerwin.cpp:4312
 #, fuzzy, kde-format
 #| msgid "Plugin Editor Information"
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
 msgstr "Redaktoriplugina teave"
 
-#: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:29
+#: editor/potentialphishingemail/potentialphishingdetaildialog.cpp:25
 #, kde-format
 msgctxt "@title:window"
 msgid "Details"
@@ -2910,7 +2910,7 @@ msgctxt "@action"
 msgid "Send Now"
 msgstr "Saada kohe"
 
-#: editor/subjectlineeditwithautocorrection.cpp:20
+#: editor/subjectlineeditwithautocorrection.cpp:16
 #, fuzzy, kde-format
 #| msgid "Set a subject for this message"
 msgctxt "@info:tooltip"
@@ -6746,25 +6746,25 @@ msgstr "Eksport PDF-ina"
 msgid "PDF document (*.pdf)"
 msgstr "PDF-dokument (*.pdf)"
 
-#: searchdialog/incompleteindexdialog.cpp:138
+#: searchdialog/incompleteindexdialog.cpp:134
 #, kde-format
 msgid "Reindex"
 msgstr "Indekseeri uuesti"
 
-#: searchdialog/incompleteindexdialog.cpp:139
+#: searchdialog/incompleteindexdialog.cpp:135
 #, fuzzy, kde-format
 #| msgid "Search Anyway"
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Otsi ikkagi"
 
-#: searchdialog/incompleteindexdialog.cpp:218
+#: searchdialog/incompleteindexdialog.cpp:197
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "Indekseerimine"
 
-#: searchdialog/incompleteindexdialog.cpp:221
+#: searchdialog/incompleteindexdialog.cpp:200
 #, fuzzy, kde-format
 #| msgid "Indexing Collections..."
 msgid "Indexing Collections…"
@@ -7314,19 +7314,19 @@ msgstr "Silti ei leitud"
 msgid "Toggle Message Tag: %1"
 msgstr "Lülita kirja silti: %1"
 
-#: tag/tagselectdialog.cpp:43
+#: tag/tagselectdialog.cpp:39
 #, kde-format
 msgctxt "@title:window"
 msgid "Select Tags"
 msgstr "Siltide valimine"
 
-#: tag/tagselectdialog.cpp:54
+#: tag/tagselectdialog.cpp:50
 #, fuzzy, kde-format
 #| msgid "Add New Tag..."
 msgid "Add New Tag…"
 msgstr "Lisa uus silt..."
 
-#: tag/tagselectdialog.cpp:68
+#: tag/tagselectdialog.cpp:64
 #, fuzzy, kde-format
 #| msgid "Search tag"
 msgctxt "@info:placeholder"
