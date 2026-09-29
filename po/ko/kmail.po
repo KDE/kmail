@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-05-25 21:28+0200\n"
+"PO-Revision-Date: 2026-09-29 00:50+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -2930,7 +2930,7 @@ msgstr "기존 vCard 복사(&D)"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "vCard가 있는 기존 프로필이 없습니다."
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -8047,9 +8047,7 @@ msgid "Use Global Setting"
 msgstr "전역 설정 사용"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "서버에서 부재 중 답장 사용 중"
