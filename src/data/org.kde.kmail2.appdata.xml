@@ -467,6 +467,7 @@
           <li xml:lang="ia">Le messages HTML es monstrate con lor colores intendite per defecto.  Pro cambiar isto, dismarca le option "Apparentia-&gt;Colores-&gt;Non cambiar color del e-posta HTML original"</li>
           <li xml:lang="it">I messaggi HTML sono mostrati, come impostazione predefinita, con i colori previsti. Per cambiare questo comportamento, disabilitare l'opzione "Aspetto-&gt;Colori-&gt;Non modificare il colore del messaggio di posta originale in HTML".</li>
           <li xml:lang="ka">HTML შეტყობინებები ნაგულისხმევად მათთვის სასურველ ფერებშია ნაჩვენები. ამის გადასაფარად მოხსენით თოლია "გარეგნობა-&gt;ფერები-&gt;HTML ელფოსტის ორიგინალი ფერების არშეცვლა"</li>
+          <li xml:lang="ko">기본값으로 HTML 메시지는 원래 의도했던 색상대로 표시됩니다. 이 설정을 재정의하려면 "모양-&gt;색상-&gt;원래 HTML 메일의 색상 변경하지 않기" 옵션의 선택을 해제하십시오</li>
           <li xml:lang="nl">HTML-berichten worden standaard weergegeven met de bedoelde kleuren. Om dit te wijzigen, schakelt u de optie "Uiterlijk-&gt;Kleuren-&gt;Kleur niet wijzigen ten opzichte van originele HTML-mail" uit</li>
           <li xml:lang="pt-BR">As mensagens HTML são exibidas com suas cores originais por padrão. Para alterar isso, desmarque a opção "Aparência -&gt; Cores -&gt; Não alterar a cor do e-mail HTML original".</li>
           <li xml:lang="ru">HTML-сообщения по умолчанию показываются с их исходными цветами. Чтобы это переопределить, снимите флажок в параметре «Внешний вид → Цвета → Не изменять цвета исходного сообщения в формате HTML»</li>
