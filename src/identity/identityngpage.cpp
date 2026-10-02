@@ -148,6 +148,7 @@ void IdentityNgPage::slotNewIdentity()
 
         updateButtons();
     }
+    delete dialog;
 }
 
 void IdentityNgPage::modifyIdentity(KIdentityManagementCore::Identity &identity)
