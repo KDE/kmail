@@ -171,6 +171,7 @@ bool AttachPropertyDialog::saveProperty(QTreeWidget *lv, KTNEFPropertySet *pSet,
                 f.close();
             } else {
                 KMessageBox::error(parent, i18nc("@info", "Unable to open file for writing, check file permissions."));
+                return false;
             }
         }
     }
