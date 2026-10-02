@@ -29,6 +29,9 @@ bool SendLaterUtil::compareSendLaterInfo(MessageComposer::SendLaterInfo *left, M
 
 static QDateTime updateRecurence(MessageComposer::SendLaterInfo *info, QDateTime dateTime)
 {
+    if (info->recurrenceEachValue() <= 0) {
+        return dateTime;
+    }
     switch (info->recurrenceUnit()) {
     case MessageComposer::SendLaterInfo::Days:
         dateTime = dateTime.addDays(info->recurrenceEachValue());
@@ -54,7 +57,11 @@ void SendLaterUtil::changeRecurrentDate(MessageComposer::SendLaterInfo *info)
         newInfoDateTime = updateRecurence(info, newInfoDateTime);
         qCDebug(SENDLATERAGENT_LOG) << " QDateTime::currentDateTime()" << QDateTime::currentDateTime().toString();
         while (newInfoDateTime <= QDateTime::currentDateTime()) {
-            newInfoDateTime = updateRecurence(info, newInfoDateTime);
+            const QDateTime tmpDateTime = updateRecurence(info, newInfoDateTime);
+            if (tmpDateTime == newInfoDateTime) {
+                break;
+            }
+            newInfoDateTime = tmpDateTime;
         }
         info->setDateTime(newInfoDateTime);
         qCDebug(SENDLATERAGENT_LOG) << "AFTER SendLaterUtil::changeRecurrentDate " << info->dateTime().toString() << " info" << info << "New date"
