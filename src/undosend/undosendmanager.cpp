@@ -55,7 +55,7 @@ QString UndoSendManager::UndoSendManagerInfo::generateMessageInfoText() const
 
 bool UndoSendManager::UndoSendManagerInfo::isValid() const
 {
-    return index != -1 && delay != -1;
+    return index != -1 && delay > 0;
 }
 
 #include "moc_undosendmanager.cpp"
