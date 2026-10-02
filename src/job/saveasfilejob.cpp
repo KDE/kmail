@@ -37,12 +37,12 @@ void SaveAsFileJob::start()
         QTextDocumentWriter writer;
         const QString filename = dlg->selectedFiles().at(0);
         writer.setFileName(filename);
-        if (dlg->selectedNameFilter() == "text/plain"_L1 || filename.endsWith(".txt"_L1)) {
+        if (dlg->selectedMimeTypeFilter() == "text/plain"_L1 || filename.endsWith(".txt"_L1)) {
             writer.setFormat("plaintext");
-        } else if (dlg->selectedNameFilter() == "text/html"_L1 || filename.endsWith(".html"_L1)) {
+        } else if (dlg->selectedMimeTypeFilter() == "text/html"_L1 || filename.endsWith(".html"_L1)) {
             writer.setFormat("HTML");
-        } else if (dlg->selectedNameFilter() == "application/vnd.oasis.opendocument.text"_L1 || filename.endsWith(".odf"_L1)) {
-            writer.setFormat("ODF");
+        } else if (dlg->selectedMimeTypeFilter() == "application/vnd.oasis.opendocument.text"_L1 || filename.endsWith(".odt"_L1)) {
+            writer.setFormat("ODT");
         } else {
             writer.setFormat("plaintext");
         }
