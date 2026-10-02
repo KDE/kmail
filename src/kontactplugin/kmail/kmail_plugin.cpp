@@ -107,6 +107,7 @@ void KMailPlugin::processDropEvent(QDropEvent *de)
                 return;
             }
             openComposer(QUrl::fromLocalFile(tmp.fileName()));
+            return;
         } else {
             qCWarning(KMAILPLUGIN_LOG) << " Impossible to create temporary file";
         }
