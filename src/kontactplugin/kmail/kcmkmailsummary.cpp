@@ -101,7 +101,7 @@ void KCMKMailSummary::save()
 
 void KCMKMailSummary::defaults()
 {
-    mFullPath->setChecked(true);
+    mFullPath->setChecked(false);
     setNeedsSave(true);
 }
 #include "kcmkmailsummary.moc"
