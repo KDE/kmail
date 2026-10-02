@@ -401,6 +401,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab(QWidget *parent)
 void ComposerPageGeneralTab::doResetToDefaultsOther()
 {
     const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
+    const bool bUseDefaultsTemplateParser = TemplateParser::TemplateParserSettings::self()->useDefaults(true);
 
     const bool autoAppSignFile = MessageComposer::MessageComposerSettings::self()->autoTextSignature() == "auto"_L1;
     const bool topQuoteCheck = MessageComposer::MessageComposerSettings::self()->prependSignature();
@@ -416,6 +417,7 @@ void ComposerPageGeneralTab::doResetToDefaultsOther()
     const bool showActivateQuickTextFormat = MessageComposer::MessageComposerSettings::self()->activateQuickTextFormat();
 
     MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
+    TemplateParser::TemplateParserSettings::self()->useDefaults(bUseDefaultsTemplateParser);
 
     mAutoAppSignFileCheck->setChecked(autoAppSignFile);
     mTopQuoteCheck->setChecked(topQuoteCheck);
