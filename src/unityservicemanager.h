@@ -34,7 +34,11 @@ public:
 
     void setSystemTryAssociatedWindow(QWindow *window);
 
+Q_SIGNALS:
+    void updateToolTip();
+
 private:
+    void slotUpdateToolTip();
     void unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex = {});
     void slotCollectionStatisticsChanged(Akonadi::Collection::Id id, const Akonadi::CollectionStatistics &);
     [[nodiscard]] bool hasUnreadMail() const;

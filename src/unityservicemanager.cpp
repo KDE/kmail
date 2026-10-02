@@ -30,6 +30,7 @@ using namespace KMail;
 UnityServiceManager::UnityServiceManager(QObject *parent)
     : QObject(parent)
 {
+    connect(this, &UnityServiceManager::updateToolTip, this, &UnityServiceManager::slotUpdateToolTip);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionStatisticsChanged, this, &UnityServiceManager::slotCollectionStatisticsChanged);
 
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionAdded, this, &UnityServiceManager::initListOfCollection);
@@ -79,9 +80,14 @@ void UnityServiceManager::unreadMail(const QAbstractItemModel *model, const QMod
         }
     }
     if (mSystemTray) {
-        // Update tooltip to reflect count of unread messages
-        mSystemTray->updateToolTip(mCount);
+        Q_EMIT updateToolTip();
     }
+}
+
+void UnityServiceManager::slotUpdateToolTip()
+{
+    // Update tooltip to reflect count of unread messages
+    mSystemTray->updateToolTip(mCount);
 }
 
 void UnityServiceManager::updateSystemTray()
