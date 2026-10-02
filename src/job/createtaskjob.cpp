@@ -81,11 +81,11 @@ void CreateTaskJob::itemFetchJobDone(KJob *job)
         }
         if (Akonadi::Item item(it); item.hasFlag(toActFlag)) {
             item.clearFlag(toActFlag);
-            itemsToModify.push_back(item);
             if (item.hasAttribute<TaskAttribute>()) {
                 // Change todo as done.
                 item.removeAttribute<TaskAttribute>();
             }
+            itemsToModify.push_back(item);
         } else {
             item.setFlag(toActFlag);
             itemsToModify.push_back(std::move(item));
