@@ -25,12 +25,6 @@
 #include <QPointer>
 #include <QTimer>
 
-#if KMAIL_WITH_KUSERFEEDBACK
-namespace KUserFeedback
-{
-class NotificationPopup;
-}
-#endif
 #include <KAboutData>
 namespace MailTransport
 {
@@ -659,9 +653,6 @@ private:
     Akonadi::Collection mCurrentCollection;
     QStatusBar *mCurrentStatusBar = nullptr;
     ZoomLabelWidget *mZoomLabelIndicator = nullptr;
-#if KMAIL_WITH_KUSERFEEDBACK
-    KUserFeedback::NotificationPopup *mUserFeedBackNotificationPopup = nullptr;
-#endif
     KMailPluginCheckBeforeDeletingManagerInterface *mPluginCheckBeforeDeletingManagerInterface = nullptr;
     CollectionSwitcherTreeViewManager *const mCollectionSwitcherTreeViewManager;
     QAction *mClearFolderCacheAction = nullptr;
