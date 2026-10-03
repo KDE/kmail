@@ -15,7 +15,7 @@ endif()
 
 include(CheckIncludeFiles)
 
-set(KF_MIN_VERSION "6.28.0")
+set(KF_MIN_VERSION "6.29.0")
 set(QT_REQUIRED_VERSION "6.9.0")
 find_package(ECM ${KF_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
