@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-05 02:45+0000\n"
-"PO-Revision-Date: 2026-03-02 19:23+0200\n"
+"PO-Revision-Date: 2026-08-25 19:33+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -2975,7 +2975,7 @@ msgstr "&Monista olemassa oleva vCard"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Olemassa olevaa henkilöyttä, jolla olisi vCard, ei ole käytettävissä"
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:91
 #, kde-format
@@ -4104,7 +4104,7 @@ msgstr "Luettelee käyttäjäpalautteelle käytettävissä olevat valinnat"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Aktivoi virheenpaikannustila"
 
 #: kmail_options.h:44
 #, kde-format
@@ -7117,10 +7117,9 @@ msgstr "Salli viestien poistaminen vahvistuksetta"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "&Lähetä lähtevät-kansiossa olevat viestit:"
+msgstr "Salli viestien veto ja pudottaminen kansioihin"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8061,6 +8060,7 @@ msgstr "Liitännäisten tiedot"
 msgid "Plugins used in KMail."
 msgstr "KMailissa käytetyt liitännäiset."
 
+# Täysi arvoitus, mikä %1 on. Lähettäjä? Palvelin? Tili?
 #: util.cpp:35
 #, kde-format
 msgctxt "@info"
@@ -8068,26 +8068,26 @@ msgid ""
 "It appears that this email from %1 is not being monitored. Do you wish to "
 "reply to this email?"
 msgstr ""
+"Vaikuttaa siltä, että sähköposteja ei valvota: %1. Haluatko vastata tähän "
+"viestiin?"
 
 #: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email not monitored"
-msgstr ""
+msgstr "Sähköpostia ei valvota"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "&Älä allekirjoita"
+msgstr "Älä lähetä"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Lähetä sähköposti"
+msgstr "Lähetä sähköposti"
 
 #: util.cpp:190
 #, kde-format
@@ -8170,9 +8170,7 @@ msgid "Use Global Setting"
 msgstr "Käytä järjestelmäasetusta"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "Poissaolovastaus on aktiivinen palvelimella"
