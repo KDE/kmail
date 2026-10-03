@@ -46,7 +46,6 @@ target_link_libraries(
     KF6::I18n
     KPim6::KontactInterface
     KF6::CalendarCore
-    KPim6::CalendarUtils
     KPim6::AkonadiCore
     KF6::Contacts
     KPim6::AkonadiWidgets

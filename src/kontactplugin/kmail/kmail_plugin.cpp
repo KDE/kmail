@@ -11,15 +11,9 @@
 #include "kmailinterface.h"
 #include "summarywidget.h"
 
-#include <kcalendarcore_version.h>
-#if KCALENDARCORE_VERSION < QT_VERSION_CHECK(6, 29, 0)
-#include <KCalUtils/ICalDrag>
-#include <KCalUtils/VCalDrag>
-#else
-#include <KCalendarCore/MimeData>
-#endif
 #include <KCalendarCore/FileStorage>
 #include <KCalendarCore/MemoryCalendar>
+#include <KCalendarCore/MimeData>
 #include <KContacts/VCardDrag>
 
 #include <KontactInterface/Core>
@@ -69,11 +63,7 @@ KMailPlugin::KMailPlugin(KontactInterface::Core *core, const KPluginMetaData &da
 
 bool KMailPlugin::canDecodeMimeData(const QMimeData *mimeData) const
 {
-#if KCALENDARCORE_VERSION < QT_VERSION_CHECK(6, 29, 0)
-    return KCalUtils::ICalDrag::canDecode(mimeData) || KCalUtils::VCalDrag::canDecode(mimeData) || KContacts::VCardDrag::canDecode(mimeData);
-#else
     return KCalendarCore::MimeData::canDecode(mimeData) || KContacts::VCardDrag::canDecode(mimeData);
-#endif
 }
 
 void KMailPlugin::shortcutChanged()
@@ -89,17 +79,10 @@ void KMailPlugin::shortcutChanged()
 
 void KMailPlugin::processDropEvent(QDropEvent *de)
 {
-#if KCALENDARCORE_VERSION < QT_VERSION_CHECK(6, 29, 0)
-    MemoryCalendar::Ptr cal(new MemoryCalendar(QTimeZone::utc()));
-#endif
     KContacts::Addressee::List list;
     const QMimeData *md = de->mimeData();
 
-#if KCALENDARCORE_VERSION < QT_VERSION_CHECK(6, 29, 0)
-    if (KCalUtils::VCalDrag::fromMimeData(md, cal) || KCalUtils::ICalDrag::fromMimeData(md, cal)) {
-#else
     if (const auto cal = KCalendarCore::MimeData::decodeCalendar(md); cal) {
-#endif
         if (QTemporaryFile tmp(u"incidences-kmail_XXXXXX.ics"_s); tmp.open()) {
             tmp.setAutoRemove(false);
             if (FileStorage storage(cal, tmp.fileName()); !storage.save()) {
