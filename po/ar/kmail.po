@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
 "PO-Revision-Date: 2026-09-23 18:58+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -1239,13 +1239,13 @@ msgstr "المؤلّف"
 msgid "Activate quick text format toolbar"
 msgstr "نشّط شريط أدوات تنسيق النص السريع"
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "بادئات عنوان ال&رّدّ"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1255,169 +1255,169 @@ msgstr ""
 "تعرّف على أيّ بادئة من القائمة الآتية (المدخلات هي تعبيرات نمطيّة غير حسّاسة "
 "للحالة):"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr "أ&ضف…"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "أ&زل"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Mod&ify…"
 msgstr "عدّل…"
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "أدخل بادئة ردّ جديدة:"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "أتريد إزالة بادئة الرَّد؟"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "بادئة الردّ:"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "بادئات عنوان التّم&رير"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "أز&ل"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr "أضف…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Modify…"
 msgstr "عدّل…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "أدخل بادئة تمرير جديدة:"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "أتريد إزالة بادئة التَّمرير؟"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "بادئة التَّمرير:"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "عرّف حقول ترويسة MIME المخصّصة:"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "الاسم"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "القيمة"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&جديد"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "أ&زل"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "الا&سم:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "ال&قيمة:"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "'نوع-المحتوى' سلسلة غير مُجازة. لن تحفظ هذه التَّرويسة."
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "ترويسة غير صالحة"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&مكّن اكتشاف المرفقات المفقودة"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "تعرّف على أيّ كلمة من الآتي كإشارة إلى إرفاق ملفّ:"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "أدخل كلمة مفتاحيّة جديدة:"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "هل تريد إزالة كلمة المرفق هذه؟"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "كلمة الملحق:"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "أقصى حجم للملحق:"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " ك.بتّ"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "لا حدّ"
@@ -1429,7 +1429,7 @@ msgid "Add"
 msgstr "أضف"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3625,12 +3625,12 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "مجلد سخام منتهي الصلاحية"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>أتريد حقًّا حذف الهويّة المسمَّاة <b>%1</b>؟</qt>"
 
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3641,7 +3641,7 @@ msgstr[3] "أتريد حقًّا حذف هذه  %1 الهويّات؟"
 msgstr[4] "أتريد حقًّا حذف هذه  %1 هوية؟"
 msgstr[5] "أتريد حقًّا حذف هذه  %1 هوية؟"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3652,31 +3652,31 @@ msgstr[3] "أزل الهويّة"
 msgstr[4] "أزل الهويّة"
 msgstr[5] "أزل الهويّة"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "أ&زل"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "أضف…"
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "عدّل…"
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "أعد التّسمية"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"

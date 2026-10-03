@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
 "PO-Revision-Date: 2009-02-28 13:57+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@aol.in>\n"
 "Language-Team: Hindi <kde-i18n-doc@lists.kde.org>\n"
@@ -1310,13 +1310,13 @@ msgstr "कम्पोजर"
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "विसय उपसर्ग के साथ जवाब भेजव (&y)"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1324,31 +1324,31 @@ msgid ""
 "insensitive regular expressions):"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "मेटाव (&m)"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "सुधारव..."
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "नवा जवाब उपसर्ग भरव:"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, fuzzy, kde-format
 #| msgctxt "@info"
 #| msgid "Do you really want to execute <filename>%1</filename>?"
@@ -1357,40 +1357,40 @@ msgstr ""
 "का आप मन सचमुच मं चलाना चाहथो एला-\n"
 " <filename>%1</filename>?"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "विसय उपसर्ग के साथ जवाब भेजव (&y)"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "विसय उपसर्ग आगू भेजव (&w)"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "मेटाव (&v)"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "सुधारव..."
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "नवा आगू भेजे के उपसर्ग भरव:"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, fuzzy, kde-format
 #| msgctxt "@info"
 #| msgid "Do you really want to execute <filename>%1</filename>?"
@@ -1399,89 +1399,89 @@ msgstr ""
 "का आप मन सचमुच मं चलाना चाहथो एला-\n"
 " <filename>%1</filename>?"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "विसय उपसर्ग आगू भेजव (&w)"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "मनमाफिक माइम सीर्स फील्ड मन परिभासित करव:"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "नाम"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "मान"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "नवा (&w)"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "मेटाव (&m)"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "नाम: (&N)"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "मान: (&V)"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, fuzzy, kde-format
 #| msgid "Invalid signature."
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "अवैध दसखत"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "गुमे संलग्नकों के पता लगिसना सक्छम करव (&n)"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "नवा कुंजी-सब्द भरव:"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, fuzzy, kde-format
 #| msgctxt "@info"
 #| msgid "Do you really want to execute <filename>%1</filename>?"
@@ -1490,27 +1490,27 @@ msgstr ""
 "का आप मन सचमुच मं चलाना चाहथो एला-\n"
 " <filename>%1</filename>?"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, fuzzy, kde-format
 #| msgid "Attachments:"
 msgid "Attachment Word:"
 msgstr "संलग्नक:"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, fuzzy, kde-format
 #| msgid "Has Attachment"
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "संलग्नक हे"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, fuzzy, kde-format
 #| msgid " MB"
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "मे.बा."
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgid "No limit"
@@ -1524,7 +1524,7 @@ msgid "Add"
 msgstr "जोड़व...(&A)"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3791,13 +3791,13 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "बीत गिस फोल्डर"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>का आप मन सचमुच कमइया नाम <b>%1</b> मिटाना चाहू?</qt>"
 
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
@@ -3805,7 +3805,7 @@ msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>का आप मन सचमुच कमइया नाम <b>%1</b> मिटाना चाहू?</qt>"
 msgstr[1] "<qt>का आप मन सचमुच कमइया नाम <b>%1</b> मिटाना चाहू?</qt>"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
@@ -3813,34 +3813,34 @@ msgid_plural "Remove Identities"
 msgstr[0] "पहिचान मेटाव"
 msgstr[1] "पहिचान मेटाव"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "मेटाव (&R)"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "सुधारव..."
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, fuzzy, kde-format
 #| msgid "&Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "नाम बदलव (&R)"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

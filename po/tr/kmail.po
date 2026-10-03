@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
 "PO-Revision-Date: 2026-09-20 18:50+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -1251,13 +1251,13 @@ msgstr "Oluşturucu"
 msgid "Activate quick text format toolbar"
 msgstr "Tez metin biçimlendirme araç çubuğunu etkinleştir"
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "&Yanıtlama Konusu Önekleri"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1267,137 +1267,137 @@ msgstr ""
 "Aşağıdaki öneklerin herhangi bir sıralamasını tanı (girdiler BÜYÜK/küçük "
 "harf duyarsız düzenli ifadelerdir):"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr "E&kle…"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "&Kaldır"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Değ&iştir…"
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Yeni yanıt önekini gir:"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Yanıt önekini kaldırmak istiyor musunuz?"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Yanıt öneki:"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "İletme &Konusu Önekleri"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "Ka&ldır"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr "Ekle…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Modify…"
 msgstr "Değiştir…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Yeni iletme önekini gir:"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "İletme önekini kaldırmak istiyor musunuz?"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "İletme öneki:"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Özel MIME üstbilgi alanları tanımla:"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Ad"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Değer"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "Ye&ni"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Kaldır"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Ad:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Değer:"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "“Content-Type”, izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Geçersiz üstbilgi"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Eksik eklerin algılanmasını etki&nleştir"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1405,34 +1405,34 @@ msgstr ""
 "Aşağıdaki anahtar sözcüklerden herhangi birini dosya iliştirme niyeti olarak "
 "kabul et:"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Yeni anahtar sözcüğü gir:"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Bu ek sözcüğünü kaldırmak istiyor musunuz?"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Ek sözcüğü:"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "En büyük ek boyutu:"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "Sınır yok"
@@ -1444,7 +1444,7 @@ msgid "Add"
 msgstr "Ekle"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3659,50 +3659,50 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "İstenmeyen Klasörünü Süreli Yap"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt><b>%1</b> adlı kimliği kaldırmayı gerçekten istiyor musunuz?</qt>"
 
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Bu %1 kimliği kaldırmayı gerçekten istiyor musunuz?"
 msgstr[1] "Bu %1 kimliği kaldırmayı gerçekten istiyor musunuz?"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Kimliği Kaldır"
 msgstr[1] "Kimlikleri Kaldır"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Ka&ldır"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Ekle…"
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Değiştir…"
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Yeniden Adlandır"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"

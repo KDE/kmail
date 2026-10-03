@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
 "PO-Revision-Date: 2026-09-21 00:24+0200\n"
 "Last-Translator: Libor Filipek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1247,13 +1247,13 @@ msgstr "Editor"
 msgid "Activate quick text format toolbar"
 msgstr "Aktivovat panel nástrojů pro rychlý formát textu"
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "Přei&dpony předmětu odpovědi"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1263,136 +1263,136 @@ msgstr ""
 "Rozpoznat libovolnou sekvenci následujících prefixů (záznamy jsou regulární "
 "výrazy bez rozlišení velkých a malých písmen):"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr "Při&dat…"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "&Odstranit"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Mod&ify…"
 msgstr "Změn&it…"
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Vložit novou předponu odpovědi:"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Přejete si odstranit předponu odpovědi?"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Předpona odpovědi:"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "Předměty předmětu př&eposlání"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Odstranit"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr "Přidat…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Modify…"
 msgstr "Změnit…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Vložit nový prefix přeposlání:"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Přejete si odstranit předponu přeposlání?"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Předpona přeposílání:"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Definovat vlastní pole pro MIME hlavičky:"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Jméno"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Hodnota"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Nová"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Odst&ranit"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Jméno:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Hodnota:"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "'Content-Type' není povolený řetězec. Tato hlavička nebude uložena."
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Neplatná hlavička"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Povolit detekci c&hybějících příloh"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
@@ -1400,34 +1400,34 @@ msgstr ""
 "Rozeznat jakékoliv z následujících klíčových slov jako záměr připojit "
 "přílohu:"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Vložit nové klíčové slovo:"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Chcete odstranit toto klíčové slovo pro přílohu?"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Klíčové slovo pro přílohu:"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Maximální velikost přílohy:"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kB"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "Bez limitu"
@@ -1439,7 +1439,7 @@ msgid "Add"
 msgstr "Přidat"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3659,13 +3659,13 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "Nechat vypršet složku Spam"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr ""
 "<qt>Přejete si opravdu odstranit identitu, pojmenovanou jako <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3673,7 +3673,7 @@ msgstr[0] "Opravdu si přejete odstranit tuto %1 identitu?"
 msgstr[1] "Opravdu si přejete odstranit tyto %1 identity?"
 msgstr[2] "Opravdu si přejete odstranit těchto %1 identit?"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3681,31 +3681,31 @@ msgstr[0] "Odstranit identitu"
 msgstr[1] "Odstranit identity"
 msgstr[2] "Odstranit identity"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Odst&ranit"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Přidat…"
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Změnit…"
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Přejmenovat"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"

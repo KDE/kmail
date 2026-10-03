@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
 "PO-Revision-Date: 2012-07-09 10:48+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1316,13 +1316,13 @@ msgstr "កម្មវិធី​តែង"
 msgid "Activate quick text format toolbar"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​ឆ្លើយតប"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any sequence of the following prefixes\n"
@@ -1335,147 +1335,147 @@ msgstr ""
 "ទទួល​ស្គាល់​លំដាប់​នៃ​បុព្វបទ​នានា​ខាងក្រោម\n"
 "(ធាតុ​គឺ​ជា​កន្សោម​ធម្មតា​ដែល​មិន​ប្រកាន់​តួអក្សរ​តូច​ធំ) ៖"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Mod&ify…"
 msgstr "​កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "បញ្ចូល​បុព្វបទ​ឆ្លើយតប​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove reply prefix?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, fuzzy, kde-format
 #| msgid "Repl&y Subject Prefixes"
 msgid "Reply Prefix:"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​ឆ្លើយតប"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​បញ្ជូនបន្ត"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgid "Modify…"
 msgstr "​កែប្រែ..."
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "បញ្ចូល​បុព្វបទ​​បញ្ជូន​បន្ត​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove forward prefix?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, fuzzy, kde-format
 #| msgid "For&ward Subject Prefixes"
 msgid "Forward Prefix:"
 msgstr "បុព្វបទ​ប្រធានបទ​របស់​ការ​បញ្ជូនបន្ត"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, fuzzy, kde-format
 #| msgid "Define custom mime header fields:"
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "កំណត់​វាល​បឋមកថា​ mime ផ្ទាល់ខ្លួន ៖"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "ឈ្មោះ"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "តម្លៃ"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "​ថ្មី"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, fuzzy, kde-format
 #| msgid "Re&move"
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "​យកចេញ"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "ឈ្មោះ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, fuzzy, kde-format
 #| msgid "&Value:"
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "តម្លៃ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, fuzzy, kde-format
 #| msgid "Invalid Email Address"
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "អាសយដ្ឋាន​អ៊ីមែល​មិនត្រឹមត្រូវ"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, fuzzy, kde-format
 #| msgid "E&nable detection of missing attachments"
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "បើក​ការ​រក​​នៃ​ឯកសារ​ភ្ជាប់​ដែល​បាត់"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, fuzzy, kde-format
 #| msgid ""
 #| "Recognize any of the following key words as intention to attach a file:"
@@ -1483,25 +1483,25 @@ msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "ទទួល​ស្គាល់​​​ពាក្យ​គន្លឹះ​មួយ​ចំនួន​ខាងក្រោម​ នៅពេល​មាន​បំណង​ភ្ជាប់​ឯកសារ ៖"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "បញ្ចូល​ពាក្យ​គន្លឹះ​ថ្មី ៖"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, fuzzy, kde-format
 #| msgid "Do you want to remove account '%1'?"
 msgid "Do you want to remove this attachment word?"
 msgstr "តើ​អ្នក​ចង់​យក​គណនី '%1' ចេញ​ឬ ?"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
 msgid "Attachment Word:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, fuzzy, kde-format
 #| msgctxt "Config->Composer->Attachments"
 #| msgid "Attachments"
@@ -1509,13 +1509,13 @@ msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "ឯកសារ​ភ្ជាប់"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr "គីឡូបៃ"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "គ្មាន​ព្រំដែន"
@@ -1528,7 +1528,7 @@ msgid "Add"
 msgstr "បន្ថែម..."
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, fuzzy, kde-format
 #| msgid "Remove"
 msgctxt "@action"
@@ -3850,54 +3850,54 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "ធ្វើ​ឲ្យ​ថត​ផុតកំណត់"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>តើអ្នកពិតជាចង់​យក​​អត្តសញ្ញាណ​ឈ្មោះ <b>%1</b> ចេញ​ឬ ?</qt>"
 
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, fuzzy, kde-format
 #| msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "<qt>តើអ្នកពិតជាចង់​យក​​អត្តសញ្ញាណ​ឈ្មោះ <b>%1</b> ចេញ​ឬ ?</qt>"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, fuzzy, kde-format
 #| msgid "Remove Identity"
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "យក​អត្តសញ្ញាណ​ចេញ"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, fuzzy, kde-format
 #| msgid "&Remove"
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "យក​ចេញ"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, fuzzy, kde-format
 #| msgid "Modify..."
 msgctxt "@action"
 msgid "Modify…"
 msgstr "​កែប្រែ..."
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, fuzzy, kde-format
 #| msgid "Rename"
 msgctxt "@action"
 msgid "Rename"
 msgstr "​ប្ដូរ​ឈ្មោះ"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, fuzzy, kde-format
 #| msgid "Set as Default"
 msgctxt "@action"

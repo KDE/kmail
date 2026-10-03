@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
 "PO-Revision-Date: 2026-09-20 19:09+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -1259,13 +1259,13 @@ msgstr "Редактор"
 msgid "Activate quick text format toolbar"
 msgstr "Задіяти панелі інструментів швидкого форматування тексту"
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "П&рефікси теми відповіді"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1275,170 +1275,170 @@ msgstr ""
 "Розпізнавати будь-яку послідовність наступних префіксів (без урахування "
 "регістру):"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr "&Додати…"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Mod&ify…"
 msgstr "З&мінити…"
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Введіть новий префікс відповіді:"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Хочете вилучити префікс відповіді?"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Префікс відповіді:"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "П&рефікси теми пересилання"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr "Додати…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Modify…"
 msgstr "Змінити…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Введіть новий префікс пересилки:"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Хочете вилучити префікс переспрямовування?"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Префікс переспрямовування:"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Власні нетипові заголовки для листів:"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Назва"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Значення"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Створити"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "Ви&лучити"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Назва:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "&Значення:"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
 "«Content-Type» не є дозволеним рядком. Цей заголовок не буде збережено."
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Некоректний заголовок"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "Уві&мкнути визначення відсутніх долучень"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Вважати будь-яке з наступних слів наміром долучити файл:"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Введіть нове слово:"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Хочете вилучити цей слово долучення?"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Слово долучення:"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Максимальний розмір долучення:"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " кБ"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "Не обмежувати"
@@ -1450,7 +1450,7 @@ msgid "Add"
 msgstr "Додати"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -3715,12 +3715,12 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "Тека застарілих небажаних повідомлень"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Ви справді хочете вилучити профіль із назвою <b>%1</b>?</qt>"
 
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
@@ -3729,7 +3729,7 @@ msgstr[1] "Ви дійсно хочете вилучити ці %1 профіл�
 msgstr[2] "Ви дійсно хочете вилучити ці %1 профілів?"
 msgstr[3] "Ви дійсно хочете вилучити цей профіль?"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
@@ -3738,31 +3738,31 @@ msgstr[1] "Вилучити профілі"
 msgstr[2] "Вилучити профілі"
 msgstr[3] "Вилучити профіль"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "Ви&лучити"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Додати…"
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Змінити…"
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Перейменувати"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"

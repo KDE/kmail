@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-30 00:47+0000\n"
-"PO-Revision-Date: 2026-03-02 19:23+0200\n"
+"POT-Creation-Date: 2026-10-03 00:46+0000\n"
+"PO-Revision-Date: 2026-08-25 19:33+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -1264,13 +1264,13 @@ msgstr "Kirjoitusikkuna"
 msgid "Activate quick text format toolbar"
 msgstr "Aktivoi tekstin pikamuotoilutyökalurivi"
 
-#: configuredialog/configurecomposerpage.cpp:578
+#: configuredialog/configurecomposerpage.cpp:580
 #, kde-format
 msgid "Repl&y Subject Prefixes"
 msgstr "&Vastausviestin otsikon etuliitteet"
 
-#: configuredialog/configurecomposerpage.cpp:583
-#: configuredialog/configurecomposerpage.cpp:609
+#: configuredialog/configurecomposerpage.cpp:585
+#: configuredialog/configurecomposerpage.cpp:611
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1280,169 +1280,169 @@ msgstr ""
 "Tunnista seuraavat etuliitteet (mallit ovat säännöllisiä lausekkeita, joiden "
 "pien- tai suuraakkosellisuutta ei oteta huomioon):"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "A&dd…"
 msgstr "&Lisää…"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Re&move"
 msgstr "&Poista"
 
-#: configuredialog/configurecomposerpage.cpp:591
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:593
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Mod&ify…"
 msgstr "&Muuta…"
 
-#: configuredialog/configurecomposerpage.cpp:591
+#: configuredialog/configurecomposerpage.cpp:593
 #, kde-format
 msgid "Enter new reply prefix:"
 msgstr "Anna uusi vastausetuliite:"
 
-#: configuredialog/configurecomposerpage.cpp:592
+#: configuredialog/configurecomposerpage.cpp:594
 #, kde-format
 msgid "Do you want to remove reply prefix?"
 msgstr "Haluatko poistaa vastausetuliitteen?"
 
-#: configuredialog/configurecomposerpage.cpp:594
+#: configuredialog/configurecomposerpage.cpp:596
 #, kde-format
 msgid "Reply Prefix:"
 msgstr "Vastausetuliite:"
 
-#: configuredialog/configurecomposerpage.cpp:605
+#: configuredialog/configurecomposerpage.cpp:607
 #, kde-format
 msgid "For&ward Subject Prefixes"
 msgstr "&Välitetyn viestin otsikon etuliitteet"
 
 #. i18n: ectx: property (text), widget (QPushButton, mRemoveButton)
-#: configuredialog/configurecomposerpage.cpp:615 ui/identityngpage.ui:73
+#: configuredialog/configurecomposerpage.cpp:617 ui/identityngpage.ui:73
 #, kde-format
 msgid "Remo&ve"
 msgstr "&Poista"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Add…"
 msgstr "Lisää…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Modify…"
 msgstr "Muuta…"
 
-#: configuredialog/configurecomposerpage.cpp:615
+#: configuredialog/configurecomposerpage.cpp:617
 #, kde-format
 msgid "Enter new forward prefix:"
 msgstr "Anna uusi välitysetuliite"
 
-#: configuredialog/configurecomposerpage.cpp:616
+#: configuredialog/configurecomposerpage.cpp:618
 #, kde-format
 msgid "Do you want to remove forward prefix?"
 msgstr "Haluatko poistaa edennysetuliitteen?"
 
-#: configuredialog/configurecomposerpage.cpp:617
+#: configuredialog/configurecomposerpage.cpp:619
 #, kde-format
 msgid "Forward Prefix:"
 msgstr "Edennysetuliite:"
 
-#: configuredialog/configurecomposerpage.cpp:664
+#: configuredialog/configurecomposerpage.cpp:666
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
 msgstr "Määritä omat MIME-otsakekentät:"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Name of the mime header."
 msgid "Name"
 msgstr "Nimi"
 
-#: configuredialog/configurecomposerpage.cpp:672
+#: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
 msgctxt "@title:column Value of the mimeheader."
 msgid "Value"
 msgstr "Arvo"
 
-#: configuredialog/configurecomposerpage.cpp:680
+#: configuredialog/configurecomposerpage.cpp:682
 #, kde-format
 msgctxt "@action:button Add new mime header field."
 msgid "Ne&w"
 msgstr "&Uusi"
 
-#: configuredialog/configurecomposerpage.cpp:684
+#: configuredialog/configurecomposerpage.cpp:686
 #, kde-format
 msgctxt "@action:button"
 msgid "Re&move"
 msgstr "&Poista"
 
-#: configuredialog/configurecomposerpage.cpp:693
+#: configuredialog/configurecomposerpage.cpp:695
 #, kde-format
 msgctxt "@label:textbox Name of the mime header."
 msgid "&Name:"
 msgstr "&Nimi:"
 
-#: configuredialog/configurecomposerpage.cpp:703
+#: configuredialog/configurecomposerpage.cpp:705
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Value:"
 msgstr "Ar&vo:"
 
-#: configuredialog/configurecomposerpage.cpp:834
+#: configuredialog/configurecomposerpage.cpp:836
 #, kde-format
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr "”Content-Type” ei ole valtuutettu merkkijono. Otsaketta ei tallenneta."
 
-#: configuredialog/configurecomposerpage.cpp:835
+#: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
 msgstr "Virheellinen otsake"
 
-#: configuredialog/configurecomposerpage.cpp:870
+#: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
 msgctxt "@option:check"
 msgid "E&nable detection of missing attachments"
 msgstr "&Havaitse liitteiden puuttuminen"
 
-#: configuredialog/configurecomposerpage.cpp:876
+#: configuredialog/configurecomposerpage.cpp:878
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Recognize any of the following key words as intention to attach a file:"
 msgstr "Tunnista seuraavat ilmaukset aikeeksi liittää tiedosto:"
 
-#: configuredialog/configurecomposerpage.cpp:887
+#: configuredialog/configurecomposerpage.cpp:889
 #, kde-format
 msgid "Enter new key word:"
 msgstr "Anna uusi avainsana:"
 
-#: configuredialog/configurecomposerpage.cpp:889
+#: configuredialog/configurecomposerpage.cpp:891
 #, kde-format
 msgid "Do you want to remove this attachment word?"
 msgstr "Haluatko poistaa tämän liitesanan?"
 
-#: configuredialog/configurecomposerpage.cpp:890
+#: configuredialog/configurecomposerpage.cpp:892
 #, kde-format
 msgid "Attachment Word:"
 msgstr "Liitesana:"
 
-#: configuredialog/configurecomposerpage.cpp:897
+#: configuredialog/configurecomposerpage.cpp:899
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum Attachment Size:"
 msgstr "Liitteen enimmäiskoko:"
 
-#: configuredialog/configurecomposerpage.cpp:904
+#: configuredialog/configurecomposerpage.cpp:906
 #, kde-format
 msgctxt "spinbox suffix: unit for kilobyte"
 msgid " kB"
 msgstr " kt"
 
-#: configuredialog/configurecomposerpage.cpp:906
+#: configuredialog/configurecomposerpage.cpp:908
 #, kde-format
 msgid "No limit"
 msgstr "Ei rajoitusta"
@@ -1454,7 +1454,7 @@ msgid "Add"
 msgstr "Lisää"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:246
+#: identity/identityngpage.cpp:247
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
@@ -2983,7 +2983,7 @@ msgstr "&Monista olemassa oleva vCard"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No existing identity with a vCard is available."
-msgstr ""
+msgstr "Olemassa olevaa henkilöyttä, jolla olisi vCard, ei ole käytettävissä"
 
 #: identity/identityaddvcarddialog.cpp:95 identity/newidentitydialog.cpp:92
 #, kde-format
@@ -3666,51 +3666,51 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "Vanhenna roskapostikansio"
 
-#: identity/identityngpage.cpp:202
+#: identity/identityngpage.cpp:203
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Haluatko varmasti poistaa henkilöyden <b>%1</b>?</qt>"
 
 # *** TARKISTA: Onko %1 varmasti näissä luku eikä esim. henkilöyden nimi?
-#: identity/identityngpage.cpp:205
+#: identity/identityngpage.cpp:206
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Haluatko varmasti poistaa tämän %1 henkilöyden?"
 msgstr[1] "Haluatko varmasti poistaa nämä %1 henkilöyttä?"
 
-#: identity/identityngpage.cpp:208
+#: identity/identityngpage.cpp:209
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Poista henkilöys"
 msgstr[1] "Poista henkilöydet"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:210
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Poista"
 
-#: identity/identityngpage.cpp:240
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Lisää…"
 
-#: identity/identityngpage.cpp:242
+#: identity/identityngpage.cpp:243
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Muuta…"
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:244
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Muuta nimeä"
 
-#: identity/identityngpage.cpp:253
+#: identity/identityngpage.cpp:254
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -4112,7 +4112,7 @@ msgstr "Luettelee käyttäjäpalautteelle käytettävissä olevat valinnat"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Activate Debug Mode"
-msgstr ""
+msgstr "Aktivoi virheenpaikannustila"
 
 #: kmail_options.h:37
 #, kde-format
@@ -5606,13 +5606,12 @@ msgstr "&Kumoa: ”%1”"
 #: kmmainwidget.cpp:4278
 #, kde-format
 msgid "&Redo"
-msgstr ""
+msgstr "Tee &uudelleen"
 
 #: kmmainwidget.cpp:4280
-#, fuzzy, kde-format
-#| msgid "&Undo: \"%1\""
+#, kde-format
 msgid "&Redo: \"%1\""
-msgstr "&Kumoa: ”%1”"
+msgstr "Tee &uudelleen: ”%1”"
 
 #: kmmainwidget.cpp:4337
 #, kde-format
@@ -5880,17 +5879,14 @@ msgid "Cannot move message. %1"
 msgstr "Viestiä ei voi siirtää. %1"
 
 #: kmundoredomanager.cpp:134
-#, fuzzy, kde-format
-#| msgid "Move Message"
-#| msgid_plural "Move Messages"
+#, kde-format
 msgid "Move messages"
-msgstr "Siirrä viesti"
+msgstr "Siirrä viestejä"
 
 #: kmundoredomanager.cpp:170
-#, fuzzy, kde-format
-#| msgid "Message Status"
+#, kde-format
 msgid "Change Messages Status"
-msgstr "&Viestien luokittelu"
+msgstr "Vaihda viestin tilaa"
 
 #: kontactplugin/kmail/kcmkmailsummary.cpp:31
 #, kde-format
@@ -6380,8 +6376,7 @@ msgid "Last Search"
 msgstr "Edellinen haku"
 
 #: searchdialog/searchwindowdialog.cpp:425
-#, fuzzy, kde-format
-#| msgid "You did not selected a valid folder."
+#, kde-format
 msgid "You did not select a valid folder."
 msgstr "Et valinnut kelvollista kansiota."
 
@@ -7155,10 +7150,9 @@ msgstr "Salli viestien poistaminen vahvistuksetta"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFolderDnD)
 #: ui/miscpagemaintab.ui:187
-#, fuzzy, kde-format
-#| msgid "Send &messages in outbox folder:"
+#, kde-format
 msgid "Enable drag and drop messages into folders"
-msgstr "&Lähetä lähtevät-kansiossa olevat viestit:"
+msgstr "Salli viestien veto ja pudottaminen kansioihin"
 
 #. i18n: ectx: property (text), widget (QRadioButton, mChkbxAllFolders)
 #: ui/searchwindow.ui:17
@@ -8096,18 +8090,16 @@ msgid "Email Address not Monitored"
 msgstr "Sähköpostiosoite"
 
 #: util.cpp:37
-#, fuzzy, kde-format
-#| msgid "Do &Not Sign"
+#, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
-msgstr "&Älä allekirjoita"
+msgstr "Älä lähetä"
 
 #: util.cpp:38
-#, fuzzy, kde-format
-#| msgid "&Send Mail"
+#, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
-msgstr "&Lähetä sähköposti"
+msgstr "Lähetä sähköposti"
 
 #: util.cpp:187
 #, kde-format
@@ -8159,13 +8151,11 @@ msgid "Use Global Setting"
 msgstr "Käytä järjestelmäasetusta"
 
 #: widgets/vacationscriptindicatorwidget.cpp:127
-#, fuzzy, kde-format
-#| msgid "Out of office reply active on server"
-#| msgid_plural "Out of office reply active on servers"
+#, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"
 msgstr[0] "Poissaolovastaus on aktiivinen palvelimella"
-msgstr[1] "Poissaolovastaus on aktiivinen palvelimilla"
+msgstr[1] "Poissaolovastaus on aktiivinen %1 palvelimella"
 
 #: widgets/zoomlabelwidget.cpp:22
 #, kde-format
