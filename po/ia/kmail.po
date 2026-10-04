@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-03 00:46+0000\n"
+"POT-Creation-Date: 2026-10-04 00:48+0000\n"
 "PO-Revision-Date: 2026-09-21 12:31+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
@@ -1736,7 +1736,7 @@ msgid "Show attachment list"
 msgstr "Monstra lista de attachamento"
 
 #: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
-#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
@@ -2926,12 +2926,12 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Lector claudite"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:63
+#: historyclosedreader/historyclosedreadermenu.cpp:60
 #, kde-format
 msgid "Clear History"
 msgstr "Netta chronologia"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:81
+#: historyclosedreader/historyclosedreadermenu.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
@@ -5947,13 +5947,13 @@ msgstr ""
 "listate in le summario. Si iste option non es habilitate, alora solmente le "
 "percurso de dossier de base essera monstrate."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:48
+#: kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Nove message..."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:54
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5963,14 +5963,14 @@ msgstr ""
 "Tu essera presentate con un dialogo ubi tu pote crear e inviar un nove "
 "message de e-posta."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:59
+#: kontactplugin/kmail/kmail_plugin.cpp:53
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Sync E-Posta"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:62
+#: kontactplugin/kmail/kmail_plugin.cpp:56
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8183,19 +8183,19 @@ msgstr "Il non pote initiar assistente de conto"
 msgid "Message Default Format"
 msgstr "Formato predefinite de message"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Prefere &HTML a texto plan"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Prefere Texto &Plan a HTML"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-03 00:46+0000\n"
+"POT-Creation-Date: 2026-10-04 00:48+0000\n"
 "PO-Revision-Date: 2013-07-06 02:07+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <linux-wa@walon.org>\n"
@@ -1883,7 +1883,7 @@ msgid "Show attachment list"
 msgstr "Mostrer l' djivêye des ataetchmints"
 
 #: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
-#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -3089,12 +3089,12 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "Messaedje ecripté"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:63
+#: historyclosedreader/historyclosedreadermenu.cpp:60
 #, kde-format
 msgid "Clear History"
 msgstr ""
 
-#: historyclosedreader/historyclosedreadermenu.cpp:81
+#: historyclosedreader/historyclosedreadermenu.cpp:78
 #, fuzzy, kde-format
 #| msgid "Post New Message"
 msgctxt "@action"
@@ -6314,14 +6314,14 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:48
+#: kontactplugin/kmail/kmail_plugin.cpp:42
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Novea messaedje"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:54
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6329,7 +6329,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:59
+#: kontactplugin/kmail/kmail_plugin.cpp:53
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:inmenu"
@@ -6337,7 +6337,7 @@ msgid "Sync Mail"
 msgstr "&Evoyî emile"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:62
+#: kontactplugin/kmail/kmail_plugin.cpp:56
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8504,21 +8504,21 @@ msgstr "Dji n' sai enonder l' macrea des contes"
 msgid "Message Default Format"
 msgstr "Cogne do messaedje nén såve"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&HTML pus rade ki peur tecse"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "&HTML pus rade ki peur tecse"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, fuzzy, kde-format
 #| msgid "Reset Font Settings"
 msgctxt "@action"

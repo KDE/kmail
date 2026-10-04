@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-03 00:46+0000\n"
+"POT-Creation-Date: 2026-10-04 00:48+0000\n"
 "PO-Revision-Date: 2009-06-01 15:12+0000\n"
 "Last-Translator: Vilson Gjeci <vilsongjeci@gmail.com>\n"
 "Language-Team: Albanian <sq@li.org>\n"
@@ -1726,7 +1726,7 @@ msgid "Show attachment list"
 msgstr "Ruaj të bashkangjiturit ..."
 
 #: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
-#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -2843,12 +2843,12 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr ""
 
-#: historyclosedreader/historyclosedreadermenu.cpp:63
+#: historyclosedreader/historyclosedreadermenu.cpp:60
 #, kde-format
 msgid "Clear History"
 msgstr ""
 
-#: historyclosedreader/historyclosedreadermenu.cpp:81
+#: historyclosedreader/historyclosedreadermenu.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
@@ -5820,14 +5820,14 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:48
+#: kontactplugin/kmail/kmail_plugin.cpp:42
 #, fuzzy, kde-format
 #| msgid "Moving messages"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Duke lëvizur mesazhet"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:54
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5835,7 +5835,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:59
+#: kontactplugin/kmail/kmail_plugin.cpp:53
 #, fuzzy, kde-format
 #| msgctxt "type of folder content"
 #| msgid "Mail"
@@ -5844,7 +5844,7 @@ msgid "Sync Mail"
 msgstr "Posta"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:62
+#: kontactplugin/kmail/kmail_plugin.cpp:56
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -7919,19 +7919,19 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "Gjithsej Mesazhe"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr ""
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr ""
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"

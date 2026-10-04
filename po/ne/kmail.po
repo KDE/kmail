@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-03 00:46+0000\n"
+"POT-Creation-Date: 2026-10-04 00:48+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1931,7 +1931,7 @@ msgid "Show attachment list"
 msgstr "यस रूपमा सङ्लग्नता बचत गर्नुहोस्"
 
 #: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
-#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
 #, fuzzy, kde-format
 #| msgid "KMail"
 msgid "KMail2"
@@ -3152,13 +3152,13 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "उद्धरण हेडर"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:63
+#: historyclosedreader/historyclosedreadermenu.cpp:60
 #, fuzzy, kde-format
 #| msgid "Clear Past"
 msgid "Clear History"
 msgstr "बिगतका खाली"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:81
+#: historyclosedreader/historyclosedreadermenu.cpp:78
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgctxt "@action"
@@ -6458,14 +6458,14 @@ msgid ""
 "path will be shown."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:48
+#: kontactplugin/kmail/kmail_plugin.cpp:42
 #, fuzzy, kde-format
 #| msgid "New Message"
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "नयाँ सन्देश"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:54
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -6473,7 +6473,7 @@ msgid ""
 "email message."
 msgstr ""
 
-#: kontactplugin/kmail/kmail_plugin.cpp:59
+#: kontactplugin/kmail/kmail_plugin.cpp:53
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:inmenu"
@@ -6481,7 +6481,7 @@ msgid "Sync Mail"
 msgstr "मेल पठाउनुहोस्"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:62
+#: kontactplugin/kmail/kmail_plugin.cpp:56
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8850,21 +8850,21 @@ msgstr "खाता सिर्जना गर्न असमर्थ"
 msgid "Message Default Format"
 msgstr "असुरक्षित सन्देश ढाँचा"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "सादा पाठमा HTML पेश गर्नुहोस्"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "सादा पाठमा HTML पेश गर्नुहोस्"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, fuzzy, kde-format
 #| msgid "Reset Font Settings"
 msgctxt "@action"

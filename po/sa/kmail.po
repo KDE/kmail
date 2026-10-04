@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-03 00:46+0000\n"
+"POT-Creation-Date: 2026-10-04 00:48+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1717,7 +1717,7 @@ msgid "Show attachment list"
 msgstr "संलग्नकसूचीं दर्शयतु"
 
 #: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
-#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:46
+#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
 #, kde-format
 msgid "KMail2"
 msgstr "केमेल२"
@@ -2864,12 +2864,12 @@ msgctxt "List of message viewer closed"
 msgid "Closed Reader"
 msgstr "बन्द पाठक"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:63
+#: historyclosedreader/historyclosedreadermenu.cpp:60
 #, kde-format
 msgid "Clear History"
 msgstr "इतिहासं स्पष्टं कुरुत"
 
-#: historyclosedreader/historyclosedreadermenu.cpp:81
+#: historyclosedreader/historyclosedreadermenu.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Reopen Closed Viewer"
@@ -5875,13 +5875,13 @@ msgstr ""
 "यदि भवान् सारांशे सूचीकृतस्य प्रत्येकस्य पुटस्य पूर्णमार्गं द्रष्टुम् इच्छति तर्हि एतत् विकल्पं सक्षमं "
 "कुर्वन्तु । यदि एषः विकल्पः सक्षमः नास्ति तर्हि केवलं आधारपुटमार्गः एव दर्शितः भविष्यति ।"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:48
+#: kontactplugin/kmail/kmail_plugin.cpp:42
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "नवीनः सन्देशः…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:54
+#: kontactplugin/kmail/kmail_plugin.cpp:48
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5891,14 +5891,14 @@ msgstr ""
 "भवद्भ्यः एकः संवादः प्रस्तुतः भविष्यति यत्र भवन्तः नूतनं ईमेल-सन्देशं निर्माय प्रेषयितुं शक्नुवन्ति "
 "।"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:59
+#: kontactplugin/kmail/kmail_plugin.cpp:53
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "मेल समन्वयन"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:62
+#: kontactplugin/kmail/kmail_plugin.cpp:56
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
@@ -8060,19 +8060,19 @@ msgstr "खाताविजार्डं आरभ्यतुं असम�
 msgid "Message Default Format"
 msgstr "सन्देश पूर्वनिर्धारित प्रारूप"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Plain Text इत्यस्मात् &HTML इत्येतत् प्राधान्यं ददातु"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "HTML इत्यस्मात् &Plain Text इत्येतत् प्राधान्यं ददातु"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
