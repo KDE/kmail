@@ -462,6 +462,7 @@
           <li xml:lang="cs">Zprávy ve formátu HTML se ve výchozím nastavení zobrazují v původních barvách. Chcete-li toto nastavení změnit, zrušte zaškrtnutí políčka Vzhled -&gt; Barvy -&gt; Nezměnit barvu původního e-mailu HTML</li>
           <li xml:lang="es">Los mensajes HTML se muestran con sus colores de forma predeterminada. Para anular esto, desmarque la opción «Aspecto-&gt;Colores&gt;No cambiar los colores del mensaje HTML original».</li>
           <li xml:lang="eu">HTML mezuak, era lehenetsian, jatorrizko koloreekin erakusten dira. Hori aldatzeko, kendu marka "Itxura-&gt;Koloreak-&gt;Ez aldatu jatorrizko HTML postaren koloreak" aukeran</li>
+          <li xml:lang="fi">HTML-viestit näytetään oletuksena pyydetyissä väreissään. Tämän voi ohittaa poistamalla valinnan ”Ulkoasu→Värit→Älä muuta HTML-viestin alkuperäisiä värejä”</li>
           <li xml:lang="fr">Les messages au format « HTML » sont affichés avec leurs couleurs prévue par défaut. Pour modifier cela, veuillez décocher l'option « Apparence / Couleurs / Ne pas modifier la couleur du courriel original en HTML ».</li>
           <li xml:lang="he">הודעות HTML מופיעות עם הצבע הייעודי שלהן כברירת מחדל. כדי לעקוף את זה, יש לבטל את הסימון של האפשרות „מראה-&gt;צבעים-&gt;לא לשנות את הצבע מהודעת ה־HTML המקורית”</li>
           <li xml:lang="ia">Le messages HTML es monstrate con lor colores intendite per defecto.  Pro cambiar isto, dismarca le option "Apparentia-&gt;Colores-&gt;Non cambiar color del e-posta HTML original"</li>
@@ -493,6 +494,7 @@
           <li xml:lang="cs">Povolit export textu v modulech pro automatické generování v editoru.</li>
           <li xml:lang="es">Permitir exportación de texto en los complementos de generación automática del editor.</li>
           <li xml:lang="eu">Automatikoki sortzeko editore-pluginetako testua esportatzea baimendu.</li>
+          <li xml:lang="fi">Salli viedä tekstiä muokkaimen automaattituottoliitännäisiin.</li>
           <li xml:lang="fr">Autoriser l'exportation de texte dans les modules externes auto-générés d'éditeurs.</li>
           <li xml:lang="he">לאפשר לייצא טקסט בתוספי עורך ליצירה אוטומטית.</li>
           <li xml:lang="ia">Permitte exportar texto in plugins de editor autogenerate.</li>
@@ -515,6 +517,7 @@
           <li xml:lang="cs">Oprava podpory převodu textu na řeč (zařazení zpráv do fronty)</li>
           <li xml:lang="es">Corregir la compatibilidad con lectura de texto (encolar mensajes).</li>
           <li xml:lang="eu">Testutik ahotsera euskarria konpondu (mezuak ilaran ipini)</li>
+          <li xml:lang="fi">Korjattu puhesynteesituki (viestien jonotus)</li>
           <li xml:lang="fr">Correction du texte pour la prise en charge de la synthèse vocale (Mise en file des messages)</li>
           <li xml:lang="he">תוקנה התמיכה בהקראה (הוספת הודעות לתור)</li>
           <li xml:lang="ia">Fixa supporto de Texto-a-Pronunciation (TextToSpeech) (messages ponite retro in cauda)</li>
@@ -546,6 +549,7 @@
           <li xml:lang="cs">Přidat nový widget „Co je nového“.</li>
           <li xml:lang="es">Añadir nuevo elemento de novedades.</li>
           <li xml:lang="eu">Zerberri trepeta berria gehitu.</li>
+          <li xml:lang="fi">Lisätty uusi mitäuutta-sovelma.</li>
           <li xml:lang="fr">Ajouter un nouveau composant graphique « Quoi de neuf ».</li>
           <li xml:lang="he">הוספת וידג׳ט חדש בשם מה חדש.</li>
           <li xml:lang="ia">Adde nove widget de cosa es nove.</li>
@@ -569,6 +573,7 @@
           <li xml:lang="cs">Nový modul: zobrazení velikosti sbírky.</li>
           <li xml:lang="es">Nuevo complemento: mostrar el tamaño de la colección.</li>
           <li xml:lang="eu">Plugin berria: erakutsi bildumaren neurria.</li>
+          <li xml:lang="fi">Uusi liitännäinen: näytä kokoelman koko.</li>
           <li xml:lang="fr">Nouveau module externe : affichage de la taille de la collection.</li>
           <li xml:lang="he">תוסף חדש: הצגת גודל אוסף.</li>
           <li xml:lang="ia">Nove plugin: monstra grandor de collection.</li>
