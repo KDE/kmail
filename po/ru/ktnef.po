@@ -314,7 +314,7 @@ msgstr "Создание, перенос на Qt4/KDE4"
 #: main.cpp:45
 #, kde-format
 msgid "An optional argument 'file' "
-msgstr "Необязательный аргумент «файл»"
+msgstr "Необязательный аргумент «файл» "
 
 #: messagepropertydialog.cpp:42
 #, kde-format

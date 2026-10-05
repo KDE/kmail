@@ -448,8 +448,8 @@ msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
 "in the addresses by hand."
 msgstr ""
-"KMail не удалось обнаружить список рассылки в этой папке. Укажите адреса "
-"вручную."
+"KMail не удалось полностью определить список рассылки в этой папке. Укажите "
+"адреса вручную."
 
 #: collectionpage/collectionquotapage.cpp:23
 #, kde-format
@@ -535,7 +535,7 @@ msgstr "(%1%)"
 #: configuredialog/configagentdelegate.cpp:215
 #, kde-format
 msgid "Retrieval Options"
-msgstr "Параметры синхронизации"
+msgstr "Параметры получения"
 
 #: configuredialog/configureaccountpage.cpp:56
 #, kde-format
@@ -588,7 +588,7 @@ msgstr "Проверять орфографию"
 #: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Never Automatically"
-msgstr "Отключить автоматическую отправку"
+msgstr "Не отправлять автоматически"
 
 #: configuredialog/configureaccountpage.cpp:111
 #, kde-format
@@ -598,7 +598,7 @@ msgstr "При проверке почты вручную"
 #: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On All Mail Checks"
-msgstr "При проверке почты"
+msgstr "При любой проверке почты"
 
 #: configuredialog/configureaccountpage.cpp:113
 #, kde-format
@@ -640,13 +640,13 @@ msgstr "Другая учётная запись…"
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
-msgstr "Включить в проверку почты"
+msgstr "Включить в проверку почты вручную"
 
 #: configuredialog/configureaccountpage.cpp:271
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
-msgstr "Отключить от сети после выхода из KMail"
+msgstr "Переходить в автономный режим при выходе из KMail"
 
 #: configuredialog/configureaccountpage.cpp:278
 #, kde-format
@@ -659,13 +659,13 @@ msgstr "Проверять почту при запуске"
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
 msgstr ""
-"Агент уведомления о новой почте не зарегистрирован. Обратитесь "
-"кадминистратору."
+"Агент уведомления о новой почте не зарегистрирован. Обратитесь к "
+"администратору."
 
 #: configuredialog/configureappearancepage.cpp:86
 #, kde-format
 msgid "General"
-msgstr "Главное"
+msgstr "Общие"
 
 #: configuredialog/configureappearancepage.cpp:93
 #, kde-format
@@ -772,7 +772,7 @@ msgstr "Цвет текста строки состояния HTML — пись�
 
 #: configuredialog/configureappearancepage.cpp:312
 msgid "HTML Status Bar Background - HTML Message"
-msgstr "Фон строки состояния HTML — письмо в HTML"
+msgstr "Цвет фона строки состояния HTML — письмо в HTML"
 
 #: configuredialog/configureappearancepage.cpp:313
 msgid "HTML Status Bar Foreground - HTML Message"
@@ -811,7 +811,7 @@ msgstr "%"
 #, kde-format
 msgctxt "@option:check"
 msgid "Show folder quick search field"
-msgstr "Поле быстрого поиска"
+msgstr "Показывать поле быстрого поиска по папкам"
 
 #: configuredialog/configureappearancepage.cpp:487
 #: configuredialog/configureappearancepage.cpp:510
@@ -927,7 +927,7 @@ msgstr ""
 "<p><strong>Данные выражения могут быть использованы для указания времени:</"
 "strong></p>\n"
 "<ul>\n"
-"<li>h — час без предшествующего нуля (0-23 или 1-12 в 12 часовом формате)</"
+"<li>h — час без предшествующего нуля (0-23 или 1-12 в 12-часовом формате)</"
 "li>\n"
 "<li>hh — час вместе с предшествующим нулём (00-23 или 01-12 в 12-часовом "
 "формате)</li>\n"
@@ -966,8 +966,7 @@ msgstr "Письмо"
 msgctxt "@info:tooltip"
 msgid ""
 "Close the standalone message window after replying or forwarding the message"
-msgstr ""
-"Закрывать отдельное окно редактора писем после ответа или пересылки письма"
+msgstr "Закрывать отдельное окно письма после ответа или пересылки письма"
 
 #: configuredialog/configureappearancepage.cpp:842
 #, kde-format
@@ -978,7 +977,7 @@ msgstr "Системный лоток"
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable system tray icon"
-msgstr "Значок в системном лотке"
+msgstr "Показывать значок в системном лотке"
 
 #: configuredialog/configureappearancepage.cpp:852
 #, kde-format
@@ -990,7 +989,7 @@ msgstr "Запускать в свёрнутом виде"
 #, kde-format
 msgctxt "@option:check"
 msgid "Show unread email in Taskbar"
-msgstr "Показывать непрочитанное в списке задач"
+msgstr "Показывать непрочитанное на панели задач"
 
 #: configuredialog/configureappearancepage.cpp:875
 #, kde-format
@@ -1063,12 +1062,12 @@ msgstr "Создать метку невозможно. Метка с таким
 #, kde-format
 msgctxt "General settings for the composer."
 msgid "General"
-msgstr "Главное"
+msgstr "Общие"
 
 #: configuredialog/configurecomposerpage.cpp:69
 #, kde-format
 msgid "Standard Templates"
-msgstr "Шаблоны"
+msgstr "Стандартные шаблоны"
 
 #: configuredialog/configurecomposerpage.cpp:75
 #, kde-format
@@ -1157,7 +1156,7 @@ msgid ""
 "even when the line was created by adding an additional line break while word-"
 "wrapping the text."
 msgstr ""
-"При ответе добавить символы цитирования перед всеми строками цитируемого "
+"При ответе добавлять символы цитирования перед всеми строками цитируемого "
 "текста, даже если строка появилась в результате автоматического переноса "
 "текста на новую строку."
 
@@ -1379,7 +1378,7 @@ msgstr "Префикс пересылаемого письма:"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
-msgstr "Пользовательские теги заголовков MIME:"
+msgstr "Пользовательские поля заголовков MIME:"
 
 #: configuredialog/configurecomposerpage.cpp:677
 #, kde-format
@@ -1449,12 +1448,12 @@ msgstr "Введите новое ключевое слово:"
 #: configuredialog/configurecomposerpage.cpp:896
 #, kde-format
 msgid "Do you want to remove this attachment word?"
-msgstr "Удалить это слово вложения?"
+msgstr "Удалить это ключевое слово?"
 
 #: configuredialog/configurecomposerpage.cpp:897
 #, kde-format
 msgid "Attachment Word:"
-msgstr "Слово вложения:"
+msgstr "Ключевое слово:"
 
 #: configuredialog/configurecomposerpage.cpp:904
 #, kde-format
@@ -1559,7 +1558,7 @@ msgstr "Прочие"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:294
 #, kde-format
 msgid "Confirm Deleting Emails Plugins"
-msgstr "Подтверждение удаления модулей электронных писем"
+msgstr "Модули подтверждения удаления писем"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:318
 #, kde-format
@@ -1584,7 +1583,7 @@ msgstr "Шифрование"
 #: configuredialog/configuresecuritypage.cpp:63
 #, kde-format
 msgid "S/MIME Validation"
-msgstr "Сертификаты S/MIME"
+msgstr "Проверка S/MIME"
 
 #: configuredialog/configuresecuritypage.cpp:90
 #, kde-format
@@ -1630,7 +1629,7 @@ msgid ""
 "provided by kdepim-addons."
 msgstr ""
 "Модуль отсутствует, проверьте правильность установки.\n"
-"Этот модуль входит в программный пакет kdepim-addon."
+"Этот модуль входит в программный пакет kdepim-addons."
 
 #: configuredialog/configuresecuritypage.cpp:333
 #, kde-format
@@ -1651,7 +1650,7 @@ msgstr "нет прокси-сервера"
 #: configuredialog/configuresecuritypage.cpp:541
 #, kde-format
 msgid "(Current system setting: %1)"
-msgstr "(системные настройки: %1)"
+msgstr "(системный параметр: %1)"
 
 #: dialog/addemailtoexistingcontactdialog.cpp:35
 #, kde-format
@@ -1785,7 +1784,7 @@ msgstr "KMail2"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
-msgstr "Выберите словарь для проверки правописания в письме"
+msgstr "Выберите словарь для проверки орфографии в письме"
 
 #: editor/kmcomposerwin.cpp:364
 #, kde-format
@@ -1902,7 +1901,7 @@ msgstr "Сохранить в папке шаблонов"
 #: editor/kmcomposerwin.cpp:1307
 #, kde-format
 msgid "Save as &File"
-msgstr "Сохранить как файл"
+msgstr "Сохранить как ф&айл"
 
 #: editor/kmcomposerwin.cpp:1308
 #, kde-format
@@ -1987,7 +1986,7 @@ msgstr "Запросить подтверждение &получения"
 #, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
-msgstr "&Динамический перенос строк"
+msgstr "&Перенос строк"
 
 #: editor/kmcomposerwin.cpp:1398
 #, kde-format
@@ -2070,7 +2069,7 @@ msgstr "Добавить &подпись"
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
-msgstr "Добавить подпись &до курсора"
+msgstr "Вставить подпись в &начало"
 
 #: editor/kmcomposerwin.cpp:1457
 #, kde-format
@@ -2124,7 +2123,7 @@ msgstr "Выберите метод шифрования для этого пи�
 #: editor/kmcomposerwin.cpp:1516
 #, kde-format
 msgid "Create Follow Up Reminder…"
-msgstr "Добавить напоминание для поддержания разговора…"
+msgstr "Создать напоминание об ответе…"
 
 #: editor/kmcomposerwin.cpp:1550
 #, kde-format
@@ -2258,7 +2257,7 @@ msgstr "Добавить как встроенное &изображение"
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
-msgstr "Вставить как &вложение"
+msgstr "Добавить как &вложение"
 
 #: editor/kmcomposerwin.cpp:2453
 #, kde-format
@@ -2406,7 +2405,7 @@ msgstr "Письмо готово к отправке…"
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
-msgstr "Отправление подтверждения"
+msgstr "Подтверждение отправки"
 
 #: editor/kmcomposerwin.cpp:3115
 #, kde-format
@@ -2499,7 +2498,7 @@ msgid ""
 "Your selected SMIME key (%1) doesn't exist in your keyring or is not "
 "suitable for encryption."
 msgstr ""
-"Выбранный ключ MIME (%1) отсутствует в связке ключей или не пригоден для "
+"Выбранный ключ S/MIME (%1) отсутствует в связке ключей или не пригоден для "
 "шифрования."
 
 #: editor/kmcomposerwin.cpp:3494
@@ -2509,7 +2508,7 @@ msgid ""
 "Your selected SMIME signing key (%1) doesn't exist in your keyring or is not "
 "suitable for signing."
 msgstr ""
-"Выбранный для подписания ключ SMIME (%1) отсутствует в связке ключей или не "
+"Выбранный для подписания ключ S/MIME (%1) отсутствует в связке ключей или не "
 "пригоден для создания подписи."
 
 #: editor/kmcomposerwin.cpp:3667
@@ -2537,7 +2536,7 @@ msgid ""
 "Autocrypt gossip key is used for this recipient. We got this key from 3rd "
 "party recipients. This key is not verified."
 msgstr ""
-"Для этого получателя используется gossip-ключ Autocrypt. Этот ключ бы "
+"Для этого получателя используется gossip-ключ Autocrypt. Этот ключ был "
 "получен от третьей стороны и не был проверен."
 
 #: editor/kmcomposerwin.cpp:3835
@@ -2655,11 +2654,11 @@ msgid ""
 "will be trusted more. Or you can sign the key, if you communicated the "
 "fingerprint by another channel. Click the icon for details."
 msgstr ""
-"Ключ шифрования является ограниченно доверенным и не использовался "
-"достаточно долго, чтобы гарантировать его принадлежность указанному лицу. "
-"Использование этого ключа позволит ему стать более доверенным. Ключ может "
-"быть подписан, если его отпечаток был передан по другому каналу связи. "
-"Нажмите на значок для просмотра более подробных сведений."
+"Ключ шифрования является ограниченно доверенным, но использовался достаточно "
+"часто, поэтому, скорее всего, принадлежит указанному лицу. Использование "
+"этого ключа позволит ему стать более доверенным. Ключ может быть подписан, "
+"если его отпечаток был передан по другому каналу связи. Нажмите на значок "
+"для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3924
 #, kde-format
@@ -2669,8 +2668,8 @@ msgid ""
 "signing the key. Click the icon for details."
 msgstr ""
 "Ключ, используемый для шифрования, является полностью доверенным. "
-"Безопасность возможно дополнительно усилить, подписанием ключа. Нажмите на "
-"значок для просмотра подробных сведений."
+"Безопасность можно дополнительно усилить, подписав ключ. Нажмите на значок "
+"для просмотра подробных сведений."
 
 #: editor/kmcomposerwin.cpp:3929
 #, kde-format
@@ -2679,9 +2678,8 @@ msgid ""
 "The encryption key is ultimately trusted or is signed by another ultimately "
 "trusted key. Click the icon for details."
 msgstr ""
-"Ключ шифрования является абсолютно доверенным или подписан другим полностью "
-"абсолютно доверенным ключом. Нажмите на значок для просмотра более подробных "
-"сведений."
+"Ключ шифрования является абсолютно доверенным или подписан другим абсолютно "
+"доверенным ключом. Нажмите на значок для просмотра более подробных сведений."
 
 #: editor/kmcomposerwin.cpp:4046
 #, kde-format
@@ -2757,7 +2755,7 @@ msgid ""
 "What do you want to do?"
 msgstr ""
 "Нажатие этой комбинации клавиш незамедлительно отправляет письмо.\n"
-" Письмо может быть отправлено случайно.\n"
+"Письмо может быть отправлено случайно.\n"
 "Что следует делать с письмом при нажатии этой комбинации клавиш?"
 
 #: editor/validatesendmailshortcut.cpp:31
@@ -2811,7 +2809,7 @@ msgstr ""
 #: editor/warningwidgets/attachmentmissingwarning.cpp:25
 #, kde-format
 msgid "&Attach file"
-msgstr "Вложить файл"
+msgstr "&Вложить файл"
 
 #: editor/warningwidgets/attachmentmissingwarning.cpp:30
 #, kde-format
@@ -2926,7 +2924,7 @@ msgstr "Не удалось переместить письма."
 #: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
-msgstr "Не удалось получить содержимое папки. Сообщение о ошибке: %1"
+msgstr "Не удалось получить содержимое папки. Сообщение об ошибке: %1"
 
 #: folderarchive/folderarchivemanager.cpp:81
 #, kde-format
@@ -2937,7 +2935,7 @@ msgstr "Не удалось определить родительскую пап
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr ""
-"Не удалось получить содержимое родительской папки. Сообщение о ошибке: %1"
+"Не удалось получить содержимое родительской папки. Сообщение об ошибке: %1"
 
 #: folderarchive/folderarchivemanager.cpp:99
 #, kde-format
@@ -3101,7 +3099,7 @@ msgstr "Изменение профиля"
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
-msgstr "Главное"
+msgstr "Общие"
 
 #: identity/identitydialog.cpp:372
 #, kde-format
@@ -3116,7 +3114,7 @@ msgid ""
 "like it to appear in the email header that is sent out;</p><p>if you leave "
 "this blank your real name will not appear, only the email address.</p></qt>"
 msgstr ""
-"<qt><h3>Ваше имя</h3><p>Это поле должно содержать имя, или псевдоним. Оно "
+"<qt><h3>Ваше имя</h3><p>Это поле должно содержать имя или псевдоним. Оно "
 "будет использовано в заголовках отправляемых писем.</p><p>Если оставить это "
 "поле пустым, в отправляемых письмах будет виден только адрес электронной "
 "почты.</p></qt>"
@@ -3155,10 +3153,9 @@ msgid ""
 msgstr ""
 "<qt><h3>Адрес электронной почты</h3><p>Это поле должно содержать полный "
 "адрес электронной почты.</p><p>Этот адрес является основным, он используется "
-"для исходящей почты. Если адресов несколько, создайте ещё одну учётную "
-"запись или добавьте дополнительные адреса в нижнее поле.</p><p>Если оставить "
-"это поле пустым или заполнить его неправильно, вам не смогут ответить.</p></"
-"qt>"
+"для исходящей почты. Если адресов несколько, создайте ещё один профиль или "
+"добавьте дополнительные адреса в нижнее поле.</p><p>Если оставить это поле "
+"пустым или заполнить его неправильно, вам не смогут ответить.</p></qt>"
 
 #: identity/identitydialog.cpp:429
 #, kde-format
@@ -3198,10 +3195,10 @@ msgid ""
 "<a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
 "<qt><p>Ключ OpenPGP будет использован для подписывания писем. Можно также "
-"использовать ключи GnuPG.</p><p>Если оставить это поле пустым, то можно "
-"будет отправлять обычную почту, для которой не требуется шифрование.</"
-"p><p>Подробнее о ключах можно прочитать на <a>https://www.gnupg.org</a></p></"
-"qt>"
+"использовать ключи GnuPG.</p><p>Если оставить это поле пустым, KMail не "
+"сможет подписывать письма с помощью OpenPGP; обычная работа с почтой не "
+"изменится.</p><p>Подробнее о ключах можно прочитать на <a>https://www.gnupg."
+"org</a></p></qt>"
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3235,11 +3232,12 @@ msgid ""
 "mail functions will not be affected.</p><p>You can find out more about keys "
 "at <a>https://www.gnupg.org</a></p></qt>"
 msgstr ""
-"<qt><p>Ключ OpenPGP будет использован для шифрования писем и для команды "
-"«Добавить открытый ключ» в редакторе. Можно также использовать ключи GnuPG.</"
-"p><p>Если оставить это поле пустым, то можно будет отправлять обычную почту, "
-"для которой не требуется шифрование.</p><p>Подробнее о ключах можно "
-"прочитать на <a>https://www.gnupg.org</a></p></qt>"
+"<qt><p>Ключ OpenPGP будет использован для шифрования писем самому себе и для "
+"команды «Добавить открытый ключ» в редакторе. Можно также использовать ключи "
+"GnuPG.</p><p>Если оставить это поле пустым, KMail не сможет шифровать для "
+"вас копии исходящих писем с помощью OpenPGP; обычная работа с почтой не "
+"изменится.</p><p>Подробнее о ключах можно прочитать на <a>https://www.gnupg."
+"org</a></p></qt>"
 
 #: identity/identitydialog.cpp:511
 #, kde-format
@@ -3255,9 +3253,9 @@ msgid ""
 "be able to digitally sign emails using S/MIME; normal mail functions will "
 "not be affected.</p></qt>"
 msgstr ""
-"<qt><p>Ключ S/MIME (X.509) будет использован для подписывания писем.</"
-"p><p>Если оставить это поле пустым, то можно будет отправлять обычную почту, "
-"для которой не требуется шифрование.</p></qt>"
+"<qt><p>Сертификат S/MIME (X.509) будет использован для подписывания писем.</"
+"p><p>Если оставить это поле пустым, KMail не сможет подписывать письма с "
+"помощью S/MIME; обычная работа с почтой не изменится.</p></qt>"
 
 #: identity/identitydialog.cpp:526
 #, kde-format
@@ -3274,10 +3272,10 @@ msgid ""
 "encrypt copies of outgoing messages to you using S/MIME; normal mail "
 "functions will not be affected.</p></qt>"
 msgstr ""
-"<qt><p>Сертификат S/MIME будет использован для шифрования писем и для "
-"команды «Добавить открытый ключ» в редакторе.</p><p>Если оставить это поле "
-"пустым, то можно будет отправлять обычную почту, для которой не требуется "
-"шифрование.</p></qt>"
+"<qt><p>Сертификат S/MIME будет использован для шифрования писем самому себе "
+"и для команды «Вложить мой сертификат» в редакторе.</p><p>Если оставить это "
+"поле пустым, KMail не сможет шифровать для вас копии исходящих писем с "
+"помощью S/MIME; обычная работа с почтой не изменится.</p></qt>"
 
 #: identity/identitydialog.cpp:546
 #, kde-format
@@ -3295,13 +3293,13 @@ msgstr "Предпочитаемый формат шифрования:"
 #: identity/identitydialog.cpp:568
 #, kde-format
 msgid "Enable Autocrypt"
-msgstr "Использовать сквозное шифрование"
+msgstr "Включить Autocrypt"
 
 #: identity/identitydialog.cpp:572
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
-msgstr "Сквозное шифрование:"
+msgstr "Autocrypt:"
 
 #: identity/identitydialog.cpp:577
 #, kde-format
@@ -3369,7 +3367,7 @@ msgid ""
 msgstr ""
 "<qt><h3>Адреса для ответов</h3><p>Определяет поле <tt>Адрес для ответа</tt> "
 "в заголовке письма. Указанный адрес будет использован при ответе на письмо.</"
-"p><p>Это может быть полезно когда, например, группа людей работает вместе, "
+"p><p>Это может быть полезно, когда, например, группа людей работает вместе, "
 "выполняя одни обязанности. В таком случае в поле <tt>Адрес для ответа</tt> "
 "можно указывать общий адрес, а не личный, указываемый в поле "
 "<tt>Отправитель</tt>.</p> <p>Оставьте это поле пустым, если в данном "
@@ -3418,7 +3416,8 @@ msgstr ""
 "h3><p>Адреса, введённые в данном поле, будут добавлены к каждому письму, "
 "отправленному с использованием этого профиля, и не будут видны другим "
 "получателям.</p><p>Обычно это используется для отправки копий письма по "
-"другим вашим адресам.</p><p>Оставьте данное поле пустым, если не уверены в "
+"другим вашим адресам.</p><p>Чтобы указать несколько адресов, вводите их "
+"через запятую.</p><p>Оставьте данное поле пустым, если не уверены в "
 "необходимости этих копий.</p></qt>"
 
 #: identity/identitydialog.cpp:677
@@ -3441,7 +3440,7 @@ msgstr "&Папка для отправленных:"
 #: identity/identitydialog.cpp:691
 #, kde-format
 msgid "Select Draft Folder"
-msgstr "Выбрать папку черновиков"
+msgstr "Выбор папки черновиков"
 
 #: identity/identitydialog.cpp:693
 #, kde-format
@@ -3452,7 +3451,7 @@ msgstr "Папка &черновиков:"
 #: identity/identitydialog.cpp:699
 #, kde-format
 msgid "Select Templates Folder"
-msgstr "Выбрать папку шаблонов"
+msgstr "Выбор папки шаблонов"
 
 #: identity/identitydialog.cpp:701
 #, kde-format
@@ -3463,7 +3462,7 @@ msgstr "Папка &шаблонов:"
 #: identity/identitydialog.cpp:708
 #, kde-format
 msgid "Select Spam Folder"
-msgstr "Выбрать папку спама"
+msgstr "Выбор папки спама"
 
 #: identity/identitydialog.cpp:710
 #, kde-format
@@ -3531,7 +3530,7 @@ msgstr "&Другие шаблоны писем для этого профиля
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
-msgstr "&Использовать стандартные шаблоны"
+msgstr "&Скопировать общие шаблоны"
 
 #: identity/identitydialog.cpp:795
 #, kde-format
@@ -3595,7 +3594,7 @@ msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
-"Один из настроенных ключей OpenPGP для подписи не содержит идентификатор "
+"Один из настроенных ключей OpenPGP для шифрования не содержит идентификатор "
 "пользователя с адресом электронной почты для этого профиля (%1)."
 
 #: identity/identitydialog.cpp:952
@@ -3617,7 +3616,7 @@ msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
-"Один из настроенных сертификатов S/MIME для подписи не содержит адреса "
+"Один из настроенных сертификатов S/MIME для шифрования не содержит адреса "
 "электронной почты для этого профиля (%1)."
 
 #: identity/identitydialog.cpp:971
@@ -3682,7 +3681,7 @@ msgstr "Удаление визитки"
 #: identity/identityeditvcarddialog.cpp:78
 #, kde-format
 msgid "We cannot delete vCard file."
-msgstr "Не получилось удалить файл vCard."
+msgstr "Не удалось удалить файл vCard."
 
 #: identity/identityeditvcarddialog.cpp:124
 #, kde-format
@@ -3723,10 +3722,10 @@ msgstr "<qt>Удалить профиль <b>%1</b>?</qt>"
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
-msgstr[0] "Удалить этот %1 профиль?"
+msgstr[0] "Удалить %1 профиль?"
 msgstr[1] "Удалить эти %1 профиля?"
 msgstr[2] "Удалить эти %1 профилей?"
-msgstr[3] "Удалить этот %1 профиль?"
+msgstr[3] "Удалить %1 профиль?"
 
 #: identity/identityngpage.cpp:208
 #, kde-format
@@ -4342,7 +4341,7 @@ msgstr "Как вложение"
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
-msgstr "В тексте"
+msgstr "По отдельности"
 
 #: kmcommands.cpp:1323
 #, kde-format
@@ -4403,7 +4402,7 @@ msgstr "Панель направления текста"
 #: kmkernel.cpp:642
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
-msgstr "KMail переключен в автономный режим. Все сетевые операции отключены."
+msgstr "KMail переключён в автономный режим. Все сетевые операции отключены."
 
 #: kmkernel.cpp:662 kmmainwidget.cpp:2544 kmmainwidget.cpp:2559
 #, kde-format
@@ -4418,7 +4417,7 @@ msgstr "Невозможно отправить письмо"
 #: kmkernel.cpp:694
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
-msgstr "KMail переключен в режим работы в сети. Все сетевые операции доступны"
+msgstr "KMail переключён в режим работы в сети. Все сетевые операции доступны"
 
 #: kmkernel.cpp:696
 #, kde-format
@@ -4426,7 +4425,7 @@ msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
-"KMail переключен в режим работы в сети. Все сетевые операции станут "
+"KMail переключён в режим работы в сети. Все сетевые операции станут "
 "доступны, когда будет обнаружено подключение к сети"
 
 #: kmkernel.cpp:767
@@ -4554,7 +4553,7 @@ msgstr "Агент объединения почты не был зарегис�
 #: kmlaunchexternalcomponent.cpp:62
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
-msgstr "Агент напоминаний для поддержания разговора не был зарегистрирован."
+msgstr "Агент напоминаний об ответе не был зарегистрирован."
 
 #: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, kde-format
@@ -5032,7 +5031,7 @@ msgstr "Режим работы в сети (нет данных)"
 #: kmmainwidget.cpp:3039
 #, kde-format
 msgid "Send Queued Messages Via"
-msgstr "Отправить из очереди"
+msgstr "Отправить из очереди через"
 
 #: kmmainwidget.cpp:3059
 #, kde-format
@@ -5717,7 +5716,7 @@ msgstr "Фильтр %1"
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
-msgstr "Поиск... <%1>"
+msgstr "Поиск… <%1>"
 
 #: kmmainwidget.cpp:4948
 #, kde-format
@@ -5746,11 +5745,10 @@ msgid ""
 "disable the feature completely in KMail's Plugin settings."
 msgstr ""
 "Настроена работа более чем с одной учётной записью электронной почты.\n"
-"Для отображения содержимого находящихся в разных учётных записях одинаковых "
-"папок (Входящие, Исходящие и Черновики) возможно использовать объединение "
-"папок.\n"
+"Для показа содержимого находящихся в разных учётных записях одинаковых папок "
+"(Входящие, Отправленные и Черновики) можно использовать объединение папок.\n"
 "Начать использование объединённых папок сейчас?\n"
-"На вкладке «Настройка модулей» диалога настройки KMail возможно управлять "
+"На вкладке «Настройка модулей» диалога настройки KMail можно управлять "
 "параметрами таких папок, создать собственные папки или полностью отключить "
 "функционал объединения папок."
 
@@ -5797,7 +5795,7 @@ msgstr "Служба Akonadi перезапущена."
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
-msgstr "Запуск программы..."
+msgstr "Запуск…"
 
 #: kmreadermainwin.cpp:502 util.cpp:187
 #, kde-format
@@ -5925,7 +5923,7 @@ msgstr "Получение содержимого папки"
 #: kmreaderwin.cpp:278
 #, kde-format
 msgid "Please wait . . ."
-msgstr "Подождите..."
+msgstr "Подождите…"
 
 #: kmreaderwin.cpp:284 kmreaderwin.cpp:293
 #, kde-format
@@ -5947,7 +5945,7 @@ msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
 "\">here</a> to go online . . .</p>"
 msgstr ""
-"Работа с учетной записью производится в автономном режиме. Нажмите <a href="
+"Работа с учётной записью производится в автономном режиме. Нажмите <a href="
 "\"kmail:goResourceOnline\">здесь</a>, чтобы перейти в сетевой режим.</p>"
 
 #: kmreaderwin.cpp:858
@@ -6244,7 +6242,7 @@ msgstr "Фильтровать по &списку рассылки…"
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
-msgstr "Добавить напоминание для поддержания разговора…"
+msgstr "Добавить напоминание об ответе…"
 
 #: messageactions.cpp:80
 #, kde-format
@@ -6492,7 +6490,7 @@ msgstr "Не добавлено ни одного условия."
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
-msgstr "Содержит условие присутствия подстроки короче 4 символов."
+msgstr "Условие «содержит» нельзя использовать для строки короче 4 символов."
 
 #: searchdialog/searchwindowdialog.cpp:522
 #, kde-format
@@ -6567,7 +6565,7 @@ msgid ""
 "'Action Item'"
 msgstr ""
 "Эта возможность предотвращает автоматическое удаление устаревших писем, если "
-"отмечены как важные или на контроле."
+"они отмечены как важные или на контроле."
 
 #. i18n: ectx: label, entry (AllowLocalFlags), group (Behaviour)
 #: settings/kmail.kcfg:58
@@ -6589,20 +6587,21 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
-"<qt><p>Отправлять письма из очереди вручную, при проверке почты во всех "
-"ящиках или отправлять немедленно. </p></qt>"
+"<qt><p>Укажите, отправлять ли письма из папки «Исходящие» при проверке почты "
+"вручную, при любой проверке почты или не отправлять их автоматически вовсе. "
+"</p></qt>"
 
 #. i18n: ectx: whatsthis, entry (LastSelectedFolder), group (FolderSelectionDialog)
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "The most recently selected folder in the folder selection dialog."
-msgstr "Показывать часто используемые папки в списке выбора."
+msgstr "Последняя выбранная папка в диалоге выбора папки."
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:91
 #, kde-format
 msgid "Enable system tray icon"
-msgstr "Значок в системном лотке"
+msgstr "Показывать значок в системном лотке"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
 #: settings/kmail.kcfg:95
@@ -6614,7 +6613,7 @@ msgstr "Запускать в свёрнутом виде"
 #: settings/kmail.kcfg:99
 #, kde-format
 msgid "Show Unread Email in TaskBar"
-msgstr "Показывать непрочитанное в списке задач"
+msgstr "Показывать непрочитанное на панели задач"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
 #: settings/kmail.kcfg:103
@@ -6684,7 +6683,7 @@ msgstr "Показ начальной страницы KMail."
 #: settings/kmail.kcfg:178
 #, kde-format
 msgid "Show folder quick search line edit"
-msgstr "Показать поле быстрого поиска по папке"
+msgstr "Показывать поле быстрого поиска по папке"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
 #: settings/kmail.kcfg:186
@@ -6803,7 +6802,7 @@ msgstr "Выбрано действие при нажатии комбинаци
 #: settings/kmail.kcfg:334
 #, kde-format
 msgid "Message preview pane:"
-msgstr "Письмо:"
+msgstr "Панель просмотра письма:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
 #: settings/kmail.kcfg:337
@@ -6875,7 +6874,7 @@ msgstr "Символы цитирования"
 #: settings/kmail.kcfg:400
 #, kde-format
 msgid "Specifies the policy used when displaying policy"
-msgstr "Определяет политику при ее отображении"
+msgstr "Определяет политику при её отображении"
 
 #: tag/tagactionmanager.cpp:86 tag/tagactionmanager.cpp:203
 #, kde-format
@@ -7166,7 +7165,7 @@ msgstr ""
 "weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\">При переходе к следующему "
-"непрочитанному письму, может случиться так, что ниже текущего письма "
+"непрочитанному письму может случиться так, что ниже текущего письма "
 "непрочитанных писем больше не будет.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
@@ -7178,7 +7177,7 @@ msgstr ""
 "списка писем, но только в текущей папке.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"weight:600;\">Циклично по всем папках:</span> поиск продолжится с начала "
+"weight:600;\">Циклично по всем папкам:</span> поиск продолжится с начала "
 "списка писем. Если непрочитанные письма не будут найдены, то поиск "
 "продолжится со следующей папки.</p>\n"
 "<p style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-"
@@ -7221,7 +7220,7 @@ msgstr "Циклично по всем отмеченным папкам"
 #: ui/miscpagemaintab.ui:157
 #, kde-format
 msgid " sec"
-msgstr " c"
+msgstr " с"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_StartSpecificFolderAtStartup)
 #: ui/miscpagemaintab.ui:173
@@ -7305,7 +7304,7 @@ msgstr "Шифровать черновики"
 #: ui/securitypageencryptiontab.ui:33
 #, kde-format
 msgid "Check to store messages encrypted "
-msgstr "Отметьте для хранения писем в зашифрованном виде"
+msgstr "Отметьте для хранения писем в зашифрованном виде "
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
 #: ui/securitypageencryptiontab.ui:41
@@ -7328,8 +7327,8 @@ msgstr ""
 "не рекомендуется, так как прочитать отправленные письма после истечения "
 "срока действия сертификатов не удастся.\n"
 "<p>\n"
-"Однако, локальные правила могут требовать установки этого параметра. В "
-"случае возникновения вопросов свяжитесь с системным администратором.\n"
+"Однако локальные правила могут требовать установки этого параметра. В случае "
+"возникновения вопросов свяжитесь с системным администратором.\n"
 "</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_CryptoStoreEncrypted)
@@ -7571,7 +7570,7 @@ msgstr ""
 #: ui/securitypagegeneraltab.ui:48
 #, kde-format
 msgid "Prefer HTML to plain text"
-msgstr "Обрабатывать HTML в письмах"
+msgstr "Предпочитать HTML обычному тексту"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, mExternalReferences)
 #: ui/securitypagegeneraltab.ui:57
@@ -7673,7 +7672,7 @@ msgstr "По возможности расшифровывать письма п
 #: ui/securitypagegeneraltab.ui:185
 #, kde-format
 msgid "Certificate && Key Bundle Attachments"
-msgstr "Управление сертификатами"
+msgstr "Вложенные сертификаты и ключи"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mAutomaticallyImportAttachedKeysCheck)
 #: ui/securitypagegeneraltab.ui:191
@@ -7734,7 +7733,7 @@ msgstr ""
 "отправку уведомлений. Таким способом можно контролировать отправку "
 "уведомлений.</li><li><em>Отказать</em>: всегда отправлять уведомление об "
 "<b>отказе</b>. Автор письма тем самым узнаёт, что письмо обработано, но не "
-"будет знать, каким именно образом.</li><li><em>Всегда отправлять</em>: Автор "
+"будет знать, каким именно образом.</li><li><em>Всегда отправлять</em>: автор "
 "письма тем самым узнаёт, что письмо обработано, и будет знать, каким именно "
 "образом. Не рекомендуется устанавливать этот параметр, если этого не "
 "требуется для бизнес-логики.</li></ul></qt>"
@@ -7755,7 +7754,7 @@ msgstr "Спрашивать"
 #: ui/securitypagemdntab.ui:53
 #, kde-format
 msgid "Deny"
-msgstr "Отклонить"
+msgstr "Отказать"
 
 #. i18n: ectx: property (text), widget (QRadioButton, radioAlways)
 #: ui/securitypagemdntab.ui:63
@@ -7977,7 +7976,7 @@ msgstr ""
 #: ui/smimeconfiguration.ui:179
 #, kde-format
 msgid "Use s&ystem HTTP proxy:"
-msgstr "И&спользовать системный прокси–сервер:"
+msgstr "И&спользовать системный прокси-сервер:"
 
 #. i18n: ectx: property (text), widget (QRadioButton, useCustomHTTPProxyRB)
 #: ui/smimeconfiguration.ui:196
@@ -8056,7 +8055,7 @@ msgid ""
 msgstr ""
 "При указании сервера LDAP все запросы будут направляться на него. Этот "
 "параметр будет использован, если невозможно определить адрес сервера и порт "
-"из ссылки на сервер LDAP. Другие сервера LDAP будут использованы при "
+"из ссылки на сервер LDAP. Другие серверы LDAP будут использованы при "
 "невозможности соединения через прокси-сервер.\n"
 "Указать адрес сервера можно в виде «адрес_сервера» или «адрес_сервера:порт». "
 "Если порт не указан, подразумевается стандартный порт LDAP 389."
@@ -8065,7 +8064,7 @@ msgstr ""
 #: ui/xfaceconfigurator.ui:19
 #, kde-format
 msgid "Send picture with every message:"
-msgstr "Отправлять &изображение с каждым письмом:"
+msgstr "Отправлять изображение с каждым письмом:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, enableComboBox)
 #: ui/xfaceconfigurator.ui:27
@@ -8099,10 +8098,10 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
-"KMail может отправлять с каждым письмом небольшое (48х48 точек) чёрно-белое "
-"изображение (например, фотографию пользователя или глиф). Это изображение "
-"будет показано в почтовом клиенте получателя (если поддерживается эта "
-"возможность)."
+"KMail может отправлять с каждым письмом небольшое (48×48 точек) изображение "
+"низкого качества (например, фотографию пользователя или глиф). Это "
+"изображение будет показано в почтовом клиенте получателя (если "
+"поддерживается эта возможность)."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
 #: ui/xfaceconfigurator.ui:75
@@ -8276,13 +8275,13 @@ msgstr "Формат письма по умолчанию"
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
-msgstr "Обр&абатывать HTML-код в письмах"
+msgstr "Предпочитать &HTML обычному тексту"
 
 #: widgets/displaymessageformatactionmenu.cpp:32
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
-msgstr "И&спользовать вариант письма в простом тексте"
+msgstr "Предпочитать &обычный текст HTML"
 
 #: widgets/displaymessageformatactionmenu.cpp:38
 #, kde-format
