@@ -156,7 +156,7 @@ msgstr "Сообщение отправлено"
 #: sendlatermanager.cpp:190
 #, kde-format
 msgid "An error was found. Do you want to resend it?"
-msgstr "При отправке сообщения произошла ошибка. Хотите повторить отправку?"
+msgstr "При отправке сообщения произошла ошибка. Повторить отправку?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

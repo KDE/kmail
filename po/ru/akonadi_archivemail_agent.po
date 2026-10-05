@@ -109,7 +109,7 @@ msgstr "Следующий архив в"
 #: archivemailwidget.cpp:69
 #, kde-format
 msgid "Storage directory"
-msgstr "Каталог хранения"
+msgstr "Папка хранения"
 
 #: archivemailwidget.cpp:94
 #, kde-format
@@ -171,7 +171,7 @@ msgstr ""
 #, kde-format
 msgid "Directory does not exist. Please verify settings. Archive postponed."
 msgstr ""
-"Каталог не существует. Проверьте правильность настройки. Архивирование "
+"Папка не существует. Проверьте правильность настройки. Архивирование "
 "отложено."
 
 #: job/archivejob.cpp:76
@@ -189,7 +189,7 @@ msgstr "Добавить…"
 #: ui/archivemailwidget.ui:38
 #, kde-format
 msgid "Modify…"
-msgstr "Изменить..."
+msgstr "Изменить…"
 
 #. i18n: ectx: property (text), widget (QPushButton, deleteItem)
 #: ui/archivemailwidget.ui:45

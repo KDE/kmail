@@ -2,7 +2,7 @@
 <!DOCTYPE article PUBLIC "-//KDE//DTD DocBook XML V4.5-Based Variant V1.1//EN"
 "dtd/kdedbx45.dtd" [
   <!ENTITY i18n-followupreminderagent "<application
->Агент напоминания о продолжении</application
+>Агент напоминания об ответе</application
 >">
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % Russian "INCLUDE">
@@ -57,35 +57,35 @@
 >Введение</title>
 
 <para
->&i18n-followupreminderagent; — это агент akonadi, который напоминает о письмах, оставшихся без ответа </para>
+>&i18n-followupreminderagent; — это агент Akonadi, который напоминает о письмах, оставшихся без ответа </para>
 
 <sect2 id="using-kapp">
 <title
->Использование агента напоминания о продолжении</title>
+>Использование агента напоминания об ответе</title>
 
 <para
->Чтобы открыть диалог, позволяющий создать напоминание для текущего электронного адреса на указанную дату, воспользуйтесь меню <menuchoice
+>Чтобы открыть диалог, позволяющий создать напоминание об ответе на текущее письмо к указанной дате, воспользуйтесь меню <menuchoice
 ><guimenu
 >Параметры</guimenu
 ><guimenuitem
->Добавить напоминание для поддержания разговора</guimenuitem
+>Создать напоминание об ответе</guimenuitem
 ></menuchoice
 > в окне создания письма &kmail;.</para>
 
 <screenshot>
 <screeninfo
->Диалог агента напоминания о продолжении</screeninfo>
+>Диалог агента напоминания об ответе</screeninfo>
   <mediaobject>
     <imageobject>
       <imagedata fileref="add-followup-reminder.png" format="PNG"/>
     </imageobject>
     <textobject>
       <phrase
->Диалог агента напоминания о продолжении</phrase>
+>Диалог агента напоминания об ответе</phrase>
     </textobject>
     <caption>
       <para
->Диалог агента напоминания о продолжении</para>
+>Диалог агента напоминания об ответе</para>
     </caption>
   </mediaobject>
 </screenshot>
@@ -101,30 +101,30 @@
 ><guimenu
 >Настройка</guimenu
 > <guimenuitem
->Настроить &kmail;...</guimenuitem
+>Настроить &kmail;…</guimenuitem
 ></menuchoice
 >, перейдите на страницу <guilabel
 >Модули</guilabel
 > и нажмите кнопку настройки напротив элемента <guilabel
->Агент напоминания о продолжении</guilabel
+>Агент напоминания об ответе</guilabel
 >. Затем щёлкните правой кнопкой мыши по напоминанию и в открывшемся контекстном меню выберите действие <guimenuitem
 >Удалить</guimenuitem
 >. </para>
 
 <screenshot>
 <screeninfo
->Настройка агента напоминаний поддержания разговора</screeninfo>
+>Настройка агента напоминания об ответе</screeninfo>
   <mediaobject>
     <imageobject>
       <imagedata fileref="followupreminder-configure.png" format="PNG"/>
     </imageobject>
     <textobject>
       <phrase
->Настройка агента напоминаний поддержания разговора</phrase>
+>Настройка агента напоминания об ответе</phrase>
     </textobject>
     <caption>
       <para
->Настройка агента напоминаний поддержания разговора</para>
+>Настройка агента напоминания об ответе</para>
     </caption>
   </mediaobject>
 </screenshot>

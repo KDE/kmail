@@ -61,14 +61,14 @@ msgstr "Ожидается"
 #, kde-format
 msgctxt "@action"
 msgid "Show Message"
-msgstr "Показать письмо…"
+msgstr "Показать письмо"
 
 # BUGME: needs ellipsis at the end (as it opens a new window/dialog)? --aspotashev
 #: followupreminderinfowidget.cpp:216
 #, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
-msgstr "Показать исходное письмо…"
+msgstr "Показать исходное письмо"
 
 #: followupreminderinfowidget.cpp:219
 #, kde-format
@@ -100,7 +100,7 @@ msgstr "Получен ответ от %1"
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
-msgstr "Напоминание для поддержания разговора"
+msgstr "Напоминание об ответе"
 
 #: followupremindernoanswerdialog.cpp:44
 #, kde-format

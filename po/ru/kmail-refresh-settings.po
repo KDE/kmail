@@ -81,7 +81,7 @@ msgstr "Очистить"
 #: refreshsettingscleanuppage.cpp:51
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
-msgstr "Завершено удаление устаревшего раздела настроек «Подсказка дня»"
+msgstr "Завершено удаление устаревшего раздела параметров «Подсказка дня»"
 
 #: refreshsettingscleanuppage.cpp:63
 #, kde-format
@@ -107,6 +107,4 @@ msgstr "Завершено удаление параметров размеро�
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Please close KMail/Kontact before using it."
-msgstr ""
-"Закройте и снова запустите приложения KMail и/или Kontact для продолжения "
-"работы."
+msgstr "Перед использованием закройте KMail и Kontact."
