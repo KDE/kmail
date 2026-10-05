@@ -10,7 +10,6 @@ Dependencies:
     'pim/akonadi' : '@same'
     'pim/akonadi-contacts' : '@same'
     'pim/akonadi-mime' : '@same'
-    'pim/kcalutils' : '@same'
     'pim/kidentitymanagement' : '@same'
     'pim/kldap' : '@same'
     'pim/kmailtransport' : '@same'
