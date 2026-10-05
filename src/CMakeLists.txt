@@ -518,6 +518,9 @@ target_link_libraries(
 if(TARGET KF6::TextEditTextToSpeech)
     target_link_libraries(kmailprivate PRIVATE KF6::TextEditTextToSpeech)
 endif()
+if(HAVE_SPEECH_TO_TEXT)
+    target_link_libraries(kmailprivate PRIVATE KF6::TextSpeechToText)
+endif()
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
     target_link_libraries(kmailprivate PRIVATE KPim6::PimCommonActivities)
@@ -617,7 +620,7 @@ target_link_libraries(
     KPim6::AkonadiCore
 )
 
-if(TARGET KF6::TextEditTextToSpeech)
+if(HAVE_TEXT_TO_SPEECH_SUPPORT OR HAVE_SPEECH_TO_TEXT)
     kcoreaddons_add_plugin(kcm_kmail_accessibility SOURCES configuredialog/kcm_kmail_accessibility.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
     target_link_libraries(
         kcm_kmail_accessibility

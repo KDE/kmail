@@ -8,7 +8,7 @@
  *
  */
 #include "config-kmail.h"
-#if HAVE_TEXT_TO_SPEECH_SUPPORT
+#if HAVE_TEXT_TO_SPEECH_SUPPORT || HAVE_SPEECH_TO_TEXT
 #include "configuredialog/configureaccessibilitypage.h"
 #endif
 #include "configuredialog/configureaccountpage.h"

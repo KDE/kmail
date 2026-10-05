@@ -73,6 +73,10 @@
     </entry>
   </group>
   <group name="General">
+    <entry name="EnableSpeechToText" type="Bool">
+      <label>Enable speech to text</label>
+      <default>false</default>
+    </entry>
     <entry key="PlasmaActivitySupport" type="Bool">
       <default>false</default>
     </entry>
