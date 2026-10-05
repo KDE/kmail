@@ -6,7 +6,6 @@
  *
  */
 #include "filtermanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "mailfilteragent_debug.h"
 #include <Akonadi/AgentManager>
@@ -35,6 +34,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <algorithm>
 #include <cerrno>
 
+using namespace Qt::Literals::StringLiterals;
 using namespace MailCommon;
 
 class FilterManager::Private

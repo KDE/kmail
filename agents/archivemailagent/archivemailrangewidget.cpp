@@ -5,13 +5,14 @@
 */
 
 #include "archivemailrangewidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "archivemailagent_debug.h"
 #include "widgets/hourcombobox.h"
 #include <KLocalizedString>
 #include <QCheckBox>
 #include <QHBoxLayout>
+
+using namespace Qt::Literals::StringLiterals;
 
 ArchiveMailRangeWidget::ArchiveMailRangeWidget(QWidget *parent)
     : QWidget{parent}

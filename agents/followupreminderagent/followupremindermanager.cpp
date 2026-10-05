@@ -5,7 +5,6 @@
 */
 
 #include "followupremindermanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "followupreminderagent_debug.h"
 #include "followupreminderinfo.h"
@@ -21,6 +20,7 @@ using namespace Qt::Literals::StringLiterals;
 #include <KLocalizedString>
 #include <KNotification>
 #include <QRegularExpression>
+using namespace Qt::Literals::StringLiterals;
 using namespace FollowUpReminder;
 
 FollowUpReminderManager::FollowUpReminderManager(QObject *parent)

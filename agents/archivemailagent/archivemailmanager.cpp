@@ -5,7 +5,6 @@
 */
 
 #include "archivemailmanager.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "archivemailagentutil.h"
 #include "archivemailinfo.h"
@@ -21,6 +20,8 @@ using namespace Qt::Literals::StringLiterals;
 #include <QDate>
 #include <QFile>
 #include <QRegularExpression>
+
+using namespace Qt::Literals::StringLiterals;
 
 ArchiveMailManager::ArchiveMailManager(QObject *parent)
     : QObject(parent)

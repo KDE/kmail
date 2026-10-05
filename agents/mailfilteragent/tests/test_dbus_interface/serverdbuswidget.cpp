@@ -5,7 +5,6 @@
 */
 
 #include "serverdbuswidget.h"
-using namespace Qt::Literals::StringLiterals;
 
 #include "dbusadaptor.h"
 
@@ -15,6 +14,8 @@ using namespace Qt::Literals::StringLiterals;
 #include <QPushButton>
 #include <QTextEdit>
 #include <QVBoxLayout>
+
+using namespace Qt::Literals::StringLiterals;
 
 ServerDbusWidget::ServerDbusWidget(QWidget *parent)
     : QWidget{parent}
