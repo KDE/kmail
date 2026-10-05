@@ -131,6 +131,7 @@ set(KDEPIM_LIB_VERSION "${PIM_VERSION}")
 set(KDEPIM_LIB_SOVERSION "6")
 
 set(KTEXTADDONS_MIN_VERSION "2.2.0")
+set(KTEXTADDONS_WITH_SPEECH_TO_TEXT_VERSION "2.2.1")
 
 find_package(
     Qt6
@@ -265,6 +266,19 @@ set(CMAKE_MODULE_PATH
     ${CMAKE_MODULE_PATH}
 )
 find_package(LibGpgError ${GPG_ERROR_REQUIRED_VERSION} REQUIRED)
+
+find_package(KF6TextSpeechToText ${KTEXTADDONS_WITH_SPEECH_TO_TEXT_VERSION} CONFIG)
+set_package_properties(
+    KF6TextSpeechToText
+    PROPERTIES
+        DESCRIPTION
+            "Add support for speech to text (ktextaddons)"
+        TYPE
+            OPTIONAL
+)
+if(TARGET KF6::TextSpeechToText)
+    set(HAVE_SPEECH_TO_TEXT TRUE)
+endif()
 
 find_package(KF6TextEditTextToSpeech ${KTEXTADDONS_MIN_VERSION} CONFIG)
 set_package_properties(
