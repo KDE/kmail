@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-06 00:48+0000\n"
 "PO-Revision-Date: 2025-08-20 22:54+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -77,7 +77,7 @@ msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
 msgstr "ארכיון"
 
-#: archivemailrangewidget.cpp:20
+#: archivemailrangewidget.cpp:21
 #, kde-format
 msgctxt "@option:check"
 msgid "Use Range"

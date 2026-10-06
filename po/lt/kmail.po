@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-04 00:48+0000\n"
+"POT-Creation-Date: 2026-10-06 00:48+0000\n"
 "PO-Revision-Date: 2026-09-25 18:10+0300\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -540,6 +540,23 @@ msgstr "(%1%)"
 #, kde-format
 msgid "Retrieval Options"
 msgstr "Gavimo parinktys"
+
+#: configuredialog/configureaccessibilitypage.cpp:28
+#, kde-format
+msgid "Text to Speech"
+msgstr ""
+
+#: configuredialog/configureaccessibilitypage.cpp:32
+#, fuzzy, kde-format
+#| msgid "Rich Text"
+msgid "Speech to Text"
+msgstr "Raiškusis tekstas"
+
+#: configuredialog/configureaccessibilitypage.cpp:82
+#, kde-format
+msgctxt "@option:check"
+msgid "Enable Speech To Text"
+msgstr ""
 
 #: configuredialog/configureaccountpage.cpp:55
 #, kde-format
@@ -6631,39 +6648,45 @@ msgstr ""
 msgid "The most recently selected folder in the folder selection dialog."
 msgstr "Paskutinis pažymėtas aplankas aplankų pasirinkimo dialoge."
 
+#. i18n: ectx: label, entry (EnableSpeechToText), group (General)
+#: settings/kmail.kcfg:77
+#, kde-format
+msgid "Enable speech to text"
+msgstr ""
+
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
-#: settings/kmail.kcfg:83
+#: settings/kmail.kcfg:87
 #, kde-format
 msgid "Enable system tray icon"
 msgstr "Įjungti sistemos dėklo piktogramą"
 
 #. i18n: ectx: label, entry (StartInTray), group (General)
-#: settings/kmail.kcfg:87
+#: settings/kmail.kcfg:91
 #, kde-format
 msgid "Start minimized to tray"
 msgstr "Paleisti suskleistą į dėklą"
 
 #. i18n: ectx: label, entry (ShowUnreadInTaskbar), group (General)
-#: settings/kmail.kcfg:91
+#: settings/kmail.kcfg:95
 #, fuzzy, kde-format
 #| msgid "Show unread mail in system tray"
 msgid "Show Unread Email in TaskBar"
 msgstr "Rodyti neperskaitytus laiškus sistemos dėkle"
 
 #. i18n: ectx: label, entry (ExternalEditor), group (General)
-#: settings/kmail.kcfg:95
+#: settings/kmail.kcfg:99
 #, kde-format
 msgid "Specify e&ditor:"
 msgstr "Nurodykite re&daktorių:"
 
 #. i18n: ectx: label, entry (UseExternalEditor), group (General)
-#: settings/kmail.kcfg:99
+#: settings/kmail.kcfg:103
 #, kde-format
 msgid "Use e&xternal editor instead of composer"
 msgstr "Vietoj rengyklės, naudo&ti išorinį redaktorių"
 
 #. i18n: ectx: label, entry (CloseToQuotaThreshold), group (General)
-#: settings/kmail.kcfg:105
+#: settings/kmail.kcfg:109
 #, kde-format
 msgid ""
 "The threshold for when to warn the user that a folder is nearing its quota "
@@ -6671,32 +6694,32 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (EmptyTrashOnExit), group (General)
-#: settings/kmail.kcfg:109
+#: settings/kmail.kcfg:113
 #, kde-format
 msgid "Empty the local trash folder on program exit"
 msgstr "Išjungiant programą išvalyti vietinį šiukšlinės aplanką"
 
 #. i18n: ectx: label, entry (DeleteMessageWithoutConfirmation), group (General)
-#: settings/kmail.kcfg:113
+#: settings/kmail.kcfg:117
 #, kde-format
 msgid "Delete messages without confirmation"
 msgstr "Ištrinti laiškus neprašant patvirtinimo"
 
 #. i18n: ectx: label, entry (StartSpecificFolderAtStartup), group (General)
-#: settings/kmail.kcfg:117
+#: settings/kmail.kcfg:121
 #, fuzzy, kde-format
 #| msgid "Select specific folders:"
 msgid "Allow to start specific folder"
 msgstr "Pasirinkite specifinius aplankus:"
 
 #. i18n: ectx: label, entry (StartupFolder), group (General)
-#: settings/kmail.kcfg:121
+#: settings/kmail.kcfg:125
 #, fuzzy, kde-format
 msgid "Specify the folder to open when the program is started"
 msgstr "Nurodykite aplanką, kurį atverti kai paleidžiama programa"
 
 #. i18n: ectx: label, entry, group (General)
-#: settings/kmail.kcfg:153
+#: settings/kmail.kcfg:157
 #, kde-format
 msgid ""
 "Whether to ask if users wants to enable Unified Mailboxes if more than one "
@@ -6704,7 +6727,7 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: whatsthis, entry (PreviousNewFeaturesMD5), group (Internal)
-#: settings/kmail.kcfg:159
+#: settings/kmail.kcfg:163
 #, fuzzy, kde-format
 msgid ""
 "This value is used to decide whether the KMail Introduction should be "
@@ -6712,27 +6735,27 @@ msgid ""
 msgstr "Šis įrašas naudojamas nustatant, ar turi būti rodoma KMail įžanga."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
-#: settings/kmail.kcfg:165
+#: settings/kmail.kcfg:169
 #, fuzzy, kde-format
 #| msgid "Show folder quick search field"
 msgid "Show folder quick search line edit"
 msgstr "Rodyti aplankų greitosios paieškos lauką"
 
 #. i18n: ectx: label, entry (ForwardingInlineByDefault), group (Composer)
-#: settings/kmail.kcfg:172
+#: settings/kmail.kcfg:176
 #, kde-format
 msgid "Forward Inline As Default."
 msgstr ""
 
 #. i18n: ectx: label, entry (TooManyRecipients), group (Composer)
-#: settings/kmail.kcfg:175
+#: settings/kmail.kcfg:179
 #, kde-format
 msgid "Warn if the number of recipients is more than:"
 msgstr "Įspėti, jei gavėjų skaičius yra daugiau nei:"
 
 #. i18n: ectx: whatsthis, entry (TooManyRecipients), group (Composer)
 #. i18n: ectx: whatsthis, entry (RecipientThreshold), group (Composer)
-#: settings/kmail.kcfg:177 settings/kmail.kcfg:184
+#: settings/kmail.kcfg:181 settings/kmail.kcfg:188
 #, kde-format
 msgid ""
 "If the number of recipients is larger than this value, KMail will warn and "
@@ -6741,25 +6764,25 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
-#: settings/kmail.kcfg:197
+#: settings/kmail.kcfg:201
 #, fuzzy, kde-format
 msgid "Confirm &before send"
 msgstr "&Klausti prieš siunčiant"
 
 #. i18n: ectx: label, entry (CheckSpellingBeforeSend), group (Composer)
-#: settings/kmail.kcfg:204
+#: settings/kmail.kcfg:208
 #, fuzzy, kde-format
 msgid "Check spelling before send"
 msgstr "Tikrinti rašybą prieš siunčiant"
 
 #. i18n: ectx: label, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:208
+#: settings/kmail.kcfg:212
 #, fuzzy, kde-format
 msgid "Automatically request &message disposition notifications"
 msgstr "Automatiškai prašyti &pranešimo apie laiško pristatymą"
 
 #. i18n: ectx: whatsthis, entry (RequestMDN), group (Composer)
-#: settings/kmail.kcfg:209
+#: settings/kmail.kcfg:213
 #, fuzzy, kde-format
 msgid ""
 "<qt><p>Enable this option if you want KMail to request Message Disposition "
@@ -6776,13 +6799,13 @@ msgstr ""
 "pranešimo</em>.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:230
+#: settings/kmail.kcfg:234
 #, kde-format
 msgid "Autosave interval:"
 msgstr "Automatinio įrašymo intervalas:"
 
 #. i18n: ectx: whatsthis, entry (AutosaveInterval), group (Composer)
-#: settings/kmail.kcfg:231
+#: settings/kmail.kcfg:235
 #, fuzzy, kde-format
 msgid ""
 "A backup copy of the text in the composer window can be created regularly. "
@@ -6794,116 +6817,116 @@ msgstr ""
 "automatinį išsaugojimą nustatydami reikšmę „0“."
 
 #. i18n: ectx: label, entry (ShowSnippetManager), group (Composer)
-#: settings/kmail.kcfg:236
+#: settings/kmail.kcfg:240
 #, kde-format
 msgid "Show the Text Snippet Management and Insertion Panel in the composer."
 msgstr ""
 
 #. i18n: ectx: label, entry (CryptoStoreEncrypted), group (Composer)
-#: settings/kmail.kcfg:241
+#: settings/kmail.kcfg:245
 #, kde-format
 msgid "When check, sent messages will be stored in the encrypted form"
 msgstr ""
 
 #. i18n: ectx: label, entry (RecentUrls), group (Composer)
-#: settings/kmail.kcfg:245
+#: settings/kmail.kcfg:249
 #, kde-format
 msgid "A list of all the recently used URLs"
 msgstr "Visų paskiausiai naudotų URL sąrašas"
 
 #. i18n: ectx: label, entry (RecentEncodings), group (Composer)
-#: settings/kmail.kcfg:251
+#: settings/kmail.kcfg:255
 #, kde-format
 msgid "A list of all the recently used encodings"
 msgstr "Visų paskiausiai naudotų koduočių sąrašas"
 
 #. i18n: ectx: label, entry (ShowCryptoLabelIndicator), group (Composer)
-#: settings/kmail.kcfg:257
+#: settings/kmail.kcfg:261
 #, fuzzy, kde-format
 #| msgid "Show sign/encrypt indicator in editor"
 msgid "Show crypto label indicator"
 msgstr "Rodyti pasirašyti/užšifruoti indikatorių redaktoriuje"
 
 #. i18n: ectx: label, entry (CheckSendDefaultActionShortcut), group (Composer)
-#: settings/kmail.kcfg:261
+#: settings/kmail.kcfg:265
 #, kde-format
 msgid "Validate Send Default Shortcut"
 msgstr ""
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:312
+#: settings/kmail.kcfg:316
 #, kde-format
 msgid "Message preview pane:"
 msgstr "Laiškų peržiūros polangis:"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:315
+#: settings/kmail.kcfg:319
 #, kde-format
 msgid "Do not show a message preview pane"
 msgstr "Nerodyti laiškų peržiūros polangio"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:318
+#: settings/kmail.kcfg:322
 #, kde-format
 msgid "Show the message preview pane below the message list"
 msgstr "Rodyti laiškų peržiūros polangį žemiau laiškų sąrašo"
 
 #. i18n: ectx: label, entry (readerWindowMode), group (Geometry)
-#: settings/kmail.kcfg:321
+#: settings/kmail.kcfg:325
 #, kde-format
 msgid "Show the message preview pane next to the message list"
 msgstr "Rodyti laiškų peržiūros polangį šalia laiškų sąrašo"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:327
+#: settings/kmail.kcfg:331
 #, kde-format
 msgid "Folder list:"
 msgstr "Aplankų sąrašas:"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:330
+#: settings/kmail.kcfg:334
 #, kde-format
 msgid "Long folder list"
 msgstr "Ilgas aplankų sąrašas"
 
 #. i18n: ectx: label, entry (FolderList), group (Geometry)
-#: settings/kmail.kcfg:333
+#: settings/kmail.kcfg:337
 #, kde-format
 msgid "Short folder list"
 msgstr "Trumpas aplankų sąrašas"
 
 #. i18n: ectx: label, entry (TemplateNewMessage), group (GlobalTemplates)
-#: settings/kmail.kcfg:341
+#: settings/kmail.kcfg:345
 #, fuzzy, kde-format
 msgid "Message template for new message"
 msgstr "Laiško šablonas naujam laiškui"
 
 #. i18n: ectx: label, entry (TemplateReply), group (GlobalTemplates)
-#: settings/kmail.kcfg:346
+#: settings/kmail.kcfg:350
 #, fuzzy, kde-format
 msgid "Message template for reply"
 msgstr "Laiško šablonas atsakymui"
 
 #. i18n: ectx: label, entry (TemplateReplyAll), group (GlobalTemplates)
-#: settings/kmail.kcfg:351
+#: settings/kmail.kcfg:355
 #, fuzzy, kde-format
 msgid "Message template for reply to all"
 msgstr "Laiško šablonas atsakymui visiems"
 
 #. i18n: ectx: label, entry (TemplateForward), group (GlobalTemplates)
-#: settings/kmail.kcfg:356
+#: settings/kmail.kcfg:360
 #, fuzzy, kde-format
 msgid "Message template for forward"
 msgstr "Laiško šablonas persiuntimui"
 
 #. i18n: ectx: label, entry (QuoteString), group (GlobalTemplates)
-#: settings/kmail.kcfg:361
+#: settings/kmail.kcfg:365
 #, fuzzy, kde-format
 msgid "Quote characters"
 msgstr "Citavimo rašmenys"
 
 #. i18n: ectx: label, entry (ToolTipDisplayPolicy), group (MainFolderView)
-#: settings/kmail.kcfg:374
+#: settings/kmail.kcfg:378
 #, fuzzy, kde-format
 msgid "Specifies the policy used when displaying policy"
 msgstr "Nustato naudojamas taisykles, kai rodomos taisyklės"
