@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-06 00:48+0000\n"
-"PO-Revision-Date: 2026-09-21 03:59+0200\n"
+"PO-Revision-Date: 2026-10-06 04:57+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -518,19 +518,18 @@ msgstr "მიღების პარამეტრები"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "ტექსტიდან-საუბრამდე"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "მდიდარი ტექსტი"
+msgstr "საუბრიდან-ტექსტამდე"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "საუბრის ტექსტში გადაყვანის ჩართვა"
 
 #: configuredialog/configureaccountpage.cpp:55
 #, kde-format
@@ -6535,7 +6534,7 @@ msgstr "ბოლოს არჩეული საქაღალდე სა
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "საუბრის ტექსტში გადაყვანის ჩართვა"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
