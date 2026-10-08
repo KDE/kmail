@@ -14,7 +14,7 @@ Dependencies:
     'pim/kidentitymanagement' : '@same'
     'pim/kldap' : '@same'
     'pim/kmailtransport' : '@same'
-    'pim/kmime' : '@same'
+    'frameworks/kmime' : '@same'
     'pim/kontactinterface' : '@same'
     'pim/kpimtextedit' : '@same'
     'pim/ktnef' : '@same'
@@ -49,11 +49,11 @@ Dependencies:
     'frameworks/kstatusnotifieritem': 'Frameworks/6.24'
     'frameworks/kuserfeedback': 'Frameworks/6.24'
     'third-party/qtkeychain': '@latest-kf6'
-    'libraries/ktextaddons': '@latest-kf6'
+    'libraries/ktextaddons': '1.9'
 
 - 'on': ['Linux', 'FreeBSD']
   'require':
-    'plasma/plasma-activities': '@latest-kf6'
+    'plasma/plasma-activities': 'Plasma/6.6'
     'pim/akonadi-search' : '@same'
 
 
