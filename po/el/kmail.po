@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2024-09-19 17:57+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -8548,19 +8548,19 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "Προκαθορισμένη μορφή μηνύματος"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Προτίμηση &HTML από το απλό κείμενο"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Προτίμηση &απλού κειμένου αντί για HTML"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"

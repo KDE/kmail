@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KDE 4.4\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2025-07-31 22:22+0200\n"
 "Last-Translator: Kristof Kiszel <ulysses@fsf.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
@@ -8179,19 +8179,19 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "Alapértelmezett üzenetformátum"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&HTML előnyben részesítése egyszerű szöveg helyett"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "E&gyszerű szöveg előnyben részesítése a HTML-lel szemben"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"

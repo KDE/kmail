@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2024-06-05 07:03\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@gmail.com>\n"
 "Language-Team: Belarusian\n"
@@ -7805,19 +7805,19 @@ msgstr ""
 msgid "Message Default Format"
 msgstr ""
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Апрацоўваць HTML у паведамленнях"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Апрацоўваць HTML-код у паведамленнях"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, fuzzy, kde-format
 #| msgid "Use Global Setting"
 msgctxt "@action"

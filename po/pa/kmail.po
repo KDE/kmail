@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2011-06-29 22:58+0530\n"
 "Last-Translator: A S Alam <aalam@users.sf.net>\n"
 "Language-Team: Punjabi/Panjabi <punjabi-users@lists.sf.net>\n"
@@ -8404,21 +8404,21 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "ਗ਼ੈਰ-ਸੁਰੱਖਿਅਤ ਸੁਨੇਹਾ ਫਾਰਮੈਟ"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "ਪਲੇਨ ਟੈਕਸਟ ਨਾਲੋਂ &HTML"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "ਪਲੇਨ ਟੈਕਸਟ ਨਾਲੋਂ &HTML"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, fuzzy, kde-format
 #| msgid "Reset Font Settings"
 msgctxt "@action"

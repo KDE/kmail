@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2026-08-25 19:33+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -8151,19 +8151,19 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "Viestien oletusmuoto"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "Suosi &HTML:ää raakatekstin sijaan"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Suosi &raakatekstiä HTML:n sijaan"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"

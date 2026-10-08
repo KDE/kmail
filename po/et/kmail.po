@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2020-03-23 10:56+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -8712,21 +8712,21 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "Kirja vaikevormindus"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&Eelista HTML-i tavalisele tekstile"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, fuzzy, kde-format
 #| msgid "Prefer &Plain Text to HTML"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "Ee&lista tavalist teksti HTML-ile"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, fuzzy, kde-format
 #| msgid "Use Global Setting"
 msgctxt "@action"

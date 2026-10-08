@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2014-08-15 15:47+0200\n"
 "Last-Translator: Sönke Dibbern <s_dibbern@web.de>\n"
 "Language-Team: Low Saxon <kde-i18n-nds@kde.org>\n"
@@ -8842,21 +8842,21 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "Standard-Narichtenformaat"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, fuzzy, kde-format
 #| msgid "Prefer &HTML to Plain Text"
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&HTML günt Eenfachtext vörtrecken"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, fuzzy, kde-format
 #| msgid "Prefer &Plain Text to HTML"
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "&Eenfachtext günt HTML vörtrecken"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, fuzzy, kde-format
 #| msgid "Use Global Setting"
 msgctxt "@action"

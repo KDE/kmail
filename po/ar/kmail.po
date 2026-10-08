@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-05 02:45+0000\n"
+"POT-Creation-Date: 2026-10-08 02:57+0000\n"
 "PO-Revision-Date: 2026-08-10 14:11+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
@@ -8137,19 +8137,19 @@ msgstr ""
 msgid "Message Default Format"
 msgstr "نسق الرّسالة المبدئيّ"
 
-#: widgets/displaymessageformatactionmenu.cpp:26
+#: widgets/displaymessageformatactionmenu.cpp:24
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &HTML to Plain Text"
 msgstr "&فضّل HTML على النّصّ الصّرف"
 
-#: widgets/displaymessageformatactionmenu.cpp:32
+#: widgets/displaymessageformatactionmenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Prefer &Plain Text to HTML"
 msgstr "فضّل النّ&صّ الصّرف على HTML"
 
-#: widgets/displaymessageformatactionmenu.cpp:38
+#: widgets/displaymessageformatactionmenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Use Global Setting"
