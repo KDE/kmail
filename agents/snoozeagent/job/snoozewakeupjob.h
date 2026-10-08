@@ -40,6 +40,7 @@ Q_SIGNALS:
     void wakeUpFailed(const QString &error);
 
 private:
+    void slotOpenMail();
     void doStart();
     void slotItemFetchDone(KJob *job);
     void slotUnlinkDone(KJob *job);
@@ -47,5 +48,4 @@ private:
     void notifyUser();
 
     Snooze::SnoozeInfo *const mInfo;
-    Akonadi::Item mItem;
 };
