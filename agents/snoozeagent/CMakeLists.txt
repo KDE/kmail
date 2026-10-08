@@ -13,6 +13,8 @@ ecm_qt_declare_logging_category(snooze_common_SRCS HEADER snoozeagent_debug.h ID
 )
 
 set(libsnoozeagent_SRCS
+    job/showmessagejob.cpp
+    job/showmessagejob.h
     job/snoozewakeupjob.cpp
     job/snoozewakeupjob.h
     snoozeconfigurewidget.cpp
