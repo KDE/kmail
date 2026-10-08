@@ -525,21 +525,21 @@ msgid "Retrieval Options"
 msgstr "Настройки на изтеглянето"
 
 #: configuredialog/configureaccessibilitypage.cpp:28
-#, kde-format
+#, fuzzy, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "Преобразуване на текст в реч"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
 #, fuzzy, kde-format
 #| msgid "Rich Text"
 msgid "Speech to Text"
-msgstr "Форматиран текст"
+msgstr "Реч към текст"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
-#, kde-format
+#, fuzzy, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "Активиране на разпознаване на реч (Speech To Text)"
 
 #: configuredialog/configureaccountpage.cpp:55
 #, kde-format
@@ -6573,9 +6573,9 @@ msgstr "Последно избраната папка в прозореца з�
 
 #. i18n: ectx: label, entry (EnableSpeechToText), group (General)
 #: settings/kmail.kcfg:77
-#, kde-format
+#, fuzzy, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "Разрешаване на преобразуване на реч в текст"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
