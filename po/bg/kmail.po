@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-06 00:48+0000\n"
-"PO-Revision-Date: 2026-09-22 23:28+0200\n"
+"PO-Revision-Date: 2026-10-08 15:59+0200\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
 "Language: bg\n"
@@ -525,21 +525,20 @@ msgid "Retrieval Options"
 msgstr "Настройки на изтеглянето"
 
 #: configuredialog/configureaccessibilitypage.cpp:28
-#, fuzzy, kde-format
+#, kde-format
 msgid "Text to Speech"
 msgstr "Преобразуване на текст в реч"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
 msgstr "Реч към текст"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
-#, fuzzy, kde-format
+#, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr "Активиране на разпознаване на реч (Speech To Text)"
+msgstr "Активиране на разпознаване на реч"
 
 #: configuredialog/configureaccountpage.cpp:55
 #, kde-format
@@ -6573,9 +6572,9 @@ msgstr "Последно избраната папка в прозореца з�
 
 #. i18n: ectx: label, entry (EnableSpeechToText), group (General)
 #: settings/kmail.kcfg:77
-#, fuzzy, kde-format
+#, kde-format
 msgid "Enable speech to text"
-msgstr "Разрешаване на преобразуване на реч в текст"
+msgstr "Активиране на разпознаване на реч"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
