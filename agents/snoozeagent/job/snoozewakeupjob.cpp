@@ -8,6 +8,7 @@
 #include "showmessagejob.h"
 #include "snoozeagent_debug.h"
 #include "snoozeinfo.h"
+#include <KLocalizedString>
 #include <KNotification>
 
 using namespace Snooze;
