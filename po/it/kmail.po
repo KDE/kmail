@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-06 00:48+0000\n"
-"PO-Revision-Date: 2026-09-21 22:56+0200\n"
+"PO-Revision-Date: 2026-10-07 15:46+0200\n"
 "Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -524,19 +524,18 @@ msgstr "Opzioni di recupero"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "Sintesi vocale"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "Testo formattato"
+msgstr "Riconoscimento vocale"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "Abilita riconoscimento vocale"
 
 #: configuredialog/configureaccountpage.cpp:55
 #, kde-format
@@ -6605,7 +6604,7 @@ msgstr ""
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "Abilita riconoscimento vocale"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
