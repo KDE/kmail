@@ -41,7 +41,7 @@ public:
     void writeConfig(KConfigGroup &config);
     void readConfig(const KConfigGroup &config);
 
-    [[nodiscard]] bool operator==(const FolderArchiveAccountInfo &other) const;
+    [[nodiscard]] bool operator==(const FolderArchiveAccountInfo &other) const = default;
 
     [[nodiscard]] bool useDateFromMessage() const;
     void setUseDateFromMessage(bool newUseDateFromMessage);

@@ -47,7 +47,7 @@ public:
 
     [[nodiscard]] bool calledWithSession() const;
 
-    [[nodiscard]] bool operator==(const CommandLineInfo &other) const;
+    [[nodiscard]] bool operator==(const CommandLineInfo &other) const = default;
 
     void setCustomHeaders(const QStringList &newCustomHeaders);
 

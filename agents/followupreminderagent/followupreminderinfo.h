@@ -42,7 +42,7 @@ public:
     [[nodiscard]] QString subject() const;
     void setSubject(const QString &subject);
 
-    [[nodiscard]] bool operator==(const FollowUpReminderInfo &other) const;
+    [[nodiscard]] bool operator==(const FollowUpReminderInfo &other) const = default;
 
     [[nodiscard]] bool answerWasReceived() const;
     void setAnswerWasReceived(bool answerWasReceived);

@@ -92,12 +92,6 @@ void SnoozeInfo::setUniqueIdentifier(qint32 uniqueIdentifier)
     mUniqueIdentifier = uniqueIdentifier;
 }
 
-bool SnoozeInfo::operator==(const SnoozeInfo &other) const
-{
-    return mItemId == other.mItemId && mWakeUpDateTime == other.mWakeUpDateTime && mSubject == other.mSubject && mFrom == other.mFrom
-        && mUniqueIdentifier == other.mUniqueIdentifier;
-}
-
 QDebug operator<<(QDebug debug, const Snooze::SnoozeInfo &info)
 {
     debug.space() << "Item id:" << info.itemId();

@@ -96,13 +96,6 @@ void FolderArchiveAccountInfo::writeConfig(KConfigGroup &config)
     config.writeEntry("useDateFromMessage", mUseDateFromMessage);
 }
 
-bool FolderArchiveAccountInfo::operator==(const FolderArchiveAccountInfo &other) const
-{
-    return (mInstanceName == other.mInstanceName) && (mArchiveTopLevelCollectionId == other.mArchiveTopLevelCollectionId)
-        && (mArchiveType == other.mArchiveType) && (mEnabled == other.mEnabled) && (mKeepExistingStructure == other.mKeepExistingStructure)
-        && (mUseDateFromMessage == other.mUseDateFromMessage);
-}
-
 bool FolderArchiveAccountInfo::useDateFromMessage() const
 {
     return mUseDateFromMessage;

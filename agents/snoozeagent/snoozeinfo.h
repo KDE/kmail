@@ -42,7 +42,7 @@ public:
 
     void writeConfig(KConfigGroup &config, qint32 identifier);
 
-    [[nodiscard]] bool operator==(const SnoozeInfo &other) const;
+    [[nodiscard]] bool operator==(const SnoozeInfo &other) const = default;
 
 private:
     void readConfig(const KConfigGroup &config);
