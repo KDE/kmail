@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-06 00:48+0000\n"
-"PO-Revision-Date: 2026-10-06 19:58+0300\n"
+"PO-Revision-Date: 2026-10-12 11:52+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -173,7 +173,7 @@ msgstr "Ekleri isteğe bağlı olarak sıkıştırs"
 
 #: aboutdata.cpp:108
 msgid "Added spam status to fancy headers"
-msgstr "Süslü üstbilgilere istenmeyen durumu eklendi"
+msgstr "Süslü üst bilgilere istenmeyen durumu eklendi"
 
 #: aboutdata.cpp:109
 msgid "Implemented todo status handling"
@@ -334,7 +334,7 @@ msgstr "Çok sayıda IMAP hatası düzeltme"
 #: kmsystemtray.cpp:79
 #, kde-format
 msgid "KMail"
-msgstr "K Posta"
+msgstr "KMail"
 
 #: aboutdata.cpp:197
 #, kde-format
@@ -344,7 +344,7 @@ msgstr "KDE E-posta İstemcisi"
 #: aboutdata.cpp:199
 #, kde-format
 msgid "Copyright © %1, KMail authors"
-msgstr "Telif hakkı © 1997–%1, K Posta yazarları"
+msgstr "© 1997–%1, KMail yazarları"
 
 #: collectionpage/collectionmailinglistpage.cpp:40
 #, kde-format
@@ -435,7 +435,7 @@ msgstr "Kullanılabilir değil."
 #: collectionpage/collectionmailinglistpage.cpp:211
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
-msgstr "K Posta bu klasörde bir e-posta listesi bulamadı."
+msgstr "KMail bu klasörde bir e-posta listesi bulamadı."
 
 #: collectionpage/collectionmailinglistpage.cpp:214
 #, kde-format
@@ -443,7 +443,7 @@ msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
 "in the addresses by hand."
 msgstr ""
-"K Posta bu klasörde bir tam olarak bir e-posta listesi bulunamadı. Lütfen "
+"KMail bu klasörde bir tam olarak bir e-posta listesi bulunamadı. Lütfen "
 "adresleri elle doldurun."
 
 #: collectionpage/collectionquotapage.cpp:23
@@ -656,7 +656,7 @@ msgstr "Elle posta denetimini etkinleştir"
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
-msgstr "K Posta kapatılırken çevrim dışı kipe geç"
+msgstr "KMail kapatılırken çevrim dışı kipe geç"
 
 #: configuredialog/configureaccountpage.cpp:273
 #, kde-format
@@ -1075,7 +1075,7 @@ msgstr "Konu"
 #: configuredialog/configurecomposerpage.cpp:85
 #, kde-format
 msgid "Headers"
-msgstr "Üstbilgiler"
+msgstr "Üst Bilgiler"
 
 #: configuredialog/configurecomposerpage.cpp:91
 #, kde-format
@@ -1356,7 +1356,7 @@ msgstr "İletme öneki:"
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Define custom mime header fields:"
-msgstr "Özel MIME üstbilgi alanları tanımla:"
+msgstr "Özel MIME üst bilgi alanları tanımla:"
 
 #: configuredialog/configurecomposerpage.cpp:674
 #, kde-format
@@ -1399,13 +1399,13 @@ msgstr "&Değer:"
 msgid ""
 "'Content-Type' is not an authorized string. This header will be not saved."
 msgstr ""
-"“Content-Type”, izin verilen bir dizi değildir. Bu üstbilgi kaydedilmeyecek."
+"“Content-Type”, izin verilen bir dizi değildir. Bu üst bilgi kaydedilmeyecek."
 
 #: configuredialog/configurecomposerpage.cpp:837
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid header"
-msgstr "Geçersiz üstbilgi"
+msgstr "Geçersiz üst bilgi"
 
 #: configuredialog/configurecomposerpage.cpp:872
 #, kde-format
@@ -1524,7 +1524,7 @@ msgstr "Web Motoru Eklentileri"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:269
 #, kde-format
 msgid "Header Style Plugins"
-msgstr "Üstbilgi Biçem Eklentileri"
+msgstr "Üst Bilgi Biçem Eklentileri"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:278
 #, kde-format
@@ -1754,7 +1754,7 @@ msgstr "Ek listesini göster"
 #: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
 #, kde-format
 msgid "KMail2"
-msgstr "K Posta2"
+msgstr "KMail2"
 
 #: editor/kmcomposerwin.cpp:353
 #, kde-format
@@ -2100,7 +2100,7 @@ msgstr "Takip Anımsatıcısı Oluştur…"
 #: editor/kmcomposerwin.cpp:1545
 #, kde-format
 msgid "Configure KMail…"
-msgstr "K Posta Uygulamasını Yapılandır…"
+msgstr "KMail Uygulamasını Yapılandır…"
 
 #: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:222 kmreadermainwin.cpp:543
 #, kde-format
@@ -2204,14 +2204,13 @@ msgstr "İleti Gönderilemedi"
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
-msgstr ""
-"“K Adres Defteri” programı başlatılamadı. Lütfen kurulumunuzu denetleyin."
+msgstr "“KAddressbook” programı başlatılamadı. Lütfen kurulumunuzu denetleyin."
 
 #: editor/kmcomposerwin.cpp:2208 kmlaunchexternalcomponent.cpp:151
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
-msgstr "“K Adres Defteri” Başlatılamıyor"
+msgstr "“KAddressbook” Başlatılamıyor"
 
 #: editor/kmcomposerwin.cpp:2330
 #, kde-format
@@ -2235,7 +2234,7 @@ msgstr "&Ek Olarak Ekle"
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
-msgstr "K Posta"
+msgstr "KMail"
 
 #: editor/kmcomposerwin.cpp:2431 editor/kmcomposerwin.cpp:2533
 #, kde-format
@@ -3157,10 +3156,10 @@ msgid ""
 msgstr ""
 "<qt><p>Burada seçtiğiniz OpenPGP anahtarı, iletileri sayısal olarak "
 "imzalamak için kullanılacaktır. GnuPG anahtarlarını da kullanabilirsiniz.</"
-"p><p>Bunu boş bırakabilirsiniz; ancak K Posta, OpenPGP kullanarak e-"
-"postaları sayısal olarak imzalayamaz; normal posta işlevleri "
-"etkilenmeyecektir.</p><p>Anahtarlar hakkında daha fazla bilgiyi <a>https://"
-"www.gnupg.org</a></p></qt> adresinde bulabilirsiniz."
+"p><p>Bunu boş bırakabilirsiniz; ancak KMail, OpenPGP kullanarak e-postaları "
+"sayısal olarak imzalayamaz; normal posta işlevleri etkilenmeyecektir.</"
+"p><p>Anahtarlar hakkında daha fazla bilgiyi <a>https://www.gnupg.org</a></"
+"p></qt> adresinde bulabilirsiniz."
 
 #: identity/identitydialog.cpp:463
 #, kde-format
@@ -3197,7 +3196,7 @@ msgstr ""
 "<qt><p>Kendinizi şifrelemek ve oluşturucuda “Genel Anahtarımı İliştir” "
 "özelliğini kullanmak için OpenPGP anahtarını seçin. Ayrıca GnuPG "
 "anahtarlarını da kullanabilirsiniz.</p><p>Bu alanı boş bırakabilirsiniz; "
-"ancak K Posta giden iletilerinizi şifreleyemeyecektir. Bu durumdan normal "
+"ancak KMail giden iletilerinizi şifreleyemeyecektir. Bu durumdan normal "
 "ileti gönderme süreci etkilenmez.</p><p>Anahtarlar hakkında daha geniş "
 "bilgiyi <a>https://www.gnupg.org</a> adresinden edinebilirsiniz</p>.</qt>"
 
@@ -3217,7 +3216,7 @@ msgid ""
 msgstr ""
 "<qt><p>Burada seçtiğiniz S/MIME (X.509) sertifikası, iletileri sayısal "
 "olarak imzalamak için kullanılacaktır.</p><p>Bunu boş bırakabilirsiniz; "
-"ancak K Posta, S/MIME kullanarak e-postaları sayısal olarak imzalayamaz; "
+"ancak KMail, S/MIME kullanarak e-postaları sayısal olarak imzalayamaz; "
 "normal posta işlevleri etkilenmeyecektir.</p></qt>"
 
 #: identity/identitydialog.cpp:525
@@ -3237,7 +3236,7 @@ msgid ""
 msgstr ""
 "<qt><p>Burada seçtiğiniz S/MIME sertifikası, iletileri kendinize şifrelemek "
 "ve oluşturucudaki “Sertifikamı İliştir” özelliği için kullanılacaktır.</"
-"p><p>Bunu boş bırakabilirsiniz; ancak K Posta, S/MIME kullanarak size giden "
+"p><p>Bunu boş bırakabilirsiniz; ancak KMail, S/MIME kullanarak size giden "
 "iletilerin kopyalarını şifreleyemez; normal posta işlevleri "
 "etkilenmeyecektir.</p></qt>"
 
@@ -3327,8 +3326,8 @@ msgid ""
 "email in the <tt>From:</tt> field, but any responses to go to a group "
 "address.</p><p>If in doubt, leave this field blank.</p></qt>"
 msgstr ""
-"<qt><h3>Adreslere Yanıtla</h3><p>Bu<tt>Yanıtla:</tt> üstbilgilerini farklı e-"
-"posta adresleri içeren biçimden normal <tt>Kimden:</tt> adresleri biçimine "
+"<qt><h3>Adreslere Yanıtla</h3><p>Bu<tt>Yanıtla:</tt> üst bilgilerini farklı "
+"e-posta adresleri içeren biçimden normal <tt>Kimden:</tt> adresleri biçimine "
 "dönüştürür.</p><p>Bu benzer rolleri olan insanlarla birlikte çalışılan grup "
 "çalışmalarında kullanışlıdır. Örneğin, <tt>Kimden</tt> alanında kendi e-"
 "posta adresiniz olan fakat grup adresinden yanıt alamadığınız tüm iletileri "
@@ -3784,23 +3783,22 @@ msgstr "Bir görsel gönderilmeyecek."
 #: identity/xfaceconfigurator.cpp:128
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
-msgstr "K Posta, Yüz üstbilgisi üzerinden renkli bir görsel gönderecektir."
+msgstr "KMail, Yüz üst bilgisi üzerinden renkli bir görsel gönderecektir."
 
 #: identity/xfaceconfigurator.cpp:131
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
-msgstr ""
-"K Posta, Yüz üstbilgisi üzerinden siyah-beyaz bir görsel gönderecektir."
+msgstr "KMail, Yüz üst bilgisi üzerinden siyah-beyaz bir görsel gönderecektir."
 
 #: identity/xfaceconfigurator.cpp:134
 #, kde-format
 msgid "KMail will send both a colored and a black-and-white image."
-msgstr "K Posta, hem renkli hem siyah-beyaz bir görsel gönderecektir."
+msgstr "KMail, hem renkli hem siyah-beyaz bir görsel gönderecektir."
 
 #: identity/xfaceconfigurator.cpp:170
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
-msgstr "Üstbilgiye sığması için görsel boyutu azaltılamadı."
+msgstr "Üst bilgiye sığması için görsel boyutu azaltılamadı."
 
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
@@ -3808,7 +3806,7 @@ msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
 "better compression results."
 msgstr ""
-"Görsel boyutu üstbilgiye sığacak biçimde azaltılamadı. Daha iyi sıkıştırma "
+"Görsel boyutu üst bilgiye sığacak biçimde azaltılamadı. Daha iyi sıkıştırma "
 "sonuçları elde etmek için pngquant kurun."
 
 #: identity/xfaceconfigurator.cpp:180
@@ -4028,7 +4026,7 @@ msgstr "Yanıt adresini “adres” olarak ayarla"
 #, kde-format
 msgctxt "@info:shell"
 msgid "Add 'header' to message. This can be repeated"
-msgstr "İletiye bir “üstbilgi” ekle. Bu, yinelenebilirdir"
+msgstr "İletiye bir “üst bilgi” ekle. Bu, yinelenebilirdir"
 
 #: kmail_options.h:22
 #, kde-format
@@ -4347,7 +4345,7 @@ msgstr "Metin Yönü Araç Çubuğu"
 #: kmkernel.cpp:636
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
-msgstr "K Posta çevrim dışı olarak ayarlanmış; tüm ağ işleri beklemede"
+msgstr "KMail çevrim dışı olarak ayarlanmış; tüm ağ işleri beklemede"
 
 #: kmkernel.cpp:653 kmmainwidget.cpp:2518 kmmainwidget.cpp:2529
 #, kde-format
@@ -4362,7 +4360,7 @@ msgstr "E-posta gönderimi olanaksız"
 #: kmkernel.cpp:677
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
-msgstr "K Posta çevrim içi olarak ayarlandı; tüm ağ işlemleri sürdürülüyor"
+msgstr "KMail çevrim içi olarak ayarlandı; tüm ağ işlemleri sürdürülüyor"
 
 #: kmkernel.cpp:679
 #, kde-format
@@ -4370,14 +4368,14 @@ msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
 "connection is detected"
 msgstr ""
-"K Posta çevrim içi olarak ayarlandı; ağ bağlantısı tespit edildiğinde tüm ağ "
+"KMail çevrim içi olarak ayarlandı; ağ bağlantısı tespit edildiğinde tüm ağ "
 "işlemlerini sürdürülecek"
 
 #: kmkernel.cpp:749
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr ""
-"K Posta şu anda çevrim dışı çalışıyor. İşlemi nasıl gerçekleştirmek "
+"KMail şu anda çevrim dışı çalışıyor. İşlemi nasıl gerçekleştirmek "
 "istiyorsunuz?"
 
 #: kmkernel.cpp:751
@@ -4503,7 +4501,7 @@ msgstr ""
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
-msgstr "K Posta Hatası"
+msgstr "KMail Hatası"
 
 #: kmlaunchexternalcomponent.cpp:98 kmlaunchexternalcomponent.cpp:106
 #, kde-format
@@ -5409,7 +5407,7 @@ msgstr "&Bildirimleri Yapılandır…"
 #: kmmainwidget.cpp:3499
 #, kde-format
 msgid "&Configure KMail…"
-msgstr "&K Posta Uygulamasını Yapılandır…"
+msgstr "&KMail Uygulamasını Yapılandır…"
 
 #: kmmainwidget.cpp:3506
 #, kde-format
@@ -5435,7 +5433,7 @@ msgstr "Bu Klasöre ve Tüm Alt Klasörlerine Süzgeçleri Uygula"
 #: kmmainwidget.cpp:3544
 #, kde-format
 msgid "Import/Export KMail Data…"
-msgstr "K Posta Verisi İçe/Dışa Aktar…"
+msgstr "KMail Verisi İçe/Dışa Aktar…"
 
 #: kmmainwidget.cpp:3550
 #, kde-format
@@ -5674,7 +5672,7 @@ msgstr ""
 "Gelen, Gönderilen ve Taslaklar klasörlerinin birleşik bir görünümünü sunmak "
 "için Birleşik Posta Kutusu seçeneğini etkinleştirmek ister misiniz?\n"
 "Birleşik posta kutuları oluşturabilir, özel kutular yaratabilir\n"
-"veya özelliği K Posta’nın Eklentiler ayarlarından tümüyle kapatabilirsiniz."
+"veya özelliği KMail’in Eklentiler ayarlarından tümüyle kapatabilirsiniz."
 
 #: kmmainwidget.cpp:5066
 #, kde-format
@@ -5859,7 +5857,7 @@ msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
 "a> to go online . . .</p>"
 msgstr ""
-"K Posta şu anda çevrim dışı kipte çalışıyor. Çevrim içi kipe geçmek için <a "
+"KMail şu anda çevrim dışı kipte çalışıyor. Çevrim içi kipe geçmek için <a "
 "href=\"kmail:goOnline\">buraya</a> tıklayın…</p>"
 
 #: kmreaderwin.cpp:293
@@ -6009,7 +6007,7 @@ msgstr "&Özet Görünümünü Yapılandır…"
 #: kontactplugin/summary/summaryview_plugin.cpp:101
 #, kde-format
 msgid "Kontact Summary"
-msgstr "Kontak Özeti"
+msgstr "Kontact Özeti"
 
 #: kontactplugin/summary/summaryview_part.cpp:60
 #, kde-format
@@ -6051,12 +6049,12 @@ msgstr "Tümü"
 #: kontactplugin/summary/summaryview_plugin.cpp:103
 #, kde-format
 msgid "Kontact Summary View"
-msgstr "Kontak Özet Görünümü"
+msgstr "Kontact Özet Görünümü"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:105
 #, kde-format
 msgid "© 2003-2025 The Kontact developers"
-msgstr "© 2003–2025 Kontak geliştiricileri"
+msgstr "© 2003–2025 Kontact geliştiricileri"
 
 #: kontactplugin/summary/summaryview_plugin.cpp:107
 #, kde-format
@@ -6519,7 +6517,7 @@ msgid ""
 "manual or all mail checks, or whether you do not want messages to be sent "
 "automatically at all. </p></qt>"
 msgstr ""
-"<qt><p>K Posta’nın giden kutusundaki bütün iletileri elle veya tüm posta "
+"<qt><p>KMail’in giden kutusundaki bütün iletileri elle veya tüm posta "
 "denetiminde göndermesini ya da iletilerin hiçbir şekilde kendiliğinden "
 "gönderilmemesini ayarlayabilirsiniz.</p></qt>"
 
@@ -6616,7 +6614,7 @@ msgid ""
 "This value is used to decide whether the KMail Introduction should be "
 "displayed."
 msgstr ""
-"Bu değer, K Posta tanıtımının görüntülenip görüntülenmeyeceğine karar vermek "
+"Bu değer, KMail tanıtımının görüntülenip görüntülenmeyeceğine karar vermek "
 "için kullanılır."
 
 #. i18n: ectx: label, entry (EnableFolderQuickSearch), group (UserInterface)
@@ -6646,7 +6644,7 @@ msgid ""
 "ask for a confirmation before sending the mail. The warning can be turned "
 "off."
 msgstr ""
-"Alıcı sayısı bu değerden daha büyük ise K Posta, postayı göndermeden önce "
+"Alıcı sayısı bu değerden daha büyük ise KMail, postayı göndermeden önce "
 "uyarı verecek ve bir onay isteyecektir. Uyarı iletisi kapatılabilir."
 
 #. i18n: ectx: label, entry (ConfirmBeforeSend), group (Composer)
@@ -6677,12 +6675,11 @@ msgid ""
 "a per-message basis in the composer, menu item <em>Options</em>→<em>Request "
 "Disposition Notification</em>.</p></qt>"
 msgstr ""
-"<qt><p>K Posta’nın giden her iletiniz için İleti Durum Bildirimleri "
-"(MDN’ler) göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu "
-"seçenek yalnızca öntanımlıları etkiler; düzenleyici ekranında her ileti için "
-"MDN isteğini etkin veya devre dışı yapabilirsiniz, bunun için "
-"<em>Seçenekler</em> → <em>Durum Bildirimi İste</em> menü ögesini seçin.</p></"
-"qt>"
+"<qt><p>KMail’in giden her iletiniz için İleti Durum Bildirimleri (MDN’ler) "
+"göndermesini istiyorsanız bu seçeneği etkinleştirin.</p><p>Bu seçenek "
+"yalnızca öntanımlıları etkiler; düzenleyici ekranında her ileti için MDN "
+"isteğini etkin veya devre dışı yapabilirsiniz, bunun için <em>Seçenekler</"
+"em> → <em>Durum Bildirimi İste</em> menü ögesini seçin.</p></qt>"
 
 #. i18n: ectx: label, entry (AutosaveInterval), group (Composer)
 #: settings/kmail.kcfg:234
@@ -7500,11 +7497,11 @@ msgstr ""
 "görüntülemek, ileti içindeki bazı biçim özelliklerinin kaybolmasına neden "
 "olurken güvenlik açısından neredeyse tam <em>güvenilir</em> bir ortam sunar."
 "</p><p>Aşağıdaki seçenek HTML iletilerinin bilinen kötüye kullanımlarına "
-"karşı savunma sağlayacaktır; ancak K Posta yazıldığında var olduğu "
-"bilinmeyen güvenlik sorunlarına karşı savunmasızdır.</p><p>Bu nedenle e-"
-"postaları düz metin yerine HTML olarak <em>görüntülememeyi</em> öneriyoruz.</"
-"p><p><b>Not:</b> Bu seçeneği klasör bazında K Posta’nın ana penceresindeki "
-"<i>Klasör</i> menüsünden ayarlayabilirsiniz.</p></qt>"
+"karşı savunma sağlayacaktır; ancak KMail yazıldığında var olduğu bilinmeyen "
+"güvenlik sorunlarına karşı savunmasızdır.</p><p>Bu nedenle e-postaları düz "
+"metin yerine HTML olarak <em>görüntülememeyi</em> öneriyoruz.</p><p><b>Not:</"
+"b> Bu seçeneği klasör bazında KMail’in ana penceresindeki <i>Klasör</i> "
+"menüsünden ayarlayabilirsiniz.</p></qt>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mHtmlMailCheck)
 #: ui/securitypagegeneraltab.ui:48
@@ -7530,7 +7527,7 @@ msgstr ""
 "okuduğunuzu öğrenmek için reklâm verenler tarafından yerleştirilmiş "
 "başvurular (“ağ böcekleri”) içerebilir. </p><p>Bunun gibi görselleri "
 "İnternet’ten yüklemek için geçerli hiçbir neden yoktur; çünkü gönderen kişi "
-"her zaman ilgili görselleri iletiye doğrudan ekleyebilir.</p><p>K Posta’nın "
+"her zaman ilgili görselleri iletiye doğrudan ekleyebilir.</p><p>KMail’in "
 "HTML görüntüleme özelliğinin bu şekilde yanlış kullanılmasına karşı önlem "
 "olarak, bu özellik öntanımlı olarak <em>devre dışı</em> kılınmıştır.</"
 "p><p>İsterseniz HTML iletilerine eklenmemiş görsellerin görüntülenmesini "
@@ -7562,7 +7559,7 @@ msgid ""
 "KMail can analyze messages for suspected email scams by looking for common "
 "techniques used to deceive you"
 msgstr ""
-"K Posta, sizi aldatmaya yönelik ortak yöntemleri arayarak kuşkulu e-posta "
+"KMail, sizi aldatmaya yönelik ortak yöntemleri arayarak kuşkulu e-posta "
 "dolandırıcılarına karşı iletileri inceleyebilir."
 
 #. i18n: ectx: property (text), widget (QCheckBox, mScamDetection)
@@ -7727,7 +7724,7 @@ msgstr "Tüm ileti"
 #: ui/securitypagemdntab.ui:119
 #, kde-format
 msgid "Only headers"
-msgstr "Yalnızca üstbilgiler"
+msgstr "Yalnızca üst bilgiler"
 
 #. i18n: ectx: property (text), widget (QCheckBox, mNoMDNsWhenEncryptedCheck)
 #: ui/securitypagemdntab.ui:142
@@ -8040,8 +8037,8 @@ msgid ""
 "message. For example, this could be a picture of you or a glyph. It is shown "
 "in the recipient's mail client (if supported)."
 msgstr ""
-"K Posta, her bir ileti ile küçük (48 × 48 piksel) ve düşük kalitede bir "
-"resim gönderebilir. Örneğin, bu sizin veya bir sembolün resmi olabilir. "
+"KMail, her bir ileti ile küçük (48 × 48 piksel) ve düşük kalitede bir resim "
+"gönderebilir. Örneğin, bu sizin veya bir sembolün resmi olabilir. "
 "Destekleniyorsa alıcının e-posta istemcisinde görüntülenir."
 
 #. i18n: ectx: property (text), widget (QLabel, modeInfo)
@@ -8084,7 +8081,7 @@ msgstr "Hesap Bilgisi"
 #, kde-format
 msgid "Number and type of accounts configured in KMail (receiver and sender)."
 msgstr ""
-"K Posta içinde yapılandırılan hesap sayısı ve hesap türleri (gönderici ve "
+"KMail içinde yapılandırılan hesap sayısı ve hesap türleri (gönderici ve "
 "alıcı)."
 
 #: userfeedback/plugininfosource.cpp:20
@@ -8095,7 +8092,7 @@ msgstr "Eklentiler Bilgisi"
 #: userfeedback/plugininfosource.cpp:25
 #, kde-format
 msgid "Plugins used in KMail."
-msgstr "K Posta’da kullanılan eklentiler."
+msgstr "KMail’de kullanılan eklentiler."
 
 #: util.cpp:35
 #, kde-format
