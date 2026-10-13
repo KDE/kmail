@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-08 02:57+0000\n"
-"PO-Revision-Date: 2026-06-25 18:50+0300\n"
+"PO-Revision-Date: 2026-10-12 11:52+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 26.04.2\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1059,7 +1059,7 @@ msgstr "Konu"
 #: configuredialog/configurecomposerpage.cpp:88
 #, kde-format
 msgid "Headers"
-msgstr "Üstbilgiler"
+msgstr "Üst Bilgiler"
 
 #: configuredialog/configurecomposerpage.cpp:94
 #, kde-format
@@ -1508,7 +1508,7 @@ msgstr "Web Motoru Eklentileri"
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:267
 #, kde-format
 msgid "Header Style Plugins"
-msgstr "Üstbilgi Biçem Eklentileri"
+msgstr "Üst Bilgi Biçem Eklentileri"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:276
 #, kde-format
@@ -3778,7 +3778,7 @@ msgstr "K Posta, hem renkli hem siyah-beyaz bir görsel gönderecektir."
 #: identity/xfaceconfigurator.cpp:172
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
-msgstr "Üstbilgiye sığması için görsel boyutu azaltılamadı."
+msgstr "Üst bilgiye sığması için görsel boyutu azaltılamadı."
 
 #: identity/xfaceconfigurator.cpp:174
 #, kde-format
