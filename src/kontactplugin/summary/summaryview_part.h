@@ -33,7 +33,7 @@ class SummaryViewPart : public KParts::Part
     Q_OBJECT
 
 public:
-    SummaryViewPart(KontactInterface::Core *core, QObject *parent = nullptr);
+    explicit SummaryViewPart(KontactInterface::Core *core, QObject *parent = nullptr);
     ~SummaryViewPart() override;
 
 public Q_SLOTS:
