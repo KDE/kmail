@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-08 02:57+0000\n"
-"PO-Revision-Date: 2026-06-25 05:54+0200\n"
+"PO-Revision-Date: 2026-10-13 14:57+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -4599,13 +4599,13 @@ msgstr "&ვადა"
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
-msgstr "ნაგვის დაცარიელება"
+msgstr "ნაგვის ყუთის დაცარიელება"
 
 #: kmmainwidget.cpp:1541
 #, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
-msgstr "ნაგავში გადატანა"
+msgstr "ნაგვის ყუთში გადატანა"
 
 #: kmmainwidget.cpp:1542
 #, kde-format
@@ -5704,7 +5704,7 @@ msgstr "&სანაგვე ყუთში გადატანა"
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
-msgstr "ნაგავი"
+msgstr "ნაგვის ყუთი"
 
 #: kmreadermainwin.cpp:504
 #, kde-format
@@ -8036,7 +8036,7 @@ msgstr "<b>სათაური:</b> %1"
 #: undostack.cpp:42
 #, kde-format
 msgid "Move To Trash"
-msgstr "ნაგავში გადატანა"
+msgstr "ნაგვის ყუთში გადატანა"
 
 #: undostack.cpp:42
 #, kde-format
@@ -8113,7 +8113,7 @@ msgstr "წაშლა"
 #: util.cpp:190
 #, kde-format
 msgid "Move to Trash"
-msgstr "ნაგავში გადატანა"
+msgstr "ნაგვის ყუთში გადატანა"
 
 #: util.cpp:199
 #, kde-format
