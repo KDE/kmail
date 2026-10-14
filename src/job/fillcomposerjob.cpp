@@ -57,7 +57,8 @@ void FillComposerJob::start()
 void FillComposerJob::slotOpenComposer()
 {
     KMail::Composer::TemplateContext context = KMail::Composer::TemplateContext::New;
-    KMime::Content *msgPart = nullptr;
+    std::unique_ptr<KMime::Content> msgPart;
+
     bool iCalAutoSend = false;
     bool noWordWrap = false;
     bool isICalInvitation = false;
@@ -80,7 +81,7 @@ void FillComposerJob::slotOpenComposer()
             noWordWrap = true; // we shouldn't word wrap inline invitations
         } else {
             // Just do what we're told to do
-            msgPart = new KMime::Content;
+            msgPart.reset(new KMime::Content);
             msgPart->contentTransferEncoding()->fromUnicodeString(QLatin1StringView(mSettings.mAttachCte));
             msgPart->setBody(mSettings.mAttachData); // TODO: check if was setBodyEncoded
             auto ct = msgPart->contentType(); // Create
@@ -114,7 +115,7 @@ void FillComposerJob::slotOpenComposer()
         cWin->disableWordWrap();
     }
     if (msgPart) {
-        cWin->addAttach(msgPart);
+        cWin->addAttach(msgPart.get());
     }
     if (isICalInvitation) {
         cWin->disableWordWrap();
