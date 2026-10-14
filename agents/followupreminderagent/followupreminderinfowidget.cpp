@@ -10,15 +10,18 @@
 #include "followupreminderutil.h"
 #include "jobs/followupremindershowmessagejob.h"
 
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KSharedConfig>
+#include <QCursor>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
 #include <QKeyEvent>
 #include <QLocale>
 #include <QMenu>
+#include <QRegularExpression>
 #include <QTreeWidget>
 
 using namespace Qt::Literals::StringLiterals;

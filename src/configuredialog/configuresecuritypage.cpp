@@ -15,6 +15,8 @@ using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include <WebEngineViewer/CheckPhishingUrlCache>
 
 #include "kmkernel.h"
+#include "ui_securitypageencryptiontab.h"
+#include "ui_smimeconfiguration.h"
 
 #include <Libkleo/KeyRequester>
 #include <Libkleo/KeySelectionDialog>

@@ -9,16 +9,15 @@
 #include "folderarchivecache.h"
 #include "folderarchiveutil.h"
 
-#include <Akonadi/AgentManager>
+#include <Akonadi/AgentInstance>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/ItemFetchJob>
-#include <Akonadi/ItemFetchScope>
 
 #include "kmail_debug.h"
+#include <KConfig>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KNotification>
-#include <KSharedConfig>
 
 #include <QRegularExpression>
 using namespace Qt::Literals::StringLiterals;

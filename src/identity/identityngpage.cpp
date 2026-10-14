@@ -11,7 +11,6 @@
 
 #include "identityngpage.h"
 #include "config-kmail.h"
-#include "kmail_debug.h"
 
 #include "identitydialog.h"
 #include "identitytreengwidget.h"
@@ -28,8 +27,7 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QMenu>
-
-#include <QTreeWidgetItem>
+#include <QPointer>
 
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"

@@ -7,8 +7,8 @@
 #pragma once
 
 #include <Akonadi/Tag>
+#include <MailCommon/Tag>
 #include <QObject>
-#include <mailcommon/tag.h>
 namespace Akonadi
 {
 class Monitor;

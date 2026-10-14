@@ -9,8 +9,8 @@
 #pragma once
 
 class QByteArray;
-class QString;
 #include <QObject>
+#include <QStringList>
 
 namespace KMail
 {

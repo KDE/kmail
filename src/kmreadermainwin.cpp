@@ -29,8 +29,8 @@
 #include <KEditToolBar>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KMime/Message>
 #include <KStandardAction>
-#include <KStandardShortcut>
 #include <KToolBar>
 #include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
@@ -40,9 +40,9 @@
 #include <QAction>
 #include <QMenu>
 #include <QMenuBar>
+#include <QModelIndex>
 #include <QStatusBar>
 #include <QUrl>
-#include <TemplateParser/CustomTemplatesMenu>
 
 #include "tag/tagactionmanager.h"
 #include "tag/tagselectdialog.h"

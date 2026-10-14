@@ -7,8 +7,6 @@
 #include "kmcomposerupdatetemplatejob.h"
 #include "kmkernel.h"
 
-#include <MessageComposer/ComposerJob>
-#include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 
 KMComposerUpdateTemplateJob::KMComposerUpdateTemplateJob(QObject *parent)

@@ -25,20 +25,26 @@
 #include <KActionCollection>
 #include <KConfigGui>
 #include <KEditToolBar>
+#include <KHamburgerMenu>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KStandardAction>
+#include <KToggleFullScreenAction>
 #include <KXMLGUIFactory>
 #include <QMenuBar>
 
+#include <QDate>
+#include <QFontDatabase>
 #include <QLabel>
+#include <QMenu>
+#include <QPointer>
+#include <QToolButton>
 #include <QVBoxLayout>
 
 // signal handler for SIGINT & SIGTERM
 #ifdef Q_OS_UNIX
 #include <KSignalHandler>
 #include <csignal>
-#include <unistd.h>
 #endif
 
 #include <chrono>

@@ -7,6 +7,7 @@
 #pragma once
 
 #include <KMessageWidget>
+#include <QStringList>
 
 namespace KMail
 {

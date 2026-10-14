@@ -12,18 +12,16 @@
 
 #include "dialog/addemailtoexistingcontactdialog.h"
 #include "job/addemailtoexistingcontactjob.h"
-#include "kmmainwidget.h"
+#include "kmkernel.h"
 #include "kmreadermainwin.h"
 #include <MailCommon/MailKernel>
 
-#include "kmail-version.h"
 #include "kmcommands.h"
 #include <Akonadi/AddEmailAddressJob>
 #include <Akonadi/AddEmailDisplayJob>
+#include <Akonadi/MDNStateAttribute>
 #include <Akonadi/OpenEmailAddressJob>
 #include <KEmailAddress>
-#include <MessageViewer/CSSHelper>
-#include <MessageViewer/HeaderStrategy>
 #include <MessageViewer/MarkMessageReadHandler>
 #include <MessageViewer/MessageViewerSettings>
 #include <PimCommon/BroadcastStatus>
@@ -32,8 +30,6 @@ using MessageViewer::CSSHelper;
 #include "util.h"
 #include <Akonadi/MessageFlags>
 #include <KMime/MDN>
-#include <MessageCore/StringUtil>
-#include <QCryptographicHash>
 
 using namespace MessageViewer;
 #include <MessageCore/MessageCoreSettings>
@@ -41,9 +37,7 @@ using namespace MessageViewer;
 #include <MessageComposer/ComposerJob>
 #include <MessageComposer/InfoPart>
 #include <MessageComposer/MDNWarningWidgetJob>
-#include <MessageComposer/MessageSender>
 #include <MessageComposer/TextPart>
-#include <MessageViewer/AttachmentStrategy>
 
 #include <KJobUiDelegate>
 
@@ -54,10 +48,13 @@ using namespace MessageViewer;
 #include <KActionCollection>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KStandardShortcut>
 #include <KToggleAction>
 #include <QAction>
+#include <QApplication>
 #include <QDesktopServices>
 #include <QMenu>
+#include <QPointer>
 #include <QUrl>
 
 #include <QClipboard>
@@ -69,7 +66,6 @@ using namespace MessageViewer;
 #include <MailCommon/MDNWarningJob>
 #include <MailCommon/MailUtil>
 
-#include <KLazyLocalizedString>
 using namespace Qt::Literals::StringLiterals;
 
 using namespace KMail;

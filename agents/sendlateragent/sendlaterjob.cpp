@@ -10,11 +10,9 @@
 #include <MessageComposer/DraftStatus>
 #include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/Util>
-#include <MessageCore/StringUtil>
 
 #include <Akonadi/SentBehaviourAttribute>
 #include <Akonadi/TransportAttribute>
-#include <MailTransport/Transport>
 #include <MailTransport/TransportManager>
 
 #include <Akonadi/ItemDeleteJob>
@@ -22,6 +20,7 @@
 
 #include "sendlateragent_debug.h"
 #include <KLocalizedString>
+#include <KMime/Message>
 #include <KNotification>
 using namespace Qt::Literals::StringLiterals;
 

@@ -14,11 +14,6 @@
 #include <KMime/Message>
 #include <QUrl>
 
-namespace KMime
-{
-class Content;
-}
-
 namespace KMail
 {
 class KMAIL_EXPORT Composer : public KMail::SecondaryWindow

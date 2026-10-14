@@ -11,7 +11,6 @@
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
 #include <KLocalizedString>
-#include <KMessageBox>
 #include <Libkdepim/ProgressManager>
 
 ClearCacheJobInFolderAndSubFolderJob::ClearCacheJobInFolderAndSubFolderJob(QObject *parent, QWidget *parentWidget)

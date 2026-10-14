@@ -9,10 +9,7 @@
 
 #include "kmmainwidget.h"
 #include "unityservicemanager.h"
-#include <Akonadi/NewMailNotifierAttribute>
-#include <MailCommon/FolderTreeView>
-#include <MailCommon/MailKernel>
-#include <MailCommon/MailUtil>
+#include <Akonadi/Collection>
 
 #include <KLocalizedString>
 #include <KWindowSystem>
@@ -28,8 +25,6 @@
 #include <KX11Extras>
 #endif
 using namespace Qt::Literals::StringLiterals;
-
-using namespace MailCommon;
 
 /**
  * Construct a KSystemTray icon to be displayed when new mail

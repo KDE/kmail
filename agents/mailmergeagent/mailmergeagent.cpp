@@ -10,11 +10,7 @@
 #include "mailmergeagentsettings.h"
 #include "mailmergeconfiguredialog.h"
 #include "mailmergemanager.h"
-#include <Akonadi/AgentInstance>
-#include <Akonadi/AgentManager>
-#include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>

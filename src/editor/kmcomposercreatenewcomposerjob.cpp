@@ -8,7 +8,6 @@
 #include "editor/kmcomposerwin.h"
 #include "kmkernel.h"
 
-#include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
 #include <TemplateParser/TemplateParserJob>
 

@@ -10,9 +10,11 @@
 #include "kmmainwidget.h"
 #include <Akonadi/CollectionDeleteJob>
 #include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
 #include <KGuiItem>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KMime/Message>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 

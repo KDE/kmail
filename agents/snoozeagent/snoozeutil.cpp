@@ -8,7 +8,6 @@
 #include "snoozeagentsettings.h"
 #include "snoozeinfo.h"
 #include <Akonadi/ServerManager>
-#include <KConfigGroup>
 #include <QDBusInterface>
 using namespace Qt::Literals::StringLiterals;
 using namespace Snooze;

@@ -6,15 +6,19 @@
 
 #pragma once
 
-#include <MailCommon/FolderSettings>
+#include <Akonadi/Collection>
+#include <QHash>
 #include <QObject>
 #include <QPointer>
-
-#include <Libkdepim/ProgressManager>
+#include <QStringList>
 
 namespace Akonadi
 {
 class CollectionPropertiesDialog;
+}
+namespace KPIM
+{
+class ProgressItem;
 }
 
 class KJob;

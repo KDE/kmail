@@ -10,7 +10,6 @@
 #include "kmkernel.h"
 #include <KEmailAddress>
 #include <MailCommon/MailUtil>
-#include <MessageComposer/ComposerJob>
 
 CreateReplyMessageJob::CreateReplyMessageJob(QObject *parent)
     : QObject(parent)

@@ -8,7 +8,6 @@
 
 #include <Akonadi/AgentConfigurationBase>
 #include <Akonadi/Item>
-#include <QDialog>
 class SendLaterWidget;
 class SendLaterInfoConfigWidget : public Akonadi::AgentConfigurationBase
 {

@@ -8,7 +8,6 @@
 */
 #pragma once
 
-#include <kparts/part.h>
 #include <kparts/readonlypart.h>
 
 class QWidget;

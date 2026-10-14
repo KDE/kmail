@@ -6,6 +6,7 @@
 
 #include "kmsieveimappasswordprovider.h"
 #include "kmail_debug.h"
+#include <qt6keychain/keychain.h>
 using namespace QKeychain;
 using namespace Qt::Literals::StringLiterals;
 

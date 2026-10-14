@@ -9,9 +9,13 @@
 #include "kmail_private_export.h"
 #include <Akonadi/Item>
 #include <KMime/Message>
-#include <MessageComposer/MessageFactoryNG>
 #include <QObject>
 #include <QUrl>
+
+namespace MessageComposer
+{
+class MessageFactoryNG;
+}
 
 struct KMAILTESTS_TESTS_EXPORT CreateForwardMessageJobSettings {
     QUrl url;

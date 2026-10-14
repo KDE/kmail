@@ -4,7 +4,6 @@
 #include "config-kmail.h"
 #include <MailCommon/MailInterfaces>
 
-#include <QDBusObjectPath>
 #include <QList>
 #include <QObject>
 #include <QPointer>
@@ -41,11 +40,6 @@ class IndexedItems;
 }
 }
 #endif
-namespace KIO
-{
-class Job;
-}
-
 namespace MessageComposer
 {
 class MessageSender;
@@ -78,7 +72,6 @@ class IdentityManager;
 
 namespace MailCommon
 {
-class Kernel;
 class FolderSettings;
 class FolderCollectionMonitor;
 class JobScheduler;
@@ -100,6 +93,7 @@ class KeyCache;
 }
 
 class QTimer;
+class QWindow;
 class KMainWindow;
 class KMMainWidget;
 class ConfigureDialog;

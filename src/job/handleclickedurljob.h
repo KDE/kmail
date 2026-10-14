@@ -10,6 +10,13 @@
 #include <MailCommon/FolderSettings>
 #include <QObject>
 #include <QSharedPointer>
+#include <QUrl>
+#include <memory>
+
+namespace KMime
+{
+class Message;
+}
 
 class KMAILTESTS_TESTS_EXPORT HandleClickedUrlJob : public QObject
 {

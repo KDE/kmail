@@ -6,12 +6,12 @@
 #pragma once
 
 #include <Akonadi/Collection>
-#include <KConfigGroup>
 #include <MailCommon/BackupJob>
 #include <QDate>
 #include <QUrl>
 
 class QDebug;
+class KConfigGroup;
 class ArchiveMailInfo
 {
     Q_GADGET

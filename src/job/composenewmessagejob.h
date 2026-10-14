@@ -6,9 +6,16 @@
 
 #pragma once
 
+#include <Akonadi/Item>
 #include <MailCommon/FolderSettings>
 #include <QObject>
 #include <QSharedPointer>
+#include <memory>
+
+namespace KMime
+{
+class Message;
+}
 
 class ComposeNewMessageJob : public QObject
 {

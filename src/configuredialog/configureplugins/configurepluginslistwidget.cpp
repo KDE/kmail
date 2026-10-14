@@ -10,7 +10,6 @@
 #include "kmail_debug.h"
 #include <Akonadi/ServerManager>
 #include <KLocalizedString>
-#include <KSharedConfig>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
 #include <MessageComposer/PluginEditorConvertText>
 #include <MessageComposer/PluginEditorConvertTextManager>
@@ -22,11 +21,11 @@
 #include <MessageViewer/MessageViewerCheckBeforeDeletingPluginManager>
 #include <MessageViewer/ViewerPluginManager>
 #include <PimCommon/CustomToolsPlugin>
-#include <PimCommon/GenericPluginManager>
 #include <WebEngineViewer/NetworkUrlInterceptorPluginManager>
 
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentInstance>
+#include <Akonadi/AgentManager>
 
 #include <MessageComposer/PluginEditor>
 #include <MessageComposer/PluginEditorCheckBeforeSend>
@@ -36,6 +35,7 @@
 #include <MessageViewer/MessageViewerConfigureSettingsPluginManager>
 #include <MessageViewer/ViewerPlugin>
 #include <PimCommon/GenericPlugin>
+#include <PimCommon/PluginUtil>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QPointer>

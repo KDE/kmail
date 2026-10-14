@@ -15,10 +15,10 @@ class RichTextEditor;
 }
 namespace MessageComposer
 {
-class PluginEditorInterface;
 class ComposerViewBase;
 }
 class KActionCollection;
+class QKeyEvent;
 class KMailPluginEditorManagerInterface : public QObject
 {
     Q_OBJECT

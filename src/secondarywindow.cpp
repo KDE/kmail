@@ -13,6 +13,7 @@
 #include <KLocalizedString>
 
 #include <QCloseEvent>
+#include <QGuiApplication>
 
 using namespace KMail;
 //---------------------------------------------------------------------------

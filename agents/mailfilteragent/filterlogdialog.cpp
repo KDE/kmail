@@ -20,6 +20,7 @@
 
 #include <QAction>
 #include <QCheckBox>
+#include <QFrame>
 #include <QGroupBox>
 #include <QLabel>
 #include <QMenu>
@@ -34,6 +35,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <cerrno>
+#include <cstring>
 
 using namespace MailCommon;
 using namespace Qt::Literals::StringLiterals;

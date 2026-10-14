@@ -8,7 +8,10 @@
 #include "kmail_private_export.h"
 #include <KSieveCore/SieveImapPasswordProvider>
 #include <QHash>
-#include <qt6keychain/keychain.h>
+namespace QKeychain
+{
+class Job;
+}
 class KMAILTESTS_TESTS_EXPORT KMSieveImapPasswordProvider : public KSieveCore::SieveImapPasswordProvider
 {
     Q_OBJECT

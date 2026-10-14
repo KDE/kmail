@@ -23,17 +23,21 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 
+#include <QApplication>
 #include <QBuffer>
 #include <QDataStream>
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QFileDialog>
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QPushButton>
+#include <QTextStream>
 #include <QTreeWidget>
 #include <QVBoxLayout>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 using namespace Qt::Literals::StringLiterals;
+using namespace KTnef;
 namespace
 {
 const char myAttachPropertyDialogGroupName[] = "AttachPropertyDialog";

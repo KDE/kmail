@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "archivemailinfo.h"
-#include <Akonadi/Collection>
 #include <QDialog>
 
+class QPushButton;
+class ArchiveMailInfo;
 class AddArchiveMailWidget;
 class AddArchiveMailDialog : public QDialog
 {

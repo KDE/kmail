@@ -15,10 +15,9 @@
 #include <Akonadi/CollectionPropertiesDialog>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <Libkdepim/ProgressManager>
 using namespace Qt::Literals::StringLiterals;
 
-Q_DECLARE_METATYPE(KPIM::ProgressItem *)
-Q_DECLARE_METATYPE(Akonadi::Job *)
 Q_DECLARE_METATYPE(QPointer<KPIM::ProgressItem>)
 
 ManageShowCollectionProperties::ManageShowCollectionProperties(KMMainWidget *mainWidget, QObject *parent)

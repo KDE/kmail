@@ -9,9 +9,6 @@
 
 #include "mailfilteragent_debug.h"
 #include <Akonadi/AgentManager>
-#include <Akonadi/ChangeRecorder>
-#include <Akonadi/CollectionFetchJob>
-#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/ItemDeleteJob>
@@ -32,7 +29,6 @@
 #include <KSharedConfig>
 #include <QLocale>
 #include <algorithm>
-#include <cerrno>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace MailCommon;

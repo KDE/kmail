@@ -8,6 +8,7 @@
 
 #include <Akonadi/AgentWidgetBase>
 #include <QDate>
+class QTimer;
 class FollowUpReminderManager;
 class FollowUpReminderAgent : public Akonadi::AgentWidgetBase, public Akonadi::AgentBase::ObserverV3
 {

@@ -11,10 +11,13 @@
 #include <KConfigGroup>
 #include <KLocalizedString>
 
+#include <QCursor>
 #include <QHBoxLayout>
 #include <QHeaderView>
+#include <QIcon>
 #include <QMenu>
 #include <QPushButton>
+#include <QRegularExpression>
 #include <QTreeWidget>
 #include <QVBoxLayout>
 

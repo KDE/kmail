@@ -6,6 +6,7 @@
 
 #include "addarchivemailwidget.h"
 
+#include "archivemailinfo.h"
 #include "archivemailrangewidget.h"
 #include "widgets/formatcombobox.h"
 #include "widgets/unitcombobox.h"
@@ -15,6 +16,7 @@
 #include <MailCommon/FolderRequester>
 #include <QCheckBox>
 #include <QFormLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QSpinBox>
 

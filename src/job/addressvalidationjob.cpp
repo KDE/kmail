@@ -12,8 +12,6 @@
 #include <MessageComposer/AliasesExpandJob>
 using MessageComposer::AliasesExpandJob;
 
-#include <MessageComposer/MessageComposerSettings>
-
 #include <KLocalizedString>
 #include <KMessageBox>
 

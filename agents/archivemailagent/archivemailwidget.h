@@ -6,11 +6,12 @@
 
 #pragma once
 
-#include "archivemailinfo.h"
 #include "ui_archivemailwidget.h"
 #include <QTreeWidgetItem>
 
 #include <Akonadi/AgentConfigurationBase>
+
+class ArchiveMailInfo;
 
 class ArchiveMailItem : public QTreeWidgetItem
 {

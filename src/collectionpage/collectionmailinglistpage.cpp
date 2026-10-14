@@ -9,6 +9,7 @@
 
 #include "collectionmailinglistpage.h"
 #include "util.h"
+#include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
@@ -174,8 +175,8 @@ void CollectionMailingListPage::slotDetectMailingList()
 
     // next try the 5 most recently added messages
     if (!(mMailingList.features() & MailingList::Post)) {
-        // FIXME not load all folder
         auto job = new Akonadi::ItemFetchJob(mCurrentCollection, this);
+        job->setLimit(5, 0, Qt::DescendingOrder);
         job->fetchScope().fetchPayloadPart(Akonadi::MessagePart::Header);
         connect(job, &Akonadi::ItemFetchJob::result, this, &CollectionMailingListPage::slotFetchDone);
         // Don't allow to reactive it

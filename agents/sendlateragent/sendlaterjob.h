@@ -12,13 +12,17 @@
 
 #include <Akonadi/Item>
 #include <Akonadi/ItemFetchScope>
-#include <KMime/Message>
+#include <memory>
 
 namespace MessageComposer
 {
 class SendLaterInfo;
 }
 class KJob;
+namespace KMime
+{
+class Message;
+}
 class SendLaterJob : public QObject
 {
     Q_OBJECT

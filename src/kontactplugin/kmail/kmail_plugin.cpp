@@ -12,7 +12,6 @@
 #include "summarywidget.h"
 
 #include <KCalendarCore/FileStorage>
-#include <KCalendarCore/MemoryCalendar>
 #include <KCalendarCore/MimeData>
 #include <KContacts/VCardDrag>
 
@@ -26,7 +25,6 @@
 #include <QTemporaryFile>
 
 #include <QDropEvent>
-#include <QStandardPaths>
 #include <QUrl>
 
 using namespace KCalendarCore;

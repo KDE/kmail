@@ -10,10 +10,10 @@
 
 #include <KSharedConfig>
 
-#include "unifiedmailboxmanager.h"
-
 class QStandardItemModel;
 class MailKernel;
+class UnifiedMailboxManager;
+class UnifiedMailbox;
 
 class SettingsDialog : public QDialog
 {

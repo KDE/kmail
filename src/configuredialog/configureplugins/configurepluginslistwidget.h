@@ -6,10 +6,9 @@
 
 #pragma once
 
-#include <Akonadi/AgentManager>
-#include <PimCommon/ConfigurePluginsWidget>
-#include <PimCommon/PluginUtil>
-#include <QList>
+#include <Akonadi/AgentType>
+#include <TextAddonsWidgets/ConfigurePluginsWidget>
+#include <TextAddonsWidgets/PluginUtil>
 class ConfigurePluginsListWidget : public TextAddonsWidgets::ConfigurePluginsWidget
 {
     Q_OBJECT

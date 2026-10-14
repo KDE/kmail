@@ -13,6 +13,7 @@ SPDX-License-Identifier: LGPL-2.0-or-later
 class CollectionSwitcherTreeView;
 class CollectionSwitcherModel;
 class QAction;
+class QModelIndex;
 
 class KMAILTESTS_TESTS_EXPORT CollectionSwitcherTreeViewManager : public QObject
 {

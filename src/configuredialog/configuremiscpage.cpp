@@ -9,6 +9,7 @@
 using namespace PimCommon::ConfigureImmutableWidgetUtils;
 #include "kmkernel.h"
 #include "settings/kmailsettings.h"
+#include "ui_miscpagemaintab.h"
 #include <MailCommon/FolderRequester>
 #include <MessageViewer/InvitationSettings>
 #include <MessageViewer/MessageViewerSettings>
@@ -53,26 +54,29 @@ QString MiscPageFolderTab::helpAnchor() const
 
 MiscPageFolderTab::MiscPageFolderTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mMMTab(std::make_unique<Ui_MiscMainTab>())
 {
-    mMMTab.setupUi(this);
+    mMMTab->setupUi(this);
     // replace QWidget with FolderRequester. Promote to doesn't work due to the custom constructor
     auto layout = new QHBoxLayout;
     layout->setContentsMargins({});
-    mMMTab.mOnStartupOpenFolder->setLayout(layout);
-    mOnStartupOpenFolder = new FolderRequester(mMMTab.mOnStartupOpenFolder);
+    mMMTab->mOnStartupOpenFolder->setLayout(layout);
+    mOnStartupOpenFolder = new FolderRequester(mMMTab->mOnStartupOpenFolder);
     layout->addWidget(mOnStartupOpenFolder);
 
-    connect(mMMTab.mDelayedMarkTime, &QSpinBox::valueChanged, this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab.mDelayedMarkTime, &QWidget::setEnabled);
-    connect(mMMTab.mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
+    connect(mMMTab->mDelayedMarkTime, &QSpinBox::valueChanged, this, &MiscPageFolderTab::slotEmitChanged);
+    connect(mMMTab->mDelayedMarkAsRead, &QAbstractButton::toggled, mMMTab->mDelayedMarkTime, &QWidget::setEnabled);
+    connect(mMMTab->mDelayedMarkAsRead, &QAbstractButton::toggled, this, &ConfigModuleTab::slotEmitChanged);
     connect(mOnStartupOpenFolder, &MailCommon::FolderRequester::folderChanged, this, &MiscPageFolderTab::slotEmitChanged);
-    connect(mMMTab.kcfg_StartSpecificFolderAtStartup, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
+    connect(mMMTab->kcfg_StartSpecificFolderAtStartup, &QCheckBox::toggled, mOnStartupOpenFolder, &MailCommon::FolderRequester::setEnabled);
 }
+
+MiscPageFolderTab::~MiscPageFolderTab() = default;
 
 void MiscPageFolderTab::doLoadFromGlobalSettings()
 {
-    loadWidget(mMMTab.mDelayedMarkAsRead, MessageViewer::MessageViewerSettings::self()->delayedMarkAsReadItem());
-    loadWidget(mMMTab.mDelayedMarkTime, MessageViewer::MessageViewerSettings::self()->delayedMarkTimeItem());
+    loadWidget(mMMTab->mDelayedMarkAsRead, MessageViewer::MessageViewerSettings::self()->delayedMarkAsReadItem());
+    loadWidget(mMMTab->mDelayedMarkTime, MessageViewer::MessageViewerSettings::self()->delayedMarkTimeItem());
     mOnStartupOpenFolder->setEnabled(KMailSettings::self()->startSpecificFolderAtStartup());
 
     doLoadOther();
@@ -96,8 +100,8 @@ void MiscPageFolderTab::save()
 {
     KMailSettings::self()->setStartupFolder(mOnStartupOpenFolder->collection().id());
 
-    saveCheckBox(mMMTab.mDelayedMarkAsRead, MessageViewer::MessageViewerSettings::self()->delayedMarkAsReadItem());
-    saveSpinBox(mMMTab.mDelayedMarkTime, MessageViewer::MessageViewerSettings::self()->delayedMarkTimeItem());
+    saveCheckBox(mMMTab->mDelayedMarkAsRead, MessageViewer::MessageViewerSettings::self()->delayedMarkAsReadItem());
+    saveSpinBox(mMMTab->mDelayedMarkTime, MessageViewer::MessageViewerSettings::self()->delayedMarkTimeItem());
 }
 
 MiscPageInviteTab::MiscPageInviteTab(QWidget *parent)

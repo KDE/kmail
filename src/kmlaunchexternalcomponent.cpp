@@ -10,17 +10,18 @@
 #include "util.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
+#include <Akonadi/ServerManager>
 #include <KDialogJobUiDelegate>
 #include <KIO/ApplicationLauncherJob>
 #include <KIO/CommandLauncherJob>
 #include <KLocalizedString>
 #include <KMessageBox>
+#include <KService>
 #include <MailCommon/FilterManager>
 #include <QPointer>
 #include <TextAddonsWidgets/ExecutableUtils>
 
 #include <QProcess>
-#include <QStandardPaths>
 using namespace Qt::Literals::StringLiterals;
 
 KMLaunchExternalComponent::KMLaunchExternalComponent(QWidget *parentWidget, QObject *parent)

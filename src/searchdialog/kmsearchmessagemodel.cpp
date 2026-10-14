@@ -7,18 +7,15 @@
 #include <MailCommon/MailUtil>
 #include <MessageList/MessageListUtil>
 
-#include <MessageCore/StringUtil>
-
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/Monitor>
-#include <Akonadi/Session>
 
-#include <Akonadi/MessageParts>
 #include <KMime/Message>
 
 #include <KLocalizedString>
 #include <QApplication>
 #include <QColor>
+#include <QLocale>
 #include <QPalette>
 using namespace Qt::Literals::StringLiterals;
 

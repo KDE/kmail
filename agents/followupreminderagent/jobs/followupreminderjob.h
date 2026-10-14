@@ -10,6 +10,7 @@
 
 #include <Akonadi/Item>
 
+class KJob;
 class FollowUpReminderJob : public QObject
 {
     Q_OBJECT

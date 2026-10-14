@@ -59,7 +59,6 @@
 #include <Akonadi/ContactGroupExpandJob>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/MessageFlags>
-#include <Akonadi/MessageStatus>
 #include <Akonadi/Monitor>
 
 #include <KContacts/VCardConverter>
@@ -74,9 +73,6 @@
 #include <KPIMTextEdit/RichTextComposerImages>
 #include <KPIMTextEdit/RichTextExternalComposer>
 #include <TextCustomEditor/RichTextEditorWidget>
-
-#include <Libkdepim/ProgressStatusBarWidget>
-#include <Libkdepim/StatusbarProgressWidget>
 
 #include <KCursorSaver>
 
@@ -103,20 +99,16 @@
 #include <MessageComposer/DraftStatus>
 #include <MessageComposer/FollowUpReminderSelectDateDialog>
 #include <MessageComposer/FollowupReminder>
-#include <MessageComposer/FollowupReminderCreateJob>
 #include <MessageComposer/GlobalPart>
-#include <MessageComposer/InfoPart>
 #include <MessageComposer/InsertTextFileJob>
 #include <MessageComposer/Kleo_Util>
 #include <MessageComposer/MessageComposerSettings>
-#include <MessageComposer/MessageHelper>
 #include <MessageComposer/PluginActionType>
 #include <MessageComposer/PluginEditorCheckBeforeSendParams>
 #include <MessageComposer/PluginEditorConverterBeforeConvertingData>
 #include <MessageComposer/PluginEditorConverterInitialData>
 #include <MessageComposer/PluginEditorInterface>
 #include <MessageComposer/RecipientsEditor>
-#include <MessageComposer/RichTextComposerSignatures>
 #include <MessageComposer/SendLaterDialog>
 #include <MessageComposer/SendLaterInfo>
 #include <MessageComposer/SendLaterUtil>
@@ -127,13 +119,11 @@
 
 #include <Sonnet/DictionaryComboBox>
 
-#include <MessageCore/AttachmentPart>
 #include <MessageCore/AutocryptStorage>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageCore/StringUtil>
 
 #include <MessageViewer/MessageViewerSettings>
-#include <MessageViewer/Stl_Util>
 
 #include <MimeTreeParser/NodeHelper>
 #include <MimeTreeParser/ObjectTreeParser>
@@ -141,7 +131,6 @@
 
 #include <PimCommon/CustomToolsPluginManager>
 #include <PimCommon/CustomToolsWidgetng>
-#include <PimCommon/KActionMenuChangeCase>
 #include <PimCommon/PurposeMenuMessageWidget>
 
 #include <TemplateParser/TemplateParserJob>
@@ -156,15 +145,17 @@
 #include <KConfigGroup>
 #include <KEditToolBar>
 #include <KEmailAddress>
-#include <KEncodingFileDialog>
 #include <KFileWidget>
+#include <KHamburgerMenu>
 #include <KIO/JobUiDelegate>
 #include <KIconUtils>
 #include <KMessageBox>
 #include <KRecentDirs>
 #include <KRecentFilesAction>
+#include <KSelectAction>
 #include <KShortcutsDialog>
 #include <KSplitterCollapserButton>
+#include <KStandardActions>
 #include <KStandardShortcut>
 #include <KToggleAction>
 #include <KToolBar>
@@ -175,15 +166,28 @@
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
+#include <QCursor>
+#include <QDateTime>
+#include <QFile>
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QFontDatabase>
+#include <QGridLayout>
+#include <QIcon>
+#include <QImage>
 #include <QInputDialog>
+#include <QLabel>
+#include <QLineEdit>
 #include <QMenu>
 #include <QMenuBar>
 #include <QMimeData>
 #include <QPointer>
+#include <QProcess>
 #include <QSplitter>
 #include <QStatusBar>
+#include <QTimer>
 #include <QUrlQuery>
+#include <QVBoxLayout>
 
 // GPGME
 #include <gpgme++/key.h>

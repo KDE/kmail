@@ -8,11 +8,12 @@
 
 #include "kmail_debug.h"
 #include "kmkernel.h"
+#include "kmsystemtray.h"
 #include "settings/kmailsettings.h"
 #include <MailCommon/MailKernel>
 #include <MailCommon/MailUtil>
 
-#include <QApplication>
+#include <QGuiApplication>
 #include <QTimer>
 
 #include <Akonadi/ChangeRecorder>
@@ -20,6 +21,7 @@
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/NewMailNotifierAttribute>
+#include <KMime/Message>
 #include <chrono>
 
 using namespace std::chrono_literals;

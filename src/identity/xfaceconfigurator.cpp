@@ -17,6 +17,7 @@
 #include <KMessageBox>
 
 #include <QBuffer>
+#include <QImage>
 
 using namespace KMail;
 using MessageViewer::KXFace;

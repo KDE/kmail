@@ -17,8 +17,6 @@
 
 #include <MessageCore/MailingList>
 #include <MessageCore/MessageCoreSettings>
-#include <MessageCore/StringUtil>
-#include <MessageViewer/HeaderStylePlugin>
 #include <MessageViewer/MessageViewerSettings>
 
 #include <Akonadi/ChangeRecorder>
@@ -40,16 +38,16 @@
 #include <KIO/OpenUrlJob>
 #include <KLocalizedString>
 #include <KStringHandler>
-#include <KUriFilter>
 #include <KXMLGUIClient>
+#include <QDir>
 #include <QFileDialog>
 #include <QIcon>
 #include <QMenu>
+#include <QPointer>
 
 #include "folderarchive/folderarchivemanager.h"
 #include <Akonadi/Collection>
 #include <Akonadi/StandardMailActionManager>
-#include <MailCommon/MailUtil>
 #include <MessageViewer/MessageViewerUtil>
 #include <QVariant>
 #include <QWidget>

@@ -6,7 +6,6 @@
 
 #include "opencomposerhiddenjob.h"
 #include "kmkernel.h"
-#include <MessageComposer/ComposerJob>
 
 #include <MessageComposer/MessageHelper>
 

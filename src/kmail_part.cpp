@@ -15,16 +15,14 @@
 #include <QVBoxLayout>
 
 #include "foldershortcutactionmanager.h"
+#include "kmail_debug.h"
 #include "tag/tagactionmanager.h"
-#include <Akonadi/ChangeRecorder>
-#include <Akonadi/Collection>
-#include <Akonadi/EntityDisplayAttribute>
 #include <KLocalizedString>
 #include <KParts/GUIActivateEvent>
 #include <KPluginFactory>
 #include <KSharedConfig>
+#include <QDBusConnection>
 #include <kmailpartadaptor.h>
-#include <kparts/mainwindow.h>
 #include <kparts/statusbarextension.h>
 
 using namespace Qt::Literals::StringLiterals;

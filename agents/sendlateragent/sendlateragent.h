@@ -8,8 +8,6 @@
 
 #include <Akonadi/AgentWidgetBase>
 
-#include <MessageComposer/SendLaterInfo>
-
 class SendLaterManager;
 
 class SendLaterAgent : public Akonadi::AgentWidgetBase, public Akonadi::AgentBase::ObserverV3

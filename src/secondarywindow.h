@@ -10,7 +10,7 @@
 #pragma once
 
 #include "kmail_private_export.h"
-#include <kxmlguiwindow.h>
+#include <KXmlGuiWindow>
 class QCloseEvent;
 
 namespace KMail

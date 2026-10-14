@@ -24,6 +24,8 @@
 #include <QDBusMetaType>
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
+#include <QHash>
+#include <QSortFilterProxyModel>
 #include <QTimer>
 #include <chrono>
 

@@ -22,8 +22,11 @@
 #endif
 #include <KWindowSystem>
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QDir>
+#include <QIcon>
 #include <QSessionManager>
+#include <QTextStream>
 #include <QWebEngineUrlScheme>
 
 #if KMAIL_WITH_KUSERFEEDBACK

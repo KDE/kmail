@@ -12,6 +12,7 @@
 
 #include <QTreeWidget>
 
+class QDragEnterEvent;
 class QDropEvent;
 class QDragMoveEvent;
 class QDragLeaveEvent;

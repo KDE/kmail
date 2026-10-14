@@ -17,10 +17,13 @@
 #include <KGuiItem>
 #include <KXMLGUIClient>
 #include <QDialog>
+#include <QPointer>
 #include <QTimer>
 
+class QAction;
 class QCloseEvent;
 class QKeyEvent;
+class QPushButton;
 class KActionMenu;
 class KJob;
 class KMMainWidget;

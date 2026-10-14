@@ -6,6 +6,8 @@
 
 #include "identityinvalidfolder.h"
 
+#include <QIcon>
+
 using namespace KMail;
 using namespace Qt::Literals::StringLiterals;
 

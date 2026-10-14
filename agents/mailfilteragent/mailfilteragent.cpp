@@ -29,8 +29,8 @@
 #include <KLocalizedString>
 #include <KMime/Message>
 #include <KNotification>
-#include <KWindowSystem>
 #include <MailCommon/MailKernel>
+#include <QApplication>
 #include <QDBusConnection>
 
 #include <KSharedConfig>

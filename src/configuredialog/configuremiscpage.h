@@ -9,8 +9,9 @@
 #include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "kmail_export.h"
-#include "ui_miscpagemaintab.h"
+#include <memory>
 
+class Ui_MiscMainTab;
 namespace MailCommon
 {
 class FolderRequester;
@@ -26,6 +27,7 @@ class MiscPageFolderTab : public ConfigModuleTab
     Q_OBJECT
 public:
     explicit MiscPageFolderTab(QWidget *parent = nullptr);
+    ~MiscPageFolderTab() override;
 
     void save() override;
     [[nodiscard]] QString helpAnchor() const;
@@ -36,7 +38,7 @@ private:
     void doResetToDefaultsOther() override;
 
 private:
-    Ui_MiscMainTab mMMTab;
+    std::unique_ptr<Ui_MiscMainTab> const mMMTab;
     MailCommon::FolderRequester *mOnStartupOpenFolder = nullptr;
 };
 

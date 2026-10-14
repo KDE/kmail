@@ -6,6 +6,7 @@
 
 #include "refreshsettingscleanuppage.h"
 
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KSharedConfig>
 #include <QHBoxLayout>

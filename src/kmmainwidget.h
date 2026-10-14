@@ -18,7 +18,6 @@
 
 #include "messageactions.h"
 #include <Akonadi/StandardMailActionManager>
-#include <Akonadi/Tag>
 #include <KXMLGUIClient>
 #include <MailCommon/FolderSettings>
 #include <MessageList/View>
@@ -32,6 +31,7 @@ class Transport;
 }
 namespace Akonadi
 {
+class FavoriteCollectionsModel;
 class Tag;
 }
 
@@ -42,6 +42,7 @@ class Message;
 class QUrl;
 class QVBoxLayout;
 class QSplitter;
+class QShowEvent;
 class KMLaunchExternalComponent;
 class DisplayMessageFormatActionMenu;
 class QAction;
@@ -59,9 +60,9 @@ class KActionMenuAccount;
 class ZoomLabelWidget;
 class HistoryClosedReaderMenu;
 class KActionCollection;
-namespace KIO
+namespace WebEngineViewer
 {
-class Job;
+class WebHitTestResult;
 }
 
 namespace KMail

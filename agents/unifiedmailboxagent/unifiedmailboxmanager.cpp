@@ -22,6 +22,7 @@
 #include <Akonadi/SpecialMailCollections>
 #include <Akonadi/UnlinkJob>
 
+#include <QSet>
 #include <QTimer>
 
 #include <stdexcept> // for std::out_of_range

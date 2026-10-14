@@ -10,6 +10,7 @@
 #include <KLocalizedString>
 #include <KSeparator>
 #include <QDialogButtonBox>
+#include <QIcon>
 #include <QPushButton>
 #include <QVBoxLayout>
 using namespace Qt::Literals::StringLiterals;

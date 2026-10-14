@@ -34,18 +34,14 @@
 
 class QUrl;
 
-class QByteArray;
 class QGridLayout;
 class QLabel;
 class QSplitter;
 class KSplitterCollapserButton;
-class KMComposerWin;
-class KMComposerEditor;
 class KSelectAction;
 class QAction;
 class KJob;
 class KToggleAction;
-class QUrl;
 class KRecentFilesAction;
 class AttachmentMissingWarning;
 class ExternalEditorWarning;
@@ -64,6 +60,13 @@ class KHamburgerMenu;
 class TooManyRecipientsWarning;
 class SubjectLineEditWithAutoCorrection;
 class QVBoxLayout;
+class QTimer;
+class QMimeData;
+class QKeyEvent;
+namespace KPIM
+{
+class MultiplyingLine;
+}
 namespace MailTransport
 {
 class Transport;
@@ -88,11 +91,6 @@ namespace TextCustomEditor
 class RichTextEditorWidget;
 }
 
-namespace KIO
-{
-class Job;
-}
-
 namespace MessageComposer
 {
 class ComposerLineEdit;
@@ -114,18 +112,11 @@ class CustomToolsWidgetNg;
 class PurposeMenuMessageWidget;
 }
 
-namespace GpgME
-{
-class Key;
-}
-
 //-----------------------------------------------------------------------------
 class KMComposerWin : public KMail::Composer
 {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.kde.kmail.mailcomposer")
-
-    friend class ::KMComposerEditor;
 
 private: // mailserviceimpl, kmkernel, kmcommands, callback, kmmainwidget
     explicit KMComposerWin(const std::shared_ptr<KMime::Message> &msg,

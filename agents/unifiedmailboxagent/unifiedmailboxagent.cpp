@@ -22,8 +22,6 @@
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/LinkJob>
 #include <Akonadi/ServerManager>
-#include <Akonadi/Session>
-#include <Akonadi/SpecialCollectionAttribute>
 #include <Akonadi/UnlinkJob>
 
 #include <KIdentityManagementCore/Identity>
@@ -34,6 +32,7 @@
 
 #include <QHash>
 #include <QPointer>
+#include <QSet>
 #include <QTimer>
 
 #include <memory>

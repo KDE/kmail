@@ -10,20 +10,15 @@
 #include "sendlateragentsettings.h"
 #include "sendlatermanager.h"
 #include "sendlaterutil.h"
-#include <Akonadi/AgentInstance>
-#include <Akonadi/AgentManager>
-#include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
-#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
 #include <Akonadi/SpecialMailCollections>
 #include <KMime/Message>
+#include <MessageComposer/SendLaterInfo>
 #include <QDBusConnection>
 
-#include <KWindowSystem>
-#include <QPointer>
 #include <QTimer>
 #include <chrono>
 

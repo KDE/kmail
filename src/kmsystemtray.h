@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include <Akonadi/Collection>
 #include <KStatusNotifierItem>
 #include <QModelIndex>
 class QAbstractItemModel;

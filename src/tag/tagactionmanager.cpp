@@ -11,7 +11,7 @@
 
 #include <MailCommon/AddTagDialog>
 
-#include <Akonadi/Monitor>
+#include <Akonadi/Item>
 #include <KActionCollection>
 #include <KActionMenu>
 #include <KLocalizedString>

@@ -18,6 +18,7 @@
 
 #include <KKeySequenceWidget>
 #include <KLocalizedString>
+#include <MailCommon/FolderSettings>
 #include <QHBoxLayout>
 
 using namespace Qt::Literals::StringLiterals;

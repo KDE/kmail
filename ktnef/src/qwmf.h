@@ -9,13 +9,13 @@
 #pragma once
 
 #include <QColor>
-#include <QImage>
 #include <QPainter>
 #include <QRect>
 #include <QString>
 #include <QTransform>
 
 class QBuffer;
+class QImage;
 class WmfCmd;
 class WinObjHandle;
 struct WmfPlaceableHeader;

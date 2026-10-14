@@ -7,7 +7,6 @@
 #include "followupremindernoanswerdialog.h"
 
 #include "followupreminderagent_debug.h"
-#include "followupreminderinfo.h"
 #include "followupreminderinfowidget.h"
 
 #include <KLocalizedString>

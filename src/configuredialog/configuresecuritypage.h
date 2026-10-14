@@ -8,17 +8,21 @@
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
-#include "ui_securitypageencryptiontab.h"
 #include "ui_securitypagegeneraltab.h"
 #include "ui_securitypagemdntab.h"
-#include "ui_smimeconfiguration.h"
 
 #include <KCMultiDialog>
 #include <memory>
 
+class QButtonGroup;
 namespace QGpgME
 {
 class CryptoConfig;
+}
+namespace Ui
+{
+class SecurityPageEncryptionTab;
+class SMimeConfiguration;
 }
 
 class SecurityPageGeneralTab : public ConfigModuleTab

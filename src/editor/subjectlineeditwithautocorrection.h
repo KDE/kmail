@@ -9,6 +9,8 @@
 #include "kmail_private_export.h"
 #include <PimCommon/SpellCheckLineEdit>
 
+class QDropEvent;
+class QMimeData;
 class KMAILTESTS_TESTS_EXPORT SubjectLineEditWithAutoCorrection : public PimCommon::SpellCheckLineEdit
 {
     Q_OBJECT

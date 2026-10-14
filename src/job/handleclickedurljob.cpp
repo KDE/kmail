@@ -10,7 +10,6 @@
 #include "kmkernel.h"
 #include "util.h"
 #include <KMime/Message>
-#include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
 #include <MessageCore/StringUtil>
 #include <TemplateParser/TemplateParserJob>

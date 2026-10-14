@@ -19,7 +19,6 @@
 
 #include <QMap>
 #include <QPixmap>
-using namespace Qt::Literals::StringLiterals;
 
 namespace KTnef
 {
@@ -27,7 +26,6 @@ class KTNEFAttach;
 class KTNEFProperty;
 class KTNEFPropertySet;
 }
-using namespace KTnef;
 
 class QTreeWidget;
 class QTreeWidgetItem;
@@ -39,12 +37,12 @@ public:
     explicit AttachPropertyDialog(QWidget *parent = nullptr);
     ~AttachPropertyDialog() override;
 
-    void setAttachment(KTNEFAttach *attach);
+    void setAttachment(KTnef::KTNEFAttach *attach);
 
-    static QPixmap loadRenderingPixmap(KTNEFPropertySet *, const QColor &);
-    static void formatProperties(const QMap<int, KTNEFProperty *> &, QTreeWidget *, QTreeWidgetItem *, const QString & = u"prop"_s);
-    static void formatPropertySet(KTNEFPropertySet *, QTreeWidget *);
-    static bool saveProperty(QTreeWidget *, KTNEFPropertySet *, QWidget *);
+    static QPixmap loadRenderingPixmap(KTnef::KTNEFPropertySet *, const QColor &);
+    static void formatProperties(const QMap<int, KTnef::KTNEFProperty *> &, QTreeWidget *, QTreeWidgetItem *, const QString & = QStringLiteral("prop"));
+    static void formatPropertySet(KTnef::KTNEFPropertySet *, QTreeWidget *);
+    static bool saveProperty(QTreeWidget *, KTnef::KTNEFPropertySet *, QWidget *);
 
 protected:
     Ui::AttachPropertyWidgetBase mUI;
@@ -52,5 +50,5 @@ protected:
 private:
     void slotSave();
     void readConfig();
-    KTNEFAttach *mAttach = nullptr;
+    KTnef::KTNEFAttach *mAttach = nullptr;
 };

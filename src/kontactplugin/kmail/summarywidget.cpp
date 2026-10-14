@@ -34,9 +34,10 @@
 #include <QGridLayout>
 #include <QIcon>
 #include <QItemSelectionModel>
+#include <QLabel>
+#include <QStyle>
+#include <QTimer>
 #include <QVBoxLayout>
-
-#include <ctime>
 using namespace Qt::Literals::StringLiterals;
 
 SummaryWidget::SummaryWidget(KontactInterface::Plugin *plugin, QWidget *parent)

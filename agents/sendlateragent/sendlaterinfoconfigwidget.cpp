@@ -8,6 +8,9 @@
 #include "sendlaterremovemessagejob.h"
 
 #include "sendlaterconfigurewidget.h"
+#include <QApplication>
+#include <QIcon>
+#include <QLayout>
 
 using namespace Qt::Literals::StringLiterals;
 

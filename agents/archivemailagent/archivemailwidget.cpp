@@ -9,6 +9,7 @@
 #include "addarchivemaildialog.h"
 #include "archivemailagent_debug.h"
 #include "archivemailagentutil.h"
+#include "archivemailinfo.h"
 #include "archivemailkernel.h"
 
 #include <KIO/JobUiDelegateFactory>
@@ -21,8 +22,13 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KSharedConfig>
+#include <QCursor>
+#include <QHeaderView>
+#include <QIcon>
 #include <QLocale>
 #include <QMenu>
+#include <QPointer>
+#include <QRegularExpression>
 
 using namespace Qt::Literals::StringLiterals;
 namespace

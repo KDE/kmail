@@ -11,7 +11,6 @@
 #include <Akonadi/CachePolicy>
 #include <Akonadi/EntityHiddenAttribute>
 #include <Akonadi/EntityTreeModel>
-#include <Akonadi/ServerManager>
 #include <KConfigGroup>
 #include <KSharedConfig>
 #include <MailCommon/MailUtil>

@@ -7,7 +7,6 @@
 #pragma once
 
 #include <QObject>
-#include <QSet>
 #include <QSettings>
 
 #include <KSharedConfig>

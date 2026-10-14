@@ -104,10 +104,13 @@
 
 #include <QApplication>
 #include <QByteArray>
+#include <QDir>
 #include <QFileDialog>
+#include <QFileInfo>
 #include <QFontDatabase>
 #include <QProgressDialog>
 #include <QStandardPaths>
+#include <QUndoStack>
 
 using KMail::SecondaryWindow;
 using MailTransport::TransportManager;

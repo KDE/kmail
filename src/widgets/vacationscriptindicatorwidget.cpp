@@ -7,6 +7,8 @@
 #include "vacationscriptindicatorwidget.h"
 
 #include <KLocalizedString>
+#include <QColor>
+#include <QCursor>
 #include <QEvent>
 #include <QIcon>
 #include <QStyle>

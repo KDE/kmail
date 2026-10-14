@@ -6,15 +6,16 @@
 
 #pragma once
 
-#include "kmsystemtray.h"
 #include <Akonadi/Collection>
 #include <QModelIndex>
 #include <QObject>
 #include <QPointer>
 class QAbstractItemModel;
+class QWidget;
 class QWindow;
 namespace KMail
 {
+class KMSystemTray;
 class UnityServiceManager : public QObject
 {
     Q_OBJECT

@@ -7,7 +7,6 @@
 #include "fillcomposerjob.h"
 
 #include "kmkernel.h"
-#include <MessageComposer/ComposerJob>
 #include <MessageViewer/MessageViewerSettings>
 
 #include <MessageComposer/MessageHelper>

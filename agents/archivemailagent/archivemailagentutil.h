@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "archivemailinfo.h"
 #include <QDate>
 using namespace Qt::Literals::StringLiterals;
+class ArchiveMailInfo;
 
 namespace ArchiveMailAgentUtil
 {

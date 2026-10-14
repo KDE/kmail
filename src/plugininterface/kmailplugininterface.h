@@ -8,7 +8,6 @@
 
 #include <PimCommonAkonadi/PluginInterface>
 #include <QPointer>
-class QObject;
 class KMMainWidget;
 class KMailPluginInterface : public PimCommon::PluginInterface
 {

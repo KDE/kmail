@@ -8,8 +8,11 @@
 
 #include "configuredialog_p.h"
 #include "kmail_export.h"
-#include "ui_accountspagereceivingtab.h"
+#include <QHash>
+#include <QSharedPointer>
+#include <memory>
 
+class Ui_AccountsPageReceivingTab;
 class QCheckBox;
 class QComboBox;
 class UndoSendCombobox;
@@ -97,7 +100,7 @@ private:
 private:
     void slotAddCustomAccount();
     void slotAddMailAccount();
-    Ui_AccountsPageReceivingTab mAccountsReceiving;
+    std::unique_ptr<Ui_AccountsPageReceivingTab> const mAccountsReceiving;
     OrgFreedesktopAkonadiNewMailNotifierInterface *mNewMailNotifierInterface = nullptr;
 };
 

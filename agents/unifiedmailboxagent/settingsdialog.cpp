@@ -8,8 +8,11 @@
 #include "mailkernel.h"
 #include "unifiedmailbox.h"
 #include "unifiedmailboxeditor.h"
+#include "unifiedmailboxmanager.h"
 
+#include <QCursor>
 #include <QDialogButtonBox>
+#include <QIcon>
 #include <QItemSelectionModel>
 #include <QListView>
 #include <QPushButton>

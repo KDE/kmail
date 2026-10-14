@@ -13,6 +13,7 @@
 #include <QGroupBox>
 #include <memory>
 class KJob;
+class QUrl;
 
 namespace Ui
 {

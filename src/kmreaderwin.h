@@ -15,9 +15,9 @@
 #include <MessageComposer/MDNAdviceHelper>
 #include <MessageViewer/MDNWarningWidget>
 #include <MessageViewer/Viewer>
-// #include <MimeTreeParser/BodyPart>
 #include <QWidget>
 class KActionCollection;
+class KActionMenu;
 class QAction;
 class KToggleAction;
 class QMenu;
@@ -26,6 +26,7 @@ namespace MessageViewer
 {
 class CSSHelper;
 class DKIMViewerMenu;
+class RemoteContentMenu;
 class AttachmentStrategy;
 }
 

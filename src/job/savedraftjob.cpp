@@ -10,7 +10,6 @@
 #include <Akonadi/Item>
 #include <Akonadi/ItemCreateJob>
 #include <Akonadi/MessageFlags>
-#include <Akonadi/MessageStatus>
 
 SaveDraftJob::SaveDraftJob(const std::shared_ptr<KMime::Message> &msg, const Akonadi::Collection &col, QObject *parent)
     : KJob(parent)

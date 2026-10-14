@@ -4,7 +4,6 @@
 
 #include "kmail_private_export.h"
 
-#include <MailCommon/SearchPattern>
 #include <MessageComposer/MessageFactoryNG>
 #include <MessageList/View>
 #include <MessageViewer/Viewer>

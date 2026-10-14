@@ -5,16 +5,19 @@
 */
 
 #pragma once
-#include "ui_sendlaterconfigurewidget.h"
 
 #include <Akonadi/Item>
 
-#include <KConfigGroup>
 #include <QTreeWidgetItem>
 
+class KConfigGroup;
 namespace MessageComposer
 {
 class SendLaterInfo;
+}
+namespace Ui
+{
+class SendLaterConfigureWidget;
 }
 
 class SendLaterItem : public QTreeWidgetItem

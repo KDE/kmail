@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <Akonadi/Item>
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
 
@@ -14,7 +15,6 @@
 class QWidget;
 class QAction;
 class KJob;
-class QAction;
 class KActionMenu;
 class KActionCollection;
 class KXMLGUIClient;
@@ -23,7 +23,6 @@ class QMenu;
 
 namespace Akonadi
 {
-class Item;
 class StandardMailActionManager;
 }
 

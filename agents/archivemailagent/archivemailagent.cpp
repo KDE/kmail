@@ -15,7 +15,6 @@
 #include <Akonadi/Monitor>
 #include <Akonadi/Session>
 #include <KMime/Message>
-#include <MailCommon/MailKernel>
 #include <QDBusConnection>
 #include <QTimer>
 #include <chrono>

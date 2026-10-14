@@ -14,18 +14,19 @@
 #pragma once
 
 #include <KService>
-#include <KTNEF/KTNEFAttach>
 #include <KXmlGuiWindow>
 
 class QActionGroup;
 class QAction;
 class QContextMenuEvent;
+class QMenu;
 class QTreeWidgetItem;
 class KRecentFilesMenu;
 class QUrl;
 
 namespace KTnef
 {
+class KTNEFAttach;
 class KTNEFParser;
 }
 using namespace KTnef;

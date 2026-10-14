@@ -5,6 +5,7 @@
 */
 
 #include "archivemailagentutil.h"
+#include "archivemailinfo.h"
 
 QDate ArchiveMailAgentUtil::diffDate(const ArchiveMailInfo *info)
 {

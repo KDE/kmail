@@ -13,7 +13,6 @@
 #include "configmodule.h"
 #include "kmail_export.h"
 class QTabWidget;
-class ConfigureDialog;
 
 // Individual tab of a ConfigModuleWithTabs
 class ConfigModuleTab : public QWidget

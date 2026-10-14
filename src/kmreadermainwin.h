@@ -6,15 +6,14 @@
 
 #include "secondarywindow.h"
 
-#include <KMime/Message>
-
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
 #include <MessageViewer/Viewer>
-#include <QModelIndex>
 class KMReaderWin;
 class QAction;
 class KJob;
+class KToggleAction;
+class QMenu;
 class ZoomLabelWidget;
 class QUrl;
 
@@ -26,13 +25,13 @@ class TagActionManager;
 namespace Akonadi
 {
 class StandardMailActionManager;
+class Tag;
 }
 namespace KMime
 {
 class Message;
 class Content;
 }
-Q_DECLARE_METATYPE(QModelIndex)
 
 class KMAIL_EXPORT KMReaderMainWin : public KMail::SecondaryWindow
 {

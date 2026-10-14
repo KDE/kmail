@@ -14,11 +14,8 @@
 #include <KToggleAction>
 #include <MessageCore/ColorUtil>
 #include <MessageCore/MessageCoreSettings>
-#include <QCheckBox>
 #include <QMenu>
 #include <QMimeData>
-#include <Sonnet/ConfigDialog>
-#include <sonnet/dictionarycombobox.h>
 using namespace Qt::Literals::StringLiterals;
 
 namespace

@@ -16,7 +16,6 @@
 #include <KConfigDialogManager>
 
 // Qt headers:
-#include <QShowEvent>
 #include <QTabBar>
 #include <QTabWidget>
 #include <QVBoxLayout>

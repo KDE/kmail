@@ -6,15 +6,16 @@
 
 #pragma once
 
-#include "MailCommon/Tag"
 #include "kmail_private_export.h"
 #include <Akonadi/Item>
 #include <Akonadi/Tag>
+#include <MailCommon/Tag>
 #include <QDialog>
 #include <QList>
 
 class QListWidget;
 class KActionCollection;
+class KJob;
 class KMAILTESTS_TESTS_EXPORT TagSelectDialog : public QDialog
 {
     Q_OBJECT

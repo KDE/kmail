@@ -10,6 +10,7 @@
 #include <QDate>
 
 class KConfigGroup;
+class QDebug;
 namespace FollowUpReminder
 {
 /** Follow up reminder information. */

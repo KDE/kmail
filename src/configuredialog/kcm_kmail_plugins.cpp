@@ -3,7 +3,7 @@
 
   SPDX-License-Identifier: LGPL-2.0-or-later
 */
-#include "kcm_kmail.cpp"
+#include "configurepluginpage.h"
 #include <KPluginFactory>
 
 K_PLUGIN_CLASS_WITH_JSON(ConfigurePluginPage, "kmail_config_plugins.json")

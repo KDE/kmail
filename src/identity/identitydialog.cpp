@@ -31,7 +31,6 @@
 #include "job/addressvalidationjob.h"
 #include <MessageComposer/Kleo_Util>
 #include <MessageComposer/MessageComposerSettings>
-#include <MessageCore/StringUtil>
 #include <Sonnet/DictionaryComboBox>
 #include <TemplateParser/TemplatesConfiguration>
 #include <templateparser/templatesconfiguration_kfg.h>
@@ -51,7 +50,6 @@
 #include <Libkleo/KeyParameters>
 #include <Libkleo/KeySelectionCombo>
 #include <Libkleo/OpenPGPCertificateCreationDialog>
-#include <Libkleo/ProgressDialog>
 
 // gpgme++
 #include <QGpgME/KeyGenerationJob>
@@ -85,12 +83,12 @@ using MailTransport::TransportManager;
 #include <QFormLayout>
 #include <QHostInfo>
 #include <QLabel>
+#include <QProgressDialog>
 #include <QToolButton>
 #include <QVBoxLayout>
 
 // other headers:
-#include <algorithm>
-#include <iterator>
+#include <memory>
 
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionModifyJob>

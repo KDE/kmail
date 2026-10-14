@@ -5,12 +5,14 @@
 */
 
 #include "sendlaterconfigurewidget.h"
+#include "ui_sendlaterconfigurewidget.h"
 
 #include "sendlaterutil.h"
 
 #include <MessageComposer/SendLaterDialog>
 #include <MessageComposer/SendLaterInfo>
 
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <QIcon>

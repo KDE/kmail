@@ -6,10 +6,11 @@
 
 #include "collectionviewpage.h"
 
+#include <MailCommon/FolderSettings>
 #include <MailCommon/MailKernel>
 
+#include <Akonadi/Collection>
 #include <Akonadi/EntityDisplayAttribute>
-#include <Akonadi/MessageFolderAttribute>
 
 #include <KIconButton>
 #include <KLocalizedString>
@@ -18,11 +19,6 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QVBoxLayout>
-
-#include <MessageList/AggregationComboBox>
-#include <MessageList/AggregationConfigButton>
-#include <MessageList/ThemeComboBox>
-#include <MessageList/ThemeConfigButton>
 
 #include <MailCommon/CollectionViewWidget>
 

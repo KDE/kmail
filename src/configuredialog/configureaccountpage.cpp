@@ -11,6 +11,7 @@
 #include "kmkernel.h"
 #include "newmailnotifierinterface.h"
 #include "settings/kmailsettings.h"
+#include "ui_accountspagereceivingtab.h"
 #include "undosend/undosendcombobox.h"
 #include "util.h"
 #include <MailCommon/AccountConfigOrderDialog>
@@ -160,6 +161,7 @@ QString AccountsPageReceivingTab::helpAnchor() const
 
 AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
     : ConfigModuleTab(parent)
+    , mAccountsReceiving(std::make_unique<Ui_AccountsPageReceivingTab>())
 {
     const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_newmailnotifier_agent"_s);
     mNewMailNotifierInterface = new OrgFreedesktopAkonadiNewMailNotifierInterface(service, u"/NewMailNotifierAgent"_s, QDBusConnection::sessionBus(), this);
@@ -168,32 +170,32 @@ AccountsPageReceivingTab::AccountsPageReceivingTab(QWidget *parent)
         delete mNewMailNotifierInterface;
         mNewMailNotifierInterface = nullptr;
     }
-    mAccountsReceiving.setupUi(this);
+    mAccountsReceiving->setupUi(this);
 
-    mAccountsReceiving.mAccountsReceiving->setMimeTypeFilter({KMime::Message::mimeType()});
-    mAccountsReceiving.mAccountsReceiving->setCapabilityFilter({u"Resource"_s});
-    mAccountsReceiving.mAccountsReceiving->setExcludeCapabilities({u"MailTransport"_s, u"Notes"_s, u"Autostart"_s});
+    mAccountsReceiving->mAccountsReceiving->setMimeTypeFilter({KMime::Message::mimeType()});
+    mAccountsReceiving->mAccountsReceiving->setCapabilityFilter({u"Resource"_s});
+    mAccountsReceiving->mAccountsReceiving->setExcludeCapabilities({u"MailTransport"_s, u"Notes"_s, u"Autostart"_s});
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
-    mAccountsReceiving.mAccountsReceiving->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
-    mAccountsReceiving.mAccountsReceiving->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
+    mAccountsReceiving->mAccountsReceiving->setEnablePlasmaActivities(KMailSettings::self()->plasmaActivitySupport());
+    mAccountsReceiving->mAccountsReceiving->setAccountActivitiesAbstract(ActivitiesManager::self()->accountActivities());
 #endif
     if (KConfig specialMailCollection(u"specialmailcollectionsrc"_s); specialMailCollection.hasGroup(u"SpecialCollections"_s)) {
         KConfigGroup grp = specialMailCollection.group(u"SpecialCollections"_s);
-        mAccountsReceiving.mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(u"DefaultResourceId"_s));
+        mAccountsReceiving->mAccountsReceiving->setSpecialCollectionIdentifier(grp.readEntry(u"DefaultResourceId"_s));
     }
-    auto configDelegate = new ConfigAgentDelegate(mAccountsReceiving.mAccountsReceiving->view());
-    mAccountsReceiving.mAccountsReceiving->setItemDelegate(configDelegate);
+    auto configDelegate = new ConfigAgentDelegate(mAccountsReceiving->mAccountsReceiving->view());
+    mAccountsReceiving->mAccountsReceiving->setItemDelegate(configDelegate);
     connect(configDelegate, &ConfigAgentDelegate::optionsClicked, this, &AccountsPageReceivingTab::slotShowMailCheckMenu);
 
-    connect(mAccountsReceiving.mVerboseNotificationCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
+    connect(mAccountsReceiving->mVerboseNotificationCheck, &QCheckBox::checkStateChanged, this, &ConfigModuleTab::slotEmitChanged);
 
-    connect(mAccountsReceiving.mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
-    connect(mAccountsReceiving.customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
-    mAccountsReceiving.mAccountsReceiving->disconnectAddAccountButton();
+    connect(mAccountsReceiving->mOtherNewMailActionsButton, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotEditNotifications);
+    connect(mAccountsReceiving->customizeAccountOrder, &QAbstractButton::clicked, this, &AccountsPageReceivingTab::slotCustomizeAccountOrder);
+    mAccountsReceiving->mAccountsReceiving->disconnectAddAccountButton();
     auto accountMenu = new QMenu(this);
     accountMenu->addAction(i18n("Add Mail Account…"), this, &AccountsPageReceivingTab::slotAddMailAccount);
     accountMenu->addAction(i18n("Custom Account…"), this, &AccountsPageReceivingTab::slotAddCustomAccount);
-    mAccountsReceiving.mAccountsReceiving->addAccountButton()->setMenu(accountMenu);
+    mAccountsReceiving->mAccountsReceiving->addAccountButton()->setMenu(accountMenu);
 }
 
 AccountsPageReceivingTab::~AccountsPageReceivingTab()
@@ -203,7 +205,7 @@ AccountsPageReceivingTab::~AccountsPageReceivingTab()
 
 void AccountsPageReceivingTab::slotAddCustomAccount()
 {
-    mAccountsReceiving.mAccountsReceiving->slotAddAccount();
+    mAccountsReceiving->mAccountsReceiving->slotAddAccount();
 }
 
 void AccountsPageReceivingTab::slotAddMailAccount()
@@ -278,7 +280,7 @@ void AccountsPageReceivingTab::slotShowMailCheckMenu(const QString &ident, const
 
     connect(checkOnStartup, &QAction::toggled, this, &AccountsPageReceivingTab::slotCheckOnStatupChanged);
 
-    menu.exec(mAccountsReceiving.mAccountsReceiving->view()->mapToGlobal(pos));
+    menu.exec(mAccountsReceiving->mAccountsReceiving->view()->mapToGlobal(pos));
 }
 
 void AccountsPageReceivingTab::slotCheckOnStatupChanged(bool checked)
@@ -347,7 +349,7 @@ void AccountsPageReceivingTab::slotEditNotifications()
 void AccountsPageReceivingTab::doLoadFromGlobalSettings()
 {
     if (mNewMailNotifierInterface) {
-        mAccountsReceiving.mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
+        mAccountsReceiving->mVerboseNotificationCheck->setChecked(mNewMailNotifierInterface->verboseMailNotification());
     }
 }
 
@@ -355,7 +357,7 @@ void AccountsPageReceivingTab::save()
 {
     // Save Mail notification settings
     if (mNewMailNotifierInterface) {
-        mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving.mVerboseNotificationCheck->isChecked());
+        mNewMailNotifierInterface->setVerboseMailNotification(mAccountsReceiving->mVerboseNotificationCheck->isChecked());
     }
 
     const QString resourceGroupPattern(u"Resource %1"_s);

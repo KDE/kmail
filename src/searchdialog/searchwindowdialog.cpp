@@ -33,15 +33,20 @@
 #include <Akonadi/CachePolicy>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/CollectionModifyJob>
 #include <Akonadi/EntityHiddenAttribute>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/EntityTreeView>
+#include <Akonadi/Monitor>
 #include <Akonadi/PersistentSearchAttribute>
 #include <Akonadi/SearchCreateJob>
 #include <Akonadi/StandardActionManager>
+#include <Akonadi/StandardMailActionManager>
 #include <KActionMenu>
+#include <KConfig>
+#include <KConfigGroup>
 #include <KMessageBox>
 #include <KMime/Message>
 #include <KStandardGuiItem>
@@ -54,6 +59,7 @@
 #include <QCloseEvent>
 #include <QCursor>
 #include <QDialogButtonBox>
+#include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QPushButton>
@@ -62,7 +68,6 @@
 
 using namespace std::chrono_literals;
 
-using namespace KPIM;
 using namespace MailCommon;
 
 using namespace KMail;

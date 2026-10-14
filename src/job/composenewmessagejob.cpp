@@ -5,8 +5,9 @@
 */
 
 #include "composenewmessagejob.h"
+#include "kmail_debug.h"
 #include "kmkernel.h"
-#include <MessageComposer/ComposerJob>
+#include <MessageComposer/Util>
 
 #include <KMime/Message>
 #include <MessageComposer/MessageHelper>

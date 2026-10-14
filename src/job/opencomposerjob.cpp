@@ -12,9 +12,7 @@
 #include <KIdentityManagementCore/IdentityManager>
 #include <KLocalizedString>
 #include <KMessageBox>
-#include <MessageComposer/ComposerJob>
 #include <MessageComposer/MessageHelper>
-#include <MessageCore/StringUtil>
 #include <QFile>
 #include <QMimeDatabase>
 #include <TemplateParser/TemplateParserJob>

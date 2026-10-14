@@ -7,10 +7,10 @@
 #pragma once
 
 #include <Akonadi/Item>
-#include <KConfigGroup>
 #include <QTreeWidgetItem>
 #include <QWidget>
 class QTreeWidget;
+class KConfigGroup;
 namespace FollowUpReminder
 {
 class FollowUpReminderInfo;

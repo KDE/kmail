@@ -10,7 +10,6 @@
 
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
-#include <MailCommon/SearchPattern>
 
 #include <Akonadi/AgentInstance>
 
@@ -18,6 +17,7 @@ class FilterLogDialog;
 class FilterManager;
 class KJob;
 class DummyKernel;
+class QTimer;
 
 namespace Akonadi
 {

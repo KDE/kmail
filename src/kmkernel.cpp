@@ -30,7 +30,6 @@ using PimCommon::RecentAddresses;
 #include <MailCommon/FolderTreeView>
 #include <MailCommon/KMFilterDialog>
 #include <MailCommon/MailUtil>
-#include <MessageCore/StringUtil>
 #include <PimCommon/PimUtil>
 #include <mailcommon/mailcommonsettings_base.h>
 #include <mailcommon/pop3settings.h>
@@ -48,7 +47,6 @@ using KMail::MailServiceImpl;
 
 #include <MessageComposer/AkonadiSender>
 #include <MessageComposer/MessageComposerSettings>
-#include <MessageComposer/MessageHelper>
 #include <MessageCore/MessageCoreSettings>
 #include <MessageList/MessageListUtil>
 #include <MessageViewer/MessageViewerSettings>
@@ -69,29 +67,29 @@ using KMail::MailServiceImpl;
 #include <KConfig>
 #include <KConfigGroup>
 #include <KCrash>
-#include <KIO/JobUiDelegate>
 #include <KMessageBox>
 
 #include <Akonadi/AgentManager>
 #include <Akonadi/AttributeFactory>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/Collection>
-#include <Akonadi/CollectionFetchJob>
-#include <Akonadi/CollectionStatisticsJob>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/Session>
-#include <KMime/Headers>
 #include <KMime/Message>
 
 #include <Libkleo/FileSystemWatcher>
 #include <Libkleo/GnuPG>
 #include <Libkleo/KeyCache>
 
+#include <QDBusInterface>
+#include <QDBusReply>
 #include <QDir>
 #include <QFileInfo>
+#include <QStack>
+#include <QTimer>
 #include <QUrl>
 #include <QWidget>
 
@@ -104,7 +102,6 @@ using KMail::MailServiceImpl;
 #include <kmailadaptor.h>
 #include <pimcommon/imapresourcesettings.h>
 
-#include "kmail_options.h"
 #include "searchdialog/searchdescriptionattribute.h"
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
 #include "activities/activitiesmanager.h"

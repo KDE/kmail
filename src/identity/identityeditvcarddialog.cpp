@@ -14,10 +14,10 @@
 #include <QStandardPaths>
 
 #include <QDialogButtonBox>
+#include <QFile>
 #include <QFileInfo>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <qdialog.h>
 using namespace Qt::Literals::StringLiterals;
 
 IdentityEditVcardDialog::IdentityEditVcardDialog(const QString &fileName, QWidget *parent)

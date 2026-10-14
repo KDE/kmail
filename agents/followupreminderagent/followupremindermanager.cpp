@@ -15,7 +15,6 @@
 
 #include <Akonadi/SpecialMailCollections>
 
-#include <KConfig>
 #include <KConfigGroup>
 #include <KLocalizedString>
 #include <KNotification>

@@ -18,7 +18,6 @@
 
 #include <MessageComposer/AttachmentModel>
 
-#include <QContextMenuEvent>
 #include <QDrag>
 #include <QHBoxLayout>
 #include <QHeaderView>

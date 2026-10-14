@@ -5,10 +5,11 @@
 */
 #pragma once
 
-#include "MailCommon/Tag"
 #include "config-kmail.h"
 #include "configuredialog_p.h"
 #include "kmail_export.h"
+#include <MailCommon/Tag>
+#include <QFont>
 #include <QListWidgetItem>
 
 class QPushButton;
@@ -38,7 +39,6 @@ class ThemeComboBox;
 
 namespace MailCommon
 {
-class Tag;
 using TagPtr = QSharedPointer<Tag>;
 class TagWidget;
 }

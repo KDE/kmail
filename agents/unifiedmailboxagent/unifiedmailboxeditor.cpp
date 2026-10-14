@@ -15,6 +15,9 @@
 #include <QSortFilterProxyModel>
 #include <QVBoxLayout>
 
+#include <Akonadi/Collection>
+#include <Akonadi/EntityTreeModel>
+
 #include <KCheckableProxyModel>
 #include <KIconDialog>
 #include <KLocalizedString>

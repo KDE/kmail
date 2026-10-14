@@ -6,6 +6,7 @@
 #include "archivemailinfo.h"
 
 #include "archivemailagent_debug.h"
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <QDir>
 

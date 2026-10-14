@@ -23,6 +23,7 @@
 #include <KMessageBox>
 
 #include <QFileDialog>
+#include <QFontDatabase>
 #include <QImageReader>
 
 using namespace KMail;

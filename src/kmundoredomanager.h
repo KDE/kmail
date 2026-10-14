@@ -10,6 +10,7 @@
 #include <QObject>
 #include <QUndoCommand>
 class QUndoStack;
+class KJob;
 namespace KMail
 {
 class KMUndoRedoManager : public QObject

@@ -11,14 +11,12 @@
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KMime/Message>
-#include <MessageComposer/MessageHelper>
-#include <MessageCore/StringUtil>
+#include <KMime/Util>
 #include <TextAddonsWidgets/ExecutableUtils>
 
 #include <KEmailAddress>
 #include <QAction>
 #include <QProcess>
-#include <QStandardPaths>
 
 using namespace MailCommon;
 using namespace KMail;

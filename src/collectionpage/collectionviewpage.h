@@ -6,18 +6,20 @@
 
 #pragma once
 
-#include <Akonadi/Collection>
 #include <Akonadi/CollectionPropertiesPage>
-#include <MailCommon/FolderSettings>
+#include <QSharedPointer>
 class QCheckBox;
 class QLabel;
 class KIconButton;
-template<typename T>
-class QSharedPointer;
 
+namespace Akonadi
+{
+class Collection;
+}
 namespace MailCommon
 {
 class CollectionViewWidget;
+class FolderSettings;
 }
 class CollectionViewPage : public Akonadi::CollectionPropertiesPage
 {

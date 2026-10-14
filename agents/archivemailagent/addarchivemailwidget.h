@@ -6,17 +6,19 @@
 
 #pragma once
 
-#include "archivemailinfo.h"
 #include <QWidget>
-class QUrl;
 class QCheckBox;
 class KUrlRequester;
 class QSpinBox;
-class QPushButton;
 
+class ArchiveMailInfo;
 class FormatComboBox;
 class UnitComboBox;
 class ArchiveMailRangeWidget;
+namespace Akonadi
+{
+class Collection;
+}
 namespace MailCommon
 {
 class FolderRequester;

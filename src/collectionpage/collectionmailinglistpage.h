@@ -9,17 +9,20 @@
 
 #pragma once
 
-#include <MailCommon/FolderSettings>
 #include <MessageCore/MailingList>
 
 #include <Akonadi/Collection>
 #include <Akonadi/CollectionPropertiesPage>
 
+#include <QSharedPointer>
+
 class QCheckBox;
 class QPushButton;
 
-template<typename T>
-class QSharedPointer;
+namespace MailCommon
+{
+class FolderSettings;
+}
 
 class QComboBox;
 class KJob;
@@ -56,7 +59,7 @@ private:
     Akonadi::Collection mCurrentCollection;
     QSharedPointer<MailCommon::FolderSettings> mFolder;
 
-    MailingList mMailingList;
+    MessageCore::MailingList mMailingList;
     QCheckBox *mHoldsMailingList = nullptr;
     QComboBox *mMLHandlerCombo = nullptr;
     QPushButton *mDetectButton = nullptr;

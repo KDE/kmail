@@ -10,6 +10,9 @@
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
 #include <MailCommon/FolderSettings>
+class QAction;
+class QUrl;
+class QWidget;
 
 namespace KMail
 {

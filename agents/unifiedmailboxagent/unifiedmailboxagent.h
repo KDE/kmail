@@ -11,8 +11,6 @@
 
 #include "unifiedmailboxmanager.h"
 
-#include <QHash>
-
 /* Despite its name, this is actually a Resource, but it acts as an Agent: it
  * listens to notifications about Items that belong to other resources and acts
  * on them.

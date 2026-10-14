@@ -8,14 +8,15 @@
 
 #pragma once
 
-#include <MailCommon/FolderSettings>
-
+#include <Akonadi/Collection>
 #include <Akonadi/CollectionPropertiesPage>
-
-template<typename T>
-class QSharedPointer;
+#include <QSharedPointer>
 
 class KKeySequenceWidget;
+namespace MailCommon
+{
+class FolderSettings;
+}
 
 class CollectionShortcutPage : public Akonadi::CollectionPropertiesPage
 {

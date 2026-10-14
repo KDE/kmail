@@ -22,7 +22,6 @@
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
 #include <MailCommon/FolderSelectionDialog>
-#include <PimCommonAkonadi/MailUtil>
 #include <TemplateParser/CustomTemplatesMenu>
 #include <TextAddonsWidgets/ExecutableUtils>
 
@@ -69,7 +68,6 @@
 #include <TextAddonsWidgets/WhatsNewMessageNgWidget>
 #include <TextAddonsWidgets/WhatsNewNgDialog>
 
-#include <kmime/content.h>
 #include <mailcommon/mailcommonsettings_base.h>
 
 #include <MessageViewer/HeaderStyle>
@@ -77,16 +75,12 @@
 #include <MessageViewer/MessageViewerSettings>
 #include <MessageViewer/Viewer>
 
-#include <MessageViewer/AttachmentStrategy>
-#include <MessageViewer/MessageViewerCheckBeforeDeletingPluginManager>
-
 #include <KColorSchemeMenu>
 #include <KCursorSaver>
 
 #include <MessageComposer/MessageHelper>
 #include <MessageComposer/MessageSender>
 
-#include <MessageCore/MailingList>
 #include <MessageCore/MessageCoreSettings>
 
 #include "dialog/kmknotify.h"
@@ -100,21 +94,14 @@
 
 #include <Akonadi/AgentInstance>
 #include <Akonadi/AgentManager>
-#include <Akonadi/AgentType>
-#include <Akonadi/AttributeFactory>
 #include <Akonadi/CachePolicy>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/ClearCacheFoldersJob>
-#include <Akonadi/CollectionAttributesSynchronizationJob>
-#include <Akonadi/CollectionDialog>
-#include <Akonadi/CollectionFetchJob>
-#include <Akonadi/CollectionFetchScope>
 #include <Akonadi/CollectionPropertiesDialog>
 #include <Akonadi/CollectionStatistics>
 #include <Akonadi/ContactSearchJob>
 #include <Akonadi/ControlGui>
 #include <Akonadi/ETMViewStateSaver>
-#include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/EntityListView>
 #include <Akonadi/EntityMimeTypeFilterModel>
 #include <Akonadi/EntityTreeModel>
@@ -123,8 +110,8 @@
 #include <Akonadi/ItemFetchScope>
 #include <Akonadi/ItemModifyJob>
 #include <Akonadi/MessageFlags>
-#include <Akonadi/Session>
 #include <Akonadi/StandardActionManager>
+#include <Akonadi/Tag>
 
 #include <KEmailAddress>
 #include <KIdentityManagementCore/Identity>
@@ -133,7 +120,6 @@
 #include <KSieveCore/Util>
 #include <KSieveUi/ManageSieveScriptsDialog>
 #include <MailTransport/Transport>
-#include <MailTransport/TransportManager>
 
 #include "kmail_debug.h"
 

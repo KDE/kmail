@@ -26,6 +26,7 @@
 #include <QHeaderView>
 #include <QPushButton>
 #include <QTreeWidget>
+#include <QVBoxLayout>
 #include <TextAddonsWidgets/LoadDialogSizeUtils>
 namespace
 {

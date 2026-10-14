@@ -18,6 +18,7 @@
 
 #include <KLocalizedString>
 
+#include <QApplication>
 #include <QIcon>
 
 #include <QMimeDatabase>

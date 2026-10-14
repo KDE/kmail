@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <KConfigGroup>
 #include <QWidget>
+
+class KConfigGroup;
 
 class RefreshSettingsCleanupPage : public QWidget
 {

@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "configuredialog_p.h"
+#include "configmodule.h"
+#include "kmail_export.h"
 
-#include <QWidget>
 namespace PimCommon
 {
 class ConfigurePluginsWidget;

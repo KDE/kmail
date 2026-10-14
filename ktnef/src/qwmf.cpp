@@ -14,7 +14,7 @@
 #include <QBuffer>
 #include <QDataStream>
 #include <QFile>
-#include <QPainterPath>
+#include <QImage>
 #include <QPolygon>
 
 #include "ktnef_debug.h"
