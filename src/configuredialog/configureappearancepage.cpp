@@ -143,7 +143,7 @@ AppearancePageFontsTab::AppearancePageFontsTab(QWidget *parent)
     , mFontLocationCombo(new QComboBox(this))
     , mFontChooser(new KFontChooser(KFontChooser::DisplayFrame, this))
 {
-    assert(numFontNames == sizeof mFont / sizeof *mFont);
+    static_assert(numFontNames == sizeof mFont / sizeof *mFont);
 
     // "Use custom fonts" checkbox, followed by <hr>
     auto vlay = new QVBoxLayout(this);
