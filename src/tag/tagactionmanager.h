@@ -8,8 +8,11 @@
 
 #include "kmail_export.h"
 #include "mailcommon/tag.h"
+
 #include <QList>
 #include <QMap>
+#include <QObject>
+
 class KActionCollection;
 class KXMLGUIClient;
 class KToggleAction;

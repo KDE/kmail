@@ -7,11 +7,15 @@
 
 #include "clearcachejobinfolderandsubfolderjob.h"
 #include "kmail_debug.h"
+
 #include <Akonadi/ClearCacheFoldersJob>
 #include <Akonadi/CollectionFetchJob>
 #include <Akonadi/CollectionFetchScope>
-#include <KLocalizedString>
 #include <Libkdepim/ProgressManager>
+
+#include <KLocalizedString>
+
+#include <QVariant>
 
 ClearCacheJobInFolderAndSubFolderJob::ClearCacheJobInFolderAndSubFolderJob(QObject *parent, QWidget *parentWidget)
     : QObject(parent)
