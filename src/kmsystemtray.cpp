@@ -19,7 +19,7 @@
 
 #include "widgets/kactionmenutransport.h"
 
-#if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
+#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
 #define HAVE_X11 1
 #include <KWindowInfo>
 #include <KX11Extras>
