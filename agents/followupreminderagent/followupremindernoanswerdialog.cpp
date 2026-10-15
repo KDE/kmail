@@ -25,9 +25,9 @@
 using namespace Qt::Literals::StringLiterals;
 namespace
 {
-static constexpr const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
-static constexpr const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
-static constexpr const char DialogGroup[] = "FollowUpReminderNoAnswerDialog";
+constexpr const char s_fdo_notifications_service[] = "org.freedesktop.Notifications";
+constexpr const char s_fdo_notifications_path[] = "/org/freedesktop/Notifications";
+constexpr const char DialogGroup[] = "FollowUpReminderNoAnswerDialog";
 }
 
 FollowUpReminderNoAnswerDialog::FollowUpReminderNoAnswerDialog(QWidget *parent)

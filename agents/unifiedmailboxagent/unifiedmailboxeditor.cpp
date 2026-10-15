@@ -29,7 +29,7 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
-static constexpr const char *EditorGroup = "UnifiedMailboxEditorDialog";
+constexpr const char *EditorGroup = "UnifiedMailboxEditorDialog";
 
 class SelfFilterProxyModel : public QSortFilterProxyModel
 {

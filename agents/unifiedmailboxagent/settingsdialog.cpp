@@ -30,7 +30,7 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace
 {
-static constexpr const char *DialogGroup = "UnifiedMailboxSettingsDialog";
+constexpr const char *DialogGroup = "UnifiedMailboxSettingsDialog";
 }
 
 SettingsDialog::SettingsDialog(const KSharedConfigPtr &config, UnifiedMailboxManager &boxManager, WId, QWidget *parent)
