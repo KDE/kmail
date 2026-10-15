@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:48+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2025-08-20 15:16+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -20,60 +20,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 25.08.0\n"
 
-#: addarchivemaildialog.cpp:21
+#: addarchivemaildialog.cpp:22
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Aldatu posta artxiboa"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
+#: addarchivemaildialog.cpp:24 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Gehitu posta artxiboa"
 
-#: addarchivemailwidget.cpp:27
+#: addarchivemailwidget.cpp:29
 #, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Artxibatu azpikarpeta guztiak"
 
-#: addarchivemailwidget.cpp:37
+#: addarchivemailwidget.cpp:39
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Karpeta:"
 
-#: addarchivemailwidget.cpp:47
+#: addarchivemailwidget.cpp:49
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Formatua:"
 
-#: addarchivemailwidget.cpp:55
+#: addarchivemailwidget.cpp:57
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Bide-izena:"
 
-#: addarchivemailwidget.cpp:62
+#: addarchivemailwidget.cpp:64
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Babes-kopia hainbestero:"
 
-#: addarchivemailwidget.cpp:74
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Artxiboen gehienezko kopurua:"
 
-#: addarchivemailwidget.cpp:77
+#: addarchivemailwidget.cpp:79
 #, kde-format
 msgid "unlimited"
 msgstr "mugagabea"
 
-#: archivemailinfo.cpp:68 archivemailinfo.cpp:84
+#: archivemailinfo.cpp:69 archivemailinfo.cpp:85
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
@@ -85,73 +85,73 @@ msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Erabili barrutia"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Name"
 msgstr "Izena"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Last archive"
 msgstr "Azken artxiboa"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Next archive in"
 msgstr "Hurrengo artxiboa hemen,"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Storage directory"
 msgstr "Biltegiratzeko direktorioa"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:100
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Gehitu…"
 
-#: archivemailwidget.cpp:100
+#: archivemailwidget.cpp:106
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Ireki hau barnean duen karpeta..."
 
-#: archivemailwidget.cpp:103
+#: archivemailwidget.cpp:109
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Ezabatu"
 
-#: archivemailwidget.cpp:160
+#: archivemailwidget.cpp:166
 #, kde-format
 msgid "Folder: %1"
 msgstr "Karpeta: %1"
 
-#: archivemailwidget.cpp:182
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Bihar"
 msgstr[1] "%1 egun"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:197
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Artxiboa egiteko %1"
 
-#: archivemailwidget.cpp:227
+#: archivemailwidget.cpp:233
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Hautatutako elementuak ezabatu nahi dituzu?"
 
-#: archivemailwidget.cpp:228
+#: archivemailwidget.cpp:234
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Ezabatu elementuak"
 
-#: archivemailwidget.cpp:267
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

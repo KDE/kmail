@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:48+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2026-08-25 19:33+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -337,9 +337,9 @@ msgstr "Korjasi monia IMAP-ohjelmavirheitä"
 
 # pmap: =/gen=KMailin/
 # pmap: =/elat=KMailista/
-#: aboutdata.cpp:195 collectionpage/collectionmailinglistpage.cpp:78
-#: kmmainwidget.cpp:4225 kmreaderwin.cpp:265 kmsystemtray.cpp:50
-#: kmsystemtray.cpp:79
+#: aboutdata.cpp:195 collectionpage/collectionmailinglistpage.cpp:79
+#: kmmainwidget.cpp:4211 kmreaderwin.cpp:261 kmsystemtray.cpp:45
+#: kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -354,98 +354,98 @@ msgstr "KDE:n sähköpostiohjelma"
 msgid "Copyright © %1, KMail authors"
 msgstr "Tekijänoikeudet © %1 KMailin tekijät"
 
-#: collectionpage/collectionmailinglistpage.cpp:40
+#: collectionpage/collectionmailinglistpage.cpp:41
 #, kde-format
 msgctxt "@title:tab Mailing list settings for a folder."
 msgid "Mailing List"
 msgstr "Postituslista"
 
-#: collectionpage/collectionmailinglistpage.cpp:63
+#: collectionpage/collectionmailinglistpage.cpp:64
 #, kde-format
 msgctxt "@option:check"
 msgid "Folder contains a single mailing list"
 msgstr "Kansio sisältää yksittäisen postilistan"
 
-#: collectionpage/collectionmailinglistpage.cpp:68
+#: collectionpage/collectionmailinglistpage.cpp:69
 #, kde-format
 msgctxt "@action:button"
 msgid "Detect Automatically"
 msgstr "Tunnista automaattisesti"
 
-#: collectionpage/collectionmailinglistpage.cpp:74
+#: collectionpage/collectionmailinglistpage.cpp:75
 #, kde-format
 msgid "Mailing list description:"
 msgstr "Sähköpostilistan kuvaus:"
 
-#: collectionpage/collectionmailinglistpage.cpp:79
+#: collectionpage/collectionmailinglistpage.cpp:80
 #, kde-format
 msgid "Browser"
 msgstr "Selain"
 
-#: collectionpage/collectionmailinglistpage.cpp:82
+#: collectionpage/collectionmailinglistpage.cpp:83
 #, kde-format
 msgid "Preferred handler:"
 msgstr "Haluttu käsittelijä:"
 
-#: collectionpage/collectionmailinglistpage.cpp:94
+#: collectionpage/collectionmailinglistpage.cpp:95
 #, kde-format
 msgctxt "@action:button"
 msgid "Invoke Handler"
 msgstr "Kutsu käsittelijää"
 
-#: collectionpage/collectionmailinglistpage.cpp:101
+#: collectionpage/collectionmailinglistpage.cpp:102
 #, kde-format
 msgid "Address type:"
 msgstr "Osoitteen tyyppi:"
 
-#: collectionpage/collectionmailinglistpage.cpp:103
+#: collectionpage/collectionmailinglistpage.cpp:104
 #, kde-format
 msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "Sähköpostilistalle lähettämisen verkko-osoite:"
 
-#: collectionpage/collectionmailinglistpage.cpp:112 messageactions.cpp:464
+#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:462
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Liity listalle"
 
-#: collectionpage/collectionmailinglistpage.cpp:112
+#: collectionpage/collectionmailinglistpage.cpp:113
 #, kde-format
 msgid "Post to List"
 msgstr "Postita listalle"
 
-#: collectionpage/collectionmailinglistpage.cpp:112
+#: collectionpage/collectionmailinglistpage.cpp:113
 #, kde-format
 msgid "Unsubscribe From List"
 msgstr "Poistu listalta"
 
-#: collectionpage/collectionmailinglistpage.cpp:112
+#: collectionpage/collectionmailinglistpage.cpp:113
 #, kde-format
 msgid "List Archives"
 msgstr "Lista-arkistot"
 
-#: collectionpage/collectionmailinglistpage.cpp:112
+#: collectionpage/collectionmailinglistpage.cpp:113
 #, kde-format
 msgid "List Help"
 msgstr "Lista-ohje"
 
-#: collectionpage/collectionmailinglistpage.cpp:131
+#: collectionpage/collectionmailinglistpage.cpp:132
 #, kde-format
 msgid "Not available"
 msgstr "Ei käytössä"
 
-#: collectionpage/collectionmailinglistpage.cpp:184
-#: collectionpage/collectionmailinglistpage.cpp:218
+#: collectionpage/collectionmailinglistpage.cpp:185
+#: collectionpage/collectionmailinglistpage.cpp:219
 #, kde-format
 msgid "Not available."
 msgstr "Ei käytettävissä."
 
-#: collectionpage/collectionmailinglistpage.cpp:211
+#: collectionpage/collectionmailinglistpage.cpp:212
 #, kde-format
 msgid "KMail was unable to detect any mailing list in this folder."
 msgstr "KMail ei tunnistanut tästä kansiosta postituslistoja."
 
-#: collectionpage/collectionmailinglistpage.cpp:214
+#: collectionpage/collectionmailinglistpage.cpp:215
 #, kde-format
 msgid ""
 "KMail was unable to fully detect a mailing list in this folder. Please fill "
@@ -482,13 +482,13 @@ msgstr "%p % täynnä"
 msgid "%1 of %2 used"
 msgstr "%1/%2 käytössä"
 
-#: collectionpage/collectionshortcutpage.cpp:31
+#: collectionpage/collectionshortcutpage.cpp:32
 #, kde-format
 msgctxt "@title:tab Shortcut settings for a folder."
 msgid "Shortcut"
 msgstr "Pikanäppäin"
 
-#: collectionpage/collectionshortcutpage.cpp:44
+#: collectionpage/collectionshortcutpage.cpp:45
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -506,25 +506,25 @@ msgctxt "@title:tab Templates settings page."
 msgid "Templates"
 msgstr "Viestipohjat"
 
-#: collectionpage/collectionviewpage.cpp:36
+#: collectionpage/collectionviewpage.cpp:32
 #, kde-format
 msgctxt "@title:tab View settings for a folder."
 msgid "View"
 msgstr "Näkymä"
 
-#: collectionpage/collectionviewpage.cpp:57
+#: collectionpage/collectionviewpage.cpp:53
 #, kde-format
 msgctxt "@option:check"
 msgid "Use custom &icons"
 msgstr "Käytä &omia kuvakkeita"
 
-#: collectionpage/collectionviewpage.cpp:61
+#: collectionpage/collectionviewpage.cpp:57
 #, kde-format
 msgctxt "Icon used for folders with no unread messages."
 msgid "&Normal:"
 msgstr "&Normaali:"
 
-#: collectionpage/collectionviewpage.cpp:73
+#: collectionpage/collectionviewpage.cpp:69
 #, kde-format
 msgctxt "Icon used for folders which do have unread messages."
 msgid "&Unread:"
@@ -557,124 +557,124 @@ msgctxt "@option:check"
 msgid "Enable Speech To Text"
 msgstr ""
 
-#: configuredialog/configureaccountpage.cpp:55
+#: configuredialog/configureaccountpage.cpp:56
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures identities"
 msgid "Identities"
 msgstr "Henkilöydet"
 
-#: configuredialog/configureaccountpage.cpp:61
+#: configuredialog/configureaccountpage.cpp:62
 #, kde-format
 msgctxt ""
 "@title:tab Tab page where the user configures accounts to receive mail"
 msgid "Receiving"
 msgstr "Saapuva"
 
-#: configuredialog/configureaccountpage.cpp:68
+#: configuredialog/configureaccountpage.cpp:69
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures accounts to send mail"
 msgid "Sending"
 msgstr "Lähtevä"
 
-#: configuredialog/configureaccountpage.cpp:74
+#: configuredialog/configureaccountpage.cpp:75
 #, kde-format
 msgctxt "@title:tab Tab page where the user configures ldap server"
 msgid "LDAP server"
 msgstr "LDAP-palvelin"
 
-#: configuredialog/configureaccountpage.cpp:88
+#: configuredialog/configureaccountpage.cpp:89
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Outgoing accounts (add at least one):"
 msgstr "Lähtevät tilit (lisää vähintään yksi):"
 
-#: configuredialog/configureaccountpage.cpp:99
+#: configuredialog/configureaccountpage.cpp:100
 #, kde-format
 msgctxt "@option:check"
 msgid "&Confirm action"
 msgstr "&Vahvista toimenpide"
 
-#: configuredialog/configureaccountpage.cpp:101
+#: configuredialog/configureaccountpage.cpp:102
 #, kde-format
 msgid "Before sending:"
 msgstr "Ennen lähettämistä:"
 
-#: configuredialog/configureaccountpage.cpp:103
+#: configuredialog/configureaccountpage.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Check spelling"
 msgstr "Tarkista oikeinkirjoitus"
 
-#: configuredialog/configureaccountpage.cpp:110
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "Never Automatically"
 msgstr "Älä koskaan lähetä automaattisesti"
 
-#: configuredialog/configureaccountpage.cpp:110
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On Manual Mail Checks"
 msgstr "Käsin tehtävän postintarkistuksen yhteydessä"
 
-#: configuredialog/configureaccountpage.cpp:110
+#: configuredialog/configureaccountpage.cpp:111
 #, kde-format
 msgid "On All Mail Checks"
 msgstr "Aina postia tarkistettaessa"
 
-#: configuredialog/configureaccountpage.cpp:112
+#: configuredialog/configureaccountpage.cpp:113
 #, kde-format
 msgid "Send &messages in outbox folder:"
 msgstr "&Lähetä lähtevät-kansiossa olevat viestit:"
 
-#: configuredialog/configureaccountpage.cpp:118
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Now"
 msgstr "Lähetä heti"
 
-#: configuredialog/configureaccountpage.cpp:118
+#: configuredialog/configureaccountpage.cpp:119
 #, kde-format
 msgid "Send Later"
 msgstr "Lähetä myöhemmin"
 
-#: configuredialog/configureaccountpage.cpp:119
+#: configuredialog/configureaccountpage.cpp:120
 #, kde-format
 msgid "Defa&ult send method:"
 msgstr "Oletus&lähetystapa:"
 
-#: configuredialog/configureaccountpage.cpp:123
+#: configuredialog/configureaccountpage.cpp:124
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Undo Send"
 msgstr "Käytä lähetyksen perumista"
 
-#: configuredialog/configureaccountpage.cpp:194
+#: configuredialog/configureaccountpage.cpp:196
 #, kde-format
 msgid "Add Mail Account…"
 msgstr "Lisää sähköpostitili.."
 
-#: configuredialog/configureaccountpage.cpp:195
+#: configuredialog/configureaccountpage.cpp:197
 #, kde-format
 msgid "Custom Account…"
 msgstr "Mukautettu tili…"
 
-#: configuredialog/configureaccountpage.cpp:258
+#: configuredialog/configureaccountpage.cpp:260
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Include in Manual Mail Check"
 msgstr "Sisällytä käsin tehtyyn tarkastukseen"
 
-#: configuredialog/configureaccountpage.cpp:266
+#: configuredialog/configureaccountpage.cpp:268
 #, kde-format
 msgctxt "Label to a checkbox, so is either checked/unchecked"
 msgid "Switch offline on KMail Shutdown"
 msgstr "Siirry verkottomaan tilaan KMailia lopetettaessa"
 
-#: configuredialog/configureaccountpage.cpp:273
+#: configuredialog/configureaccountpage.cpp:275
 #, kde-format
 msgctxt "@action"
 msgid "Check mail on startup"
 msgstr "Tarkista posti käynnistettäessä"
 
-#: configuredialog/configureaccountpage.cpp:343
+#: configuredialog/configureaccountpage.cpp:345
 #, kde-format
 msgid ""
 "New Mail Notifier Agent not registered. Please contact your administrator."
@@ -1471,28 +1471,28 @@ msgid "Add"
 msgstr "Lisää"
 
 #: configuredialog/configuredialoglistview.cpp:58
-#: identity/identityngpage.cpp:247
+#: identity/identityngpage.cpp:245
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Poista"
 
-#: configuredialog/configuremiscpage.cpp:36
+#: configuredialog/configuremiscpage.cpp:37
 #, kde-format
 msgid "Folders"
 msgstr "&Kansiot"
 
-#: configuredialog/configuremiscpage.cpp:39
+#: configuredialog/configuremiscpage.cpp:40
 #, kde-format
 msgid "Invitations"
 msgstr "Kutsut"
 
-#: configuredialog/configuremiscpage.cpp:42
+#: configuredialog/configuremiscpage.cpp:43
 #, kde-format
 msgid "Printing"
 msgstr "Tulostus"
 
-#: configuredialog/configuremiscpage.cpp:45
+#: configuredialog/configuremiscpage.cpp:46
 #, kde-format
 msgid "User Feedback"
 msgstr "Käyttäjäpalaute"
@@ -1558,60 +1558,60 @@ msgstr "Vahvista sähköpostiliitännäisten poistaminen"
 msgid "Akonadi Agents"
 msgstr "Akonadi-agentit"
 
-#: configuredialog/configuresecuritypage.cpp:48
+#: configuredialog/configuresecuritypage.cpp:50
 #, kde-format
 msgid "Reading"
 msgstr "&Lukeminen"
 
-#: configuredialog/configuresecuritypage.cpp:50
+#: configuredialog/configuresecuritypage.cpp:52
 #, kde-format
 msgid "Message Disposition Notifications"
 msgstr "Vastaanottokuittaukset"
 
-#: configuredialog/configuresecuritypage.cpp:56
+#: configuredialog/configuresecuritypage.cpp:58
 #, kde-format
 msgid "Encryption"
 msgstr "Salaus"
 
-#: configuredialog/configuresecuritypage.cpp:62
+#: configuredialog/configuresecuritypage.cpp:64
 #, kde-format
 msgid "S/MIME Validation"
 msgstr "S/MIME-&varmistus"
 
-#: configuredialog/configuresecuritypage.cpp:89
+#: configuredialog/configuresecuritypage.cpp:91
 #, kde-format
 msgid "Email Address:"
 msgstr "Sähköpostiosoite:"
 
-#: configuredialog/configuresecuritypage.cpp:90
+#: configuredialog/configuresecuritypage.cpp:92
 #, kde-format
 msgid "Do you want to remove this email address?"
 msgstr "Haluatko poistaa tämän sähköpostiosoitteen?"
 
-#: configuredialog/configuresecuritypage.cpp:125
+#: configuredialog/configuresecuritypage.cpp:127
 #, kde-format
 msgid ""
 "Changing the global HTML setting will override all folder specific values."
 msgstr ""
 "Yleisen HTML-asetuksen muuttaminen ohittaa kaikki kansiokohtaiset asetukset."
 
-#: configuredialog/configuresecuritypage.cpp:282
-#: configuredialog/configuresecuritypage.cpp:283
 #: configuredialog/configuresecuritypage.cpp:284
 #: configuredialog/configuresecuritypage.cpp:285
+#: configuredialog/configuresecuritypage.cpp:286
+#: configuredialog/configuresecuritypage.cpp:287
 #, kde-format
 msgid "%v day"
 msgid_plural "%v days"
 msgstr[0] "%v päivä"
 msgstr[1] "%v päivää"
 
-#: configuredialog/configuresecuritypage.cpp:316
+#: configuredialog/configuresecuritypage.cpp:318
 #, kde-format
 msgctxt "@title:window"
 msgid "GnuPG Settings"
 msgstr "GnuPG-asetukset"
 
-#: configuredialog/configuresecuritypage.cpp:323
+#: configuredialog/configuresecuritypage.cpp:325
 #, kde-format
 msgctxt "@label:textbox"
 msgid ""
@@ -1619,23 +1619,23 @@ msgid ""
 "provided by kdepim-addons."
 msgstr "Moduuli puuttuu: tarkista asennus. Moduulin tarjoaa kdepim-addons."
 
-#: configuredialog/configuresecuritypage.cpp:328
+#: configuredialog/configuresecuritypage.cpp:330
 #, kde-format
 msgid "GnuPG Configure Module Error"
 msgstr "GnuPG-asetusosion virhe"
 
-#: configuredialog/configuresecuritypage.cpp:392
+#: configuredialog/configuresecuritypage.cpp:394
 #, kde-format
 msgid "This option requires dirmngr >= 0.9.0"
 msgstr "Tämä optio tarvitsee dirmngr 0.9.0 tai uudemman"
 
 #. i18n: ectx: property (text), widget (QLabel, systemHTTPProxy)
-#: configuredialog/configuresecuritypage.cpp:504 ui/smimeconfiguration.ui:186
+#: configuredialog/configuresecuritypage.cpp:506 ui/smimeconfiguration.ui:186
 #, kde-format
 msgid "no proxy"
 msgstr "ei välityspalvelinta"
 
-#: configuredialog/configuresecuritypage.cpp:506
+#: configuredialog/configuresecuritypage.cpp:508
 #, kde-format
 msgid "(Current system setting: %1)"
 msgstr "(Nykyiset järjestelmän asetukset: %1)"
@@ -1663,7 +1663,7 @@ msgctxt "@title:window for archiving a folder"
 msgid "Archive Folder"
 msgstr "Arkistoi kansio"
 
-#: dialog/archivefolderdialog.cpp:63 kmmainwidget.cpp:3693
+#: dialog/archivefolderdialog.cpp:63 kmmainwidget.cpp:3679
 #, kde-format
 msgctxt "@action"
 msgid "Archive"
@@ -1741,379 +1741,379 @@ msgctxt "@title:window"
 msgid "Notification"
 msgstr "Ilmoitus"
 
-#: editor/attachment/attachmentview.cpp:170
+#: editor/attachment/attachmentview.cpp:169
 #, kde-format
 msgid "1 attachment (%2)"
 msgid_plural "%1 attachments (%2)"
 msgstr[0] "1 liite (%2)"
 msgstr[1] "%1 liitettä (%2)"
 
-#: editor/attachment/attachmentview.cpp:202
+#: editor/attachment/attachmentview.cpp:201
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Hide attachment list"
 msgstr "Piilota liiteluettelo"
 
-#: editor/attachment/attachmentview.cpp:204
+#: editor/attachment/attachmentview.cpp:203
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Näytä liiteluettelo"
 
-#: editor/kmcomposerwin.cpp:322 kmail_part.cpp:38 kmmainwin.cpp:94
-#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:40
+#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:36 kmmainwin.cpp:100
+#: kmreadermainwin.cpp:482 kontactplugin/kmail/kmail_plugin.cpp:38
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:353
+#: editor/kmcomposerwin.cpp:357
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
 msgstr "Valitse viestin oikeinkirjoitusta tarkistettaessa käytettävä sanasto"
 
-#: editor/kmcomposerwin.cpp:360
+#: editor/kmcomposerwin.cpp:364
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr "Valitse lähteneiden kansio, johon viestin kopio tallennetaan"
 
-#: editor/kmcomposerwin.cpp:369
+#: editor/kmcomposerwin.cpp:373
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr "Valitse viestiä lähetettäessä käytettävä lähetystili"
 
-#: editor/kmcomposerwin.cpp:378
+#: editor/kmcomposerwin.cpp:382
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Aseta tämän viestin lähettäjäosoite"
 
-#: editor/kmcomposerwin.cpp:408
+#: editor/kmcomposerwin.cpp:412
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Henkilöys:"
 
-#: editor/kmcomposerwin.cpp:409
+#: editor/kmcomposerwin.cpp:413
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Sanasto:"
 
-#: editor/kmcomposerwin.cpp:410
+#: editor/kmcomposerwin.cpp:414
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "&Lähetettyjen kansio:"
 
-#: editor/kmcomposerwin.cpp:411
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "Postin&välitys:"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&Lähettäjä:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:417
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "&Aihe:"
 
-#: editor/kmcomposerwin.cpp:482
+#: editor/kmcomposerwin.cpp:486
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Kirjoitusikkuna"
 
-#: editor/kmcomposerwin.cpp:1244 editor/kmcomposerwin.cpp:1278
+#: editor/kmcomposerwin.cpp:1248 editor/kmcomposerwin.cpp:1282
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Lähetä sähköposti"
 
-#: editor/kmcomposerwin.cpp:1251 editor/kmcomposerwin.cpp:1284
+#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1288
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "&Lähetä sähköposti käyttäen"
 
-#: editor/kmcomposerwin.cpp:1253
+#: editor/kmcomposerwin.cpp:1257
 #, kde-format
 msgid "Send"
 msgstr "Lähetä"
 
-#: editor/kmcomposerwin.cpp:1256 editor/kmcomposerwin.cpp:1268
+#: editor/kmcomposerwin.cpp:1260 editor/kmcomposerwin.cpp:1272
 #, kde-format
 msgid "Send &Later"
 msgstr "Lähetä &myöhemmin"
 
-#: editor/kmcomposerwin.cpp:1262 editor/kmcomposerwin.cpp:1275
+#: editor/kmcomposerwin.cpp:1266 editor/kmcomposerwin.cpp:1279
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Lähetä &myöhemmin käyttäen"
 
-#: editor/kmcomposerwin.cpp:1264
+#: editor/kmcomposerwin.cpp:1268
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "Pane jonoon"
 
-#: editor/kmcomposerwin.cpp:1293
+#: editor/kmcomposerwin.cpp:1297
 #, kde-format
 msgid "Save as &Draft"
 msgstr "Tallenna &luonnokseksi"
 
-#: editor/kmcomposerwin.cpp:1295
+#: editor/kmcomposerwin.cpp:1299
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "Tallenna viesti luonnoskansioon"
 
-#: editor/kmcomposerwin.cpp:1299
+#: editor/kmcomposerwin.cpp:1303
 #, kde-format
 msgid "Save as &Template"
 msgstr "Tallenna &viestipohjaksi"
 
-#: editor/kmcomposerwin.cpp:1300
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "Tallenna viesti viestipohjakansioon"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1308
 #, kde-format
 msgid "Save as &File"
 msgstr "Tallenna tiedostoksi"
 
-#: editor/kmcomposerwin.cpp:1305
+#: editor/kmcomposerwin.cpp:1309
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "Tallenna viesti teksti- tai HTML-tiedostoksi"
 
-#: editor/kmcomposerwin.cpp:1309
+#: editor/kmcomposerwin.cpp:1313
 #, kde-format
 msgid "&Insert Text File…"
 msgstr "L&isää tekstitiedosto…"
 
-#: editor/kmcomposerwin.cpp:1313
+#: editor/kmcomposerwin.cpp:1317
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "L&isää viimeaikainen tekstitiedosto"
 
-#: editor/kmcomposerwin.cpp:1323 kmmainwidget.cpp:3012
+#: editor/kmcomposerwin.cpp:1327 kmmainwidget.cpp:2998
 #, kde-format
 msgid "&Address Book"
 msgstr "&Osoitekirja"
 
-#: editor/kmcomposerwin.cpp:1324
+#: editor/kmcomposerwin.cpp:1328
 #, kde-format
 msgid "Open Address Book"
 msgstr "Avaa osoitekirja"
 
-#: editor/kmcomposerwin.cpp:1331
+#: editor/kmcomposerwin.cpp:1335
 #, kde-format
 msgid "&New Composer"
 msgstr "&Uusi viesti"
 
-#: editor/kmcomposerwin.cpp:1337
+#: editor/kmcomposerwin.cpp:1341
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "&Valitse vastaanottajat…"
 
-#: editor/kmcomposerwin.cpp:1340
+#: editor/kmcomposerwin.cpp:1344
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Talleta &jakelulista…"
 
-#: editor/kmcomposerwin.cpp:1364
+#: editor/kmcomposerwin.cpp:1368
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "&Liitä liitteeksi"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1372
 #, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Pu&hdista välilyönnit"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1376
 #, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Käytä &tasavälistä fonttia"
 
-#: editor/kmcomposerwin.cpp:1378
+#: editor/kmcomposerwin.cpp:1382
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "K&iireinen"
 
 # Tässä olisi hyvä tietää sanan ”disposition” täsmällinen käyttö, mutta yksi merkitys on siirto yhdeltä toiselle
-#: editor/kmcomposerwin.cpp:1380
+#: editor/kmcomposerwin.cpp:1384
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "P&yydä välityskuittausta"
 
-#: editor/kmcomposerwin.cpp:1384
+#: editor/kmcomposerwin.cpp:1388
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Pyydä vastaanotto&kuittausta"
 
-#: editor/kmcomposerwin.cpp:1389
+#: editor/kmcomposerwin.cpp:1393
 #, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Rivitys"
 
-#: editor/kmcomposerwin.cpp:1394
+#: editor/kmcomposerwin.cpp:1398
 #, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "L&eikkeet"
 
-#: editor/kmcomposerwin.cpp:1399
+#: editor/kmcomposerwin.cpp:1403
 #, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "&Automaattinen oikoluku"
 
-#: editor/kmcomposerwin.cpp:1415
+#: editor/kmcomposerwin.cpp:1419
 #, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Muotoiltu tekstimuokkaus"
 
-#: editor/kmcomposerwin.cpp:1417
+#: editor/kmcomposerwin.cpp:1421
 #, kde-format
 msgid "Rich Text"
 msgstr "Muotoiltu teksti"
 
-#: editor/kmcomposerwin.cpp:1418
+#: editor/kmcomposerwin.cpp:1422
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Ota muotoillun tekstin muokkaus käyttöön tai poista se käytöstä"
 
-#: editor/kmcomposerwin.cpp:1422
+#: editor/kmcomposerwin.cpp:1426
 #, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "K&aikki kentät"
 
-#: editor/kmcomposerwin.cpp:1425
+#: editor/kmcomposerwin.cpp:1429
 #, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Henkilöys"
 
-#: editor/kmcomposerwin.cpp:1428
+#: editor/kmcomposerwin.cpp:1432
 #, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Sanasto"
 
-#: editor/kmcomposerwin.cpp:1431
+#: editor/kmcomposerwin.cpp:1435
 #, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "&Lähetettyjen kansio"
 
-#: editor/kmcomposerwin.cpp:1434
+#: editor/kmcomposerwin.cpp:1438
 #, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "Postin&välitys"
 
-#: editor/kmcomposerwin.cpp:1437
+#: editor/kmcomposerwin.cpp:1441
 #, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&Lähettäjä"
 
-#: editor/kmcomposerwin.cpp:1440
+#: editor/kmcomposerwin.cpp:1444
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "&Aihe"
 
-#: editor/kmcomposerwin.cpp:1445
+#: editor/kmcomposerwin.cpp:1449
 #, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Lisää &allekirjoitus"
 
-#: editor/kmcomposerwin.cpp:1449
+#: editor/kmcomposerwin.cpp:1453
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Lisää allekirjoitus e&delle"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1457
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Lisää allekirjoitus ko&hdistimen kohdalle"
 
-#: editor/kmcomposerwin.cpp:1468
+#: editor/kmcomposerwin.cpp:1472
 #, kde-format
 msgid "&Spellchecker…"
 msgstr "Tarkista &oikeinkirjoitus…"
 
-#: editor/kmcomposerwin.cpp:1469
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "Spellchecker"
 msgstr "Oikoluku"
 
-#: editor/kmcomposerwin.cpp:1473
+#: editor/kmcomposerwin.cpp:1477
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "&Salaa viesti"
 
-#: editor/kmcomposerwin.cpp:1474
+#: editor/kmcomposerwin.cpp:1478
 #, kde-format
 msgid "Encrypt"
 msgstr "Salaus"
 
-#: editor/kmcomposerwin.cpp:1476
+#: editor/kmcomposerwin.cpp:1480
 #, kde-format
 msgid "&Sign Message"
 msgstr "&Allekirjoita viesti"
 
-#: editor/kmcomposerwin.cpp:1477
+#: editor/kmcomposerwin.cpp:1481
 #, kde-format
 msgid "Sign"
 msgstr "Allekirjoita"
 
-#: editor/kmcomposerwin.cpp:1504
+#: editor/kmcomposerwin.cpp:1508
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "&Viestien salausmuoto"
 
-#: editor/kmcomposerwin.cpp:1507
+#: editor/kmcomposerwin.cpp:1511
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Aseta tämän viestin salaustapa"
 
-#: editor/kmcomposerwin.cpp:1512
+#: editor/kmcomposerwin.cpp:1516
 #, kde-format
 msgid "Create Follow Up Reminder…"
 msgstr "Lisää vastaamisen seurannasta muistuttaja…"
 
-#: editor/kmcomposerwin.cpp:1545
+#: editor/kmcomposerwin.cpp:1549
 #, kde-format
 msgid "Configure KMail…"
 msgstr "KMailin asetukset…"
 
-#: editor/kmcomposerwin.cpp:1576 kmmainwin.cpp:222 kmreadermainwin.cpp:543
+#: editor/kmcomposerwin.cpp:1580 kmmainwin.cpp:228 kmreadermainwin.cpp:543
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2122,55 +2122,55 @@ msgstr ""
 "<qt>Tämä piilottaa valikkorivin kokonaan. Saat sen uudelleen näkyviin "
 "painamalla %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1579 kmmainwin.cpp:225
+#: editor/kmcomposerwin.cpp:1583 kmmainwin.cpp:231
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Piilota valikkorivi"
 
-#: editor/kmcomposerwin.cpp:1677 editor/kmcomposerwin.cpp:3999
+#: editor/kmcomposerwin.cpp:1681 editor/kmcomposerwin.cpp:4003
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Rivi: %1 "
 
-#: editor/kmcomposerwin.cpp:1680
+#: editor/kmcomposerwin.cpp:1684
 #, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Sarake: %1 "
 
-#: editor/kmcomposerwin.cpp:1685
+#: editor/kmcomposerwin.cpp:1689
 #, kde-format
 msgid "OVR"
 msgstr "KOR"
 
-#: editor/kmcomposerwin.cpp:1685
+#: editor/kmcomposerwin.cpp:1689
 #, kde-format
 msgid "INS"
 msgstr "LIS"
 
-#: editor/kmcomposerwin.cpp:1693
+#: editor/kmcomposerwin.cpp:1697
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Oikoluku: käytössä"
 
-#: editor/kmcomposerwin.cpp:1693
+#: editor/kmcomposerwin.cpp:1697
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Oikoluku: ei käytössä"
 
-#: editor/kmcomposerwin.cpp:2061
+#: editor/kmcomposerwin.cpp:2065
 #, kde-format
 msgid "Re&save as Template"
 msgstr "&Tallenna uudestaan viestipohjana"
 
-#: editor/kmcomposerwin.cpp:2061
+#: editor/kmcomposerwin.cpp:2065
 #, kde-format
 msgid "&Save as Draft"
 msgstr "&Tallenna luonnoksena"
 
-#: editor/kmcomposerwin.cpp:2062
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2179,7 +2179,7 @@ msgstr ""
 "Tallenna tämä viesti taas viestipohjakansioon, mistä sen saa "
 "käyttöönmyöhemmin."
 
-#: editor/kmcomposerwin.cpp:2064
+#: editor/kmcomposerwin.cpp:2068
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2188,54 +2188,54 @@ msgstr ""
 "Tallenna viesti luonnoskansioon, missä sitä voi muokata ja sen voi lähettää "
 "myöhemmin."
 
-#: editor/kmcomposerwin.cpp:2068
+#: editor/kmcomposerwin.cpp:2072
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Haluatko tallentaa viestin, vai hylätä muutokset?"
 
-#: editor/kmcomposerwin.cpp:2069
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Sulje kirjoitusikkuna"
 
-#: editor/kmcomposerwin.cpp:2136
+#: editor/kmcomposerwin.cpp:2140
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Viestin automaattitallennus epäonnistui"
 
-#: editor/kmcomposerwin.cpp:2137
+#: editor/kmcomposerwin.cpp:2141
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Viestin lähettäminen epäonnistui"
 
-#: editor/kmcomposerwin.cpp:2206 kmlaunchexternalcomponent.cpp:149
+#: editor/kmcomposerwin.cpp:2210 kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
 msgstr "KAddressbook-ohjelmaa ei voitu käynnistää. Tarkista asennus."
 
-#: editor/kmcomposerwin.cpp:2208 kmlaunchexternalcomponent.cpp:151
+#: editor/kmcomposerwin.cpp:2212 kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "KAddressBook-ohjelmaa ei voitu käynnistää"
 
-#: editor/kmcomposerwin.cpp:2330
+#: editor/kmcomposerwin.cpp:2334
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Lisää tiedosto"
 
-#: editor/kmcomposerwin.cpp:2415
+#: editor/kmcomposerwin.cpp:2419
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Lisää &sisällytetyksi kuvaksi"
 
-#: editor/kmcomposerwin.cpp:2416
+#: editor/kmcomposerwin.cpp:2420
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
@@ -2243,54 +2243,54 @@ msgstr "L&isää liitteeksi"
 
 # pmap: =/gen=KMailin/
 # pmap: =/elat=KMailista/
-#: editor/kmcomposerwin.cpp:2431
+#: editor/kmcomposerwin.cpp:2435
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2431 editor/kmcomposerwin.cpp:2533
+#: editor/kmcomposerwin.cpp:2435 editor/kmcomposerwin.cpp:2537
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Liitteen nimi:"
 
-#: editor/kmcomposerwin.cpp:2437
+#: editor/kmcomposerwin.cpp:2441
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "Liitteen nimi ei voi olla tyhjä"
 
-#: editor/kmcomposerwin.cpp:2437
+#: editor/kmcomposerwin.cpp:2441
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Virheellinen liitteen nimi"
 
-#: editor/kmcomposerwin.cpp:2485
+#: editor/kmcomposerwin.cpp:2489
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Lisää osoite viestiin"
 msgstr[1] "Lisää osoitteet viestiin"
 
-#: editor/kmcomposerwin.cpp:2486
+#: editor/kmcomposerwin.cpp:2490
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Lisää tiedosto &liitteeksi"
 msgstr[1] "Lisää tiedostot &liitteeksi"
 
-#: editor/kmcomposerwin.cpp:2532
+#: editor/kmcomposerwin.cpp:2536
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Liitä teksti leikepöydältä liitteeksi"
 
-#: editor/kmcomposerwin.cpp:2625
+#: editor/kmcomposerwin.cpp:2629
 #, kde-format
 msgid "unnamed"
 msgstr "nimetön"
 
-#: editor/kmcomposerwin.cpp:2651
+#: editor/kmcomposerwin.cpp:2655
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2301,13 +2301,13 @@ msgstr ""
 "käytettävä salausavain (OpenPGP tai S/MIME).</p><p>Valitse käytettävä avain "
 "henkilöysasetuksissa.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2658
+#: editor/kmcomposerwin.cpp:2662
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Määrittämätön allekirjoitusavain"
 
-#: editor/kmcomposerwin.cpp:2822
+#: editor/kmcomposerwin.cpp:2826
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2318,7 +2318,7 @@ msgstr ""
 "henkilöydellesi olisi hyvä määrittää sähköpostiosoite, jottei sitä tarvitse "
 "lisätä kuhunkin viestiin erikseen."
 
-#: editor/kmcomposerwin.cpp:2831
+#: editor/kmcomposerwin.cpp:2835
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2327,47 +2327,47 @@ msgstr ""
 "Ainakin yksi vastaanottaja on kirjoitettava Vastaanottaja-, Kopio- tai "
 "Piilokopio-kenttään."
 
-#: editor/kmcomposerwin.cpp:2837
+#: editor/kmcomposerwin.cpp:2841
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "Et määrittänyt vastaanottaja-kenttää. Lähetäänkö viesti silti?"
 
-#: editor/kmcomposerwin.cpp:2839
+#: editor/kmcomposerwin.cpp:2843
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "Vastaanottajaa ei ole annettu"
 
-#: editor/kmcomposerwin.cpp:2840 editor/kmcomposerwin.cpp:2854
+#: editor/kmcomposerwin.cpp:2844 editor/kmcomposerwin.cpp:2858
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "&Lähetä sellaisenaan"
 
-#: editor/kmcomposerwin.cpp:2841
+#: editor/kmcomposerwin.cpp:2845
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "&Määritä vastaanottajakenttä"
 
-#: editor/kmcomposerwin.cpp:2851
+#: editor/kmcomposerwin.cpp:2855
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "Et antanut viestin otsikkoa. Lähetetäänkö viesti silti?"
 
-#: editor/kmcomposerwin.cpp:2853
+#: editor/kmcomposerwin.cpp:2857
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "Aihetta ei ole annettu"
 
-#: editor/kmcomposerwin.cpp:2855
+#: editor/kmcomposerwin.cpp:2859
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Määritä aihe"
 
-#: editor/kmcomposerwin.cpp:2900
+#: editor/kmcomposerwin.cpp:2904
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2375,30 +2375,30 @@ msgid ""
 msgstr ""
 "Vähintään yksi vastaanottaja on annettava, jotta luonnoksen voi salata."
 
-#: editor/kmcomposerwin.cpp:3082
+#: editor/kmcomposerwin.cpp:3086
 #, kde-format
 msgid "About to send email…"
 msgstr "Lähetetään sähköpostia…"
 
-#: editor/kmcomposerwin.cpp:3083
+#: editor/kmcomposerwin.cpp:3087
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Vahvista lähettäminen"
 
-#: editor/kmcomposerwin.cpp:3084
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Lähetä heti"
 
-#: editor/kmcomposerwin.cpp:3085
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Lähetä &myöhemmin"
 
-#: editor/kmcomposerwin.cpp:3162
+#: editor/kmcomposerwin.cpp:3166
 #, fuzzy, kde-format
 #| msgid ""
 #| "You are trying to send the mail to more than %1 recipients. Send message "
@@ -2414,25 +2414,25 @@ msgstr[0] ""
 msgstr[1] ""
 "Yrität lähettää viestin yli %1 vastaanottajalle. Lähetetäänkö viesti silti?"
 
-#: editor/kmcomposerwin.cpp:3165
+#: editor/kmcomposerwin.cpp:3169
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Liikaa vastaanottajia"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3170
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "&Lähetä sellaisenaan"
 
-#: editor/kmcomposerwin.cpp:3167
+#: editor/kmcomposerwin.cpp:3171
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Muokkaa vastaanottajia"
 
-#: editor/kmcomposerwin.cpp:3204
+#: editor/kmcomposerwin.cpp:3208
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
@@ -2440,25 +2440,25 @@ msgid ""
 msgstr ""
 "HTML-tilan poistaminen käytöstä hylkää tekstin muotoilun. Oletko varma?"
 
-#: editor/kmcomposerwin.cpp:3206
+#: editor/kmcomposerwin.cpp:3210
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Hylätäänkö muotoilu?"
 
-#: editor/kmcomposerwin.cpp:3207
+#: editor/kmcomposerwin.cpp:3211
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Hylkää muotoilu"
 
-#: editor/kmcomposerwin.cpp:3208
+#: editor/kmcomposerwin.cpp:3212
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Lisää tunniste raakatekstiin"
 
-#: editor/kmcomposerwin.cpp:3415
+#: editor/kmcomposerwin.cpp:3419
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2467,7 +2467,7 @@ msgid ""
 msgstr ""
 "Valittua PGP-avainta (%1) ei ole avainrenkaassasi tai se ei sovi salaukseen."
 
-#: editor/kmcomposerwin.cpp:3427
+#: editor/kmcomposerwin.cpp:3431
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2477,7 +2477,7 @@ msgstr ""
 "Valittua PGP-allekirjoitusavainta (%1) ei ole avainrenkaassa tai se ei sovi "
 "allekirjoittamiseen."
 
-#: editor/kmcomposerwin.cpp:3442
+#: editor/kmcomposerwin.cpp:3446
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2486,7 +2486,7 @@ msgid ""
 msgstr ""
 "Valittua S/MIME-avainta (%1) ei ole avainrenkaassa tai se ei sovi salaukseen."
 
-#: editor/kmcomposerwin.cpp:3454
+#: editor/kmcomposerwin.cpp:3458
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2496,25 +2496,25 @@ msgstr ""
 "Valittua S/MIME-allekirjoitusavainta (%1) ei ole avainrenkaassa tai se ei "
 "sovi allekirjoittamiseen."
 
-#: editor/kmcomposerwin.cpp:3623
+#: editor/kmcomposerwin.cpp:3627
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Salaa"
 
-#: editor/kmcomposerwin.cpp:3625
+#: editor/kmcomposerwin.cpp:3629
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "Ei salata"
 
-#: editor/kmcomposerwin.cpp:3765
+#: editor/kmcomposerwin.cpp:3769
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "Vastaanottajalle ei löytynyt avainta."
 
-#: editor/kmcomposerwin.cpp:3787
+#: editor/kmcomposerwin.cpp:3791
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2524,7 +2524,7 @@ msgstr ""
 "Tälle vastaanottajalle käytettään automaattisalauksen juoruavainta. Avain "
 "saatiin kolmannen osapuolen vastaanottajilta. Avainta ei ole varmennettu."
 
-#: editor/kmcomposerwin.cpp:3791
+#: editor/kmcomposerwin.cpp:3795
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2534,7 +2534,7 @@ msgstr ""
 "Tälle vastaanottajalle käytettävä automaattisalausavain. Avainta ei "
 "todenneta. Vastaanottaja suosii salattuja viestejä."
 
-#: editor/kmcomposerwin.cpp:3795
+#: editor/kmcomposerwin.cpp:3799
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2544,7 +2544,7 @@ msgstr ""
 "Tälle vastaanottajalle käytettävä automaattisalausavain. Avainta ei "
 "todenneta. Vastaanottaja ei suosi salattuja viestejä."
 
-#: editor/kmcomposerwin.cpp:3821
+#: editor/kmcomposerwin.cpp:3825
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2556,7 +2556,7 @@ msgstr ""
 "avaimen, jos sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla "
 "kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3829
+#: editor/kmcomposerwin.cpp:3833
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2570,7 +2570,7 @@ msgstr ""
 "allekirjoittaa, jos sormenjälki on saatu toista kautta. Lisätietoa saa "
 "napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3837
+#: editor/kmcomposerwin.cpp:3841
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2580,7 +2580,7 @@ msgstr ""
 "Salausavain ei ole luotettava: sen TOFU-tiedot ovat ristiriitaiset. "
 "Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3843
+#: editor/kmcomposerwin.cpp:3847
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2590,7 +2590,7 @@ msgstr ""
 "Salausavain ei ole luotettava: TOFU-tiedoissa sen kelpoisuus on tuntematon. "
 "Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3849
+#: editor/kmcomposerwin.cpp:3853
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2600,7 +2600,7 @@ msgstr ""
 "Salausavain ei ole luotettava: avain on merkitty huonoksi. Lisätietoa saa "
 "napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3857
+#: editor/kmcomposerwin.cpp:3861
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2614,7 +2614,7 @@ msgstr ""
 "käyttämällä sen luotettavuus kasvaa. Voit myös allekirjoittaa avaimen, jos "
 "sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3865
+#: editor/kmcomposerwin.cpp:3869
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2624,7 +2624,7 @@ msgstr ""
 "Salausavain on vain ehdollisesti luotettava. Voit allekirjoittaa avaimen, "
 "jos sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3871
+#: editor/kmcomposerwin.cpp:3875
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2638,7 +2638,7 @@ msgstr ""
 "käyttämällä sen luotettavuus kasvaa. Voit myös allekirjoittaa avaimen, jos "
 "sait sormenjäljen toista kautta. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3879
+#: editor/kmcomposerwin.cpp:3883
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2648,7 +2648,7 @@ msgstr ""
 "Salausavaimen luottamus on täysi. Turvatasoa voi kohottaa allekirjoittamalla "
 "avaimen. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:3884
+#: editor/kmcomposerwin.cpp:3888
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2658,12 +2658,12 @@ msgstr ""
 "Salausavaimen luottamus on äärimmäinen tai sen on allekirjoittanut toinen "
 "näin luotettava avain. Lisätietoa saa napsauttamalla kuvaketta."
 
-#: editor/kmcomposerwin.cpp:4001
+#: editor/kmcomposerwin.cpp:4005
 #, kde-format
 msgid " Column: %1 "
 msgstr " Sarake: %1 "
 
-#: editor/kmcomposerwin.cpp:4216
+#: editor/kmcomposerwin.cpp:4220
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2680,13 +2680,13 @@ msgstr ""
 "käyttää. Ellei luettelossa ole sopivaa varmennetta, ulkoisia varmenteita voi "
 "etsiä napsauttamalla painiketta ”Etsi ulkoisia varmenteita”.</qt>"
 
-#: editor/kmcomposerwin.cpp:4228
+#: editor/kmcomposerwin.cpp:4232
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Salausavaimen valinta"
 
 # *** TARKISTA: ID merkitykseltään epäselvä
-#: editor/kmcomposerwin.cpp:4312
+#: editor/kmcomposerwin.cpp:4316
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -2850,8 +2850,8 @@ msgid "Message will not be encrypted"
 msgstr "Viestiä ei salata"
 
 #: folderarchive/folderarchiveagentcheckcollection.cpp:36
-#: folderarchive/folderarchiveagentjob.cpp:58
-#: folderarchive/folderarchiveagentjob.cpp:64
+#: folderarchive/folderarchiveagentjob.cpp:57
+#: folderarchive/folderarchiveagentjob.cpp:63
 #, kde-format
 msgid "Cannot fetch collection. %1"
 msgstr "Kokoelmaa ei saatu noudettua. %1"
@@ -2868,53 +2868,53 @@ msgstr "Kansion nimeä ei määritetty."
 msgid "Unable to create folder. %1"
 msgstr "Kansion luominen epäonnistui. %1"
 
-#: folderarchive/folderarchiveagentjob.cpp:32
+#: folderarchive/folderarchiveagentjob.cpp:31
 #, kde-format
 msgid "Archive folder not defined. Please verify settings for account %1"
 msgstr "Arkistokansiota ei ole määritetty. Tarkista tilin %1 asetukset"
 
-#: folderarchive/folderarchiveagentjob.cpp:36
+#: folderarchive/folderarchiveagentjob.cpp:35
 #, kde-format
 msgid "No messages selected."
 msgstr "Viestejä ei valittu."
 
-#: folderarchive/folderarchiveagentjob.cpp:73
+#: folderarchive/folderarchiveagentjob.cpp:72
 #, kde-format
 msgid "List of collections is empty. %1"
 msgstr "Kokoelmaluettelo on tyhjä. %1"
 
-#: folderarchive/folderarchiveagentjob.cpp:92
+#: folderarchive/folderarchiveagentjob.cpp:91
 #, kde-format
 msgid ""
 "This folder %1 is read only. Please verify the configuration of account %2"
 msgstr "Tätä kansiota %1 voi vain lukea. Tarkista tilin %2 asetukset"
 
-#: folderarchive/folderarchiveagentjob.cpp:104
+#: folderarchive/folderarchiveagentjob.cpp:103
 #, kde-format
 msgid "Cannot move messages."
 msgstr "Viestejä ei voi siirtää."
 
-#: folderarchive/folderarchivemanager.cpp:69
+#: folderarchive/folderarchivemanager.cpp:68
 #, kde-format
 msgid "Unable to fetch folder. Error reported: %1"
 msgstr "Kansion noutaminen epäonnistui. Virheilmoitus: %1"
 
-#: folderarchive/folderarchivemanager.cpp:75
+#: folderarchive/folderarchivemanager.cpp:74
 #, kde-format
 msgid "No folder returned."
 msgstr "Mitään kansiota ei palautettu."
 
-#: folderarchive/folderarchivemanager.cpp:87
+#: folderarchive/folderarchivemanager.cpp:86
 #, kde-format
 msgid "Unable to fetch parent folder. Error reported: %1"
 msgstr "Yläkansion noutaminen epäonnistui. Virheilmoitus: %1"
 
-#: folderarchive/folderarchivemanager.cpp:93
+#: folderarchive/folderarchivemanager.cpp:92
 #, kde-format
 msgid "Unable to return list of folders."
 msgstr "Kansioluettelon palauttaminen epäonnistui."
 
-#: folderarchive/folderarchivemanager.cpp:156
+#: folderarchive/folderarchivemanager.cpp:155
 #, kde-format
 msgid "Messages archived"
 msgstr "Viestit arkistoitiin"
@@ -2942,25 +2942,25 @@ msgid "Reopen Closed Viewer"
 msgstr "Avaa suljettu lukuikkuna uudelleen"
 
 #. i18n: ectx: property (text), widget (QLabel, image)
-#: identity/encodedimagepicker.cpp:86 kmcommands.cpp:1963
+#: identity/encodedimagepicker.cpp:87 kmcommands.cpp:1966
 #: ui/encodedimagepicker.ui:37
 #, kde-format
 msgid "Image"
 msgstr "Kuva"
 
-#: identity/encodedimagepicker.cpp:130
+#: identity/encodedimagepicker.cpp:131
 #, kde-format
 msgid "You do not have your own contact defined in the address book."
 msgstr "Et ole määritellyt omaa kontaktitietoa osoitekirjaan."
 
-#: identity/encodedimagepicker.cpp:130 identity/encodedimagepicker.cpp:136
-#: identity/encodedimagepicker.cpp:142
+#: identity/encodedimagepicker.cpp:131 identity/encodedimagepicker.cpp:137
+#: identity/encodedimagepicker.cpp:143
 #, kde-format
 msgctxt "@title:window"
 msgid "No Picture"
 msgstr "Ei kuvaa"
 
-#: identity/encodedimagepicker.cpp:136 identity/encodedimagepicker.cpp:142
+#: identity/encodedimagepicker.cpp:137 identity/encodedimagepicker.cpp:143
 #, kde-format
 msgid "No picture set for your address book entry."
 msgstr "Osoitekirjatietueessasi ei ole kuvaa."
@@ -3008,24 +3008,24 @@ msgctxt "@label:textbox"
 msgid "&Existing identities:"
 msgstr "&Olemassa olevat henkilöydet:"
 
-#: identity/identitydialog.cpp:223
+#: identity/identitydialog.cpp:221
 #, kde-format
 msgctxt "@info:status"
 msgid "Could not start OpenPGP certificate generation."
 msgstr "OpenPGP-varmenteen luomista ei voitu käynnistää."
 
-#: identity/identitydialog.cpp:236
+#: identity/identitydialog.cpp:234
 #, kde-format
 msgid "Could not start OpenPGP certificate generation: %1"
 msgstr "OpenPGP-varmenteen luomista ei voitu käynnistää: %1"
 
-#: identity/identitydialog.cpp:245
+#: identity/identitydialog.cpp:243
 #, kde-format
 msgctxt "@title"
 msgid "Generating an OpenPGP Certificate…"
 msgstr "Luodaan OpenPGP-varmennetta…"
 
-#: identity/identitydialog.cpp:247
+#: identity/identitydialog.cpp:245
 #, kde-format
 msgid ""
 "The process of generating an OpenPGP certificate requires large amounts of "
@@ -3034,52 +3034,52 @@ msgstr ""
 "OpenPGP-varmenteen luomisprosessi vaatii suuren määrän satunnaislukuja. Tämä "
 "voi kestää minuutteja…"
 
-#: identity/identitydialog.cpp:265
+#: identity/identitydialog.cpp:263
 #, kde-format
 msgid "Could not generate an OpenPGP certificate: %1"
 msgstr "Ei voitu luoda OpenPGP-varmennetta: %1"
 
-#: identity/identitydialog.cpp:270
+#: identity/identitydialog.cpp:268
 #, kde-format
 msgctxt "@info:status"
 msgid "Key generation was cancelled."
 msgstr "Avaimen luominen peruttiin."
 
-#: identity/identitydialog.cpp:310
+#: identity/identitydialog.cpp:308
 #, kde-format
 msgid "No key"
 msgstr "Ei avainta"
 
-#: identity/identitydialog.cpp:312
+#: identity/identitydialog.cpp:310
 #, kde-format
 msgid "Generate a new OpenPGP certificate"
 msgstr "Luo uusi OpenPGP-varmenne"
 
-#: identity/identitydialog.cpp:327
+#: identity/identitydialog.cpp:325
 #, kde-format
 msgctxt "@title:window"
 msgid "Key Generation Error"
 msgstr "Avaimen luontivirhe"
 
-#: identity/identitydialog.cpp:341
+#: identity/identitydialog.cpp:339
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity"
 msgstr "Muokkaa henkilöyttä"
 
-#: identity/identitydialog.cpp:365
+#: identity/identitydialog.cpp:363
 #, kde-format
 msgctxt "@title:tab General identity settings."
 msgid "General"
 msgstr "Yleistä"
 
-#: identity/identitydialog.cpp:372
+#: identity/identitydialog.cpp:370
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Your name:"
 msgstr "&Nimi:"
 
-#: identity/identitydialog.cpp:377
+#: identity/identitydialog.cpp:375
 #, kde-format
 msgid ""
 "<qt><h3>Your name</h3><p>This field should contain your name as you would "
@@ -3090,13 +3090,13 @@ msgstr ""
 "lähetetyisä viesteissä.</p><p>Jos jätät tämän tyhjäksi, vain "
 "sähköpostiosoite näytetään vastaanottajalle.</p></qt>"
 
-#: identity/identitydialog.cpp:388
+#: identity/identitydialog.cpp:386
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Organi&zation:"
 msgstr "Organi&saatio:"
 
-#: identity/identitydialog.cpp:393
+#: identity/identitydialog.cpp:391
 #, kde-format
 msgid ""
 "<qt><h3>Organization</h3><p>This field should have the name of your "
@@ -3107,13 +3107,13 @@ msgstr ""
 "haluat sen näkyvän lähtevien viestien otsikkotiedoissa.</p><p>Kohdan voi "
 "jättää tyhjäksi.</p></qt>"
 
-#: identity/identitydialog.cpp:405
+#: identity/identitydialog.cpp:403
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Email address:"
 msgstr "&Sähköpostiosoite:"
 
-#: identity/identitydialog.cpp:410
+#: identity/identitydialog.cpp:408
 #, kde-format
 msgid ""
 "<qt><h3>Email address</h3><p>This field should have your full email address."
@@ -3128,13 +3128,13 @@ msgstr ""
 "aliaksia alla olevaan kenttään.</p><p>Jos kentän jättää tyhjäksi tai sen "
 "sisältö on virheellinen, sinulle on vaikea sähköpostitse vastata.</p></qt>"
 
-#: identity/identitydialog.cpp:429
+#: identity/identitydialog.cpp:427
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Email a&liases:"
 msgstr "Sähköposti&aliakset:"
 
-#: identity/identitydialog.cpp:434
+#: identity/identitydialog.cpp:432
 #, kde-format
 msgid ""
 "<qt><h3>Email aliases</h3><p>This field contains alias addresses that should "
@@ -3151,12 +3151,12 @@ msgstr ""
 "th><td>etunimi@esimerkki.org<br>sukunimi@esimerkki.org</td></tr></"
 "table><p>Kirjoita vain yksi alias kullekin riville.</p></qt>"
 
-#: identity/identitydialog.cpp:451
+#: identity/identitydialog.cpp:449
 #, kde-format
 msgid "Cryptography"
 msgstr "&Salaus"
 
-#: identity/identitydialog.cpp:457
+#: identity/identitydialog.cpp:455
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to digitally sign "
@@ -3172,29 +3172,29 @@ msgstr ""
 "asetuksella ei ole vaikutusta.</p><p>Lisätietoa salausavaimista löytyy "
 "osoitteesta <a>https://www.gnupg.org</a></p></qt>"
 
-#: identity/identitydialog.cpp:463
+#: identity/identitydialog.cpp:461
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-allekirjoitusavain:"
 
-#: identity/identitydialog.cpp:469
+#: identity/identitydialog.cpp:467
 #, kde-format
 msgctxt "@option:check"
 msgid "Use same key for encryption and signing"
 msgstr "Käytä salaamiseen ja allekirjoittamiseen samaa avainta"
 
-#: identity/identitydialog.cpp:479
+#: identity/identitydialog.cpp:477
 #, kde-format
 msgid "OpenPGP key:"
 msgstr "OpenPGP-avain:"
 
-#: identity/identitydialog.cpp:486
+#: identity/identitydialog.cpp:484
 #, kde-format
 msgid "OpenPGP signing key:"
 msgstr "OpenPGP-allekirjoitusavain:"
 
-#: identity/identitydialog.cpp:503
+#: identity/identitydialog.cpp:501
 #, kde-format
 msgid ""
 "<qt><p>The OpenPGP key you choose here will be used to encrypt messages to "
@@ -3211,13 +3211,13 @@ msgstr ""
 "sähköpostitoimintoihin tällä ei ole vaikutusta.</p><p>Lisätietoa "
 "salausavaimista löytyy osoitteesta <a>https://www.gnupg.org/</a>. </p></qt>"
 
-#: identity/identitydialog.cpp:510
+#: identity/identitydialog.cpp:508
 #, kde-format
 msgctxt "@label:textbox"
 msgid "OpenPGP encryption key:"
 msgstr "OpenPGP-salausavain:"
 
-#: identity/identitydialog.cpp:520
+#: identity/identitydialog.cpp:518
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME (X.509) certificate you choose here will be used to "
@@ -3230,13 +3230,13 @@ msgstr ""
 "sähköpostiviestejä ei tällöin pystytä allekirjoittamaan S/MIMEllä. "
 "Tavallisiin sähköpostitoimintoihin tällä ei ole vaikutusta.</p></qt>"
 
-#: identity/identitydialog.cpp:525
+#: identity/identitydialog.cpp:523
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME signing certificate:"
 msgstr "S/MIME-allekirjoitusvarmenne:"
 
-#: identity/identitydialog.cpp:539
+#: identity/identitydialog.cpp:537
 #, kde-format
 msgid ""
 "<qt><p>The S/MIME certificate you choose here will be used to encrypt "
@@ -3251,83 +3251,83 @@ msgstr ""
 "salaamaan kopiota itsellesi. Tavallisiin sähköpostitoimintoihin tällä ei ole "
 "vaikutusta.</p></qt>"
 
-#: identity/identitydialog.cpp:545
+#: identity/identitydialog.cpp:543
 #, kde-format
 msgctxt "@label:textbox"
 msgid "S/MIME encryption certificate:"
 msgstr "S/MIME-salausvarmenne:"
 
-#: identity/identitydialog.cpp:562
+#: identity/identitydialog.cpp:560
 #, kde-format
 msgctxt "preferred format of encrypted messages"
 msgid "Preferred format:"
 msgstr "Ensisijainen muoto:"
 
-#: identity/identitydialog.cpp:567
+#: identity/identitydialog.cpp:565
 #, kde-format
 msgid "Enable Autocrypt"
 msgstr "Salaa automaattisesti"
 
-#: identity/identitydialog.cpp:571
+#: identity/identitydialog.cpp:569
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocrypt:"
 msgstr "Salaa automaattisesti:"
 
-#: identity/identitydialog.cpp:576
+#: identity/identitydialog.cpp:574
 #, kde-format
 msgctxt "@option:check"
 msgid "Let others know you prefer encryption"
 msgstr "Kerro muille, että suosit salaamista"
 
-#: identity/identitydialog.cpp:579
+#: identity/identitydialog.cpp:577
 #, kde-format
 msgid "Overwrite global settings for security defaults"
 msgstr "Korvaa tietoturvaoletusten yleisasetukset"
 
-#: identity/identitydialog.cpp:582
+#: identity/identitydialog.cpp:580
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Overwrite defaults:"
 msgstr "Korvaa oletusasetukset:"
 
-#: identity/identitydialog.cpp:587
+#: identity/identitydialog.cpp:585
 #, kde-format
 msgctxt "@option:check"
 msgid "Sign messages"
 msgstr "Allekirjoita viestit"
 
-#: identity/identitydialog.cpp:590
+#: identity/identitydialog.cpp:588
 #, kde-format
 msgctxt "@option:check"
 msgid "Encrypt messages when possible"
 msgstr "Salaa viestit, kun mahdollista"
 
-#: identity/identitydialog.cpp:593
+#: identity/identitydialog.cpp:591
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unsigned messages"
 msgstr "Varoita lähetettäessä allekirjoittamattomia viestejä"
 
-#: identity/identitydialog.cpp:596
+#: identity/identitydialog.cpp:594
 #, kde-format
 msgctxt "@option:check"
 msgid "Warn when trying to send unencrypted messages"
 msgstr "Varoita lähetettäessä salaamattomia viestejä"
 
-#: identity/identitydialog.cpp:606
+#: identity/identitydialog.cpp:604
 #, kde-format
 msgctxt "@title:tab Advanced identity settings."
 msgid "Advanced"
 msgstr "&Lisäasetukset"
 
-#: identity/identitydialog.cpp:614
+#: identity/identitydialog.cpp:612
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Reply-To address:"
 msgstr "&Vastausosoite:"
 
-#: identity/identitydialog.cpp:618
+#: identity/identitydialog.cpp:616
 #, kde-format
 msgid ""
 "<qt><h3>Reply-To addresses</h3><p>This sets the <tt>Reply-to:</tt> header to "
@@ -3345,13 +3345,13 @@ msgstr ""
 "p><p>Ellet ole varma, mitä tähän pitäisi tulla, jätä kenttä tyhjäksi.</p></"
 "qt>"
 
-#: identity/identitydialog.cpp:636
+#: identity/identitydialog.cpp:634
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&CC addresses:"
 msgstr "&Kopio-osoitteet:"
 
-#: identity/identitydialog.cpp:642
+#: identity/identitydialog.cpp:640
 #, kde-format
 msgid ""
 "<qt><h3>CC (Carbon Copy) addresses</h3><p>The addresses that you enter here "
@@ -3366,13 +3366,13 @@ msgstr ""
 "p><p>Tätä käytetään tavallisesti välittämään kopio lähetetyistä viesteistä "
 "toiselle tilillesi.</p><p>Ellet ole varma, jätä kohta tyhjäksi.</p></qt>"
 
-#: identity/identitydialog.cpp:658
+#: identity/identitydialog.cpp:656
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&BCC addresses:"
 msgstr "&Piilokopio-osoitteet:"
 
-#: identity/identitydialog.cpp:662
+#: identity/identitydialog.cpp:660
 #, kde-format
 msgid ""
 "<qt><h3>BCC (Blind Carbon Copy) addresses</h3><p>The addresses that you "
@@ -3390,98 +3390,98 @@ msgstr ""
 "vastaanottajat toisistaan pilkuin.</p><p>Ellet ole varma, jätä kohta "
 "tyhjäksi.</p></qt>"
 
-#: identity/identitydialog.cpp:676
+#: identity/identitydialog.cpp:674
 #, kde-format
 msgctxt "@label:textbox"
 msgid "D&ictionary:"
 msgstr "Sana&kirja:"
 
-#: identity/identitydialog.cpp:682
+#: identity/identitydialog.cpp:680
 #, kde-format
 msgid "Select Send-mail Folder"
 msgstr "Valitse lähetettyjen kansio"
 
-#: identity/identitydialog.cpp:684
+#: identity/identitydialog.cpp:682
 #, kde-format
 msgctxt "@option:check"
 msgid "Sent-mail &folder:"
 msgstr "&Lähetettyjen kansio:"
 
-#: identity/identitydialog.cpp:690
+#: identity/identitydialog.cpp:688
 #, kde-format
 msgid "Select Draft Folder"
 msgstr "Valitse luonnoskansio"
 
-#: identity/identitydialog.cpp:692
+#: identity/identitydialog.cpp:690
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Drafts folder:"
 msgstr "&Luonnosten kansio:"
 
-#: identity/identitydialog.cpp:698
+#: identity/identitydialog.cpp:696
 #, kde-format
 msgid "Select Templates Folder"
 msgstr "Valitse mallipohjakansio"
 
-#: identity/identitydialog.cpp:700
+#: identity/identitydialog.cpp:698
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Templates folder:"
 msgstr "&Viestipohjien kansio:"
 
-#: identity/identitydialog.cpp:707
+#: identity/identitydialog.cpp:705
 #, kde-format
 msgid "Select Spam Folder"
 msgstr "Valitse roskapostikansio"
 
-#: identity/identitydialog.cpp:709
+#: identity/identitydialog.cpp:707
 #, kde-format
 msgctxt "@option:check"
 msgid "Spam &folder:"
 msgstr "&Roskapostikansio:"
 
-#: identity/identitydialog.cpp:712
+#: identity/identitydialog.cpp:710
 #, kde-format
 msgid "Configure Expire Folder..."
 msgstr "Kansion vanhentamisen asetukset…"
 
-#: identity/identitydialog.cpp:723
+#: identity/identitydialog.cpp:721
 #, kde-format
 msgctxt "@option:check"
 msgid "Outgoing Account:"
 msgstr "Lähtevä tili:"
 
-#: identity/identitydialog.cpp:730
+#: identity/identitydialog.cpp:728
 #, kde-format
 msgctxt "@option:check"
 msgid "Attach my vCard to message"
 msgstr "Liitä viestiin vCardini"
 
-#: identity/identitydialog.cpp:731
+#: identity/identitydialog.cpp:729
 #, kde-format
 msgctxt "@action:button"
 msgid "Create…"
 msgstr "Luo…"
 
-#: identity/identitydialog.cpp:735
+#: identity/identitydialog.cpp:733
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Autocorrection language:"
 msgstr "Automaattikorjauksen kieli:"
 
-#: identity/identitydialog.cpp:747
+#: identity/identitydialog.cpp:745
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Restore default domain name"
 msgstr "Palauta oletustoimialue"
 
-#: identity/identitydialog.cpp:750
+#: identity/identitydialog.cpp:748
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Defaul&t domain:"
 msgstr "Olet&ustoimialue:"
 
-#: identity/identitydialog.cpp:756
+#: identity/identitydialog.cpp:754
 #, kde-format
 msgid ""
 "<qt><p>The default domain is used to complete email addresses that only "
@@ -3490,62 +3490,62 @@ msgstr ""
 "<qt><p>Oletustoimialueen avulla voidaan täydentää sähköpostiosoitteita, "
 "joissa on pelkästään käyttäjän nimi.</p></qt>"
 
-#: identity/identitydialog.cpp:773
+#: identity/identitydialog.cpp:771
 #, kde-format
 msgctxt "@option:check"
 msgid "&Use custom message templates for this identity"
 msgstr "M&ukauta tämän henkilöyden viestipohjia"
 
-#: identity/identitydialog.cpp:787
+#: identity/identitydialog.cpp:785
 #, kde-format
 msgctxt "@action:button"
 msgid "&Copy Global Templates"
 msgstr "&Kopioi järjestelmänlaajuiset viestipohjat"
 
-#: identity/identitydialog.cpp:794
+#: identity/identitydialog.cpp:792
 #, kde-format
 msgid "Templates"
 msgstr "Viestipohjat"
 
-#: identity/identitydialog.cpp:800
+#: identity/identitydialog.cpp:798
 #, kde-format
 msgid "Signature"
 msgstr "Allekirjoitus"
 
-#: identity/identitydialog.cpp:807
+#: identity/identitydialog.cpp:805
 #, kde-format
 msgid "Picture"
 msgstr "Kuva"
 
-#: identity/identitydialog.cpp:813
+#: identity/identitydialog.cpp:811
 #, kde-format
 msgid "Activities"
 msgstr "Aktiviteetit"
 
-#: identity/identitydialog.cpp:863
+#: identity/identitydialog.cpp:861
 #, kde-format
 msgid "Invalid Email Alias \"%1\""
 msgstr "Virheellinen sähköpostialias ”%1”"
 
-#: identity/identitydialog.cpp:871
+#: identity/identitydialog.cpp:869
 #, kde-format
 msgid "You must provide an email for this identity."
 msgstr "Tälle henkilöydelle on annettava sähköpostiosoite."
 
-#: identity/identitydialog.cpp:871
+#: identity/identitydialog.cpp:869
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Email Address"
 msgstr "Tyhjä sähköpostiosoite"
 
-#: identity/identitydialog.cpp:876 job/addressvalidationjob.cpp:78
-#: job/addressvalidationjob.cpp:85
+#: identity/identitydialog.cpp:874 job/addressvalidationjob.cpp:76
+#: job/addressvalidationjob.cpp:83
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Virheellinen sähköpostiosoite"
 
-#: identity/identitydialog.cpp:934
+#: identity/identitydialog.cpp:932
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3558,7 +3558,7 @@ msgstr ""
 "Tästä johtuen näillä asetuksilla allekirjoitettujen viestien vastaanottaja "
 "saattaa saada varoituksia."
 
-#: identity/identitydialog.cpp:943
+#: identity/identitydialog.cpp:941
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3567,7 +3567,7 @@ msgstr ""
 "Jokin valituista OpenPGP-salausavaimista ei sisällä yhtään "
 "käyttäjätunnistetta asetetulla sähköpostiosoitteella (%1)."
 
-#: identity/identitydialog.cpp:950
+#: identity/identitydialog.cpp:948
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3580,7 +3580,7 @@ msgstr ""
 "Tästä johtuen näillä asetuksilla allekirjoitettujen viestien vastaanottaja "
 "saattaa saada varoituksia."
 
-#: identity/identitydialog.cpp:959
+#: identity/identitydialog.cpp:957
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3589,24 +3589,24 @@ msgstr ""
 "Jokin valituista S/MIME-salausvarmenteista ei sisällä yhtään "
 "käyttäjätunnistetta asetetulla sähköpostiosoitteella (%1)."
 
-#: identity/identitydialog.cpp:969
+#: identity/identitydialog.cpp:967
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Sähköpostiosoitetta ei löydy avaimesta/varmenteista"
 
-#: identity/identitydialog.cpp:980
+#: identity/identitydialog.cpp:978
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Allekirjoitustiedosto ei kelpaa."
 
-#: identity/identitydialog.cpp:995
+#: identity/identitydialog.cpp:993
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Muokkaa henkilöyttä ”%1”"
 
-#: identity/identitydialog.cpp:1076
+#: identity/identitydialog.cpp:1074
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3615,12 +3615,12 @@ msgstr ""
 "Joitain henkilöyden omia kansioita ei ole (enää) olemassa. KMail käyttää "
 "siis oletuskansioita."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Create…"
 msgstr "Luo…"
 
-#: identity/identitydialog.cpp:1330
+#: identity/identitydialog.cpp:1328
 #, kde-format
 msgid "Edit…"
 msgstr "Muokkaa…"
@@ -3683,51 +3683,51 @@ msgctxt "@title:window"
 msgid "Expire Spam Folder"
 msgstr "Vanhenna roskapostikansio"
 
-#: identity/identityngpage.cpp:203
+#: identity/identityngpage.cpp:201
 #, kde-format
 msgid "<qt>Do you really want to remove the identity named <b>%1</b>?</qt>"
 msgstr "<qt>Haluatko varmasti poistaa henkilöyden <b>%1</b>?</qt>"
 
 # *** TARKISTA: Onko %1 varmasti näissä luku eikä esim. henkilöyden nimi?
-#: identity/identityngpage.cpp:206
+#: identity/identityngpage.cpp:204
 #, kde-format
 msgid "Do you really want to remove this %1 identity?"
 msgid_plural "Do you really want to remove these %1 identities?"
 msgstr[0] "Haluatko varmasti poistaa tämän %1 henkilöyden?"
 msgstr[1] "Haluatko varmasti poistaa nämä %1 henkilöyttä?"
 
-#: identity/identityngpage.cpp:209
+#: identity/identityngpage.cpp:207
 #, kde-format
 msgid "Remove Identity"
 msgid_plural "Remove Identities"
 msgstr[0] "Poista henkilöys"
 msgstr[1] "Poista henkilöydet"
 
-#: identity/identityngpage.cpp:210
+#: identity/identityngpage.cpp:208
 #, kde-format
 msgctxt "@action:button"
 msgid "&Remove"
 msgstr "&Poista"
 
-#: identity/identityngpage.cpp:241
+#: identity/identityngpage.cpp:239
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Lisää…"
 
-#: identity/identityngpage.cpp:243
+#: identity/identityngpage.cpp:241
 #, kde-format
 msgctxt "@action"
 msgid "Modify…"
 msgstr "Muuta…"
 
-#: identity/identityngpage.cpp:244
+#: identity/identityngpage.cpp:242
 #, kde-format
 msgctxt "@action"
 msgid "Rename"
 msgstr "Muuta nimeä"
 
-#: identity/identityngpage.cpp:254
+#: identity/identityngpage.cpp:252
 #, kde-format
 msgctxt "@action"
 msgid "Set as Default"
@@ -3757,17 +3757,17 @@ msgctxt "@option:radio"
 msgid "&Duplicate existing identity"
 msgstr "&Monista olemassa oleva henkilöys"
 
-#: identity/xfaceconfigurator.cpp:40
+#: identity/xfaceconfigurator.cpp:41
 #, kde-format
 msgid "Face"
 msgstr "Face"
 
-#: identity/xfaceconfigurator.cpp:41
+#: identity/xfaceconfigurator.cpp:42
 #, kde-format
 msgid "X-Face"
 msgstr "X-Face"
 
-#: identity/xfaceconfigurator.cpp:42
+#: identity/xfaceconfigurator.cpp:43
 #, kde-format
 msgid ""
 "More information under <a href=\"https://quimby.gnus.org/circus/face/"
@@ -3776,7 +3776,7 @@ msgstr ""
 "Lisätietoa: <a href=\"https://quimby.gnus.org/circus/face/\">https://quimby."
 "gnus.org/circus/face/</a>."
 
-#: identity/xfaceconfigurator.cpp:43
+#: identity/xfaceconfigurator.cpp:44
 #, kde-format
 msgid ""
 "Examples are available at <a href=\"https://ace.home.xs4all.nl/X-Faces/"
@@ -3785,32 +3785,32 @@ msgstr ""
 "Esimerkkejä löytyy osoitteesta <a href=\"https://ace.home.xs4all.nl/X-Faces/"
 "\">https://ace.home.xs4all.nl/X-Faces/</a>."
 
-#: identity/xfaceconfigurator.cpp:125
+#: identity/xfaceconfigurator.cpp:126
 #, kde-format
 msgid "No image will be sent."
 msgstr "Kuvaa ei lähetetä."
 
-#: identity/xfaceconfigurator.cpp:128
+#: identity/xfaceconfigurator.cpp:129
 #, kde-format
 msgid "KMail will send a colored image through the Face header."
 msgstr "KMail lähettää Face-otsakkeessa värillisen kuvan."
 
-#: identity/xfaceconfigurator.cpp:131
+#: identity/xfaceconfigurator.cpp:132
 #, kde-format
 msgid "KMail will send a black-and-white image through the X-Face header."
 msgstr "KMail lähettää X-Face-otsakkeessa mustavalkokuvan."
 
-#: identity/xfaceconfigurator.cpp:134
+#: identity/xfaceconfigurator.cpp:135
 #, kde-format
 msgid "KMail will send both a colored and a black-and-white image."
 msgstr "KMail lähettää sekä värillisen että mustavalkokuvan."
 
-#: identity/xfaceconfigurator.cpp:170
+#: identity/xfaceconfigurator.cpp:171
 #, kde-format
 msgid "Failed to reduce image size to fit in header."
 msgstr "Kuvan koon muuttaminen otsakkeeseen sopivaksi epäonnistui."
 
-#: identity/xfaceconfigurator.cpp:172
+#: identity/xfaceconfigurator.cpp:173
 #, kde-format
 msgid ""
 "Failed to reduce image size to fit in header. Install pngquant to obtain "
@@ -3819,12 +3819,12 @@ msgstr ""
 "Kuvan koon muuttaminen otsakkeeseen sopivaksi epäonnistui. Paranna "
 "pakkaustuloksia asentamalla pngquant."
 
-#: identity/xfaceconfigurator.cpp:180
+#: identity/xfaceconfigurator.cpp:181
 #, kde-format
 msgid "Install pngquant to obtain better image quality."
 msgstr "Paremman kuvalaadun saamiseksi asenna pngquant."
 
-#: identity/xfaceconfigurator.cpp:267
+#: identity/xfaceconfigurator.cpp:268
 #, kde-format
 msgid "pngquant exited with code %1: %2"
 msgstr "pngquant päättyi koodiin %1: %2"
@@ -3834,22 +3834,22 @@ msgstr "pngquant päättyi koodiin %1: %2"
 msgid "Email added successfully."
 msgstr "Sähköpostin lisääminen onnistui."
 
-#: job/addressvalidationjob.cpp:74
+#: job/addressvalidationjob.cpp:72
 #, kde-format
 msgid "Distribution list %2 is empty, it cannot be used."
 msgid_plural "Distribution lists %2 are empty, they cannot be used."
 msgstr[0] "Jakelulista ”%2” on tyhjä eikä sitä voi käyttää."
 msgstr[1] "Jakelulistat ”%2” ovat tyhjiä eikä niitä voi käyttää."
 
-#: job/clearcachejobinfolderandsubfolderjob.cpp:69
+#: job/clearcachejobinfolderandsubfolderjob.cpp:72
 #, kde-format
 msgid "Clear Akonadi Cache"
 msgstr "Tyhjennä Akonadin välimuisti"
 
-#: job/clearcachejobinfolderandsubfolderjob.cpp:91
+#: job/clearcachejobinfolderandsubfolderjob.cpp:94
 #: job/removeduplicatemailjob.cpp:56
 #: job/removeduplicatemessageinfolderandsubfolderjob.cpp:89
-#: manageshowcollectionproperties.cpp:171
+#: manageshowcollectionproperties.cpp:170
 #, kde-format
 msgid "Done"
 msgstr "Valmis"
@@ -3865,47 +3865,47 @@ msgstr "Lisää osoitekirjaan"
 msgid "Contact created successfully"
 msgstr "Yhteystieto luotu onnistuneesti"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:849
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:845
 #, kde-format
 msgid "Contact cannot be stored: %1"
 msgstr "Yhteystietoa ei voi tallentaa: %1"
 
-#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:849
+#: job/createnewcontactjob.cpp:137 kmreaderwin.cpp:845
 #, kde-format
 msgctxt "@title:window"
 msgid "Failed to store contact"
 msgstr "Yhteystiedon tallettaminen epäonnistui"
 
-#: job/opencomposerjob.cpp:122
+#: job/opencomposerjob.cpp:120
 #, kde-format
 msgid "Do you want to attach this folder \"%1\"?"
 msgstr "Haluatko varmasti liittää tämän kansion (”%1”)?"
 
-#: job/opencomposerjob.cpp:123
+#: job/opencomposerjob.cpp:121
 #, kde-format
 msgctxt "@title:window"
 msgid "Attach Folder"
 msgstr "Liitä kansio"
 
-#: job/opencomposerjob.cpp:124
+#: job/opencomposerjob.cpp:122
 #, kde-format
 msgctxt "@action:button"
 msgid "Attach"
 msgstr "Liitä"
 
-#: job/opencomposerjob.cpp:125
+#: job/opencomposerjob.cpp:123
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Attach"
 msgstr "Älä liitä"
 
-#: job/removecollectionjob.cpp:58
+#: job/removecollectionjob.cpp:60
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Search"
 msgstr "Poista haku"
 
-#: job/removecollectionjob.cpp:60
+#: job/removecollectionjob.cpp:62
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the search <b>%1</b>?<br />Any messages "
@@ -3914,24 +3914,24 @@ msgstr ""
 "<qt>Haluatko varmasti poistaa haun <b>%1</b>?<br />Kaikki sen näyttämät "
 "viestit ovat saatavilla niiden alkuperäisestä kansiosta.</qt>"
 
-#: job/removecollectionjob.cpp:63
+#: job/removecollectionjob.cpp:65
 #, kde-format
 msgctxt "@action:button Delete search"
 msgid "&Delete"
 msgstr "&Poista"
 
-#: job/removecollectionjob.cpp:65
+#: job/removecollectionjob.cpp:67
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Folder"
 msgstr "Poista kansio"
 
-#: job/removecollectionjob.cpp:70
+#: job/removecollectionjob.cpp:72
 #, kde-format
 msgid "<qt>Are you sure you want to delete the empty folder <b>%1</b>?</qt>"
 msgstr "<qt>Haluatko varmasti poistaa tyhjän kansion <b>%1</b>?</qt>"
 
-#: job/removecollectionjob.cpp:75
+#: job/removecollectionjob.cpp:77
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the empty folder <resource>%1</resource> "
@@ -3944,7 +3944,7 @@ msgstr ""
 "tuhoutuu. <p><b>Huomaa</b>, että poistettuja viestejä ei tallenneta "
 "roskakorikansioosi vaan poistetaan lopullisesti.</p></qt>"
 
-#: job/removecollectionjob.cpp:85
+#: job/removecollectionjob.cpp:87
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the folder <resource>%1</resource>, "
@@ -3955,7 +3955,7 @@ msgstr ""
 "huolimatta? <p><b>Huomaa</b>, että poistettuja viestejä ei tallenneta "
 "roskakoriin vaan ne poistetaan lopullisesti.</p></qt>"
 
-#: job/removecollectionjob.cpp:92
+#: job/removecollectionjob.cpp:94
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to delete the folder <resource>%1</resource> and "
@@ -3967,7 +3967,7 @@ msgstr ""
 "niiden sisällöstä huolimatta? <p><b>Huomaa</b>, että poistettuja viestejä ei "
 "tallenneta roskakoriin vaan ne poistetaan lopullisesti.</p></qt>"
 
-#: job/removecollectionjob.cpp:99
+#: job/removecollectionjob.cpp:101
 #, kde-format
 msgctxt "@action:button Delete folder"
 msgid "&Delete"
@@ -4177,7 +4177,7 @@ msgid "F&older"
 msgstr "&Kansio"
 
 #. i18n: ectx: Menu (apply_filters_folder_actions)
-#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3534 kmmainwin.rc:134
+#: kmail_part.rc:134 kmail_part.rc:287 kmmainwidget.cpp:3520 kmmainwin.rc:134
 #: kmmainwin.rc:289
 #, kde-format
 msgid "Apply Filters on Folder"
@@ -4209,7 +4209,7 @@ msgid "&Forward"
 msgstr "&Välitä"
 
 #. i18n: ectx: Menu (apply_filter_actions)
-#: kmail_part.rc:191 kmmainwidget.cpp:3358 kmmainwin.rc:191
+#: kmail_part.rc:191 kmmainwidget.cpp:3344 kmmainwin.rc:191
 #, kde-format
 msgid "A&pply Filter"
 msgstr "Käy&tä suodatinta"
@@ -4239,42 +4239,42 @@ msgstr "&Ohje"
 msgid "Main Toolbar"
 msgstr "Päätyökalurivi"
 
-#: kmcommands.cpp:290
+#: kmcommands.cpp:293
 #, kde-format
 msgctxt "@title:window"
 msgid "Please wait"
 msgstr "Odota"
 
-#: kmcommands.cpp:293 kmcommands.cpp:366
+#: kmcommands.cpp:296 kmcommands.cpp:369
 #, kde-format
 msgid "Please wait while the message is transferred"
 msgid_plural "Please wait while the %1 messages are transferred"
 msgstr[0] "Ole hyvä ja odota, kunnes %1 viesti on siirretty"
 msgstr[1] "Ole hyvä ja odota, kunnes %1 viestiä on siirretty"
 
-#: kmcommands.cpp:519
+#: kmcommands.cpp:522
 #, kde-format
 msgctxt "@title:window"
 msgid "Save To File"
 msgstr "Tallenna tiedostoon"
 
-#: kmcommands.cpp:704
+#: kmcommands.cpp:707
 #, kde-format
 msgctxt "@title:window"
 msgid "Open Message"
 msgstr "Avaa viesti"
 
-#: kmcommands.cpp:704
+#: kmcommands.cpp:707
 #, kde-format
 msgid "Message"
 msgstr "Viesti"
 
-#: kmcommands.cpp:733
+#: kmcommands.cpp:736
 #, kde-format
 msgid "The file does not contain a message."
 msgstr "Tiedosto ei sisällä viestiä."
 
-#: kmcommands.cpp:922
+#: kmcommands.cpp:925
 #, kde-format
 msgid ""
 "Do you want to forward the selected messages as attachments in one message "
@@ -4283,39 +4283,39 @@ msgstr ""
 "Haluatko välittää valitut viestit liitteinä yhdessä viestissä (MIME-"
 "koosteena) vai yksittäisinä viesteinä?"
 
-#: kmcommands.cpp:926
+#: kmcommands.cpp:929
 #, kde-format
 msgctxt "@action:button"
 msgid "Send As Digest"
 msgstr "Lähetä koosteena"
 
-#: kmcommands.cpp:927
+#: kmcommands.cpp:930
 #, kde-format
 msgctxt "@action:button"
 msgid "Send Individually"
 msgstr "Lähetä yksittäin"
 
-#: kmcommands.cpp:1342
+#: kmcommands.cpp:1345
 #, kde-format
 msgid "Filtering messages"
 msgstr "Suodatetaan viestejä"
 
-#: kmcommands.cpp:1351
+#: kmcommands.cpp:1354
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Suodatetaan %2:n viestiä %1"
 
-#: kmcommands.cpp:1573 kmcommands.cpp:1709
+#: kmcommands.cpp:1576 kmcommands.cpp:1712
 #, kde-format
 msgid "Moving messages"
 msgstr "Siirretään viestejä"
 
-#: kmcommands.cpp:1573 kmcommands.cpp:1719
+#: kmcommands.cpp:1576 kmcommands.cpp:1722
 #, kde-format
 msgid "Deleting messages"
 msgstr "Poistetaan viestejä"
 
-#: kmcommands.cpp:1859
+#: kmcommands.cpp:1862
 #, kde-format
 msgctxt "@info:progress"
 msgid "Deleting Attachments"
@@ -4351,31 +4351,31 @@ msgstr "HTML-työkalurivi"
 msgid "Text Direction Toolbar"
 msgstr "Tekstin suunta -työkalurivi"
 
-#: kmkernel.cpp:636
+#: kmkernel.cpp:633
 #, kde-format
 msgid "KMail is set to be offline; all network jobs are suspended"
 msgstr ""
 "KMail on asetettu verkottomaan tilaan ja kaikki verkkotoimenpiteet "
 "keskeytetty"
 
-#: kmkernel.cpp:653 kmmainwidget.cpp:2518 kmmainwidget.cpp:2529
+#: kmkernel.cpp:650 kmmainwidget.cpp:2504 kmmainwidget.cpp:2515
 #, kde-format
 msgid "Send Email"
 msgstr "Lähetä sähköposti"
 
-#: kmkernel.cpp:653 kmmainwidget.cpp:2518 kmmainwidget.cpp:2529
+#: kmkernel.cpp:650 kmmainwidget.cpp:2504 kmmainwidget.cpp:2515
 #, kde-format
 msgid "Impossible to send email"
 msgstr "Sähköpostin lähettäminen on mahdotonta"
 
-#: kmkernel.cpp:677
+#: kmkernel.cpp:674
 #, kde-format
 msgid "KMail is set to be online; all network jobs resumed"
 msgstr ""
 "KMail on asetettu verkolliseen tilaan ja kaikkia verkkotoimenpiteitä "
 "jatketaan"
 
-#: kmkernel.cpp:679
+#: kmkernel.cpp:676
 #, kde-format
 msgid ""
 "KMail is set to be online; all network jobs will resume when a network "
@@ -4384,40 +4384,40 @@ msgstr ""
 "KMail on asetettu verkolliseen tilaan: kaikkia verkkotoimenpiteitä jatketaan "
 "heti, kun verkko on havaittu"
 
-#: kmkernel.cpp:749
+#: kmkernel.cpp:746
 #, kde-format
 msgid "KMail is currently in offline mode. How do you want to proceed?"
 msgstr "KMail ei ole nyt verkossa. Kuinka haluat edetä?"
 
-#: kmkernel.cpp:751
+#: kmkernel.cpp:748
 #, kde-format
 msgctxt "@title:window"
 msgid "Online/Offline"
 msgstr "Verkossa/Ei verkossa"
 
-#: kmkernel.cpp:752
+#: kmkernel.cpp:749
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Online"
 msgstr "Työskentele verkollisessa tilassa"
 
-#: kmkernel.cpp:753
+#: kmkernel.cpp:750
 #, kde-format
 msgctxt "@action:button"
 msgid "Work Offline"
 msgstr "Työskentele verkottomassa tilassa"
 
-#: kmkernel.cpp:777
+#: kmkernel.cpp:774
 #, kde-format
 msgid "Network connection detected, all network jobs resumed"
 msgstr "Verkkoyhteys havaittiin: kaikkia verkkotoimenpiteitä jatketaan"
 
-#: kmkernel.cpp:780
+#: kmkernel.cpp:777
 #, kde-format
 msgid "No network connection detected, all network jobs are suspended"
 msgstr "Verkkoyhteyttä ei havaittu: kaikki verkkotoimenpiteet on keskeytetty"
 
-#: kmkernel.cpp:874
+#: kmkernel.cpp:871
 #, kde-format
 msgid ""
 "Failed to open autosave file at %1.\n"
@@ -4426,13 +4426,13 @@ msgstr ""
 "Automaattitallennustiedoston avaus kohteesta %1 epäonnistui.\n"
 "Syy: %2"
 
-#: kmkernel.cpp:875
+#: kmkernel.cpp:872
 #, kde-format
 msgctxt "@title:window"
 msgid "Opening Autosave File Failed"
 msgstr "Automaattitallennustiedoston avaaminen epäonnistui"
 
-#: kmkernel.cpp:1425
+#: kmkernel.cpp:1422
 #, kde-format
 msgid "This identity has been changed to use the default transport:"
 msgid_plural ""
@@ -4440,7 +4440,7 @@ msgid_plural ""
 msgstr[0] "Tämä henkilöys muutettiin käyttämään oletuslähetystapaa."
 msgstr[1] "Nämä %1 henkilöyttä muutettiin käyttämään oletuslähetystapaa."
 
-#: kmkernel.cpp:1447
+#: kmkernel.cpp:1444
 #, kde-format
 msgid "This identity has been changed to use the modified transport:"
 msgid_plural ""
@@ -4448,17 +4448,17 @@ msgid_plural ""
 msgstr[0] "Tämä henkilöys muutettiin käyttämään muutettua lähetystapaa:"
 msgstr[1] "Nämä %1 henkilöyttä muutettiin käyttämään muutettua lähetystapaa:"
 
-#: kmkernel.cpp:1462
+#: kmkernel.cpp:1459
 #, kde-format
 msgid "Sending messages"
 msgstr "Lähettää viestejä"
 
-#: kmkernel.cpp:1463
+#: kmkernel.cpp:1460
 #, kde-format
 msgid "Initiating sending process…"
 msgstr "Käynnistetään lähetysprosessia…"
 
-#: kmkernel.cpp:1539
+#: kmkernel.cpp:1536
 #, kde-format
 msgid ""
 "Resource %1 is broken.\n"
@@ -4467,33 +4467,33 @@ msgstr ""
 "Resurssi %1 on rikki.\n"
 "%2"
 
-#: kmkernel.cpp:1710 kmkernel.cpp:1716
+#: kmkernel.cpp:1707 kmkernel.cpp:1713
 #, kde-format
 msgctxt "<source>: <error message>"
 msgid "%1: %2"
 msgstr "%1: %2"
 
-#: kmlaunchexternalcomponent.cpp:47
+#: kmlaunchexternalcomponent.cpp:48
 #, kde-format
 msgid "Archive Mail Agent was not registered."
 msgstr "Postin arkistointiagenttia ei ole rekisteröity."
 
-#: kmlaunchexternalcomponent.cpp:52
+#: kmlaunchexternalcomponent.cpp:53
 #, kde-format
 msgid "Send Later Agent was not registered."
 msgstr "Lähetä myöhemmin -agenttia ei ole rekisteröity."
 
-#: kmlaunchexternalcomponent.cpp:57
+#: kmlaunchexternalcomponent.cpp:58
 #, kde-format
 msgid "Mail Merge Agent was not registered."
 msgstr "Viestinkoostamisagenttia ei ole rekisteröity."
 
-#: kmlaunchexternalcomponent.cpp:62
+#: kmlaunchexternalcomponent.cpp:63
 #, kde-format
 msgid "Followup Reminder Agent was not registered."
 msgstr "Vastaamisen seurannasta muistuttaja -agenttia ei ole rekisteröity."
 
-#: kmlaunchexternalcomponent.cpp:74 kmlaunchexternalcomponent.cpp:82
+#: kmlaunchexternalcomponent.cpp:75 kmlaunchexternalcomponent.cpp:83
 #, kde-format
 msgid ""
 "Could not start certificate manager; please make sure you have Kleopatra "
@@ -4502,38 +4502,38 @@ msgstr ""
 "Varmenteiden hallintaa ei voi käynnistää. Varmista, että Kleopatra on "
 "asennettu oikein."
 
-#: kmlaunchexternalcomponent.cpp:76 kmlaunchexternalcomponent.cpp:84
+#: kmlaunchexternalcomponent.cpp:77 kmlaunchexternalcomponent.cpp:85
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail-virhe"
 
-#: kmlaunchexternalcomponent.cpp:98 kmlaunchexternalcomponent.cpp:106
+#: kmlaunchexternalcomponent.cpp:99 kmlaunchexternalcomponent.cpp:107
 #, kde-format
 msgid ""
 "Could not start \"ImportWizard\" program. Please check your installation."
 msgstr "Opastettua tuontia ei voitu käynnistää. Tarkista asennus."
 
-#: kmlaunchexternalcomponent.cpp:100 kmlaunchexternalcomponent.cpp:108
+#: kmlaunchexternalcomponent.cpp:101 kmlaunchexternalcomponent.cpp:109
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"ImportWizard\" program"
 msgstr "Opastettua tuontia ei voi käynnistää"
 
-#: kmlaunchexternalcomponent.cpp:123 kmlaunchexternalcomponent.cpp:131
+#: kmlaunchexternalcomponent.cpp:124 kmlaunchexternalcomponent.cpp:132
 #, kde-format
 msgid ""
 "Could not start \"PIM Data Exporter\" program. Please check your "
 "installation."
 msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää. Tarkista asennus."
 
-#: kmlaunchexternalcomponent.cpp:125 kmlaunchexternalcomponent.cpp:133
+#: kmlaunchexternalcomponent.cpp:126 kmlaunchexternalcomponent.cpp:134
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"PIM Data Exporter\" program"
 msgstr "Opastettua PIM-tietojen tuontia ei voi käynnistää"
 
-#: kmlaunchexternalcomponent.cpp:162
+#: kmlaunchexternalcomponent.cpp:163
 #, kde-format
 msgid ""
 "Could not start the ImportWizard. Please make sure you have ImportWizard "
@@ -4541,95 +4541,95 @@ msgid ""
 msgstr ""
 "Opastettua tuontia ei voi käynnistää. Varmista, että se on asennettu oikein."
 
-#: kmlaunchexternalcomponent.cpp:164
+#: kmlaunchexternalcomponent.cpp:165
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start ImportWizard"
 msgstr "Opastettua tuontia ei voi käynnistää"
 
-#: kmmainwidget.cpp:334
+#: kmmainwidget.cpp:320
 #, kde-format
 msgid "Another mailer was found on system. Do you want to import data from it?"
 msgstr ""
 "Järjestelmästä löytyi toinen postiohjelma. Haluatko tuoda tiedot siitä?"
 
-#: kmmainwidget.cpp:337
+#: kmmainwidget.cpp:323
 #, kde-format
 msgctxt "@action:button"
 msgid "Import"
 msgstr "Tuo"
 
-#: kmmainwidget.cpp:338
+#: kmmainwidget.cpp:324
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Import"
 msgstr "Älä tuo"
 
-#: kmmainwidget.cpp:343
+#: kmmainwidget.cpp:329
 #, kde-format
 msgid "Could not start the import wizard. Please check your installation."
 msgstr "Opastettua tuontia ei voi käynnistää. Tarkista asennuksesi."
 
-#: kmmainwidget.cpp:345
+#: kmmainwidget.cpp:331
 #, kde-format
 msgid "Unable to start import wizard"
 msgstr "Opastettua tuontia ei voi käynnistää."
 
-#: kmmainwidget.cpp:1409
+#: kmmainwidget.cpp:1395
 #, kde-format
 msgctxt "@action"
 msgid "(loading templates…)"
 msgstr "(ladataan mallipohjia…)"
 
-#: kmmainwidget.cpp:1433
+#: kmmainwidget.cpp:1419
 #, kde-format
 msgid "No Subject"
 msgstr "Ei aihetta"
 
-#: kmmainwidget.cpp:1446
+#: kmmainwidget.cpp:1432
 #, kde-format
 msgid "(no templates)"
 msgstr "(ei viestipohjia)"
 
-#: kmmainwidget.cpp:1497
+#: kmmainwidget.cpp:1483
 #, kde-format
 msgid "This folder does not have any expiry options set"
 msgstr "Tälle kansiolle ei ole asetettu siivousasetuksia"
 
-#: kmmainwidget.cpp:1503
+#: kmmainwidget.cpp:1489
 #, kde-format
 msgid "<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>"
 msgstr "<qt>Haluatko varmasti siivota kansion <b>%1</b>?</qt>"
 
-#: kmmainwidget.cpp:1504
+#: kmmainwidget.cpp:1490
 #, kde-format
 msgid "Expire Folder"
 msgstr "Siivoa kansio"
 
-#: kmmainwidget.cpp:1504
+#: kmmainwidget.cpp:1490
 #, kde-format
 msgctxt "@action:button"
 msgid "&Expire"
 msgstr "&Siivoa"
 
-#: kmmainwidget.cpp:1521
+#: kmmainwidget.cpp:1507
 #, kde-format
 msgctxt "@title:window"
 msgid "Empty Trash"
 msgstr "Tyhjennä roskakori"
 
-#: kmmainwidget.cpp:1521
+#: kmmainwidget.cpp:1507
 #, kde-format
 msgctxt "@title:window"
 msgid "Move to Trash"
 msgstr "Siirrä roskakoriin"
 
-#: kmmainwidget.cpp:1522
+#: kmmainwidget.cpp:1508
 #, kde-format
 msgid "Are you sure you want to empty the trash folder?"
 msgstr "Haluatko varmasti tyhjentää roskakorikansion?"
 
-#: kmmainwidget.cpp:1524
+#: kmmainwidget.cpp:1510
 #, kde-format
 msgid ""
 "<qt>Are you sure you want to move all messages from folder <b>%1</b> to the "
@@ -4638,28 +4638,28 @@ msgstr ""
 "<qt>Haluatko varmasti siirtää kaikki viestit kansiosta <b>%1</b> roskakoriin?"
 "</qt>"
 
-#: kmmainwidget.cpp:1547
+#: kmmainwidget.cpp:1533
 #, kde-format
 msgid "Moved all messages to the trash"
 msgstr "Siirrettiin kaikki viestit roskakoriin"
 
-#: kmmainwidget.cpp:1601
+#: kmmainwidget.cpp:1587
 #, kde-format
 msgid "Are you sure you want to expire all old messages?"
 msgstr "Haluatko varmasti siivota kaikki vanhat viestit?"
 
-#: kmmainwidget.cpp:1602
+#: kmmainwidget.cpp:1588
 #, kde-format
 msgid "Expire Old Messages?"
 msgstr "Siivotaanko vanhat viestit?"
 
-#: kmmainwidget.cpp:1603
+#: kmmainwidget.cpp:1589
 #, kde-format
 msgctxt "@action:button"
 msgid "Expire"
 msgstr "Siivoa"
 
-#: kmmainwidget.cpp:1628
+#: kmmainwidget.cpp:1614
 #, kde-format
 msgid ""
 "Loading external references in html mail will make you more vulnerable to "
@@ -4670,19 +4670,19 @@ msgstr ""
 "roskapostille ja voi kasvattaa järjestelmän todennäköisyyttä vaarantua "
 "muille ei-toivotuille tietoturva-aukoille."
 
-#: kmmainwidget.cpp:1631 kmmainwidget.cpp:4916
+#: kmmainwidget.cpp:1617 kmmainwidget.cpp:4902
 #, kde-format
 msgctxt "@title:window"
 msgid "Security Warning"
 msgstr "Turvallisuusvaroitus"
 
-#: kmmainwidget.cpp:1632
+#: kmmainwidget.cpp:1618
 #, kde-format
 msgctxt "@action:button"
 msgid "Load External References"
 msgstr "Lataa ulkoiset viittaukset"
 
-#: kmmainwidget.cpp:1705
+#: kmmainwidget.cpp:1691
 #, kde-format
 msgid ""
 "<qt>Do you really want to delete the selected message?<br />Once deleted, it "
@@ -4697,137 +4697,137 @@ msgstr[1] ""
 "<qt>Haluatko varmasti poistaa valitut %1 viestiä?<br />Jos poistat viestit, "
 "niitä ei voida palauttaa enää.</qt>"
 
-#: kmmainwidget.cpp:1710
+#: kmmainwidget.cpp:1696
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Poista viestit"
 
-#: kmmainwidget.cpp:1710
+#: kmmainwidget.cpp:1696
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Message"
 msgstr "Poista viesti"
 
-#: kmmainwidget.cpp:1725
+#: kmmainwidget.cpp:1711
 #, kde-format
 msgid "Moving messages…"
 msgstr "Siirretään viestejä…"
 
-#: kmmainwidget.cpp:1727 kmmainwidget.cpp:1920
+#: kmmainwidget.cpp:1713 kmmainwidget.cpp:1906
 #, kde-format
 msgid "Deleting messages…"
 msgstr "Poistetaan viestejä…"
 
-#: kmmainwidget.cpp:1742 kmmainwidget.cpp:1944
+#: kmmainwidget.cpp:1728 kmmainwidget.cpp:1930
 #, kde-format
 msgid "Messages deleted successfully."
 msgstr "Viestit poistettu onnistuneesti."
 
-#: kmmainwidget.cpp:1744
+#: kmmainwidget.cpp:1730
 #, kde-format
 msgid "Messages moved successfully."
 msgstr "Viestit siirrettiin onnistuneesti"
 
-#: kmmainwidget.cpp:1749 kmmainwidget.cpp:1957
+#: kmmainwidget.cpp:1735 kmmainwidget.cpp:1943
 #, kde-format
 msgid "Deleting messages failed."
 msgstr "Viestien poisto epäonnistui."
 
-#: kmmainwidget.cpp:1751 kmmainwidget.cpp:1970
+#: kmmainwidget.cpp:1737 kmmainwidget.cpp:1956
 #, kde-format
 msgid "Deleting messages canceled."
 msgstr "Viestien poisto peruttiin."
 
-#: kmmainwidget.cpp:1755
+#: kmmainwidget.cpp:1741
 #, kde-format
 msgid "Moving messages failed."
 msgstr "Viestien siirto epäonnistui."
 
-#: kmmainwidget.cpp:1757
+#: kmmainwidget.cpp:1743
 #, kde-format
 msgid "Moving messages canceled."
 msgstr "Viestien siirto peruttiin."
 
-#: kmmainwidget.cpp:1826
+#: kmmainwidget.cpp:1812
 #, kde-format
 msgctxt "@title:window"
 msgid "Move Messages to Folder"
 msgstr "Siirrä viestit kansioon"
 
-#: kmmainwidget.cpp:1851
+#: kmmainwidget.cpp:1837
 #, kde-format
 msgid "Copying messages…"
 msgstr "Kopioidaan viestejä…"
 
-#: kmmainwidget.cpp:1859
+#: kmmainwidget.cpp:1845
 #, kde-format
 msgid "Messages copied successfully."
 msgstr "Viestit kopioitiin onnistuneesti"
 
-#: kmmainwidget.cpp:1862
+#: kmmainwidget.cpp:1848
 #, kde-format
 msgid "Copying messages failed."
 msgstr "Viestien kopiointi epäonnistui."
 
-#: kmmainwidget.cpp:1864
+#: kmmainwidget.cpp:1850
 #, kde-format
 msgid "Copying messages canceled."
 msgstr "Viestien kopiointi peruttiin."
 
-#: kmmainwidget.cpp:1874
+#: kmmainwidget.cpp:1860
 #, kde-format
 msgctxt "@title:window"
 msgid "Copy Messages to Folder"
 msgstr "Kopioi viestit kansioon"
 
-#: kmmainwidget.cpp:1917
+#: kmmainwidget.cpp:1903
 #, kde-format
 msgid "Moving messages to trash…"
 msgstr "Siirretään viestejä roskakoriin…"
 
-#: kmmainwidget.cpp:1924
+#: kmmainwidget.cpp:1910
 #, kde-format
 msgid "Deleting and moving messages to trash…"
 msgstr "Poistetaan ja siirretään viestejä roskakoriin…"
 
-#: kmmainwidget.cpp:1941
+#: kmmainwidget.cpp:1927
 #, kde-format
 msgid "Messages moved to trash successfully."
 msgstr "Viestit siirrettiin roskakoriin onnistuneesti"
 
-#: kmmainwidget.cpp:1948
+#: kmmainwidget.cpp:1934
 #, kde-format
 msgid "Messages moved to trash or deleted successfully"
 msgstr "Viestien siirto roskakoriin tai poistaminen onnistui"
 
-#: kmmainwidget.cpp:1954
+#: kmmainwidget.cpp:1940
 #, kde-format
 msgid "Moving messages to trash failed."
 msgstr "Viestien siirto roskakoriin epäonnistui."
 
-#: kmmainwidget.cpp:1961
+#: kmmainwidget.cpp:1947
 #, kde-format
 msgid "Deleting or moving messages to trash failed."
 msgstr "Viestien poistaminen tai siirto roskakoriin epäonnistui."
 
-#: kmmainwidget.cpp:1967
+#: kmmainwidget.cpp:1953
 #, kde-format
 msgid "Moving messages to trash canceled."
 msgstr "Viestien siirto roskakoriin peruttiin."
 
-#: kmmainwidget.cpp:1974
+#: kmmainwidget.cpp:1960
 #, kde-format
 msgid "Deleting or moving messages to trash canceled."
 msgstr "Viestien poistaminen tai siirto roskakoriin peruttiin."
 
-#: kmmainwidget.cpp:2258
+#: kmmainwidget.cpp:2244
 #, kde-format
 msgctxt "@title:window"
 msgid "Jump to Folder"
 msgstr "Siirry kansioon"
 
-#: kmmainwidget.cpp:2451
+#: kmmainwidget.cpp:2437
 #, kde-format
 msgid ""
 "The selected message is encrypted. It's currently not possible to delete "
@@ -4842,7 +4842,7 @@ msgstr[1] ""
 "Valinnassa on vain salattuja viestejä, joista ei liitteitä toistaiseksi voi "
 "poistaa."
 
-#: kmmainwidget.cpp:2454
+#: kmmainwidget.cpp:2440
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments from Encrypted Message"
@@ -4850,7 +4850,7 @@ msgid_plural "Delete Attachments from Encrypted Messages"
 msgstr[0] "Poista liitteet salatusta viestistä"
 msgstr[1] "Poista liitteet salatuista viesteistä"
 
-#: kmmainwidget.cpp:2459
+#: kmmainwidget.cpp:2445
 #, kde-format
 msgid ""
 "<html><p>Do you really want to delete all attachments from the selected "
@@ -4865,7 +4865,7 @@ msgstr[1] ""
 "<html>Haluatko varmasti poistaa valituista %1 viestistä kaikki liitteet?<br /"
 ">Poistamisen jälkeen niitä ei voi enää palauttaa.</html>"
 
-#: kmmainwidget.cpp:2466
+#: kmmainwidget.cpp:2452
 #, kde-format
 msgid ""
 "<html><p>Note that deleting attachments from a cryptographically signed "
@@ -4874,7 +4874,7 @@ msgstr ""
 "<html><p>Huomaa, että kryptografisesti allekirjoitetun viestin liitteiden "
 "poistaminen mitätöi allekirjoituksen.</p></html>"
 
-#: kmmainwidget.cpp:2471
+#: kmmainwidget.cpp:2457
 #, kde-format
 msgid ""
 "<html><p>It's not currently possible to delete attachments from encrypted "
@@ -4883,491 +4883,491 @@ msgstr ""
 "<html><p>Toistaiseksi ei liitteitä voi poistaa salatuista viesteistä.<br /"
 ">Salatut viestit sivuutetaan.</p></html>"
 
-#: kmmainwidget.cpp:2476
+#: kmmainwidget.cpp:2462
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Attachments"
 msgstr "Poista liitteet"
 
-#: kmmainwidget.cpp:2505
+#: kmmainwidget.cpp:2491
 #, kde-format
 msgid "Work Offline"
 msgstr "Työskentele verkottomassa tilassa"
 
-#: kmmainwidget.cpp:2508
+#: kmmainwidget.cpp:2494
 #, kde-format
 msgid "Work Online"
 msgstr "Työskentele verkollisessa tilassa"
 
-#: kmmainwidget.cpp:2955
+#: kmmainwidget.cpp:2941
 #, kde-format
 msgid "Save &As…"
 msgstr "Tallenna &nimellä…"
 
-#: kmmainwidget.cpp:2966
+#: kmmainwidget.cpp:2952
 #, kde-format
 msgctxt "@action"
 msgid "&Expire All Folders"
 msgstr "&Siivoa kaikki kansiot"
 
-#: kmmainwidget.cpp:2971
+#: kmmainwidget.cpp:2957
 #, kde-format
 msgid "Check &Mail"
 msgstr "Tarkista &posti"
 
-#: kmmainwidget.cpp:2979
+#: kmmainwidget.cpp:2965
 #, kde-format
 msgid "Check Mail In"
 msgstr "Tarkista posti kansiosta"
 
-#: kmmainwidget.cpp:2984
+#: kmmainwidget.cpp:2970
 #, kde-format
 msgid "Check Mail"
 msgstr "Tarkista posti"
 
-#: kmmainwidget.cpp:2985
+#: kmmainwidget.cpp:2971
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Check Mail"
 msgstr "Tarkista posti"
 
-#: kmmainwidget.cpp:2989
+#: kmmainwidget.cpp:2975
 #, kde-format
 msgid "&Send Queued Messages"
 msgstr "Lähetä jono&ttavat viestit"
 
-#: kmmainwidget.cpp:2997
+#: kmmainwidget.cpp:2983
 #, kde-format
 msgid "Online status (unknown)"
 msgstr "Yhteyden tila (tuntematon)"
 
-#: kmmainwidget.cpp:3002
+#: kmmainwidget.cpp:2988
 #, kde-format
 msgid "Send Queued Messages Via"
 msgstr "Lähetä jonossa olevat viestit reittiä"
 
-#: kmmainwidget.cpp:3021
+#: kmmainwidget.cpp:3007
 #, kde-format
 msgid "Certificate Manager"
 msgstr "Varmennehallinta…"
 
-#: kmmainwidget.cpp:3031
+#: kmmainwidget.cpp:3017
 #, kde-format
 msgid "&Import Messages…"
 msgstr "&Tuo viestejä…"
 
-#: kmmainwidget.cpp:3041
+#: kmmainwidget.cpp:3027
 #, kde-format
 msgctxt "@action"
 msgid "&Debug Sieve…"
 msgstr "&Sieve-virheenpaikannus…"
 
-#: kmmainwidget.cpp:3048
+#: kmmainwidget.cpp:3034
 #, kde-format
 msgctxt "@action"
 msgid "Filter &Log Viewer…"
 msgstr "Suodati&nloki…"
 
-#: kmmainwidget.cpp:3053
+#: kmmainwidget.cpp:3039
 #, kde-format
 msgctxt "@action"
 msgid "Notification History…"
 msgstr "Ilmoitushistoria…"
 
-#: kmmainwidget.cpp:3058
+#: kmmainwidget.cpp:3044
 #, kde-format
 msgctxt "@action"
 msgid "&Import from another Email Client…"
 msgstr "&Tuo toisesta sähköpostiohjelmasta…"
 
-#: kmmainwidget.cpp:3063
+#: kmmainwidget.cpp:3049
 #, kde-format
 msgctxt "@action"
 msgid "Edit \"Out of Office\" Replies…"
 msgstr "Muokkaa poissaoloviestejä…"
 
-#: kmmainwidget.cpp:3069
+#: kmmainwidget.cpp:3055
 #, kde-format
 msgctxt "@action"
 msgid "&Configure Automatic Archiving…"
 msgstr "Auto&maattisen arkistoinnin asetukset…"
 
-#: kmmainwidget.cpp:3075
+#: kmmainwidget.cpp:3061
 #, kde-format
 msgctxt "@action"
 msgid "Delayed Messages…"
 msgstr "Viivästetyt viestit…"
 
-#: kmmainwidget.cpp:3081
+#: kmmainwidget.cpp:3067
 #, kde-format
 msgctxt "@action"
 msgid "Followup Reminder Messages…"
 msgstr "Vastaamisen seurannasta muistuttajan viestit…"
 
-#: kmmainwidget.cpp:3086
+#: kmmainwidget.cpp:3072
 #, kde-format
 msgctxt "@action"
 msgid "Expand All"
 msgstr "Laajenna kaikki"
 
-#: kmmainwidget.cpp:3091
+#: kmmainwidget.cpp:3077
 #, kde-format
 msgctxt "@action"
 msgid "Collapse All"
 msgstr "Supista kaikki"
 
-#: kmmainwidget.cpp:3102 util.cpp:184
+#: kmmainwidget.cpp:3088 util.cpp:182
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
 msgstr "&Poista"
 
-#: kmmainwidget.cpp:3107
+#: kmmainwidget.cpp:3093
 #, kde-format
 msgctxt "@action"
 msgid "M&ove Thread to Trash"
 msgstr "Siirrä ketju roskakoriin"
 
-#: kmmainwidget.cpp:3111
+#: kmmainwidget.cpp:3097
 #, kde-format
 msgid "Move thread to trashcan"
 msgstr "Siirrä viestiketju roskakoriin"
 
-#: kmmainwidget.cpp:3114 kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:3100 kmmainwidget.cpp:4160
 #, kde-format
 msgid "Delete T&hread"
 msgstr "Poista viestiketju"
 
-#: kmmainwidget.cpp:3123 kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:3109 kmmainwidget.cpp:4162
 #, kde-format
 msgid "&Find Messages…"
 msgstr "&Etsi viestejä…"
 
-#: kmmainwidget.cpp:3129
+#: kmmainwidget.cpp:3115
 #, kde-format
 msgctxt "@action"
 msgid "Select &All Messages"
 msgstr "V&alitse kaikki viestit"
 
-#: kmmainwidget.cpp:3136
+#: kmmainwidget.cpp:3122
 #, kde-format
 msgctxt "@action"
 msgid "&Mailing List Management…"
 msgstr "&Sähköpostilistojen hallinta…"
 
-#: kmmainwidget.cpp:3144
+#: kmmainwidget.cpp:3130
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache…"
 msgstr "T&yhjennä Akonadin välimuisti…"
 
-#: kmmainwidget.cpp:3149
+#: kmmainwidget.cpp:3135
 #, kde-format
 msgctxt "@action"
 msgid "&Clear Akonadi Cache in This Folder and All its Subfolders"
 msgstr "T&yhjennä Akonadin välimuisti tästä kansiosta kaikkine alikansioineen"
 
-#: kmmainwidget.cpp:3154
+#: kmmainwidget.cpp:3140
 #, kde-format
 msgid "&Assign Shortcut…"
 msgstr "K&ytke pikanäppäin…"
 
-#: kmmainwidget.cpp:3172
+#: kmmainwidget.cpp:3158
 #, kde-format
 msgctxt "@action"
 msgid "&Expiration Settings"
 msgstr "&Erääntymisasetukset"
 
-#: kmmainwidget.cpp:3197
+#: kmmainwidget.cpp:3183
 #, kde-format
 msgctxt "@action"
 msgid "&Archive Folder…"
 msgstr "&Arkistoi kansio…"
 
-#: kmmainwidget.cpp:3205
+#: kmmainwidget.cpp:3191
 #, kde-format
 msgctxt "@action"
 msgid "Load E&xternal References"
 msgstr "Lataa &ulkoiset viittaukset"
 
-#: kmmainwidget.cpp:3228
+#: kmmainwidget.cpp:3214
 #, kde-format
 msgid "Copy Message To…"
 msgstr "Kopioi viesti kohteeseen…"
 
-#: kmmainwidget.cpp:3230
+#: kmmainwidget.cpp:3216
 #, kde-format
 msgid "Move Message To…"
 msgstr "Siirrä viesti kohteeseen…"
 
-#: kmmainwidget.cpp:3235
+#: kmmainwidget.cpp:3221
 #, kde-format
 msgid "&New Message…"
 msgstr "&Uusi viesti…"
 
-#: kmmainwidget.cpp:3237
+#: kmmainwidget.cpp:3223
 #, kde-format
 msgctxt "@action:intoolbar New Empty Message"
 msgid "New"
 msgstr "Uusi"
 
-#: kmmainwidget.cpp:3245
+#: kmmainwidget.cpp:3231
 #, kde-format
 msgid "Message From &Template"
 msgstr "Uusi viesti &mallista"
 
-#: kmmainwidget.cpp:3251
+#: kmmainwidget.cpp:3237
 #, kde-format
 msgid "New Message t&o Mailing-List…"
 msgstr "Uusi viesti &postilistalle…"
 
-#: kmmainwidget.cpp:3257
+#: kmmainwidget.cpp:3243
 #, kde-format
 msgid "&Create Filter"
 msgstr "&Luo suodatin"
 
-#: kmmainwidget.cpp:3261
+#: kmmainwidget.cpp:3247
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Subject…"
 msgstr "Suodata &otsikolla…"
 
-#: kmmainwidget.cpp:3268
+#: kmmainwidget.cpp:3254
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &From…"
 msgstr "Suodata &lähettäjällä…"
 
-#: kmmainwidget.cpp:3274
+#: kmmainwidget.cpp:3260
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &To…"
 msgstr "Suodata &vastaanottajalla…"
 
-#: kmmainwidget.cpp:3280
+#: kmmainwidget.cpp:3266
 #, kde-format
 msgctxt "@action"
 msgid "Filter on &Cc…"
 msgstr "Suodata &kopio-osoitteella…"
 
-#: kmmainwidget.cpp:3294
+#: kmmainwidget.cpp:3280
 #, kde-format
 msgid "Mark &Thread"
 msgstr "Merki&tse säie"
 
-#: kmmainwidget.cpp:3297
+#: kmmainwidget.cpp:3283
 #, kde-format
 msgid "Mark Thread as &Read"
 msgstr "Me&rkitse säie luetuksi"
 
-#: kmmainwidget.cpp:3300
+#: kmmainwidget.cpp:3286
 #, kde-format
 msgid "Mark all messages in the selected thread as read"
 msgstr "Merkitse kaikki viestit valitussa säikeessä luetuiksi"
 
-#: kmmainwidget.cpp:3303
+#: kmmainwidget.cpp:3289
 #, kde-format
 msgid "Mark Thread as &Unread"
 msgstr "Merkitse säie luke&mattomaksi"
 
-#: kmmainwidget.cpp:3306
+#: kmmainwidget.cpp:3292
 #, kde-format
 msgid "Mark all messages in the selected thread as unread"
 msgstr "Merkitse valitun säikeen kaikkien viestien olevan lukematta"
 
-#: kmmainwidget.cpp:3312
+#: kmmainwidget.cpp:3298
 #, kde-format
 msgid "Mark Thread as &Important"
 msgstr "Merk&itse säie tärkeäksi"
 
-#: kmmainwidget.cpp:3315
+#: kmmainwidget.cpp:3301
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Important Thread Mark"
 msgstr "Poista &tärkeä säie -merkintä"
 
-#: kmmainwidget.cpp:3318
+#: kmmainwidget.cpp:3304
 #, kde-format
 msgid "Mark Thread as &Action Item"
 msgstr "Merkitse säie te&htäväksi"
 
-#: kmmainwidget.cpp:3321
+#: kmmainwidget.cpp:3307
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove &Action Item Thread Mark"
 msgstr "Poista &tehtävän merkki"
 
-#: kmmainwidget.cpp:3325
+#: kmmainwidget.cpp:3311
 #, kde-format
 msgid "&Watch Thread"
 msgstr "&Seuraa säiettä"
 
-#: kmmainwidget.cpp:3329
+#: kmmainwidget.cpp:3315
 #, kde-format
 msgid "&Ignore Thread"
 msgstr "&Ohita säie"
 
-#: kmmainwidget.cpp:3337 kmreadermainwin.cpp:493
+#: kmmainwidget.cpp:3323 kmreadermainwin.cpp:493
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Tallenna l&iitteet…"
 
-#: kmmainwidget.cpp:3341
+#: kmmainwidget.cpp:3327
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Delete All Attachments"
 msgstr "Poista kaikki liitteet"
 
-#: kmmainwidget.cpp:3349
+#: kmmainwidget.cpp:3335
 #, kde-format
 msgid "Copy Decrypted To…"
 msgstr "Kopioi salaamattomana kohteeseen…"
 
-#: kmmainwidget.cpp:3353
+#: kmmainwidget.cpp:3339
 #, kde-format
 msgid "Appl&y All Filters"
 msgstr "Kä&ytä kaikkia suodattimia"
 
-#: kmmainwidget.cpp:3362
+#: kmmainwidget.cpp:3348
 #, kde-format
 msgctxt "View->"
 msgid "&Expand Thread / Group"
 msgstr "&Laajenna säie tai ryhmä"
 
-#: kmmainwidget.cpp:3365
+#: kmmainwidget.cpp:3351
 #, kde-format
 msgid "Expand the current thread or group"
 msgstr "Laajentaa nykyisen säikeen tai ryhmän"
 
-#: kmmainwidget.cpp:3369
+#: kmmainwidget.cpp:3355
 #, kde-format
 msgctxt "View->"
 msgid "&Collapse Thread / Group"
 msgstr "&Supista säie tai ryhmä"
 
-#: kmmainwidget.cpp:3372
+#: kmmainwidget.cpp:3358
 #, kde-format
 msgid "Collapse the current thread or group"
 msgstr "Supistaa nykyisen säikeen tai ryhmän"
 
-#: kmmainwidget.cpp:3376
+#: kmmainwidget.cpp:3362
 #, kde-format
 msgctxt "View->"
 msgid "Ex&pand All Threads"
 msgstr "L&aajenna kaikki säikeet"
 
-#: kmmainwidget.cpp:3379
+#: kmmainwidget.cpp:3365
 #, kde-format
 msgid "Expand all threads in the current folder"
 msgstr "Laajentaa kaikki nykyisen kansion säikeet"
 
-#: kmmainwidget.cpp:3383
+#: kmmainwidget.cpp:3369
 #, kde-format
 msgctxt "View->"
 msgid "C&ollapse All Threads"
 msgstr "S&ulje kaikki säikeet"
 
-#: kmmainwidget.cpp:3386
+#: kmmainwidget.cpp:3372
 #, kde-format
 msgid "Collapse all threads in the current folder"
 msgstr "Supistaa kaikki nykyisen kansion säikeet"
 
-#: kmmainwidget.cpp:3390
+#: kmmainwidget.cpp:3376
 #, kde-format
 msgctxt "@action"
 msgid "&Display Message"
 msgstr "&Näytä viesti"
 
-#: kmmainwidget.cpp:3397
+#: kmmainwidget.cpp:3383
 #, kde-format
 msgctxt "@action"
 msgid "&Next Message"
 msgstr "&Seuraava viesti"
 
-#: kmmainwidget.cpp:3400
+#: kmmainwidget.cpp:3386
 #, kde-format
 msgid "Go to the next message"
 msgstr "Siirtyy seuraavaan viestiin"
 
-#: kmmainwidget.cpp:3404
+#: kmmainwidget.cpp:3390
 #, kde-format
 msgctxt "@action"
 msgid "Next &Unread Message"
 msgstr "Seuraava luke&maton viesti"
 
-#: kmmainwidget.cpp:3412
+#: kmmainwidget.cpp:3398
 #, kde-format
 msgctxt "@action:inmenu Goto next unread message"
 msgid "Next"
 msgstr "Seuraava"
 
-#: kmmainwidget.cpp:3413
+#: kmmainwidget.cpp:3399
 #, kde-format
 msgid "Go to the next unread message"
 msgstr "Siirtyy seuraavaan lukematta olevaan viestiin"
 
-#: kmmainwidget.cpp:3417
+#: kmmainwidget.cpp:3403
 #, kde-format
 msgctxt "@action"
 msgid "&Previous Message"
 msgstr "&Edellinen viesti"
 
-#: kmmainwidget.cpp:3419
+#: kmmainwidget.cpp:3405
 #, kde-format
 msgid "Go to the previous message"
 msgstr "Siirtyy edelliseen viestiin"
 
-#: kmmainwidget.cpp:3424
+#: kmmainwidget.cpp:3410
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread &Message"
 msgstr "Edellinen lukem&aton viesti"
 
-#: kmmainwidget.cpp:3432
+#: kmmainwidget.cpp:3418
 #, kde-format
 msgctxt "@action:inmenu Goto previous unread message."
 msgid "Previous"
 msgstr "Edellinen "
 
-#: kmmainwidget.cpp:3433
+#: kmmainwidget.cpp:3419
 #, kde-format
 msgid "Go to the previous unread message"
 msgstr "Siirry edelliseen lukematta olevaan viestiin"
 
-#: kmmainwidget.cpp:3437
+#: kmmainwidget.cpp:3423
 #, kde-format
 msgctxt "@action"
 msgid "Next Unread &Folder"
 msgstr "Seuraava lukematon &kansio"
 
-#: kmmainwidget.cpp:3443
+#: kmmainwidget.cpp:3429
 #, kde-format
 msgid "Go to the next folder with unread messages"
 msgstr "Siirtyy seuraavaan kansioon, jossa on lukematon viesti"
 
-#: kmmainwidget.cpp:3446
+#: kmmainwidget.cpp:3432
 #, kde-format
 msgctxt "@action"
 msgid "Previous Unread F&older"
 msgstr "Edellinen lukemat&on kansio"
 
-#: kmmainwidget.cpp:3452
+#: kmmainwidget.cpp:3438
 #, kde-format
 msgid "Go to the previous folder with unread messages"
 msgstr "Siirtyy edelliseen kansioon, jossa on lukematon viesti"
 
-#: kmmainwidget.cpp:3456
+#: kmmainwidget.cpp:3442
 #, kde-format
 msgctxt "Go->"
 msgid "Next Unread &Text"
 msgstr "Seuraava lukematon &teksti"
 
-#: kmmainwidget.cpp:3459
+#: kmmainwidget.cpp:3445
 #, kde-format
 msgid "Go to the next unread text"
 msgstr "Siirry seuraavaan lukematta olevaan tekstiin"
 
-#: kmmainwidget.cpp:3461
+#: kmmainwidget.cpp:3447
 #, kde-format
 msgid ""
 "Scroll down current message. If at end of current message, go to next unread "
@@ -5376,272 +5376,272 @@ msgstr ""
 "Vierittää nykyistä viestiä alaspäin. Viestin lopussa siirtyy seuraavaan "
 "lukematta olevaan viestiin."
 
-#: kmmainwidget.cpp:3469
+#: kmmainwidget.cpp:3455
 #, kde-format
 msgid "Configure &Filters…"
 msgstr "&Suodatusasetukset…"
 
-#: kmmainwidget.cpp:3475
+#: kmmainwidget.cpp:3461
 #, kde-format
 msgctxt "@action"
 msgid "Manage &Sieve Scripts…"
 msgstr "&Sieve-skriptien hallinta…"
 
-#: kmmainwidget.cpp:3480
+#: kmmainwidget.cpp:3466
 #, kde-format
 msgid "&Add Account…"
 msgstr "Lisää &tili…"
 
-#: kmmainwidget.cpp:3485
+#: kmmainwidget.cpp:3471
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "What's new"
 msgstr "Mitä uutta?"
 
-#: kmmainwidget.cpp:3492
+#: kmmainwidget.cpp:3478
 #, kde-format
 msgid "Configure &Notifications…"
 msgstr "Muokkaa &ilmoituksia…"
 
-#: kmmainwidget.cpp:3499
+#: kmmainwidget.cpp:3485
 #, kde-format
 msgid "&Configure KMail…"
 msgstr "&KMailin asetukset…"
 
-#: kmmainwidget.cpp:3506
+#: kmmainwidget.cpp:3492
 #, kde-format
 msgctxt "@action"
 msgid "Expire…"
 msgstr "Vanhenna…"
 
-#: kmmainwidget.cpp:3512
+#: kmmainwidget.cpp:3498
 #, kde-format
 msgid "Add Favorite Folder…"
 msgstr "Lisää suosikkikansio…"
 
-#: kmmainwidget.cpp:3518 kmmainwidget.cpp:3526
+#: kmmainwidget.cpp:3504 kmmainwidget.cpp:3512
 #, kde-format
 msgid "Apply All Filters"
 msgstr "Käytä kaikkia suodattimia"
 
-#: kmmainwidget.cpp:3539
+#: kmmainwidget.cpp:3525
 #, kde-format
 msgid "Apply Filters on Folder and All its Subfolders"
 msgstr "Käytä suodattimia kansioon kaikkine alikansioineen"
 
-#: kmmainwidget.cpp:3544
+#: kmmainwidget.cpp:3530
 #, kde-format
 msgid "Import/Export KMail Data…"
 msgstr "Tuo/vie KMail-tiedot…"
 
-#: kmmainwidget.cpp:3550
+#: kmmainwidget.cpp:3536
 #, kde-format
 msgid "New AddressBook Contact…"
 msgstr "Uusi osoitekirjan yhteystieto…"
 
-#: kmmainwidget.cpp:3565 kmmainwidget.cpp:4209
+#: kmmainwidget.cpp:3551 kmmainwidget.cpp:4195
 #, kde-format
 msgid "Account &Settings"
 msgstr "Ti&lin asetukset"
 
-#: kmmainwidget.cpp:3569
+#: kmmainwidget.cpp:3555
 #, kde-format
 msgid "Restart Account"
 msgstr "Käynnistä tili uudelleen"
 
-#: kmmainwidget.cpp:3586
+#: kmmainwidget.cpp:3572
 #, kde-format
 msgctxt "@action"
 msgid "Copy Message to Folder"
 msgstr "Kopioi viesti kansioon"
 
-#: kmmainwidget.cpp:3592
+#: kmmainwidget.cpp:3578
 #, kde-format
 msgid "Jump to Folder…"
 msgstr "Siirry kansioon…"
 
-#: kmmainwidget.cpp:3598
+#: kmmainwidget.cpp:3584
 #, kde-format
 msgctxt "@action"
 msgid "Abort Current Operation"
 msgstr "Keskeytä nykyinen tapahtuma"
 
-#: kmmainwidget.cpp:3604
+#: kmmainwidget.cpp:3590
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Folder"
 msgstr "Kohdistus seuraavaan kansioon"
 
-#: kmmainwidget.cpp:3610
+#: kmmainwidget.cpp:3596
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Folder"
 msgstr "Kohdistus edelliseen kansioon"
 
-#: kmmainwidget.cpp:3616
+#: kmmainwidget.cpp:3602
 #, kde-format
 msgctxt "@action"
 msgid "Select Folder with Focus"
 msgstr "Valitse kohdistettu kansio"
 
-#: kmmainwidget.cpp:3623
+#: kmmainwidget.cpp:3609
 #, kde-format
 msgctxt "@action"
 msgid "Focus on First Folder"
 msgstr "Kohdistus ensimmäiseen kansioon"
 
-#: kmmainwidget.cpp:3629
+#: kmmainwidget.cpp:3615
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Last Folder"
 msgstr "Kohdistus viimeiseen kansioon"
 
-#: kmmainwidget.cpp:3635
+#: kmmainwidget.cpp:3621
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Next Message"
 msgstr "Kohdistus seuraavaan viestiin"
 
-#: kmmainwidget.cpp:3641
+#: kmmainwidget.cpp:3627
 #, kde-format
 msgctxt "@action"
 msgid "Focus on Previous Message"
 msgstr "Kohdistus edelliseen viestiin"
 
-#: kmmainwidget.cpp:3647
+#: kmmainwidget.cpp:3633
 #, kde-format
 msgctxt "@action"
 msgid "Select First Message"
 msgstr "Valitse ensimmäinen viesti"
 
-#: kmmainwidget.cpp:3653
+#: kmmainwidget.cpp:3639
 #, kde-format
 msgctxt "@action"
 msgid "Select Last Message"
 msgstr "Valitse viimeinen viesti"
 
-#: kmmainwidget.cpp:3659
+#: kmmainwidget.cpp:3645
 #, kde-format
 msgctxt "@action"
 msgid "Select Message with Focus"
 msgstr "Valitse kohdistettu viesti"
 
-#: kmmainwidget.cpp:3666
+#: kmmainwidget.cpp:3652
 #, kde-format
 msgctxt "@action"
 msgid "Set Focus to Quick Search"
 msgstr "Kohdista pikahakuun"
 
-#: kmmainwidget.cpp:3674
+#: kmmainwidget.cpp:3660
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Previous Message"
 msgstr "Laajenna valintaa edelliseen viestiin"
 
-#: kmmainwidget.cpp:3680
+#: kmmainwidget.cpp:3666
 #, kde-format
 msgctxt "@action"
 msgid "Extend Selection to Next Message"
 msgstr "Laajenna valintaa seuraavaan viestiin"
 
-#: kmmainwidget.cpp:3687
+#: kmmainwidget.cpp:3673
 #, kde-format
 msgctxt "@action"
 msgid "Move Message to Folder"
 msgstr "Siirrä viesti kansioon"
 
-#: kmmainwidget.cpp:3697
+#: kmmainwidget.cpp:3683
 #, kde-format
 msgctxt "@action"
 msgid "Mark All Messages As Read in This Folder and All its Subfolder"
 msgstr "Merkitse kaikki viestit tässä kansiossa ja sen alikansioissa luetuiksi"
 
-#: kmmainwidget.cpp:3702
+#: kmmainwidget.cpp:3688
 #, kde-format
 msgctxt "@action"
 msgid "Remove Duplicates in This Folder and All its Subfolder"
 msgstr "Poista kaksoiskappaleet tästä kansiossa ja sen alikansioista"
 
-#: kmmainwidget.cpp:3708
+#: kmmainwidget.cpp:3694
 #, kde-format
 msgctxt "@action"
 msgid "Previous Selected Folder"
 msgstr "Edellinen valittu kansio"
 
-#: kmmainwidget.cpp:3715
+#: kmmainwidget.cpp:3701
 #, kde-format
 msgctxt "@action"
 msgid "Next Selected Folder"
 msgstr "Seuraava valittu kansio"
 
-#: kmmainwidget.cpp:3744
+#: kmmainwidget.cpp:3730
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Favorite Folder"
 msgstr "Lisää suosikkikansio"
 
-#: kmmainwidget.cpp:4162
+#: kmmainwidget.cpp:4148
 #, kde-format
 msgid "&Delete Search"
 msgstr "&Poista haku"
 
-#: kmmainwidget.cpp:4174
+#: kmmainwidget.cpp:4160
 #, kde-format
 msgid "M&ove Thread to Trash"
 msgstr "Siirrä ketju roskakoriin"
 
-#: kmmainwidget.cpp:4176
+#: kmmainwidget.cpp:4162
 #, kde-format
 msgid "Edit Search…"
 msgstr "Muokkaa hakua…"
 
-#: kmmainwidget.cpp:4207
+#: kmmainwidget.cpp:4193
 #, kde-format
 msgid "Configure Unified Mailbox"
 msgstr "Yhdistetyn postilaatikon asetukset"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4204
 #, kde-format
 msgid "E&mpty Trash"
 msgstr "Tyhjennä &roskakori"
 
-#: kmmainwidget.cpp:4218
+#: kmmainwidget.cpp:4204
 #, kde-format
 msgid "&Move All Messages to Trash"
 msgstr "S&iirrä kaikki viestit roskakoriin"
 
-#: kmmainwidget.cpp:4266
+#: kmmainwidget.cpp:4252
 #, kde-format
 msgid "&Undo"
 msgstr "&Kumoa"
 
-#: kmmainwidget.cpp:4268
+#: kmmainwidget.cpp:4254
 #, kde-format
 msgid "&Undo: \"%1\""
 msgstr "&Kumoa: ”%1”"
 
-#: kmmainwidget.cpp:4278
+#: kmmainwidget.cpp:4264
 #, kde-format
 msgid "&Redo"
 msgstr "Tee &uudelleen"
 
-#: kmmainwidget.cpp:4280
+#: kmmainwidget.cpp:4266
 #, kde-format
 msgid "&Redo: \"%1\""
 msgstr "Tee &uudelleen: ”%1”"
 
-#: kmmainwidget.cpp:4337
+#: kmmainwidget.cpp:4323
 #, kde-format
 msgid "Filter %1"
 msgstr "Suodatin %1"
 
-#: kmmainwidget.cpp:4905
+#: kmmainwidget.cpp:4891
 #, kde-format
 msgctxt "Show shortcut for focus quick search. Don't change it"
 msgid "Search… <%1>"
 msgstr "Etsi… <%1>"
 
-#: kmmainwidget.cpp:4913
+#: kmmainwidget.cpp:4899
 #, kde-format
 msgid ""
 "Use of HTML in mail will make you more vulnerable to \"spam\" and may "
@@ -5652,13 +5652,13 @@ msgstr ""
 "kasvattaa järjestelmän todennäköisyyttä vaarantua muille ei-toivotuille "
 "tietoturva-aukoille."
 
-#: kmmainwidget.cpp:4917
+#: kmmainwidget.cpp:4903
 #, kde-format
 msgctxt "@action:button"
 msgid "Use HTML"
 msgstr "Käytä HTML:ää"
 
-#: kmmainwidget.cpp:5063
+#: kmmainwidget.cpp:5049
 #, kde-format
 msgid ""
 "You have more than one email account set up.\n"
@@ -5673,52 +5673,52 @@ msgstr ""
 "Voit luoda asettaa yhdistetyt postilaatikot, luoda mukautettuja\n"
 "tai poistaa piirteen käytöstä KMailin liitännäisasetuksissa."
 
-#: kmmainwidget.cpp:5066
+#: kmmainwidget.cpp:5052
 #, kde-format
 msgid "Enable Unified Mailboxes?"
 msgstr "Käytetäänkö yhdistettyjä postilaatikoita?"
 
-#: kmmainwidget.cpp:5067
+#: kmmainwidget.cpp:5053
 #, kde-format
 msgctxt "@action:button"
 msgid "Enable Unified Mailboxes"
 msgstr "Käytä yhdistettyjä postilaatikoita"
 
-#: kmmainwidget.cpp:5068
+#: kmmainwidget.cpp:5054
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel"
 msgstr "Peru"
 
-#: kmmainwidget.cpp:5102
+#: kmmainwidget.cpp:5088
 #, kde-format
 msgid "Do you want to restart Akonadi?"
 msgstr "Haluatko käynnistää Akonadin uudelleen?"
 
-#: kmmainwidget.cpp:5103
+#: kmmainwidget.cpp:5089
 #, kde-format
 msgctxt "@title:window"
 msgid "Restart Akonadi"
 msgstr "Käynnistä Akonadi uudelleen"
 
-#: kmmainwidget.cpp:5104
+#: kmmainwidget.cpp:5090
 #, kde-format
 msgctxt "@action:button"
 msgid "Restart"
 msgstr "Käynnistä uudelleen"
 
-#: kmmainwidget.cpp:5111
+#: kmmainwidget.cpp:5097
 #, kde-format
 msgid "Akonadi restarted."
 msgstr "Akonadi käynnistetty uudelleen."
 
-#: kmmainwin.cpp:50
+#: kmmainwin.cpp:56
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Aloitetaan…"
 
-#: kmreadermainwin.cpp:496 util.cpp:184
+#: kmreadermainwin.cpp:496 util.cpp:182
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Siirrä roskakoriin"
@@ -5744,113 +5744,113 @@ msgstr "Piilota valikkorivi"
 msgid "Cannot copy item. %1"
 msgstr "Viestiä ei voi kopioida. %1"
 
-#: kmreaderwin.cpp:123
+#: kmreaderwin.cpp:119
 #, kde-format
 msgid "New Message To…"
 msgstr "Uusi viesti…"
 
-#: kmreaderwin.cpp:129
+#: kmreaderwin.cpp:125
 #, kde-format
 msgid "Reply To…"
 msgstr "Vastaa…"
 
-#: kmreaderwin.cpp:135
+#: kmreaderwin.cpp:131
 #, kde-format
 msgid "Forward To…"
 msgstr "Edennä…"
 
-#: kmreaderwin.cpp:141
+#: kmreaderwin.cpp:137
 #, kde-format
 msgid "Add to Address Book"
 msgstr "Lisää osoitekirjaan"
 
-#: kmreaderwin.cpp:146
+#: kmreaderwin.cpp:142
 #, kde-format
 msgid "Add to Existing Contact"
 msgstr "Lisää olemassa olevaan yhteystietoon"
 
-#: kmreaderwin.cpp:152
+#: kmreaderwin.cpp:148
 #, kde-format
 msgid "Open in Address Book"
 msgstr "Avaa osoitekirja"
 
-#: kmreaderwin.cpp:157
+#: kmreaderwin.cpp:153
 #, kde-format
 msgid "Bookmark This Link"
 msgstr "Lisää linkki kirjanmerkkeihin"
 
-#: kmreaderwin.cpp:162
+#: kmreaderwin.cpp:158
 #, kde-format
 msgid "Edit contact…"
 msgstr "Muokkaa yhteystietoa…"
 
-#: kmreaderwin.cpp:168
+#: kmreaderwin.cpp:164
 #, kde-format
 msgctxt "@action"
 msgid "Save Link As…"
 msgstr "Tallenna linkki nimellä…"
 
-#: kmreaderwin.cpp:174
+#: kmreaderwin.cpp:170
 #, kde-format
 msgid "&Find in Message…"
 msgstr "&Etsi viestistä…"
 
-#: kmreaderwin.cpp:180
+#: kmreaderwin.cpp:176
 #, kde-format
 msgctxt "@action"
 msgid "Save Image On Disk…"
 msgstr "Tallenna kuva levylle…"
 
-#: kmreaderwin.cpp:186
+#: kmreaderwin.cpp:182
 #, kde-format
 msgctxt "@action"
 msgid "Open Image…"
 msgstr "Avaa kuva…"
 
-#: kmreaderwin.cpp:192
+#: kmreaderwin.cpp:188
 #, kde-format
 msgid "Show HTML Format"
 msgstr "Näytä HTML-muoto"
 
-#: kmreaderwin.cpp:193
+#: kmreaderwin.cpp:189
 #, kde-format
 msgctxt "@action"
 msgid "Show HTML format when mail comes from this contact"
 msgstr "Näytä HTML-muodossa, kun viesti on tältä taholta"
 
-#: kmreaderwin.cpp:199
+#: kmreaderwin.cpp:195
 #, kde-format
 msgctxt "@action"
 msgid "Load external reference when mail comes for this contact"
 msgstr "Lataa ulkoiset viittaukset, kun viesti on tältä taholta"
 
-#: kmreaderwin.cpp:205
+#: kmreaderwin.cpp:201
 #, kde-format
 msgctxt "@action"
 msgid "Share image…"
 msgstr "Jaa kuva…"
 
-#: kmreaderwin.cpp:268
+#: kmreaderwin.cpp:264
 #, kde-format
 msgid "The KDE Mail Client"
 msgstr "KDE:n sähköpostiohjelma"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:272
 #, kde-format
 msgid "Retrieving Folder Contents"
 msgstr "Noudetaan kansion sisältöä"
 
-#: kmreaderwin.cpp:276
+#: kmreaderwin.cpp:272
 #, kde-format
 msgid "Please wait . . ."
 msgstr "Odota hetki…"
 
-#: kmreaderwin.cpp:282 kmreaderwin.cpp:291
+#: kmreaderwin.cpp:278 kmreaderwin.cpp:287
 #, kde-format
 msgid "Offline"
 msgstr "Yhteydetön tlla"
 
-#: kmreaderwin.cpp:284
+#: kmreaderwin.cpp:280
 #, kde-format
 msgid ""
 "KMail is currently in offline mode. Click <a href=\"kmail:goOnline\">here</"
@@ -5859,7 +5859,7 @@ msgstr ""
 "KMail on tällä hetkellä yhteydettömässä tilassa. Yhdistä verkkoon "
 "napsauttamalla <a href=\"kmail:goOnline\">tästä</a>…</p>"
 
-#: kmreaderwin.cpp:293
+#: kmreaderwin.cpp:289
 #, kde-format
 msgid ""
 "Account is currently in offline mode. Click <a href=\"kmail:goResourceOnline"
@@ -5868,22 +5868,22 @@ msgstr ""
 "Tili on tällä hetkellä yhteydettömässä tilassa. Yhdistä verkkoon "
 "napsauttamalla <a href=\"kmail:goOnline\">tästä</a>…</p>"
 
-#: kmreaderwin.cpp:859
+#: kmreaderwin.cpp:855
 #, kde-format
 msgid "Contact modified successfully"
 msgstr "Yhteystietoa muutettiin onnistuneesti"
 
-#: kmsystemtray.cpp:92
+#: kmsystemtray.cpp:87
 #, kde-format
 msgid "New Messages In"
 msgstr "Uusia viestejä kansiossa"
 
-#: kmsystemtray.cpp:274
+#: kmsystemtray.cpp:269
 #, kde-format
 msgid "There are no unread messages"
 msgstr "Ei viestejä lukematta"
 
-#: kmsystemtray.cpp:274
+#: kmsystemtray.cpp:269
 #, kde-format
 msgid "1 unread message"
 msgid_plural "%1 unread messages"
@@ -5929,13 +5929,13 @@ msgstr ""
 "kansion koko sijaintipolun. Ellei asetus ole käytössä, vain kansiopolun "
 "viimeinen osa näytetään."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:42
+#: kontactplugin/kmail/kmail_plugin.cpp:40
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "New Message…"
 msgstr "Uusi viesti…"
 
-#: kontactplugin/kmail/kmail_plugin.cpp:48
+#: kontactplugin/kmail/kmail_plugin.cpp:46
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid ""
@@ -5945,42 +5945,42 @@ msgstr ""
 "Saat näkyviin ikkunan, jossa voit kirjoittaa ja lähettää uuden "
 "sähköpostiviestin."
 
-#: kontactplugin/kmail/kmail_plugin.cpp:53
+#: kontactplugin/kmail/kmail_plugin.cpp:51
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Sync Mail"
 msgstr "Synkronoi sähköposti"
 
 #. i18nc( "@info:status", "Synchronize groupware mail" ) );
-#: kontactplugin/kmail/kmail_plugin.cpp:56
+#: kontactplugin/kmail/kmail_plugin.cpp:54
 #, kde-format
 msgctxt "@info:whatsthis"
 msgid "Choose this option to synchronize your groupware email."
 msgstr "Valitse tämä synkronoidaksesi ryhmätyösähköpostisi."
 
-#: kontactplugin/kmail/summarywidget.cpp:51
+#: kontactplugin/kmail/summarywidget.cpp:52
 #, kde-format
 msgid "New Messages"
 msgstr "Uudet viestit"
 
-#: kontactplugin/kmail/summarywidget.cpp:143
+#: kontactplugin/kmail/summarywidget.cpp:144
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
 msgstr "<qt><b>%1</b><br/>Kaikkiaan: %2<br/>Lukematta: %3</qt>"
 
-#: kontactplugin/kmail/summarywidget.cpp:157
+#: kontactplugin/kmail/summarywidget.cpp:158
 #, kde-format
 msgctxt "%1: number of unread messages %2: total number of messages"
 msgid "%1 / %2"
 msgstr "%1/%2"
 
-#: kontactplugin/kmail/summarywidget.cpp:198
+#: kontactplugin/kmail/summarywidget.cpp:199
 #, kde-format
 msgctxt "@label:textbox"
 msgid "No unread messages in your monitored folders"
 msgstr "Seuraamissasi kansioissa ei ole viestejä lukematta"
 
-#: kontactplugin/kmail/summarywidget.cpp:216
+#: kontactplugin/kmail/summarywidget.cpp:217
 #, kde-format
 msgid "Open Folder: \"%1\""
 msgstr "Avaa kansio: ”%1”"
@@ -6072,196 +6072,196 @@ msgctxt "@info:credit"
 msgid "Tobias Koenig"
 msgstr "Tobias Koenig"
 
-#: manageshowcollectionproperties.cpp:82 manageshowcollectionproperties.cpp:139
+#: manageshowcollectionproperties.cpp:81 manageshowcollectionproperties.cpp:138
 #, kde-format
 msgid "Retrieving folder properties"
 msgstr "Noudetaan kansion ominaisuuksia"
 
-#: manageshowcollectionproperties.cpp:101
+#: manageshowcollectionproperties.cpp:100
 #, kde-format
 msgid "Network is unconnected. Folder information cannot be updated."
 msgstr "Ei yhteyttä verkkoon. Kansion tietoja ei voi päivittää."
 
-#: manageshowcollectionproperties.cpp:185
+#: manageshowcollectionproperties.cpp:184
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "Kansion %1 ominaisuudet"
 
-#: messageactions.cpp:63
+#: messageactions.cpp:61
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Vastaa"
 
-#: messageactions.cpp:64 searchdialog/searchwindowdialog.cpp:157
+#: messageactions.cpp:62 searchdialog/searchwindowdialog.cpp:162
 #, kde-format
 msgid "&Reply…"
 msgstr "&Vastaa…"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:161
+#: messageactions.cpp:63 searchdialog/searchwindowdialog.cpp:166
 #, kde-format
 msgid "Reply to &All…"
 msgstr "V&astaa kaikille…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:64
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "Vastaa l&ähettäjälle…"
 
-#: messageactions.cpp:67 searchdialog/searchwindowdialog.cpp:165
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:170
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "Vastaa &postituslistalle…"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:66
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Vastaa &lainaamatta…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:67
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Sisällytettynä…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:68
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "L&iitteeksi…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&Ohjaa uudelleen…"
 
-#: messageactions.cpp:72
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Uusi viesti vastaanottajille…"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:71
 #, kde-format
 msgid "Mar&k Message"
 msgstr "Merkitse viest&i"
 
-#: messageactions.cpp:74 searchdialog/searchwindowdialog.cpp:169
+#: messageactions.cpp:72 searchdialog/searchwindowdialog.cpp:174
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&Välitä"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "Postitus&lista"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:74
 #, kde-format
 msgid "&Edit As New"
 msgstr "Muokkaa &uutena"
 
-#: messageactions.cpp:77
+#: messageactions.cpp:75
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "Suo&data postituslistalla…"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "Lisää vastaamisen seurannasta muistuttaja…"
 
-#: messageactions.cpp:80
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Lähetä &uudelleen…"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:79
 #, kde-format
 msgid "New Message From &Template"
 msgstr "Uusi viesti &mallista"
 
-#: messageactions.cpp:83
+#: messageactions.cpp:81
 #, kde-format
 msgid "Export to PDF…"
 msgstr "Vie PDF:ksi…"
 
-#: messageactions.cpp:84
+#: messageactions.cpp:82
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Arkistoi viesti"
 
-#: messageactions.cpp:407
+#: messageactions.cpp:405
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "Suodata postituslistalla…"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:444
 #, kde-format
 msgid "<unknown>"
 msgstr "<tuntematon>"
 
-#: messageactions.cpp:446
+#: messageactions.cpp:444
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "Postituslistan nimi: %1"
 
-#: messageactions.cpp:449
+#: messageactions.cpp:447
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "Avaa viesti listan arkistosta"
 
-#: messageactions.cpp:452
+#: messageactions.cpp:450
 #, kde-format
 msgid "Post New Message"
 msgstr "Lähetä uusi viesti"
 
-#: messageactions.cpp:455
+#: messageactions.cpp:453
 #, kde-format
 msgid "Go to Archive"
 msgstr "Siirry arkistoon"
 
-#: messageactions.cpp:458
+#: messageactions.cpp:456
 #, kde-format
 msgid "Request Help"
 msgstr "Pyydä ohjeita"
 
-#: messageactions.cpp:461
+#: messageactions.cpp:459
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "Yhteystiedon omistaja"
 
-#: messageactions.cpp:467
+#: messageactions.cpp:465
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "Poistu listalta"
 
-#: messageactions.cpp:479
+#: messageactions.cpp:477
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "Suodata postituslistalla %1…"
 
-#: messageactions.cpp:655
+#: messageactions.cpp:653
 #, kde-format
 msgid "email"
 msgstr "sähköposti"
 
-#: messageactions.cpp:658
+#: messageactions.cpp:656
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:663
+#: messageactions.cpp:661
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6269,65 +6269,65 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:768
+#: messageactions.cpp:766
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "Vie PDF:ksi"
 
-#: messageactions.cpp:768
+#: messageactions.cpp:766
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF-tiedosto (*.pdf)"
 
-#: searchdialog/incompleteindexdialog.cpp:134
+#: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
 msgstr "Indeksoi uudelleen"
 
-#: searchdialog/incompleteindexdialog.cpp:135
+#: searchdialog/incompleteindexdialog.cpp:137
 #, kde-format
 msgctxt "@action:button"
 msgid "Search Anyway"
 msgstr "Etsi silti"
 
-#: searchdialog/incompleteindexdialog.cpp:197
+#: searchdialog/incompleteindexdialog.cpp:199
 #, kde-format
 msgctxt "@title:window"
 msgid "Indexing"
 msgstr "Indeksoidaan"
 
-#: searchdialog/incompleteindexdialog.cpp:200
+#: searchdialog/incompleteindexdialog.cpp:202
 #, kde-format
 msgid "Indexing Collections…"
 msgstr "Indeksoidaan kokoelmia…"
 
-#: searchdialog/kmsearchmessagemodel.cpp:86
-#: searchdialog/kmsearchmessagemodel.cpp:99
+#: searchdialog/kmsearchmessagemodel.cpp:83
+#: searchdialog/kmsearchmessagemodel.cpp:96
 #, kde-format
 msgid "From"
 msgstr "Lähettäjä"
 
-#: searchdialog/kmsearchmessagemodel.cpp:89
-#: searchdialog/kmsearchmessagemodel.cpp:102
+#: searchdialog/kmsearchmessagemodel.cpp:86
+#: searchdialog/kmsearchmessagemodel.cpp:99
 #, kde-format
 msgctxt "Receiver of the email"
 msgid "To"
 msgstr "Vastaanottaja"
 
-#: searchdialog/kmsearchmessagemodel.cpp:92
-#: searchdialog/kmsearchmessagemodel.cpp:105
+#: searchdialog/kmsearchmessagemodel.cpp:89
+#: searchdialog/kmsearchmessagemodel.cpp:102
 #, kde-format
 msgid "Date"
 msgstr "Päivä"
 
-#: searchdialog/kmsearchmessagemodel.cpp:95
-#: searchdialog/kmsearchmessagemodel.cpp:108
+#: searchdialog/kmsearchmessagemodel.cpp:92
+#: searchdialog/kmsearchmessagemodel.cpp:105
 #, kde-format
 msgid "Preview"
 msgstr "Esikatselu"
 
-#: searchdialog/kmsearchmessagemodel.cpp:166
+#: searchdialog/kmsearchmessagemodel.cpp:163
 #, kde-format
 msgctxt "@title:column, folder (e.g. email)"
 msgid "Folder"
@@ -6338,117 +6338,117 @@ msgstr "Kansio"
 msgid "Search failed some errors were found: <ul><li>%1</li></ul>"
 msgstr "Haku epäonnistui joidenkin virheiden takia:<ul><li>%1</li></ul>"
 
-#: searchdialog/searchwindowdialog.cpp:76
+#: searchdialog/searchwindowdialog.cpp:81
 #, kde-format
 msgctxt "@title:window"
 msgid "Find Messages"
 msgstr "Etsi viestejä"
 
-#: searchdialog/searchwindowdialog.cpp:92
+#: searchdialog/searchwindowdialog.cpp:97
 #, kde-format
 msgctxt "@action:button Search for messages"
 msgid "&Search"
 msgstr "&Etsi"
 
-#: searchdialog/searchwindowdialog.cpp:173
+#: searchdialog/searchwindowdialog.cpp:178
 #, kde-format
 msgctxt "@action:inmenu Forward message inline."
 msgid "&Inline…"
 msgstr "&Sisällytettynä…"
 
-#: searchdialog/searchwindowdialog.cpp:177
+#: searchdialog/searchwindowdialog.cpp:182
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "As &Attachment…"
 msgstr "L&iitteeksi…"
 
-#: searchdialog/searchwindowdialog.cpp:191
+#: searchdialog/searchwindowdialog.cpp:196
 #, kde-format
 msgid "Save Attachments…"
 msgstr "Tallenna liitteet…"
 
-#: searchdialog/searchwindowdialog.cpp:197
+#: searchdialog/searchwindowdialog.cpp:202
 #, kde-format
 msgctxt "@action"
 msgid "Clear Selection"
 msgstr "Tyhjennä valinta"
 
-#: searchdialog/searchwindowdialog.cpp:201
+#: searchdialog/searchwindowdialog.cpp:206
 #, kde-format
 msgctxt "@action"
 msgid "Jump to original folder"
 msgstr "Siirry alkuperäiseen kansioon"
 
-#: searchdialog/searchwindowdialog.cpp:291
+#: searchdialog/searchwindowdialog.cpp:296
 #, kde-format
 msgid "%1 match"
 msgid_plural "%1 matches"
 msgstr[0] "%1 osuma"
 msgstr[1] "%1 osumaa"
 
-#: searchdialog/searchwindowdialog.cpp:357
-#: searchdialog/searchwindowdialog.cpp:399
+#: searchdialog/searchwindowdialog.cpp:362
+#: searchdialog/searchwindowdialog.cpp:404
 #, kde-format
 msgid "Last Search"
 msgstr "Edellinen haku"
 
-#: searchdialog/searchwindowdialog.cpp:425
+#: searchdialog/searchwindowdialog.cpp:430
 #, kde-format
 msgid "You did not select a valid folder."
 msgstr "Et valinnut kelvollista kansiota."
 
-#: searchdialog/searchwindowdialog.cpp:439
+#: searchdialog/searchwindowdialog.cpp:444
 #, kde-format
 msgid "You forgot to select collections."
 msgstr "Unohdit valita kokoelmat."
 
-#: searchdialog/searchwindowdialog.cpp:456
+#: searchdialog/searchwindowdialog.cpp:461
 #, kde-format
 msgid "You forgot to define condition."
 msgstr "Unohdit määrittää ehdon."
 
-#: searchdialog/searchwindowdialog.cpp:461
+#: searchdialog/searchwindowdialog.cpp:466
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
 msgstr "Kaikki valitut kansiot ovat tyhjiä tai niitä ei indeksoitu."
 
-#: searchdialog/searchwindowdialog.cpp:467
+#: searchdialog/searchwindowdialog.cpp:472
 #, kde-format
 msgid "You forgot to add conditions."
 msgstr "Unohdit lisätä ehdot."
 
-#: searchdialog/searchwindowdialog.cpp:471
+#: searchdialog/searchwindowdialog.cpp:476
 #, kde-format
 msgid ""
 "Contains condition cannot be used with a number of characters inferior to 4."
 msgstr "Sisältää-ehtoa ei voi käyttää, jos merkkien määrä on pienempi kuin 4."
 
-#: searchdialog/searchwindowdialog.cpp:512
+#: searchdialog/searchwindowdialog.cpp:517
 #, kde-format
 msgid "Searching…"
 msgstr "Etsitään…"
 
-#: searchdialog/searchwindowdialog.cpp:525
+#: searchdialog/searchwindowdialog.cpp:530
 #, kde-format
 msgid "Cannot get search result. %1"
 msgstr "Hakutuloksia ei saada. %1"
 
-#: searchdialog/searchwindowdialog.cpp:528
+#: searchdialog/searchwindowdialog.cpp:533
 #, kde-format
 msgid "Search failed."
 msgstr "Haku epäonnistui."
 
-#: searchdialog/searchwindowdialog.cpp:569
+#: searchdialog/searchwindowdialog.cpp:574
 #, kde-format
 msgid "Search complete."
 msgstr "Haku valmis."
 
-#: searchdialog/searchwindowdialog.cpp:607
+#: searchdialog/searchwindowdialog.cpp:612
 #, kde-format
 msgid "Search stopped."
 msgstr "Haku pysäytetty."
 
-#: searchdialog/searchwindowdialog.cpp:664
+#: searchdialog/searchwindowdialog.cpp:669
 #, kde-format
 msgid ""
 "There was a problem renaming your search folder. A common reason for this is "
@@ -6458,26 +6458,26 @@ msgstr ""
 "Hakukansiosi nimen muuttamisessa ilmeni ongelmia. Yleinen syy tähän on, että "
 "toinen saman niminen hakukansio on jo olemassa. Virhe oli: %1."
 
-#: searchdialog/searchwindowdialog.cpp:767
+#: searchdialog/searchwindowdialog.cpp:772
 #, kde-format
 msgid "Copy Message"
 msgid_plural "Copy %1 Messages"
 msgstr[0] "Kopioi viesti"
 msgstr[1] "Kopioi %1 viestiä"
 
-#: searchdialog/searchwindowdialog.cpp:770
+#: searchdialog/searchwindowdialog.cpp:775
 #, kde-format
 msgid "Cut Message"
 msgid_plural "Cut %1 Messages"
 msgstr[0] "Leikkaa viesti"
 msgstr[1] "Leikkaa %1 viestiä"
 
-#: searchdialog/searchwindowdialog.cpp:900
+#: searchdialog/searchwindowdialog.cpp:905
 #, kde-format
 msgid "Checking index status…"
 msgstr "Tarkistetaan indeksoinnin tilaa…"
 
-#: secondarywindow.cpp:77
+#: secondarywindow.cpp:78
 #, kde-format
 msgctxt "Document/application separator in titlebar"
 msgid " – "
@@ -8097,7 +8097,7 @@ msgstr "Liitännäisten tiedot"
 msgid "Plugins used in KMail."
 msgstr "KMailissa käytetyt liitännäiset."
 
-#: util.cpp:35
+#: util.cpp:33
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8105,37 +8105,37 @@ msgid ""
 "wish to reply to this email?"
 msgstr ""
 
-#: util.cpp:36
+#: util.cpp:34
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Sähköpostiosoite"
 
-#: util.cpp:37
+#: util.cpp:35
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "Älä lähetä"
 
-#: util.cpp:38
+#: util.cpp:36
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "Lähetä sähköposti"
 
-#: util.cpp:187
+#: util.cpp:185
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Poista"
 
-#: util.cpp:187
+#: util.cpp:185
 #, kde-format
 msgid "Move to Trash"
 msgstr "Siirrä roskakoriin"
 
-#: util.cpp:195
+#: util.cpp:193
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8144,7 +8144,7 @@ msgstr ""
 "Opastettua tilin luontia ei voi käynnistää. Varmista, että se on asennettu "
 "oikein."
 
-#: util.cpp:197
+#: util.cpp:195
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
@@ -8173,7 +8173,7 @@ msgctxt "@action"
 msgid "Use Global Setting"
 msgstr "Käytä järjestelmäasetusta"
 
-#: widgets/vacationscriptindicatorwidget.cpp:127
+#: widgets/vacationscriptindicatorwidget.cpp:129
 #, kde-format
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on %1 servers"

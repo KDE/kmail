@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_followupreminder_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-08-19 22:33+0200\n"
 "Last-Translator: Johannes Obermayr <johannesobermayr@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -17,79 +17,79 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.05.2\n"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "To"
 msgstr "An"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "Subject"
 msgstr "Betreff"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "Deadline"
 msgstr "Frist"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "Answer"
 msgstr "Antwort"
 
-#: followupreminderinfowidget.cpp:145
+#: followupreminderinfowidget.cpp:148
 #, kde-format
 msgid "Received"
 msgstr "Empfangen"
 
-#: followupreminderinfowidget.cpp:145
+#: followupreminderinfowidget.cpp:148
 #, kde-format
 msgid "On hold"
 msgstr "In der Warteschleife"
 
-#: followupreminderinfowidget.cpp:213
+#: followupreminderinfowidget.cpp:216
 #, kde-format
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Nachricht anzeigen"
 
-#: followupreminderinfowidget.cpp:216
+#: followupreminderinfowidget.cpp:219
 #, kde-format
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Originalnachricht anzeigen"
 
-#: followupreminderinfowidget.cpp:219
+#: followupreminderinfowidget.cpp:222
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Löschen"
 
-#: followupreminderinfowidget.cpp:246
+#: followupreminderinfowidget.cpp:249
 #, kde-format
 msgid "Do you want to delete this selected item?"
 msgid_plural "Do you want to delete these %1 selected items?"
 msgstr[0] "Möchten Sie diesen ausgewählten Eintrag löschen?"
 msgstr[1] "Möchten Sie diese %1 ausgewählten Einträge löschen?"
 
-#: followupreminderinfowidget.cpp:247
+#: followupreminderinfowidget.cpp:250
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Elemente löschen"
 
-#: followupremindermanager.cpp:154
+#: followupremindermanager.cpp:153
 #, kde-format
 msgid "Answer from %1 received"
 msgstr "Antwort von %1 erhalten"
 
-#: followupremindernoanswerdialog.cpp:38
+#: followupremindernoanswerdialog.cpp:37
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Erinnerung an Folgenachrichten"
 
-#: followupremindernoanswerdialog.cpp:44
+#: followupremindernoanswerdialog.cpp:43
 #, kde-format
 msgctxt "@label:textbox"
 msgid "You are still waiting for answers to these mails:"

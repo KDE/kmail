@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2026-06-25 14:51+0200\n"
 "Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
@@ -72,33 +72,33 @@ msgstr "Очистка параметров"
 msgid "Finish"
 msgstr "Завершить"
 
-#: refreshsettingscleanuppage.cpp:22
+#: refreshsettingscleanuppage.cpp:23
 #, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "Очистить"
 
-#: refreshsettingscleanuppage.cpp:51
+#: refreshsettingscleanuppage.cpp:52
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "Завершено удаление устаревшего раздела параметров «Подсказка дня»"
 
-#: refreshsettingscleanuppage.cpp:63
+#: refreshsettingscleanuppage.cpp:64
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "Завершено удаление параметров диалога в файле «%1»"
 
-#: refreshsettingscleanuppage.cpp:75
+#: refreshsettingscleanuppage.cpp:76
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "Завершено удаление параметров фильтров в файле «%1»"
 
-#: refreshsettingscleanuppage.cpp:91
+#: refreshsettingscleanuppage.cpp:92
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "Завершено удаление параметров папки в файле параметров «%1»"
 
-#: refreshsettingscleanuppage.cpp:140
+#: refreshsettingscleanuppage.cpp:141
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "Завершено удаление параметров размеров диалога в файле параметров «%1»"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-07-14 08:14+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -30,41 +30,41 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "xalba@ni.eus"
 
-#: attachpropertydialog.cpp:58
+#: attachpropertydialog.cpp:62
 #, kde-format
 msgid "Save…"
 msgstr "Gorde…"
 
-#: attachpropertydialog.cpp:77
+#: attachpropertydialog.cpp:81
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "%1 eranskinaren propietateak"
 
-#: attachpropertydialog.cpp:81
+#: attachpropertydialog.cpp:85
 #, kde-format
 msgid " bytes"
 msgstr " byte"
 
-#: attachpropertydialog.cpp:139
+#: attachpropertydialog.cpp:143
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF atributuak"
 
-#: attachpropertydialog.cpp:148
+#: attachpropertydialog.cpp:152
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Aurrena elementu bat hautatu behar da."
 
-#: attachpropertydialog.cpp:153
+#: attachpropertydialog.cpp:157
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Hautatutako elementua ezin da gorde etiketa huts bat duelako."
 
-#: attachpropertydialog.cpp:173
+#: attachpropertydialog.cpp:177
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -245,19 +245,19 @@ msgstr "E&zarpenak"
 msgid "Main Toolbar"
 msgstr "Tresna-barra nagusia"
 
-#: ktnefview.cpp:70
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Fitxategi-izena"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Fitxategi mota"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"
@@ -312,19 +312,19 @@ msgstr "Egilea, Qt4/KDE4-ra eratorri zuen"
 msgid "An optional argument 'file' "
 msgstr "Hautazko «file» argumentu bat"
 
-#: messagepropertydialog.cpp:41
+#: messagepropertydialog.cpp:42
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "Mezuaren propietateak"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property name"
 msgid "Name"
 msgstr "Izena"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property value"
 msgid "Value"

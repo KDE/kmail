@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2013-03-11 16:13+0530\n"
 "Last-Translator: Chetan Khona <chetan@kompkin.com>\n"
 "Language-Team: Marathi <kde-i18n-doc@kde.org>\n"
@@ -27,41 +27,41 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "chetan@kompkin.com"
 
-#: attachpropertydialog.cpp:58
+#: attachpropertydialog.cpp:62
 #, kde-format
 msgid "Save…"
 msgstr ""
 
-#: attachpropertydialog.cpp:77
+#: attachpropertydialog.cpp:81
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr ""
 
-#: attachpropertydialog.cpp:81
+#: attachpropertydialog.cpp:85
 #, kde-format
 msgid " bytes"
 msgstr ""
 
-#: attachpropertydialog.cpp:139
+#: attachpropertydialog.cpp:143
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr ""
 
-#: attachpropertydialog.cpp:148
+#: attachpropertydialog.cpp:152
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr ""
 
-#: attachpropertydialog.cpp:153
+#: attachpropertydialog.cpp:157
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr ""
 
-#: attachpropertydialog.cpp:173
+#: attachpropertydialog.cpp:177
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -238,19 +238,19 @@ msgstr "संयोजना (&S)"
 msgid "Main Toolbar"
 msgstr "मुख्य साधनपट्टी"
 
-#: ktnefview.cpp:70
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "फाईल नाव"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "फाईल प्रकार"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"
@@ -301,7 +301,7 @@ msgstr ""
 msgid "An optional argument 'file' "
 msgstr ""
 
-#: messagepropertydialog.cpp:41
+#: messagepropertydialog.cpp:42
 #, fuzzy, kde-format
 #| msgctxt "@action:inmenu"
 #| msgid "Properties"
@@ -309,13 +309,13 @@ msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "गुणधर्म"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property name"
 msgid "Name"
 msgstr "नाव"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property value"
 msgid "Value"

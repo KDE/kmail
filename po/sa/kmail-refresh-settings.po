@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-12-25 19:45+0530\n"
 "Last-Translator: kali <shreekantkalwar@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -72,33 +72,33 @@ msgstr "सेटिंग्स् स्वच्छं कुर्वन्�
 msgid "Finish"
 msgstr "समापन"
 
-#: refreshsettingscleanuppage.cpp:22
+#: refreshsettingscleanuppage.cpp:23
 #, kde-format
 msgctxt "@action:button"
 msgid "Clean"
 msgstr "स्वच्छम्‌"
 
-#: refreshsettingscleanuppage.cpp:51
+#: refreshsettingscleanuppage.cpp:52
 #, kde-format
 msgid "Remove obsolete \"TipOfDay\" settings: Done"
 msgstr "अप्रचलितं \"TipOfDay\" सेटिंग्स् निष्कासयन्तु: कृतम्"
 
-#: refreshsettingscleanuppage.cpp:63
+#: refreshsettingscleanuppage.cpp:64
 #, kde-format
 msgid "Delete Dialog settings in file `%1`: Done"
 msgstr "`%1` सञ्चिकायां संवादसेटिंग्स् विलोपयन्तु: कृतम्"
 
-#: refreshsettingscleanuppage.cpp:75
+#: refreshsettingscleanuppage.cpp:76
 #, kde-format
 msgid "Delete Filters settings in file `%1`: Done"
 msgstr "`%1` सञ्चिकायां Filters सेटिङ्ग्स् विलोपयन्तु: कृतम्"
 
-#: refreshsettingscleanuppage.cpp:91
+#: refreshsettingscleanuppage.cpp:92
 #, kde-format
 msgid "Clean Folder Settings in setting file `%1`: Done"
 msgstr "सेटिङ्ग् सञ्चिकायां `%1` मध्ये समुच्चय सेटिङ्ग्स् स्वच्छं कुर्वन्तु: कृतम्"
 
-#: refreshsettingscleanuppage.cpp:140
+#: refreshsettingscleanuppage.cpp:141
 #, kde-format
 msgid "Clean Dialog Size in setting file `%1`: Done"
 msgstr "`%1` सञ्चिकायां सेटिङ्ग् मध्ये Dialog Size स्वच्छं कुर्वन्तु: कृतम्"

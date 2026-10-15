@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:48+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-07-30 17:31+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
@@ -20,60 +20,60 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 24.05.2\n"
 
-#: addarchivemaildialog.cpp:21
+#: addarchivemaildialog.cpp:22
 #, kde-format
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modificar a tarefa para arquivar correo"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
+#: addarchivemaildialog.cpp:24 archivemailwidget.cpp:274
 #, kde-format
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Engadir unha tarefa para arquivar correo"
 
-#: addarchivemailwidget.cpp:27
+#: addarchivemailwidget.cpp:29
 #, kde-format
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arquivar todos os subcartafoles."
 
-#: addarchivemailwidget.cpp:37
+#: addarchivemailwidget.cpp:39
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "Cartafol:"
 
-#: addarchivemailwidget.cpp:47
+#: addarchivemailwidget.cpp:49
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "Formato:"
 
-#: addarchivemailwidget.cpp:55
+#: addarchivemailwidget.cpp:57
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Ruta:"
 
-#: addarchivemailwidget.cpp:62
+#: addarchivemailwidget.cpp:64
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Crear unha salvagarda cada:"
 
-#: addarchivemailwidget.cpp:74
+#: addarchivemailwidget.cpp:76
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Límite do arquivo:"
 
-#: addarchivemailwidget.cpp:77
+#: addarchivemailwidget.cpp:79
 #, kde-format
 msgid "unlimited"
 msgstr "ilimitado"
 
-#: archivemailinfo.cpp:68 archivemailinfo.cpp:84
+#: archivemailinfo.cpp:69 archivemailinfo.cpp:85
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
@@ -85,73 +85,73 @@ msgctxt "@option:check"
 msgid "Use Range"
 msgstr "Usar un intervalo."
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Name"
 msgstr "Nome"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Last archive"
 msgstr "Último arquivo"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Next archive in"
 msgstr "Próximo arquivo en"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Storage directory"
 msgstr "Cartafol de almacenamento"
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:100
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr "Engadir…"
 
-#: archivemailwidget.cpp:100
+#: archivemailwidget.cpp:106
 #, kde-format
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Abrir o cartafol contedor…"
 
-#: archivemailwidget.cpp:103
+#: archivemailwidget.cpp:109
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Eliminar"
 
-#: archivemailwidget.cpp:160
+#: archivemailwidget.cpp:166
 #, kde-format
 msgid "Folder: %1"
 msgstr "Cartafol: %1"
 
-#: archivemailwidget.cpp:182
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
 msgstr[0] "Mañá"
 msgstr[1] "%1 días"
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:197
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Realizarase o arquivo %1"
 
-#: archivemailwidget.cpp:227
+#: archivemailwidget.cpp:233
 #, kde-format
 msgid "Do you want to delete the selected items?"
 msgstr "Quere eliminar os elementos seleccionados?"
 
-#: archivemailwidget.cpp:228
+#: archivemailwidget.cpp:234
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Eliminar elementos"
 
-#: archivemailwidget.cpp:267
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

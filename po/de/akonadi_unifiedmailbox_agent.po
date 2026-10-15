@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_unifiedmailbox_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2026-08-31 00:04+0200\n"
 "Last-Translator: Philipp Kiemle <l10n.daphipz@fastmail.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -19,95 +19,95 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 26.08.0\n"
 
-#: settingsdialog.cpp:52
+#: settingsdialog.cpp:55
 #, kde-format
 msgctxt "@action:button"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: settingsdialog.cpp:67
+#: settingsdialog.cpp:70
 #, kde-format
 msgctxt "@action:button"
 msgid "Modify"
 msgstr "Ändern"
 
-#: settingsdialog.cpp:88
+#: settingsdialog.cpp:91
 #, kde-format
 msgid "Remove"
 msgstr "Entfernen"
 
-#: settingsdialog.cpp:98
+#: settingsdialog.cpp:101
 #, kde-format
 msgid "Do you really want to remove unified mailbox <b>%1</b>?"
 msgstr "Möchten Sie das einheitliche Postfach <b>%1</b> wirklich löschen?"
 
-#: settingsdialog.cpp:99
+#: settingsdialog.cpp:102
 #, kde-format
 msgctxt "@title:window"
 msgid "Really Remove?"
 msgstr "Wirklich entfernen?"
 
-#: settingsdialog.cpp:125
+#: settingsdialog.cpp:128
 #, kde-format
 msgctxt "@action"
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: settingsdialog.cpp:129
+#: settingsdialog.cpp:132
 #, kde-format
 msgctxt "@action"
 msgid "Modify"
 msgstr "Ändern"
 
-#: settingsdialog.cpp:131
+#: settingsdialog.cpp:134
 #, kde-format
 msgctxt "@action"
 msgid "Remove"
 msgstr "Entfernen"
 
-#: unifiedmailboxagent.cpp:46 unifiedmailboxagent.cpp:135
+#: unifiedmailboxagent.cpp:45 unifiedmailboxagent.cpp:134
 #, kde-format
 msgid "Unified Mailboxes"
 msgstr "Einheitliche Postfächer"
 
-#: unifiedmailboxagent.cpp:175
+#: unifiedmailboxagent.cpp:174
 #, kde-format
 msgid "Synchronizing unified mailbox %1"
 msgstr "Einheitliches Postfach %1 wird abgeglichen"
 
-#: unifiedmailboxeditor.cpp:84
+#: unifiedmailboxeditor.cpp:87
 #, kde-format
 msgctxt "@title:window"
 msgid "Configure Unified Mailbox"
 msgstr "Einheitliche Postfächer einrichten"
 
-#: unifiedmailboxeditor.cpp:96
+#: unifiedmailboxeditor.cpp:99
 #, kde-format
 msgid "Name:"
 msgstr "Name:"
 
-#: unifiedmailboxeditor.cpp:101
+#: unifiedmailboxeditor.cpp:104
 #, kde-format
 msgctxt "@action:button"
 msgid "Pick icon…"
 msgstr "Symbol auswählen …"
 
-#: unifiedmailboxeditor.cpp:102
+#: unifiedmailboxeditor.cpp:105
 #, kde-format
 msgid "Icon:"
 msgstr "Symbol:"
 
-#: unifiedmailboxmanager.cpp:298
+#: unifiedmailboxmanager.cpp:299
 #, kde-format
 msgid "Inbox"
 msgstr "Posteingang"
 
-#: unifiedmailboxmanager.cpp:305
+#: unifiedmailboxmanager.cpp:306
 #, kde-format
 msgid "Sent"
 msgstr "Versendet"
 
-#: unifiedmailboxmanager.cpp:312
+#: unifiedmailboxmanager.cpp:313
 #, kde-format
 msgid "Drafts"
 msgstr "Entwürfe"

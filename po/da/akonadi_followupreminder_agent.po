@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2020-07-27 22:48+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -17,59 +17,59 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 20.04.2\n"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "To"
 msgstr "Til"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "Subject"
 msgstr "Emne"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, fuzzy, kde-format
 #| msgid "Dead Line"
 msgid "Deadline"
 msgstr "Deadline"
 
-#: followupreminderinfowidget.cpp:63
+#: followupreminderinfowidget.cpp:66
 #, kde-format
 msgid "Answer"
 msgstr "Svar"
 
-#: followupreminderinfowidget.cpp:145
+#: followupreminderinfowidget.cpp:148
 #, kde-format
 msgid "Received"
 msgstr "Modtaget"
 
-#: followupreminderinfowidget.cpp:145
+#: followupreminderinfowidget.cpp:148
 #, kde-format
 msgid "On hold"
 msgstr "I venteposition"
 
-#: followupreminderinfowidget.cpp:213
+#: followupreminderinfowidget.cpp:216
 #, fuzzy, kde-format
 #| msgid "Show Message"
 msgctxt "@action"
 msgid "Show Message"
 msgstr "Vis besked"
 
-#: followupreminderinfowidget.cpp:216
+#: followupreminderinfowidget.cpp:219
 #, fuzzy, kde-format
 #| msgid "Show Message"
 msgctxt "@action"
 msgid "Show Original Message"
 msgstr "Vis besked"
 
-#: followupreminderinfowidget.cpp:219
+#: followupreminderinfowidget.cpp:222
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action"
 msgid "Delete"
 msgstr "Slet"
 
-#: followupreminderinfowidget.cpp:246
+#: followupreminderinfowidget.cpp:249
 #, fuzzy, kde-format
 #| msgid "Do you want to remove this selected item?"
 #| msgid_plural "Do you want to remove these %1 selected items?"
@@ -78,25 +78,25 @@ msgid_plural "Do you want to delete these %1 selected items?"
 msgstr[0] "Vil du fjerne det valgte element?"
 msgstr[1] "Vil du fjerne disse %1 valgte elementer?"
 
-#: followupreminderinfowidget.cpp:247
+#: followupreminderinfowidget.cpp:250
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Slet"
 
-#: followupremindermanager.cpp:154
+#: followupremindermanager.cpp:153
 #, kde-format
 msgid "Answer from %1 received"
 msgstr "Svar fra %1 modtaget"
 
-#: followupremindernoanswerdialog.cpp:38
+#: followupremindernoanswerdialog.cpp:37
 #, kde-format
 msgctxt "@title:window"
 msgid "Follow Up Reminder"
 msgstr "Opfølgningspåmindelse"
 
-#: followupremindernoanswerdialog.cpp:44
+#: followupremindernoanswerdialog.cpp:43
 #, fuzzy, kde-format
 #| msgid "You still wait an answer about this mail:"
 msgctxt "@label:textbox"

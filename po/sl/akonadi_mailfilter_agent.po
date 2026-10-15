@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2025-10-17 06:31+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
@@ -22,25 +22,25 @@ msgstr ""
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
 "X-Generator: Poedit 3.7\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:47
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Deli…"
 
-#: filterlogdialog.cpp:47
+#: filterlogdialog.cpp:49
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Pregledovalnik dnevnika filtrov"
 
-#: filterlogdialog.cpp:69
+#: filterlogdialog.cpp:71
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Be&leži dejanja filtrov"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:76
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -49,24 +49,24 @@ msgstr ""
 "Tu lahko vklopite in izklopite beleženje dejanj filtrov. Seveda se podatki "
 "zbirajo in prikažejo le, če je beleženje vključeno. "
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:97
 #, kde-format
 msgid "Logging Details"
 msgstr "Podrobnosti beleženja"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Beleži opis vzorca"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:109
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Beleži v&rednotenje filtrirnega pravila"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:114
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -80,36 +80,36 @@ msgstr ""
 "vsako posamezno pravilo filtra. V nasprotnem primeru bo prikazan samo odziv "
 "vrednotenja vseh pravil posameznega filtra."
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:121
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Beleži vrednotenje filtrirnega vzorca"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:126
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Beleži dejanja filtra"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:136
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Omejitev velikosti dnevnika:"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:144
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:145
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "neomejeno"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:148
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -122,7 +122,7 @@ msgstr ""
 "uporabi: če velikost zbranih zapisov preseže to mejo, potem bodo najstarejši "
 "zapisi zavrženi dokler meja ni več presežena. "
 
-#: filterlogdialog.cpp:324
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -131,48 +131,48 @@ msgstr ""
 "Ni bilo mogoče pisati v datoteko %1:\n"
 "»%2« je podroben opis napake."
 
-#: filterlogdialog.cpp:328
+#: filterlogdialog.cpp:330
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Napaka programa KMail"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:97
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtriranje sporočila %1 od %2"
 
-#: filtermanager.cpp:186
+#: filtermanager.cpp:182
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Napaka uveljavitve premikanja poštnega filtra"
 
-#: filtermanager.cpp:194
+#: filtermanager.cpp:190
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Napaka uveljavitve brisanja poštnega filtra"
 
-#: filtermanager.cpp:202
+#: filtermanager.cpp:198
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Napaka uveljavitve spreminjanja poštnega filtra"
 
-#: filtermanager.cpp:219
+#: filtermanager.cpp:215
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Vrednotenje filtrirnih pravil:</b> "
 
-#: filtermanager.cpp:226
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Filtrirna pravila se ujemajo.</b>"
 
-#: filtermanager.cpp:254
+#: filtermanager.cpp:250
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Začni filtrirati pri sporočilu »%1« od »%2« z dne »%3«:</b>"
 
-#: filtermanager.cpp:587 mailfilteragent.cpp:222
+#: filtermanager.cpp:583 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtriranje sporočil"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2020-07-27 22:46+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <kde-i18n-doc@kde.org>\n"
@@ -27,41 +27,41 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "mschlander@opensuse.org"
 
-#: attachpropertydialog.cpp:58
+#: attachpropertydialog.cpp:62
 #, kde-format
 msgid "Save…"
 msgstr ""
 
-#: attachpropertydialog.cpp:77
+#: attachpropertydialog.cpp:81
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "Egenskaber for bilag %1"
 
-#: attachpropertydialog.cpp:81
+#: attachpropertydialog.cpp:85
 #, kde-format
 msgid " bytes"
 msgstr " bytes"
 
-#: attachpropertydialog.cpp:139
+#: attachpropertydialog.cpp:143
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF-attributter"
 
-#: attachpropertydialog.cpp:148
+#: attachpropertydialog.cpp:152
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Du skal vælge et element først."
 
-#: attachpropertydialog.cpp:153
+#: attachpropertydialog.cpp:157
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Det valgte element kan ikke gemmes da det har et tomt mærke."
 
-#: attachpropertydialog.cpp:173
+#: attachpropertydialog.cpp:177
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -254,19 +254,19 @@ msgstr "&Indstillinger"
 msgid "Main Toolbar"
 msgstr "Hovedværktøjslinje"
 
-#: ktnefview.cpp:70
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Filnavn"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Filtype"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"
@@ -323,19 +323,19 @@ msgstr "Ophavsmand, porteret til Qt4/KDE4"
 msgid "An optional argument 'file' "
 msgstr "Et valgfrit argument \"file\" "
 
-#: messagepropertydialog.cpp:41
+#: messagepropertydialog.cpp:42
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "Brevegenskaber"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property name"
 msgid "Name"
 msgstr "Navn"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property value"
 msgid "Value"

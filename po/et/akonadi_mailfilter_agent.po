@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2019-12-18 18:36+0200\n"
 "Last-Translator: Marek Laane <qiilaq69@gmail.com>\n"
 "Language-Team: Estonian <kde-et@lists.linux.ee>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "X-Generator: Lokalize 19.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:47
 #, fuzzy, kde-format
 #| msgid "Share..."
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Jaga ..."
 
-#: filterlogdialog.cpp:47
+#: filterlogdialog.cpp:49
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Filtrilogi näitaja"
 
-#: filterlogdialog.cpp:69
+#: filterlogdialog.cpp:71
 #, fuzzy, kde-format
 #| msgid "&Log filter activities"
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "Filtri tegevuste &logimine"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:76
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -47,26 +47,26 @@ msgstr ""
 "kogutakse ja näidatakse mõistagi ainult siis, kui logimine on sisse "
 "lülitatud."
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:97
 #, kde-format
 msgid "Logging Details"
 msgstr "Logimise üksikasjad"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:104
 #, fuzzy, kde-format
 #| msgid "Log pattern description"
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Logimustri kirjeldus"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:109
 #, fuzzy, kde-format
 #| msgid "Log filter &rule evaluation"
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Filtri &reegli hindamise logimine"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:114
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -80,39 +80,39 @@ msgstr ""
 "filtrireegli kohta, vastasel juhul aga ainult iga filtri kõigi reeglite "
 "hindamise tulemus."
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:121
 #, fuzzy, kde-format
 #| msgid "Log filter pattern evaluation"
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Filtri mustri hindamise logimine"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:126
 #, fuzzy, kde-format
 #| msgid "Log filter actions"
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Filtri toimingute logimine"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:136
 #, fuzzy, kde-format
 #| msgid "Log size limit:"
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Logi suuruse piirang:"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:144
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:145
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "piiramatu"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:148
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -125,7 +125,7 @@ msgstr ""
 "suurus ületab limiidi, kustutatakse vanemad andmed, et taas jõuda allapoole "
 "limiiti."
 
-#: filterlogdialog.cpp:324
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -134,50 +134,50 @@ msgstr ""
 "Faili %1 kirjutamine nurjus:\n"
 "\"%2\" on üksikasjalik veakirjeldus."
 
-#: filterlogdialog.cpp:328
+#: filterlogdialog.cpp:330
 #, fuzzy, kde-format
 #| msgid "KMail Error"
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMaili tõrge"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:97
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "%1. kirja filtreerimine (kokku %2)"
 
-#: filtermanager.cpp:186
+#: filtermanager.cpp:182
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Tõrge kirja liigutava filtri rakendamisel"
 
-#: filtermanager.cpp:194
+#: filtermanager.cpp:190
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Tõrge kirja kustutava filtri rakendamisel"
 
-#: filtermanager.cpp:202
+#: filtermanager.cpp:198
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Tõrge kirja muutva filtri rakendamisel"
 
-#: filtermanager.cpp:219
+#: filtermanager.cpp:215
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Filtri reeglite hindamine:</b>"
 
-#: filtermanager.cpp:226
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>Filtri reeglid sobivad.</b>"
 
-#: filtermanager.cpp:254
+#: filtermanager.cpp:250
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr ""
 "<b>Filtreerimist alustatakse kirjast \"%1\" saatjalt \"%2\" \"%3\":</b>"
 
-#: filtermanager.cpp:587 mailfilteragent.cpp:222
+#: filtermanager.cpp:583 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "Kirjade filtreerimine"

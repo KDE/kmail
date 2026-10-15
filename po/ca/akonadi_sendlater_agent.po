@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2025-08-20 10:38+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -21,126 +21,126 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Generator: Lokalize 25.08.0\n"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "To"
 msgstr "A"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Subject"
 msgstr "Assumpte"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Send around"
 msgstr "Envia al voltant de"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Recurrent"
 msgstr "Recurrència"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:60
 #, kde-format
 msgid "Message Id"
 msgstr "ID del missatge"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:71
 #, kde-format
 msgid "No messages waiting…"
 msgstr "No hi ha missatges en espera…"
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Envia ara"
 
-#: sendlaterconfigurewidget.cpp:96
+#: sendlaterconfigurewidget.cpp:98
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Suprimeix"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "Yes"
 msgstr "Sí"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "No"
 msgstr "No"
 
-#: sendlaterconfigurewidget.cpp:204
+#: sendlaterconfigurewidget.cpp:206
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "Voleu suprimir l'element seleccionat?"
 msgstr[1] "Voleu suprimir els elements seleccionats?"
 
-#: sendlaterconfigurewidget.cpp:205
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Supressió d'elements"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:215
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "També voleu suprimir aquest missatge?"
 msgstr[1] "També voleu suprimir els missatges?"
 
-#: sendlaterconfigurewidget.cpp:214
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Supressió de missatges"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "No els suprimeixis"
 
-#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
 msgstr "No s'ha trobat el missatge."
 
-#: sendlaterjob.cpp:68
+#: sendlaterjob.cpp:67
 #, kde-format
 msgid "No message found."
 msgstr "No s'ha trobat el missatge."
 
-#: sendlaterjob.cpp:77
+#: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Error mentre s'obtenia el missatge."
 
-#: sendlaterjob.cpp:83
+#: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "No s'ha pogut obtenir el missatge. %1"
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:87
 #, kde-format
 msgid "We can't create transport"
 msgstr "No s'ha pogut crear el transport"
 
-#: sendlaterjob.cpp:95
+#: sendlaterjob.cpp:94
 #, kde-format
 msgid "Message is not a real message"
 msgstr "El missatge no és un missatge real"
 
-#: sendlaterjob.cpp:102
+#: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
 msgstr "No s'ha pogut enviar el missatge."
 
-#: sendlaterjob.cpp:131
+#: sendlaterjob.cpp:130
 #, kde-format
 msgid "Message sent"
 msgstr "El missatge s'ha enviat"

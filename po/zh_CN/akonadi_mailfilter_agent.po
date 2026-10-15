@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -17,25 +17,25 @@ msgstr ""
 "X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_mailfilter_agent.pot\n"
 "X-Crowdin-File-ID: 45631\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:47
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "分享..."
 
-#: filterlogdialog.cpp:47
+#: filterlogdialog.cpp:49
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "过滤器日志查看器"
 
-#: filterlogdialog.cpp:69
+#: filterlogdialog.cpp:71
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "记录过滤器的活动日志(&L)"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:76
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -44,24 +44,24 @@ msgstr ""
 "您可以选择开启或关闭过滤器的活动日志。当然，只有在日志开启时才会收集和显示日"
 "志。"
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:97
 #, kde-format
 msgid "Logging Details"
 msgstr "日志细节"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "日志模式描述"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:109
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "日志过滤规则求值(&R)"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:114
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -73,36 +73,36 @@ msgstr ""
 "您可以控制如何记录应用的过滤器的过滤规则求值过程：选中此项将会获得每个单独的"
 "过滤规则的详细反馈；反之，只有将所有规则求值后的单独的过滤器的结果将会返回。"
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:121
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "记录过滤规则求值"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:126
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "记录过滤器操作"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:136
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "日志大小限制："
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:144
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:145
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "无限制"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:148
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -113,7 +113,7 @@ msgstr ""
 "日志数据的收集使用内存临时存储日志数据；这里您可以限制使用内存的最大值：如果"
 "收集的日志大小超过了限额那么最老的数据将被丢弃直到不再超过限额为止。"
 
-#: filterlogdialog.cpp:324
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -122,48 +122,48 @@ msgstr ""
 "无法写入文件 %1：\n"
 "“%2”为详细错误描述。"
 
-#: filterlogdialog.cpp:328
+#: filterlogdialog.cpp:330
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "KMail 错误"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:97
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "正在过滤 %2 条消息中的第 %1 条"
 
-#: filtermanager.cpp:186
+#: filtermanager.cpp:182
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "应用过滤器的移动操作时发生错误"
 
-#: filtermanager.cpp:194
+#: filtermanager.cpp:190
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "应用过滤器的删除操作时发生错误"
 
-#: filtermanager.cpp:202
+#: filtermanager.cpp:198
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "应用过滤器的修改操作时发生错误"
 
-#: filtermanager.cpp:219
+#: filtermanager.cpp:215
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>正在对过滤规则求值：</b> "
 
-#: filtermanager.cpp:226
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>过滤规则已匹配。</b>"
 
-#: filtermanager.cpp:254
+#: filtermanager.cpp:250
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>开始过滤在“%3”来自“%2”的消息“%1”：</b>"
 
-#: filtermanager.cpp:587 mailfilteragent.cpp:222
+#: filtermanager.cpp:583 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "过滤消息"

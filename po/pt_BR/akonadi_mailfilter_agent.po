@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_mailfilter_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2025-11-08 21:10-0300\n"
 "Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -21,25 +21,25 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Lokalize 25.08.2\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:47
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "Compartilhar…"
 
-#: filterlogdialog.cpp:47
+#: filterlogdialog.cpp:49
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "Visualizador de registros do filtro"
 
-#: filterlogdialog.cpp:69
+#: filterlogdialog.cpp:71
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&Registro das atividades do filtro"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:76
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -49,24 +49,24 @@ msgstr ""
 "Obviamente os registros são coletados e mostrados quando isto estiver "
 "habilitado. "
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:97
 #, kde-format
 msgid "Logging Details"
 msgstr "Detalhes do registro"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "Registro da descrição do padrão"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:109
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "Registro da avaliação da &regra de filtragem"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:114
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -81,36 +81,36 @@ msgstr ""
 "particular. Alternativamente, poderá ser fornecido somente o retorno sobre o "
 "resultado da avaliação de todas as regras de um filtro."
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:121
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "Registro da avaliação do padrão do filtro"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:126
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "Registro das ações do filtro"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:136
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "Limite de tamanho do registro:"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:144
 #, kde-format
 msgid " KB"
 msgstr " KB"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:145
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "sem limite"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:148
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -124,7 +124,7 @@ msgstr ""
 "então os dados mais antigos serão descartados, até que o limite não seja "
 "mais excedido. "
 
-#: filterlogdialog.cpp:324
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -133,48 +133,48 @@ msgstr ""
 "Não foi possível gravar o arquivo %1:\n"
 "\"%2\" é a descrição detalhada do erro."
 
-#: filterlogdialog.cpp:328
+#: filterlogdialog.cpp:330
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "Erro do KMail"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:97
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "Filtrando mensagem %1 de %2"
 
-#: filtermanager.cpp:186
+#: filtermanager.cpp:182
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "Erro ao aplicar a movimentação do filtro de e-mails"
 
-#: filtermanager.cpp:194
+#: filtermanager.cpp:190
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "Erro ao aplicar a exclusão do filtro de e-mails"
 
-#: filtermanager.cpp:202
+#: filtermanager.cpp:198
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "Erro ao aplicar as modificações do filtro de e-mails"
 
-#: filtermanager.cpp:219
+#: filtermanager.cpp:215
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>Avaliando as regras de filtragem:</b> "
 
-#: filtermanager.cpp:226
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>As regras de filtragem coincidem.</b>"
 
-#: filtermanager.cpp:254
+#: filtermanager.cpp:250
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>Iniciar a filtragem na mensagem \"%1\" de \"%2\" em \"%3\" :</b>"
 
-#: filtermanager.cpp:587 mailfilteragent.cpp:222
+#: filtermanager.cpp:583 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "Filtrando mensagens"

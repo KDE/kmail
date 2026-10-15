@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-08-03 11:23+0200\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -18,59 +18,59 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "To"
 msgstr "Do"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Subject"
 msgstr "Temat"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Send around"
 msgstr "Roześlij"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Recurrent"
 msgstr "Powtarzając się"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:60
 #, kde-format
 msgid "Message Id"
 msgstr "ID wiadomości"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:71
 #, kde-format
 msgid "No messages waiting…"
 msgstr "Żadna wiadomość nie oczekuje…"
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Wyślij teraz"
 
-#: sendlaterconfigurewidget.cpp:96
+#: sendlaterconfigurewidget.cpp:98
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Usuń"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "Yes"
 msgstr "Tak"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "No"
 msgstr "Nie"
 
-#: sendlaterconfigurewidget.cpp:204
+#: sendlaterconfigurewidget.cpp:206
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -78,13 +78,13 @@ msgstr[0] "Czy chcesz usunąć wybrany element?"
 msgstr[1] "Czy chcesz usunąć wybrane elementy?"
 msgstr[2] "Czy chcesz usunąć wybrane elementy?"
 
-#: sendlaterconfigurewidget.cpp:205
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Usuń elementy"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:215
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -92,54 +92,54 @@ msgstr[0] "Czy chcesz usunąć również tę wiadomość?"
 msgstr[1] "Czy chcesz usunąć również te wiadomości?"
 msgstr[2] "Czy chcesz usunąć również te wiadomości?"
 
-#: sendlaterconfigurewidget.cpp:214
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Usuń wiadomości"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Nie usuwaj"
 
-#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
 msgstr "Nie znaleziono wiadomości."
 
-#: sendlaterjob.cpp:68
+#: sendlaterjob.cpp:67
 #, kde-format
 msgid "No message found."
 msgstr "Nie znaleziono wiadomości."
 
-#: sendlaterjob.cpp:77
+#: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Błąd przy pobieraniu wiadomości."
 
-#: sendlaterjob.cpp:83
+#: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Nie można pobrać wiadomości. %1"
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:87
 #, kde-format
 msgid "We can't create transport"
 msgstr "Nie można utworzyć przekazywania"
 
-#: sendlaterjob.cpp:95
+#: sendlaterjob.cpp:94
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Wiadomość nie jest rzeczywista"
 
-#: sendlaterjob.cpp:102
+#: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
 msgstr "Nie można wysłać wiadomości."
 
-#: sendlaterjob.cpp:131
+#: sendlaterjob.cpp:130
 #, kde-format
 msgid "Message sent"
 msgstr "Wysłano wiadomość"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-11-22 15:43+0300\n"
 "Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
 "Language-Team: Basealt Translation Team\n"
@@ -25,59 +25,59 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "To"
 msgstr "Кому"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Subject"
 msgstr "Тема"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Send around"
 msgstr "Назначенное время"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Recurrent"
 msgstr "С повторением"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:60
 #, kde-format
 msgid "Message Id"
 msgstr "Идентификатор письма"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:71
 #, kde-format
 msgid "No messages waiting…"
 msgstr "Нет писем, ожидающих отправки…"
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Отправить сейчас"
 
-#: sendlaterconfigurewidget.cpp:96
+#: sendlaterconfigurewidget.cpp:98
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Удалить"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "Yes"
 msgstr "Да"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "No"
 msgstr "Нет"
 
-#: sendlaterconfigurewidget.cpp:204
+#: sendlaterconfigurewidget.cpp:206
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -86,13 +86,13 @@ msgstr[1] "Удалить выбранные записи?"
 msgstr[2] "Удалить выбранные записи?"
 msgstr[3] "Удалить выбранную запись?"
 
-#: sendlaterconfigurewidget.cpp:205
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Удаление записей"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:215
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
@@ -101,54 +101,54 @@ msgstr[1] "Также удалить сообщения?"
 msgstr[2] "Также удалить сообщения?"
 msgstr[3] "Также удалить сообщение?"
 
-#: sendlaterconfigurewidget.cpp:214
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Удаление сообщений"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Не удалять"
 
-#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
 msgstr "Письмо не найдено."
 
-#: sendlaterjob.cpp:68
+#: sendlaterjob.cpp:67
 #, kde-format
 msgid "No message found."
 msgstr "Письмо не найдено."
 
-#: sendlaterjob.cpp:77
+#: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Ошибка при извлечении сообщения."
 
-#: sendlaterjob.cpp:83
+#: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Получить сообщение для отправки не удалось. %1"
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:87
 #, kde-format
 msgid "We can't create transport"
 msgstr "Создать транспорт не удалось."
 
-#: sendlaterjob.cpp:95
+#: sendlaterjob.cpp:94
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Отправляемое сообщение фактически сообщением не является"
 
-#: sendlaterjob.cpp:102
+#: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
 msgstr "Отправить сообщение не удалось."
 
-#: sendlaterjob.cpp:131
+#: sendlaterjob.cpp:130
 #, kde-format
 msgid "Message sent"
 msgstr "Сообщение отправлено"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2015-02-07 19:02+0100\n"
 "Last-Translator: Bjørn Steensrud <bjornst@skogkatt.homelinux.org>\n"
 "Language-Team: Norwegian Bokmål <l10n-no@nuug.no>\n"
@@ -19,126 +19,126 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "To"
 msgstr "Til"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Subject"
 msgstr "Emne"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Send around"
 msgstr "Send omkring"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Recurrent"
 msgstr "Gjentas"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:60
 #, kde-format
 msgid "Message Id"
 msgstr "Meldings-ID"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:71
 #, fuzzy, kde-format
 msgid "No messages waiting…"
 msgstr "Ingen meldinger venter …"
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Send nå"
 
-#: sendlaterconfigurewidget.cpp:96
+#: sendlaterconfigurewidget.cpp:98
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Slett"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "Yes"
 msgstr "Ja"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "No"
 msgstr "Nei"
 
-#: sendlaterconfigurewidget.cpp:204
+#: sendlaterconfigurewidget.cpp:206
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sendlaterconfigurewidget.cpp:205
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr ""
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:215
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] ""
 msgstr[1] ""
 
-#: sendlaterconfigurewidget.cpp:214
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr ""
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr ""
 
-#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
 msgstr "Ingen melding funnet."
 
-#: sendlaterjob.cpp:68
+#: sendlaterjob.cpp:67
 #, kde-format
 msgid "No message found."
 msgstr "Ingen melding funnet."
 
-#: sendlaterjob.cpp:77
+#: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Feil når melding ble hentet."
 
-#: sendlaterjob.cpp:83
+#: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Kan ikke hente melding. %1"
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:87
 #, kde-format
 msgid "We can't create transport"
 msgstr "Kan ikke opprette transport"
 
-#: sendlaterjob.cpp:95
+#: sendlaterjob.cpp:94
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Meldinga er ikke en virkelig melding"
 
-#: sendlaterjob.cpp:102
+#: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
 msgstr "Kan ikke sende melding."
 
-#: sendlaterjob.cpp:131
+#: sendlaterjob.cpp:130
 #, kde-format
 msgid "Message sent"
 msgstr "Melding sendt"

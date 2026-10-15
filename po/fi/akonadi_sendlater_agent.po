@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2025-09-10 17:48+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -18,126 +18,126 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 25.04.0\n"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "To"
 msgstr "Vastaanottaja"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Subject"
 msgstr "Aihe"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Send around"
 msgstr "Lähetä suunnilleen"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Recurrent"
 msgstr "Toistuu"
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:60
 #, kde-format
 msgid "Message Id"
 msgstr "Viestin tunniste"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:71
 #, kde-format
 msgid "No messages waiting…"
 msgstr "Ei odottavia viestejä…"
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Lähetä heti"
 
-#: sendlaterconfigurewidget.cpp:96
+#: sendlaterconfigurewidget.cpp:98
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Poista"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "Yes"
 msgstr "Kyllä"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "No"
 msgstr "Ei"
 
-#: sendlaterconfigurewidget.cpp:204
+#: sendlaterconfigurewidget.cpp:206
 #, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
 msgstr[0] "Haluatko poistaa valitun tietueen?"
 msgstr[1] "Haluatko poistaa valitut tietueet?"
 
-#: sendlaterconfigurewidget.cpp:205
+#: sendlaterconfigurewidget.cpp:207
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Poista kohteet"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:215
 #, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "Haluatko poistaa viestinkin?"
 msgstr[1] "Haluatko poistaa viestitkin?"
 
-#: sendlaterconfigurewidget.cpp:214
+#: sendlaterconfigurewidget.cpp:216
 #, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Poista viestit"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Älä poista"
 
-#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, kde-format
 msgid "Not message found."
 msgstr "Viestiä ei löytynyt."
 
-#: sendlaterjob.cpp:68
+#: sendlaterjob.cpp:67
 #, kde-format
 msgid "No message found."
 msgstr "Viestiä ei löytynyt."
 
-#: sendlaterjob.cpp:77
+#: sendlaterjob.cpp:76
 #, kde-format
 msgid "Error during fetching message."
 msgstr "Virhe noudettaessa viestiä."
 
-#: sendlaterjob.cpp:83
+#: sendlaterjob.cpp:82
 #, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Viestiä ei saatu noudettua. %1"
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:87
 #, kde-format
 msgid "We can't create transport"
 msgstr "Postinvälitystä ei saatu luotua."
 
-#: sendlaterjob.cpp:95
+#: sendlaterjob.cpp:94
 #, kde-format
 msgid "Message is not a real message"
 msgstr "Viesti ei ole oikea viesti"
 
-#: sendlaterjob.cpp:102
+#: sendlaterjob.cpp:101
 #, kde-format
 msgid "Cannot send message."
 msgstr "Viestin lähettäminen epäonnistui."
 
-#: sendlaterjob.cpp:131
+#: sendlaterjob.cpp:130
 #, kde-format
 msgid "Message sent"
 msgstr "Viesti lähetetty"

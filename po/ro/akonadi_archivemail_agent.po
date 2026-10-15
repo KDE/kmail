@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-06 00:48+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2013-01-13 21:44+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -17,68 +17,68 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
 
-#: addarchivemaildialog.cpp:21
+#: addarchivemaildialog.cpp:22
 #, fuzzy, kde-format
 #| msgid "Modify Archive Mail"
 msgctxt "@title:window"
 msgid "Modify Archive Mail"
 msgstr "Modifică arhivarea poștei"
 
-#: addarchivemaildialog.cpp:23 archivemailwidget.cpp:268
+#: addarchivemaildialog.cpp:24 archivemailwidget.cpp:274
 #, fuzzy, kde-format
 #| msgid "Add Archive Mail"
 msgctxt "@title:window"
 msgid "Add Archive Mail"
 msgstr "Adaugă arhivarea poștei"
 
-#: addarchivemailwidget.cpp:27
+#: addarchivemailwidget.cpp:29
 #, fuzzy, kde-format
 #| msgid "Archive all subfolders"
 msgctxt "@option:check"
 msgid "Archive all subfolders"
 msgstr "Arhivează toate subdosarele"
 
-#: addarchivemailwidget.cpp:37
+#: addarchivemailwidget.cpp:39
 #, fuzzy, kde-format
 #| msgid "&Folder:"
 msgctxt "@label:textbox"
 msgid "Folder:"
 msgstr "&Dosar:"
 
-#: addarchivemailwidget.cpp:47
+#: addarchivemailwidget.cpp:49
 #, fuzzy, kde-format
 #| msgid "F&ormat:"
 msgctxt "@label:textbox"
 msgid "Format:"
 msgstr "F&ormat:"
 
-#: addarchivemailwidget.cpp:55
+#: addarchivemailwidget.cpp:57
 #, fuzzy, kde-format
 #| msgid "Path:"
 msgctxt "@label:textbox"
 msgid "Path:"
 msgstr "Cale:"
 
-#: addarchivemailwidget.cpp:62
+#: addarchivemailwidget.cpp:64
 #, fuzzy, kde-format
 #| msgid "Backup each:"
 msgctxt "@label:textbox"
 msgid "Backup each:"
 msgstr "Arhivează la fiecare:"
 
-#: addarchivemailwidget.cpp:74
+#: addarchivemailwidget.cpp:76
 #, fuzzy, kde-format
 #| msgid "Maximum number of archive:"
 msgctxt "@label:textbox"
 msgid "Maximum number of archive:"
 msgstr "Numărul maxim al arhivei:"
 
-#: addarchivemailwidget.cpp:77
+#: addarchivemailwidget.cpp:79
 #, kde-format
 msgid "unlimited"
 msgstr "nelimitat"
 
-#: archivemailinfo.cpp:68 archivemailinfo.cpp:84
+#: archivemailinfo.cpp:69 archivemailinfo.cpp:85
 #, kde-format
 msgctxt "Start of the filename for a mail archive file"
 msgid "Archive"
@@ -90,52 +90,52 @@ msgctxt "@option:check"
 msgid "Use Range"
 msgstr ""
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Name"
 msgstr "Denumire"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Last archive"
 msgstr "Ultima arhivă"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Next archive in"
 msgstr "Următoarea arhivă în"
 
-#: archivemailwidget.cpp:69
+#: archivemailwidget.cpp:75
 #, kde-format
 msgid "Storage directory"
 msgstr ""
 
-#: archivemailwidget.cpp:94
+#: archivemailwidget.cpp:100
 #, kde-format
 msgctxt "@action"
 msgid "Add…"
 msgstr ""
 
-#: archivemailwidget.cpp:100
+#: archivemailwidget.cpp:106
 #, fuzzy, kde-format
 #| msgid "Open Containing Folder..."
 msgctxt "@action"
 msgid "Open Containing Folder…"
 msgstr "Deschide dosarul care conține..."
 
-#: archivemailwidget.cpp:103
+#: archivemailwidget.cpp:109
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@action"
 msgid "Delete"
 msgstr "Șterge"
 
-#: archivemailwidget.cpp:160
+#: archivemailwidget.cpp:166
 #, kde-format
 msgid "Folder: %1"
 msgstr "Dosar: %1"
 
-#: archivemailwidget.cpp:182
+#: archivemailwidget.cpp:188
 #, kde-format
 msgid "Tomorrow"
 msgid_plural "%1 days"
@@ -143,25 +143,25 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: archivemailwidget.cpp:191
+#: archivemailwidget.cpp:197
 #, kde-format
 msgid "Archive will be done %1"
 msgstr "Arhiva va fi făcută %1"
 
-#: archivemailwidget.cpp:227
+#: archivemailwidget.cpp:233
 #, fuzzy, kde-format
 #| msgid "Do you want to delete selected items? Do you want to continue?"
 msgid "Do you want to delete the selected items?"
 msgstr "Doriți să ștergeți elementele alese? Doriți să continuați?"
 
-#: archivemailwidget.cpp:228
+#: archivemailwidget.cpp:234
 #, fuzzy, kde-format
 #| msgid "Delete"
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Șterge"
 
-#: archivemailwidget.cpp:267
+#: archivemailwidget.cpp:273
 #, kde-format
 msgid ""
 "Cannot add a second archive for this folder. Modify the existing one instead."

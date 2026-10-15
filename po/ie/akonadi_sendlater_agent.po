@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2024-08-01 21:41+0700\n"
 "Last-Translator: OIS <mistresssilvara@hotmail.com>\n"
 "Language-Team: Interlingue <>\n"
@@ -17,59 +17,59 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.07.70\n"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "To"
 msgstr "A"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Subject"
 msgstr "Tema"
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Send around"
 msgstr ""
 
-#: sendlaterconfigurewidget.cpp:56
+#: sendlaterconfigurewidget.cpp:58
 #, kde-format
 msgid "Recurrent"
 msgstr ""
 
-#: sendlaterconfigurewidget.cpp:58
+#: sendlaterconfigurewidget.cpp:60
 #, fuzzy, kde-format
 msgid "Message Id"
 msgstr "Proprietás de missage"
 
-#: sendlaterconfigurewidget.cpp:69
+#: sendlaterconfigurewidget.cpp:71
 #, fuzzy, kde-format
 msgid "No messages waiting…"
 msgstr "no"
 
-#: sendlaterconfigurewidget.cpp:93
+#: sendlaterconfigurewidget.cpp:95
 #, kde-format
 msgctxt "@action"
 msgid "Send now"
 msgstr "Inviar nu"
 
-#: sendlaterconfigurewidget.cpp:96
+#: sendlaterconfigurewidget.cpp:98
 #, kde-format
 msgctxt "@action"
 msgid "Delete"
 msgstr "Remover"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "Yes"
 msgstr "Yes"
 
-#: sendlaterconfigurewidget.cpp:154
+#: sendlaterconfigurewidget.cpp:156
 #, kde-format
 msgid "No"
 msgstr "No"
 
-#: sendlaterconfigurewidget.cpp:204
+#: sendlaterconfigurewidget.cpp:206
 #, fuzzy, kde-format
 msgid "Do you want to delete the selected item?"
 msgid_plural "Do you want to delete the selected items?"
@@ -78,67 +78,67 @@ msgstr[0] ""
 "previder it quam un simplic textu?"
 msgstr[1] "Remover files"
 
-#: sendlaterconfigurewidget.cpp:205
+#: sendlaterconfigurewidget.cpp:207
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Items"
 msgstr "Remover un file"
 
-#: sendlaterconfigurewidget.cpp:213
+#: sendlaterconfigurewidget.cpp:215
 #, fuzzy, kde-format
 msgid "Do you want to delete the message as well?"
 msgid_plural "Do you want to delete the messages as well?"
 msgstr[0] "Proprietás de missage"
 msgstr[1] "Remover files"
 
-#: sendlaterconfigurewidget.cpp:214
+#: sendlaterconfigurewidget.cpp:216
 #, fuzzy, kde-format
 msgctxt "@title:window"
 msgid "Delete Messages"
 msgstr "Remover un file"
 
-#: sendlaterconfigurewidget.cpp:216
+#: sendlaterconfigurewidget.cpp:218
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Delete"
 msgstr "Ne remover"
 
-#: sendlaterjob.cpp:57 sendlaterjob.cpp:60
+#: sendlaterjob.cpp:56 sendlaterjob.cpp:59
 #, fuzzy, kde-format
 msgid "Not message found."
 msgstr "Proprietás de missage"
 
-#: sendlaterjob.cpp:68
+#: sendlaterjob.cpp:67
 #, fuzzy, kde-format
 msgid "No message found."
 msgstr "Proprietás de missage"
 
-#: sendlaterjob.cpp:77
+#: sendlaterjob.cpp:76
 #, fuzzy, kde-format
 msgid "Error during fetching message."
 msgstr "Proprietás de missage"
 
-#: sendlaterjob.cpp:83
+#: sendlaterjob.cpp:82
 #, fuzzy, kde-format
 msgid "Cannot fetch message. %1"
 msgstr "Proprietás de missage"
 
-#: sendlaterjob.cpp:88
+#: sendlaterjob.cpp:87
 #, fuzzy, kde-format
 msgid "We can't create transport"
 msgstr "Adjunter un nov"
 
-#: sendlaterjob.cpp:95
+#: sendlaterjob.cpp:94
 #, fuzzy, kde-format
 msgid "Message is not a real message"
 msgstr "Proprietás de missage"
 
-#: sendlaterjob.cpp:102
+#: sendlaterjob.cpp:101
 #, fuzzy, kde-format
 msgid "Cannot send message."
 msgstr "Proprietás de missage"
 
-#: sendlaterjob.cpp:131
+#: sendlaterjob.cpp:130
 #, fuzzy, kde-format
 msgid "Message sent"
 msgstr "Proprietás de missage"

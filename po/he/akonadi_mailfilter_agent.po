@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-31 00:44+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2025-10-17 16:26+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,25 +18,25 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 25.08.1\n"
 
-#: filterlogdialog.cpp:45
+#: filterlogdialog.cpp:47
 #, kde-format
 msgctxt "@action:button"
 msgid "Share…"
 msgstr "שיתוף…"
 
-#: filterlogdialog.cpp:47
+#: filterlogdialog.cpp:49
 #, kde-format
 msgctxt "@title:window"
 msgid "Filter Log Viewer"
 msgstr "מציג קובצי יומנים"
 
-#: filterlogdialog.cpp:69
+#: filterlogdialog.cpp:71
 #, kde-format
 msgctxt "@option:check"
 msgid "&Log filter activities"
 msgstr "&פעילויות מסנן יומנים"
 
-#: filterlogdialog.cpp:74
+#: filterlogdialog.cpp:76
 #, kde-format
 msgid ""
 "You can turn logging of filter activities on and off here. Of course, log "
@@ -45,24 +45,24 @@ msgstr ""
 "כאן אפשר לכבות או להפעיל תיעוד פעילויות מסנן. כמובן שנתוני היומן נאספים "
 "ומופיעים רק כשהתיעוד פעיל."
 
-#: filterlogdialog.cpp:95
+#: filterlogdialog.cpp:97
 #, kde-format
 msgid "Logging Details"
 msgstr "פרטי תיעוד"
 
-#: filterlogdialog.cpp:102
+#: filterlogdialog.cpp:104
 #, kde-format
 msgctxt "@option:check"
 msgid "Log pattern description"
 msgstr "תיאור תבנית יומן"
 
-#: filterlogdialog.cpp:107
+#: filterlogdialog.cpp:109
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter &rule evaluation"
 msgstr "ה&ערכת כללי מסנן יומנים"
 
-#: filterlogdialog.cpp:112
+#: filterlogdialog.cpp:114
 #, kde-format
 msgid ""
 "You can control the feedback in the log concerning the evaluation of the "
@@ -75,36 +75,36 @@ msgstr ""
 "אפשרות זאת יציג משוב מפורט על כל אחד מכללי המסנן. לחלופין, יספק משוב רק על "
 "תוצאת הערכת כל הכללים של מסנן יחיד."
 
-#: filterlogdialog.cpp:119
+#: filterlogdialog.cpp:121
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter pattern evaluation"
 msgstr "הערכת תבנית מסנן יומן"
 
-#: filterlogdialog.cpp:124
+#: filterlogdialog.cpp:126
 #, kde-format
 msgctxt "@option:check"
 msgid "Log filter actions"
 msgstr "פעולות מסנן יומן"
 
-#: filterlogdialog.cpp:134
+#: filterlogdialog.cpp:136
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Log size limit:"
 msgstr "מגבלת גודל יומן:"
 
-#: filterlogdialog.cpp:142
+#: filterlogdialog.cpp:144
 #, kde-format
 msgid " KB"
 msgstr " ק״ב"
 
-#: filterlogdialog.cpp:143
+#: filterlogdialog.cpp:145
 #, kde-format
 msgctxt "@label:spinbox Set the size of the logfile to unlimited."
 msgid "unlimited"
 msgstr "ללא הגבלה"
 
-#: filterlogdialog.cpp:146
+#: filterlogdialog.cpp:148
 #, kde-format
 msgid ""
 "Collecting log data uses memory to temporarily store the log data; here you "
@@ -117,7 +117,7 @@ msgstr ""
 "מהמגבלה אז הנתונים הישנים ביותר מושלכים הצידה עד שהגודל הכולל לא עובר את "
 "המגבלה. "
 
-#: filterlogdialog.cpp:324
+#: filterlogdialog.cpp:326
 #, kde-format
 msgid ""
 "Could not write the file %1:\n"
@@ -126,48 +126,48 @@ msgstr ""
 "לא ניתן לכתוב לקובץ %1:\n"
 "„%2” הוא תיאור השגיאה המפורט."
 
-#: filterlogdialog.cpp:328
+#: filterlogdialog.cpp:330
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail Error"
 msgstr "שגיאה של KMail"
 
-#: filtermanager.cpp:101
+#: filtermanager.cpp:97
 #, kde-format
 msgid "Filtering message %1 of %2"
 msgstr "מתבצע סינון על הודעה %1 מתוך %2"
 
-#: filtermanager.cpp:186
+#: filtermanager.cpp:182
 #, kde-format
 msgid "Error applying mail filter move"
 msgstr "שגיאה בהחלת העברת מסנן דוא״ל"
 
-#: filtermanager.cpp:194
+#: filtermanager.cpp:190
 #, kde-format
 msgid "Error applying mail filter delete"
 msgstr "שגיאה בהחלת מחיקת מסנן דוא״ל"
 
-#: filtermanager.cpp:202
+#: filtermanager.cpp:198
 #, kde-format
 msgid "Error applying mail filter modifications"
 msgstr "שגיאה בהחלת שינויי מסנן דוא״ל"
 
-#: filtermanager.cpp:219
+#: filtermanager.cpp:215
 #, kde-format
 msgid "<b>Evaluating filter rules:</b> "
 msgstr "<b>כללי המסנן מוערכים:</b> "
 
-#: filtermanager.cpp:226
+#: filtermanager.cpp:222
 #, kde-format
 msgid "<b>Filter rules have matched.</b>"
 msgstr "<b>כללי המסנן תפסו.</b>"
 
-#: filtermanager.cpp:254
+#: filtermanager.cpp:250
 #, kde-format
 msgid "<b>Begin filtering on message \"%1\" from \"%2\" at \"%3\" :</b>"
 msgstr "<b>התחלת סינון על ההודעה „%1\" מאת „%2\" ב־„%3” :</b>"
 
-#: filtermanager.cpp:587 mailfilteragent.cpp:222
+#: filtermanager.cpp:583 mailfilteragent.cpp:222
 #, kde-format
 msgid "Filtering messages"
 msgstr "סינון הודעות"

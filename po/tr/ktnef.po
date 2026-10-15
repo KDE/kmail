@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-29 00:46+0000\n"
+"POT-Creation-Date: 2026-10-15 00:46+0000\n"
 "PO-Revision-Date: 2026-09-02 15:02+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
@@ -28,41 +28,41 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "necdetyucel@gmail.com, emir_sari@icloud.com"
 
-#: attachpropertydialog.cpp:58
+#: attachpropertydialog.cpp:62
 #, kde-format
 msgid "Save…"
 msgstr "Kaydet…"
 
-#: attachpropertydialog.cpp:77
+#: attachpropertydialog.cpp:81
 #, kde-format
 msgctxt "@title:window"
 msgid "Properties for Attachment %1"
 msgstr "%1 Eki Özellikleri"
 
-#: attachpropertydialog.cpp:81
+#: attachpropertydialog.cpp:85
 #, kde-format
 msgid " bytes"
 msgstr " bayt"
 
-#: attachpropertydialog.cpp:139
+#: attachpropertydialog.cpp:143
 #, kde-format
 msgctxt "@label"
 msgid "TNEF Attributes"
 msgstr "TNEF Öznitelikleri"
 
-#: attachpropertydialog.cpp:148
+#: attachpropertydialog.cpp:152
 #, kde-format
 msgctxt "@info"
 msgid "Must select an item first."
 msgstr "Önce bir öge seçmelisiniz."
 
-#: attachpropertydialog.cpp:153
+#: attachpropertydialog.cpp:157
 #, kde-format
 msgctxt "@info"
 msgid "The selected item cannot be saved because it has an empty tag."
 msgstr "Seçili öge boş bir etiketi olduğundan kaydedilemedi."
 
-#: attachpropertydialog.cpp:173
+#: attachpropertydialog.cpp:177
 #, kde-format
 msgctxt "@info"
 msgid "Unable to open file for writing, check file permissions."
@@ -241,19 +241,19 @@ msgstr "Ayar&lar"
 msgid "Main Toolbar"
 msgstr "Ana Araç Çubuğu"
 
-#: ktnefview.cpp:70
+#: ktnefview.cpp:71
 #, kde-format
 msgctxt "@title:column file name"
 msgid "File Name"
 msgstr "Dosya Adı"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file type"
 msgid "File Type"
 msgstr "Dosya Türü"
 
-#: ktnefview.cpp:71
+#: ktnefview.cpp:72
 #, kde-format
 msgctxt "@title:column file size"
 msgid "Size"
@@ -305,19 +305,19 @@ msgstr "Yazar, Qt4/KDE4’e geçiş"
 msgid "An optional argument 'file' "
 msgstr "“file” isteğe bağlı argümanı"
 
-#: messagepropertydialog.cpp:41
+#: messagepropertydialog.cpp:42
 #, kde-format
 msgctxt "@title:window"
 msgid "Message Properties"
 msgstr "İleti Özellikleri"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property name"
 msgid "Name"
 msgstr "Ad"
 
-#: messagepropertydialog.cpp:54
+#: messagepropertydialog.cpp:55
 #, kde-format
 msgctxt "@title:column property value"
 msgid "Value"
