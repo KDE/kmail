@@ -792,20 +792,22 @@ void SearchWindowDialog::slotClearSelection()
 
 void SearchWindowDialog::slotReplyToMsg()
 {
-    auto command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplySmart);
-
-    command->start();
+    replyToSelectedMessage(MessageComposer::ReplySmart);
 }
 
 void SearchWindowDialog::slotReplyAllToMsg()
 {
-    auto command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplyAll);
-    command->start();
+    replyToSelectedMessage(MessageComposer::ReplyAll);
 }
 
 void SearchWindowDialog::slotReplyListToMsg()
 {
-    auto command = new KMReplyCommand(this, selectedMessage(), MessageComposer::ReplyList);
+    replyToSelectedMessage(MessageComposer::ReplyList);
+}
+
+void SearchWindowDialog::replyToSelectedMessage(MessageComposer::ReplyStrategy strategy)
+{
+    auto command = new KMReplyCommand(this, selectedMessage(), strategy);
     command->start();
 }
 

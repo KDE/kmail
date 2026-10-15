@@ -506,6 +506,10 @@ private Q_SLOTS:
     KMAIL_NO_EXPORT void slotRedirectCurrentMessage();
     KMAIL_NO_EXPORT void slotEditCurrentVacation();
     KMAIL_NO_EXPORT void slotReplyMessageTo(const std::shared_ptr<KMime::Message> &message, bool replyToAll);
+    KMAIL_NO_EXPORT void replyMessage(const Akonadi::Item &item,
+                                      MessageComposer::ReplyStrategy strategy,
+                                      const QString &selection = QString(),
+                                      const QString &templateName = QString());
 
 private:
     KMAIL_NO_EXPORT void slotSetFocusToViewer();

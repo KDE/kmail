@@ -34,6 +34,10 @@ namespace PimCommon
 class SelectMultiCollectionDialog;
 }
 
+namespace MessageComposer
+{
+enum ReplyStrategy : uint8_t;
+}
 namespace Akonadi
 {
 class StandardMailActionManager;
@@ -144,6 +148,7 @@ private:
 
 private:
     void doSearch();
+    void replyToSelectedMessage(MessageComposer::ReplyStrategy strategy);
     QList<qint64> checkIncompleteIndex(const Akonadi::Collection::List &searchCols, bool recursive);
     Akonadi::Collection::List searchCollectionsRecursive(const Akonadi::Collection::List &cols) const;
     QPointer<PimCommon::SelectMultiCollectionDialog> mSelectMultiCollectionDialog;

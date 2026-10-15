@@ -479,14 +479,14 @@ void MessageActions::updateMailingListActions(const Akonadi::Item &messageItem)
     }
 }
 
-void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy)
+void MessageActions::replyCommand(MessageComposer::ReplyStrategy strategy, bool noQuote)
 {
     if (!mCurrentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
 
-    const QString text = mMessageView ? mMessageView->copyText() : QString();
-    auto command = new KMReplyCommand(mParent, mCurrentItem, strategy, text);
+    const QString text = (mMessageView && !noQuote) ? mMessageView->copyText() : QString();
+    auto command = new KMReplyCommand(mParent, mCurrentItem, strategy, text, noQuote);
     command->setReplyAsHtml(mMessageView ? mMessageView->viewer()->htmlMail() : false);
     connect(command, &KMCommand::completed, this, &MessageActions::replyActionFinished);
     command->start();
@@ -555,13 +555,7 @@ void MessageActions::slotReplyAllToMsg()
 
 void MessageActions::slotNoQuoteReplyToMsg()
 {
-    if (!mCurrentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
-        return;
-    }
-    auto command = new KMReplyCommand(mParent, mCurrentItem, MessageComposer::ReplySmart, QString(), true);
-    command->setReplyAsHtml(mMessageView ? mMessageView->viewer()->htmlMail() : false);
-
-    command->start();
+    replyCommand(MessageComposer::ReplySmart, true);
 }
 
 void MessageActions::slotRunUrl(QAction *urlAction)

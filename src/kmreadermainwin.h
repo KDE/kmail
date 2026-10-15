@@ -27,6 +27,10 @@ namespace Akonadi
 class StandardMailActionManager;
 class Tag;
 }
+namespace MessageComposer
+{
+enum ReplyStrategy : uint8_t;
+}
 namespace KMime
 {
 class Message;
@@ -95,6 +99,7 @@ private:
     /// This closes the window if the setting to close the window after replying or
     /// forwarding is set.
     KMAIL_NO_EXPORT void slotReplyOrForwardFinished();
+    KMAIL_NO_EXPORT void customReply(MessageComposer::ReplyStrategy strategy, const QString &tmpl);
     KMAIL_NO_EXPORT void slotCopyItem(QAction *);
     KMAIL_NO_EXPORT void slotCopyMoveResult(KJob *job);
     KMAIL_NO_EXPORT void slotMoveItem(QAction *action);

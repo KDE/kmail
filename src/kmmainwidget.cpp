@@ -2118,12 +2118,9 @@ void KMMainWidget::slotCustomReplyToMsg(const QString &tmpl)
         return;
     }
 
-    const QString text = mMsgView ? mMsgView->copyText() : QString();
-
     qCDebug(KMAIL_LOG) << "Reply with template:" << tmpl;
 
-    auto command = new KMReplyCommand(this, msg, MessageComposer::ReplySmart, text, false, tmpl);
-    command->start();
+    replyMessage(msg, MessageComposer::ReplySmart, mMsgView ? mMsgView->copyText() : QString(), tmpl);
 }
 
 //-----------------------------------------------------------------------------
@@ -2134,13 +2131,9 @@ void KMMainWidget::slotCustomReplyAllToMsg(const QString &tmpl)
         return;
     }
 
-    const QString text = mMsgView ? mMsgView->copyText() : QString();
-
     qCDebug(KMAIL_LOG) << "Reply to All with template:" << tmpl;
 
-    auto command = new KMReplyCommand(this, msg, MessageComposer::ReplyAll, text, false, tmpl);
-    command->setReplyAsHtml(messageView() ? messageView()->htmlMail() : false);
-    command->start();
+    replyMessage(msg, MessageComposer::ReplyAll, mMsgView ? mMsgView->copyText() : QString(), tmpl);
 }
 
 //-----------------------------------------------------------------------------
@@ -4972,8 +4965,13 @@ void KMMainWidget::slotRedirectCurrentMessage()
 
 void KMMainWidget::replyMessageTo(const Akonadi::Item &item, bool replyToAll)
 {
-    auto command = new KMReplyCommand(this, item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
-    command->setReplyAsHtml(messageView() ? messageView()->htmlMail() : false);
+    replyMessage(item, replyToAll ? MessageComposer::ReplyAll : MessageComposer::ReplyAuthor);
+}
+
+void KMMainWidget::replyMessage(const Akonadi::Item &item, MessageComposer::ReplyStrategy strategy, const QString &selection, const QString &templateName)
+{
+    auto command = new KMReplyCommand(this, item, strategy, selection, false, templateName);
+    command->setReplyAsHtml(mMsgView ? mMsgView->htmlMail() : false);
     command->start();
 }
 

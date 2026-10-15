@@ -409,26 +409,23 @@ void KMReaderMainWin::slotRedirectMessage()
 
 void KMReaderMainWin::slotCustomReplyToMsg(const QString &tmpl)
 {
-    const Akonadi::Item currentItem = mReaderWin->messageItem();
-    if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
-        return;
-    }
-    auto command = new KMReplyCommand(this, currentItem, MessageComposer::ReplySmart, mReaderWin->copyText(), false, tmpl);
-    command->setReplyAsHtml(mReaderWin->htmlMail());
-    connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
-    command->start();
+    customReply(MessageComposer::ReplySmart, tmpl);
 }
 
 void KMReaderMainWin::slotCustomReplyAllToMsg(const QString &tmpl)
+{
+    customReply(MessageComposer::ReplyAll, tmpl);
+}
+
+void KMReaderMainWin::customReply(MessageComposer::ReplyStrategy strategy, const QString &tmpl)
 {
     const Akonadi::Item currentItem = mReaderWin->messageItem();
     if (!currentItem.hasPayload<std::shared_ptr<KMime::Message>>()) {
         return;
     }
-    auto command = new KMReplyCommand(this, currentItem, MessageComposer::ReplyAll, mReaderWin->copyText(), false, tmpl);
+    auto command = new KMReplyCommand(this, currentItem, strategy, mReaderWin->copyText(), false, tmpl);
     command->setReplyAsHtml(mReaderWin->htmlMail());
     connect(command, &KMReplyCommand::completed, this, &KMReaderMainWin::slotReplyOrForwardFinished);
-
     command->start();
 }
 
