@@ -577,7 +577,7 @@ void KMKernel::raise()
     }
 }
 
-bool KMKernel::showMail(qint64 serialNumber)
+KMMainWidget *KMKernel::findMainWidget() const
 {
     KMMainWidget *mainWidget = nullptr;
 
@@ -592,6 +592,31 @@ bool KMKernel::showMail(qint64 serialNumber)
             }
         }
     }
+    return mainWidget;
+}
+
+bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
+{
+    KMMainWidget *mainWidget = findMainWidget();
+
+    if (mainWidget) {
+        auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
+        job->fetchScope().fetchFullPayload();
+        job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+        if (job->exec()) {
+            if (!job->items().isEmpty()) {
+                const auto item = job->items().constFirst();
+                mainWidget->replyMessageTo(item, replyToAll);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool KMKernel::showMail(qint64 serialNumber)
+{
+    KMMainWidget *mainWidget = findMainWidget();
     if (mainWidget) {
         auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
         job->fetchScope().fetchFullPayload();
@@ -1799,36 +1824,6 @@ void KMKernel::showFolder(const QString &collectionId)
 void KMKernel::reloadFolderArchiveConfig()
 {
     mFolderArchiveManager->reloadConfig();
-}
-
-bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
-{
-    KMMainWidget *mainWidget = nullptr;
-
-    // First look for a KMainWindow.
-    const auto lst = KMainWindow::memberList();
-    for (KMainWindow *window : lst) {
-        // Then look for a KMMainWidget.
-        if (QList<KMMainWidget *> l = window->findChildren<KMMainWidget *>(); !l.isEmpty() && l.first()) {
-            mainWidget = l.first();
-            if (window->isActiveWindow()) {
-                break;
-            }
-        }
-    }
-    if (mainWidget) {
-        auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
-        job->fetchScope().fetchFullPayload();
-        job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-        if (job->exec()) {
-            if (!job->items().isEmpty()) {
-                const auto item = job->items().constFirst();
-                mainWidget->replyMessageTo(item, replyToAll);
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 void KMKernel::slotCollectionChanged(const Akonadi::Collection &, const QSet<QByteArray> &set)

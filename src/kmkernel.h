@@ -588,6 +588,7 @@ private:
     KMAIL_NO_EXPORT void openReader(bool onlyCheck, bool startInTray);
     KMAIL_NO_EXPORT QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
     KMAIL_NO_EXPORT void saveConfig();
+    KMAIL_NO_EXPORT KMMainWidget *findMainWidget() const;
 
     KMail::KMUndoRedoManager *const mUndoRedoManager;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;
