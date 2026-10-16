@@ -333,6 +333,8 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE bool replyMail(qint64 serialNumber, bool replyToAll);
 
+    Q_SCRIPTABLE bool replyMailWithStrategy(qint64 serialNumber, int strategy);
+
     /**
      * End of D-Bus callable stuff
      */

@@ -595,6 +595,19 @@ KMMainWidget *KMKernel::findMainWidget() const
     return mainWidget;
 }
 
+bool KMKernel::replyMailWithStrategy(qint64 serialNumber, int strategy)
+{
+    if (strategy < MessageComposer::ReplySmart || strategy > MessageComposer::ReplyAll) {
+        qCWarning(KMAIL_LOG) << "Invalid reply strategy:" << strategy;
+        return false;
+    }
+    if (KMMainWidget *mainWidget = findMainWidget()) {
+        mainWidget->replyMessage(Akonadi::Item(serialNumber), static_cast<MessageComposer::ReplyStrategy>(strategy));
+        return true;
+    }
+    return false;
+}
+
 bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
 {
     KMMainWidget *mainWidget = findMainWidget();
