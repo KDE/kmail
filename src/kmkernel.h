@@ -589,6 +589,7 @@ private:
     KMAIL_NO_EXPORT QSharedPointer<MailCommon::FolderSettings> currentFolderCollection();
     KMAIL_NO_EXPORT void saveConfig();
     KMAIL_NO_EXPORT KMMainWidget *findMainWidget() const;
+    KMAIL_NO_EXPORT void slotShowMailFetchDone(KJob *job);
 
     KMail::KMUndoRedoManager *const mUndoRedoManager;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;

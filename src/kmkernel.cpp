@@ -613,17 +613,24 @@ bool KMKernel::showMail(qint64 serialNumber)
         auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
         job->fetchScope().fetchFullPayload();
         job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-        if (job->exec()) {
-            if (job->items().count() >= 1) {
-                auto win = new KMReaderMainWin(MessageViewer::Viewer::UseGlobalSetting, false);
-                const auto item = job->items().at(0);
-                win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(), item, item.parentCollection());
-                win->showAndActivateWindow();
-                return true;
-            }
-        }
+        connect(job, &Akonadi::ItemFetchJob::result, this, &KMKernel::slotShowMailFetchDone);
+        return true;
     }
     return false;
+}
+
+void KMKernel::slotShowMailFetchDone(KJob *job)
+{
+    if (MailCommon::Util::showJobErrorMessage(job)) {
+        return;
+    }
+    const Akonadi::Item::List items = static_cast<Akonadi::ItemFetchJob *>(job)->items();
+    if (!items.isEmpty()) {
+        const Akonadi::Item &item = items.constFirst();
+        auto win = new KMReaderMainWin(MessageViewer::Viewer::UseGlobalSetting, false);
+        win->showMessage(MessageCore::MessageCoreSettings::self()->overrideCharacterEncoding(), item, item.parentCollection());
+        win->showAndActivateWindow();
+    }
 }
 
 void KMKernel::pauseBackgroundJobs()
