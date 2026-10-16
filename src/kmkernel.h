@@ -335,6 +335,8 @@ public Q_SLOTS:
 
     Q_SCRIPTABLE bool replyMailWithStrategy(qint64 serialNumber, int strategy);
 
+    Q_SCRIPTABLE bool editMail(qint64 serialNumber);
+
     /**
      * End of D-Bus callable stuff
      */
@@ -592,6 +594,7 @@ private:
     KMAIL_NO_EXPORT void saveConfig();
     KMAIL_NO_EXPORT KMMainWidget *findMainWidget() const;
     KMAIL_NO_EXPORT void slotShowMailFetchDone(KJob *job);
+    KMAIL_NO_EXPORT void slotEditMailFetchDone(KJob *job);
 
     KMail::KMUndoRedoManager *const mUndoRedoManager;
     MessageComposer::AkonadiSender *the_msgSender = nullptr;

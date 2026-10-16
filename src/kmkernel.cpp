@@ -646,6 +646,37 @@ void KMKernel::slotShowMailFetchDone(KJob *job)
     }
 }
 
+bool KMKernel::editMail(qint64 serialNumber)
+{
+    if (!findMainWidget()) {
+        return false;
+    }
+    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
+    job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
+    connect(job, &Akonadi::ItemFetchJob::result, this, &KMKernel::slotEditMailFetchDone);
+    return true;
+}
+
+void KMKernel::slotEditMailFetchDone(KJob *job)
+{
+    if (MailCommon::Util::showJobErrorMessage(job)) {
+        return;
+    }
+    const Akonadi::Item::List items = static_cast<Akonadi::ItemFetchJob *>(job)->items();
+    if (items.isEmpty()) {
+        return;
+    }
+    const Akonadi::Item &item = items.constFirst();
+    if (!CommonKernel->folderIsDrafts(item.parentCollection())) {
+        qCWarning(KMAIL_LOG) << "Item" << item.id() << "is not in a drafts folder, it can't be edited";
+        return;
+    }
+    if (KMMainWidget *mainWidget = findMainWidget()) {
+        auto command = new KMEditItemCommand(mainWidget, item, true);
+        command->start();
+    }
+}
+
 void KMKernel::pauseBackgroundJobs()
 {
     mBackgroundTasksTimer->stop();
