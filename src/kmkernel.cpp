@@ -600,16 +600,8 @@ bool KMKernel::replyMail(qint64 serialNumber, bool replyToAll)
     KMMainWidget *mainWidget = findMainWidget();
 
     if (mainWidget) {
-        auto job = new Akonadi::ItemFetchJob(Akonadi::Item(serialNumber), this);
-        job->fetchScope().fetchFullPayload();
-        job->fetchScope().setAncestorRetrieval(Akonadi::ItemFetchScope::Parent);
-        if (job->exec()) {
-            if (!job->items().isEmpty()) {
-                const auto item = job->items().constFirst();
-                mainWidget->replyMessageTo(item, replyToAll);
-                return true;
-            }
-        }
+        mainWidget->replyMessageTo(Akonadi::Item(serialNumber), replyToAll);
+        return true;
     }
     return false;
 }
