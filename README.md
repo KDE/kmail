@@ -79,4 +79,3 @@ This project uses KDE/REUSE licensing conventions. See the `LICENSES/` directory
 ## Related
 
 - Project homepage: https://invent.kde.org/pim/kmail
-- Repository: https://github.com/xabbas/kmail
