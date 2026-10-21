@@ -646,9 +646,9 @@ void ComposerPageSubjectTab::save()
 
 void ComposerPageSubjectTab::doResetToDefaultsOther()
 {
-    const bool bUseDefaults = MessageComposer::MessageComposerSettings::self()->useDefaults(true);
+    const bool bUseDefaults = MessageCore::MessageCoreSettings::self()->useDefaults(true);
     doLoadFromGlobalSettings();
-    MessageComposer::MessageComposerSettings::self()->useDefaults(bUseDefaults);
+    MessageCore::MessageCoreSettings::self()->useDefaults(bUseDefaults);
 }
 
 QString ComposerPageHeadersTab::helpAnchor() const
