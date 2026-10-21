@@ -162,7 +162,7 @@ void SendLaterManager::removeInfo(Akonadi::Item::Id id)
     group.sync();
 }
 
-void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType type)
+void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType type, const QString &errorMessage)
 {
     mCurrentJob = nullptr;
     if (info) {
@@ -187,7 +187,7 @@ void SendLaterManager::sendError(MessageComposer::SendLaterInfo *info, ErrorType
         case CanNotFetchItem:
         case CanNotCreateTransport: {
             const int answer = KMessageBox::questionTwoActions(nullptr,
-                                                               i18n("An error was found. Do you want to resend it?"),
+                                                               i18n("An error was found:\n%1\nDo you want to resend it?", errorMessage),
                                                                i18nc("@title:window", "Error found"),
                                                                KGuiItem(i18nc("@action:button", "Resend"), u"mail-send"_s),
                                                                KStandardGuiItem::cancel());

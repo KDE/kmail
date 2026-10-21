@@ -135,7 +135,7 @@ void SendLaterJob::sendDone()
 void SendLaterJob::sendError(const QString &error, SendLaterManager::ErrorType type)
 {
     KNotification::event(u"mailsendfailed"_s, QString(), error, u"kmail"_s, KNotification::CloseOnTimeout, u"akonadi_sendlater_agent"_s);
-    mManager->sendError(mInfo, type);
+    mManager->sendError(mInfo, type, error);
     deleteLater();
 }
 

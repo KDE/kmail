@@ -38,7 +38,7 @@ public:
     ~SendLaterManager() override;
 
     void sendDone(MessageComposer::SendLaterInfo *info);
-    void sendError(MessageComposer::SendLaterInfo *info, ErrorType type);
+    void sendError(MessageComposer::SendLaterInfo *info, ErrorType type, const QString &errorMessage);
     [[nodiscard]] QString printDebugInfo() const;
 
     void stopAll();
