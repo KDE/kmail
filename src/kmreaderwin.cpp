@@ -170,7 +170,7 @@ void KMReaderWin::createActions()
     auto action = new QAction(QIcon::fromTheme(u"edit-find"_s), i18n("&Find in Message…"), this);
     ac->addAction(u"find_in_messages"_s, action);
     connect(action, &QAction::triggered, this, &KMReaderWin::slotFind);
-    ac->setDefaultShortcut(action, KStandardShortcut::find().first());
+    ac->setDefaultShortcuts(action, KStandardShortcut::find());
 
     // save Image On Disk
     mImageUrlSaveAsAction = new QAction(i18nc("@action", "Save Image On Disk…"), this);

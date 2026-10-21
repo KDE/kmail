@@ -2934,7 +2934,7 @@ void KMMainWidget::setupActions()
     mSaveAsAction = new QAction(QIcon::fromTheme(u"document-save"_s), i18n("Save &As…"), this);
     actionCollection()->addAction(u"file_save_as"_s, mSaveAsAction);
     connect(mSaveAsAction, &QAction::triggered, this, &KMMainWidget::slotSaveMsg);
-    actionCollection()->setDefaultShortcut(mSaveAsAction, KStandardShortcut::save().first());
+    actionCollection()->setDefaultShortcuts(mSaveAsAction, KStandardShortcut::save());
 
     mOpenAction = KStandardActions::open(this, &KMMainWidget::slotOpenMsg, actionCollection());
 
@@ -3217,7 +3217,7 @@ void KMMainWidget::setupActions()
         connect(action, &QAction::triggered, this, &KMMainWidget::slotCompose);
         // do not set a New shortcut if kmail is a component
         if (kmkernel->xmlGuiInstanceName().isEmpty()) {
-            actionCollection()->setDefaultShortcut(action, KStandardShortcut::openNew().first());
+            actionCollection()->setDefaultShortcuts(action, KStandardShortcut::openNew());
         }
     }
 
