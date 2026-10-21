@@ -75,6 +75,7 @@ KMReaderMainWin::KMReaderMainWin(const QString &name)
     , mReaderWin(new KMReaderWin(this, this, actionCollection()))
 {
     initKMReaderMainWin();
+    KMail::Util::setWindowTag(this, u"viewer"_s);
 }
 
 KMReaderMainWin::KMReaderMainWin(KMime::Content *aMsgPart, MessageViewer::Viewer::DisplayFormatMessage format, const QString &encoding, const QString &name)

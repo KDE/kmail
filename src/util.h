@@ -65,5 +65,7 @@ KMAILTESTS_TESTS_EXPORT void setActionTrashOrDelete(QAction *action, bool isInTr
 
 [[nodiscard]] bool checkNoReplyEmails(const QString &email, QWidget *parent);
 void executeAccountWizard(QWidget *parentWidget);
+// Set window tag on wayland
+void setWindowTag(QWidget *window, const QString &tag);
 }
 }

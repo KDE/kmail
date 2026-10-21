@@ -15,6 +15,8 @@
 #include <TextAddonsWidgets/ExecutableUtils>
 
 #include <KEmailAddress>
+#include <KWaylandExtras>
+#include <KWindowSystem>
 #include <QAction>
 #include <QProcess>
 
@@ -194,4 +196,13 @@ void KMail::Util::executeAccountWizard(QWidget *parentWidget)
                                 "Please make sure you have AccountWizard properly installed."),
                            i18nc("@title:window", "Unable to start account wizard"));
     }
+}
+
+void KMail::Util::setWindowTag(QWidget *window, const QString &tag)
+{
+    if (!KWindowSystem::isPlatformWayland()) {
+        return;
+    }
+    window->winId();
+    KWaylandExtras::setXdgToplevelTag(window->windowHandle(), tag);
 }

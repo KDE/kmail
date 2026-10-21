@@ -252,6 +252,7 @@ KMComposerWin::KMComposerWin(const std::shared_ptr<KMime::Message> &aMsg,
     , mPluginEditorMessageWidget(new PimCommon::PurposeMenuMessageWidget(this))
     , mKeyCache(Kleo::KeyCache::mutableInstance())
 {
+    KMail::Util::setWindowTag(this, u"composer"_s);
     mGlobalAction = new KMComposerGlobalAction(this, this);
     mComposerBase = new MessageComposer::ComposerViewBase(this, this);
     mComposerBase->setIdentityManager(kmkernel->identityManager());

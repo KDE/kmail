@@ -10,6 +10,7 @@
 #include "config-kmail.h"
 #include "kmmainwidget.h"
 #include "tag/tagactionmanager.h"
+#include "util.h"
 #include <Libkdepim/ProgressStatusBarWidget>
 #include <Libkdepim/StatusbarProgressWidget>
 #include <PimCommon/BroadcastStatus>
@@ -71,6 +72,7 @@ KMMainWin::KMMainWin(QWidget *)
     });
 #endif
     setObjectName("kmail-mainwindow#"_L1);
+    KMail::Util::setWindowTag(this, u"main"_s);
 
     resize(700, 500); // The default size
 
