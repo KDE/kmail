@@ -91,16 +91,31 @@ void SnoozeManager::addSnooze(Snooze::SnoozeInfo *info)
 
 bool SnoozeManager::itemRemoved(Akonadi::Item::Id id)
 {
+    auto info = searchInfo(id);
+    if (!info) {
+        // TODO error
+        return false;
+    }
     // TODO forget the info and re-arm the timer.
-    Q_UNUSED(id)
     return false;
 }
 
 void SnoozeManager::wakeUpNow(Akonadi::Item::Id id)
 {
-    // TODO auto job = new SnoozeWakeUpJob()
-    // TODO start a SnoozeWakeUpJob straight away for this item.
-    Q_UNUSED(id)
+    auto info = searchInfo(id);
+    if (!info) {
+        // TODO error
+        return;
+    }
+    auto job = new SnoozeWakeUpJob(info, this);
+    connect(job, &SnoozeWakeUpJob::wakeUpDone, this, [this, info]() {
+        removeInfo(info->itemId());
+    });
+    connect(job, &SnoozeWakeUpJob::wakeUpFailed, this, [this, info](const QString &errorStr) {
+        // TODO
+    });
+
+    job->start();
 }
 
 void SnoozeManager::stopTimer()
@@ -144,9 +159,12 @@ QString SnoozeManager::printDebugInfo() const
 
 QString SnoozeManager::infoToStr(Snooze::SnoozeInfo *info) const
 {
-    // Don't translate it. => debug info.
-    QString infoStr = u"From "_s + info->from();
-    // TODO
+    QString infoStr = u"****************************************"_s;
+    infoStr += u"From :%1\n"_s.arg(info->from());
+    infoStr += u"itemId :%1\n"_s.arg(info->itemId());
+    infoStr += u"Subject :%1\n"_s.arg(info->subject());
+    infoStr += u"WakeUpDateTime :%1\n"_s.arg(info->wakeUpDateTime().toString());
+    infoStr += u"****************************************\n"_s;
     return infoStr;
 }
 

@@ -7,6 +7,7 @@
 #include "snoozeagent.h"
 #include "snoozeagentadaptor.h"
 #include "snoozeagentsettings.h"
+#include "snoozeinfo.h"
 #include "snoozemanager.h"
 
 #include <MailCommon/SnoozeAttribute>
@@ -84,11 +85,13 @@ void SnoozeAgent::reload()
 
 void SnoozeAgent::snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString &subject, const QString &from)
 {
-    // TODO build a SnoozeInfo and hand it to the manager.
-    Q_UNUSED(itemId)
-    Q_UNUSED(wakeUpDateTime)
-    Q_UNUSED(subject)
-    Q_UNUSED(from)
+    auto snoozeInfo = new Snooze::SnoozeInfo();
+    snoozeInfo->setFrom(from);
+    snoozeInfo->setSubject(subject);
+    snoozeInfo->setWakeUpDateTime(QDateTime::fromMSecsSinceEpoch(wakeUpDateTime));
+    snoozeInfo->setItemId(itemId);
+    // TODO snoozeInfo->setUniqueIdentifier();
+    mManager->addSnooze(snoozeInfo);
 }
 
 void SnoozeAgent::cancelSnooze(qint64 itemId)

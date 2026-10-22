@@ -8,6 +8,7 @@
 #include "showmessagejob.h"
 #include "snoozeagent_debug.h"
 #include "snoozeinfo.h"
+#include <Akonadi/ItemFetchJob>
 #include <KLocalizedString>
 #include <KNotification>
 
@@ -38,6 +39,10 @@ void SnoozeWakeUpJob::start()
 
 void SnoozeWakeUpJob::doStart()
 {
+    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(mInfo->itemId()), this);
+    connect(job, &Akonadi::ItemFetchJob::finished, this, &SnoozeWakeUpJob::slotItemFetchDone);
+    job->start();
+
     // TODO Akonadi::ItemFetchJob on mInfo->itemId(), fetching SnoozeAttribute.
 }
 
