@@ -22,8 +22,7 @@ QString serviceName()
 
 QString dbusPath()
 {
-    // TODO verify
-    return u"/Snooze"_s;
+    return u"/SnoozeAgent"_s;
 }
 }
 
