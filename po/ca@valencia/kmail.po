@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-17 00:50+0000\n"
+"POT-Creation-Date: 2026-10-22 00:51+0000\n"
 "PO-Revision-Date: 2026-10-06 09:43+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1764,13 +1764,13 @@ msgctxt "@info:tooltip"
 msgid "Show attachment list"
 msgstr "Mostra la llista d'adjunts"
 
-#: editor/kmcomposerwin.cpp:326 kmail_part.cpp:36 kmmainwin.cpp:100
-#: kmreadermainwin.cpp:479 kontactplugin/kmail/kmail_plugin.cpp:38
+#: editor/kmcomposerwin.cpp:327 kmail_part.cpp:36 kmmainwin.cpp:102
+#: kmreadermainwin.cpp:480 kontactplugin/kmail/kmail_plugin.cpp:38
 #, kde-format
 msgid "KMail2"
 msgstr "KMail2"
 
-#: editor/kmcomposerwin.cpp:357
+#: editor/kmcomposerwin.cpp:358
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the dictionary to use when spell-checking this message"
@@ -1778,349 +1778,349 @@ msgstr ""
 "Trieu el diccionari que s'ha d'utilitzar en verificar l'ortografia d'este "
 "missatge"
 
-#: editor/kmcomposerwin.cpp:364
+#: editor/kmcomposerwin.cpp:365
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the sent-mail folder where a copy of this message will be saved"
 msgstr ""
 "Trieu la carpeta del correu enviat, on es guardarà una còpia d'este missatge"
 
-#: editor/kmcomposerwin.cpp:373
+#: editor/kmcomposerwin.cpp:374
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select the outgoing account to use for sending this message"
 msgstr ""
 "Trieu el compte d'eixida que s'ha d'utilitzar per a enviar este missatge"
 
-#: editor/kmcomposerwin.cpp:382
+#: editor/kmcomposerwin.cpp:383
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Set the \"From:\" email address for this message"
 msgstr "Indiqueu l'adreça de correu «Des de:» per a este missatge"
 
-#: editor/kmcomposerwin.cpp:412
+#: editor/kmcomposerwin.cpp:413
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Identity:"
 msgstr "&Identitat:"
 
-#: editor/kmcomposerwin.cpp:413
+#: editor/kmcomposerwin.cpp:414
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Dictionary:"
 msgstr "&Diccionari:"
 
-#: editor/kmcomposerwin.cpp:414
+#: editor/kmcomposerwin.cpp:415
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Sent-Mail folder:"
 msgstr "Carpeta del correu envia&t:"
 
-#: editor/kmcomposerwin.cpp:415
+#: editor/kmcomposerwin.cpp:416
 #, kde-format
 msgctxt "@label:textbox"
 msgid "&Mail transport:"
 msgstr "&Transport de correu:"
 
-#: editor/kmcomposerwin.cpp:416
+#: editor/kmcomposerwin.cpp:417
 #, kde-format
 msgctxt "sender address field"
 msgid "&From:"
 msgstr "&De:"
 
-#: editor/kmcomposerwin.cpp:417
+#: editor/kmcomposerwin.cpp:418
 #, kde-format
 msgctxt "@label:textbox Subject of email."
 msgid "S&ubject:"
 msgstr "Ass&umpte:"
 
-#: editor/kmcomposerwin.cpp:486
+#: editor/kmcomposerwin.cpp:487
 #, kde-format
 msgctxt "@title:window"
 msgid "Composer"
 msgstr "Editor"
 
-#: editor/kmcomposerwin.cpp:1248 editor/kmcomposerwin.cpp:1282
+#: editor/kmcomposerwin.cpp:1249 editor/kmcomposerwin.cpp:1283
 #, kde-format
 msgid "&Send Mail"
 msgstr "&Envia el correu"
 
-#: editor/kmcomposerwin.cpp:1255 editor/kmcomposerwin.cpp:1288
+#: editor/kmcomposerwin.cpp:1256 editor/kmcomposerwin.cpp:1289
 #, kde-format
 msgid "&Send Mail Via"
 msgstr "&Envia el correu a través de"
 
-#: editor/kmcomposerwin.cpp:1257
+#: editor/kmcomposerwin.cpp:1258
 #, kde-format
 msgid "Send"
 msgstr "Envia"
 
-#: editor/kmcomposerwin.cpp:1260 editor/kmcomposerwin.cpp:1272
+#: editor/kmcomposerwin.cpp:1261 editor/kmcomposerwin.cpp:1273
 #, kde-format
 msgid "Send &Later"
 msgstr "Envia més &tard"
 
-#: editor/kmcomposerwin.cpp:1266 editor/kmcomposerwin.cpp:1279
+#: editor/kmcomposerwin.cpp:1267 editor/kmcomposerwin.cpp:1280
 #, kde-format
 msgid "Send &Later Via"
 msgstr "Envia més &tard a través de"
 
-#: editor/kmcomposerwin.cpp:1268
+#: editor/kmcomposerwin.cpp:1269
 #, kde-format
 msgctxt "Queue the message for sending at a later date"
 msgid "Queue"
 msgstr "A la cua"
 
-#: editor/kmcomposerwin.cpp:1297
+#: editor/kmcomposerwin.cpp:1298
 #, kde-format
 msgid "Save as &Draft"
 msgstr "Anomena i gu&arda com a esborrany"
 
-#: editor/kmcomposerwin.cpp:1299
+#: editor/kmcomposerwin.cpp:1300
 #, kde-format
 msgid "Save email in Draft folder"
 msgstr "Guarda el correu en la carpeta d'esborranys"
 
-#: editor/kmcomposerwin.cpp:1303
+#: editor/kmcomposerwin.cpp:1304
 #, kde-format
 msgid "Save as &Template"
 msgstr "Anomena i guarda plan&tilla"
 
-#: editor/kmcomposerwin.cpp:1304
+#: editor/kmcomposerwin.cpp:1305
 #, kde-format
 msgid "Save email in Template folder"
 msgstr "Guarda el correu en la carpeta de plantilles"
 
-#: editor/kmcomposerwin.cpp:1308
+#: editor/kmcomposerwin.cpp:1309
 #, kde-format
 msgid "Save as &File"
 msgstr "Anomena i guarda com a fi&txer"
 
-#: editor/kmcomposerwin.cpp:1309
+#: editor/kmcomposerwin.cpp:1310
 #, kde-format
 msgid "Save email as text or html file"
 msgstr "Guarda el correu com un fitxer de text o HTML"
 
-#: editor/kmcomposerwin.cpp:1313
+#: editor/kmcomposerwin.cpp:1314
 #, kde-format
 msgid "&Insert Text File…"
 msgstr "&Inserix un fitxer de text…"
 
-#: editor/kmcomposerwin.cpp:1317
+#: editor/kmcomposerwin.cpp:1318
 #, kde-format
 msgid "&Insert Recent Text File"
 msgstr "&Inserix un fitxer de text recent"
 
-#: editor/kmcomposerwin.cpp:1327 kmmainwidget.cpp:2991
+#: editor/kmcomposerwin.cpp:1328 kmmainwidget.cpp:2991
 #, kde-format
 msgid "&Address Book"
 msgstr "Llibreta d'&adreces"
 
-#: editor/kmcomposerwin.cpp:1328
+#: editor/kmcomposerwin.cpp:1329
 #, kde-format
 msgid "Open Address Book"
 msgstr "Obri la llibreta d'adreces"
 
-#: editor/kmcomposerwin.cpp:1335
+#: editor/kmcomposerwin.cpp:1336
 #, kde-format
 msgid "&New Composer"
 msgstr "Editor nou"
 
-#: editor/kmcomposerwin.cpp:1341
+#: editor/kmcomposerwin.cpp:1342
 #, kde-format
 msgctxt "@action"
 msgid "Select &Recipients…"
 msgstr "Tria els &destinataris…"
 
-#: editor/kmcomposerwin.cpp:1344
+#: editor/kmcomposerwin.cpp:1345
 #, kde-format
 msgctxt "@action"
 msgid "Save &Distribution List…"
 msgstr "Guarda la llista de &distribució…"
 
-#: editor/kmcomposerwin.cpp:1368
+#: editor/kmcomposerwin.cpp:1369
 #, kde-format
 msgctxt "@action"
 msgid "Paste as Attac&hment"
 msgstr "Apega com a ad&junt"
 
-#: editor/kmcomposerwin.cpp:1372
+#: editor/kmcomposerwin.cpp:1373
 #, kde-format
 msgctxt "@action"
 msgid "Cl&ean Spaces"
 msgstr "Neteja els &espais"
 
-#: editor/kmcomposerwin.cpp:1376
+#: editor/kmcomposerwin.cpp:1377
 #, kde-format
 msgctxt "@action"
 msgid "Use Fi&xed Font"
 msgstr "Utilitza una lletra d'amplària fi&xa"
 
-#: editor/kmcomposerwin.cpp:1382
+#: editor/kmcomposerwin.cpp:1383
 #, kde-format
 msgctxt "@action:inmenu Mark the email as urgent."
 msgid "&Urgent"
 msgstr "&Urgent"
 
-#: editor/kmcomposerwin.cpp:1384
+#: editor/kmcomposerwin.cpp:1385
 #, kde-format
 msgctxt "@action"
 msgid "&Request Disposition Notification"
 msgstr "Sol·licitud de notificació de p&rocessament (MDN)"
 
-#: editor/kmcomposerwin.cpp:1388
+#: editor/kmcomposerwin.cpp:1389
 #, kde-format
 msgctxt "@action"
 msgid "&Request Delivery Confirmation"
 msgstr "Sol·licitud de confirmació d'ent&rega"
 
-#: editor/kmcomposerwin.cpp:1393
+#: editor/kmcomposerwin.cpp:1394
 #, kde-format
 msgctxt "@action"
 msgid "&Wordwrap"
 msgstr "&Talla les paraules"
 
-#: editor/kmcomposerwin.cpp:1398
+#: editor/kmcomposerwin.cpp:1399
 #, kde-format
 msgctxt "@action"
 msgid "&Snippets"
 msgstr "F&ragments"
 
-#: editor/kmcomposerwin.cpp:1403
+#: editor/kmcomposerwin.cpp:1404
 #, kde-format
 msgctxt "@action"
 msgid "&Automatic Spellchecking"
 msgstr "Verificació &automàtica de l'ortografia"
 
-#: editor/kmcomposerwin.cpp:1419
+#: editor/kmcomposerwin.cpp:1420
 #, kde-format
 msgctxt "@action"
 msgid "Rich Text Editing"
 msgstr "Edició de text enriquit"
 
-#: editor/kmcomposerwin.cpp:1421
+#: editor/kmcomposerwin.cpp:1422
 #, kde-format
 msgid "Rich Text"
 msgstr "Text enriquit"
 
-#: editor/kmcomposerwin.cpp:1422
+#: editor/kmcomposerwin.cpp:1423
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Toggle rich text editing mode"
 msgstr "Alterna el mode edició de text enriquit"
 
-#: editor/kmcomposerwin.cpp:1426
+#: editor/kmcomposerwin.cpp:1427
 #, kde-format
 msgctxt "@action"
 msgid "&All Fields"
 msgstr "&Tots els camps"
 
-#: editor/kmcomposerwin.cpp:1429
+#: editor/kmcomposerwin.cpp:1430
 #, kde-format
 msgctxt "@action"
 msgid "&Identity"
 msgstr "&Identitat"
 
-#: editor/kmcomposerwin.cpp:1432
+#: editor/kmcomposerwin.cpp:1433
 #, kde-format
 msgctxt "@action"
 msgid "&Dictionary"
 msgstr "&Diccionari"
 
-#: editor/kmcomposerwin.cpp:1435
+#: editor/kmcomposerwin.cpp:1436
 #, kde-format
 msgctxt "@action"
 msgid "&Sent-Mail Folder"
 msgstr "Carpeta del c&orreu enviat"
 
-#: editor/kmcomposerwin.cpp:1438
+#: editor/kmcomposerwin.cpp:1439
 #, kde-format
 msgctxt "@action"
 msgid "&Mail Transport"
 msgstr "Transport de &correu"
 
-#: editor/kmcomposerwin.cpp:1441
+#: editor/kmcomposerwin.cpp:1442
 #, kde-format
 msgctxt "@action"
 msgid "&From"
 msgstr "&De"
 
-#: editor/kmcomposerwin.cpp:1444
+#: editor/kmcomposerwin.cpp:1445
 #, kde-format
 msgctxt "@action:inmenu Show the subject in the composer window."
 msgid "S&ubject"
 msgstr "Ass&umpte"
 
-#: editor/kmcomposerwin.cpp:1449
+#: editor/kmcomposerwin.cpp:1450
 #, kde-format
 msgctxt "@action"
 msgid "Append S&ignature"
 msgstr "Adjunta la s&ignatura"
 
-#: editor/kmcomposerwin.cpp:1453
+#: editor/kmcomposerwin.cpp:1454
 #, kde-format
 msgctxt "@action"
 msgid "Pr&epend Signature"
 msgstr "Preposa la s&ignatura"
 
-#: editor/kmcomposerwin.cpp:1457
+#: editor/kmcomposerwin.cpp:1458
 #, kde-format
 msgctxt "@action"
 msgid "Insert Signature At C&ursor Position"
 msgstr "Adjunta la signatura a la posició del c&ursor"
 
-#: editor/kmcomposerwin.cpp:1472
+#: editor/kmcomposerwin.cpp:1473
 #, kde-format
 msgid "&Spellchecker…"
 msgstr "&Corrector ortogràfic…"
 
-#: editor/kmcomposerwin.cpp:1473
+#: editor/kmcomposerwin.cpp:1474
 #, kde-format
 msgid "Spellchecker"
 msgstr "Corrector ortogràfic"
 
-#: editor/kmcomposerwin.cpp:1477
+#: editor/kmcomposerwin.cpp:1478
 #, kde-format
 msgid "&Encrypt Message"
 msgstr "&Encripta el missatge"
 
-#: editor/kmcomposerwin.cpp:1478
+#: editor/kmcomposerwin.cpp:1479
 #, kde-format
 msgid "Encrypt"
 msgstr "Encripta"
 
-#: editor/kmcomposerwin.cpp:1480
+#: editor/kmcomposerwin.cpp:1481
 #, kde-format
 msgid "&Sign Message"
 msgstr "&Signa el missatge"
 
-#: editor/kmcomposerwin.cpp:1481
+#: editor/kmcomposerwin.cpp:1482
 #, kde-format
 msgid "Sign"
 msgstr "Signa"
 
-#: editor/kmcomposerwin.cpp:1508
+#: editor/kmcomposerwin.cpp:1509
 #, kde-format
 msgid "&Cryptographic Message Format"
 msgstr "Format &criptogràfic dels missatges"
 
-#: editor/kmcomposerwin.cpp:1511
+#: editor/kmcomposerwin.cpp:1512
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Select a cryptographic format for this message"
 msgstr "Tria un format criptogràfic per a este missatge"
 
-#: editor/kmcomposerwin.cpp:1516
+#: editor/kmcomposerwin.cpp:1517
 #, kde-format
 msgid "Create Follow Up Reminder…"
 msgstr "Crea un recordatori de seguiment…"
 
-#: editor/kmcomposerwin.cpp:1549
+#: editor/kmcomposerwin.cpp:1550
 #, kde-format
 msgid "Configure KMail…"
 msgstr "Configura KMail…"
 
-#: editor/kmcomposerwin.cpp:1580 kmmainwin.cpp:228 kmreadermainwin.cpp:540
+#: editor/kmcomposerwin.cpp:1581 kmmainwin.cpp:230 kmreadermainwin.cpp:541
 #, kde-format
 msgid ""
 "<qt>This will hide the menu bar completely. You can show it again by typing "
@@ -2129,55 +2129,55 @@ msgstr ""
 "<qt>Ocultarà completament la barra de menús. La podeu tornar a mostrar "
 "prement %1.</qt>"
 
-#: editor/kmcomposerwin.cpp:1583 kmmainwin.cpp:231
+#: editor/kmcomposerwin.cpp:1584 kmmainwin.cpp:233
 #, kde-format
 msgctxt "@title:window"
 msgid "Hide menu bar"
 msgstr "Ocultació de la barra de menús"
 
-#: editor/kmcomposerwin.cpp:1681 editor/kmcomposerwin.cpp:4003
+#: editor/kmcomposerwin.cpp:1682 editor/kmcomposerwin.cpp:4004
 #, kde-format
 msgctxt "Shows the linenumber of the cursor position."
 msgid " Line: %1 "
 msgstr " Línia: %1 "
 
-#: editor/kmcomposerwin.cpp:1684
+#: editor/kmcomposerwin.cpp:1685
 #, kde-format
 msgctxt "@label:textbox"
 msgid " Column: %1 "
 msgstr " Columna: %1 "
 
-#: editor/kmcomposerwin.cpp:1689
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgid "OVR"
 msgstr "SOB"
 
-#: editor/kmcomposerwin.cpp:1689
+#: editor/kmcomposerwin.cpp:1690
 #, kde-format
 msgid "INS"
 msgstr "INS"
 
-#: editor/kmcomposerwin.cpp:1697
+#: editor/kmcomposerwin.cpp:1698
 #, kde-format
 msgid "Spellcheck: on"
 msgstr "Verificació ortogràfica: activada"
 
-#: editor/kmcomposerwin.cpp:1697
+#: editor/kmcomposerwin.cpp:1698
 #, kde-format
 msgid "Spellcheck: off"
 msgstr "Verificació ortogràfica: desactivada"
 
-#: editor/kmcomposerwin.cpp:2065
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "Re&save as Template"
 msgstr "Torna a de&sar com a plantilla"
 
-#: editor/kmcomposerwin.cpp:2065
+#: editor/kmcomposerwin.cpp:2066
 #, kde-format
 msgid "&Save as Draft"
 msgstr "Anomena i gu&arda com a esborrany"
 
-#: editor/kmcomposerwin.cpp:2066
+#: editor/kmcomposerwin.cpp:2067
 #, kde-format
 msgid ""
 "Resave this message in the Templates folder. It can then be used at a later "
@@ -2186,7 +2186,7 @@ msgstr ""
 "Torna a guardar este missatge en la carpeta de plantilles. Es podrà "
 "utilitzar més tard."
 
-#: editor/kmcomposerwin.cpp:2068
+#: editor/kmcomposerwin.cpp:2069
 #, kde-format
 msgid ""
 "Save this message in the Drafts folder. It can then be edited and sent at a "
@@ -2195,30 +2195,30 @@ msgstr ""
 "Guarda este missatge en la carpeta d'esborranys. Podrà ser editat i enviat "
 "més tard."
 
-#: editor/kmcomposerwin.cpp:2072
+#: editor/kmcomposerwin.cpp:2073
 #, kde-format
 msgid "Do you want to save the message for later or discard it?"
 msgstr "Voleu guardar el missatge per a més tard o descartar-lo?"
 
-#: editor/kmcomposerwin.cpp:2073
+#: editor/kmcomposerwin.cpp:2074
 #, kde-format
 msgctxt "@title:window"
 msgid "Close Composer"
 msgstr "Tanca l'editor"
 
-#: editor/kmcomposerwin.cpp:2140
+#: editor/kmcomposerwin.cpp:2141
 #, kde-format
 msgctxt "@title:window"
 msgid "Autosave Message Failed"
 msgstr "Ha fallat mentre es guardava automàticament el missatge"
 
-#: editor/kmcomposerwin.cpp:2141
+#: editor/kmcomposerwin.cpp:2142
 #, kde-format
 msgctxt "@title:window"
 msgid "Sending Message Failed"
 msgstr "Ha fallat mentre s'enviava el missatge"
 
-#: editor/kmcomposerwin.cpp:2210 kmlaunchexternalcomponent.cpp:150
+#: editor/kmcomposerwin.cpp:2211 kmlaunchexternalcomponent.cpp:150
 #, kde-format
 msgid ""
 "Could not start \"KAddressbook\" program. Please check your installation."
@@ -2226,78 +2226,78 @@ msgstr ""
 "No s'ha pogut iniciar el programa «KAddressBook». Comproveu esta "
 "instal·lació."
 
-#: editor/kmcomposerwin.cpp:2212 kmlaunchexternalcomponent.cpp:152
+#: editor/kmcomposerwin.cpp:2213 kmlaunchexternalcomponent.cpp:152
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start \"KAddressbook\" program"
 msgstr "No s'ha pogut iniciar el programa «KAddressBook»"
 
-#: editor/kmcomposerwin.cpp:2334
+#: editor/kmcomposerwin.cpp:2335
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert File"
 msgstr "Inserció d'un fitxer"
 
-#: editor/kmcomposerwin.cpp:2419
+#: editor/kmcomposerwin.cpp:2420
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Inline Image"
 msgstr "Afig com a &imatge inclosa"
 
-#: editor/kmcomposerwin.cpp:2420
+#: editor/kmcomposerwin.cpp:2421
 #, kde-format
 msgctxt "@action"
 msgid "Add as &Attachment"
 msgstr "Afig com a &adjunt"
 
-#: editor/kmcomposerwin.cpp:2435
+#: editor/kmcomposerwin.cpp:2436
 #, kde-format
 msgctxt "@title:window"
 msgid "KMail"
 msgstr "KMail"
 
-#: editor/kmcomposerwin.cpp:2435 editor/kmcomposerwin.cpp:2537
+#: editor/kmcomposerwin.cpp:2436 editor/kmcomposerwin.cpp:2538
 #, kde-format
 msgid "Name of the attachment:"
 msgstr "Nom de l'adjunt:"
 
-#: editor/kmcomposerwin.cpp:2441
+#: editor/kmcomposerwin.cpp:2442
 #, kde-format
 msgid "Attachment name can't be empty"
 msgstr "El nom de l'adjunt no pot estar buit"
 
-#: editor/kmcomposerwin.cpp:2441
+#: editor/kmcomposerwin.cpp:2442
 #, kde-format
 msgctxt "@title:window"
 msgid "Invalid Attachment Name"
 msgstr "Nom no vàlid de l'adjunt"
 
-#: editor/kmcomposerwin.cpp:2489
+#: editor/kmcomposerwin.cpp:2490
 #, kde-format
 msgid "Add URL into Message"
 msgid_plural "Add URLs into Message"
 msgstr[0] "Afig un URL al missatge"
 msgstr[1] "Afig alguns URL al missatge"
 
-#: editor/kmcomposerwin.cpp:2490
+#: editor/kmcomposerwin.cpp:2491
 #, kde-format
 msgid "Add File as &Attachment"
 msgid_plural "Add Files as &Attachment"
 msgstr[0] "Afig un fitxer com a &adjunt"
 msgstr[1] "Afig alguns fitxers com a &adjunts"
 
-#: editor/kmcomposerwin.cpp:2536
+#: editor/kmcomposerwin.cpp:2537
 #, kde-format
 msgctxt "@title:window"
 msgid "Insert clipboard text as attachment"
 msgstr "Inserix el text del porta-retalls com a adjunt"
 
-#: editor/kmcomposerwin.cpp:2629
+#: editor/kmcomposerwin.cpp:2630
 #, kde-format
 msgid "unnamed"
 msgstr "sense nom"
 
-#: editor/kmcomposerwin.cpp:2655
+#: editor/kmcomposerwin.cpp:2656
 #, kde-format
 msgid ""
 "<qt><p>In order to be able to sign this message you first have to define the "
@@ -2308,13 +2308,13 @@ msgstr ""
 "signatura que s'utilitzarà (OpenPGP o S/MIME).</p><p>Trieu la clau que "
 "s'utilitzarà en la configuració de la identitat.</p></qt>"
 
-#: editor/kmcomposerwin.cpp:2662
+#: editor/kmcomposerwin.cpp:2663
 #, kde-format
 msgctxt "@title:window"
 msgid "Undefined Signing Key"
 msgstr "Clau de signatura no definida"
 
-#: editor/kmcomposerwin.cpp:2826
+#: editor/kmcomposerwin.cpp:2827
 #, kde-format
 msgid ""
 "You must enter your email address in the From: field. You should also set "
@@ -2325,7 +2325,7 @@ msgstr ""
 "heu d'establir l'adreça de correu electrònic per a totes les identitats de "
 "forma que no hàgeu d'introduir-la per a cada missatge."
 
-#: editor/kmcomposerwin.cpp:2835
+#: editor/kmcomposerwin.cpp:2836
 #, kde-format
 msgid ""
 "You must specify at least one receiver, either in the To: field or as CC or "
@@ -2334,47 +2334,47 @@ msgstr ""
 "Almenys cal especificar un destinatari ja siga en el camp Per a:, com a CC o "
 "com a BCC."
 
-#: editor/kmcomposerwin.cpp:2841
+#: editor/kmcomposerwin.cpp:2842
 #, kde-format
 msgid "To: field is empty. Send message anyway?"
 msgstr "El camp «A:» està buit. Voleu que envie el missatge igualment?"
 
-#: editor/kmcomposerwin.cpp:2843
+#: editor/kmcomposerwin.cpp:2844
 #, kde-format
 msgctxt "@title:window"
 msgid "No To: specified"
 msgstr "No s'ha especificat res a «A:»"
 
-#: editor/kmcomposerwin.cpp:2844 editor/kmcomposerwin.cpp:2858
+#: editor/kmcomposerwin.cpp:2845 editor/kmcomposerwin.cpp:2859
 #, kde-format
 msgctxt "@action:button"
 msgid "S&end as Is"
 msgstr "Envia t&al qual"
 
-#: editor/kmcomposerwin.cpp:2845
+#: editor/kmcomposerwin.cpp:2846
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the To field"
 msgstr "E&specifica el camp A"
 
-#: editor/kmcomposerwin.cpp:2855
+#: editor/kmcomposerwin.cpp:2856
 #, kde-format
 msgid "You did not specify a subject. Send message anyway?"
 msgstr "No heu especificat un assumpte. Voleu que envie el missatge igualment?"
 
-#: editor/kmcomposerwin.cpp:2857
+#: editor/kmcomposerwin.cpp:2858
 #, kde-format
 msgctxt "@title:window"
 msgid "No Subject Specified"
 msgstr "No s'ha especificat l'assumpte"
 
-#: editor/kmcomposerwin.cpp:2859
+#: editor/kmcomposerwin.cpp:2860
 #, kde-format
 msgctxt "@action:button"
 msgid "&Specify the Subject"
 msgstr "&Especifica l'assumpte"
 
-#: editor/kmcomposerwin.cpp:2904
+#: editor/kmcomposerwin.cpp:2905
 #, kde-format
 msgid ""
 "You must specify at least one receiver in order to be able to encrypt a "
@@ -2382,30 +2382,30 @@ msgid ""
 msgstr ""
 "Almenys haureu d'especificar un destinatari per tal d'encriptar un esborrany."
 
-#: editor/kmcomposerwin.cpp:3086
+#: editor/kmcomposerwin.cpp:3087
 #, kde-format
 msgid "About to send email…"
 msgstr "A punt d'enviar el correu…"
 
-#: editor/kmcomposerwin.cpp:3087
+#: editor/kmcomposerwin.cpp:3088
 #, kde-format
 msgctxt "@title:window"
 msgid "Send Confirmation"
 msgstr "Envia la confirmació"
 
-#: editor/kmcomposerwin.cpp:3088
+#: editor/kmcomposerwin.cpp:3089
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send Now"
 msgstr "&Envia ara"
 
-#: editor/kmcomposerwin.cpp:3089
+#: editor/kmcomposerwin.cpp:3090
 #, kde-format
 msgctxt "@action:button"
 msgid "Send &Later"
 msgstr "Envia més &tard"
 
-#: editor/kmcomposerwin.cpp:3166
+#: editor/kmcomposerwin.cpp:3167
 #, kde-format
 msgid ""
 "You are trying to send the mail to more than %1 recipient. Send message "
@@ -2420,50 +2420,50 @@ msgstr[1] ""
 "Esteu intentant enviar el correu a més de %1 destinataris. Voleu enviar-lo "
 "igualment?"
 
-#: editor/kmcomposerwin.cpp:3169
+#: editor/kmcomposerwin.cpp:3170
 #, kde-format
 msgctxt "@title:window"
 msgid "Too many recipients"
 msgstr "Massa destinataris"
 
-#: editor/kmcomposerwin.cpp:3170
+#: editor/kmcomposerwin.cpp:3171
 #, kde-format
 msgctxt "@action:button"
 msgid "&Send as Is"
 msgstr "Envia t&al qual"
 
-#: editor/kmcomposerwin.cpp:3171
+#: editor/kmcomposerwin.cpp:3172
 #, kde-format
 msgctxt "@action:button"
 msgid "&Edit Recipients"
 msgstr "&Edita els destinataris"
 
-#: editor/kmcomposerwin.cpp:3208
+#: editor/kmcomposerwin.cpp:3209
 #, kde-format
 msgid ""
 "Turning HTML mode off will cause the text to lose the formatting. Are you "
 "sure?"
 msgstr "Desactivar el mode HTML farà que el text perda el format. Esteu segur?"
 
-#: editor/kmcomposerwin.cpp:3210
+#: editor/kmcomposerwin.cpp:3211
 #, kde-format
 msgctxt "@title:window"
 msgid "Lose the formatting?"
 msgstr "Voleu perdre el format?"
 
-#: editor/kmcomposerwin.cpp:3211
+#: editor/kmcomposerwin.cpp:3212
 #, kde-format
 msgctxt "@action:button"
 msgid "Lose Formatting"
 msgstr "Perd el format"
 
-#: editor/kmcomposerwin.cpp:3212
+#: editor/kmcomposerwin.cpp:3213
 #, kde-format
 msgctxt "@action:button"
 msgid "Add Markup Plain Text"
 msgstr "Afig un marcador de text net"
 
-#: editor/kmcomposerwin.cpp:3419
+#: editor/kmcomposerwin.cpp:3420
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2473,7 +2473,7 @@ msgstr ""
 "La vostra clau PGP seleccionada (%1) no existix en l'anell de claus o no és "
 "adequada per a l'encriptació."
 
-#: editor/kmcomposerwin.cpp:3431
+#: editor/kmcomposerwin.cpp:3432
 #, kde-format
 msgctxt "The argument is as PGP fingerprint"
 msgid ""
@@ -2483,7 +2483,7 @@ msgstr ""
 "La vostra clau PGP de signatura seleccionada (%1) no existix en l'anell de "
 "claus o no és adequada per a signar."
 
-#: editor/kmcomposerwin.cpp:3446
+#: editor/kmcomposerwin.cpp:3447
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2493,7 +2493,7 @@ msgstr ""
 "La vostra clau SMIME seleccionada (%1) no existix en l'anell de claus o no "
 "és adequada per a l'encriptació."
 
-#: editor/kmcomposerwin.cpp:3458
+#: editor/kmcomposerwin.cpp:3459
 #, kde-format
 msgctxt "The argument is as SMIME fingerprint"
 msgid ""
@@ -2503,25 +2503,25 @@ msgstr ""
 "La vostra clau SMIME de signatura seleccionada (%1) no existix en l'anell de "
 "claus o no és adequada per a signar."
 
-#: editor/kmcomposerwin.cpp:3627
+#: editor/kmcomposerwin.cpp:3628
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Encrypt"
 msgstr "Encripta"
 
-#: editor/kmcomposerwin.cpp:3629
+#: editor/kmcomposerwin.cpp:3630
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Not Encrypt"
 msgstr "No l'encriptes"
 
-#: editor/kmcomposerwin.cpp:3769
+#: editor/kmcomposerwin.cpp:3770
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
 msgstr "No s'ha trobat la clau del destinatari."
 
-#: editor/kmcomposerwin.cpp:3791
+#: editor/kmcomposerwin.cpp:3792
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2532,7 +2532,7 @@ msgstr ""
 "s'ha aconseguit a partir de destinataris de terceres parts. Esta clau no "
 "està verificada."
 
-#: editor/kmcomposerwin.cpp:3795
+#: editor/kmcomposerwin.cpp:3796
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2542,7 +2542,7 @@ msgstr ""
 "Per a este destinatari s'utilitza la clau d'Autocrypt. Esta clau no està "
 "verificada. El destinatari preferix respostes encriptades."
 
-#: editor/kmcomposerwin.cpp:3799
+#: editor/kmcomposerwin.cpp:3800
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2552,7 +2552,7 @@ msgstr ""
 "Per a este destinatari s'utilitza la clau d'Autocrypt. Esta clau no està "
 "verificada. El destinatari no preferix respostes encriptades."
 
-#: editor/kmcomposerwin.cpp:3825
+#: editor/kmcomposerwin.cpp:3826
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2564,7 +2564,7 @@ msgstr ""
 "clau, si comuniqueu l'empremta digital per un altre canal. Per a més "
 "detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3833
+#: editor/kmcomposerwin.cpp:3834
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2578,7 +2578,7 @@ msgstr ""
 "podeu signar la clau, si comuniqueu l'empremta digital per un altre canal. "
 "Per a més detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3841
+#: editor/kmcomposerwin.cpp:3842
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2588,7 +2588,7 @@ msgstr ""
 "La clau d'encriptació no és fiable. Té dades TOFU conflictives. Per a més "
 "detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3847
+#: editor/kmcomposerwin.cpp:3848
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2598,7 +2598,7 @@ msgstr ""
 "La clau d'encriptació no és fiable. Té una validesa desconeguda en les dades "
 "TOFU. Per a més detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3853
+#: editor/kmcomposerwin.cpp:3854
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2608,7 +2608,7 @@ msgstr ""
 "La clau d'encriptació no és fiable. La clau està marcada com a roïna. Per a "
 "més detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3861
+#: editor/kmcomposerwin.cpp:3862
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2622,7 +2622,7 @@ msgstr ""
 "serà més fiable. O podeu signar la clau, si comuniqueu l'empremta digital "
 "per un altre canal. Per a més detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3869
+#: editor/kmcomposerwin.cpp:3870
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2633,7 +2633,7 @@ msgstr ""
 "comuniqueu l'empremta digital per un altre canal. Per a més detalls, cliqueu "
 "damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3875
+#: editor/kmcomposerwin.cpp:3876
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2648,7 +2648,7 @@ msgstr ""
 "l'empremta digital per un altre canal. Per a més detalls, cliqueu damunt de "
 "la icona."
 
-#: editor/kmcomposerwin.cpp:3883
+#: editor/kmcomposerwin.cpp:3884
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2658,7 +2658,7 @@ msgstr ""
 "La clau d'encriptació és completament fiable. Podeu elevar el nivell de "
 "seguretat signant la clau. Per a més detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:3888
+#: editor/kmcomposerwin.cpp:3889
 #, kde-format
 msgctxt "@info:tooltip"
 msgid ""
@@ -2668,12 +2668,12 @@ msgstr ""
 "La clau d'encriptació és totalment fiable o està signada per una altra clau "
 "de fiabilitat total. Per a més detalls, cliqueu damunt de la icona."
 
-#: editor/kmcomposerwin.cpp:4005
+#: editor/kmcomposerwin.cpp:4006
 #, kde-format
 msgid " Column: %1 "
 msgstr " Columna: %1 "
 
-#: editor/kmcomposerwin.cpp:4220
+#: editor/kmcomposerwin.cpp:4221
 #, kde-format
 msgctxt ""
 "if in your language something like 'certificate(s)' is not possible please "
@@ -2691,12 +2691,12 @@ msgstr ""
 "buscar certificats externs clicant damunt del botó: busca certificats "
 "externs.</qt>"
 
-#: editor/kmcomposerwin.cpp:4232
+#: editor/kmcomposerwin.cpp:4233
 #, kde-format
 msgid "Encryption Key Selection"
 msgstr "Trieu la clau d'encriptació"
 
-#: editor/kmcomposerwin.cpp:4316
+#: editor/kmcomposerwin.cpp:4317
 #, kde-format
 msgctxt "@title:window"
 msgid "Plugin Editor Information"
@@ -5061,7 +5061,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Reduïx-ho tot"
 
-#: kmmainwidget.cpp:3081 util.cpp:182
+#: kmmainwidget.cpp:3081 util.cpp:184
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5255,7 +5255,7 @@ msgstr "&Vigila la conversa"
 msgid "&Ignore Thread"
 msgstr "&Ignora la conversa"
 
-#: kmmainwidget.cpp:3316 kmreadermainwin.cpp:490
+#: kmmainwidget.cpp:3316 kmreadermainwin.cpp:491
 #, kde-format
 msgid "Save A&ttachments…"
 msgstr "Guarda els ad&junts…"
@@ -5763,34 +5763,34 @@ msgstr "Reinicia"
 msgid "Akonadi restarted."
 msgstr "S'ha reiniciat Akonadi."
 
-#: kmmainwin.cpp:56
+#: kmmainwin.cpp:57
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "S'està iniciant…"
 
-#: kmreadermainwin.cpp:493 util.cpp:182
+#: kmreadermainwin.cpp:494 util.cpp:184
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Mou cap a dins de la paperera"
 
-#: kmreadermainwin.cpp:494
+#: kmreadermainwin.cpp:495
 #, kde-format
 msgctxt "@action:intoolbar Move to Trash"
 msgid "Trash"
 msgstr "Mou cap a dins de la paperera"
 
-#: kmreadermainwin.cpp:495
+#: kmreadermainwin.cpp:496
 #, kde-format
 msgid "Move message to trashcan"
 msgstr "Mou el missatge cap a dins de la paperera"
 
-#: kmreadermainwin.cpp:543
+#: kmreadermainwin.cpp:544
 #, kde-format
 msgid "Hide menu bar"
 msgstr "Oculta la barra de menús"
 
-#: kmreadermainwin.cpp:623
+#: kmreadermainwin.cpp:624
 #, kde-format
 msgid "Cannot copy item. %1"
 msgstr "No s'ha pogut copiar l'element. %1"
@@ -8164,7 +8164,7 @@ msgstr "Informació dels connectors"
 msgid "Plugins used in KMail."
 msgstr "Connectors emprats en KMail."
 
-#: util.cpp:33
+#: util.cpp:35
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8174,36 +8174,36 @@ msgstr ""
 "Pareix que esta adreça de correu electrònic de %1 no se seguix. Voleu "
 "respondre a este correu electrònic?"
 
-#: util.cpp:34
+#: util.cpp:36
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Adreça de correu electrònic no seguida"
 
-#: util.cpp:35
+#: util.cpp:37
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "No envies"
 
-#: util.cpp:36
+#: util.cpp:38
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "Envia un correu"
 
-#: util.cpp:185
+#: util.cpp:187
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Suprimix"
 
-#: util.cpp:185
+#: util.cpp:187
 #, kde-format
 msgid "Move to Trash"
 msgstr "Mou cap a dins de la paperera"
 
-#: util.cpp:193
+#: util.cpp:195
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8212,7 +8212,7 @@ msgstr ""
 "No s'ha pogut iniciar l'assistent de comptes. Comproveu que AccountWizard "
 "estiga instal·lat correctament."
 
-#: util.cpp:195
+#: util.cpp:197
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

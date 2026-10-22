@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-15 00:46+0000\n"
+"POT-Creation-Date: 2026-10-22 00:51+0000\n"
 "PO-Revision-Date: 2025-08-21 12:56+0300\n"
 "Last-Translator: Toms Trasuns <toms.trasuns@posteo.net>\n"
 "Language-Team: Latvian <kde-i18n-doc@kde.org>\n"
@@ -146,8 +146,12 @@ msgid "Message sent"
 msgstr "Vēstule ir nosūtīta"
 
 #: sendlatermanager.cpp:190
-#, kde-format
-msgid "An error was found. Do you want to resend it?"
+#, fuzzy, kde-format
+#| msgid "An error was found. Do you want to resend it?"
+msgid ""
+"An error was found:\n"
+"%1\n"
+"Do you want to resend it?"
 msgstr "Atrasta kļūda. Vai vēlaties sūtīt no jauna?"
 
 #: sendlatermanager.cpp:191

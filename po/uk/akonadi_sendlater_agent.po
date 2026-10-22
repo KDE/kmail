@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-15 00:46+0000\n"
+"POT-Creation-Date: 2026-10-22 00:51+0000\n"
 "PO-Revision-Date: 2025-08-20 11:35+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -149,8 +149,12 @@ msgid "Message sent"
 msgstr "Повідомлення надіслано"
 
 #: sendlatermanager.cpp:190
-#, kde-format
-msgid "An error was found. Do you want to resend it?"
+#, fuzzy, kde-format
+#| msgid "An error was found. Do you want to resend it?"
+msgid ""
+"An error was found:\n"
+"%1\n"
+"Do you want to resend it?"
 msgstr "Виявлено помилку. Хочете повторити спробу надсилання?"
 
 #: sendlatermanager.cpp:191
