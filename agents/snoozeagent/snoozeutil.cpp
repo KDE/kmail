@@ -39,7 +39,9 @@ bool SnoozeUtil::snoozeAgentEnabled()
 
 void SnoozeUtil::reload()
 {
-    // TODO call reload() on the agent over D-Bus.
+    if (QDBusInterface interface(serviceName(), dbusPath()); interface.isValid()) {
+        interface.call(u"reload"_s);
+    }
 }
 
 void SnoozeUtil::forceReparseConfiguration()
