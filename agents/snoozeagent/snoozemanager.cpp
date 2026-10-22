@@ -8,8 +8,10 @@
 #include "job/snoozewakeupjob.h"
 #include "snoozeinfo.h"
 #include "snoozeutil.h"
-#include <QRegularExpression>
 
+#include <KConfigGroup>
+
+#include <QRegularExpression>
 #include <QTimer>
 
 using namespace Snooze;
