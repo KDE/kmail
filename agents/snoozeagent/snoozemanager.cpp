@@ -8,6 +8,7 @@
 #include "job/snoozewakeupjob.h"
 #include "snoozeinfo.h"
 #include "snoozeutil.h"
+#include <QRegularExpression>
 
 #include <QTimer>
 
@@ -37,8 +38,23 @@ void SnoozeManager::stopAll()
 
 void SnoozeManager::load(bool forceReloadConfig)
 {
-    // TODO read every "SnoozeItem <n>" group into mListSnoozeInfo, then createSnoozeList().
-    Q_UNUSED(forceReloadConfig)
+    if (forceReloadConfig) {
+        mConfig->reparseConfiguration();
+    }
+    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(u"SnoozeItem \\d+"_s));
+    const int numberOfItems = itemList.count();
+    QList<SnoozeInfo *> snoozeInfo;
+    for (int i = 0; i < numberOfItems; ++i) {
+        KConfigGroup group = mConfig->group(itemList.at(i));
+
+        if (auto info = new SnoozeInfo(group); info->isValid()) {
+            snoozeInfo.append(std::move(info));
+        } else {
+            delete info;
+        }
+    }
+    mListSnoozeInfo = std::move(snoozeInfo);
+    createSnoozeList();
 }
 
 void SnoozeManager::createSnoozeList()
@@ -82,6 +98,7 @@ bool SnoozeManager::itemRemoved(Akonadi::Item::Id id)
 
 void SnoozeManager::wakeUpNow(Akonadi::Item::Id id)
 {
+    // TODO auto job = new SnoozeWakeUpJob()
     // TODO start a SnoozeWakeUpJob straight away for this item.
     Q_UNUSED(id)
 }
