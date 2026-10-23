@@ -18,11 +18,16 @@ QString serviceName()
 {
     return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_snooze_agent"_s);
 }
+}
 
-QString dbusPath()
+QString SnoozeUtil::dbusPath()
 {
     return u"/SnoozeAgent"_s;
 }
+
+QString SnoozeUtil::dbusInterface()
+{
+    return u"org.freedesktop.Akonadi.SnoozeAgent"_s;
 }
 
 bool SnoozeUtil::snoozeAgentWasRegistered()
@@ -40,6 +45,25 @@ void SnoozeUtil::reload()
 {
     if (QDBusInterface interface(serviceName(), dbusPath()); interface.isValid()) {
         interface.call(u"reload"_s);
+    }
+}
+
+void SnoozeUtil::cancelSnooze(const QList<Akonadi::Item::Id> &ids)
+{
+    if (ids.isEmpty()) {
+        return;
+    }
+    if (QDBusInterface interface(serviceName(), dbusPath()); interface.isValid()) {
+        for (const Akonadi::Item::Id id : ids) {
+            interface.call(QDBus::NoBlock, u"cancelSnooze"_s, id);
+        }
+    }
+}
+
+void SnoozeUtil::wakeUpNow(Akonadi::Item::Id id)
+{
+    if (QDBusInterface interface(serviceName(), dbusPath()); interface.isValid()) {
+        interface.call(QDBus::NoBlock, u"wakeUpNow"_s, id);
     }
 }
 

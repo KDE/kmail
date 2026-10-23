@@ -7,6 +7,7 @@
 #pragma once
 
 #include <Akonadi/Collection>
+#include <Akonadi/Item>
 #include <KSharedConfig>
 #include <QList>
 #include <QString>
@@ -25,6 +26,13 @@ namespace SnoozeUtil
 [[nodiscard]] bool snoozeAgentEnabled();
 
 void reload();
+
+void cancelSnooze(const QList<Akonadi::Item::Id> &ids);
+
+void wakeUpNow(Akonadi::Item::Id id);
+
+[[nodiscard]] QString dbusPath();
+[[nodiscard]] QString dbusInterface();
 
 void forceReparseConfiguration();
 

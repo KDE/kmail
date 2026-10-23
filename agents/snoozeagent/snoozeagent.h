@@ -34,6 +34,9 @@ public:
     void setEnableAgent(bool enabled);
     [[nodiscard]] bool enabledAgent() const;
 
+Q_SIGNALS:
+    void needUpdateConfigDialogBox();
+
 public Q_SLOTS:
     void reload();
 

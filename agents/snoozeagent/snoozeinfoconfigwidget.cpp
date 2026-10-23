@@ -6,8 +6,10 @@
 
 #include "snoozeinfoconfigwidget.h"
 #include "snoozeconfigurewidget.h"
+#include "snoozeutil.h"
 
 #include <QApplication>
+#include <QDBusConnection>
 #include <QIcon>
 #include <QLayout>
 
@@ -19,6 +21,15 @@ SnoozeInfoConfigWidget::SnoozeInfoConfigWidget(const KSharedConfigPtr &config, Q
 {
     parent->layout()->addWidget(mWidget);
     QApplication::setWindowIcon(QIcon::fromTheme(u"kmail"_s));
+
+    connect(mWidget, &SnoozeWidget::wakeUpNow, this, &Snooze::SnoozeUtil::wakeUpNow);
+    // The agent runs in another process: follow its changes over D-Bus.
+    QDBusConnection::sessionBus().connect(QString(),
+                                          Snooze::SnoozeUtil::dbusPath(),
+                                          Snooze::SnoozeUtil::dbusInterface(),
+                                          u"needUpdateConfigDialogBox"_s,
+                                          this,
+                                          SLOT(slotNeedToReloadConfig()));
 }
 
 SnoozeInfoConfigWidget::~SnoozeInfoConfigWidget() = default;
@@ -35,8 +46,9 @@ void SnoozeInfoConfigWidget::load()
 
 bool SnoozeInfoConfigWidget::save() const
 {
-    // TODO tell the agent over D-Bus about the messages the user unsnoozed.
-    return mWidget->save();
+    // The agent drops the attribute, the link and its config entry itself.
+    Snooze::SnoozeUtil::cancelSnooze(mWidget->messagesToUnsnooze());
+    return false;
 }
 
 void SnoozeInfoConfigWidget::slotNeedToReloadConfig()

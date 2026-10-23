@@ -23,5 +23,6 @@
     <method name="wakeUpNow">
       <arg name="itemId" type="x" direction="in"/>
     </method>
+    <signal name="needUpdateConfigDialogBox"/>
   </interface>
 </node>

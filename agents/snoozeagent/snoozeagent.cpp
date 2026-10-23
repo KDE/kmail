@@ -52,6 +52,7 @@ SnoozeAgent::SnoozeAgent(const QString &id)
     connect(mMonitor, &Akonadi::Monitor::itemsRemoved, this, &SnoozeAgent::slotItemsRemoved);
     connect(mMonitor, &Akonadi::Monitor::itemsMoved, this, &SnoozeAgent::slotItemsMoved);
 
+    connect(mManager, &SnoozeManager::needUpdateConfigDialogBox, this, &SnoozeAgent::needUpdateConfigDialogBox);
     connect(this, &Akonadi::ResourceBase::collectionTreeSynchronized, this, &SnoozeAgent::discoverSnoozeCollection);
 
     setNeedsNetwork(false);

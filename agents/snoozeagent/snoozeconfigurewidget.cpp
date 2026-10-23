@@ -5,16 +5,19 @@
 */
 
 #include "snoozeconfigurewidget.h"
+#include "job/showmessagejob.h"
 #include "snoozeinfo.h"
 #include "snoozeutil.h"
 
 #include <KConfigGroup>
 #include <KLocalizedString>
+#include <KMessageBox>
 
 #include <QCursor>
 #include <QHBoxLayout>
 #include <QHeaderView>
 #include <QIcon>
+#include <QLocale>
 #include <QMenu>
 #include <QPushButton>
 #include <QRegularExpression>
@@ -90,23 +93,21 @@ void SnoozeWidget::load()
     for (int i = 0; i < numberOfItem; ++i) {
         KConfigGroup group = config->group(filterGroups.at(i));
 
-        if (auto info = new SnoozeInfo(group); info->isValid()) {
+        // Skip the messages the user already unsnoozed but did not apply yet.
+        if (auto info = new SnoozeInfo(group); info->isValid() && !mListMessagesToUnsnooze.contains(info->itemId())) {
             createOrUpdateItem(info);
         } else {
             delete info;
         }
     }
-}
-
-bool SnoozeWidget::save()
-{
-    // TODO rewrite the config groups from the tree.
-    return mChanged;
+    updateButtons();
 }
 
 void SnoozeWidget::needToReload()
 {
-    // TODO clear and load() again.
+    mTreeWidget->clear();
+    SnoozeUtil::forceReparseConfiguration();
+    load();
 }
 
 void SnoozeWidget::saveTreeWidgetHeader(KConfigGroup &group)
@@ -126,45 +127,59 @@ QList<Akonadi::Item::Id> SnoozeWidget::messagesToUnsnooze() const
 
 void SnoozeWidget::slotRemoveItem()
 {
-    // TODO confirm, then queue the ids into mListMessagesToUnsnooze.
+    const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
+    if (listItems.isEmpty()) {
+        return;
+    }
+    const int answer = KMessageBox::questionTwoActions(this,
+                                                       i18np("Do you want to unsnooze the selected message?\nIt will come back without notification.",
+                                                             "Do you want to unsnooze the %1 selected messages?\nThey will come back without notification.",
+                                                             listItems.count()),
+                                                       i18nc("@title:window", "Unsnooze Messages"),
+                                                       KGuiItem(i18nc("@action:button", "Unsnooze"), u"edit-delete"_s),
+                                                       KStandardGuiItem::cancel());
+    if (answer != KMessageBox::ButtonCode::PrimaryAction) {
+        return;
+    }
+    for (QTreeWidgetItem *item : listItems) {
+        mListMessagesToUnsnooze << static_cast<SnoozeItem *>(item)->info()->itemId();
+        delete item;
+    }
+    updateButtons();
 }
 
 void SnoozeWidget::slotWakeUpNow()
 {
-    // TODO Q_EMIT wakeUpNow() for the current item.
+    // The agent removes them from the config, the list follows on needToReload().
+    const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
+    for (QTreeWidgetItem *item : listItems) {
+        Q_EMIT wakeUpNow(static_cast<SnoozeItem *>(item)->info()->itemId());
+    }
+}
+
+void SnoozeWidget::slotShowMessage()
+{
+    if (const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems(); listItems.count() == 1) {
+        auto job = new ShowMessageJob(static_cast<SnoozeItem *>(listItems.at(0))->info()->itemId());
+        job->start();
+    }
 }
 
 void SnoozeWidget::slotCustomContextMenuRequested(QPoint pos)
 {
+    Q_UNUSED(pos)
     const QList<QTreeWidgetItem *> listItems = mTreeWidget->selectedItems();
-    if (const int nbElementSelected = listItems.count(); nbElementSelected > 0) {
-        QMenu menu(this);
-        QAction *showMessage = nullptr;
-        QAction *showOriginalMessage = nullptr;
-        SnoozeItem *mailItem = nullptr;
-        if ((nbElementSelected == 1)) {
-            mailItem = static_cast<SnoozeItem *>(listItems.at(0));
-            // if (mailItem->data(0, AnswerItemFound).toBool()) {
-            //     showMessage = menu.addAction(i18nc("@action", "Show Message"));
-            //     menu.addSeparator();
-            // }
-            showOriginalMessage = menu.addAction(QIcon::fromTheme(u"mail-message"_s), i18nc("@action", "Show Original Message"));
-            menu.addSeparator();
-        }
-        const QAction *deleteItem = menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Delete"));
-        const QAction *result = menu.exec(QCursor::pos());
-        if (result) {
-            /*
-            if (result == showMessage) {
-                openShowMessage(mailItem->info()->answerMessageItemId());
-            } else if (result == deleteItem) {
-                deleteItems(listItems);
-            } else if (result == showOriginalMessage) {
-                openShowMessage(mailItem->info()->originalMessageItemId());
-            }
-            */
-        }
+    if (listItems.isEmpty()) {
+        return;
     }
+    QMenu menu(this);
+    if (listItems.count() == 1) {
+        menu.addAction(QIcon::fromTheme(u"mail-message"_s), i18nc("@action", "Show Message"), this, &SnoozeWidget::slotShowMessage);
+        menu.addSeparator();
+    }
+    menu.addAction(i18nc("@action", "Wake Up Now"), this, &SnoozeWidget::slotWakeUpNow);
+    menu.addAction(QIcon::fromTheme(u"edit-delete"_s), i18nc("@action", "Unsnooze"), this, &SnoozeWidget::slotRemoveItem);
+    menu.exec(QCursor::pos());
 }
 
 void SnoozeWidget::updateButtons()
@@ -179,6 +194,11 @@ void SnoozeWidget::createOrUpdateItem(Snooze::SnoozeInfo *info, SnoozeItem *item
     if (!item) {
         item = new SnoozeItem(mTreeWidget);
     }
+    item->setText(From, info->from());
+    item->setToolTip(From, info->from());
+    item->setText(Subject, info->subject());
+    item->setToolTip(Subject, info->subject());
+    item->setText(WakeUpDate, QLocale().toString(info->wakeUpDateTime().toLocalTime(), QLocale::ShortFormat));
     item->setInfo(info);
 }
 

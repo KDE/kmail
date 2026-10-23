@@ -46,7 +46,6 @@ public:
     };
 
     void load();
-    [[nodiscard]] bool save();
     void needToReload();
 
     void saveTreeWidgetHeader(KConfigGroup &group);
@@ -61,6 +60,7 @@ private:
     void slotRemoveItem();
     void slotWakeUpNow();
     void slotCustomContextMenuRequested(QPoint pos);
+    void slotShowMessage();
     void updateButtons();
     void createOrUpdateItem(Snooze::SnoozeInfo *info, SnoozeItem *item = nullptr);
 
@@ -68,5 +68,4 @@ private:
     QTreeWidget *const mTreeWidget;
     QPushButton *const mRemoveButton;
     QPushButton *const mWakeUpNowButton;
-    bool mChanged = false;
 };
