@@ -5,18 +5,24 @@
 */
 
 #include "snoozeagent.h"
+#include "snoozeagent_debug.h"
 #include "snoozeagentadaptor.h"
 #include "snoozeagentsettings.h"
 #include "snoozeinfo.h"
 #include "snoozemanager.h"
+#include "snoozeutil.h"
 
 #include <MailCommon/SnoozeAttribute>
 
 #include <Akonadi/AttributeFactory>
-#include <Akonadi/ChangeRecorder>
+#include <Akonadi/CollectionFetchJob>
+#include <Akonadi/CollectionFetchScope>
+#include <Akonadi/EntityDisplayAttribute>
 #include <Akonadi/ItemFetchScope>
+#include <Akonadi/Monitor>
 #include <Akonadi/ServerManager>
 #include <Akonadi/Session>
+#include <KLocalizedString>
 #include <KMime/Message>
 
 #include <QDBusConnection>
@@ -25,9 +31,11 @@
 using namespace Qt::Literals::StringLiterals;
 
 SnoozeAgent::SnoozeAgent(const QString &id)
-    : Akonadi::AgentWidgetBase(id)
+    : Akonadi::ResourceWidgetBase(id)
     , mManager(new SnoozeManager(this))
+    , mMonitor(new Akonadi::Monitor(this))
 {
+    setAgentName(i18n("Snooze Agent"));
     Akonadi::AttributeFactory::registerAttribute<MailCommon::SnoozeAttribute>();
 
     new SnoozeAgentAdaptor(this);
@@ -35,12 +43,16 @@ SnoozeAgent::SnoozeAgent(const QString &id)
     const QString service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_snooze_agent"_s);
     QDBusConnection::sessionBus().registerService(service);
 
-    changeRecorder()->setMimeTypeMonitored(KMime::Message::mimeType());
-    changeRecorder()->itemFetchScope().setCacheOnly(true);
-    changeRecorder()->itemFetchScope().setFetchModificationTime(false);
-    changeRecorder()->fetchCollection(true);
-    changeRecorder()->setChangeRecordingEnabled(false);
-    changeRecorder()->ignoreSession(Akonadi::Session::defaultSession());
+    mMonitor->setObjectName("SnoozeAgentMonitor"_L1);
+    mMonitor->setMimeTypeMonitored(KMime::Message::mimeType());
+    mMonitor->itemFetchScope().setCacheOnly(true);
+    mMonitor->itemFetchScope().setFetchModificationTime(false);
+    mMonitor->itemFetchScope().fetchFullPayload(false);
+    mMonitor->ignoreSession(Akonadi::Session::defaultSession());
+    connect(mMonitor, &Akonadi::Monitor::itemsRemoved, this, &SnoozeAgent::slotItemsRemoved);
+    connect(mMonitor, &Akonadi::Monitor::itemsMoved, this, &SnoozeAgent::slotItemsMoved);
+
+    connect(this, &Akonadi::ResourceBase::collectionTreeSynchronized, this, &SnoozeAgent::discoverSnoozeCollection);
 
     setNeedsNetwork(false);
 
@@ -54,6 +66,7 @@ void SnoozeAgent::slotStartAgent()
     mAgentInitialized = true;
     if (isOnline() && enabledAgent()) {
         mManager->load();
+        synchronizeCollectionTree();
     }
 }
 
@@ -69,6 +82,8 @@ void SnoozeAgent::setEnableAgent(bool enabled)
     } else {
         mManager->stopAll();
     }
+    // Creates the "Snoozed" collection, or deletes it when disabled.
+    synchronizeCollectionTree();
 }
 
 bool SnoozeAgent::enabledAgent() const
@@ -88,7 +103,7 @@ void SnoozeAgent::snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString
     auto snoozeInfo = new Snooze::SnoozeInfo();
     snoozeInfo->setFrom(from);
     snoozeInfo->setSubject(subject);
-    snoozeInfo->setWakeUpDateTime(QDateTime::fromMSecsSinceEpoch(wakeUpDateTime));
+    snoozeInfo->setWakeUpDateTime(QDateTime::fromSecsSinceEpoch(wakeUpDateTime, QTimeZone::UTC));
     snoozeInfo->setItemId(itemId);
     mManager->addSnooze(snoozeInfo);
 }
@@ -103,7 +118,7 @@ void SnoozeAgent::wakeUpNow(qint64 itemId)
     mManager->wakeUpNow(itemId);
 }
 
-void SnoozeAgent::itemsRemoved(const Akonadi::Item::List &items)
+void SnoozeAgent::slotItemsRemoved(const Akonadi::Item::List &items)
 {
     // The manager keeps its list and the config in sync itself: no reload needed.
     for (const Akonadi::Item &item : items) {
@@ -111,9 +126,7 @@ void SnoozeAgent::itemsRemoved(const Akonadi::Item::List &items)
     }
 }
 
-void SnoozeAgent::itemsMoved(const Akonadi::Item::List &items,
-                             const Akonadi::Collection & /*sourceCollection*/,
-                             const Akonadi::Collection & /*destinationCollection*/)
+void SnoozeAgent::slotItemsMoved(const Akonadi::Item::List &items)
 {
     // Moving a snoozed message by hand is an explicit "I am dealing with it
     // now": cancel the snooze rather than letting it pop back up later.
@@ -140,6 +153,53 @@ QString SnoozeAgent::printDebugInfo() const
     return mManager->printDebugInfo();
 }
 
-AKONADI_AGENT_MAIN(SnoozeAgent)
+void SnoozeAgent::retrieveCollections()
+{
+    if (!enabledAgent()) {
+        collectionsRetrieved({});
+        return;
+    }
+
+    Akonadi::Collection collection;
+    collection.setName(identifier());
+    collection.setRemoteId(identifier());
+    collection.setParentCollection(Akonadi::Collection::root());
+    collection.setContentMimeTypes({KMime::Message::mimeType()});
+    collection.setRights(Akonadi::Collection::CanChangeItem | Akonadi::Collection::CanDeleteItem);
+    collection.setVirtual(true);
+    auto displayAttr = collection.attribute<Akonadi::EntityDisplayAttribute>(Akonadi::Collection::AddIfMissing);
+    displayAttr->setDisplayName(i18n("Snoozed"));
+    displayAttr->setIconName(u"chronometer"_s);
+    collectionsRetrieved({collection});
+}
+
+void SnoozeAgent::retrieveItems(const Akonadi::Collection &collection)
+{
+    Q_UNUSED(collection)
+    // The content is made of links managed by SnoozeItemJob/SnoozeWakeUpJob: nothing to retrieve.
+    itemsRetrievedIncremental({}, {});
+}
+
+bool SnoozeAgent::retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts)
+{
+    Q_UNUSED(parts)
+    qCWarning(SNOOZEAGENT_LOG) << "retrieveItems() called for" << items.count() << "items but we can't own any items! This is a bug in Akonadi";
+    return false;
+}
+
+void SnoozeAgent::discoverSnoozeCollection()
+{
+    auto job = new Akonadi::CollectionFetchJob(Akonadi::Collection::root(), Akonadi::CollectionFetchJob::FirstLevel, this);
+    job->fetchScope().setResource(identifier());
+    connect(job, &Akonadi::CollectionFetchJob::result, this, [job]() {
+        const Akonadi::Collection::List collections = job->collections();
+        const Akonadi::Collection::Id id = collections.isEmpty() ? -1 : collections.first().id();
+        if (id != Snooze::SnoozeUtil::snoozeCollectionId()) {
+            Snooze::SnoozeUtil::setSnoozeCollectionId(id);
+        }
+    });
+}
+
+AKONADI_RESOURCE_MAIN(SnoozeAgent)
 
 #include "moc_snoozeagent.cpp"

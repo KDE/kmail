@@ -6,13 +6,23 @@
 
 #pragma once
 
-#include <Akonadi/AgentWidgetBase>
 #include <Akonadi/Collection>
 #include <Akonadi/Item>
+#include <Akonadi/ResourceWidgetBase>
 
+namespace Akonadi
+{
+class Monitor;
+}
 class SnoozeManager;
 
-class SnoozeAgent : public Akonadi::AgentWidgetBase, public Akonadi::AgentBase::ObserverV3
+/* Like the unified mailbox agent, this is a Resource acting as an Agent: being
+ * a resource is the only way to own the virtual "Snoozed" collection into
+ * which snoozed messages are linked.
+ * The resource's ChangeRecorder only watches that collection, so the messages
+ * of the other resources are watched through a separate Monitor.
+ */
+class SnoozeAgent : public Akonadi::ResourceWidgetBase
 {
     Q_OBJECT
 public:
@@ -33,13 +43,18 @@ public Q_SLOTS:
     void wakeUpNow(qint64 itemId);
 
 protected:
-    void itemsRemoved(const Akonadi::Item::List &items) override;
-    void itemsMoved(const Akonadi::Item::List &items, const Akonadi::Collection &sourceCollection, const Akonadi::Collection &destinationCollection) override;
+    void retrieveCollections() override;
+    void retrieveItems(const Akonadi::Collection &collection) override;
+    [[nodiscard]] bool retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts) override;
     void doSetOnline(bool online) override;
 
 private:
     void slotStartAgent();
+    void slotItemsRemoved(const Akonadi::Item::List &items);
+    void slotItemsMoved(const Akonadi::Item::List &items);
+    void discoverSnoozeCollection();
 
     SnoozeManager *const mManager;
+    Akonadi::Monitor *const mMonitor;
     bool mAgentInitialized = false;
 };
