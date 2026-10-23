@@ -7,6 +7,7 @@
 #pragma once
 
 #include "snoozeinfo.h"
+#include <Akonadi/Item>
 #include <QObject>
 
 class KJob;
@@ -40,7 +41,10 @@ private:
     void slotItemFetchDone(KJob *job);
     void slotUnlinkDone(KJob *job);
     void slotItemModifyDone(KJob *job);
+    void modifyItem();
+    void failed(const QString &error);
     void notifyUser();
 
     const Snooze::SnoozeInfo mInfo;
+    Akonadi::Item mItem;
 };
