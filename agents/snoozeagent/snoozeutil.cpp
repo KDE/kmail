@@ -16,7 +16,6 @@ namespace
 {
 QString serviceName()
 {
-    // TODO verify
     return Akonadi::ServerManager::agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_snooze_agent"_s);
 }
 
@@ -66,19 +65,52 @@ SnoozeInfo *SnoozeUtil::readSnoozeInfo(const KConfigGroup &config)
 
 void SnoozeUtil::writeSnoozeInfo(const KSharedConfig::Ptr &config, Snooze::SnoozeInfo *info, bool forceReload)
 {
-    // TODO allocate a unique identifier, write the group, sync and optionally reload.
-    Q_UNUSED(config)
-    Q_UNUSED(info)
-    Q_UNUSED(forceReload)
+    if (!info || !info->isValid()) {
+        return;
+    }
+    KConfigGroup general = config->group(u"General"_s);
+    // "Number" is the next free identifier: it only ever grows, so a removed
+    // item can never hand its identifier to a new one still in use.
+    int identifier = info->uniqueIdentifier();
+    if (identifier == -1) {
+        identifier = general.readEntry("Number", 0);
+        general.writeEntry("Number", identifier + 1);
+    }
+
+    const QString groupName = u"SnoozeItem %1"_s.arg(identifier);
+    config->deleteGroup(groupName);
+    KConfigGroup group = config->group(groupName);
+    info->writeConfig(group, identifier);
+
+    config->sync();
+    config->reparseConfiguration();
+    if (forceReload) {
+        reload();
+    }
 }
 
 bool SnoozeUtil::removeSnoozeInfo(const KSharedConfig::Ptr &config, const QList<qint32> &listRemove, bool forceReload)
 {
-    // TODO delete the matching groups.
-    Q_UNUSED(config)
-    Q_UNUSED(listRemove)
-    Q_UNUSED(forceReload)
-    return false;
+    if (listRemove.isEmpty()) {
+        return false;
+    }
+
+    bool needSaveConfig = false;
+    for (qint32 identifier : listRemove) {
+        const QString groupName = u"SnoozeItem %1"_s.arg(identifier);
+        if (config->hasGroup(groupName)) {
+            config->deleteGroup(groupName);
+            needSaveConfig = true;
+        }
+    }
+    if (needSaveConfig) {
+        config->sync();
+        config->reparseConfiguration();
+        if (forceReload) {
+            reload();
+        }
+    }
+    return needSaveConfig;
 }
 
 bool SnoozeUtil::compareSnoozeInfo(Snooze::SnoozeInfo *left, Snooze::SnoozeInfo *right)

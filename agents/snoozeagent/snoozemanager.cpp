@@ -43,7 +43,7 @@ void SnoozeManager::load(bool forceReloadConfig)
     if (forceReloadConfig) {
         mConfig->reparseConfiguration();
     }
-    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(u"SnoozeItem \\d+"_s));
+    const QStringList itemList = mConfig->groupList().filter(QRegularExpression(SnoozeUtil::snoozePattern()));
     const int numberOfItems = itemList.count();
     QList<SnoozeInfo *> snoozeInfo;
     for (int i = 0; i < numberOfItems; ++i) {
@@ -55,6 +55,7 @@ void SnoozeManager::load(bool forceReloadConfig)
             delete info;
         }
     }
+    qDeleteAll(mListSnoozeInfo);
     mListSnoozeInfo = std::move(snoozeInfo);
     createSnoozeList();
 }
@@ -109,12 +110,13 @@ void SnoozeManager::wakeUpNow(Akonadi::Item::Id id)
         // TODO error
         return;
     }
-    auto job = new SnoozeWakeUpJob(info, this);
-    connect(job, &SnoozeWakeUpJob::wakeUpDone, this, [this, info]() {
-        removeInfo(info->itemId());
+    auto job = new SnoozeWakeUpJob(*info, this);
+    connect(job, &SnoozeWakeUpJob::wakeUpDone, this, [this, id]() {
+        removeInfo(id);
     });
-    connect(job, &SnoozeWakeUpJob::wakeUpFailed, this, [this, info](const QString &errorStr) {
+    connect(job, &SnoozeWakeUpJob::wakeUpFailed, this, [](const QString &errorStr) {
         // TODO
+        Q_UNUSED(errorStr)
     });
 
     job->start();
