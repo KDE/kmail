@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:51+0000\n"
-"PO-Revision-Date: 2025-08-20 06:13+0200\n"
+"PO-Revision-Date: 2026-10-22 07:34+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "Translator: Andrej Mernik <andrejm@ubuntu.si>\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 
 #: sendlaterconfigurewidget.cpp:58
 #, kde-format
@@ -149,13 +149,15 @@ msgid "Message sent"
 msgstr "Sporočilo poslano"
 
 #: sendlatermanager.cpp:190
-#, fuzzy, kde-format
-#| msgid "An error was found. Do you want to resend it?"
+#, kde-format
 msgid ""
 "An error was found:\n"
 "%1\n"
 "Do you want to resend it?"
-msgstr "Najdena je bila napaka. Ali želite poslati znova?"
+msgstr ""
+"Najdena je bila napaka.\n"
+"%1\n"
+"Ali želite poslati ponovno?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:51+0000\n"
-"PO-Revision-Date: 2024-11-22 15:43+0300\n"
-"Last-Translator: Olesya Gerasimenko <translation-team@basealt.ru>\n"
+"PO-Revision-Date: 2026-10-22 05:22+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -154,13 +154,15 @@ msgid "Message sent"
 msgstr "Сообщение отправлено"
 
 #: sendlatermanager.cpp:190
-#, fuzzy, kde-format
-#| msgid "An error was found. Do you want to resend it?"
+#, kde-format
 msgid ""
 "An error was found:\n"
 "%1\n"
 "Do you want to resend it?"
-msgstr "При отправке сообщения произошла ошибка. Повторить отправку?"
+msgstr ""
+"При отправке сообщения произошла ошибка:\n"
+"%1\n"
+"Повторить отправку?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

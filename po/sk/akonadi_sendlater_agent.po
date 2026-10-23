@@ -143,13 +143,15 @@ msgid "Message sent"
 msgstr "Správa odoslaná"
 
 #: sendlatermanager.cpp:190
-#, fuzzy, kde-format
-#| msgid "An error was found. Do you want to resend it?"
+#, kde-format
 msgid ""
 "An error was found:\n"
 "%1\n"
 "Do you want to resend it?"
-msgstr "Našla sa chyba. Chcete to preposlať?"
+msgstr ""
+"Našla sa chyba:\n"
+"%1\n"
+"Chcete ju poslať znova?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

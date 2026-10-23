@@ -1,13 +1,14 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 # SPDX-FileCopyrightText: 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024 Vit Pelcak <vit@pelcak.org>
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:51+0000\n"
-"PO-Revision-Date: 2026-08-14 11:47+0200\n"
+"PO-Revision-Date: 2026-10-22 12:18+0200\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #: sendlaterconfigurewidget.cpp:58
 #, kde-format
@@ -144,13 +145,15 @@ msgid "Message sent"
 msgstr "Zpráva byla odeslána"
 
 #: sendlatermanager.cpp:190
-#, fuzzy, kde-format
-#| msgid "An error was found. Do you want to resend it?"
+#, kde-format
 msgid ""
 "An error was found:\n"
 "%1\n"
 "Do you want to resend it?"
-msgstr "Byla nalezena chyba. Chcete ji znovu poslat?"
+msgstr ""
+"Byla zjištěna chyba:\n"
+"%1\n"
+"Chcete zprávu odeslat znovu?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

@@ -4,22 +4,22 @@
 #
 # André Marcelo Alvarenga <alvarenga@kde.org>, 2013, 2014, 2015, 2016, 2018, 2019, 2020.
 # Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2019, 2021, 2022.
-# SPDX-FileCopyrightText: 2025 Marcus Gama <marcus.gama@gmail.com>
+# SPDX-FileCopyrightText: 2025-2026 Marcus Gama <marcus.gama@gmail.com>
 # SPDX-FileCopyrightText: 2025 Guilherme Marçal Silva <guimarcalsilva@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_sendlater_agent\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:51+0000\n"
-"PO-Revision-Date: 2025-11-08 21:10-0300\n"
-"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
-"Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
+"PO-Revision-Date: 2026-10-22 09:42-0300\n"
+"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.2\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #: sendlaterconfigurewidget.cpp:58
 #, kde-format
@@ -147,13 +147,15 @@ msgid "Message sent"
 msgstr "Mensagem enviada"
 
 #: sendlatermanager.cpp:190
-#, fuzzy, kde-format
-#| msgid "An error was found. Do you want to resend it?"
+#, kde-format
 msgid ""
 "An error was found:\n"
 "%1\n"
 "Do you want to resend it?"
-msgstr "Ocorreu um erro. Deseja tentar enviá-la novamente?"
+msgstr ""
+"Ocorreu um erro:\n"
+"%1\n"
+"Deseja tentar enviá-la novamente?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

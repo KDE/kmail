@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-22 00:51+0000\n"
-"PO-Revision-Date: 2025-08-20 08:06+0200\n"
+"PO-Revision-Date: 2026-10-22 06:16+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.10\n"
 
 #: sendlaterconfigurewidget.cpp:58
 #, kde-format
@@ -143,13 +143,15 @@ msgid "Message sent"
 msgstr "შეტყობინება გაგზავნილია"
 
 #: sendlatermanager.cpp:190
-#, fuzzy, kde-format
-#| msgid "An error was found. Do you want to resend it?"
+#, kde-format
 msgid ""
 "An error was found:\n"
 "%1\n"
 "Do you want to resend it?"
-msgstr "ნაპოვნია შეცდომა. მაინც გნებავთ მისი თავიდან გაგზავნა?"
+msgstr ""
+"ნაპოვნია შეცდომა:\n"
+"%1\n"
+"მაინც გნებავთ მისი თავიდან გაგზავნა?"
 
 #: sendlatermanager.cpp:191
 #, kde-format

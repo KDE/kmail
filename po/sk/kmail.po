@@ -523,19 +523,18 @@ msgstr "Možnosti prijímania"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "Prevod textu na reč"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "Rich Text"
+msgstr "Prevod reči na text"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "Povoliť prevod reči na text"
 
 #: configuredialog/configureaccountpage.cpp:56
 #, kde-format
@@ -6544,7 +6543,7 @@ msgstr "Posledný vybraný priečinok v dialógu výberu priečinkov."
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "Povoliť prevod reči na text"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
@@ -7801,16 +7800,13 @@ msgstr "Podpis odpovede OCSP:"
 
 #. i18n: ectx: property (whatsThis), widget (KLineEdit, OCSPResponderURL)
 #: ui/smimeconfiguration.ui:74
-#, fuzzy, kde-format
-#| msgid ""
-#| "Enter here the address of the server for online validation of "
-#| "certificates (OCSP responder). The URL is usually starting with http://."
+#, kde-format
 msgid ""
 "Enter here the address of the server for online validation of certificates "
 "(OCSP responder). The URL is usually starting with https://."
 msgstr ""
-"Sem zadajte adresu serveru pre on-line kontrolu certifikátov (OCSP). URL "
-"obvykle začína http://."
+"Sem zadajte adresu servera na online overovanie certifikátov (OCSP). URL "
+"zvyčajne začína https://."
 
 #. i18n: ectx: property (text), widget (QCheckBox, ignoreServiceURLCB)
 #: ui/smimeconfiguration.ui:91
