@@ -90,7 +90,6 @@ void SnoozeAgent::snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString
     snoozeInfo->setSubject(subject);
     snoozeInfo->setWakeUpDateTime(QDateTime::fromMSecsSinceEpoch(wakeUpDateTime));
     snoozeInfo->setItemId(itemId);
-    // TODO snoozeInfo->setUniqueIdentifier();
     mManager->addSnooze(snoozeInfo);
 }
 

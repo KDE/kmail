@@ -85,11 +85,20 @@ void SnoozeManager::slotWakeUpJobFinished()
 
 void SnoozeManager::addSnooze(Snooze::SnoozeInfo *info)
 {
-    if (info && info->isValid()) {
-        SnoozeUtil::writeSnoozeInfo(SnoozeUtil::defaultConfig(), info, true);
-    } else {
+    if (!info || !info->isValid()) {
         delete info;
+        return;
     }
+    // Snoozing an already snoozed message again only moves its deadline.
+    if (SnoozeInfo *existing = searchInfo(info->itemId())) {
+        info->setUniqueIdentifier(existing->uniqueIdentifier());
+        mListSnoozeInfo.removeOne(existing);
+        delete existing;
+    }
+    // We are the agent: update the list in place instead of reloading ourselves over D-Bus.
+    SnoozeUtil::writeSnoozeInfo(mConfig, info, false);
+    mListSnoozeInfo.append(info);
+    createSnoozeList();
 }
 
 bool SnoozeManager::itemRemoved(Akonadi::Item::Id id)
