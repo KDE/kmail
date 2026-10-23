@@ -121,12 +121,11 @@ bool SnoozeUtil::compareSnoozeInfo(Snooze::SnoozeInfo *left, Snooze::SnoozeInfo 
 
 Akonadi::Collection::Id SnoozeUtil::snoozeCollectionId()
 {
-    // TODO read it back from the agent settings.
-    return -1;
+    return SnoozeAgentSettings::self()->snoozeCollectionId();
 }
 
 void SnoozeUtil::setSnoozeCollectionId(Akonadi::Collection::Id id)
 {
-    // TODO store it in the agent settings.
-    Q_UNUSED(id)
+    SnoozeAgentSettings::self()->setSnoozeCollectionId(id);
+    SnoozeAgentSettings::self()->save();
 }
