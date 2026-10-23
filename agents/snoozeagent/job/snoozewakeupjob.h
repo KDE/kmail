@@ -6,14 +6,10 @@
 
 #pragma once
 
+#include "snoozeinfo.h"
 #include <QObject>
 
 class KJob;
-
-namespace Snooze
-{
-class SnoozeInfo;
-}
 
 /**
  * Wakes one snoozed message up: unlink it from the virtual Snooze collection,
@@ -27,7 +23,7 @@ class SnoozeWakeUpJob : public QObject
 {
     Q_OBJECT
 public:
-    explicit SnoozeWakeUpJob(Snooze::SnoozeInfo *info, QObject *parent = nullptr);
+    explicit SnoozeWakeUpJob(const Snooze::SnoozeInfo &info, QObject *parent = nullptr);
     ~SnoozeWakeUpJob() override;
 
     void start();
@@ -46,5 +42,5 @@ private:
     void slotItemModifyDone(KJob *job);
     void notifyUser();
 
-    Snooze::SnoozeInfo *const mInfo;
+    const Snooze::SnoozeInfo mInfo;
 };

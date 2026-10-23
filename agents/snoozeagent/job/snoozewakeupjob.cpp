@@ -7,14 +7,16 @@
 #include "snoozewakeupjob.h"
 #include "showmessagejob.h"
 #include "snoozeagent_debug.h"
-#include "snoozeinfo.h"
 #include <Akonadi/ItemFetchJob>
+#include <Akonadi/ItemFetchScope>
+#include <Akonadi/UnlinkJob>
 #include <KLocalizedString>
 #include <KNotification>
+#include <MailCommon/SnoozeAttribute>
 
 using namespace Snooze;
 
-SnoozeWakeUpJob::SnoozeWakeUpJob(Snooze::SnoozeInfo *info, QObject *parent)
+SnoozeWakeUpJob::SnoozeWakeUpJob(const Snooze::SnoozeInfo &info, QObject *parent)
     : QObject(parent)
     , mInfo(info)
 {
@@ -24,7 +26,7 @@ SnoozeWakeUpJob::~SnoozeWakeUpJob() = default;
 
 bool SnoozeWakeUpJob::canStart() const
 {
-    return mInfo && mInfo->isValid();
+    return mInfo.isValid();
 }
 
 void SnoozeWakeUpJob::start()
@@ -39,15 +41,21 @@ void SnoozeWakeUpJob::start()
 
 void SnoozeWakeUpJob::doStart()
 {
-    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(mInfo->itemId()), this);
+    auto job = new Akonadi::ItemFetchJob(Akonadi::Item(mInfo.itemId()), this);
+    job->fetchScope().fetchAttribute<MailCommon::SnoozeAttribute>();
     connect(job, &Akonadi::ItemFetchJob::finished, this, &SnoozeWakeUpJob::slotItemFetchDone);
     job->start();
-
-    // TODO Akonadi::ItemFetchJob on mInfo->itemId(), fetching SnoozeAttribute.
 }
 
 void SnoozeWakeUpJob::slotItemFetchDone(KJob *job)
 {
+    // TODO unlink from collection
+#if 0
+    auto job = new Akonadi::UnlinkJob(Akonadi::Item(mInfo.itemId()), this);
+    job->fetchScope().fetchAttribute<MailCommon::SnoozeAttribute>();
+    connect(job, &Akonadi::ItemFetchJob::finished, this, &SnoozeWakeUpJob::slotItemFetchDone);
+    job->start();
+#endif
     // TODO keep the item, then Akonadi::UnlinkJob from the virtual collection.
     Q_UNUSED(job)
 }
@@ -78,7 +86,7 @@ void SnoozeWakeUpJob::notifyUser()
 
 void SnoozeWakeUpJob::slotOpenMail()
 {
-    auto job = new ShowMessageJob(mInfo->itemId());
+    auto job = new ShowMessageJob(mInfo.itemId());
     job->start();
     deleteLater();
 }
