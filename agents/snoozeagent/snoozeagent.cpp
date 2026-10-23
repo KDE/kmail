@@ -106,14 +106,9 @@ void SnoozeAgent::wakeUpNow(qint64 itemId)
 
 void SnoozeAgent::itemsRemoved(const Akonadi::Item::List &items)
 {
-    bool needToReload = false;
+    // The manager keeps its list and the config in sync itself: no reload needed.
     for (const Akonadi::Item &item : items) {
-        if (mManager->itemRemoved(item.id())) {
-            needToReload = true;
-        }
-    }
-    if (needToReload) {
-        reload();
+        (void)mManager->itemRemoved(item.id());
     }
 }
 

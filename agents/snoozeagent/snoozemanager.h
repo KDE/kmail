@@ -10,10 +10,10 @@
 #include <KSharedConfig>
 #include <QList>
 #include <QObject>
+#include <QSet>
 #include <chrono>
 
 class QTimer;
-class SnoozeWakeUpJob;
 
 namespace Snooze
 {
@@ -59,7 +59,8 @@ private:
     void createSnoozeList();
     void rearmTimer();
     void processDue();
-    void slotWakeUpJobFinished();
+    void startWakeUpJob(const Snooze::SnoozeInfo &info);
+    void slotWakeUpJobFinished(Akonadi::Item::Id id);
     void stopTimer();
     void removeInfo(Akonadi::Item::Id id);
     [[nodiscard]] Snooze::SnoozeInfo *searchInfo(Akonadi::Item::Id id) const;
@@ -67,7 +68,6 @@ private:
 
     KSharedConfig::Ptr mConfig;
     QList<Snooze::SnoozeInfo *> mListSnoozeInfo;
-    Snooze::SnoozeInfo *mCurrentInfo = nullptr;
-    SnoozeWakeUpJob *mCurrentJob = nullptr;
+    QSet<Akonadi::Item::Id> mWakingUp;
     QTimer *const mTimer;
 };

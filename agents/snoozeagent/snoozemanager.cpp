@@ -6,6 +6,7 @@
 
 #include "snoozemanager.h"
 #include "job/snoozewakeupjob.h"
+#include "snoozeagent_debug.h"
 #include "snoozeinfo.h"
 #include "snoozeutil.h"
 
@@ -14,6 +15,8 @@
 #include <QRegularExpression>
 #include <QTimer>
 
+#include <algorithm>
+
 using namespace Snooze;
 using namespace Qt::Literals::StringLiterals;
 SnoozeManager::SnoozeManager(QObject *parent)
@@ -21,6 +24,7 @@ SnoozeManager::SnoozeManager(QObject *parent)
     , mConfig(SnoozeUtil::defaultConfig())
     , mTimer(new QTimer(this))
 {
+    mTimer->setSingleShot(true);
     connect(mTimer, &QTimer::timeout, this, &SnoozeManager::processDue);
 }
 
@@ -34,8 +38,6 @@ void SnoozeManager::stopAll()
     stopTimer();
     qDeleteAll(mListSnoozeInfo);
     mListSnoozeInfo.clear();
-    mCurrentInfo = nullptr;
-    mCurrentJob = nullptr;
 }
 
 void SnoozeManager::load(bool forceReloadConfig)
@@ -62,25 +64,61 @@ void SnoozeManager::load(bool forceReloadConfig)
 
 void SnoozeManager::createSnoozeList()
 {
-    // TODO sort with SnoozeUtil::compareSnoozeInfo, then rearmTimer().
+    std::sort(mListSnoozeInfo.begin(), mListSnoozeInfo.end(), SnoozeUtil::compareSnoozeInfo);
+    rearmTimer();
 }
 
 void SnoozeManager::rearmTimer()
 {
-    // TODO: compare the head of the list against QDateTime::currentDateTimeUtc()
-    // and start mTimer for min(remaining, kMaxSleep).
+    stopTimer();
+    const auto it = std::find_if(mListSnoozeInfo.cbegin(), mListSnoozeInfo.cend(), [this](SnoozeInfo *info) {
+        return !mWakingUp.contains(info->itemId());
+    });
+    if (it == mListSnoozeInfo.cend()) {
+        return;
+    }
+    const std::chrono::milliseconds remaining{QDateTime::currentDateTimeUtc().msecsTo((*it)->wakeUpDateTime())};
+    mTimer->start(std::clamp<std::chrono::milliseconds>(remaining, std::chrono::milliseconds::zero(), kMaxSleep));
 }
 
 void SnoozeManager::processDue()
 {
-    // TODO: wake up every info whose deadline has passed, then rearmTimer().
+    const QDateTime now = QDateTime::currentDateTimeUtc();
+    const QList<SnoozeInfo *> infos = mListSnoozeInfo;
+    for (SnoozeInfo *info : infos) {
+        if (info->wakeUpDateTime() > now) {
+            break;
+        }
+        startWakeUpJob(*info);
+    }
+    rearmTimer();
 }
 
-void SnoozeManager::slotWakeUpJobFinished()
+void SnoozeManager::startWakeUpJob(const Snooze::SnoozeInfo &info)
 {
-    mCurrentJob = nullptr;
-    mCurrentInfo = nullptr;
-    // TODO drop the info from the index and re-arm.
+    const Akonadi::Item::Id id = info.itemId();
+    if (mWakingUp.contains(id)) {
+        return;
+    }
+    mWakingUp.insert(id);
+    auto job = new SnoozeWakeUpJob(info, this);
+    connect(job, &SnoozeWakeUpJob::wakeUpDone, this, [this, id]() {
+        slotWakeUpJobFinished(id);
+    });
+    connect(job, &SnoozeWakeUpJob::wakeUpFailed, this, [this, id](const QString &errorStr) {
+        // The message list shows it again anyway once the deadline has passed:
+        // drop the entry rather than retrying forever.
+        qCWarning(SNOOZEAGENT_LOG) << "Wake up failed for item" << id << errorStr;
+        slotWakeUpJobFinished(id);
+    });
+    job->start();
+}
+
+void SnoozeManager::slotWakeUpJobFinished(Akonadi::Item::Id id)
+{
+    mWakingUp.remove(id);
+    removeInfo(id);
+    rearmTimer();
 }
 
 void SnoozeManager::addSnooze(Snooze::SnoozeInfo *info)
@@ -103,32 +141,23 @@ void SnoozeManager::addSnooze(Snooze::SnoozeInfo *info)
 
 bool SnoozeManager::itemRemoved(Akonadi::Item::Id id)
 {
-    auto info = searchInfo(id);
-    if (!info) {
-        // TODO error
+    if (!searchInfo(id)) {
         return false;
     }
-    // TODO forget the info and re-arm the timer.
-    return false;
+    removeInfo(id);
+    rearmTimer();
+    return true;
 }
 
 void SnoozeManager::wakeUpNow(Akonadi::Item::Id id)
 {
-    auto info = searchInfo(id);
+    const SnoozeInfo *info = searchInfo(id);
     if (!info) {
-        // TODO error
+        qCWarning(SNOOZEAGENT_LOG) << "No snoozed message with item id" << id;
         return;
     }
-    auto job = new SnoozeWakeUpJob(*info, this);
-    connect(job, &SnoozeWakeUpJob::wakeUpDone, this, [this, id]() {
-        removeInfo(id);
-    });
-    connect(job, &SnoozeWakeUpJob::wakeUpFailed, this, [](const QString &errorStr) {
-        // TODO
-        Q_UNUSED(errorStr)
-    });
-
-    job->start();
+    startWakeUpJob(*info);
+    rearmTimer();
 }
 
 void SnoozeManager::stopTimer()
@@ -140,8 +169,14 @@ void SnoozeManager::stopTimer()
 
 void SnoozeManager::removeInfo(Akonadi::Item::Id id)
 {
-    // TODO remove from mListSnoozeInfo and from the config.
-    Q_UNUSED(id)
+    SnoozeInfo *info = searchInfo(id);
+    if (!info) {
+        return;
+    }
+    mListSnoozeInfo.removeOne(info);
+    (void)SnoozeUtil::removeSnoozeInfo(mConfig, {info->uniqueIdentifier()}, false);
+    delete info;
+    Q_EMIT needUpdateConfigDialogBox();
 }
 
 SnoozeInfo *SnoozeManager::searchInfo(Akonadi::Item::Id id) const
