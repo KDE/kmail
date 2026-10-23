@@ -5,6 +5,7 @@
 */
 
 #include "snoozemanager.h"
+#include "job/snoozeitemjob.h"
 #include "job/snoozewakeupjob.h"
 #include "snoozeagent_debug.h"
 #include "snoozeinfo.h"
@@ -94,7 +95,7 @@ void SnoozeManager::processDue()
     rearmTimer();
 }
 
-void SnoozeManager::startWakeUpJob(const Snooze::SnoozeInfo &info)
+void SnoozeManager::startWakeUpJob(const Snooze::SnoozeInfo &info, bool silent)
 {
     const Akonadi::Item::Id id = info.itemId();
     if (mWakingUp.contains(id)) {
@@ -102,6 +103,7 @@ void SnoozeManager::startWakeUpJob(const Snooze::SnoozeInfo &info)
     }
     mWakingUp.insert(id);
     auto job = new SnoozeWakeUpJob(info, this);
+    job->setSilent(silent);
     connect(job, &SnoozeWakeUpJob::wakeUpDone, this, [this, id]() {
         slotWakeUpJobFinished(id);
     });
@@ -137,6 +139,16 @@ void SnoozeManager::addSnooze(Snooze::SnoozeInfo *info)
     SnoozeUtil::writeSnoozeInfo(mConfig, info, false);
     mListSnoozeInfo.append(info);
     createSnoozeList();
+
+    const Akonadi::Item::Id id = info->itemId();
+    auto job = new SnoozeItemJob(*info, this);
+    connect(job, &SnoozeItemJob::snoozeFailed, this, [this, id](const QString &errorStr) {
+        // Without its attribute the message is not hidden: nothing to wake up.
+        qCWarning(SNOOZEAGENT_LOG) << "Snooze failed for item" << id << errorStr;
+        removeInfo(id);
+        rearmTimer();
+    });
+    job->start();
 }
 
 bool SnoozeManager::itemRemoved(Akonadi::Item::Id id)
@@ -158,6 +170,25 @@ void SnoozeManager::wakeUpNow(Akonadi::Item::Id id)
     }
     startWakeUpJob(*info);
     rearmTimer();
+}
+
+void SnoozeManager::cancelSnooze(Akonadi::Item::Id id)
+{
+    SnoozeInfo info;
+    if (const SnoozeInfo *knownInfo = searchInfo(id)) {
+        info = *knownInfo;
+    } else {
+        // Not indexed (any more): still clean the item up, a stale attribute would keep it hidden.
+        info.setItemId(id);
+        info.setWakeUpDateTime(QDateTime::currentDateTimeUtc());
+    }
+    startWakeUpJob(info, true);
+    rearmTimer();
+}
+
+bool SnoozeManager::isSnoozed(Akonadi::Item::Id id) const
+{
+    return searchInfo(id) != nullptr;
 }
 
 void SnoozeManager::stopTimer()

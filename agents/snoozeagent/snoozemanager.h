@@ -50,6 +50,11 @@ public:
     /** Wake @p id up now, regardless of its deadline. */
     void wakeUpNow(Akonadi::Item::Id id);
 
+    /** Undo the snooze of @p id without notifying. */
+    void cancelSnooze(Akonadi::Item::Id id);
+
+    [[nodiscard]] bool isSnoozed(Akonadi::Item::Id id) const;
+
     [[nodiscard]] QString printDebugInfo() const;
 
 Q_SIGNALS:
@@ -59,7 +64,7 @@ private:
     void createSnoozeList();
     void rearmTimer();
     void processDue();
-    void startWakeUpJob(const Snooze::SnoozeInfo &info);
+    void startWakeUpJob(const Snooze::SnoozeInfo &info, bool silent = false);
     void slotWakeUpJobFinished(Akonadi::Item::Id id);
     void stopTimer();
     void removeInfo(Akonadi::Item::Id id);

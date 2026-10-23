@@ -34,6 +34,11 @@ bool SnoozeWakeUpJob::canStart() const
     return mInfo.isValid();
 }
 
+void SnoozeWakeUpJob::setSilent(bool silent)
+{
+    mSilent = silent;
+}
+
 void SnoozeWakeUpJob::start()
 {
     if (!canStart()) {
@@ -85,7 +90,7 @@ void SnoozeWakeUpJob::slotUnlinkDone(KJob *job)
 void SnoozeWakeUpJob::modifyItem()
 {
     mItem.removeAttribute<MailCommon::SnoozeAttribute>();
-    if (SnoozeAgentSettings::self()->markAsUnreadOnWakeUp()) {
+    if (!mSilent && SnoozeAgentSettings::self()->markAsUnreadOnWakeUp()) {
         mItem.clearFlag(Akonadi::MessageFlags::Seen);
     }
     auto modifyJob = new Akonadi::ItemModifyJob(mItem, this);
@@ -99,8 +104,13 @@ void SnoozeWakeUpJob::slotItemModifyDone(KJob *job)
         failed(job->errorString());
         return;
     }
-    notifyUser();
     Q_EMIT wakeUpDone();
+    if (mSilent) {
+        deleteLater();
+    } else {
+        // The notification deletes the job once it is closed.
+        notifyUser();
+    }
 }
 
 void SnoozeWakeUpJob::failed(const QString &error)

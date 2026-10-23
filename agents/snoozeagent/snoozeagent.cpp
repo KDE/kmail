@@ -95,8 +95,7 @@ void SnoozeAgent::snoozeItem(qint64 itemId, qint64 wakeUpDateTime, const QString
 
 void SnoozeAgent::cancelSnooze(qint64 itemId)
 {
-    // TODO unlink, drop the attribute, forget the info -- without notifying.
-    Q_UNUSED(itemId)
+    mManager->cancelSnooze(itemId);
 }
 
 void SnoozeAgent::wakeUpNow(qint64 itemId)
@@ -118,7 +117,11 @@ void SnoozeAgent::itemsMoved(const Akonadi::Item::List &items,
 {
     // Moving a snoozed message by hand is an explicit "I am dealing with it
     // now": cancel the snooze rather than letting it pop back up later.
-    Q_UNUSED(items)
+    for (const Akonadi::Item &item : items) {
+        if (mManager->isSnoozed(item.id())) {
+            mManager->cancelSnooze(item.id());
+        }
+    }
 }
 
 void SnoozeAgent::doSetOnline(bool online)

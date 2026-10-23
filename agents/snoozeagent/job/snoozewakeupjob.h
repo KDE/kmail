@@ -31,6 +31,9 @@ public:
 
     [[nodiscard]] bool canStart() const;
 
+    /** Cancel rather than wake up: no notification, the unread flag is left alone. */
+    void setSilent(bool silent);
+
 Q_SIGNALS:
     void wakeUpDone();
     void wakeUpFailed(const QString &error);
@@ -47,4 +50,5 @@ private:
 
     const Snooze::SnoozeInfo mInfo;
     Akonadi::Item mItem;
+    bool mSilent = false;
 };
