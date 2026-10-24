@@ -100,13 +100,11 @@ void KActionMenuAccount::updateAccountMenu()
 
         for (const Akonadi::AgentInstance &type : lst) {
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
-#if 0 // TODO
             if (mAccountActivities && mAccountActivities->hasActivitySupport()) {
-                if (!mAccountActivities->filterAcceptsRow(type.activities())) {
+                if (type.activitiesEnabled() && !mAccountActivities->filterAcceptsRow(type.activities())) {
                     continue;
                 }
             }
-#endif
 #endif
             // Explicitly make a copy, as we're not changing values of the list but only
             // the local copy which is passed to action.
