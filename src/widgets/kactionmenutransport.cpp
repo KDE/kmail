@@ -66,7 +66,8 @@ void KActionMenuTransport::updateTransportMenu()
         for (MailTransport::Transport *transport : transports) {
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
             if (mTransportActivities) {
-                if (mTransportActivities->hasActivitySupport() && !mTransportActivities->filterAcceptsRow(transport->activities())) {
+                if (mTransportActivities->hasActivitySupport() && transport->activitiesEnabled()
+                    && !mTransportActivities->filterAcceptsRow(transport->activities())) {
                     continue;
                 }
             }
