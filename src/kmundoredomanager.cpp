@@ -169,3 +169,5 @@ QString KMUndoInfoChangeStatusItems::actionText() const
 {
     return i18n("Change Messages Status");
 }
+
+#include "moc_kmundoredomanager.cpp"

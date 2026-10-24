@@ -46,3 +46,5 @@ bool SnoozeFilterProxyModel::filterAcceptsRow(int row, const QModelIndex &parent
     const auto *attr = item.attribute<MailCommon::SnoozeAttribute>();
     return !attr || attr->wakeUpDateTime() <= QDateTime::currentDateTimeUtc();
 }
+
+#include "moc_snoozefilterproxymodel.cpp"
