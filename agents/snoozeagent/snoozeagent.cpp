@@ -181,9 +181,8 @@ void SnoozeAgent::retrieveItems(const Akonadi::Collection &collection)
     itemsRetrievedIncremental({}, {});
 }
 
-bool SnoozeAgent::retrieveItems(const Akonadi::Item::List &items, const QSet<QByteArray> &parts)
+bool SnoozeAgent::retrieveItems(const Akonadi::Item::List &items, [[maybe_unused]] const QSet<QByteArray> &parts)
 {
-    Q_UNUSED(parts)
     qCWarning(SNOOZEAGENT_LOG) << "retrieveItems() called for" << items.count() << "items but we can't own any items! This is a bug in Akonadi";
     return false;
 }
