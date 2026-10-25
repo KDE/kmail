@@ -104,6 +104,7 @@ using KMail::MailServiceImpl;
 
 #include "searchdialog/searchdescriptionattribute.h"
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
+#include "activities/accountactivities.h"
 #include "activities/activitiesmanager.h"
 #endif
 #if KMAIL_WITH_KUSERFEEDBACK
@@ -305,7 +306,16 @@ void KMKernel::checkMail() // might create a new reader but won't show!!
     }
 
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    const auto accountActivities = ActivitiesManager::self()->accountActivities();
+#endif
     for (Akonadi::AgentInstance &agent : lst) {
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+        if (accountActivities && accountActivities->hasActivitySupport() && agent.activitiesEnabled()
+            && !accountActivities->filterAcceptsRow(agent.activities())) {
+            continue;
+        }
+#endif
         const QString id = agent.identifier();
         if (const KConfigGroup group = resourceConfigGroup(id); group.readEntry("IncludeInManualChecks", true)) {
             if (!agent.isOnline()) {
