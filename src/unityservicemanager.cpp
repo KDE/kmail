@@ -5,6 +5,7 @@
 */
 
 #include "unityservicemanager.h"
+#include "config-kmail.h"
 
 #include "kmail_debug.h"
 #include "kmkernel.h"
@@ -24,6 +25,12 @@
 #include <KMime/Message>
 #include <chrono>
 
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+#include "activities/accountactivities.h"
+#include "activities/activitiesmanager.h"
+#include <Akonadi/AgentManager>
+#endif
+
 using namespace std::chrono_literals;
 using namespace Qt::Literals::StringLiterals;
 
@@ -39,6 +46,12 @@ UnityServiceManager::UnityServiceManager(QObject *parent)
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionRemoved, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &UnityServiceManager::initListOfCollection);
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    connect(ActivitiesManager::self()->accountActivities(),
+            &Akonadi::AccountActivitiesAbstract::activitiesChanged,
+            this,
+            &UnityServiceManager::initListOfCollection);
+#endif
     initListOfCollection();
 }
 
@@ -64,12 +77,28 @@ bool UnityServiceManager::excludeFolder(const Akonadi::Collection &collection) c
     return false;
 }
 
+bool UnityServiceManager::excludeFromActivities(const Akonadi::Collection &collection) const
+{
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    if (const Akonadi::AgentInstance instance = Akonadi::AgentManager::self()->instance(collection.resource()); instance.activitiesEnabled()) {
+        return !ActivitiesManager::self()->accountActivities()->filterAcceptsRow(instance.activities());
+    }
+#else
+    Q_UNUSED(collection)
+#endif
+    return false;
+}
+
 void UnityServiceManager::unreadMail(const QAbstractItemModel *model, const QModelIndex &parentIndex)
 {
     const int rowCount = model->rowCount(parentIndex);
     for (int row = 0; row < rowCount; ++row) {
         const QModelIndex index = model->index(row, 0, parentIndex);
-        if (const auto collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>(); !excludeFolder(collection)) {
+        const auto collection = model->data(index, Akonadi::EntityTreeModel::CollectionRole).value<Akonadi::Collection>();
+        if (excludeFromActivities(collection)) {
+            continue;
+        }
+        if (!excludeFolder(collection)) {
             const Akonadi::CollectionStatistics statistics = collection.statistics();
             if (const qint64 count = qMax(0LL, statistics.unreadCount()); count > 0) {
                 if (!ignoreNewMailInFolder(collection)) {

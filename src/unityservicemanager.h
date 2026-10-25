@@ -30,6 +30,7 @@ public:
     void toggleSystemTray(QWidget *parent);
     void initListOfCollection();
     [[nodiscard]] bool excludeFolder(const Akonadi::Collection &collection) const;
+    [[nodiscard]] bool excludeFromActivities(const Akonadi::Collection &collection) const;
     [[nodiscard]] bool ignoreNewMailInFolder(const Akonadi::Collection &collection);
     void updateCount();
 
