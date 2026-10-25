@@ -1247,6 +1247,9 @@ void KMKernel::slotShowConfigurationDialog()
 
 void KMKernel::slotConfigChanged()
 {
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    ActivitiesManager::self()->setEnabled(KMailSettings::self()->plasmaActivitySupport());
+#endif
     Q_EMIT configChanged();
 }
 
