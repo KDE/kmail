@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2025-03-03 20:07+0700\n"
 "Last-Translator: Pongsakorn S. <kde@xerusion.me>\n"
 "Language-Team: Thai\n"
@@ -3690,7 +3690,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "ที่อยู่อีเมลไม่ถูกต้อง"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3699,14 +3699,14 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
 "with the configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3715,33 +3715,33 @@ msgid ""
 "verify signatures made with this configuration."
 msgstr ""
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
 "configured email address for this identity (%1)."
 msgstr ""
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "ไม่พบที่อยู่อีเมลในกุญแจ/ใบรับรองอิเล็กทรอนิกส์"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "แฟ้มลายเซ็นใช้งานไม่ได้"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "แก้ไขการแสดงตัว \"%1\""
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3753,13 +3753,13 @@ msgstr ""
 "ยังไม่มีโฟลเดอร์กำหนดเองของฉบับร่างสำหรับการแสดงตัว \"%1\" (ในตอนนี้); "
 "ดังนั้นจะทำการใช้โฟลเดอร์ฉบับร่างตัวปริยายแทน"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "เปลี่ยนชื่อ..."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"

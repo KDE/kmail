@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2014-03-26 13:37+0200\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -3824,7 +3824,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Adresă de e-mail eronată"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3838,7 +3838,7 @@ msgstr ""
 "Acest lucru poate să genereze mesaje de avertizare la primirea mesajelor de "
 "la dumneavoastră atunci când destinatarul încearcă să verifice semnătura."
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3848,7 +3848,7 @@ msgstr ""
 "identificator de utilizator cu adresa de e-mail configurată pentru această "
 "identitate (%1)."
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3862,7 +3862,7 @@ msgstr ""
 "Acest lucru poate să genereze mesaje de avertizare la primirea mesajelor de "
 "la dumneavoastră atunci când destinatarul încearcă să verifice semnătura."
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3872,26 +3872,26 @@ msgstr ""
 "identificator de utilizator cu adresa de e-mail configurată pentru această "
 "identitate (%1)."
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Adresa de e-mail nu există în cheie/certificat"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Fișierul semnătură nu este valid"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Editare identitate „%1”"
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3903,13 +3903,13 @@ msgstr ""
 "Dosarul \"ciorne\" al identității „%1” nu mai există. De aceea pentru ciorne "
 "va fi utilizat dosarul implicit."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Create..."
 msgid "Create…"
 msgstr "Creează..."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Edit"
 msgid "Edit…"

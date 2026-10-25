@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2010-07-20 20:15+0800\n"
 "Last-Translator: Sharuzzaman Ahmat Raslan <sharuzzaman@gmail.com>\n"
 "Language-Team: Malay <kedidiemas@yahoogroups.com>\n"
@@ -3811,7 +3811,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Alamat E-mel Tidak Sah"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3825,7 +3825,7 @@ msgstr ""
 "Ini mungkin menyebabkan mesej amaran kepada penerima semasa cuba mengesahkan "
 "tandatangan yang dibuat menggunakan konfigurasi ini."
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3835,7 +3835,7 @@ msgstr ""
 "sebarang ID pengguna dengan alamat e-mel yang dikonfigurasi bagi identiti "
 "ini (%1)."
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3848,7 +3848,7 @@ msgstr ""
 "Ini mungkin menyebabkan mesej amaran di pihak penerima semasa cuba "
 "mengesahkan tandatangan yang dibuat menggunakan konfigurasi ini."
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3857,26 +3857,26 @@ msgstr ""
 "Salah satu sijil penyulitan S/MIME yang dikonfigurasi tidak mengandungi "
 "alamat e-mel yang dikonfigurasi dengan identiti ini (%1)."
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Alamat E-mel Tidak Ditemui Dalam Kekunci/Sijil"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Fail tandatangan  tidak sah"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Edit Identiti \"%1\""
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3888,13 +3888,13 @@ msgstr ""
 "Folder draf langganan untuk identiti \"%1\" tidak wujud (lagi); oleh itu, "
 "folder draf piawai akan digunakan."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Namakan semula..."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Keluar"

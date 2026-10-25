@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2007-09-10 16:41+0545\n"
 "Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -3860,7 +3860,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "अवैध इमेल ठेगाना"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3873,7 +3873,7 @@ msgstr ""
 "यसको परिणाम स्वरूप प्रापक पक्षले यो कन्फिगरेसनको हस्ताक्षर रुजु गर्ने प्रयास गर्दा चेतावनी "
 "सन्देश देखिन सक्छ ।"
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3882,7 +3882,7 @@ msgstr ""
 "कन्फिगर गरिएको एउटा OpenPGP गुप्तिकरण कुञ्जीले पहिचान (%1) का लागि कन्फिगर गरिएको "
 "इमेल ठेगानासँग कुनै पनि प्रयोगकर्ता आईडी समावेश गर्दैन ।"
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3895,7 +3895,7 @@ msgstr ""
 "यसको परिणाम स्वरूप प्रापक पक्षले यो कन्फिगरेसनको हस्ताक्षर रुजु गर्ने प्रयास गर्दा चेतावनी "
 "सन्देश देखिन सक्छ ।"
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3904,26 +3904,26 @@ msgstr ""
 "कन्फिगर गरिएको एउटा S/MIME गुप्तिकरण प्रमाणपत्रले पहिचान (%1) का लागि कन्फिगर "
 "गरिएको इमेल ठेगाना समावेश गर्दैन ।"
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "कुञ्जी/प्रमाणपत्रमा इमेल ठेगाना फेला परेन"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "हस्ताक्षर फाइल वैध छैन"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "परिचय \"%1\" सम्पादन गर्नुहोस्"
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3935,13 +3935,13 @@ msgstr ""
 "परिचय \"%1\" का लागि अनुकूल ड्राफ्ट फोल्डर अवस्थित छैन (यसपछि); त्यसैले, पूर्वनिर्धारित "
 "ड्राफ्ट फोल्डर प्रयोग गरिन्छ ।"
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "पुन: नामकरण गर्नुहोस्..."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "बाहिरिनुहोस्"

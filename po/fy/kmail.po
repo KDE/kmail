@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2007-04-27 11:01+0100\n"
 "Last-Translator: Berend Ytsma <berendy@gmail.com>\n"
 "Language-Team: Frysk <kde-i18n-fry@kde.org>\n"
@@ -3898,7 +3898,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Unjildich e-postadres"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3911,7 +3911,7 @@ msgstr ""
 "Dit kin liede ta warskôgings wannear jo besykje om hântekenings te "
 "ferifiearjen mei dizze ynstellings."
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3920,7 +3920,7 @@ msgstr ""
 "Ien fan de ynstelde OpenPGP-kaaien foar fersifering befettet gjin brûkers-id "
 "mei in e-postadres foar dizze identiteit (%1)."
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3933,7 +3933,7 @@ msgstr ""
 "Dit kin liede ta warskôgings wannear jo besykje om hântekenings te "
 "ferifiearjen mei dizze ynstellings."
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3942,26 +3942,26 @@ msgstr ""
 "Ien fan de ynstelde S/MIME-fersiferingsertifikaten befettet gjin brûkers-id "
 "mei in e-postadres foar dizze identiteit (%1)."
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "E-postadres wurdt net fûn yn de kaaien/sertifikaten"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "De hântekeningstriem is ûnjildich"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Identiteit \"%1\" bewurkje"
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3973,13 +3973,13 @@ msgstr ""
 "De oanpaste ûntwerpmap foar identiteit \"%1\" bestiet net (mear). Ynstee "
 "dêrfan sil de standert ûntwerpmap brûkt wurde."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Omneame..."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 #| msgid "Exit"
 msgid "Edit…"

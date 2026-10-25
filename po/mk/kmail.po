@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2007-02-28 14:08+0100\n"
 "Last-Translator: Bozidar Proevski <bobibobi@freemail.com.mk>\n"
 "Language-Team: Macedonian <mkde-l10n@lists.sourceforge.net>\n"
@@ -3876,7 +3876,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Невалидна е-пошт. адреса"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3889,7 +3889,7 @@ msgstr ""
 "Ова може да предизвика пораки со предупредување на приемната страна при обид "
 "за се верификуваат потписите направени со оваа конфигурација."
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3898,7 +3898,7 @@ msgstr ""
 "Еден од конфигурираните OpenPGP-клучеви за криптирање не содржи никаков ид. "
 "на корисник со конфигурираната е-пошт адреса за овој идентитет (%1)."
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3911,7 +3911,7 @@ msgstr ""
 "Ова може да предизвика пораки со предупредување на приемната страна при обид "
 "за се верификуваат потписите направени со оваа конфигурација."
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3920,26 +3920,26 @@ msgstr ""
 "Еден од конфигурираните S/MIME-сертификати за криптирање не ја содржи "
 "конфигурираната е-пошт адреса за овој идентитет (%1)."
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, fuzzy, kde-format
 #| msgid "Email Address Not Found in Key/Certificates"
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr "Не е пронајдена е-пошт. адреса во клучевите/сертификатите"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Датотеката со потпис не е валидна"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, fuzzy, kde-format
 #| msgid "Edit Identity \"%1\""
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Уредете го идентитетот „%1“"
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, fuzzy, kde-format
 #| msgid ""
 #| "The custom drafts folder for identity \"%1\" does not exist (anymore); "
@@ -3951,13 +3951,13 @@ msgstr ""
 "Сопствената папка за нацрти за идентитетот „%1“ не постои (повеќе). Поради "
 "тоа ќе се користи стандардната папка за нацрти."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, fuzzy, kde-format
 #| msgid "Rename..."
 msgid "Create…"
 msgstr "Преименувај..."
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, fuzzy, kde-format
 msgid "Edit…"
 msgstr "Излези"

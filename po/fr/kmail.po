@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-22 00:51+0000\n"
+"POT-Creation-Date: 2026-10-25 00:51+0000\n"
 "PO-Revision-Date: 2026-10-07 10:14+0200\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
@@ -3615,7 +3615,7 @@ msgctxt "@title:window"
 msgid "Invalid Email Address"
 msgstr "Adresse de courriel non valable"
 
-#: identity/identitydialog.cpp:932
+#: identity/identitydialog.cpp:931
 #, kde-format
 msgid ""
 "One of the configured OpenPGP signing keys does not contain any user ID with "
@@ -3629,7 +3629,7 @@ msgstr ""
 "Ceci peut occasionner des messages d'avertissement du côté destinataire en "
 "essayant de vérifier les signatures effectuées avec cette configuration."
 
-#: identity/identitydialog.cpp:941
+#: identity/identitydialog.cpp:940
 #, kde-format
 msgid ""
 "One of the configured OpenPGP encryption keys does not contain any user ID "
@@ -3639,7 +3639,7 @@ msgstr ""
 "d'utilisateur avec l'adresse électronique configurée pour cette identité "
 "(%1)."
 
-#: identity/identitydialog.cpp:948
+#: identity/identitydialog.cpp:947
 #, kde-format
 msgid ""
 "One of the configured S/MIME signing certificates does not contain the "
@@ -3652,7 +3652,7 @@ msgstr ""
 "Ceci peut occasionner des messages d'avertissement du côté destinataire en "
 "essayant de vérifier les signatures effectuées avec cette configuration."
 
-#: identity/identitydialog.cpp:957
+#: identity/identitydialog.cpp:956
 #, kde-format
 msgid ""
 "One of the configured S/MIME encryption certificates does not contain the "
@@ -3661,25 +3661,25 @@ msgstr ""
 "Un des certificats de signature S/MIME configurés ne contient pas l'adresse "
 "électronique configurée pour cette identité (%1)."
 
-#: identity/identitydialog.cpp:967
+#: identity/identitydialog.cpp:966
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address Not Found in Key/Certificates"
 msgstr ""
 "Impossible de trouver l'adresse électronique dans les clés / certificats"
 
-#: identity/identitydialog.cpp:978
+#: identity/identitydialog.cpp:977
 #, kde-format
 msgid "The signature file is not valid"
 msgstr "Le fichier de signature n'est pas valable"
 
-#: identity/identitydialog.cpp:993
+#: identity/identitydialog.cpp:992
 #, kde-format
 msgctxt "@title:window"
 msgid "Edit Identity \"%1\""
 msgstr "Modifier l'identité « %1 »"
 
-#: identity/identitydialog.cpp:1074
+#: identity/identitydialog.cpp:1073
 #, kde-format
 msgid ""
 "Some custom folder for identity does not exist (anymore); therefore, default "
@@ -3688,12 +3688,12 @@ msgstr ""
 "Un dossier personnalisé pour cette identité n'existe pas (ou plus) ; de ce "
 "fait, le dossier par défaut sera utilisé."
 
-#: identity/identitydialog.cpp:1326
+#: identity/identitydialog.cpp:1324
 #, kde-format
 msgid "Create…"
 msgstr "Créer…"
 
-#: identity/identitydialog.cpp:1328
+#: identity/identitydialog.cpp:1326
 #, kde-format
 msgid "Edit…"
 msgstr "Modifier…"
