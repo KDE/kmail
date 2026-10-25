@@ -344,6 +344,7 @@ QStringList KMKernel::accounts() const
     QStringList accountLst;
     const Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
     accountLst.reserve(lst.count());
+
     for (const Akonadi::AgentInstance &type : lst) {
         // Explicitly make a copy, as we're not changing values of the list but only
         // the local copy which is passed to action.
@@ -772,7 +773,16 @@ bool KMKernel::isOffline()
 void KMKernel::verifyAccounts()
 {
     Akonadi::AgentInstance::List lst = MailCommon::Util::agentInstances();
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    const auto accountActivities = ActivitiesManager::self()->accountActivities();
+#endif
     for (Akonadi::AgentInstance &agent : lst) {
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+        if (accountActivities && accountActivities->hasActivitySupport() && agent.activitiesEnabled()
+            && !accountActivities->filterAcceptsRow(agent.activities())) {
+            continue;
+        }
+#endif
         const KConfigGroup group = resourceConfigGroup(agent.identifier());
         if (group.readEntry("CheckOnStartup", false)) {
             if (!agent.isOnline()) {
