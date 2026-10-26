@@ -47,6 +47,7 @@ UnityServiceManager::UnityServiceManager(QObject *parent)
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionSubscribed, this, &UnityServiceManager::initListOfCollection);
     connect(kmkernel->folderCollectionMonitor(), &Akonadi::Monitor::collectionUnsubscribed, this, &UnityServiceManager::initListOfCollection);
 #if KMAIL_HAVE_ACTIVITY_SUPPORT
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceActivitiesChanged, this, &UnityServiceManager::initListOfCollection);
     connect(ActivitiesManager::self()->accountActivities(),
             &Akonadi::AccountActivitiesAbstract::activitiesChanged,
             this,
