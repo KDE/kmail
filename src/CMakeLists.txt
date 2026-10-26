@@ -361,6 +361,8 @@ target_sources(
         historyclosedreader/historyclosedreadermenu.cpp
         snooze/snoozefilterproxymodel.h
         snooze/snoozefilterproxymodel.cpp
+        snooze/snoozemenu.h
+        snooze/snoozemenu.cpp
 )
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
@@ -622,13 +624,6 @@ target_link_libraries(
 
 if(HAVE_TEXT_TO_SPEECH_SUPPORT OR HAVE_SPEECH_TO_TEXT)
     kcoreaddons_add_plugin(kcm_kmail_accessibility SOURCES configuredialog/kcm_kmail_accessibility.cpp INSTALL_NAMESPACE "pim6/kcms/kmail")
-
-    target_sources(
-        kcm_kmail_accessibility
-        PRIVATE
-            snooze/snoozemenu.h
-            snooze/snoozemenu.cpp
-    )
     target_link_libraries(
         kcm_kmail_accessibility
         kcm_kmail_static

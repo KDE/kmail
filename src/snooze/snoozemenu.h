@@ -5,13 +5,29 @@
 */
 
 #pragma once
+#include "kmail_private_export.h"
+#include <KActionMenu>
+class QAction;
 
-#include <QObject>
-
-class SnoozeMenu : public QObject
+class KMAILTESTS_TESTS_EXPORT SnoozeMenu : public KActionMenu
 {
     Q_OBJECT
 public:
+    enum class SnoozeType : uint8_t {
+        Unknown = 0,
+        OneHourLater,
+        HeightHourLater,
+        Tomorrow,
+        NextWeek,
+        Custom,
+    };
+
     explicit SnoozeMenu(QObject *parent = nullptr);
     ~SnoozeMenu() override;
+
+Q_SIGNALS:
+    void snoozeRequested(SnoozeMenu::SnoozeType type);
+
+private:
+    KMAIL_NO_EXPORT void slotSnoozeRequested(QAction *act);
 };
