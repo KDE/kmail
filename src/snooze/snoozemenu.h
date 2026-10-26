@@ -16,11 +16,12 @@ public:
     enum class SnoozeType : uint8_t {
         Unknown = 0,
         OneHourLater,
-        HeightHourLater,
+        EightHoursLater,
         Tomorrow,
         NextWeek,
         Custom,
     };
+    Q_ENUM(SnoozeType)
 
     explicit SnoozeMenu(QObject *parent = nullptr);
     ~SnoozeMenu() override;

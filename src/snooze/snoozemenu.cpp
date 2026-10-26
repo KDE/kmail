@@ -17,27 +17,31 @@ SnoozeMenu::SnoozeMenu(QObject *parent)
     auto actionGroup = new QActionGroup(this);
     actionGroup->setExclusive(false);
 
-    /*
-        auto act = new KToggleAction(i18nc("@action", "Prefer &HTML to Plain Text"), this);
-        act->setObjectName("prefer-html-action"_L1);
-        act->setData(MessageViewer::Viewer::Html);
-        actionGroup->addAction(act);
-        subMenu->addAction(act);
+    auto act = new QAction(i18nc("@action", "One hour later"), this);
+    act->setData(QVariant::fromValue(SnoozeMenu::SnoozeType::OneHourLater));
+    actionGroup->addAction(act);
+    subMenu->addAction(act);
 
-        act = new KToggleAction(i18nc("@action", "Prefer &Plain Text to HTML"), this);
-        act->setData(MessageViewer::Viewer::Text);
-        act->setObjectName("prefer-text-action"_L1);
-        actionGroup->addAction(act);
-        subMenu->addAction(act);
+    act = new QAction(i18nc("@action", "Eight hours later"), this);
+    act->setData(QVariant::fromValue(SnoozeMenu::SnoozeType::EightHoursLater));
+    actionGroup->addAction(act);
+    subMenu->addAction(act);
 
-        act = new KToggleAction(i18nc("@action", "Use Global Setting"), this);
-        act->setObjectName("use-global-setting-action"_L1);
-        act->setData(MessageViewer::Viewer::UseGlobalSetting);
-        actionGroup->addAction(act);
-        subMenu->addAction(act);
-        connect(actionGroup, &QActionGroup::triggered, this, &DisplayMessageFormatActionMenu::slotChangeDisplayMessageFormat);
-        updateMenu();
-    */
+    act = new QAction(i18nc("@action", "Tomorrow"), this);
+    act->setData(QVariant::fromValue(SnoozeMenu::SnoozeType::Tomorrow));
+    actionGroup->addAction(act);
+    subMenu->addAction(act);
+
+    act = new QAction(i18nc("@action", "Next week"), this);
+    act->setData(QVariant::fromValue(SnoozeMenu::SnoozeType::NextWeek));
+    actionGroup->addAction(act);
+    subMenu->addAction(act);
+
+    act = new QAction(i18nc("@action", "Custom…"), this);
+    act->setData(QVariant::fromValue(SnoozeMenu::SnoozeType::Custom));
+    actionGroup->addAction(act);
+    subMenu->addAction(act);
+
     connect(actionGroup, &QActionGroup::triggered, this, &SnoozeMenu::slotSnoozeRequested);
 }
 
@@ -45,13 +49,8 @@ SnoozeMenu::~SnoozeMenu() = default;
 
 void SnoozeMenu::slotSnoozeRequested(QAction *act)
 {
-    /*
-    if (MessageViewer::Viewer::DisplayFormatMessage format = static_cast<MessageViewer::Viewer::DisplayFormatMessage>(act->data().toInt());
-        format != mDisplayMessageFormat) {
-        mDisplayMessageFormat = format;
-        Q_EMIT snoozeRequested(format);
-    }
-    */
+    const SnoozeMenu::SnoozeType selectedType = act->data().value<SnoozeMenu::SnoozeType>();
+    Q_EMIT snoozeRequested(selectedType);
 }
 
 #include "moc_snoozemenu.cpp"
