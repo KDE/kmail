@@ -389,17 +389,15 @@ if(TARGET KPim6::PimCommonActivities)
         endif()
     endif()
     if(OPTION_USE_PLASMA_ACTIVITIES)
-        if(NOT WIN32 AND NOT APPLE)
-            find_package(PlasmaActivities "6.5.0")
-            set_package_properties(
-                PlasmaActivities
-                PROPERTIES
-                    DESCRIPTION
-                        "Allow to compile with plasma activities"
-                    TYPE
-                        OPTIONAL
-            )
-        endif()
+        find_package(PlasmaActivities "6.5.0")
+        set_package_properties(
+            PlasmaActivities
+            PROPERTIES
+                DESCRIPTION
+                    "Allow to compile with plasma activities"
+                TYPE
+                    OPTIONAL
+        )
 
         if(TARGET Plasma::Activities)
             set(KMAIL_HAVE_ACTIVITY_SUPPORT TRUE)
