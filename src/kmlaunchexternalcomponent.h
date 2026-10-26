@@ -27,6 +27,7 @@ public:
     void slotFilterLogViewer();
 
     void slotShowNotificationHistory();
+    void slotConfigureSnooze();
 
 private:
     void createAgentConfigurationDialog(const QString &agentName, const QString &errorMessage);

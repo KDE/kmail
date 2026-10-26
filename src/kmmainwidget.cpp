@@ -3061,6 +3061,13 @@ void KMMainWidget::setupActions()
         actionCollection()->addAction(u"followup_reminder_messages"_s, action);
         connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureFollowupReminder);
     }
+
+    {
+        auto action = new QAction(i18nc("@action", "&Configure Snooze…"), this);
+        actionCollection()->addAction(u"snooze_messages"_s, action);
+        connect(action, &QAction::triggered, mLaunchExternalComponent, &KMLaunchExternalComponent::slotConfigureSnooze);
+    }
+
     {
         auto action = new QAction(i18nc("@action", "Expand All"), this);
         actionCollection()->addAction(u"expand_all"_s, action);

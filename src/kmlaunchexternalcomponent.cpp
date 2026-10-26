@@ -63,6 +63,11 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
     createAgentConfigurationDialog(u"akonadi_followupreminder_agent"_s, i18n("Followup Reminder Agent was not registered."));
 }
 
+void KMLaunchExternalComponent::slotConfigureSnooze()
+{
+    createAgentConfigurationDialog(u"akonadi_snooze_agent"_s, i18n("Snooze Agent was not registered."));
+}
+
 void KMLaunchExternalComponent::slotStartCertManager()
 {
 #if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
