@@ -309,7 +309,7 @@ void ConfigurePluginsListWidget::initialize()
 void ConfigurePluginsListWidget::initializeAgentPlugins()
 {
     mPluginUtilDataList.clear();
-    mPluginUtilDataList.reserve(5);
+    mPluginUtilDataList.reserve(6);
     const Akonadi::AgentType::List lstAgent = Akonadi::AgentManager::self()->types();
     createAgentPluginData(u"akonadi_sendlater_agent"_s, u"/SendLaterAgent"_s, lstAgent);
     createAgentPluginData(u"akonadi_archivemail_agent"_s, u"/ArchiveMailAgent"_s, lstAgent);
