@@ -84,7 +84,7 @@ void KMKnotify::setCurrentNotification(const QString &name)
 
 void KMKnotify::initCombobox()
 {
-    static constexpr std::array<QLatin1StringView, 8> lstNotify = {
+    static constexpr std::array<QLatin1StringView, 9> lstNotify = {
         "kmail2"_L1,
         "akonadi_maildispatcher_agent"_L1,
         "akonadi_mailfilter_agent"_L1,
@@ -92,6 +92,7 @@ void KMKnotify::initCombobox()
         "akonadi_sendlater_agent"_L1,
         "akonadi_newmailnotifier_agent"_L1,
         "akonadi_followupreminder_agent"_L1,
+        "akonadi_snooze_agent"_L1,
         "messageviewer"_L1,
     };
     for (const QLatin1StringView notify : lstNotify) {
