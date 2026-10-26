@@ -24,6 +24,13 @@ KActionMenuAccount::KActionMenuAccount(QObject *parent)
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceNameChanged, this, &KActionMenuAccount::forceUpdateAccountMenu);
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &KActionMenuAccount::forceUpdateAccountMenu);
     connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &KActionMenuAccount::forceUpdateAccountMenu);
+#if KMAIL_HAVE_ACTIVITY_SUPPORT
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceActivitiesChanged, this, [this]() {
+        if (mAccountActivities) {
+            forceUpdateAccountMenu();
+        }
+    });
+#endif
 }
 
 KActionMenuAccount::~KActionMenuAccount() = default;
