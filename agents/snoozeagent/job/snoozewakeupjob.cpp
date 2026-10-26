@@ -43,7 +43,7 @@ void SnoozeWakeUpJob::start()
 {
     if (!canStart()) {
         qCWarning(SNOOZEAGENT_LOG) << "Impossible to start SnoozeWakeUpJob";
-        deleteLater();
+        failed(u"Impossible to start SnoozeWakeUpJob"_s);
         return;
     }
     doStart();
