@@ -29,6 +29,9 @@ ConfigureDialog::ConfigureDialog(QWidget *parent, bool modal)
     for (const KPluginMetaData &metaData : availablePlugins) {
         addModule(metaData);
     }
+    if (const auto plugin = KPluginMetaData::findPluginById(u"pim6/kcms/akonadimcpserver"_s, u"kcm_akonadi_mcp_protocol"_s); plugin.isValid()) {
+        addModule(plugin);
+    }
 
     connect(button(QDialogButtonBox::Ok), &QPushButton::clicked, this, &ConfigureDialog::slotOk);
     connect(button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &ConfigureDialog::slotApply);
