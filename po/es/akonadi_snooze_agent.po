@@ -1,0 +1,105 @@
+# Spanish translations for akonadi_snooze_agent.po package.
+# Copyright (C) 2026 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# Automatically generated, 2026.
+#
+# SPDX-FileCopyrightText: 2026 Eloy Cuadra <ecuadra@eloihr.net>
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_snooze_agent\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"PO-Revision-Date: 2026-10-27 23:06+0100\n"
+"Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
+"Language-Team: Spanish <kde-l10n-es@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 26.08.2\n"
+
+#: snoozeagent.cpp:38
+#, kde-format
+msgid "Snooze Agent"
+msgstr "Agente de aplazamiento"
+
+#: snoozeagent.cpp:172
+#, kde-format
+msgid "Snoozed"
+msgstr "Aplazado"
+
+#: snoozeconfigurewidget.cpp:54
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "Eliminar"
+
+#: snoozeconfigurewidget.cpp:55
+#, kde-format
+msgctxt "@action:button"
+msgid "Wake Up Now"
+msgstr "Reactivar ahora"
+
+#: snoozeconfigurewidget.cpp:63
+#, kde-format
+msgctxt "@title:column send mail from"
+msgid "From"
+msgstr "De"
+
+#: snoozeconfigurewidget.cpp:64
+#, kde-format
+msgctxt "@title:column mail subject"
+msgid "Subject"
+msgstr "Asunto"
+
+#: snoozeconfigurewidget.cpp:65
+#, kde-format
+msgctxt "@title:column when the message comes back"
+msgid "Wake Up"
+msgstr "Reactivar"
+
+#: snoozeconfigurewidget.cpp:135
+#, kde-format
+msgid ""
+"Do you want to unsnooze the selected message?\n"
+"It will come back without notification."
+msgid_plural ""
+"Do you want to unsnooze the %1 selected messages?\n"
+"They will come back without notification."
+msgstr[0] ""
+"¿Desea reactivar el mensaje seleccionado?\n"
+"Volverá a aparecer sin notificación."
+msgstr[1] ""
+"¿Desea reactivar los %1 mensajes seleccionados?\n"
+"Volverán a aparecer sin notificación."
+
+#: snoozeconfigurewidget.cpp:138
+#, kde-format
+msgctxt "@title:window"
+msgid "Unsnooze Messages"
+msgstr "Reactivar mensajes"
+
+#: snoozeconfigurewidget.cpp:139
+#, kde-format
+msgctxt "@action:button"
+msgid "Unsnooze"
+msgstr "Reactivar"
+
+#: snoozeconfigurewidget.cpp:177
+#, kde-format
+msgctxt "@action"
+msgid "Show Message"
+msgstr "Mostrar mensaje"
+
+#: snoozeconfigurewidget.cpp:180
+#, kde-format
+msgctxt "@action"
+msgid "Wake Up Now"
+msgstr "Reactivar ahora"
+
+#: snoozeconfigurewidget.cpp:181
+#, kde-format
+msgctxt "@action"
+msgid "Unsnooze"
+msgstr "Reactivar"

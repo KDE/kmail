@@ -18,14 +18,14 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-27 01:00+0000\n"
-"PO-Revision-Date: 2026-10-06 11:05+0200\n"
-"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"PO-Revision-Date: 2026-10-27 16:11+0100\n"
+"Last-Translator: freek <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 26.08.1\n"
+"X-Generator: Lokalize 25.04.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -997,7 +997,7 @@ msgstr "Ongelezen e-mail in takenbalk tonen"
 #: configuredialog/configureappearancepage.cpp:868
 #, kde-format
 msgid "Plasma activities"
-msgstr "Activiteiten van Plasma"
+msgstr "Plasma activiteiten"
 
 #: configuredialog/configureappearancepage.cpp:873
 #, kde-format
@@ -4539,10 +4539,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "Agent voor herinneren aan vervolgactie is niet geregistreerd."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "Agent voor later verzenden is niet geregistreerd."
+msgstr "Snooze-agent is niet geregistreerd."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5067,11 +5066,10 @@ msgid "Followup Reminder Messages…"
 msgstr "Berichten van herinneren aan vervolgactie…"
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "KMail &configureren…"
+msgstr "Snooze &configureren…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -6895,42 +6893,37 @@ msgstr "Specificeert het gebruikte beleid bij het weergeven van het beleid"
 #: snooze/snoozemenu.cpp:15
 #, kde-format
 msgid "Snooze"
-msgstr ""
+msgstr "Snooze"
 
 #: snooze/snoozemenu.cpp:20
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "Eén uur later"
 
 #: snooze/snoozemenu.cpp:25
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "Acht uur later"
 
 #: snooze/snoozemenu.cpp:30
-#, fuzzy, kde-format
-#| msgid "Tomorrow"
-#| msgid_plural "%1 days"
+#, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
 msgstr "Morgen"
 
 #: snooze/snoozemenu.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "Volge&nde bericht"
+msgstr "Volgende week"
 
 #: snooze/snoozemenu.cpp:40
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Eigen account…"
+msgstr "Aangepast…"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format

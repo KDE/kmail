@@ -1,0 +1,100 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: kdeorg\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"PO-Revision-Date: 2026-10-27 09:55\n"
+"Last-Translator: \n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: kdeorg\n"
+"X-Crowdin-Project-ID: 269464\n"
+"X-Crowdin-Language: zh-CN\n"
+"X-Crowdin-File: /kf6-trunk/messages/kmail/akonadi_snooze_agent.pot\n"
+"X-Crowdin-File-ID: 60613\n"
+
+#: snoozeagent.cpp:38
+#, kde-format
+msgid "Snooze Agent"
+msgstr "暂停提示代理"
+
+#: snoozeagent.cpp:172
+#, kde-format
+msgid "Snoozed"
+msgstr "已暂停提示"
+
+#: snoozeconfigurewidget.cpp:54
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "移除"
+
+#: snoozeconfigurewidget.cpp:55
+#, kde-format
+msgctxt "@action:button"
+msgid "Wake Up Now"
+msgstr "立即唤醒"
+
+#: snoozeconfigurewidget.cpp:63
+#, kde-format
+msgctxt "@title:column send mail from"
+msgid "From"
+msgstr "发件人"
+
+#: snoozeconfigurewidget.cpp:64
+#, kde-format
+msgctxt "@title:column mail subject"
+msgid "Subject"
+msgstr "主题"
+
+#: snoozeconfigurewidget.cpp:65
+#, kde-format
+msgctxt "@title:column when the message comes back"
+msgid "Wake Up"
+msgstr "唤醒"
+
+#: snoozeconfigurewidget.cpp:135
+#, kde-format
+msgid ""
+"Do you want to unsnooze the selected message?\n"
+"It will come back without notification."
+msgid_plural ""
+"Do you want to unsnooze the %1 selected messages?\n"
+"They will come back without notification."
+msgstr[0] ""
+"您要取消暂停这 %1 条已选消息吗？  \n"
+"它们将恢复提示，但不会发送通知。"
+
+#: snoozeconfigurewidget.cpp:138
+#, kde-format
+msgctxt "@title:window"
+msgid "Unsnooze Messages"
+msgstr "取消暂停提示消息"
+
+#: snoozeconfigurewidget.cpp:139
+#, kde-format
+msgctxt "@action:button"
+msgid "Unsnooze"
+msgstr "取消暂停提示"
+
+#: snoozeconfigurewidget.cpp:177
+#, kde-format
+msgctxt "@action"
+msgid "Show Message"
+msgstr "显示消息"
+
+#: snoozeconfigurewidget.cpp:180
+#, kde-format
+msgctxt "@action"
+msgid "Wake Up Now"
+msgstr "立即唤醒"
+
+#: snoozeconfigurewidget.cpp:181
+#, kde-format
+msgctxt "@action"
+msgid "Unsnooze"
+msgstr "取消暂停提示"

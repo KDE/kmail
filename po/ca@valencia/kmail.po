@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-27 01:00+0000\n"
-"PO-Revision-Date: 2026-10-06 09:43+0200\n"
+"PO-Revision-Date: 2026-10-27 10:44+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -4528,10 +4528,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "L'agent de recordatoris de seguiment no està registrat."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "L'agent d'enviar més tard no està registrat."
+msgstr "L'agent de posposició no està registrat."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5056,11 +5055,10 @@ msgid "Followup Reminder Messages…"
 msgstr "Missatges de recordatori de seguiment…"
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "&Configura KMail…"
+msgstr "&Configura la posposició…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -6892,40 +6890,37 @@ msgstr "Especifica la política utilitzada quan es mostra la política"
 #: snooze/snoozemenu.cpp:15
 #, kde-format
 msgid "Snooze"
-msgstr ""
+msgstr "Posposa"
 
 #: snooze/snoozemenu.cpp:20
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "Una hora després"
 
 #: snooze/snoozemenu.cpp:25
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "Huit hores després"
 
 #: snooze/snoozemenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "Demà"
 
 #: snooze/snoozemenu.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "Missatge se&güent"
+msgstr "Setmana següent"
 
 #: snooze/snoozemenu.cpp:40
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Compte personalitzat…"
+msgstr "Personalitza…"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format

@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-27 01:00+0000\n"
-"PO-Revision-Date: 2026-10-06 08:28+0200\n"
-"Last-Translator: Alexander Yavorskiy <kekcuha@gmail.com>\n"
+"PO-Revision-Date: 2026-10-27 07:46+0200\n"
+"Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -4574,10 +4574,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "Агент напоминаний об ответе не был зарегистрирован."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "Агент отложенной отправки не был зарегистрирован."
+msgstr "Агент отложенных писем не был зарегистрирован."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5116,11 +5115,10 @@ msgid "Followup Reminder Messages…"
 msgstr "Письма, оставшиеся без ответа…"
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "&Настроить KMail…"
+msgstr "&Настроить откладывание писем…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -6943,40 +6941,37 @@ msgstr "Определяет политику при её отображении
 #: snooze/snoozemenu.cpp:15
 #, kde-format
 msgid "Snooze"
-msgstr ""
+msgstr "Отложить"
 
 #: snooze/snoozemenu.cpp:20
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "На час"
 
 #: snooze/snoozemenu.cpp:25
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "На восемь часов"
 
 #: snooze/snoozemenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "До завтра"
 
 #: snooze/snoozemenu.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "Следующее &письмо"
+msgstr "До следующей недели"
 
 #: snooze/snoozemenu.cpp:40
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Другая учётная запись…"
+msgstr "Другое…"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format

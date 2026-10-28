@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-27 01:00+0000\n"
-"PO-Revision-Date: 2026-10-06 08:55+0300\n"
+"PO-Revision-Date: 2026-10-27 11:58+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -4556,10 +4556,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "Агент стеження за нагадуваннями не зареєстровано."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "Агент відкладеного надсилання не зареєстровано."
+msgstr "Агент відкладення не зареєстровано."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5105,11 +5104,10 @@ msgid "Followup Reminder Messages…"
 msgstr "Повідомлення стеження за нагадуваннями…"
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "Налашту&вати KMail…"
+msgstr "Налашту&вати відкладення…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -6946,40 +6944,37 @@ msgstr "Визначає правила, які буде показано у в�
 #: snooze/snoozemenu.cpp:15
 #, kde-format
 msgid "Snooze"
-msgstr ""
+msgstr "Нагадати пізніше"
 
 #: snooze/snoozemenu.cpp:20
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "На годину пізніше"
 
 #: snooze/snoozemenu.cpp:25
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "На вісім годин пізніше"
 
 #: snooze/snoozemenu.cpp:30
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "Завтра"
 
 #: snooze/snoozemenu.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "На&ступне повідомлення"
+msgstr "Наступний тиждень"
 
 #: snooze/snoozemenu.cpp:40
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Нетиповий обліковий запис…"
+msgstr "Нетипове…"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
