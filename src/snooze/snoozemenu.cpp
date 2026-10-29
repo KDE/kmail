@@ -8,6 +8,7 @@
 #include <KLocalizedString>
 #include <QActionGroup>
 #include <QMenu>
+#include <QTimeZone>
 
 SnoozeMenu::SnoozeMenu(QObject *parent)
     : KActionMenu{parent}
@@ -46,6 +47,27 @@ SnoozeMenu::SnoozeMenu(QObject *parent)
 }
 
 SnoozeMenu::~SnoozeMenu() = default;
+
+QDateTime SnoozeMenu::wakeUpDateTime(SnoozeType type, const QDateTime &now)
+{
+    // Messages snoozed until a later day pop back up at the start of the day.
+    const QTime morning(8, 0);
+    switch (type) {
+    case SnoozeType::OneHourLater:
+        return now.addSecs(3600);
+    case SnoozeType::EightHoursLater:
+        return now.addSecs(8 * 3600);
+    case SnoozeType::Tomorrow:
+        return {now.date().addDays(1), morning, now.timeZone()};
+    case SnoozeType::NextWeek:
+        // Next Monday, a week later when today is already Monday.
+        return {now.date().addDays(8 - now.date().dayOfWeek()), morning, now.timeZone()};
+    case SnoozeType::Unknown:
+    case SnoozeType::Custom:
+        break;
+    }
+    return {};
+}
 
 void SnoozeMenu::slotSnoozeRequested(QAction *act)
 {

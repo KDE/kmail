@@ -7,6 +7,7 @@
 #pragma once
 #include "kmail_private_export.h"
 #include <KActionMenu>
+#include <QDateTime>
 class QAction;
 
 class KMAILTESTS_TESTS_EXPORT SnoozeMenu : public KActionMenu
@@ -25,6 +26,9 @@ public:
 
     explicit SnoozeMenu(QObject *parent = nullptr);
     ~SnoozeMenu() override;
+
+    /** Local wake-up date computed from @p now; invalid for Custom/Unknown. */
+    [[nodiscard]] static QDateTime wakeUpDateTime(SnoozeType type, const QDateTime &now);
 
 Q_SIGNALS:
     void snoozeRequested(SnoozeMenu::SnoozeType type);
