@@ -195,6 +195,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
     , mCollectionSwitcherTreeViewManager(new CollectionSwitcherTreeViewManager(this))
+    , mSnoozeActionMenu(new SnoozeMenu(this))
 {
     // must be the first line of the constructor:
     mActionCollection = actionCollection;
@@ -3564,7 +3565,6 @@ void KMMainWidget::setupActions()
     connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::undoTextChanged, this, &KMMainWidget::slotUpdateUndoText);
     connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::redoTextChanged, this, &KMMainWidget::slotUpdateRedoText);
 
-    mSnoozeActionMenu = new SnoozeMenu(this);
     actionCollection()->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
     connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &KMMainWidget::slotSnoozeRequested);
 

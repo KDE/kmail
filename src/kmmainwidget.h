@@ -668,5 +668,5 @@ private:
     QAction *mClearFolderCacheAction = nullptr;
     HistoryClosedReaderMenu *mRestoreClosedMessageMenu = nullptr;
     QList<KAboutRelease> mReleasesInfo;
-    SnoozeMenu *mSnoozeActionMenu = nullptr;
+    SnoozeMenu *const mSnoozeActionMenu;
 };
