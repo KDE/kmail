@@ -363,6 +363,10 @@ target_sources(
         snooze/snoozefilterproxymodel.cpp
         snooze/snoozemenu.h
         snooze/snoozemenu.cpp
+        snooze/snoozemessagesjob.h
+        snooze/snoozemessagesjob.cpp
+        snooze/snoozeselectdatetimedialog.h
+        snooze/snoozeselectdatetimedialog.cpp
 )
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
@@ -432,6 +436,10 @@ qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
 
 qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
     ../agents/mailfilteragent/org.freedesktop.Akonadi.MailFilterAgent.xml
+)
+
+qt_add_dbus_interfaces(kmailprivate_LIB_SRCS
+    ../agents/snoozeagent/org.freedesktop.Akonadi.SnoozeAgent.xml
 )
 
 ki18n_wrap_ui(kmailprivate

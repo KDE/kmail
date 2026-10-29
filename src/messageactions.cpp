@@ -12,6 +12,8 @@
 #include "kmreaderwin.h"
 #include "settings/kmailsettings.h"
 #include "snooze/snoozemenu.h"
+#include "snooze/snoozemessagesjob.h"
+#include "snooze/snoozeselectdatetimedialog.h"
 #include "util.h"
 #include <MailCommon/MailKernel>
 #include <TemplateParser/CustomTemplatesMenu>
@@ -196,7 +198,32 @@ MessageActions::~MessageActions()
 
 void MessageActions::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
 {
-    // TODO
+    Akonadi::Item::List items = mVisibleItems;
+    if (items.isEmpty() && mCurrentItem.isValid()) {
+        items.append(mCurrentItem);
+    }
+    if (items.isEmpty()) {
+        return;
+    }
+
+    QDateTime wakeUpDateTime;
+    if (type == SnoozeMenu::SnoozeType::Custom) {
+        QPointer<SnoozeSelectDateTimeDialog> dlg = new SnoozeSelectDateTimeDialog(mParent);
+        if (dlg->exec()) {
+            wakeUpDateTime = dlg->wakeUpDateTime();
+        }
+        delete dlg;
+    } else {
+        wakeUpDateTime = SnoozeMenu::wakeUpDateTime(type, QDateTime::currentDateTime());
+    }
+    if (!wakeUpDateTime.isValid()) {
+        return;
+    }
+
+    auto job = new SnoozeMessagesJob(this);
+    job->setItems(items);
+    job->setWakeUpDateTime(wakeUpDateTime);
+    job->start();
 }
 
 void MessageActions::fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager)
