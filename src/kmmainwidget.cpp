@@ -3564,6 +3564,10 @@ void KMMainWidget::setupActions()
     connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::undoTextChanged, this, &KMMainWidget::slotUpdateUndoText);
     connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::redoTextChanged, this, &KMMainWidget::slotUpdateRedoText);
 
+    mSnoozeActionMenu = new SnoozeMenu(this);
+    actionCollection()->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
+    connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &KMMainWidget::slotSnoozeRequested);
+
     updateMessageActions();
     updateFolderMenu();
     mTagActionManager = new KMail::TagActionManager(this, actionCollection(), mMsgActions, mGUIClient);
@@ -3710,10 +3714,6 @@ void KMMainWidget::setupActions()
     }
     auto manager = KColorSchemeManager::instance();
     actionCollection()->addAction(u"colorscheme_menu"_s, KColorSchemeMenu::createMenu(manager, this));
-
-    mSnoozeActionMenu = new SnoozeMenu(this);
-    actionCollection()->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
-    connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &KMMainWidget::slotSnoozeRequested);
 }
 
 void KMMainWidget::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
