@@ -18,6 +18,7 @@
 #include "kmreadermainwin.h"
 #include "kmundoredomanager.h"
 #include "searchdialog/searchwindowdialog.h"
+#include "snooze/snoozemenu.h"
 #include "util.h"
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
@@ -3709,6 +3710,15 @@ void KMMainWidget::setupActions()
     }
     auto manager = KColorSchemeManager::instance();
     actionCollection()->addAction(u"colorscheme_menu"_s, KColorSchemeMenu::createMenu(manager, this));
+
+    mSnoozeActionMenu = new SnoozeMenu(this);
+    actionCollection()->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
+    connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &KMMainWidget::slotSnoozeRequested);
+}
+
+void KMMainWidget::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
+{
+    // TODO
 }
 
 void KMMainWidget::redoSwitchFolder()
@@ -4025,6 +4035,7 @@ void KMMainWidget::updateMessageActionsDelayed()
     } else {
         mCopyDecryptedActionMenu->setVisible(false);
     }
+    mSnoozeActionMenu->setEnabled(count > 0);
 }
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()

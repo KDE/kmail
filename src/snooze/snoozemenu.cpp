@@ -12,7 +12,7 @@
 SnoozeMenu::SnoozeMenu(QObject *parent)
     : KActionMenu{parent}
 {
-    setText(i18n("Snooze"));
+    setText(i18nc("@action:inmenu", "Snooze"));
     QMenu *subMenu = menu();
     auto actionGroup = new QActionGroup(this);
     actionGroup->setExclusive(false);
