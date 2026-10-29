@@ -208,7 +208,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     if (!newFeaturesMD5.isEmpty()) {
         if (const QString previousNewFeaturesMD5 = KMailSettings::self()->previousNewFeaturesMD5(); !previousNewFeaturesMD5.isEmpty()) {
             if (previousNewFeaturesMD5 != newFeaturesMD5) {
-                auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageNgWidget(this);
+                auto whatsNewMessageWidget = new TextAddonsWidgets::WhatsNewMessageNgWidget(i18n("KMail"), this);
                 whatsNewMessageWidget->setReleases(mReleasesInfo);
                 whatsNewMessageWidget->setObjectName(u"whatsNewMessageWidget"_s);
                 mTopLayout->addWidget(whatsNewMessageWidget);
