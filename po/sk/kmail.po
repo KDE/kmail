@@ -4491,10 +4491,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "Agent pripomienkovača Followup nebol zaregistrovaný."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "Agent pre poslanie neskôr nebol registrovaný."
+msgstr "Agent pre odloženie nebol zaregistrovaný."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5018,11 +5017,10 @@ msgid "Followup Reminder Messages…"
 msgstr "Pripomienkovač správ Followup..."
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "&Nastavenie KMail..."
+msgstr "&Nastaviť odloženie…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -6837,42 +6835,37 @@ msgstr "Určuje politiku použitú pri zobrazovaní politiky"
 #: snooze/snoozemenu.cpp:15
 #, kde-format
 msgid "Snooze"
-msgstr ""
+msgstr "Odložiť"
 
 #: snooze/snoozemenu.cpp:20
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "O hodinu neskôr"
 
 #: snooze/snoozemenu.cpp:25
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "O osem hodín neskôr"
 
 #: snooze/snoozemenu.cpp:30
-#, fuzzy, kde-format
-#| msgid "Tomorrow"
-#| msgid_plural "%1 days"
+#, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
 msgstr "Zajtra"
 
 #: snooze/snoozemenu.cpp:35
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "Ďa&lšia správa"
+msgstr "Budúci týždeň"
 
 #: snooze/snoozemenu.cpp:40
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Vlastný účet..."
+msgstr "Vlastné…"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
