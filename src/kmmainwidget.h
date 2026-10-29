@@ -17,7 +17,6 @@
 #include <MailCommon/FolderTreeWidget>
 
 #include "messageactions.h"
-#include "snooze/snoozemenu.h"
 #include <Akonadi/StandardMailActionManager>
 #include <KXMLGUIClient>
 #include <MailCommon/FolderSettings>
@@ -61,7 +60,6 @@ class KActionMenuAccount;
 class ZoomLabelWidget;
 class HistoryClosedReaderMenu;
 class KActionCollection;
-class SnoozeMenu;
 namespace WebEngineViewer
 {
 class WebHitTestResult;
@@ -541,7 +539,6 @@ private:
     KMAIL_NO_EXPORT void slotHistoryClosedReaderChanged();
     KMAIL_NO_EXPORT void slotExpandAll();
     KMAIL_NO_EXPORT void slotCollapseAll();
-    KMAIL_NO_EXPORT void slotSnoozeRequested(SnoozeMenu::SnoozeType type);
 
     // Message actions
     QAction *mDeleteAction = nullptr;
@@ -668,5 +665,4 @@ private:
     QAction *mClearFolderCacheAction = nullptr;
     HistoryClosedReaderMenu *mRestoreClosedMessageMenu = nullptr;
     QList<KAboutRelease> mReleasesInfo;
-    SnoozeMenu *const mSnoozeActionMenu;
 };

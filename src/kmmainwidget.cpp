@@ -18,7 +18,6 @@
 #include "kmreadermainwin.h"
 #include "kmundoredomanager.h"
 #include "searchdialog/searchwindowdialog.h"
-#include "snooze/snoozemenu.h"
 #include "util.h"
 #include "widgets/vacationscriptindicatorwidget.h"
 #include "widgets/zoomlabelwidget.h"
@@ -195,7 +194,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, KXMLGUIClient *aGUIClient, KActionCo
     , mLaunchExternalComponent(new KMLaunchExternalComponent(this, this))
     , mManageShowCollectionProperties(new ManageShowCollectionProperties(this, this))
     , mCollectionSwitcherTreeViewManager(new CollectionSwitcherTreeViewManager(this))
-    , mSnoozeActionMenu(new SnoozeMenu(this))
 {
     // must be the first line of the constructor:
     mActionCollection = actionCollection;
@@ -3565,9 +3563,6 @@ void KMMainWidget::setupActions()
     connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::undoTextChanged, this, &KMMainWidget::slotUpdateUndoText);
     connect(kmkernel->undoRedoManager()->undoStack(), &QUndoStack::redoTextChanged, this, &KMMainWidget::slotUpdateRedoText);
 
-    actionCollection()->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
-    connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &KMMainWidget::slotSnoozeRequested);
-
     updateMessageActions();
     updateFolderMenu();
     mTagActionManager = new KMail::TagActionManager(this, actionCollection(), mMsgActions, mGUIClient);
@@ -3714,11 +3709,6 @@ void KMMainWidget::setupActions()
     }
     auto manager = KColorSchemeManager::instance();
     actionCollection()->addAction(u"colorscheme_menu"_s, KColorSchemeMenu::createMenu(manager, this));
-}
-
-void KMMainWidget::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
-{
-    // TODO
 }
 
 void KMMainWidget::redoSwitchFolder()
@@ -4035,7 +4025,6 @@ void KMMainWidget::updateMessageActionsDelayed()
     } else {
         mCopyDecryptedActionMenu->setVisible(false);
     }
-    mSnoozeActionMenu->setEnabled(count > 0);
 }
 
 void KMMainWidget::slotAkonadiStandardActionUpdated()

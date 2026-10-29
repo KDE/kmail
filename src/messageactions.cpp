@@ -11,6 +11,7 @@
 #include "kmkernel.h"
 #include "kmreaderwin.h"
 #include "settings/kmailsettings.h"
+#include "snooze/snoozemenu.h"
 #include "util.h"
 #include <MailCommon/MailKernel>
 #include <TemplateParser/CustomTemplatesMenu>
@@ -80,10 +81,13 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
     , mExportToPdfAction(new QAction(QIcon::fromTheme(u"application-pdf"_s), i18n("Export to PDF…"), this))
     , mArchiveMessageAction(new QAction(i18nc("@action:inmenu", "Archive Message"), this))
-
+    , mSnoozeActionMenu(new SnoozeMenu(this))
 {
     ac->addAction(u"message_reply_menu"_s, mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
+
+    ac->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
+    connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &MessageActions::slotSnoozeRequested);
 
     ac->addAction(u"reply"_s, mReplyAction);
     ac->setDefaultShortcut(mReplyAction, Qt::Key_R);
@@ -190,6 +194,11 @@ MessageActions::~MessageActions()
     delete mCustomTemplatesMenu;
 }
 
+void MessageActions::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
+{
+    // TODO
+}
+
 void MessageActions::fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager)
 {
     QAction *action = akonadiStandardActionManager->action(Akonadi::StandardMailActionManager::MarkMailAsRead);
@@ -283,6 +292,11 @@ KActionMenu *MessageActions::messageStatusMenu() const
     return mStatusMenu;
 }
 
+KActionMenu *MessageActions::snoozeMenu() const
+{
+    return mSnoozeActionMenu;
+}
+
 KActionMenu *MessageActions::forwardMenu() const
 {
     return mForwardActionMenu;
@@ -357,6 +371,7 @@ void MessageActions::updateActions()
     mSendAgainAction->setEnabled(hasPayload);
 
     mStatusMenu->setEnabled(multiVisible);
+    mSnoozeActionMenu->setEnabled(multiVisible);
 
     mPrintAction->setEnabled(mMessageView != nullptr);
     mPrintPreviewAction->setEnabled(mMessageView != nullptr);

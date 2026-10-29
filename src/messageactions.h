@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include "snooze/snoozemenu.h"
 #include <Akonadi/Item>
 #include <MessageComposer/MessageFactoryNG>
 #include <QUrl>
@@ -97,6 +98,7 @@ public:
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
     [[nodiscard]] Akonadi::Item currentItem() const;
 
+    [[nodiscard]] KActionMenu *snoozeMenu() const;
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
@@ -116,6 +118,7 @@ private:
     void printMessage(bool preview);
     void clearMailingListActions();
     void clearListFilterAction();
+    void slotSnoozeRequested(SnoozeMenu::SnoozeType type);
 
 private Q_SLOTS:
     void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
@@ -174,5 +177,6 @@ private:
     KIO::KUriFilterSearchProviderActions *const mWebShortcutMenuManager;
     QAction *const mExportToPdfAction;
     QAction *const mArchiveMessageAction;
+    SnoozeMenu *const mSnoozeActionMenu;
 };
 }
