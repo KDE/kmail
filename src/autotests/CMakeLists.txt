@@ -170,3 +170,17 @@ target_link_libraries(
     KF6::ConfigGui
     kmailprivate
 )
+
+add_executable(
+    snoozemenutest
+    snoozemenutest.cpp
+    snoozemenutest.h
+)
+add_test(NAME snoozemenutest COMMAND snoozemenutest)
+ecm_mark_as_test(snoozemenutest)
+target_link_libraries(
+    snoozemenutest
+    Qt::Test
+    KF6::WidgetsAddons
+    kmailprivate
+)
