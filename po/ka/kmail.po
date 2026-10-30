@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"POT-Creation-Date: 2026-10-30 00:54+0000\n"
 "PO-Revision-Date: 2026-10-27 09:46+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -313,8 +313,8 @@ msgid "Fixed many IMAP bugs"
 msgstr "გასწორდა ბევრი IMAP-ის შეცდომა"
 
 #: aboutdata.cpp:195 collectionpage/collectionmailinglistpage.cpp:79
-#: kmmainwidget.cpp:4211 kmreaderwin.cpp:261 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:74
+#: kmmainwidget.cpp:211 kmmainwidget.cpp:4211 kmreaderwin.cpp:261
+#: kmsystemtray.cpp:45 kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -379,7 +379,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "ბმული დაგზავნის სიაში დაპოსტვისთვის:"
 
-#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:462
+#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:504
 #, kde-format
 msgid "Subscribe to List"
 msgstr "სიის გამოწერა"
@@ -4223,7 +4223,7 @@ msgid "&Help"
 msgstr "&დახმარება"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:348 kmcomposerui.rc:111 kmmainwin.rc:350 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "ხელსაწყოთა მთავარი ზოლი"
@@ -6102,180 +6102,180 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr "საქაღალდის თვისებები: %1"
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&პასუხი"
 
-#: messageactions.cpp:62 searchdialog/searchwindowdialog.cpp:162
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:162
 #, kde-format
 msgid "&Reply…"
 msgstr "&პასუხი…"
 
-#: messageactions.cpp:63 searchdialog/searchwindowdialog.cpp:166
+#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:166
 #, kde-format
 msgid "Reply to &All…"
 msgstr "&ყველასთვის პასუხი…"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, kde-format
 msgid "Reply to A&uthor…"
 msgstr "&ავტორისთვის პასუხი…"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:170
+#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:170
 #, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "პასუხი &დაგზავნის სიაზე…"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "პასუხი &ციტირების გარეშე…"
 
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&ხაზში…"
 
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "მიმ&აგრებულ ფაილად…"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr "&გადამისამართება…"
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "ახალი შეტყობინება მიმღებებს…"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&შეტყობინების დანიშვნა"
 
-#: messageactions.cpp:72 searchdialog/searchwindowdialog.cpp:174
+#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:174
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "&წინ"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr "&დაგზავნის სია"
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
 msgstr "ჩასწორება, &როგორც ახლის"
 
-#: messageactions.cpp:75
+#: messageactions.cpp:78
 #, kde-format
 msgctxt "@action"
 msgid "Filter on Mailing-&List…"
 msgstr "&ფილტრი დაგზავნის სიაზე…"
 
-#: messageactions.cpp:76
+#: messageactions.cpp:79
 #, kde-format
 msgctxt "@action"
 msgid "Add Followup Reminder…"
 msgstr "მიყოლების შემხსენებლის დამატება…"
 
-#: messageactions.cpp:78
+#: messageactions.cpp:81
 #, kde-format
 msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "თავიდან &გაგზავნა…"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr "ახალი შეტყობინება &ნიმუშიდან"
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
 msgstr "PDF-ად გატანა…"
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "შეტყობინების დაარქივება"
 
-#: messageactions.cpp:405
+#: messageactions.cpp:447
 #, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "ფილტრი დაგზავნის სიაზე…"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:486
 #, kde-format
 msgid "<unknown>"
 msgstr "<უცნობი>"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:486
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr "დაგზავნის სიის სახელი: %1"
 
-#: messageactions.cpp:447
+#: messageactions.cpp:489
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr "შეტყობინების გახსნა სიის არქივში"
 
-#: messageactions.cpp:450
+#: messageactions.cpp:492
 #, kde-format
 msgid "Post New Message"
 msgstr "ახალი შეტყობინები დაპოსტვა"
 
-#: messageactions.cpp:453
+#: messageactions.cpp:495
 #, kde-format
 msgid "Go to Archive"
 msgstr "არქივზე გადასვლა"
 
-#: messageactions.cpp:456
+#: messageactions.cpp:498
 #, kde-format
 msgid "Request Help"
 msgstr "დახმარების მოთხოვნა"
 
-#: messageactions.cpp:459
+#: messageactions.cpp:501
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr "დაუკავშირდით მფლობელს"
 
-#: messageactions.cpp:465
+#: messageactions.cpp:507
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr "სიის გამოწერის გაუქმება"
 
-#: messageactions.cpp:477
+#: messageactions.cpp:519
 #, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "ფილტრი დაგზავნის-სიაზე %1…"
 
-#: messageactions.cpp:647
+#: messageactions.cpp:689
 #, kde-format
 msgid "email"
 msgstr "ელფოსტა"
 
-#: messageactions.cpp:650
+#: messageactions.cpp:692
 #, kde-format
 msgid "web"
 msgstr "web"
 
-#: messageactions.cpp:655
+#: messageactions.cpp:697
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6283,13 +6283,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr "%1 (%2)"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:802
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr "PDF-ად გატანა"
 
-#: messageactions.cpp:760
+#: messageactions.cpp:802
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr "PDF დოკუმენტი (*.pdf)"
@@ -6827,40 +6827,55 @@ msgstr "ბრჭყალის სიმბოლოები"
 msgid "Specifies the policy used when displaying policy"
 msgstr "მიუთითებს პოლიტიკის ჩვენებისთვის გამოყენებულპოლიტიკას"
 
-#: snooze/snoozemenu.cpp:15
-#, kde-format
+#: snooze/snoozemenu.cpp:16
+#, fuzzy, kde-format
+#| msgid "Snooze"
+msgctxt "@action:inmenu"
 msgid "Snooze"
 msgstr "ჩაჩუმება"
 
-#: snooze/snoozemenu.cpp:20
+#: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
 msgstr "ერთი საათის შემდეგ"
 
-#: snooze/snoozemenu.cpp:25
+#: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
 msgstr "რვა საათის შემდეგ"
 
-#: snooze/snoozemenu.cpp:30
+#: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
 msgstr "ხვალ"
 
-#: snooze/snoozemenu.cpp:35
+#: snooze/snoozemenu.cpp:36
 #, kde-format
 msgctxt "@action"
 msgid "Next week"
 msgstr "შემდეგი კვირა"
 
-#: snooze/snoozemenu.cpp:40
+#: snooze/snoozemenu.cpp:41
 #, kde-format
 msgctxt "@action"
 msgid "Custom…"
 msgstr "ხელით…"
+
+#: snooze/snoozeselectdatetimedialog.cpp:21
+#, fuzzy, kde-format
+#| msgid "Snooze"
+msgctxt "@title:window"
+msgid "Snooze Until"
+msgstr "ჩაჩუმება"
+
+#: snooze/snoozeselectdatetimedialog.cpp:35
+#, kde-format
+msgctxt "@label:textbox"
+msgid "Wake up on:"
+msgstr ""
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format

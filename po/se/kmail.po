@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"POT-Creation-Date: 2026-10-30 00:54+0000\n"
 "PO-Revision-Date: 2009-10-09 13:24+0200\n"
 "Last-Translator: Børre Gaup <boerre@skolelinux.no>\n"
 "Language-Team: Northern Sami <l10n-no@nuug.no>\n"
@@ -314,8 +314,8 @@ msgid "Fixed many IMAP bugs"
 msgstr ""
 
 #: aboutdata.cpp:195 collectionpage/collectionmailinglistpage.cpp:79
-#: kmmainwidget.cpp:4211 kmreaderwin.cpp:261 kmsystemtray.cpp:45
-#: kmsystemtray.cpp:74
+#: kmmainwidget.cpp:211 kmmainwidget.cpp:4211 kmreaderwin.cpp:261
+#: kmsystemtray.cpp:45 kmsystemtray.cpp:74
 #, kde-format
 msgid "KMail"
 msgstr "KMail"
@@ -380,7 +380,7 @@ msgctxt "@label:textbox"
 msgid "URL for mailing list posting:"
 msgstr "E-boastalisttu válddahus:"
 
-#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:462
+#: collectionpage/collectionmailinglistpage.cpp:113 messageactions.cpp:504
 #, kde-format
 msgid "Subscribe to List"
 msgstr "Diŋgo listtu"
@@ -4049,7 +4049,7 @@ msgid "&Help"
 msgstr "&Veahkki"
 
 #. i18n: ectx: ToolBar (mainToolBar)
-#: kmail_part.rc:346 kmcomposerui.rc:111 kmmainwin.rc:348 kmreadermainwin.rc:89
+#: kmail_part.rc:348 kmcomposerui.rc:111 kmmainwin.rc:350 kmreadermainwin.rc:89
 #, kde-format
 msgid "Main Toolbar"
 msgstr "Váldoreaidoholga"
@@ -5868,182 +5868,182 @@ msgctxt "@title:window"
 msgid "Properties of Folder %1"
 msgstr ""
 
-#: messageactions.cpp:61
+#: messageactions.cpp:64
 #, kde-format
 msgctxt "Message->"
 msgid "&Reply"
 msgstr "&Vástit"
 
-#: messageactions.cpp:62 searchdialog/searchwindowdialog.cpp:162
+#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:162
 #, fuzzy, kde-format
 msgid "&Reply…"
 msgstr "&Vástit"
 
-#: messageactions.cpp:63 searchdialog/searchwindowdialog.cpp:166
+#: messageactions.cpp:66 searchdialog/searchwindowdialog.cpp:166
 #, fuzzy, kde-format
 msgid "Reply to &All…"
 msgstr "Vástit &buohkaide …"
 
-#: messageactions.cpp:64
+#: messageactions.cpp:67
 #, fuzzy, kde-format
 msgid "Reply to A&uthor…"
 msgstr "Vástit čá&llái …"
 
-#: messageactions.cpp:65 searchdialog/searchwindowdialog.cpp:170
+#: messageactions.cpp:68 searchdialog/searchwindowdialog.cpp:170
 #, fuzzy, kde-format
 msgid "Reply to Mailing-&List…"
 msgstr "Vástit e-boasta&listui …"
 
-#: messageactions.cpp:66
+#: messageactions.cpp:69
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Reply Without &Quote…"
 msgstr "Vástit &siterenkeahttá …"
 
 # unreviewed-context
-#: messageactions.cpp:67
+#: messageactions.cpp:70
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "&Inline…"
 msgstr "&Dieđáhusa siskkobealde …"
 
 # unreviewed-context
-#: messageactions.cpp:68
+#: messageactions.cpp:71
 #, fuzzy, kde-format
 msgctxt "@action:inmenu Message->Forward->"
 msgid "As &Attachment…"
 msgstr "Mielddusin"
 
-#: messageactions.cpp:69
+#: messageactions.cpp:72
 #, kde-format
 msgctxt "Message->Forward->"
 msgid "&Redirect…"
 msgstr ""
 
-#: messageactions.cpp:70
+#: messageactions.cpp:73
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "New Message to Recipients…"
 msgstr "Ođđa &reive e-boastalistui …"
 
-#: messageactions.cpp:71
+#: messageactions.cpp:74
 #, kde-format
 msgid "Mar&k Message"
 msgstr "&Merke reivve"
 
-#: messageactions.cpp:72 searchdialog/searchwindowdialog.cpp:174
+#: messageactions.cpp:75 searchdialog/searchwindowdialog.cpp:174
 #, kde-format
 msgctxt "Message->"
 msgid "&Forward"
 msgstr "Sádde &viidáset"
 
-#: messageactions.cpp:73
+#: messageactions.cpp:76
 #, kde-format
 msgctxt "Message->"
 msgid "Mailing-&List"
 msgstr ""
 
-#: messageactions.cpp:74
+#: messageactions.cpp:77
 #, kde-format
 msgid "&Edit As New"
-msgstr ""
-
-#: messageactions.cpp:75
-#, fuzzy, kde-format
-msgctxt "@action"
-msgid "Filter on Mailing-&List…"
-msgstr "Si&lle e-boastalisttu bokte …"
-
-#: messageactions.cpp:76
-#, kde-format
-msgctxt "@action"
-msgid "Add Followup Reminder…"
 msgstr ""
 
 #: messageactions.cpp:78
 #, fuzzy, kde-format
 msgctxt "@action"
+msgid "Filter on Mailing-&List…"
+msgstr "Si&lle e-boastalisttu bokte …"
+
+#: messageactions.cpp:79
+#, kde-format
+msgctxt "@action"
+msgid "Add Followup Reminder…"
+msgstr ""
+
+#: messageactions.cpp:81
+#, fuzzy, kde-format
+msgctxt "@action"
 msgid "Send A&gain…"
 msgstr "Sádde &ođđasit …"
 
-#: messageactions.cpp:79
+#: messageactions.cpp:82
 #, kde-format
 msgid "New Message From &Template"
 msgstr ""
 
-#: messageactions.cpp:81
+#: messageactions.cpp:84
 #, kde-format
 msgid "Export to PDF…"
 msgstr ""
 
-#: messageactions.cpp:82
+#: messageactions.cpp:85
 #, fuzzy, kde-format
 msgctxt "@action:inmenu"
 msgid "Archive Message"
 msgstr "Reive masa lea čadnon doaibma"
 
-#: messageactions.cpp:405
+#: messageactions.cpp:447
 #, fuzzy, kde-format
 msgid "Filter on Mailing-List…"
 msgstr "E-boastalisttu filttar …"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:486
 #, kde-format
 msgid "<unknown>"
 msgstr "<amas>"
 
-#: messageactions.cpp:444
+#: messageactions.cpp:486
 #, kde-format
 msgid "Mailing List Name: %1"
 msgstr ""
 
-#: messageactions.cpp:447
+#: messageactions.cpp:489
 #, kde-format
 msgid "Open Message in List Archive"
 msgstr ""
 
-#: messageactions.cpp:450
+#: messageactions.cpp:492
 #, kde-format
 msgid "Post New Message"
 msgstr ""
 
-#: messageactions.cpp:453
+#: messageactions.cpp:495
 #, kde-format
 msgid "Go to Archive"
 msgstr ""
 
-#: messageactions.cpp:456
+#: messageactions.cpp:498
 #, kde-format
 msgid "Request Help"
 msgstr ""
 
-#: messageactions.cpp:459
+#: messageactions.cpp:501
 #, kde-format
 msgctxt "Contact the owner of the mailing list"
 msgid "Contact Owner"
 msgstr ""
 
-#: messageactions.cpp:465
+#: messageactions.cpp:507
 #, kde-format
 msgid "Unsubscribe from List"
 msgstr ""
 
-#: messageactions.cpp:477
+#: messageactions.cpp:519
 #, fuzzy, kde-format
 msgid "Filter on Mailing-List %1…"
 msgstr "E-boastalisttu %1 sillen …"
 
-#: messageactions.cpp:647
+#: messageactions.cpp:689
 #, kde-format
 msgid "email"
 msgstr ""
 
-#: messageactions.cpp:650
+#: messageactions.cpp:692
 #, kde-format
 msgid "web"
 msgstr ""
 
-#: messageactions.cpp:655
+#: messageactions.cpp:697
 #, kde-format
 msgctxt ""
 "%1 is a 'Contact Owner' or similar action. %2 is a protocol normally web or "
@@ -6051,13 +6051,13 @@ msgctxt ""
 msgid "%1 (%2)"
 msgstr ""
 
-#: messageactions.cpp:760
+#: messageactions.cpp:802
 #, kde-format
 msgctxt "@title:window"
 msgid "Export to PDF"
 msgstr ""
 
-#: messageactions.cpp:760
+#: messageactions.cpp:802
 #, kde-format
 msgid "PDF document (*.pdf)"
 msgstr ""
@@ -6571,39 +6571,52 @@ msgstr ""
 msgid "Specifies the policy used when displaying policy"
 msgstr ""
 
-#: snooze/snoozemenu.cpp:15
+#: snooze/snoozemenu.cpp:16
 #, kde-format
+msgctxt "@action:inmenu"
 msgid "Snooze"
 msgstr ""
 
-#: snooze/snoozemenu.cpp:20
+#: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
 msgstr ""
 
-#: snooze/snoozemenu.cpp:25
+#: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
 msgstr ""
 
-#: snooze/snoozemenu.cpp:30
+#: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
 msgstr ""
 
-#: snooze/snoozemenu.cpp:35
+#: snooze/snoozemenu.cpp:36
 #, fuzzy, kde-format
 msgctxt "@action"
 msgid "Next week"
 msgstr "&Boahtte reive"
 
-#: snooze/snoozemenu.cpp:40
+#: snooze/snoozemenu.cpp:41
 #, kde-format
 msgctxt "@action"
 msgid "Custom…"
+msgstr ""
+
+#: snooze/snoozeselectdatetimedialog.cpp:21
+#, kde-format
+msgctxt "@title:window"
+msgid "Snooze Until"
+msgstr ""
+
+#: snooze/snoozeselectdatetimedialog.cpp:35
+#, kde-format
+msgctxt "@label:textbox"
+msgid "Wake up on:"
 msgstr ""
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204

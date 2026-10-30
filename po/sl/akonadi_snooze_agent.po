@@ -1,64 +1,62 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kmail package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# SPDX-FileCopyrightText: 2026 Matjaž Jeran <matjaz.jeran@amis.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-27 01:00+0000\n"
-"PO-Revision-Date: 2026-10-28 09:51+0100\n"
+"PO-Revision-Date: 2026-10-29 11:58+0100\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
-"Language-Team: LANGUAGE <kde-i18n-doc@kde.org>\n"
+"Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n"
-"%100<=4 ? 2 : 3);\n"
-"X-Generator: Poedit 3.10\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+"X-Generator: Lokalize 26.08.1\n"
 
 #: snoozeagent.cpp:38
 #, kde-format
 msgid "Snooze Agent"
-msgstr ""
+msgstr "Snooze Agent"
 
 #: snoozeagent.cpp:172
 #, kde-format
 msgid "Snoozed"
-msgstr ""
+msgstr "V mirovanju"
 
 #: snoozeconfigurewidget.cpp:54
 #, kde-format
 msgctxt "@action:button"
 msgid "Remove"
-msgstr ""
+msgstr "Odstrani"
 
 #: snoozeconfigurewidget.cpp:55
 #, kde-format
 msgctxt "@action:button"
 msgid "Wake Up Now"
-msgstr ""
+msgstr "Prebudi se zdaj"
 
 #: snoozeconfigurewidget.cpp:63
 #, kde-format
 msgctxt "@title:column send mail from"
 msgid "From"
-msgstr ""
+msgstr "Od"
 
 #: snoozeconfigurewidget.cpp:64
 #, kde-format
 msgctxt "@title:column mail subject"
 msgid "Subject"
-msgstr ""
+msgstr "Predmet"
 
 #: snoozeconfigurewidget.cpp:65
 #, kde-format
 msgctxt "@title:column when the message comes back"
 msgid "Wake Up"
-msgstr ""
+msgstr "Prebudi se"
 
 #: snoozeconfigurewidget.cpp:135
 #, kde-format
@@ -69,36 +67,44 @@ msgid_plural ""
 "Do you want to unsnooze the %1 selected messages?\n"
 "They will come back without notification."
 msgstr[0] ""
+"Ali želite preklicati odlog %1 izbranih sporočil?\r\n"
+"Sporočila se bodo znova pojavila brez obvestila."
 msgstr[1] ""
+"Ali želite preklicati odlog %1 izbranega sporočila?\n"
+"Sporočilo se bo znova pojavilo brez obvestila."
 msgstr[2] ""
+"Ali želite preklicati odlog %1 izbranih sporočil?\r\n"
+"Sporočili se bosta znova pojavili brez obvestila."
 msgstr[3] ""
+"Ali želite preklicati odlog %1 izbranih sporočil?\n"
+"Sporočila se bodo znova pojavila brez obvestila."
 
 #: snoozeconfigurewidget.cpp:138
 #, kde-format
 msgctxt "@title:window"
 msgid "Unsnooze Messages"
-msgstr ""
+msgstr "Prekini odlog sporočil"
 
 #: snoozeconfigurewidget.cpp:139
 #, kde-format
 msgctxt "@action:button"
 msgid "Unsnooze"
-msgstr ""
+msgstr "Prekini odlog"
 
 #: snoozeconfigurewidget.cpp:177
 #, kde-format
 msgctxt "@action"
 msgid "Show Message"
-msgstr ""
+msgstr "Prikaži sporočilo"
 
 #: snoozeconfigurewidget.cpp:180
 #, kde-format
 msgctxt "@action"
 msgid "Wake Up Now"
-msgstr ""
+msgstr "Prebudi se zdaj"
 
 #: snoozeconfigurewidget.cpp:181
 #, kde-format
 msgctxt "@action"
 msgid "Unsnooze"
-msgstr ""
+msgstr "Prekini odlog"
