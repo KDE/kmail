@@ -450,13 +450,16 @@
       <description>
         <ul>
           <li>Implement Plasma Activities.</li>
+          <li xml:lang="bg">Внедряване на Действия на Plasma</li>
           <li xml:lang="ca">Implementa les activitats del Plasma.</li>
           <li xml:lang="ca-valencia">Implementa les activitats de Plasma.</li>
+          <li xml:lang="cs">Implementovány aktivity Plasma.</li>
           <li xml:lang="es">Implementar las actividades de Plasma.</li>
           <li xml:lang="ka">განხორციელდა Plasma-ის აქტივობები.</li>
           <li xml:lang="nl">Plasma activiteiten implementeren.</li>
           <li xml:lang="pt-BR">Atividades do Plasma implementadas.</li>
           <li xml:lang="ru">Реализована поддержка комнат Plasma.</li>
+          <li xml:lang="sk">Implementované aktivity Plasma.</li>
           <li xml:lang="sl">Implemenira Plasmine dejavnosti.</li>
           <li xml:lang="uk">Реалізовано простори дій Плазми.</li>
         </ul>
@@ -563,7 +566,7 @@
           <li xml:lang="bg">Добавяне на нов уиджет „Какво е ново“.</li>
           <li xml:lang="ca">Afegeix un giny nou «Què hi ha de nou».</li>
           <li xml:lang="ca-valencia">Afig un giny nou «Què hi ha de nou».</li>
-          <li xml:lang="cs">Přidat nový widget „Co je nového“.</li>
+          <li xml:lang="cs">Přidat nový widget "Co je nového".</li>
           <li xml:lang="es">Añadir nuevo elemento de novedades.</li>
           <li xml:lang="eu">Zerberri trepeta berria gehitu.</li>
           <li xml:lang="fi">Lisätty uusi mitäuutta-sovelma.</li>
