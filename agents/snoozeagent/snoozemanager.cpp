@@ -243,7 +243,7 @@ QString SnoozeManager::infoToStr(Snooze::SnoozeInfo *info) const
     infoStr += u"itemId :%1\n"_s.arg(info->itemId());
     infoStr += u"Subject :%1\n"_s.arg(info->subject());
     infoStr += u"WakeUpDateTime :%1\n"_s.arg(info->wakeUpDateTime().toString());
-    infoStr += u"****************************************\n"_s;
+    infoStr += u"****************************************\n";
     return infoStr;
 }
 

@@ -416,7 +416,7 @@ QString MailFilterAgent::printCollectionMonitored() const
             printDebugCollection += u"Collection id: %1\n"_s.arg(collection.id());
         }
     }
-    printDebugCollection += u"End print collection monitored\n"_s;
+    printDebugCollection += u"End print collection monitored\n";
     return printDebugCollection;
 }
 

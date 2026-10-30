@@ -182,7 +182,7 @@ QString FollowUpReminderManager::infoToStr(FollowUpReminder::FollowUpReminderInf
     infoStr += u"To :%1\n"_s.arg(info->to());
     infoStr += u"Deadline :%1\n"_s.arg(info->followUpReminderDate().toString());
     infoStr += u"Answer received :%1\n"_s.arg(info->answerWasReceived() ? u"true"_s : u"false"_s);
-    infoStr += u"****************************************\n"_s;
+    infoStr += u"****************************************\n";
     return infoStr;
 }
 

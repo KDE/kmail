@@ -45,11 +45,11 @@ QString UndoSendManager::UndoSendManagerInfo::generateMessageInfoText() const
     }
     if (!subject.isEmpty()) {
         if (!to.isEmpty()) {
-            str += u"<br />"_s;
+            str += u"<br />";
         }
         str += i18n("<b>Subject:</b> %1", subject);
     }
-    str += u"</qt>"_s;
+    str += u"</qt>";
     return str;
 }
 
