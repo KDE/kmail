@@ -15,7 +15,9 @@
 #include <TextAddonsWidgets/ExecutableUtils>
 
 #include <KEmailAddress>
+#ifndef Q_OS_WIN
 #include <KWaylandExtras>
+#endif
 #include <KWindowSystem>
 #include <QAction>
 #include <QProcess>
@@ -204,5 +206,7 @@ void KMail::Util::setWindowTag(QWidget *window, const QString &tag)
         return;
     }
     window->winId();
+#ifndef Q_OS_WIN
     KWaylandExtras::setXdgToplevelTag(window->windowHandle(), tag);
+#endif
 }
