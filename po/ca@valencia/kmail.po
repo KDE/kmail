@@ -339,7 +339,7 @@ msgstr "Client de correu de KDE"
 #: aboutdata.cpp:198
 #, kde-format
 msgid "Copyright © %1, KMail authors"
-msgstr "Copyright © %1, Els autors de KMail"
+msgstr "Drets d'autoria © %1, Els autors de KMail"
 
 #: collectionpage/collectionmailinglistpage.cpp:40
 #, kde-format

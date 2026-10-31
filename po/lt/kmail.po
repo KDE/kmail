@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-08 02:57+0000\n"
-"PO-Revision-Date: 2026-09-25 18:10+0300\n"
+"PO-Revision-Date: 2026-10-31 01:41+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1523,10 +1523,9 @@ msgid "Editor Plugins"
 msgstr "Tekstų rengyklė"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:247
-#, fuzzy, kde-format
-#| msgid "Message Window"
+#, kde-format
 msgid "Message Viewer"
-msgstr "Laiško polangis"
+msgstr "Laiškų žiūryklė"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:257
 #, kde-format
@@ -2535,7 +2534,7 @@ msgstr "Nešifruoti"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Nerastas joks gavėjui skirtas raktas."
 
 #: editor/kmcomposerwin.cpp:3831
 #, kde-format
@@ -2862,7 +2861,7 @@ msgstr "Nepasirinkta žinučių."
 #: folderarchive/folderarchiveagentjob.cpp:71
 #, kde-format
 msgid "List of collections is empty. %1"
-msgstr ""
+msgstr "Rinkinių sąrašas yra tuščias. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:90
 #, kde-format
@@ -6025,7 +6024,7 @@ msgstr "Nauji laiškai"
 #: kontactplugin/kmail/summarywidget.cpp:144
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
-msgstr ""
+msgstr "<qt><b>%1</b><br/>Iš viso: %2<br/>Neskaitytų: %3</qt>"
 
 #: kontactplugin/kmail/summarywidget.cpp:158
 #, kde-format
@@ -6351,7 +6350,7 @@ msgstr "PDF dokumentas (*.pdf)"
 #: searchdialog/incompleteindexdialog.cpp:135
 #, kde-format
 msgid "Reindex"
-msgstr ""
+msgstr "Indeksuoti iš naujo"
 
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
@@ -6468,12 +6467,12 @@ msgstr "Naujausia paieška"
 #: searchdialog/searchwindowdialog.cpp:432
 #, kde-format
 msgid "You did not selected a valid folder."
-msgstr ""
+msgstr "Jūs nepasirinkote tinkamo aplanko."
 
 #: searchdialog/searchwindowdialog.cpp:446
 #, kde-format
 msgid "You forgot to select collections."
-msgstr ""
+msgstr "Jūs pamiršote pasirinkti rinkinius."
 
 #: searchdialog/searchwindowdialog.cpp:464
 #, kde-format
@@ -6483,7 +6482,7 @@ msgstr "Jūs pamiršote apibrėžti sąlygą."
 #: searchdialog/searchwindowdialog.cpp:469
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
-msgstr ""
+msgstr "Visi pasirinkti aplankai yra tušti arba nebuvo indeksuoti."
 
 #: searchdialog/searchwindowdialog.cpp:475
 #, kde-format
