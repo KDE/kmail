@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-30 00:54+0000\n"
-"PO-Revision-Date: 2026-09-21 12:31+0200\n"
+"POT-Creation-Date: 2026-10-31 00:52+0000\n"
+"PO-Revision-Date: 2026-10-30 12:48+0100\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -518,19 +518,18 @@ msgstr "Optiones de recuperar"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "Texto-a-Pronunciation (TextToSpeech)"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "Rich Text"
+msgstr "Pronuncia Texto"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "Habilita Texto-a-Pronunciation (TextToSpeech)"
 
 #: configuredialog/configureaccountpage.cpp:56
 #, kde-format
@@ -4514,10 +4513,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "Agente de rememorar de continuation non esseva registrate."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "Agente de inviar plus tarde non esseva registrate."
+msgstr "Agente de Snooze (dormettar) non esseva registrate."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5042,11 +5040,10 @@ msgid "Followup Reminder Messages…"
 msgstr "Messages de rememorar de continuation..."
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "&Configura KMail…"
+msgstr "&Configura Snooze (Dormettar)…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -5060,7 +5057,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Plica toto"
 
-#: kmmainwidget.cpp:3088 util.cpp:184
+#: kmmainwidget.cpp:3088 util.cpp:186
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5764,7 +5761,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Initiante…"
 
-#: kmreadermainwin.cpp:494 util.cpp:184
+#: kmreadermainwin.cpp:494 util.cpp:186
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Move al corbe"
@@ -6583,7 +6580,7 @@ msgstr ""
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "Habilita Texto-a-Pronunciation (TextToSpeech)"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
@@ -6876,52 +6873,49 @@ msgstr "Il specifica le politica usate quando on monstra politica"
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
-msgstr ""
+msgstr "Snooze (Dormettar)"
 
 #: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "Un  hora plus tarde"
 
 #: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "Optohoras plus tarde"
 
 #: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "Deman"
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "Proxime &message"
+msgstr "Septimana proxime"
 
 #: snooze/snoozemenu.cpp:41
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "Conto personalisate..."
+msgstr "Personalisate…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr ""
+msgstr "Snooze (Dormettar) usque"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "Evelia le:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
@@ -8211,7 +8205,7 @@ msgstr "Information de plugins"
 msgid "Plugins used in KMail."
 msgstr "Plugins usate in KMail."
 
-#: util.cpp:35
+#: util.cpp:37
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8221,36 +8215,36 @@ msgstr ""
 "Il sembla que iste adresse de eposta ex %1 non es surveliate. Tu vole "
 "responder a iste eposta?"
 
-#: util.cpp:36
+#: util.cpp:38
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Adresse de Eposta non surveliate"
 
-#: util.cpp:37
+#: util.cpp:39
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "Non Invia"
 
-#: util.cpp:38
+#: util.cpp:40
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "Invia E-posta"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Dele"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgid "Move to Trash"
 msgstr "Move al Corbe"
 
-#: util.cpp:195
+#: util.cpp:197
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8259,7 +8253,7 @@ msgstr ""
 "Il non pote initiar le assistente de conto. Pro favor, tu verifica que tu ha "
 "AccountWizard propriemente installate.."
 
-#: util.cpp:197
+#: util.cpp:199
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

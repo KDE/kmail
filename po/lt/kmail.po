@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-30 00:54+0000\n"
-"PO-Revision-Date: 2026-09-25 18:10+0300\n"
+"POT-Creation-Date: 2026-10-31 00:52+0000\n"
+"PO-Revision-Date: 2026-10-31 01:41+0200\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -544,13 +544,12 @@ msgstr "Gavimo parinktys"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "Garsinis teksto atkūrimas"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "Raiškusis tekstas"
+msgstr "Rašymas balsu"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
@@ -1540,10 +1539,9 @@ msgid "Editor Plugins"
 msgstr "Tekstų rengyklė"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:249
-#, fuzzy, kde-format
-#| msgid "Message Window"
+#, kde-format
 msgid "Message Viewer"
-msgstr "Laiško polangis"
+msgstr "Laiškų žiūryklė"
 
 #: configuredialog/configureplugins/configurepluginslistwidget.cpp:259
 #, kde-format
@@ -2562,7 +2560,7 @@ msgstr "Nešifruoti"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "No key found for the recipient."
-msgstr ""
+msgstr "Nerastas joks gavėjui skirtas raktas."
 
 #: editor/kmcomposerwin.cpp:3792
 #, kde-format
@@ -2889,7 +2887,7 @@ msgstr "Nepasirinkta žinučių."
 #: folderarchive/folderarchiveagentjob.cpp:72
 #, kde-format
 msgid "List of collections is empty. %1"
-msgstr ""
+msgstr "Rinkinių sąrašas yra tuščias. %1"
 
 #: folderarchive/folderarchiveagentjob.cpp:91
 #, kde-format
@@ -5108,7 +5106,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Suskleisti viską"
 
-#: kmmainwidget.cpp:3088 util.cpp:184
+#: kmmainwidget.cpp:3088 util.cpp:186
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5836,7 +5834,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Paleidžiama…"
 
-#: kmreadermainwin.cpp:494 util.cpp:184
+#: kmreadermainwin.cpp:494 util.cpp:186
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Perkelti į šiukšlinę"
@@ -6087,7 +6085,7 @@ msgstr "Nauji laiškai"
 #: kontactplugin/kmail/summarywidget.cpp:144
 #, kde-format
 msgid "<qt><b>%1</b><br/>Total: %2<br/>Unread: %3</qt>"
-msgstr ""
+msgstr "<qt><b>%1</b><br/>Iš viso: %2<br/>Neskaitytų: %3</qt>"
 
 #: kontactplugin/kmail/summarywidget.cpp:158
 #, kde-format
@@ -6413,7 +6411,7 @@ msgstr "PDF dokumentas (*.pdf)"
 #: searchdialog/incompleteindexdialog.cpp:136
 #, kde-format
 msgid "Reindex"
-msgstr ""
+msgstr "Indeksuoti iš naujo"
 
 #: searchdialog/incompleteindexdialog.cpp:137
 #, kde-format
@@ -6530,12 +6528,12 @@ msgstr "Naujausia paieška"
 #: searchdialog/searchwindowdialog.cpp:430
 #, kde-format
 msgid "You did not select a valid folder."
-msgstr ""
+msgstr "Jūs nepasirinkote tinkamo aplanko."
 
 #: searchdialog/searchwindowdialog.cpp:444
 #, kde-format
 msgid "You forgot to select collections."
-msgstr ""
+msgstr "Jūs pamiršote pasirinkti rinkinius."
 
 #: searchdialog/searchwindowdialog.cpp:461
 #, kde-format
@@ -6545,7 +6543,7 @@ msgstr "Jūs pamiršote apibrėžti sąlygą."
 #: searchdialog/searchwindowdialog.cpp:466
 #, kde-format
 msgid "All folders selected are empty or were not indexed."
-msgstr ""
+msgstr "Visi pasirinkti aplankai yra tušti arba nebuvo indeksuoti."
 
 #: searchdialog/searchwindowdialog.cpp:472
 #, kde-format
@@ -6665,7 +6663,7 @@ msgstr "Paskutinis pažymėtas aplankas aplankų pasirinkimo dialoge."
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "Įjungti rašymą balsu"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
@@ -8280,7 +8278,7 @@ msgstr "Siuntimas be patvirtinimo"
 msgid "Plugins used in KMail."
 msgstr "KMail programoje naudojami įskiepiai."
 
-#: util.cpp:35
+#: util.cpp:37
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8288,37 +8286,37 @@ msgid ""
 "wish to reply to this email?"
 msgstr ""
 
-#: util.cpp:36
+#: util.cpp:38
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "El. pašto adresas"
 
-#: util.cpp:37
+#: util.cpp:39
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "Nesiųsti"
 
-#: util.cpp:38
+#: util.cpp:40
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "Siųsti laišką"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Ištrinti"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgid "Move to Trash"
 msgstr "Perkelti į šiukšlinę"
 
-#: util.cpp:195
+#: util.cpp:197
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8327,7 +8325,7 @@ msgstr ""
 "Nepavyko paleisti paskyros vediklio. Įsitikinkite, kad paskyros vediklis yra "
 "tinkamai įdiegtas."
 
-#: util.cpp:197
+#: util.cpp:199
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

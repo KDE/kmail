@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-30 00:54+0000\n"
+"POT-Creation-Date: 2026-10-31 00:52+0000\n"
 "PO-Revision-Date: 2026-09-20 13:59+0200\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -4965,7 +4965,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "அனைத்தையும் சுருக்கு"
 
-#: kmmainwidget.cpp:3088 util.cpp:184
+#: kmmainwidget.cpp:3088 util.cpp:186
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5666,7 +5666,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "துவங்குகிறது…"
 
-#: kmreadermainwin.cpp:494 util.cpp:184
+#: kmreadermainwin.cpp:494 util.cpp:186
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&அகற்றிடத்துக்கு நகர்த்து"
@@ -8044,7 +8044,7 @@ msgstr "செருகுநிரல்களின் விவரங்க�
 msgid "Plugins used in KMail."
 msgstr "கேமெயிலில் பயன்படுத்தப்படும் செருகுநிரல்கள்."
 
-#: util.cpp:35
+#: util.cpp:37
 #, fuzzy, kde-format
 #| msgctxt "@info"
 #| msgid ""
@@ -8058,7 +8058,7 @@ msgstr ""
 "%1 தனிலிருந்தான இந்த மின்னஞ்சலுக்க வரும் பதில்களை யாரும் கண்காணிக்காதது போல் தெரிகிறது. "
 "உறுதியாக பதிலளிக்க வேண்டுமா?"
 
-#: util.cpp:36
+#: util.cpp:38
 #, fuzzy, kde-format
 #| msgctxt "@title:window"
 #| msgid "Email not monitored"
@@ -8066,30 +8066,30 @@ msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "கண்காணிக்கப்படாத அஞ்சல் முகவரி"
 
-#: util.cpp:37
+#: util.cpp:39
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "அனுப்ப வேண்டாம்"
 
-#: util.cpp:38
+#: util.cpp:40
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "அஞ்சலை அனுப்பு"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "அழி"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgid "Move to Trash"
 msgstr "அகற்றிடத்துக்கு நகர்த்து"
 
-#: util.cpp:195
+#: util.cpp:197
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8097,7 +8097,7 @@ msgid ""
 msgstr ""
 "கணக்கு உதவிநிரலை துவக்க முடியவில்லை. அது சரியாக நிறுவப்பட்டுள்ளதா என பாருங்கள்."
 
-#: util.cpp:197
+#: util.cpp:199
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"

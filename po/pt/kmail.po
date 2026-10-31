@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ktnef\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-30 00:54+0000\n"
+"POT-Creation-Date: 2026-10-31 00:52+0000\n"
 "PO-Revision-Date: 2023-07-14 22:02+0100\n"
 "Last-Translator: José Nuno Coelho Pires <zepires@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt@kde.org>\n"
@@ -5360,7 +5360,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Fechar T&odos os Tópicos"
 
-#: kmmainwidget.cpp:3088 util.cpp:184
+#: kmmainwidget.cpp:3088 util.cpp:186
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -6139,7 +6139,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "A iniciar..."
 
-#: kmreadermainwin.cpp:494 util.cpp:184
+#: kmreadermainwin.cpp:494 util.cpp:186
 #, kde-format
 msgid "&Move to Trash"
 msgstr "E&nviar para o Lixo"
@@ -8666,7 +8666,7 @@ msgstr "Informação dos 'Plugins'"
 msgid "Plugins used in KMail."
 msgstr "'Plugins' usados no KMail."
 
-#: util.cpp:35
+#: util.cpp:37
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8674,14 +8674,14 @@ msgid ""
 "wish to reply to this email?"
 msgstr ""
 
-#: util.cpp:36
+#: util.cpp:38
 #, fuzzy, kde-format
 #| msgid "Email Address"
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Endereço de E-mail"
 
-#: util.cpp:37
+#: util.cpp:39
 #, fuzzy, kde-format
 #| msgctxt "@action:button"
 #| msgid "Do Not Cancel"
@@ -8689,25 +8689,25 @@ msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "Não Cancelar"
 
-#: util.cpp:38
+#: util.cpp:40
 #, fuzzy, kde-format
 #| msgid "&Send Mail"
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "En&viar um E-mail"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Apagar"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgid "Move to Trash"
 msgstr "Enviar para o Lixo"
 
-#: util.cpp:195
+#: util.cpp:197
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8716,7 +8716,7 @@ msgstr ""
 "Não foi possível iniciar o assistente de contas. Verifique por favor a sua "
 "instalação."
 
-#: util.cpp:197
+#: util.cpp:199
 #, fuzzy, kde-format
 #| msgid "Unable to start account wizard"
 msgctxt "@title:window"

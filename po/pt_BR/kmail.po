@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-30 00:54+0000\n"
-"PO-Revision-Date: 2026-10-27 10:14-0300\n"
+"POT-Creation-Date: 2026-10-31 00:52+0000\n"
+"PO-Revision-Date: 2026-10-30 07:28-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -5076,7 +5076,7 @@ msgctxt "@action"
 msgid "Collapse All"
 msgstr "Recolher tudo"
 
-#: kmmainwidget.cpp:3088 util.cpp:184
+#: kmmainwidget.cpp:3088 util.cpp:186
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "&Delete"
@@ -5780,7 +5780,7 @@ msgctxt "@label:textbox"
 msgid "Starting…"
 msgstr "Iniciando…"
 
-#: kmreadermainwin.cpp:494 util.cpp:184
+#: kmreadermainwin.cpp:494 util.cpp:186
 #, kde-format
 msgid "&Move to Trash"
 msgstr "&Mover para o lixo"
@@ -6883,8 +6883,7 @@ msgid "Specifies the policy used when displaying policy"
 msgstr "Especifica a política usada na sua visualização"
 
 #: snooze/snoozemenu.cpp:16
-#, fuzzy, kde-format
-#| msgid "Snooze"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
 msgstr "Adiar"
@@ -6920,17 +6919,16 @@ msgid "Custom…"
 msgstr "Personalizado…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
-#, fuzzy, kde-format
-#| msgid "Snooze"
+#, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr "Adiar"
+msgstr "Adiar até"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "Reativar em:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format
@@ -8224,7 +8222,7 @@ msgstr "Informação dos plugins"
 msgid "Plugins used in KMail."
 msgstr "Plugins usados no KMail."
 
-#: util.cpp:35
+#: util.cpp:37
 #, kde-format
 msgctxt "@info"
 msgid ""
@@ -8234,36 +8232,36 @@ msgstr ""
 "Parece que este endereço de e-mail de %1 não está sendo monitorado. Deseja "
 "responder a este e-mail?"
 
-#: util.cpp:36
+#: util.cpp:38
 #, kde-format
 msgctxt "@title:window"
 msgid "Email Address not Monitored"
 msgstr "Endereço de e-mail não monitorado"
 
-#: util.cpp:37
+#: util.cpp:39
 #, kde-format
 msgctxt "@action:button"
 msgid "Do Not Send"
 msgstr "Não enviar"
 
-#: util.cpp:38
+#: util.cpp:40
 #, kde-format
 msgctxt "@action:button"
 msgid "Send EMail"
 msgstr "Enviar e-mail"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgctxt "@action Hard delete, bypassing trash"
 msgid "Delete"
 msgstr "Excluir"
 
-#: util.cpp:187
+#: util.cpp:189
 #, kde-format
 msgid "Move to Trash"
 msgstr "Mover para o lixo"
 
-#: util.cpp:195
+#: util.cpp:197
 #, kde-format
 msgid ""
 "Could not start the account wizard. Please make sure you have AccountWizard "
@@ -8272,7 +8270,7 @@ msgstr ""
 "Não foi possível iniciar o Assistente de Contas. Verifique se o "
 "AccountWizard está instalado corretamente."
 
-#: util.cpp:197
+#: util.cpp:199
 #, kde-format
 msgctxt "@title:window"
 msgid "Unable to start account wizard"
