@@ -1,5 +1,5 @@
 # translation of kmail.po to
-# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025, 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2022-2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 # Ahmad M. Zawawi <azawawi@emirates.net.ae>, 2004.
 # Ahmad M. Zawawi <zawawi@arabeyes.org>, 2004.
 # Usamah Ali Al-Maqdad <msareehi@kacst.edu.sa>, 2004.
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-31 00:52+0000\n"
-"PO-Revision-Date: 2026-09-23 18:58+0400\n"
+"PO-Revision-Date: 2026-10-31 19:58+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 26.08.1\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -525,19 +525,18 @@ msgstr "خيارات الاسترجاع"
 #: configuredialog/configureaccessibilitypage.cpp:28
 #, kde-format
 msgid "Text to Speech"
-msgstr ""
+msgstr "تحويل النص إلى كلام"
 
 #: configuredialog/configureaccessibilitypage.cpp:32
-#, fuzzy, kde-format
-#| msgid "Rich Text"
+#, kde-format
 msgid "Speech to Text"
-msgstr "النّصّ الغنيّ"
+msgstr "تحويل الكلام إلى نص"
 
 #: configuredialog/configureaccessibilitypage.cpp:82
 #, kde-format
 msgctxt "@option:check"
 msgid "Enable Speech To Text"
-msgstr ""
+msgstr "مكّن تحويل الكلام إلى نص"
 
 #: configuredialog/configureaccountpage.cpp:56
 #, kde-format
@@ -4467,10 +4466,9 @@ msgid "Followup Reminder Agent was not registered."
 msgstr "لم يُسجِّل وكيل تذكير بالمتابعة."
 
 #: kmlaunchexternalcomponent.cpp:68
-#, fuzzy, kde-format
-#| msgid "Send Later Agent was not registered."
+#, kde-format
 msgid "Snooze Agent was not registered."
-msgstr "لم يسجل وكيل الإرسال اللاحق."
+msgstr "لم يُسجَّل وكيل التأجيل."
 
 #: kmlaunchexternalcomponent.cpp:80 kmlaunchexternalcomponent.cpp:88
 #, kde-format
@@ -5007,11 +5005,10 @@ msgid "Followup Reminder Messages…"
 msgstr "رسائل تذكير بالمتابعة …"
 
 #: kmmainwidget.cpp:3066
-#, fuzzy, kde-format
-#| msgid "&Configure KMail…"
+#, kde-format
 msgctxt "@action"
 msgid "&Configure Snooze…"
-msgstr "ا&ضبط «بريدك»…"
+msgstr "ا&ضبط التأجيل…"
 
 #: kmmainwidget.cpp:3072
 #, kde-format
@@ -6548,7 +6545,7 @@ msgstr "المجلَّد الأكثر تحديد مؤخرًا في  حواريّ
 #: settings/kmail.kcfg:77
 #, kde-format
 msgid "Enable speech to text"
-msgstr ""
+msgstr "مكّن تحويل الكلام إلى نص"
 
 #. i18n: ectx: label, entry (SystemTrayEnabled), group (General)
 #: settings/kmail.kcfg:87
@@ -6831,52 +6828,49 @@ msgstr "تحدَّد السياسة المستخدمة عند عرض السيا�
 #, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
-msgstr ""
+msgstr "تأجيل"
 
 #: snooze/snoozemenu.cpp:21
 #, kde-format
 msgctxt "@action"
 msgid "One hour later"
-msgstr ""
+msgstr "بعد ساعة واحدة"
 
 #: snooze/snoozemenu.cpp:26
 #, kde-format
 msgctxt "@action"
 msgid "Eight hours later"
-msgstr ""
+msgstr "بعد ثماني ساعات"
 
 #: snooze/snoozemenu.cpp:31
 #, kde-format
 msgctxt "@action"
 msgid "Tomorrow"
-msgstr ""
+msgstr "غدًا"
 
 #: snooze/snoozemenu.cpp:36
-#, fuzzy, kde-format
-#| msgctxt "@action"
-#| msgid "&Next Message"
+#, kde-format
 msgctxt "@action"
 msgid "Next week"
-msgstr "الرّسالة ال&تّالية"
+msgstr "الأسبوع القادم"
 
 #: snooze/snoozemenu.cpp:41
-#, fuzzy, kde-format
-#| msgid "Custom Account…"
+#, kde-format
 msgctxt "@action"
 msgid "Custom…"
-msgstr "خصّص الحساب…"
+msgstr "مخصص…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
 #, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr ""
+msgstr "أجّل حتى"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "أيقظ في:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format

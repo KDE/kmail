@@ -1,0 +1,116 @@
+# Copyright (C) 2026 This file is copyright:
+# This file is distributed under the same license as the kmail package.
+# SPDX-FileCopyrightText: 2026 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kmail\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2026-10-27 01:00+0000\n"
+"PO-Revision-Date: 2026-10-31 21:11+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Lokalize 26.08.1\n"
+
+#: snoozeagent.cpp:38
+#, kde-format
+msgid "Snooze Agent"
+msgstr "وكيل التأجيل"
+
+#: snoozeagent.cpp:172
+#, kde-format
+msgid "Snoozed"
+msgstr "مؤجّل"
+
+#: snoozeconfigurewidget.cpp:54
+#, kde-format
+msgctxt "@action:button"
+msgid "Remove"
+msgstr "أزل"
+
+#: snoozeconfigurewidget.cpp:55
+#, kde-format
+msgctxt "@action:button"
+msgid "Wake Up Now"
+msgstr "استيقظ الآن"
+
+#: snoozeconfigurewidget.cpp:63
+#, kde-format
+msgctxt "@title:column send mail from"
+msgid "From"
+msgstr "من"
+
+#: snoozeconfigurewidget.cpp:64
+#, kde-format
+msgctxt "@title:column mail subject"
+msgid "Subject"
+msgstr "الموضوع"
+
+#: snoozeconfigurewidget.cpp:65
+#, kde-format
+msgctxt "@title:column when the message comes back"
+msgid "Wake Up"
+msgstr "استيقظ"
+
+#: snoozeconfigurewidget.cpp:135
+#, kde-format
+msgid ""
+"Do you want to unsnooze the selected message?\n"
+"It will come back without notification."
+msgid_plural ""
+"Do you want to unsnooze the %1 selected messages?\n"
+"They will come back without notification."
+msgstr[0] ""
+"هل تريد إلغاء تأجيل أي رسالة؟\n"
+"ستعود بدون إشعار."
+msgstr[1] ""
+"هل تريد إلغاء تأجيل الرسالة المحددة؟\n"
+"ستعود بدون إشعار."
+msgstr[2] ""
+"هل تريد إلغاء تأجيل الرسالتين المحددتين؟\n"
+"ستعودان بدون إشعار."
+msgstr[3] ""
+"هل تريد إلغاء تأجيل %1 رسائل محددة؟\n"
+"ستعود بدون إشعار."
+msgstr[4] ""
+"هل تريد إلغاء تأجيل %1 رسالة محددة؟\n"
+"ستعود بدون إشعار."
+msgstr[5] ""
+"هل تريد إلغاء تأجيل %1 رسالة محددة؟\n"
+"ستعود بدون إشعار."
+
+#: snoozeconfigurewidget.cpp:138
+#, kde-format
+msgctxt "@title:window"
+msgid "Unsnooze Messages"
+msgstr "ألغِ تأجيل الرسائل"
+
+#: snoozeconfigurewidget.cpp:139
+#, kde-format
+msgctxt "@action:button"
+msgid "Unsnooze"
+msgstr "ألغِ التأجيل"
+
+#: snoozeconfigurewidget.cpp:177
+#, kde-format
+msgctxt "@action"
+msgid "Show Message"
+msgstr "أظهر الرّسالة"
+
+#: snoozeconfigurewidget.cpp:180
+#, kde-format
+msgctxt "@action"
+msgid "Wake Up Now"
+msgstr "استيقظ الآن"
+
+#: snoozeconfigurewidget.cpp:181
+#, kde-format
+msgctxt "@action"
+msgid "Unsnooze"
+msgstr "ألغِ التأجيل"

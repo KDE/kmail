@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: kmail\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-31 00:52+0000\n"
-"PO-Revision-Date: 2026-10-28 22:57+0100\n"
+"PO-Revision-Date: 2026-10-31 11:35+0100\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -6840,11 +6840,10 @@ msgid "Specifies the policy used when displaying policy"
 msgstr "Určuje zásady použité při jejich zobrazování"
 
 #: snooze/snoozemenu.cpp:16
-#, fuzzy, kde-format
-#| msgid "Snooze"
+#, kde-format
 msgctxt "@action:inmenu"
 msgid "Snooze"
-msgstr "Uspat"
+msgstr "Odložení"
 
 #: snooze/snoozemenu.cpp:21
 #, kde-format
@@ -6877,17 +6876,16 @@ msgid "Custom…"
 msgstr "Vlastní…"
 
 #: snooze/snoozeselectdatetimedialog.cpp:21
-#, fuzzy, kde-format
-#| msgid "Snooze"
+#, kde-format
 msgctxt "@title:window"
 msgid "Snooze Until"
-msgstr "Uspat"
+msgstr "Odložení do"
 
 #: snooze/snoozeselectdatetimedialog.cpp:35
 #, kde-format
 msgctxt "@label:textbox"
 msgid "Wake up on:"
-msgstr ""
+msgstr "Probudit v:"
 
 #: tag/tagactionmanager.cpp:87 tag/tagactionmanager.cpp:204
 #, kde-format

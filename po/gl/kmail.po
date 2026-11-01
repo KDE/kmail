@@ -4031,7 +4031,8 @@ msgid "Set subject of message"
 msgstr "Indicar o asunto da mensaxe"
 
 #: kmail_options.h:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Subject"
 msgid "Subject"
 msgstr "Asunto"
 
