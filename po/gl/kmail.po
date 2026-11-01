@@ -4006,7 +4006,8 @@ msgid "Set subject of message"
 msgstr "Indicar o asunto da mensaxe"
 
 #: kmail_options.h:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Subject"
 msgid "Subject"
 msgstr "Asunto"
 
@@ -8230,7 +8231,9 @@ msgid "Use Global Setting"
 msgstr "Usar os parámetros globais"
 
 #: widgets/vacationscriptindicatorwidget.cpp:84
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Out of office reply active on server"
+#| msgid_plural "Out of office reply active on servers"
 msgid "Out of office reply active on server"
 msgid_plural "Out of office reply active on servers"
 msgstr[0] "Resposta para fóra da oficina activa no servidor"
