@@ -6,6 +6,7 @@
 
 #include "collectionpane.h"
 #include "kmkernel.h"
+#include "snooze/snoozefilterproxymodel.h"
 #include <MailCommon/MailKernel>
 
 #include <Akonadi/MessageFolderAttribute>
