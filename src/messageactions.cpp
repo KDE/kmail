@@ -86,8 +86,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
     , mWebShortcutMenuManager(new KIO::KUriFilterSearchProviderActions(this))
     , mExportToPdfAction(new QAction(QIcon::fromTheme(u"application-pdf"_s), i18n("Export to PDF…"), this))
     , mArchiveMessageAction(new QAction(i18nc("@action:inmenu", "Archive Message"), this))
+    , mConfigureSnoozeAction(new QAction(i18nc("@action", "&Configure Snooze…"), this))
     , mSnoozeActionMenu(new SnoozeMenu(this))
 {
+    ac->addAction(u"snooze_messages"_s, mConfigureSnoozeAction);
+
     ac->addAction(u"message_reply_menu"_s, mReplyActionMenu);
     connect(mReplyActionMenu, &KActionMenu::triggered, this, &MessageActions::slotReplyToMsg);
 
@@ -428,6 +431,7 @@ void MessageActions::updateActions()
 
     mStatusMenu->setEnabled(multiVisible);
     mSnoozeActionMenu->setVisible(mSnoozeAgentAvailable);
+    mConfigureSnoozeAction->setVisible(mSnoozeAgentAvailable);
     mSnoozeActionMenu->setEnabled(mSnoozeAgentAvailable && multiVisible && KMail::SnoozeUtil::canSnoozeInCollection(parent));
 
     mPrintAction->setEnabled(mMessageView != nullptr);
@@ -845,6 +849,11 @@ void MessageActions::slotArchiveMessage()
     items << mCurrentItem;
     auto resource = CommonKernel->collectionFromId(mCurrentItem.parentCollection().id()).resource();
     KMKernel::self()->folderArchiveManager()->setArchiveItems(items, resource);
+}
+
+QAction *MessageActions::configureSnoozeAction() const
+{
+    return mConfigureSnoozeAction;
 }
 
 Akonadi::Item MessageActions::currentItem() const

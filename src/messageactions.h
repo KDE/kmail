@@ -100,6 +100,8 @@ public:
     [[nodiscard]] Akonadi::Item currentItem() const;
 
     [[nodiscard]] KActionMenu *snoozeMenu() const;
+    [[nodiscard]] QAction *configureSnoozeAction() const;
+
 Q_SIGNALS:
     // This signal is emitted when a reply is triggered and the
     // action has finished.
@@ -180,6 +182,7 @@ private:
     KIO::KUriFilterSearchProviderActions *const mWebShortcutMenuManager;
     QAction *const mExportToPdfAction;
     QAction *const mArchiveMessageAction;
+    QAction *const mConfigureSnoozeAction;
     SnoozeMenu *const mSnoozeActionMenu;
     bool mSnoozeAgentAvailable = false;
     bool mArchiveAgentAvailable = false;
