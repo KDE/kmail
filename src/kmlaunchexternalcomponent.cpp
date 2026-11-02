@@ -7,6 +7,7 @@
 #include "kmlaunchexternalcomponent.h"
 #include "kmail_debug.h"
 #include "newmailnotifierinterface.h"
+#include "snooze/snoozeutil.h"
 #include "util.h"
 #include <Akonadi/AgentConfigurationDialog>
 #include <Akonadi/AgentManager>
@@ -65,7 +66,7 @@ void KMLaunchExternalComponent::slotConfigureFollowupReminder()
 
 void KMLaunchExternalComponent::slotConfigureSnooze()
 {
-    createAgentConfigurationDialog(u"akonadi_snooze_agent"_s, i18n("Snooze Agent was not registered."));
+    createAgentConfigurationDialog(KMail::SnoozeUtil::agentIdentifier(), i18n("Snooze Agent was not registered."));
 }
 
 void KMLaunchExternalComponent::slotStartCertManager()

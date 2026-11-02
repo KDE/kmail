@@ -8,6 +8,7 @@
 
 #include "../../plugininterface/kmailplugininterface.h"
 #include "kmail_debug.h"
+#include "snooze/snoozeutil.h"
 #include <Akonadi/ServerManager>
 #include <KLocalizedString>
 #include <MessageComposer/PluginEditorCheckBeforeSendManager>
@@ -316,7 +317,7 @@ void ConfigurePluginsListWidget::initializeAgentPlugins()
     createAgentPluginData(u"akonadi_newmailnotifier_agent"_s, u"/NewMailNotifierAgent"_s, lstAgent);
     createAgentPluginData(u"akonadi_followupreminder_agent"_s, u"/FollowUpReminder"_s, lstAgent);
     createAgentPluginData(u"akonadi_unifiedmailbox_agent"_s, u"/UnifiedMailboxAgent"_s, lstAgent);
-    createAgentPluginData(u"akonadi_snooze_agent"_s, u"/SnoozeAgent"_s, lstAgent);
+    createAgentPluginData(KMail::SnoozeUtil::agentIdentifier(), u"/SnoozeAgent"_s, lstAgent);
 
     TextAddonsWidgets::ConfigurePluginsWidget::fillTopItems(mPluginUtilDataList,
                                                             i18n("Akonadi Agents"),

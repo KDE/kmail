@@ -6,6 +6,7 @@
 
 #include "snoozemessagesjob.h"
 #include "kmail_debug.h"
+#include "snooze/snoozeutil.h"
 #include "snoozeagentinterface.h"
 #include <Akonadi/ItemFetchJob>
 #include <Akonadi/ItemFetchScope>
@@ -41,7 +42,7 @@ void SnoozeMessagesJob::slotItemFetchDone(KJob *job)
         deleteLater();
         return;
     }
-    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, u"akonadi_snooze_agent"_s);
+    const auto service = Akonadi::ServerManager::self()->agentServiceName(Akonadi::ServerManager::Agent, KMail::SnoozeUtil::agentIdentifier());
     OrgFreedesktopAkonadiSnoozeAgentInterface snoozeInterface(service, u"/SnoozeAgent"_s, QDBusConnection::sessionBus());
     if (!snoozeInterface.isValid()) {
         qCWarning(KMAIL_LOG) << "org.freedesktop.Akonadi.SnoozeAgent not found. Please verify your installation";
