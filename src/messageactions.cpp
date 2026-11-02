@@ -14,6 +14,7 @@
 #include "snooze/snoozemenu.h"
 #include "snooze/snoozemessagesjob.h"
 #include "snooze/snoozeselectdatetimedialog.h"
+#include "snooze/snoozeutil.h"
 #include "util.h"
 #include <MailCommon/MailKernel>
 #include <TemplateParser/CustomTemplatesMenu>
@@ -22,6 +23,7 @@
 #include <MessageCore/MessageCoreSettings>
 #include <MessageViewer/MessageViewerSettings>
 
+#include <Akonadi/AgentManager>
 #include <Akonadi/ChangeRecorder>
 #include <Akonadi/MessageParts>
 #if !KMAIL_FORCE_DISABLE_AKONADI_SEARCH
@@ -90,6 +92,10 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     ac->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
     connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &MessageActions::slotSnoozeRequested);
+    connect(KMKernel::self(), &KMKernel::configChanged, this, &MessageActions::updateSnoozeAgentAvailable);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &MessageActions::updateSnoozeAgentAvailable);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MessageActions::updateSnoozeAgentAvailable);
+    mSnoozeAgentAvailable = KMail::SnoozeUtil::snoozeAgentAvailable();
 
     ac->addAction(u"reply"_s, mReplyAction);
     ac->setDefaultShortcut(mReplyAction, Qt::Key_R);
@@ -194,6 +200,15 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 MessageActions::~MessageActions()
 {
     delete mCustomTemplatesMenu;
+}
+
+void MessageActions::updateSnoozeAgentAvailable()
+{
+    const bool available = KMail::SnoozeUtil::snoozeAgentAvailable();
+    if (mSnoozeAgentAvailable != available) {
+        mSnoozeAgentAvailable = available;
+        updateActions();
+    }
 }
 
 void MessageActions::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
@@ -398,7 +413,8 @@ void MessageActions::updateActions()
     mSendAgainAction->setEnabled(hasPayload);
 
     mStatusMenu->setEnabled(multiVisible);
-    mSnoozeActionMenu->setEnabled(multiVisible);
+    mSnoozeActionMenu->setVisible(mSnoozeAgentAvailable);
+    mSnoozeActionMenu->setEnabled(mSnoozeAgentAvailable && multiVisible && KMail::SnoozeUtil::canSnoozeInCollection(parent));
 
     mPrintAction->setEnabled(mMessageView != nullptr);
     mPrintPreviewAction->setEnabled(mMessageView != nullptr);

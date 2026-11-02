@@ -119,6 +119,7 @@ private:
     void clearMailingListActions();
     void clearListFilterAction();
     void slotSnoozeRequested(SnoozeMenu::SnoozeType type);
+    void updateSnoozeAgentAvailable();
 
 private Q_SLOTS:
     void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
@@ -178,5 +179,6 @@ private:
     QAction *const mExportToPdfAction;
     QAction *const mArchiveMessageAction;
     SnoozeMenu *const mSnoozeActionMenu;
+    bool mSnoozeAgentAvailable = false;
 };
 }

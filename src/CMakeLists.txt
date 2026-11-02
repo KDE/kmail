@@ -367,6 +367,8 @@ target_sources(
         snooze/snoozemessagesjob.cpp
         snooze/snoozeselectdatetimedialog.h
         snooze/snoozeselectdatetimedialog.cpp
+        snooze/snoozeutil.h
+        snooze/snoozeutil.cpp
 )
 
 if(KMAIL_HAVE_ACTIVITY_SUPPORT)
