@@ -94,6 +94,7 @@ public:
     [[nodiscard]] QAction *exportToPdfAction() const;
 
     [[nodiscard]] QAction *archiveMessageAction() const;
+    [[nodiscard]] bool archiveAgentAvailable() const;
 
     void fillAkonadiStandardAction(Akonadi::StandardMailActionManager *akonadiStandardActionManager);
     [[nodiscard]] Akonadi::Item currentItem() const;
@@ -105,6 +106,7 @@ Q_SIGNALS:
     // This is useful for the stand-alone reader, it might want to close the window in
     // that case.
     void replyActionFinished();
+    void archiveAgentAvailableChanged();
 
 public Q_SLOTS:
     void editCurrentMessage();
@@ -119,7 +121,7 @@ private:
     void clearMailingListActions();
     void clearListFilterAction();
     void slotSnoozeRequested(SnoozeMenu::SnoozeType type);
-    void updateSnoozeAgentAvailable();
+    void updateAgentsAvailable();
 
 private Q_SLOTS:
     void slotItemModified(const Akonadi::Item &item, const QSet<QByteArray> &partIdentifiers);
@@ -180,5 +182,6 @@ private:
     QAction *const mArchiveMessageAction;
     SnoozeMenu *const mSnoozeActionMenu;
     bool mSnoozeAgentAvailable = false;
+    bool mArchiveAgentAvailable = false;
 };
 }

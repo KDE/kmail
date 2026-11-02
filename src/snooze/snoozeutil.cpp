@@ -5,9 +5,7 @@
 */
 
 #include "snoozeutil.h"
-#include <Akonadi/AgentManager>
-#include <KConfigGroup>
-#include <KSharedConfig>
+#include "util.h"
 #include <MailCommon/MailKernel>
 
 using namespace Qt::Literals::StringLiterals;
@@ -19,13 +17,7 @@ QString KMail::SnoozeUtil::agentIdentifier()
 
 bool KMail::SnoozeUtil::snoozeAgentAvailable()
 {
-    if (!Akonadi::AgentManager::self()->instance(agentIdentifier()).isValid()) {
-        return false;
-    }
-    // Written by the agent process: reparse to see its latest state.
-    const KSharedConfig::Ptr config = KSharedConfig::openConfig(u"akonadi_snooze_agentrc"_s);
-    config->reparseConfiguration();
-    return config->group(u"General"_s).readEntry("enabled", true);
+    return KMail::Util::agentAvailable(agentIdentifier());
 }
 
 bool KMail::SnoozeUtil::canSnoozeInCollection(const Akonadi::Collection &collection)

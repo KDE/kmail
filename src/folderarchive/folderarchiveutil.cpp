@@ -4,6 +4,7 @@
    SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "folderarchiveutil.h"
+#include "util.h"
 
 #include <Akonadi/Collection>
 #include <KConfig>
@@ -31,4 +32,14 @@ bool FolderArchiveUtil::resourceSupportArchiving(const QString &resource)
         }
     }
     return false;
+}
+
+bool FolderArchiveUtil::folderArchiveAgentAvailable()
+{
+    return KMail::Util::agentAvailable(folderArchiveAgentIdentifier());
+}
+
+QString FolderArchiveUtil::folderArchiveAgentIdentifier()
+{
+    return u"akonadi_archivemail_agent"_s;
 }

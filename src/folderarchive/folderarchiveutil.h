@@ -13,5 +13,7 @@ namespace FolderArchiveUtil
 [[nodiscard]] QString groupConfigPattern();
 [[nodiscard]] bool resourceSupportArchiving(const QString &resource);
 [[nodiscard]] QString configFileName();
+[[nodiscard]] bool folderArchiveAgentAvailable();
+[[nodiscard]] QString folderArchiveAgentIdentifier();
 }
 }

@@ -8,10 +8,13 @@
 
 #include "job/handleclickedurljob.h"
 #include "kmail_debug.h"
+#include <Akonadi/AgentManager>
+#include <KConfigGroup>
 #include <KLocalizedString>
 #include <KMessageBox>
 #include <KMime/Message>
 #include <KMime/Util>
+#include <KSharedConfig>
 #include <TextAddonsWidgets/ExecutableUtils>
 
 #include <KEmailAddress>
@@ -209,4 +212,15 @@ void KMail::Util::setWindowTag(QWidget *window, const QString &tag)
 #ifndef Q_OS_WIN
     KWaylandExtras::setXdgToplevelTag(window->windowHandle(), tag);
 #endif
+}
+
+bool KMail::Util::agentAvailable(const QString &identifier)
+{
+    if (!Akonadi::AgentManager::self()->instance(identifier).isValid()) {
+        return false;
+    }
+    // Written by the agent process: reparse to see its latest state.
+    const KSharedConfig::Ptr config = KSharedConfig::openConfig(identifier + u"rc"_s);
+    config->reparseConfiguration();
+    return config->group(u"General"_s).readEntry("enabled", true);
 }

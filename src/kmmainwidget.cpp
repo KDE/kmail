@@ -2927,6 +2927,7 @@ void KMMainWidget::setupActions()
     KMailPluginInterface::self()->setParentWidget(this);
     KMailPluginInterface::self()->createPluginInterface();
     mMsgActions = new KMail::MessageActions(actionCollection(), this);
+    connect(mMsgActions, &KMail::MessageActions::archiveAgentAvailableChanged, this, &KMMainWidget::updateMessageActionsDelayed);
     mMsgActions->fillAkonadiStandardAction(mAkonadiStandardActionManager);
     mMsgActions->setMessageView(mMsgView);
 
@@ -3985,7 +3986,8 @@ void KMMainWidget::updateMessageActionsDelayed()
         actionList << mMsgActions->editAsNewAction();
     }
     actionList << mSaveAttachmentsAction << mDeleteAttachmentsAction;
-    if (mCurrentCollection.isValid() && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
+    if (mMsgActions->archiveAgentAvailable() && mCurrentCollection.isValid()
+        && FolderArchive::FolderArchiveUtil::resourceSupportArchiving(mCurrentCollection.resource())) {
         actionList << mArchiveAction;
     }
     mGUIClient->unplugActionList(u"messagelist_actionlist"_s);

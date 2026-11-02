@@ -51,6 +51,7 @@
 #include <QPointer>
 
 #include "folderarchive/folderarchivemanager.h"
+#include "folderarchive/folderarchiveutil.h"
 #include <Akonadi/Collection>
 #include <Akonadi/StandardMailActionManager>
 #include <MessageViewer/MessageViewerUtil>
@@ -92,10 +93,11 @@ MessageActions::MessageActions(KActionCollection *ac, QWidget *parent)
 
     ac->addAction(u"snooze_menu"_s, mSnoozeActionMenu);
     connect(mSnoozeActionMenu, &SnoozeMenu::snoozeRequested, this, &MessageActions::slotSnoozeRequested);
-    connect(KMKernel::self(), &KMKernel::configChanged, this, &MessageActions::updateSnoozeAgentAvailable);
-    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &MessageActions::updateSnoozeAgentAvailable);
-    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MessageActions::updateSnoozeAgentAvailable);
+    connect(KMKernel::self(), &KMKernel::configChanged, this, &MessageActions::updateAgentsAvailable);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceAdded, this, &MessageActions::updateAgentsAvailable);
+    connect(Akonadi::AgentManager::self(), &Akonadi::AgentManager::instanceRemoved, this, &MessageActions::updateAgentsAvailable);
     mSnoozeAgentAvailable = KMail::SnoozeUtil::snoozeAgentAvailable();
+    mArchiveAgentAvailable = FolderArchive::FolderArchiveUtil::folderArchiveAgentAvailable();
 
     ac->addAction(u"reply"_s, mReplyAction);
     ac->setDefaultShortcut(mReplyAction, Qt::Key_R);
@@ -202,13 +204,25 @@ MessageActions::~MessageActions()
     delete mCustomTemplatesMenu;
 }
 
-void MessageActions::updateSnoozeAgentAvailable()
+void MessageActions::updateAgentsAvailable()
 {
-    const bool available = KMail::SnoozeUtil::snoozeAgentAvailable();
-    if (mSnoozeAgentAvailable != available) {
-        mSnoozeAgentAvailable = available;
-        updateActions();
+    const bool snoozeAvailable = KMail::SnoozeUtil::snoozeAgentAvailable();
+    const bool archiveAvailable = FolderArchive::FolderArchiveUtil::folderArchiveAgentAvailable();
+    if (mSnoozeAgentAvailable == snoozeAvailable && mArchiveAgentAvailable == archiveAvailable) {
+        return;
     }
+    mSnoozeAgentAvailable = snoozeAvailable;
+    const bool archiveChanged = mArchiveAgentAvailable != archiveAvailable;
+    mArchiveAgentAvailable = archiveAvailable;
+    updateActions();
+    if (archiveChanged) {
+        Q_EMIT archiveAgentAvailableChanged();
+    }
+}
+
+bool MessageActions::archiveAgentAvailable() const
+{
+    return mArchiveAgentAvailable;
 }
 
 void MessageActions::slotSnoozeRequested(SnoozeMenu::SnoozeType type)
@@ -433,7 +447,8 @@ void MessageActions::updateActions()
         }
     }
     mEditAsNewAction->setEnabled(uniqItem);
-    mArchiveMessageAction->setEnabled(hasPayload);
+    mArchiveMessageAction->setVisible(mArchiveAgentAvailable);
+    mArchiveMessageAction->setEnabled(mArchiveAgentAvailable && hasPayload);
 }
 
 void MessageActions::slotUpdateActionsFetchDone(KJob *job)

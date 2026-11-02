@@ -67,5 +67,7 @@ KMAILTESTS_TESTS_EXPORT void setActionTrashOrDelete(QAction *action, bool isInTr
 void executeAccountWizard(QWidget *parentWidget);
 // Set window tag on wayland
 void setWindowTag(QWidget *window, const QString &tag);
+
+[[nodiscard]] KMAILTESTS_TESTS_EXPORT bool agentAvailable(const QString &identifier);
 }
 }
